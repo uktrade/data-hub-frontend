@@ -1,0 +1,50 @@
+[
+    {
+        "id": "af959812-6095-e211-a939-e4115bead28a",
+        "name": "Advanced Engineering"
+    },
+    {
+        "id": "e9e181d2-f6a0-e211-b972-e4115bead28a",
+        "name": "Aerospace : Component Manufacturing"
+    },
+    {
+        "id": "b122c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Component Manufacturing : Engines"
+    },
+    {
+        "id": "e74171b4-efe9-e511-8ffa-e4115bead28a",
+        "name": "Aerospace : Component Manufacturing : test widgerts"
+    },
+    {
+        "id": "b722c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Maintenance"
+    },
+    {
+        "id": "b906a205-f5a0-e211-b972-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly"
+    },
+    {
+        "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Aircraft"
+    },
+    {
+        "id": "b522c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Helicopters"
+    },
+    {
+        "id": "b622c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Space Technology"
+    },
+    {
+        "id": "b322c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : UAVs"
+    },
+    {
+        "id": "b1ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Automotive Maintenance"
+    },
+    {
+        "id": "b0ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Automotive Retail"
+    }
+]

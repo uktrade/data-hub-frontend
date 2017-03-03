@@ -1,0 +1,42 @@
+{% extends "layouts/ukti_template.html" %}
+
+{% set homepage_url = "/" %}
+{% block service_name %}Datahub{% endblock %}
+
+{% block head_styles %}
+<!-- This is a test -->
+<link href="{{ asset_path | default('/') }}css/application.css" media="screen" rel="stylesheet" />
+{% endblock %}
+
+{% block head_script %}
+<script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
+ {% if user %}
+    <script>
+      if (!window.DIT) window.DIT = {};
+      window.DIT.user = {{ user | stringify | safe }};
+    </script>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if user and user.name %}
+    <div class="login-bar">
+      <div class="login-links login-links-right">
+        <span class="user-name">{{ user.name }}:</span><a href="/myaccount">My account</a>
+        |
+        <a href="/login/signout">Sign out</a>
+      </div>
+    </div>
+  {% endif %}
+  <div class="container">
+    {% block main %}{% endblock %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+<footer class="group js-footer footer--govuk" id="footer" role="contentinfo">
+  <div class="footer-wrapper">
+    <span>This is a new service – your <a href="/support/bug">feedback</a> will help us to improve it.</span>
+  </div>
+</footer>
+{% endblock %}

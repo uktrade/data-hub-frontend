@@ -1,0 +1,50 @@
+{% extends "./index.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+{% if company.contacts.length > 0 %}
+  <div class="grid-row table-summary">
+    <div class="column-one-third">
+      <div class="data">
+        <h2 class="bold-xlarge data__title">{{ timeSinceNewContact.amount }}</h2>
+        <p class="bold-xsmall data__description">{{ timeSinceNewContact.unit }} since last new contact entry</p>
+      </div>
+    </div>
+    <div class="column-one-third">
+      <div class="data">
+        <h2 id="added-count" class="bold-xlarge data__title">{{ contactsInLastYear.length }}</h2>
+        <p class="bold-xsmall data__description">contacts added in the last 12 months</p>
+      </div>
+    </div>
+    <div class="column-one-third">
+      <p class="actions">
+        <a class="button button-secondary" href="/contact/add?companyId={{company.id}}">Add new contact</a>
+      </p>
+    </div>
+  </div>
+  <table class="table--data table--sortable js-table--sortable contact-table">
+    <thead>
+      <tr>
+        <th data-key="name">Name</th>
+        <th data-key="role">Role</th>
+        <th data-key="phone">Phone</th>
+        <th data-key="email">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for contact in company.contacts %}
+      <tr>
+        <td><a href="/contact/{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</a></td>
+        <td>{{ contact.job_title }}</td>
+        <td>{{ contact.telephone_number }}</td>
+        <td><a href="mailto:{{contact.email}}">{{ contact.email }}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="actions">
+    <a class="button button-secondary" href="/contact/add?companyId={{company.id}}">Add new contact</a>
+  </p>
+{% endif %}
+{% endblock %}

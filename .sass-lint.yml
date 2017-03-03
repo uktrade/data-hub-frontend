@@ -1,0 +1,27 @@
+options:
+  formatter: stylish
+  merge-default-rules: true
+files:
+  include: 'stylesheets/**/*.s+(a|c)ss'
+rules:
+  class-name-format:
+    - 1
+    - convention: hyphenatedbem
+  id-name-format:
+    - 1
+    - convention: hyphenatedbem
+  placeholder-name-format:
+    - 1
+    - convention: hyphenatedbem
+  force-element-nesting:
+    - 0
+  force-pseudo-nesting:
+    - 0
+  property-sort-order:
+    - 0
+  mixins-before-declarations:
+    - 0
+  no-vendor-prefixes:
+    - 0
+  nesting-depth:
+    - max-depth: 3

@@ -1,0 +1,165 @@
+{% extends "layouts/ukti.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  <h1 class="page-heading">Create a company</h1>
+  <div class="grid-row">
+    <div class="column-three-quarters">
+      {{ trade.errorPanel( errors, labels=companyDetailLabels ) }}
+      <div class="section">
+        <div class="for-control key-value key-value--vertical">
+          <div id="business-type" class="key-value__key form-label-bold">Business type
+            <a href="/company/add-step-1" class="button-link">Change</a>
+          </div>
+          <div class="key-value__value" aria-labelledby="business-type">UK {{businessType}}</div>
+        </div>
+      </div>
+
+      <div class="section">
+        {% if chDisplay %}
+          {{ trade.keyvaluetable(chDisplay, labels=chDetailLabels, keyorder=chDetailsDisplayOrder, class="table--small") }}
+        {% endif %}
+      </div>
+
+      <form method="POST">
+        <input type="hidden" name="business_type" value="{{business_type}}">
+        <input type="hidden" name="uk_based" value="true">
+
+        {{ trade.textbox("name", label="Name", value=company.name, error=errors.name) }}
+        {{ trade.textbox("alias", label="Trading name (optional)", value=company.alias, error=error.alias) }}
+
+        <fieldset id="registered-address-wrapper" class="fieldset--address {% if errors.registered_address %}error{% endif %} lookup-address-js">
+          <legend class="form-label-bold">
+            Primary address
+            {% if errors.registered_address %}<span class="error-message">{{errors.registered_address}}</span>{% endif %}
+          </legend>
+          <div class="key-value key-value--vertical form-group">
+            <div id="registered-address-contry-label" class="key-value__key form-label-bold">Country</div>
+            <div class="key-value__value" aria-labelledby="registered-address-contry-label">United Kingdom</div>
+          </div>
+
+          <div class="form-group form-group--postcode">{# hide for none js #}
+            <label class="form-label-bold">Postcode</label>
+            <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
+            <button class="button button-secondary postcode-lookup-button" type="button">
+              Find UK Address
+            </button>
+          </div>
+          {# dropdown of suggestions #}
+          <div class="form-group form-group--address-suggestions">
+            <label class="form-label-bold">Select an address from the drop down</label>
+            <select class="form-control">
+            <option value="">Please enter a postcode to lookup your address</option>
+            </select>
+          </div>
+
+          {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=company.registered_address_1, error=errors.registered_address_1) }}
+          {{ trade.textbox("registered_address_2", value=company.registered_address_2, error=errors.registered_address_2) }}
+          {{ trade.textbox("registered_address_town", label="Town of city (optional)", value=company.registered_address_town, error=errors.registered_address_town) }}
+          {{ trade.textbox("registered_address_county", label="County (optonal)", value=company.registered_address_county, error=errors.registered_address_county) }}
+          {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=company.registered_address_postcode, error=errors.registered_address_postcode )}}
+        </fieldset>
+
+        <fieldset class="inline form-group form-group__checkbox-group form-group__radiohide">
+          <legend class='form-label-bold'>Is the trading address the same as the primary address?</legend>
+          <label
+            class="block-label selection-button-radio"
+            for="trading_address_same_as_registered_yes">
+            <input id="trading_address_same_as_registered_yes" type="radio" name="trading_address_same_as_registered" value="yes" {% if company.trading_address_same_as_registered == true %}checked{% endif %}>
+            Yes
+          </label>
+          <label
+            class="block-label selection-button-radio {% if company.trading_address_same_as_registered == false %}selected{% endif %}"
+            for="trading_address_same_as_registered_no">
+            <input id="trading_address_same_as_registered_no" type="radio" name="trading_address_same_as_registered" value="no" {% if company.trading_address_same_as_registered == false %}checked{% endif %}>
+            No
+          </label>
+        </fieldset>
+
+        <fieldset id="trading-address-wrapper" class="fieldset--address panel panel-border-narrow lookup-address-js">
+          <div class="key-value key-value--vertical form-group">
+            <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
+            <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>
+          </div>
+
+          <div class="form-group form-group--postcode">{# hide for none js #}
+            <label class="form-label-bold">Postcode</label>
+            <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
+            <button class="button button-secondary postcode-lookup-button" type="button">
+              Find UK Address
+            </button>
+          </div>
+          {# dropdown of suggestions #}
+          <div class="form-group form-group--address-suggestions">
+            <label class="form-label-bold">Select an address from the drop down</label>
+            <select class="form-control">
+            <option value="">Please enter a postcode to lookup your address</option>
+            </select>
+          </div>
+
+          {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=company.trading_address_1, error=errors.trading_address_1) }}
+          {{ trade.textbox("trading_address_2", value=company.trading_address_2, error=errors.trading_address_2) }}
+          {{ trade.textbox("trading_address_town", label="Town of city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
+          {{ trade.textbox("trading_address_county", label="County (optonal)", value=company.trading_address_county, error=errors.trading_address_county) }}
+          {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=company.trading_address_postcode, error=errors.trading_address_postcode) }}
+        </fieldset>
+
+        {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=company.uk_region, options=REGION_OPTIONS) }}
+
+        <fieldset class="form-group form-group__checkbox-group form-group__radiohide">
+          <div class="inline">
+            <legend class='form-label-bold'>Is this a headquarters?</legend>
+            <label
+              class="block-label selection-button-radio {% if showHeadquarters == true %}selected{% endif %}"
+              for="is_headquarters_yes">
+              <input id="is_headquarters_yes" name="is_headquarters" type="radio" value="yes" {% if showHeadquarters == true %}checked{% endif %}>
+              Yes
+            </label>
+            <label
+              class="block-label selection-button-radio {% if showHeadquarters == false %}selected{% endif %}"
+              for="is_headquarters_no">
+              <input id="is_headquarters_no" name="is_headquarters" type="radio" value="no" {% if showHeadquarters == false %}checked{% endif %}>
+              No
+            </label>
+          </div>
+
+          <div id="headquarters-type-wrapper" class="panel panel-border-narrow">
+            <legend class='form-label-bold visually-hidden'>Headquarters type?</legend>
+            <label
+              class="block-label selection-button-radio {% if company.headquarters == "ukhq" %}selected{% endif %}"
+              for="ukhq">
+              <input id="ukhq" name="headquarters" type="radio" value="ukhq" {% if company.headquarters == "ukhq"  %}checked{% endif %}>
+              UK headquarters (UK HQ)
+            </label>
+            <label
+              class="block-label selection-button-radio {% if company.headquarters == "ehq" %}selected{% endif %}"
+              for="ehq">
+              <input id="ehq" name="headquarters" type="radio" value="ehq" {% if company.headquarters == "ehq" %}checked{% endif %}>
+              European headquarters (EHQ)
+            </label>
+            <label
+              class="block-label selection-button-radio {% if company.headquarters == "ghq" %}selected{% endif %}"
+              for="ghq">
+              <input id="ghq" name="headquarters" type="radio" value="ghq" {% if company.headquarters == "ghq" %}checked{% endif %}>
+              Global headquarters (GHQ)
+            </label>
+          </div>
+        </fieldset>
+        {{ trade.dropdown("sector", label="Sector", emptyLabel="Pick a value", value=company.sector, options=SECTOR_OPTIONS) }}
+        {{ trade.textbox("website", label="Website (optional)", value=company.website) }}
+        {{ trade.textarea("description", label="Business description (optional)", value=company.description) }}
+        {{ trade.dropdown("employee_range", label="Employees (optional)", emptyLabel="Pick a value", value=company.employee_ranage, options=EMPLOYEE_OPTIONS) }}
+        {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=company.turnover_ranage, options=TURNOVER_OPTIONS) }}
+
+        {% if company.id %}
+          {{ trade.save(backUrl=referer) }}
+        {% else %}
+          {{ trade.save(buttonText="Save and create", backUrl=referer) }}
+        {% endif %}
+      </form>
+
+    </div>
+  </div>
+  <script src="/javascripts/common.js"></script>
+  <script src="/javascripts/companyedit.bundle.js"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+.split-header {
+  @extend %contain-floats;
+  margin-bottom: 20px;
+
+  @include media(tablet) {
+    .cell {
+      padding: 0;
+      margin: 0;
+      width: 50%;
+      float: left;
+
+      h1,
+      h2,
+      h2,
+      h3 {
+        margin: 5px;
+      }
+    }
+
+    .cell:last-child {
+      float: right;
+      text-align: right;
+    }
+  }
+}

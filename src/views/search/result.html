@@ -1,0 +1,54 @@
+
+{% macro companyresult(id, result, term, type) %}
+
+  <li class="results-list__result result-list__ch" data_name="{{ result.name }}">
+    <h3 class="result-title">
+      <a href="/company/{{ type }}/{{ id }}?term={{ term }}">{{result.name | highlightTerm(term) | safe}}</a>
+    </h3>
+
+    {% if result.company_number %}
+      <div class="meta meta--ch">{{ result.company_number }} - Incorporated on {{ result.incorporation_date | formatDate }}</div>
+    {% endif %}
+
+    <div class="meta meta--address">
+      {% if result.registered_address_1 %}
+        {{result.registered_address_1 | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.registered_address_2 %}
+        {{result.registered_address_2 | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.registered_address_town %}
+        {{result.registered_address_town | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.registered_address_postcode %}
+        <span class="meta--address__postcode">{{result.registered_address_postcode | highlightTerm(term) | safe}}</span>
+      {% endif %}
+    </div>
+  </li>
+{% endmacro %}
+
+{% macro contactresult(id, result, term) %}
+  <li class="results-list__result result-list__contact">
+    <h3 class="result-title">
+      <a href="/contact/{{ id }}?term={{ term }}">
+        {{ (result.first_name + ' ' + result.last_name) | highlightTerm(term) | safe }}
+      </a>
+    </h3>
+    {% if (result.company and result.company != 'Undefined') %}<div class="meta">{{ result.company }}</div>{% endif %}
+    {% if (result.job_title and result.job_title.length > 0) %}<div class="meta">{{ result.job_title }}</div>{% endif %}
+    <div class="meta meta--address">
+      {% if result.address_1 %}
+        {{result.address_1 | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.address_2 %}
+        {{result.address_2 | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.address_town %}
+        {{result.address_town | lower | highlightTerm(term) | safe}},
+      {% endif %}
+      {% if result.address_postcode %}
+        <span class="meta--address__postcode">{{result.address_postcode | highlightTerm(term) | safe}}</span>
+      {% endif %}
+    </div>
+  </li>
+{% endmacro %}

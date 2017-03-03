@@ -1,0 +1,67 @@
+{% extends "layouts/ukti.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+
+  <h1 class="page-heading">Add new company</h1>
+
+  {% if messages.info.length %}
+    {% for message in messages.info %}
+    <p class="infostrip">{{message}}</p>
+      {{ message }}<br>
+    {% endfor %}
+  {% endif %}
+
+  {{ trade.errorPanel( errors, labels=companyDetailLabels ) }}
+  <form id="company-add-form" data-step="1" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrfToken }}" />
+
+    <fieldset class='form-group {% if errors.business_type %}error{% endif %}'>
+      <legend class='heading-medium visually-hidden'>Company type</legend>
+
+      <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ltd" %}selected{% endif %}" for="ltd">
+        <input id="ltd" type="radio" name="business_type" value="ltd" {% if company.business_type == "ltd" %}checked{% endif %}>
+        {{companyTypeOptions.ltd}}
+        <span class="form-hint">Must be a company registered with Companies House</span>
+      </label>
+      <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ltdchild" %}selected{% endif %}" for="ltdchild">
+        <input id="ltdchild" type="radio" name="business_type" value="ltdchild" {% if company.business_type == "ltdchild" %}checked{% endif %}>
+        {{companyTypeOptions.ltdchild}}
+        <span class="form-hint">For example, a branch of a larger company</span>
+      </label>
+      <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ukother" %}selected{% endif %}" for="ukother">
+        <input id="ukother" type="radio" name="business_type" value="ukother" {% if company.business_type == "ukother" %}checked{% endif %}>
+        {{companyTypeOptions.ukother}}
+        <span class="form-hint">UK organisation not registered with Companies House</span>
+      </label>
+      <div id="other-uk-type-wrapper" class='panel panel-border-narrow hidden'>
+        {{ trade.dropdown("business_type_uk_other",
+          label="Type of organisation",
+          emptyLabel="Select type",
+          value=company.business_type_uk_other,
+          error=errors.business_type_uk_other,
+          options=ukOtherCompanyOptions)
+        }}
+      </div>
+      <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "forother" %}selected{% endif %}" for="forother">
+        <input id="forother" type="radio" name="business_type" value="forother" {% if company.business_type == "forother" %}checked{% endif %}>
+        {{companyTypeOptions.forother}}
+      </label>
+      <div id="other-for-type-wrapper" class='panel panel-border-narrow hidden'>
+        {{ trade.dropdown("business_type_for_other",
+          label="Type of organisation",
+          emptyLabel="Select type",
+          value=company.business_type_for_other,
+          error=errors.business_type_for_other,
+          options=foreignOtherCompanyOptions)
+        }}
+      </div>
+    </fieldset>
+    <div class="button-bar">
+      <button class="button button--save" type="submit">Continue</button>
+      <a href="/" class="button-link button--link">Cancel</a>
+    </div>
+  </form>
+  <script src="/javascripts/common.js"></script>
+  <script src="/javascripts/companyadd.bundle.js"></script>
+{% endblock %}

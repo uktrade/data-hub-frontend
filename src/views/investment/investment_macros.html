@@ -1,0 +1,28 @@
+{% macro _radio(name, option, ord, checked=false) %}
+
+  <label class="block-label selection-button-radio {% if checked %}selected{% endif %}" for="{{ name }}_{{ ord }}">
+    <input type="radio" id="{{ name }}_{{ ord }}" name="{{ name }}" value="{{ option }}" {% if checked %}checked{% endif %}>{{ option }}
+  </label>
+{% endmacro %}
+
+{% macro inlineradio(name, id, class, label='', optiona='Yes', optionb='No', checked=false) %}
+
+<fieldset class="inline form-group form-group__checkbox-group form-group__radiohide {{ class }}" {% if id %}id="{{ id }}"{% endif %}>
+  <legend class="form-label-bold">{{ label }}</legend>
+  {{  _radio(name, optiona, "yes") }}
+  {{  _radio(name, optionb, "no") }}
+</fieldset>
+
+{% endmacro %}
+
+{% macro stackedradio(name, choices, id, class, label='') %}
+
+  <fieldset id="{{ id }}">
+    <legend class="form-label-bold">{{ label }}</legend>
+
+    {% for choice in choices %}
+      {{ _radio(name, choice, loop.index) }}
+    {% endfor %}
+  </fieldset>
+
+{% endmacro %}

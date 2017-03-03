@@ -1,0 +1,56 @@
+.fieldset--address {
+
+  .fieldset--address__legend {
+    margin-bottom: 10px;
+
+    @include media(tablet) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .autosuggest__suggestions {
+    width: 100%;
+
+    @include media(tablet) {
+      width: 66%;
+    }
+  }
+
+  .form-group.form-group--postcode {
+    .form-control.postcode-lookup-value  {
+      width: 100%;
+      @include media(tablet) {
+        width: 50%;
+      }
+    }
+
+    .button {
+      @include button ($grey-2);
+      @include core-16(1.4);
+      margin: 10px 0 0;
+      width: 100%;
+
+      @include media(tablet) {
+        margin: 1px 0 0 5px;
+        width: auto;
+      }
+    }
+  }
+
+  .reveal-manual-entry {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.form-group.form-group--postcode,
+.form-group.form-group--address-suggestions {
+  display: none;
+}
+
+.js-enabled {
+  .form-group.form-group--postcode,
+  .form-group.form-group--address-suggestions  {
+    display: block;
+  }
+}

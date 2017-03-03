@@ -1,0 +1,81 @@
+{% extends "layouts/ukti.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  <h1 class="page-heading">Create a company</h1>
+  <div class="grid-row">
+    <div class="column-three-quarters">
+      <div class="key-value key-value--vertical">
+        <div id="business-type" class="key-value__key form-label-bold">Business type
+          <a href="/company/add-step-1" class="button-link">Change</a>
+        </div>
+        <div class="key-value__value" aria-labelledby="business-type">{{companyTypeOptions[business_type]}}</div>
+      </div>
+
+      <form class="searchbar searchbar--show-label" action="/company/add-step-2/" method="get" role="search">
+        <input type="hidden" name="business_type" value="{{business_type}}">
+        <input type="hidden" name="country" value="{{country}}">
+
+        <div class="form-group">
+          <label class="form-label-bold" for="search-term">
+            Find the parent company's Companies House record
+            <span class="form-hint">Search for the registered company name, company number or address</span>
+          </label>
+          <div class="searchbar__wrapper">
+            <input class="searchbar__input form-control" id="search-term" type="search" name="term" value="{{term}}" placeholder="Search for company">
+            <input class="searchbar__submit" type="submit" value="Search">
+          </div>
+        </div>
+      </form>
+
+      {% if hits %}
+        <ol class="results-list results-list--lined">
+          {% for hit in hits %}
+            <li class="results-list__result">
+              {% if hit.selected %}
+                <h3 class="result-title">
+                  <strong>{{hit.name}}</strong>
+                  <a class="close-link" href="{{closeLink}}">Close</a>
+                </h3>
+                {% else %}
+                  <h3 class="result-title">
+                    <a href="{{hit.url}}">{{hit.name}}</a>
+                  </h3>
+              {% endif %}
+              {% include "./chaddressline.html" %}
+              {% if hit.selected %}
+                <div class="panel panel-border-wide">
+                  {{ trade.keyvaluetable(
+                    chDisplay,
+                    labels=chDetailLabels,
+                    keyorder=chDetailsDisplayOrder,
+                    class="table--small"
+                  ) }}
+                  {% if business_type == 'ltd' %} <!-- UK ltd company -->
+                    {% if hit.type == 'company_company' %}
+                      <a class="button" href="/company/{{type}}/{{selected}}/edit/">Go to company record</a>
+                    {% else %}
+                      <a class="button" href="/company/{{type}}/{{selected}}/edit/?business_type=ltd">Choose company</a>
+                    {% endif %}
+                  {% else %} <!-- child of ltd -->
+                    {% if hit.type == 'company_company' %}
+                      <a class="button" href="/company/create/?business_type={{business_type}}parent={{hit.id}}">Choose parent company</a>
+                    {% else %}
+                      <p class="bold-xsmall">This company does not exist in Data Hub, please create the parent before the child.</p>
+                      <a class="button" href="/company/{{type}}/{{selected}}/create/">Create parent company</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ol>
+
+        <p class="infostrip">if you can't find the company you're looking for, try a different search term. check
+          the company's website or any email correspondence that contains company registration details</p>
+
+      {% endif %}
+    </div>
+    <div class="column-one-quarter"></div>
+  </div>
+{% endblock %}

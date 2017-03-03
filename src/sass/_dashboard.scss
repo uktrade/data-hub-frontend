@@ -1,0 +1,32 @@
+.dashboard-section {
+
+  border-top: 5px solid $black;
+  @include core-16;
+
+  &:first-child {
+    margin-top: 1.5em;
+  }
+
+  .dashboard-section-title {
+    @include bold-24;
+    margin: 20px 0;
+  }
+
+  .dashboard-section-intro {
+    margin-top: -15px;
+  }
+
+  .dashboard-list {
+
+    margin-bottom: 1.5em;
+
+    li {
+
+      padding-bottom: 1em;
+    }
+  }
+}
+
+.clipped-hide {
+  display: none;
+}

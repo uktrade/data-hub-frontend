@@ -1,0 +1,59 @@
+.left-nav-container {
+
+  @extend %site-width-container;
+  @extend %contain-floats;
+  clear: both;
+
+  .left-nav {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    @include media(tablet) {
+      border-right: 1px solid $grey-2;
+      width: 25%;
+      float: left;
+    }
+
+    nav a {
+      @include core-19();
+      display: block;
+      color: $black;
+      text-decoration: underline;
+      padding: 15px;
+
+      &.active {
+        background: $govuk-blue;
+        color: $white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .right-content {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 15px;
+    clear: both;
+    margin: 20px 0px 0px 0px;
+    @include media(tablet) {
+      width: 75%;
+      float: left;
+      clear: none;
+      margin-top: 0;
+    }
+
+    > h1:first-child,
+    > h2:first-child,
+    > h3:first-child,
+    > h4:first-child,
+    > h5:first-child,
+    > p:first-child,
+    > div:first-child {
+      margin-top: 0;
+    }
+  }
+
+}
+
+

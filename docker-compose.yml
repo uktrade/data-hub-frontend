@@ -1,0 +1,17 @@
+version: "3"
+services:
+  datahub-invest-fe:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+      - 5858:5858
+      - 9229:9229
+    environment:
+     - POSTCODE_KEY
+     - API_ROOT
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+      - ./build:/usr/src/app/build
+    command: npm run develop

@@ -1,0 +1,44 @@
+version: "3"
+services:
+  datahub-invest-fe:
+    build: .
+    ports:
+      - 3000:3000
+      - 5858:5858
+    environment:
+      - POSTCODE_KEY
+      - API_ROOT=http://datahub-zorg:3010
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+      - ./build:/usr/src/app/build
+    links:
+      - datahub-zorg
+    command: dockerize -wait tcp://datahub-zorg:3010 -timeout 60s npm run develop
+  datahub-zorg:
+    build: ../data-hub-zorg
+    ports:
+      - 3010:3010
+    environment:
+      - DATABASE_URL=postgres://datahub:datahub@postgres:5432/datahub
+      - BONSAI_URL=http://elasticsearch:9200/
+    volumes:
+      - ../data-hub-zorg/src:/usr/src/app/src
+      - ../data-hub-zorg/test:/usr/src/app/test
+      - ../data-hub-zorg/data:/usr/src/app/datatest
+    links:
+      - postgres
+      - elasticsearch
+    command: dockerize -wait tcp://postgres:5432 npm run fulldevstart
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: datahub
+      POSTGRES_PASSWORD: datahub
+      POSTGRES_DB: datahub
+  elasticsearch:
+    image: jeanberu/elasticsearch-head
+    ports:
+      - 9200:9200
