@@ -22,6 +22,7 @@
     "compression": "^1.6.2",
     "connect-flash": "0.1.1",
     "connect-redis-crypto": "3.1.1",
+    "eslint": "^3.17.0",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "font-awesome": "^4.6.3",

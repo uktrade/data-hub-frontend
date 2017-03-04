@@ -19,7 +19,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js)$/,
         loader: 'babel-loader',
         query: {
           cacheDirectory: './babel_cache'
@@ -28,7 +28,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js'],
     modules: [
       'src',
       'node_modules'

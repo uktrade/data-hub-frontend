@@ -2,7 +2,7 @@
 
 require('babel-polyfill')
 const getQueryParam = require('../lib/urlstuff').getQueryParam
-const {toggleClass} = require('@uktrade/trade_elements').elementstuff
+const {toggleClass, show} = require('@uktrade/trade_elements').elementstuff
 
 const term = getQueryParam('term')
 
@@ -11,7 +11,7 @@ class Facets {
   constructor (targetElement) {
     this.initElements(targetElement)
     this.addEventHandlers()
-    targetElement.className = ''
+    show(targetElement)
   }
 
   initElements (targetElement) {

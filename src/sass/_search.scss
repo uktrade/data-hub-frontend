@@ -1,9 +1,22 @@
-.meta ~ .panel {
-  margin-top: em(15, 19);
+.grid-row > .column-one-third > .filters {
+
+  display: none;
+
+  @include media(tablet) {
+    display: block;
+  }
+
 }
 
-.searchbar {
-  .form-control {
-    margin: 0;
-  }
+.meta--address {
+  text-transform: capitalize;
+}
+
+.meta--address .meta--address__postcode {
+  text-transform: uppercase;
+}
+
+.result-summary {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

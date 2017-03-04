@@ -9,18 +9,21 @@
 {% endblock %}
 
 {% block head_script %}
-<script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
  {% if user %}
     <script>
       if (!window.DIT) window.DIT = {};
       window.DIT.user = {{ user | stringify | safe }};
     </script>
   {% endif %}
+    <script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
 {% endblock %}
 
 {% block content %}
   {% if user and user.name %}
     <div class="login-bar">
+      <div class="login-links login-links-left">
+        <a href="/">Home</a>
+      </div>
       <div class="login-links login-links-right">
         <span class="user-name">{{ user.name }}:</span><a href="/myaccount">My account</a>
         |
@@ -31,12 +34,4 @@
   <div class="container">
     {% block main %}{% endblock %}
   </div>
-{% endblock %}
-
-{% block footer %}
-<footer class="group js-footer footer--govuk" id="footer" role="contentinfo">
-  <div class="footer-wrapper">
-    <span>This is a new service – your <a href="/support/bug">feedback</a> will help us to improve it.</span>
-  </div>
-</footer>
 {% endblock %}
