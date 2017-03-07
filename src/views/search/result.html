@@ -3,7 +3,7 @@
 
   <li class="results-list__result result-list__ch" data_name="{{ result.name }}">
     <h3 class="result-title">
-      <a href="/company/{{ type }}/{{ id }}?term={{ term }}">{{result.name | highlightTerm(term) | safe}}</a>
+      <a href="/company/{{ type }}/{{ id }}/details?term={{ term }}">{{result.name | highlightTerm(term) | safe}}</a>
     </h3>
 
     {% if result.company_number %}
@@ -30,7 +30,7 @@
 {% macro contactresult(id, result, term) %}
   <li class="results-list__result result-list__contact">
     <h3 class="result-title">
-      <a href="/contact/{{ id }}?term={{ term }}">
+      <a href="/contact/{{ id }}/detail?term={{ term }}">
         {{ (result.first_name + ' ' + result.last_name) | highlightTerm(term) | safe }}
       </a>
     </h3>

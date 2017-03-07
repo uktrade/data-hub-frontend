@@ -3,6 +3,7 @@ const express = require('express')
 const winston = require('winston')
 const controllerUtils = require('../lib/controllerutils')
 const companyRepository = require('../repositorys/companyrepository')
+const companyService = require('../services/companyservice')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions } = require('../labels/companylabels')
@@ -12,7 +13,7 @@ function getCommon (req, res, next) {
   const id = req.params.sourceId
   const source = req.params.source
   const csrfToken = controllerUtils.genCSRF(req, res)
-  return companyRepository.getCompany(req.session.token, id, source)
+  companyService.getCompanyForSource(req.session.token, id, source)
   .then((company) => {
     const headingAddress = companyFormattingService.getHeadingAddress(company)
     const headingName = companyFormattingService.getHeadingName(company)
@@ -24,6 +25,10 @@ function getCommon (req, res, next) {
     res.locals.headingAddress = headingAddress
     res.locals.csrfToken = csrfToken
 
+    next()
+  })
+  .catch((error) => {
+    winston.error(error)
     next()
   })
 }
@@ -43,25 +48,29 @@ function preParseFields (req, res, next) {
 }
 
 function getDetails (req, res, next) {
-  const company = res.locals.company
-  const companyDisplay = companyFormattingService.getDisplayCompany(company)
-  const chDisplay = companyFormattingService.getDisplayCH(company)
-  const parents = companyFormattingService.parseRelatedData(company.parents)
-  const children = companyFormattingService.parseRelatedData(company.children)
+  try {
+    const company = res.locals.company
+    const companyDisplay = companyFormattingService.getDisplayCompany(company)
+    const chDisplay = companyFormattingService.getDisplayCH(company)
+    const parents = companyFormattingService.parseRelatedData(company.parents)
+    const children = companyFormattingService.parseRelatedData(company.children)
 
-  res.render('company/details', {
-    tab: 'details',
-    companyDisplay,
-    chDisplay,
-    companyDetailLabels,
-    companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
-    chDetailLabels,
-    chDetailsDisplayOrder: ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'sic_code'],
-    companyTableHeadings,
-    companyTableKeys: Object.keys(companyTableHeadings),
-    children,
-    parents
-  })
+    res.render('company/details', {
+      tab: 'details',
+      companyDisplay,
+      chDisplay,
+      companyDetailLabels,
+      companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
+      chDetailLabels,
+      chDetailsDisplayOrder: ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'sic_code'],
+      companyTableHeadings,
+      companyTableKeys: Object.keys(companyTableHeadings),
+      children,
+      parents
+    })
+  } catch (error) {
+    next(error)
+  }
 }
 
 function editDetails (req, res) {

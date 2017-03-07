@@ -13,7 +13,7 @@
   {% if companyDisplay %}
     {{ trade.keyvaluetable(companyDisplay, stripey=true, labels=companyDetailLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
 
-    <a href="/company/edit" class="button">Update</a>
+    <a href="/company/{{source}}/{{company.id}}/edit" class="button">Update</a>
 
     <div class="section">
       <h3 class="heading-medium">Parent companies</h3>
@@ -35,7 +35,7 @@
     </div>
   {% else %}
     <p>
-      <a href="/company/edit" class="button button-secondary">Update</a>
+      <a href="/company/{{source}}/{{company.id}}/edit" class="button button-secondary">Update</a>
     </p>
   {% endif %}
 {% endblock %}

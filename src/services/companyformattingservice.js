@@ -53,11 +53,11 @@ function getDisplayCompany (company) {
   if (tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
 
   if (!company.companies_house_data) {
-    displayCompany.business_type = (company.business_type && company.business_type) ? company.business_type : TODO
+    displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : TODO
     displayCompany.name = company.name
   }
 
-  if (company.uk_region) displayCompany.uk_region = company.uk_region.name
+  if (company.uk_region && company.uk_region.name && company.uk_region.name !== 'Undefined') displayCompany.uk_region = company.uk_region.name
 
   if (company.export_to_countries && company.export_to_countries.length > 0) {
     displayCompany.export_to_countries = company.export_to_countries.map(country => country.name).toString()

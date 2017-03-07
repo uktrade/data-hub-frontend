@@ -10,7 +10,7 @@
 {% block main %}
 <h1 class="visually-hidden">Company Details</h1>
 <h2 class="page-heading">
-    {% if company.id %}<span class="pre-header">Company ref: 321513</span>{% endif %}
+    {% if company.id %}<span class="pre-header">Company ref: TBD</span>{% endif %}
     {{ headingName }}
     <span class="post-header">{{ headingAddress }}</span>
 </h2>
@@ -26,7 +26,6 @@
       <a class="{% if tab == 'interactions' %}active{% endif %}" href="/company/{{source}}/{{id}}/interactions">Interactions</a>
       {% if company.id %}
           <a class="{% if tab == 'exports' %}active{% endif %}" href="/company/{{source}}/{{id}}/export">Export</a>
-          <a class="{% if tab == 'investment' %}active{% endif %}" href="/company/{{source}}/{{id}}/investment">Investment</a>
       {% endif %}
     </nav>
   </div>
