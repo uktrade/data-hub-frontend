@@ -1,0 +1,8 @@
+{% extends "layouts/ukti-search-header.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  <h1 class="heading-xlarge record-title">Interaction details</h1>
+  {{ trade.keyvaluetable(displayValues, stripey=true, labels=labels) }}
+  <a class="button" href="/interaction/{{interaction.id}}/edit">Edit interaction details</a>
+{% endblock %}

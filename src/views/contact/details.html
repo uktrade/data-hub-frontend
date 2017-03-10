@@ -1,0 +1,12 @@
+{% extends "./index.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+    Contact Details
+
+
+    <a href="/company/company_company/{{contact.company.id}}/details">{{contact.company.name}}</a>
+
+    <a href="/contact/{{id}}/edit" class="button button-secondary">Update</a>
+
+{% endblock %}

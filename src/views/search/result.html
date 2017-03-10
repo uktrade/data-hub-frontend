@@ -30,7 +30,7 @@
 {% macro contactresult(id, result, term) %}
   <li class="results-list__result result-list__contact">
     <h3 class="result-title">
-      <a href="/contact/{{ id }}/detail?term={{ term }}">
+      <a href="/contact/{{ id }}/details?term={{ term }}">
         {{ (result.first_name + ' ' + result.last_name) | highlightTerm(term) | safe }}
       </a>
     </h3>

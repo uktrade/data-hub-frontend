@@ -2,5 +2,10 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-interactions
+{% if company.interactions.length > 0 %}
+  {{ trade.datatable(interactionTableData, stripey=true, headings=tableLabels, columnorder=tableFieldOrder)}}
+{% endif %}
+<p class="actions">
+  <a class="button button-secondary" href="/interaction/add?companyId={{company.id}}">Add new interaction</a>
+</p>
 {% endblock %}

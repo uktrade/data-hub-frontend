@@ -1,0 +1,25 @@
+{% extends "layouts/ukti.html" %}
+{% block head_script %}
+<script>
+    window.contact = {{ contact | dump | safe }}
+    window.csrfToken= '{{ csrfToken }}'
+</script>
+{% endblock %}
+
+{% block main %}
+<h1 class="visually-hidden">Contact Details</h1>
+<h2 class="page-heading">{{contact.first_name}} {{contact.last_name}}</h2>
+{{ contact | log | safe }}
+
+<div class="left-nav-container">
+  <div class="left-nav">
+    <nav>
+      <a class="{% if tab == 'details' %}active{% endif %}" href="/contact/{{id}}/details">Details</a>
+      <a class="{% if tab == 'interactions' %}active{% endif %}" href="/contact/{{id}}/interactions">Interactions</a>
+    </nav>
+  </div>
+  <div class="right-content">
+    {% block tabmain%}{% endblock %}
+  </div>
+</div>
+{% endblock %}

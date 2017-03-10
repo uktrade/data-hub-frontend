@@ -102,7 +102,11 @@ describe('Company formatting service', () => {
           'trading_address_county': null,
           'trading_address_postcode': null,
           'archived_by': null,
-          'business_type': 'Company',
+          'business_type': {
+            'id': '98d14e94-5d95-e211-a939-e4115bead28a',
+            'name': 'Company',
+            'selectable': true
+          },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
             'name': 'Giftware, Jewellery and Tableware',
@@ -207,7 +211,11 @@ describe('Company formatting service', () => {
           'trading_address_county': null,
           'trading_address_postcode': null,
           'archived_by': null,
-          'business_type': 'Company',
+          'business_type': {
+            'id': '98d14e94-5d95-e211-a939-e4115bead28a',
+            'name': 'Company',
+            'selectable': true
+          },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
             'name': 'Giftware, Jewellery and Tableware',

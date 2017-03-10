@@ -7,6 +7,7 @@ const companyService = require('../services/companyservice')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions } = require('../labels/companylabels')
+const formatDate = require('../lib/date').formatDate
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -137,18 +138,80 @@ function postDetails (req, res, next) {
 }
 
 function getContacts (req, res) {
-  res.render('company/contacts', {tab: 'contacts'})
+  // build the data for the contact table.
+  const contactTableData = res.locals.company.contacts
+    .filter(contact => contact.archived === false)
+    .map((contact) => {
+      return {
+        name: `<a href="/contact/{{ contact.id }}">${contact.first_name} ${contact.last_name}</a>`,
+        job_title: contact.job_title,
+        telephone_number: contact.telephone_number,
+        email: `<a href="mailto:${contact.email}">${contact.email}</a>`
+      }
+    })
+
+  const archivedContactTableData = res.locals.company.contacts
+    .filter(contact => contact.archived === true)
+    .map((contact) => {
+      return {
+        name: `<a href="/contact/{{ contact.id }}">${contact.first_name} ${contact.last_name}</a>`,
+        job_title: contact.job_title,
+        telephone_number: contact.telephone_number,
+        email: `<a href="mailto:${contact.email}">${contact.email}</a>`
+      }
+    })
+
+  const tableLabels = {
+    name: 'Name',
+    job_title: 'Role',
+    telephone_number: 'Phone',
+    email: 'Email'
+  }
+
+  const tableFieldOrder = Object.keys(tableLabels)
+
+  res.render('company/contacts', {
+    tab: 'contacts',
+    contactTableData,
+    archivedContactTableData,
+    tableLabels,
+    tableFieldOrder
+  })
 }
 
 function getInteractions (req, res) {
-  res.render('company/interactions', {tab: 'interactions'})
+  // build the data for the contact table.
+  const interactionTableData = res.locals.company.interactions.map((interaction) => {
+    return {
+      date: formatDate(interaction.date),
+      interaction_type: interaction.interaction_type.name,
+      advisor: `${interaction.dit_advisor.first_name} ${interaction.dit_advisor.last_name}`,
+      subject: `<a href="/${(interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'}/${interaction.id}/details">${interaction.subject}</a>`
+    }
+  })
+
+  const tableLabels = {
+    date: 'Date',
+    interaction_type: 'Type',
+    advisor: 'Advisor',
+    subject: 'Subject'
+  }
+
+  const tableFieldOrder = Object.keys(tableLabels)
+
+  res.render('company/interactions', {
+    tab: 'interactions',
+    interactionTableData,
+    tableLabels,
+    tableFieldOrder
+  })
 }
 
 function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
 
-router.use(['/company/:source/:sourceId/*'], getCommon)
+router.use('/company/:source/:sourceId/*', getCommon)
 router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
 router.get('/company/:source/:sourceId/details', getDetails)

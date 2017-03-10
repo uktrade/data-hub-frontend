@@ -1,0 +1,87 @@
+{% extends "layouts/ukti-search-header.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  {% if query.contactId %}
+    {% set backUrl="/contact/" + query.contactId + "/interactions" %}
+    <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
+  {% elseif query.companyId %}
+    {% set backUrl="/company/company_company/" + query.companyId + "/interactions" %}
+    <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
+  {% endif %}
+
+  <h1 class="heading-xlarge">Add new interaction</h2>
+  {{ trade.errorPanel( errors, labels=labels ) }}
+  <form method="POST">
+    <input type="hidden" name="interaction_type" value="{{interaction.interaction_type.id}}"/>
+    <input type="hidden" name="company" value="{{interaction.company.id}}"/>
+    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    {% if interaction.id %}
+      <input type="hidden" name="id" value="{{interaction.id}}"/>
+    {% endif %}
+
+    <div class='form-group'>
+      <div class='form-label-bold'>Company</div>
+      <strong>{{ interaction.company.name }}</strong>
+    </div>
+
+    <div class='form-group'>
+      <div class='form-label-bold'>Interaction type</div>
+      <strong>{{ interaction.interaction_type.name }}</strong>
+    </div>
+
+    {{ trade.textbox("subject",
+      label=labels.subject,
+      value=interaction.subject,
+      error=errors.subject)
+    }}
+
+    {{ trade.textarea("notes",
+      label=labels.notes,
+      value=interaction.notes,
+      error=errors.notes
+    ) }}
+
+    {{ trade.autocomplete("contact",
+      label=labels.contact,
+      emptyLabel="Pick a contact",
+      hint="Please start typing to search for a contact",
+      value=interaction.contact.id,
+      error=errors.contact,
+      options=contacts)
+    }}
+
+    {{ trade.date('date', label=labels.date, value=interaction.date ) }}
+
+    {{ trade.autocomplete('dit_advisor',
+      label=labels.advisor,
+      value=interaction.dit_advisor.id,
+      displayvalue=interaction.dit_advisor.name,
+      hint="Please start typing to search for an advisor",
+      error=errors.advisor,
+      autofocus=false,
+      url='/api/accountmanagerlookup?term=')
+    }}
+
+    {{ trade.autocomplete("service",
+      label="Service offer",
+      emptyLabel="Pick a service",
+      hint="Please start typing to search for a service",
+      value=interaction.service.id,
+      error=errors.service,
+      options=serviceOfferOptions)
+    }}
+
+    {{ trade.autocomplete("dit_team",
+      label="Service provider",
+      emptyLabel="Pick a provider",
+      hint="Please start typing to search for a provider",
+      value=interaction.dit_team.id,
+      error=errors.dit_team,
+      options=serviceProviderOptions)
+    }}
+
+
+    {{ trade.save(backUrl) }}
+  </form>
+{% endblock %}
