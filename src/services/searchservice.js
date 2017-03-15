@@ -1,6 +1,8 @@
 const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
 const includes = require('lodash/includes')
+const Q = require('q')
+
 const winston = require('winston')
 
 const FACETS = {
@@ -97,4 +99,19 @@ function populateFacets (result, filters) {
   result.facets = facets
 }
 
-module.exports = { search, suggestCompany }
+function searchLimited (token, term) {
+  return new Promise((resolve, reject) => {
+    Q.spawn(function * () {
+      try {
+        const allResults = yield search({token, term, page: 1, doc_type: ['company_company', 'company_companieshousecompany']})
+        // Now filter those results to remove results that are not CH or are not uk
+        resolve(allResults)
+      } catch (error) {
+        winston.error(error)
+        reject(error)
+      }
+    })
+  })
+}
+
+module.exports = { search, suggestCompany, searchLimited }

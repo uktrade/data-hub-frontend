@@ -1,4 +1,5 @@
 const express = require('express')
+const Q = require('q')
 const winston = require('winston')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { genCSRF, isBlank, toQueryString } = require('../lib/controllerutils')
@@ -79,65 +80,57 @@ function getAddStepTwo (req, res, next) {
     return res.render('company/add-step-2.html', req.query)
   }
 
-  const paramsSansSelected = Object.assign({}, req.query)
-  delete paramsSansSelected.selected
-  delete paramsSansSelected.type
+  Q.spawn(function * () {
+    try {
+      const paramsSansSelected = Object.assign({}, req.query)
+      delete paramsSansSelected.selected
+      delete paramsSansSelected.type
 
-  // Todo - Dont just search companies house records.
-  // Instead search for ltd companies or you get no results that have
-  // CDMS records.
-  // Also lets you use the type to figure out the link to use.
+      const results = yield searchService.searchLimited(req.session.token, req.query.term)
 
-  searchService.searchLimited(req.session.token, req.query.term)
-  .then((results) => {
-    // Parse the result and generate a link for more details and indicate if this is a currentlt selected company
-    const hits = results.hits.map((hit) => {
-      const parsedHit = Object.assign({}, hit._source)
-      parsedHit.type = hit._type
-      if (hit._type === 'company_company') {
-        parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.id}`
-      } else {
-        parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.company_number}`
-      }
-
-      // indicate if this is the currently selected hit
-      if (!isBlank(req.query.selected)) {
-        if (req.query.type === 'company_company' && req.query.selected === parsedHit.id) {
-          parsedHit.selected = true
-        } else if (req.query.selected === parsedHit.company_number) {
-          parsedHit.selected = true
+      // Parse the result and generate a link for more details and indicate if this is a currentlt selected company
+      const hits = results.hits.map((hit) => {
+        const parsedHit = hit._source
+        parsedHit.type = hit._type
+        if (hit._type === 'company_company') {
+          parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.id}`
+        } else {
+          parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.company_number}`
         }
+
+        // indicate if this is the currently selected hit
+        if (!isBlank(req.query.selected)) {
+          if (req.query.type === 'company_company' && req.query.selected === parsedHit.id) {
+            parsedHit.selected = true
+          } else if (req.query.selected === parsedHit.company_number) {
+            parsedHit.selected = true
+          }
+        }
+
+        return parsedHit
+      })
+
+      const data = Object.assign({}, req.query, { hits })
+
+      // if have search results, but no company is currently selected, render the page.
+      if (isBlank(req.query.selected)) {
+        return res.render('company/add-step-2.html', data)
       }
 
-      return parsedHit
-    })
-    const data = Object.assign({}, req.query, { hits })
+      // Figure out if we need to fetch a CH record or a CDMS record, then go get it
+      const { selected, type } = req.query
 
-    // if have search results, but no company is currently selected, render the page.
-    if (isBlank(req.query.selected)) {
-      return res.render('company/add-step-2.html', data)
-    }
-
-    // Figure out if we need to fetch a CH record or a CDMS record, then go get it
-    const { selected, type } = req.query
-
-    companyRepository.getCompany(req.session.token, selected, type)
-    .then((company) => {
+      const company = yield companyRepository.getCompany(req.session.token, selected, type)
       data.company = company
       data.chDisplay = companyFormattingService.getDisplayCH(data.company)
       data.chDetailLabels = chDetailLabels
       data.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       data.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
       res.render('company/add-step-2.html', data)
-    })
-    .catch((error) => {
+    } catch (error) {
       winston.error(error)
       next(error)
-    })
-  })
-  .catch((error) => {
-    winston.error(error)
-    next(error)
+    }
   })
 }
 
