@@ -2,7 +2,7 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
-  <h1 class="page-heading">Create a company</h1>
+  <h1 class="page-heading">Add new company</h1>
   <div class="grid-row">
     <div class="column-three-quarters">
       <div class="key-value key-value--vertical">
@@ -13,6 +13,7 @@
       </div>
 
       <form class="searchbar searchbar--show-label" action="/company/add-step-2/" method="get" role="search">
+        <input type="hidden" name="_csrf_token" value="{{ csrfToken }}" />
         <input type="hidden" name="business_type" value="{{business_type}}">
         <input type="hidden" name="country" value="{{country}}">
 
