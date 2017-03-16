@@ -37,7 +37,6 @@ function postAddStepOne (req, res, next) {
   }
 
   if (Object.keys(errors).length > 0) {
-    genCSRF(req, res)
     res.locals.errors = errors
     return getAddStepOne(req, res)
   }
