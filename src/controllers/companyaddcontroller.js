@@ -2,9 +2,9 @@ const express = require('express')
 const Q = require('q')
 const winston = require('winston')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
-const { genCSRF, isBlank, toQueryString } = require('../lib/controllerutils')
+const { isBlank, toQueryString } = require('../lib/controllerutils')
 const searchService = require('../services/searchservice')
-const companyRepository = require('../repositorys/companyrepository')
+const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailLabels, chDetailLabels, companyTypeOptions } = require('../labels/companylabels')
 
@@ -88,7 +88,7 @@ function getAddStepTwo (req, res, next) {
       const results = yield searchService.searchLimited(req.session.token, req.query.term)
 
       // Parse the result and generate a link for more details and indicate if this is a currentlt selected company
-      const hits = results.hits.map((hit) => {
+      res.locals.hits = results.map((hit) => {
         const parsedHit = hit._source
         parsedHit.type = hit._type
         if (hit._type === 'company_company') {
@@ -109,23 +109,20 @@ function getAddStepTwo (req, res, next) {
         return parsedHit
       })
 
-      const data = Object.assign({}, req.query, { hits })
-
       // if have search results, but no company is currently selected, render the page.
       if (isBlank(req.query.selected)) {
-        return res.render('company/add-step-2.html', data)
+        return res.render('company/add-step-2.html')
       }
 
       // Figure out if we need to fetch a CH record or a CDMS record, then go get it
       const { selected, type } = req.query
 
-      const company = yield companyRepository.getCompany(req.session.token, selected, type)
-      data.company = company
-      data.chDisplay = companyFormattingService.getDisplayCH(data.company)
-      data.chDetailLabels = chDetailLabels
-      data.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
-      data.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
-      res.render('company/add-step-2.html', data)
+      res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
+      res.locals.chDisplay = companyFormattingService.getDisplayCH(res.locals.company)
+      res.locals.chDetailLabels = chDetailLabels
+      res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
+      res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
+      res.render('company/add-step-2.html')
     } catch (error) {
       winston.error(error)
       next(error)

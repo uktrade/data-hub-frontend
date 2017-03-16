@@ -103,9 +103,9 @@ function searchLimited (token, term) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const allResults = yield search({token, term, page: 1, doc_type: ['company_company', 'company_companieshousecompany']})
-        // Now filter those results to remove results that are not CH or are not uk
-        resolve(allResults)
+        const allResults = yield search({token, term, page: 1, filters: ['company_company', 'company_companieshousecompany']})
+        const filtered = allResults.hits.filter(result => result._source.company_number)
+        resolve(filtered)
       } catch (error) {
         winston.error(error)
         reject(error)

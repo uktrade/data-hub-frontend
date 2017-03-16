@@ -201,3 +201,13 @@ hr {
   width: 60%;
   float: right;
 }
+
+.table_footnote {
+  @include core-16;
+  color: #6f777b;
+  margin-bottom: 15px;
+
+  strong {
+    @include bold-16;
+  }
+}
