@@ -116,7 +116,7 @@ function getAddStepTwo (req, res, next) {
 
       // Figure out if we need to fetch a CH record or a CDMS record, then go get it
       const { selected, type } = req.query
-
+      res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
       res.locals.chDisplay = companyFormattingService.getDisplayCH(res.locals.company)
       res.locals.chDetailLabels = chDetailLabels

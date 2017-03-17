@@ -402,6 +402,29 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res)
       })
+      it('should include la link to close the selected section', function (done) {
+        const req = {
+          session: {
+            token: '1234'
+          },
+          query: {
+            business_type: 'ltd',
+            country: 'uk',
+            term: 'test',
+            selected: '1234',
+            type: 'company_company'
+          }
+        }
+        const res = {
+          locals: {},
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.closeLink).to.not.include('selected')
+            done()
+          }
+        }
+        companyAddController.getAddStepTwo(req, res)
+      })
     })
   })
 })
