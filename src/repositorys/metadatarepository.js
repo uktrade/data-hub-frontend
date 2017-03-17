@@ -96,8 +96,6 @@ const restrictedServiceKeys = [
   'Trade - ECR Web Action Plan',
   'UK Region Local]']
 
-
-
 module.exports.setRedisClient = (client) => {
   redisClient = client
 }
