@@ -24,11 +24,6 @@
         {{companyTypeOptions.ltd}}
         <span class="form-hint">Must be a company registered with Companies House</span>
       </label>
-      <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ltdchild" %}selected{% endif %}" for="ltdchild">
-        <input id="ltdchild" type="radio" name="business_type" value="ltdchild" {% if company.business_type == "ltdchild" %}checked{% endif %}>
-        {{companyTypeOptions.ltdchild}}
-        <span class="form-hint">For example, a branch of a larger company</span>
-      </label>
       <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ukother" %}selected{% endif %}" for="ukother">
         <input id="ukother" type="radio" name="business_type" value="ukother" {% if company.business_type == "ukother" %}checked{% endif %}>
         {{companyTypeOptions.ukother}}

@@ -134,4 +134,4 @@ router.get('/company/add-step-1/', getAddStepOne)
 router.post('/company/add-step-1/', postAddStepOne)
 router.get('/company/add-step-2/', getAddStepTwo)
 
-module.exports = { router }
+module.exports = { router, getAddStepOne, postAddStepOne }

@@ -1,4 +1,4 @@
 --require test/common.js
 --recursive
---reporter spec
+--reporter list
 --compilers js:babel-core/register

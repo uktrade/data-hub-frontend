@@ -21,7 +21,7 @@ const ukOtherCompanyOptions = [
   'Intermediary',
   'Limited partnership',
   'Partnership',
-  'Sold trade'
+  'Sole trader'
 ]
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -30,7 +30,7 @@ const foreignOtherCompanyOptions = [
   'Intermediary',
   'Limited partnership',
   'Partnership',
-  'Sold trade'
+  'Sole trader'
 ]
 
 module.exports = {
