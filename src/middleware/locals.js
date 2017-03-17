@@ -13,6 +13,7 @@ module.exports = function locals (req, res, next) {
   res.locals.referer = req.headers.referer
   res.locals.env = config.env
   res.locals.googleTagManager = config.googleTagManager
+  res.locals.query = req.query
   winston.debug('locals:end')
   next()
 }
