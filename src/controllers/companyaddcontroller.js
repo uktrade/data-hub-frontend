@@ -120,7 +120,6 @@ function getAddStepTwo (req, res, next) {
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
       res.locals.chDisplay = companyFormattingService.getDisplayCH(res.locals.company)
       res.locals.chDetailLabels = chDetailLabels
-      res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
       res.render('company/add-step-2.html')
     } catch (error) {
@@ -134,4 +133,4 @@ router.get('/company/add-step-1/', getAddStepOne)
 router.post('/company/add-step-1/', postAddStepOne)
 router.get('/company/add-step-2/', getAddStepTwo)
 
-module.exports = { router, getAddStepOne, postAddStepOne }
+module.exports = { router, getAddStepOne, postAddStepOne, getAddStepTwo }
