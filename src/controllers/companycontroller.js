@@ -1,48 +1,31 @@
 /* eslint new-cap: 0 */
 const express = require('express')
 const winston = require('winston')
-const controllerUtils = require('../lib/controllerutils')
 const companyRepository = require('../repositorys/companyrepository')
 const companyService = require('../services/companyservice')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyFormattingService = require('../services/companyformattingservice')
-const { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions } = require('../labels/companylabels')
+const { companyDetailLabels, chDetailLabels, companyTableHeadings, hqLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
 const router = express.Router()
+const { isBlank } = require('../lib/controllerutils')
 
 function getCommon (req, res, next) {
   const id = req.params.sourceId
   const source = req.params.source
   companyService.getCompanyForSource(req.session.token, id, source)
   .then((company) => {
-    const headingAddress = companyFormattingService.getHeadingAddress(company)
-    const headingName = companyFormattingService.getHeadingName(company)
-
+    res.locals.headingName = companyFormattingService.getHeadingName(company)
+    res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
     res.locals.id = id
     res.locals.source = source
     res.locals.company = company
-    res.locals.headingName = headingName
-    res.locals.headingAddress = headingAddress
     next()
   })
   .catch((error) => {
     winston.error(error)
     next()
   })
-}
-
-function preParseFields (req, res, next) {
-  const keys = Object.keys(req.body)
-  for (const key of keys) {
-    const value = req.body[key].toLowerCase()
-    console.log(`${key}: ${value}`)
-    if (value === 'yes' || value === 'true') {
-      req.body[key] = true
-    }
-    if (value === 'no' || value === 'false') {
-      req.body[key] = false
-    }
-  }
 }
 
 function getDetails (req, res, next) {
@@ -71,51 +54,67 @@ function getDetails (req, res, next) {
   }
 }
 
+// Figure out the business type using either the existing company business type
+// the companies house type or type sent in the request for a new company
+function calculateBusinessType (company, req) {
+  if (company && company.business_type && company.business_type !== null && typeof company.business_type === 'object') {
+    return company.business_type
+  } else if (company && company.companies_house_data) {
+    for (const businessType of metadataRepository.TYPES_OF_BUSINESS) {
+      if (businessType.name.toLowerCase() === company.companies_house_data.company_category.toLowerCase()) {
+        return businessType
+      }
+    }
+  } else if (req.query && req.query.business_type) {
+    for (const businessType of metadataRepository.TYPES_OF_BUSINESS) {
+      if (businessType.name.toLowerCase() === req.query.business_type.toLowerCase()) {
+        return businessType
+      }
+    }
+  }
+}
+
 function editDetails (req, res) {
   const company = res.locals.company || {}
-  const chDisplay = (company.companies_house) ? companyFormattingService.getDisplayCH(company) : null
 
-  const businessType = company.business_type || req.query.business_type
-  const ukBased = company.uk_based || (req.query.country === 'uk')
+  if (company.companies_house_data) {
+    res.locals.chDisplay = companyFormattingService.getDisplayCH(company)
+    res.locals.chDetailLabels = chDetailLabels
+    res.locals.chDetailDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type']
+  }
+
+  const businessType = res.locals.business_type = calculateBusinessType(company, req)
+  const ukBased = res.locals.uk_based = (company.companies_house_data || company.uk_based || (req.query && req.query.country && req.query.country === 'uk'))
 
   let template
-  if (businessType === 'ltd') {
+  if (businessType.name.toLowerCase() === 'private limited company' || businessType.name.toLowerCase() === 'public limited company') {
     template = 'edit-ltd'
-  } else if (businessType === 'ltdchild') {
-    template = 'edit-ltdchild'
   } else if (!ukBased) {
     template = 'edit-nonuk'
   } else {
     template = 'edit-ukother'
   }
 
+  if (!isBlank(company.trading_address_country)) {
+    res.locals.showTradingAddress = true
+  } else {
+    res.locals.showTradingAddress = false
+  }
+
   res.render(`company/${template}`, {
-    tab: 'details',
-    chDisplay,
     companyDetailLabels,
-    companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
-    chDetailLabels,
-    chDetailsDisplayOrder: ['name', 'business_type', 'company_status', 'incorporation_date', 'sic_code'],
-    companyTableHeadings,
-    companyTableKeys: Object.keys(companyTableHeadings),
-    companyTypeOptions,
-    business_type: businessType,
-    showHeadquarters: !controllerUtils.isBlank(company.headquarters),
-    businessType,
-    ukBased,
-    REGION_OPTIONS: metadataRepository.REGION_OPTIONS,
-    SECTOR_OPTIONS: metadataRepository.SECTOR_OPTIONS,
-    EMPLOYEE_OPTIONS: metadataRepository.EMPLOYEE_OPTIONS,
-    TURNOVER_OPTIONS: metadataRepository.TURNOVER_OPTIONS,
-    countries: metadataRepository.COUNTRYS
+    regionOptions: metadataRepository.REGION_OPTIONS,
+    sectorOptions: metadataRepository.SECTOR_OPTIONS,
+    employeeOptions: metadataRepository.EMPLOYEE_OPTIONS,
+    turnoverOptions: metadataRepository.TURNOVER_OPTIONS,
+    countryOptions: metadataRepository.COUNTRYS,
+    headquarterOptions: metadataRepository.headquarterOptions,
+    hqLabels
   })
 }
 
 function postDetails (req, res, next) {
-  preParseFields(req, res)
-  // Flatten selected fields
-  const company = Object.assign({}, req.body)
-  companyRepository.saveCompany(req.session.token, company)
+  companyRepository.saveCompany(req.session.token, req.body)
     .then((data) => {
       req.flash('success-message', 'Updated company record')
       res.redirect(`/company/company_company/${data.id}/details`)
@@ -123,13 +122,23 @@ function postDetails (req, res, next) {
     .catch((error) => {
       winston.debug(error)
       if (error.errors) {
+        // if something went wrong, gather data as if a get request
+        // then override it with the daa entered
         winston.debug(error)
-        res.locals.errors = controllerUtils.transformErrors(error.errors)
-        res.locals.company = req.body
-        return editDetails(req, res)
-      }
+        // Leeloo has inconsistant structure to return errors.
+        if (error.errors.errors) {
+          res.locals.errors = error.errors.errors
+        } else {
+          res.locals.errors = error.errors
+        }
 
-      return next(error)
+        getCommon(req, res, function () {
+          res.locals.company = Object.assign({}, res.locals.company, req.body)
+          editDetails(req, res, next)
+        })
+      } else {
+        return next(error)
+      }
     })
 }
 
@@ -215,4 +224,4 @@ router.get('/company/:source/:sourceId/contacts', getContacts)
 router.get('/company/:source/:sourceId/interactions', getInteractions)
 router.get('/company/:source/:sourceId/export', getExport)
 
-module.exports = { router }
+module.exports = { router, editDetails, getCommon, postDetails }

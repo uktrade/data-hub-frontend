@@ -1,10 +1,4 @@
 {% extends "layouts/ukti.html" %}
-{% block head_script %}
-<script>
-    window.company = {{ company | dump | safe }}
-    window.csrfToken= '{{ csrfToken }}'
-</script>
-{% endblock %}
 
 {% block main %}
 <h1 class="visually-hidden">Company Details</h1>
@@ -13,7 +7,6 @@
     {{ headingName }}
     <span class="post-header">{{ headingAddress }}</span>
 </h2>
-{{ company | log | safe }}
 
 <div class="left-nav-container">
   <div class="left-nav">
