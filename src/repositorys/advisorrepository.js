@@ -39,7 +39,6 @@ function advisorSearch (token, term) {
           return 0
         })
 
-
         resolve(filtered)
       } catch (error) {
         winston.error(error)

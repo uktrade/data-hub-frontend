@@ -55,11 +55,8 @@ function getAddStep1 (req, res) {
     interactionTypeColB.push(selectableTypes[pos])
   }
 
-  const csrfToken = controllerUtils.genCSRF(req)
-
   res.render('interaction/add-step-1.html', {
     query: req.query,
-    csrfToken,
     interactionTypeColA,
     interactionTypeColB
   })
@@ -105,7 +102,6 @@ function getInteractionEdit (req, res, next) {
         }
       })
 
-      res.locals.csrfToken = controllerUtils.genCSRF(req)
       res.locals.serviceOfferOptions = yield metadataRepository.getServiceOffers(token)
       res.locals.serviceProviderOptions = metadataRepository.TEAMS
       res.locals.labels = interactionLabels

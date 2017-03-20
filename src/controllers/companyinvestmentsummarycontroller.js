@@ -78,7 +78,6 @@ function postInvestment (req, res) {
 
   const errors = validateInvestment(req.body)
   if (errors) {
-    controllerUtils.genCSRF(req, res)
     res.locals.errors = errors
     return editInvestment(req, res)
   }

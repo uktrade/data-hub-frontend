@@ -1,20 +1,16 @@
 const express = require('express')
-const Q = require('q')
 const winston = require('winston')
 
 const contactRepository = require('../repositorys/contactrepository')
-const controllerUtils = require('../lib/controllerutils')
 
 const router = express.Router()
 
 function getCommon (req, res, next) {
   const id = req.params.contactId
-  const csrfToken = controllerUtils.genCSRF(req, res)
   contactRepository.getContact(req.session.token, id)
   .then((contact) => {
     res.locals.id = id
     res.locals.contact = contact
-    res.locals.csrfToken = csrfToken
     next()
   })
   .catch((error) => {

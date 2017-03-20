@@ -1,10 +1,9 @@
 const winston = require('winston')
+const { genCSRF } = require('../lib/controllerutils')
 
 module.exports = (req, res, next) => {
-  winston.debug('csrf:start')
-
   if (req.method !== 'POST' || req.url === '/login') {
-    winston.debug('csrf:bypass')
+    res.locals.csrfToken = genCSRF(req, res)
     return next()
   }
 
@@ -33,5 +32,6 @@ module.exports = (req, res, next) => {
 
   winston.debug('csrf:end')
   delete req.body._csrf_token
+  res.locals.csrfToken = genCSRF(req, res)
   return next()
 }

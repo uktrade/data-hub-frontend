@@ -48,9 +48,7 @@ function getServiceDeliveryEdit (req, res, next) {
         }
       })
 
-      res.locals.csrfToken = controllerUtils.genCSRF(req)
       res.locals.labels = serviceDeliverylabels
-
       res.locals.serviceProviderOptions = metadataRepository.TEAMS
       res.locals.serviceOptions = metadataRepository.SERVICE_DELIVERY_SERVICE_OPTIONS
       res.locals.countryOptions = metadataRepository.COUNTRYS

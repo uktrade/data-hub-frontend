@@ -13,7 +13,6 @@ const router = express.Router()
 function getCommon (req, res, next) {
   const id = req.params.sourceId
   const source = req.params.source
-  const csrfToken = controllerUtils.genCSRF(req, res)
   companyService.getCompanyForSource(req.session.token, id, source)
   .then((company) => {
     const headingAddress = companyFormattingService.getHeadingAddress(company)
@@ -24,8 +23,6 @@ function getCommon (req, res, next) {
     res.locals.company = company
     res.locals.headingName = headingName
     res.locals.headingAddress = headingAddress
-    res.locals.csrfToken = csrfToken
-
     next()
   })
   .catch((error) => {
@@ -124,7 +121,6 @@ function postDetails (req, res, next) {
       res.redirect(`/company/company_company/${data.id}/details`)
     })
     .catch((error) => {
-      controllerUtils.genCSRF(req, res)
       winston.debug(error)
       if (error.errors) {
         winston.debug(error)
