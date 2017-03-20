@@ -49,13 +49,13 @@ function getServiceDeliveryEdit (req, res, next) {
       })
 
       res.locals.labels = serviceDeliverylabels
-      res.locals.serviceProviderOptions = metadataRepository.TEAMS
-      res.locals.serviceOptions = metadataRepository.SERVICE_DELIVERY_SERVICE_OPTIONS
-      res.locals.countryOptions = metadataRepository.COUNTRYS
-      res.locals.sectorOptions = metadataRepository.SECTOR_OPTIONS
-      res.locals.regionOptions = metadataRepository.REGION_OPTIONS
-      res.locals.statusOptions = metadataRepository.SERVICE_DELIVERY_STATUS_OPTIONS
-      res.locals.eventOptions = metadataRepository.EVENT_OPTIONS
+      res.locals.serviceProviderOptions = metadataRepository.teams
+      res.locals.serviceOptions = metadataRepository.serviceDeliveryServiceOptions
+      res.locals.countryOptions = metadataRepository.countryOptions
+      res.locals.sectorOptions = metadataRepository.sectorOptions
+      res.locals.regionOptions = metadataRepository.regionOptions
+      res.locals.statusOptions = metadataRepository.serviceDeliveryStatusOptions
+      res.locals.eventOptions = metadataRepository.eventOptions
 
       res.render('interaction/servicedelivery-edit')
     } catch (error) {

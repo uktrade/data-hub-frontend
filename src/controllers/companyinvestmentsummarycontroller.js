@@ -68,7 +68,7 @@ function editInvestment (req, res, next) {
         investmentTierOptions,
         investmentFormLabels,
         investmentSummary,
-        countries: metadataRepository.COUNTRYS.map((country) => country.name)
+        countries: metadataRepository.countryOptions.map((country) => country.name)
       })
     })
 }

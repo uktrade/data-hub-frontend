@@ -2,13 +2,13 @@
 const express = require('express')
 const winston = require('winston')
 const companyRepository = require('../repositorys/companyrepository')
-const companyService = require('../services/companyservice')
 const metadataRepository = require('../repositorys/metadatarepository')
+const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailLabels, chDetailLabels, companyTableHeadings, hqLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
-const router = express.Router()
 const { isBlank } = require('../lib/controllerutils')
+const router = express.Router()
 
 function getCommon (req, res, next) {
   const id = req.params.sourceId
@@ -60,13 +60,13 @@ function calculateBusinessType (company, req) {
   if (company && company.business_type && company.business_type !== null && typeof company.business_type === 'object') {
     return company.business_type
   } else if (company && company.companies_house_data) {
-    for (const businessType of metadataRepository.TYPES_OF_BUSINESS) {
+    for (const businessType of metadataRepository.businessTypeOptions) {
       if (businessType.name.toLowerCase() === company.companies_house_data.company_category.toLowerCase()) {
         return businessType
       }
     }
   } else if (req.query && req.query.business_type) {
-    for (const businessType of metadataRepository.TYPES_OF_BUSINESS) {
+    for (const businessType of metadataRepository.businessTypeOptions) {
       if (businessType.name.toLowerCase() === req.query.business_type.toLowerCase()) {
         return businessType
       }
@@ -77,7 +77,7 @@ function calculateBusinessType (company, req) {
 function editDetails (req, res) {
   const company = res.locals.company || {}
 
-  if (company.companies_house_data) {
+  if (company.companies_house_data && company.companies_house_data.company_number) {
     res.locals.chDisplay = companyFormattingService.getDisplayCH(company)
     res.locals.chDetailLabels = chDetailLabels
     res.locals.chDetailDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type']
@@ -103,11 +103,11 @@ function editDetails (req, res) {
 
   res.render(`company/${template}`, {
     companyDetailLabels,
-    regionOptions: metadataRepository.REGION_OPTIONS,
-    sectorOptions: metadataRepository.SECTOR_OPTIONS,
-    employeeOptions: metadataRepository.EMPLOYEE_OPTIONS,
-    turnoverOptions: metadataRepository.TURNOVER_OPTIONS,
-    countryOptions: metadataRepository.COUNTRYS,
+    regionOptions: metadataRepository.regionOptions,
+    sectorOptions: metadataRepository.sectorOptions,
+    employeeOptions: metadataRepository.employeeOptions,
+    turnoverOptions: metadataRepository.turnoverOptions,
+    countryOptions: metadataRepository.countryOptions,
     headquarterOptions: metadataRepository.headquarterOptions,
     hqLabels
   })
@@ -122,16 +122,17 @@ function postDetails (req, res, next) {
     .catch((error) => {
       winston.debug(error)
       if (error.errors) {
-        // if something went wrong, gather data as if a get request
-        // then override it with the daa entered
         winston.debug(error)
         // Leeloo has inconsistant structure to return errors.
+        // Get the errors and then re-render the edit page.
         if (error.errors.errors) {
           res.locals.errors = error.errors.errors
         } else {
           res.locals.errors = error.errors
         }
 
+        // Call get common to get the data you would normally have got before an edit
+        // and merge it with the data posted.
         getCommon(req, res, function () {
           res.locals.company = Object.assign({}, res.locals.company, req.body)
           editDetails(req, res, next)

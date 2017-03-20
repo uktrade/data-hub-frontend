@@ -121,11 +121,11 @@
             </label>
           </div>
         </fieldset>
-        {{ trade.dropdown("sector", label="Sector", emptyLabel="Pick a value", value=company.sector, options=SECTOR_OPTIONS) }}
+        {{ trade.dropdown("sector", label="Sector", emptyLabel="Pick a value", value=company.sector, options=sectorOptions) }}
         {{ trade.textbox("website", label="Website (optional)", value=company.website) }}
         {{ trade.textarea("description", label="Business description (optional)", value=company.description) }}
-        {{ trade.dropdown("employee_range", label="Employees (optional)", emptyLabel="Pick a value", value=company.employee_ranage, options=EMPLOYEE_OPTIONS) }}
-        {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=company.turnover_ranage, options=TURNOVER_OPTIONS) }}
+        {{ trade.dropdown("employee_range", label="Employees (optional)", emptyLabel="Pick a value", value=company.employee_ranage, options=employeeOptions) }}
+        {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=company.turnover_ranage, options=turnoverOptions) }}
 
         {% if company.id %}
           {{ trade.save(backUrl=referer) }}

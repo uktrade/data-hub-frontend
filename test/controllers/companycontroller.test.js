@@ -71,7 +71,7 @@ describe('Company controller', function () {
       }
     },
     '../repositorys/metadatarepository': {
-      TYPES_OF_BUSINESS: [
+      businessTypeOptions: [
         {
           'id': '9dd14e94-5d95-e211-a939-e4115bead28a',
           'name': 'Charity',
@@ -225,6 +225,7 @@ describe('Company controller', function () {
         company_number: '1111',
         companies_house_data: {
           company_category: 'Private Limited Company',
+          company_number: '1111',
           name: 'Test company'
         }
       }
