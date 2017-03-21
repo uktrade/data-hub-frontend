@@ -8,7 +8,7 @@ const interactionRepository = require('../repositorys/interactionrepository')
 const advisorRepository = require('../repositorys/advisorrepository')
 
 function getInteractionType (interactionTypeId) {
-  for (const interactionType of metadataRepository.TYPES_OF_INTERACTION) {
+  for (const interactionType of metadataRepository.interactionTypeOptions) {
     if (interactionType.id === interactionTypeId) {
       return interactionType
     }

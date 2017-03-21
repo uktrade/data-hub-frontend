@@ -62,16 +62,17 @@ module.exports.getMetadataItem = function (table, id) {
 }
 
 const metadataItems = [
-  ['sector', 'SECTOR_OPTIONS'],
-  ['turnover', 'TURNOVER_OPTIONS'],
-  ['uk-region', 'REGION_OPTIONS'],
-  ['country', 'COUNTRYS'],
-  ['employee-range', 'EMPLOYEE_OPTIONS'],
-  ['business-type', 'TYPES_OF_BUSINESS'],
-  ['team', 'TEAMS'],
-  ['interaction-type', 'TYPES_OF_INTERACTION'],
-  ['service-delivery-status', 'SERVICE_DELIVERY_STATUS_OPTIONS'],
-  ['event', 'EVENT_OPTIONS']
+  ['sector', 'sectorOptions'],
+  ['turnover', 'turnoverOptions'],
+  ['uk-region', 'regionOptions'],
+  ['country', 'countryOptions'],
+  ['employee-range', 'employeeOptions'],
+  ['business-type', 'businessTypeOptions'],
+  ['team', 'teams'],
+  ['interaction-type', 'interactionTypeOptions'],
+  ['service-delivery-status', 'serviceDeliveryStatusOptions'],
+  ['event', 'eventOptions'],
+  ['headquarter-type', 'headquarterOptions']
 ]
 
 const restrictedServiceKeys = [
@@ -147,7 +148,7 @@ module.exports.getServiceOffers = function (token) {
 module.exports.initialiseRestrictedServiceOptions = function () {
   authorisedRequest(null, `${config.apiRoot}/metadata/service/`)
   .then((data) => {
-    module.exports.SERVICE_DELIVERY_SERVICE_OPTIONS = data.filter(service => restrictedServiceKeys.includes(service.name))
+    module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
   })
 }
 

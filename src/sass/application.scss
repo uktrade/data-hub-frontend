@@ -14,3 +14,13 @@ $images-dir: '/images/';
 @import 'shame';
 @import 'splitheader';
 @import 'tables';
+
+.button-link {
+  @include core-19;
+  border: 0;
+  background-color: $white;
+  color: $link-colour;
+  text-decoration: underline;
+  margin: 0;
+  padding: 0;
+}

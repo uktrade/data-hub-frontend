@@ -46,5 +46,10 @@ const companyTypeOptions = {
   forother: 'Foreign organisation'
 }
 
-module.exports = { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions }
+const hqLabels = {
+  'ehq': 'European headquarters (EHQ)',
+  'ghq': 'Global headquarters (GHQ)',
+  'ukhq': 'UK headquarters (UK HQ)'
+}
 
+module.exports = { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions, hqLabels }

@@ -26,7 +26,7 @@ function getCommon (req, res, next) {
 }
 
 function getAddStep1 (req, res) {
-  const interactionTypes = [...metadataRepository.TYPES_OF_INTERACTION, { id: 999, name: 'Service delivery', selectable: true }]
+  const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery', selectable: true }]
 
   const selectableTypes = interactionTypes
     .filter(selectableType => selectableType.selectable)
@@ -103,7 +103,7 @@ function getInteractionEdit (req, res, next) {
       })
 
       res.locals.serviceOfferOptions = yield metadataRepository.getServiceOffers(token)
-      res.locals.serviceProviderOptions = metadataRepository.TEAMS
+      res.locals.serviceProviderOptions = metadataRepository.teams
       res.locals.labels = interactionLabels
 
       res.render('interaction/interaction-edit')
