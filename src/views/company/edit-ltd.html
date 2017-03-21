@@ -36,13 +36,12 @@
         <input type="hidden" name="registered_address_county" value="{{company.companies_house_data.registered_address_county}}">
         <input type="hidden" name="registered_address_postcode" value="{{company.companies_house_data.registered_address_postcode}}">
         <input type="hidden" name="registered_address_country" value="{{company.companies_house_data.registered_address_country.id}}">
-{{ company.companies_house_data.registered_address_country | log | safe }}
         {{ trade.textbox("alias", label="Trading name", value=company.alias, error=errors.alias) }}
 
         <div class="form-group">
           <div class="form-label-bold">Trading address (optional)</div>
-          <button id="add-trading-address" class="button-link{%if showTradingAddress == true %}hidden{% endif %}" type="button">Add a trading device</button>
-          <button id="remove-trading-address" class="button-link{%if showTradingAddress == false %} hidden{% endif %}" type="button">Add a trading device</button>
+          <button id="add-trading-address" class="button-link{%if showTradingAddress == true %}hidden{% endif %}" type="button">Add trading address</button>
+          <button id="remove-trading-address" class="button-link{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
         </div>
 
         <fieldset id="trading-address-wrapper"
@@ -70,7 +69,7 @@
           {{ trade.textbox("trading_address_town", label="Town of city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
           {{ trade.textbox("trading_address_county", label="County (optonal)", value=company.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=company.trading_address_postcode, error=errors.trading_address_postcode) }}
-          {{ trade.dropdown("trading_address_country", label="Country", emptyLabel="Pick a value", value=company.trading_address_country, options=countryOptions, errors=trading_address_country)}}
+          {{ trade.dropdown("trading_address_country", class="hidde", label="Country", emptyLabel="Pick a value", value=company.trading_address_country, options=countryOptions, errors=trading_address_country)}}
         </fieldset>
 
         {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=company.uk_region, options=regionOptions, error=errors.uk_region) }}
@@ -103,4 +102,5 @@
       </form>
     </div>
   </div>
+  <script src="/javascripts/companyedit.bundle.js"></script>
 {% endblock %}
