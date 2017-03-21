@@ -6,7 +6,6 @@ const DateLib = require('../lib/date')
 const companyDetailsDisplayOrder = Object.keys(companyDetailLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailLabels)
 const companyTableKeys = ['name', 'address']
-const TODO = '<span class="status-badge status-badge--xsmall status-badge--action">TO DO</span>'
 
 function getDisplayCH (company) {
   if (!company.companies_house_data) return null
@@ -35,12 +34,12 @@ function getDisplayCompany (company) {
   if (!company.id) return null
 
   const displayCompany = {
-    sector: (company.sector && company.sector.name) ? company.sector.name : TODO,
-    description: company.description || TODO,
-    website: company.website ? `<a href="${company.website}">${company.website}</a>` : TODO,
-    employee_range: (company.employee_range && company.employee_range.name) ? company.employee_range.name : TODO,
-    turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : TODO,
-    account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : TODO,
+    sector: (company.sector && company.sector.name) ? company.sector.name : null,
+    description: company.description || null,
+    website: company.website ? `<a href="${company.website}">${company.website}</a>` : null,
+    employee_range: (company.employee_range && company.employee_range.name) ? company.employee_range.name : null,
+    turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : null,
+    account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : null,
     headquarters: company.headquarters || 'Not a headquarters'
   }
 
@@ -53,7 +52,7 @@ function getDisplayCompany (company) {
   if (tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
 
   if (!company.companies_house_data) {
-    displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : TODO
+    displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : null
     displayCompany.name = company.name
   }
 

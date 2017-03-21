@@ -1,6 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
 const companyFormattingService = require('../../src/services/companyformattingservice')
-const TODO = '<span class="status-badge status-badge--xsmall status-badge--action">TO DO</span>'
 
 describe('Company formatting service', () => {
   describe('get display company', () => {
@@ -125,10 +124,10 @@ describe('Company formatting service', () => {
           registered_address: 'Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom',
           business_type: 'Company',
           sector: 'Giftware, Jewellery and Tableware',
-          website: TODO,
-          description: TODO,
-          employee_range: TODO,
-          turnover_range: TODO,
+          website: null,
+          description: null,
+          employee_range: null,
+          turnover_range: null,
           uk_region: 'London',
           account_manager: 'Yvonne Ahern',
           export_to_countries: 'No',

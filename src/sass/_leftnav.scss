@@ -43,16 +43,41 @@
       margin-top: 0;
     }
 
-    > h1:first-child,
-    > h2:first-child,
-    > h3:first-child,
-    > h4:first-child,
-    > h5:first-child,
-    > p:first-child,
-    > div:first-child {
+    > .heading-xlarge,
+    > .heading-large,
+    > .heading-medium,
+    > .heading-small {
       margin-top: 0;
     }
+
+    > .heading-xlarge ~ .heading-xlarge {
+      margin-top: em(15, 32);
+      @include media(tablet) {
+        margin-top: em(30, 48);
+      }
+    }
+    > .heading-large ~ .heading-large {
+      margin-top: em(25, 24);
+      @include media(tablet) {
+        margin-top: em(45, 36);
+      }
+    }
+    > .heading-medium ~ .heading-medium {
+      margin-top: em(25, 20);
+      @include media(tablet) {
+        margin-top: em(45, 24);
+      }
+    }
+    > .heading-small ~ .heading-small {
+      margin-top: em(10, 16);
+      @include media(tablet) {
+        margin-top: em(20, 19);
+      }
+    }
+
+
   }
+
 
 }
 

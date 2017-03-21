@@ -7,8 +7,11 @@ const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailLabels, chDetailLabels, companyTableHeadings, hqLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
-const { isBlank } = require('../lib/controllerutils')
+const { isBlank, toQueryString } = require('../lib/controllerutils')
 const router = express.Router()
+const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const companyWithCHKeys = ['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const chDetailDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 
 function getCommon (req, res, next) {
   const id = req.params.sourceId
@@ -20,6 +23,12 @@ function getCommon (req, res, next) {
     res.locals.id = id
     res.locals.source = source
     res.locals.company = company
+    res.locals.archiveUrl = getArchiveUrl(req)
+
+    if (req.query.archive) {
+      res.locals.cancelArchiveUrl = getCancelArchiveUrl(req)
+    }
+
     next()
   })
   .catch((error) => {
@@ -43,9 +52,9 @@ function getDetails (req, res, next) {
       companyDetailLabels,
       companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
       chDetailLabels,
-      chDetailsDisplayOrder: ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'sic_code'],
+      chDetailDisplayOrder,
       companyTableHeadings,
-      companyTableKeys: Object.keys(companyTableHeadings),
+      companyTableKeys: (company.companies_house_data && company.companies_house_date !== null) ? companyWithCHKeys : companyWithoutCHKeys,
       children,
       parents
     })
@@ -217,6 +226,22 @@ function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
 
+function postArchive (req, res) {
+  res.redirect(`/company/company_company/${req.params.sourceId}/details`)
+}
+
+function getArchiveUrl (req) {
+  const query = Object.assign({}, req.query)
+  query.archive = true
+  const queryParams = toQueryString(query)
+  const fullUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}?${queryParams}`
+  return fullUrl
+}
+
+function getCancelArchiveUrl (req) {
+  return `${req.protocol}://${req.get('host')}${req.baseUrl}`
+}
+
 router.use('/company/:source/:sourceId/*', getCommon)
 router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
@@ -224,5 +249,6 @@ router.get('/company/:source/:sourceId/details', getDetails)
 router.get('/company/:source/:sourceId/contacts', getContacts)
 router.get('/company/:source/:sourceId/interactions', getInteractions)
 router.get('/company/:source/:sourceId/export', getExport)
+router.post('/company/:source/:sourceId/archive', postArchive)
 
 module.exports = { router, editDetails, getCommon, postDetails }

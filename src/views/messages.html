@@ -1,0 +1,9 @@
+{% for message in messages.success %}
+  <p class="flash flash--info">{{message}}</p>
+{% endfor %}
+{% for message in messages.info %}
+  <p class="flash flash--info">{{message}}</p>
+{% endfor %}
+{% for message in messages.error %}
+  <p class="flash flash--error">{{message}}</p>
+{% endfor %}

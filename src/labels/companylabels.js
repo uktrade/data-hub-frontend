@@ -24,7 +24,8 @@ const companyDetailLabels = {
   registered_address_postcode: 'Registered address postcode',
   registered_address_country: 'Registered address country',
   business_type_for_other: 'Type of organisation',
-  business_type_uk_other: 'Type of organisation'
+  business_type_uk_other: 'Type of organisation',
+  headquarter_type: 'Headquarters'
 }
 const chDetailLabels = {
   name: 'Registered company name',
