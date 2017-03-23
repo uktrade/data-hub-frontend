@@ -118,6 +118,12 @@ describe('Company controller', function () {
     '../repositorys/companyrepository': fakeCompanyRepository
   })
 
+  describe('get common', function () {
+    it('should generate a url to archive if the company is not archived or showing archive form')
+    it('should generate a url to cancel archive if the company is not archived and showing archive form')
+    it('should generate a url to un-archive if the company is marked as archived')
+  })
+
   describe('get edit screen', function () {
     describe('pick edit form', function () {
       it('should render the uk ltd form for records with companies house data', function (done) {
@@ -540,6 +546,11 @@ describe('Company controller', function () {
 
       it('should convert a form back to a company object if there are errors', function (done) {
         const req = {
+          get: function () {
+            return 'localhost'
+          },
+          query: {},
+          baseUrl: '/company/company_company/123123/',
           params: {
             sourceId: '1234',
             source: 'company_companieshousecompany'
@@ -562,6 +573,11 @@ describe('Company controller', function () {
       })
       it('should include errors in the form when posting bad data', function (done) {
         const req = {
+          get: function () {
+            return 'localhost'
+          },
+          query: {},
+          baseUrl: '/company/company_company/123123/',
           params: {
             sourceId: '1234',
             source: 'company_companieshousecompany'
@@ -582,6 +598,268 @@ describe('Company controller', function () {
         companyController.postDetails(req, res)
       })
     })
+  })
+  describe('get details screen', function () {
+    it('should generate formatted companies house data for display if there is companies house data', function (done) {
+      const company = {
+        id: '1234',
+        company_number: '1111',
+        companies_house_data: {
+          company_category: 'Private Limited Company',
+          company_number: '1111',
+          name: 'Test company'
+        }
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions).to.have.property('chDisplay')
+          expect(allOptions).to.have.property('chDetailLabels')
+          expect(allOptions).to.have.property('chDetailDisplayOrder')
+          done()
+        }
+      }
+      companyController.editDetails(req, res)
+    })
+    it('should not generate formatted companies house data if there is no companies house data', function (done) {
+      const company = {
+        id: '1234',
+        company_number: null,
+        companies_house_data: null
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions).to.not.have.property('chDisplay')
+          expect(allOptions).to.not.have.property('chDetailLabels')
+          expect(allOptions).to.not.have.property('chDetailDisplayOrder')
+          done()
+        }
+      }
+      companyController.getDetails(req, res)
+    })
+    it('should generate appropriate formatted CDMS data if there is a CDMS record for this company and no companies house record', function (done) {
+      const company = {
+        id: '1234',
+        company_number: null,
+        companies_house_data: null,
+        name: 'Shelter',
+        business_type: {id: '1234', name: 'Charity'},
+        registered_address_1: '88 Old Streed',
+        registered_address_2: null,
+        registered_address_3: null,
+        registered_address_4: null,
+        registered_address_town: 'London',
+        registered_address_county: null,
+        registered_address_postcode: 'EC1V 9HU',
+        registered_address_country: {
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+          name: 'United Kingdom',
+          selectable: true
+        },
+        uk_region: {
+          id: '433',
+          name: 'London'
+        },
+        headquarter_type: {
+          id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+          name: 'ehq',
+          selectable: true
+        },
+        sector: { id: '1234', name: 'Retail' },
+        website: 'http://www.test.org',
+        description: 'test description',
+        employee_range: null,
+        turnover_range: null
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions).to.have.property('companyDetails')
+          expect(allOptions).to.have.property('companyDetailsLabels')
+          expect(allOptions.companyDetailsDisplayOrder).to.deep.equal([
+            'business_type',
+            'registered_address',
+            'alias',
+            'trading_address',
+            'uk_region',
+            'headquarter_type',
+            'sector',
+            'website',
+            'description',
+            'employee_range',
+            'turnover_range'
+          ])
+          done()
+        }
+      }
+      const next = function (error) {
+        console.log(error)
+        expect(false).to.equal(true)
+      }
+      companyController.getDetails(req, res, next)
+    })
+    it('should also show country for none uk countries')
+    it('should generate appropriate formatted CDMS data if there is a CDMS record for this company and a companies house record', function (done) {
+      const company = {
+        id: '1234',
+        company_number: '1234',
+        companies_house_data: {
+          name: 'freds',
+          company_category: 'Private Limited Company',
+          registered_address_1: '10 the street',
+          registered_address_2: null,
+          registered_address_3: null,
+          registered_address_4: null,
+          registered_address_town: 'town',
+          registered_address_county: 'county',
+          registered_address_country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+            selectable: true
+          }
+        },
+        name: 'Shelter',
+        business_type: {id: '1234', name: 'Charity'},
+        registered_address_1: '88 Old Streed',
+        registered_address_2: null,
+        registered_address_3: null,
+        registered_address_4: null,
+        registered_address_town: 'London',
+        registered_address_county: null,
+        registered_address_postcode: 'EC1V 9HU',
+        registered_address_country: {
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+          name: 'United Kingdom',
+          selectable: true
+        },
+        uk_region: {
+          id: '433',
+          name: 'London'
+        },
+        headquarter_type: {
+          id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+          name: 'ehq',
+          selectable: true
+        },
+        sector: { id: '1234', name: 'Retail' },
+        website: 'http://www.test.org',
+        description: 'test description',
+        employee_range: null,
+        turnover_range: null
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions).to.have.property('companyDetails')
+          expect(allOptions).to.have.property('companyDetailsLabels')
+          expect(allOptions.companyDetailsDisplayOrder).to.deep.equal([
+            'alias',
+            'trading_address',
+            'uk_region',
+            'headquarter_type',
+            'sector',
+            'website',
+            'description',
+            'employee_range',
+            'turnover_range'
+          ])
+          done()
+        }
+      }
+      const next = function (error) {
+        console.log(error)
+        expect(false).to.equal(true)
+      }
+      companyController.getDetails(req, res, next)
+    })
+    it('should not generate company information if this is a companies house only entry', function (done) {
+      const company = {
+        id: null,
+        company_number: '1234',
+        companies_house_data: {
+          name: 'freds',
+          company_category: 'Private Limited Company',
+          registered_address_1: '10 the street',
+          registered_address_2: null,
+          registered_address_3: null,
+          registered_address_4: null,
+          registered_address_town: 'town',
+          registered_address_county: 'county',
+          registered_address_country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+            selectable: true
+          }
+        }
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions).to.not.have.property('companyDetails')
+          expect(allOptions).to.not.have.property('companyDetailsDisplayOrder')
+          expect(allOptions).to.not.have.property('companyDetailsLabels')
+          done()
+        }
+      }
+      companyController.getDetails(req, res)
+    })
+    it('should generate account management formatted data if this is a CDMS record', function (done) {
+      const company = {
+        id: '1234',
+        company_number: null,
+        companies_house_data: null,
+        name: 'Shelter',
+        business_type: {id: '1234', name: 'Charity'},
+        registered_address_1: '88 Old Streed',
+        registered_address_2: null,
+        registered_address_3: null,
+        registered_address_4: null,
+        registered_address_town: 'London',
+        registered_address_county: null,
+        registered_address_postcode: 'EC1V 9HU',
+        registered_address_country: {
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+          name: 'United Kingdom',
+          selectable: true
+        },
+        uk_region: {
+          id: '433',
+          name: 'London'
+        },
+        headquarter_type: {
+          id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+          name: 'ehq',
+          selectable: true
+        },
+        sector: { id: '1234', name: 'Retail' },
+        website: 'http://www.test.org',
+        description: 'test description',
+        employee_range: null,
+        turnover_range: null
+      }
+      const req = {}
+      const res = {
+        locals: { company },
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions.accountManagementDisplay).to.deep.equal({oneListTier: 'None', oneListAccountManager: 'None'})
+          done()
+        }
+      }
+      companyController.getDetails(req, res)
+    })
+    it('should strip out the primary sector and just show that, instead of the full sector value')
   })
 })
 

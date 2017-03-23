@@ -5,7 +5,7 @@ const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
-const { companyDetailLabels, chDetailLabels, companyTableHeadings, hqLabels } = require('../labels/companylabels')
+const { companyDetailLabels, chDetailLabels, hqLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
 const { isBlank, toQueryString } = require('../lib/controllerutils')
 const router = express.Router()
@@ -40,24 +40,25 @@ function getCommon (req, res, next) {
 function getDetails (req, res, next) {
   try {
     const company = res.locals.company
-    const companyDisplay = companyFormattingService.getDisplayCompany(company)
-    const chDisplay = companyFormattingService.getDisplayCH(company)
-    const parents = companyFormattingService.parseRelatedData(company.parents)
-    const children = companyFormattingService.parseRelatedData(company.children)
+    res.locals.tab = 'details'
 
-    res.render('company/details', {
-      tab: 'details',
-      companyDisplay,
-      chDisplay,
-      companyDetailLabels,
-      companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
-      chDetailLabels,
-      chDetailDisplayOrder,
-      companyTableHeadings,
-      companyTableKeys: (company.companies_house_data && company.companies_house_date !== null) ? companyWithCHKeys : companyWithoutCHKeys,
-      children,
-      parents
-    })
+    if (company && company.companies_house_data && company.companies_house_data !== null) {
+      res.locals.chDisplay = companyFormattingService.getDisplayCH(company)
+      res.locals.chDetailLabels = chDetailLabels
+      res.locals.chDetailDisplayOrder = chDetailDisplayOrder
+    }
+
+    if (company && company.id && company.id !== null) {
+      res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
+      res.locals.companyDetailsDisplayOrder = (res.locals.chDisplay) ? companyWithCHKeys : companyWithoutCHKeys
+      res.locals.companyDetailsLabels = companyDetailLabels
+      res.locals.accountManagementDisplay = {
+        oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
+        oneListAccountManager: 'None'
+      }
+    }
+
+    res.render('company/details')
   } catch (error) {
     next(error)
   }
@@ -251,4 +252,4 @@ router.get('/company/:source/:sourceId/interactions', getInteractions)
 router.get('/company/:source/:sourceId/export', getExport)
 router.post('/company/:source/:sourceId/archive', postArchive)
 
-module.exports = { router, editDetails, getCommon, postDetails }
+module.exports = { router, editDetails, getCommon, postDetails, getDetails }

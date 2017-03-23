@@ -89,21 +89,30 @@ describe('Company formatting service', () => {
           'created_on': '2017-01-17T15:09:56.228305',
           'modified_on': '2017-01-17T15:09:56.228311',
           'company_number': null,
-          'alias': null,
+          'alias': 'Fred',
           'lead': true,
-          'description': null,
-          'website': null,
-          'trading_address_1': null,
-          'trading_address_2': null,
+          'description': 'description',
+          'website': 'http://www.test.com',
+          'trading_address_1': 'Business Innovation & Skills',
+          'trading_address_2': '2 Victoria Street',
           'trading_address_3': null,
-          'trading_address_4': null,
-          'trading_address_town': null,
-          'trading_address_county': null,
-          'trading_address_postcode': null,
+          'tradig_address_4': null,
+          'trading_address_town': 'London',
+          'trading_address_country': {
+            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+            'name': 'United Kingdom'
+          },
+          'trading_address_county': 'Greater London',
+          'trading_address_postcode': 'SW1H 0ET',
           'archived_by': null,
           'business_type': {
             'id': '98d14e94-5d95-e211-a939-e4115bead28a',
             'name': 'Company',
+            'selectable': true
+          },
+          'headquarter_type': {
+            'id': 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+            'name': 'ehq',
             'selectable': true
           },
           'sector': {
@@ -117,23 +126,23 @@ describe('Company formatting service', () => {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
             'name': 'London',
             'selectable': true
-          },
-          'trading_address_country': null
+          }
         }
         const expected = {
-          registered_address: 'Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom',
           business_type: 'Company',
+          name: 'Fresh Flowers',
+          registered_address: 'Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom',
+          alias: 'Fred',
+          trading_address: 'Business Innovation & Skills, 2 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom',
+          uk_region: 'London',
+          headquarter_type: 'European headquarters (EHQ)',
           sector: 'Giftware, Jewellery and Tableware',
-          website: null,
-          description: null,
+          website: '<a href="http://www.test.com">http://www.test.com</a>',
+          description: 'description',
           employee_range: null,
           turnover_range: null,
-          uk_region: 'London',
           account_manager: 'Yvonne Ahern',
-          export_to_countries: 'No',
-          future_interest_countries: 'Sweden',
-          headquarters: 'Not a headquarters',
-          name: 'Fresh Flowers'
+          country: 'United Kingdom'
         }
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual).to.deep.equal(expected)
