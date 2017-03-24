@@ -25,3 +25,7 @@ $images-dir: '/images/';
   margin: 0;
   padding: 0;
 }
+
+.table--readonly {
+  border-left-width: 5px;
+}

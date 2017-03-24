@@ -6,7 +6,7 @@ const { isBlank, toQueryString } = require('../lib/controllerutils')
 const searchService = require('../services/searchservice')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
-const { companyDetailLabels, chDetailLabels, companyTypeOptions } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels/companylabels')
 
 const router = express.Router()
 
@@ -16,7 +16,7 @@ function getAddStepOne (req, res, next) {
     foreignOtherCompanyOptions,
     company: req.body,
     companyTypeOptions,
-    companyDetailLabels
+    companyDetailsLabels
   })
 }
 
@@ -118,8 +118,8 @@ function getAddStepTwo (req, res, next) {
       const { selected, type } = req.query
       res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
-      res.locals.chDisplay = companyFormattingService.getDisplayCH(res.locals.company)
-      res.locals.chDetailLabels = chDetailLabels
+      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company)
+      res.locals.chDetailsLabels = chDetailsLabels
       res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
       res.render('company/add-step-2.html')
     } catch (error) {

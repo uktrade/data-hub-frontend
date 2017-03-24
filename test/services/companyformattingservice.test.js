@@ -156,6 +156,77 @@ describe('Company formatting service', () => {
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual.website).to.equal('<a href="http:/www.test.com">http:/www.test.com</a>')
       })
+      it('should return the country if this is a none uk company', () => {
+        const company = {
+          'id': '3a4b36c6-a950-43c5-ba41-82cf6bffaa91',
+          'name': 'Fresh Flowers',
+          'trading_name': null,
+          'companies_house_data': null,
+          'registered_address_1': 'Business Innovation & Skills',
+          'registered_address_2': '1 Victoria Street',
+          'registered_address_3': null,
+          'registered_address_4': null,
+          'registered_address_town': 'London',
+          'registered_address_country': {
+            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+            'name': 'Spain'
+          },
+          'registered_address_county': 'Greater London',
+          'registered_address_postcode': 'SW1H 0ET',
+          'trading_address_1': 'Trading address',
+          'trading_address_2': '2 Victoria Street',
+          'trading_address_3': null,
+          'trading_address_4': null,
+          'trading_address_town': 'Trading town',
+          'trading_address_county': 'Trading county',
+          'trading_address_postcode': 'WC1 1AA',
+          'trading_address_country': {
+            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+            'name': 'United Kingdom'
+          }
+        }
+
+        const actual = companyFormattingService.getDisplayCompany(company)
+        expect(actual.country).to.equal('Spain')
+      })
+      it('should return the primary sector and not the sub sector data', () => {
+        const company = {
+          'id': '3a4b36c6-a950-43c5-ba41-82cf6bffaa91',
+          'name': 'Fresh Flowers',
+          'trading_name': null,
+          'companies_house_data': null,
+          'registered_address_1': 'Business Innovation & Skills',
+          'registered_address_2': '1 Victoria Street',
+          'registered_address_3': null,
+          'registered_address_4': null,
+          'registered_address_town': 'London',
+          'registered_address_country': {
+            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+            'name': 'Spain'
+          },
+          'registered_address_county': 'Greater London',
+          'registered_address_postcode': 'SW1H 0ET',
+          'trading_address_1': 'Trading address',
+          'trading_address_2': '2 Victoria Street',
+          'trading_address_3': null,
+          'trading_address_4': null,
+          'trading_address_town': 'Trading town',
+          'trading_address_county': 'Trading county',
+          'trading_address_postcode': 'WC1 1AA',
+          'trading_address_country': {
+            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+            'name': 'United Kingdom'
+          },
+          'sector': {
+            'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
+            'name': 'Computers : Tech',
+            'selectable': true
+          }
+        }
+
+        const actual = companyFormattingService.getDisplayCompany(company)
+        expect(actual.sector).to.equal('Computers')
+      })
       describe('and no CH data', () => {
         const company = {
           'id': '3a4b36c6-a950-43c5-ba41-82cf6bffaa91',

@@ -92,7 +92,7 @@ describe('Company add controller', function () {
             ukother: 'Other type of UK organisation',
             forother: 'Foreign organisation'
           })
-          expect(allOptions.companyDetailLabels.business_type).to.equal('Business type')
+          expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
           done()
         }
       }
@@ -370,7 +370,7 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res)
       })
-      it('should include labels and dispay order for the table', function (done) {
+      it('should include labels and display order for the table', function (done) {
         const req = {
           session: {
             token: '1234'
@@ -387,14 +387,14 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.chDetailLabels).to.deep.equal({
-              name: 'Registered company name',
-              company_number: 'Companies House number',
+            expect(allOptions.chDetailsLabels).to.deep.equal({
+              name: 'Registered name',
+              company_number: 'Companies House No',
               registered_address: 'Registered office address',
               business_type: 'Company type',
               company_status: 'Company status',
               sic_code: 'Nature of business (SIC)',
-              incorporation_date: 'Incorporation date'
+              incorporation_date: 'Incorporated on'
             })
             expect(allOptions.chDetailsDisplayOrder).to.deep.equal(['business_type', 'company_status', 'incorporation_date', 'sic_code'])
             done()

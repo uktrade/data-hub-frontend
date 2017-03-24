@@ -1,6 +1,4 @@
 /* eslint new-cap: 0 */
-
-require('babel-polyfill')
 const getQueryParam = require('../lib/urlstuff').getQueryParam
 const {toggleClass, show} = require('@uktrade/trade_elements').elementstuff
 

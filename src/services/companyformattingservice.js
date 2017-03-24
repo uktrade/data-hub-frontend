@@ -1,10 +1,11 @@
-const { companyDetailLabels, chDetailLabels, hqLabels } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
 const getFormattedAddress = require('../lib/address').getFormattedAddress
 const sentenceCase = require('../lib/sentencecase')
 const DateLib = require('../lib/date')
+const { getPrimarySectorName } = require('../lib/transformsectors')
 
-const companyDetailsDisplayOrder = Object.keys(companyDetailLabels)
-const chDetailsDisplayOrder = Object.keys(chDetailLabels)
+const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
+const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
 const companyTableKeys = ['name', 'address']
 
 function getDisplayCH (company) {
@@ -34,7 +35,7 @@ function getDisplayCompany (company) {
   if (!company.id) return null
 
   const displayCompany = {
-    sector: (company.sector && company.sector.name) ? company.sector.name : null,
+    sector: (company.sector && company.sector.name) ? getPrimarySectorName(company.sector.name) : null,
     description: company.description || null,
     website: company.website ? `<a href="${company.website}">${company.website}</a>` : null,
     employee_range: (company.employee_range && company.employee_range.name) ? company.employee_range.name : null,

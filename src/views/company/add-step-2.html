@@ -41,11 +41,11 @@
                   <h3 class="result-title">{{hit.name}}</h3>
                 </a>
               {% endif %}
-              {% if hit.selected and chDisplay %}
+              {% if hit.selected and chDetails %}
                 <div class="panel panel-border-wide">
                   {{ trade.keyvaluetable(
-                    chDisplay,
-                    labels=chDetailLabels,
+                    chDetails,
+                    labels=chDetailsLabels,
                     keyorder=chDetailsDisplayOrder,
                     class="table--small"
                   ) }}
