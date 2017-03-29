@@ -26,6 +26,7 @@ function getCommon (req, res, next) {
 }
 
 function getAddStep1 (req, res) {
+  controllerUtils.genCSRF(req, res)
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery', selectable: true }]
 
   const selectableTypes = interactionTypes
@@ -80,6 +81,7 @@ function postAddStep1 (req, res) {
 }
 
 function getInteractionEdit (req, res, next) {
+  controllerUtils.genCSRF(req, res)
   Q.spawn(function *() {
     try {
       const token = req.session.token

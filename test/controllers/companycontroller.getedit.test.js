@@ -47,8 +47,6 @@ describe('Company controller, getEdit', function () {
     companyController = proxyquire('../../src/controllers/companycontroller', {
       '../services/searchservice': {
         getCompanyForSource: function (token, id, source) {
-          getSource = source
-          getId = id
           return new Promise((resolve) => {
             resolve(fakeCompany)
           })
@@ -123,6 +121,10 @@ describe('Company controller, getEdit', function () {
             'name': 'Undefined',
             'selectable': true
           }
+        ],
+        countryOptions: [
+          { id: '9999', name: 'United Kingdom' },
+          { id: '12344', name: 'France' }
         ]
       },
       '../repositorys/companyrepository': fakeCompanyRepository
@@ -131,7 +133,7 @@ describe('Company controller, getEdit', function () {
 
   describe('pick edit form', function () {
     it('should render the uk ltd form for records with companies house data', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: {
           company: {
@@ -155,7 +157,8 @@ describe('Company controller, getEdit', function () {
         query: {
           business_type: 'Charity',
           country: 'uk'
-        }
+        },
+        session: {}
       }
       const res = {
         locals: {
@@ -169,7 +172,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should render the uk other form for an existing UK company without companies house data', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: {
           company: {
@@ -194,7 +197,8 @@ describe('Company controller, getEdit', function () {
         query: {
           business_type: 'Charity',
           country: 'non-uk'
-        }
+        },
+        session: {}
       }
       const res = {
         locals: {
@@ -208,7 +212,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should render the non uk form for existing none uk company', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: {
           company: {
@@ -241,7 +245,7 @@ describe('Company controller, getEdit', function () {
     }
 
     it('should include option data', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -258,7 +262,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should include labels', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -271,7 +275,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should include formatted CH data if CH data is present', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -285,7 +289,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should include the business type and uk based indicator', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -303,7 +307,7 @@ describe('Company controller, getEdit', function () {
       companyController.editDetails(req, res)
     })
     it('should indicate to hide the trading address', function (done) {
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -316,7 +320,7 @@ describe('Company controller, getEdit', function () {
     })
     it('should indicate theres a trading address', function (done) {
       company.trading_address_country = { id: '1234', name: 'Spain' }
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
@@ -329,12 +333,31 @@ describe('Company controller, getEdit', function () {
     })
     it('should indicate there is not a trading address', function (done) {
       company.trading_address_country = null
-      const req = {}
+      const req = { session: {} }
       const res = {
         locals: { company },
         render: function (url, options) {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.showTradingAddress).to.not.be.true
+          done()
+        }
+      }
+      companyController.editDetails(req, res)
+    })
+    it('should include the id for the united kingdom when editing a uk none ltd', function (done) {
+      const req = {
+        query: {
+          business_type: 'Charity',
+          country: 'uk'
+        },
+        session: {}
+      }
+      const res = {
+        locals: {},
+        render: function (url, options) {
+          const allOptions = mergeLocals(res, options)
+          expect(allOptions.unitedKingdom).to.eq('9999')
+          expect(allOptions.uk_based).to.equal(true)
           done()
         }
       }
@@ -399,34 +422,34 @@ describe('Company controller, getEdit', function () {
     })
 
     it('should include companies house data as hidden defaults in a uk ltd edit form', function () {
-      expect(document.querySelector('[name=company_number]').value).to.equal('1234')
-      expect(document.querySelector('[name=business_type]').value).to.equal('1111')
-      expect(document.querySelector('[name=uk_based]').value).to.equal('true')
-      expect(document.querySelector('[name=name]').value).to.equal('Freds test company')
-      expect(document.querySelector('[name=registered_address_1]').value).to.equal('address1')
-      expect(document.querySelector('[name=registered_address_2]').value).to.equal('address2')
-      expect(document.querySelector('[name=registered_address_3]').value).to.equal('address3')
-      expect(document.querySelector('[name=registered_address_4]').value).to.equal('address4')
-      expect(document.querySelector('[name=registered_address_town]').value).to.equal('addresstown')
-      expect(document.querySelector('[name=registered_address_county]').value).to.equal('addresscounty')
-      expect(document.querySelector('[name=registered_address_postcode]').value).to.equal('addresspostcode')
-      expect(document.querySelector('[name=registered_address_country]').value).to.equal('4444')
+      expect(document.querySelector('[type=hidden][name=company_number]').value).to.equal('1234')
+      expect(document.querySelector('[type=hidden][name=business_type]').value).to.equal('1111')
+      expect(document.querySelector('[type=hidden][name=uk_based]').value).to.equal('true')
+      expect(document.querySelector('[type=hidden][name=name]').value).to.equal('Freds test company')
+      expect(document.querySelector('[type=hidden][name=registered_address_1]').value).to.equal('address1')
+      expect(document.querySelector('[type=hidden][name=registered_address_2]').value).to.equal('address2')
+      expect(document.querySelector('[type=hidden][name=registered_address_3]').value).to.equal('address3')
+      expect(document.querySelector('[type=hidden][name=registered_address_4]').value).to.equal('address4')
+      expect(document.querySelector('[type=hidden][name=registered_address_town]').value).to.equal('addresstown')
+      expect(document.querySelector('[type=hidden][name=registered_address_county]').value).to.equal('addresscounty')
+      expect(document.querySelector('[type=hidden][name=registered_address_postcode]').value).to.equal('addresspostcode')
+      expect(document.querySelector('[type=hidden][name=registered_address_country]').value).to.equal('4444')
     })
     it('should include all the fields from the design (hidden and visible) for a ltd company', function () {
-      expect(document.querySelector('[name=alias]')).to.not.be.null
-      expect(document.querySelector('[name=trading_address_1]')).to.not.be.null
-      expect(document.querySelector('[name=trading_address_2]')).to.not.be.null
-      expect(document.querySelector('[name=trading_address_town]')).to.not.be.null
-      expect(document.querySelector('[name=trading_address_county]')).to.not.be.null
-      expect(document.querySelector('[name=trading_address_postcode]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=alias]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_1]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_2]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_town]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_county]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_postcode]')).to.not.be.null
       expect(document.querySelector('[name=trading_address_country]')).to.not.be.null
-      expect(document.querySelector('[name=uk_region]')).to.not.be.null
-      expect(document.querySelector('[name=headquarters]')).to.not.be.null
-      expect(document.querySelector('[name=sector]')).to.not.be.null
-      expect(document.querySelector('[name=website]')).to.not.be.null
-      expect(document.querySelector('[name=description]')).to.not.be.null
-      expect(document.querySelector('[name=employee_range]')).to.not.be.null
-      expect(document.querySelector('[name=turnover_range]')).to.not.be.null
+      expect(document.querySelector('select[name=uk_region]')).to.not.be.null
+      expect(document.querySelector('[type=radio][name=headquarters]')).to.not.be.null
+      expect(document.querySelector('select[name=sector]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=website]')).to.not.be.null
+      expect(document.querySelector('textarea[name=description]')).to.not.be.null
+      expect(document.querySelector('select[name=employee_range]')).to.not.be.null
+      expect(document.querySelector('select[name=turnover_range]')).to.not.be.null
     })
     it('should display the companies house data above the form', function () {
       const chDetailElement = document.querySelector('#ch-details')
@@ -436,6 +459,123 @@ describe('Company controller, getEdit', function () {
       expect(chDetails).to.include('1234')
       expect(chDetails).to.include('10 the street')
       expect(chDetails).to.include('Ltd')
+    })
+    it('should hide the trading address section by default and include a button to show it', function () {
+      expect(document.querySelector('#trading-address-wrapper').className).to.include('hidden')
+      expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
+      expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
+    })
+    it('should show the trading address section and include the remove button if there is one', function (done) {
+      markup = nunjucks.render('../../src/views/company/edit-ltd.html', {
+        business_type: { id: '1111', name: 'Private limited company' },
+        company: {
+          countryOptions: [{id: 1, name: 'country'}],
+          company_number: '1234',
+          companies_house_data: {
+            name: 'Freds test company',
+            registered_address_1: 'address1',
+            registered_address_2: 'address2',
+            registered_address_3: 'address3',
+            registered_address_4: 'address4',
+            registered_address_town: 'addresstown',
+            registered_address_county: 'addresscounty',
+            registered_address_postcode: 'addresspostcode',
+            registered_address_country: 'addresscountry'
+          }
+        },
+        chDetails: {
+          name: 'fred',
+          company_number: '1234',
+          registered_address: '10 the street',
+          business_type: 'Ltd',
+          company_status: 'Active',
+          sic_code: '1234 - Thing'
+        },
+        chDetailsDisplayOrder: ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'sic_code'],
+        chDetailsLabels: {
+          name: 'Registered company name',
+          company_number: 'Companies House number',
+          registered_address: 'Registered office address',
+          business_type: 'Company type',
+          company_status: 'Company status',
+          sic_code: 'Nature of business (SIC)',
+          incorporation_date: 'Incorporation date'
+        },
+        csrfToken: '2222',
+        showTradingAddress: true
+      })
+
+      jsdom.env(markup, (err, jsdomWindow) => {
+        if (err) {
+          throw new Error(err)  // eslint-disable-line no-new
+        }
+
+        document = jsdomWindow.document
+        expect(document.querySelector('#trading-address-wrapper').className).to.not.include('hidden')
+        expect(document.querySelector('#add-trading-address').className).to.include('hidden')
+        expect(document.querySelector('#remove-trading-address').className).to.not.include('hidden')
+        done()
+      })
+
+      expect(document.querySelector('#trading-address-wrapper').className).to.include('hidden')
+      expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
+      expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
+    })
+  })
+  describe('edit none ltd company markup', function () {
+    let document
+    let markup
+
+    beforeEach(function (done) {
+      markup = nunjucks.render('../../src/views/company/edit-ukother.html', {
+        business_type: { id: '1111', name: 'Government dept' },
+        company: {
+          countryOptions: [{id: 1, name: 'country'}],
+          company_number: null,
+          companies_house_data: null
+        },
+        csrfToken: '2222',
+        showTradingAddress: false
+      })
+
+      jsdom.env(markup, (err, jsdomWindow) => {
+        if (err) {
+          throw new Error(err)  // eslint-disable-line no-new
+        }
+
+        document = jsdomWindow.document
+        done()
+      })
+    })
+
+    it('should include all the fields from the design (hidden and visible) for a ltd company', function () {
+      expect(document.querySelector('[type=text][name=company_number]')).to.be.null
+      expect(document.querySelector('[type=hidden][name=business_type]')).to.not.be.null
+      expect(document.querySelector('[type=hidden][name=uk_based]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=name]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=registered_address_1]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=registered_address_2]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=registered_address_town]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=registered_address_county]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=registered_address_postcode]')).to.not.be.null
+      expect(document.querySelector('[type=hidden][name=registered_address_country]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=alias]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_1]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_2]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_town]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_county]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=trading_address_postcode]')).to.not.be.null
+      expect(document.querySelector('[type=hidden][name=trading_address_country]')).to.not.be.null
+      expect(document.querySelector('select[name=uk_region]')).to.not.be.null
+      expect(document.querySelector('[type=radio][name=headquarters]')).to.not.be.null
+      expect(document.querySelector('select[name=sector]')).to.not.be.null
+      expect(document.querySelector('[type=text][name=website]')).to.not.be.null
+      expect(document.querySelector('textarea[name=description]')).to.not.be.null
+      expect(document.querySelector('select[name=employee_range]')).to.not.be.null
+      expect(document.querySelector('select[name=turnover_range]')).to.not.be.null
+    })
+    it('should not display the companies house data above the form', function () {
+      expect(document.querySelector('#ch-details')).to.be.null
     })
     it('should hide the trading address section by default and include a button to show it', function () {
       expect(document.querySelector('#trading-address-wrapper').className).to.include('hidden')

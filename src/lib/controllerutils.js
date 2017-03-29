@@ -87,9 +87,7 @@ function nullEmptyFields (data) {
 function genCSRF (req, res) {
   const token = guid()
   req.session.csrfToken = token
-  if (res) {
-    res.set('x-csrf-token', token)
-  }
+  res.locals.csrfToken = token
   return token
 }
 

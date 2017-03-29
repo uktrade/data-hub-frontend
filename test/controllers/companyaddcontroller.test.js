@@ -52,14 +52,14 @@ describe('Company add controller', function () {
 
   describe('Get step 1', function () {
     it('should return options for company types', function (done) {
-      const req = {}
+      const req = {session: {}}
       const res = {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.ukOtherCompanyOptions).to.deep.equal([
             'Charity',
-            'Government department',
+            'Government dept',
             'Intermediary',
             'Limited partnership',
             'Partnership',
@@ -68,7 +68,7 @@ describe('Company add controller', function () {
           expect(allOptions.foreignOtherCompanyOptions).to.deep.equal([
             'Charity',
             'Company',
-            'Government department',
+            'Government dept',
             'Intermediary',
             'Limited partnership',
             'Partnership',
@@ -81,7 +81,7 @@ describe('Company add controller', function () {
       companyAddController.getAddStepOne(req, res)
     })
     it('should return labels for the types and error messages', function (done) {
-      const req = {}
+      const req = {session: {}}
       const res = {
         locals: {},
         render: function (template, options) {
@@ -101,7 +101,7 @@ describe('Company add controller', function () {
     })
     it('should pass through the request body to show previosuly selected options', function (done) {
       const body = { business_type: '1231231231232' }
-      const req = { body }
+      const req = { body, session: {}}
       const res = {
         locals: {},
         render: function (template, options) {
@@ -126,7 +126,8 @@ describe('Company add controller', function () {
         const req = {
           body: {
             business_type: 'ltd'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -142,7 +143,8 @@ describe('Company add controller', function () {
           body: {
             business_type: 'ukother',
             business_type_uk_other: 'Charity'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -158,7 +160,8 @@ describe('Company add controller', function () {
           body: {
             business_type: 'forother',
             business_type_for_other: 'Charity'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -173,7 +176,8 @@ describe('Company add controller', function () {
     describe('errors', function () {
       it('should show an error when no option selected', function (done) {
         const req = {
-          body: {}
+          body: {},
+          session: {}
         }
         const res = {
           locals: {},
@@ -189,7 +193,8 @@ describe('Company add controller', function () {
         const req = {
           body: {
             business_type: 'ukother'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -205,7 +210,8 @@ describe('Company add controller', function () {
         const req = {
           body: {
             business_type: 'forother'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -226,7 +232,8 @@ describe('Company add controller', function () {
           query: {
             business_type: 'ltd',
             country: 'uk'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -242,7 +249,8 @@ describe('Company add controller', function () {
           query: {
             business_type: 'ltd',
             country: 'uk'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},
@@ -264,7 +272,8 @@ describe('Company add controller', function () {
           query: {
             business_type: 'ltd',
             country: 'uk'
-          }
+          },
+          session: {}
         }
         const res = {
           locals: {},

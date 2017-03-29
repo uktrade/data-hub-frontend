@@ -17,7 +17,7 @@ const managedOptions = [
 
 const ukOtherCompanyOptions = [
   'Charity',
-  'Government department',
+  'Government dept',
   'Intermediary',
   'Limited partnership',
   'Partnership',
@@ -26,7 +26,7 @@ const ukOtherCompanyOptions = [
 const foreignOtherCompanyOptions = [
   'Charity',
   'Company',
-  'Government department',
+  'Government dept',
   'Intermediary',
   'Limited partnership',
   'Partnership',

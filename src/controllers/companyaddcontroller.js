@@ -2,7 +2,7 @@ const express = require('express')
 const Q = require('q')
 const winston = require('winston')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
-const { isBlank, toQueryString } = require('../lib/controllerutils')
+const { isBlank, toQueryString, genCSRF } = require('../lib/controllerutils')
 const searchService = require('../services/searchservice')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
@@ -11,6 +11,7 @@ const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('.
 const router = express.Router()
 
 function getAddStepOne (req, res, next) {
+  genCSRF(req, res)
   res.render('company/add-step-1.html', {
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
@@ -72,6 +73,8 @@ function postAddStepOne (req, res, next) {
 }
 
 function getAddStepTwo (req, res, next) {
+  genCSRF(req, res)
+
   // If there is no search, just render.
   res.locals.companyTypeOptions = companyTypeOptions
 
