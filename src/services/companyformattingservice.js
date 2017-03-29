@@ -1,12 +1,12 @@
-const { companyDetailLabels, chDetailLabels } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
 const getFormattedAddress = require('../lib/address').getFormattedAddress
 const sentenceCase = require('../lib/sentencecase')
 const DateLib = require('../lib/date')
+const { getPrimarySectorName } = require('../lib/transformsectors')
 
-const companyDetailsDisplayOrder = Object.keys(companyDetailLabels)
-const chDetailsDisplayOrder = Object.keys(chDetailLabels)
+const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
+const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
 const companyTableKeys = ['name', 'address']
-const TODO = '<span class="status-badge status-badge--xsmall status-badge--action">TO DO</span>'
 
 function getDisplayCH (company) {
   if (!company.companies_house_data) return null
@@ -35,40 +35,32 @@ function getDisplayCompany (company) {
   if (!company.id) return null
 
   const displayCompany = {
-    sector: (company.sector && company.sector.name) ? company.sector.name : TODO,
-    description: company.description || TODO,
-    website: company.website ? `<a href="${company.website}">${company.website}</a>` : TODO,
-    employee_range: (company.employee_range && company.employee_range.name) ? company.employee_range.name : TODO,
-    turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : TODO,
-    account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : TODO,
-    headquarters: company.headquarters || 'Not a headquarters'
+    sector: (company.sector && company.sector.name) ? getPrimarySectorName(company.sector.name) : null,
+    description: company.description || null,
+    website: company.website ? `<a href="${company.website}">${company.website}</a>` : null,
+    employee_range: (company.employee_range && company.employee_range.name) ? company.employee_range.name : null,
+    turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : null,
+    account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : null,
+    headquarter_type: (company.headquarter_type && company.headquarter_type.name && company.headquarter_type.name.length > 0) ? hqLabels[company.headquarter_type.name] : 'Not a headquarters',
+    alias: company.alias || null
   }
 
   if (company.alias && company.alias.length > 0) displayCompany.alias = company.alias
 
   const registeredAddress = getFormattedAddress(company, 'registered')
   if (registeredAddress.length > 0) displayCompany.registered_address = registeredAddress
-
+  if (company.registered_address_country && company.registered_address_country.name) {
+    displayCompany.country = company.registered_address_country.name
+  }
   const tradingAddress = getFormattedAddress(company, 'trading')
   if (tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
 
   if (!company.companies_house_data) {
-    displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : TODO
+    displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : null
     displayCompany.name = company.name
   }
 
   if (company.uk_region && company.uk_region.name && company.uk_region.name !== 'Undefined') displayCompany.uk_region = company.uk_region.name
-
-  if (company.export_to_countries && company.export_to_countries.length > 0) {
-    displayCompany.export_to_countries = company.export_to_countries.map(country => country.name).toString()
-  } else {
-    displayCompany.export_to_countries = 'No'
-  }
-  if (company.future_interest_countries && company.future_interest_countries.length > 0) {
-    displayCompany.future_interest_countries = company.future_interest_countries.map(country => country.name).toString()
-  } else {
-    displayCompany.future_interest_countries = 'No'
-  }
 
   return displayCompany
 }

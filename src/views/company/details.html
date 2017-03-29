@@ -2,40 +2,28 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
+  {% include "messages.html" %}
+
   <h2 class="heading-medium">Company summary</h2>
-  {% if chDisplay %}
+
+  {% if chDetails %}
     <div class="dark-panel">
-      {{ trade.keyvaluetable(chDisplay, labels=chDetailLabels, keyorder=chDetailsDisplayOrder, readonly=true) }}
+      {{ trade.keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, readonly=true) }}
       <p class="footnote">Powered by data from <strong>Companies House</strong></p>
     </div>
   {% endif %}
 
-  {% if companyDisplay %}
-    {{ trade.keyvaluetable(companyDisplay, stripey=true, labels=companyDetailLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
+  {% if companyDetails %}
+    {{ trade.keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
+  {% endif %}
 
-    <a href="/company/{{source}}/{{company.id}}/edit" class="button">Update</a>
+  <p><a href="/company/{{source}}/{{company.id}}/edit" class="button">Edit</a></p>
 
+  {% if accountManagementDisplay %}
     <div class="section">
-      <h3 class="heading-medium">Parent companies</h3>
-      {% if parents.length > 0 %}
-        {{  trade.datatable(parents, headings=companyTableHeadings, columnorder=companyTableKeys, class="table--related-companies") }}
-      {% else %}
-        <p>This company is currently not linked with any companies that it is a child of.</p>
-      {% endif %}
-      <a href="#" class="button button-secondary">Add a parent company</a>
+      <h2 class="heading-medium">Account management</h2>
+      {{ trade.keyvaluetable(accountManagementDisplay, stripey=true, labels=accountManagementDisplayLabels) }}
+      <p class="footnote">You do not have perission to edit the Account management section</strong></p>
     </div>
-    <div class="section">
-      <h3 class="heading-medium">Child companies</h3>
-      {% if children.length > 0 %}
-        {{  trade.datatable(children, headings=companyTableHeadings, columnorder=companyTableKeys, class="table--related-companies") }}
-      {% else %}
-        <p>This company is currently not linked with any companies that is is a parent of.</p>
-      {% endif %}
-      <a href="#" class="button button-secondary">Add a child company</a>
-    </div>
-  {% else %}
-    <p>
-      <a href="/company/{{source}}/{{company.id}}/edit" class="button button-secondary">Update</a>
-    </p>
   {% endif %}
 {% endblock %}

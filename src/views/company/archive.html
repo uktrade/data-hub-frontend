@@ -1,0 +1,14 @@
+<form class="section" method="POST">
+  <div class='form-group'>
+    <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
+
+    <select class='form-control' name='archived_reason'>
+      <option value=''>Select a value</option>
+      <option value=>Company is dissolved</option>
+      <option value='Other'>Other</option>
+    </select>
+  </div>
+  {{ trade.textbox("archived_reason_other", label="Other", error=errors.archived_reason_other) }}
+
+  {{ trade.save(buttonText="Archive", backUrl=cancelArchiveUrl) }}
+</form>

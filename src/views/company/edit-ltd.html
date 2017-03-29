@@ -5,7 +5,7 @@
   <h1 class="page-heading">Create a company</h1>
   <div class="grid-row">
     <div class="column-three-quarters">
-      {{ trade.errorPanel( errors, labels=companyDetailLabels ) }}
+      {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
       <div class="section">
         <div class="for-control key-value key-value--vertical">
           <div id="business-type" class="key-value__key form-label-bold">Business type
@@ -16,8 +16,8 @@
       </div>
 
       <div class="section">
-        {% if chDisplay %}
-          {{ trade.keyvaluetable(chDisplay, labels=chDetailLabels, keyorder=chDetailDisplayOrder, class="table--small", id="ch-details") }}
+        {% if chDetails %}
+          {{ trade.keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, class="table--small", id="ch-details") }}
           <div class="table_footnote">Data from <strong>Companies House</strong></div>
         {% endif %}
       </div>

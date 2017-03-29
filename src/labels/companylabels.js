@@ -1,4 +1,4 @@
-const companyDetailLabels = {
+const companyDetailsLabels = {
   business_type: 'Business type',
   name: 'Name',
   registered_address: 'Primary address',
@@ -24,20 +24,17 @@ const companyDetailLabels = {
   registered_address_postcode: 'Registered address postcode',
   registered_address_country: 'Registered address country',
   business_type_for_other: 'Type of organisation',
-  business_type_uk_other: 'Type of organisation'
+  business_type_uk_other: 'Type of organisation',
+  headquarter_type: 'Headquarters'
 }
-const chDetailLabels = {
-  name: 'Registered company name',
-  company_number: 'Companies House number',
+const chDetailsLabels = {
+  name: 'Registered name',
+  company_number: 'Companies House No',
   registered_address: 'Registered office address',
   business_type: 'Company type',
   company_status: 'Company status',
   sic_code: 'Nature of business (SIC)',
-  incorporation_date: 'Incorporation date'
-}
-const companyTableHeadings = {
-  name: 'Company name',
-  address: 'Address'
+  incorporation_date: 'Incorporated on'
 }
 const companyTypeOptions = {
   ltd: 'UK private or public limited company',
@@ -51,5 +48,9 @@ const hqLabels = {
   'ghq': 'Global headquarters (GHQ)',
   'ukhq': 'UK headquarters (UK HQ)'
 }
+const accountManagementDisplayLabels = {
+  oneListTier: 'One List tier',
+  oneListAccountManager: 'One List account manager'
+}
 
-module.exports = { companyDetailLabels, chDetailLabels, companyTableHeadings, companyTypeOptions, hqLabels }
+module.exports = { companyDetailsLabels, chDetailsLabels, companyTypeOptions, hqLabels, accountManagementDisplayLabels }

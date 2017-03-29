@@ -3,22 +3,30 @@
 {% block main %}
 <h1 class="visually-hidden">Company Details</h1>
 <h2 class="page-heading">
-    {% if company.id %}<span class="pre-header">Company ref: TBD</span>{% endif %}
     {{ headingName }}
     <span class="post-header">{{ headingAddress }}</span>
 </h2>
 
+{% if query.archive %}
+  {% include "company/archive.html" %}
+{% else %}
+  {% if company.id %}
+    <p>
+      <div class="form-label-bold">{{company.ref}}</div>
+      <a href="{{archiveUrl}}">Archive company</a>
+    </p>
+  {% endif %}
+{% endif %}
 <div class="left-nav-container">
   <div class="left-nav">
     <nav>
-      <a class="{% if tab == 'details' %}active{% endif %}"
-         href="/company/{{source}}/{{id}}/details">Details</a>
-      <a class="{% if tab == 'contacts' %}active{% endif %}"
-         href="/company/{{source}}/{{id}}/contacts">Contacts</a>
+      <a class="{% if tab == 'details' %}active{% endif %}" href="/company/{{source}}/{{id}}/details">Company details</a>
+      <a class="{% if tab == 'hierarchy' %}active{% endif %}" href="/company/{{source}}/{{id}}/details">Company hierarchy</a>
+      <a class="{% if tab == 'contacts' %}active{% endif %}" href="/company/{{source}}/{{id}}/contacts">Contacts</a>
       <a class="{% if tab == 'interactions' %}active{% endif %}" href="/company/{{source}}/{{id}}/interactions">Interactions</a>
-      {% if company.id %}
-          <a class="{% if tab == 'exports' %}active{% endif %}" href="/company/{{source}}/{{id}}/export">Export</a>
-      {% endif %}
+      <a class="{% if tab == 'contacts' %}active{% endif %}" href="/company/{{source}}/{{id}}/contacts">Documents</a>
+      <a class="{% if tab == 'exports' %}active{% endif %}" href="/company/{{source}}/{{id}}/export">Export</a>
+      <a class="{% if tab == 'contacts' %}active{% endif %}" href="/company/{{source}}/{{id}}/contacts">Investment</a>
     </nav>
   </div>
   <div class="right-content">

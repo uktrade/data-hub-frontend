@@ -1,5 +1,4 @@
 /* eslint no-new: 0 */
-require('babel-polyfill')
 const Facets = require('./facets')
 
 document.addEventListener(

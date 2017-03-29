@@ -5,10 +5,14 @@ const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
-const { companyDetailLabels, chDetailLabels, companyTableHeadings, hqLabels } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, hqLabels, accountManagementDisplayLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
-const { isBlank } = require('../lib/controllerutils')
+const { isBlank, toQueryString } = require('../lib/controllerutils')
 const router = express.Router()
+const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const companyWithCHKeys = ['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
+const chDetailsDisplayOrderShort = ['name', 'company_number', 'registered_address', 'business_type']
 
 function getCommon (req, res, next) {
   const id = req.params.sourceId
@@ -20,38 +24,23 @@ function getCommon (req, res, next) {
     res.locals.id = id
     res.locals.source = source
     res.locals.company = company
+
+    if (company.archived) {
+      res.locals.unarchiveUrl = getUnarchiveUrl(req)
+    } else {
+      if (req.query.archive) {
+        res.locals.cancelArchiveUrl = getCancelArchiveUrl(req)
+      } else {
+        res.locals.archiveUrl = getArchiveUrl(req)
+      }
+    }
+
     next()
   })
   .catch((error) => {
     winston.error(error)
     next()
   })
-}
-
-function getDetails (req, res, next) {
-  try {
-    const company = res.locals.company
-    const companyDisplay = companyFormattingService.getDisplayCompany(company)
-    const chDisplay = companyFormattingService.getDisplayCH(company)
-    const parents = companyFormattingService.parseRelatedData(company.parents)
-    const children = companyFormattingService.parseRelatedData(company.children)
-
-    res.render('company/details', {
-      tab: 'details',
-      companyDisplay,
-      chDisplay,
-      companyDetailLabels,
-      companyDetailsDisplayOrder: Object.keys(companyDetailLabels),
-      chDetailLabels,
-      chDetailsDisplayOrder: ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'sic_code'],
-      companyTableHeadings,
-      companyTableKeys: Object.keys(companyTableHeadings),
-      children,
-      parents
-    })
-  } catch (error) {
-    next(error)
-  }
 }
 
 // Figure out the business type using either the existing company business type
@@ -74,13 +63,41 @@ function calculateBusinessType (company, req) {
   }
 }
 
+function getDetails (req, res, next) {
+  try {
+    const company = res.locals.company
+    res.locals.tab = 'details'
+
+    if (company && company.companies_house_data && company.companies_house_data !== null) {
+      res.locals.chDetails = companyFormattingService.getDisplayCH(company)
+      res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
+      res.locals.chDetailsLabels = chDetailsLabels
+    }
+
+    if (company && company.id && company.id !== null) {
+      res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
+      res.locals.companyDetailsDisplayOrder = (res.locals.chDetails) ? companyWithCHKeys : companyWithoutCHKeys
+      res.locals.companyDetailsLabels = companyDetailsLabels
+      res.locals.accountManagementDisplay = {
+        oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
+        oneListAccountManager: 'None'
+      }
+      res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
+    }
+
+    res.render('company/details')
+  } catch (error) {
+    next(error)
+  }
+}
+
 function editDetails (req, res) {
   const company = res.locals.company || {}
 
   if (company.companies_house_data && company.companies_house_data.company_number) {
-    res.locals.chDisplay = companyFormattingService.getDisplayCH(company)
-    res.locals.chDetailLabels = chDetailLabels
-    res.locals.chDetailDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type']
+    res.locals.chDetails = companyFormattingService.getDisplayCH(company)
+    res.locals.chDetailsLabels = chDetailsLabels
+    res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderShort
   }
 
   const businessType = res.locals.business_type = calculateBusinessType(company, req)
@@ -102,7 +119,7 @@ function editDetails (req, res) {
   }
 
   res.render(`company/${template}`, {
-    companyDetailLabels,
+    companyDetailsLabels,
     regionOptions: metadataRepository.regionOptions,
     sectorOptions: metadataRepository.sectorOptions,
     employeeOptions: metadataRepository.employeeOptions,
@@ -217,6 +234,31 @@ function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
 
+function postArchive (req, res) {
+  res.redirect(`/company/company_company/${req.params.sourceId}/details`)
+}
+
+function getArchiveUrl (req) {
+  const query = Object.assign({}, req.query)
+  query.archive = true
+  const queryParams = toQueryString(query)
+  const fullUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}?${queryParams}`
+  return fullUrl
+}
+
+function getUnarchiveUrl (req) {
+  const query = Object.assign({}, req.query)
+  query.unarchive = true
+  const queryParams = toQueryString(query)
+  const fullUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}?${queryParams}`
+  return fullUrl
+}
+
+
+function getCancelArchiveUrl (req) {
+  return `${req.protocol}://${req.get('host')}${req.baseUrl}`
+}
+
 router.use('/company/:source/:sourceId/*', getCommon)
 router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
@@ -224,5 +266,6 @@ router.get('/company/:source/:sourceId/details', getDetails)
 router.get('/company/:source/:sourceId/contacts', getContacts)
 router.get('/company/:source/:sourceId/interactions', getInteractions)
 router.get('/company/:source/:sourceId/export', getExport)
+router.post('/company/:source/:sourceId/archive', postArchive)
 
-module.exports = { router, editDetails, getCommon, postDetails }
+module.exports = { router, editDetails, getCommon, postDetails, getDetails }
