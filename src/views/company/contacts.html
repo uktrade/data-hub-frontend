@@ -2,16 +2,45 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-{% if contactTableData.length > 0 %}
-  {{ trade.datatable(contactTableData, stripey=true, headings=tableLabels, columnorder=tableFieldOrder)}}
+  <h2 class="heading-medium">Company contacts</h2>
+{% if contacts.length > 0 %}
+  <ul id="contact-list" class="cardlist">
+    {% for contact in contacts %}
+      <li class="cardlist--card contact">
+        <a class="cardlist--metadata" href="{{contact.url}}">{{contact.name}}</a>
+        <div class="split-data">
+          <div>
+            <div class="cardlist--metadata">{{contact.job_title}}</div>
+            <div class="cardlist--metadata">{{contact.added}}</div>
+          </div>
+          <div>
+            <div class="cardlist--metadata">{{contact.phone}}</div>
+            <div class="cardlist--metadata"><{{contact.email}}</div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+<p class="lede">There are no contacts at this time</p>
 {% endif %}
+
 <p class="actions">
-  <a class="button button-secondary" href="/contact/add?companyId={{company.id}}">Add new contact</a>
+  <a id="add-contact-link" class="button button-secondary" href="{{addContactUrl}}">Add new contact</a>
 </p>
 
-{% if archivedContactTableData.length > 0 %}
-  <h2 class="heading-large">Archived</h2>
-  {{ trade.datatable(archivedContactTableData, stripey=true, headings=tableLabels, columnorder=tableFieldOrder)}}
+{% if contactsArchived.length > 0 %}
+  <h2 id="archived-title" class="heading-medium">Archived contacts</h2>
+  <ul id="archived-contact-list" class="cardlist">
+    {% for contact in contactsArchived %}
+      <li class="cardlist--card contact">
+        <a class="cardlist--metadata" href="{{contact.url}}">{{contact.name}}</a>
+        <div class="cardlist--metadata">{{contact.job_title}}</div>
+        <div class="cardlist--metadata">{{contact.reason}}</div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
 {% endif %}
 
 {% endblock %}
