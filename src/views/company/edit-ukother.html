@@ -29,7 +29,6 @@
           <div class="key-value key-value--vertical form-group">
             <div id="registered-address-contry-label" class="key-value__key form-label-bold">Country</div>
             <div class="key-value__value" aria-labelledby="registered-address-contry-label">United Kingdom</div>
-            <!-- add hidden field for country -->
           </div>
 
           <div class="form-group form-group--postcode">{# hide for none js #}
@@ -47,8 +46,8 @@
 
           {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=company.registered_address_1, error=errors.registered_address_1) }}
           {{ trade.textbox("registered_address_2", value=company.registered_address_2, error=errors.registered_address_2) }}
-          {{ trade.textbox("registered_address_town", label="Town of city (optional)", value=company.registered_address_town, error=errors.registered_address_town) }}
-          {{ trade.textbox("registered_address_county", label="County (optonal)", value=company.registered_address_county, error=errors.registered_address_county) }}
+          {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=company.registered_address_town, error=errors.registered_address_town) }}
+          {{ trade.textbox("registered_address_county", label="County (optional)", value=company.registered_address_county, error=errors.registered_address_county) }}
           {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=company.registered_address_postcode, error=errors.registered_address_postcode) }}
           <input type="hidden" name="registered_address_country" value="{{unitedKingdom}}">
         </fieldset>
@@ -69,7 +68,7 @@
           <div class="form-group form-group--postcode">{# hide for none js #}
             <label class="form-label-bold">Postcode</label>
             <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-            <button class="button button-secondary postcode-lookup-button" type="button">Find UK Address</button>
+            <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
           </div>
           {# dropdown of suggestions #}
           <div class="form-group form-group--address-suggestions">
@@ -81,8 +80,8 @@
 
           {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=company.trading_address_1, error=errors.trading_address_1) }}
           {{ trade.textbox("trading_address_2", value=company.trading_address_2, error=errors.trading_address_2) }}
-          {{ trade.textbox("trading_address_town", label="Town of city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
-          {{ trade.textbox("trading_address_county", label="County (optonal)", value=company.trading_address_county, error=errors.trading_address_county) }}
+          {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
+          {{ trade.textbox("trading_address_county", label="County (optional)", value=company.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=company.trading_address_postcode, error=errors.trading_address_postcode) }}
           <input type="hidden" name="trading_address_country" value="{{company.trading_address_country}}">
         </fieldset>
