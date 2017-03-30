@@ -1,0 +1,24 @@
+.cardlist {
+  list-style: none;
+}
+
+.cardlist--card {
+  padding-bottom: 20px;
+  border-bottom: 1px solid $border-colour;
+
+  &:first-child {
+    padding-top: 20px;
+    border-top: 1px solid $border-colour;
+  }
+
+  & > a {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+}
+
+.cardlist--card.split-data {
+  > div {
+    width: 50%;
+  }
+}
