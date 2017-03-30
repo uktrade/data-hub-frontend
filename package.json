@@ -8,7 +8,7 @@
     "url": "https://github.com/uktrade/data-hub-fe-beta2"
   },
   "dependencies": {
-    "@uktrade/trade_elements": "^3.0.0",
+    "@uktrade/trade_elements": "^3.0.4",
     "axios": "^0.15.2",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",

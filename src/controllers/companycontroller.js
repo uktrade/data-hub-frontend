@@ -7,12 +7,14 @@ const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailsLabels, chDetailsLabels, hqLabels, accountManagementDisplayLabels } = require('../labels/companylabels')
 const formatDate = require('../lib/date').formatDate
-const { isBlank, toQueryString } = require('../lib/controllerutils')
+const { isBlank, toQueryString, genCSRF } = require('../lib/controllerutils')
 const router = express.Router()
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 const companyWithCHKeys = ['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 const chDetailsDisplayOrderShort = ['name', 'company_number', 'registered_address', 'business_type']
+let unitedKingdom
+
 
 function getCommon (req, res, next) {
   const id = req.params.sourceId
@@ -61,6 +63,13 @@ function calculateBusinessType (company, req) {
       }
     }
   }
+
+  // Worst case, return undefined
+  for (const businessType of metadataRepository.businessTypeOptions) {
+    if (businessType.name.toLowerCase() === 'undefined') {
+      return businessType
+    }
+  }
 }
 
 function getDetails (req, res, next) {
@@ -93,6 +102,7 @@ function getDetails (req, res, next) {
 
 function editDetails (req, res) {
   const company = res.locals.company || {}
+  genCSRF(req, res)
 
   if (company.companies_house_data && company.companies_house_data.company_number) {
     res.locals.chDetails = companyFormattingService.getDisplayCH(company)
@@ -104,12 +114,18 @@ function editDetails (req, res) {
   const ukBased = res.locals.uk_based = (company.companies_house_data || company.uk_based || (req.query && req.query.country && req.query.country === 'uk'))
 
   let template
-  if (businessType.name.toLowerCase() === 'private limited company' || businessType.name.toLowerCase() === 'public limited company') {
+  if (businessType && businessType.name && businessType.name.toLowerCase() === 'private limited company' || businessType.name.toLowerCase() === 'public limited company') {
     template = 'edit-ltd'
   } else if (!ukBased) {
     template = 'edit-nonuk'
   } else {
     template = 'edit-ukother'
+    // pass the id for the UK to use for addresses.
+    if (!unitedKingdom && metadataRepository.countryOptions) {
+      unitedKingdom = metadataRepository.countryOptions.filter(option => option.name.toLowerCase() === 'united kingdom')[0].id
+    }
+    res.locals.unitedKingdom = unitedKingdom
+    res.locals.uk_based = true
   }
 
   if (!isBlank(company.trading_address_country)) {

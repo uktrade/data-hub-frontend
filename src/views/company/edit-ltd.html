@@ -54,7 +54,7 @@
           <div class="form-group form-group--postcode">{# hide for none js #}
             <label class="form-label-bold">Postcode</label>
             <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-            <button class="button button-secondary postcode-lookup-button" type="button">Find UK Address</button>
+            <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
           </div>
           {# dropdown of suggestions #}
           <div class="form-group form-group--address-suggestions">
@@ -66,8 +66,8 @@
 
           {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=company.trading_address_1, error=errors.trading_address_1) }}
           {{ trade.textbox("trading_address_2", value=company.trading_address_2, error=errors.trading_address_2) }}
-          {{ trade.textbox("trading_address_town", label="Town of city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
-          {{ trade.textbox("trading_address_county", label="County (optonal)", value=company.trading_address_county, error=errors.trading_address_county) }}
+          {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
+          {{ trade.textbox("trading_address_county", label="County (optional)", value=company.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=company.trading_address_postcode, error=errors.trading_address_postcode) }}
           {{ trade.dropdown("trading_address_country", class="hidde", label="Country", emptyLabel="Pick a value", value=company.trading_address_country, options=countryOptions, errors=trading_address_country)}}
         </fieldset>

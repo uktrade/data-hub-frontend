@@ -8,7 +8,7 @@ const serviceDeliveryRepository = require('../repositorys/servicedeliveryreposit
 const serviceDeliverylabels = require('../labels/servicedelivery')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
 const formatDate = require('../lib/date').formatDate
-
+const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -26,6 +26,7 @@ function getCommon (req, res, next) {
 }
 
 function getServiceDeliveryEdit (req, res, next) {
+  genCSRF(req, res)
   Q.spawn(function *() {
     try {
       const token = req.session.token

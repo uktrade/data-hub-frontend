@@ -125,7 +125,7 @@ describe('Company controller, getDetails', function () {
         name: 'Test company'
       }
     }
-    const req = {}
+    const req = {session: {}}
     const res = {
       locals: { company },
       render: function (url, options) {
@@ -286,7 +286,6 @@ describe('Company controller, getDetails', function () {
       }
     }
     const next = function (error) {
-      console.log(error)
       expect(false).to.equal(true)
     }
     companyController.getDetails(req, res, next)
