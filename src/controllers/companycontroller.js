@@ -202,7 +202,7 @@ function getContacts (req, res) {
 
   const tableLabels = {
     name: 'Name',
-    job_title: 'Role',
+    job_title: 'Job title',
     telephone_number: 'Phone',
     email: 'Email'
   }
