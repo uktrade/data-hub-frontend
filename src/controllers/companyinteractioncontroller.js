@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const moment = require('moment')
+const {formatLongDate} = require('../lib/date')
 
 const router = express.Router()
 /**
@@ -21,7 +21,7 @@ function getInteractions (req, res) {
       url: `/${type}/${interaction.id}/details`,
       type: interaction.interaction_type.name,
       subject: interaction.subject,
-      date: moment(interaction.date).format('DD MMMM YYYY'),
+      date: formatLongDate(interaction.date),
       advisor: `${interaction.dit_advisor.first_name} ${interaction.dit_advisor.last_name}`
     }
   })

@@ -32,5 +32,6 @@ module.exports = {
   zenEmail: process.env.ZEN_EMAIL,
   zenBrowser: process.env.ZEN_BROWSER,
   zenImpact: process.env.ZEN_IMPACT,
-  zenService: process.env.ZEN_SERVICE
+  zenService: process.env.ZEN_SERVICE,
+  longDateFormat: 'D MMMM YYYY'
 }
