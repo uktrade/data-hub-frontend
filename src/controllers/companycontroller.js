@@ -6,7 +6,7 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailsLabels, chDetailsLabels, hqLabels, accountManagementDisplayLabels } = require('../labels/companylabels')
-const formatDate = require('../lib/date').formatDate
+const {formatLongDate} = require('../lib/date')
 const { isBlank, toQueryString, genCSRF } = require('../lib/controllerutils')
 const router = express.Router()
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
@@ -218,34 +218,6 @@ function getContacts (req, res) {
   })
 }
 
-function getInteractions (req, res) {
-  // build the data for the contact table.
-  const interactionTableData = res.locals.company.interactions.map((interaction) => {
-    return {
-      date: formatDate(interaction.date),
-      interaction_type: interaction.interaction_type.name,
-      advisor: `${interaction.dit_advisor.first_name} ${interaction.dit_advisor.last_name}`,
-      subject: `<a href="/${(interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'}/${interaction.id}/details">${interaction.subject}</a>`
-    }
-  })
-
-  const tableLabels = {
-    date: 'Date',
-    interaction_type: 'Type',
-    advisor: 'Advisor',
-    subject: 'Subject'
-  }
-
-  const tableFieldOrder = Object.keys(tableLabels)
-
-  res.render('company/interactions', {
-    tab: 'interactions',
-    interactionTableData,
-    tableLabels,
-    tableFieldOrder
-  })
-}
-
 function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
@@ -280,7 +252,6 @@ router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
 router.get('/company/:source/:sourceId/details', getDetails)
 router.get('/company/:source/:sourceId/contacts', getContacts)
-router.get('/company/:source/:sourceId/interactions', getInteractions)
 router.get('/company/:source/:sourceId/export', getExport)
 router.post('/company/:source/:sourceId/archive', postArchive)
 

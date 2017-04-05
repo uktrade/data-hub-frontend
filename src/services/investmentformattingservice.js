@@ -1,4 +1,4 @@
-const DateLib = require('../lib/date')
+const {formatLongDate} = require('../lib/date')
 
 function getInvestmentDetailsDisplay (investmentSummary) {
   if (!investmentSummary.id || !investmentSummary.investment_tier || investmentSummary.investment_tier.length === 0) return null
@@ -36,7 +36,7 @@ function getOpenInvestmentProjects (investmentProjects) {
         name: `<a href="/investmentprojects/${project.id}/">${project.name}</a>`,
         value: project.value,
         state: project.state,
-        land_date: DateLib.formatDate(project.land_date)
+        land_date: formatLongDate(project.land_date)
       }
     })
 }
@@ -50,7 +50,7 @@ function getClosedInvestmentProjects (investmentProjects) {
         name: `<a href="/investmentprojects/${project.id}/">${project.name}</a>`,
         value: project.value,
         state: project.state,
-        state_date: DateLib.formatDate(project.state_date)
+        state_date: formatLongDate(project.state_date)
       }
     })
 }

@@ -7,7 +7,7 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliverylabels = require('../labels/servicedelivery')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
-const formatDate = require('../lib/date').formatDate
+const {formatLongDate} = require('../lib/date')
 const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
 
@@ -107,7 +107,7 @@ function getServiceDeliveryDetails (req, res, next) {
     status: serviceDelivery.status.name,
     subject: serviceDelivery.subject,
     notes: serviceDelivery.notes,
-    date: formatDate(serviceDelivery.date),
+    date: formatLongDate(serviceDelivery.date),
     contact: `<a href="/contact/${serviceDelivery.contact.id}">${serviceDelivery.contact.first_name} ${serviceDelivery.contact.last_name}</a>`,
     dit_advisor: serviceDelivery.dit_advisor.name,
     uk_region: serviceDelivery.uk_region.name,

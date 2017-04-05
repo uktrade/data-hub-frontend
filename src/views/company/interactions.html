@@ -2,10 +2,32 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-{% if company.interactions.length > 0 %}
-  {{ trade.datatable(interactionTableData, stripey=true, headings=tableLabels, columnorder=tableFieldOrder)}}
+<h2 class="heading-medium">Company interactions</h2>
+{% if interactions.length > 0 %}
+<ul id="interaction-list" class="lined-list">
+  {% for interaction in interactions %}
+  <li class="lined-list__item">
+    <div class="card interaction">
+      <a class="card__metadata" href="{{interaction.url}}">{{interaction.subject}}</a>
+      <div class="split-data">
+        <div>
+          <div class="card__metadata">{{interaction.type}}</div>
+          <div class="card__metadata">{{interaction.date}}</div>
+        </div>
+        <div>
+          <div class="card__metadata">{{interaction.advisor}}</div>
+        </div>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p id="no-interaction-warning" class="infostrip">There are no interactions at this time.</p>
 {% endif %}
-<p class="actions">
-  <a class="button button-secondary" href="/interaction/add?companyId={{company.id}}">Add new interaction</a>
-</p>
+{% if addInteractionUrl %}
+  <p class="actions">
+    <a id="add-interaction-link" class="button button-secondary" href="{{addInteractionUrl}}">Add new interaction</a>
+  </p>
+{% endif %}
 {% endblock %}
