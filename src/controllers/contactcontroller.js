@@ -25,7 +25,6 @@ function getDetails (req, res, next) {
     res.locals.tab = 'details'
     res.locals.contactDetails = contactFormattingService.getDisplayContact(res.locals.contact)
     res.locals.contactDetailsLabels = contactDetailsLabels
-    res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
     res.render('contact/details')
   } catch (error) {
     next(error)
@@ -49,4 +48,4 @@ router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 router.get('/contact/:contactId/details', getDetails)
 router.get('/contact/:contactId/interactions', getInteractions)
 
-module.exports = {router}
+module.exports = {router, getDetails}

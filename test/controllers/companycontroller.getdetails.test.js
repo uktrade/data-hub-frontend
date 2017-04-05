@@ -285,7 +285,7 @@ describe('Company controller, getDetails', function () {
         done()
       }
     }
-    const next = function (error) {
+    const next = function () {
       expect(false).to.equal(true)
     }
     companyController.getDetails(req, res, next)
