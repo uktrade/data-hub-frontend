@@ -1,13 +1,14 @@
 const express = require('express')
 const winston = require('winston')
 
-const contactRepository = require('../repositorys/contactrepository')
-
+const contactService = require('../services/contactservice')
+const contactFormattingService = require('../services/contactformattingservice')
+const { contactDetailsLabels } = require('../labels/contactlabels')
 const router = express.Router()
 
 function getCommon (req, res, next) {
   const id = req.params.contactId
-  contactRepository.getContact(req.session.token, id)
+  contactService.getInflatedContact(req.session.token, id)
   .then((contact) => {
     res.locals.id = id
     res.locals.contact = contact
@@ -21,9 +22,11 @@ function getCommon (req, res, next) {
 
 function getDetails (req, res, next) {
   try {
-    res.render('contact/details', {
-      tab: 'details'
-    })
+    res.locals.tab = 'details'
+    res.locals.contactDetails = contactFormattingService.getDisplayContact(res.locals.contact)
+    res.locals.contactDetailsLabels = contactDetailsLabels
+    res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
+    res.render('contact/details')
   } catch (error) {
     next(error)
   }
