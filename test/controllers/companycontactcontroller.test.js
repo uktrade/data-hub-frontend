@@ -286,22 +286,20 @@ describe('Company contacts controller', function () {
       addContactUrl = '/contact/add?company=1234'
     })
 
-    it('should render a list of un-archived contacts', function (done) {
-      renderContent({contacts, contactsArchived, addContactUrl, company})
+    it('should render a list of un-archived contacts', function () {
+      return renderContent({contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('contact-list')).to.not.be.null
-        done()
       })
     })
-    it('should render a list of archived contacts', function (done) {
-      renderContent({contacts, contactsArchived, addContactUrl, company})
+    it('should render a list of archived contacts', function () {
+      return renderContent({contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.not.be.null
-        done()
       })
     })
-    it('each un-archived line should include the required data', function (done) {
-      renderContent({contacts, contactsArchived, addContactUrl, company})
+    it('each un-archived line should include the required data', function () {
+      return renderContent({contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .contact')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -310,42 +308,37 @@ describe('Company contacts controller', function () {
         expect(contactElement.innerHTML).to.include('+44 7788 112 332')
         expect(contactElement.innerHTML).to.include('fred@acme.org')
         expect(contactElement.innerHTML).to.include('/contact/1/details')
-        done()
       })
     })
-    it('each archived line should include the required data', function (done) {
-      renderContent({contacts, contactsArchived, addContactUrl, company})
+    it('each archived line should include the required data', function () {
+      return renderContent({contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const contactElement = document.querySelector('#archived-contact-list .contact')
         expect(contactElement.innerHTML).to.include('John Smith')
         expect(contactElement.innerHTML).to.include('Director')
         expect(contactElement.innerHTML).to.include('Left company')
         expect(contactElement.innerHTML).to.include('/contact/3/details')
-        done()
       })
     })
-    it('include a link to add a new contact', function (done) {
-      renderContent({contacts, contactsArchived, addContactUrl, company})
+    it('include a link to add a new contact', function () {
+      return renderContent({contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
         expect(link.href).to.eq('/contact/add?company=1234')
-        done()
       })
     })
-    it('should not render contacts section if there are none and warn user', function (done) {
-      renderContent({contacts: [], contactsArchived, addContactUrl, company})
+    it('should not render contacts section if there are none and warn user', function () {
+      return renderContent({contacts: [], contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('contact-list')).to.be.null
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
-        done()
       })
     })
-    it('should not render archived contacts section if there are none', function (done) {
-      renderContent({contacts: [], contactsArchived: [], addContactUrl, company})
+    it('should not render archived contacts section if there are none', function () {
+      return renderContent({contacts: [], contactsArchived: [], addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.be.null
         expect(document.getElementById('archived-title')).to.be.null
-        done()
       })
     })
   })

@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const moment = require('moment')
+const {formatLongDate} = require('../lib/date')
 
 const router = express.Router()
 /**
@@ -23,7 +23,7 @@ function getContacts (req, res) {
         job_title: contact.job_title,
         phone: formatPhone(contact),
         email: contact.email,
-        added: moment(contact.created_on).format('DD MMMM YYYY')
+        added: formatLongDate(contact.created_on)
       }
     })
 
