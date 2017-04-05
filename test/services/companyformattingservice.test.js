@@ -485,7 +485,7 @@ describe('Company formatting service', () => {
         name: 'Amazon Savers',
         company_status: 'Active',
         sic_code: ['82990 - Other business support service activities n.e.c.', '82991 - Other business support service activities n.e.c.'],
-        incorporation_date: '6 Feb 2012'
+        incorporation_date: '6 February 2012'
       }
       expect(actual).to.deep.equal(expected)
     })

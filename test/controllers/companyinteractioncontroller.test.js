@@ -165,40 +165,36 @@ describe('Company interactions controller', function () {
       addInteractionUrl = '/interaction/add?company=1234'
     })
 
-    it('should render a list of interactions', function (done) {
-      renderContent({interactions, addInteractionUrl, company})
+    it('should render a list of interactions', function () {
+      return renderContent({interactions, addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.not.be.null
-        done()
       })
     })
 
-    it('each un-archived line should include the required data', function (done) {
-      renderContent({interactions, addInteractionUrl, company})
+    it('each un-archived line should include the required data', function () {
+      return renderContent({interactions, addInteractionUrl, company})
       .then((document) => {
         const interactionElement = document.querySelector('#interaction-list .interaction')
         expect(interactionElement.innerHTML).to.include('Test subject')
         expect(interactionElement.innerHTML).to.include('Email')
         expect(interactionElement.innerHTML).to.include('23 February 2017')
         expect(interactionElement.innerHTML).to.include('Fred Smith')
-        done()
       })
     })
 
-    it('include a link to add a new interaction', function (done) {
-      renderContent({interactions, addInteractionUrl, company})
+    it('include a link to add a new interaction', function () {
+      return renderContent({interactions, addInteractionUrl, company})
       .then((document) => {
         const link = document.querySelector('a#add-interaction-link')
         expect(link.href).to.eq('/interaction/add?company=1234')
-        done()
       })
     })
-    it('should not render interactions if there are none and warn user', function (done) {
-      renderContent({interactions: [], addInteractionUrl, company})
+    it('should not render interactions if there are none and warn user', function () {
+      return renderContent({interactions: [], addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.be.null
         expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('There are no interactions at this time.')
-        done()
       })
     })
   })
