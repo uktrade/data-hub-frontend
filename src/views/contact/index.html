@@ -1,15 +1,12 @@
 {% extends "layouts/ukti.html" %}
-{% block head_script %}
-<script>
-    window.contact = {{ contact | dump | safe }}
-    window.csrfToken= '{{ csrfToken }}'
-</script>
-{% endblock %}
+{% import "macros/trade.html" as trade %}
 
 {% block main %}
 <h1 class="visually-hidden">Contact Details</h1>
-<h2 class="page-heading">{{contact.first_name}} {{contact.last_name}}</h2>
-{{ contact | log | safe }}
+<h2 class="page-heading">
+  {{contact.first_name}} {{contact.last_name}} {% if contact.primary == true %}{{trade.statusbadge('Primary', variation="fuschia")}}{% endif %}
+  <span class="post-header"><a href="/company/company_company/{{contact.company.id}}">{{contact.company.name}}</a></span>
+</h2>
 
 <div class="left-nav-container">
   <div class="left-nav">
