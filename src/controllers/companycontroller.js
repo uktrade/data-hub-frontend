@@ -6,7 +6,6 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const companyService = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailsLabels, chDetailsLabels, hqLabels, accountManagementDisplayLabels } = require('../labels/companylabels')
-const {formatLongDate} = require('../lib/date')
 const { isBlank, toQueryString, genCSRF } = require('../lib/controllerutils')
 const router = express.Router()
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
@@ -176,48 +175,6 @@ function postDetails (req, res, next) {
     })
 }
 
-function getContacts (req, res) {
-  // build the data for the contact table.
-  const contactTableData = res.locals.company.contacts
-    .filter(contact => contact.archived === false)
-    .map((contact) => {
-      return {
-        name: `<a href="/contact/{{ contact.id }}">${contact.first_name} ${contact.last_name}</a>`,
-        job_title: contact.job_title,
-        telephone_number: contact.telephone_number,
-        email: `<a href="mailto:${contact.email}">${contact.email}</a>`
-      }
-    })
-
-  const archivedContactTableData = res.locals.company.contacts
-    .filter(contact => contact.archived === true)
-    .map((contact) => {
-      return {
-        name: `<a href="/contact/{{ contact.id }}">${contact.first_name} ${contact.last_name}</a>`,
-        job_title: contact.job_title,
-        telephone_number: contact.telephone_number,
-        email: `<a href="mailto:${contact.email}">${contact.email}</a>`
-      }
-    })
-
-  const tableLabels = {
-    name: 'Name',
-    job_title: 'Job title',
-    telephone_number: 'Phone',
-    email: 'Email'
-  }
-
-  const tableFieldOrder = Object.keys(tableLabels)
-
-  res.render('company/contacts', {
-    tab: 'contacts',
-    contactTableData,
-    archivedContactTableData,
-    tableLabels,
-    tableFieldOrder
-  })
-}
-
 function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
@@ -251,7 +208,6 @@ router.use('/company/:source/:sourceId/*', getCommon)
 router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
 router.get('/company/:source/:sourceId/details', getDetails)
-router.get('/company/:source/:sourceId/contacts', getContacts)
 router.get('/company/:source/:sourceId/export', getExport)
 router.post('/company/:source/:sourceId/archive', postArchive)
 

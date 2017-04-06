@@ -411,7 +411,7 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res)
       })
-      it('should include la link to close the selected section', function (done) {
+      it('should include a link to close the selected section', function (done) {
         const req = {
           session: {
             token: '1234'
