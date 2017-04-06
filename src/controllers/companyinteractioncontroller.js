@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const {formatLongDate} = require('../lib/date')
+const {getDisplayCompanyInteraction} = require('../services/interactionformattingservice')
 
 const router = express.Router()
 /**
@@ -11,22 +11,11 @@ const router = express.Router()
  */
 function getInteractions (req, res) {
   res.locals.tab = 'interactions'
-  const company = res.locals.company
 
-  // build the data for the interaction list.
-  res.locals.interactions = company.interactions.map((interaction) => {
-    const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
-
-    return {
-      url: `/${type}/${interaction.id}/details`,
-      type: interaction.interaction_type.name,
-      subject: interaction.subject,
-      date: formatLongDate(interaction.date),
-      advisor: `${interaction.dit_advisor.first_name} ${interaction.dit_advisor.last_name}`
-    }
-  })
+  res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
 
   // Only allow a link to add an interaction if the company has contacts
+  const company = res.locals.company
   if (company.contacts && company.contacts.length > 0) {
     res.locals.addInteractionUrl = `/interaction/add?company=${company.id}`
   }

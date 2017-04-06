@@ -124,23 +124,6 @@ describe('Company interactions controller', function () {
       expect(locals).to.have.property('interactions')
       expect(locals.interactions).to.have.length(2)
     })
-
-    it('should return the required fields for each interaction', function () {
-      const interaction = locals.interactions[0]
-      expect(interaction.url).to.equal('/interaction/22651151-2149-465e-871b-ac45bc568a62/details')
-      expect(interaction.type).to.equal('Email')
-      expect(interaction.subject).to.equal('Subject 1234')
-      expect(interaction.date).to.equal('14 February 2017')
-      expect(interaction.advisor).to.equal('Fred Smith')
-    })
-    it('should create the alternative url for service deliveries', function () {
-      const interaction = locals.interactions[1]
-      expect(interaction.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a63/details')
-    })
-
-    it('should return a link to add a new interaction', function () {
-      expect(locals.addInteractionUrl).to.equal('/interaction/add?company=3f2b2a0f-0eb6-4299-8489-7390ccaa17f5')
-    })
   })
 
   describe('markup', function () {
@@ -150,16 +133,18 @@ describe('Company interactions controller', function () {
     beforeEach(function () {
       interactions = [{
         url: '/interaction/1/details',
-        type: 'Email',
+        interaction_type: 'Email',
         subject: 'Test subject',
         date: '23 February 2017',
-        advisor: 'Fred Smith'
+        advisor: 'Fred Smith',
+        contact: 'Jim Brown'
       }, {
         url: '/servicedelivery/2/details',
-        type: 'Service Delivery',
+        interaction_type: 'Service Delivery',
         subject: 'Test subject',
         date: '23 February 2017',
-        advisor: 'Fred Smith'
+        advisor: 'Fred Smith',
+        contact: 'Simon Carter'
       }]
 
       addInteractionUrl = '/interaction/add?company=1234'
@@ -172,7 +157,7 @@ describe('Company interactions controller', function () {
       })
     })
 
-    it('each un-archived line should include the required data', function () {
+    it('each line should include the required data', function () {
       return renderContent({interactions, addInteractionUrl, company})
       .then((document) => {
         const interactionElement = document.querySelector('#interaction-list .interaction')
@@ -180,6 +165,7 @@ describe('Company interactions controller', function () {
         expect(interactionElement.innerHTML).to.include('Email')
         expect(interactionElement.innerHTML).to.include('23 February 2017')
         expect(interactionElement.innerHTML).to.include('Fred Smith')
+        expect(interactionElement.innerHTML).to.include('Jim Brown')
       })
     })
 

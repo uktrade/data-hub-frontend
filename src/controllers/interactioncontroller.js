@@ -5,9 +5,10 @@ const Q = require('q')
 const interactionRepository = require('../repositorys/interactionrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const interactionService = require('../services/interactionservice')
+const {getDisplayInteraction} = require('../services/interactionformattingservice')
 const controllerUtils = require('../lib/controllerutils')
 const interactionLabels = require('../labels/interaction')
-const {formatLongDate} = require('../lib/date')
+
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -143,21 +144,8 @@ function postInteractionEdit (req, res, next) {
 }
 
 function getInteractionDetails (req, res, next) {
-  const interaction = res.locals.interaction
-
-  res.locals.displayValues = {
-    company: `<a href="/company/company_company/${interaction.company.id}">${interaction.company.name}</a>`,
-    interaction_type: interaction.interaction_type.name,
-    subject: interaction.subject,
-    notes: interaction.notes,
-    contact: `<a href="/company/company_company/${interaction.company.id}">${interaction.contact.first_name} ${interaction.contact.last_name}</a>`,
-    date: formatLongDate(interaction.date),
-    dit_advisor: interaction.dit_advisor.name,
-    service: interaction.service.name,
-    dit_team: interaction.dit_team.name
-  }
+  res.locals.displayValues = getDisplayInteraction(res.locals.interaction)
   res.locals.labels = interactionLabels
-
   res.render('interaction/interaction-details')
 }
 
