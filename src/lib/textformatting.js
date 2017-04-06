@@ -1,14 +1,12 @@
 /**
- * Translate text to sentance case, e.g. the cat sat -> The cat sat
+ * Translate text to sentence case, e.g. the cat sat -> The cat sat
  *
- * @param {string} source text
+ * @param {string} str text
  * @returns {string} result formatted text
  */
-function sentenceCase (str) {
-  if ((str === null) || (str === '')) {
-    return false
-  } else {
-    str = str.toString()
+function titleCase (str) {
+  if (typeof str !== 'string' || str.length === 0) {
+    return null
   }
 
   return str.replace(/\w\S*/g, function (txt) {
@@ -20,11 +18,15 @@ function sentenceCase (str) {
 /**
  * turn text with \n into <br/>
  *
- * @param {string} text
+ * @param {string} str
  * @returns {string} formatted text
  */
-function newlineToBr (text) {
-  return text.replace(/(?:\r\n|\r|\n)/g, '<br />')
+function newlineToBr (str) {
+  if (typeof str !== 'string' || str.length === 0) {
+    return null
+  }
+
+  return str.replace(/(?:\r\n|\r|\n)/g, '<br/>')
 }
 
-module.exports = {sentenceCase, newlineToBr}
+module.exports = {titleCase, newlineToBr}

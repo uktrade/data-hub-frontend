@@ -12,7 +12,6 @@ const {formatPhone} = require('../lib/phone')
  */
 function getDisplayContact (contact) {
   return {
-    title: (contact.title && contact.title.name) ? contact.title.name : null,
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,

@@ -43,7 +43,6 @@ describe('Contact formatting service', function () {
   })
   it('Should convert a typical contact into its display format', function () {
     const expected = {
-      title: 'Mr',
       job_title: 'Director',
       telephone_number: '+44 7814 333 777',
       email: 'fred@test.com',
