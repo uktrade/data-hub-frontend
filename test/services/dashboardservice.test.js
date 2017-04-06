@@ -39,8 +39,8 @@ describe('Dashboard service', () => {
             subject: 'int-subject',
             url: '/interaction/int-id/details',
             company: {
-              'url': '/company/company_company/comp-id/details',
-              'name': 'comp-name'
+              url: '/company/company_company/comp-id/details',
+              name: 'comp-name'
             }
           }],
           contacts: [{
@@ -48,9 +48,9 @@ describe('Dashboard service', () => {
             name: 'first-name last-name',
             url: '/contact/contact-id/details',
             company: {
-              'url': '/company/company_company/comp-id/details',
-              'name': 'comp-name',
-              'id': 'comp-id'
+              url: '/company/company_company/comp-id/details',
+              name: 'comp-name',
+              id: 'comp-id'
             }
           }]
         })
