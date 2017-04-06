@@ -22,7 +22,7 @@ function getServiceDelivery (token, serviceDeliveryId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/${serviceDeliveryId}/`)
     .then((response) => {
-      resolve(response.dat)
+      resolve(response.data)
     })
     .catch((error) => {
       winston.info(error)
@@ -35,7 +35,7 @@ function getServiceDeliverysForCompany (token, companyId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?company=${companyId}`)
     .then((response) => {
-      resolve(response.dat)
+      resolve(response.data)
     })
     .catch((error) => {
       winston.info(error)
@@ -48,7 +48,7 @@ function getServiceDeliverysForContact (token, companyId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact=${companyId}`)
     .then((response) => {
-      resolve(response.dat)
+      resolve(response.data)
     })
     .catch((error) => {
       winston.info(error)
