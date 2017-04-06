@@ -14,7 +14,6 @@ const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address
 const chDetailsDisplayOrderShort = ['name', 'company_number', 'registered_address', 'business_type']
 let unitedKingdom
 
-
 function getCommon (req, res, next) {
   const id = req.params.sourceId
   const source = req.params.source
@@ -198,7 +197,6 @@ function getUnarchiveUrl (req) {
   const fullUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}?${queryParams}`
   return fullUrl
 }
-
 
 function getCancelArchiveUrl (req) {
   return `${req.protocol}://${req.get('host')}${req.baseUrl}`

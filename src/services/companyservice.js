@@ -25,7 +25,7 @@ function getInflatedDitCompany (token, id) {
         for (const interaction of company.interactions) {
           advisorHash[interaction.dit_advisor] = true
         }
-        for (const serviceDelivery of serviceDeliverys.data) {
+        for (const serviceDelivery of serviceDeliverys) {
           advisorHash[serviceDelivery.relationships.dit_advisor.data.id] = true
         }
 
@@ -36,7 +36,7 @@ function getInflatedDitCompany (token, id) {
         }
 
         // Parse the service delivery results into something that can be displayed
-        const parsedServiceDeliverys = serviceDeliverys.data.map((serviceDelivery) => {
+        const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
           return {
             id: serviceDelivery.id,
             date: serviceDelivery.attributes.date,
