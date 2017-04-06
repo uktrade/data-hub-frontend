@@ -247,7 +247,6 @@ describe('Company contacts controller', function () {
       expect(contact.name).to.equal('Jane Smith')
       expect(contact.job_title).to.equal('Director')
       expect(contact.reason).to.equal('Contact has left the company')
-      expect
     })
     it('should return a link to add a new contact', function () {
       expect(locals.addContactUrl).to.equal('/contact/add?company=3f2b2a0f-0eb6-4299-8489-7390ccaa17f5')
