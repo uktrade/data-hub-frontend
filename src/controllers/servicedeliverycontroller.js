@@ -10,6 +10,7 @@ const serviceDeliveryService = require('../services/servicedeliveryservice')
 const {formatLongDate} = require('../lib/date')
 const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
+const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
 
 function getCommon (req, res, next) {
   Q.spawn(function *() {
@@ -98,24 +99,8 @@ function postServiceDeliveryEdit (req, res, next) {
 }
 
 function getServiceDeliveryDetails (req, res, next) {
-  const serviceDelivery = res.locals.serviceDelivery
-
-  res.locals.displayValues = {
-    company: `<a href="/company/company_company/${serviceDelivery.company.id}">${serviceDelivery.company.name}</a>`,
-    dit_team: serviceDelivery.dit_team.name,
-    service: serviceDelivery.service.name,
-    status: serviceDelivery.status.name,
-    subject: serviceDelivery.subject,
-    notes: serviceDelivery.notes,
-    date: formatLongDate(serviceDelivery.date),
-    contact: `<a href="/contact/${serviceDelivery.contact.id}">${serviceDelivery.contact.first_name} ${serviceDelivery.contact.last_name}</a>`,
-    dit_advisor: serviceDelivery.dit_advisor.name,
-    uk_region: serviceDelivery.uk_region.name,
-    sector: serviceDelivery.sector.name,
-    country_of_interest: serviceDelivery.country_of_interest.name
-  }
+  res.locals.displayValues = getDisplayServiceDelivery(res.locals.serviceDelivery)
   res.locals.labels = serviceDeliverylabels
-
   res.render('interaction/servicedelivery-details')
 }
 
