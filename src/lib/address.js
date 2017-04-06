@@ -1,4 +1,4 @@
-const sentenceCase = require('./sentencecase')
+const {sentenceCase} = require('./textformatting')
 
 function getFormattedAddress (object, key) {
   if (key) {

@@ -51,7 +51,10 @@ describe('Contact controller, getDetails', function () {
       },
       advisor: null,
       address_country: null,
-      teams: []
+      teams: [],
+      company: {
+        name: 'Bank ltd.'
+      }
     }
   })
   describe('data', function () {
@@ -88,9 +91,41 @@ describe('Contact controller, getDetails', function () {
       }
     })
 
-    it('should render a contact details section')
-    it('should include the contact details in a key value table')
-    it('should display the contact name and address in a heading')
+    it('should render a contact details section', function () {
+      return renderContent({contact, contactDetails, contactDetailsLabels})
+      .then((document) => {
+        expect(document.getElementById('contact-details')).to.not.be.null
+      })
+    })
+    it('should include the contact details in a key value table', function () {
+      return renderContent({contact, contactDetails, contactDetailsLabels})
+      .then((document) => {
+        const details = document.getElementById('contact-details')
+        expect(details.innerHTML).to.include(contactDetails.title)
+        expect(details.innerHTML).to.include(contactDetails.job_title)
+        expect(details.innerHTML).to.include(contactDetails.telephone_number)
+        expect(details.innerHTML).to.include(contactDetails.email)
+        expect(details.innerHTML).to.include(contactDetails.address)
+        expect(details.innerHTML).to.include(contactDetails.telephone_alternative)
+        expect(details.innerHTML).to.include(contactDetails.email_alternative)
+        expect(details.innerHTML).to.include(contactDetails.notes)
+      })
+    })
+    it('should display the contact name and address in a heading', function () {
+      return renderContent({contact, contactDetails, contactDetailsLabels})
+      .then((document) => {
+        const heading = document.querySelector('h1.page-heading')
+        expect(heading.innerHTML).to.include('Fred Smith')
+        expect(heading.innerHTML).to.include('Bank ltd')
+      })
+    })
+    it('should indicate primary contacts', function () {
+      return renderContent({contact, contactDetails, contactDetailsLabels})
+      .then((document) => {
+        const heading = document.querySelector('h1.page-heading')
+        expect(heading.innerHTML).to.include('<span class="status-badge status-badge--fuschia ">Primary</span>')
+      })
+    })
   })
 })
 
@@ -100,7 +135,7 @@ function mergeLocals (res, options) {
 
 function renderContent (locals) {
   return new Promise((resolve, reject) => {
-    const markup = nunjucks.render('../../src/views/contact/index.html', locals)
+    const markup = nunjucks.render('../../src/views/contact/details.html', locals)
     jsdom.env(markup, (err, jsdomWindow) => {
       if (err) {
         reject(err)

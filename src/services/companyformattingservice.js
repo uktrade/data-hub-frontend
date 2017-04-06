@@ -1,6 +1,6 @@
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
 const getFormattedAddress = require('../lib/address').getFormattedAddress
-const sentenceCase = require('../lib/sentencecase')
+const {sentenceCase} = require('../lib/textformatting')
 const {formatLongDate} = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transformsectors')
 

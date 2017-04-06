@@ -1,5 +1,6 @@
 const getFormattedAddress = require('../lib/address').getFormattedAddress
 const phone = require('../lib/phone')
+const {newlineToBr} = require('./lib/textformatting')
 
 /**
  * Translate a raw contact object into a formatted contact
@@ -17,7 +18,7 @@ function getDisplayContact (contact) {
     address: getFormattedAddress(contact),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: contact.notes
+    notes: newlineToBr(contact.notes)
   }
 }
 

@@ -16,7 +16,7 @@ function getCommon (req, res, next) {
   })
   .catch((error) => {
     winston.error(error)
-    next()
+    res.render('error', { error: 'Error loading contact' })
   })
 }
 

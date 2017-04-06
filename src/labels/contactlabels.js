@@ -1,11 +1,11 @@
 const contactDetailsLabels = {
   title: 'Title',
-  role: 'Role',
-  contact_telephone: 'Phone number',
+  job_title: 'Job title',
+  telephone_number: 'Phone number',
   email: 'Email',
   address: 'Address',
-  alternate_telephone: 'Alternative phone',
-  alternate_email: 'Alternative email',
+  telephone_alternative: 'Alternative phone',
+  email_alternative: 'Alternative email',
   notes: 'Notes'
 }
 
