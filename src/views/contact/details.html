@@ -2,11 +2,18 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-    Contact Details
+    <h2 class="heading-medium">Contact Details</h2>
 
+    {{ trade.keyvaluetable(
+        contactDetails,
+        stripey=true,
+        labels=contactDetailsLabels,
+        keyorder=contactDetailsDisplayOrder,
+        id="contact-details")
+    }}
 
-    <a href="/company/company_company/{{contact.company.id}}/details">{{contact.company.name}}</a>
-
-    <a href="/contact/{{id}}/edit" class="button button-secondary">Update</a>
+    <p>
+      <a href="/contact/{{id}}/edit" class="button button-secondary">Edit contact details</a>
+    </p>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
 const getFormattedAddress = require('../lib/address').getFormattedAddress
-const sentenceCase = require('../lib/sentencecase')
+const {titleCase} = require('../lib/textformatting')
 const {formatLongDate} = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transformsectors')
 
@@ -14,7 +14,7 @@ function getDisplayCH (company) {
   const companyHouseData = company.companies_house_data
 
   const displayCH = {
-    name: sentenceCase(companyHouseData.name),
+    name: titleCase(companyHouseData.name),
     company_number: companyHouseData.company_number,
     business_type: companyHouseData.company_category,
     company_status: companyHouseData.company_status,
@@ -98,12 +98,12 @@ function parseRelatedData (companies) {
 
     let address = ''
     if (company[`${key}_address_town`] && company[`${key}_address_town`].length > 0) {
-      address += sentenceCase(`${company[`${key}_address_town`]}, `)
+      address += titleCase(`${company[`${key}_address_town`]}, `)
     } else if (company[`${key}_address_county`] && company[`${key}_address_county`].length > 0) {
-      address += sentenceCase(`${company[`${key}_address_county`]}, `)
+      address += titleCase(`${company[`${key}_address_county`]}, `)
     }
     if (company[`${key}_address_country`] && company[`${key}_address_country`].name && company[`${key}_address_country`].name.length > 0) {
-      address += sentenceCase(company[`${key}_address_country`].name)
+      address += titleCase(company[`${key}_address_country`].name)
     } else if (address.length > 0) {
       address += 'United Kingdom'
     }

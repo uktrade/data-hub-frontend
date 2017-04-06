@@ -6,48 +6,6 @@
   margin-bottom: 20px;
 }
 
-table.contact-table {
-  [data-key='name'] {
-    width: 20%;
-  }
-
-  [data-key='role'] {
-    width: 25%;
-  }
-
-  [data-key='phone'] {
-    width: 20%;
-  }
-
-  [data-key='email'] {
-    width: 25%;
-  }
-}
-
-table.interaction-table {
-
-  [data-key='date'] {
-    width: 10%;
-    white-space: nowrap;
-  }
-
-  [data-key='type'] {
-    width: 15%;
-  }
-
-  [data-key='advisor'] {
-    width: 25%;
-  }
-
-  [data-key='contact'] {
-    width: 25%;
-  }
-
-  [data-key='subject'] {
-    width: 25%;
-  }
-}
-
 .table-summary {
   .actions {
     margin: em(20) 0;
