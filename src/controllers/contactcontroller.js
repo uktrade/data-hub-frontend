@@ -48,4 +48,4 @@ router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 router.get('/contact/:contactId/details', getDetails)
 router.get('/contact/:contactId/interactions', getInteractions)
 
-module.exports = {router, getDetails}
+module.exports = {router, getDetails, getCommon}

@@ -1,6 +1,7 @@
 const getFormattedAddress = require('../lib/address').getFormattedAddress
-const phone = require('../lib/phone')
-const {newlineToBr} = require('./lib/textformatting')
+const {newlineToBr} = require('../lib/textformatting')
+const {formatLongDate} = require('../lib/date')
+const {formatPhone} = require('../lib/phone')
 
 /**
  * Translate a raw contact object into a formatted contact
@@ -13,7 +14,7 @@ function getDisplayContact (contact) {
   return {
     title: (contact.title && contact.title.name) ? contact.title.name : null,
     job_title: contact.job_title,
-    telephone_number: phone.formatPhone(contact.telephone_countrycode, contact.telephone_number),
+    telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
     address: getFormattedAddress(contact),
     telephone_alternative: contact.telephone_alternative,
@@ -22,4 +23,36 @@ function getDisplayContact (contact) {
   }
 }
 
-module.exports = { getDisplayContact }
+/**
+ * Format contact details for use in the company screen
+ *
+ * @param {object} contact
+ * @returns {object} displayContact A contact that can be put into a key value table
+ */
+function getDisplayCompanyContact (contact) {
+  return {
+    url: `/contact/${contact.id}/details`,
+    name: `${contact.first_name} ${contact.last_name}`,
+    job_title: contact.job_title,
+    phone: formatPhone(contact.telephone_countrycode, contact.telephone_number),
+    email: contact.email,
+    added: formatLongDate(contact.created_on)
+  }
+}
+
+/**
+ * Format an archived contact for use in the company screen
+ *
+ * @param {object} contact
+ * @returns {object} displayContact A contact that can be put into a key value table
+ */
+function getDisplayArchivedCompanyContact (contact) {
+  return {
+    url: `/contact/${contact.id}/details`,
+    name: `${contact.first_name} ${contact.last_name}`,
+    job_title: contact.job_title,
+    reason: contact.archived_reason
+  }
+}
+
+module.exports = { getDisplayContact, getDisplayCompanyContact, getDisplayArchivedCompanyContact }

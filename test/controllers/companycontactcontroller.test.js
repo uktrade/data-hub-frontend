@@ -340,21 +340,6 @@ describe('Company contacts controller', function () {
       })
     })
   })
-
-  describe('format phone', function () {
-    it('should format a correctly entered interational number', function () {
-      const number = companycontactcontroller.formatPhone({telephone_countrycode: '+44', telephone_number: '07813 333222'})
-      expect(number).to.equal('+44 7813 333222')
-    })
-    it('should format a number with no international code', function () {
-      const number = companycontactcontroller.formatPhone({telephone_countrycode: null, telephone_number: '07813 333222'})
-      expect(number).to.equal('07813 333222')
-    })
-    it('should format a number with no 0 at the start, but has a country code', function () {
-      const number = companycontactcontroller.formatPhone({telephone_countrycode: '+44', telephone_number: '7813 333222'})
-      expect(number).to.equal('+44 7813 333222')
-    })
-  })
 })
 
 function renderContent (locals) {
