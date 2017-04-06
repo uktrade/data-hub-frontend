@@ -239,7 +239,6 @@ describe('Company contacts controller', function () {
       expect(contact.phone).to.equal('+44 7814 333 777')
       expect(contact.added).to.equal('14 February 2017')
       expect(contact.email).to.equal('fred@test.com')
-      expect
     })
     it('should return the required fields to list archived contacts', function () {
       const contact = locals.contactsArchived[0]
