@@ -236,7 +236,7 @@ describe('Company contacts controller', function () {
       expect(contact.url).to.equal('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
       expect(contact.name).to.equal('Fred Smith')
       expect(contact.job_title).to.equal('Director')
-      expect(contact.phone).to.equal('+44 7814 333 777')
+      expect(contact.telephone_number).to.equal('+44 7814 333 777')
       expect(contact.added).to.equal('14 February 2017')
       expect(contact.email).to.equal('fred@test.com')
     })
@@ -262,14 +262,14 @@ describe('Company contacts controller', function () {
         url: '/contact/1/details',
         name: 'Fred Smith',
         job_title: 'Director',
-        phone: '+44 7788 112 332',
+        telephone_number: '+44 7788 112 332',
         email: 'fred@acme.org',
         added: '23 February 2017'
       }, {
         url: '/contact/2/details',
         name: 'Jane Smith',
         job_title: 'Director',
-        phone: '+44 7788 112 332',
+        telephone_number: '+44 7788 112 332',
         email: 'Jane@acme.org',
         added: '23 February 2017'
       }]

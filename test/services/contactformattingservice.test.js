@@ -56,4 +56,29 @@ describe('Contact formatting service', function () {
     const actual = contactFormattingService.getDisplayContact(contact)
     expect(actual).to.deep.equal(expected)
   })
+  it('Should convert a typical contact into its company display format', function () {
+    const expected = {
+      url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+      name: 'Fred Smith',
+      job_title: 'Director',
+      telephone_number: '+44 7814 333 777',
+      email: 'fred@test.com',
+      added: '14 February 2017'
+    }
+
+    const actual = contactFormattingService.getDisplayCompanyContact(contact)
+    expect(actual).to.deep.equal(expected)
+  })
+  it('Should convert a typical archived contact into its company display format', function () {
+    contact.archived_reason = 'Left company'
+    const expected = {
+      url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+      name: 'Fred Smith',
+      job_title: 'Director',
+      reason: 'Left company'
+    }
+
+    const actual = contactFormattingService.getDisplayArchivedCompanyContact(contact)
+    expect(actual).to.deep.equal(expected)
+  })
 })

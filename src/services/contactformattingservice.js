@@ -34,7 +34,7 @@ function getDisplayCompanyContact (contact) {
     url: `/contact/${contact.id}/details`,
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,
-    phone: formatPhone(contact.telephone_countrycode, contact.telephone_number),
+    telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
     added: formatLongDate(contact.created_on)
   }
