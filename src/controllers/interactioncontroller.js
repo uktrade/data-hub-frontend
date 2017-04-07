@@ -19,8 +19,7 @@ function getCommon (req, res, next) {
       next()
     } catch (error) {
       winston.error(error)
-      res.errors = error
-      next()
+      res.render('error', { error: 'Error loading interaction' })
     }
   })
 }

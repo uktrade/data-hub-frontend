@@ -7,7 +7,6 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliverylabels = require('../labels/servicedelivery')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
-const {formatLongDate} = require('../lib/date')
 const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
 const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
@@ -20,8 +19,7 @@ function getCommon (req, res, next) {
       next()
     } catch (error) {
       winston.error(error)
-      res.errors = error
-      next()
+      res.render('error', { error: 'Error loading service delivery' })
     }
   })
 }

@@ -16,9 +16,9 @@ function getHydratedServiceDelivery (token, serviceDeliveryId) {
     Q.spawn(function *() {
       try {
         const sourceServiceDelivery = yield serviceDeliveryRepository.getServiceDelivery(token, serviceDeliveryId)
-        const serviceDelivery = sourceServiceDelivery.data.attributes
+        const serviceDelivery = sourceServiceDelivery.attributes
         serviceDelivery.id = serviceDeliveryId
-        const related = sourceServiceDelivery.data.relationships
+        const related = sourceServiceDelivery.relationships
         if (validKey(related, 'company')) {
           serviceDelivery.company = yield companyRepository.getDitCompany(token, related.company.data.id)
         }

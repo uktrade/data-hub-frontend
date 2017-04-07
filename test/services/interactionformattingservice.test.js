@@ -27,7 +27,7 @@ describe('Interaction formatting service', function () {
         subject: 'Subject 1234',
         date: '14 February 2017',
         advisor: 'John Brown',
-        contact: 'Fred Smith'
+        contact: '<a href="/contact/444/details">Fred Smith</a>'
       }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actual).to.deep.equal(expected)
@@ -40,7 +40,7 @@ describe('Interaction formatting service', function () {
         subject: 'Subject 1234',
         date: '14 February 2017',
         advisor: null,
-        contact: 'Fred Smith'
+        contact: '<a href="/contact/444/details">Fred Smith</a>'
       }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actual).to.deep.equal(expected)
@@ -53,7 +53,7 @@ describe('Interaction formatting service', function () {
         subject: 'Subject 1234',
         date: '14 February 2017',
         advisor: 'John Brown',
-        contact: 'Smith'
+        contact: '<a href="/contact/444/details">Smith</a>'
       }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actual).to.deep.equal(expected)
@@ -66,7 +66,7 @@ describe('Interaction formatting service', function () {
         subject: 'Subject 1234',
         date: '14 February 2017',
         advisor: 'John Brown',
-        contact: 'Fred'
+        contact: '<a href="/contact/444/details">Fred</a>'
       }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actual).to.deep.equal(expected)

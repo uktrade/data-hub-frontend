@@ -8,7 +8,7 @@ function saveServiceDelivery (token, serviceDelivery) {
   }
 
   if (serviceDelivery.data.id && serviceDelivery.data.id.length > 0) {
-    options.url = `${config.apiRoot}/v2/service_delivery/${serviceDelivery.id}/`
+    options.url = `${config.apiRoot}/v2/service-delivery/${serviceDelivery.id}/`
     options.method = 'PUT'
   } else {
     options.url = `${config.apiRoot}/v2/service_delivery/`
@@ -19,21 +19,21 @@ function saveServiceDelivery (token, serviceDelivery) {
 }
 
 function getServiceDelivery (token, serviceDeliveryId) {
-  return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/v2/service_delivery/${serviceDeliveryId}/`)
+  return new Promise((resolve, reject) => {
+    authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/${serviceDeliveryId}/`)
     .then((response) => {
       resolve(response.data)
     })
     .catch((error) => {
-      winston.info(error)
-      resolve([])
+      winston.error(error)
+      reject(error)
     })
   })
 }
 
 function getServiceDeliverysForCompany (token, companyId) {
   return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/v2/service_delivery/?company_id=${companyId}`)
+    authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?company_id=${companyId}`)
     .then((response) => {
       resolve(response.data)
     })
@@ -46,7 +46,7 @@ function getServiceDeliverysForCompany (token, companyId) {
 
 function getServiceDeliverysForContact (token, companyId) {
   return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/v2/service_delivery/?contact_id=${companyId}`)
+    authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact_id=${companyId}`)
     .then((response) => {
       resolve(response.data)
     })
