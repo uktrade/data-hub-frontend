@@ -11,10 +11,11 @@
       <a class="card__metadata" href="{{interaction.url}}">{{interaction.subject}}</a>
       <div class="split-data">
         <div>
-          <div class="card__metadata">{{interaction.type}}</div>
+          <div class="card__metadata">{{interaction.interaction_type}}</div>
           <div class="card__metadata">{{interaction.date}}</div>
         </div>
         <div>
+          <div class="card__metadata">{{interaction.contact | safe}}</div>
           <div class="card__metadata">{{interaction.advisor}}</div>
         </div>
       </div>

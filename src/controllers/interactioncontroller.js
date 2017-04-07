@@ -2,12 +2,14 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
+const interactionLabels = require('../labels/interaction')
+const controllerUtils = require('../lib/controllerutils')
 const interactionRepository = require('../repositorys/interactionrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const interactionService = require('../services/interactionservice')
-const controllerUtils = require('../lib/controllerutils')
-const interactionLabels = require('../labels/interaction')
-const {formatLongDate} = require('../lib/date')
+const {getDisplayInteraction} = require('../services/interactionformattingservice')
+
+const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_advisor', 'service', 'dit_team']
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -18,8 +20,7 @@ function getCommon (req, res, next) {
       next()
     } catch (error) {
       winston.error(error)
-      res.errors = error
-      next()
+      res.render('error', { error: 'Error loading interaction' })
     }
   })
 }
@@ -143,21 +144,9 @@ function postInteractionEdit (req, res, next) {
 }
 
 function getInteractionDetails (req, res, next) {
-  const interaction = res.locals.interaction
-
-  res.locals.displayValues = {
-    company: `<a href="/company/company_company/${interaction.company.id}">${interaction.company.name}</a>`,
-    interaction_type: interaction.interaction_type.name,
-    subject: interaction.subject,
-    notes: interaction.notes,
-    contact: `<a href="/company/company_company/${interaction.company.id}">${interaction.contact.first_name} ${interaction.contact.last_name}</a>`,
-    date: formatLongDate(interaction.date),
-    dit_advisor: interaction.dit_advisor.name,
-    service: interaction.service.name,
-    dit_team: interaction.dit_team.name
-  }
-  res.locals.labels = interactionLabels
-
+  res.locals.interactionDetails = getDisplayInteraction(res.locals.interaction)
+  res.locals.interactionLabels = interactionLabels
+  res.locals.interactionDisplayOrder = interactonDisplayOrder
   res.render('interaction/interaction-details')
 }
 
