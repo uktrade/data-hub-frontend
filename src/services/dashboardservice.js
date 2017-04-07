@@ -23,14 +23,14 @@ function mapContacts (contacts) {
 function mapInteractions (interactions) {
   if (interactions && (typeof interactions.map) === 'function') {
     return interactions.map((interaction) => {
-      const company = typeof interaction.company === 'object' ? interaction.company : {}
+      const company = typeof interaction.company === 'object' && interaction.company !== null ? interaction.company : null
       return {
         url: `/interaction/${interaction.id}/details`,
         id: interaction.id,
         subject: interaction.subject,
         company: {
-          name: company.name,
-          url: `/company/company_company/${company.id}/details`
+          name: company ? company.name : null,
+          url: company ? `/company/company_company/${company.id}/details` : null
         }
       }
     })
