@@ -3,6 +3,6 @@
 
 {% block main %}
   <h1 class="heading-xlarge record-title">Interaction</h1>
-  {{ trade.keyvaluetable(displayValues, stripey=true, labels=labels) }}
+  {{ trade.keyvaluetable(interactionDetails, stripey=true, labels=interactionLabels, keyorder=interactionDisplayOrder) }}
   <a class="button button-secondary" href="/interaction/{{interaction.id}}/edit">Edit interaction</a>
 {% endblock %}

@@ -2,13 +2,14 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
+const interactionLabels = require('../labels/interaction')
+const controllerUtils = require('../lib/controllerutils')
 const interactionRepository = require('../repositorys/interactionrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const interactionService = require('../services/interactionservice')
 const {getDisplayInteraction} = require('../services/interactionformattingservice')
-const controllerUtils = require('../lib/controllerutils')
-const interactionLabels = require('../labels/interaction')
 
+const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_advisor', 'service', 'dit_team']
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -143,8 +144,9 @@ function postInteractionEdit (req, res, next) {
 }
 
 function getInteractionDetails (req, res, next) {
-  res.locals.displayValues = getDisplayInteraction(res.locals.interaction)
-  res.locals.labels = interactionLabels
+  res.locals.interactionDetails = getDisplayInteraction(res.locals.interaction)
+  res.locals.interactionLabels = interactionLabels
+  res.locals.interactionDisplayOrder = interactonDisplayOrder
   res.render('interaction/interaction-details')
 }
 

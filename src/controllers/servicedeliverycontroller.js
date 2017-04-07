@@ -2,14 +2,16 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
+const serviceDeliverylabels = require('../labels/servicedelivery')
 const controllerUtils = require('../lib/controllerutils')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
-const serviceDeliverylabels = require('../labels/servicedelivery')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
+const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
+
+const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
 const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
-const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
 
 function getCommon (req, res, next) {
   Q.spawn(function *() {
@@ -97,8 +99,9 @@ function postServiceDeliveryEdit (req, res, next) {
 }
 
 function getServiceDeliveryDetails (req, res, next) {
-  res.locals.displayValues = getDisplayServiceDelivery(res.locals.serviceDelivery)
-  res.locals.labels = serviceDeliverylabels
+  res.locals.serviceDeliveryDetails = getDisplayServiceDelivery(res.locals.serviceDelivery)
+  res.locals.serviceDeliveryLabels = serviceDeliverylabels
+  res.locals.serviceDeliveryDisplayOrder = serviceDeliveryDisplayOrder
   res.render('interaction/servicedelivery-details')
 }
 
