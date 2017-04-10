@@ -20,6 +20,10 @@ function getFormattedAddress (object, key) {
     addressStr += 'United Kingdom'
   }
 
+  if (addressStr.length === 0) {
+    return null
+  }
+
   return addressStr
 }
 

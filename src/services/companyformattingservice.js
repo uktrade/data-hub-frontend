@@ -48,12 +48,12 @@ function getDisplayCompany (company) {
   if (company.alias && company.alias.length > 0) displayCompany.alias = company.alias
 
   const registeredAddress = getFormattedAddress(company, 'registered')
-  if (registeredAddress.length > 0) displayCompany.registered_address = registeredAddress
+  if (registeredAddress && registeredAddress.length > 0) displayCompany.registered_address = registeredAddress
   if (company.registered_address_country && company.registered_address_country.name) {
     displayCompany.country = company.registered_address_country.name
   }
   const tradingAddress = getFormattedAddress(company, 'trading')
-  if (tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
+  if (tradingAddress && tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
 
   if (!company.companies_house_data) {
     displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : null
@@ -68,7 +68,7 @@ function getDisplayCompany (company) {
 function getHeadingAddress (company) {
   // If this is a CDMS company
   const cdmsTradingAddress = getFormattedAddress(company, 'trading')
-  if (cdmsTradingAddress.length > 0) {
+  if (cdmsTradingAddress && cdmsTradingAddress.length > 0) {
     return cdmsTradingAddress
   }
 
