@@ -1,6 +1,4 @@
-'use strict'
-
-const classUtils = require('@uktrade/trade_elements').elementstuff
+const elementStuff = require('../lib/elementstuff')
 
 const HIDE = 'hide'
 const SHOW = 'show'
@@ -31,7 +29,7 @@ class ClippedList {
     const action = (setHidden ? 'addClass' : 'removeClass')
 
     for (let i = this.itemsToShow; i < l; i++) {
-      classUtils[action](this.items[i], HIDDEN_CLASS)
+      elementStuff[action](this.items[i], HIDDEN_CLASS)
     }
   }
 

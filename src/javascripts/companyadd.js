@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('@uktrade/trade_elements').elementstuff
+const { addClass, removeClass } = require('../lib/elementstuff')
 const form = document.getElementById('company-add-form')
 const step = form.getAttribute('data-step')
 

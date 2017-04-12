@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('@uktrade/trade_elements').elementstuff
+const { addClass, removeClass } = require('../lib/elementstuff')
 const foreignOwnedCountryWrapper = document.getElementById('foreign-owned-country-wrapper')
 const investmentAccountManagerWapper = document.getElementById('investment-account-manager-wrapper')
 const foreignOwnedRadio = document.getElementById('foreign-owned-radio')
