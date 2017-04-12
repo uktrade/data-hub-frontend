@@ -4,7 +4,6 @@ const winston = require('winston')
 const advisorRepository = require('../repositorys/advisorrepository')
 const interactionRepository = require('../repositorys/interactionrepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
-const interactionService = require('./interactionservice')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but
