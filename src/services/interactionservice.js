@@ -100,7 +100,7 @@ function convertFormBodyBackToInteraction (token, flatInteraction) {
         }
 
         if (flatInteraction.contact) {
-          result.contact = yield contactRepository.getBriefContact(token, flatInteraction.contact)
+          result.contact = yield contactRepository.getContact(token, flatInteraction.contact)
         } else {
           result.contact = { id: null }
         }

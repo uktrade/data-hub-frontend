@@ -1,6 +1,13 @@
 const {formatLongDate} = require('../lib/date')
 const {newlineToBr, getContactLink, getPropertyName} = require('../lib/textformatting')
 
+/**
+ * Returns an interaction formatted for display in the interaction detail
+ * page. Compatible with key value table macro
+ *
+ * @param {any} interaction
+ * @returns {Object} A formatted service delivery or interaction
+ */
 function getDisplayInteraction (interaction) {
   const result = {
     company: `<a href="/company/company_company/${interaction.company.id}/details">${interaction.company.name}</a>`,
@@ -17,6 +24,13 @@ function getDisplayInteraction (interaction) {
   return result
 }
 
+/**
+ * Returns a service delivery or interaction formatted for display in the interaction
+ * tab of the company screen
+ *
+ * @param {any} interaction
+ * @returns {Object} A formatted service delivery or interaction
+ */
 function getDisplayCompanyInteraction (interaction) {
   const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
 
@@ -32,4 +46,25 @@ function getDisplayCompanyInteraction (interaction) {
   return result
 }
 
-module.exports = {getDisplayInteraction, getDisplayCompanyInteraction}
+/**
+ * Returns a service delivery or interaction formatted for display in the interaction
+ * tab of the contact screen
+ *
+ * @param {any} interaction
+ * @returns {Object} A formatted service delivery or interaction
+ */
+function getDisplayContactInteraction (interaction) {
+  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
+
+  const result = {
+    url: `/${type}/${interaction.id}/details`,
+    interaction_type: interaction.interaction_type.name,
+    subject: interaction.subject,
+    date: formatLongDate(interaction.date),
+    advisor: getPropertyName(interaction, 'dit_advisor')
+  }
+
+  return result
+}
+
+module.exports = {getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction}

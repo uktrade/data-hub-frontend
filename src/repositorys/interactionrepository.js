@@ -1,3 +1,4 @@
+const winston = require('winston')
 const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
 
@@ -22,7 +23,28 @@ function saveInteraction (token, interaction) {
   return authorisedRequest(token, options)
 }
 
+/**
+ * Get all the interactions for a contact
+ *
+ * @param {any} token
+ * @param {any} contactId
+ * @return {Array[Object]} Returns a promise that resolves to an array of API interaction objects
+ */
+function getInteractionsForContact (token, contactId) {
+  return new Promise((resolve) => {
+    authorisedRequest(token, `${config.apiRoot}/interaction/?contact_id=${contactId}`)
+    .then((response) => {
+      resolve(response.results)
+    })
+    .catch((error) => {
+      winston.info(error)
+      resolve([])
+    })
+  })
+}
+
 module.exports = {
   saveInteraction,
-  getInteraction
+  getInteraction,
+  getInteractionsForContact
 }

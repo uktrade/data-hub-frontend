@@ -1,10 +1,6 @@
 const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
 
-function getBriefContact (token, contactId) {
-  return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/`)
-}
-
 function getContact (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/`)
 }
@@ -50,4 +46,4 @@ function unarchiveContact (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/unarchive/`)
 }
 
-module.exports = { getContact, saveContact, archiveContact, unarchiveContact, getBriefContact }
+module.exports = { getContact, saveContact, archiveContact, unarchiveContact }
