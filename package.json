@@ -56,7 +56,7 @@
     "build": "npm run clean && npm run sass && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
     "coverage": "nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js",
-    "lint": "npm run lint:js & npm run lint:sass",
+    "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "standard",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
     "develop": "parallel sass:watch js:client:watch js:server:watch",
