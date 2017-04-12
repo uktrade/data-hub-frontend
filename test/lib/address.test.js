@@ -2,7 +2,25 @@
 const address = require('../../src/lib/address')
 
 describe('Address formatter', function () {
-  it('should format an address when', function () {
+  it('should format an address when it is fully populated.', function () {
+    const source = {
+      id: '12651151-2149-465e-871b-ac45bc568a62',
+      address_1: '10 The Street',
+      address_2: 'Warble',
+      address_3: '',
+      address_4: '',
+      address_town: 'Big Town',
+      address_county: 'Large County',
+      address_country: {
+        id: '1234',
+        name: 'Country'
+      },
+      address_postcode: 'LL1 1LL'
+    }
+    const actual = address.getFormattedAddress(source)
+    expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, Country')
+  })
+  it('should add United Kingdom to the address if no country is provided.', function () {
     const source = {
       id: '12651151-2149-465e-871b-ac45bc568a62',
       address_1: '10 The Street',
@@ -31,7 +49,7 @@ describe('Address formatter', function () {
     const actual = address.getFormattedAddress(source, 'trading')
     expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
   })
-  it('should return null when the address is emptyu', function () {
+  it('should return null when the address is empty', function () {
     const source = {
       id: '12651151-2149-465e-871b-ac45bc568a62',
       address_1: '',
