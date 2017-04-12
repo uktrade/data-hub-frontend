@@ -101,7 +101,7 @@ describe('Company add controller', function () {
     })
     it('should pass through the request body to show previosuly selected options', function (done) {
       const body = { business_type: '1231231231232' }
-      const req = { body, session: {}}
+      const req = { body, session: {} }
       const res = {
         locals: {},
         render: function (template, options) {
