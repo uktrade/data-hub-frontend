@@ -1,8 +1,9 @@
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
-const getFormattedAddress = require('../lib/address').getFormattedAddress
-const {titleCase} = require('../lib/textformatting')
-const {formatLongDate} = require('../lib/date')
+const { getFormattedAddress } = require('../lib/address')
+const { titleCase } = require('../lib/textformatting')
+const { formatLongDate } = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transformsectors')
+
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
@@ -48,12 +49,12 @@ function getDisplayCompany (company) {
   if (company.alias && company.alias.length > 0) displayCompany.alias = company.alias
 
   const registeredAddress = getFormattedAddress(company, 'registered')
-  if (registeredAddress && registeredAddress.length > 0) displayCompany.registered_address = registeredAddress
+  displayCompany.registered_address = registeredAddress
   if (company.registered_address_country && company.registered_address_country.name) {
     displayCompany.country = company.registered_address_country.name
   }
-  const tradingAddress = getFormattedAddress(company, 'trading')
-  if (tradingAddress && tradingAddress.length > 0) displayCompany.trading_address = tradingAddress
+
+  displayCompany.trading_address = getFormattedAddress(company, 'trading')
 
   if (!company.companies_house_data) {
     displayCompany.business_type = (company.business_type && company.business_type.name && company.business_type.name !== 'Undefined') ? company.business_type.name : null
@@ -68,7 +69,7 @@ function getDisplayCompany (company) {
 function getHeadingAddress (company) {
   // If this is a CDMS company
   const cdmsTradingAddress = getFormattedAddress(company, 'trading')
-  if (cdmsTradingAddress && cdmsTradingAddress.length > 0) {
+  if (cdmsTradingAddress) {
     return cdmsTradingAddress
   }
 
@@ -95,18 +96,8 @@ function parseRelatedData (companies) {
 
   return companies.map((company) => {
     const key = (company.trading_address_1 && company.trading_address_1.length > 0) ? 'trading' : 'registered'
+    let address = getFormattedAddress(company, key)
 
-    let address = ''
-    if (company[`${key}_address_town`] && company[`${key}_address_town`].length > 0) {
-      address += titleCase(`${company[`${key}_address_town`]}, `)
-    } else if (company[`${key}_address_county`] && company[`${key}_address_county`].length > 0) {
-      address += titleCase(`${company[`${key}_address_county`]}, `)
-    }
-    if (company[`${key}_address_country`] && company[`${key}_address_country`].name && company[`${key}_address_country`].name.length > 0) {
-      address += titleCase(company[`${key}_address_country`].name)
-    } else if (address.length > 0) {
-      address += 'United Kingdom'
-    }
     return {
       name: `<a href="/company/company_company/${company.id}">${company.alias || company.name}</a>`,
       address
