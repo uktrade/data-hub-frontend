@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('@uktrade/trade_elements').elementstuff
+const { addClass, removeClass } = require('../lib/elementstuff')
 
 function clearInnerFields (element) {
   const radios = element.querySelectorAll('input[type="radio"]:checked')

@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show } = require('@uktrade/trade_elements').elementstuff
+const { hide, show } = require('../lib/elementstuff')
 require('./lookupaddress')
 require('./sectors')
 

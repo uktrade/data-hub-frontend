@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
 const axios = require('axios')
-const { hide } = require('@uktrade/trade_elements').elementstuff
+const { hide } = require('../lib/elementstuff')
 
 class LookupAddress {
 
