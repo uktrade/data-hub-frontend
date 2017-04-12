@@ -151,7 +151,7 @@ function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
         }
 
         if (flatServiceDelivery.contact) {
-          result.contact = yield contactRepository.getBriefContact(token, flatServiceDelivery.contact)
+          result.contact = yield contactRepository.getContact(token, flatServiceDelivery.contact)
         } else {
           result.contact = { id: null }
         }

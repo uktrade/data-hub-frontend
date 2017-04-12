@@ -1,22 +1,24 @@
 const express = require('express')
 const winston = require('winston')
+const Q = require('q')
 
-const contactService = require('../services/contactservice')
+const contactRepository = require('../repositorys/contactrepository')
 const contactFormattingService = require('../services/contactformattingservice')
 const { contactDetailsLabels } = require('../labels/contactlabels')
 const router = express.Router()
 
 function getCommon (req, res, next) {
-  const id = req.params.contactId
-  contactService.getInflatedContact(req.session.token, id)
-  .then((contact) => {
-    res.locals.id = id
-    res.locals.contact = contact
-    next()
-  })
-  .catch((error) => {
-    winston.error(error)
-    res.render('error', { error: 'Error loading contact' })
+  return new Promise((resolve, reject) => {
+    Q.spawn(function * () {
+      try {
+        res.locals.id = req.params.contactId
+        res.locals.contact = contactRepository.getContact(req.session.token, res.locals.id)
+        next()
+      } catch (error) {
+        winston.error(error)
+        res.render('error', { error })
+      }
+    })
   })
 }
 
@@ -38,14 +40,9 @@ function editDetails (req, res, next) {
 function postDetails (req, res, next) {
 }
 
-function getInteractions (req, res, next) {
-
-}
-
 router.use(['/contact/:contactId/*'], getCommon)
 router.get(['/contact/:contactId/edit', '/contact/add'], editDetails)
 router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 router.get('/contact/:contactId/details', getDetails)
-router.get('/contact/:contactId/interactions', getInteractions)
 
 module.exports = {router, getDetails, getCommon}
