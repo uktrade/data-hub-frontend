@@ -4,7 +4,6 @@ const { titleCase } = require('../lib/textformatting')
 const { formatLongDate } = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transformsectors')
 
-
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
 const companyTableKeys = ['name', 'address']

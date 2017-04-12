@@ -14,8 +14,6 @@ describe('Company controller, getCommon', function () {
         })
       }
     }
-    getSource = null
-    getId = null
     fakeCompany = {
       id: '1234',
       company_number: '1111',
@@ -37,8 +35,6 @@ describe('Company controller, getCommon', function () {
     companyController = proxyquire('../../src/controllers/companycontroller', {
       '../services/searchservice': {
         getCompanyForSource: function (token, id, source) {
-          getSource = source
-          getId = id
           return new Promise((resolve) => {
             resolve(fakeCompany)
           })
