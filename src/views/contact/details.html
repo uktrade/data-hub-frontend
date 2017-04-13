@@ -2,18 +2,19 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-    <h2 class="heading-medium">Contact Details</h2>
+  <h2 class="heading-medium">Contact Details</h2>
 
-    {{ trade.keyvaluetable(
-        contactDetails,
-        stripey=true,
-        labels=contactDetailsLabels,
-        keyorder=contactDetailsDisplayOrder,
-        id="contact-details")
-    }}
+  {{ trade.keyvaluetable(
+      contactDetails,
+      stripey=true,
+      labels=contactDetailsLabels,
+      keyorder=contactDetailsDisplayOrder,
+      id="contact-details")
+  }}
 
+  {% if not contact.archived %}
     <p>
       <a href="/contact/{{id}}/edit" class="button button-secondary">Edit contact details</a>
     </p>
-
+  {% endif %}
 {% endblock %}
