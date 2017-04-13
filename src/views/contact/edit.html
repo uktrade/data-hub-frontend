@@ -1,0 +1,104 @@
+{% extends "layouts/ukti.html" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  <h1 class="page-heading">
+    {% if contactFormData and contactFormData.id %}
+      Edit contact
+    {% else %}
+      Add contact
+    {% endif %}
+  </h1>
+  <div class="grid-row">
+    <div class="column-three-quarters">
+      {{ trade.errorPanel( errors, labels=contactDetailsLabels ) }}
+
+      <form method="POST">
+        <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
+        <input type="hidden" name="company" value="{{contactFormData.company}}">
+        {% if contactFormData.id %}
+          <input type="hidden" name="id" value="{{contactFormData.id}}">
+        {% endif %}
+
+        <div class='form-group'>
+          <div class='form-label-bold'>Company</div>
+          <a href="/company/company_company/{{contact.company.id}}">{{ contact.company.name }}</a>
+        </div>
+
+        {{ trade.textbox("first_name", label="First name", value=contactFormData.first_name, error=errors.first_name) }}
+        {{ trade.textbox("last_name", label="First name", value=contactFormData.last_name, error=errors.last_name) }}
+        {{ trade.textbox("job_title", label="Job title", value=contactFormData.job_title, error=errors.job_title) }}
+
+        <fieldset class="form-group inline">
+          <legend class="form-label-bold">Is this person a primary contact?</legend>
+          <label
+            class="block-label selection-button-radio{% if contactFormData.primary == 'yes' %} selected{% endif %}">
+            <input name="primary" type="radio" value="yes" {% if contactFormData.primary == 'yes' %}selected{% endif %}>
+            Yes
+          </label>
+          <label
+            class="block-label selection-button-radio ">
+            <input name="primary" type="radio" value="no" {% if not contactFormData.primary or contactFormData.primary == 'no' %} selected{% endif %}>
+            No
+          </label>
+        </fieldset>
+
+        {{ trade.textbox("telephone_countrycode", label="Telephone country code", value=contactFormData.telephone_countrycode, error=errors.telephone_countrycode) }}
+        {{ trade.textbox("telephone_number", label="Telephone", value=contactFormData.telephone_number, error=errors.telephone_number) }}
+        {{ trade.textbox("email", label="Email", value=contactFormData.email, error=errors.email) }}
+
+        <fieldset class="form-group inline">
+          <legend class="form-label-bold">Is the contacts address the same as the company address?</legend>
+          <label
+            class="block-label selection-button-radio{% if contactFormData.address_same_as_company == 'yes' %} selected{% endif %}">
+            <input name="primary" type="radio" value="yes" {% if contactFormData.address_same_as_company == 'yes' %}selected{% endif %}>
+            Yes
+          </label>
+          <label
+            class="block-label selection-button-radio{% if contactFormData.address_same_as_company == 'no' %} selected{% endif %}">
+            <input name="primary" type="radio" value="no" {% if contactFormData.address_same_as_company == 'no' %} selected{% endif %}>
+            No
+          </label>
+        </fieldset>
+
+        <fieldset id="address-wrapper" class="fieldset--address lookup-address-js">
+          <div class="form-group">
+            <legend class="form-label-bold">Contact address</legend>
+          </div>
+
+          <div class="form-group form-group--postcode">{# hide for none js #}
+            <label class="form-label-bold">Postcode lookup</label>
+            <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
+            <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
+          </div>
+
+          {# dropdown of suggestions #}
+          <div class="form-group form-group--address-suggestions">
+            <label class="form-label-bold">Select an address from the drop down</label>
+            <select class="form-control">
+            <option value="">Please enter a postcode to lookup your address</option>
+            </select>
+          </div>
+
+          {{ trade.textbox("address_1", label="Business and street (optional)", value=contactFormData.address_1, error=errors.address_1) }}
+          {{ trade.textbox("address_2", value=contactFormData.address_2, error=errors.address_2) }}
+          {{ trade.textbox("address_town", label="Town or city (optional)", value=contactFormData.address_town, error=errors.address_town) }}
+          {{ trade.textbox("address_county", label="County (optional)", value=contactFormData.address_county, error=errors.address_county) }}
+          {{ trade.textbox("address_postcode", label="Postcode (optional)", value=contactFormData.address_postcode, error=errors.address_postcode) }}
+          {{ trade.dropdown("address_country", label="Country", emptyLabel="Pick a value", value=contactFormData.address_country, options=countryOptions, error=errors.address_country) }}
+        </fieldset>
+
+        {{ trade.textbox("telephone_alternative", label="Alternative phone (optional)", value=contactFormData.telephone_alternative, error=errors.telephone_alternative) }}
+        {{ trade.textbox("email_alternative", label="Alternative email (optional)", value=contactFormData.email_alternative, error=errors.email_alternative) }}
+
+        {{ trade.textarea("notes", label="Notes (optional)", value=contactFormData.notes, error=errors.notes) }}
+
+        {% if contactFormData.id %}
+          {{ trade.save(backUrl=referer) }}
+        {% else %}
+          {{ trade.save(buttonText="Save and create", backUrl=referer) }}
+        {% endif %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

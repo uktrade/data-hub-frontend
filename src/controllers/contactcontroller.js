@@ -33,16 +33,7 @@ function getDetails (req, res, next) {
   }
 }
 
-function editDetails (req, res, next) {
-  res.render('contact/edit')
-}
-
-function postDetails (req, res, next) {
-}
-
 router.use(['/contact/:contactId/*'], getCommon)
-router.get(['/contact/:contactId/edit', '/contact/add'], editDetails)
-router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 router.get('/contact/:contactId/details', getDetails)
 
 module.exports = {router, getDetails, getCommon}
