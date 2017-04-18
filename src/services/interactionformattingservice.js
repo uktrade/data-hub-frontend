@@ -1,7 +1,6 @@
 const {formatLongDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/textformatting')
 const {getPropertyName} = require('../lib/propertyhelpers')
-
 /**
  * Returns an interaction formatted for display in the interaction detail
  * page. Compatible with key value table macro
