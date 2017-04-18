@@ -7,6 +7,7 @@ module.exports = {
     companyinvestmenttabform: './src/javascripts/companyinvestmenttabform',
     companyadd: './src/javascripts/companyadd',
     companyedit: './src/javascripts/companyedit',
+    contactedit: './src/javascripts/contactedit',
     investment: './src/javascripts/investment',
     createinvestment: './src/javascripts/createinvestment',
     index: './src/javascripts/index',
