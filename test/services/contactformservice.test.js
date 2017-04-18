@@ -156,6 +156,9 @@ describe('contact form service', function () {
 
       expect(actual).to.deep.equal(expected)
     })
+    it('should handle a null contact', function () {
+      expect(contactFormService.getContactAsFormData(null)).to.be.null
+    })
   })
   describe('save contact form', function () {
     let formData
