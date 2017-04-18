@@ -37,8 +37,8 @@
             Yes
           </label>
           <label
-            class="block-label selection-button-radio ">
-            <input name="primary" type="radio" value="no" {% if not contactFormData.primary or contactFormData.primary == 'no' %} selected{% endif %}>
+            class="block-label selection-button-radio{% if contactFormData.primary != 'yes' %} selected{% endif %}">
+            <input name="primary" type="radio" value="no" {% if not contactFormData.primary or contactFormData.primary != 'yes' %} selected{% endif %}>
             No
           </label>
         </fieldset>
@@ -47,16 +47,16 @@
         {{ trade.textbox("telephone_number", label="Telephone", value=contactFormData.telephone_number, error=errors.telephone_number) }}
         {{ trade.textbox("email", label="Email", value=contactFormData.email, error=errors.email) }}
 
-        <fieldset class="form-group inline">
+        <fieldset class="form-group inline" id="address-same-wrapper">
           <legend class="form-label-bold">Is the contacts address the same as the company address?</legend>
           <label
-            class="block-label selection-button-radio{% if contactFormData.address_same_as_company == 'yes' %} selected{% endif %}">
-            <input name="primary" type="radio" value="yes" {% if contactFormData.address_same_as_company == 'yes' %}selected{% endif %}>
+            class="block-label selection-button-radio{% if not contactFormData.address_same_as_company or contactFormData.address_same_as_company != 'no' %} selected{% endif %}">
+            <input id="address-same-radio" name="address_same_as_company" type="radio" value="yes" {% if not contactFormData.address_same_as_company or contactFormData.address_same_as_company != 'no' %}checked{% endif %}>
             Yes
           </label>
           <label
             class="block-label selection-button-radio{% if contactFormData.address_same_as_company == 'no' %} selected{% endif %}">
-            <input name="primary" type="radio" value="no" {% if contactFormData.address_same_as_company == 'no' %} selected{% endif %}>
+            <input name="address_same_as_company" type="radio" value="no" {% if contactFormData.address_same_as_company == 'no' %}checked{% endif %}>
             No
           </label>
         </fieldset>
@@ -93,12 +93,13 @@
 
         {{ trade.textarea("notes", label="Notes (optional)", value=contactFormData.notes, error=errors.notes) }}
 
-        {% if contactFormData.id %}
-          {{ trade.save(backUrl=referer) }}
+        {% if backUrl %}
+          {{ trade.save(buttonText="Save", backUrl=backUrl) }}
         {% else %}
-          {{ trade.save(buttonText="Save and create", backUrl=referer) }}
+          {{ trade.save(buttonText="Save") }}
         {% endif %}
       </form>
     </div>
   </div>
+  <script src="/javascripts/contactedit.bundle.js"></script>
 {% endblock %}

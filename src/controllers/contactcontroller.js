@@ -33,7 +33,7 @@ function getDetails (req, res, next) {
   }
 }
 
-router.use(['/contact/:contactId/*'], getCommon)
+router.get(['/contact/:contactId/*'], getCommon)
 router.get('/contact/:contactId/details', getDetails)
 
 module.exports = {router, getDetails, getCommon}
