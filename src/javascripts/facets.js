@@ -36,7 +36,7 @@ class Facets {
     let url = `?term=${term}`
 
     const checkedInputs = this.element.querySelectorAll('input[type=checkbox]:checked')
-    for (let pos = 0; checkedInputs.length; pos += 1) {
+    for (let pos = 0; pos < checkedInputs.length; pos += 1) {
       const input = checkedInputs.item(pos)
       url += `&${input.name}=${input.value}`
     }
