@@ -4,7 +4,7 @@ const winston = require('winston')
 const advisorRepository = require('../repositorys/advisorrepository')
 const companyRepository = require('../repositorys/companyrepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
-const interactionService = require('./interactionservice')
+const interactionDataService = require('./interactiondataservice')
 
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
@@ -58,7 +58,7 @@ function getInflatedDitCompany (token, id) {
             notes: interaction.notes,
             subject: interaction.subject,
             contact: getContactInCompanyObject(company, interaction.contact),
-            interaction_type: interactionService.getInteractionType(interaction.interaction_type),
+            interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
             dit_advisor: advisorHash[interaction.dit_advisor]
           }
         })

@@ -1,6 +1,12 @@
 /* globals sinon: true */
 /* eslint camelcase: 0 */
 
+const interactionFormService = require('../src/services/interactionformservice')
+
+function getInteractionAsFormDataStub () {
+  return sinon.spy(interactionFormService.getInteractionAsFormData)
+}
+
 function saveStub () {
   return sinon.spy(function (token, formData) {
     return new Promise((resolve, reject) => {
@@ -160,6 +166,7 @@ function getInteractionStub (interaction) {
 }
 
 module.exports = {
+  getInteractionAsFormDataStub,
   saveStub,
   createBlankInteractionForCompanyStub,
   createBlankInteractionForContactStub,

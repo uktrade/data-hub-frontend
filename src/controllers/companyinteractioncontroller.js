@@ -17,7 +17,7 @@ function getInteractions (req, res) {
   // Only allow a link to add an interaction if the company has contacts
   const company = res.locals.company
   if (company.contacts && company.contacts.length > 0) {
-    res.locals.addInteractionUrl = `/interaction/add?company=${company.id}`
+    res.locals.addInteractionUrl = `/interaction/add-step-1/?company=${company.id}`
   }
 
   res.render('company/interactions')
