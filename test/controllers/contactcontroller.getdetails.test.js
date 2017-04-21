@@ -1,18 +1,7 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
+const { render } = require('../nunjucks')
 const contactController = require('../../src/controllers/contactcontroller')
 const { contactDetailsLabels } = require('../../src/labels/contactlabels')
-const nunjucks = require('nunjucks')
-const jsdom = require('jsdom')
-const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
-
-nunjucks.configure('views')
-const nunenv = nunjucks.configure([`${__dirname}/../../src/views`, `${__dirname}/../../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true
-})
-
-Object.keys(filters).forEach((filterName) => {
-  nunenv.addFilter(filterName, filters[filterName])
-})
 
 describe('Contact controller, getDetails', function () {
   let contact
@@ -92,13 +81,13 @@ describe('Contact controller, getDetails', function () {
     })
 
     it('should render a contact details section', function () {
-      return renderContent({contact, contactDetails, contactDetailsLabels})
+      return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
       .then((document) => {
         expect(document.getElementById('contact-details')).to.not.be.null
       })
     })
     it('should include the contact details in a key value table', function () {
-      return renderContent({contact, contactDetails, contactDetailsLabels})
+      return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
       .then((document) => {
         const details = document.getElementById('contact-details')
         expect(details.innerHTML).to.include(contactDetails.title)
@@ -112,7 +101,7 @@ describe('Contact controller, getDetails', function () {
       })
     })
     it('should display the contact name and address in a heading', function () {
-      return renderContent({contact, contactDetails, contactDetailsLabels})
+      return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
       .then((document) => {
         const heading = document.querySelector('h1.page-heading')
         expect(heading.innerHTML).to.include('Fred Smith')
@@ -120,7 +109,7 @@ describe('Contact controller, getDetails', function () {
       })
     })
     it('should indicate primary contacts', function () {
-      return renderContent({contact, contactDetails, contactDetailsLabels})
+      return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
       .then((document) => {
         const heading = document.querySelector('h1.page-heading')
         expect(heading.innerHTML).to.include('<span class="status-badge status-badge--fuschia ">Primary</span>')
@@ -131,16 +120,4 @@ describe('Contact controller, getDetails', function () {
 
 function mergeLocals (res, options) {
   return Object.assign({}, res.locals, options)
-}
-
-function renderContent (locals) {
-  return new Promise((resolve, reject) => {
-    const markup = nunjucks.render('../../src/views/contact/details.html', locals)
-    jsdom.env(markup, (err, jsdomWindow) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(jsdomWindow.document)
-    })
-  })
 }
