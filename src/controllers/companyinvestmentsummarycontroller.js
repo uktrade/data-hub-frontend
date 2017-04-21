@@ -1,13 +1,12 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const controllerUtils = require('../lib/controllerutils')
+const { isBlank } = require('../lib/controllerutils')
 const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const investmentFormattingService = require('../services/investmentformattingservice')
 const { investmentDetailLabels, investmentProjectsOpenLabels, investmentProjectsClosedLabels, investmentFormLabels } = require('../labels/investmentlabels')
 const { managedOptions, investmentTierOptions } = require('../options')
 const router = express.Router()
-const isBlank = controllerUtils.isBlank
 
 function getInvestment (req, res, next) {
   companyRepository.getCompanyInvestmentSummary(req.session.token, req.params.sourceId)

@@ -28,13 +28,6 @@ function newlineToBr (str) {
   return str.replace(/(?:\r\n|\r|\n)/g, '<br/>')
 }
 
-function getPropertyName (object, key) {
-  if (object && typeof object === 'object' && object.hasOwnProperty(key) && object[key] !== null) {
-    return object[key].name
-  }
-  return null
-}
-
 function getContactName (contact) {
   let name = ''
   if (contact.first_name) {
@@ -53,4 +46,4 @@ function getContactLink (object) {
   return null
 }
 
-module.exports = {titleCase, newlineToBr, getPropertyName, getContactName, getContactLink}
+module.exports = {titleCase, newlineToBr, getContactName, getContactLink}
