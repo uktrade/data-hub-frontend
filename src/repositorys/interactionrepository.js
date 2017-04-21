@@ -32,9 +32,9 @@ function saveInteraction (token, interaction) {
  */
 function getInteractionsForContact (token, contactId) {
   return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/interaction/?contact_id=${contactId}`)
+    authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/`)
     .then((response) => {
-      resolve(response.results)
+      resolve(response.interactions)
     })
     .catch((error) => {
       winston.info(error)
