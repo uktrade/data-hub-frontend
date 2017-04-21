@@ -12,7 +12,7 @@ function getCommon (req, res, next) {
     Q.spawn(function * () {
       try {
         res.locals.id = req.params.contactId
-        res.locals.contact = contactRepository.getContact(req.session.token, res.locals.id)
+        res.locals.contact = yield contactRepository.getContact(req.session.token, res.locals.id)
         next()
       } catch (error) {
         winston.error(error)
