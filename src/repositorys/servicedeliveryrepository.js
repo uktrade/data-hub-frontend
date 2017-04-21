@@ -44,9 +44,9 @@ function getServiceDeliverysForCompany (token, companyId) {
   })
 }
 
-function getServiceDeliverysForContact (token, companyId) {
+function getServiceDeliverysForContact (token, contactId) {
   return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact_id=${companyId}`)
+    authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact_id=${contactId}`)
     .then((response) => {
       resolve(response.data)
     })
