@@ -20,11 +20,11 @@ class LookupAddress {
 
     this.postcodeLookupField = this.element.querySelector('.postcode-lookup-field')
     this.postcodeLookupButton = this.element.querySelector('.postcode-lookup-button')
-    this.address1Field = this.element.querySelector('[name*="_address_1"]')
-    this.address2Field = this.element.querySelector('[name*="_address_2"]')
-    this.addressTownField = this.element.querySelector('[name*="_address_town"]')
-    this.addressCountyField = this.element.querySelector('[name*="_address_county"]')
-    this.addressPostcodeField = this.element.querySelector('[name*="_address_postcode"]')
+    this.address1Field = this.element.querySelector('[name*="address_1"]')
+    this.address2Field = this.element.querySelector('[name*="address_2"]')
+    this.addressTownField = this.element.querySelector('[name*="address_town"]')
+    this.addressCountyField = this.element.querySelector('[name*="address_county"]')
+    this.addressPostcodeField = this.element.querySelector('[name*="address_postcode"]')
     this.addressSuggestionsWrapper = this.element.querySelector('.form-group--address-suggestions select')
     this.addressSuggestionsDropdown = this.element.querySelector('.form-group--address-suggestions select')
   }
