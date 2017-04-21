@@ -1,6 +1,10 @@
-global.chai = require('chai').use(require('sinon-chai'))
-global.expect = global.chai.expect
+const chai = require('chai')
+const sinonChai = require('sinon-chai')
+
+global.expect = chai.expect
 global.sinon = require('sinon')
+chai.use(sinonChai)
+
 global.appFolder = process.cwd() + '/src'
 
 process.setMaxListeners(0)

@@ -1,16 +1,6 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
-const nunjucks = require('nunjucks')
-const jsdom = require('jsdom')
-const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
-
-nunjucks.configure('views')
-const nunenv = nunjucks.configure([`${__dirname}/../../src/views`, `${__dirname}/../../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true
-})
-
-Object.keys(filters).forEach((filterName) => {
-  nunenv.addFilter(filterName, filters[filterName])
-})
+const { render } = require('../nunjucks')
+const contactTemplate = '../../src/views/company/contacts.html'
 
 describe('Company contacts controller', function () {
   let company
@@ -285,19 +275,19 @@ describe('Company contacts controller', function () {
     })
 
     it('should render a list of un-archived contacts', function () {
-      return renderContent({contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('contact-list')).to.not.be.null
       })
     })
     it('should render a list of archived contacts', function () {
-      return renderContent({contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.not.be.null
       })
     })
     it('each un-archived line should include the required data', function () {
-      return renderContent({contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .contact')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -309,7 +299,7 @@ describe('Company contacts controller', function () {
       })
     })
     it('each archived line should include the required data', function () {
-      return renderContent({contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const contactElement = document.querySelector('#archived-contact-list .contact')
         expect(contactElement.innerHTML).to.include('John Smith')
@@ -319,21 +309,21 @@ describe('Company contacts controller', function () {
       })
     })
     it('include a link to add a new contact', function () {
-      return renderContent({contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
         expect(link.href).to.eq('/contact/add?company=1234')
       })
     })
     it('should not render contacts section if there are none and warn user', function () {
-      return renderContent({contacts: [], contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts: [], contactsArchived, addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('contact-list')).to.be.null
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
       })
     })
     it('should not render archived contacts section if there are none', function () {
-      return renderContent({contacts: [], contactsArchived: [], addContactUrl, company})
+      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.be.null
         expect(document.getElementById('archived-title')).to.be.null
@@ -341,15 +331,3 @@ describe('Company contacts controller', function () {
     })
   })
 })
-
-function renderContent (locals) {
-  return new Promise((resolve, reject) => {
-    const markup = nunjucks.render('../../src/views/company/contacts.html', locals)
-    jsdom.env(markup, (err, jsdomWindow) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(jsdomWindow.document)
-    })
-  })
-}
