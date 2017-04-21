@@ -74,16 +74,6 @@ function flattenIdFields (data) {
   }
 }
 
-function nullEmptyFields (data) {
-  const fieldNames = Object.keys(data)
-  for (const fieldName of fieldNames) {
-    const fieldValue = data[fieldName]
-    if (fieldValue !== null && fieldValue.length === 0) {
-      data[fieldName] = null
-    }
-  }
-}
-
 function genCSRF (req, res) {
   const token = guid()
   req.session.csrfToken = token
@@ -110,7 +100,6 @@ module.exports = {
   encodeQueryData,
   convertAutosuggestCollection,
   flattenIdFields,
-  nullEmptyFields,
   genCSRF,
   isBlank,
   toQueryString

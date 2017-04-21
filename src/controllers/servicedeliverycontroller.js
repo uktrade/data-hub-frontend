@@ -3,14 +3,14 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/servicedelivery')
-const controllerUtils = require('../lib/controllerutils')
+const { genCSRF, transformErrors } = require('../lib/controllerutils')
+const { nullEmptyFields } = require('../lib/propertyhelpers')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
 const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
-const genCSRF = controllerUtils.genCSRF
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -75,14 +75,14 @@ function postServiceDeliveryEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      controllerUtils.nullEmptyFields(req.body)
+      nullEmptyFields(req.body)
       const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)
     } catch (response) {
       try {
         if (response.error && response.error.errors) {
-          res.locals.errors = controllerUtils.transformV2Errors(response.error.errors)
+          res.locals.errors = transformErrors(response.error.errors)
           try {
             res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
           } catch (error) {

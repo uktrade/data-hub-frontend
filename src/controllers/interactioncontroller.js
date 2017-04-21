@@ -3,7 +3,8 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 const interactionLabels = require('../labels/interaction')
-const controllerUtils = require('../lib/controllerutils')
+const {nullEmptyFields} = require('../lib/propertyhelpers')
+const {genCSRF} = require('../lib/controllerutils')
 const interactionRepository = require('../repositorys/interactionrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const interactionService = require('../services/interactionservice')
@@ -26,7 +27,7 @@ function getCommon (req, res, next) {
 }
 
 function getAddStep1 (req, res) {
-  controllerUtils.genCSRF(req, res)
+  genCSRF(req, res)
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery', selectable: true }]
 
   const selectableTypes = interactionTypes
@@ -81,7 +82,7 @@ function postAddStep1 (req, res) {
 }
 
 function getInteractionEdit (req, res, next) {
-  controllerUtils.genCSRF(req, res)
+  genCSRF(req, res)
   Q.spawn(function *() {
     try {
       const token = req.session.token
@@ -124,7 +125,7 @@ function postInteractionEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      controllerUtils.nullEmptyFields(req.body)
+      nullEmptyFields(req.body)
 
       const result = yield interactionRepository.saveInteraction(req.session.token, req.body)
       res.redirect(`/interaction/${result.id}/details`)
