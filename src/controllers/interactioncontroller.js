@@ -125,7 +125,7 @@ function postInteractionEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      nullEmptyFields(req.body)
+      req.body = nullEmptyFields(req.body)
 
       const result = yield interactionRepository.saveInteraction(req.session.token, req.body)
       res.redirect(`/interaction/${result.id}/details`)
