@@ -75,7 +75,7 @@ function postServiceDeliveryEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      nullEmptyFields(req.body)
+      req.body = nullEmptyFields(req.body)
       const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)
