@@ -8,7 +8,7 @@
     "url": "https://github.com/uktrade/data-hub-fe-beta2"
   },
   "dependencies": {
-    "@uktrade/trade_elements": "^3.1.1",
+    "@uktrade/trade_elements": "^3.1.3",
     "axios": "^0.15.2",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
@@ -37,7 +37,7 @@
     "nodemon": "^1.11.0",
     "npm-parallel": "^2.0.1",
     "nunjucks": "^3.0.0",
-    "nyc": "^10.1.2",
+    "nyc": "^10.2.0",
     "proxyquire": "^1.7.10",
     "q": "^1.4.1",
     "request": "^2.74.0",
@@ -55,7 +55,7 @@
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
-    "coverage": "nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js",
+    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "standard",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
@@ -74,7 +74,7 @@
   "author": "Zac Tolley <zac@thetolleys.com>",
   "license": "MIT",
   "engines": {
-    "node": "6.10.0"
+    "node": "6.10.2"
   },
   "standard": {
     "parser": "babel-eslint",
