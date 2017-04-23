@@ -3,7 +3,7 @@ const Q = require('q')
 const winston = require('winston')
 const { genCSRF } = require('../lib/controllerutils')
 const contactFormService = require('../services/contactformservice')
-const { contactDetailsLabels } = require('../labels/contactlabels')
+const { contactLabels } = require('../labels/contactlabels')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyRepository = require('../repositorys/companyrepository')
 
@@ -45,7 +45,7 @@ function editDetails (req, res, next) {
       }
 
       // Labels and options needed for the form and error display
-      res.locals.contactDetailsLabels = contactDetailsLabels
+      res.locals.contactLabels = contactLabels
       res.locals.countryOptions = metadataRepository.countryOptions
 
       genCSRF(req, res)

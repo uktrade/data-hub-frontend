@@ -11,7 +11,7 @@
   </h1>
   <div class="grid-row">
     <div class="column-three-quarters">
-      {{ trade.errorPanel( errors, labels=contactDetailsLabels ) }}
+      {{ trade.errorPanel( errors, labels=contactLabels ) }}
 
       <form method="POST">
         <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
@@ -29,7 +29,7 @@
         {{ trade.textbox("last_name", label="Last name", value=formData.last_name, error=errors.last_name) }}
         {{ trade.textbox("job_title", label="Job title", value=formData.job_title, error=errors.job_title) }}
 
-        <fieldset class="form-group inline">
+        <fieldset id="primary-wrapper" class="form-group inline">
           <legend class="form-label-bold">Is this person a primary contact?</legend>
           <label
             class="block-label selection-button-radio{% if formData.primary == 'yes' %} selected{% endif %}">
@@ -47,7 +47,7 @@
         {{ trade.textbox("telephone_number", label="Telephone", value=formData.telephone_number, error=errors.telephone_number) }}
         {{ trade.textbox("email", label="Email", value=formData.email, error=errors.email) }}
 
-        <fieldset class="form-group inline" id="address-same-wrapper">
+        <fieldset class="form-group inline" id="address_same_as_company-wrapper">
           <legend class="form-label-bold">Is the contact's address the same as the company address?</legend>
           <label
             class="block-label selection-button-radio{% if not formData.address_same_as_company or formData.address_same_as_company != 'no' %} selected{% endif %}">

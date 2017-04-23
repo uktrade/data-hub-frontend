@@ -3,7 +3,7 @@ const { hide, show } = require('../lib/elementstuff')
 require('./lookupaddress')
 
 const addressWrapper = document.getElementById('address-wrapper')
-const addressSameWrapper = document.getElementById('address-same-wrapper')
+const addressSameWrapper = document.getElementById('address_same_as_company-wrapper')
 const addressIsSameRadio = document.getElementById('address-same-radio')
 const address1 = document.querySelector('[name=address_1]')
 const address2 = document.querySelector('[name=address_2]')
