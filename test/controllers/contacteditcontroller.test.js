@@ -1,9 +1,8 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint handle-callback-err: 0 */
-const stubs = require('../stubs')
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
-const { expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
+const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
 const contactLabels = require('../../src/labels/contactlabels')
 
 describe('Contact controller, edit', function () {
@@ -19,9 +18,9 @@ describe('Contact controller, edit', function () {
       name: 'Fred ltd.'
     }
 
-    getDitCompanyStub = stubs.getNetworkObjectStub(company)
-    getContactAsFormDataStub = stubs.transformObjectStub()
-    saveContactFormStub = stubs.saveStub()
+    getDitCompanyStub = sinon.stub().resolves(company)
+    getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
+    saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
     contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
       '../services/contactformservice': {
@@ -253,7 +252,8 @@ describe('Contact controller, edit', function () {
           notes: 'some notes'
         },
         countryOptions,
-        company
+        company,
+        contactLabels
       }
     })
     it('should render all the required fields on the page', function () {
@@ -261,9 +261,116 @@ describe('Contact controller, edit', function () {
       .then((document) => {
         expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
         expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
-        expectTextFieldWithLabel(document, 'first_name', 'First name')
-        expectTextFieldWithLabel(document, 'last_name', 'Last name')
-        expectTextFieldWithLabel(document, 'job_title', 'Job title')
+        expectHiddenField(document, 'id', locals.formData.id)
+        expectHiddenField(document, 'company', locals.formData.company)
+        expectTextFieldWithLabel(document, 'first_name', 'First name', locals.formData.first_name)
+        expectTextFieldWithLabel(document, 'last_name', 'Last name', locals.formData.last_name)
+        expectTextFieldWithLabel(document, 'job_title', 'Job title', locals.formData.job_title)
+        expectRadioWithLabel(document, 'primary', 'Is this person a primary contact?', locals.formData.primary)
+        expectTextFieldWithLabel(document, 'telephone_countrycode', 'Telephone country code', locals.formData.telephone_countrycode)
+        expectTextFieldWithLabel(document, 'telephone_number', 'Telephone', locals.formData.telephone_number)
+        expectTextFieldWithLabel(document, 'email', 'Email', locals.formData.email)
+        expectRadioWithLabel(document, 'address_same_as_company', 'Is the contact\'s address the same as the company address?', locals.formData.address_same_as_company)
+        expectTextFieldWithLabel(document, 'address_1', 'Business and street (optional)', locals.formData.address_1)
+        expectTextFieldWithLabel(document, 'address_town', 'Town or city (optional)', locals.formData.address_town)
+        expectTextFieldWithLabel(document, 'address_county', 'County (optional)', locals.formData.address_county)
+        expectTextFieldWithLabel(document, 'address_postcode', 'Postcode (optional)', locals.formData.address_postcode)
+        expectTextFieldWithLabel(document, 'telephone_alternative', 'Alternative phone (optional)', locals.formData.telephone_alternarive)
+        expectTextFieldWithLabel(document, 'email_alternative', 'Alternative email (optional)', locals.formData.email_alternative)
+        expectTextAreaWithLabel(document, 'notes', 'Notes (optional)', locals.formData.notes)
+      })
+    })
+  })
+  describe('save', function () {
+    let body
+    let req = {
+      session: {
+        token: '1234'
+      },
+      params: { id: '1234' },
+      query: {}
+    }
+    let res = {
+      locals: {}
+    }
+    const next = function (error) {
+      console.log(error)
+      throw Error('error')
+    }
+
+    beforeEach(function () {
+      body = {
+        id: '1234',
+        first_name: 'Fred',
+        last_name: 'Smith',
+        company: '1234'
+      }
+      req.body = body
+    })
+    it('should save the form data to the back end', function (done) {
+      res.redirect = function () {
+        expect(saveContactFormStub).to.be.calledWith('1234', body)
+        done()
+      }
+
+      contactEditController.postDetails(req, res, next)
+    })
+    it('should redirect the user to the view page if successful', function (done) {
+      res.redirect = function (url) {
+        expect(url).to.equal('/contact/1234/details')
+        done()
+      }
+      contactEditController.postDetails(req, res, next)
+    })
+    it('should re-render the edit page with the original form data on validation errors', function (done) {
+      saveContactFormStub = sinon.stub().rejects({
+        error: { name: ['test'] }
+      })
+
+      contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
+        '../services/contactformservice': {
+          getContactAsFormData: getContactAsFormDataStub,
+          saveContactForm: saveContactFormStub
+        },
+        '../repositorys/metadatarepository': {
+          countryOptions: [{
+            id: '986',
+            name: 'United Kingdom'
+          }]
+        },
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        }
+      })
+
+      res.render = function (template) {
+        expect(template).to.equal('contact/edit')
+        expect(res.locals).to.have.property('errors')
+        done()
+      }
+      contactEditController.postDetails(req, res, next)
+    })
+    it('should show errors when the save fails for a non-validation related reason', function (done) {
+      saveContactFormStub = sinon.stub().rejects(Error('some error'))
+
+      contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
+        '../services/contactformservice': {
+          getContactAsFormData: getContactAsFormDataStub,
+          saveContactForm: saveContactFormStub
+        },
+        '../repositorys/metadatarepository': {
+          countryOptions: [{
+            id: '986',
+            name: 'United Kingdom'
+          }]
+        },
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        }
+      })
+
+      contactEditController.postDetails(req, res, function (error) {
+        done()
       })
     })
   })

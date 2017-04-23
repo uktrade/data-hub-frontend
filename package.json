@@ -43,7 +43,7 @@
     "request": "^2.74.0",
     "request-promise": "^4.1.1",
     "sass-lint": "^1.10.2",
-    "sinon": "^1.17.5",
+    "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
     "standard": "^8.6.0",
     "uglify": "^0.1.5",
