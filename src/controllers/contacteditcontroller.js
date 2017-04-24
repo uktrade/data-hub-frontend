@@ -57,7 +57,6 @@ function editDetails (req, res, next) {
   })
 }
 
-
 /**
  * POST contact form. Accepts a contact form and saves it to the backend
  *

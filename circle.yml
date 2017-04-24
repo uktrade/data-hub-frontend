@@ -1,8 +1,11 @@
 machine:
   node:
     version: 6.10.2
+dependencies:
+  override:
+    - yarn
 test:
   override:
-    - npm run lint && mocha test --reporter mocha-junit-reporter --require test/common.js --ui bdd test/**/*.test.js && nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js:
+    - yarn lint && yarn mocha test --reporter mocha-junit-reporter --require test/common.js --ui bdd test/**/*.test.js && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js:
         environment:
           MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml

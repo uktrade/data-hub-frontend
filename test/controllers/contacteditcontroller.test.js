@@ -2,7 +2,7 @@
 /* eslint handle-callback-err: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
-const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
+const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../formhelpers')
 const contactLabels = require('../../src/labels/contactlabels')
 
 describe('Contact controller, edit', function () {
