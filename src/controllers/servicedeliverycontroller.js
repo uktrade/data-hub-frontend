@@ -9,13 +9,12 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
 const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
-const { nullEmptyFields } = require('../lib/propertyhelpers')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
 const router = express.Router()
 
 function getCommon (req, res, next) {
-  Q.spawn(function *() {
+  Q.spawn(function * () {
     try {
       const token = req.session.token
       res.locals.serviceDelivery = yield serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
@@ -29,7 +28,7 @@ function getCommon (req, res, next) {
 
 function getServiceDeliveryEdit (req, res, next) {
   genCSRF(req, res)
-  Q.spawn(function *() {
+  Q.spawn(function * () {
     try {
       const token = req.session.token
       const dit_advisor = req.session.user
@@ -69,7 +68,7 @@ function getServiceDeliveryEdit (req, res, next) {
 }
 
 function postServiceDeliveryEdit (req, res, next) {
-  Q.spawn(function *main () {
+  Q.spawn(function * () {
     try {
       req.body.date = `${req.body.date_year}-${req.body.date_month}-${req.body.date_day}T00:00:00.00Z`
       delete req.body.date_year
