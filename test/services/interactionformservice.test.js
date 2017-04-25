@@ -1,6 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint handle-callback-err: 0, camelcase: 0 */
-const stubs = require('../stubs')
 const proxyquire = require('proxyquire')
 
 describe('interaction form service', function () {
@@ -35,7 +34,7 @@ describe('interaction form service', function () {
       dit_team
     }
 
-    saveInteractionStub = stubs.saveStub()
+    saveInteractionStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
     interactionFormService = proxyquire('../../src/services/interactionformservice', {
       '../repositorys/interactionrepository': {
@@ -130,7 +129,14 @@ describe('interaction form service', function () {
       })
     })
     it('should pass back any failures', function (done) {
-      interactionForm.id = 'YYY'
+      saveInteractionStub = sinon.stub().rejects(new Error('error'))
+
+      interactionFormService = proxyquire('../../src/services/interactionformservice', {
+        '../repositorys/interactionrepository': {
+          save: saveInteractionStub
+        }
+      })
+
       interactionFormService.saveInteractionForm(token, interactionForm)
       .catch(() => {
         done()

@@ -1,6 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint handle-callback-err: 0, camelcase: 0 */
-const stubs = require('../stubs')
 const proxyquire = require('proxyquire')
 
 describe('interaction data service', function () {
@@ -22,9 +21,9 @@ describe('interaction data service', function () {
     interaction_type = { id: '1234', name: 'Email' }
     interaction = { id: '999', company: { id: company.id } }
 
-    getContactStub = stubs.getContactStub(contact)
-    getDitCompanyStub = stubs.getDitCompanyStub(company)
-    getInteractionStub = stubs.getInteractionStub(interaction)
+    getContactStub = sinon.stub().resolves(contact)
+    getDitCompanyStub = sinon.stub().resolves(company)
+    getInteractionStub = sinon.stub().resolves(interaction)
 
     interactionDataService = proxyquire('../../src/services/interactiondataservice', {
       '../repositorys/companyrepository': {
@@ -53,7 +52,22 @@ describe('interaction data service', function () {
       })
     })
     it('should throw an error if fetching something fails', function (done) {
-      interaction.company.id = 'YYY'
+      getInteractionStub = sinon.stub().rejects(new Error('error'))
+
+      interactionDataService = proxyquire('../../src/services/interactiondataservice', {
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/contactrepository': {
+          getContact: getContactStub
+        },
+        '../repositorys/interactionrepository': {
+          getInteraction: getInteractionStub
+        },
+        '../repositorys/metadatarepository': {
+          interactionTypeOptions: [interaction_type]
+        }
+      })
       interactionDataService.getHydratedInteraction(token, '1234')
       .catch(() => {
         done()
@@ -94,14 +108,45 @@ describe('interaction data service', function () {
       })
     })
     it('should throw an error if something goes wrong', function (done) {
-      contact = null
+      getContactStub = sinon.stub().rejects(new Error('error'))
+
+      interactionDataService = proxyquire('../../src/services/interactiondataservice', {
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/contactrepository': {
+          getContact: getContactStub
+        },
+        '../repositorys/interactionrepository': {
+          getInteraction: getInteractionStub
+        },
+        '../repositorys/metadatarepository': {
+          interactionTypeOptions: [interaction_type]
+        }
+      })
+
       interactionDataService.createBlankInteractionForContact(token, dit_advisor, interaction_type.id, 'YYY')
       .catch((error) => {
         done()
       })
     })
     it('should throw null for a contact with an invalid company', function (done) {
-      contact.company = null
+      getContactStub = sinon.stub().rejects(new Error('error'))
+
+      interactionDataService = proxyquire('../../src/services/interactiondataservice', {
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/contactrepository': {
+          getContact: getContactStub
+        },
+        '../repositorys/interactionrepository': {
+          getInteraction: getInteractionStub
+        },
+        '../repositorys/metadatarepository': {
+          interactionTypeOptions: [interaction_type]
+        }
+      })
       interactionDataService.createBlankInteractionForContact(token, dit_advisor, interaction_type.id, 'YYY')
       .catch((error) => {
         done()
@@ -131,7 +176,22 @@ describe('interaction data service', function () {
       })
     })
     it('should throw an error if something goes wrong', function (done) {
-      contact = null
+      getDitCompanyStub = sinon.stub().rejects(new Error('error'))
+
+      interactionDataService = proxyquire('../../src/services/interactiondataservice', {
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/contactrepository': {
+          getContact: getContactStub
+        },
+        '../repositorys/interactionrepository': {
+          getInteraction: getInteractionStub
+        },
+        '../repositorys/metadatarepository': {
+          interactionTypeOptions: [interaction_type]
+        }
+      })
       interactionDataService.createBlankInteractionForCompany(token, dit_advisor, interaction_type.id, 'YYY')
       .catch((error) => {
         done()

@@ -1,6 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint handle-callback-err: 0 */
-const stubs = require('../stubs')
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
 const { expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
@@ -33,13 +32,15 @@ describe('Interaction controller, edit', function () {
       name: 'Email'
     }
 
+    const contact = {
+      id: '888',
+      name: 'Fred Smith',
+      first_name: 'Fred',
+      last_name: 'Smith'
+    }
+
     newContactInteraction = {
-      contact: {
-        id: '888',
-        name: 'Fred Smith',
-        first_name: 'Fred',
-        last_name: 'Smith'
-      },
+      contact,
       company,
       interaction_type: emailInteractionType
     }
@@ -49,15 +50,15 @@ describe('Interaction controller, edit', function () {
       interaction_type: emailInteractionType
     }
 
-    getInteractionAsFormDataStub = stubs.getInteractionAsFormDataStub()
-    createBlankInteractionForCompanyStub = stubs.createBlankInteractionForCompanyStub(newCompanyInteraction)
-    createBlankInteractionForContactStub = stubs.createBlankInteractionForContactStub(newContactInteraction)
-    getContactsForCompanyStub = stubs.getContactsForCompanyStub()
-    getAdvisorStub = stubs.getAdvisorStub()
-    getServiceOffersStub = stubs.getServiceOffersStub()
-    getDitCompanyStub = stubs.getDitCompanyStub(company)
-    getInteractionTypeStub = stubs.getInteractionTypeStub(emailInteractionType)
-    saveInteractionFormStub = stubs.saveStub()
+    getInteractionAsFormDataStub = sinon.stub().returns({ id: '1234', subject: 'Thing', company: '1111', contact: '2222' })
+    createBlankInteractionForCompanyStub = sinon.stub().resolves(newCompanyInteraction)
+    createBlankInteractionForContactStub = sinon.stub().resolves(newContactInteraction)
+    getContactsForCompanyStub = sinon.stub().resolves([contact])
+    getAdvisorStub = sinon.stub().resolves({ id: '3221', name: 'John Doe' })
+    getServiceOffersStub = sinon.stub().resolves([{ id: '8888', name: 'Service' }])
+    getDitCompanyStub = sinon.stub().resolves(company)
+    getInteractionTypeStub = sinon.stub().returns(emailInteractionType)
+    saveInteractionFormStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
     interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
       '../services/interactionformservice': {
@@ -453,21 +454,73 @@ describe('Interaction controller, edit', function () {
     })
     it('should redirect the user to the view page if successful', function (done) {
       res.redirect = function (url) {
-        expect(url).to.equal('/interaction/222/details')
+        expect(url).to.equal('/interaction/1234/details')
         done()
       }
 
       interactionEditController.postDetails(req, res, next)
     })
     it('should re-render the edit page with the original form data on validation errors', function (done) {
-      req.body.id = 'XXX'
+      saveInteractionFormStub = sinon.stub().rejects({
+        error: { subject: ['test'] }
+      })
+
+      interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
+        '../services/interactionformservice': {
+          getInteractionAsFormData: getInteractionAsFormDataStub,
+          saveInteractionForm: saveInteractionFormStub
+        },
+        '../services/interactiondataservice': {
+          createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
+          createBlankInteractionForContact: createBlankInteractionForContactStub,
+          getInteractionType: getInteractionTypeStub
+        },
+        '../repositorys/contactrepository': {
+          getContactsForCompany: getContactsForCompanyStub
+        },
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/advisorrepository': {
+          getAdvisor: getAdvisorStub
+        },
+        '../repositorys/metadatarepository': {
+          getServiceOffers: getServiceOffersStub
+        }
+      })
+
       res.render = function (url) {
         done()
       }
       interactionEditController.postDetails(req, res, next)
     })
     it('should show errors when the save fails for a non-validation related reason', function (done) {
-      req.body.id = 'YYY'
+      saveInteractionFormStub = sinon.stub().rejects(Error('some error'))
+
+      interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
+        '../services/interactionformservice': {
+          getInteractionAsFormData: getInteractionAsFormDataStub,
+          saveInteractionForm: saveInteractionFormStub
+        },
+        '../services/interactiondataservice': {
+          createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
+          createBlankInteractionForContact: createBlankInteractionForContactStub,
+          getInteractionType: getInteractionTypeStub
+        },
+        '../repositorys/contactrepository': {
+          getContactsForCompany: getContactsForCompanyStub
+        },
+        '../repositorys/companyrepository': {
+          getDitCompany: getDitCompanyStub
+        },
+        '../repositorys/advisorrepository': {
+          getAdvisor: getAdvisorStub
+        },
+        '../repositorys/metadatarepository': {
+          getServiceOffers: getServiceOffersStub
+        }
+      })
+
       interactionEditController.postDetails(req, res, function (error) {
         done()
       })

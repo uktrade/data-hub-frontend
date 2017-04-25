@@ -1,3 +1,6 @@
+const winston = require('winston')
+const Q = require('q')
+
 const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
 
@@ -46,4 +49,18 @@ function unarchiveContact (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/unarchive/`)
 }
 
-module.exports = { getContact, saveContact, archiveContact, unarchiveContact }
+function getContactsForCompany (token, companyId) {
+  return new Promise((resolve, reject) => {
+    Q.spawn(function * () {
+      try {
+        const company = yield authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
+        return company.contacts
+      } catch (error) {
+        winston.error(error)
+        reject(error)
+      }
+    })
+  })
+}
+
+module.exports = { getContact, saveContact, archiveContact, unarchiveContact, getContactsForCompany }
