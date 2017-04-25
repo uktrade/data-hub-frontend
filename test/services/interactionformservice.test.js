@@ -28,7 +28,7 @@ describe('interaction form service', function () {
       interaction_type,
       subject: 'Test subject',
       notes: 'Test notes',
-      interaction_date: '2017-01-02:T00:00:00.00Z',
+      date: '2017-01-02:T00:00:00.00Z',
       dit_advisor,
       service,
       dit_team
@@ -52,7 +52,7 @@ describe('interaction form service', function () {
         interaction_type: interaction_type.id,
         subject: 'Test subject',
         notes: 'Test notes',
-        interaction_date: '2017-01-02:T00:00:00.00Z',
+        date: '2017-01-02:T00:00:00.00Z',
         dit_advisor: dit_advisor.id,
         service: service.id,
         dit_team: dit_team.id
@@ -65,7 +65,7 @@ describe('interaction form service', function () {
         contact: null,
         interaction_type: interaction_type,
         dit_advisor,
-        interaction_date: '2017-01-02:T00:00:00.00Z',
+        date: '2017-01-02:T00:00:00.00Z',
         service: {
           id: null,
           name: null
@@ -82,7 +82,7 @@ describe('interaction form service', function () {
         interaction_type: interaction_type.id,
         subject: null,
         notes: null,
-        interaction_date: '2017-01-02:T00:00:00.00Z',
+        date: '2017-01-02:T00:00:00.00Z',
         dit_advisor: dit_advisor.id,
         service: null,
         dit_team: null
@@ -100,9 +100,9 @@ describe('interaction form service', function () {
         interaction_type: interaction_type.id,
         subject: 'Test subject',
         notes: 'Test notes',
-        interaction_date_year: '2017',
-        interaction_date_month: '2',
-        interaction_date_day: '12',
+        date_year: '2017',
+        date_month: '2',
+        date_day: '12',
         dit_advisor: dit_advisor.id,
         service: service.id,
         dit_team: dit_team.id
@@ -125,7 +125,7 @@ describe('interaction form service', function () {
     it('convert the date from seperate fields into a single date field', function () {
       return interactionFormService.saveInteractionForm(token, interactionForm)
       .then((savedInteraction) => {
-        expect(saveInteractionStub.firstCall.args[1].interaction_date).to.equal('2017-2-12T00:00:00.00Z')
+        expect(saveInteractionStub.firstCall.args[1].date).to.equal('2017-2-12T00:00:00.00Z')
       })
     })
     it('should pass back any failures', function (done) {

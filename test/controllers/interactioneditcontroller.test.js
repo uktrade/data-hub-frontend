@@ -2,7 +2,7 @@
 /* eslint handle-callback-err: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
-const { expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
+const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
 const interactionLabels = require('../../src/labels/interactionlabels')
 
 describe('Interaction controller, edit', function () {
@@ -354,7 +354,10 @@ describe('Interaction controller, edit', function () {
           company: '333',
           contact: '444',
           subject: 'test subject',
-          dit_advisor: '7811'
+          dit_advisor: '7811',
+          notes: 'some notes',
+          service: '3322',
+          dit_team: '9884'
         },
         company: {
           id: '1234',
@@ -370,16 +373,16 @@ describe('Interaction controller, edit', function () {
       it('should render all the required fields on the page', function () {
         return render(`${__dirname}/../../src/views/interaction/interaction-edit.html`, locals)
         .then((document) => {
-          expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
-          expect(document.querySelector('[type=hidden][name=interaction_type]')).to.not.be.null
-          expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
-          expectTextFieldWithLabel(document, 'subject', 'Subject')
-          expectTextAreaWithLabel(document, 'notes', 'Interaction notes')
-          expectDropdownWithLabel(document, 'contact', 'Company contact')
-          expectDateFieldWithLabel(document, 'date', 'Date of interaction')
-          expectDropdownWithLabel(document, 'dit_advisor', 'DIT advisor')
-          expectDropdownWithLabel(document, 'service', 'Service offer')
-          expectDropdownWithLabel(document, 'dit_team', 'Service provider')
+          expectHiddenField(document, 'id', locals.formData.id)
+          expectHiddenField(document, 'interaction_type', locals.formData.interaction_type)
+          expectHiddenField(document, 'company', locals.formData.company)
+          expectTextFieldWithLabel(document, 'subject', 'Subject', locals.formData.subject)
+          expectTextAreaWithLabel(document, 'notes', 'Interaction notes', locals.formData.notes)
+          expectDropdownWithLabel(document, 'contact', 'Company contact', locals.formData.contact)
+          expectDateFieldWithLabel(document, 'date', 'Date of interaction', locals.formData.date)
+          expectDropdownWithLabel(document, 'dit_advisor', 'DIT advisor', locals.formData.dit_advisor)
+          expectDropdownWithLabel(document, 'service', 'Service offer', locals.formData.service)
+          expectDropdownWithLabel(document, 'dit_team', 'Service provider', locals.formData.dit_team)
         })
       })
       it('should show the company name and the interaction type', function () {
@@ -429,7 +432,8 @@ describe('Interaction controller, edit', function () {
         company: '333',
         contact: '444',
         subject: 'test subject',
-        dit_advisor: '7811'
+        dit_advisor: '7811',
+        date: '2017-02-01T00:00:00:00Z'
       }
 
       req = {

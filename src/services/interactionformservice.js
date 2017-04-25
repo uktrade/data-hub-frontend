@@ -18,11 +18,10 @@ function getInteractionAsFormData (interaction) {
     interaction_type: getPropertyId(interaction, 'interaction_type'),
     subject: interaction.subject || null,
     notes: interaction.notes || null,
-    interaction_date: interaction.interaction_date,
+    date: interaction.date || null,
     dit_advisor: getPropertyId(interaction, 'dit_advisor'),
     service: getPropertyId(interaction, 'service'),
-    dit_team: getPropertyId(interaction, 'dit_team'),
-    date: interaction.date || null
+    dit_team: getPropertyId(interaction, 'dit_team')
   }
 
   result = nullEmptyFields(result)
@@ -44,10 +43,10 @@ function saveInteractionForm (token, interactionForm) {
         const dataToSave = nullEmptyFields(interactionForm)
 
         // convert the date entered
-        dataToSave.interaction_date = `${dataToSave.interaction_date_year}-${dataToSave.interaction_date_month}-${dataToSave.interaction_date_day}T00:00:00.00Z`
-        delete dataToSave.interaction_date_year
-        delete dataToSave.interaction_date_month
-        delete dataToSave.interaction_date_day
+        dataToSave.date = `${dataToSave.date_year}-${dataToSave.date_month}-${dataToSave.date_day}T00:00:00.00Z`
+        delete dataToSave.date_year
+        delete dataToSave.date_month
+        delete dataToSave.date_day
 
         const savedInteraction = yield interactionRepository.save(token, dataToSave)
         resolve(savedInteraction)
