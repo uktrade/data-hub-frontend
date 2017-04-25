@@ -2,6 +2,7 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
+{{ formData | log | safe }}
   {% if query.contactId %}
     {% set backUrl="/contact/" + query.contactId + "/interactions" %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
@@ -51,11 +52,11 @@
       options=contacts)
     }}
 
-    {{ trade.date('date', label=labels.date, value=formData.interaction_date ) }}
+    {{ trade.date('date', label=labels.date, value=formData.date ) }}
 
     {{ trade.autocomplete('dit_advisor',
       label=labels.dit_advisor,
-      value=formdata.dit_advisor,
+      value=formData.dit_advisor,
       displayvalue=dit_advisor.name,
       hint="Please start typing to search for an advisor",
       error=errors.dit_advisor,

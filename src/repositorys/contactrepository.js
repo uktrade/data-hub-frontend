@@ -54,7 +54,7 @@ function getContactsForCompany (token, companyId) {
     Q.spawn(function * () {
       try {
         const company = yield authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
-        return company.contacts
+        resolve(company.contacts)
       } catch (error) {
         winston.error(error)
         reject(error)

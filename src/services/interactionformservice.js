@@ -21,7 +21,8 @@ function getInteractionAsFormData (interaction) {
     interaction_date: interaction.interaction_date,
     dit_advisor: getPropertyId(interaction, 'dit_advisor'),
     service: getPropertyId(interaction, 'service'),
-    dit_team: getPropertyId(interaction, 'dit_team')
+    dit_team: getPropertyId(interaction, 'dit_team'),
+    date: interaction.date || null
   }
 
   result = nullEmptyFields(result)
