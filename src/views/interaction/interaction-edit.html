@@ -2,6 +2,7 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
+{{ formData | log | safe }}
   {% if query.contactId %}
     {% set backUrl="/contact/" + query.contactId + "/interactions" %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
@@ -13,32 +14,32 @@
   <h1 class="heading-xlarge">Add new interaction</h2>
   {{ trade.errorPanel( errors, labels=labels ) }}
   <form method="POST">
-    <input type="hidden" name="interaction_type" value="{{interaction.interaction_type.id}}"/>
-    <input type="hidden" name="company" value="{{interaction.company.id}}"/>
+    <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}"/>
+    <input type="hidden" name="company" value="{{formData.company}}"/>
     <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
-    {% if interaction.id %}
-      <input type="hidden" name="id" value="{{interaction.id}}"/>
+    {% if formData.id %}
+      <input type="hidden" name="id" value="{{formData.id}}"/>
     {% endif %}
 
-    <div class='form-group'>
+    <div class='form-group' id="company-wrapper">
       <div class='form-label-bold'>Company</div>
-      <strong>{{ interaction.company.name }}</strong>
+      <strong>{{ company.name }}</strong>
     </div>
 
     <div class='form-group'>
       <div class='form-label-bold'>Interaction type</div>
-      <strong>{{ interaction.interaction_type.name }}</strong>
+      <strong>{{ interaction_type.name }}</strong>
     </div>
 
     {{ trade.textbox("subject",
       label=labels.subject,
-      value=interaction.subject,
+      value=formData.subject,
       error=errors.subject)
     }}
 
     {{ trade.textarea("notes",
       label=labels.notes,
-      value=interaction.notes,
+      value=formData.notes,
       error=errors.notes
     ) }}
 
@@ -46,19 +47,19 @@
       label=labels.contact,
       emptyLabel="Pick a contact",
       hint="Please start typing to search for a contact",
-      value=interaction.contact.id,
+      value=formData.contact,
       error=errors.contact,
       options=contacts)
     }}
 
-    {{ trade.date('date', label=labels.date, value=interaction.date ) }}
+    {{ trade.date('date', label=labels.date, value=formData.date ) }}
 
     {{ trade.autocomplete('dit_advisor',
       label=labels.dit_advisor,
-      value=interaction.dit_advisor.id,
-      displayvalue=interaction.dit_advisor.name,
-      hint="Please start typing to search for an advisor",
-      error=errors.advisor,
+      value=formData.dit_advisor,
+      displayvalue=dit_advisor.name,
+      hint="Please start typing to search for an adviser",
+      error=errors.dit_advisor,
       autofocus=false,
       url='/api/accountmanagerlookup?term=')
     }}
@@ -67,7 +68,7 @@
       label="Service offer",
       emptyLabel="Pick a service",
       hint="Please start typing to search for a service",
-      value=interaction.service.id,
+      value=formData.service,
       error=errors.service,
       options=serviceOfferOptions)
     }}
@@ -76,7 +77,7 @@
       label="Service provider",
       emptyLabel="Pick a provider",
       hint="Please start typing to search for a provider",
-      value=interaction.dit_team.id,
+      value=formData.dit_team,
       error=errors.dit_team,
       options=serviceProviderOptions)
     }}

@@ -1,17 +1,20 @@
 {
-  "name":"data-hub-invest-fe",
+  "name":"data-hub-fe-beta2",
   "scripts":{},
   "env":{
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs.git",
     "NODE_MODULES_CACHE": "false",
     "NPM_CONFIG_PRODUCTION": "false",
-    "POSTCODE_KEY": { "required": true },
+    "API_CLIENT_ID": { "required": true },
+    "API_CLIENT_SECRET": { "required": true },
     "API_ROOT": { "required": true },
+    "POSTCODE_KEY": { "required": true },
     "ZEN_TOKEN": { "required": true },
     "ZEN_DOMAIN": { "required": true },
     "ZEN_EMAIL": { "required": true },
     "ZEN_BROWSER": { "required": true },
     "ZEN_IMPACT": { "required": true },
     "ZEN_SERVICE": { "required": true }
-  }
+  },
+  "addons":["heroku-redis"]
 }

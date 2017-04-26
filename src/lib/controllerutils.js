@@ -95,6 +95,10 @@ function toQueryString (obj) {
   return parts.join('&')
 }
 
+function containsFormData (req) {
+  return (typeof req.body === 'object' && Object.keys(req.body).length > 0)
+}
+
 module.exports = {
   transformErrors,
   encodeQueryData,
@@ -102,5 +106,6 @@ module.exports = {
   flattenIdFields,
   genCSRF,
   isBlank,
-  toQueryString
+  toQueryString,
+  containsFormData
 }

@@ -13,8 +13,8 @@
   <h1 class="heading-xlarge">Add new interaction</h2>
 
   <form method="POST">
-    <input name="companyId" type="hidden" value="{{query.companyId}}"/>
-    <input name="contactId" type="hidden" value="{{query.contactId}}"/>
+    <input name="company" type="hidden" value="{{query.company}}"/>
+    <input name="contact" type="hidden" value="{{query.contact}}"/>
     <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
     <p>Please select interaction type</p>
     <fieldset class="form-group radio-list-stacked">
@@ -50,9 +50,3 @@
     {{ trade.save(backUrl, buttonText="Continue") }}
   </form>
 {% endblock %}
-
-{% block body_end %}
-  <script src="{{ asset_path }}javascripts/radio.bundle.js?{{ startTime }}"></script>
-{% endblock %}
-
-

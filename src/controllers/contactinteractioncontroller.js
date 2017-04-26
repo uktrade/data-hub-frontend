@@ -12,7 +12,7 @@ function getInteractions (req, res, next) {
       res.locals.tab = 'interactions'
       const interactions = yield contactDataService.getContactInteractionsAndServiceDeliveries(req.session.token, res.locals.id)
       res.locals.displayInteractions = interactions.map(interaction => getDisplayContactInteraction(interaction))
-      res.locals.addInteractionUrl = `/interaction/add?contact=${res.locals.contact.id}`
+      res.locals.addInteractionUrl = `/interaction/add-step-1/?contact=${res.locals.contact.id}`
 
       res.render('contact/interactions')
     } catch (error) {
