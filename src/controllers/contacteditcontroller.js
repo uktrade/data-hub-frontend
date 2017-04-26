@@ -1,7 +1,7 @@
 const express = require('express')
 const Q = require('q')
 const winston = require('winston')
-const { genCSRF } = require('../lib/controllerutils')
+const { genCSRF, containsFormData } = require('../lib/controllerutils')
 const contactFormService = require('../services/contactformservice')
 const { contactLabels } = require('../labels/contactlabels')
 const metadataRepository = require('../repositorys/metadatarepository')
@@ -25,7 +25,7 @@ function editDetails (req, res, next) {
       // This can either be data recently posted, to be re-rendered with errors
       // or a contact that the user wishes to edit
       // or a new contact for a company
-      if (typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+      if (containsFormData(req)) {
         res.locals.formData = req.body
         res.locals.company = yield companyRepository.getDitCompany(token, req.body.company)
       } else if (res.locals.contact) {

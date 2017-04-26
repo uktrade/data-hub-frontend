@@ -380,7 +380,7 @@ describe('Interaction controller, edit', function () {
           expectTextAreaWithLabel(document, 'notes', 'Interaction notes', locals.formData.notes)
           expectDropdownWithLabel(document, 'contact', 'Company contact', locals.formData.contact)
           expectDateFieldWithLabel(document, 'date', 'Date of interaction', locals.formData.date)
-          expectDropdownWithLabel(document, 'dit_advisor', 'DIT advisor', locals.formData.dit_advisor)
+          expectDropdownWithLabel(document, 'dit_advisor', 'DIT adviser', locals.formData.dit_advisor)
           expectDropdownWithLabel(document, 'service', 'Service offer', locals.formData.service)
           expectDropdownWithLabel(document, 'dit_team', 'Service provider', locals.formData.dit_team)
         })

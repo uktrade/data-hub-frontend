@@ -8,7 +8,7 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const advisorRepository = require('../repositorys/advisorrepository')
 const interactionDataService = require('../services/interactiondataservice')
 const interactionFormService = require('../services/interactionformservice')
-const { genCSRF } = require('../lib/controllerutils')
+const { genCSRF, containsFormData } = require('../lib/controllerutils')
 const router = express.Router()
 
 function editDetails (req, res, next) {
@@ -21,7 +21,7 @@ function editDetails (req, res, next) {
       // This can either be data recently posted, to be re-rendered with errors
       // or an interaction that the user wishes to edit
       // or a new interaction for a company or contact
-      if (typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+      if (containsFormData(req)) {
         res.locals.formData = req.body
         res.locals.company = yield companyRepository.getDitCompany(token, req.body.company)
         res.locals.interaction_type = interactionDataService.getInteractionType(req.body.interaction_type)
