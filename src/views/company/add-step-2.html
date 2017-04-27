@@ -50,11 +50,7 @@
                     class="table--small"
                   ) }}
                   <div class="table_footnote">Data from <strong>Companies House</strong></div>
-                  {% if hit.type == 'company_company' %}
-                    <a class="button" href="/company/{{query.type}}/{{query.selected}}/edit/">Go to company record</a>
-                  {% else %}
-                    <a class="button" href="/company/{{query.type}}/{{query.selected}}/edit/">Choose Companies House record</a>
-                  {% endif %}
+                  <a class="button" href="{{addLink.url}}">{{addLink.label}}</a>
                 </div>
               {% endif %}
             </li>

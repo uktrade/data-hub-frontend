@@ -37,7 +37,7 @@ module.exports = (token, opts) => {
     requestOptions.method = 'GET'
     requestOptions.headers = {}
   } else {
-    requestOptions.url = opts.url
+    requestOptions.url = opts.url ``
     requestOptions.headers = opts.headers || {}
     requestOptions.method = opts.method || 'GET'
 

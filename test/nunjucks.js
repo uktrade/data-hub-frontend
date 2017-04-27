@@ -1,5 +1,6 @@
 const nunjucks = require('nunjucks')
 const jsdom = require('jsdom')
+const { JSDOM } = jsdom
 const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
 
 nunjucks.configure('views')
@@ -13,13 +14,14 @@ Object.keys(filters).forEach((filterName) => {
 
 function render (template, options) {
   return new Promise((resolve, reject) => {
-    const markup = nunjucks.render(template, options)
-    jsdom.env(markup, (err, jsdomWindow) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(jsdomWindow.document)
-    })
+    try {
+      const markup = nunjucks.render(template, options)
+      const { document } = (new JSDOM(markup).window)
+      resolve(document)
+    } catch (error) {
+      console.log(error)
+      reject(error)
+    }
   })
 }
 

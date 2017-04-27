@@ -437,45 +437,34 @@ describe('Company formatting service', () => {
   })
   describe('get display CH data', () => {
     it('should return null if there is no CH data', () => {
-      const company = {
-        'company_number': '07937720',
-        'companies_house_data': null,
-        'contacts': [],
-        'interactions': []
-      }
-      const actual = companyFormattingService.getDisplayCH(company)
+      const actual = companyFormattingService.getDisplayCH(null)
       expect(actual).to.be.null
     })
     it('should return a subset of CH data to display', () => {
       const company = {
+        'id': 4179778,
+        'name': 'AMAZON SAVERS',
+        'registered_address_1': '52A HIGH STREET',
+        'registered_address_2': '',
+        'registered_address_3': '',
+        'registered_address_4': '',
+        'registered_address_town': 'SHEFFIELD',
+        'registered_address_county': '',
+        'registered_address_postcode': 'S20 1ED',
         'company_number': '02658484',
-        'companies_house_data': {
-          'id': 4179778,
-          'name': 'AMAZON SAVERS',
-          'registered_address_1': '52A HIGH STREET',
-          'registered_address_2': '',
-          'registered_address_3': '',
-          'registered_address_4': '',
-          'registered_address_town': 'SHEFFIELD',
-          'registered_address_county': '',
-          'registered_address_postcode': 'S20 1ED',
-          'company_number': '02658484',
-          'company_category': 'Private Limited Company',
-          'company_status': 'Active',
-          'sic_code_1': '82990 - Other business support service activities n.e.c.',
-          'sic_code_2': '82991 - Other business support service activities n.e.c.',
-          'sic_code_3': '',
-          'sic_code_4': '',
-          'uri': 'http://business.data.gov.uk/id/company/07937720',
-          'incorporation_date': '2012-02-06',
-          'registered_address_country': {
-            'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom',
-            'selectable': true
-          }
-        },
-        'contacts': [],
-        'interactions': []
+        'company_category': 'Private Limited Company',
+        'company_status': 'Active',
+        'sic_code_1': '82990 - Other business support service activities n.e.c.',
+        'sic_code_2': '82991 - Other business support service activities n.e.c.',
+        'sic_code_3': '',
+        'sic_code_4': '',
+        'uri': 'http://business.data.gov.uk/id/company/07937720',
+        'incorporation_date': '2012-02-06',
+        'registered_address_country': {
+          'id': '80756b9a-5d95-e211-a939-e4115bead28a',
+          'name': 'United Kingdom',
+          'selectable': true
+        }
       }
       const actual = companyFormattingService.getDisplayCH(company)
       const expected = {

@@ -8,10 +8,8 @@ const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
 const companyTableKeys = ['name', 'address']
 
-function getDisplayCH (company) {
-  if (!company.companies_house_data) return null
-
-  const companyHouseData = company.companies_house_data
+function getDisplayCH (companyHouseData) {
+  if (!companyHouseData) return null
 
   const displayCH = {
     name: titleCase(companyHouseData.name),
