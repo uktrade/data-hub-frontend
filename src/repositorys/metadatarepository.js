@@ -152,3 +152,12 @@ module.exports.initialiseRestrictedServiceOptions = function () {
   })
 }
 
+module.exports.getIdForName = function (options, name) {
+  if (!name) return null
+  const _name = name.toLowerCase()
+  for (const option of options) {
+    if (_name === option.name.toLowerCase()) {
+      return option
+    }
+  }
+}

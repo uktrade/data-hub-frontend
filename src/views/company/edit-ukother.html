@@ -2,7 +2,13 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
-  <h1 class="page-heading">Create a company</h1>
+  <h1 class="page-heading">
+    {% if formData.id %}
+      Edit company
+    {% else %}
+      Create a company
+    {% endif %}
+  </h1>
   <div class="grid-row">
     <div class="column-three-quarters">
       {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
@@ -17,12 +23,13 @@
 
       <form method="POST">
         <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
-        <input type="hidden" name="business_type" value="{{business_type.id}}">
-        <input type="hidden" name="uk_based" value="true">
+        <input type="hidden" name="business_type" value="{{formData.business_type}}">
+        <input type="hidden" name="uk_based" value="yes">
+        <input type="hidden" name="id" value="{{formData.id}}">
 
-        {{ trade.textbox("name", label="Name", value=company.name, error=errors.name) }}
+        {{ trade.textbox("name", label="Name", value=formData.name, error=errors.name) }}
 
-        {{ trade.textbox("alias", label="Trading name", value=company.alias, error=errors.alias) }}
+        {{ trade.textbox("alias", label="Trading name", value=formData.alias, error=errors.alias) }}
 
         <fieldset id="registered-address-wrapper" class="fieldset--address lookup-address-js">
           <div class="form-group"><legend class="form-label-bold">Primary address</legend></div>
@@ -44,12 +51,12 @@
             </select>
           </div>
 
-          {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=company.registered_address_1, error=errors.registered_address_1) }}
-          {{ trade.textbox("registered_address_2", value=company.registered_address_2, error=errors.registered_address_2) }}
-          {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=company.registered_address_town, error=errors.registered_address_town) }}
-          {{ trade.textbox("registered_address_county", label="County (optional)", value=company.registered_address_county, error=errors.registered_address_county) }}
-          {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=company.registered_address_postcode, error=errors.registered_address_postcode) }}
-          <input type="hidden" name="registered_address_country" value="{{unitedKingdom}}">
+          {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
+          {{ trade.textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
+          {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
+          {{ trade.textbox("registered_address_county", label="County (optional)", value=formData.registered_address_county, error=errors.registered_address_county) }}
+          {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=formData.registered_address_postcode, error=errors.registered_address_postcode) }}
+          <input type="hidden" name="registered_address_country" value="{{formData.registered_address_country}}">
         </fieldset>
 
         <div class="form-group">
@@ -78,37 +85,36 @@
             </select>
           </div>
 
-          {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=company.trading_address_1, error=errors.trading_address_1) }}
-          {{ trade.textbox("trading_address_2", value=company.trading_address_2, error=errors.trading_address_2) }}
-          {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=company.trading_address_town, error=errors.trading_address_town) }}
-          {{ trade.textbox("trading_address_county", label="County (optional)", value=company.trading_address_county, error=errors.trading_address_county) }}
-          {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=company.trading_address_postcode, error=errors.trading_address_postcode) }}
-          <input type="hidden" name="trading_address_country" value="{{company.trading_address_country}}">
+          {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=formData.trading_address_1, error=errors.trading_address_1) }}
+          {{ trade.textbox("trading_address_2", value=formData.trading_address_2, error=errors.trading_address_2) }}
+          {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}
+          {{ trade.textbox("trading_address_county", label="County (optional)", value=formData.trading_address_county, error=errors.trading_address_county) }}
+          {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=formData.trading_address_postcode, error=errors.trading_address_postcode) }}
+          <input type="hidden" name="trading_address_country" value="{{formData.trading_address_country}}">
         </fieldset>
 
-        {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=company.uk_region, options=regionOptions, error=errors.uk_region) }}
-        <fieldset class="form-group form-group__checkbox-group">
+        {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=formData.uk_region, options=regionOptions, error=errors.uk_region) }}
+        <fieldset class="form-group form-group__checkbox-group" id="headquarters-wrapper">
           <legend class="form-label-bold">Is this a headquarters?</legend>
           <label
-            class="block-label selection-button-radio{% if not company.headquarter_type or company.headquarter_type == '' %} selected{% endif %}">
-            <input name="headquarters" type="radio" value="" {% if not company.headquarter_type or company.headquarter_type == '' %} selected{% endif %}>
+            class="block-label selection-button-radio{% if not formData.headquarter_type or formData.headquarter_type == '' %} selected{% endif %}">
+            <input name="headquarters" type="radio" value="" {% if not formData.headquarter_type or formData.headquarter_type == '' %} checked{% endif %}>
             Not a headquarters
           </label>
           {% for option in headquarterOptions %}
-            <label
-              class="block-label selection-button-radio ">
-              <input name="headquarters" type="radio" value="{{option.name}}" {% if option.id == company.headquarters %}checked{% endif %}>
+            <label class="block-label selection-button-radio {% if option.id == formData.headquarter_type %}selected{% endif %}">
+              <input name="headquarters" type="radio" value="{{option.id}}" {% if option.id == formData.headquarter_type %}checked{% endif %}>
               {{ hqLabels[option.name] }}
             </label>
           {% endfor %}
         </fieldset>
-        {{ trade.dropdown("sector", label="Sector", emptyLabel="Pick a value", value=company.sector, options=sectorOptions, error=errors.sector) }}
-        {{ trade.textbox("website", label="Website (optional)", value=company.website, error=errors.website) }}
-        {{ trade.textarea("description", label="Business description (optional)", value=company.description, error=errors.description) }}
-        {{ trade.dropdown("employee_range", label="Number of employees (optional)", emptyLabel="Pick a value", value=company.employee_range, options=employeeOptions, error=errors.employee_range) }}
-        {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=company.turnover_ranage, options=turnoverOptions, error=errors.turnover_range) }}
+        {{ trade.dropdown("sector", label="Sector", emptyLabel="Pick a value", value=formData.sector, options=sectorOptions, error=errors.sector) }}
+        {{ trade.textbox("website", label="Website (optional)", value=formData.website, error=errors.website) }}
+        {{ trade.textarea("description", label="Business description (optional)", value=formData.description, error=errors.description) }}
+        {{ trade.dropdown("employee_range", label="Number of employees (optional)", emptyLabel="Pick a value", value=formData.employee_range, options=employeeOptions, error=errors.employee_range) }}
+        {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=formData.turnover_range, options=turnoverOptions, error=errors.turnover_range) }}
 
-        {% if company.id %}
+        {% if formData.id %}
           {{ trade.save(backUrl=referer) }}
         {% else %}
           {{ trade.save(buttonText="Save and create", backUrl=referer) }}

@@ -3,9 +3,9 @@ machine:
     version: 6.10.2
 dependencies:
   override:
-    - yarn
+    - yarn install && npm rebuild node-sass && yarn clean && yarn sass && yarn js
 test:
   override:
-    - yarn lint && yarn mocha test --reporter mocha-junit-reporter --require test/common.js --ui bdd test/**/*.test.js && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js:
-        environment:
-          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
+    - yarn lint:js && yarn mocha test --reporter mocha-junit-reporter --require test/common.js --ui bdd test/**/*.test.js && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js:
+      environment:
+        MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
