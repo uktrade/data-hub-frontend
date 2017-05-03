@@ -1,6 +1,7 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
 /* eslint no-new: 0, no-unused-expressions: 0 */
 const jsdom = require('jsdom')
+const { JSDOM } = jsdom
 const Sectors = require('../../src/javascripts/sectors')
 
 const HTML = `
@@ -35,16 +36,10 @@ describe('Sector control', function () {
   let document
   let sectorsControl
 
-  beforeEach(function (done) {
-    jsdom.env(HTML, (err, jsdomWindow) => {
-      if (err) {
-        throw new Error(err)  // eslint-disable-line no-new
-      }
-
-      document = jsdomWindow.document
-      sectorsControl = new Sectors(document.getElementById('sector-wrapper'), document)
-      done()
-    })
+  beforeEach(function () {
+    const { window } = new JSDOM(HTML)
+    document = window.document
+    sectorsControl = new Sectors(document.getElementById('sector-wrapper'), document)
   })
 
   it('should hide the original element', function () {
@@ -197,133 +192,85 @@ describe('Sector control', function () {
       </html>`
 
     describe('initial state', function () {
-      it('should show the primary dropdown with the value selected if the current value has a sub sector', function (done) {
-        jsdom.env(maintenanceHTML, function (err, jsdomWindow) {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
-          }
-
-          document = jsdomWindow.document
-          new Sectors(document.getElementById('sector-wrapper'), document)
-          const primaryDropdownElement = document.querySelector('.primary-sector-wrapper select')
-          expect(primaryDropdownElement.selectedIndex).to.eq(2)
-          done()
-        })
+      it('should show the primary dropdown with the value selected if the current value has a sub sector', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        new Sectors(document.getElementById('sector-wrapper'), document)
+        const primaryDropdownElement = document.querySelector('.primary-sector-wrapper select')
+        expect(primaryDropdownElement.selectedIndex).to.eq(2)
       })
-      it('should show the subsector dropdown with the correct sub sector options and have the correct subsector selected', function (done) {
-        jsdom.env(maintenanceHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
-          }
-
-          document = jsdomWindow.document
-          new Sectors(document.getElementById('sector-wrapper'), document)
-          const subsectorDropdownElement = document.querySelector('.subsector-wrapper select')
-          expect(subsectorDropdownElement.selectedIndex).to.eq(4)
-          done()
-        })
+      it('should show the subsector dropdown with the correct sub sector options and have the correct subsector selected', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        new Sectors(document.getElementById('sector-wrapper'), document)
+        const subsectorDropdownElement = document.querySelector('.subsector-wrapper select')
+        expect(subsectorDropdownElement.selectedIndex).to.eq(4)
       })
-      it('should show the primary dropdown with the value selected if the current value has no sub sector', function (done) {
-        jsdom.env(engineeringHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
-          }
-
-          document = jsdomWindow.document
-          new Sectors(document.getElementById('sector-wrapper'), document)
-          const primaryDropdownElement = document.querySelector('.primary-sector-wrapper select')
-          expect(primaryDropdownElement.selectedIndex).to.eq(1)
-          done()
-        })
+      it('should show the primary dropdown with the value selected if the current value has no sub sector', function () {
+        const { window } = new JSDOM(engineeringHTML)
+        document = window.document
+        new Sectors(document.getElementById('sector-wrapper'), document)
+        const primaryDropdownElement = document.querySelector('.primary-sector-wrapper select')
+        expect(primaryDropdownElement.selectedIndex).to.eq(1)
       })
-      it('should hide the subsector dropdown if the value selected has no sub sector', function (done) {
-        jsdom.env(engineeringHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
-          }
-
-          document = jsdomWindow.document
-          new Sectors(document.getElementById('sector-wrapper'), document)
-          const subsectorDropdownElement = document.querySelector('.subsector-wrapper select')
-          expect(subsectorDropdownElement).to.be.null
-          done()
-        })
+      it('should hide the subsector dropdown if the value selected has no sub sector', function () {
+        const { window } = new JSDOM(engineeringHTML)
+        document = window.document
+        new Sectors(document.getElementById('sector-wrapper'), document)
+        const subsectorDropdownElement = document.querySelector('.subsector-wrapper select')
+        expect(subsectorDropdownElement).to.be.null
       })
     })
     describe('respond to selection', function () {
-      it('should hide the sub sector dropdown if you select a sector with sub sectors and then select one that doesnt have sub sectors', function (done) {
-        jsdom.env(maintenanceHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
+      it('should hide the sub sector dropdown if you select a sector with sub sectors and then select one that doesnt have sub sectors', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        const sectorsControl = new Sectors(document.getElementById('sector-wrapper'), document)
+        sectorsControl.handlePrimarySelect({
+          target: {
+            value: 'Advanced Engineering'
           }
-
-          document = jsdomWindow.document
-          const sectorsControl = new Sectors(document.getElementById('sector-wrapper'), document)
-          sectorsControl.handlePrimarySelect({
-            target: {
-              value: 'Advanced Engineering'
-            }
-          })
-
-          const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
-          expect(subsectorSelectElement).to.be.null
-          done()
         })
+
+        const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
+        expect(subsectorSelectElement).to.be.null
       })
     })
     describe('update original select', function () {
-      it('should not store a value if you select a primary sector that has sub sectors', function (done) {
-        jsdom.env(maintenanceHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
+      it('should not store a value if you select a primary sector that has sub sectors', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        sectorsControl.handlePrimarySelect({
+          target: {
+            value: 'Aerospace'
           }
-
-          document = jsdomWindow.document
-          sectorsControl.handlePrimarySelect({
-            target: {
-              value: 'Aerospace'
-            }
-          })
-          expect(sectorsControl.sourceSelect.selectedIndex).to.eq(0)
-          done()
         })
+        expect(sectorsControl.sourceSelect.selectedIndex).to.eq(0)
       })
-      it('should set the original select if you select a sector that has no sub sectors', function (done) {
-        jsdom.env(maintenanceHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
+      it('should set the original select if you select a sector that has no sub sectors', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        sectorsControl.handlePrimarySelect({
+          target: {
+            value: 'Advanced Engineering'
           }
-
-          document = jsdomWindow.document
-          sectorsControl.handlePrimarySelect({
-            target: {
-              value: 'Advanced Engineering'
-            }
-          })
-          expect(sectorsControl.sourceSelect.selectedIndex).to.eq(1)
-          done()
         })
+        expect(sectorsControl.sourceSelect.selectedIndex).to.eq(1)
       })
-      it('should set the original select if you select a primary sector and then a sub sector', function (done) {
-        jsdom.env(maintenanceHTML, (err, jsdomWindow) => {
-          if (err) {
-            throw new Error(err)  // eslint-disable-line no-new
+      it('should set the original select if you select a primary sector and then a sub sector', function () {
+        const { window } = new JSDOM(maintenanceHTML)
+        document = window.document
+        sectorsControl.handlePrimarySelect({
+          target: {
+            value: 'Aerospace'
           }
-
-          document = jsdomWindow.document
-          sectorsControl.handlePrimarySelect({
-            target: {
-              value: 'Aerospace'
-            }
-          })
-          sectorsControl.handleSubsectorSelect({
-            target: {
-              value: 'e9e181d2-f6a0-e211-b972-e4115bead28a'
-            }
-          })
-          expect(sectorsControl.sourceSelect.selectedIndex).to.eq(2)
-          done()
         })
+        sectorsControl.handleSubsectorSelect({
+          target: {
+            value: 'e9e181d2-f6a0-e211-b972-e4115bead28a'
+          }
+        })
+        expect(sectorsControl.sourceSelect.selectedIndex).to.eq(2)
       })
     })
   })
