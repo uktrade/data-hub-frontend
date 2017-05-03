@@ -23,6 +23,6 @@ function getInteractions (req, res) {
   res.render('company/interactions')
 }
 
-router.get('/company/:source/:sourceId/interactions', getInteractions)
+router.get('/company-interactions/:sourceId', getInteractions)
 
 module.exports = { getInteractions, router }

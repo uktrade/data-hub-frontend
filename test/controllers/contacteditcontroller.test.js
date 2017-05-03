@@ -164,7 +164,7 @@ describe('Contact controller, edit', function () {
       })
       it('should provide a back link to the company', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/company/company_company/1234/contacts')
+          expect(res.locals.backUrl).to.equal('/company-contacts/1234')
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -213,7 +213,7 @@ describe('Contact controller, edit', function () {
       })
       it('should provide a back link to the company', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/company/company_company/1234/contacts')
+          expect(res.locals.backUrl).to.equal('/company-contacts/1234')
           done()
         }
         contactEditController.editDetails(req, res, next)
