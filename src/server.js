@@ -145,7 +145,7 @@ app.use(interactionController.router)
 app.use(interactionEditController.router)
 app.use(serviceDeliveryController.router)
 
-app.use('/search', searchController.router)
+app.use(searchController.router)
 app.use(apiController.router)
 app.get('/', indexController)
 app.use('/ping.xml', pingdomController.get)

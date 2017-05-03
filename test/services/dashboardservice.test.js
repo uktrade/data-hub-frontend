@@ -1,3 +1,4 @@
+/* globals expect: true, describe: true, it: true */
 const proxyquire = require('proxyquire')
 
 describe('Dashboard service', () => {
