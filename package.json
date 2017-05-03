@@ -69,7 +69,8 @@
     "sass:watch": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -r -w",
     "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
-    "circle": "yarn standard && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js && yarn sass && yarn js"
+    "circle": "yarn standard && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js && yarn sass && yarn js",
+    "heroku-postbuild": "npm rebuild node-sass && yarn sass && yarn js"
   },
   "author": "Zac Tolley <zac@thetolleys.com>",
   "license": "MIT",
