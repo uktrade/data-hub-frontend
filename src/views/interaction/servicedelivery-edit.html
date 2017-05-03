@@ -117,7 +117,7 @@
     {{ trade.dropdown("country_of_interest",
       label=labels.country_of_interest,
       emptyLabel="Pick a country",
-      hint="Pease start typing to search for a country",
+      hint="Please start typing to search for a country",
       value=serviceDelivery.country_of_interest.id,
       error=errors.country_of_interest,
       options=countryOptions,
@@ -126,5 +126,5 @@
 
     {{ trade.save(backUrl) }}
   </form>
-  <script src="{{ asset_path }}javascripts/sectors.bundle.js"></script>
+  <script src="{{ asset_path }}javascripts/servicedelivery.bundle.js"></script>
 {% endblock %}

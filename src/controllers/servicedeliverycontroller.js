@@ -37,8 +37,8 @@ function getServiceDeliveryEdit (req, res, next) {
       if (!res.locals.serviceDelivery) {
         if (req.query.contactId) {
           res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contactId)
-        } else if (req.query.companyId) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.companyId)
+        } else if (req.query.company) {
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.company)
         }
       } else {
         res.locals.backUrl = `/servicedelivery/${req.params.serviceDeliveryId}/details`
@@ -107,9 +107,9 @@ function getServiceDeliveryDetails (req, res, next) {
   res.render('interaction/servicedelivery-details')
 }
 
-router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 router.get(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], getServiceDeliveryEdit)
 router.post(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], postServiceDeliveryEdit)
 router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
+router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 
 module.exports = { router }
