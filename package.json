@@ -68,8 +68,8 @@
     "js:server:watch": "nodemon --debug src/server.js",
     "sass:watch": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -r -w",
     "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -x --output-style compressed",
-    "postinstall": "npm run build",
-    "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js"
+    "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
+    "circle": "yarn standard && yarn sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q && yarn mocha test --reporter mocha-junit-reporter --require test/common.js --ui bdd test/**/*.test.js && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js && yarn test && yarn clean && yarn sass && yarn js"
   },
   "author": "Zac Tolley <zac@thetolleys.com>",
   "license": "MIT",
