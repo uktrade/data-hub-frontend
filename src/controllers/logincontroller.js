@@ -13,7 +13,7 @@ function authenticate (username, password) {
 
     headers: {
       'cache-control': 'no-cache',
-      'authorization': `Basic ${new Buffer(config.api.clientId + ':' + config.api.clientSecret).toString('base64')}`,
+      'authorization': `Basic ${Buffer.from(config.api.clientId + ':' + config.api.clientSecret).toString('base64')}`,
       'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
     },
     formData: {

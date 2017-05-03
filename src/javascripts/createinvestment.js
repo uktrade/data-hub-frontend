@@ -118,4 +118,3 @@ radioCannotShare.addEventListener('click', () => {
   trade.addClass(textShareDetailsWrapper, 'hidden')
   trade.removeClass(textNoShareDetailsWrapper, 'hidden')
 })
-

@@ -1,4 +1,5 @@
-/* globals expect: true, describe: true, it: true */
+/* globals expect: true, beforeEach: true, describe: true, it: true */
+/* eslint no-unused-expressions: 0 */
 const transformSectors = require('../../src/lib/transformsectors')
 const sectorList = require('../data/sector-list_input.json')
 

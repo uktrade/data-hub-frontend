@@ -17,7 +17,6 @@ const SUBSECTORPANELMARKUP = `
   </div>`
 
 class Sectors {
-
   constructor (element, document) {
     this.document = document || window.document
     this.cacheElements(element)

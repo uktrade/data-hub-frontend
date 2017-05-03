@@ -12,7 +12,7 @@ const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes
 const router = express.Router()
 
 function getCommon (req, res, next) {
-  Q.spawn(function *() {
+  Q.spawn(function * () {
     try {
       const token = req.session.token
       if (req.params.interactionId && req.params.interactionId !== 'add') {

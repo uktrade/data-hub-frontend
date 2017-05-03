@@ -1,4 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true */
+/* eslint no-unused-expressions: 0 */
 const address = require('../../src/lib/address')
 
 describe('Address formatter', function () {

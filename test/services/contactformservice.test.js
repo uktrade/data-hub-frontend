@@ -1,4 +1,6 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
+/* eslint no-unused-expressions: 0, prefer-promise-reject-errors: 0 */
+
 const proxyquire = require('proxyquire')
 
 describe('contact form service', function () {

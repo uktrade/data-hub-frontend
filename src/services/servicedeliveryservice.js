@@ -13,7 +13,7 @@ function validKey (object, key) {
 
 function getHydratedServiceDelivery (token, serviceDeliveryId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const sourceServiceDelivery = yield serviceDeliveryRepository.getServiceDelivery(token, serviceDeliveryId)
         const serviceDelivery = sourceServiceDelivery.attributes
@@ -91,7 +91,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
 
 function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const contact = yield contactRepository.getContact(token, contactId)
         const company = yield companyRepository.getDitCompany(token, contact.company.id)
@@ -115,7 +115,7 @@ function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
 
 function createBlankServiceDeliveryForCompany (token, dit_advisor, companyId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const company = yield companyRepository.getDitCompany(token, companyId)
         resolve({
@@ -132,7 +132,7 @@ function createBlankServiceDeliveryForCompany (token, dit_advisor, companyId) {
 
 function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const company = yield companyRepository.getDitCompany(token, flatServiceDelivery.company)
 

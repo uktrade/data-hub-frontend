@@ -28,7 +28,7 @@ function radioHide (name, hideFor, targetElementSelector, defaultHidden) {
   function updateVisible () {
     const selectedElement = document.querySelector(`input[name="${name}"]:checked`)
 
-    if (!selectedElement && defaultHidden || selectedElement.value === hideFor) {
+    if ((!selectedElement && defaultHidden) || selectedElement.value === hideFor) {
       addClass(targetElement, 'hidden')
       clearInnerFields(targetElement)
     } else {

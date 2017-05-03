@@ -18,7 +18,7 @@ const serviceDeliveryRepository = require('../repositorys/servicedeliveryreposit
  */
 function getInflatedContact (token, contact) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         resolve(contact)
       } catch (error) {
@@ -31,7 +31,7 @@ function getInflatedContact (token, contact) {
 
 function getContactInteractionsAndServiceDeliveries (token, contactId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const advisorHash = {}
 
