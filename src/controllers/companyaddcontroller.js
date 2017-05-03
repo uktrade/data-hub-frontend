@@ -124,6 +124,13 @@ function getAddStepTwo (req, res, next) {
       res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company)
       res.locals.chDetailsLabels = chDetailsLabels
       res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
+
+      if (req.query.type === 'company_company') {
+        res.locals.addLink = { label: 'Go to company record', url: `/company/edit/ltd/${res.locals.company.id}` }
+      } else {
+        res.locals.addLink = { label: 'Choose company', url: `/company/add/ltd/${res.locals.company.company_number}` }
+      }
+
       res.render('company/add-step-2.html')
     } catch (error) {
       winston.error(error)

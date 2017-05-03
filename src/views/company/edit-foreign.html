@@ -2,7 +2,13 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
-  <h1 class="page-heading">Create a company</h1>
+  <h1 class="page-heading">
+    {% if formData.id %}
+      Edit company
+    {% else %}
+      Create a company
+    {% endif %}
+  </h1>
   <div class="grid-row">
     <div class="column-three-quarters">
       {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
@@ -11,32 +17,28 @@
           <div id="business-type" class="key-value__key form-label-bold">Business type
             <a href="/company/add-step-1" class="button-link">Change</a>
           </div>
-          <div class="key-value__value" aria-labelledby="business-type">{{business_type.name}}</div>
+          <div class="key-value__value" aria-labelledby="business-type">Foreign {{business_type.name}}</div>
         </div>
-      </div>
-
-      <div class="section">
-        {% if chDetails %}
-          {{ trade.keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, class="table--small", id="ch-details") }}
-          <div class="table_footnote">Data from <strong>Companies House</strong></div>
-        {% endif %}
       </div>
 
       <form method="POST">
         <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
-        <input type="hidden" name="company_number" value="{{formData.company_number}}">
         <input type="hidden" name="business_type" value="{{formData.business_type}}">
-        <input type="hidden" name="uk_based" value="yes">
-        <input type="hidden" name="name" value="{{formData.name}}">
-        <input type="hidden" name="registered_address_1" value="{{formData.registered_address_1}}">
-        <input type="hidden" name="registered_address_2" value="{{formData.registered_address_2}}">
-        <input type="hidden" name="registered_address_3" value="{{formData.registered_address_3}}">
-        <input type="hidden" name="registered_address_4" value="{{formData.registered_address_4}}">
-        <input type="hidden" name="registered_address_town" value="{{formData.registered_address_town}}">
-        <input type="hidden" name="registered_address_county" value="{{formData.registered_address_county}}">
-        <input type="hidden" name="registered_address_postcode" value="{{formData.registered_address_postcode}}">
-        <input type="hidden" name="registered_address_country" value="{{formData.registered_address_country}}">
+        <input type="hidden" name="uk_based" value="no">
+        <input type="hidden" name="id" value="{{formData.id}}">
+
+        {{ trade.textbox("name", label="Name", value=formData.name, error=errors.name) }}
+
         {{ trade.textbox("alias", label="Trading name", value=formData.alias, error=errors.alias) }}
+
+        <fieldset id="registered-address-wrapper" class="fieldset--address lookup-address-js">
+          {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
+          {{ trade.textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
+          {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
+          {{ trade.textbox("registered_address_county", label="County (optional)", value=formData.registered_address_county, error=errors.registered_address_county) }}
+          {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=formData.registered_address_postcode, error=errors.registered_address_postcode) }}
+          {{ trade.dropdown("registered_address_country", label="Country", options=countryOptions, value=formData.registered_address_country, error=errors.registered_address_country) }}
+        </fieldset>
 
         <div class="form-group">
           <div class="form-label-bold">Trading address (optional)</div>
@@ -44,35 +46,15 @@
           <button id="remove-trading-address" class="button-link{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
         </div>
 
-        <fieldset id="trading-address-wrapper"
-          class="fieldset--address lookup-address-js{%if showTradingAddress == false %} hidden{% endif %}">
-          <div class="key-value key-value--vertical form-group">
-            <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
-            <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>
-          </div>
-
-          <div class="form-group form-group--postcode">{# hide for none js #}
-            <label class="form-label-bold">Postcode</label>
-            <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-            <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
-          </div>
-          {# dropdown of suggestions #}
-          <div class="form-group form-group--address-suggestions">
-            <label class="form-label-bold">Select an address from the drop down</label>
-            <select class="form-control">
-            <option value="">Please enter a postcode to lookup your address</option>
-            </select>
-          </div>
-
+        <fieldset id="trading-address-wrapper" class="fieldset--address lookup-address-js{%if showTradingAddress == false %} hidden{% endif %}">
           {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=formData.trading_address_1, error=errors.trading_address_1) }}
           {{ trade.textbox("trading_address_2", value=formData.trading_address_2, error=errors.trading_address_2) }}
           {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}
           {{ trade.textbox("trading_address_county", label="County (optional)", value=formData.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=formData.trading_address_postcode, error=errors.trading_address_postcode) }}
-          {{ trade.dropdown("trading_address_country", class="hidden", label="Country", emptyLabel="Pick a value", value=formData.trading_address_country, options=countryOptions, errors=trading_address_country)}}
+          {{ trade.dropdown("trading_address_country", label="Country", options=countryOptions, value=formData.trading_address_country, error=errors.trading_address_country) }}
         </fieldset>
 
-        {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=formData.uk_region, options=regionOptions, error=errors.uk_region) }}
         <fieldset class="form-group form-group__checkbox-group" id="headquarters-wrapper">
           <legend class="form-label-bold">Is this a headquarters?</legend>
           <label
