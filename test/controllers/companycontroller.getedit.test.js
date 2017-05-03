@@ -1,18 +1,7 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
 /* eslint no-unused-expressions: 0 */
 const proxyquire = require('proxyquire')
-const nunjucks = require('nunjucks')
-const jsdom = require('jsdom')
-const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
-
-nunjucks.configure('views')
-const nunenv = nunjucks.configure([`${__dirname}/../../src/views`, `${__dirname}/../../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true
-})
-
-Object.keys(filters).forEach((filterName) => {
-  nunenv.addFilter(filterName, filters[filterName])
-})
+const { render } = require('../nunjucks')
 
 describe('Company controller, getEdit', function () {
   let fakeCompany = {}
@@ -367,10 +356,9 @@ describe('Company controller, getEdit', function () {
   })
   describe('edit ltd company markup', function () {
     let document
-    let markup
 
-    beforeEach(function (done) {
-      markup = nunjucks.render('../../src/views/company/edit-ltd.html', {
+    beforeEach(function () {
+      return render('../../src/views/company/edit-ltd.html', {
         business_type: { id: '1111', name: 'Private limited company' },
         company: {
           countryOptions: [{id: 1, name: 'country'}],
@@ -411,14 +399,8 @@ describe('Company controller, getEdit', function () {
         csrfToken: '2222',
         showTradingAddress: false
       })
-
-      jsdom.env(markup, (err, jsdomWindow) => {
-        if (err) {
-          throw new Error(err)  // eslint-disable-line no-new
-        }
-
-        document = jsdomWindow.document
-        done()
+      .then((_document) => {
+        document = _document
       })
     })
 
@@ -466,8 +448,8 @@ describe('Company controller, getEdit', function () {
       expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
       expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
     })
-    it('should show the trading address section and include the remove button if there is one', function (done) {
-      markup = nunjucks.render('../../src/views/company/edit-ltd.html', {
+    it('should show the trading address section and include the remove button if there is one', function () {
+      return render('../../src/views/company/edit-ltd.html', {
         business_type: { id: '1111', name: 'Private limited company' },
         company: {
           countryOptions: [{id: 1, name: 'country'}],
@@ -505,30 +487,18 @@ describe('Company controller, getEdit', function () {
         csrfToken: '2222',
         showTradingAddress: true
       })
-
-      jsdom.env(markup, (err, jsdomWindow) => {
-        if (err) {
-          throw new Error(err)  // eslint-disable-line no-new
-        }
-
-        document = jsdomWindow.document
+      .then((document) => {
         expect(document.querySelector('#trading-address-wrapper').className).to.not.include('hidden')
         expect(document.querySelector('#add-trading-address').className).to.include('hidden')
         expect(document.querySelector('#remove-trading-address').className).to.not.include('hidden')
-        done()
       })
-
-      expect(document.querySelector('#trading-address-wrapper').className).to.include('hidden')
-      expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
-      expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
     })
   })
   describe('edit none ltd company markup', function () {
     let document
-    let markup
 
-    beforeEach(function (done) {
-      markup = nunjucks.render('../../src/views/company/edit-ukother.html', {
+    beforeEach(function () {
+      return render('../../src/views/company/edit-ukother.html', {
         business_type: { id: '1111', name: 'Government dept' },
         company: {
           countryOptions: [{id: 1, name: 'country'}],
@@ -538,14 +508,8 @@ describe('Company controller, getEdit', function () {
         csrfToken: '2222',
         showTradingAddress: false
       })
-
-      jsdom.env(markup, (err, jsdomWindow) => {
-        if (err) {
-          throw new Error(err)  // eslint-disable-line no-new
-        }
-
-        document = jsdomWindow.document
-        done()
+      .then((_document) => {
+        document = _document
       })
     })
 
@@ -583,8 +547,8 @@ describe('Company controller, getEdit', function () {
       expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
       expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
     })
-    it('should show the trading address section and include the remove button if there is one', function (done) {
-      markup = nunjucks.render('../../src/views/company/edit-ltd.html', {
+    it('should show the trading address section and include the remove button if there is one', function () {
+      render('../../src/views/company/edit-ltd.html', {
         business_type: { id: '1111', name: 'Private limited company' },
         company: {
           countryOptions: [{id: 1, name: 'country'}],
@@ -622,22 +586,11 @@ describe('Company controller, getEdit', function () {
         csrfToken: '2222',
         showTradingAddress: true
       })
-
-      jsdom.env(markup, (err, jsdomWindow) => {
-        if (err) {
-          throw new Error(err)  // eslint-disable-line no-new
-        }
-
-        document = jsdomWindow.document
+      .then((document) => {
         expect(document.querySelector('#trading-address-wrapper').className).to.not.include('hidden')
         expect(document.querySelector('#add-trading-address').className).to.include('hidden')
         expect(document.querySelector('#remove-trading-address').className).to.not.include('hidden')
-        done()
       })
-
-      expect(document.querySelector('#trading-address-wrapper').className).to.include('hidden')
-      expect(document.querySelector('#add-trading-address').className).to.not.include('hidden')
-      expect(document.querySelector('#remove-trading-address').className).to.include('hidden')
     })
   })
 })

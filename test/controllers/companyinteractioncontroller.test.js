@@ -1,17 +1,6 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
 /* eslint no-unused-expressions: 0 */
-const nunjucks = require('nunjucks')
-const jsdom = require('jsdom')
-const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
-
-nunjucks.configure('views')
-const nunenv = nunjucks.configure([`${__dirname}/../../src/views`, `${__dirname}/../../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true
-})
-
-Object.keys(filters).forEach((filterName) => {
-  nunenv.addFilter(filterName, filters[filterName])
-})
+const { render } = require('../nunjucks')
 
 describe('Company interactions controller', function () {
   let company
@@ -152,14 +141,14 @@ describe('Company interactions controller', function () {
     })
 
     it('should render a list of interactions', function () {
-      return renderContent({interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.not.be.null
       })
     })
 
     it('each line should include the required data', function () {
-      return renderContent({interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
       .then((document) => {
         const interactionElement = document.querySelector('#interaction-list .interaction')
         expect(interactionElement.innerHTML).to.include('Test subject')
@@ -171,14 +160,14 @@ describe('Company interactions controller', function () {
     })
 
     it('include a link to add a new interaction', function () {
-      return renderContent({interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
       .then((document) => {
         const link = document.querySelector('a#add-interaction-link')
         expect(link.href).to.eq('/interaction/add?company=1234')
       })
     })
     it('should not render interactions if there are none and warn user', function () {
-      return renderContent({interactions: [], addInteractionUrl, company})
+      return render('../../src/views/company/interactions.html', {interactions: [], addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.be.null
         expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('There are no interactions at this time.')
@@ -186,15 +175,3 @@ describe('Company interactions controller', function () {
     })
   })
 })
-
-function renderContent (locals) {
-  return new Promise((resolve, reject) => {
-    const markup = nunjucks.render('../../src/views/company/interactions.html', locals)
-    jsdom.env(markup, (err, jsdomWindow) => {
-      if (err) {
-        reject(err)
-      }
-      resolve(jsdomWindow.document)
-    })
-  })
-}

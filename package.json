@@ -27,7 +27,7 @@
     "express-session": "^1.14.1",
     "font-awesome": "^4.6.3",
     "istanbul": "^0.4.5",
-    "jsdom": "^9.9.1",
+    "jsdom": "^10.1.0",
     "lodash": "^4.16.4",
     "mocha": "^3.0.2",
     "mocha-junit-reporter": "^1.12.0",
