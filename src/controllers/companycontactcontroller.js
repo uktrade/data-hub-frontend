@@ -27,6 +27,6 @@ function getContacts (req, res) {
   res.render('company/contacts')
 }
 
-router.get('/company/:source/:sourceId/contacts', getContacts)
+router.get('/company-contacts/:sourceId', getContacts)
 
 module.exports = { getContacts, router }

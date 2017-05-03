@@ -175,10 +175,6 @@ function postDetails (req, res, next) {
     })
 }
 
-function getExport (req, res) {
-  res.render('company/export', {tab: 'export'})
-}
-
 function getArchiveUrl (req) {
   const query = Object.assign({}, req.query)
   query.archive = true
@@ -203,6 +199,5 @@ router.use('/company/:source/:sourceId/*', getCommon)
 router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
 router.get('/company/:source/:sourceId/details', getDetails)
-router.get('/company/:source/:sourceId/export', getExport)
 
 module.exports = { router, editDetails, getCommon, postDetails, getDetails }
