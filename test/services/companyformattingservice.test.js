@@ -1,4 +1,6 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true */
+/* eslint no-unused-expressions: 0 */
+
 const companyFormattingService = require('../../src/services/companyformattingservice')
 
 describe('Company formatting service', () => {

@@ -1,4 +1,4 @@
-/* eslint new-cap: 0 */
+/* eslint new-cap: 0, expr: 0 */
 const express = require('express')
 const winston = require('winston')
 const companyRepository = require('../repositorys/companyrepository')
@@ -112,7 +112,7 @@ function editDetails (req, res) {
   const ukBased = res.locals.uk_based = (company.companies_house_data || company.uk_based || (req.query && req.query.country && req.query.country === 'uk'))
 
   let template
-  if (businessType && businessType.name && businessType.name.toLowerCase() === 'private limited company' || businessType.name.toLowerCase() === 'public limited company') {
+  if ((businessType && businessType.name && businessType.name.toLowerCase() === 'private limited company') || businessType.name.toLowerCase() === 'public limited company') {
     template = 'edit-ltd'
   } else if (!ukBased) {
     template = 'edit-nonuk'

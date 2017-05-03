@@ -1,3 +1,6 @@
+/* globals expect: true */
+/* eslint no-unused-expressions: 0 */
+
 function expectHiddenField (rootElement, name, value) {
   const input = rootElement.querySelector(`input[type=hidden][name=${name}]`)
   expect(input).to.not.be.null

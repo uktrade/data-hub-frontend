@@ -1,4 +1,4 @@
-/* eslint camelcase: 0 */
+/* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const Q = require('q')
 const config = require('../config')
 const authorisedRequest = require('../lib/authorisedrequest')

@@ -5,7 +5,6 @@ const SHOW = 'show'
 const HIDDEN_CLASS = 'clipped-hide'
 
 class ClippedList {
-
   constructor (element, showMessage, hideMessage, itemsToShow = 5) {
     if (!element) { return }
 

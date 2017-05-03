@@ -5,7 +5,6 @@ const {toggleClass, show} = require('../lib/elementstuff')
 const term = getQueryParam('term')
 
 class Facets {
-
   constructor (targetElement) {
     this.initElements(targetElement)
     this.addEventHandlers()
@@ -62,7 +61,6 @@ class Facets {
     toggleClass(control, 'fa-chevron-up')
     toggleClass(control, 'fa-chevron-down')
   }
-
 }
 
 module.exports = Facets

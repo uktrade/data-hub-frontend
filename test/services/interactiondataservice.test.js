@@ -1,5 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint handle-callback-err: 0, camelcase: 0 */
+/* eslint handle-callback-err: 0, camelcase: 0, no-unused-expressions: 0 */
 const proxyquire = require('proxyquire')
 
 describe('interaction data service', function () {

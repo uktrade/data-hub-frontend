@@ -151,4 +151,3 @@ module.exports.initialiseRestrictedServiceOptions = function () {
     module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
   })
 }
-

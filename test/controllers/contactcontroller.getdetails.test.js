@@ -1,4 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
+/* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const contactController = require('../../src/controllers/contactcontroller')
 const { contactDetailsLabels } = require('../../src/labels/contactlabels')

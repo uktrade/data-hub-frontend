@@ -1,4 +1,5 @@
-/* eslint no-new: 0 */
+/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* eslint no-new: 0, no-unused-expressions: 0 */
 const jsdom = require('jsdom')
 const Sectors = require('../../src/javascripts/sectors')
 

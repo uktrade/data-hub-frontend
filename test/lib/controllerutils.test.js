@@ -1,4 +1,5 @@
 /* globals expect: true, describe: true, it: true */
+/* eslint no-unused-expressions: 0 */
 const { isBlank } = require('../../src/lib/controllerutils')
 
 describe('isBlank', function () {

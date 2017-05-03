@@ -9,7 +9,7 @@ function getAdvisor (token, id) {
 
 function advisorSearch (token, term) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *main () {
+    Q.spawn(function * () {
       try {
         if (!term || term.trim().length === 0) {
           return resolve(null)

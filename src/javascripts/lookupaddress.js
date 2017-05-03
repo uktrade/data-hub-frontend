@@ -3,7 +3,6 @@ const axios = require('axios')
 const { hide } = require('../lib/elementstuff')
 
 class LookupAddress {
-
   constructor (elementSelector) {
     this.cacheElements(elementSelector)
     this.suggestions = []

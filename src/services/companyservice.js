@@ -15,7 +15,7 @@ function getContactInCompanyObject (company, contactId) {
 
 function getInflatedDitCompany (token, id) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const advisorHash = {}
         const company = yield companyRepository.getDitCompany(token, id)
@@ -77,7 +77,7 @@ function getInflatedDitCompany (token, id) {
 
 function getCompanyForSource (token, id, source) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         if (source === 'company_companieshousecompany') {
           const companies_house_data = yield companyRepository.getCHCompany(token, id)
@@ -94,7 +94,6 @@ function getCompanyForSource (token, id, source) {
         resolve(company)
       } catch (error) {
         reject(error)
-        return
       }
     })
   })

@@ -1,5 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint handle-callback-err: 0 */
+/* eslint handle-callback-err: 0, no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
 const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../formhelpers')

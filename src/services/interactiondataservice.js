@@ -1,4 +1,4 @@
-/* eslint camelcase: 0 */
+/* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const Q = require('q')
 const companyRepository = require('../repositorys/companyrepository')
 const contactRepository = require('../repositorys/contactrepository')
@@ -16,7 +16,7 @@ function getInteractionType (interactionTypeId) {
 
 function getHydratedInteraction (token, interactionId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         const interaction = yield interactionRepository.getInteraction(token, interactionId)
         interaction.company = yield companyRepository.getDitCompany(token, interaction.company.id)
@@ -30,7 +30,7 @@ function getHydratedInteraction (token, interactionId) {
 
 function createBlankInteractionForContact (token, dit_advisor, interaction_type, contactId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         if (!contactId || !interaction_type || !token) {
           return reject('Missing parameter')
@@ -68,7 +68,7 @@ function createBlankInteractionForContact (token, dit_advisor, interaction_type,
 
 function createBlankInteractionForCompany (token, dit_advisor, interaction_type, companyId) {
   return new Promise((resolve, reject) => {
-    Q.spawn(function *() {
+    Q.spawn(function * () {
       try {
         if (!companyId || !interaction_type || !token) {
           return reject('Missing parameter')

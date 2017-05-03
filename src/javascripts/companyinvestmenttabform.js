@@ -39,4 +39,3 @@ ownershipRadioContainer.addEventListener('change', function (event) {
 })
 
 updateVisibility()
-

@@ -1,4 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
+/* eslint no-unused-expressions: 0 */
 const nunjucks = require('nunjucks')
 const jsdom = require('jsdom')
 const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
