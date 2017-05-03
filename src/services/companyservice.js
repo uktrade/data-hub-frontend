@@ -5,6 +5,7 @@ const advisorRepository = require('../repositorys/advisorrepository')
 const companyRepository = require('../repositorys/companyrepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const interactionDataService = require('./interactiondataservice')
+const companyFormattingService = require('./companyformattingservice')
 
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
@@ -117,4 +118,10 @@ function getViewCompanyLink (company) {
   }
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink }
+function getCommonTitlesAndlinks (company, res) {
+  res.locals.headingName = companyFormattingService.getHeadingName(company)
+  res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
+  res.locals.companyUrl = getViewCompanyLink(company)
+}
+
+module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink, getCommonTitlesAndlinks }

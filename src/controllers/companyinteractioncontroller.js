@@ -3,7 +3,6 @@ const express = require('express')
 const Q = require('q')
 const companyService = require('../services/companyservice')
 const { getDisplayCompanyInteraction } = require('../services/interactionformattingservice')
-
 const router = express.Router()
 
 /**
@@ -17,6 +16,8 @@ function getInteractions (req, res, next) {
     try {
       res.locals.tab = 'interactions'
       const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
+      companyService.getCommonTitlesAndlinks(company, res)
+
       res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
 
       // Only allow a link to add an interaction if the company has contacts

@@ -3,7 +3,6 @@ const express = require('express')
 const Q = require('q')
 const companyService = require('../services/companyservice')
 const { getDisplayCompanyContact, getDisplayArchivedCompanyContact } = require('../services/contactformattingservice')
-
 const router = express.Router()
 
 /**
@@ -17,6 +16,7 @@ function getContacts (req, res, next) {
     try {
       res.locals.tab = 'contacts'
       const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
+      companyService.getCommonTitlesAndlinks(company, res)
 
       // build the data for the contact table.
       res.locals.contacts = company.contacts

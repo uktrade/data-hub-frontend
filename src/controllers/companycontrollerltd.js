@@ -16,11 +16,9 @@ const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address
 function getDetails (req, res, next) {
   Q.spawn(function * () {
     try {
-      const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
-
       res.locals.tab = 'details'
-      res.locals.headingName = companyFormattingService.getHeadingName(company)
-      res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
+      const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
+      companyService.getCommonTitlesAndlinks(company, res)
       res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
       res.locals.companyDetailsDisplayOrder = companyWithCHKeys
       res.locals.companyDetailsLabels = companyDetailsLabels
