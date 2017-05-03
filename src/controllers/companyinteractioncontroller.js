@@ -31,6 +31,6 @@ function getInteractions (req, res, next) {
   })
 }
 
-router.get('/company-interactions/:sourceId', getInteractions)
+router.get('/company-interactions/:id', getInteractions)
 
 module.exports = { getInteractions, router }
