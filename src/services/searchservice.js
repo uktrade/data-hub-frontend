@@ -104,7 +104,10 @@ function searchLimited (token, term) {
     Q.spawn(function * () {
       try {
         const allResults = yield search({token, term, page: 1, filters: ['company_company', 'company_companieshousecompany']})
-        const filtered = allResults.hits.filter(result => result._source.company_number)
+        const filtered = allResults.hits.filter(result => (result._type === 'company_companieshousecompany' ||
+          (result._source.business_type && result._source.business_type.toLowerCase() === 'private limited company') ||
+          (result._source.business_type && result._source.business_type.toLowerCase() === 'public limited company')))
+
         resolve(filtered)
       } catch (error) {
         winston.error(error)
