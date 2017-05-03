@@ -4,6 +4,7 @@ const Q = require('q')
 
 const contactRepository = require('../repositorys/contactrepository')
 const contactFormattingService = require('../services/contactformattingservice')
+const companyService = require('../services/companyservice')
 const { contactDetailsLabels } = require('../labels/contactlabels')
 const router = express.Router()
 
@@ -13,6 +14,7 @@ function getCommon (req, res, next) {
       try {
         res.locals.id = req.params.contactId
         res.locals.contact = yield contactRepository.getContact(req.session.token, res.locals.id)
+        res.locals.companyUrl = companyService.getViewCompanyLink(res.locals.contact.company)
         next()
       } catch (error) {
         winston.error(error)

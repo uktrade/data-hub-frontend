@@ -8,7 +8,8 @@ const { nullEmptyFields } = require('../lib/propertyhelpers')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
-const {getDisplayServiceDelivery} = require('../services/servicedeliveryformattingservice')
+const { getDisplayServiceDelivery } = require('../services/servicedeliveryformattingservice')
+const { getViewCompanyLink } = require('../services/companyservice')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
 const router = express.Router()
@@ -58,6 +59,7 @@ function getServiceDeliveryEdit (req, res, next) {
       res.locals.regionOptions = metadataRepository.regionOptions
       res.locals.statusOptions = metadataRepository.serviceDeliveryStatusOptions
       res.locals.eventOptions = metadataRepository.eventOptions
+      res.locals.companyUrl = getViewCompanyLink(res.locals.serviceDelivery.company)
 
       res.render('interaction/servicedelivery-edit')
     } catch (error) {

@@ -3,7 +3,7 @@ const express = require('express')
 const winston = require('winston')
 const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
-const companyService = require('../services/companyservice')
+const { getCompanyForSource, getViewCompanyLink } = require('../services/companyservice')
 const companyFormattingService = require('../services/companyformattingservice')
 const { companyDetailsLabels, chDetailsLabels, hqLabels, accountManagementDisplayLabels } = require('../labels/companylabels')
 const { isBlank, toQueryString, genCSRF } = require('../lib/controllerutils')
@@ -17,13 +17,14 @@ let unitedKingdom
 function getCommon (req, res, next) {
   const id = req.params.sourceId
   const source = req.params.source
-  companyService.getCompanyForSource(req.session.token, id, source)
+  getCompanyForSource(req.session.token, id, source)
   .then((company) => {
     res.locals.headingName = companyFormattingService.getHeadingName(company)
     res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
     res.locals.id = id
     res.locals.source = source
     res.locals.company = company
+    res.locals.companyUrl = getViewCompanyLink(company)
 
     if (company.archived) {
       res.locals.unarchiveUrl = getUnarchiveUrl(req)
@@ -148,7 +149,7 @@ function postDetails (req, res, next) {
   companyRepository.saveCompany(req.session.token, req.body)
     .then((data) => {
       req.flash('success-message', 'Updated company record')
-      res.redirect(`/company/company_company/${data.id}/details`)
+      res.redirect(getViewCompanyLink(data))
     })
     .catch((error) => {
       winston.debug(error)
@@ -178,10 +179,6 @@ function getExport (req, res) {
   res.render('company/export', {tab: 'export'})
 }
 
-function postArchive (req, res) {
-  res.redirect(`/company/company_company/${req.params.sourceId}/details`)
-}
-
 function getArchiveUrl (req) {
   const query = Object.assign({}, req.query)
   query.archive = true
@@ -207,6 +204,5 @@ router.get(['/company/:source/:sourceId/edit', '/company/add'], editDetails)
 router.post(['/company/:source/:sourceId/edit', '/company/add'], postDetails)
 router.get('/company/:source/:sourceId/details', getDetails)
 router.get('/company/:source/:sourceId/export', getExport)
-router.post('/company/:source/:sourceId/archive', postArchive)
 
 module.exports = { router, editDetails, getCommon, postDetails, getDetails }

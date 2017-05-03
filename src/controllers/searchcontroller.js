@@ -1,6 +1,9 @@
 const express = require('express')
+const companyRepository = require('../repositorys/companyrepository')
+const companyService = require('../services/companyservice')
 const searchService = require('../services/searchservice')
 const getPagination = require('../lib/pagination').getPagination
+const Q = require('q')
 
 const router = express.Router()
 
@@ -27,8 +30,24 @@ function get (req, res) {
     .catch(error => res.render('error', { error }))
 }
 
-router.get('/', get)
+function viewCompanyResult (req, res, next) {
+  if (req.params.source === 'company_companieshousecompany') {
+    res.redirect(`/company/view/ch/${req.params.id}`)
+  } else {
+    Q.spawn(function * () {
+      try {
+        const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
+        res.redirect(companyService.getCompanyUrl(company))
+      } catch (error) {
+        next(error)
+      }
+    })
+  }
+}
+
+router.get('/search', get)
+router.get('/viewcompanyresult/:source/:id', viewCompanyResult)
 
 module.exports = {
-  search: get, router
+  search: get, router, viewCompanyResult
 }

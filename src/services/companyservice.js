@@ -99,4 +99,16 @@ function getCompanyForSource (token, id, source) {
   })
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource }
+/**
+ * Pass an API formatted company record in and return a url to view that company
+ * depending on it's type
+ *
+ * @param {Object} company
+ *
+ * @returns {string} url
+ */
+function getViewCompanyLink (company) {
+  return `/company/company_company/${company.id}/details`
+}
+
+module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink }

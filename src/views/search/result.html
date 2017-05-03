@@ -3,7 +3,7 @@
 
   <li class="results-list__result result-list__ch" data_name="{{ result.name }}">
     <h3 class="result-title">
-      <a href="/company/{{ type }}/{{ id }}/details?term={{ term }}">{{result.name | highlightTerm(term) | safe}}</a>
+      <a href="/search/viewcompanyresult/{{ type }}/{{ id }}">{{result.name | highlightTerm(term) | safe}}</a>
     </h3>
 
     {% if result.company_number %}
