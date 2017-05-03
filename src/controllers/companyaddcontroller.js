@@ -121,7 +121,7 @@ function getAddStepTwo (req, res, next) {
       const { selected, type } = req.query
       res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
-      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company)
+      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company.companies_house_data)
       res.locals.chDetailsLabels = chDetailsLabels
       res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
 

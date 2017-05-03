@@ -472,7 +472,7 @@ describe('Company controller, foreign', function () {
     })
     it('should re-render the edit form with form data on error', function (done) {
       saveCompanyFormStub = sinon.stub().rejects({
-        error: { name: ['test'] }
+        errors: { name: ['test'] }
       })
 
       companyControllerForeign = proxyquire('../../src/controllers/companycontrollerforeign', {

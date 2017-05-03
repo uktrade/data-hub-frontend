@@ -54,6 +54,7 @@ function editCommon (req, res, next) {
   res.locals.employeeOptions = metadataRepository.employeeOptions
   res.locals.turnoverOptions = metadataRepository.turnoverOptions
   res.locals.headquarterOptions = metadataRepository.headquarterOptions
+  res.locals.companyDetailsLabels = companyDetailsLabels
   res.locals.hqLabels = hqLabels
 
   genCSRF(req, res)
@@ -71,7 +72,7 @@ function addDetails (req, res, next) {
       } else {
         res.locals.formData = companyFormService.getDefaultLtdFormForCH(res.locals.chCompany)
       }
-
+      res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
       res.render(`company/edit-ltd`)
     } catch (error) {
       next(error)
@@ -103,15 +104,15 @@ function postDetails (req, res, next) {
         const savedCompany = yield companyFormService.saveCompanyForm(req.session.token, req.body)
         req.flash('success-message', 'Updated company record')
         res.redirect(`/company/view/ltd/${savedCompany.id}`)
-      } catch (errors) {
-        winston.debug(errors)
-        if (errors.error) {
+      } catch (response) {
+        winston.debug(response)
+        if (response.errors) {
           // Leeloo has inconsistant structure to return errors.
           // Get the errors and then re-render the edit page.
-          if (errors.error.errors) {
-            res.locals.errors = errors.error.errors
+          if (response.errors.errors) {
+            res.locals.errors = response.errors.errors
           } else {
-            res.locals.errors = errors.error
+            res.locals.errors = response.errors
           }
 
           // re-edit the data
@@ -122,7 +123,7 @@ function postDetails (req, res, next) {
             addDetails(req, res, next)
           }
         } else {
-          next(errors)
+          next(response)
         }
       }
     })
