@@ -1,7 +1,7 @@
 {
   "name": "data-hub-fe-beta2",
   "version": "1.0.0",
-  "description": "Datahub Beta 2",
+  "description": "Data Hub Beta 2",
   "main": "src/server.js",
   "repository": {
     "type": "git",
