@@ -109,7 +109,7 @@ function getServiceDeliveryDetails (req, res, next) {
 
 router.get(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], getServiceDeliveryEdit)
 router.post(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], postServiceDeliveryEdit)
-router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
 router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
+router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
 
 module.exports = { router }

@@ -3,6 +3,6 @@
 
 {% block main %}
   <h1 class="heading-xlarge record-title">Service delivery details</h1>
-  {{ trade.keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
+    {{ trade.keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
   <a class="button" href="/servicedelivery/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
 {% endblock %}

@@ -14,7 +14,6 @@ function saveServiceDelivery (token, serviceDelivery) {
     options.url = `${config.apiRoot}/v2/service-delivery/`
     options.method = 'POST'
   }
-
   return authorisedRequest(token, options)
 }
 
