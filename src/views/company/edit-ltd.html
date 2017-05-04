@@ -2,7 +2,13 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
-  <h1 class="page-heading">Create a company</h1>
+  <h1 class="page-heading">
+    {% if formData.id %}
+      Edit company
+    {% else %}
+      Create a company
+    {% endif %}
+  </h1>
   <div class="grid-row">
     <div class="column-three-quarters">
       {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
@@ -94,9 +100,9 @@
         {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=formData.turnover_range, options=turnoverOptions, error=errors.turnover_range) }}
 
         {% if formData.id %}
-          {{ trade.save(backUrl=referer) }}
+          {{ trade.save() }}
         {% else %}
-          {{ trade.save(buttonText="Save and create", backUrl=referer) }}
+          {{ trade.save(buttonText="Save and create") }}
         {% endif %}
       </form>
     </div>

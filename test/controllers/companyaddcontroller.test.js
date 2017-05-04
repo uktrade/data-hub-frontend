@@ -422,7 +422,7 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res, next)
       })
-      it('should provide a link to edit a CDMS record if one exists', function (done) {
+      it('should provide a link to edit a DIT company record if one exists', function (done) {
         const req = {
           session: {
             token: '1234'
@@ -449,7 +449,7 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res, next)
       })
-      it('should provide a link to add a new CDMS record for a companies house entry', function (done) {
+      it('should provide a link to add a new DIT company record for a companies house entry', function (done) {
         const req = {
           session: {
             token: '1234'

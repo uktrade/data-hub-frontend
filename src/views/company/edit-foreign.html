@@ -77,9 +77,9 @@
         {{ trade.dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=formData.turnover_range, options=turnoverOptions, error=errors.turnover_range) }}
 
         {% if formData.id %}
-          {{ trade.save(backUrl=referer) }}
+          {{ trade.save() }}
         {% else %}
-          {{ trade.save(buttonText="Save and create", backUrl=referer) }}
+          {{ trade.save(buttonText="Save and create") }}
         {% endif %}
       </form>
     </div>
