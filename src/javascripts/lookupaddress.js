@@ -8,6 +8,8 @@ class LookupAddress {
     this.suggestions = []
     this.addEvents()
     hide(this.addressPostcodeField.parentNode)
+
+    this.postcodeLookupField.value = this.addressPostcodeField.value
   }
 
   cacheElements (elementSelector) {
