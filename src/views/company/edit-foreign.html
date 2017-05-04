@@ -17,7 +17,7 @@
           <div id="business-type" class="key-value__key form-label-bold">Business type
             <a href="/company/add-step-1" class="button-link">Change</a>
           </div>
-          <div class="key-value__value" aria-labelledby="business-type">Foreign {{business_type.name}}</div>
+          <div class="key-value__value" aria-labelledby="business-type">Foreign {{businessTypeName}}</div>
         </div>
       </div>
 
@@ -31,13 +31,13 @@
 
         {{ trade.textbox("alias", label="Trading name", value=formData.alias, error=errors.alias) }}
 
-        <fieldset id="registered-address-wrapper" class="fieldset--address lookup-address-js">
+        <fieldset id="registered-address-wrapper" class="fieldset--address">
           {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
           {{ trade.textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
           {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
           {{ trade.textbox("registered_address_county", label="County (optional)", value=formData.registered_address_county, error=errors.registered_address_county) }}
           {{ trade.textbox("registered_address_postcode", label="Postcode (optional)", value=formData.registered_address_postcode, error=errors.registered_address_postcode) }}
-          {{ trade.dropdown("registered_address_country", label="Country", options=countryOptions, value=formData.registered_address_country, error=errors.registered_address_country) }}
+          {{ trade.dropdown("registered_address_country", label="Country", emptyLabel="Select a country", options=countryOptions, value=formData.registered_address_country, error=errors.registered_address_country) }}
         </fieldset>
 
         <div class="form-group">
@@ -46,13 +46,13 @@
           <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
         </div>
 
-        <fieldset id="trading-address-wrapper" class="fieldset--address lookup-address-js{%if showTradingAddress == false %} hidden{% endif %}">
+        <fieldset id="trading-address-wrapper" class="fieldset--address{%if showTradingAddress == false %} hidden{% endif %}">
           {{ trade.textbox("trading_address_1", label="Business and street (optional)", value=formData.trading_address_1, error=errors.trading_address_1) }}
           {{ trade.textbox("trading_address_2", value=formData.trading_address_2, error=errors.trading_address_2) }}
           {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}
           {{ trade.textbox("trading_address_county", label="County (optional)", value=formData.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=formData.trading_address_postcode, error=errors.trading_address_postcode) }}
-          {{ trade.dropdown("trading_address_country", label="Country", options=countryOptions, value=formData.trading_address_country, error=errors.trading_address_country) }}
+          {{ trade.dropdown("trading_address_country", label="Country", emptyLabel="Select a country", options=countryOptions, value=formData.trading_address_country, error=errors.trading_address_country) }}
         </fieldset>
 
         <fieldset class="form-group form-group__checkbox-group" id="headquarters-wrapper">

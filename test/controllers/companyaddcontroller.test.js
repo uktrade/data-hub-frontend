@@ -79,7 +79,7 @@ describe('Company add controller', function () {
             ltd: 'UK private or public limited company',
             ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
-            forother: 'Foreign organisation'
+            foreign: 'Foreign organisation'
           })
           expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
           done()
@@ -99,7 +99,7 @@ describe('Company add controller', function () {
             ltd: 'UK private or public limited company',
             ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
-            forother: 'Foreign organisation'
+            foreign: 'Foreign organisation'
           })
           expect(allOptions.company).to.deep.equal(body)
           done()
@@ -138,7 +138,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add?business_type=Charity&country=uk')
+            expect(url).to.equal('/company/add/ukother?business_type=Charity&country=uk')
             done()
           }
         }
@@ -147,7 +147,7 @@ describe('Company add controller', function () {
       it('should forward the user to add screen when adding a foreign company', function (done) {
         const req = {
           body: {
-            business_type: 'forother',
+            business_type: 'foreign',
             business_type_for_other: 'Charity'
           },
           session: {}
@@ -155,7 +155,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add?business_type=Charity&country=non-uk')
+            expect(url).to.equal('/company/add/foreign?business_type=Charity&country=non-uk')
             done()
           }
         }
@@ -198,7 +198,7 @@ describe('Company add controller', function () {
       it('should show an error if foreign selected but no option selected from the list', function (done) {
         const req = {
           body: {
-            business_type: 'forother'
+            business_type: 'foreign'
           },
           session: {}
         }
@@ -249,7 +249,7 @@ describe('Company add controller', function () {
               ltd: 'UK private or public limited company',
               ltdchild: 'Child of a UK private or public limited company',
               ukother: 'Other type of UK organisation',
-              forother: 'Foreign organisation'
+              foreign: 'Foreign organisation'
             })
             done()
           }

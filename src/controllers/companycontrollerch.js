@@ -31,6 +31,6 @@ function getDetails (req, res, next) {
   })
 }
 
-router.get('/company/ch/details/:id', getDetails)
+router.get('/company/view/ch/:id', getDetails)
 
 module.exports = { router, getDetails }

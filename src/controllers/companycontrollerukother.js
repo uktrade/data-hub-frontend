@@ -27,7 +27,6 @@ function getDetails (req, res, next) {
         oneListAccountManager: 'None'
       }
       res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
-
       res.render('company/details-ukother')
     } catch (error) {
       winston.error(error)
@@ -52,8 +51,11 @@ function addDetails (req, res, next) {
   if (containsFormData(req)) {
     res.locals.formData = req.body
   } else {
-    res.locals.formData = {}
+    res.locals.formData = {
+      business_type: metadataRepository.getIdForName(metadataRepository.businessTypeOptions, req.query.business_type).id
+    }
   }
+  res.locals.businessTypeName = req.query.business_type
   res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
   res.render(`company/edit-ukother`)
 }
@@ -61,12 +63,13 @@ function addDetails (req, res, next) {
 function editDetails (req, res, next) {
   Q.spawn(function * () {
     try {
+      const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
       if (containsFormData(req)) {
         res.locals.formData = req.body
       } else {
-        const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
         res.locals.formData = companyFormService.getUkOtherCompanyAsFormData(company)
       }
+      res.locals.businessTypeName = company.business_type.name
       res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
       res.render(`company/edit-ukother`)
     } catch (error) {

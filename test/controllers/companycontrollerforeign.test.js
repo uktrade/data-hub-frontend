@@ -25,6 +25,10 @@ describe('Company controller, foreign', function () {
     company_number: '10620176',
     copanies_house_data: null,
     name: 'Freds ltd',
+    business_type: {
+      id: '43134234',
+      name: 'Charity'
+    },
     registered_address_1: '13 HOWICK PARK AVENUE',
     registered_address_2: 'PENWORTHAM',
     registered_address_3: null,
@@ -38,6 +42,7 @@ describe('Company controller, foreign', function () {
     sectorOptions: [{id: '1', name: 'option 1'}],
     employeeOptions: [{id: '1', name: 'option 1'}],
     turnoverOptions: [{id: '1', name: 'option 1'}],
+    businessTypeOptions: [{id: '1', name: 'Charity'}],
     countryOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'United Kingdom' }],
     headquarterOptions: [
       { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq', selectable: true },
@@ -197,12 +202,13 @@ describe('Company controller, foreign', function () {
     it('should not create form defaults for an empty company', function (done) {
       const req = {
         session: { token: '1234' },
+        query: { business_type: 'charity' },
         params: {}
       }
       const res = {
         locals: {},
         render: function () {
-          expect(res.locals.formData).to.deep.equal({})
+          expect(res.locals.formData).to.deep.equal({ business_type: '1' })
           done()
         }
       }
@@ -217,6 +223,7 @@ describe('Company controller, foreign', function () {
       const req = {
         session: { token: '1234' },
         params: { id: '00112233' },
+        query: { business_type: 'charity' },
         body
       }
       const res = {
@@ -232,6 +239,7 @@ describe('Company controller, foreign', function () {
     it('should render with the correct template', function (done) {
       const req = {
         session: { token: '1234' },
+        query: { business_type: 'charity' },
         params: { id: '00112233' }
       }
       const res = {
@@ -355,7 +363,6 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         render: function () {
-          expect(getDitCompanyStub).to.not.be.called
           expect(getForeignCompanyAsFormDataStub).to.not.be.called
           expect(res.locals.formData).to.deep.equal(body)
           done()
@@ -502,6 +509,7 @@ describe('Company controller, foreign', function () {
         session: {
           token: '1234'
         },
+        query: { business_type: 'charity' },
         params: {},
         flash: flashStub,
         body

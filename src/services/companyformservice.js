@@ -23,7 +23,7 @@ function getLtdCompanyAsFormData (company) {
     registered_address_town: company.registered_address_town,
     registered_address_county: company.registered_address_county,
     registered_address_postcode: company.registered_address_postcode,
-    registered_address_country: company.registered_address_country.id,
+    registered_address_country: getPropertyId(company, 'registered_address_country'),
     trading_address_1: company.trading_address_1,
     trading_address_2: company.trading_address_2,
     trading_address_3: company.trading_address_3,
@@ -31,7 +31,7 @@ function getLtdCompanyAsFormData (company) {
     trading_address_town: company.trading_address_town,
     trading_address_county: company.trading_address_county,
     trading_address_postcode: company.trading_address_postcode,
-    trading_address_country: company.trading_address_country.id,
+    trading_address_country: getPropertyId(company, 'trading_address_country'),
     uk_region: getPropertyId(company, 'uk_region'),
     headquarter_type: getPropertyId(company, 'headquarter_type'),
     sector: getPropertyId(company, 'sector'),
@@ -62,7 +62,7 @@ function getUkOtherCompanyAsFormData (company) {
     registered_address_town: company.registered_address_town,
     registered_address_county: company.registered_address_county,
     registered_address_postcode: company.registered_address_postcode,
-    registered_address_country: company.registered_address_country.id,
+    registered_address_country: getPropertyId(company, 'registered_address_country'),
     trading_address_1: company.trading_address_1,
     trading_address_2: company.trading_address_2,
     trading_address_3: company.trading_address_3,
@@ -70,7 +70,7 @@ function getUkOtherCompanyAsFormData (company) {
     trading_address_town: company.trading_address_town,
     trading_address_county: company.trading_address_county,
     trading_address_postcode: company.trading_address_postcode,
-    trading_address_country: company.trading_address_country.id,
+    trading_address_country: getPropertyId(company, 'trading_address_country'),
     uk_region: getPropertyId(company, 'uk_region'),
     headquarter_type: getPropertyId(company, 'headquarter_type'),
     sector: getPropertyId(company, 'sector'),
@@ -101,7 +101,7 @@ function getForeignCompanyAsFormData (company) {
     registered_address_town: company.registered_address_town,
     registered_address_county: company.registered_address_county,
     registered_address_postcode: company.registered_address_postcode,
-    registered_address_country: company.registered_address_country.id,
+    registered_address_country: getPropertyId(company, 'registered_address_country'),
     trading_address_1: company.trading_address_1,
     trading_address_2: company.trading_address_2,
     trading_address_3: company.trading_address_3,
@@ -109,7 +109,7 @@ function getForeignCompanyAsFormData (company) {
     trading_address_town: company.trading_address_town,
     trading_address_county: company.trading_address_county,
     trading_address_postcode: company.trading_address_postcode,
-    trading_address_country: company.trading_address_country.id,
+    trading_address_country: getPropertyId(company, 'trading_address_country'),
     headquarter_type: getPropertyId(company, 'headquarter_type'),
     sector: getPropertyId(company, 'sector'),
     website: company.website,
@@ -141,7 +141,7 @@ function getDefaultLtdFormForCH (companies_house_data) {
     registered_address_town: companies_house_data.registered_address_town,
     registered_address_county: companies_house_data.registered_address_county,
     registered_address_postcode: companies_house_data.registered_address_postcode,
-    registered_address_country: companies_house_data.registered_address_country.id
+    registered_address_country: getPropertyId(companies_house_data, 'registered_address_country')
   }
 
   result = nullEmptyFields(result)

@@ -33,7 +33,7 @@ function postAddStepOne (req, res, next) {
     errors.business_type_uk_other = ['You must select the type of business']
   }
 
-  if (req.body.business_type === 'forother' && isBlank(req.body.business_type_for_other)) {
+  if (req.body.business_type === 'foreign' && isBlank(req.body.business_type_for_other)) {
     errors.business_type_for_other = ['You must select the type of business']
   }
 
@@ -57,7 +57,7 @@ function postAddStepOne (req, res, next) {
         country: 'uk'
       }
       break
-    case 'forother':
+    case 'foreign':
       params = {
         business_type: req.body.business_type_for_other,
         country: 'non-uk'
@@ -65,8 +65,8 @@ function postAddStepOne (req, res, next) {
       break
   }
 
-  if (req.body.business_type === 'ukother' || req.body.business_type === 'forother') {
-    return res.redirect(`/company/add?${toQueryString(params)}`)
+  if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
+    return res.redirect(`/company/add/${req.body.business_type}?${toQueryString(params)}`)
   }
 
   return res.redirect(`/company/add-step-2/?${toQueryString(params)}`)
