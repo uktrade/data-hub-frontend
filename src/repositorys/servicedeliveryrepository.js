@@ -3,11 +3,9 @@ const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
 
 function saveServiceDelivery (token, serviceDelivery) {
-
   const options = {
     body: serviceDelivery
   }
-
   // v2 endpoint only supports POST
   options.method = 'POST'
   options.url = `${config.apiRoot}/v2/service-delivery/`
