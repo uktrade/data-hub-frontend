@@ -53,6 +53,7 @@ function editCommon (req, res, next) {
   res.locals.turnoverOptions = metadataRepository.turnoverOptions
   res.locals.headquarterOptions = metadataRepository.headquarterOptions
   res.locals.companyDetailsLabels = companyDetailsLabels
+  res.locals.countryOptions = metadataRepository.countryOptions
   res.locals.hqLabels = hqLabels
 
   genCSRF(req, res)

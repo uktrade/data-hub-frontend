@@ -36,7 +36,7 @@
         <input type="hidden" name="registered_address_county" value="{{formData.registered_address_county}}">
         <input type="hidden" name="registered_address_postcode" value="{{formData.registered_address_postcode}}">
         <input type="hidden" name="registered_address_country" value="{{formData.registered_address_country}}">
-        {{ trade.textbox("alias", label="Trading name", value=formData.alias, error=errors.alias) }}
+        {{ trade.textbox("alias", label="Trading name (optional)", value=formData.alias, error=errors.alias) }}
 
         <div class="form-group">
           <div class="form-label-bold">Trading address (optional)</div>
@@ -69,7 +69,7 @@
           {{ trade.textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}
           {{ trade.textbox("trading_address_county", label="County (optional)", value=formData.trading_address_county, error=errors.trading_address_county) }}
           {{ trade.textbox("trading_address_postcode", label="Postcode (optional)", value=formData.trading_address_postcode, error=errors.trading_address_postcode) }}
-          {{ trade.dropdown("trading_address_country", class="hidden", label="Country", emptyLabel="Pick a value", value=formData.trading_address_country, options=countryOptions, errors=trading_address_country)}}
+          {{ trade.dropdown("trading_address_country", label="Country", emptyLabel="Pick a value", value=formData.trading_address_country, options=countryOptions, errors=trading_address_country)}}
         </fieldset>
 
         {{ trade.dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=formData.uk_region, options=regionOptions, error=errors.uk_region) }}

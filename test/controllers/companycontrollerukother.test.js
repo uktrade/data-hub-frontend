@@ -272,7 +272,7 @@ describe('Company controller, uk other', function () {
         registered_address_town: 'town',
         registered_address_county: 'county',
         registered_address_postcode: 'postcode',
-        registered_address_country: '222',
+        registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
         alias: 'trading_name',
         trading_address_1: 'trading address 1',
         trading_address_2: 'trading address 2',
@@ -317,14 +317,14 @@ describe('Company controller, uk other', function () {
       expectTextFieldWithLabel(document, 'registered_address_town', 'Town or city (optional)', formData.registered_address_town)
       expectTextFieldWithLabel(document, 'registered_address_county', 'County (optional)', formData.registered_address_county)
       expectTextFieldWithLabel(document, 'registered_address_postcode', 'Postcode (optional)', formData.registered_address_postcode)
-      expectHiddenField(document, 'registered_address_country', formData.registered_address_country)
+      expectDropdownWithLabel(document, 'registered_address_country', 'Country', formData.registered_address_country)
       expectTextFieldWithLabel(document, 'alias', 'Trading name', formData.trading_name)
       expectTextFieldWithLabel(document, 'trading_address_1', 'Business and street (optional)', formData.trading_address_1)
       expectTextFieldWithLabel(document, 'trading_address_2', '', formData.trading_address_2)
       expectTextFieldWithLabel(document, 'trading_address_town', 'Town or city (optional)', formData.trading_address_town)
       expectTextFieldWithLabel(document, 'trading_address_county', 'County (optional)', formData.trading_address_county)
       expectTextFieldWithLabel(document, 'trading_address_postcode', 'Postcode (optional)', formData.trading_address_postcode)
-      expectHiddenField(document, 'trading_address_country', '', formData.trading_address_country)
+      expectDropdownWithLabel(document, 'trading_address_country', 'Country', formData.trading_address_country)
       expectDropdownWithLabel(document, 'uk_region', 'UK region', formData.ukregion)
       expectRadioWithLabel(document, 'headquarters', 'Is this a headquarters?', formData.headquarter_type)
       expectDropdownWithLabel(document, 'sector', 'Sector', formData.sector)

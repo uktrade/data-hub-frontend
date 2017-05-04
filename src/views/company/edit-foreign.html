@@ -29,9 +29,10 @@
 
         {{ trade.textbox("name", label="Name", value=formData.name, error=errors.name) }}
 
-        {{ trade.textbox("alias", label="Trading name", value=formData.alias, error=errors.alias) }}
+        {{ trade.textbox("alias", label="Trading name (optional)", value=formData.alias, error=errors.alias) }}
 
         <fieldset id="registered-address-wrapper" class="fieldset--address">
+          <div class="form-group"><legend class="form-label-bold">Primary address</legend></div>
           {{ trade.textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
           {{ trade.textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
           {{ trade.textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
