@@ -5,6 +5,13 @@ function transformErrors (sourceErrors) {
     return null
   }
 
+  // deal with variant error response from Service Deliveries where
+  // the service delivery combination does not exist
+  if (Array.isArray(sourceErrors)) {
+    sourceErrors = sourceErrors[0]
+    return {Alert: sourceErrors.detail}
+  }
+
   const errors = {}
   const keys = Object.keys(sourceErrors)
   if (keys.length === 0) {
