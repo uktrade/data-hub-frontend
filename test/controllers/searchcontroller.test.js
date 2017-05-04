@@ -1,4 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
+/* globals expect: true, describe: true, it: true, sinon: true */
 const proxyquire = require('proxyquire')
 const next = function (error) {
   throw Error(error)

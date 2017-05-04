@@ -93,31 +93,24 @@ describe('Company interactions controller', function () {
   })
 
   describe('data', function () {
-    let res
-    let req
-    let locals
-    beforeEach(function (done) {
-      req = {
+    it('should return a list of interactions', function (done) {
+      const req = {
         session: {},
         params: { id: '1' }
       }
-      res = {
+      const res = {
         locals: {
           headingName: 'Freds Company',
           headingAddress: '1234 Road, London, EC1 1AA',
           id: '44332211'
         },
         render: function (template, options) {
-          locals = Object.assign({}, res.locals, options)
+          expect(res.locals).to.have.property('interactions')
+          expect(res.locals.interactions).to.have.length(2)
           done()
         }
       }
       companyinteractioncontroller.getInteractions(req, res)
-    })
-
-    it('should return a list of interactions', function () {
-      expect(locals).to.have.property('interactions')
-      expect(locals.interactions).to.have.length(2)
     })
   })
 
