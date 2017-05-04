@@ -18,7 +18,13 @@ function getCommon (req, res, next) {
   Q.spawn(function * () {
     try {
       const token = req.session.token
-      res.locals.serviceDelivery = yield serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
+      // if we are creating a new service delivery then the id comes through as edit
+      // @TODO make the routes a bit more sensible
+      if (req.params.serviceDeliveryId === 'edit') {
+        yield {}
+      } else {
+        res.locals.serviceDelivery = yield serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
+      }
       next()
     } catch (error) {
       winston.error(error)
@@ -107,9 +113,9 @@ function getServiceDeliveryDetails (req, res, next) {
   res.render('interaction/servicedelivery-details')
 }
 
+router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 router.get(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], getServiceDeliveryEdit)
 router.post(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], postServiceDeliveryEdit)
-router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
 
 module.exports = { router }
