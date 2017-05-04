@@ -4,6 +4,7 @@ const Q = require('q')
 
 const { getDisplayContactInteraction } = require('../services/interactionformattingservice')
 const contactDataService = require('../services/contactdataservice')
+const { getCommon } = require('./contactcontroller')
 const router = express.Router()
 
 function getInteractions (req, res, next) {
@@ -22,6 +23,7 @@ function getInteractions (req, res, next) {
   })
 }
 
-router.get('/contact/:contactId/interactions', getInteractions)
+router.get('/contact-interactions/:contactId', getCommon)
+router.get('/contact-interactions/:contactId', getInteractions)
 
 module.exports = {router, getInteractions}

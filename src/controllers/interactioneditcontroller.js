@@ -44,9 +44,9 @@ function editDetails (req, res, next) {
       }
 
       if (req.query && req.query.company) {
-        res.locals.backUrl = `/company/company_company/${req.query.company}/interactions`
+        res.locals.backUrl = `/company-interactions/${req.query.company}`
       } else if (req.query && req.query.contact) {
-        res.locals.backUrl = `/contact/${req.query.contact}/interactions`
+        res.locals.backUrl = `/contact-interactions/${req.query.contact}`
       } else if (res.locals.interaction) {
         res.locals.backUrl = `/interaction/${res.locals.interaction.id}/details`
       }
