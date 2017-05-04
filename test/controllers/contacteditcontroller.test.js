@@ -164,7 +164,7 @@ describe('Contact controller, edit', function () {
       })
       it('should provide a back link to the company', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/company/company_company/1234/contacts')
+          expect(res.locals.backUrl).to.equal('/company-contacts/1234')
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -213,7 +213,7 @@ describe('Contact controller, edit', function () {
       })
       it('should provide a back link to the company', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/company/company_company/1234/contacts')
+          expect(res.locals.backUrl).to.equal('/company-contacts/1234')
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -265,7 +265,7 @@ describe('Contact controller, edit', function () {
         expectHiddenField(document, 'company', locals.formData.company)
         expectTextFieldWithLabel(document, 'first_name', 'First name', locals.formData.first_name)
         expectTextFieldWithLabel(document, 'last_name', 'Last name', locals.formData.last_name)
-        expectTextFieldWithLabel(document, 'job_title', 'Job title', locals.formData.job_title)
+        expectTextFieldWithLabel(document, 'job_title', 'Job Title', locals.formData.job_title)
         expectRadioWithLabel(document, 'primary', 'Is this person a primary contact?', locals.formData.primary)
         expectTextFieldWithLabel(document, 'telephone_countrycode', 'Telephone country code', locals.formData.telephone_countrycode)
         expectTextFieldWithLabel(document, 'telephone_number', 'Telephone', locals.formData.telephone_number)

@@ -4,10 +4,10 @@
 {% block main %}
 {{ formData | log | safe }}
   {% if query.contactId %}
-    {% set backUrl="/contact/" + query.contactId + "/interactions" %}
+    {% set backUrl="/contact-interactions/" + query.contactId %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
   {% elseif query.companyId %}
-    {% set backUrl="/company/company_company/" + query.companyId + "/interactions" %}
+    {% set backUrl="/company-interactions/" + query.companyId %}
     <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
   {% endif %}
 
