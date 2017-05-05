@@ -82,9 +82,9 @@ function postServiceDeliveryEdit (req, res, next) {
       delete req.body.date_day
 
       // v2 endpoint rejects nulls
-      const nullbody = deleteNulls(nullEmptyFields(req.body))
+      req.body = deleteNulls(nullEmptyFields(req.body))
 
-      const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(nullbody)
+      const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)
     } catch (response) {
@@ -92,7 +92,7 @@ function postServiceDeliveryEdit (req, res, next) {
         if (response.error && response.error.errors) {
           res.locals.errors = transformErrors(response.error.errors)
           try {
-            res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, nullbody)
+            res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
           } catch (error) {
             winston.error(error)
           }
