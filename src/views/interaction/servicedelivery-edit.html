@@ -119,7 +119,8 @@
       label=labels.sector,
       emptyLabel="Pick a value",
       value=serviceDelivery.sector.id,
-      options=sectorOptions)
+      options=sectorOptions,
+      error=errors.sector)
     }}
 
     {{ trade.dropdown("country_of_interest",

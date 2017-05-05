@@ -3,7 +3,7 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/servicedelivery')
-const { genCSRF, transformErrors } = require('../lib/controllerutils')
+const { genCSRF, transformV2Errors } = require('../lib/controllerutils')
 const { nullEmptyFields, deleteNulls } = require('../lib/propertyhelpers')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
@@ -83,7 +83,6 @@ function postServiceDeliveryEdit (req, res, next) {
 
       // v2 endpoint rejects nulls
       req.body = deleteNulls(nullEmptyFields(req.body))
-
       const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)

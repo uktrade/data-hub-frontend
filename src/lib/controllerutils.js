@@ -4,14 +4,6 @@ function transformErrors (sourceErrors) {
   if (!sourceErrors) {
     return null
   }
-
-  // deal with variant error response from Service Deliveries where
-  // the service delivery combination does not exist
-  if (Array.isArray(sourceErrors)) {
-    sourceErrors = sourceErrors[0]
-    return {Alert: sourceErrors.detail}
-  }
-
   const errors = {}
   const keys = Object.keys(sourceErrors)
   if (keys.length === 0) {
@@ -22,6 +14,52 @@ function transformErrors (sourceErrors) {
     errors[key] = [sourceErrors[key].msg]
   }
 
+  return errors
+}
+// V2 source errors come in a fairly useless format, which we have to fix here
+function transformV2Errors (sourceErrors) {
+  if (!sourceErrors) {
+    return null
+  }
+
+  const errors = {}
+  const req = ' is required'
+  const typeMatcher = new RegExp(/.*type': '(.*)'}}.*/)
+
+  sourceErrors.forEach((err) => {
+    // deal with errors which do not contain a source for the error
+    if (typeof err.detail === 'string') {
+      if (err.source.pointer === '/data/attributes/subject') {
+        errors.subject = 'Subject' + req
+      }
+
+      if (err.source.pointer === '/data/attributes/notes') {
+        errors.notes = 'Notes are required'
+      }
+      // this error only occurs if the service delivery exists and there are no other errors
+      if (err.detail === 'This combination of service and service provider does not exist.') {
+        errors.Alert = 'This combination of service and service provider does not exist.'
+      }
+
+      // most errors come in this form: {"errors":[{"detail":"{'data': {'type': 'UKRegion'}} has no key id",
+      if (err.detail.startsWith('{\'data')) {
+        let type = typeMatcher.exec(err.detail)
+        if (type.length > 1) {
+          if (type[1] === 'Country') {
+            errors.country_of_interest = type[1] + req
+          } else if (type[1] === 'ServiceDeliveryStatus') {
+            errors.status = 'Status ' + req
+          } else if (type[1] === 'Team') {
+            errors.dit_team = 'Service provider ' + req
+          } else if (type[1] === 'UKRegion') {
+            errors.uk_region = 'UK Region ' + req
+          } else {
+            errors[type[1].toLowerCase()] = type[1] + req
+          }
+        }
+      }
+    }
+  })
   return errors
 }
 

@@ -86,7 +86,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
   }
   // Only include event in the object if present
   if (serviceDeliveryForm.event) {
-    serviceDelivery.relationships.event = {data: {type: 'Event', id: serviceDeliveryForm.event}}
+    serviceDelivery.data.relationships.event = {data: {type: 'Event', id: serviceDeliveryForm.event}}
   }
   return serviceDelivery
 }
