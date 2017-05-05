@@ -23,7 +23,7 @@ function deleteNulls (data) {
   const fieldNames = Object.keys(nullableObject)
   for (const fieldName of fieldNames) {
     const fieldValue = nullableObject[fieldName]
-    if (!fieldValue) {
+    if (fieldValue === null) {
       delete nullableObject[fieldName]
     }
   }
