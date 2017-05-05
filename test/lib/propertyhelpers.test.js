@@ -11,7 +11,7 @@ describe('PropertyHelpers: Conversion of empty values to nulls in an object with
     }
     const actual = propertyHelpers.nullEmptyFields(source)
     expect(actual.foo).equal('foo')
-    expect(actual.bar).equal(null)
+    expect(actual.bar).be.null
   })
   it('Should leave existing nulls alone', function () {
     const source = {
@@ -20,7 +20,7 @@ describe('PropertyHelpers: Conversion of empty values to nulls in an object with
     }
     const actual = propertyHelpers.nullEmptyFields(source)
     expect(actual.foo).equal('foo')
-    expect(actual.bar).equal(null)
+    expect(actual.bar).be.null
   })
 })
 
@@ -58,7 +58,7 @@ describe('PropertyHelpers: Stripping fields with null values out of an object wi
     }
     const actual = propertyHelpers.deleteNulls(source)
     expect(actual.foo).to.equal('foo')
-    expect(actual.bar).to.equal(false)
+    expect(actual.bar).to.be.false
   })
 })
 
@@ -83,7 +83,7 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       }
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
-    expect(actual).to.equal(undefined)
+    expect(actual).to.be.undefined
   })
   it('Should return null if the source property dows not exist', function () {
     const source = {
@@ -94,7 +94,7 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       }
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
-    expect(actual).to.equal(null)
+    expect(actual).to.be.null
   })
 })
 
@@ -130,7 +130,7 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
       }
     }
     const actual = propertyHelpers.getPropertyId(source, 'data')
-    expect(actual).to.equal(null)
+    expect(actual).to.be.null
   })
 })
 
@@ -160,9 +160,9 @@ describe('PropertyHelpers: Convert Yes and No string to true and false with conv
     }
 
     const actual = propertyHelpers.convertYesNoToBoolean(source)
-    expect(actual.foo).to.equal(true)
+    expect(actual.foo).to.be.true
     expect(typeof actual.foo).to.equal('boolean')
-    expect(actual.bar).to.equal(false)
+    expect(actual.bar).to.be.false
     expect(typeof actual.bar).to.equal('boolean')
   })
 })
@@ -176,7 +176,7 @@ describe('PropertyHelpers: Check if an object has a property that is also an obj
     }
 
     const actual = propertyHelpers.hasObjectProperty(source, 'foo')
-    expect(actual).to.equal(true)
+    expect(actual).to.be.true
     expect(typeof actual).to.equal('boolean')
   })
   it('Should return false if the property is not an object', function () {
@@ -185,7 +185,7 @@ describe('PropertyHelpers: Check if an object has a property that is also an obj
     }
 
     const actual = propertyHelpers.hasObjectProperty(source, 'foo')
-    expect(actual).to.equal(false)
+    expect(actual).to.be.false
     expect(typeof actual).to.equal('boolean')
   })
 })
@@ -199,7 +199,7 @@ describe('PropertyHelpers: Check if an object has a property with hasProperty', 
     }
 
     const actual = propertyHelpers.hasProperty(source, 'foo')
-    expect(actual).to.equal(true)
+    expect(actual).to.be.true
     expect(typeof actual).to.equal('boolean')
   })
   it('Should return false if the property does not exist', function () {
@@ -208,7 +208,7 @@ describe('PropertyHelpers: Check if an object has a property with hasProperty', 
     }
 
     const actual = propertyHelpers.hasProperty(source, 'foo')
-    expect(actual).to.equal(false)
+    expect(actual).to.be.false
     expect(typeof actual).to.equal('boolean')
   })
 })
