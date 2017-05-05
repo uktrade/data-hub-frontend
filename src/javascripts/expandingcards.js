@@ -42,4 +42,3 @@ for (let pos = 0; pos < expandingCards.length; pos += 1) {
 }
 
 module.exports = ExpandingCard
-

@@ -1,6 +1,6 @@
 const {getFormattedAddress} = require('../lib/address')
 const {newlineToBr} = require('../lib/textformatting')
-const {formatLongDate} = require('../lib/date')
+const {formatMediumDate} = require('../lib/date')
 const {formatPhone} = require('../lib/phone')
 
 /**
@@ -35,7 +35,7 @@ function getDisplayCompanyContact (contact) {
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
-    added: formatLongDate(contact.created_on),
+    added: formatMediumDate(contact.created_on),
     address: getFormattedAddress(contact),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
@@ -55,7 +55,7 @@ function getDisplayArchivedCompanyContact (contact) {
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,
     reason: contact.archived_reason,
-    archived_on: formatLongDate(contact.archived_on),
+    archived_on: formatMediumDate(contact.archived_on),
     archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`
   }
 }

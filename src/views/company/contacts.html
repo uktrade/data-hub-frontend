@@ -22,14 +22,14 @@
               <div class="card__metadata"><strong>Email:</strong> {{contact.email}}</div>
             </div>
             <div>
-              <div class="card__metadata"><strong>Added on</strong> {{contact.added}}</div>
+              <div class="card__metadata"><strong>Added on:</strong> {{contact.added}}</div>
             </div>
           </div>
           <div class="expanding-card__reveal">
             <table class="table--key-value table--plain">
               <tbody>
                 <tr>
-                  <th>Addess</th>
+                  <th>Address</th>
                   <td>{{contact.address}}</td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@
 
 {% if contactsArchived.length > 0 %}
   <h2 id="archived-title" class="heading-medium">Archived contacts</h2>
-  <ul id="pppl" class="lined-list">
+  <ul id="archived-contact-list" class="lined-list">
     {% for contact in contactsArchived %}
       <li class="lined-list__item">
         <div class="card contact">
