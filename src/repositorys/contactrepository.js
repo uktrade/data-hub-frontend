@@ -13,17 +13,6 @@ function saveContact (token, contact) {
     body: contact
   }
 
-  if (contact.address_same_as_company) {
-    delete contact.address_1
-    delete contact.address_2
-    delete contact.address_3
-    delete contact.address_4
-    delete contact.address_town
-    delete contact.address_county
-    delete contact.address_country
-    delete contact.address_postcode
-  }
-
   if (contact.id && contact.id.length > 0) {
     // update
     options.url = `${config.apiRoot}/contact/${contact.id}/`
