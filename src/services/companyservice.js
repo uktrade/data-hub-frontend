@@ -5,6 +5,7 @@ const advisorRepository = require('../repositorys/advisorrepository')
 const companyRepository = require('../repositorys/companyrepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const interactionDataService = require('./interactiondataservice')
+const companyFormattingService = require('./companyformattingservice')
 
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
@@ -108,7 +109,19 @@ function getCompanyForSource (token, id, source) {
  * @returns {string} url
  */
 function getViewCompanyLink (company) {
-  return `/company/company_company/${company.id}/details`
+  if (!company.uk_based) {
+    return `/company/view/foreign/${company.id}`
+  } else if (company.business_type.name.toLowerCase() === 'private limited company' || company.business_type.name.toLowerCase() === 'public limited company') {
+    return `/company/view/ltd/${company.id}`
+  } else {
+    return `/company/view/ukother/${company.id}`
+  }
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink }
+function getCommonTitlesAndlinks (company, res) {
+  res.locals.headingName = companyFormattingService.getHeadingName(company)
+  res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
+  res.locals.companyUrl = getViewCompanyLink(company)
+}
+
+module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink, getCommonTitlesAndlinks }

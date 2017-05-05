@@ -69,4 +69,24 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
-module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean }
+/**
+ * Determine if an object has a property, and that property is also an object.
+ *
+ * @param {any} object
+ * @param {any} property
+ * @returns
+ */
+function hasObjectProperty (object, property) {
+  return (object &&
+    object.hasOwnProperty(property) &&
+    object[property] !== null &&
+    typeof object[property] === 'object')
+}
+
+function hasProperty (object, property) {
+  return (object &&
+    object.hasOwnProperty(property) &&
+    object[property] !== null)
+}
+
+module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean, hasObjectProperty, hasProperty }

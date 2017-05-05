@@ -33,7 +33,7 @@ function postAddStepOne (req, res, next) {
     errors.business_type_uk_other = ['You must select the type of business']
   }
 
-  if (req.body.business_type === 'forother' && isBlank(req.body.business_type_for_other)) {
+  if (req.body.business_type === 'foreign' && isBlank(req.body.business_type_for_other)) {
     errors.business_type_for_other = ['You must select the type of business']
   }
 
@@ -57,7 +57,7 @@ function postAddStepOne (req, res, next) {
         country: 'uk'
       }
       break
-    case 'forother':
+    case 'foreign':
       params = {
         business_type: req.body.business_type_for_other,
         country: 'non-uk'
@@ -65,8 +65,8 @@ function postAddStepOne (req, res, next) {
       break
   }
 
-  if (req.body.business_type === 'ukother' || req.body.business_type === 'forother') {
-    return res.redirect(`/company/add?${toQueryString(params)}`)
+  if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
+    return res.redirect(`/company/add/${req.body.business_type}?${toQueryString(params)}`)
   }
 
   return res.redirect(`/company/add-step-2/?${toQueryString(params)}`)
@@ -121,9 +121,16 @@ function getAddStepTwo (req, res, next) {
       const { selected, type } = req.query
       res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
-      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company)
+      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company.companies_house_data)
       res.locals.chDetailsLabels = chDetailsLabels
       res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
+
+      if (req.query.type === 'company_company') {
+        res.locals.addLink = { label: 'Go to company record', url: `/company/edit/ltd/${res.locals.company.id}` }
+      } else {
+        res.locals.addLink = { label: 'Choose company', url: `/company/add/ltd/${res.locals.company.company_number}` }
+      }
+
       res.render('company/add-step-2.html')
     } catch (error) {
       winston.error(error)
