@@ -108,6 +108,7 @@ function containsFormData (req) {
 
 module.exports = {
   transformErrors,
+  transformV2Errors,
   encodeQueryData,
   convertAutosuggestCollection,
   flattenIdFields,

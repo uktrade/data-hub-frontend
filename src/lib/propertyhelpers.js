@@ -18,7 +18,7 @@ function nullEmptyFields (data) {
   return cleanedObject
 }
 
-function deleteNulls(data) {
+function deleteNulls (data) {
   const nullableObject = Object.assign({}, data)
   const fieldNames = Object.keys(nullableObject)
   for (const fieldName of fieldNames) {

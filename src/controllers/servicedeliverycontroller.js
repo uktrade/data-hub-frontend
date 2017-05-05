@@ -90,7 +90,7 @@ function postServiceDeliveryEdit (req, res, next) {
     } catch (response) {
       try {
         if (response.error && response.error.errors) {
-          res.locals.errors = transformErrors(response.error.errors)
+          res.locals.errors = transformV2Errors(response.error.errors)
           try {
             res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
           } catch (error) {
