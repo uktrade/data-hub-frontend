@@ -1,4 +1,4 @@
-const getFormattedAddress = require('../lib/address').getFormattedAddress
+const {getFormattedAddress} = require('../lib/address')
 const {newlineToBr} = require('../lib/textformatting')
 const {formatLongDate} = require('../lib/date')
 const {formatPhone} = require('../lib/phone')
@@ -31,11 +31,16 @@ function getDisplayContact (contact) {
 function getDisplayCompanyContact (contact) {
   return {
     url: `/contact/${contact.id}/details`,
+    editUrl: `/contact/${contact.id}/edit`,
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
-    added: formatLongDate(contact.created_on)
+    added: formatLongDate(contact.created_on),
+    address: getFormattedAddress(contact),
+    telephone_alternative: contact.telephone_alternative,
+    email_alternative: contact.email_alternative,
+    notes: contact.notes
   }
 }
 

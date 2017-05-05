@@ -50,6 +50,15 @@ function toggleClass (element, className) {
   }
 }
 
+function toggleVisible (element) {
+  if (hasClass(element, 'hidden')) {
+    show(element)
+  } else {
+    hide(element)
+  }
+}
+
+
 function generateID () {
   let d = new Date().getTime()
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -123,5 +132,6 @@ module.exports = {
   hide,
   show,
   createElementFromMarkup,
-  removeElement
+  removeElement,
+  toggleVisible
 }

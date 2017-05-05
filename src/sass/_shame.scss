@@ -219,3 +219,63 @@ hr {
 .button-secondary.hidden {
   display: none;
 }
+
+.split-header {
+  @extend %contain-floats;
+
+  > * {
+    float: right;
+    margin-top: 0;
+  }
+
+  > *:first-child {
+    float: left;
+  }
+}
+
+#contact-list .card .split-data {
+
+  > div {
+    width: 35%;
+  }
+
+  > div:first-child {
+    width: 65%;
+  }
+
+}
+
+#contact-list {
+  .table--key-value {
+    th {
+      white-space: nowrap;
+    }
+  }
+}
+
+
+a.expanding-card__button {
+  display: none;
+
+}
+.js-enabled {
+  .expanding-card__button-indicator::before {
+    font-family: "FontAwesome";
+    width: 10px;
+    display: inline-block;
+    content: "\f0da";
+  }
+
+  .expanding-card--open .expanding-card__button-indicator::before {
+    content: "\f0d7";
+  }
+
+  a.expanding-card__button {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .expanding-card__button-text {
+    text-decoration: underline;
+  }
+}
