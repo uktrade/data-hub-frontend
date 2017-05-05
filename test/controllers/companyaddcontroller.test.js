@@ -1,53 +1,42 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
+/* eslint no-unused-expressions: 0 */
 const proxyquire = require('proxyquire')
+const next = function (error) {
+  throw Error(error)
+}
 
 describe('Company add controller', function () {
-  let lastSearchPhrase
-  let getCompanyForSourceId
-  let getCompanyForSourceType
-  let getDisplayCHCalled
-
-  const companyAddController = proxyquire('../../src/controllers/companyaddcontroller', {
-    '../services/searchservice': {
-      searchLimited: function (token, term) {
-        lastSearchPhrase = term
-
-        return new Promise((resolve) => {
-          resolve([
-            {
-              _type: 'company_company',
-              _source: {
-                id: '1234',
-                company_number: '123123',
-                name: 'freds'
-              }
-            }
-          ])
-        })
-      }
-    },
-    '../services/companyservice': {
-      getCompanyForSource: function (token, id, type) {
-        getCompanyForSourceId = id
-        getCompanyForSourceType = type
-        return new Promise((resolve) => {
-          resolve({ id: '1234' })
-        })
-      }
-    },
-    '../services/companyformattingservice': {
-      getDisplayCH: function () {
-        getDisplayCHCalled = true
-        return { id: 1 }
-      }
-    }
-  })
+  let searchLimitedStub
+  let getCompanyForSourceStub
+  let getDisplayCHStub
+  let companyAddController
 
   beforeEach(function () {
-    lastSearchPhrase = null
-    getCompanyForSourceId = null
-    getCompanyForSourceType = null
-    getDisplayCHCalled = false
+    searchLimitedStub = sinon.stub().resolves([
+      {
+        _type: 'company_company',
+        _source: {
+          id: '1234',
+          company_number: '123123',
+          name: 'freds'
+        }
+      }
+    ])
+
+    getCompanyForSourceStub = sinon.stub().resolves({ id: '9999', company_number: '8888' })
+    getDisplayCHStub = sinon.stub().resolves({ id: '1234' })
+
+    companyAddController = proxyquire('../../src/controllers/companyaddcontroller', {
+      '../services/searchservice': {
+        searchLimited: searchLimitedStub
+      },
+      '../services/companyservice': {
+        getCompanyForSource: getCompanyForSourceStub
+      },
+      '../services/companyformattingservice': {
+        getDisplayCH: getDisplayCHStub
+      }
+    })
   })
 
   describe('Get step 1', function () {
@@ -78,7 +67,7 @@ describe('Company add controller', function () {
         }
       }
 
-      companyAddController.getAddStepOne(req, res)
+      companyAddController.getAddStepOne(req, res, next)
     })
     it('should return labels for the types and error messages', function (done) {
       const req = {session: {}}
@@ -90,14 +79,14 @@ describe('Company add controller', function () {
             ltd: 'UK private or public limited company',
             ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
-            forother: 'Foreign organisation'
+            foreign: 'Foreign organisation'
           })
           expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
           done()
         }
       }
 
-      companyAddController.getAddStepOne(req, res)
+      companyAddController.getAddStepOne(req, res, next)
     })
     it('should pass through the request body to show previosuly selected options', function (done) {
       const body = { business_type: '1231231231232' }
@@ -110,14 +99,14 @@ describe('Company add controller', function () {
             ltd: 'UK private or public limited company',
             ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
-            forother: 'Foreign organisation'
+            foreign: 'Foreign organisation'
           })
           expect(allOptions.company).to.deep.equal(body)
           done()
         }
       }
 
-      companyAddController.getAddStepOne(req, res)
+      companyAddController.getAddStepOne(req, res, next)
     })
   })
   describe('Post step 1', function () {
@@ -136,7 +125,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
       it('should forward the user to add screen when adding uk other', function (done) {
         const req = {
@@ -149,16 +138,16 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add?business_type=Charity&country=uk')
+            expect(url).to.equal('/company/add/ukother?business_type=Charity&country=uk')
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
       it('should forward the user to add screen when adding a foreign company', function (done) {
         const req = {
           body: {
-            business_type: 'forother',
+            business_type: 'foreign',
             business_type_for_other: 'Charity'
           },
           session: {}
@@ -166,11 +155,11 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add?business_type=Charity&country=non-uk')
+            expect(url).to.equal('/company/add/foreign?business_type=Charity&country=non-uk')
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
     })
     describe('errors', function () {
@@ -187,7 +176,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
       it('should show an error if other uk selected but no option selected from the list', function (done) {
         const req = {
@@ -204,12 +193,12 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
       it('should show an error if foreign selected but no option selected from the list', function (done) {
         const req = {
           body: {
-            business_type: 'forother'
+            business_type: 'foreign'
           },
           session: {}
         }
@@ -221,7 +210,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.postAddStepOne(req, res)
+        companyAddController.postAddStepOne(req, res, next)
       })
     })
   })
@@ -242,7 +231,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should pass the company type labels', function (done) {
         const req = {
@@ -260,12 +249,12 @@ describe('Company add controller', function () {
               ltd: 'UK private or public limited company',
               ltdchild: 'Child of a UK private or public limited company',
               ukother: 'Other type of UK organisation',
-              forother: 'Foreign organisation'
+              foreign: 'Foreign organisation'
             })
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should pass through the query variables', function (done) {
         const req = {
@@ -284,7 +273,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
     })
     describe('show when search term entered', function () {
@@ -302,11 +291,11 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(lastSearchPhrase).to.equal('test')
+            expect(searchLimitedStub).to.be.calledWith('1234', 'test')
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include parsed search results in page', function (done) {
         const req = {
@@ -330,7 +319,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
     })
     describe('show when a company is selected', function () {
@@ -343,19 +332,18 @@ describe('Company add controller', function () {
             business_type: 'ltd',
             country: 'uk',
             term: 'test',
-            selected: '1234',
+            selected: '9999',
             type: 'company_company'
           }
         }
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(getCompanyForSourceId).to.equal('1234')
-            expect(getCompanyForSourceType).to.equal('company_company')
+            expect(getCompanyForSourceStub).to.be.calledWith('1234', '9999', 'company_company')
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should parse the CH details for display', function (done) {
         const req = {
@@ -373,11 +361,11 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(getDisplayCHCalled).to.eq(true)
+            expect(getDisplayCHStub).to.have.been.called
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include labels and display order for the table', function (done) {
         const req = {
@@ -409,7 +397,7 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include a link to close the selected section', function (done) {
         const req = {
@@ -432,7 +420,61 @@ describe('Company add controller', function () {
             done()
           }
         }
-        companyAddController.getAddStepTwo(req, res)
+        companyAddController.getAddStepTwo(req, res, next)
+      })
+      it('should provide a link to edit a DIT company record if one exists', function (done) {
+        const req = {
+          session: {
+            token: '1234'
+          },
+          query: {
+            business_type: 'ltd',
+            country: 'uk',
+            term: 'test',
+            selected: '1234',
+            type: 'company_company'
+          }
+        }
+
+        const res = {
+          locals: {},
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.addLink).to.deep.equal({
+              label: 'Go to company record',
+              url: `/company/edit/ltd/9999`
+            })
+            done()
+          }
+        }
+        companyAddController.getAddStepTwo(req, res, next)
+      })
+      it('should provide a link to add a new DIT company record for a companies house entry', function (done) {
+        const req = {
+          session: {
+            token: '1234'
+          },
+          query: {
+            business_type: 'ltd',
+            country: 'uk',
+            term: 'test',
+            selected: '1234',
+            type: 'company_companieshousecompany'
+          }
+        }
+
+        const res = {
+          locals: {},
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.addLink).to.deep.equal({
+              label: 'Choose company',
+              url: `/company/add/ltd/8888`
+            })
+            done()
+          }
+        }
+        companyAddController.getAddStepTwo(req, res, next)
       })
     })
   })

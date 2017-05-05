@@ -28,6 +28,7 @@ function saveCompany (token, company) {
           method = 'PUT'
           url = `${config.apiRoot}/company/${parsedCompany.id}/`
         } else {
+          delete parsedCompany.id
           method = 'POST'
           url = `${config.apiRoot}/company/`
         }

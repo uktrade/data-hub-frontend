@@ -1,11 +1,15 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const contactTemplate = '../../src/views/company/contacts.html'
+const proxyquire = require('proxyquire')
 
 describe('Company contacts controller', function () {
   let company
-  const companycontactcontroller = require('../../src/controllers/companycontactcontroller')
+  let companycontactcontroller
+  const next = function (error) {
+    throw (error)
+  }
 
   beforeEach(function () {
     company = {
@@ -188,6 +192,11 @@ describe('Company contacts controller', function () {
       headquarter_type: null,
       classification: null
     }
+    companycontactcontroller = proxyquire('../../src/controllers/companycontactcontroller', {
+      '../services/companyservice': {
+        getInflatedDitCompany: sinon.stub().resolves(company)
+      }
+    })
   })
 
   describe('data', function () {
@@ -196,22 +205,21 @@ describe('Company contacts controller', function () {
     let locals
     beforeEach(function (done) {
       req = {
-        session: {}
+        session: {},
+        params: { id: '1' }
       }
       res = {
         locals: {
           headingName: 'Freds Company',
           headingAddress: '1234 Road, London, EC1 1AA',
-          id: '44332211',
-          source: 'company_company',
-          company
+          id: '44332211'
         },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()
         }
       }
-      companycontactcontroller.getContacts(req, res)
+      companycontactcontroller.getContacts(req, res, next)
     })
 
     it('should return a list of contacts not archived', function () {

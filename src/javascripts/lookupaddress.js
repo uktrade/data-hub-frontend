@@ -8,6 +8,8 @@ class LookupAddress {
     this.suggestions = []
     this.addEvents()
     hide(this.addressPostcodeField.parentNode)
+
+    this.postcodeLookupField.value = this.addressPostcodeField.value
   }
 
   cacheElements (elementSelector) {
@@ -24,7 +26,7 @@ class LookupAddress {
     this.addressTownField = this.element.querySelector('[name*="address_town"]')
     this.addressCountyField = this.element.querySelector('[name*="address_county"]')
     this.addressPostcodeField = this.element.querySelector('[name*="address_postcode"]')
-    this.addressSuggestionsWrapper = this.element.querySelector('.form-group--address-suggestions select')
+    this.addressCountryField = this.element.querySelector('[name*="address_country"]')
     this.addressSuggestionsDropdown = this.element.querySelector('.form-group--address-suggestions select')
   }
 
@@ -59,6 +61,7 @@ class LookupAddress {
     this.addressTownField.value = suggestion.city
     this.addressCountyField.value = suggestion.county
     this.addressPostcodeField.value = suggestion.postcode
+    this.addressCountryField.value = suggestion.country
   }
 }
 
