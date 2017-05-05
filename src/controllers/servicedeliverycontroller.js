@@ -39,17 +39,15 @@ function getServiceDeliveryEdit (req, res, next) {
     try {
       const token = req.session.token
       const dit_advisor = req.session.user
-
       if (!res.locals.serviceDelivery) {
-        if (req.query.contactId) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contactId)
+        if (req.query.contact) {
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contact)
         } else if (req.query.company) {
           res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.company)
         }
       } else {
         res.locals.backUrl = `/servicedelivery/${req.params.serviceDeliveryId}/details`
       }
-
       res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
         return {
           id: contact.id,
