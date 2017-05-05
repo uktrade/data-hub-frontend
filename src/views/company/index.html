@@ -20,12 +20,14 @@
   <div class="left-nav">
     <nav>
       <a class="{% if tab == 'details' %}active{% endif %}" href="{{companyUrl}}">Company details</a>
-      <a class="{% if tab == 'hierarchy' %}active{% endif %}" href="">Company hierarchy</a>
-      <a class="{% if tab == 'contacts' %}active{% endif %}" href="/company-contacts/{{company.id}}">Contacts</a>
-      <a class="{% if tab == 'interactions' %}active{% endif %}" href="/company-interactions/{{company.id}}">Interactions</a>
-      <a class="{% if tab == 'documents' %}active{% endif %}" href="">Documents</a>
-      <a class="{% if tab == 'exports' %}active{% endif %}" href="">Export</a>
-      <a class="{% if tab == 'investment' %}active{% endif %}" href="">Investment</a>
+      {% if company.id %}
+        <a class="{% if tab == 'hierarchy' %}active{% endif %}" href="">Company hierarchy</a>
+        <a class="{% if tab == 'contacts' %}active{% endif %}" href="/company-contacts/{{company.id}}">Contacts</a>
+        <a class="{% if tab == 'interactions' %}active{% endif %}" href="/company-interactions/{{company.id}}">Interactions</a>
+        <a class="{% if tab == 'documents' %}active{% endif %}" href="">Documents</a>
+        <a class="{% if tab == 'exports' %}active{% endif %}" href="">Export</a>
+        <a class="{% if tab == 'investment' %}active{% endif %}" href="">Investment</a>
+      {% endif %}
     </nav>
   </div>
   <div class="right-content">
