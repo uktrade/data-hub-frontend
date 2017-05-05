@@ -233,8 +233,8 @@ hr {
   }
 }
 
-#contact-list .card .split-data {
-
+#contact-list .card .split-data,
+#archived-contact-list .card .split-data {
   > div {
     width: 35%;
   }
@@ -242,7 +242,6 @@ hr {
   > div:first-child {
     width: 65%;
   }
-
 }
 
 #contact-list {

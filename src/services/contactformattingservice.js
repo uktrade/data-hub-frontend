@@ -31,7 +31,6 @@ function getDisplayContact (contact) {
 function getDisplayCompanyContact (contact) {
   return {
     url: `/contact/${contact.id}/details`,
-    editUrl: `/contact/${contact.id}/edit`,
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
@@ -55,7 +54,9 @@ function getDisplayArchivedCompanyContact (contact) {
     url: `/contact/${contact.id}/details`,
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,
-    reason: contact.archived_reason
+    reason: contact.archived_reason,
+    archived_on: formatLongDate(contact.archived_on),
+    archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`
   }
 }
 
