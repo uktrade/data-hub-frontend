@@ -18,6 +18,18 @@ function nullEmptyFields (data) {
   return cleanedObject
 }
 
+function deleteNulls(data) {
+  const nullableObject = Object.assign({}, data)
+  const fieldNames = Object.keys(nullableObject)
+  for (const fieldName of fieldNames) {
+    const fieldValue = nullableObject[fieldName]
+    if (!fieldValue) {
+      delete nullableObject[fieldName]
+    }
+  }
+  return nullableObject
+}
+
 /**
  * Looks in the object passed and if it has a name property, return the name
  *
@@ -69,4 +81,4 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
-module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean }
+module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean, deleteNulls }

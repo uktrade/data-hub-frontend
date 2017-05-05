@@ -4,7 +4,7 @@ const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/servicedelivery')
 const { genCSRF, transformErrors } = require('../lib/controllerutils')
-const { nullEmptyFields } = require('../lib/propertyhelpers')
+const { nullEmptyFields, deleteNulls } = require('../lib/propertyhelpers')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
@@ -81,8 +81,10 @@ function postServiceDeliveryEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      req.body = nullEmptyFields(req.body)
-      const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
+      // v2 endpoint rejects nulls
+      const nullbody = deleteNulls(nullEmptyFields(req.body))
+
+      const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(nullbody)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)
     } catch (response) {
@@ -90,7 +92,7 @@ function postServiceDeliveryEdit (req, res, next) {
         if (response.error && response.error.errors) {
           res.locals.errors = transformErrors(response.error.errors)
           try {
-            res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
+            res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, nullbody)
           } catch (error) {
             winston.error(error)
           }
