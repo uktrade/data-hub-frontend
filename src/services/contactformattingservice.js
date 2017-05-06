@@ -39,7 +39,7 @@ function getDisplayCompanyContact (contact) {
     address: getFormattedAddress(contact),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: contact.notes
+    notes: newlineToBr(contact.notes)
   }
 }
 
