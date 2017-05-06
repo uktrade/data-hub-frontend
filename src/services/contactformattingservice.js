@@ -3,6 +3,14 @@ const {newlineToBr} = require('../lib/textformatting')
 const {formatMediumDate} = require('../lib/date')
 const {formatPhone} = require('../lib/phone')
 
+function getContactAddress (contact) {
+  let contactAddress = getFormattedAddress(contact)
+  if (!contactAddress) {
+    contactAddress = getFormattedAddress(contact.company, 'trading') || getFormattedAddress(contact.company, 'registered')
+  }
+  return contactAddress
+}
+
 /**
  * Translate a raw contact object into a formatted contact
  * to display on the screen
@@ -16,7 +24,7 @@ function getDisplayContact (contact) {
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
-    address: getFormattedAddress(contact),
+    address: getContactAddress(contact),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
     notes: newlineToBr(contact.notes)
@@ -38,7 +46,7 @@ function getDisplayCompanyContact (contact) {
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
     added: formatMediumDate(contact.created_on),
-    address: getFormattedAddress(contact),
+    address: getContactAddress(contact),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
     notes: newlineToBr(contact.notes)
