@@ -2,33 +2,70 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
-<h2 class="heading-medium">Company interactions</h2>
-{% if interactions.length > 0 %}
-<ul id="interaction-list" class="lined-list">
-  {% for interaction in interactions %}
-  <li class="lined-list__item">
-    <div class="card interaction">
-      <a class="card__metadata" href="{{interaction.url}}">{{interaction.subject}}</a>
-      <div class="split-data">
-        <div>
-          <div class="card__metadata">{{interaction.interaction_type}}</div>
-          <div class="card__metadata">{{interaction.date}}</div>
-        </div>
-        <div>
-          <div class="card__metadata">{{interaction.contact | safe}}</div>
-          <div class="card__metadata">{{interaction.advisor}}</div>
-        </div>
-      </div>
+  {% if interactions.length > 0 %}
+    <div class="split-header">
+      <h2 class="heading-medium">Company interactions</h2>
+      <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add new interaction</a>
     </div>
-  </li>
-  {% endfor %}
-</ul>
-{% else %}
-  <p id="no-interaction-warning" class="infostrip">There are no interactions at this time.</p>
-{% endif %}
-{% if addInteractionUrl %}
-  <p class="actions">
-    <a id="add-interaction-link" class="button button-secondary" href="{{addInteractionUrl}}">Add new interaction</a>
-  </p>
-{% endif %}
+    <p>
+      An interaction could be a meeting, call, email or an other activity where you have been in touch with a company.
+    </p>
+    <ul id="interaction-list" class="lined-list">
+      {% for interaction in interactions %}
+      <li class="lined-list__item">
+        <div class="card expanding-card interaction" id="{{interaction.id}}">
+          <a class="card__metadata expanding-card__button" href="#{{interaction.id}}">
+            <div class="expanding-card__indicator"></div>
+            {{interaction.subject}}
+          </a>
+          <div class="split-data">
+            <div>
+              <div class="card__metadata"><strong>Type:</strong> {{interaction.interaction_type}}</div>
+              <div class="card__metadata"><strong>Adviser:</strong> {{interaction.advisor | safe}}</div>
+              <div class="card__metadata"><strong>Adviser tean:</strong> {{interaction.dit_team}}</div>
+              <div class="card__metadata"><strong>Contact:</strong> {{interaction.contact | safe}}</div>
+            </div>
+            <div>
+              <div class="card__metadata"><strong>Date:</strong> {{interaction.date}}</div>
+            </div>
+          </div>
+          <div class="expanding-card__reveal">
+            <table class="table--key-value table--plain">
+              <tbody>
+                <tr>
+                  <th>Service offer</th>
+                  <td>{{interaction.service}}</td>
+                </tr>
+                <tr>
+                  <th>Interaction notes</th>
+                  <td>{{interaction.notes | safe}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p><a class="button button-secondary" href="{{interaction.url}}">View interaction details</a></p>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <script src="/javascripts/expandingcards.bundle.js"></script>
+  {% elseif (not company.contacts or company.contacts.length == 0) %}
+    <h2 class="heading-medium">Company interactions</h2>
+    <p>
+      An interaction could be a meeting, call, email or an other activity where you have been in touch with a company.
+    </p>
+    <p id="no-contact-warning" class="infostrip">
+      You currently have no contacts for this company. To add an interaction you must first <a href="{{addContact}}">add a contact</a>.
+    </p>
+  {% else %}
+    <div class="split-header">
+      <h2 class="heading-medium">Company interactions</h2>
+      <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add new interaction</a>
+    </div>
+    <p>
+      An interaction could be a meeting, call, email or an other activity
+      where you have been in touch with a company.
+    </p>
+    <p id="no-interaction-warning" class="infostrip">You currently have no interactions for this company.</p>
+  {% endif %}
 {% endblock %}

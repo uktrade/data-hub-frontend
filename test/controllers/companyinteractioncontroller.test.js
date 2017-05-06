@@ -2,6 +2,9 @@
 /* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
+const next = function (error) {
+  throw Error(error)
+}
 
 describe('Company interactions controller', function () {
   let company
@@ -95,22 +98,73 @@ describe('Company interactions controller', function () {
   describe('data', function () {
     it('should return a list of interactions', function (done) {
       const req = {
-        session: {},
+        session: { token: '1234' },
         params: { id: '1' }
       }
       const res = {
-        locals: {
-          headingName: 'Freds Company',
-          headingAddress: '1234 Road, London, EC1 1AA',
-          id: '44332211'
-        },
+        locals: {},
         render: function (template, options) {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(2)
           done()
         }
       }
-      companyinteractioncontroller.getInteractions(req, res)
+      companyinteractioncontroller.getInteractions(req, res, next)
+    })
+    it('should return a url to add interactions if a valid company and has contacts', function (done) {
+      const req = {
+        session: { token: '1234' },
+        params: { id: '1' }
+      }
+      const res = {
+        locals: {},
+        render: function (template, options) {
+          expect(res.locals).to.have.property('addInteractionUrl')
+          done()
+        }
+      }
+      companyinteractioncontroller.getInteractions(req, res, next)
+    })
+    it('should not return a url to add interactions if not a valid company', function (done) {
+      company.id = null
+      company.companies_house_data = { name: 'Fred' }
+      companyinteractioncontroller = proxyquire('../../src/controllers/companyinteractioncontroller', {
+        '../services/companyservice': {
+          getInflatedDitCompany: sinon.stub().resolves(company)
+        }
+      })
+      const req = {
+        session: { token: '1234' },
+        params: { id: '1' }
+      }
+      const res = {
+        locals: {},
+        render: function (template, options) {
+          expect(res.locals).to.not.have.property('addInteractionUrl')
+          done()
+        }
+      }
+      companyinteractioncontroller.getInteractions(req, res, next)
+    })
+    it('should not return a url to add interactions if no contacts', function (done) {
+      company.contacts = []
+      companyinteractioncontroller = proxyquire('../../src/controllers/companyinteractioncontroller', {
+        '../services/companyservice': {
+          getInflatedDitCompany: sinon.stub().resolves(company)
+        }
+      })
+      const req = {
+        session: { token: '1234' },
+        params: { id: '1' }
+      }
+      const res = {
+        locals: {},
+        render: function (template, options) {
+          expect(res.locals).to.not.have.property('addInteractionUrl')
+          done()
+        }
+      }
+      companyinteractioncontroller.getInteractions(req, res, next)
     })
   })
 
@@ -136,6 +190,14 @@ describe('Company interactions controller', function () {
       }]
 
       addInteractionUrl = '/interaction/add?company=1234'
+    })
+    it('should warn the user if there are no interactions and no contacts to associate with interactions', function () {
+      company.contacts = []
+      return render('../../src/views/company/interactions.html', {interactions: [], addInteractionUrl, company, addContact: 'test'})
+      .then((document) => {
+        expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('You currently have no contacts for this company. To add an interaction you must first add a contact.')
+        expect(document.querySelector('#no-contact-warning.infostrip a').href).to.equal('test')
+      })
     })
 
     it('should render a list of interactions', function () {
@@ -168,7 +230,7 @@ describe('Company interactions controller', function () {
       return render('../../src/views/company/interactions.html', {interactions: [], addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.be.null
-        expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('There are no interactions at this time.')
+        expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('You currently have no interactions for this company')
       })
     })
   })

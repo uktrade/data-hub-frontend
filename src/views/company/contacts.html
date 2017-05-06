@@ -10,8 +10,8 @@
   <ul id="contact-list" class="lined-list">
     {% for contact in contacts %}
       <li class="lined-list__item">
-        <div class="card expanding-card contact">
-          <a class="card__metadata expanding-card__button" href="#">
+        <div class="card expanding-card contact" id="{{contact.id}}">
+          <a class="card__metadata expanding-card__button" href="#{{contact.id}}">
             <div class="expanding-card__indicator"></div>
             {{contact.name}}
           </a>

@@ -43,6 +43,7 @@ describe('Contact formatting service', function () {
   })
   it('Should convert a typical contact into its display format', function () {
     const expected = {
+      id: '12651151-2149-465e-871b-ac45bc568a62',
       job_title: 'Director',
       telephone_number: '+44 7814 333 777',
       email: 'fred@test.com',
@@ -57,6 +58,7 @@ describe('Contact formatting service', function () {
   })
   it('Should convert a typical contact into its company display format', function () {
     const expected = {
+      id: '12651151-2149-465e-871b-ac45bc568a62',
       url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
       name: 'Fred Smith',
       job_title: 'Director',
