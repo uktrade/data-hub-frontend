@@ -20,6 +20,7 @@ function getContactAddress (contact) {
  */
 function getDisplayContact (contact) {
   return {
+    id: contact.id,
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
@@ -38,6 +39,7 @@ function getDisplayContact (contact) {
  */
 function getDisplayCompanyContact (contact) {
   return {
+    id: contact.id,
     url: `/contact/${contact.id}/details`,
     name: `${contact.first_name} ${contact.last_name}`,
     job_title: contact.job_title,

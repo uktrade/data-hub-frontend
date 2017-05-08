@@ -21,8 +21,12 @@ function getInteractions (req, res, next) {
       res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
 
       // Only allow a link to add an interaction if the company has contacts
-      if (company.contacts && company.contacts.length > 0) {
+      if (company.id && company.contacts && company.contacts.length > 0) {
         res.locals.addInteractionUrl = `/interaction/add-step-1/?company=${company.id}`
+      }
+
+      if (!company.contacts || company.contacts.length === 0) {
+        res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
       }
 
       res.render('company/interactions')

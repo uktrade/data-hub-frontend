@@ -3,6 +3,7 @@ const Q = require('q')
 const winston = require('winston')
 const advisorRepository = require('../repositorys/advisorrepository')
 const companyRepository = require('../repositorys/companyrepository')
+const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const interactionDataService = require('./interactiondataservice')
 const companyFormattingService = require('./companyformattingservice')
@@ -36,32 +37,28 @@ function getInflatedDitCompany (token, id) {
           advisorHash[advisor.id] = advisor
         }
 
-        // Parse the service delivery results into something that can be displayed
+        const serviceOffers = yield metadataRepository.getServiceOffers(token)
+
+        // Parse the service delivery results to expand some of the properties
         const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
-          return {
-            id: serviceDelivery.id,
-            date: serviceDelivery.attributes.date,
-            created_on: serviceDelivery.attributes.date,
-            notes: serviceDelivery.attributes.notes,
-            subject: serviceDelivery.attributes.subject,
+          return Object.assign({}, {id: serviceDelivery.id}, serviceDelivery.attributes, {
             contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
             interaction_type: { id: null, name: 'Service delivery' },
-            dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id]
-          }
+            dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
+            service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
+            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id)
+          })
         })
 
-        // Parse the interaction into something that can be displayed
+        // Parse the interaction results to expand some of the properties
         const parsedInteractions = company.interactions.map((interaction) => {
-          return {
-            id: interaction.id,
-            date: interaction.date,
-            created_on: interaction.date,
-            notes: interaction.notes,
-            subject: interaction.subject,
+          return Object.assign({}, interaction, {
             contact: getContactInCompanyObject(company, interaction.contact),
             interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-            dit_advisor: advisorHash[interaction.dit_advisor]
-          }
+            dit_advisor: advisorHash[interaction.dit_advisor],
+            service: serviceOffers.find((option) => option.id === interaction.service),
+            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team)
+          })
         })
 
         const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliverys]
