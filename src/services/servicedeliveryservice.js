@@ -59,7 +59,7 @@ function getHydratedServiceDelivery (token, serviceDeliveryId) {
 
 // Change this to do the saving
 function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
-  const serviceDelivery = {
+  let serviceDelivery = {
     data: {
       type: 'ServiceDelivery',
       attributes: {
@@ -71,7 +71,6 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
         company: {data: {type: 'Company', id: serviceDeliveryForm.company}},
         dit_team: {data: {type: 'Team', id: serviceDeliveryForm.dit_team}},
         service: {data: {type: 'Service', id: serviceDeliveryForm.service}},
-        event: {data: {type: 'Event', id: serviceDeliveryForm.event}},
         status: {data: {type: 'ServiceDeliveryStatus', id: serviceDeliveryForm.status}},
         contact: {data: {type: 'Contact', id: serviceDeliveryForm.contact}},
         dit_advisor: {data: {type: 'Advisor', id: serviceDeliveryForm.dit_advisor}},
@@ -85,7 +84,10 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
   if (serviceDeliveryForm.id && serviceDeliveryForm.id.length > 0) {
     serviceDelivery.data.id = serviceDeliveryForm.id
   }
-
+  // Only include event in the object if present
+  if (serviceDeliveryForm.event) {
+    serviceDelivery.data.relationships.event = {data: {type: 'Event', id: serviceDeliveryForm.event}}
+  }
   return serviceDelivery
 }
 

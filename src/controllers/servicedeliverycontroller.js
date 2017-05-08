@@ -3,8 +3,8 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/servicedelivery')
-const { genCSRF, transformErrors } = require('../lib/controllerutils')
-const { nullEmptyFields } = require('../lib/propertyhelpers')
+const { genCSRF, transformV2Errors } = require('../lib/controllerutils')
+const { nullEmptyFields, deleteNulls } = require('../lib/propertyhelpers')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const serviceDeliveryService = require('../services/servicedeliveryservice')
@@ -18,7 +18,13 @@ function getCommon (req, res, next) {
   Q.spawn(function * () {
     try {
       const token = req.session.token
-      res.locals.serviceDelivery = yield serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
+      // if we are creating a new service delivery then the id comes through as edit
+      // @TODO make the routes a bit more sensible
+      if (req.params.serviceDeliveryId === 'edit') {
+        yield {}
+      } else {
+        res.locals.serviceDelivery = yield serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
+      }
       next()
     } catch (error) {
       winston.error(error)
@@ -33,17 +39,15 @@ function getServiceDeliveryEdit (req, res, next) {
     try {
       const token = req.session.token
       const dit_advisor = req.session.user
-
       if (!res.locals.serviceDelivery) {
-        if (req.query.contactId) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contactId)
-        } else if (req.query.companyId) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.companyId)
+        if (req.query.contact) {
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contact)
+        } else if (req.query.company) {
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.company)
         }
       } else {
         res.locals.backUrl = `/servicedelivery/${req.params.serviceDeliveryId}/details`
       }
-
       res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
         return {
           id: contact.id,
@@ -77,14 +81,15 @@ function postServiceDeliveryEdit (req, res, next) {
       delete req.body.date_month
       delete req.body.date_day
 
-      req.body = nullEmptyFields(req.body)
+      // v2 endpoint rejects nulls
+      req.body = deleteNulls(nullEmptyFields(req.body))
       const deliveryToSave = yield serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
       const result = yield serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
       res.redirect(`/servicedelivery/${result.data.id}/details`)
     } catch (response) {
       try {
         if (response.error && response.error.errors) {
-          res.locals.errors = transformErrors(response.error.errors)
+          res.locals.errors = transformV2Errors(response.error.errors)
           try {
             res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
           } catch (error) {

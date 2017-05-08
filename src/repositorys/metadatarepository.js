@@ -71,6 +71,7 @@ const metadataItems = [
   ['team', 'teams'],
   ['interaction-type', 'interactionTypeOptions'],
   ['service-delivery-status', 'serviceDeliveryStatusOptions'],
+  ['service', 'serviceDeliveryServiceOptions'],
   ['event', 'eventOptions'],
   ['headquarter-type', 'headquarterOptions']
 ]

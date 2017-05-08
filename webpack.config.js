@@ -10,9 +10,10 @@ module.exports = {
     contactedit: './src/javascripts/contactedit',
     investment: './src/javascripts/investment',
     createinvestment: './src/javascripts/createinvestment',
+    expandingcards: './src/javascripts/expandingcards',
     index: './src/javascripts/index',
     search: './src/javascripts/search',
-    expandingcards: './src/javascripts/expandingcards'
+    servicedelivery: './src/javascripts/servicedelivery'
   },
   output: {
     path: 'build/javascripts',
