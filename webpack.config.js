@@ -11,7 +11,8 @@ module.exports = {
     investment: './src/javascripts/investment',
     createinvestment: './src/javascripts/createinvestment',
     index: './src/javascripts/index',
-    search: './src/javascripts/search'
+    search: './src/javascripts/search',
+    expandingcards: './src/javascripts/expandingcards'
   },
   output: {
     path: 'build/javascripts',
