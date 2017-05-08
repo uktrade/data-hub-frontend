@@ -8,7 +8,7 @@
       <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add new interaction</a>
     </div>
     <p>
-      An interaction could be a meeting, call, email or an other activity where you have been in touch with a company.
+      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
     </p>
     <ul id="interaction-list" class="lined-list">
       {% for interaction in interactions %}
@@ -22,7 +22,7 @@
             <div>
               <div class="card__metadata"><strong>Type:</strong> {{interaction.interaction_type}}</div>
               <div class="card__metadata"><strong>Adviser:</strong> {{interaction.advisor | safe}}</div>
-              <div class="card__metadata"><strong>Adviser tean:</strong> {{interaction.dit_team}}</div>
+              <div class="card__metadata"><strong>Adviser team:</strong> {{interaction.dit_team}}</div>
               <div class="card__metadata"><strong>Contact:</strong> {{interaction.contact | safe}}</div>
             </div>
             <div>
@@ -52,7 +52,7 @@
   {% elseif (not company.contacts or company.contacts.length == 0) %}
     <h2 class="heading-medium">Company interactions</h2>
     <p>
-      An interaction could be a meeting, call, email or an other activity where you have been in touch with a company.
+      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
     </p>
     <p id="no-contact-warning" class="infostrip">
       You currently have no contacts for this company. To add an interaction you must first <a href="{{addContact}}">add a contact</a>.
@@ -63,7 +63,7 @@
       <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add new interaction</a>
     </div>
     <p>
-      An interaction could be a meeting, call, email or an other activity
+      An interaction could be a meeting, call, email or another activity
       where you have been in touch with a company.
     </p>
     <p id="no-interaction-warning" class="infostrip">You currently have no interactions for this company.</p>
