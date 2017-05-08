@@ -37,7 +37,7 @@ class ExpandingCard {
    */
   enhanceMarkup () {
     const buttonText = this.toggleButton.innerText
-    const markup = `<span class="expanding-card__button-indicator"><span>
+    const markup = `<span class="expanding-card__button-indicator"></span>
       <span class="expanding-card__button-text">${buttonText}</span>`
     this.toggleButton.innerHTML = markup
     this.indicator = this.toggleButton.querySelector('.expanding-card__button-indicator')
