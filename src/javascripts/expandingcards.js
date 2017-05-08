@@ -60,6 +60,7 @@ class ExpandingCard {
    * @memberof ExpandingCard
    */
   clickToggleButton = (event) => {
+    event.preventDefault()
     toggleVisible(this.revealElement)
     toggleClass(this.wrapperElement, 'expanding-card--open')
     this.toggleButton.blur()
