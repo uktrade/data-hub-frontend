@@ -1,4 +1,5 @@
 /* globals expect: true, describe: true, it: true */
+/* eslint no-unused-expressions: 0 */
 const servicedeliveryservice = require('../../src/services/servicedeliveryservice')
 
 describe('Service delivery formatting service', function () {
