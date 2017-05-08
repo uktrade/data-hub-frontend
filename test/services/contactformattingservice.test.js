@@ -41,10 +41,10 @@ describe('Contact formatting service', function () {
       teams: []
     }
   })
-
   describe('contact details', function () {
     it('Should convert a typical contact into its display format', function () {
       const expected = {
+        id: '12651151-2149-465e-871b-ac45bc568a62',
         job_title: 'Director',
         telephone_number: '+44 7814 333 777',
         email: 'fred@test.com',
@@ -71,10 +71,10 @@ describe('Contact formatting service', function () {
         registered_address_1: '20 The Street',
         registered_address_2: 'rarble',
         registered_address_3: '',
-        regisstred_address_4: '',
+        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
-        registred_address_postcode: 'RR1 1PP',
+        registered_address_postcode: 'RR1 1PP',
         trading_address_1: '30 The Street',
         trading_address_2: 'Tarble',
         trading_address_3: '',
@@ -84,21 +84,8 @@ describe('Contact formatting service', function () {
         trading_address_postcode: 'TT1 1TT'
       }
 
-      const expected = {
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
-        name: 'Fred Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'fred@test.com',
-        added: '14 Feb 2017',
-        address: '30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom',
-        email_alternative: 'fred@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333'
-      }
-
-      const actual = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(actual).to.deep.equal(expected)
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
     })
     it('should use a company trading address if the contact has no address but has a company registered address', function () {
       contact.address_1 = ''
@@ -114,7 +101,7 @@ describe('Contact formatting service', function () {
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
         registered_address_3: '',
-        regisstred_address_4: '',
+        registred_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
@@ -127,27 +114,14 @@ describe('Contact formatting service', function () {
         trading_address_postcode: ''
       }
 
-      const expected = {
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
-        name: 'Fred Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'fred@test.com',
-        added: '14 Feb 2017',
-        address: '20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom',
-        email_alternative: 'fred@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333'
-      }
-
-      const actual = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(actual).to.deep.equal(expected)
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
-
   describe('company contact', function () {
     it('Should convert a typical contact into its company display format', function () {
       const expected = {
+        id: '12651151-2149-465e-871b-ac45bc568a62',
         url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
         name: 'Fred Smith',
         job_title: 'Director',
@@ -177,7 +151,7 @@ describe('Contact formatting service', function () {
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
         registered_address_3: '',
-        regisstred_address_4: '',
+        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
@@ -190,21 +164,8 @@ describe('Contact formatting service', function () {
         trading_address_postcode: 'TT1 1TT'
       }
 
-      const expected = {
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
-        name: 'Fred Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'fred@test.com',
-        added: '14 Feb 2017',
-        address: '30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom',
-        email_alternative: 'fred@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333'
-      }
-
-      const actual = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(actual).to.deep.equal(expected)
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
     })
     it('Should use the registered address if no contact address but has a registered address in company', function () {
       contact.address_1 = ''
@@ -220,7 +181,7 @@ describe('Contact formatting service', function () {
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
         registered_address_3: '',
-        regisstred_address_4: '',
+        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
@@ -233,21 +194,8 @@ describe('Contact formatting service', function () {
         trading_address_postcode: ''
       }
 
-      const expected = {
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
-        name: 'Fred Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'fred@test.com',
-        added: '14 Feb 2017',
-        address: '20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom',
-        email_alternative: 'fred@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333'
-      }
-
-      const actual = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(actual).to.deep.equal(expected)
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
 
