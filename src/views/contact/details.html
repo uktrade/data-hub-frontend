@@ -3,13 +3,13 @@
 
 {% block tabmain %}
   <h2 class="heading-medium">Contact Details</h2>
-
   {{ trade.keyvaluetable(
       contactDetails,
       stripey=true,
       labels=contactDetailsLabels,
       keyorder=contactDetailsDisplayOrder,
-      id="contact-details")
+      id="contact-details",
+      shownull=true)
   }}
 
   {% if not contact.archived %}

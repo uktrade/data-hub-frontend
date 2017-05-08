@@ -13,6 +13,7 @@ module.exports = {
     index: './src/javascripts/index',
     search: './src/javascripts/search',
     servicedelivery: './src/javascripts/servicedelivery'
+    expandingcards: './src/javascripts/expandingcards'
   },
   output: {
     path: 'build/javascripts',
