@@ -1,5 +1,7 @@
 version: "3"
 services:
+  redis:
+    image: redis
   datahub-invest-fe:
     build:
       context: .
@@ -15,3 +17,5 @@ services:
       - ./test:/usr/src/app/test
       - ./build:/usr/src/app/build
     command: npm run develop
+    links:
+      - redis
