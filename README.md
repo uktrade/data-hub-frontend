@@ -64,24 +64,25 @@ a remote debug session over port 5858 if using webstorm or Visual Studio Code
 
 1. Clone repository and change directory:
 
-  ```
-  git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2 && cd data-hub-fe-beta2
-  ```
+   ```
+   git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2 && cd data-hub-fe-beta2
+   ```
 
-1. Install node dependencies:
+2. Install node dependencies:
 
-  ```
-  yarn install
-  ```
+   ```
+   yarn install
+   ```
 
-1. Create a copy of the sample .env file and add values for the keys.
-   A current member of the project team can give you these.
+3. Create a copy of the sample .env file and add values for the keys
+   (a current member of the project team can give you these):
 
-  ```
-  cp sample.env .env
-  ```
+   ```
+   cp sample.env .env
+   ```
 
-1. Run an instance of Redis
+4. Run an instance of Redis and change `REDIS_HOST` and `REDIS_PORT` in your
+   .env file if necessary
 
 #### Run in production mode
 
