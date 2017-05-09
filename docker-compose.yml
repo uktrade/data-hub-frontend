@@ -3,6 +3,8 @@ services:
   redis:
     image: redis
   datahub-invest-fe:
+    env_file:
+     - .env
     build:
       context: .
     ports:
@@ -10,8 +12,10 @@ services:
       - 5858:5858
       - 9229:9229
     environment:
-     - POSTCODE_KEY
      - API_ROOT
+     - API_CLIENT_ID
+     - API_CLIENT_SECRET
+     - POSTCODE_KEY
     volumes:
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
