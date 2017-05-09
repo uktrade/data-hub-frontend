@@ -1,26 +1,28 @@
 # Data hub Beta 2
 
-An express application that fetches data from a back end JSON based api and renders it to the screen. 
-This front end layer is primarily turning requests from the browser into back end API calls and then 
+An express application that fetches data from a back end JSON based api and renders it to the screen.
+This front end layer is primarily turning requests from the browser into back end API calls and then
 rendering them using Nunjucks template language.
 
-The client layer applies the ideals of progressive enhancement so that a wide range of devices can 
+The client layer applies the ideals of progressive enhancement so that a wide range of devices can
 access it, no matter what their limitation.
 
-In order to use the application the front end layer must be ran, with a small number of settings, 
+In order to use the application the front end layer must be run, with a small number of settings,
 and be provided with a back end server to provide the API, data storage and search engine capabilities.
 
 ## Getting started
 
 ### Docker
-The project comes with docker compose files, this means if you have docker you can start 
+
+The project comes with docker compose files, this means if you have docker you can start
 the app with a single command.
 
-There are 2 docker files
+There are 2 docker files.
 
 #### docker-compose.yml
-This will run the front end server locally, but will point to a remote backend. This file expects 
-2 environment variables:
+
+This will run the front end server locally, but will point to a remote backend.
+This file expects the following environment variables:
 
 | Name | Description |
 |:-----|:------------|
@@ -32,16 +34,22 @@ This will run the front end server locally, but will point to a remote backend. 
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
 | REDIS_URL | A full length url to conenct to redis |
 | REDISTOGO_URL | Probably for use with heroku |
+| ZEN_TOKEN | Zendesk auth token |
+| ZEN_DOMAIN | Domain used on Zendesk |
+| ZEN_EMAIL | Zendesk email address |
+| ZEN_BROWSER | Zendesk browser ID |
+| ZEN_IMPACT | Zendesk impact ID |
+| ZEN_SERVICE | Zendesk service ID |
 
-Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv). 
+Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
 
     docker-compose up
 
-The server starts in developer mode, which means that when you make local changes it will auto-compile 
+The server starts in developer mode, which means that when you make local changes it will auto-compile
 sass or javavscript, and will restart nodejs when server side changes are made.
 
-You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run 
+You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
 a remote debug session over port 5858 if using webstorm or Visual Studio Code
 
 ### Native install
@@ -49,59 +57,78 @@ a remote debug session over port 5858 if using webstorm or Visual Studio Code
 #### Dependencies
 
 * [Node.js](https://nodejs.org/en/) (>= 6.9.1)
+* [Yarn](https://yarnpkg.com/en/docs/install) (>= 0.23.4)
+* [Redis](https://redis.io/)
 
 ### Installation
 
-1. Clone repository:
+1. Clone repository and change directory:
 
-  ```
-  git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2
-  ```
+   ```
+   git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2 && cd data-hub-fe-beta2
+   ```
 
 2. Install node dependencies:
 
-  ```
-  npm install
-  ```
+   ```
+   yarn install
+   ```
 
-Run the server in either production mode or develop mode
+3. Create a copy of the sample .env file and add values for the keys
+   (a current member of the project team can give you these):
 
-#### Production
+   ```
+   cp sample.env .env
+   ```
+
+4. Run an instance of Redis and change `REDIS_HOST` and `REDIS_PORT` in your
+   .env file if necessary
+
+#### Run in production mode
+
 Builds static assets and runs a server using node
 
 ```
-npm run build
-npm start
+yarn run build && yarn start
 ```
 
-#### Development
-Server watches for changes and rebuilds sass or compiles js using webpack as needed. Changes to server side
-code will result in the server autorestarting. The server will run with the node debug flag so you can
- debug with Webstorm or Visual Studio Code
+#### Run in development mode
+
+Server watches for changes and rebuilds sass or compiles js using webpack as
+needed. Changes to server side code will result in the server autorestarting.
+The server will run with the node debug flag so you can debug with Webstorm
+or Visual Studio Code.
+
 ```
-npm run develop
+yarn run develop
 ```
 
 ### Other Scripts
-The package.json file includes a number of useful scripts for other tasks such as
 
-- test: Run BDD tests using Mocha
-- lint: Lint both SASS and JS to make sure it conforms to rules
+The [package.json](./package.json) file includes a number of useful scripts
+for other tasks.
+
+Run BDD tests using Mocha:
+
+```
+yarn run test
+```
+
+Lint both SASS and JS to make sure it conforms to rules:
+
+```
+yarn run lint
+```
 
 ## Making changes
-When working on a new feature the convention is to follow Git Flow.
-Ongoing work is kept in the 'Develop' branch, each time a new thing is worked on a feature branch needs
-to be created below 'feature' and merged back into develop. Once feature are tested and agreen they are
-released feature by feature or somethings as a collection of features by merging to master.
-Once you are happy the feature is ready then make 
-sure you have linted the code and ran the tests. Make sure your commits don't 
-contain extranous entries (such as wip) using rebase interactive and create a pull request. The 
-pull request title should briefly say what the change is, and the description describe how you did the change 
-and why you chose to do it the way you did.
 
-Once a pull request is made it will be tested using [CircleCI](https://circleci.com/) and, if successful, 
-deployed to a heroku instance. Links to the Circle build and deployed address will be 
-shown in the github pull request.
+See the [contributing guide](./CONTRIBUTING.md).
 
 ## Deployment
-Changes to 'develop' and 'master' are auto deployed to staging and prod (ish) on Heroku.
+
+Commits to `develop` are automatically deployed to a heroku instance. Pull
+requests deploy to a [review app](https://devcenter.heroku.com/articles/github-integration-review-apps)
+from this heroku instance.
+
+Deployments to staging and production are done manually through Jenkins and are
+deployed from the `master` branch.
