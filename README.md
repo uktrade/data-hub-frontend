@@ -34,6 +34,12 @@ This file expects the following environment variables:
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
 | REDIS_URL | A full length url to conenct to redis |
 | REDISTOGO_URL | Probably for use with heroku |
+| ZEN_TOKEN | Zendesk auth token |
+| ZEN_DOMAIN | Domain used on Zendesk |
+| ZEN_EMAIL | Zendesk email address |
+| ZEN_BROWSER | Zendesk browser ID |
+| ZEN_IMPACT | Zendesk impact ID |
+| ZEN_SERVICE | Zendesk service ID |
 
 Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
