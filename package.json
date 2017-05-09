@@ -59,7 +59,7 @@
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "standard",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
-    "develop": "env $(cat .env) parallel sass:watch js:client:watch js:server:watch",
+    "develop": "parallel sass:watch js:client:watch js:server:watch",
     "client:watch": "parallel sass:watch js:client:watch",
     "js": "npm run js:client",
     "js:client": "webpack",
