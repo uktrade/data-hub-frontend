@@ -7,7 +7,7 @@ rendering them using Nunjucks template language.
 The client layer applies the ideals of progressive enhancement so that a wide range of devices can
 access it, no matter what their limitation.
 
-In order to use the application the front end layer must be ran, with a small number of settings,
+In order to use the application the front end layer must be run, with a small number of settings,
 and be provided with a back end server to provide the API, data storage and search engine capabilities.
 
 ## Getting started
@@ -125,5 +125,9 @@ See the [contributing guide](./CONTRIBUTING.md).
 
 ## Deployment
 
-Changes to `develop` and `master` are auto deployed to staging and production
-environments on Heroku.
+Commits to `develop` are automatically deployed to a heroku instance. Pull
+requests deploy to a [review app](https://devcenter.heroku.com/articles/github-integration-review-apps)
+from this heroku instance.
+
+Deployments to staging and production are done manually through Jenkins and are
+deployed from the `master` branch.
