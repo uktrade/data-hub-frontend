@@ -66,6 +66,7 @@
     "js:client:watch": "webpack --watch",
     "js:server": "babel src -d build",
     "js:server:watch": "nodemon --debug src/server.js",
+    "presass:watch": "npm run sass -- --output-style expanded",
     "sass:watch": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -r -w",
     "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
