@@ -19,18 +19,24 @@
 {% endblock %}
 
 {% block content %}
-  {% if user and user.name %}
+  <div class="phase-banner-beta">
+    <p>
+      <strong class="phase-tag">BETA</strong>
+      <span>This is a new service – your <a href="/support/bug">feedback</a> will help us to improve it.</span>
+    </p>
+  </div>
     <div class="login-bar">
       <div class="login-links login-links-left">
         <a href="/">Home</a>
       </div>
+    {% if user and user.name %}
       <div class="login-links login-links-right">
         <span class="user-name">{{ user.name }}:</span><a href="/myaccount">My account</a>
         |
         <a href="/login/signout">Sign out</a>
       </div>
+    {% endif %}
     </div>
-  {% endif %}
   <div class="container">
     {% block main %}{% endblock %}
   </div>
