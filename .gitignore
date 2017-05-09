@@ -30,3 +30,4 @@ reports
 .env
 npm*.log
 stats.json
+.idea
