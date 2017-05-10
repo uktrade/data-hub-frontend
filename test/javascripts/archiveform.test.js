@@ -15,7 +15,7 @@ const HTML = `
         <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
         <select id="archived_reason" class='form-control' name='archived_reason'>
           <option value=''>Select a value</option>
-          <option value=>Company is dissolved</option>
+          <option value='Company is dissolved'>Company is dissolved</option>
           <option value='Other'>Other</option>
         </select>
       </div>
@@ -51,11 +51,13 @@ describe('archive form control', function () {
   let form
   let showButton
   let otherWrapper
+  let wrapper
 
   beforeEach(function () {
     const { window } = new JSDOM(HTML)
     document = window.document
-    archiveFormControl = new ArchiveForm(document.querySelector('.archive-panel'))
+    wrapper = document.querySelector('.archive-panel')
+    archiveFormControl = new ArchiveForm(wrapper)
     form = document.querySelector('.archive-panel__form')
     showButton = document.querySelector('.archive-panel__show-button')
     otherWrapper = document.querySelector('#archived_reason_other-wrapper')
@@ -103,6 +105,32 @@ describe('archive form control', function () {
     expect(otherField.value).to.include('')
   })
   it('removes the js hidden class, used to avoid flicker when the page starts', function () {
-    expect(domTokenToArray(document.querySelector('.archive-panel').classList)).to.not.include('js-hidden')
+    expect(domTokenToArray(wrapper.classList)).to.not.include('js-hidden')
+  })
+  it('should alert the user if then try to submit a form with no value', function () {
+    const valid = archiveFormControl.validateForm(event)
+
+    expect(valid).to.equal(false)
+    expect(domTokenToArray(wrapper.classList)).to.include('error')
+    const errorMessage = document.querySelector('#archived_reason-wrapper .form-label-bold .error-message')
+    expect(errorMessage).to.not.be.null
+    expect(errorMessage.textContent).to.include('You cannot archive a company without a reason')
+  })
+  it('should not add 2 errors if you try to submit bad data twice', function () {
+    archiveFormControl.validateForm(event)
+    archiveFormControl.validateForm(event)
+    const errorMessages = document.querySelectorAll('#archived_reason-wrapper .form-label-bold .error-message')
+    expect(errorMessages.length).to.equal(1)
+  })
+  it('should indicate that a form passes validation when an option is selected', function () {
+    dropdownField.value = 'Company is dissolved'
+    const valid = archiveFormControl.validateForm(event)
+    expect(valid).to.equal(true)
+  })
+  it('should indicate that a form passes validation when an other value is selected', function () {
+    dropdownField.value = 'Other'
+    otherField.value = 'something'
+    const valid = archiveFormControl.validateForm(event)
+    expect(valid).to.equal(true)
   })
 })

@@ -11,9 +11,10 @@ function archiveCompany (req, res, next) {
     try {
       const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
       const url = companyService.getViewCompanyLink(company)
+      const reason = (req.body.reason !== 'Other') ? req.body.reason : req.body.reasonother
 
-      if (req.body.reason && req.body.reason.length > 0) {
-        yield companyRepository.archiveCompany(req.session.token, company.id, req.body.reason)
+      if (reason.length > 0) {
+        yield companyRepository.archiveCompany(req.session.token, company.id, reason)
         req.flash('success-message', 'Updated company record')
       } else {
         req.flash('error-message', 'Unable to archive company, no reason given')

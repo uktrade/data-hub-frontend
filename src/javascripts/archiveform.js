@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show, removeClass } = require('../lib/elementstuff')
+const { hide, show, removeClass, addClass } = require('../lib/elementstuff')
 
 class ArchiveForm {
   constructor (element) {
@@ -14,6 +14,7 @@ class ArchiveForm {
     this.dropdownChange()
 
     removeClass(this.archivePanelWrapper, 'js-hidden')
+    this.showingError = false
   }
 
   cacheElements (element) {
@@ -24,6 +25,14 @@ class ArchiveForm {
     this.dropdownElement = this.archivePanelWrapper.querySelector('select[name=archived_reason]')
     this.otherTextWrapper = this.archivePanelWrapper.querySelector('#archived_reason_other-wrapper')
     this.otherTextInput = this.otherTextWrapper.querySelector('input')
+  }
+
+  showError () {
+    if (this.showingError) return
+    const label = this.archivePanelWrapper.querySelector('#archived_reason-wrapper label')
+    label.innerHTML = label.innerHTML + '<span class="error-message">You cannot archive a company without a reason</span>'
+    addClass(this.archivePanelWrapper, 'error')
+    this.showingError = true
   }
 
   showFormClick (event) {
@@ -48,10 +57,22 @@ class ArchiveForm {
     }
   }
 
+  validateForm (event) {
+    if (this.dropdownElement.value === '' ||
+      (this.dropdownElement.value === 'Other' && this.otherTextInput.value === '')) {
+      this.showError()
+      event.preventDefault()
+      return false
+    }
+
+    return true
+  }
+
   attachEvents () {
     this.showArchiveFormButton.addEventListener('click', this.showFormClick.bind(this), true)
     this.hideArchiveFormButton.addEventListener('click', this.hideFormClick.bind(this), true)
     this.dropdownElement.addEventListener('change', this.dropdownChange.bind(this), true)
+    this.archiveForm.addEventListener('submit', this.validateForm, true)
   }
 }
 
