@@ -7,15 +7,8 @@
     <span class="post-header">{{ headingAddress }}</span>
 </h2>
 
-{% if query.archive %}
-  {% include "company/archive.html" %}
-{% else %}
-  {% if company.id %}
-    <p>
-      <a href="{{archiveUrl}}">Archive company</a>
-    </p>
-  {% endif %}
-{% endif %}
+{% include "company/archive.html" %}
+
 <div class="left-nav-container">
   <div class="left-nav">
     <nav>

@@ -13,7 +13,8 @@ module.exports = {
     expandingcards: './src/javascripts/expandingcards',
     index: './src/javascripts/index',
     search: './src/javascripts/search',
-    servicedelivery: './src/javascripts/servicedelivery'
+    servicedelivery: './src/javascripts/servicedelivery',
+    archiveform: './src/javascripts/archiveform'
   },
   output: {
     path: 'build/javascripts',
