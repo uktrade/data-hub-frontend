@@ -48,7 +48,7 @@ function saveInteractionForm (token, interactionForm) {
         delete dataToSave.date_month
         delete dataToSave.date_day
 
-        const savedInteraction = yield interactionRepository.save(token, dataToSave)
+        const savedInteraction = yield interactionRepository.saveInteraction(token, dataToSave)
         resolve(savedInteraction)
       } catch (error) {
         reject(error)
