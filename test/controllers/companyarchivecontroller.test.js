@@ -46,7 +46,7 @@ describe('Company controller, archive', function () {
   it('should call the archive company method for the id and reason', function (done) {
     const req = {
       session: { token },
-      body: { reason: 'test', reasonother: '' },
+      body: { archived_reason: 'test', archived_reason_other: '' },
       params: {
         id: company.id
       },
@@ -55,7 +55,7 @@ describe('Company controller, archive', function () {
     const res = {
       locals: {},
       redirect: function () {
-        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.reason)
+        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason)
         done()
       }
     }
@@ -65,7 +65,7 @@ describe('Company controller, archive', function () {
   it('should call the archive company method for the id and other reason', function (done) {
     const req = {
       session: { token },
-      body: { reason: 'Other', reasonother: 'otherreason' },
+      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
         id: company.id
       },
@@ -74,7 +74,7 @@ describe('Company controller, archive', function () {
     const res = {
       locals: {},
       redirect: function () {
-        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.reasonother)
+        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason_other)
         done()
       }
     }
@@ -84,7 +84,7 @@ describe('Company controller, archive', function () {
   it('should get the company and generate a url to redirect to', function (done) {
     const req = {
       session: { token },
-      body: { reason: 'Other', reasonother: 'otherreason' },
+      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
         id: company.id
       },
@@ -105,7 +105,7 @@ describe('Company controller, archive', function () {
   it('should send a flash message that all went well', function (done) {
     const req = {
       session: { token },
-      body: { reason: 'Other', reasonother: 'otherreason' },
+      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
         id: company.id
       },
@@ -124,7 +124,7 @@ describe('Company controller, archive', function () {
   it('should sent a flash message if there was a problem', function (done) {
     const req = {
       session: { token },
-      body: { reason: 'Other', reasonother: '' },
+      body: { archived_reason: 'Other', archived_reason_other: '' },
       params: {
         id: company.id
       },

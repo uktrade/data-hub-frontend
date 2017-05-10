@@ -13,7 +13,7 @@ const HTML = `
       <input type="hidden" name="_csrf_token" value="5481c30c-dd08-0b47-32d9-50b16fefb59e">
       <div class='form-group ' id="archived_reason-wrapper">
         <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
-        <select id="archived_reason" class='form-control' name='archived_reason'>
+        <select id="archived_reason" class="form-control" name="archived_reason">
           <option value=''>Select a value</option>
           <option value='Company is dissolved'>Company is dissolved</option>
           <option value='Other'>Other</option>
