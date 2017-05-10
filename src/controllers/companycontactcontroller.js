@@ -16,7 +16,7 @@ function getContacts (req, res, next) {
     try {
       res.locals.tab = 'contacts'
       const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
-      companyService.getCommonTitlesAndlinks(company, res)
+      companyService.getCommonTitlesAndlinks(req, res, company)
 
       // build the data for the contact table.
       res.locals.contacts = company.contacts
