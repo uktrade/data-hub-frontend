@@ -321,6 +321,54 @@ describe('Company add controller', function () {
         }
         companyAddController.getAddStepTwo(req, res, next)
       })
+      it('should include business information after search in page when selected is blank', function (done) {
+        const req = {
+          session: {
+            token: '1234'
+          },
+          query: {
+            business_type: 'ltd',
+            country: 'uk',
+            term: 'test',
+            selected: ''
+          }
+        }
+        const res = {
+          locals: {},
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.business_type).to.equal('ltd')
+            expect(allOptions.country).to.equal('uk')
+            expect(allOptions.term).to.equal('test')
+            done()
+          }
+        }
+        companyAddController.getAddStepTwo(req, res, next)
+      })
+      it('should include business information after search in page when selected has a value', function (done) {
+        const req = {
+          session: {
+            token: '1234'
+          },
+          query: {
+            business_type: 'ltd',
+            country: 'uk',
+            term: 'test',
+            selected: '9999'
+          }
+        }
+        const res = {
+          locals: {},
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.business_type).to.equal('ltd')
+            expect(allOptions.country).to.equal('uk')
+            expect(allOptions.term).to.equal('test')
+            done()
+          }
+        }
+        companyAddController.getAddStepTwo(req, res, next)
+      })
     })
     describe('show when a company is selected', function () {
       it('should fetch the ch company', function (done) {
