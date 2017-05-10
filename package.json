@@ -97,5 +97,8 @@
       "$",
       "_gaq"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
   }
 }

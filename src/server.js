@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const config = require('./config')
