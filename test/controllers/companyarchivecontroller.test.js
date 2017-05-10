@@ -9,6 +9,7 @@ const next = function (error) {
 
 describe('Company controller, archive', function () {
   let companyRepositoryArchiveCompanyStub
+  let companyRepositoryUnArchiveCompanyStub
   let getViewCompanyLinkStub
   let flashStub
   const token = '1234'
@@ -32,13 +33,15 @@ describe('Company controller, archive', function () {
     getDitCompanyStub = sinon.stub().resolves(company)
     getViewCompanyLinkStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
+    companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
     companyArchiveController = proxyquire('../../src/controllers/companyarchivecontroller', {
       '../services/companyservice': {
         getViewCompanyLink: getViewCompanyLinkStub
       },
       '../repositorys/companyrepository': {
         getDitCompany: getDitCompanyStub,
-        archiveCompany: companyRepositoryArchiveCompanyStub
+        archiveCompany: companyRepositoryArchiveCompanyStub,
+        unarchiveCompany: companyRepositoryUnArchiveCompanyStub
       }
     })
     flashStub = sinon.stub()
@@ -139,5 +142,23 @@ describe('Company controller, archive', function () {
     }
 
     companyArchiveController.archiveCompany(req, res, next)
+  })
+  it('should call unarchive', function (done) {
+    const req = {
+      session: { token },
+      params: {
+        id: company.id
+      },
+      flash: flashStub
+    }
+    const res = {
+      locals: {},
+      redirect: function () {
+        expect(companyRepositoryUnArchiveCompanyStub).to.be.calledWith(token, company.id)
+        done()
+      }
+    }
+
+    companyArchiveController.unarchiveCompany(req, res, next)
   })
 })

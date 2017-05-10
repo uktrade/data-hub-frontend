@@ -2,7 +2,9 @@
 {% if company.archived %}
   <p class='infostrip'>
     This company has been archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br />
-    <strong>Reason:</strong> {{company.archived_reason}}
+    <strong>Reason:</strong> {{company.archived_reason}}<br/>
+    <br/>
+    <a href="/company/unarchive/{{company.id}}">Unarchive</a>
   </p>
 {% elif company.id %}
   <div class="archive-panel js-hidden">

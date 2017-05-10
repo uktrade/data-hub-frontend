@@ -28,12 +28,12 @@ function archiveCompany (req, res, next) {
   })
 }
 
-function unArchiveCompany (req, res, next) {
+function unarchiveCompany (req, res, next) {
   Q.spawn(function * () {
     try {
       const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
       const url = companyService.getViewCompanyLink(company)
-      yield companyRepository.unArchiveCompany(req.session.token, company.id)
+      yield companyRepository.unarchiveCompany(req.session.token, company.id)
       req.flash('success-message', 'Updated company record')
       res.redirect(url)
     } catch (error) {
@@ -44,6 +44,6 @@ function unArchiveCompany (req, res, next) {
 }
 
 router.post('/company/archive/:id', archiveCompany)
-router.get('/company/unarchive/:id', unArchiveCompany)
+router.get('/company/unarchive/:id', unarchiveCompany)
 
-module.exports = { router, archiveCompany }
+module.exports = { router, archiveCompany, unarchiveCompany }
