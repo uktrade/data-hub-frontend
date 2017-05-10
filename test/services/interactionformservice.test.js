@@ -38,7 +38,7 @@ describe('interaction form service', function () {
 
     interactionFormService = proxyquire('../../src/services/interactionformservice', {
       '../repositorys/interactionrepository': {
-        save: saveInteractionStub
+        saveInteraction: saveInteractionStub
       }
     })
   })
@@ -133,7 +133,7 @@ describe('interaction form service', function () {
 
       interactionFormService = proxyquire('../../src/services/interactionformservice', {
         '../repositorys/interactionrepository': {
-          save: saveInteractionStub
+          saveInteraction: saveInteractionStub
         }
       })
 
