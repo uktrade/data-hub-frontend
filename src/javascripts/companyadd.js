@@ -6,7 +6,7 @@ function step1 () {
   const otherUkTypeWrapper = document.getElementById('other-uk-type-wrapper')
   const otherUkField = document.getElementById('ukother')
   const otherForeignTypeWrapper = document.getElementById('other-for-type-wrapper')
-  const otherForeignField = document.getElementById('forother')
+  const otherForeignField = document.getElementById('foreign')
 
   function updateVisibility () {
     if (otherUkField.checked === true) {

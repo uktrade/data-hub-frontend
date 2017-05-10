@@ -4,14 +4,14 @@
 {% block main %}
 <h1 class="page-heading">
   {{contact.first_name}} {{contact.last_name}} {% if contact.primary == true %}{{trade.statusbadge('Primary', variation="fuschia")}}{% endif %}
-  <span class="post-header"><a href="/company/company_company/{{contact.company.id}}/details">{{contact.company.name}}</a></span>
+  <span class="post-header"><a href="{{companyUrl}}">{{contact.company.name}}</a></span>
 </h1>
 
 <div class="left-nav-container">
   <div class="left-nav">
     <nav>
       <a class="{% if tab == 'details' %}active{% endif %}" href="/contact/{{id}}/details">Details</a>
-      <a class="{% if tab == 'interactions' %}active{% endif %}" href="/contact/{{id}}/interactions">Interactions</a>
+      <a class="{% if tab == 'interactions' %}active{% endif %}" href="/contact-interactions/{{id}}">Interactions</a>
     </nav>
   </div>
   <div class="right-content">

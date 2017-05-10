@@ -191,7 +191,7 @@ describe('Interaction controller, edit', function () {
       })
       it('should provide a link back to contact', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/contact/888/interactions')
+          expect(res.locals.backUrl).to.equal('/contact-interactions/888')
           done()
         }
         interactionEditController.editDetails(req, res, next)
@@ -246,7 +246,7 @@ describe('Interaction controller, edit', function () {
       })
       it('should provide a link back to company', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/company/company_company/888/interactions')
+          expect(res.locals.backUrl).to.equal('/company-interactions/888')
           done()
         }
         interactionEditController.editDetails(req, res, next)

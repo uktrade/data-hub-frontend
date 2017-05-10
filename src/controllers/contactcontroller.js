@@ -4,6 +4,7 @@ const Q = require('q')
 
 const contactRepository = require('../repositorys/contactrepository')
 const contactFormattingService = require('../services/contactformattingservice')
+const companyService = require('../services/companyservice')
 const { contactDetailsLabels } = require('../labels/contactlabels')
 const router = express.Router()
 
@@ -13,6 +14,7 @@ function getCommon (req, res, next) {
       try {
         res.locals.id = req.params.contactId
         res.locals.contact = yield contactRepository.getContact(req.session.token, res.locals.id)
+        res.locals.companyUrl = companyService.getViewCompanyLink(res.locals.contact.company)
         next()
       } catch (error) {
         winston.error(error)
@@ -27,6 +29,7 @@ function getDetails (req, res, next) {
     res.locals.tab = 'details'
     res.locals.contactDetails = contactFormattingService.getDisplayContact(res.locals.contact)
     res.locals.contactDetailsLabels = contactDetailsLabels
+    res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
     res.render('contact/details')
   } catch (error) {
     next(error)

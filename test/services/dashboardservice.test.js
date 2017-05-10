@@ -1,8 +1,12 @@
+/* globals expect: true, describe: true, it: true, sinon: stub */
 const proxyquire = require('proxyquire')
 
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
     return proxyquire('../../src/services/dashboardservice', {
+      './companyservice': {
+        getViewCompanyLink: sinon.stub().returns('/test')
+      },
       '../lib/authorisedrequest': () => new Promise((resolve) => {
         resolve(mockData)
       })
@@ -39,7 +43,7 @@ describe('Dashboard service', () => {
             subject: 'int-subject',
             url: '/interaction/int-id/details',
             company: {
-              url: '/company/company_company/comp-id/details',
+              url: '/test',
               name: 'comp-name'
             }
           }],
@@ -48,7 +52,7 @@ describe('Dashboard service', () => {
             name: 'first-name last-name',
             url: '/contact/contact-id/details',
             company: {
-              url: '/company/company_company/comp-id/details',
+              url: '/test',
               name: 'comp-name',
               id: 'comp-id'
             }
@@ -93,7 +97,7 @@ describe('Dashboard service', () => {
             name: 'first-name last-name',
             url: '/contact/contact-id/details',
             company: {
-              url: '/company/company_company/comp-id/details',
+              url: '/test',
               name: 'comp-name',
               id: 'comp-id'
             }

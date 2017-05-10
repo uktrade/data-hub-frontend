@@ -18,6 +18,18 @@ function nullEmptyFields (data) {
   return cleanedObject
 }
 
+function deleteNulls (data) {
+  const nullableObject = Object.assign({}, data)
+  const fieldNames = Object.keys(nullableObject)
+  for (const fieldName of fieldNames) {
+    const fieldValue = nullableObject[fieldName]
+    if (fieldValue === null) {
+      delete nullableObject[fieldName]
+    }
+  }
+  return nullableObject
+}
+
 /**
  * Looks in the object passed and if it has a name property, return the name
  *
@@ -69,4 +81,24 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
-module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean }
+/**
+ * Determine if an object has a property, and that property is also an object.
+ *
+ * @param {any} object
+ * @param {any} property
+ * @returns
+ */
+function hasObjectProperty (object, property) {
+  return (object &&
+  object.hasOwnProperty(property) &&
+  object[property] !== null &&
+  typeof object[property] === 'object')
+}
+
+function hasProperty (object, property) {
+  return (object &&
+  object.hasOwnProperty(property) &&
+  object[property] !== null)
+}
+
+module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean, deleteNulls, hasProperty, hasObjectProperty }

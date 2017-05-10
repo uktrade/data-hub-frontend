@@ -1,6 +1,6 @@
 const contactDetailsLabels = {
   title: 'Title',
-  job_title: 'Job title',
+  job_title: 'Job Title',
   telephone_number: 'Phone number',
   telephone_countrycode: 'Telephone country code',
   email: 'Email',

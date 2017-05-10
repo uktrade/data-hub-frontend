@@ -71,6 +71,7 @@ const metadataItems = [
   ['team', 'teams'],
   ['interaction-type', 'interactionTypeOptions'],
   ['service-delivery-status', 'serviceDeliveryStatusOptions'],
+  ['service', 'serviceDeliveryServiceOptions'],
   ['event', 'eventOptions'],
   ['headquarter-type', 'headquarterOptions']
 ]
@@ -150,4 +151,14 @@ module.exports.initialiseRestrictedServiceOptions = function () {
   .then((data) => {
     module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
   })
+}
+
+module.exports.getIdForName = function (options, name) {
+  if (!name) return null
+  const _name = name.toLowerCase()
+  for (const option of options) {
+    if (_name === option.name.toLowerCase()) {
+      return option
+    }
+  }
 }

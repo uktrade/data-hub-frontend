@@ -22,12 +22,12 @@
 
         <div class='form-group'>
           <div class='form-label-bold'>Company</div>
-          <a href="/company/company_company/{{contact.company.id}}/details">{{ contact.company.name }}</a>
+          <a href="{{companyUrl}}">{{ contact.company.name }}</a>
         </div>
 
         {{ trade.textbox("first_name", label="First name", value=formData.first_name, error=errors.first_name) }}
         {{ trade.textbox("last_name", label="Last name", value=formData.last_name, error=errors.last_name) }}
-        {{ trade.textbox("job_title", label="Job title", value=formData.job_title, error=errors.job_title) }}
+        {{ trade.textbox("job_title", label="Job Title", value=formData.job_title, error=errors.job_title) }}
 
         <fieldset id="primary-wrapper" class="form-group inline">
           <legend class="form-label-bold">Is this person a primary contact?</legend>

@@ -1,14 +1,15 @@
 const {formatLongDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/textformatting')
 const {getPropertyName} = require('../lib/propertyhelpers')
+const {getViewCompanyLink} = require('../services/companyservice')
 
 function getDisplayServiceDelivery (serviceDelivery) {
   if (!serviceDelivery) {
     return null
   }
-
+  const companyUrl = getViewCompanyLink(serviceDelivery.company)
   const result = {
-    company: `<a href="/company/company_company/${serviceDelivery.company.id}/details">${serviceDelivery.company.name}</a>`,
+    company: `<a href="${companyUrl}">${serviceDelivery.company.name}</a>`,
     dit_team: getPropertyName(serviceDelivery, 'dit_team'),
     service: getPropertyName(serviceDelivery, 'service'),
     status: getPropertyName(serviceDelivery, 'status'),

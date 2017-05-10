@@ -1,11 +1,15 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
+/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const contactTemplate = '../../src/views/company/contacts.html'
+const proxyquire = require('proxyquire')
 
 describe('Company contacts controller', function () {
   let company
-  const companycontactcontroller = require('../../src/controllers/companycontactcontroller')
+  let companycontactcontroller
+  const next = function (error) {
+    throw (error)
+  }
 
   beforeEach(function () {
     company = {
@@ -14,126 +18,6 @@ describe('Company contacts controller', function () {
       trading_name: '',
       companies_house_data: null,
       interactions: null,
-      contacts: [{
-        id: '12651151-2149-465e-871b-ac45bc568a62',
-        created_on: '2017-02-14T14:49:17',
-        modified_on: '2017-02-14T14:49:17',
-        archived: false,
-        archived_on: null,
-        archived_reason: '',
-        first_name: 'Fred',
-        last_name: 'Smith',
-        job_title: 'Director',
-        primary: true,
-        telephone_countrycode: '+44',
-        telephone_number: '07814 333 777',
-        email: 'fred@test.com',
-        address_same_as_company: false,
-        address_1: '',
-        address_2: '',
-        address_3: '',
-        address_4: '',
-        address_town: '',
-        address_county: '',
-        address_postcode: '',
-        telephone_alternative: null,
-        email_alternative: null,
-        notes: null,
-        archived_by: null,
-        title: {
-          id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-          name: 'Mr',
-          selectable: true
-        },
-        advisor: null,
-        address_country: null,
-        teams: []
-      },
-      {
-        id: '12651151-2149-465e-871b-ac45bc568a63',
-        created_on: '2017-02-14T14:49:17',
-        modified_on: '2017-02-14T14:49:17',
-        archived: false,
-        archived_on: null,
-        archived_reason: '',
-        first_name: 'John',
-        last_name: 'Smith',
-        job_title: 'Director',
-        primary: true,
-        telephone_countrycode: '+44',
-        telephone_number: '07814 333 777',
-        email: 'john@test.com',
-        address_same_as_company: false,
-        address_1: '',
-        address_2: '',
-        address_3: '',
-        address_4: '',
-        address_town: '',
-        address_county: '',
-        address_postcode: '',
-        telephone_alternative: null,
-        email_alternative: null,
-        notes: null,
-        archived_by: null,
-        title: {
-          id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-          name: 'Mr',
-          selectable: true
-        },
-        advisor: null,
-        address_country: null,
-        teams: []
-      },
-      {
-        id: '12651151-2149-465e-871b-ac45bc568a64',
-        created_on: '2017-02-14T14:49:17',
-        modified_on: '2017-02-14T14:49:17',
-        archived: true,
-        archived_on: '2017-02-14T14:49:17',
-        archived_reason: 'Contact has left the company',
-        first_name: 'Jane',
-        last_name: 'Smith',
-        job_title: 'Director',
-        primary: true,
-        telephone_countrycode: '+44',
-        telephone_number: '07814 333 777',
-        email: 'jane@test.com',
-        address_same_as_company: false,
-        address_1: '',
-        address_2: '',
-        address_3: '',
-        address_4: '',
-        address_town: '',
-        address_county: '',
-        address_postcode: '',
-        telephone_alternative: null,
-        email_alternative: null,
-        notes: null,
-        archived_by: {
-          id: '5707c18a-454a-4bd2-b14b-218761a684bc',
-          password: 'pbkdf2_sha256$30000$CcwYNPOk7Q0S$Isy9CB/NLd9eKXJfVtR7mgi1Shj4OiavmgqhZ/vCnMs=',
-          last_login: '2017-02-27T15:51:27.258250',
-          is_superuser: true,
-          first_name: 'Zac',
-          last_name: 'Tolley',
-          email: 'zac.tolley@digital.trade.gov.uk',
-          is_staff: true,
-          is_active: true,
-          date_joined: '2017-02-20T10:33:14',
-          enabled: false,
-          dit_team: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-          groups: [],
-          user_permissions: []
-        },
-        title: {
-          id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-          name: 'Mr',
-          selectable: true
-        },
-        advisor: null,
-        address_country: null,
-        teams: []
-      }],
       export_to_countries: [],
       future_interest_countries: [],
       uk_based: true,
@@ -188,6 +72,136 @@ describe('Company contacts controller', function () {
       headquarter_type: null,
       classification: null
     }
+
+    company.contacts = [{
+      company,
+      id: '12651151-2149-465e-871b-ac45bc568a62',
+      created_on: '2017-02-14T14:49:17',
+      modified_on: '2017-02-14T14:49:17',
+      archived: false,
+      archived_on: null,
+      archived_reason: '',
+      first_name: 'Fred',
+      last_name: 'Smith',
+      job_title: 'Director',
+      primary: true,
+      telephone_countrycode: '+44',
+      telephone_number: '07814 333 777',
+      email: 'fred@test.com',
+      address_same_as_company: false,
+      address_1: '',
+      address_2: '',
+      address_3: '',
+      address_4: '',
+      address_town: '',
+      address_county: '',
+      address_postcode: '',
+      telephone_alternative: null,
+      email_alternative: null,
+      notes: null,
+      archived_by: null,
+      title: {
+        id: 'a26cb21e-6095-e211-a939-e4115bead28a',
+        name: 'Mr',
+        selectable: true
+      },
+      advisor: null,
+      address_country: null,
+      teams: []
+    },
+    {
+      company,
+      id: '12651151-2149-465e-871b-ac45bc568a63',
+      created_on: '2017-02-14T14:49:17',
+      modified_on: '2017-02-14T14:49:17',
+      archived: false,
+      archived_on: null,
+      archived_reason: '',
+      first_name: 'John',
+      last_name: 'Smith',
+      job_title: 'Director',
+      primary: true,
+      telephone_countrycode: '+44',
+      telephone_number: '07814 333 777',
+      email: 'john@test.com',
+      address_same_as_company: false,
+      address_1: '',
+      address_2: '',
+      address_3: '',
+      address_4: '',
+      address_town: '',
+      address_county: '',
+      address_postcode: '',
+      telephone_alternative: null,
+      email_alternative: null,
+      notes: null,
+      archived_by: null,
+      title: {
+        id: 'a26cb21e-6095-e211-a939-e4115bead28a',
+        name: 'Mr',
+        selectable: true
+      },
+      advisor: null,
+      address_country: null,
+      teams: []
+    },
+    {
+      company,
+      id: '12651151-2149-465e-871b-ac45bc568a64',
+      created_on: '2017-02-14T14:49:17',
+      modified_on: '2017-02-14T14:49:17',
+      archived: true,
+      archived_on: '2017-02-14T14:49:17',
+      archived_reason: 'Contact has left the company',
+      first_name: 'Jane',
+      last_name: 'Smith',
+      job_title: 'Director',
+      primary: true,
+      telephone_countrycode: '+44',
+      telephone_number: '07814 333 777',
+      email: 'jane@test.com',
+      address_same_as_company: false,
+      address_1: '',
+      address_2: '',
+      address_3: '',
+      address_4: '',
+      address_town: '',
+      address_county: '',
+      address_postcode: '',
+      telephone_alternative: null,
+      email_alternative: null,
+      notes: null,
+      archived_by: {
+        id: '5707c18a-454a-4bd2-b14b-218761a684bc',
+        password: 'pbkdf2_sha256$30000$CcwYNPOk7Q0S$Isy9CB/NLd9eKXJfVtR7mgi1Shj4OiavmgqhZ/vCnMs=',
+        last_login: '2017-02-27T15:51:27.258250',
+        is_superuser: true,
+        first_name: 'Zac',
+        last_name: 'Tolley',
+        email: 'zac.tolley@digital.trade.gov.uk',
+        is_staff: true,
+        is_active: true,
+        date_joined: '2017-02-20T10:33:14',
+        enabled: false,
+        dit_team: '0167b456-0ddd-49bd-8184-e3227a0b6396',
+        groups: [],
+        user_permissions: []
+      },
+      title: {
+        id: 'a26cb21e-6095-e211-a939-e4115bead28a',
+        name: 'Mr',
+        selectable: true
+      },
+      advisor: null,
+      address_country: null,
+      teams: []
+    }]
+
+    companycontactcontroller = proxyquire('../../src/controllers/companycontactcontroller', {
+      '../services/companyservice': {
+        getInflatedDitCompany: sinon.stub().resolves(company)
+      }
+    })
   })
 
   describe('data', function () {
@@ -196,22 +210,21 @@ describe('Company contacts controller', function () {
     let locals
     beforeEach(function (done) {
       req = {
-        session: {}
+        session: {},
+        params: { id: '1' }
       }
       res = {
         locals: {
           headingName: 'Freds Company',
           headingAddress: '1234 Road, London, EC1 1AA',
-          id: '44332211',
-          source: 'company_company',
-          company
+          id: '44332211'
         },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()
         }
       }
-      companycontactcontroller.getContacts(req, res)
+      companycontactcontroller.getContacts(req, res, next)
     })
 
     it('should return a list of contacts not archived', function () {
@@ -228,7 +241,7 @@ describe('Company contacts controller', function () {
       expect(contact.name).to.equal('Fred Smith')
       expect(contact.job_title).to.equal('Director')
       expect(contact.telephone_number).to.equal('+44 7814 333 777')
-      expect(contact.added).to.equal('14 February 2017')
+      expect(contact.added).to.equal('14 Feb 2017')
       expect(contact.email).to.equal('fred@test.com')
     })
     it('should return the required fields to list archived contacts', function () {
@@ -250,26 +263,36 @@ describe('Company contacts controller', function () {
 
     beforeEach(function () {
       contacts = [{
-        url: '/contact/1/details',
+        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
         name: 'Fred Smith',
         job_title: 'Director',
-        telephone_number: '+44 7788 112 332',
-        email: 'fred@acme.org',
-        added: '23 February 2017'
+        telephone_number: '+44 7814 333 777',
+        email: 'fred@test.com',
+        added: '14 Feb 2017',
+        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
+        email_alternative: 'fred@gmail.com',
+        notes: 'some notes',
+        telephone_alternative: '07814 000 333'
       }, {
-        url: '/contact/2/details',
+        url: '/contact/12651151-2149-465e-871b-ac45bc568a63/details',
         name: 'Jane Smith',
         job_title: 'Director',
-        telephone_number: '+44 7788 112 332',
-        email: 'Jane@acme.org',
-        added: '23 February 2017'
+        telephone_number: '+44 7814 333 777',
+        email: 'jane@test.com',
+        added: '14 Feb 2017',
+        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
+        email_alternative: 'jane@gmail.com',
+        notes: 'some notes',
+        telephone_alternative: '07814 000 333'
       }]
 
       contactsArchived = [{
-        url: '/contact/3/details',
-        name: 'John Smith',
+        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+        name: 'Fred Smith',
         job_title: 'Director',
-        reason: 'Left company'
+        reason: 'Left company',
+        archived_by: 'Fred Flintstone',
+        archived_on: '14 Feb 2017'
       }]
 
       addContactUrl = '/contact/add?company=1234'
@@ -292,21 +315,39 @@ describe('Company contacts controller', function () {
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .contact')
         expect(contactElement.innerHTML).to.include('Fred Smith')
+        expect(contactElement.innerHTML).to.include('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
+        expect(contactElement.innerHTML).to.include('Job title:')
         expect(contactElement.innerHTML).to.include('Director')
-        expect(contactElement.innerHTML).to.include('23 February 2017')
-        expect(contactElement.innerHTML).to.include('+44 7788 112 332')
-        expect(contactElement.innerHTML).to.include('fred@acme.org')
-        expect(contactElement.innerHTML).to.include('/contact/1/details')
+        expect(contactElement.innerHTML).to.include('Telephone:')
+        expect(contactElement.innerHTML).to.include('+44 7814 333 777')
+        expect(contactElement.innerHTML).to.include('Email:')
+        expect(contactElement.innerHTML).to.include('fred@test.com')
+        expect(contactElement.innerHTML).to.include('Added on:')
+        expect(contactElement.innerHTML).to.include('14 Feb 2017')
+        expect(contactElement.innerHTML).to.include('Address')
+        expect(contactElement.innerHTML).to.include('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
+        expect(contactElement.innerHTML).to.include('Alternate phone')
+        expect(contactElement.innerHTML).to.include('07814 000 333')
+        expect(contactElement.innerHTML).to.include('Alternate email address')
+        expect(contactElement.innerHTML).to.include('fred@gmail.com')
+        expect(contactElement.innerHTML).to.include('Notes')
+        expect(contactElement.innerHTML).to.include('some notes')
       })
     })
     it('each archived line should include the required data', function () {
       return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
         const contactElement = document.querySelector('#archived-contact-list .contact')
-        expect(contactElement.innerHTML).to.include('John Smith')
+        expect(contactElement.innerHTML).to.include('Fred Smith')
+        expect(contactElement.innerHTML).to.include('Job title:')
         expect(contactElement.innerHTML).to.include('Director')
+        expect(contactElement.innerHTML).to.include('Reason:')
         expect(contactElement.innerHTML).to.include('Left company')
-        expect(contactElement.innerHTML).to.include('/contact/3/details')
+        expect(contactElement.innerHTML).to.include('Archived on:')
+        expect(contactElement.innerHTML).to.include('14 Feb 2017')
+        expect(contactElement.innerHTML).to.include('Archived by:')
+        expect(contactElement.innerHTML).to.include('Fred Flintstone')
+        expect(contactElement.innerHTML).to.include('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
       })
     })
     it('include a link to add a new contact', function () {
@@ -317,7 +358,7 @@ describe('Company contacts controller', function () {
       })
     })
     it('should not render contacts section if there are none and warn user', function () {
-      return render(contactTemplate, {contacts: [], contactsArchived, addContactUrl, company})
+      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
       .then((document) => {
         expect(document.getElementById('contact-list')).to.be.null
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')

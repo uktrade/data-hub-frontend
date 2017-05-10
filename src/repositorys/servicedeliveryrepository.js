@@ -6,15 +6,9 @@ function saveServiceDelivery (token, serviceDelivery) {
   const options = {
     body: serviceDelivery
   }
-
-  if (serviceDelivery.data.id && serviceDelivery.data.id.length > 0) {
-    options.url = `${config.apiRoot}/v2/service-delivery/${serviceDelivery.id}/`
-    options.method = 'PUT'
-  } else {
-    options.url = `${config.apiRoot}/v2/service-delivery/`
-    options.method = 'POST'
-  }
-
+  // v2 endpoint only supports POST
+  options.method = 'POST'
+  options.url = `${config.apiRoot}/v2/service-delivery/`
   return authorisedRequest(token, options)
 }
 

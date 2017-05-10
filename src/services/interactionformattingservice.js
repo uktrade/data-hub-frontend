@@ -1,6 +1,8 @@
-const {formatLongDate} = require('../lib/date')
+const {formatLongDate, formatMediumDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/textformatting')
 const {getPropertyName} = require('../lib/propertyhelpers')
+const {getViewCompanyLink} = require('../services/companyservice')
+
 /**
  * Returns an interaction formatted for display in the interaction detail
  * page. Compatible with key value table macro
@@ -9,8 +11,9 @@ const {getPropertyName} = require('../lib/propertyhelpers')
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayInteraction (interaction) {
+  const companyUrl = getViewCompanyLink(interaction.company)
   const result = {
-    company: `<a href="/company/company_company/${interaction.company.id}/details">${interaction.company.name}</a>`,
+    company: `<a href="${companyUrl}">${interaction.company.name}</a>`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     notes: newlineToBr(interaction.notes),
@@ -35,14 +38,17 @@ function getDisplayCompanyInteraction (interaction) {
   const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
 
   const result = {
+    id: interaction.id,
     url: `/${type}/${interaction.id}/details`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
-    date: formatLongDate(interaction.date),
+    date: formatMediumDate(interaction.date),
     advisor: getPropertyName(interaction, 'dit_advisor'),
-    contact: getContactLink(interaction)
+    contact: getContactLink(interaction),
+    notes: newlineToBr(interaction.notes),
+    service: getPropertyName(interaction, 'service'),
+    dit_team: getPropertyName(interaction, 'dit_team')
   }
-
   return result
 }
 

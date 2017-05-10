@@ -8,7 +8,7 @@
     "url": "https://github.com/uktrade/data-hub-fe-beta2"
   },
   "dependencies": {
-    "@uktrade/trade_elements": "^3.1.3",
+    "@uktrade/trade_elements": "^3.2.1",
     "axios": "^0.15.2",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.2.3",
@@ -45,6 +45,7 @@
     "sass-lint": "^1.10.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.10.0",
+    "sniffr": "^1.1.4",
     "standard": "^10.0.2",
     "uglify": "^0.1.5",
     "webpack": "^1.14.0",
@@ -66,6 +67,7 @@
     "js:client:watch": "webpack --watch",
     "js:server": "babel src -d build",
     "js:server:watch": "nodemon --debug src/server.js",
+    "presass:watch": "npm run sass -- --output-style expanded",
     "sass:watch": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -r -w",
     "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
