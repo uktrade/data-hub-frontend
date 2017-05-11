@@ -2,6 +2,7 @@
 {% import "macros/trade.html" as trade %}
 
 {% block tabmain %}
+  {% include "messages.html" %}
   <h2 class="heading-medium">Contact Details</h2>
   {{ trade.keyvaluetable(
       contactDetails,

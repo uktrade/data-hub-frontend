@@ -70,8 +70,14 @@ function postDetails (req, res, next) {
       // Try and save the form data, if it fails
       // then attach the errors to the response and re-render edit
       try {
-        const contact = yield contactFormService.saveContactForm(req.session.token, req.body)
-        res.redirect(`/contact/${contact.id}/details`)
+        yield contactFormService.saveContactForm(req.session.token, req.body)
+        if (req.body.id) {
+          req.flash('success-message', 'Updated contact record')
+          res.redirect(`/contact/${req.body.id}/details`)
+        } else {
+          req.flash('success-message', 'Added new contact')
+          res.redirect(`/company-contacts/${req.body.company}`)
+        }
       } catch (errors) {
         if (errors.error) {
           if (errors.error.errors) {
