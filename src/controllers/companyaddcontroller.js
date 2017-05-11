@@ -84,20 +84,23 @@ function getAddStepTwo (req, res, next) {
 
   Q.spawn(function * () {
     try {
-      const paramsSansSelected = Object.assign({}, req.query)
-      delete paramsSansSelected.selected
-      delete paramsSansSelected.type
+      const companyDetails = Object.assign({}, req.query)
 
-      const results = yield searchService.searchLimited(req.session.token, req.query.term)
+      delete companyDetails.selected
+      delete companyDetails.type
 
-      // Parse the result and generate a link for more details and indicate if this is a currentlt selected company
+      const results = yield searchService
+        .searchLimited(req.session.token, req.query.term)
+        .catch((error) => winston.error(error))
+
+      // Parse the result and generate a link for more details and indicate if this is a current ltd selected company
       res.locals.hits = results.map((hit) => {
         const parsedHit = hit._source
         parsedHit.type = hit._type
         if (hit._type === 'company_company') {
-          parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.id}`
+          parsedHit.url = `/company/add-step-2/?${toQueryString(companyDetails)}&type=${parsedHit.type}&selected=${parsedHit.id}`
         } else {
-          parsedHit.url = `/company/add-step-2/?${toQueryString(paramsSansSelected)}&type=${parsedHit.type}&selected=${parsedHit.company_number}`
+          parsedHit.url = `/company/add-step-2/?${toQueryString(companyDetails)}&type=${parsedHit.type}&selected=${parsedHit.company_number}`
         }
 
         // indicate if this is the currently selected hit
@@ -112,14 +115,14 @@ function getAddStepTwo (req, res, next) {
         return parsedHit
       })
 
-      // if have search results, but no company is currently selected, render the page.
+      // if have search results, but no company is currently selected, render the page and send through previously selected company information.
       if (isBlank(req.query.selected)) {
-        return res.render('company/add-step-2.html')
+        return res.render('company/add-step-2.html', companyDetails)
       }
 
       // Figure out if we need to fetch a CH record or a CDMS record, then go get it
       const { selected, type } = req.query
-      res.locals.closeLink = `/company/add-step-2/?${toQueryString(paramsSansSelected)}`
+      res.locals.closeLink = `/company/add-step-2/?${toQueryString(companyDetails)}`
       res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
       res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company.companies_house_data)
       res.locals.chDetailsLabels = chDetailsLabels
@@ -131,7 +134,7 @@ function getAddStepTwo (req, res, next) {
         res.locals.addLink = { label: 'Choose company', url: `/company/add/ltd/${res.locals.company.company_number}` }
       }
 
-      res.render('company/add-step-2.html')
+      res.render('company/add-step-2.html', companyDetails)
     } catch (error) {
       winston.error(error)
       next(error)
