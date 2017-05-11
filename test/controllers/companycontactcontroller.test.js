@@ -6,7 +6,7 @@ const proxyquire = require('proxyquire')
 
 describe('Company contacts controller', function () {
   let company
-  let companycontactcontroller
+
   const next = function (error) {
     throw (error)
   }
@@ -196,18 +196,13 @@ describe('Company contacts controller', function () {
       address_country: null,
       teams: []
     }]
-
-    companycontactcontroller = proxyquire('../../src/controllers/companycontactcontroller', {
-      '../services/companyservice': {
-        getInflatedDitCompany: sinon.stub().resolves(company)
-      }
-    })
   })
 
   describe('data', function () {
     let res
     let req
     let locals
+    let companyContactController
     beforeEach(function (done) {
       req = {
         session: {},
@@ -224,7 +219,15 @@ describe('Company contacts controller', function () {
           done()
         }
       }
-      companycontactcontroller.getContacts(req, res, next)
+
+      companyContactController = proxyquire('../../src/controllers/companycontactcontroller', {
+        '../services/companyservice': {
+          getInflatedDitCompany: sinon.stub().resolves(company),
+          getCommonTitlesAndLinks: sinon.stub()
+        }
+      })
+
+      companyContactController.getContacts(req, res, next)
     })
 
     it('should return a list of contacts not archived', function () {

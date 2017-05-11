@@ -23,7 +23,6 @@ function getInteractions (req, res, next) {
   })
 }
 
-router.get('/contact-interactions/:contactId', getCommon)
-router.get('/contact-interactions/:contactId', getInteractions)
+router.get('/contact-interactions/:contactId', getCommon, getInteractions)
 
 module.exports = {router, getInteractions}

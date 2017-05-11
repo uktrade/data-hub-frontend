@@ -13,7 +13,7 @@ function getCommon (req, res, next) {
     Q.spawn(function * () {
       try {
         res.locals.id = req.params.contactId
-        res.locals.contact = yield contactRepository.getContact(req.session.token, res.locals.id)
+        res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.id)
         res.locals.companyUrl = companyService.getViewCompanyLink(res.locals.contact.company)
         next()
       } catch (error) {
@@ -36,7 +36,6 @@ function getDetails (req, res, next) {
   }
 }
 
-router.get(['/contact/:contactId/*'], getCommon)
-router.get('/contact/:contactId/details', getDetails)
+router.get('/contact/:contactId/details', getCommon, getDetails)
 
 module.exports = {router, getDetails, getCommon}

@@ -6,6 +6,7 @@ const contactFormService = require('../services/contactformservice')
 const { contactLabels } = require('../labels/contactlabels')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyRepository = require('../repositorys/companyrepository')
+const { getCommon } = require('../controllers/contactcontroller')
 
 const router = express.Router()
 
@@ -94,7 +95,8 @@ function postDetails (req, res, next) {
   })
 }
 
-router.get(['/contact/:contactId/edit', '/contact/add'], editDetails)
+router.get(['/contact/add'], editDetails)
+router.get(['/contact/:contactId/edit'], getCommon, editDetails)
 router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 
 module.exports = {router, editDetails, postDetails}
