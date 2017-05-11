@@ -1,7 +1,7 @@
 
 {% if company.archived %}
-  <p class='infostrip'>
-    This company has been archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br />
+  <p class="infostrip">
+    This company has been archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br/>
     <strong>Reason:</strong> {{company.archived_reason}}<br/>
     <br/>
     <a href="/company/unarchive/{{company.id}}">Unarchive</a>
@@ -11,20 +11,20 @@
     <p class="hidden archive-panel__show-button" aria-hidden="true">
       <a href="#">Archive company</a>
     </p>
-    <form action="/company/archive/{{company.id}}" class="section archive-panel__form " method="POST">
+    <form action="/company/archive/{{company.id}}" class="section archive-panel__form" method="POST">
       <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
-      <div class='form-group {% if query.archiveerror %}form-group-error{% endif %}' id="archived_reason-wrapper">
-        <label class='form-label-bold' For='archived_reason'>
+      <div class="form-group {% if query.archiveerror %}form-group-error{% endif %}" id="archived_reason-wrapper">
+        <label class="form-label-bold" for="archived_reason">
           Reason for archiving company
           {% if query.archiveerror %}
             <span class="error-message">{{query.archiveerror}}</span>
           {% endif %}
         </label>
 
-        <select class='form-control' name='archived_reason'>
-          <option value=''>Select a value</option>
-          <option value='Company is dissolved'>Company is dissolved</option>
-          <option value='Other'>Other</option>
+        <select class="form-control" name="archived_reason">
+          <option value="">Select a value</option>
+          <option value="Company is dissolved">Company is dissolved</option>
+          <option value="Other">Other</option>
         </select>
       </div>
       {{ trade.textbox("archived_reason_other", label="Other") }}
