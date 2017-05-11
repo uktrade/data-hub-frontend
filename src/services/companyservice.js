@@ -6,8 +6,8 @@ const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const interactionDataService = require('./interactiondataservice')
-const companyFormattingService = require('./companyformattingservice')
 const { genCSRF } = require('../lib/controllerutils')
+const { getFormattedAddress } = require('../lib/address')
 
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
@@ -116,11 +116,36 @@ function getViewCompanyLink (company) {
   }
 }
 
+function getHeadingAddress (company) {
+  // If this is a CDMS company
+  const cdmsTradingAddress = getFormattedAddress(company, 'trading')
+  if (cdmsTradingAddress) {
+    return cdmsTradingAddress
+  }
+
+  if (company.companies_house_data && company.companies_house_data !== null) {
+    return getFormattedAddress(company.companies_house_data, 'registered')
+  }
+
+  return getFormattedAddress(company, 'registered')
+}
+
+function getHeadingName (company) {
+  if (company.id) {
+    if (company.alias && company.alias.length > 0) {
+      return company.alias
+    }
+    return company.name
+  } else {
+    return company.companies_house_data.name
+  }
+}
+
 function getCommonTitlesAndlinks (req, res, company) {
   genCSRF(req, res)
-  res.locals.headingName = companyFormattingService.getHeadingName(company)
-  res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
+  res.locals.headingName = getHeadingName(company)
+  res.locals.headingAddress = getHeadingAddress(company)
   res.locals.companyUrl = getViewCompanyLink(company)
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink, getCommonTitlesAndlinks }
+module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink, getCommonTitlesAndlinks, getHeadingAddress }

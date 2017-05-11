@@ -64,31 +64,6 @@ function getDisplayCompany (company) {
   return displayCompany
 }
 
-function getHeadingAddress (company) {
-  // If this is a CDMS company
-  const cdmsTradingAddress = getFormattedAddress(company, 'trading')
-  if (cdmsTradingAddress) {
-    return cdmsTradingAddress
-  }
-
-  if (company.companies_house_data && company.companies_house_data !== null) {
-    return getFormattedAddress(company.companies_house_data, 'registered')
-  }
-
-  return getFormattedAddress(company, 'registered')
-}
-
-function getHeadingName (company) {
-  if (company.id) {
-    if (company.alias && company.alias.length > 0) {
-      return company.alias
-    }
-    return company.name
-  } else {
-    return company.companies_house_data.name
-  }
-}
-
 function parseRelatedData (companies) {
   if (!companies) return null
 
@@ -108,8 +83,6 @@ module.exports = {
   chDetailsDisplayOrder,
   getDisplayCH,
   getDisplayCompany,
-  getHeadingAddress,
-  getHeadingName,
   parseRelatedData,
   companyTableKeys
 }
