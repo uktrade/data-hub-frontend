@@ -2,10 +2,13 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main %}
-<h1 class="page-heading">
+<h1 class="visually-hidden">Contact Details</h1>
+<h2 class="page-heading">
   {{contact.first_name}} {{contact.last_name}} {% if contact.primary == true %}{{trade.statusbadge('Primary', variation="fuschia")}}{% endif %}
   <span class="post-header"><a href="{{companyUrl}}">{{contact.company.name}}</a></span>
-</h1>
+</h2>
+
+{% include "contact/archive.html" %}
 
 <div class="left-nav-container">
   <div class="left-nav">
