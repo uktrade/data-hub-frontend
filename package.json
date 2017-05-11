@@ -33,6 +33,7 @@
     "mocha-junit-reporter": "^1.12.0",
     "mocha-multi": "^0.9.1",
     "moment": "^2.17.1",
+    "nock": "^9.0.13",
     "node-sass": "^4.0.0",
     "nodemon": "^1.11.0",
     "npm-parallel": "^2.0.1",
