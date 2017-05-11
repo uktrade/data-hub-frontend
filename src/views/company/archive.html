@@ -14,12 +14,7 @@
     <form action="/company/archive/{{company.id}}" class="section archive-panel__form" method="POST">
       <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
       <div class="form-group {% if query.archiveerror %}form-group-error{% endif %}" id="archived_reason-wrapper">
-        <label class="form-label-bold" for="archived_reason">
-          Reason for archiving company
-          {% if query.archiveerror %}
-            <span class="error-message">{{query.archiveerror}}</span>
-          {% endif %}
-        </label>
+        <label class="form-label-bold" for="archived_reason">Reason for archiving company</label>
 
         <select class="form-control" name="archived_reason">
           <option value="">Select a value</option>

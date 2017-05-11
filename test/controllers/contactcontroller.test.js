@@ -93,7 +93,7 @@ describe('Contact controller', function () {
         render: function () {}
       }
       const next = function () {
-        expect(getContactStub).to.have.been.calledWith(token, req.params.id)
+        expect(getContactStub).to.have.been.calledWith(token, req.params.contactId)
         done()
       }
       contactController.getCommon(req, res, next)
@@ -225,7 +225,7 @@ describe('Contact controller', function () {
       it('should display the contact name and address in a heading', function () {
         return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
-          const heading = document.querySelector('h1.page-heading')
+          const heading = document.querySelector('h2.page-heading')
           expect(heading.innerHTML).to.include('Fred Smith')
           expect(heading.innerHTML).to.include('Bank ltd')
         })
@@ -233,7 +233,7 @@ describe('Contact controller', function () {
       it('should indicate primary contacts', function () {
         return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
-          const heading = document.querySelector('h1.page-heading')
+          const heading = document.querySelector('h2.page-heading')
           expect(heading.innerHTML).to.include('<span class="status-badge status-badge--fuschia ">Primary</span>')
         })
       })
