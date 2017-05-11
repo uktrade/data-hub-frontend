@@ -54,7 +54,7 @@
   "scripts": {
     "clean": "rm -rf build",
     "start": "node --use-strict src/server.js",
-    "build": "npm run clean && npm run sass && npm run js",
+    "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
     "lint": "npm run lint:js && npm run lint:sass",
@@ -67,9 +67,9 @@
     "js:client:watch": "webpack --watch",
     "js:server": "babel src -d build",
     "js:server:watch": "nodemon --debug src/server.js",
-    "presass:watch": "npm run sass -- --output-style expanded",
-    "sass:watch": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -r -w",
-    "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ -x --output-style compressed",
+    "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true",
+    "sass:watch": "npm run sass && npm run sass -- -r -w",
+    "sass:compile": "npm run sass -- -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
     "circle": "yarn standard && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js && yarn sass && yarn js",
     "heroku-postbuild": "npm rebuild node-sass && yarn sass && yarn js"
