@@ -16,7 +16,7 @@ function getInteractions (req, res, next) {
     try {
       res.locals.tab = 'interactions'
       const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
-      companyService.getCommonTitlesAndlinks(company, res)
+      companyService.getCommonTitlesAndlinks(req, res, company)
 
       res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
 

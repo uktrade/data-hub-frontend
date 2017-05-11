@@ -7,6 +7,7 @@ const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
 const interactionDataService = require('./interactiondataservice')
 const companyFormattingService = require('./companyformattingservice')
+const { genCSRF } = require('../lib/controllerutils')
 
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
@@ -115,7 +116,8 @@ function getViewCompanyLink (company) {
   }
 }
 
-function getCommonTitlesAndlinks (company, res) {
+function getCommonTitlesAndlinks (req, res, company) {
+  genCSRF(req, res)
   res.locals.headingName = companyFormattingService.getHeadingName(company)
   res.locals.headingAddress = companyFormattingService.getHeadingAddress(company)
   res.locals.companyUrl = getViewCompanyLink(company)
