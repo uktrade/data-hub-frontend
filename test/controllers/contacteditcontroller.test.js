@@ -11,6 +11,10 @@ describe('Contact controller, edit', function () {
   let saveContactFormStub
   let getContactAsFormDataStub
   let company
+  const next = function (error) {
+    console.log(error)
+    throw Error('error')
+  }
 
   beforeEach(function () {
     company = {
@@ -283,22 +287,23 @@ describe('Contact controller, edit', function () {
   })
   describe('save', function () {
     let body
-    let req = {
-      session: {
-        token: '1234'
-      },
-      params: { id: '1234' },
-      query: {}
-    }
-    let res = {
-      locals: {}
-    }
-    const next = function (error) {
-      console.log(error)
-      throw Error('error')
-    }
+    let flashStub
+    let req
+    let res
 
     beforeEach(function () {
+      flashStub = sinon.stub()
+      res = {
+        locals: {}
+      }
+      req = {
+        session: {
+          token: '1234'
+        },
+        params: { id: '1234' },
+        query: {},
+        flash: flashStub
+      }
       body = {
         id: '1234',
         first_name: 'Fred',
@@ -315,7 +320,15 @@ describe('Contact controller, edit', function () {
 
       contactEditController.postDetails(req, res, next)
     })
-    it('should redirect the user to the view page if successful', function (done) {
+    it('should redirect the user to the company contact list if added a new contact', function (done) {
+      delete body.id
+      res.redirect = function (url) {
+        expect(url).to.equal(`/company-contacts/${company.id}`)
+        done()
+      }
+      contactEditController.postDetails(req, res, next)
+    })
+    it('should redirect the user to the contact detail screen if editing an existing contact', function (done) {
       res.redirect = function (url) {
         expect(url).to.equal('/contact/1234/details')
         done()
@@ -372,6 +385,21 @@ describe('Contact controller, edit', function () {
       contactEditController.postDetails(req, res, function (error) {
         done()
       })
+    })
+    it('should send a flash message to let the user know they just updated a contact', function (done) {
+      res.redirect = function (url) {
+        expect(flashStub).to.be.calledWith('success-message', 'Updated contact record')
+        done()
+      }
+      contactEditController.postDetails(req, res, next)
+    })
+    it('should send a flash message to let the user know they just added a contact', function (done) {
+      delete body.id
+      res.redirect = function (url) {
+        expect(flashStub).to.be.calledWith('success-message', 'Added new contact')
+        done()
+      }
+      contactEditController.postDetails(req, res, next)
     })
   })
 })
