@@ -7,7 +7,7 @@ const next = function (error) {
 describe('Search controller', function () {
   describe('view company result', function () {
     it('should route a ch result', function (done) {
-      const searchController = proxyquire('../../src/controllers/searchcontroller', {
+      const searchController = proxyquire('../../src/controllers/search.controller', {
         '../repositorys/companyrepository': {
           getDitCompany: sinon.stub().resolves(null)
         }
@@ -29,7 +29,7 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a uk private ltd company', function (done) {
-      const searchController = proxyquire('../../src/controllers/searchcontroller', {
+      const searchController = proxyquire('../../src/controllers/search.controller', {
         '../repositorys/companyrepository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
@@ -59,7 +59,7 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a uk public ltd company', function (done) {
-      const searchController = proxyquire('../../src/controllers/searchcontroller', {
+      const searchController = proxyquire('../../src/controllers/search.controller', {
         '../repositorys/companyrepository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
@@ -89,7 +89,7 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a uk public other company', function (done) {
-      const searchController = proxyquire('../../src/controllers/searchcontroller', {
+      const searchController = proxyquire('../../src/controllers/search.controller', {
         '../repositorys/companyrepository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
@@ -119,7 +119,7 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a foreign company', function (done) {
-      const searchController = proxyquire('../../src/controllers/searchcontroller', {
+      const searchController = proxyquire('../../src/controllers/search.controller', {
         '../repositorys/companyrepository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',

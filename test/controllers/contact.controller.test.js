@@ -64,7 +64,7 @@ describe('Contact controller', function () {
     getContactStub = sinon.stub().resolves(contact)
     getDisplayContactStub = sinon.stub().returns(formatted)
     getViewCompanyLinkStub = sinon.stub().returns(companyUrl)
-    contactController = proxyquire('../../src/controllers/contactcontroller', {
+    contactController = proxyquire('../../src/controllers/contact.controller', {
       '../repositorys/contactrepository': {
         getContact: getContactStub
       },
@@ -134,7 +134,7 @@ describe('Contact controller', function () {
     })
     it('should handle an error', function (done) {
       const error = Error('error')
-      contactController = proxyquire('../../src/controllers/contactcontroller', {
+      contactController = proxyquire('../../src/controllers/contact.controller', {
         '../repositorys/contactrepository': {
           getContact: sinon.stub.rejects(error)
         },

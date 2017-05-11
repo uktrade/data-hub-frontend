@@ -60,7 +60,7 @@ describe('Interaction controller, edit', function () {
     getInteractionTypeStub = sinon.stub().returns(emailInteractionType)
     saveInteractionFormStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
-    interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
+    interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
       '../services/interactionformservice': {
         getInteractionAsFormData: getInteractionAsFormDataStub,
         saveInteractionForm: saveInteractionFormStub
@@ -469,7 +469,7 @@ describe('Interaction controller, edit', function () {
         error: { subject: ['test'] }
       })
 
-      interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
+      interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
         '../services/interactionformservice': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub
@@ -501,7 +501,7 @@ describe('Interaction controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveInteractionFormStub = sinon.stub().rejects(Error('some error'))
 
-      interactionEditController = proxyquire('../../src/controllers/interactioneditcontroller', {
+      interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
         '../services/interactionformservice': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub

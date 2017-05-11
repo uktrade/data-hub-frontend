@@ -6,7 +6,7 @@ const contactFormService = require('../services/contactformservice')
 const { contactLabels } = require('../labels/contactlabels')
 const metadataRepository = require('../repositorys/metadatarepository')
 const companyRepository = require('../repositorys/companyrepository')
-const { getCommon } = require('../controllers/contactcontroller')
+const { getCommon } = require('../controllers/contact.controller')
 
 const router = express.Router()
 

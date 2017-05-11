@@ -26,7 +26,7 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
+    contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
       '../services/contactformservice': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub
@@ -340,7 +340,7 @@ describe('Contact controller, edit', function () {
         error: { name: ['test'] }
       })
 
-      contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
+      contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
         '../services/contactformservice': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
@@ -366,7 +366,7 @@ describe('Contact controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire('../../src/controllers/contacteditcontroller', {
+      contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
         '../services/contactformservice': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub

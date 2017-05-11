@@ -62,7 +62,7 @@ describe('Company controller, uk other', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    companyControllerUkOther = proxyquire('../../src/controllers/companycontrollerukother', {
+    companyControllerUkOther = proxyquire('../../src/controllers/company-ukother.controller', {
       '../services/companyservice': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },
@@ -493,7 +493,7 @@ describe('Company controller, uk other', function () {
         errors: { name: ['test'] }
       })
 
-      companyControllerUkOther = proxyquire('../../src/controllers/companycontrollerukother', {
+      companyControllerUkOther = proxyquire('../../src/controllers/company-ukother.controller', {
         '../services/companyservice': {
           getInflatedDitCompany: getInflatedDitCompanyStub
         },
