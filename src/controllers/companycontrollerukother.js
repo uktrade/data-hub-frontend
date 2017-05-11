@@ -17,7 +17,7 @@ function getDetails (req, res, next) {
     try {
       res.locals.tab = 'details'
       const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
-      companyService.getCommonTitlesAndlinks(company, res)
+      companyService.getCommonTitlesAndlinks(req, res, company)
       res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
       res.locals.companyDetailsDisplayOrder = companyWithoutCHKeys
       res.locals.companyDetailsLabels = companyDetailsLabels
