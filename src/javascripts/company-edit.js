@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
 const { hide, show } = require('../lib/elementstuff')
-require('./lookupaddress')
+require('./lookup-address')
 require('./sectors')
 
 const tradingAddressWrapper = document.getElementById('trading-address-wrapper')

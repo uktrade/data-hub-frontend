@@ -2,7 +2,7 @@
 /* eslint no-new: 0, no-unused-expressions: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const ArchiveForm = require('../../src/javascripts/archiveform')
+const ArchiveForm = require('../../src/javascripts/archive-form')
 
 const HTML = `
   <div class="archive-panel js-hidden">

@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
 const { hide, show } = require('../lib/elementstuff')
-require('./lookupaddress')
+require('./lookup-address')
 
 const addressWrapper = document.getElementById('address-wrapper')
 const addressSameWrapper = document.getElementById('address_same_as_company-wrapper')
