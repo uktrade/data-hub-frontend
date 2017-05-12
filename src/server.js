@@ -13,7 +13,7 @@ const winston = require('winston')
 
 const datahubFlash = require('./middleware/flash')
 const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
-const forceHttps = require('./middleware/forcehttps')
+const forceHttps = require('./middleware/force-https')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
 const metadata = require('./repos/metadata.repo')
