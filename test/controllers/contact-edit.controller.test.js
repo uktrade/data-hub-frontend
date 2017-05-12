@@ -261,7 +261,7 @@ describe('Contact controller, edit', function () {
       }
     })
     it('should render all the required fields on the page', function () {
-      return render(`${__dirname}/../../src/views/contact/edit.html`, locals)
+      return render(`${__dirname}/../../src/views/contact/edit.njk`, locals)
       .then((document) => {
         expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
         expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null

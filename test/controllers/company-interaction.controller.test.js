@@ -193,7 +193,7 @@ describe('Company interactions controller', function () {
     })
     it('should warn the user if there are no interactions and no contacts to associate with interactions', function () {
       company.contacts = []
-      return render('../../src/views/company/interactions.html', {interactions: [], addInteractionUrl, company, addContact: 'test'})
+      return render('../../src/views/company/interactions.njk', {interactions: [], addInteractionUrl, company, addContact: 'test'})
       .then((document) => {
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('You currently have no contacts for this company. To add an interaction you must first add a contact.')
         expect(document.querySelector('#no-contact-warning.infostrip a').href).to.equal('test')
@@ -201,14 +201,14 @@ describe('Company interactions controller', function () {
     })
 
     it('should render a list of interactions', function () {
-      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.njk', {interactions, addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.not.be.null
       })
     })
 
     it('each line should include the required data', function () {
-      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.njk', {interactions, addInteractionUrl, company})
       .then((document) => {
         const interactionElement = document.querySelector('#interaction-list .interaction')
         expect(interactionElement.innerHTML).to.include('Test subject')
@@ -220,14 +220,14 @@ describe('Company interactions controller', function () {
     })
 
     it('include a link to add a new interaction', function () {
-      return render('../../src/views/company/interactions.html', {interactions, addInteractionUrl, company})
+      return render('../../src/views/company/interactions.njk', {interactions, addInteractionUrl, company})
       .then((document) => {
         const link = document.querySelector('a#add-interaction-link')
         expect(link.href).to.eq('/interaction/add?company=1234')
       })
     })
     it('should not render interactions if there are none and warn user', function () {
-      return render('../../src/views/company/interactions.html', {interactions: [], addInteractionUrl, company})
+      return render('../../src/views/company/interactions.njk', {interactions: [], addInteractionUrl, company})
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.be.null
         expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('You currently have no interactions for this company')

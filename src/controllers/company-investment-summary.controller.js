@@ -62,7 +62,7 @@ function editInvestment (req, res, next) {
       return companyRepository.getCompanyInvestmentSummaryLite(req.session.token, req.params.sourceId)
     })
     .then((investmentSummary) => {
-      res.render('company/investmentform', {
+      res.render('company/investment-form', {
         tab: 'investment',
         investmentTierOptions,
         investmentFormLabels,

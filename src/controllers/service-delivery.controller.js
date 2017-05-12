@@ -65,7 +65,7 @@ function getServiceDeliveryEdit (req, res, next) {
       res.locals.eventOptions = metadataRepository.eventOptions
       res.locals.companyUrl = getViewCompanyLink(res.locals.serviceDelivery.company)
 
-      res.render('interaction/servicedelivery-edit')
+      res.render('interaction/service-delivery-edit')
     } catch (error) {
       winston.error(error)
       next(error)
@@ -109,7 +109,7 @@ function getServiceDeliveryDetails (req, res, next) {
   res.locals.serviceDeliveryDetails = getDisplayServiceDelivery(res.locals.serviceDelivery)
   res.locals.serviceDeliveryLabels = serviceDeliverylabels
   res.locals.serviceDeliveryDisplayOrder = serviceDeliveryDisplayOrder
-  res.render('interaction/servicedelivery-details')
+  res.render('interaction/service-delivery-details')
 }
 
 router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)

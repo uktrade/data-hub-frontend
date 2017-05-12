@@ -12,7 +12,7 @@ const router = express.Router()
 
 function getAddStepOne (req, res, next) {
   genCSRF(req, res)
-  res.render('company/add-step-1.html', {
+  res.render('company/add-step-1.njk', {
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
     company: req.body,
@@ -79,7 +79,7 @@ function getAddStepTwo (req, res, next) {
   res.locals.companyTypeOptions = companyTypeOptions
 
   if (isBlank(req.query.term)) {
-    return res.render('company/add-step-2.html', req.query)
+    return res.render('company/add-step-2.njk', req.query)
   }
 
   Q.spawn(function * () {
@@ -117,7 +117,7 @@ function getAddStepTwo (req, res, next) {
 
       // if have search results, but no company is currently selected, render the page and send through previously selected company information.
       if (isBlank(req.query.selected)) {
-        return res.render('company/add-step-2.html', companyDetails)
+        return res.render('company/add-step-2.njk', companyDetails)
       }
 
       // Figure out if we need to fetch a CH record or a CDMS record, then go get it
@@ -134,7 +134,7 @@ function getAddStepTwo (req, res, next) {
         res.locals.addLink = { label: 'Choose company', url: `/company/add/ltd/${res.locals.company.company_number}` }
       }
 
-      res.render('company/add-step-2.html', companyDetails)
+      res.render('company/add-step-2.njk', companyDetails)
     } catch (error) {
       winston.error(error)
       next(error)

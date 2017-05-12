@@ -1,7 +1,7 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
-const contactTemplate = '../../src/views/company/contacts.html'
+const contactTemplate = '../../src/views/company/contacts.njk'
 const proxyquire = require('proxyquire')
 
 describe('Company contacts controller', function () {

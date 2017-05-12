@@ -289,7 +289,7 @@ describe('Company controller, uk other', function () {
         turnover_range: '1'
       }
 
-      return render('../../src/views/company/edit-ukother.html', {
+      return render('../../src/views/company/edit-ukother.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,

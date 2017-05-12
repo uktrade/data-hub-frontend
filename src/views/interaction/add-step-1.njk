@@ -1,0 +1,52 @@
+{% extends "layouts/ukti-search-header.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  {% if query.contactId %}
+    {% set backUrl="/contact-interactions/" + query.contactId %}
+    <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
+  {% elseif query.companyId %}
+    {% set backUrl="/company-interactions/" + query.companyId %}
+    <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
+  {% endif %}
+
+  <h1 class="heading-xlarge">Add new interaction</h2>
+
+  <form method="POST">
+    <input name="company" type="hidden" value="{{query.company}}"/>
+    <input name="contact" type="hidden" value="{{query.contact}}"/>
+    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    <p>Please select interaction type</p>
+    <fieldset class="form-group radio-list-stacked">
+      <legend class="visually-hidden">Please select interaction type</legend>
+      <div class="grid-row">
+        <div class="column-one-third">
+          {% for interactionType in interactionTypeColA %}
+            <label class="block-label form-label-bold selection-button-radio" for="{{interactionType.id}}">
+              <input id="{{interactionType.id}}"
+                type="radio"
+                name="interaction_type"
+                value="{{interactionType.id}}"
+                {% if radioValue == 'yes' or radioValue == true %}checked="checked"{% endif %} />
+              {{interactionType.name}}
+            </label>
+          {% endfor %}
+        </div>
+        <div class="column-one-third">
+          {% for interactionType in interactionTypeColB %}
+            <label class="block-label form-label-bold selection-button-radio" for="{{interactionType.id}}">
+              <input id="{{interactionType.id}}"
+                type="radio"
+                name="interaction_type"
+                value="{{interactionType.id}}"
+                {% if radioValue == 'yes' or radioValue == true %}checked="checked"{% endif %} />
+              {{interactionType.name}}
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </fieldset>
+
+    {{ trade.save(backUrl, buttonText="Continue") }}
+  </form>
+{% endblock %}
