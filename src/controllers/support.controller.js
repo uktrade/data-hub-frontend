@@ -75,7 +75,11 @@ function postBug (req, res) {
     .then(({data}) => {
       req.flash('success-message', `Created new bug, reference number ${data.ticket.id}`)
       res.redirect('/support/thank')
-    }).catch(function (error) { res.render('support/bug', {}, {errors: {message: error.message}}) })
+    })
+    .catch((error) => {
+      req.errors = {message: error.message}
+      return getBug(req, res)
+    })
 }
 
 function thank (req, res) {
