@@ -1,7 +1,7 @@
 /* globals expect: true, describe: true, it: true */
 
 describe('get header address', () => {
-  const companyService = require('../../src/services/companyservice')
+  const companyService = require('../../src/services/company.service')
 
   it('should return the CDMS trading address if there is one', () => {
     const company = {

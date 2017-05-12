@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
-const { createElementFromMarkup, removeElement, hide, insertAfter } = require('../lib/elementstuff')
-const transformSectors = require('../lib/transformsectors')
+const { createElementFromMarkup, removeElement, hide, insertAfter } = require('../lib/element-stuff')
+const transformSectors = require('../lib/transform-sectors')
 
 const PRIMARYPANELMARKUP = `
   <div class="form-group primary-sector-wrapper">

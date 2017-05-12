@@ -1,7 +1,7 @@
 /* globals expect: true, describe: true, it: true */
 const nock = require('nock')
 const config = require('../../src/config')
-const searchService = require('../../src/services/searchservice')
+const searchService = require('../../src/services/search.service')
 const companyMockAPIResponse = require('../data/search-response-company')
 const companiesHousePrivateLtdMockAPIResponse = require('../data/search-response-companies-house-private-ltd')
 const companiesHousePublicLtdMockAPIResponse = require('../data/search-response-companies-house-public-ltd')

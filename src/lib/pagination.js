@@ -1,4 +1,4 @@
-const { encodeQueryData } = require('./controllerutils')
+const { encodeQueryData } = require('./controller-utils')
 
 const NEXTLABEL = 'Next'
 const PREVIOUSLABEL = 'Previous'
