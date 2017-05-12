@@ -242,7 +242,7 @@ describe('Company repository', () => {
   })
 
   function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-    return proxyquire('../../src/repos/company.repo', {'../lib/authorisedrequest': authorisedRequestStub})
+    return proxyquire('../../src/repos/company.repo', {'../lib/authorised-request': authorisedRequestStub})
   }
 
   function fail () {

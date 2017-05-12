@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const trade = require('../lib/elementstuff')
+const trade = require('../lib/element-stuff')
 
 const clientRelationship = document.querySelector('#amcrm_yes')
 const notClientRelationship = document.querySelector('#amcrm_no')

@@ -1,6 +1,6 @@
 /* globals expect: true, beforeEach: true, describe: true, it: true */
 /* eslint no-unused-expressions: 0 */
-const transformSectors = require('../../src/lib/transformsectors')
+const transformSectors = require('../../src/lib/transform-sectors')
 const sectorList = require('../data/sector-list_input.json')
 
 describe('Sectors transformer', () => {

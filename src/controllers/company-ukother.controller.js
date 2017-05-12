@@ -8,7 +8,7 @@ const companyService = require('../services/company.service')
 const companyFormattingService = require('../services/company-formatting.service')
 const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels/companylabels')
 const metadataRepository = require('../repos/metadata.repo')
-const { genCSRF, containsFormData, isBlank } = require('../lib/controllerutils')
+const { genCSRF, containsFormData, isBlank } = require('../lib/controller-utils')
 const router = express.Router()
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 

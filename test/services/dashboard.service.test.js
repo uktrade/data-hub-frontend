@@ -7,7 +7,7 @@ describe('Dashboard service', () => {
       './company.service': {
         getViewCompanyLink: sinon.stub().returns('/test')
       },
-      '../lib/authorisedrequest': () => new Promise((resolve) => {
+      '../lib/authorised-request': () => new Promise((resolve) => {
         resolve(mockData)
       })
     })

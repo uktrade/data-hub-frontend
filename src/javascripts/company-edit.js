@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show } = require('../lib/elementstuff')
+const { hide, show } = require('../lib/element-stuff')
 require('./lookup-address')
 require('./sectors')
 

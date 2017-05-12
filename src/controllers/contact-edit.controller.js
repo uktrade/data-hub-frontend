@@ -1,7 +1,7 @@
 const express = require('express')
 const Q = require('q')
 const winston = require('winston')
-const { genCSRF, containsFormData } = require('../lib/controllerutils')
+const { genCSRF, containsFormData } = require('../lib/controller-utils')
 const contactFormService = require('../services/contact-form.service')
 const { contactLabels } = require('../labels/contactlabels')
 const metadataRepository = require('../repos/metadata.repo')

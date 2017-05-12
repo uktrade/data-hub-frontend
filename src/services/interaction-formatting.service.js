@@ -1,6 +1,6 @@
 const {formatLongDate, formatMediumDate} = require('../lib/date')
-const {newlineToBr, getContactLink} = require('../lib/textformatting')
-const {getPropertyName} = require('../lib/propertyhelpers')
+const {newlineToBr, getContactLink} = require('../lib/text-formatting')
+const {getPropertyName} = require('../lib/property-helpers')
 const {getViewCompanyLink} = require('./company.service')
 
 /**

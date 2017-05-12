@@ -1,4 +1,4 @@
-const authorisedRequest = require('../lib/authorisedrequest')
+const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 const includes = require('lodash/includes')
 const Q = require('q')

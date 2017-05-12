@@ -1,6 +1,6 @@
 const Q = require('q')
 const winston = require('winston')
-const authorisedRequest = require('../lib/authorisedrequest')
+const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 
 function getAdvisor (token, id) {

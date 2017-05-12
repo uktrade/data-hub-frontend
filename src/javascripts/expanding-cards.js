@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, toggleVisible, toggleClass } = require('../lib/elementstuff')
+const { hide, toggleVisible, toggleClass } = require('../lib/element-stuff')
 
 /**
  * Allow markup to indicate a hidden section containing sub

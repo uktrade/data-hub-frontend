@@ -2,7 +2,7 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 
-const { genCSRF } = require('../lib/controllerutils')
+const { genCSRF } = require('../lib/controller-utils')
 const contactRepository = require('../repos/contact.repo')
 const contactFormattingService = require('../services/contact-formatting.service')
 const companyService = require('../services/company.service')

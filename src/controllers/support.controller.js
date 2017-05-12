@@ -3,7 +3,7 @@ const axios = require('axios')
 const Sniffr = require('sniffr')
 
 const config = require('../config')
-const controllerUtils = require('../lib/controllerutils')
+const controllerUtils = require('../lib/controller-utils')
 
 const router = express.Router()
 

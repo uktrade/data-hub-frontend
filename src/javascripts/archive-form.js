@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show, removeClass, addClass } = require('../lib/elementstuff')
+const { hide, show, removeClass, addClass } = require('../lib/element-stuff')
 
 class ArchiveForm {
   constructor (element) {

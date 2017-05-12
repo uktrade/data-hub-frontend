@@ -1,5 +1,5 @@
 const config = require('../config')
-const authorisedRequest = require('../lib/authorisedrequest')
+const authorisedRequest = require('../lib/authorised-request')
 
 module.exports = (req, res, next) => {
   const token = req.session.token

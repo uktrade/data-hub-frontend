@@ -1,7 +1,7 @@
 /* eslint camelcase: 0, no-unused-expressions: 0 */
 
 const Q = require('q')
-const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../lib/propertyhelpers')
+const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../lib/property-helpers')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 

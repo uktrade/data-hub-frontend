@@ -1,4 +1,4 @@
-const trade = require('../lib/elementstuff')
+const trade = require('../lib/element-stuff')
 const axios = require('axios')
 
 const searchfield = document.querySelector('#inv-search')

@@ -6,7 +6,7 @@ const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
 const interactionDataService = require('./interaction-data.service')
-const { genCSRF } = require('../lib/controllerutils')
+const { genCSRF } = require('../lib/controller-utils')
 const { getFormattedAddress } = require('../lib/address')
 
 function getContactInCompanyObject (company, contactId) {

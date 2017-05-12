@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
 const axios = require('axios')
-const { hide } = require('../lib/elementstuff')
+const { hide } = require('../lib/element-stuff')
 
 class LookupAddress {
   constructor (elementSelector) {

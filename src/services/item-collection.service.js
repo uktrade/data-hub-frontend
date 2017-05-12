@@ -1,4 +1,4 @@
-const DateDiff = require('../lib/datediff')
+const DateDiff = require('../lib/date-diff')
 
 function sortItemDate (a, b) {
   const diff = Date.parse(b.created_on) - Date.parse(a.created_on)

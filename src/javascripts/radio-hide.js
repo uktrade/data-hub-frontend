@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('../lib/elementstuff')
+const { addClass, removeClass } = require('../lib/element-stuff')
 
 function clearInnerFields (element) {
   const radios = element.querySelectorAll('input[type="radio"]:checked')

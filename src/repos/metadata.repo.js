@@ -1,5 +1,5 @@
 const winston = require('winston')
-const authorisedRequest = require('../lib/authorisedrequest')
+const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 
 let redisClient

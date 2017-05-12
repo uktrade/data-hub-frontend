@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const { isBlank } = require('../lib/controllerutils')
+const { isBlank } = require('../lib/controller-utils')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const investmentFormattingService = require('../services/investment-formatting.service')
