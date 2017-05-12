@@ -1,6 +1,6 @@
 const authorisedRequest = require('../lib/authorisedrequest')
 const config = require('../config')
-const { getViewCompanyLink } = require('./companyservice')
+const { getViewCompanyLink } = require('./company.service')
 
 function mapContacts (contacts) {
   if (contacts && (typeof contacts.map) === 'function') {

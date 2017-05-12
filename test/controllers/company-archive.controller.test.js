@@ -35,7 +35,7 @@ describe('Company controller, archive', function () {
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
     companyArchiveController = proxyquire('../../src/controllers/company-archive.controller', {
-      '../services/companyservice': {
+      '../services/company.service': {
         getViewCompanyLink: getViewCompanyLinkStub
       },
       '../repositorys/companyrepository': {

@@ -49,10 +49,10 @@ describe('Company controller, Companies Houe', function () {
     getCHCompanyStub = sinon.stub().resolves(chCompany)
 
     companyControllerCh = proxyquire('../../src/controllers/company-ch.controller', {
-      '../services/companyservice': {
+      '../services/company.service': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },
-      '../services/companyformattingservice': {
+      '../services/company-formatting.service': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
         getHeadingName: getHeadingNameStub,

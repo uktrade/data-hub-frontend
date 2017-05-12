@@ -27,13 +27,13 @@ describe('Company add controller', function () {
     getDisplayCHStub = sinon.stub().resolves({ id: '1234' })
 
     companyAddController = proxyquire('../../src/controllers/company-add.controller', {
-      '../services/searchservice': {
+      '../services/search.service': {
         searchLimited: searchLimitedStub
       },
-      '../services/companyservice': {
+      '../services/company.service': {
         getCompanyForSource: getCompanyForSourceStub
       },
-      '../services/companyformattingservice': {
+      '../services/company-formatting.service': {
         getDisplayCH: getDisplayCHStub
       }
     })

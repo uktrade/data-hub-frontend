@@ -1,7 +1,7 @@
 const {formatLongDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/textformatting')
 const {getPropertyName} = require('../lib/propertyhelpers')
-const {getViewCompanyLink} = require('../services/companyservice')
+const {getViewCompanyLink} = require('./company.service')
 
 function getDisplayServiceDelivery (serviceDelivery) {
   if (!serviceDelivery) {

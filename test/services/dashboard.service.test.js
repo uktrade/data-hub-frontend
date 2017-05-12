@@ -3,8 +3,8 @@ const proxyquire = require('proxyquire')
 
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
-    return proxyquire('../../src/services/dashboardservice', {
-      './companyservice': {
+    return proxyquire('../../src/services/dashboard.service', {
+      './company.service': {
         getViewCompanyLink: sinon.stub().returns('/test')
       },
       '../lib/authorisedrequest': () => new Promise((resolve) => {

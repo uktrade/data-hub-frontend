@@ -68,10 +68,10 @@ describe('Contact controller', function () {
       '../repositorys/contactrepository': {
         getContact: getContactStub
       },
-      '../services/contactformattingservice': {
+      '../services/contact-formatting.service': {
         getDisplayContact: getDisplayContactStub
       },
-      '../services/companyservice': {
+      '../services/company.service': {
         getViewCompanyLink: getViewCompanyLinkStub
       },
       'winston': {

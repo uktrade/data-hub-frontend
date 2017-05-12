@@ -4,8 +4,8 @@ const Q = require('q')
 
 const { genCSRF } = require('../lib/controllerutils')
 const contactRepository = require('../repositorys/contactrepository')
-const contactFormattingService = require('../services/contactformattingservice')
-const companyService = require('../services/companyservice')
+const contactFormattingService = require('../services/contact-formatting.service')
+const companyService = require('../services/company.service')
 const { contactDetailsLabels } = require('../labels/contactlabels')
 const router = express.Router()
 

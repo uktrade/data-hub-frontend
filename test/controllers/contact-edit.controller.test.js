@@ -27,7 +27,7 @@ describe('Contact controller, edit', function () {
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
     contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
-      '../services/contactformservice': {
+      '../services/contact-form.service': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub
       },
@@ -341,7 +341,7 @@ describe('Contact controller, edit', function () {
       })
 
       contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
-        '../services/contactformservice': {
+        '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
         },
@@ -367,7 +367,7 @@ describe('Contact controller, edit', function () {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
       contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
-        '../services/contactformservice': {
+        '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
         },

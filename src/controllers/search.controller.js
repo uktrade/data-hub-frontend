@@ -1,7 +1,7 @@
 const express = require('express')
 const companyRepository = require('../repositorys/companyrepository')
-const { getViewCompanyLink } = require('../services/companyservice')
-const searchService = require('../services/searchservice')
+const { getViewCompanyLink } = require('../services/company.service')
+const searchService = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
 const Q = require('q')
 

@@ -1,7 +1,7 @@
 const {formatLongDate, formatMediumDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/textformatting')
 const {getPropertyName} = require('../lib/propertyhelpers')
-const {getViewCompanyLink} = require('../services/companyservice')
+const {getViewCompanyLink} = require('./company.service')
 
 /**
  * Returns an interaction formatted for display in the interaction detail

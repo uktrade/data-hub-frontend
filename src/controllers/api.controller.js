@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const express = require('express')
 const Q = require('q')
-const postcodeService = require('../services/postcodeservice')
+const postcodeService = require('../services/postcode.service')
 const metadataRepository = require('../repositorys/metadatarepository')
 const router = express.Router()
 let unitedKingdom

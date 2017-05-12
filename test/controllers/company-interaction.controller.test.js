@@ -89,7 +89,7 @@ describe('Company interactions controller', function () {
       classification: null
     }
     companyinteractioncontroller = proxyquire('../../src/controllers/company-interaction.controller', {
-      '../services/companyservice': {
+      '../services/company.service': {
         getInflatedDitCompany: sinon.stub().resolves(company)
       }
     })
@@ -129,7 +129,7 @@ describe('Company interactions controller', function () {
       company.id = null
       company.companies_house_data = { name: 'Fred' }
       companyinteractioncontroller = proxyquire('../../src/controllers/company-interaction.controller', {
-        '../services/companyservice': {
+        '../services/company.service': {
           getInflatedDitCompany: sinon.stub().resolves(company)
         }
       })
@@ -149,7 +149,7 @@ describe('Company interactions controller', function () {
     it('should not return a url to add interactions if no contacts', function (done) {
       company.contacts = []
       companyinteractioncontroller = proxyquire('../../src/controllers/company-interaction.controller', {
-        '../services/companyservice': {
+        '../services/company.service': {
           getInflatedDitCompany: sinon.stub().resolves(company)
         }
       })

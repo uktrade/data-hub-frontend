@@ -5,7 +5,7 @@ const advisorRepository = require('../repositorys/advisorrepository')
 const companyRepository = require('../repositorys/companyrepository')
 const metadataRepository = require('../repositorys/metadatarepository')
 const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
-const interactionDataService = require('./interactiondataservice')
+const interactionDataService = require('./interaction-data.service')
 const { genCSRF } = require('../lib/controllerutils')
 const { getFormattedAddress } = require('../lib/address')
 

@@ -88,10 +88,10 @@ describe('Company controller, ltd', function () {
     flashStub = sinon.stub()
 
     companyControllerLtd = proxyquire('../../src/controllers/company-ltd.controller', {
-      '../services/companyservice': {
+      '../services/company.service': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },
-      '../services/companyformattingservice': {
+      '../services/company-formatting.service': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub
       },
@@ -99,7 +99,7 @@ describe('Company controller, ltd', function () {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub
       },
-      '../services/companyformservice': {
+      '../services/company-form.service': {
         getLtdCompanyAsFormData: getLtdCompanyAsFormDataStub,
         getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
         saveCompanyForm: saveCompanyFormStub
@@ -542,10 +542,10 @@ describe('Company controller, ltd', function () {
       })
 
       companyControllerLtd = proxyquire('../../src/controllers/company-ltd.controller', {
-        '../services/companyservice': {
+        '../services/company.service': {
           getInflatedDitCompany: getInflatedDitCompanyStub
         },
-        '../services/companyformattingservice': {
+        '../services/company-formatting.service': {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub
         },
@@ -553,7 +553,7 @@ describe('Company controller, ltd', function () {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub
         },
-        '../services/companyformservice': {
+        '../services/company-form.service': {
           getLtdCompanyAsFormData: getLtdCompanyAsFormDataStub,
           getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
           saveCompanyForm: saveCompanyFormStub

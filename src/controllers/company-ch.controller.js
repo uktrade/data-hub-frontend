@@ -4,7 +4,7 @@ const winston = require('winston')
 const Q = require('q')
 const { getFormattedAddress } = require('../lib/address')
 const companyRepository = require('../repositorys/companyrepository')
-const companyFormattingService = require('../services/companyformattingservice')
+const companyFormattingService = require('../services/company-formatting.service')
 const { chDetailsLabels } = require('../labels/companylabels')
 
 const router = express.Router()

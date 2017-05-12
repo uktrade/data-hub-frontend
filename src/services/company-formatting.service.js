@@ -3,7 +3,7 @@ const { getFormattedAddress } = require('../lib/address')
 const { titleCase } = require('../lib/textformatting')
 const { formatLongDate } = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transformsectors')
-const { getViewCompanyLink } = require('./companyservice')
+const { getViewCompanyLink } = require('./company.service')
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)

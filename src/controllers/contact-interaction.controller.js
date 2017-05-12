@@ -2,8 +2,8 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 
-const { getDisplayContactInteraction } = require('../services/interactionformattingservice')
-const contactDataService = require('../services/contactdataservice')
+const { getDisplayContactInteraction } = require('../services/interaction-formatting.service')
+const contactDataService = require('../services/contact-data.service')
 const { getCommon } = require('./contact.controller')
 const router = express.Router()
 

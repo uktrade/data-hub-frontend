@@ -5,8 +5,8 @@ const Q = require('q')
 const interactionLabels = require('../labels/interactionlabels')
 const {genCSRF} = require('../lib/controllerutils')
 const metadataRepository = require('../repositorys/metadatarepository')
-const interactionDataService = require('../services/interactiondataservice')
-const {getDisplayInteraction} = require('../services/interactionformattingservice')
+const interactionDataService = require('../services/interaction-data.service')
+const {getDisplayInteraction} = require('../services/interaction-formatting.service')
 
 const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_advisor', 'service', 'dit_team']
 const router = express.Router()

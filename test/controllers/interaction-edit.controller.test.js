@@ -61,11 +61,11 @@ describe('Interaction controller, edit', function () {
     saveInteractionFormStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
     interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
-      '../services/interactionformservice': {
+      '../services/interaction-form.service': {
         getInteractionAsFormData: getInteractionAsFormDataStub,
         saveInteractionForm: saveInteractionFormStub
       },
-      '../services/interactiondataservice': {
+      '../services/interaction-data.service': {
         createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
         createBlankInteractionForContact: createBlankInteractionForContactStub,
         getInteractionType: getInteractionTypeStub
@@ -470,11 +470,11 @@ describe('Interaction controller, edit', function () {
       })
 
       interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
-        '../services/interactionformservice': {
+        '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub
         },
-        '../services/interactiondataservice': {
+        '../services/interaction-data.service': {
           createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
           createBlankInteractionForContact: createBlankInteractionForContactStub,
           getInteractionType: getInteractionTypeStub
@@ -502,11 +502,11 @@ describe('Interaction controller, edit', function () {
       saveInteractionFormStub = sinon.stub().rejects(Error('some error'))
 
       interactionEditController = proxyquire('../../src/controllers/interaction-edit.controller', {
-        '../services/interactionformservice': {
+        '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub
         },
-        '../services/interactiondataservice': {
+        '../services/interaction-data.service': {
           createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
           createBlankInteractionForContact: createBlankInteractionForContactStub,
           getInteractionType: getInteractionTypeStub

@@ -1,5 +1,5 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true */
-const contactFormattingService = require('../../src/services/contactformattingservice')
+const contactFormattingService = require('../../src/services/contact-formatting.service')
 
 describe('Contact formatting service', function () {
   let contact

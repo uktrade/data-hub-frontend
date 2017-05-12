@@ -1,4 +1,4 @@
-const dashboardService = require('../services/dashboardservice')
+const dashboardService = require('../services/dashboard.service')
 
 module.exports = (req, res) => {
   const days = 15

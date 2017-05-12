@@ -11,7 +11,7 @@ describe('contact form service', function () {
   beforeEach(function () {
     throwError = false
 
-    contactFormService = proxyquire('../../src/services/contactformservice', {
+    contactFormService = proxyquire('../../src/services/contact-form.service', {
       '../repositorys/contactrepository': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {

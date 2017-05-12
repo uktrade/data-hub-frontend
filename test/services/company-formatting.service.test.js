@@ -1,6 +1,6 @@
 /* globals expect: true, describe: true, it: true */
 /* eslint no-unused-expressions: 0 */
-const companyFormattingService = require('../../src/services/companyformattingservice')
+const companyFormattingService = require('../../src/services/company-formatting.service')
 
 describe('Company formatting service', () => {
   describe('get display company', () => {
