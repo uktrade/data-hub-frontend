@@ -1,7 +1,7 @@
 /* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
 /* eslint no-unused-expressions: 0 */
 const proxyquire = require('proxyquire')
-const metadatarepository = require('../../src/repositorys/metadatarepository')
+const metadatarepository = require('../../src/repos/metadata.repo')
 
 describe('company form service', function () {
   let companyFormService
@@ -11,10 +11,10 @@ describe('company form service', function () {
     saveCompanyStub = sinon.stub().resolves({id: '1234'})
 
     companyFormService = proxyquire('../../src/services/company-form.service', {
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         saveCompany: saveCompanyStub
       },
-      '../repositorys/metadatarepository': {
+      '../repos/metadata.repo': {
         businessTypeOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'Private Limited Company' }],
         getIdForName: metadatarepository.getIdForName
       }
@@ -293,7 +293,7 @@ describe('company form service', function () {
     it('handles errors', function () {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
       companyFormService = proxyquire('../../src/services/company-form.service', {
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           saveCompany: saveCompanyStub
         }
       })

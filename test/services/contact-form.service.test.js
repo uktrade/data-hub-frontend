@@ -12,7 +12,7 @@ describe('contact form service', function () {
     throwError = false
 
     contactFormService = proxyquire('../../src/services/contact-form.service', {
-      '../repositorys/contactrepository': {
+      '../repos/contact.repo': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {
           return new Promise((resolve, reject) => {

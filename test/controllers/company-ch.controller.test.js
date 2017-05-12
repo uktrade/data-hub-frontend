@@ -58,7 +58,7 @@ describe('Company controller, Companies Houe', function () {
         getHeadingName: getHeadingNameStub,
         getHeadingAddress: getHeadingAddressStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getCHCompany: getCHCompanyStub
       }
     })

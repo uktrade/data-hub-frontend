@@ -2,7 +2,7 @@
 const express = require('express')
 const Q = require('q')
 const postcodeService = require('../services/postcode.service')
-const metadataRepository = require('../repositorys/metadatarepository')
+const metadataRepository = require('../repos/metadata.repo')
 const router = express.Router()
 let unitedKingdom
 

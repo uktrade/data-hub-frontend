@@ -26,16 +26,16 @@ describe('interaction data service', function () {
     getInteractionStub = sinon.stub().resolves(interaction)
 
     interactionDataService = proxyquire('../../src/services/interaction-data.service', {
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getDitCompany: getDitCompanyStub
       },
-      '../repositorys/contactrepository': {
+      '../repos/contact.repo': {
         getContact: getContactStub
       },
-      '../repositorys/interactionrepository': {
+      '../repos/interaction.repo': {
         getInteraction: getInteractionStub
       },
-      '../repositorys/metadatarepository': {
+      '../repos/metadata.repo': {
         interactionTypeOptions: [interaction_type]
       }
     })
@@ -55,16 +55,16 @@ describe('interaction data service', function () {
       getInteractionStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('../../src/services/interaction-data.service', {
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContact: getContactStub
         },
-        '../repositorys/interactionrepository': {
+        '../repos/interaction.repo': {
           getInteraction: getInteractionStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           interactionTypeOptions: [interaction_type]
         }
       })
@@ -111,16 +111,16 @@ describe('interaction data service', function () {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('../../src/services/interaction-data.service', {
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContact: getContactStub
         },
-        '../repositorys/interactionrepository': {
+        '../repos/interaction.repo': {
           getInteraction: getInteractionStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           interactionTypeOptions: [interaction_type]
         }
       })
@@ -134,16 +134,16 @@ describe('interaction data service', function () {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('../../src/services/interaction-data.service', {
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContact: getContactStub
         },
-        '../repositorys/interactionrepository': {
+        '../repos/interaction.repo': {
           getInteraction: getInteractionStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           interactionTypeOptions: [interaction_type]
         }
       })
@@ -179,16 +179,16 @@ describe('interaction data service', function () {
       getDitCompanyStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('../../src/services/interaction-data.service', {
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContact: getContactStub
         },
-        '../repositorys/interactionrepository': {
+        '../repos/interaction.repo': {
           getInteraction: getInteractionStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           interactionTypeOptions: [interaction_type]
         }
       })

@@ -38,7 +38,7 @@ describe('Company controller, archive', function () {
       '../services/company.service': {
         getViewCompanyLink: getViewCompanyLinkStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
         archiveCompany: companyRepositoryArchiveCompanyStub,
         unarchiveCompany: companyRepositoryUnArchiveCompanyStub

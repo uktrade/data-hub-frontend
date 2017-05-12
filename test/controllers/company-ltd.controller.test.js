@@ -95,7 +95,7 @@ describe('Company controller, ltd', function () {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub
       },
@@ -104,7 +104,7 @@ describe('Company controller, ltd', function () {
         getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
         saveCompanyForm: saveCompanyFormStub
       },
-      '../repositorys/metadatarepository': metadataRepositoryStub
+      '../repos/metadata.repo': metadataRepositoryStub
     })
   })
 
@@ -549,7 +549,7 @@ describe('Company controller, ltd', function () {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub
         },
@@ -558,7 +558,7 @@ describe('Company controller, ltd', function () {
           getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
           saveCompanyForm: saveCompanyFormStub
         },
-        '../repositorys/metadatarepository': metadataRepositoryStub
+        '../repos/metadata.repo': metadataRepositoryStub
       })
 
       const body = {

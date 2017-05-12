@@ -1,6 +1,6 @@
 const Q = require('q')
 const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../lib/propertyhelpers')
-const contactRepository = require('../repositorys/contactrepository')
+const contactRepository = require('../repos/contact.repo')
 
 /**
  * Accepts an API contact object and converts it into a format compatible with a HTML form

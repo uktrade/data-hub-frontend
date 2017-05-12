@@ -1,9 +1,9 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const winston = require('winston')
-const advisorRepository = require('../repositorys/advisorrepository')
-const interactionRepository = require('../repositorys/interactionrepository')
-const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
+const advisorRepository = require('../repos/advisor.repo')
+const interactionRepository = require('../repos/interaction.repo')
+const serviceDeliveryRepository = require('../repos/service-delivery.repo')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but

@@ -1,5 +1,5 @@
 const Q = require('q')
-const interactionRepository = require('../repositorys/interactionrepository')
+const interactionRepository = require('../repos/interaction.repo')
 const { getPropertyId, nullEmptyFields } = require('../lib/propertyhelpers')
 
 /**

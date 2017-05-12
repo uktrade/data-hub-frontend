@@ -74,11 +74,11 @@ describe('Company controller, uk other', function () {
         getUkOtherCompanyAsFormData: getUkOtherCompanyAsFormDataStub,
         saveCompanyForm: saveCompanyFormStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub
       },
-      '../repositorys/metadatarepository': metadataRepositoryStub
+      '../repos/metadata.repo': metadataRepositoryStub
     })
   })
 
@@ -505,11 +505,11 @@ describe('Company controller, uk other', function () {
           getUkOtherCompanyAsFormData: getUkOtherCompanyAsFormDataStub,
           saveCompanyForm: saveCompanyFormStub
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/metadatarepository': metadataRepositoryStub
+        '../repos/metadata.repo': metadataRepositoryStub
       })
 
       const body = {

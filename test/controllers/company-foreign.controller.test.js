@@ -74,11 +74,11 @@ describe('Company controller, foreign', function () {
         getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
         saveCompanyForm: saveCompanyFormStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub
       },
-      '../repositorys/metadatarepository': metadataRepositoryStub
+      '../repos/metadata.repo': metadataRepositoryStub
     })
   })
 
@@ -494,11 +494,11 @@ describe('Company controller, foreign', function () {
           getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
           saveCompanyForm: saveCompanyFormStub
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/metadatarepository': metadataRepositoryStub
+        '../repos/metadata.repo': metadataRepositoryStub
       })
 
       const body = {

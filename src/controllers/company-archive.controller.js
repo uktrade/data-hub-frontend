@@ -2,7 +2,7 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
-const companyRepository = require('../repositorys/companyrepository')
+const companyRepository = require('../repos/company.repo')
 const companyService = require('../services/company.service')
 const router = express.Router()
 

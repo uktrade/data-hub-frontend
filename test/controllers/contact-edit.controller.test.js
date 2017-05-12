@@ -31,13 +31,13 @@ describe('Contact controller, edit', function () {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub
       },
-      '../repositorys/metadatarepository': {
+      '../repos/metadata.repo': {
         countryOptions: [{
           id: '986',
           name: 'United Kingdom'
         }]
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getDitCompany: getDitCompanyStub
       }
     })
@@ -345,13 +345,13 @@ describe('Contact controller, edit', function () {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           countryOptions: [{
             id: '986',
             name: 'United Kingdom'
           }]
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         }
       })
@@ -371,13 +371,13 @@ describe('Contact controller, edit', function () {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           countryOptions: [{
             id: '986',
             name: 'United Kingdom'
           }]
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         }
       })

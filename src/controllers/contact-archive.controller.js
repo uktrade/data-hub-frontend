@@ -2,7 +2,7 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
-const contactRepository = require('../repositorys/contactrepository')
+const contactRepository = require('../repos/contact.repo')
 const router = express.Router()
 
 function archiveContact (req, res, next) {

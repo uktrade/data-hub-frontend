@@ -1,9 +1,9 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const Q = require('q')
-const companyRepository = require('../repositorys/companyrepository')
-const contactRepository = require('../repositorys/contactrepository')
-const metadataRepository = require('../repositorys/metadatarepository')
-const interactionRepository = require('../repositorys/interactionrepository')
+const companyRepository = require('../repos/company.repo')
+const contactRepository = require('../repos/contact.repo')
+const metadataRepository = require('../repos/metadata.repo')
+const interactionRepository = require('../repos/interaction.repo')
 
 function getInteractionType (interactionTypeId) {
   for (const interactionType of metadataRepository.interactionTypeOptions) {

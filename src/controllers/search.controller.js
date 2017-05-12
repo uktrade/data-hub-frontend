@@ -1,5 +1,5 @@
 const express = require('express')
-const companyRepository = require('../repositorys/companyrepository')
+const companyRepository = require('../repos/company.repo')
 const { getViewCompanyLink } = require('../services/company.service')
 const searchService = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination

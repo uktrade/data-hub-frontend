@@ -1,8 +1,8 @@
 /* eslint new-cap: 0 */
 const express = require('express')
 const { isBlank } = require('../lib/controllerutils')
-const companyRepository = require('../repositorys/companyrepository')
-const metadataRepository = require('../repositorys/metadatarepository')
+const companyRepository = require('../repos/company.repo')
+const metadataRepository = require('../repos/metadata.repo')
 const investmentFormattingService = require('../services/investment-formatting.service')
 const { investmentDetailLabels, investmentProjectsOpenLabels, investmentProjectsClosedLabels, investmentFormLabels } = require('../labels/investmentlabels')
 const { managedOptions, investmentTierOptions } = require('../options')

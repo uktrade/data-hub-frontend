@@ -1,11 +1,11 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const winston = require('winston')
-const companyRepository = require('../repositorys/companyrepository')
-const contactRepository = require('../repositorys/contactrepository')
-const metadataRepository = require('../repositorys/metadatarepository')
-const serviceDeliveryRepository = require('../repositorys/servicedeliveryrepository')
-const advisorRepository = require('../repositorys/advisorrepository')
+const companyRepository = require('../repos/company.repo')
+const contactRepository = require('../repos/contact.repo')
+const metadataRepository = require('../repos/metadata.repo')
+const serviceDeliveryRepository = require('../repos/service-delivery.repo')
+const advisorRepository = require('../repos/advisor.repo')
 
 function validKey (object, key) {
   return object && object[key] && object[key].data && object[key].data.id && object[key].data.id.length > 0

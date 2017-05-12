@@ -70,16 +70,16 @@ describe('Interaction controller, edit', function () {
         createBlankInteractionForContact: createBlankInteractionForContactStub,
         getInteractionType: getInteractionTypeStub
       },
-      '../repositorys/contactrepository': {
+      '../repos/contact.repo': {
         getContactsForCompany: getContactsForCompanyStub
       },
-      '../repositorys/companyrepository': {
+      '../repos/company.repo': {
         getDitCompany: getDitCompanyStub
       },
-      '../repositorys/advisorrepository': {
+      '../repos/advisor.repo': {
         getAdvisor: getAdvisorStub
       },
-      '../repositorys/metadatarepository': {
+      '../repos/metadata.repo': {
         getServiceOffers: getServiceOffersStub
       }
     })
@@ -479,16 +479,16 @@ describe('Interaction controller, edit', function () {
           createBlankInteractionForContact: createBlankInteractionForContactStub,
           getInteractionType: getInteractionTypeStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContactsForCompany: getContactsForCompanyStub
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/advisorrepository': {
+        '../repos/advisor.repo': {
           getAdvisor: getAdvisorStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           getServiceOffers: getServiceOffersStub
         }
       })
@@ -511,16 +511,16 @@ describe('Interaction controller, edit', function () {
           createBlankInteractionForContact: createBlankInteractionForContactStub,
           getInteractionType: getInteractionTypeStub
         },
-        '../repositorys/contactrepository': {
+        '../repos/contact.repo': {
           getContactsForCompany: getContactsForCompanyStub
         },
-        '../repositorys/companyrepository': {
+        '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
-        '../repositorys/advisorrepository': {
+        '../repos/advisor.repo': {
           getAdvisor: getAdvisorStub
         },
-        '../repositorys/metadatarepository': {
+        '../repos/metadata.repo': {
           getServiceOffers: getServiceOffersStub
         }
       })

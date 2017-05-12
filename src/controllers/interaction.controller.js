@@ -4,7 +4,7 @@ const winston = require('winston')
 const Q = require('q')
 const interactionLabels = require('../labels/interactionlabels')
 const {genCSRF} = require('../lib/controllerutils')
-const metadataRepository = require('../repositorys/metadatarepository')
+const metadataRepository = require('../repos/metadata.repo')
 const interactionDataService = require('../services/interaction-data.service')
 const {getDisplayInteraction} = require('../services/interaction-formatting.service')
 
