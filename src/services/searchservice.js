@@ -12,28 +12,16 @@ const FACETS = {
   ]
 }
 
-function search ({ token, term, limit = 10, page = 1, filters }) {
-  let body = { term, limit }
-  body.offset = (page * body.limit) - body.limit
-
-  if (filters) {
-    body = Object.assign(body, filters)
+function search ({token, term, filters, limit = 10, page = 1}) {
+  const requestBody = {
+    term,
+    limit,
+    offset: (page * limit) - limit,
+    doc_type: filters
   }
-
-  // Filters for company actually means filtering for 2 company types
-  // so we modify the criteria sent to the server.
-  if (body.doc_type && body.doc_type === 'company') {
-    body.doc_type = ['company_company', 'company_companieshousecompany']
-  } else if (body.doc_type && Array.isArray(body.doc_type) && includes(body.doc_type, 'company')) {
-    let newDocTypeArray = body.doc_type.filter(item => item !== 'company')
-    newDocTypeArray.push('company_company')
-    newDocTypeArray.push('company_companieshousecompany')
-    body.doc_type = newDocTypeArray
-  }
-
   const options = {
     url: `${config.apiRoot}/search/`,
-    body,
+    body: requestBody,
     method: 'POST'
   }
 
@@ -103,7 +91,7 @@ function searchLimited (token, term) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const allResults = yield search({token, term, page: 1, filters: ['company_company', 'company_companieshousecompany']})
+        const allResults = yield search({token, term, filters: ['company_company', 'company_companieshousecompany']})
         const filtered = allResults.hits.filter(result => (result._type === 'company_companieshousecompany' ||
           (result._source.business_type && result._source.business_type.toLowerCase() === 'private limited company') ||
           (result._source.business_type && result._source.business_type.toLowerCase() === 'public limited company')))
