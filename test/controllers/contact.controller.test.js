@@ -2,7 +2,7 @@
 /* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
-const { contactDetailsLabels } = require('../../src/labels/contactlabels')
+const { contactDetailsLabels } = require('../../src/labels/contact-labels')
 const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {

@@ -3,7 +3,7 @@
 
 const proxyquire = require('proxyquire')
 const { render } = require('../nunjucks')
-const { hqLabels } = require('../../src/labels/companylabels')
+const { hqLabels } = require('../../src/labels/company-labels')
 const { expectTextFieldWithLabel, expectDropdownWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../formhelpers')
 
 const next = function (error) {

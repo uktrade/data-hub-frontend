@@ -4,7 +4,7 @@ const { isBlank } = require('../lib/controller-utils')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const investmentFormattingService = require('../services/investment-formatting.service')
-const { investmentDetailLabels, investmentProjectsOpenLabels, investmentProjectsClosedLabels, investmentFormLabels } = require('../labels/investmentlabels')
+const { investmentDetailLabels, investmentProjectsOpenLabels, investmentProjectsClosedLabels, investmentFormLabels } = require('../labels/investment-labels')
 const { managedOptions, investmentTierOptions } = require('../options')
 const router = express.Router()
 

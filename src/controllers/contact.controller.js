@@ -6,7 +6,7 @@ const { genCSRF } = require('../lib/controller-utils')
 const contactRepository = require('../repos/contact.repo')
 const contactFormattingService = require('../services/contact-formatting.service')
 const companyService = require('../services/company.service')
-const { contactDetailsLabels } = require('../labels/contactlabels')
+const { contactDetailsLabels } = require('../labels/contact-labels')
 const router = express.Router()
 
 const reasonForArchiveOptions = [

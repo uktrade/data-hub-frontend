@@ -3,7 +3,7 @@
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
 const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
-const interactionLabels = require('../../src/labels/interactionlabels')
+const interactionLabels = require('../../src/labels/interaction-labels')
 
 describe('Interaction controller, edit', function () {
   let interactionEditController

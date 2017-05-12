@@ -5,7 +5,7 @@ const Q = require('q')
 const { getFormattedAddress } = require('../lib/address')
 const companyRepository = require('../repos/company.repo')
 const companyFormattingService = require('../services/company-formatting.service')
-const { chDetailsLabels } = require('../labels/companylabels')
+const { chDetailsLabels } = require('../labels/company-labels')
 
 const router = express.Router()
 const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']

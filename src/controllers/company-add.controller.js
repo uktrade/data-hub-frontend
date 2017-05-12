@@ -6,7 +6,7 @@ const { isBlank, toQueryString, genCSRF } = require('../lib/controller-utils')
 const searchService = require('../services/search.service')
 const companyService = require('../services/company.service')
 const companyFormattingService = require('../services/company-formatting.service')
-const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels/company-labels')
 
 const router = express.Router()
 

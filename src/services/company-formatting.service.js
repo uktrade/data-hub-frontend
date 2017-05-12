@@ -1,4 +1,4 @@
-const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/companylabels')
+const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/company-labels')
 const { getFormattedAddress } = require('../lib/address')
 const { titleCase } = require('../lib/text-formatting')
 const { formatLongDate } = require('../lib/date')

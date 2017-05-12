@@ -3,7 +3,7 @@
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
 const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../formhelpers')
-const contactLabels = require('../../src/labels/contactlabels')
+const contactLabels = require('../../src/labels/contact-labels')
 
 describe('Contact controller, edit', function () {
   let contactEditController

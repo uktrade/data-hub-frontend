@@ -2,7 +2,7 @@
 const express = require('express')
 const winston = require('winston')
 const Q = require('q')
-const serviceDeliverylabels = require('../labels/servicedelivery')
+const serviceDeliverylabels = require('../labels/service-delivery')
 const { genCSRF, transformV2Errors } = require('../lib/controller-utils')
 const { nullEmptyFields, deleteNulls } = require('../lib/property-helpers')
 const metadataRepository = require('../repos/metadata.repo')
