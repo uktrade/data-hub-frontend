@@ -2,7 +2,7 @@
 /* eslint handle-callback-err: 0, no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const proxyquire = require('proxyquire')
-const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../formhelpers')
+const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../form-helpers')
 const interactionLabels = require('../../src/labels/interaction-labels')
 
 describe('Interaction controller, edit', function () {
