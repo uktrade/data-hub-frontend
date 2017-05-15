@@ -10,7 +10,7 @@ module.exports = {
     'contact-edit': './src/javascripts/contact-edit',
     investment: './src/javascripts/investment',
     'create-investment': './src/javascripts/create-investment',
-    'expanding-cards': './src/javascripts/expanding-cards',
+    'expandable-card': './src/javascripts/expandable-card',
     index: './src/javascripts/index',
     search: './src/javascripts/search',
     'service-delivery': './src/javascripts/service-delivery',

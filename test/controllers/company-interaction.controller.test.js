@@ -210,7 +210,7 @@ describe('Company interactions controller', function () {
     it('each line should include the required data', function () {
       return render('../../src/views/company/interactions.njk', {interactions, addInteractionUrl, company})
       .then((document) => {
-        const interactionElement = document.querySelector('#interaction-list .interaction')
+        const interactionElement = document.querySelector('#interaction-list .card')
         expect(interactionElement.innerHTML).to.include('Test subject')
         expect(interactionElement.innerHTML).to.include('Email')
         expect(interactionElement.innerHTML).to.include('23 February 2017')

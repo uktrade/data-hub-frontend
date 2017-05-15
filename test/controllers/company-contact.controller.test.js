@@ -316,7 +316,7 @@ describe('Company contacts controller', function () {
     it('each un-archived line should include the required data', function () {
       return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
       .then((document) => {
-        const contactElement = document.querySelector('#contact-list .contact')
+        const contactElement = document.querySelector('#contact-list .card')
         expect(contactElement.innerHTML).to.include('Fred Smith')
         expect(contactElement.innerHTML).to.include('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
         expect(contactElement.innerHTML).to.include('Job title:')

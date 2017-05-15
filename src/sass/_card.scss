@@ -1,0 +1,21 @@
+.js-enabled .card--expandable {
+  .card__state-indicator::before {
+    font-family: "FontAwesome";
+    width: 10px;
+    display: inline-block;
+    content: "\f0da";
+  }
+
+  &.is-open .card__state-indicator::before {
+    content: "\f0d7";
+  }
+
+  .card__title {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .card__title-text {
+    text-decoration: underline;
+  }
+}
