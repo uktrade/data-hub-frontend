@@ -56,7 +56,7 @@ function postBug (req, res) {
   }
   const ticket = {
     requester: {
-      email: (req.body.email && req.body.email.length > 0) ? req.body.email : 'Anonymous'
+      name: 'Data Hub user'
     },
     subject: req.body.title,
     comment: {
@@ -68,10 +68,17 @@ function postBug (req, res) {
     ],
     tags: [req.body.type]
   }
+  if (req.body.email && req.body.email.length > 0) {
+    ticket.requester.email = req.body.email
+  }
   return postToZen(ticket)
     .then(({data}) => {
       req.flash('success-message', `Created new bug, reference number ${data.ticket.id}`)
       res.redirect('/support/thank')
+    })
+    .catch((error) => {
+      req.errors = {message: error.message}
+      return getBug(req, res)
     })
 }
 
