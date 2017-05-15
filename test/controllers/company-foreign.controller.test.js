@@ -288,7 +288,7 @@ describe('Company controller, foreign', function () {
         turnover_range: '1'
       }
 
-      return render('../../src/views/company/edit-foreign.html', {
+      return render('../../src/views/company/edit-foreign.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,

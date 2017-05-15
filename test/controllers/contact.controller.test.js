@@ -203,13 +203,13 @@ describe('Contact controller', function () {
       })
 
       it('should render a contact details section', function () {
-        return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
+        return render(`${__dirname}/../../src/views/contact/details.njk`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
           expect(document.getElementById('contact-details')).to.not.be.null
         })
       })
       it('should include the contact details in a key value table', function () {
-        return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
+        return render(`${__dirname}/../../src/views/contact/details.njk`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
           const details = document.getElementById('contact-details')
           expect(details.innerHTML).to.include(contactDetails.title)
@@ -223,7 +223,7 @@ describe('Contact controller', function () {
         })
       })
       it('should display the contact name and address in a heading', function () {
-        return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
+        return render(`${__dirname}/../../src/views/contact/details.njk`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
           const heading = document.querySelector('h2.page-heading')
           expect(heading.innerHTML).to.include('Fred Smith')
@@ -231,7 +231,7 @@ describe('Contact controller', function () {
         })
       })
       it('should indicate primary contacts', function () {
-        return render(`${__dirname}/../../src/views/contact/details.html`, {contact, contactDetails, contactDetailsLabels})
+        return render(`${__dirname}/../../src/views/contact/details.njk`, {contact, contactDetails, contactDetailsLabels})
         .then((document) => {
           const heading = document.querySelector('h2.page-heading')
           expect(heading.innerHTML).to.include('<span class="status-badge status-badge--fuschia ">Primary</span>')

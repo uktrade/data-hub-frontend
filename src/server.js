@@ -96,7 +96,7 @@ app.use(compression())
 
 filters.stringify = JSON.stringify
 
-app.set('view engine', 'html')
+app.set('view engine', 'njk')
 const nunenv = nunjucks.configure([`${__dirname}/views`, `${__dirname}/../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
   autoescape: true,
   express: app,

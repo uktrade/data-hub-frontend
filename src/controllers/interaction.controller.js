@@ -57,7 +57,7 @@ function getAddStep1 (req, res) {
     interactionTypeColB.push(selectableTypes[pos])
   }
 
-  res.render('interaction/add-step-1.html', {
+  res.render('interaction/add-step-1.njk', {
     query: req.query,
     interactionTypeColA,
     interactionTypeColB

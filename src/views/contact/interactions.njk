@@ -1,0 +1,33 @@
+{% extends "./index.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+<h2 class="heading-medium">Contact interactions</h2>
+{% if displayInteractions.length > 0 %}
+<ul id="interaction-list" class="lined-list">
+  {% for interaction in displayInteractions %}
+  <li class="lined-list__item">
+    <div class="card interaction">
+      <a class="card__metadata" href="{{interaction.url}}">{{interaction.subject}}</a>
+      <div class="split-data">
+        <div>
+          <div class="card__metadata">{{interaction.interaction_type}}</div>
+          <div class="card__metadata">{{interaction.date}}</div>
+        </div>
+        <div>
+          <div class="card__metadata">{{interaction.advisor}}</div>
+        </div>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p id="no-interaction-warning" class="infostrip">There are no interactions at this time.</p>
+{% endif %}
+
+<p class="actions">
+  <a id="add-interaction-link" class="button button-secondary" href="{{addInteractionUrl}}">Add new interaction</a>
+</p>
+
+{% endblock %}

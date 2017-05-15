@@ -28,7 +28,7 @@ function authenticate (username, password) {
 }
 
 function login (req, res) {
-  res.render('login.html', { action: '/login' })
+  res.render('login.njk', { action: '/login' })
 }
 
 function loginToApi (req, res) {
