@@ -1,0 +1,30 @@
+@import 'colours/palette';
+@import 'conditionals';
+@import 'measurements';
+@import 'typography';
+
+.local-nav {
+  @include core-19;
+  margin-left: -$gutter-half;
+  margin-right: -$gutter-half;
+
+  @include media(tablet) {
+    border-right: 1px solid $grey-2;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.local-nav__link {
+  display: block;
+  padding: 15px;
+  color: $black;
+
+  &.is-active {
+    background: $govuk-blue;
+    color: $white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
