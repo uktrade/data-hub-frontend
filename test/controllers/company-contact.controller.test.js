@@ -1,8 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const contactTemplate = '../../src/views/company/contacts.njk'
-const proxyquire = require('proxyquire')
 
 describe('Company contacts controller', function () {
   let company
@@ -220,7 +217,7 @@ describe('Company contacts controller', function () {
         }
       }
 
-      companyContactController = proxyquire('../../src/controllers/company-contact.controller', {
+      companyContactController = proxyquire(`${root}/src/controllers/company-contact.controller`, {
         '../services/company.service': {
           getInflatedDitCompany: sinon.stub().resolves(company),
           getCommonTitlesAndLinks: sinon.stub()

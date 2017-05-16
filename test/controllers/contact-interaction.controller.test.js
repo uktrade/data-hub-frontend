@@ -1,5 +1,3 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
 const contactDataService = require('../../src/services/contact-data.service')
 const interactionFormattingService = require('../../src/services/interaction-formatting.service')

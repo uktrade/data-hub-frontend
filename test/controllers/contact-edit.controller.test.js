@@ -1,9 +1,7 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint handle-callback-err: 0, no-unused-expressions: 0 */
+/* eslint handle-callback-err: 0 */
 const { render } = require('../nunjucks')
-const proxyquire = require('proxyquire')
 const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../form-helpers')
-const contactLabels = require('../../src/labels/contact-labels')
+const contactLabels = require(`${root}/src/labels/contact-labels`)
 
 describe('Contact controller, edit', function () {
   let contactEditController
@@ -26,7 +24,7 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
+    contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
       '../services/contact-form.service': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub
@@ -340,7 +338,7 @@ describe('Contact controller, edit', function () {
         error: { name: ['test'] }
       })
 
-      contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
+      contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
         '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub
@@ -366,7 +364,7 @@ describe('Contact controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire('../../src/controllers/contact-edit.controller', {
+      contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
         '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub

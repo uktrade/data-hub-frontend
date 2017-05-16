@@ -1,9 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
-
-const proxyquire = require('proxyquire')
 const { render } = require('../nunjucks')
-const { hqLabels } = require('../../src/labels/company-labels')
+const { hqLabels } = require(`${root}/src/labels/company-labels`)
 const { expectTextFieldWithLabel, expectDropdownWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../form-helpers')
 
 const next = function (error) {
@@ -87,7 +83,7 @@ describe('Company controller, ltd', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    companyControllerLtd = proxyquire('../../src/controllers/company-ltd.controller', {
+    companyControllerLtd = proxyquire(`${root}/src/controllers/company-ltd.controller`, {
       '../services/company.service': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },
@@ -541,7 +537,7 @@ describe('Company controller, ltd', function () {
         errors: { name: ['test'] }
       })
 
-      companyControllerLtd = proxyquire('../../src/controllers/company-ltd.controller', {
+      companyControllerLtd = proxyquire(`${root}/src/controllers/company-ltd.controller`, {
         '../services/company.service': {
           getInflatedDitCompany: getInflatedDitCompanyStub
         },

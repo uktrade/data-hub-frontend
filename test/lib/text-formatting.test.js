@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-/* eslint no-unused-expressions: 0 */
-const textFormatting = require('../../src/lib/text-formatting')
+const textFormatting = require(`${root}/src/lib/text-formatting`)
 
 describe('Text formatting', function () {
   describe('title case', function () {

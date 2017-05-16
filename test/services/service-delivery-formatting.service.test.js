@@ -1,12 +1,10 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-const proxyquire = require('proxyquire')
 
 describe('Service delivery formatting service', function () {
   let serviceDelivery
   let serviceDeliveryFormattingService
 
   beforeEach(function () {
-    serviceDeliveryFormattingService = proxyquire('../../src/services/service-delivery-formatting.service', {
+    serviceDeliveryFormattingService = proxyquire(`${root}/src/services/service-delivery-formatting.service`, {
       './company.service': {
         getViewCompanyLink: sinon.stub().returns('/test')
       }

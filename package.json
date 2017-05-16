@@ -59,7 +59,7 @@
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
     "lint": "npm run lint:js && npm run lint:sass",
-    "lint:js": "standard",
+    "lint:js": "eslint ./test ./src *.js",
     "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only | grep .*.js$); if [ $CHANGED_FILES ]; then eslint $CHANGED_FILES; fi",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
     "lint:sass:modified": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only | grep .*.scss) -v -q",
@@ -85,25 +85,6 @@
   "license": "MIT",
   "engines": {
     "node": "6.10.2"
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "afterEach",
-      "assert",
-      "beforeEach",
-      "describe",
-      "es",
-      "expect",
-      "ga",
-      "GOVUK",
-      "Image",
-      "it",
-      "jasmine",
-      "spyOn",
-      "$",
-      "_gaq"
-    ]
   },
   "devDependencies": {
     "dotenv": "^4.0.0",

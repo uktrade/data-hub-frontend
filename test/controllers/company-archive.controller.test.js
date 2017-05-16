@@ -1,8 +1,3 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
-
-const proxyquire = require('proxyquire')
-
 const next = function (error) {
   throw Error(error)
 }
@@ -34,7 +29,7 @@ describe('Company controller, archive', function () {
     getViewCompanyLinkStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
-    companyArchiveController = proxyquire('../../src/controllers/company-archive.controller', {
+    companyArchiveController = proxyquire(`${root}/src/controllers/company-archive.controller`, {
       '../services/company.service': {
         getViewCompanyLink: getViewCompanyLinkStub
       },

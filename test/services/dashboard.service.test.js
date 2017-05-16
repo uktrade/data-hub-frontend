@@ -1,9 +1,6 @@
-/* globals expect: true, describe: true, it: true, sinon: stub */
-const proxyquire = require('proxyquire')
-
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
-    return proxyquire('../../src/services/dashboard.service', {
+    return proxyquire(`${root}/src/services/dashboard.service`, {
       './company.service': {
         getViewCompanyLink: sinon.stub().returns('/test')
       },

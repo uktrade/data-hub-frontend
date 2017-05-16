@@ -1,12 +1,10 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-const proxyquire = require('proxyquire')
 
 describe('Interaction formatting service', function () {
   let interaction
   let interactionFormattingService
 
   beforeEach(function () {
-    interactionFormattingService = proxyquire('../../src/services/interaction-formatting.service', {
+    interactionFormattingService = proxyquire(`${root}/src/services/interaction-formatting.service`, {
       './company.service': {
         getViewCompanyLink: sinon.stub().returns('/test')
       }

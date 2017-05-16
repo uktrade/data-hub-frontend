@@ -1,8 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
 const { render } = require('../nunjucks')
-const proxyquire = require('proxyquire')
-const { contactDetailsLabels } = require('../../src/labels/contact-labels')
+const { contactDetailsLabels } = require(`${root}/src/labels/contact-labels`)
 const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {
@@ -64,7 +61,7 @@ describe('Contact controller', function () {
     getContactStub = sinon.stub().resolves(contact)
     getDisplayContactStub = sinon.stub().returns(formatted)
     getViewCompanyLinkStub = sinon.stub().returns(companyUrl)
-    contactController = proxyquire('../../src/controllers/contact.controller', {
+    contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
       '../repos/contact.repo': {
         getContact: getContactStub
       },
@@ -134,7 +131,7 @@ describe('Contact controller', function () {
     })
     it('should handle an error', function (done) {
       const error = Error('error')
-      contactController = proxyquire('../../src/controllers/contact.controller', {
+      contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
         '../repos/contact.repo': {
           getContact: sinon.stub.rejects(error)
         },

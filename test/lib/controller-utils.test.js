@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-/* eslint no-unused-expressions: 0 */
-const { isBlank, transformV2Errors } = require('../../src/lib/controller-utils')
+const { isBlank, transformV2Errors } = require(`${root}/src/lib/controller-utils`)
 
 describe('isBlank', function () {
   it('should detects undefined variables', function () {

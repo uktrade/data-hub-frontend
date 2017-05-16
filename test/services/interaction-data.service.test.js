@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint handle-callback-err: 0, camelcase: 0, no-unused-expressions: 0 */
-const proxyquire = require('proxyquire')
+/* eslint handle-callback-err: 0, camelcase: 0 */
 
 describe('interaction data service', function () {
   let interactionDataService
@@ -25,7 +23,7 @@ describe('interaction data service', function () {
     getDitCompanyStub = sinon.stub().resolves(company)
     getInteractionStub = sinon.stub().resolves(interaction)
 
-    interactionDataService = proxyquire('../../src/services/interaction-data.service', {
+    interactionDataService = proxyquire(`${root}/src/services/interaction-data.service`, {
       '../repos/company.repo': {
         getDitCompany: getDitCompanyStub
       },
@@ -54,7 +52,7 @@ describe('interaction data service', function () {
     it('should throw an error if fetching something fails', function (done) {
       getInteractionStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('../../src/services/interaction-data.service', {
+      interactionDataService = proxyquire(`${root}/src/services/interaction-data.service`, {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
@@ -110,7 +108,7 @@ describe('interaction data service', function () {
     it('should throw an error if something goes wrong', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('../../src/services/interaction-data.service', {
+      interactionDataService = proxyquire(`${root}/src/services/interaction-data.service`, {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
@@ -133,7 +131,7 @@ describe('interaction data service', function () {
     it('should throw null for a contact with an invalid company', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('../../src/services/interaction-data.service', {
+      interactionDataService = proxyquire(`${root}/src/services/interaction-data.service`, {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
@@ -178,7 +176,7 @@ describe('interaction data service', function () {
     it('should throw an error if something goes wrong', function (done) {
       getDitCompanyStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('../../src/services/interaction-data.service', {
+      interactionDataService = proxyquire(`${root}/src/services/interaction-data.service`, {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub
         },
