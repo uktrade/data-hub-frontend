@@ -1,0 +1,11 @@
+.column-two-quarters,
+.column-three-quarters {
+  h1,
+  h2 {
+    &:first-of-type {
+      @media(min-width: 641px) {
+        margin-top: 0;
+      }
+    }
+  }
+}
