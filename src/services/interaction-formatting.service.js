@@ -63,11 +63,15 @@ function getDisplayContactInteraction (interaction) {
   const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
 
   const result = {
+    id: interaction.id,
     url: `/${type}/${interaction.id}/details`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
-    date: formatLongDate(interaction.date),
-    advisor: getPropertyName(interaction, 'dit_advisor')
+    date: formatMediumDate(interaction.date),
+    advisor: getPropertyName(interaction, 'dit_advisor'),
+    notes: newlineToBr(interaction.notes),
+    service: getPropertyName(interaction, 'service'),
+    dit_team: getPropertyName(interaction, 'dit_team')
   }
 
   return result

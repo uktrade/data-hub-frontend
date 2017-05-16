@@ -11,11 +11,8 @@
   <ul id="contact-list" class="lined-list">
     {% for contact in contacts %}
       <li class="lined-list__item">
-        <div class="card expanding-card contact" id="{{contact.id}}">
-          <a class="card__metadata expanding-card__button" href="#{{contact.id}}">
-            <div class="expanding-card__indicator"></div>
-            {{contact.name}}
-          </a>
+        <div class="card card--expandable" id="{{contact.id}}">
+          <a class="card__title" href="{{contact.url}}">{{contact.name}}</a>
           <div class="split-data">
             <div>
               <div class="card__metadata"><strong>Job title:</strong> {{contact.job_title}}</div>
@@ -26,7 +23,7 @@
               <div class="card__metadata"><strong>Added on:</strong> {{contact.added}}</div>
             </div>
           </div>
-          <div class="expanding-card__reveal">
+          <div class="card__subsection">
             <table class="table--key-value table--plain">
               <tbody>
                 <tr>
@@ -81,5 +78,5 @@
 {% endif %}
 
 
-<script src="/javascripts/expanding-cards.bundle.js"></script>
+<script src="/javascripts/expandable-card.bundle.js"></script>
 {% endblock %}

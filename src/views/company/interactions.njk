@@ -13,23 +13,35 @@
     <ul id="interaction-list" class="lined-list">
       {% for interaction in interactions %}
       <li class="lined-list__item">
-        <div class="card expanding-card interaction" id="{{interaction.id}}">
-          <a class="card__metadata expanding-card__button" href="#{{interaction.id}}">
-            <div class="expanding-card__indicator"></div>
-            {{interaction.subject}}
-          </a>
+        <div class="card card--expandable" id="{{interaction.id}}">
+          <a class="card__title" href="{{interaction.url}}">{{interaction.subject}}</a>
           <div class="split-data">
             <div>
-              <div class="card__metadata"><strong>Type:</strong> {{interaction.interaction_type}}</div>
-              <div class="card__metadata"><strong>Adviser:</strong> {{interaction.advisor | safe}}</div>
-              <div class="card__metadata"><strong>Adviser team:</strong> {{interaction.dit_team}}</div>
-              <div class="card__metadata"><strong>Contact:</strong> {{interaction.contact | safe}}</div>
+              <div class="card__metadata">
+                <strong>Type:</strong>
+                {{interaction.interaction_type}}
+              </div>
+              <div class="card__metadata">
+                <strong>Adviser:</strong>
+                {{interaction.advisor | safe}}
+              </div>
+              <div class="card__metadata">
+                <strong>Adviser team:</strong>
+                {{interaction.dit_team}}
+              </div>
+              <div class="card__metadata">
+                <strong>Contact:</strong>
+                {{interaction.contact | safe}}
+              </div>
             </div>
             <div>
-              <div class="card__metadata"><strong>Date:</strong> {{interaction.date}}</div>
+              <div class="card__metadata">
+                <strong>Date:</strong>
+                {{interaction.date}}
+              </div>
             </div>
           </div>
-          <div class="expanding-card__reveal">
+          <div class="card__subsection">
             <table class="table--key-value table--plain">
               <tbody>
                 <tr>
@@ -48,7 +60,7 @@
       </li>
       {% endfor %}
     </ul>
-    <script src="/javascripts/expandingcards.bundle.js"></script>
+    <script src="/javascripts/expandable-card.bundle.js"></script>
   {% elseif (not company.contacts or company.contacts.length == 0) %}
     <h2 class="heading-medium">Company interactions</h2>
     <p>

@@ -83,7 +83,7 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       }
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
-    expect(actual).to.be.undefined
+    expect(actual).to.eq(null)
   })
   it('Should return null if the source property dows not exist', function () {
     const source = {
@@ -119,7 +119,7 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
       }
     }
     const actual = propertyHelpers.getPropertyId(source, 'data')
-    expect(actual).to.equal(undefined)
+    expect(actual).to.equal(null)
   })
   it('Should return null if the source property dows not exist', function () {
     const source = {

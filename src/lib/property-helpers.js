@@ -38,7 +38,7 @@ function deleteNulls (data) {
  * @returns {string|null} the name for the object
  */
 function getPropertyName (object, key) {
-  if (object && typeof object === 'object' && object.hasOwnProperty(key) && object[key] !== null) {
+  if (object && typeof object === 'object' && object[key] && object[key].name) {
     return object[key].name
   }
   return null
@@ -52,7 +52,7 @@ function getPropertyName (object, key) {
  * @returns {string|null} the ID for the object
  */
 function getPropertyId (object, key) {
-  if (object && typeof object === 'object' && object.hasOwnProperty(key) && object[key] !== null) {
+  if (object && typeof object === 'object' && object[key] && object[key].id) {
     return object[key].id
   }
   return null

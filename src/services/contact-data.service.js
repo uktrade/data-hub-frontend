@@ -3,7 +3,9 @@ const Q = require('q')
 const winston = require('winston')
 const advisorRepository = require('../repos/advisor.repo')
 const interactionRepository = require('../repos/interaction.repo')
+const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
+const interactionDataService = require('./interaction-data.service')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but
@@ -37,6 +39,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
 
         const interactions = yield interactionRepository.getInteractionsForContact(token, contactId)
         const serviceDeliverys = yield serviceDeliveryRepository.getServiceDeliverysForContact(token, contactId)
+        const serviceOffers = yield metadataRepository.getServiceOffers(token)
 
         // Build a list of advisors we use in interactions, to help populate service deliveries
         for (const interaction of interactions) {
@@ -53,28 +56,25 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
 
         // Parse the service delivery results into something that can be displayed
         const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
-          return {
-            id: serviceDelivery.id,
-            date: serviceDelivery.attributes.date,
-            created_on: serviceDelivery.attributes.date,
-            notes: serviceDelivery.attributes.notes,
-            subject: serviceDelivery.attributes.subject,
-            interaction_type: { id: null, name: 'Service delivery' },
-            dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id]
-          }
+          return Object.assign({},
+            serviceDelivery.attributes,
+            {
+              id: serviceDelivery.id,
+              interaction_type: { id: null, name: 'Service delivery' },
+              dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
+              service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
+              dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id)
+            })
         })
 
         // Parse the interaction into something that can be displayed
         const parsedInteractions = interactions.map((interaction) => {
-          return {
-            id: interaction.id,
-            date: interaction.date,
-            created_on: interaction.date,
-            notes: interaction.notes,
-            subject: interaction.subject,
-            interaction_type: interaction.interaction_type,
-            dit_advisor: interaction.dit_advisor
-          }
+          return Object.assign({}, interaction, {
+            interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
+            dit_advisor: advisorHash[interaction.dit_advisor],
+            service: serviceOffers.find((option) => option.id === interaction.service),
+            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team)
+          })
         })
 
         const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliverys]
