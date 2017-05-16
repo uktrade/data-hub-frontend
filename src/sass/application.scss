@@ -16,6 +16,7 @@ $images-dir: '/images/';
 @import 'shame';
 @import 'splitheader';
 @import 'tables';
+@import 'pre';
 
 .table--readonly {
   border-left-width: 5px;

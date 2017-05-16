@@ -20,6 +20,7 @@ const metadata = require('./repos/metadata.repo')
 const user = require('./middleware/user')
 const auth = require('./middleware/auth')
 const csrf = require('./middleware/csrf')
+const errors = require('./middleware/errors')
 
 const apiController = require('./controllers/api.controller')
 const contactController = require('./controllers/contact.controller')
@@ -152,6 +153,9 @@ app.use(searchController.router)
 app.use(apiController.router)
 app.get('/', indexController)
 app.use('/ping.xml', pingdomController.get)
+
+app.use(errors.notFound)
+app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
   if (errors) {
