@@ -123,6 +123,12 @@ Lint both SASS and JS to make sure it conforms to rules:
 yarn run lint
 ```
 
+Manually setup github pre-commit hooks
+> Please note this also automatically runs as a `postinstall` npm script
+```
+npm run setup:githooks
+```
+
 ## Making changes
 
 See the [contributing guide](./CONTRIBUTING.md).
