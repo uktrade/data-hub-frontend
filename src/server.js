@@ -37,9 +37,9 @@ const interactionEditController = require('./controllers/interaction-edit.contro
 const serviceDeliveryController = require('./controllers/service-delivery.controller')
 const supportController = require('./controllers/support.controller')
 
+const isDev = config.isDev
 const app = express()
 app.disable('x-powered-by')
-const isDev = app.get('env') === 'development'
 winston.level = config.logLevel
 
 const RedisStore = redisCrypto(session)

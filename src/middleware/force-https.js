@@ -1,6 +1,5 @@
+const { isDev } = require('../config')
 const winston = require('winston')
-
-const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = function forceHttps (req, res, next) {
   try {
