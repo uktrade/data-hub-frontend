@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+PATH="/usr/local/bin:$PATH"
+
+set -o errexit
+unset GIT_DIR
+
+git diff --cached --name-only | if grep -E "src/sass/.*\.scss"
+then
+npm run lint:sass
+fi
+sass=$?
+
+git diff --cached --name-only | if grep -E ".*\.js$"
+then
+npm run lint:js && npm test
+fi
+javascript=$?
+
+[ ${sass} -ne 0 ] || [ ${javascript} -ne 0 ] && exit 1
+exit 0
