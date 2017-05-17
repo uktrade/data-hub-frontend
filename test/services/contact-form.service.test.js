@@ -1,7 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
-/* eslint no-unused-expressions: 0, prefer-promise-reject-errors: 0 */
-
-const proxyquire = require('proxyquire')
+/* eslint prefer-promise-reject-errors: 0 */
 
 describe('contact form service', function () {
   let contactFormService
@@ -11,7 +8,7 @@ describe('contact form service', function () {
   beforeEach(function () {
     throwError = false
 
-    contactFormService = proxyquire('../../src/services/contact-form.service', {
+    contactFormService = proxyquire(`${root}/src/services/contact-form.service`, {
       '../repos/contact.repo': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {

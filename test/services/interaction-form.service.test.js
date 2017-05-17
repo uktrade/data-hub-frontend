@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint handle-callback-err: 0, camelcase: 0, no-unused-expressions: 0 */
-const proxyquire = require('proxyquire')
+/* eslint handle-callback-err: 0, camelcase: 0 */
 
 describe('interaction form service', function () {
   let saveInteractionStub
@@ -36,7 +34,7 @@ describe('interaction form service', function () {
 
     saveInteractionStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
-    interactionFormService = proxyquire('../../src/services/interaction-form.service', {
+    interactionFormService = proxyquire(`${root}/src/services/interaction-form.service`, {
       '../repos/interaction.repo': {
         saveInteraction: saveInteractionStub
       }
@@ -131,7 +129,7 @@ describe('interaction form service', function () {
     it('should pass back any failures', function (done) {
       saveInteractionStub = sinon.stub().rejects(new Error('error'))
 
-      interactionFormService = proxyquire('../../src/services/interaction-form.service', {
+      interactionFormService = proxyquire(`${root}/src/services/interaction-form.service`, {
         '../repos/interaction.repo': {
           saveInteraction: saveInteractionStub
         }

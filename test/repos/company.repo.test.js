@@ -1,7 +1,5 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
-/* eslint no-unused-expressions: 0, prefer-promise-reject-errors: 0 */
+/* eslint prefer-promise-reject-errors: 0 */
 require('babel-polyfill')
-const proxyquire = require('proxyquire')
 
 describe('Company repository', () => {
   describe('Save company', () => {
@@ -242,7 +240,9 @@ describe('Company repository', () => {
   })
 
   function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-    return proxyquire('../../src/repos/company.repo', {'../lib/authorised-request': authorisedRequestStub})
+    return proxyquire(`${root}/src/repos/company.repo`, {
+      '../lib/authorised-request': authorisedRequestStub
+    })
   }
 
   function fail () {

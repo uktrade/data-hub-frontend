@@ -1,7 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
-const proxyquire = require('proxyquire')
-const metadatarepository = require('../../src/repos/metadata.repo')
+const metadatarepository = require(`${root}/src/repos/metadata.repo`)
 
 describe('company form service', function () {
   let companyFormService
@@ -10,7 +7,7 @@ describe('company form service', function () {
   beforeEach(function () {
     saveCompanyStub = sinon.stub().resolves({id: '1234'})
 
-    companyFormService = proxyquire('../../src/services/company-form.service', {
+    companyFormService = proxyquire(`${root}/src/services/company-form.service`, {
       '../repos/company.repo': {
         saveCompany: saveCompanyStub
       },
@@ -292,7 +289,7 @@ describe('company form service', function () {
     })
     it('handles errors', function () {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
-      companyFormService = proxyquire('../../src/services/company-form.service', {
+      companyFormService = proxyquire(`${root}/src/services/company-form.service`, {
         '../repos/company.repo': {
           saveCompany: saveCompanyStub
         }

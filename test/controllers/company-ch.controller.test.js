@@ -1,7 +1,3 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true, sinon: true */
-/* eslint no-unused-expressions: 0 */
-
-const proxyquire = require('proxyquire')
 const next = function (error) {
   throw Error(error)
 }
@@ -48,7 +44,7 @@ describe('Company controller, Companies Houe', function () {
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
 
-    companyControllerCh = proxyquire('../../src/controllers/company-ch.controller', {
+    companyControllerCh = proxyquire(`${root}/src/controllers/company-ch.controller`, {
       '../services/company.service': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },

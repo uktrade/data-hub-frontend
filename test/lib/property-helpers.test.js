@@ -1,7 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-/* eslint no-unused-expressions: 0 */
-
-const propertyHelpers = require('../../src/lib/property-helpers')
+const propertyHelpers = require(`${root}/src/lib/property-helpers`)
 
 describe('PropertyHelpers: Conversion of empty values to nulls in an object with nullEmptyFields', function () {
   it('Should convert an empty string to a null', function () {

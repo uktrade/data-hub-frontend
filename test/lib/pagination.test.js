@@ -1,5 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-const pagination = require('../../src/lib/pagination')
+const pagination = require(`${root}/src/lib/pagination`)
 
 describe('Pagination', () => {
   describe('Start and end index', () => {

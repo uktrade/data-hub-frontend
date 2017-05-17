@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-/* eslint no-unused-expressions: 0 */
-const servicedeliveryservice = require('../../src/services/service-delivery.service')
+const servicedeliveryservice = require(`${root}/src/services/service-delivery.service`)
 
 describe('Service delivery formatting service', function () {
   describe('convertServiceDeliveryFormToApiFormat', function () {
