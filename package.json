@@ -60,7 +60,9 @@
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "standard",
+    "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only | grep .*.js$); if [ $CHANGED_FILES ]; then eslint $CHANGED_FILES; fi",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
+    "lint:sass:modified": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only | grep .*.scss) -v -q",
     "develop": "parallel sass:watch js:client:watch js:server:watch",
     "client:watch": "parallel sass:watch js:client:watch",
     "js": "npm run js:client",
@@ -75,6 +77,10 @@
     "circle": "yarn standard && yarn nyc --reporter=html --reporter=text mocha --require test/common.js --ui bdd test/**/*.test.js && yarn sass && yarn js",
     "heroku-postbuild": "npm rebuild node-sass && yarn sass && yarn js"
   },
+  "pre-commit": [
+    "lint:sass:modified",
+    "lint:js:modified"
+  ],
   "author": "Zac Tolley <zac@thetolleys.com>",
   "license": "MIT",
   "engines": {
@@ -100,6 +106,7 @@
     ]
   },
   "devDependencies": {
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "pre-commit": "^1.2.2"
   }
 }
