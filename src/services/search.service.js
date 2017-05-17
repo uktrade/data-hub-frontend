@@ -68,6 +68,10 @@ function hasFilterForFacet (filters, facet) {
   const name = facet.name
   const value = facet.value
 
+  if (!filters) {
+    return
+  }
+
   return ((filters[name] && filters[name] === value) ||
       (filters[name] && Array.isArray(filters[name]) && includes(filters[name], value)))
 }
