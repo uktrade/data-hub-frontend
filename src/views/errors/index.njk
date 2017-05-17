@@ -1,0 +1,13 @@
+{% extends "layouts/ukti.njk" %}
+
+{% block main %}
+  <h1 class="heading-medium error">{{ statusCode }}</h1>
+  <p>{{ statusMessage }}</p>
+
+  {% if devErrorDetail %}
+    <ul>
+      <li>{{ devErrorDetail.message }}</li>
+      <li><pre class="horizontal-scroll">{{ devErrorDetail.stack }}</pre></li>
+    </ul>
+  {% endif %}
+{% endblock %}
