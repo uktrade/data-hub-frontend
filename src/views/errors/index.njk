@@ -5,9 +5,9 @@
   <p>{{ statusMessage }}</p>
 
   {% if devErrorDetail %}
-    <ul>
-      <li>{{ devErrorDetail.message }}</li>
-      <li><pre class="horizontal-scroll">{{ devErrorDetail.stack }}</pre></li>
-    </ul>
+    <dl class="stack-trace">
+      <dt class="stack-trace__heading">{{ devErrorDetail.message }}</dt>
+      <dd class="stack-trace__details">{{ devErrorDetail.stack }}</dd>
+    </dl>
   {% endif %}
 {% endblock %}

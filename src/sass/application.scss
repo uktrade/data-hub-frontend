@@ -9,6 +9,7 @@ $images-dir: '/images/';
 @import 'dashboard';
 @import 'facets';
 @import 'flash';
+@import 'errors';
 @import 'leftnav';
 @import 'login-bar';
 @import 'metadata-list';
@@ -18,7 +19,6 @@ $images-dir: '/images/';
 @import 'shame';
 @import 'splitheader';
 @import 'tables';
-@import 'pre';
 
 .table--readonly {
   border-left-width: 5px;
