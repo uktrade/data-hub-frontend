@@ -30,7 +30,7 @@ This file expects the following environment variables:
 | POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
 | API_CLIENT_ID | Half the credentials needed to talk to the back end |
 | API_CLIET_SECRET | The second half of the credentials needed to talk to the backend |
-| GOOGLE_TAG_MANAGER | The key needed to integrate with google tag manager to track usage |
+| GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with google tag manager to track usage |
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
 | REDIS_URL | A full length url to conenct to redis |
 | REDISTOGO_URL | Probably for use with heroku |

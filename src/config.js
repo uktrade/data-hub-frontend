@@ -22,7 +22,7 @@ module.exports = {
     host: process.env.REDIS_HOST || 'redis',
     metadataTtl: (process.env.METADATA_TTL || (15 * 60))
   },
-  googleTagManager: process.env.GOOGLE_TAG_MANAGER,
+  googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
     secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
     // 2 hour timeout
