@@ -1,0 +1,8 @@
+// In country lists, hide all but the first label
+.country-list > .form-group > .form-label-bold {
+  display: block;
+}
+
+.country-list > .form-group ~ .form-group .form-label-bold {
+  display: none;
+}

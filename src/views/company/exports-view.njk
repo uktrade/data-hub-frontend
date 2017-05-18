@@ -1,0 +1,16 @@
+{% extends "./index.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+  {% include "messages.njk" %}
+  <h2 class="heading-medium">Exports</h2>
+  {{ trade.keyvaluetable(exportDetails, id="company-exports", labels=exportDetailsLabels, keyorder=exportDetailsDisplayOrder) }}
+  <p class="actions">
+    <a href="/company-exports/edit/{{company.id}}" class="button button-secondary">Edit summary</a>
+  </p>
+
+  <div class="section">
+    <h2 class="heading-medium">Export wins</h2>
+    <p><a href="http://www.exportwins.service.trade.gov.uk/">Record your win</a> on our export wins site.<p>
+  </div>
+{% endblock %}

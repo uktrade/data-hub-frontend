@@ -52,15 +52,6 @@ hr {
   }
 }
 
-.add-another-button {
-  @include core-19;
-  background-color: $white;
-  border: 0;
-  color: $link-colour;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
 .fieldset--address {
   margin-bottom: 40px;
 }
@@ -247,4 +238,19 @@ hr {
       white-space: nowrap;
     }
   }
+}
+
+#company-exports {
+  th {
+    white-space: nowrap;
+  }
+}
+
+.button--link {
+  background-color: $white;
+  border: 0;
+  color: $link-colour;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 0;
 }

@@ -107,8 +107,7 @@ function flattenIdFields (data) {
       if (Array.isArray(fieldValue)) {
         // Scan through the array of values, strip out any that are null, empty or have a null or empty id
         data[fieldName] = fieldValue
-          .filter(item =>
-            ((item && item.id && item.id !== null && item.id.length > 0) || (item !== null && item.length > 0)))
+          .filter(item => (item && item.id))
           .map(item => item.id)
       } else if (typeof fieldValue === 'object' && 'id' in fieldValue) {
         data[fieldName] = fieldValue.id
