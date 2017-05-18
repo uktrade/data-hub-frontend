@@ -4,16 +4,17 @@ const prod = process.env.NODE_ENV === 'production'
 module.exports = {
   devtool: prod ? 'hidden-source-map' : 'source-map',
   entry: {
-    companyinvestmenttabform: './src/javascripts/companyinvestmenttabform',
-    companyadd: './src/javascripts/companyadd',
-    companyedit: './src/javascripts/companyedit',
-    contactedit: './src/javascripts/contactedit',
+    'company-investment-tab-form': './src/javascripts/company-investment-tab-form',
+    'company-add': './src/javascripts/company-add',
+    'company-edit': './src/javascripts/company-edit',
+    'contact-edit': './src/javascripts/contact-edit',
     investment: './src/javascripts/investment',
-    createinvestment: './src/javascripts/createinvestment',
-    expandingcards: './src/javascripts/expandingcards',
+    'create-investment': './src/javascripts/create-investment',
+    'expandable-card': './src/javascripts/expandable-card',
     index: './src/javascripts/index',
     search: './src/javascripts/search',
-    servicedelivery: './src/javascripts/servicedelivery'
+    'service-delivery': './src/javascripts/service-delivery',
+    'archive-form': './src/javascripts/archive-form'
   },
   output: {
     path: 'build/javascripts',

@@ -1,0 +1,36 @@
+{% extends "layouts/ukti.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+
+  <h2 class="heading-xlarge">Login</h2>
+
+  {% if messages.error.length %}
+    <div class="flash-message error-message">
+      <p class="flash-message-content">
+        {% for message in messages.error %}
+          {{ message }}<br>
+        {% endfor %}
+      </p>
+    </div>
+  {% endif %}
+
+  {% if messages.success.length %}
+    <div class="flash-message success-message">
+      <p class="flash-message-content">
+        {% for message in messages.success %}
+          {{ message }}<br>
+        {% endfor %}
+      </p>
+    </div>
+  {% endif %}
+
+  {{ trade.errorPanel( messages.formErrors ) }}
+
+  <form action="{{ action }}" method="post">
+    {{ trade.textbox('username', label="User name", error=errors.username, autofocus=true) }}
+    {{ trade.textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
+    {{ trade.save(buttonText='Login') }}
+  </form>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "layouts/ukti-search-header.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main %}
+  {% if query.contact %}
+    {% set backUrl="/contact-interactions/" + query.contact %}
+    <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
+  {% elseif query.company %}
+    {% set backUrl="/company-interactions/" + query.company %}
+    <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
+  {% endif %}
+
+  <h1 class="heading-xlarge">
+    {% if serviceDelivery.id %}
+      Edit service delivery
+    {% else %}
+      Add new service delivery
+    {% endif %}
+  </h1>
+  {{ trade.errorPanel( errors, labels=labels ) }}
+  <form method="POST">
+    <input type="hidden" name="company" value="{{serviceDelivery.company.id}}"/>
+    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    {% if serviceDelivery.id %}
+      <input type="hidden" name="id" value="{{serviceDelivery.id}}"/>
+    {% endif %}
+
+    {% if serviceDelivery.contact %}
+    <div class='form-group'>
+      <div class='form-label-bold'>Contact</div>
+      <a href="/contact/{{ serviceDelivery.contact.id }}/details">{{ serviceDelivery.contact.name }}</a>
+    </div>
+    {% else  %}
+    <div class='form-group'>
+      <div class='form-label-bold'>Company</div>
+      <a href="{{companyUrl}}">{{ serviceDelivery.company.name }}</a>
+    </div>
+    {% endif %}
+
+
+    <div class='form-group'>
+      <div class='form-label-bold'>Interaction type</div>
+      Service delivery
+    </div>
+
+    {{ trade.autocomplete("dit_team",
+      label="Service provider",
+      emptyLabel="Pick a provider",
+      hint="Please start typing to search for a provider",
+      value=serviceDelivery.dit_team.id,
+      error=errors.dit_team,
+      options=serviceProviderOptions)
+    }}
+
+    {{ trade.autocomplete('service',
+      label=labels.service,
+      value=serviceDelivery.service.id,
+      hint="Please start typing to search for a service",
+      error=errors.service,
+      options=serviceOptions
+      )
+    }}
+
+    {{ trade.dropdown("event",
+      label=labels.event,
+      emptyLabel="Pick a value",
+      value=serviceDelivery.event.id,
+      options=eventOptions,
+      error=errors.event)
+    }}
+
+    {{ trade.dropdown("status",
+      label=labels.status,
+      emptyLabel="Pick a value",
+      value=serviceDelivery.status.id,
+      options=statusOptions,
+      error=errors.status)
+    }}
+
+    {{ trade.textbox("subject",
+      label=labels.subject,
+      value=serviceDelivery.subject,
+      error=errors.subject)
+    }}
+
+    {{ trade.textarea("notes",
+      label=labels.notes,
+      value=serviceDelivery.notes) }}
+
+    {{ trade.date('date', label='Service delivery start date', value=serviceDelivery.date ) }}
+
+    {{ trade.autocomplete("contact",
+      label=labels.contact,
+      emptyLabel="Pick a contact",
+      hint="Please start typing to search for a contact",
+      value=serviceDelivery.contact.id,
+      error=errors.contact,
+      options=contacts)
+    }}
+
+    {{ trade.autocomplete('dit_advisor',
+      label=labels.dit_advisor,
+      value=serviceDelivery.dit_advisor.id,
+      displayvalue=serviceDelivery.dit_advisor.name,
+      hint="Please start typing to search for an advisor",
+      error=errors.advisor,
+      autofocus=false,
+      url='/api/accountmanagerlookup?term=')
+    }}
+
+    {{ trade.dropdown("uk_region",
+      label=labels.uk_region,
+      emptyLabel="Pick a value",
+      value=serviceDelivery.uk_region.id,
+      options=regionOptions,
+      error=errors.uk_region)
+    }}
+    {{ trade.dropdown("sector",
+      label=labels.sector,
+      emptyLabel="Pick a value",
+      value=serviceDelivery.sector.id,
+      options=sectorOptions,
+      error=errors.sector)
+    }}
+
+    {{ trade.dropdown("country_of_interest",
+      label=labels.country_of_interest,
+      emptyLabel="Pick a country",
+      hint="Please start typing to search for a country",
+      value=serviceDelivery.country_of_interest.id,
+      error=errors.country_of_interest,
+      options=countryOptions,
+      class="select-autocomplete-js")
+    }}
+
+    {{ trade.save(backUrl) }}
+  </form>
+  <script src="{{ asset_path }}javascripts/service-delivery.bundle.js"></script>
+{% endblock %}

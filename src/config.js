@@ -1,8 +1,10 @@
 const port = process.env.PORT || 3000
-const defaultLogLevel = (process.env.NODE_ENV === 'development') ? 'debug' : 'error'
+const isDev = (process.env.NODE_ENV !== 'production')
+const defaultLogLevel = isDev ? 'debug' : 'error'
 
 module.exports = {
   env: process.env.NODE_ENV,
+  isDev,
   port,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {

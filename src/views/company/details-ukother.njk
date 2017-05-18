@@ -1,0 +1,18 @@
+{% extends "./index.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+  {% include "messages.njk" %}
+
+  <h2 class="heading-medium">Company summary</h2>
+  {{ trade.keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
+  <p><a href="/company/edit/ukother/{{company.id}}" class="button">Edit</a></p>
+
+  {% if accountManagementDisplay %}
+    <div class="section">
+      <h2 class="heading-medium">Account management</h2>
+      {{ trade.keyvaluetable(accountManagementDisplay, stripey=true, labels=accountManagementDisplayLabels) }}
+      <p class="footnote">You do not have permission to edit the Account management section</strong></p>
+    </div>
+  {% endif %}
+{% endblock %}

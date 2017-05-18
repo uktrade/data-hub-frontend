@@ -1,5 +1,4 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
-const phone = require('../../src/lib/phone')
+const phone = require(`${root}/src/lib/phone`)
 
 describe('Phone utility', function () {
   it('should format a correctly entered interational number', function () {

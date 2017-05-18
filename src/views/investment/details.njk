@@ -1,0 +1,44 @@
+{% extends "layouts/ukti.njk" %}
+
+{% block main %}
+
+  {% import "macros/trade.html" as trade %}
+  {% import "./investment_macros.njk" as local %}
+
+<h1>{{ projectTitle }}</h1>
+
+<div class="panel">
+  {{ projectNumber }}
+  Close project
+
+  Prospect stage
+  {{ prospectStage }}
+</div>
+
+  <h2 class="heading-medium">Investment project summary</h2>
+  {{ trade.keyvaluetable(
+  details,
+  stripey=false,
+  labels=detailsDisplay,
+  keyorder=detailsDisplayOrder,
+  id="investment-details")
+  }}
+
+  <h2 class="heading-medium">Value</h2>
+  <div class="panel">Please complete this section to move to "Assign project manager stage"</div>
+
+  <h2 class="heading-medium">Requirements and location</h2>
+  <div class="panel">Please complete this section to move to "Assign project manager stage"</div>
+
+  <h2></h2>
+
+  <h2 class="heading-medium">Referral source</h2>
+  {{ trade.keyvaluetable(
+  referral,
+  stripey=false,
+  labels=referLabels,
+  keyorder=referOrder,
+  id="investment-details")
+  }}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layouts/ukti.njk" %}
+
+{% block main %}
+
+  <h2 class="heading-xlarge">My Account</h2>
+
+  <table class="table-detail">
+    <tbody>
+    <tr>
+      <th width="30%">Username</th>
+      <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+      <th width="30%">Name</th>
+      <td>{{ user.name }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

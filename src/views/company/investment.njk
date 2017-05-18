@@ -1,0 +1,39 @@
+{% extends "./index.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block tabmain %}
+<div id="summary-table-wrapper">
+  <!-- TEMPLATE company/investment.njk -->
+  <h2 class="heading-medium">Investment summary</h2>
+  <div class="section">
+    {{ trade.keyvaluetable(
+      investmentDisplay,
+      stripey=true,
+      labels=investmentDetailLabels,
+      keyorder=investmentDetailsDisplayOrder,
+      id="investment-details")
+    }}
+    <a href="/company/company_company/{{company.id}}/investment/edit" class="button">Update</a>
+  </div>
+  {% if not investmentProjects %}
+    <h2 class="heading-medium">Investment projects</h2>
+    <p>This company does not have any investment projects</p>
+    <a href="/investment/{{company.id}}" class="button button-secondary">Create investment project</a>
+  {% else %}
+    <div class="section">
+      <div class="split-header">
+        <div class="cell">
+          <h3 class="heading-medium">Investment projects</h3>
+        </div>
+        <div class="cell">
+          <a href="/investment/{{company.id}}" class="button button-secondary">Create investment project</a>
+        </div>
+      </div>
+      {{ trade.datatable(investmentProjectsOpen, headings=investmentProjectsOpenLabels, columnorder=investmentProjectsOpenKeys, class="investment-project-summary-table") }}
+    </div>
+    <div class="section">
+      {{ trade.datatable(investmentProjectsClosed, headings=investmentProjectsClosedLabels, columnorder=investmentProjectsClosedKeys, class="investment-project-summary-table") }}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

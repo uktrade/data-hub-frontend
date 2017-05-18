@@ -1,6 +1,4 @@
-/* globals expect: true, describe: true, it: true */
-/* eslint no-unused-expressions: 0 */
-const address = require('../../src/lib/address')
+const address = require(`${root}/src/lib/address`)
 
 describe('Address formatter', function () {
   it('should format an address when it is fully populated.', function () {

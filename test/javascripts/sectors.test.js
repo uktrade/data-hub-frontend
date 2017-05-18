@@ -1,8 +1,7 @@
-/* globals expect: true, describe: true, it: true, beforeEach: true */
-/* eslint no-new: 0, no-unused-expressions: 0 */
+/* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const Sectors = require('../../src/javascripts/sectors')
+const Sectors = require(`${root}/src/javascripts/sectors`)
 
 const HTML = `
   <html>

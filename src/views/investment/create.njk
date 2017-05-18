@@ -1,0 +1,33 @@
+{% extends "layouts/ukti.njk" %}
+
+{% block main %}
+
+  {% import "macros/trade.html" as trade %}
+
+  <h1 class="page-heading">Add new investment project</h1>
+
+  <div class="grid-row">
+    <div class="column-three-quarters">
+
+      {% if equityCompany %}
+        <h2 class="heading-medium">Source of foreign equity investment</h2>
+
+        <table class="table--key-value">
+          <tbody>
+            <tr>
+              <td>{{ equityCompany.name }}</td>
+            </tr>
+            <tr>
+              <td>{{ equityCompany.registered_address_country.name }}</td>
+            </tr>
+            <tr>
+              <td>{{ equityCompanyInvestments.count|default('No', true) }} investment project{{ 's' if equityCompanyInvestments.count != 1 }} in the UK</td>
+            </tr>
+          </tbody>
+        </table>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}
