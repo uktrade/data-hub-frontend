@@ -10,12 +10,12 @@ const {
 
 const localNavItems = [
   { label: 'Project details', slug: 'details' },
-  { label: 'Client', url: 'client' },
-  { label: 'Project team', url: 'team' },
-  { label: 'Interactions', url: 'interactions' },
-  { label: 'Documents', url: 'documents' },
-  { label: 'Evaluation', url: 'evaluation' },
-  { label: 'Audit history', url: 'audit' }
+  { label: 'Client', slug: 'client' },
+  { label: 'Project team', slug: 'team' },
+  { label: 'Interactions', slug: 'interactions' },
+  { label: 'Documents', slug: 'documents' },
+  { label: 'Evaluation', slug: 'evaluation' },
+  { label: 'Audit history', slug: 'audit' }
 ]
 
 function getDetails (req, res, next) {
