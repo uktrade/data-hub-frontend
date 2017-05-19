@@ -1,6 +1,9 @@
-const chai = require('chai').use(require('sinon-chai'))
+const chai = require('chai')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
+
+chai.use(require('sinon-chai'))
+chai.use(require('chai-as-promised'))
 
 // mocha globals
 global.expect = chai.expect
