@@ -30,3 +30,7 @@ reports
 .env
 npm*.log
 stats.json
+
+.nyc_output
+coverage
+test-results.xml
