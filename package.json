@@ -89,6 +89,7 @@
     "node": "6.10.2"
   },
   "devDependencies": {
+    "chai-as-promised": "^6.0.0",
     "pre-commit": "^1.2.2"
   }
 }
