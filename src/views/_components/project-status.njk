@@ -1,0 +1,19 @@
+{% if project_code %}
+  <div class="status-bar grid-row">
+    <dl class="status-bar__section column-one-quarter">
+      <dt>Project code</dt>
+      <dd class="status-bar__section-title">
+        {{ project_code }}
+      </dd>
+      <dd>
+        <a href="#">Close project</a>
+      </dd>
+    </dl>
+    <dl class="status-bar__section column-one-quarter">
+      <dt>Phase</dt>
+      <dd class="status-bar__section-title">
+        {{ phase.name }} stage
+      </dd>
+    </dl>
+  </div>
+{% endif %}
