@@ -56,7 +56,11 @@ function editDetails (req, res, next) {
   })
 }
 
-router.get('/investment/:id', (req, res) => res.redirect(`/investment/${req.params.id}/details`))
+function redirectToDetails (req, res) {
+  return res.redirect(`/investment/${req.params.id}/details`)
+}
+
+router.get('/investment/:id', (req, res) => redirectToDetails)
 router.get('/investment/:id/details', getDetails)
 router.get('/investment/:id/details/edit', editDetails)
 
