@@ -19,7 +19,7 @@
     {% block localNav %}
       <nav class="local-nav column-one-quarter">
         {% for item in localNavItems %}
-          <a href="/investment/{{project.id}}/{{ item.slug }}" class="local-nav__link{% if tab == item.id %} is-active{% endif %}">
+          <a href="/investment/{{project.id}}/{{ item.slug }}" class="local-nav__link{% if currentNavItem == item.slug %} is-active{% endif %}">
             {{ item.label }}
           </a>
         {% endfor %}

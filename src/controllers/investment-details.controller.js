@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const winston = require('winston')
 const Q = require('q')
-const kebabCase = require('lodash/kebabCase')
 
 const {
   getInvestmentProjectSummary,
@@ -17,10 +16,7 @@ const localNavItems = [
   { label: 'Documents', url: 'documents' },
   { label: 'Evaluation', url: 'evaluation' },
   { label: 'Audit history', url: 'audit' }
-].map(item => {
-  item.id = kebabCase(item.label)
-  return item
-})
+]
 
 function getDetails (req, res, next) {
   Q.spawn(function * () {
@@ -34,7 +30,7 @@ function getDetails (req, res, next) {
         value,
         requirements,
         localNavItems,
-        tab: 'project-details'
+        currentNavItem: 'details'
       })
     } catch (error) {
       winston.error(error)
