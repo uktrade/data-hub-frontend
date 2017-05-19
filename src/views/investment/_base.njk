@@ -1,7 +1,6 @@
 {% extends "layouts/ukti.njk" %}
 
 {% import "macros/trade.html" as trade %}
-{% from "./_macros.njk" import projectStatus %}
 
 {% block main %}
   {% block heading %}
@@ -12,7 +11,7 @@
   {% endblock %}
 
   {% block projectStatus %}
-    {{ projectStatus(project) }}
+    {% component 'project-status', project %}
   {% endblock %}
 
   <div class="grid-row">

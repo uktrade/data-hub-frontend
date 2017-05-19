@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const winston = require('winston')
 const Q = require('q')
 
 const {
@@ -33,7 +32,6 @@ function getDetails (req, res, next) {
         currentNavItem: 'details'
       })
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
@@ -50,7 +48,6 @@ function editDetails (req, res, next) {
         tab: 'project-details'
       })
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
