@@ -58,6 +58,7 @@
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
+    "test:watch": "npm test -- -w",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "eslint ./test ./src *.js",

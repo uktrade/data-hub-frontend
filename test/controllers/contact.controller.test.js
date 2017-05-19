@@ -4,7 +4,7 @@ const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {
   let getContactStub
-  let getViewCompanyLinkStub
+  let buildCompanyUrlStub
   let getDisplayContactStub
   let contactController
   let contact
@@ -60,7 +60,7 @@ describe('Contact controller', function () {
     }
     getContactStub = sinon.stub().resolves(contact)
     getDisplayContactStub = sinon.stub().returns(formatted)
-    getViewCompanyLinkStub = sinon.stub().returns(companyUrl)
+    buildCompanyUrlStub = sinon.stub().returns(companyUrl)
     contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
       '../repos/contact.repo': {
         getContact: getContactStub
@@ -69,7 +69,7 @@ describe('Contact controller', function () {
         getDisplayContact: getDisplayContactStub
       },
       '../services/company.service': {
-        getViewCompanyLink: getViewCompanyLinkStub
+        buildCompanyUrl: buildCompanyUrlStub
       },
       'winston': {
         error: sinon.stub()
@@ -107,7 +107,7 @@ describe('Contact controller', function () {
         render: function () {}
       }
       const next = function () {
-        expect(getViewCompanyLinkStub).to.have.been.calledWith(contact.company)
+        expect(buildCompanyUrlStub).to.have.been.calledWith(contact.company)
         done()
       }
       contactController.getCommon(req, res, next)
@@ -139,7 +139,7 @@ describe('Contact controller', function () {
           getDisplayContact: getDisplayContactStub
         },
         '../services/company.service': {
-          getViewCompanyLink: getViewCompanyLinkStub
+          buildCompanyUrl: buildCompanyUrlStub
         },
         'winston': {
           error: sinon.stub()

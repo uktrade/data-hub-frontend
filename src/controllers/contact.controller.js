@@ -21,7 +21,7 @@ function getCommon (req, res, next) {
       try {
         res.locals.id = req.params.contactId
         res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.contactId)
-        res.locals.companyUrl = companyService.getViewCompanyLink(res.locals.contact.company)
+        res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.contact.company)
         res.locals.reasonForArchiveOptions = reasonForArchiveOptions
         genCSRF(req, res)
         next()

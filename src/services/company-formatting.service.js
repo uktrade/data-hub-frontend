@@ -3,7 +3,7 @@ const { getFormattedAddress } = require('../lib/address')
 const { titleCase } = require('../lib/text-formatting')
 const { formatLongDate } = require('../lib/date')
 const { getPrimarySectorName } = require('../lib/transform-sectors')
-const { getViewCompanyLink } = require('./company.service')
+const { buildCompanyUrl } = require('./company.service')
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
@@ -70,7 +70,7 @@ function parseRelatedData (companies) {
   return companies.map((company) => {
     const key = (company.trading_address_1 && company.trading_address_1.length > 0) ? 'trading' : 'registered'
     let address = getFormattedAddress(company, key)
-    const url = getViewCompanyLink(company)
+    const url = buildCompanyUrl(company)
     return {
       name: `<a href="${url}">${company.alias || company.name}</a>`,
       address

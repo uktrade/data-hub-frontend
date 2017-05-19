@@ -7,6 +7,7 @@ const { contactLabels } = require('../labels/contact-labels')
 const metadataRepository = require('../repos/metadata.repo')
 const companyRepository = require('../repos/company.repo')
 const { getCommon } = require('../controllers/contact.controller')
+const { buildCompanyUrl } = require('../services/company.service')
 
 const router = express.Router()
 
@@ -48,6 +49,7 @@ function editDetails (req, res, next) {
       // Labels and options needed for the form and error display
       res.locals.contactLabels = contactLabels
       res.locals.countryOptions = metadataRepository.countryOptions
+      res.locals.companyUrl = buildCompanyUrl(res.locals.company)
 
       genCSRF(req, res)
       res.render('contact/edit')
