@@ -9,7 +9,7 @@ const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
 const serviceDeliveryService = require('../services/service-delivery.service')
 const { getDisplayServiceDelivery } = require('../services/service-delivery-formatting.service')
-const { getViewCompanyLink } = require('../services/company.service')
+const { buildCompanyUrl } = require('../services/company.service')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
 const router = express.Router()
@@ -63,7 +63,7 @@ function getServiceDeliveryEdit (req, res, next) {
       res.locals.regionOptions = metadataRepository.regionOptions
       res.locals.statusOptions = metadataRepository.serviceDeliveryStatusOptions
       res.locals.eventOptions = metadataRepository.eventOptions
-      res.locals.companyUrl = getViewCompanyLink(res.locals.serviceDelivery.company)
+      res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
 
       res.render('interaction/service-delivery-edit')
     } catch (error) {

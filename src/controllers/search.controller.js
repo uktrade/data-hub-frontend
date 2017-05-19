@@ -1,6 +1,6 @@
 const express = require('express')
 const companyRepository = require('../repos/company.repo')
-const { getViewCompanyLink } = require('../services/company.service')
+const { buildCompanyUrl } = require('../services/company.service')
 const searchService = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
 const Q = require('q')
@@ -37,7 +37,7 @@ function viewCompanyResult (req, res, next) {
     Q.spawn(function * () {
       try {
         const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-        res.redirect(getViewCompanyLink(company))
+        res.redirect(buildCompanyUrl(company))
       } catch (error) {
         next(error)
       }
