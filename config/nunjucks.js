@@ -16,11 +16,12 @@ function ComponentExtension (env) {
     return new nodes.CallExtension(this, 'run', args)
   }
 
-  this.run = function run (context, name, locals = {}) {
+  this.run = function run (context, name, ...locals) {
     let result = ''
 
     try {
-      result = env.render(`${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`, locals)
+      const localsData = Object.assign(...locals)
+      result = env.render(`${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`, localsData)
     } catch (e) {
       if (e.message.includes('template not found')) {
         result = `Component '${name}' does not exist`
