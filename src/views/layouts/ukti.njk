@@ -4,18 +4,22 @@
 {% block service_name %}Data Hub{% endblock %}
 
 {% block head_styles %}
-<!-- This is a test -->
 <link href="{{ asset_path | default('/') }}css/application.css" media="screen" rel="stylesheet" />
 {% endblock %}
 
 {% block head_script %}
- {% if user %}
+  {% include "_includes/google-tag-manager-snippet.njk" %}
+  {% if user %}
     <script>
       if (!window.DIT) window.DIT = {};
       window.DIT.user = {{ user | stringify | safe }};
     </script>
   {% endif %}
     <script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
+{% endblock %}
+
+{% block body_start %}
+  {% include "_includes/google-tag-manager-no-script.njk" %}
 {% endblock %}
 
 {% block content %}
