@@ -1,8 +1,11 @@
+const path = require('path')
+
 const port = process.env.PORT || 3000
 const isDev = (process.env.NODE_ENV !== 'production')
 const defaultLogLevel = isDev ? 'debug' : 'error'
 
 module.exports = {
+  root: path.normalize(`${__dirname}/..`),
   env: process.env.NODE_ENV,
   isDev,
   port,

@@ -127,6 +127,29 @@ yarn run lint
 
 See the [contributing guide](./CONTRIBUTING.md).
 
+## Components
+
+This app includes support for including components using a custom [nunjucks
+tag](https://mozilla.github.io/nunjucks/api.html#custom-tags). This method
+allows components to be available in all layouts, views, includes and macros
+and allows each component to be a separating entity which makes maintaining
+and testing them easier.
+
+To include a component with its default state or one that expects no data:
+
+```njk
+{% component 'person' %}
+```
+
+To include a component and pass data to it:
+
+```njk
+{% component 'person', {
+  name: 'Barry',
+  age: '55'
+} %}
+```
+
 ## Deployment
 
 Commits to `develop` are automatically deployed to a heroku instance. Pull
