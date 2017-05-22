@@ -1,0 +1,32 @@
+{##
+ # @param {object} items An object of items with label as key
+ #
+ # @param {string} [variant] A table
+ #
+ # @return {string} HTML for key/value table
+ #
+ # @example
+ #   {% component 'key-value-table', variant='striped', items={
+ #     'Key #1: '80%',
+ #     'Key #2: '20%'
+ #   } %}
+ #}
+
+{% if items|length %}
+  <table class="table--key-value{{ ' table--' + variant if variant }}">
+    <tbody>
+      {% for label, data in items %}
+        <tr>
+          <th>{{ label }}</th>
+          <td>
+            {% if data.url %}
+              <a href="{{ data.url }}">{{ data.name }}</a>
+            {% else %}
+              {{ data }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

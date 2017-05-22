@@ -3,156 +3,31 @@
 {% block mainContent %}
   <article class="column-three-quarters">
     <h2 class="heading-medium">Investment project summary</h2>
-
-    <table class="table--key-value  table--striped">
-      <tbody>
-        <tr>
-          <th>Client</th>
-          <td>
-            <a href="/company/ukother/{{ project.investor_company.id }}">{{ project.investor_company.name }}</a>
-          </td>
-        </tr>
-        <tr>
-          <th>Type of investment</th>
-          <td>{{ project.investment_type.name }}</td>
-        </tr>
-        <tr>
-          <th>Primary sector</th>
-          <td>{{ project.sector }}</td>
-        </tr>
-        <tr>
-          <th>Sub-sector</th>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Business activity</th>
-          <td>{{ project.business_activity }}</td>
-        </tr>
-        <tr>
-          <th>Project description</th>
-          <td>{{ project.description }}</td>
-        </tr>
-        <tr>
-          <th>Non-disclosure agreement</th>
-          <td>{{ 'Signed' if project.nda_signed else 'Not signed' }}</td>
-        </tr>
-        <tr>
-          <th>Shareable with UK partners</th>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Anonymous description</th>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Estimated land date</th>
-          <td>{{ project.estimated_land_date | date('MMMM YYYY') }}</td>
-        </tr>
-      </tbody>
-    </table>
+    {% component 'key-value-table', items=project, variant='striped' %}
     <p>
-      <a href="/investment/{{ project.id }}/details/edit" class="button-secondary">Edit summary</a>
+      <a href="/investment/{{ projectMeta.id }}/details/edit" class="button-secondary">Edit summary</a>
     </p>
 
     <h2 class="heading-medium">Value</h2>
-    <table class="table--key-value  table--striped">
-      <tbody>
-        <tr>
-          <th>Total investment</th>
-          <td>{{ value.total_investment }}</td>
-        </tr>
-        <tr>
-          <th>Foreign equity investment</th>
-          <td>{{ value.foreign_equity_investment }}</td>
-        </tr>
-        <tr>
-          <th>Government assistance</th>
-          <td>{{ value.government_assistance }}</td>
-        </tr>
-        <tr>
-          <th>New jobs</th>
-          <td>{{ value.number_new_jobs }}</td>
-        </tr>
-        <tr>
-          <th>Average salary</th>
-          <td>{{ value.average_salary }}</td>
-        </tr>
-        <tr>
-          <th>Safeguarded jobs</th>
-          <td>{{ value.number_safeguarded_jobs }}</td>
-        </tr>
-        <tr>
-          <th>R&D budget</th>
-          <td>{{ value.r_and_d_budget }}</td>
-        </tr>
-        <tr>
-          <th>Non-FDI R&D project</th>
-          <td>{{ value.non_fdi_r_and_d_budget }}</td>
-        </tr>
-        <tr>
-          <th>New-to-world tech</th>
-          <td>{{ value.new_tech_to_uk }}</td>
-        </tr>
-        <tr>
-          <th>Export revenue</th>
-          <td>{{ value.export_revenue }}</td>
-        </tr>
-      </tbody>
-    </table>
+    {% component 'key-value-table', items=value, variant='striped' %}
     <p>
-      <a href="/investment/{{ project.id }}/value/start" class="button">Start</a>
+      <a href="/investment/{{ projectMeta.id }}/value/start" class="button">Start</a>
     </p>
 
     <h2 class="heading-medium">Requirements and location</h2>
-    <table class="table--key-value  table--striped">
-      <tbody>
-        <tr>
-          <th>Main strategic driver</th>
-          <td>{{ requirements.strategic_drivers }}</td>
-        </tr>
-        <tr>
-          <th>Client requirements</th>
-          <td>{{ requirements.client_requirements }}</td>
-        </tr>
-        <tr>
-          <th>Competitor countries</th>
-          <td>{{ requirements.competitor_countries }}</td>
-        </tr>
-        <tr>
-          <th>Possible UK locations</th>
-          <td>{{ requirements.uk_region_locations }}</td>
-        </tr>
-        <tr>
-          <th>Investment location</th>
-          <td>{{ requirements.average_salary }}</td>
-        </tr>
-        <tr>
-          <th>UK recipient company</th>
-          <td>{{ requirements.uk_company }}</td>
-        </tr>
-      </tbody>
-    </table>
+    {% component 'key-value-table', items=requirements, variant='striped' %}
     <p>
-      <a href="/investment/{{ project.id }}/requirements/start" class="button">Start</a>
+      <a href="/investment/{{ projectMeta.id }}/requirements/start" class="button">Start</a>
     </p>
 
     <h2 class="heading-medium">Referral source</h2>
-    <table class="table--key-value  table--striped">
-      <tbody>
-        <tr>
-          <th>Activity</th>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Event</th>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Advisor</th>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-
+    {% component 'key-value-table', {
+      items: {
+        'Activity': null,
+        'Event': null,
+        'Advisor': null
+      },
+      variant: 'striped'
+    } %}
   </article>
 {% endblock %}
