@@ -107,7 +107,7 @@ function getCompanyForSource (token, id, source) {
  */
 function buildCompanyUrl (company) {
   const companyPath = '/company/view'
-  const businessType = company.business_type && company.business_type.name.toLowerCase()
+  const businessType = company.business_type && (company.business_type.name && company.business_type.name.toLowerCase())
   let urlPath
 
   if (!company.uk_based) {
