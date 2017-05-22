@@ -44,6 +44,7 @@
     "q": "^1.4.1",
     "request": "^2.74.0",
     "request-promise": "^4.1.1",
+    "rimraf": "^2.6.1",
     "sass-lint": "^1.10.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.10.0",
@@ -54,7 +55,7 @@
     "winston": "^2.3.0"
   },
   "scripts": {
-    "clean": "rm -rf build",
+    "clean": "rimraf build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",

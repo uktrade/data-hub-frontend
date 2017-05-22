@@ -106,19 +106,21 @@ function getCompanyForSource (token, id, source) {
  * @returns {string} urlPath
  */
 function buildCompanyUrl (company) {
-  const companyPath = '/company/view'
-  const businessType = company.business_type && company.business_type.name.toLowerCase()
-  let urlPath
+  try {
+    const companyPath = '/company/view'
+    const businessType = company.business_type && company.business_type.name.toLowerCase()
+    let urlPath
 
-  if (!company.uk_based) {
-    urlPath = `${companyPath}/foreign/${company.id}`
-  } else if (businessType.includes('limited company')) {
-    urlPath = `${companyPath}/ltd/${company.id}`
-  } else {
-    urlPath = `${companyPath}/ukother/${company.id}`
-  }
+    if (!company.uk_based) {
+      urlPath = `${companyPath}/foreign/${company.id}`
+    } else if (businessType.includes('limited company')) {
+      urlPath = `${companyPath}/ltd/${company.id}`
+    } else {
+      urlPath = `${companyPath}/ukother/${company.id}`
+    }
 
-  return urlPath
+    return urlPath
+  } catch (error) {}
 }
 
 function getHeadingAddress (company) {
