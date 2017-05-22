@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const Q = require('q')
 const moment = require('moment')
-const lodash = require('lodash')
 
 const {buildCompanyUrl} = require('../services/company.service')
 const {
