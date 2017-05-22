@@ -19,15 +19,15 @@
     border-left: 8px solid $grey-2;
 
     @media(min-width: 640px) {
-      left: $gutter-one-third;
+      left: $gutter-half;
     }
   }
 }
 
 .status-bar__section {
   &:first-child {
-    @media(min-width: 640px) {
-      padding-left: $gutter;
+    @include media(tablet) {
+      padding-left: $gutter-half + $gutter-two-thirds;
     }
   }
 

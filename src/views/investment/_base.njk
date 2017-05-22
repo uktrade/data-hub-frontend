@@ -5,20 +5,21 @@
 {% block main %}
   {% block heading %}
     <h1 class="visually-hidden">Investment details</h1>
-    <h2 class="page-heading">
-      {{ project.name }}
-    </h2>
+    <h2 class="page-heading">{{ projectMeta.name }}</h2>
   {% endblock %}
 
   {% block projectStatus %}
-    {% component 'project-status', project %}
+    {% component 'project-status', projectMeta %}
   {% endblock %}
 
   <div class="grid-row">
     {% block localNav %}
       <nav class="local-nav column-one-quarter">
         {% for item in localNavItems %}
-          <a href="/investment/{{project.id}}/{{ item.slug }}" class="local-nav__link{% if currentNavItem == item.slug %} is-active{% endif %}">
+          <a
+            href="/investment/{{ projectMeta.id }}/{{ item.slug }}"
+            class="local-nav__link{% if currentNavItem == item.slug %} is-active{% endif %}"
+          >
             {{ item.label }}
           </a>
         {% endfor %}

@@ -18,8 +18,13 @@
 
 .local-nav__link {
   display: block;
-  padding: 15px;
+  padding: $gutter-half;
   color: $black;
+
+  @include media(tablet) {
+    padding-left:  $gutter-two-thirds;
+    padding-right:  $gutter-two-thirds;
+  }
 
   &.is-active {
     background: $govuk-blue;

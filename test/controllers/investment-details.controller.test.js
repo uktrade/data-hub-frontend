@@ -26,7 +26,61 @@ describe('Investment details controller', () => {
   })
 
   describe('#getDetails', () => {
-    it('should return investment summary for investmentId', () => {
+    it('should return investment summary for investmentId', (done) => {
+      const expected = {
+        'currentNavItem': 'details',
+        'localNavItems': [
+          { label: 'Project details', slug: 'details' },
+          { label: 'Client', slug: 'client' },
+          { label: 'Project team', slug: 'team' },
+          { label: 'Interactions', slug: 'interactions' },
+          { label: 'Documents', slug: 'documents' },
+          { label: 'Evaluation', slug: 'evaluation' },
+          { label: 'Audit history', slug: 'audit' }
+        ],
+        project: {
+          'Anonymous description': null,
+          'Business activity': undefined,
+          'Client': {
+            name: 'Samsung SDS',
+            url: '/company/view/foreign/6c388e5b-a098-e211-a939-e4115bead28a'
+          },
+          'Estimated land date': 'May 2018',
+          'Non-disclosure agreement': 'Not signed',
+          'Primary sector': null,
+          'Project description': 'Marriott hotels wishes to open in a new part of Manchester under-served by its existing hotels',
+          'Shareable with UK partners': null,
+          'Sub-sector': null,
+          'Type of investment': 'Commitment to invest',
+        },
+        projectMeta: {
+          id: 'f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7',
+          name: 'Marriot Hotels - New hotel in Manchester',
+          phaseName: 'Prospect',
+          projectCode: 'DHP-00000003'
+        },
+        requirements: {
+          'Client requirements': null,
+          'Competitor countries': [],
+          'Investment location': undefined,
+          'Main strategic driver': [],
+          'Possible UK locations': [],
+          'UK recipient company': null
+        },
+        value: {
+          'Average salary': null,
+          'Export revenue': null,
+          'Foreign equity investment': null,
+          'Government assistance': null,
+          'New jobs': null,
+          'New-to-world tech': null,
+          'Non-FDI R&D project': null,
+          'R&D budget': null,
+          'Safeguarded jobs': null,
+          'Total investment': null
+        },
+      }
+
       this.controller.getDetails({
         session: {
           token
@@ -36,8 +90,18 @@ describe('Investment details controller', () => {
         }
       }, {
         render: (template, data) => {
-          expect(this.getInvestmentProjectSummary).to.be.calledWith(token, investmentProjectSummaryData.id)
-          expect(data.project).to.deep.equal(investmentProjectSummaryData)
+          try {
+            expect(this.getInvestmentProjectSummary).to.be.calledWith(token, investmentProjectSummaryData.id)
+            expect(data).to.haveOwnProperty('projectMeta')
+            expect(data).to.haveOwnProperty('project')
+            expect(data).to.haveOwnProperty('value')
+            expect(data).to.haveOwnProperty('requirements')
+            expect(data).to.haveOwnProperty('localNavItems')
+            expect(data).to.deep.equal(expected)
+            done()
+          } catch (error) {
+            done(error)
+          }
         }
       }, this.next)
     })
