@@ -1,6 +1,5 @@
 /* eslint camelcase: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const interactionLabels = require('../labels/interaction-labels')
 const {genCSRF} = require('../lib/controller-utils')
@@ -20,8 +19,7 @@ function getCommon (req, res, next) {
       }
       next()
     } catch (error) {
-      winston.error(error)
-      res.render('error', { error: 'Error loading interaction' })
+      next(error)
     }
   })
 }

@@ -70,9 +70,6 @@ describe('Contact controller', function () {
       },
       '../services/company.service': {
         buildCompanyUrl: buildCompanyUrlStub
-      },
-      'winston': {
-        error: sinon.stub()
       }
     })
   })
@@ -133,16 +130,13 @@ describe('Contact controller', function () {
       const error = Error('error')
       contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
         '../repos/contact.repo': {
-          getContact: sinon.stub.rejects(error)
+          getContact: sinon.stub().rejects(error)
         },
         '../services/contact-formatting.service': {
           getDisplayContact: getDisplayContactStub
         },
         '../services/company.service': {
           buildCompanyUrl: buildCompanyUrlStub
-        },
-        'winston': {
-          error: sinon.stub()
         }
       })
 
@@ -154,14 +148,14 @@ describe('Contact controller', function () {
       }
       const res = {
         locals: {},
-        render: function (url, options) {
-          expect(url).to.equal('error')
-          expect(options).to.have.property('error')
-          done()
-        }
+        render: function () {}
+      }
+      const next = function (err) {
+        expect(err.message).to.equal(error.message)
+        done()
       }
 
-      contactController.getCommon(req, res)
+      contactController.getCommon(req, res, next)
     })
   })
 
