@@ -27,8 +27,7 @@ function getCommon (req, res, next) {
       }
       next()
     } catch (error) {
-      winston.error(error)
-      res.render('error', { error: 'Error loading service delivery' })
+      next(error)
     }
   })
 }
