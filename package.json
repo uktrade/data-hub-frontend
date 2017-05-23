@@ -60,7 +60,7 @@
     "test:watch": "npm test -- -w",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "eslint ./test ./src *.js",
-    "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ $CHANGED_FILES ]; then eslint $CHANGED_FILES; fi",
+    "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ $CHANGED_FILES ]; then eslint $(echo $CHANGED_FILES); fi",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
     "lint:sass:modified": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only -- '*.scss') -v -q",
     "develop": "parallel sass:watch js:client:watch js:server:watch",
