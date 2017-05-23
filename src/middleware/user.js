@@ -6,18 +6,18 @@ module.exports = (req, res, next) => {
   const user = req.session.user
 
   if (token && !user) {
-    authorisedRequest(token, `${config.apiRoot}/whoami/`).then((userInfo) => {
-      req.session.user = {
-        id: userInfo.id, // DIT Advisor id
-        name: userInfo.name,
-        team: userInfo.dit_team
-      }
+    authorisedRequest(token, `${config.apiRoot}/whoami/`)
+      .then((userInfo) => {
+        req.session.user = {
+          id: userInfo.id, // DIT Advisor id
+          name: userInfo.name,
+          team: userInfo.dit_team
+        }
 
-      res.locals.user = req.session.user
-      next()
-    }).catch((error) => {
-      res.render('error', { error })
-    })
+        res.locals.user = req.session.user
+        next()
+      })
+      .catch(next)
   } else {
     if (user) {
       res.locals.user = user

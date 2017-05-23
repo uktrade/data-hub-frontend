@@ -4,15 +4,14 @@ const compression = require('compression')
 const config = require('./config')
 const express = require('express')
 const flash = require('connect-flash')
-const nunjucks = require('nunjucks')
 const redis = require('redis')
 const redisCrypto = require('connect-redis-crypto')
 const session = require('express-session')
 const url = require('url')
 const winston = require('winston')
 
+const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
-const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
 const forceHttps = require('./middleware/force-https')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
@@ -97,18 +96,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 
 app.use(compression())
 
-filters.stringify = JSON.stringify
-
 app.set('view engine', 'njk')
-const nunenv = nunjucks.configure([`${__dirname}/views`, `${__dirname}/../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true,
-  express: app,
-  watch: isDev
-})
-
-Object.keys(filters).forEach((filterName) => {
-  nunenv.addFilter(filterName, filters[filterName])
-})
+nunjucks(app, config)
 
 // Static files
 app.use('/javascripts', express.static(`${__dirname}/../build/javascripts`))

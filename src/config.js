@@ -1,8 +1,11 @@
+const path = require('path')
+
 const port = process.env.PORT || 3000
 const isDev = (process.env.NODE_ENV !== 'production')
 const defaultLogLevel = isDev ? 'debug' : 'error'
 
 module.exports = {
+  root: path.normalize(`${__dirname}/..`),
   env: process.env.NODE_ENV,
   isDev,
   port,
@@ -22,7 +25,7 @@ module.exports = {
     host: process.env.REDIS_HOST || 'redis',
     metadataTtl: (process.env.METADATA_TTL || (15 * 60))
   },
-  googleTagManager: process.env.GOOGLE_TAG_MANAGER,
+  googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
     secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
     // 2 hour timeout

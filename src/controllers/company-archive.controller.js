@@ -10,7 +10,7 @@ function archiveCompany (req, res, next) {
   Q.spawn(function * () {
     try {
       const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-      const url = companyService.getViewCompanyLink(company)
+      const url = companyService.buildCompanyUrl(company)
       const reason = (req.body.archived_reason !== 'Other') ? req.body.archived_reason : req.body.archived_reason_other
 
       if (reason.length > 0) {
@@ -32,7 +32,7 @@ function unarchiveCompany (req, res, next) {
   Q.spawn(function * () {
     try {
       const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-      const url = companyService.getViewCompanyLink(company)
+      const url = companyService.buildCompanyUrl(company)
       yield companyRepository.unarchiveCompany(req.session.token, company.id)
       req.flash('success-message', 'Updated company record')
       res.redirect(url)

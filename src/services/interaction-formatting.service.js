@@ -1,7 +1,7 @@
 const {formatLongDate, formatMediumDate} = require('../lib/date')
 const {newlineToBr, getContactLink} = require('../lib/text-formatting')
 const {getPropertyName} = require('../lib/property-helpers')
-const {getViewCompanyLink} = require('./company.service')
+const {buildCompanyUrl} = require('./company.service')
 
 /**
  * Returns an interaction formatted for display in the interaction detail
@@ -11,7 +11,7 @@ const {getViewCompanyLink} = require('./company.service')
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayInteraction (interaction) {
-  const companyUrl = getViewCompanyLink(interaction.company)
+  const companyUrl = buildCompanyUrl(interaction.company)
   const result = {
     company: `<a href="${companyUrl}">${interaction.company.name}</a>`,
     interaction_type: interaction.interaction_type.name,

@@ -31,7 +31,7 @@ function login (req, res) {
   res.render('login.njk', { action: '/login' })
 }
 
-function loginToApi (req, res) {
+function loginToApi (req, res, next) {
   if (!req.body.username || !req.body.password) {
     req.flash('error-message', 'Invalid user id or password')
     res.redirect('/login')
@@ -48,7 +48,7 @@ function loginToApi (req, res) {
         req.flash('error-message', 'Invalid user id or password')
         res.redirect('/login')
       } else {
-        res.render('error', { error })
+        next(error)
       }
     })
 }

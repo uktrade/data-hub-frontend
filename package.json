@@ -31,7 +31,6 @@
     "jsdom": "^10.1.0",
     "lodash": "^4.16.4",
     "mocha": "^3.0.2",
-    "mocha-junit-reporter": "^1.12.0",
     "mocha-multi": "^0.9.1",
     "moment": "^2.17.1",
     "nock": "^9.0.13",
@@ -58,12 +57,12 @@
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha --require test/common.js --ui bdd test/**/*.test.js",
-    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
+    "test:watch": "npm test -- -w",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "eslint ./test ./src *.js",
-    "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only | grep .*.js$); if [ $CHANGED_FILES ]; then eslint $CHANGED_FILES; fi",
+    "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ $CHANGED_FILES ]; then eslint $CHANGED_FILES; fi",
     "lint:sass": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
-    "lint:sass:modified": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only | grep .*.scss) -v -q",
+    "lint:sass:modified": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only -- '*.scss') -v -q",
     "develop": "parallel sass:watch js:client:watch js:server:watch",
     "client:watch": "parallel sass:watch js:client:watch",
     "js": "npm run js:client",
@@ -75,7 +74,7 @@
     "sass:watch": "npm run sass && npm run sass -- -r -w",
     "sass:compile": "npm run sass -- -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
-    "circle": "npm run lint && nyc --reporter=html --reporter=text npm test && npm run sass && npm run js",
+    "circle": "npm run lint && nyc --reporter=html --reporter=text npm test -- --reporter mocha-circleci-reporter && npm run sass && npm run js",
     "heroku-postbuild": "npm rebuild node-sass && npm run sass && npm run js"
   },
   "pre-commit": [
@@ -88,6 +87,9 @@
     "node": "6.10.2"
   },
   "devDependencies": {
+    "html": "^1.0.0",
+    "js-beautify": "^1.6.14",
+    "mocha-circleci-reporter": "0.0.2",
     "pre-commit": "^1.2.2"
   }
 }

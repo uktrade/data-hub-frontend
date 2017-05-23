@@ -1,5 +1,4 @@
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 
 const { genCSRF } = require('../lib/controller-utils')
@@ -16,20 +15,17 @@ const reasonForArchiveOptions = [
 ]
 
 function getCommon (req, res, next) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        res.locals.id = req.params.contactId
-        res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.contactId)
-        res.locals.companyUrl = companyService.getViewCompanyLink(res.locals.contact.company)
-        res.locals.reasonForArchiveOptions = reasonForArchiveOptions
-        genCSRF(req, res)
-        next()
-      } catch (error) {
-        winston.error(error)
-        res.render('error', { error })
-      }
-    })
+  Q.spawn(function * () {
+    try {
+      res.locals.id = req.params.contactId
+      res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.contactId)
+      res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.contact.company)
+      res.locals.reasonForArchiveOptions = reasonForArchiveOptions
+      genCSRF(req, res)
+      next()
+    } catch (error) {
+      next(error)
+    }
   })
 }
 

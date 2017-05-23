@@ -4,7 +4,7 @@ const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {
   let getContactStub
-  let getViewCompanyLinkStub
+  let buildCompanyUrlStub
   let getDisplayContactStub
   let contactController
   let contact
@@ -60,7 +60,7 @@ describe('Contact controller', function () {
     }
     getContactStub = sinon.stub().resolves(contact)
     getDisplayContactStub = sinon.stub().returns(formatted)
-    getViewCompanyLinkStub = sinon.stub().returns(companyUrl)
+    buildCompanyUrlStub = sinon.stub().returns(companyUrl)
     contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
       '../repos/contact.repo': {
         getContact: getContactStub
@@ -69,10 +69,7 @@ describe('Contact controller', function () {
         getDisplayContact: getDisplayContactStub
       },
       '../services/company.service': {
-        getViewCompanyLink: getViewCompanyLinkStub
-      },
-      'winston': {
-        error: sinon.stub()
+        buildCompanyUrl: buildCompanyUrlStub
       }
     })
   })
@@ -107,7 +104,7 @@ describe('Contact controller', function () {
         render: function () {}
       }
       const next = function () {
-        expect(getViewCompanyLinkStub).to.have.been.calledWith(contact.company)
+        expect(buildCompanyUrlStub).to.have.been.calledWith(contact.company)
         done()
       }
       contactController.getCommon(req, res, next)
@@ -133,16 +130,13 @@ describe('Contact controller', function () {
       const error = Error('error')
       contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
         '../repos/contact.repo': {
-          getContact: sinon.stub.rejects(error)
+          getContact: sinon.stub().rejects(error)
         },
         '../services/contact-formatting.service': {
           getDisplayContact: getDisplayContactStub
         },
         '../services/company.service': {
-          getViewCompanyLink: getViewCompanyLinkStub
-        },
-        'winston': {
-          error: sinon.stub()
+          buildCompanyUrl: buildCompanyUrlStub
         }
       })
 
@@ -154,14 +148,14 @@ describe('Contact controller', function () {
       }
       const res = {
         locals: {},
-        render: function (url, options) {
-          expect(url).to.equal('error')
-          expect(options).to.have.property('error')
-          done()
-        }
+        render: function () {}
+      }
+      const next = function (err) {
+        expect(err.message).to.equal(error.message)
+        done()
       }
 
-      contactController.getCommon(req, res)
+      contactController.getCommon(req, res, next)
     })
   })
 

@@ -99,21 +99,26 @@ function getCompanyForSource (token, id, source) {
 }
 
 /**
- * Pass an API formatted company record in and return a url to view that company
- * depending on it's type
+ * Pass an API formatted company record in and return a path to view that company depending on company type
  *
  * @param {Object} company
  *
- * @returns {string} url
+ * @returns {string} urlPath
  */
-function getViewCompanyLink (company) {
+function buildCompanyUrl (company) {
+  const companyPath = '/company/view'
+  const businessType = company.business_type && (company.business_type.name && company.business_type.name.toLowerCase())
+  let urlPath
+
   if (!company.uk_based) {
-    return `/company/view/foreign/${company.id}`
-  } else if (company.business_type.name.toLowerCase() === 'private limited company' || company.business_type.name.toLowerCase() === 'public limited company') {
-    return `/company/view/ltd/${company.id}`
+    urlPath = `${companyPath}/foreign/${company.id}`
+  } else if (businessType.includes('limited company')) {
+    urlPath = `${companyPath}/ltd/${company.id}`
   } else {
-    return `/company/view/ukother/${company.id}`
+    urlPath = `${companyPath}/ukother/${company.id}`
   }
+
+  return urlPath
 }
 
 function getHeadingAddress (company) {
@@ -145,7 +150,7 @@ function getCommonTitlesAndlinks (req, res, company) {
   genCSRF(req, res)
   res.locals.headingName = getHeadingName(company)
   res.locals.headingAddress = getHeadingAddress(company)
-  res.locals.companyUrl = getViewCompanyLink(company)
+  res.locals.companyUrl = buildCompanyUrl(company)
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, getViewCompanyLink, getCommonTitlesAndlinks, getHeadingAddress }
+module.exports = { getInflatedDitCompany, getCompanyForSource, buildCompanyUrl, getCommonTitlesAndlinks, getHeadingAddress }

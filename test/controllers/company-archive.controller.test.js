@@ -5,7 +5,7 @@ const next = function (error) {
 describe('Company controller, archive', function () {
   let companyRepositoryArchiveCompanyStub
   let companyRepositoryUnArchiveCompanyStub
-  let getViewCompanyLinkStub
+  let buildCompanyUrlStub
   let flashStub
   const token = '1234'
   const company = {
@@ -26,12 +26,12 @@ describe('Company controller, archive', function () {
 
   beforeEach(function () {
     getDitCompanyStub = sinon.stub().resolves(company)
-    getViewCompanyLinkStub = sinon.stub().returns('/testurl')
+    buildCompanyUrlStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
     companyArchiveController = proxyquire(`${root}/src/controllers/company-archive.controller`, {
       '../services/company.service': {
-        getViewCompanyLink: getViewCompanyLinkStub
+        buildCompanyUrl: buildCompanyUrlStub
       },
       '../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
@@ -92,7 +92,7 @@ describe('Company controller, archive', function () {
       locals: {},
       redirect: function (url) {
         expect(getDitCompanyStub).to.be.calledWith(token, company.id)
-        expect(getViewCompanyLinkStub).to.be.calledWith(company)
+        expect(buildCompanyUrlStub).to.be.calledWith(company)
         expect(url).to.equal('/testurl')
         done()
       }

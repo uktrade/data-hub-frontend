@@ -1,13 +1,13 @@
 const express = require('express')
 const companyRepository = require('../repos/company.repo')
-const { getViewCompanyLink } = require('../services/company.service')
+const { buildCompanyUrl } = require('../services/company.service')
 const searchService = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
 const Q = require('q')
 
 const router = express.Router()
 
-function get (req, res) {
+function get (req, res, next) {
   const filters = Object.assign({}, req.query)
   delete filters.term
   delete filters.page
@@ -27,7 +27,7 @@ function get (req, res) {
       const pagination = getPagination(req, result)
       res.render('search/facet-search', { result, pagination, params: req.query })
     })
-    .catch(error => res.render('error', { error }))
+    .catch(next)
 }
 
 function viewCompanyResult (req, res, next) {
@@ -37,7 +37,7 @@ function viewCompanyResult (req, res, next) {
     Q.spawn(function * () {
       try {
         const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-        res.redirect(getViewCompanyLink(company))
+        res.redirect(buildCompanyUrl(company))
       } catch (error) {
         next(error)
       }
