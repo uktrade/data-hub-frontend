@@ -31,7 +31,6 @@ module.exports = {
   },
   advisor: null,
   address_country: null,
-  teams: [],
   company: {
     id: '555',
     name: 'Fred ltd'

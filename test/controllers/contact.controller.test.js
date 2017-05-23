@@ -48,7 +48,6 @@ describe('Contact controller', function () {
       },
       advisor: null,
       address_country: null,
-      teams: [],
       company: {
         id: '876544',
         name: 'Bank ltd.'
