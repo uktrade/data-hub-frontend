@@ -1,0 +1,32 @@
+@import '../environment/settings/colours';
+@import '../environment/tools/mixins/layout';
+
+.phase-banner {
+  width: 100%;
+  display: table;
+  font-size: .85em;
+  padding-top: $baseline-grid-unit * 2;
+  padding-bottom: $baseline-grid-unit * 2;
+  border-bottom: 1px solid $grey-2;
+}
+
+// TODO: remove qualifier
+span.phase-banner__tag {
+  background-color: $govuk-blue;
+  display: inline-block;
+  padding: 3px 6px 2px;
+  font-weight: 600;
+  color: $white;
+  margin-right: .2em;
+  cursor: default;
+
+  @include media(tablet) {
+    padding-top: 2px;
+  }
+}
+
+// TODO: remove qualifier
+span.phase-banner__message {
+  padding-left: 5px;
+  width: 100%;
+}

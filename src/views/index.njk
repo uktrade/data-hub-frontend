@@ -1,21 +1,18 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_content %}
 
   {{ trade.searchbar('term', label="Search for company name or contact", value=query.term) }}
 
   <div class="grid-row dashboard">
-
     <div class="column-half">
       <div class="dashboard-section">
         <h2 class="dashboard-section-title">Interactions</h2>
         {% if interactions.length %}
-
           <p class="dashboard-section-intro">
             You have added {{ interactions.length | pluralise( 'interaction' ) }} in the last {{ totalDays | pluralise( 'day') }}
           </p>
-
           <ol id="interactions-list" class="dashboard-list">
           {% for interaction in interactions %}
             <li>
@@ -27,51 +24,40 @@
             </li>
           {% endfor %}
           </ol>
-
         {% else %}
-
           <p class="dashboard-section-intro">
             No interactions have been added in the last {{ totalDays | pluralise( 'day') }}
           </p>
-
         {% endif %}
-    </div>
-  </div>
-
-  <div class="column-half">
-
-    <div class="dashboard-section">
-      <h2 class="dashboard-section-title">Contacts</h2>
-
-      {% if contacts.length %}
-
-        <p class="dashboard-section-intro">
-          {{ contacts.length | pluralise( 'new contact' ) }} {% if contacts.length == 1 %} has {% else %} have {% endif %} been added in the last {{ totalDays | pluralise( 'day') }}
-        </p>
-
-        <ol id="contacts-list" class="dashboard-list">
-        {% for contact in contacts %}
-          <li>
-            <a href="{{ contact.url }}">{{ contact.name }}</a> from <a href="{{ contact.company.url }}">{{ contact.company.name }}</a>
-          </li>
-        {% endfor %}
-        </ol>
-
-      {% else %}
-
-        <p class="dashboard-section-intro">
-          No contacts have been added in the last {{ totalDays | pluralise( 'day') }}
-        </p>
-
-      {% endif %}
-
+      </div>
     </div>
 
+    <div class="column-half">
+      <div class="dashboard-section">
+        <h2 class="dashboard-section-title">Contacts</h2>
+
+        {% if contacts.length %}
+          <p class="dashboard-section-intro">
+            {{ contacts.length | pluralise( 'new contact' ) }} {% if contacts.length == 1 %} has {% else %} have {% endif %} been added in the last {{ totalDays | pluralise( 'day') }}
+          </p>
+          <ol id="contacts-list" class="dashboard-list">
+          {% for contact in contacts %}
+            <li>
+              <a href="{{ contact.url }}">{{ contact.name }}</a> from <a href="{{ contact.company.url }}">{{ contact.company.name }}</a>
+            </li>
+          {% endfor %}
+          </ol>
+        {% else %}
+          <p class="dashboard-section-intro">
+            No contacts have been added in the last {{ totalDays | pluralise( 'day') }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
   </div>
-</div>
 {% endblock %}
 
-{% block body_end %}
+{% block body %}
+  {{ super() }}
   <script src="{{ asset_path }}javascripts/index.bundle.js?{{ startTime }}"></script>
 {% endblock %}
-

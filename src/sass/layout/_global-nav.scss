@@ -1,0 +1,31 @@
+@import '../environment/settings/colours';
+@import '../environment/tools/mixins/layout';
+
+.global-nav {
+  @include clearfix;
+  padding: ($baseline-grid-unit * 3) 0;
+  border-bottom: 1px solid $grey-2;
+}
+
+.global-nav__navigation {
+  float: left;
+}
+
+.global-nav__account {
+  float: right;
+  color: $grey-1;
+}
+
+.global-nav__item {
+  float: left;
+  margin-left: 10px;
+
+  &:not(:first-child) {
+    padding-left: 10px;
+    border-left: 1px solid $grey-1;
+  }
+}
+
+.global-nav__link {
+  display: inline-block;
+}

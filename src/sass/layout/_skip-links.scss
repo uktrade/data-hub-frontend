@@ -1,0 +1,27 @@
+@import '../environment/settings/colours';
+@import '../environment/settings/typography';
+@import '../environment/tools/mixins/layout';
+
+.skip-links {
+  background-color: $light-blue-25;
+}
+
+.skip-links__inner {
+  @include site-width-container;
+}
+
+.skip-links__link {
+  color: $white;
+  display: inline-block;
+  left: -999em;
+  padding: ($baseline-grid-unit * 2);
+  position: absolute;
+
+  &:focus {
+    background-color: $light-blue-25;
+    border: 3px solid $yellow;
+    color: $black;
+    outline: 0;
+    position: static;
+  }
+}
