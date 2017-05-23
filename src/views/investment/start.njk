@@ -129,7 +129,7 @@
       {% else %}
 
         <form class="section archive-panel__form" method="post">
-          <input type="hidden" name="_csrf_token" value="{{ csrfToken }}">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
 
           <fieldset id="client-equity-source-options" class="form-group inline {% if errors.isEquitySource %}error{% endif %}">

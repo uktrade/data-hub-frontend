@@ -25,7 +25,6 @@ describe('Investment start controller', () => {
     this.getInflatedDitCompany = this.sandbox.stub().resolves(ukCompany)
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.search = this.sandbox.stub().resolves(searchResults)
-    this.genCSRF = this.sandbox.stub()
     this.getPagination = this.sandbox.stub().resolves({})
 
     this.controller = proxyquire(`${root}/src/controllers/investment-start.controller`, {
@@ -37,9 +36,6 @@ describe('Investment start controller', () => {
       },
       '../services/search.service': {
         search: this.search
-      },
-      '../lib/controller-utils': {
-        genCSRF: this.genCSRF
       },
       '../lib/pagination': {
         getPagination: this.getPagination

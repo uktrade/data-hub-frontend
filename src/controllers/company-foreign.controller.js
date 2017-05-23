@@ -8,7 +8,7 @@ const companyService = require('../services/company.service')
 const companyFormattingService = require('../services/company-formatting.service')
 const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels/company-labels')
 const metadataRepository = require('../repos/metadata.repo')
-const { genCSRF, containsFormData, isBlank } = require('../lib/controller-utils')
+const { containsFormData, isBlank } = require('../lib/controller-utils')
 const router = express.Router()
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 
@@ -45,7 +45,6 @@ function editCommon (req, res, next) {
   res.locals.companyDetailsLabels = companyDetailsLabels
   res.locals.countryOptions = metadataRepository.countryOptions
   res.locals.hqLabels = hqLabels
-  genCSRF(req, res)
   if (next) next()
 }
 

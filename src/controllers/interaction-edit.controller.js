@@ -8,7 +8,7 @@ const metadataRepository = require('../repos/metadata.repo')
 const advisorRepository = require('../repos/advisor.repo')
 const interactionDataService = require('../services/interaction-data.service')
 const interactionFormService = require('../services/interaction-form.service')
-const { genCSRF, containsFormData } = require('../lib/controller-utils')
+const { containsFormData } = require('../lib/controller-utils')
 const router = express.Router()
 
 function editDetails (req, res, next) {
@@ -68,7 +68,7 @@ function editDetails (req, res, next) {
       res.locals.serviceOfferOptions = yield metadataRepository.getServiceOffers(token)
       res.locals.serviceProviderOptions = metadataRepository.teams
       res.locals.labels = interactionLabels
-      genCSRF(req, res)
+
       res.render('interaction/interaction-edit')
     } catch (error) {
       console.log(error)

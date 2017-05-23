@@ -14,7 +14,7 @@
 
   {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
   <form id="company-add-form" data-step="1" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrfToken }}" />
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
 
     <fieldset class='form-group {% if errors.business_type %}error{% endif %}'>
       <legend class='heading-medium visually-hidden'>Company type</legend>

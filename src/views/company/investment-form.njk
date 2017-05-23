@@ -10,7 +10,7 @@
 
 {{ trade.errorPanel( errors ) }}
 <form method="post">
-  <input type="hidden" name="_csrf_token" value="{{ csrfToken }}" />
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
   <input type="hidden" name="id" value="{{ company.id }}"/>
   {{ trade.dropdown("investment_tier",
     label="Investment account manager tier",

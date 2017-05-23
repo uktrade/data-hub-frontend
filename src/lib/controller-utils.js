@@ -1,5 +1,3 @@
-const guid = require('@uktrade/trade_elements').guid
-
 function transformErrors (sourceErrors) {
   if (!sourceErrors) {
     return null
@@ -119,13 +117,6 @@ function flattenIdFields (data) {
   }
 }
 
-function genCSRF (req, res) {
-  const token = guid()
-  req.session.csrfToken = token
-  res.locals.csrfToken = token
-  return token
-}
-
 function isBlank (thing) {
   return (!thing || thing.length === 0)
 }
@@ -150,7 +141,6 @@ module.exports = {
   encodeQueryData,
   convertAutosuggestCollection,
   flattenIdFields,
-  genCSRF,
   isBlank,
   toQueryString,
   containsFormData

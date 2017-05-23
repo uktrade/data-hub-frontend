@@ -55,11 +55,8 @@
       </fieldset>
     </div>
 
-    <input type="hidden" name="_csrf_token" value="{{data.csrfToken}}"/>
+    <input type="hidden" name="_csrf" value="{{data.csrfToken}}"/>
     {{ trade.save(backUrl=referer, buttonText='Send') }}
   </form>
 <script src="/javascripts/radio.bundle.js?{{ startTime }}"></script>
 {% endblock %}
-
-
-

@@ -20,7 +20,7 @@
   {{ trade.errorPanel( errors, labels=labels ) }}
   <form method="POST">
     <input type="hidden" name="company" value="{{serviceDelivery.company.id}}"/>
-    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {% if serviceDelivery.id %}
       <input type="hidden" name="id" value="{{serviceDelivery.id}}"/>
     {% endif %}
