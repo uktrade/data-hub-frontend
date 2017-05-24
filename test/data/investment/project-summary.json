@@ -1,0 +1,37 @@
+{
+  "id": "f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7",
+  "name": "Skyscraper project for Stark Industries",
+  "project_code": "DHP-00000003",
+  "description": "Stark Industries wishes to build in a new part of Manchester expanding its existing premises",
+  "nda_signed": false,
+  "estimated_land_date": "2018-05-01",
+  "project_shareable": null,
+  "anonymous_description": null,
+  "not_shareable_reason": null,
+  "investment_type": {
+    "name": "Commitment to invest",
+    "id": "031269ab-b7ec-40e9-8a4e-7371404f0622"
+  },
+  "phase": {
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+  },
+  "investor_company": {
+    "name": "Wonka Industries",
+    "id": "6c388e5b-a098-e211-a939-e4115bead28a"
+  },
+  "intermediate_company": null,
+  "investment_recipient_company": null,
+  "client_contacts": [],
+  "client_relationship_manager": null,
+  "referral_source_advisor": null,
+  "referral_source_activity": null,
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": null,
+  "fdi_type": null,
+  "non_fdi_type": null,
+  "sector": null,
+  "business_activities": [],
+  "project_section_complete": true
+}
