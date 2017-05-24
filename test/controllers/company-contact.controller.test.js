@@ -103,8 +103,7 @@ describe('Company contacts controller', function () {
         selectable: true
       },
       advisor: null,
-      address_country: null,
-      teams: []
+      address_country: null
     },
     {
       company,
@@ -139,8 +138,7 @@ describe('Company contacts controller', function () {
         selectable: true
       },
       advisor: null,
-      address_country: null,
-      teams: []
+      address_country: null
     },
     {
       company,
@@ -190,8 +188,7 @@ describe('Company contacts controller', function () {
         selectable: true
       },
       advisor: null,
-      address_country: null,
-      teams: []
+      address_country: null
     }]
   })
 

@@ -36,8 +36,6 @@ describe('contact form service', function () {
     beforeEach(function () {
       contact = {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
-        teams: [],
-        interactions: [],
         name: 'Zac Baman',
         address_1: '99 N Shore Road',
         address_2: 'Suite 20',

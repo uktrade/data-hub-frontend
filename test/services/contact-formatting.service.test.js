@@ -36,8 +36,7 @@ describe('Contact formatting service', function () {
         selectable: true
       },
       advisor: null,
-      address_country: null,
-      teams: []
+      address_country: null
     }
   })
   describe('contact details', function () {

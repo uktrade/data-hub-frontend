@@ -85,7 +85,6 @@ describe('Contact controller, edit', function () {
           },
           advisor: null,
           address_country: null,
-          teams: [],
           company
         }
         req = {
