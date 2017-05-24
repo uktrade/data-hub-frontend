@@ -12,7 +12,7 @@
       <a href="#">Archive Contact</a>
     </p>
     <form action="/contact/{{contact.id}}/archive" class="section archive-panel__form" method="POST">
-      <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <div class="form-group {% if query.archiveerror %}form-group-error{% endif %}" id="archived_reason-wrapper">
         <label class="form-label-bold" for="archived_reason">Reason for archiving contact</label>
         <select class="form-control" name="archived_reason">

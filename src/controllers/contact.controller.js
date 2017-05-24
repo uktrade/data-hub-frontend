@@ -1,7 +1,6 @@
 const express = require('express')
 const Q = require('q')
 
-const { genCSRF } = require('../lib/controller-utils')
 const contactRepository = require('../repos/contact.repo')
 const contactFormattingService = require('../services/contact-formatting.service')
 const companyService = require('../services/company.service')
@@ -21,7 +20,7 @@ function getCommon (req, res, next) {
       res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.contactId)
       res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.contact.company)
       res.locals.reasonForArchiveOptions = reasonForArchiveOptions
-      genCSRF(req, res)
+
       next()
     } catch (error) {
       next(error)

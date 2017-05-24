@@ -3,7 +3,7 @@ const express = require('express')
 const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/service-delivery')
-const { genCSRF, transformV2Errors } = require('../lib/controller-utils')
+const { transformV2Errors } = require('../lib/controller-utils')
 const { nullEmptyFields, deleteNulls } = require('../lib/property-helpers')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
@@ -33,7 +33,6 @@ function getCommon (req, res, next) {
 }
 
 function getServiceDeliveryEdit (req, res, next) {
-  genCSRF(req, res)
   Q.spawn(function * () {
     try {
       const token = req.session.token

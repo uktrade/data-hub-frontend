@@ -16,7 +16,7 @@
   <form method="POST">
     <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}"/>
     <input type="hidden" name="company" value="{{formData.company}}"/>
-    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {% if formData.id %}
       <input type="hidden" name="id" value="{{formData.id}}"/>
     {% endif %}

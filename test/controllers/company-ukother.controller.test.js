@@ -584,7 +584,6 @@ describe('Company controller, uk other', function () {
       expect(res.locals).to.have.property('turnoverOptions')
       expect(res.locals).to.have.property('headquarterOptions')
       expect(res.locals).to.have.property('hqLabels')
-      expect(res.locals).to.have.property('csrfToken')
       expect(res.locals).to.have.property('companyDetailsLabels')
     })
 

@@ -9,7 +9,7 @@ const HTML = `
       <a href="#">Archive company</a>
     </p>
     <form action="/company/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="section archive-panel__form " method="POST">
-      <input type="hidden" name="_csrf_token" value="5481c30c-dd08-0b47-32d9-50b16fefb59e">
+      <input type="hidden" name="_csrf" value="5481c30c-dd08-0b47-32d9-50b16fefb59e">
       <div class='form-group ' id="archived_reason-wrapper">
         <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
         <select id="archived_reason" class="form-control" name="archived_reason">

@@ -9,6 +9,7 @@ const redisCrypto = require('connect-redis-crypto')
 const session = require('express-session')
 const url = require('url')
 const winston = require('winston')
+const csrf = require('csurf')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
@@ -18,7 +19,7 @@ const locals = require('./middleware/locals')
 const metadata = require('./repos/metadata.repo')
 const user = require('./middleware/user')
 const auth = require('./middleware/auth')
-const csrf = require('./middleware/csrf')
+const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
 
 const apiController = require('./controllers/api.controller')
@@ -95,6 +96,9 @@ app.use(session({
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 
+app.use(csrf())
+app.use(csrfToken())
+
 app.use(compression())
 
 app.set('view engine', 'njk')
@@ -117,7 +121,6 @@ app.use(locals)
 app.use(datahubFlash)
 app.use(auth)
 app.use(user)
-app.use(csrf)
 app.use(headers)
 
 app.use('/login', loginController.router)
