@@ -6,7 +6,7 @@ const errorCode403 = 403
 const errorCode500 = 500
 const isDev = true
 
-describe.only('Error Middleware Test', () => {
+describe('Error Middleware Test', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.winstonErrorStub = this.sandbox.stub(winston, 'error')
