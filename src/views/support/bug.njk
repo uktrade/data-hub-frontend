@@ -23,6 +23,8 @@
   {{ trade.errorPanel( messages.formErrors ) }}
 
   <form action="{{ action }}" method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
     {{ trade.textbox('title', label="Title", hint="A brief summary of your feedback/problem", error=errors.title, autofocus=true, value=data.title) }}
     {{ trade.textarea('description', label="Description", hint="If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.", error=errors.steps, autofocus=true, value=data.steps) }}
     {{ trade.textbox('email', label="Email", hint="If you wish to be contacted, please provide your email address",error=errors.name, autofocus=true, value=data.name) }}
@@ -55,7 +57,6 @@
       </fieldset>
     </div>
 
-    <input type="hidden" name="_csrf" value="{{data.csrfToken}}"/>
     {{ trade.save(backUrl=referer, buttonText='Send') }}
   </form>
 <script src="/javascripts/radio.bundle.js?{{ startTime }}"></script>
