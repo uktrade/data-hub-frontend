@@ -28,6 +28,7 @@
   {{ trade.errorPanel( messages.formErrors ) }}
 
   <form action="{{ action }}" method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     {{ trade.textbox('username', label="User name", error=errors.username, autofocus=true) }}
     {{ trade.textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
     {{ trade.save(buttonText='Login') }}
