@@ -71,9 +71,9 @@ const ConditionalSubfields = {
 
   render () {
     this.controllers.forEach((controller) => {
-      const fields = this.wrapper.querySelectorAll(`[name="${controller}"]`)
+      const field = this.wrapper.querySelector(`[name="${controller}"]`)
 
-      fields.forEach(this._handleField)
+      this._handleField(field)
     })
   },
 
@@ -91,15 +91,31 @@ const ConditionalSubfields = {
 
   _handleField (controlInput) {
     const subFields = this.wrapper.querySelectorAll(`[data-controlled-by="${controlInput.name}"]`)
+    const tagName = controlInput.tagName
+    let controlInputValue
 
-    subFields.forEach((subField, i) => {
-      const controlInputValue = subField.getAttribute('data-control-value') + ''
-      let isVisible = false
+    if (tagName === 'SELECT') {
+      controlInputValue = controlInput.value
+    } else if (tagName === 'INPUT') {
+      const type = controlInput.type
 
-      if (controlInput.tagName === 'SELECT') {
-        isVisible = controlInput.value === controlInputValue
-      } else if (controlInputValue && controlInputValue !== '*' && controlInput.checked) {
-        isVisible = controlInput.value === controlInputValue
+      if (type === 'radio' || type === 'checkbox') {
+        const checked = this.wrapper.querySelector(`[name="${controlInput.name}"]:checked`)
+
+        controlInputValue = checked ? checked.value : null
+      } else {
+        controlInputValue = controlInput.value
+      }
+    }
+
+    subFields.forEach((subField) => {
+      const value = subField.getAttribute('data-control-value') + ''
+      let isVisible
+
+      if (controlInputValue === value) {
+        isVisible = true
+      } else {
+        isVisible = false
       }
 
       this._toggleSubField(subField, isVisible)
@@ -119,7 +135,7 @@ const ConditionalSubfields = {
     if (!isVisible && !subField.getAttribute('data-persist-values')) {
       const children = subField.querySelectorAll('input, select, checkbox, textarea')
 
-      children.forEach((field, i) => {
+      children.forEach((field) => {
         field.value = ''
         field.checked = false
 
