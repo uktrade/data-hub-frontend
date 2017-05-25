@@ -1,6 +1,26 @@
-{% extends "./_base.njk" %}
+{% extends "investment/_layout.njk" %}
 
-{% block mainContent %}
+{% block main_heading %}
+  <h1 class="visually-hidden">Investment details</h1>
+  <h2 class="page-heading">{{ projectMeta.name }}</h2>
+
+  {% component 'project-status', projectMeta %}
+{% endblock %}
+
+{% block main_grid_left_column %}
+  <nav class="local-nav">
+    {% for item in localNavItems %}
+      <a
+        href="/investment/{{ projectMeta.id }}/{{ item.slug }}"
+        class="local-nav__link{% if currentNavItem == item.slug %} is-active{% endif %}"
+      >
+        {{ item.label }}
+      </a>
+    {% endfor %}
+  </nav>
+{% endblock %}
+
+{% block main_grid_right_column %}
   <h2 class="heading-medium">Investment project summary</h2>
   {% component 'key-value-table', items=project, variant='striped' %}
   <p>
