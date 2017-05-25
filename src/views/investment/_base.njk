@@ -1,8 +1,6 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "_base.njk" %}
 
-{% import "macros/trade.html" as trade %}
-
-{% block main %}
+{% block body_main_content %}
   {% block heading %}
     <h1 class="visually-hidden">Investment details</h1>
     <h2 class="page-heading">{{ projectMeta.name }}</h2>
@@ -26,9 +24,13 @@
       </nav>
     {% endblock %}
 
-    {% block mainContent %}
-    {% endblock %}
+    <article class="column-three-quarters">
+      {% block mainContent %}{% endblock %}
+    </article>
   </div>
+{% endblock %}
 
+{% block body %}
+  {{ super() }}
   <script src="/javascripts/investment.bundle.js"></script>
 {% endblock %}
