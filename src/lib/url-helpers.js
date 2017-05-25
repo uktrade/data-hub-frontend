@@ -33,4 +33,18 @@ function getBackLink (params) {
   return null
 }
 
-module.exports = { getQueryParam, getBackLink }
+function buildQueryString (params) {
+  let queryParams = []
+
+  Object.keys(params).forEach((key) => {
+    queryParams.push(`${key}=${params[key]}`)
+  })
+
+  return encodeURI(`?${queryParams.join('&')}`)
+}
+
+module.exports = {
+  getQueryParam,
+  getBackLink,
+  buildQueryString
+}
