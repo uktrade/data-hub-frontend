@@ -26,8 +26,7 @@ describe('Company formatting service', () => {
           'incorporation_date': '2012-02-06',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom',
-            'selectable': true
+            'name': 'United Kingdom'
           }
         },
         'contacts': [],
@@ -49,8 +48,7 @@ describe('Company formatting service', () => {
           'future_interest_countries': [
             {
               'id': '300be5c4-5d95-e211-a939-e4115bead28a',
-              'name': 'Sweden',
-              'selectable': true
+              'name': 'Sweden'
             }
           ],
           'uk_based': true,
@@ -65,8 +63,7 @@ describe('Company formatting service', () => {
             'email': 'yvonne.ahern@mobile.ukti.gov.uk',
             'dit_team': {
               'id': '3a48318c-9698-e211-a939-e4115bead28a',
-              'name': 'ITFG - E-Business Operational Support Team',
-              'selectable': true
+              'name': 'ITFG - E-Business Operational Support Team'
             },
             'groups': [],
             'user_permissions': []
@@ -106,25 +103,21 @@ describe('Company formatting service', () => {
           'archived_by': null,
           'business_type': {
             'id': '98d14e94-5d95-e211-a939-e4115bead28a',
-            'name': 'Company',
-            'selectable': true
+            'name': 'Company'
           },
           'headquarter_type': {
             'id': 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
-            'name': 'ehq',
-            'selectable': true
+            'name': 'ehq'
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Giftware, Jewellery and Tableware',
-            'selectable': true
+            'name': 'Giftware, Jewellery and Tableware'
           },
           'employee_range': null,
           'turnover_range': null,
           'uk_region': {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
-            'name': 'London',
-            'selectable': true
+            'name': 'London'
           }
         }
         const expected = {
@@ -218,8 +211,7 @@ describe('Company formatting service', () => {
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Computers : Tech',
-            'selectable': true
+            'name': 'Computers : Tech'
           }
         }
 
@@ -238,8 +230,7 @@ describe('Company formatting service', () => {
           'future_interest_countries': [
             {
               'id': '300be5c4-5d95-e211-a939-e4115bead28a',
-              'name': 'Sweden',
-              'selectable': true
+              'name': 'Sweden'
             }
           ],
           'uk_based': true,
@@ -254,8 +245,7 @@ describe('Company formatting service', () => {
             'email': 'yvonne.ahern@mobile.ukti.gov.uk',
             'dit_team': {
               'id': '3a48318c-9698-e211-a939-e4115bead28a',
-              'name': 'ITFG - E-Business Operational Support Team',
-              'selectable': true
+              'name': 'ITFG - E-Business Operational Support Team'
             },
             'groups': [],
             'user_permissions': []
@@ -291,20 +281,17 @@ describe('Company formatting service', () => {
           'archived_by': null,
           'business_type': {
             'id': '98d14e94-5d95-e211-a939-e4115bead28a',
-            'name': 'Company',
-            'selectable': true
+            'name': 'Company'
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Giftware, Jewellery and Tableware',
-            'selectable': true
+            'name': 'Giftware, Jewellery and Tableware'
           },
           'employee_range': null,
           'turnover_range': null,
           'uk_region': {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
-            'name': 'London',
-            'selectable': true
+            'name': 'London'
           },
           'trading_address_country': null
         }
@@ -342,8 +329,7 @@ describe('Company formatting service', () => {
         'incorporation_date': '2012-02-06',
         'registered_address_country': {
           'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom',
-          'selectable': true
+          'name': 'United Kingdom'
         }
       }
       const actual = companyFormattingService.getDisplayCH(company)

@@ -90,8 +90,7 @@ describe('get header address', () => {
         'incorporation_date': '2012-02-06',
         'registered_address_country': {
           'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom',
-          'selectable': true
+          'name': 'United Kingdom'
         }
       },
       'registered_address_1': 'Business Innovation & Skills',

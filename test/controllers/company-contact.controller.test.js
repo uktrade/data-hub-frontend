@@ -50,20 +50,17 @@ describe('Company contacts controller', function () {
       archived_by: null,
       business_type: {
         id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-        name: 'Intermediary',
-        selectable: true
+        name: 'Intermediary'
       },
       sector: {
         id: 'b722c9d2-5f95-e211-a939-e4115bead28a',
-        name: 'Aerospace : Maintenance',
-        selectable: true
+        name: 'Aerospace : Maintenance'
       },
       employee_range: null,
       turnover_range: null,
       uk_region: {
         id: '844cd12a-6095-e211-a939-e4115bead28a',
-        name: 'East Midlands',
-        selectable: true
+        name: 'East Midlands'
       },
       trading_address_country: null,
       headquarter_type: null,
@@ -99,8 +96,7 @@ describe('Company contacts controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr',
-        selectable: true
+        name: 'Mr'
       },
       advisor: null,
       address_country: null
@@ -134,8 +130,7 @@ describe('Company contacts controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr',
-        selectable: true
+        name: 'Mr'
       },
       advisor: null,
       address_country: null
@@ -184,8 +179,7 @@ describe('Company contacts controller', function () {
       },
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr',
-        selectable: true
+        name: 'Mr'
       },
       advisor: null,
       address_country: null

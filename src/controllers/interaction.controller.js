@@ -24,10 +24,9 @@ function getCommon (req, res, next) {
 }
 
 function getAddStep1 (req, res) {
-  const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery', selectable: true }]
+  const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
 
   const selectableTypes = interactionTypes
-    .filter(selectableType => selectableType.selectable)
     .sort((a, b) => {
       const nameA = a.name.toUpperCase()
       const nameB = b.name.toUpperCase()

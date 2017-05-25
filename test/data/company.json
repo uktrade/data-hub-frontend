@@ -376,8 +376,7 @@
       },
       "address_country": {
         "id": "d2f682ac-5d95-e211-a939-e4115bead28a",
-        "name": "El Salvador",
-        "selectable": true
+        "name": "El Salvador"
       },
       "teams": []
     }
@@ -417,20 +416,17 @@
   "archived_by": null,
   "business_type": {
     "id": "98d14e94-5d95-e211-a939-e4115bead28a",
-    "name": "Company",
-    "selectable": true
+    "name": "Company"
   },
   "sector": {
     "id": "b3959812-6095-e211-a939-e4115bead28a",
-    "name": "ICT",
-    "selectable": true
+    "name": "ICT"
   },
   "employee_range": null,
   "turnover_range": null,
   "uk_region": {
     "id": "834cd12a-6095-e211-a939-e4115bead28a",
-    "name": "Yorkshire and The Humber",
-    "selectable": true
+    "name": "Yorkshire and The Humber"
   },
   "trading_address_country": null,
   "headquarter_type": null,
