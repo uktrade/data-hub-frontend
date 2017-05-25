@@ -4,6 +4,7 @@ const prod = process.env.NODE_ENV === 'production'
 module.exports = {
   devtool: prod ? 'hidden-source-map' : 'source-map',
   entry: {
+    app: './src/javascripts/app.js',
     'company-investment-tab-form': './src/javascripts/company-investment-tab-form',
     'company-add': './src/javascripts/company-add',
     'company-edit': './src/javascripts/company-edit',

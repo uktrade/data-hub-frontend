@@ -9,13 +9,15 @@
 
 {% block head_script %}
   {% include "_includes/google-tag-manager-snippet.njk" %}
+
   {% if user %}
     <script>
       if (!window.DIT) window.DIT = {};
       window.DIT.user = {{ user | stringify | safe }};
     </script>
   {% endif %}
-    <script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
+
+  <script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
 {% endblock %}
 
 {% block body_start %}
@@ -44,4 +46,8 @@
   <div class="container">
     {% block main %}{% endblock %}
   </div>
+{% endblock %}
+
+{% block body_end_scripts %}
+  <script src="{{ asset_path }}javascripts/app.bundle.js?{{ startTime }}"></script>
 {% endblock %}

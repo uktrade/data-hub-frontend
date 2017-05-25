@@ -22,6 +22,8 @@ $images-dir: '/images/';
 @import 'status-bar';
 @import 'tables';
 
+@import 'objects/conditional-subfields';
+
 @import 'trumps/layout';
 
 .table--readonly {
