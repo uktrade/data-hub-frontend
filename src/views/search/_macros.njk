@@ -1,6 +1,4 @@
-
 {% macro companyresult(id, result, term, type) %}
-
   <li class="results-list__result result-list__ch" data_name="{{ result.name }}">
     <h3 class="result-title">
       <a href="/viewcompanyresult/{{ type }}/{{ id }}">{{result.name | highlightTerm(term) | safe}}</a>

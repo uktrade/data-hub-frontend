@@ -1,7 +1,9 @@
-{% extends "./index.njk" %}
+{% extends "company/_layout.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block tabmain %}
+{% block main_grid_right_column %}
+  {{ super() }}
+
   {% if interactions.length > 0 %}
     <div class="split-header">
       <h2 class="heading-medium">Company interactions</h2>
@@ -60,7 +62,6 @@
       </li>
       {% endfor %}
     </ul>
-    <script src="/javascripts/expandable-card.bundle.js"></script>
   {% elseif (not company.contacts or company.contacts.length == 0) %}
     <h2 class="heading-medium">Company interactions</h2>
     <p>
@@ -80,4 +81,9 @@
     </p>
     <p id="no-interaction-warning" class="infostrip">You currently have no interactions for this company.</p>
   {% endif %}
+{% endblock %}
+
+{% block body %}
+  {{ super() }}
+  <script src="/javascripts/expandable-card.bundle.js"></script>
 {% endblock %}

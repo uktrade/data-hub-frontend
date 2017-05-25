@@ -1,8 +1,9 @@
-{% extends "./index.njk" %}
+{% extends "company/_layout.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block mainContent %}
-  {% include "_messages.njk" %}
+{% block main_grid_right_column %}
+  {{ super() }}
+
   <div class="split-header">
     <h2 class="heading-medium">Company contacts</h2>
     <a id="add-contact-link" class="button" href="{{addContactUrl}}">Add new contact</a>
