@@ -250,3 +250,10 @@ hr {
   text-decoration: underline;
   margin-left: 0;
 }
+
+.js-enabled .block-label.selection-button-radio {
+  &::before,
+  &::after {
+    box-sizing: content-box;
+  }
+}
