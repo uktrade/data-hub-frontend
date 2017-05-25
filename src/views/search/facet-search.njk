@@ -1,33 +1,34 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
-{{ trade.searchbar('term', label="Search companies and contacts", value=result.term) }}
+{% block body_main_content %}
+  {{ trade.searchbar('term', label="Search companies and contacts", value=result.term) }}
 
-<div class="grid-row">
-  <div class="column-one-third">
-    <div class="filters">
-      {% include "search/facets.njk" %}
+  <div class="grid-row">
+    <div class="column-one-third">
+      <div class="filters">
+        {% include "search/facets.njk" %}
+      </div>
+    </div>
+    <div class="column-two-thirds">
+      <div class="button-bar button-bar--top">
+        <a
+          class="button button-secondary"
+          href="/company/add-step-1/">
+          Add new company
+        </a>
+      </div>
+      {% include "search/results.njk" %}
     </div>
   </div>
-  <div class="column-two-thirds">
-    <div class="button-bar button-bar--top">
-      <a
-        class="button button-secondary"
-        href="/company/add-step-1/">
-        Add new company
-      </a>
+  <div class="grid-row">
+    <div class="column-full">
+      {% include "search/pagination.njk" %}
     </div>
-    {% include "search/results.njk" %}
   </div>
-</div>
-<div class="grid-row">
-  <div class="column-full">
-    {% include "search/pagination.njk" %}
-  </div>
-</div>
 {% endblock %}
 
-{% block body_end %}
+{% block body %}
+  {{ super() }}
   <script src="{{ asset_path }}javascripts/search.bundle.js?{{ startTime }}"></script>
 {% endblock %}
