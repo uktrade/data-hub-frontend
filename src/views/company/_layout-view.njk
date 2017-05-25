@@ -1,5 +1,3 @@
-{% extends "company/_layout.njk" %}
-
 {% extends "layouts/_base-two-column.njk" %}
 
 {% block main_heading %}
@@ -18,7 +16,7 @@
       <a class="local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/company-contacts/{{company.id}}">Contacts</a>
       <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/company-interactions/{{company.id}}">Interactions</a>
       <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a>
-      <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="">Export</a>
+      <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/company-exports/view/{{company.id}}">Exports</a>
       <a class="local-nav__link {% if tab == 'investment' %}is-active{% endif %}" href="">Investment</a>
     {% endif %}
   </nav>
