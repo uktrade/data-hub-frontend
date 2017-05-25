@@ -3,7 +3,13 @@ $images-dir: '/images/';
 @import 'trade-elements';
 @import 'font-awesome';
 
-// application specific
+@import 'environment/global';
+
+@import 'objects/conditional-subfields';
+
+@import 'trumps/layout';
+
+//// application specific
 @import 'address';
 @import 'card';
 @import 'country-list';
@@ -22,10 +28,6 @@ $images-dir: '/images/';
 @import 'splitheader';
 @import 'status-bar';
 @import 'tables';
-
-@import 'objects/conditional-subfields';
-
-@import 'trumps/layout';
 
 .table--readonly {
   border-left-width: 5px;

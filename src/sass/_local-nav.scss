@@ -19,7 +19,11 @@
 .local-nav__link {
   display: block;
   padding: $gutter-half;
-  color: $black;
+
+  &,
+  &:visited {
+    color: $black;
+  }
 
   @include media(tablet) {
     padding-left:  $gutter-two-thirds;
