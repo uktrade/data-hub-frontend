@@ -1,8 +1,8 @@
-{% extends "./index.njk" %}
+{% extends "./_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block tabmain %}
-  {% include "messages.njk" %}
+{% block mainContent %}
+  {% include "_messages.njk" %}
 
   <h2 class="heading-medium">Company summary</h2>
   {{ trade.keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
@@ -13,5 +13,4 @@
     {{ trade.keyvaluetable(accountManagementDisplay, stripey=true, labels=accountManagementDisplayLabels) }}
     <p class="footnote">You do not have perission to edit the Account management section</strong></p>
   </div>
-
 {% endblock %}
