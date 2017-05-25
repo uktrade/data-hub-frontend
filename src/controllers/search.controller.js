@@ -7,15 +7,26 @@ const Q = require('q')
 
 const router = express.Router()
 
-function get (req, res, next) {
-  const filters = Object.assign({}, req.query)
-  delete filters.term
-  delete filters.page
+function buildSearchFilters (query) {
+  const docType = query.doc_type
+  const filters = []
 
+  if (docType === 'company') {
+    filters.push('company_company', 'company_companieshousecompany')
+  } else if (docType) {
+    filters.push(docType)
+  }
+
+  return filters
+}
+
+function get (req, res, next) {
   if (!req.query.term || req.query.term.length === 0) {
     res.render('search/facet-search', { result: null, pagination: null, params: req.query })
     return
   }
+
+  const filters = buildSearchFilters(req.query)
 
   searchService.search({
     token: req.session.token,
@@ -25,7 +36,11 @@ function get (req, res, next) {
   })
     .then((result) => {
       const pagination = getPagination(req, result)
-      res.render('search/facet-search', { result, pagination, params: req.query })
+      res.render('search/facet-search', {
+        result,
+        pagination,
+        params: req.query
+      })
     })
     .catch(next)
 }

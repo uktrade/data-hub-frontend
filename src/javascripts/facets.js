@@ -1,5 +1,5 @@
 /* eslint new-cap: 0 */
-const getQueryParam = require('../lib/url-stuff').getQueryParam
+const {getQueryParam, buildQueryString} = require('../lib/url-helpers')
 const {toggleClass, show} = require('../lib/element-stuff')
 
 const term = getQueryParam('term')
@@ -13,53 +13,58 @@ class Facets {
 
   initElements (targetElement) {
     this.element = targetElement
-    this.clearButtons = this.element.querySelectorAll('.clear-filter-js')
-    this.collapseButtons = this.element.querySelectorAll('.collapse-filter-js')
+    this.clearButtons = Array.from(this.element.querySelectorAll('.js-clear-filter'))
+    this.collapseButtons = Array.from(this.element.querySelectorAll('.js-collapse-filter'))
+    this.checkboxInputs = Array.from(this.element.querySelectorAll('input[type=checkbox]'))
+    this.collapsibleElem = this.element.querySelector('.js-collapsible')
   }
 
   addEventHandlers () {
-    this.element.addEventListener('click', this.selectOptionHandler, false)
+    this.checkboxInputs.forEach((input) => {
+      input.addEventListener('click', this.selectOptionHandler, false)
+    })
 
-    for (let pos = 0; pos < this.clearButtons; pos += 1) {
-      const clearButton = this.clearButtons.item(pos)
-      clearButton.addEventListener('click', this.clearFacetSelection)
-    }
+    this.clearButtons.forEach((clearButton) => {
+      clearButton.addEventListener('click', this.clearFacetSelection, false)
+    })
 
-    for (let pos = 0; pos < this.collapseButtons; pos += 1) {
-      const collapseButton = this.collapseButtons.item(pos)
-      collapseButton.addEventListener('click', this.toggleFacet)
-    }
+    this.collapseButtons.forEach((collapseButton) => {
+      collapseButton.addEventListener('click', this.toggleFacet, false)
+    })
   }
 
-  selectOptionHandler = () => {
-    let url = `?term=${term}`
-
-    const checkedInputs = this.element.querySelectorAll('input[type=checkbox]:checked')
-    for (let pos = 0; pos < checkedInputs.length; pos += 1) {
-      const input = checkedInputs.item(pos)
-      url += `&${input.name}=${input.value}`
+  selectOptionHandler = (event) => {
+    const input = event.target || event.srcElement
+    const queryParams = {
+      term: decodeURIComponent(term)
     }
 
-    window.location.href = url
-  };
+    if (input.checked) {
+      queryParams[input.name] = input.value
+    }
 
-  clearFacetSelection = (event) => {
-    const facetWrapper = event.target.parentElement.parentElement.parentElement
-    const checkedInputs = facetWrapper.querySelectorAll('input[type=checkbox]:checked')
-    for (let pos = 0; pos < checkedInputs.length; pos += 1) {
-      const input = checkedInputs.item(pos)
+    window.location.href = buildQueryString(queryParams)
+  }
+
+  clearFacetSelection = () => {
+    const queryParams = {
+      term: decodeURIComponent(term)
+    }
+
+    this.checkboxInputs.forEach((input) => {
       input.checked = false
-    }
-    this.selectOptionHandler()
-  };
+    })
 
-  toggleFacet = (event) => {
-    const facetWrapper = event.target.parentElement.parentElement.parentElement
-    toggleClass(facetWrapper, 'collapse')
+    window.location.href = buildQueryString(queryParams)
+  }
 
-    const control = facetWrapper.querySelector('.collapse-filter-js')
-    toggleClass(control, 'fa-chevron-up')
-    toggleClass(control, 'fa-chevron-down')
+  toggleFacet = () => {
+    toggleClass(this.collapsibleElem, 'collapse')
+
+    this.collapseButtons.forEach((collapseButton) => {
+      toggleClass(collapseButton, 'fa-chevron-up')
+      toggleClass(collapseButton, 'fa-chevron-down')
+    })
   }
 }
 
