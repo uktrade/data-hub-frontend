@@ -41,8 +41,7 @@ describe('Company controller, ltd', function () {
     incorporation_date: '2017-02-15',
     registered_address_country: {
       id: '80756b9a-5d95-e211-a939-e4115bead28a',
-      name: 'United Kingdom',
-      selectable: true
+      name: 'United Kingdom'
     }
   }
   const company = {
@@ -65,9 +64,9 @@ describe('Company controller, ltd', function () {
     turnoverOptions: [{id: '1', name: 'option 1'}],
     countryOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'United Kingdom' }],
     headquarterOptions: [
-      { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq', selectable: true },
-      { id: '43281c5e-92a4-4794-867b-b4d5f801e6f3', name: 'ghq', selectable: true },
-      { id: '3e6debb4-1596-40c5-aa25-f00da0e05af9', name: 'ukhq', selectable: true }
+      { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq' },
+      { id: '43281c5e-92a4-4794-867b-b4d5f801e6f3', name: 'ghq' },
+      { id: '3e6debb4-1596-40c5-aa25-f00da0e05af9', name: 'ukhq' }
     ]
   }
 

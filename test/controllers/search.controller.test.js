@@ -34,8 +34,7 @@ describe('Search controller', function () {
             uk_based: true,
             business_type: {
               id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-              name: 'Private limited company',
-              selectable: true
+              name: 'Private limited company'
             }
           })
         }
@@ -64,8 +63,7 @@ describe('Search controller', function () {
             uk_based: true,
             business_type: {
               id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-              name: 'Public limited company',
-              selectable: true
+              name: 'Public limited company'
             }
           })
         }
@@ -94,8 +92,7 @@ describe('Search controller', function () {
             uk_based: true,
             business_type: {
               id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-              name: 'Partnership',
-              selectable: true
+              name: 'Partnership'
             }
           })
         }
@@ -124,8 +121,7 @@ describe('Search controller', function () {
             uk_based: false,
             business_type: {
               id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-              name: 'Company',
-              selectable: true
+              name: 'Company'
             }
           })
         }

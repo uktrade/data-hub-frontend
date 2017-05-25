@@ -33,8 +33,7 @@ describe('Company controller, Companies Houe', function () {
     incorporation_date: '2017-02-15',
     registered_address_country: {
       id: '80756b9a-5d95-e211-a939-e4115bead28a',
-      name: 'United Kingdom',
-      selectable: true
+      name: 'United Kingdom'
     }
   }
 
