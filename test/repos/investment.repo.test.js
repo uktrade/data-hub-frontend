@@ -5,7 +5,8 @@ const {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   getInvestmentValue,
-  getInvestmentRequirements
+  getInvestmentRequirements,
+  saveInvestmentProject
 } = require(`${root}/src/repos/investment.repo`)
 
 const companyData = require('../data/company.json')
@@ -59,6 +60,18 @@ describe('Investment repository', () => {
       const actual = getInvestmentRequirements('token', investmentProjectSummaryData.id)
 
       return expect(actual).to.eventually.deep.equal(investmentRequirements)
+    })
+  })
+
+  describe('#saveInvestmentProject', () => {
+    nock(config.apiRoot)
+      .post(`/v3/investment/project`)
+      .reply(200, { id: '12345' })
+
+    it('should return an investment requirements object', () => {
+      const actual = saveInvestmentProject('token', { foo: 'bar' })
+
+      return expect(actual).to.eventually.deep.equal({ id: '12345' })
     })
   })
 })

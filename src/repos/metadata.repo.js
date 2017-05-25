@@ -73,7 +73,10 @@ const metadataItems = [
   ['service-delivery-status', 'serviceDeliveryStatusOptions'],
   ['service', 'serviceDeliveryServiceOptions'],
   ['event', 'eventOptions'],
-  ['headquarter-type', 'headquarterOptions']
+  ['headquarter-type', 'headquarterOptions'],
+  ['referral-source-activity', 'referralSourceActivityOptions'],
+  ['investment-business-activity', 'businessActivityOptions'],
+  ['investment-type', 'investmentTypeOptions']
 ]
 
 const restrictedServiceKeys = [
