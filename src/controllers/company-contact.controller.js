@@ -21,7 +21,7 @@ function getContacts (req, res, next) {
       // build the data for the contact table.
       res.locals.contacts = company.contacts
         .filter(contact => !contact.archived)
-        .map(contact => getDisplayCompanyContact(contact))
+        .map(contact => getDisplayCompanyContact(contact, company))
 
       // build the data for the archived contact table.
       res.locals.contactsArchived = company.contacts

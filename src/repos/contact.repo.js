@@ -5,7 +5,7 @@ const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 
 function getContact (token, contactId) {
-  return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}`)
 }
 
 function saveContact (token, contact) {
@@ -15,10 +15,10 @@ function saveContact (token, contact) {
 
   if (contact.id && contact.id.length > 0) {
     // update
-    options.url = `${config.apiRoot}/contact/${contact.id}/`
-    options.method = 'PUT'
+    options.url = `${config.apiRoot}/v3/contact/${contact.id}`
+    options.method = 'PATCH'
   } else {
-    options.url = `${config.apiRoot}/contact/`
+    options.url = `${config.apiRoot}/v3/contact`
     options.method = 'POST'
   }
 
@@ -28,14 +28,14 @@ function saveContact (token, contact) {
 function archiveContact (token, contactId, reason) {
   const options = {
     body: { reason },
-    url: `${config.apiRoot}/contact/${contactId}/archive/`,
+    url: `${config.apiRoot}/v3/contact/${contactId}/archive`,
     method: 'POST'
   }
   return authorisedRequest(token, options)
 }
 
 function unarchiveContact (token, contactId) {
-  return authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/unarchive/`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/unarchive`)
 }
 
 function getContactsForCompany (token, companyId) {

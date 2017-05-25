@@ -28,13 +28,16 @@ function editDetails (req, res, next) {
       // or a contact that the user wishes to edit
       // or a new contact for a company
       if (containsFormData(req)) {
+        res.locals.company = res.locals.company
+          ? res.locals.company : yield companyRepository.getDitCompany(token, req.body.company)
         res.locals.formData = req.body
-        res.locals.company = yield companyRepository.getDitCompany(token, req.body.company)
       } else if (res.locals.contact) {
+        res.locals.company = res.locals.company
+          ? res.locals.company : yield companyRepository.getDitCompany(token, res.locals.contact.company.id)
         res.locals.formData = contactFormService.getContactAsFormData(res.locals.contact)
-        res.locals.company = res.locals.contact.company
       } else if (req.query.company) {
-        res.locals.company = yield companyRepository.getDitCompany(token, req.query.company)
+        res.locals.company = res.locals.company
+          ? res.locals.company : yield companyRepository.getDitCompany(token, req.query.company)
         res.locals.formData = { company: res.locals.company.id }
       } else {
         return next('Unable to edit contact')

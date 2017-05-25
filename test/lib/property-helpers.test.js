@@ -209,3 +209,24 @@ describe('PropertyHelpers: Check if an object has a property with hasProperty', 
     expect(typeof actual).to.equal('boolean')
   })
 })
+
+describe('PropertyHelpers: Conversion of nested objects', function () {
+  it('Should convert an empty string to null', function () {
+    const source = {
+      foo: 'foo',
+      bar: null
+    }
+    const actual = propertyHelpers.convertNestedObjects(source, ['bar'])
+    expect(actual.bar).be.null
+  })
+  it('Should convert a string to a nested object', function () {
+    const source = {
+      foo: 'foo',
+      bar: 'some-id'
+    }
+    const actual = propertyHelpers.convertNestedObjects(source, ['bar'])
+    expect(actual.bar).to.deep.equal({
+      id: 'some-id'
+    })
+  })
+})

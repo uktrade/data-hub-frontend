@@ -6,15 +6,21 @@ describe('Contact controller', function () {
   let getContactStub
   let buildCompanyUrlStub
   let getDisplayContactStub
+  let getDitCompanyStub
   let contactController
   let contact
-  let formatted
+  let contactFormatted
+  let company
   let companyUrl
   let token
 
   beforeEach(function () {
     token = '321'
-    companyUrl = '/company/1234'
+    company = {
+      id: '876544',
+      name: 'Bank ltd.'
+    }
+    companyUrl = '/company/876544'
     contact = {
       id: '12651151-2149-465e-871b-ac45bc568a62',
       created_on: '2017-02-14T14:49:17',
@@ -47,17 +53,15 @@ describe('Contact controller', function () {
       },
       advisor: null,
       address_country: null,
-      company: {
-        id: '876544',
-        name: 'Bank ltd.'
-      }
+      company
     }
-    formatted = {
-      id: '1234',
+    contactFormatted = {
+      id: '12651151-2149-465e-871b-ac45bc568a62',
       name: 'fred'
     }
     getContactStub = sinon.stub().resolves(contact)
-    getDisplayContactStub = sinon.stub().returns(formatted)
+    getDisplayContactStub = sinon.stub().returns(contactFormatted)
+    getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
     contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
       '../repos/contact.repo': {
@@ -65,6 +69,9 @@ describe('Contact controller', function () {
       },
       '../services/contact-formatting.service': {
         getDisplayContact: getDisplayContactStub
+      },
+      '../repos/company.repo': {
+        getDitCompany: getDitCompanyStub
       },
       '../services/company.service': {
         buildCompanyUrl: buildCompanyUrlStub
@@ -90,6 +97,26 @@ describe('Contact controller', function () {
       }
       contactController.getCommon(req, res, next)
     })
+    it('should include an expanded company', function (done) {
+      const req = {
+        session: { token },
+        params: {
+          contactId: '1234'
+        }
+      }
+      const res = {
+        locals: {
+          contact
+        },
+        render: function () {}
+      }
+      const next = function () {
+        expect(getDitCompanyStub).to.have.been.calledWith(token, contact.company.id)
+        expect(getContactStub).to.have.been.calledWith(token, req.params.contactId)
+        done()
+      }
+      contactController.getCommon(req, res, next)
+    })
     it('should get a link to the contact company', function (done) {
       const req = {
         session: { token },
@@ -98,11 +125,13 @@ describe('Contact controller', function () {
         }
       }
       const res = {
-        locals: {},
+        locals: {
+          company
+        },
         render: function () {}
       }
       const next = function () {
-        expect(buildCompanyUrlStub).to.have.been.calledWith(contact.company)
+        expect(buildCompanyUrlStub).to.have.been.calledWith(company)
         done()
       }
       contactController.getCommon(req, res, next)
@@ -132,6 +161,9 @@ describe('Contact controller', function () {
         },
         '../services/contact-formatting.service': {
           getDisplayContact: getDisplayContactStub
+        },
+        '../repos/company.repo': {
+          getDitCompany: getDitCompanyStub
         },
         '../services/company.service': {
           buildCompanyUrl: buildCompanyUrlStub
@@ -164,10 +196,10 @@ describe('Contact controller', function () {
           session: {}
         }
         const res = {
-          locals: { contact, id: '1234' },
+          locals: { contact, id: '1234', company },
           render: function (url, options) {
-            expect(getDisplayContactStub).to.be.calledWith(contact)
-            expect(res.locals.contactDetails).to.deep.equal(formatted)
+            expect(getDisplayContactStub).to.be.calledWith(contact, company)
+            expect(res.locals.contactDetails).to.deep.equal(contactFormatted)
             expect(res.locals.contactDetailsLabels).to.deep.equal(contactDetailsLabels)
             done()
           }

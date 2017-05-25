@@ -1,5 +1,8 @@
 const Q = require('q')
-const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../lib/property-helpers')
+const {
+  getPropertyId, nullEmptyFields,
+  convertYesNoToBoolean, convertNestedObjects
+} = require('../lib/property-helpers')
 const contactRepository = require('../repos/contact.repo')
 
 /**
@@ -56,6 +59,7 @@ function saveContactForm (token, contactForm) {
       try {
         let dataToSave = convertYesNoToBoolean(contactForm)
         dataToSave = nullEmptyFields(dataToSave)
+        dataToSave = convertNestedObjects(dataToSave, ['title', 'company', 'address_country'])
         const savedContact = yield contactRepository.saveContact(token, dataToSave)
         resolve(savedContact)
       } catch (error) {

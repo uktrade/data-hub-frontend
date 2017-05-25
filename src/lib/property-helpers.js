@@ -82,6 +82,28 @@ function convertYesNoToBoolean (object) {
 }
 
 /**
+* Convert fk relationships from flat to 1-level deep
+*
+* @param {Object} object
+* @param {Array} props
+*/
+function convertNestedObjects (object, props) {
+  const convertedObject = Object.assign({}, object)
+
+  for (const prop of props) {
+    const value = object[prop]
+
+    if (value) {
+      convertedObject[prop] = {
+        id: value
+      }
+    }
+  }
+
+  return convertedObject
+}
+
+/**
  * Determine if an object has a property, and that property is also an object.
  *
  * @param {any} object
@@ -101,4 +123,13 @@ function hasProperty (object, property) {
   object[property] !== null)
 }
 
-module.exports = { getPropertyId, getPropertyName, nullEmptyFields, convertYesNoToBoolean, deleteNulls, hasProperty, hasObjectProperty }
+module.exports = {
+  getPropertyId,
+  getPropertyName,
+  nullEmptyFields,
+  convertYesNoToBoolean,
+  deleteNulls,
+  hasProperty,
+  hasObjectProperty,
+  convertNestedObjects
+}
