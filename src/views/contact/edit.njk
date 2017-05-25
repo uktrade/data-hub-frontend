@@ -1,7 +1,7 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "./_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_content %}
   <h1 class="page-heading">
     {% if formData and formData.id %}
       Edit contact
@@ -101,5 +101,9 @@
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block body %}
+  {{ super() }}
   <script src="/javascripts/contact-edit.bundle.js"></script>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "_base.njk" %}
+
+{% block body_main_content %}
+  {% block heading %}
+    <h1 class="visually-hidden">Contact Details</h1>
+    <h2 class="page-heading">
+      {{contact.first_name}} {{contact.last_name}}
+      {% if contact.primary == true %}{{trade.statusbadge('Primary', variation="fuschia")}}{% endif %}
+      <span class="post-header"><a href="{{companyUrl}}">{{contact.company.name}}</a></span>
+    </h2>
+  {% endblock %}
+
+  <div class="grid-row">
+    {% block localNav %}
+      <nav class="local-nav column-one-quarter">
+        <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/contact/{{id}}/details">Details</a>
+        <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/contact-interactions/{{id}}">Interactions</a>
+      </nav>
+    {% endblock %}
+
+    <article class="column-three-quarters">
+      {% block mainContent %}{% endblock %}
+    </article>
+  </div>
+{% endblock %}
