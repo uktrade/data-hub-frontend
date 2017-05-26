@@ -401,7 +401,7 @@ describe('Interaction controller, edit', function () {
       it('should include a csrf token', function () {
         return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
-          expect(document.querySelector('[type=hidden][name=_csrf_token]')).to.not.be.null
+          expect(document.querySelector('[type=hidden][name=_csrf]')).to.not.be.null
         })
       })
       it('should render errors in a list if there are any', function () {

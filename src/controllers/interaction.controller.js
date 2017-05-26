@@ -2,7 +2,6 @@
 const express = require('express')
 const Q = require('q')
 const interactionLabels = require('../labels/interaction-labels')
-const {genCSRF} = require('../lib/controller-utils')
 const metadataRepository = require('../repos/metadata.repo')
 const interactionDataService = require('../services/interaction-data.service')
 const {getDisplayInteraction} = require('../services/interaction-formatting.service')
@@ -25,11 +24,9 @@ function getCommon (req, res, next) {
 }
 
 function getAddStep1 (req, res) {
-  genCSRF(req, res)
-  const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery', selectable: true }]
+  const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
 
   const selectableTypes = interactionTypes
-    .filter(selectableType => selectableType.selectable)
     .sort((a, b) => {
       const nameA = a.name.toUpperCase()
       const nameB = b.name.toUpperCase()

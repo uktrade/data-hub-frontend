@@ -10,15 +10,19 @@ function notFound (req, res, next) {
 
 function catchAll (error, req, res, next) {
   const statusCode = error.status = (error.status || 500)
-  const statusMessage = statusCode === 404
+  let statusMessage = statusCode === 404
     ? 'Sorry we couldn\'t find that page!'
     : 'Sorry something has gone wrong!'
+
+  if (error.code === 'EBADCSRFTOKEN') {
+    statusMessage = 'This form has been tampered with'
+  }
 
   if (res.headersSent) {
     return next(error)
   }
 
-  winston[statusCode === 500 ? 'error' : 'info'](error)
+  winston[statusCode === 404 ? 'info' : 'error'](error)
 
   res.status(statusCode)
     .render('errors/index', {

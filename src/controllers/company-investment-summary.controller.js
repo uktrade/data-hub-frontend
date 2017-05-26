@@ -73,7 +73,7 @@ function editInvestment (req, res, next) {
 }
 
 function postInvestment (req, res) {
-  delete req.body._csrf_token
+  delete req.body._csrf
 
   const errors = validateInvestment(req.body)
   if (errors) {

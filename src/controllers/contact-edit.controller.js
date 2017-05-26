@@ -1,7 +1,7 @@
 const express = require('express')
 const Q = require('q')
 const winston = require('winston')
-const { genCSRF, containsFormData } = require('../lib/controller-utils')
+const { containsFormData } = require('../lib/controller-utils')
 const contactFormService = require('../services/contact-form.service')
 const { contactLabels } = require('../labels/contact-labels')
 const metadataRepository = require('../repos/metadata.repo')
@@ -51,7 +51,6 @@ function editDetails (req, res, next) {
       res.locals.countryOptions = metadataRepository.countryOptions
       res.locals.companyUrl = buildCompanyUrl(res.locals.company)
 
-      genCSRF(req, res)
       res.render('contact/edit')
     } catch (error) {
       winston.error(error)

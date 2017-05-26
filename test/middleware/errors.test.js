@@ -2,48 +2,46 @@ const proxyquire = require('proxyquire')
 const winston = require('winston')
 
 const errorCode404 = 404
+const errorCode403 = 403
 const errorCode500 = 500
 const isDev = true
-const errorsStub = (isDev) => {
-  return proxyquire('../../src/middleware/errors', {
-    '../config': {
-      isDev
+
+describe('Error Middleware Test', () => {
+  beforeEach(() => {
+    this.sandbox = sinon.sandbox.create()
+    this.winstonErrorStub = this.sandbox.stub(winston, 'error')
+    this.winstonInfoStub = this.sandbox.stub(winston, 'info')
+
+    this.errorsStub = (isDev) => {
+      return proxyquire('../../src/middleware/errors', {
+        '../config': {
+          isDev
+        }
+      })
     }
   })
-}
 
-let winstonErrorStub
-let winstonInfoStub
+  afterEach(() => {
+    this.sandbox.restore()
+  })
 
-before(function () {
-  winstonErrorStub = sinon.stub(winston, 'error')
-  winstonInfoStub = sinon.stub(winston, 'info')
-})
+  describe('notFound method', () => {
+    it('should log a 404 and drop through to next middleware', () => {
+      const nextSpy = this.sandbox.spy()
 
-after(function () {
-  winston.error.restore()
-  winston.info.restore()
-})
-
-describe('Error Middleware Test', function () {
-  describe('notFound method', function () {
-    it('should log a 404 and drop through to next middleware', function (done) {
-      const nextSpy = sinon.spy()
-
-      errorsStub(isDev).notFound(null, null, nextSpy)
+      this.errorsStub(isDev).notFound(null, null, nextSpy)
 
       expect(nextSpy.calledOnce).to.be.true
       expect(nextSpy.args[0][0] instanceof Error).to.be.true
       expect(nextSpy.args[0][0].message).to.equal('Not Found')
       expect(nextSpy.args[0][0].status).to.equal(404)
-      done()
     })
   })
 
-  describe('catchAll method', function () {
-    it('should log a 404 and render response', function (done) {
-      const nextSpy = sinon.spy()
-      const responseRenderSpy = sinon.spy()
+  describe('catchAll method', () => {
+    it('should log a 404 and render response', () => {
+      const nextSpy = this.sandbox.spy()
+      const responseRenderSpy = this.sandbox.spy()
       const mockResponse = {
         status: () => {
           return {
@@ -52,11 +50,11 @@ describe('Error Middleware Test', function () {
         },
         headersSent: false
       }
-      const responseStatusSpy = sinon.spy(mockResponse, 'status')
+      const responseStatusSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode404} error`)
 
       error.status = errorCode404
-      errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
+      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
 
       expect(responseStatusSpy.calledOnce).to.be.true
       expect(responseStatusSpy.args[0][0]).to.equal(errorCode404)
@@ -67,15 +65,14 @@ describe('Error Middleware Test', function () {
         'statusCode': errorCode404,
         'statusMessage': 'Sorry we couldn\'t find that page!'
       })
-      expect(winstonInfoStub.args[0][0] instanceof Error).to.be.true
-      expect(winstonInfoStub.args[0][0].message).to.equal(`mock ${errorCode404} error`)
-      expect(winstonInfoStub.args[0][0].status).to.equal(errorCode404)
-      done()
+      expect(this.winstonInfoStub.args[0][0] instanceof Error).to.be.true
+      expect(this.winstonInfoStub.args[0][0].message).to.equal(`mock ${errorCode404} error`)
+      expect(this.winstonInfoStub.args[0][0].status).to.equal(errorCode404)
     })
 
-    it('should log a 500 and render response', function (done) {
-      const nextSpy = sinon.spy()
-      const responseRenderSpy = sinon.spy()
+    it('should log a 500 and render response', () => {
+      const nextSpy = this.sandbox.spy()
+      const responseRenderSpy = this.sandbox.spy()
       const mockResponse = {
         status: () => {
           return {
@@ -84,10 +81,10 @@ describe('Error Middleware Test', function () {
         },
         headersSent: false
       }
-      const responseStatusSpy = sinon.spy(mockResponse, 'status')
+      const responseStatusSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode500} error`)
 
-      errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
+      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
 
       expect(responseStatusSpy.calledOnce).to.be.true
       expect(responseStatusSpy.args[0][0]).to.equal(errorCode500)
@@ -98,15 +95,14 @@ describe('Error Middleware Test', function () {
         'statusCode': errorCode500,
         'statusMessage': 'Sorry something has gone wrong!'
       })
-      expect(winstonErrorStub.args[0][0] instanceof Error).to.be.true
-      expect(winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
-      expect(winstonErrorStub.args[0][0].status).to.equal(errorCode500)
-      done()
+      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
+      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
+      expect(this.winstonErrorStub.args[0][0].status).to.equal(errorCode500)
     })
 
-    it('should log a 500 and render response without error information', function (done) {
-      const nextSpy = sinon.spy()
-      const responseRenderSpy = sinon.spy()
+    it('should log a 403 and render response', () => {
+      const nextSpy = this.sandbox.spy()
+      const responseRenderSpy = this.sandbox.spy()
       const mockResponse = {
         status: () => {
           return {
@@ -115,10 +111,44 @@ describe('Error Middleware Test', function () {
         },
         headersSent: false
       }
-      const responseStatusSpy = sinon.spy(mockResponse, 'status')
+      const responseStatusSpy = this.sandbox.spy(mockResponse, 'status')
+      const error = new Error(`mock ${errorCode403} error`)
+
+      error.status = errorCode403
+      error.code = 'EBADCSRFTOKEN'
+
+      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
+
+      expect(responseStatusSpy.calledOnce).to.be.true
+      expect(responseStatusSpy.args[0][0]).to.equal(errorCode403)
+      expect(responseRenderSpy.calledOnce).to.be.true
+      expect(responseRenderSpy.args[0][0]).to.equal('errors/index')
+      expect(responseRenderSpy.args[0][1]).to.eql({
+        'devErrorDetail': error,
+        'statusCode': errorCode403,
+        'statusMessage': 'This form has been tampered with'
+      })
+      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
+      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode403} error`)
+      expect(this.winstonErrorStub.args[0][0].status).to.equal(errorCode403)
+      expect(nextSpy.calledOnce).to.be.false
+    })
+
+    it('should log a 500 and render response without error information', () => {
+      const nextSpy = this.sandbox.spy()
+      const responseRenderSpy = this.sandbox.spy()
+      const mockResponse = {
+        status: () => {
+          return {
+            render: responseRenderSpy
+          }
+        },
+        headersSent: false
+      }
+      const responseStatusSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode500} error`)
 
-      errorsStub(!isDev).catchAll(error, null, mockResponse, nextSpy)
+      this.errorsStub(!isDev).catchAll(error, null, mockResponse, nextSpy)
 
       expect(responseStatusSpy.calledOnce).to.be.true
       expect(responseStatusSpy.args[0][0]).to.equal(errorCode500)
@@ -129,25 +159,23 @@ describe('Error Middleware Test', function () {
         'statusCode': errorCode500,
         'statusMessage': 'Sorry something has gone wrong!'
       })
-      expect(winstonErrorStub.args[0][0] instanceof Error).to.be.true
-      expect(winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
-      expect(winstonErrorStub.args[0][0].status).to.equal(errorCode500)
-      done()
+      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
+      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
+      expect(this.winstonErrorStub.args[0][0].status).to.equal(errorCode500)
     })
 
-    it('should drop through to next middleware as headers have already been sent', function (done) {
-      const nextSpy = sinon.spy()
+    it('should drop through to next middleware as headers have already been sent', () => {
+      const nextSpy = this.sandbox.spy()
       const mockResponse = {
         headersSent: true
       }
       const error = new Error('mock headers sent error')
 
-      errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
+      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
 
       expect(nextSpy.args[0][0] instanceof Error).to.be.true
       expect(nextSpy.args[0][0].message).to.equal('mock headers sent error')
       expect(nextSpy.args[0][0].status).to.equal(errorCode500)
-      done()
     })
   })
 })

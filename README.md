@@ -150,6 +150,30 @@ To include a component and pass data to it:
 } %}
 ```
 
+Component can take multiple arguments. It will combine them in single object:
+
+```js
+res.render('some-page', {
+  personData: {
+    name: 'Barry',
+    age: 55    
+  }
+})
+```
+```njk
+{% component 'person', personData, gender='male' %} 
+```
+
+Is the same as:
+
+```njk
+{% component 'person', {
+  name: 'Barry',
+  age: '55',
+  gender: 'male'
+} %}
+```
+
 ## Deployment
 
 Commits to `develop` are automatically deployed to a heroku instance. Pull

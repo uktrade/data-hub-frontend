@@ -14,7 +14,7 @@
       {{ trade.errorPanel( errors, labels=contactLabels ) }}
 
       <form method="POST">
-        <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <input type="hidden" name="company" value="{{formData.company}}">
         {% if formData.id %}
           <input type="hidden" name="id" value="{{formData.id}}">

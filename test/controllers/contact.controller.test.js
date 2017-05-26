@@ -43,12 +43,10 @@ describe('Contact controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr',
-        selectable: true
+        name: 'Mr'
       },
       advisor: null,
       address_country: null,
-      teams: [],
       company: {
         id: '876544',
         name: 'Bank ltd.'

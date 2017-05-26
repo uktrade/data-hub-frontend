@@ -4,7 +4,7 @@ const Facets = require('./facets')
 document.addEventListener(
   'DOMContentLoaded',
   function () {
-    new Facets(document.getElementById('facets'), document.getElementById('result-summary'))
+    new Facets(document.getElementById('facets'))
   },
   false
 )

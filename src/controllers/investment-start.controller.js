@@ -3,15 +3,12 @@ const router = require('express').Router()
 const { getInflatedDitCompany } = require('../services/company.service')
 const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
 const { search } = require('../services/search.service')
-const { genCSRF } = require('../lib/controller-utils')
 const { getPagination } = require('../lib/pagination')
 
 function getHandler (req, res, next) {
   const clientCompanyId = req.query['client-company']
   const searchTerm = req.query['q']
   const promises = []
-
-  genCSRF(req, res)
 
   if (clientCompanyId) {
     promises.push(getInflatedDitCompany(req.session.token, clientCompanyId))
@@ -68,8 +65,6 @@ function postHandler (req, res, next) {
   } else if (isEquitySource === 'false') {
     res.redirect(`/investment/start?client-company=${clientCompanyId}&show-search=true`)
   } else {
-    genCSRF(req, res)
-
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
         res.render('investment/start', {

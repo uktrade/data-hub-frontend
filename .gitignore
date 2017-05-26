@@ -29,6 +29,7 @@ apitest.js
 reports
 .env
 npm*.log
+yarn-error.log
 stats.json
 
 .nyc_output

@@ -2,6 +2,7 @@ const path = require('path')
 const expect = require('chai').expect
 const html = require('html')
 const htmlBeautifier = require('js-beautify').html
+const {JSDOM} = require('jsdom')
 
 const nunjucksConfig = require('../config/nunjucks')
 
@@ -25,16 +26,24 @@ const normaliseHtml = (string) => {
 
 const renderComponent = (name, input) => {
   const componentPath = `${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`
-  return nunjucks.render(componentPath, input)
+  return normaliseHtml(nunjucks.render(componentPath, input))
+}
+
+const renderComponentToDom = (name, input) => {
+  const renderedComponent = renderComponent(name, input)
+  return (new JSDOM(renderedComponent)).window.document.body.querySelector('body>:first-child')
 }
 
 const expectComponent = (name, input, expected) => {
   // Normalise HTML whitespace, to make diffing simpler
   expect(
-    normaliseHtml(renderComponent(name, input))
+    renderComponent(name, input)
   ).to.equal(
     normaliseHtml(expected)
   )
 }
 
-module.exports.expectComponent = expectComponent
+module.exports = {
+  expectComponent,
+  renderComponentToDom
+}

@@ -1,9 +1,9 @@
 
 {% if contact.archived %}
   <p class="infostrip">
-    This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br/>
-    <strong>Reason:</strong> {{contact.archived_reason}}<br/>
-    <br/>
+    This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
+    <strong>Reason:</strong> {{contact.archived_reason}}<br>
+    <br>
     <a href="/contact/{{contact.id}}/unarchive">Unarchive</a>
   </p>
 {% else %}
@@ -12,7 +12,7 @@
       <a href="#">Archive Contact</a>
     </p>
     <form action="/contact/{{contact.id}}/archive" class="section archive-panel__form" method="POST">
-      <input type="hidden" name="_csrf_token" value="{{csrfToken}}">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <div class="form-group {% if query.archiveerror %}form-group-error{% endif %}" id="archived_reason-wrapper">
         <label class="form-label-bold" for="archived_reason">Reason for archiving contact</label>
         <select class="form-control" name="archived_reason">

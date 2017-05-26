@@ -14,11 +14,11 @@
   <h1 class="heading-xlarge">Add new interaction</h2>
   {{ trade.errorPanel( errors, labels=labels ) }}
   <form method="POST">
-    <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}"/>
-    <input type="hidden" name="company" value="{{formData.company}}"/>
-    <input type="hidden" name="_csrf_token" value="{{csrfToken}}"/>
+    <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}">
+    <input type="hidden" name="company" value="{{formData.company}}">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
     {% if formData.id %}
-      <input type="hidden" name="id" value="{{formData.id}}"/>
+      <input type="hidden" name="id" value="{{formData.id}}">
     {% endif %}
 
     <div class='form-group' id="company-wrapper">

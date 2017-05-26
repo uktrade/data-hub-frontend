@@ -1,0 +1,34 @@
+{##
+ # @param {string} projectCode Project code
+ #
+ # @param {string} [id] Project id
+ # @param {string} [name] Project name
+ # @param {string} [phaseName] Name of project phase
+ #
+ # @return {string} HTML for project status
+ #
+ # @example
+ #   {% component 'project-status', {
+ #     projectCode: 'DHP-0000001
+ #     phaseName: 'Prospect'
+ #   } %}
+ #}
+
+{% if projectCode %}
+  <div class="status-bar grid-row">
+    <dl class="status-bar__section column-one-quarter">
+      <dt>Project code</dt>
+      <dd class="status-bar__section-title">
+        {{ projectCode }}
+      </dd>
+    </dl>
+    {% if phaseName %}
+      <dl class="status-bar__section column-one-quarter">
+        <dt>Phase</dt>
+        <dd class="status-bar__section-title">
+          {{ phaseName }} stage
+        </dd>
+      </dl>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,7 @@
+.js-enabled .js-ConditionalSubfield {
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+}

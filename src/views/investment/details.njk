@@ -1,44 +1,33 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "./_base.njk" %}
 
-{% block main %}
+{% block mainContent %}
+  <article class="column-three-quarters">
+    <h2 class="heading-medium">Investment project summary</h2>
+    {% component 'key-value-table', items=project, variant='striped' %}
+    <p>
+      <a href="/investment/{{ projectMeta.id }}/details/edit" class="button-secondary">Edit summary</a>
+    </p>
 
-  {% import "macros/trade.html" as trade %}
-  {% import "./investment_macros.njk" as local %}
+    <h2 class="heading-medium">Value</h2>
+    {% component 'key-value-table', items=value, variant='striped' %}
+    <p>
+      <a href="/investment/{{ projectMeta.id }}/value/start" class="button">Start</a>
+    </p>
 
-<h1>{{ projectTitle }}</h1>
+    <h2 class="heading-medium">Requirements and location</h2>
+    {% component 'key-value-table', items=requirements, variant='striped' %}
+    <p>
+      <a href="/investment/{{ projectMeta.id }}/requirements/start" class="button">Start</a>
+    </p>
 
-<div class="panel">
-  {{ projectNumber }}
-  Close project
-
-  Prospect stage
-  {{ prospectStage }}
-</div>
-
-  <h2 class="heading-medium">Investment project summary</h2>
-  {{ trade.keyvaluetable(
-  details,
-  stripey=false,
-  labels=detailsDisplay,
-  keyorder=detailsDisplayOrder,
-  id="investment-details")
-  }}
-
-  <h2 class="heading-medium">Value</h2>
-  <div class="panel">Please complete this section to move to "Assign project manager stage"</div>
-
-  <h2 class="heading-medium">Requirements and location</h2>
-  <div class="panel">Please complete this section to move to "Assign project manager stage"</div>
-
-  <h2></h2>
-
-  <h2 class="heading-medium">Referral source</h2>
-  {{ trade.keyvaluetable(
-  referral,
-  stripey=false,
-  labels=referLabels,
-  keyorder=referOrder,
-  id="investment-details")
-  }}
-
+    <h2 class="heading-medium">Referral source</h2>
+    {% component 'key-value-table', {
+      items: {
+        'Activity': null,
+        'Event': null,
+        'Advisor': null
+      },
+      variant: 'striped'
+    } %}
+  </article>
 {% endblock %}

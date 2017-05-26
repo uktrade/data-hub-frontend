@@ -2,22 +2,14 @@ const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 const includes = require('lodash/includes')
 const Q = require('q')
-
 const winston = require('winston')
 
-const FACETS = {
-  'Category': [
-    { name: 'doc_type', value: 'company', label: 'Company' },
-    { name: 'doc_type', value: 'company_contact', label: 'Contact' }
-  ]
-}
-
-function search ({token, term, filters, limit = 10, page = 1}) {
+function search ({token, term, filters = [], limit = 10, page = 1}) {
   const requestBody = {
     term,
     limit,
     offset: (page * limit) - limit,
-    doc_type: filters
+    doc_type: filters.length && filters
   }
   const options = {
     url: `${config.apiRoot}/search/`,
@@ -27,9 +19,10 @@ function search ({token, term, filters, limit = 10, page = 1}) {
 
   return authorisedRequest(token, options)
     .then(result => {
-      populateFacets(result, filters)
+      result.facets = buildFacetViewDataObj(filters)
       result.term = term
       result.page = page
+
       return result
     })
 }
@@ -64,31 +57,23 @@ function suggestCompany (token, term, types) {
     })
 }
 
-function hasFilterForFacet (filters, facet) {
-  const name = facet.name
-  const value = facet.value
-
-  if (!filters) {
-    return
+function buildFacetViewDataObj (filters) {
+  return {
+    'Category': [
+      {
+        name: 'doc_type',
+        value: 'company',
+        label: 'Company',
+        checked: includes(filters, 'company_company', 'company_companieshousecompany')
+      },
+      {
+        name: 'doc_type',
+        value: 'company_contact',
+        label: 'Contact',
+        checked: includes(filters, 'company_contact')
+      }
+    ]
   }
-
-  return ((filters[name] && filters[name] === value) ||
-      (filters[name] && Array.isArray(filters[name]) && includes(filters[name], value)))
-}
-
-function populateFacets (result, filters) {
-  let facets = Object.assign({}, FACETS)
-
-  // Go through each facet, and then it's options.
-  // See if the facet option appears in the filters, if so then mark the option checked.
-  const facetTitles = Object.keys(facets)
-  for (const facetTitle of facetTitles) {
-    for (let facet of facets[facetTitle]) {
-      facet.checked = hasFilterForFacet(filters, facet)
-    }
-  }
-
-  result.facets = facets
 }
 
 function searchLimited (token, term) {

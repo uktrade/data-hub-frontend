@@ -36,8 +36,6 @@ describe('contact form service', function () {
     beforeEach(function () {
       contact = {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
-        teams: [],
-        interactions: [],
         name: 'Zac Baman',
         address_1: '99 N Shore Road',
         address_2: 'Suite 20',
@@ -69,8 +67,7 @@ describe('contact form service', function () {
         archived_by: null,
         title: {
           id: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-          name: 'Undefined',
-          selectable: true
+          name: 'Undefined'
         },
         company: {
           id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
