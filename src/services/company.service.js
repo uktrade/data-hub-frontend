@@ -21,13 +21,13 @@ function getInflatedDitCompany (token, id) {
       try {
         const advisorHash = {}
         const company = yield companyRepository.getDitCompany(token, id)
-        const serviceDeliverys = yield serviceDeliveryRepository.getServiceDeliverysForCompany(token, company.id)
+        const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
 
         // Build a list of advisors to lookup
         for (const interaction of company.interactions) {
           advisorHash[interaction.dit_advisor] = true
         }
-        for (const serviceDelivery of serviceDeliverys) {
+        for (const serviceDelivery of serviceDeliveries) {
           advisorHash[serviceDelivery.relationships.dit_advisor.data.id] = true
         }
 
@@ -40,7 +40,7 @@ function getInflatedDitCompany (token, id) {
         const serviceOffers = yield metadataRepository.getServiceOffers(token)
 
         // Parse the service delivery results to expand some of the properties
-        const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
+        const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
           return Object.assign({}, {id: serviceDelivery.id}, serviceDelivery.attributes, {
             contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
             interaction_type: { id: null, name: 'Service delivery' },
@@ -61,7 +61,7 @@ function getInflatedDitCompany (token, id) {
           })
         })
 
-        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliverys]
+        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliveries]
 
         company.interactions = combinedIteractions
         resolve(company)

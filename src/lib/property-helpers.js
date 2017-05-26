@@ -87,7 +87,7 @@ function convertYesNoToBoolean (object) {
 * @param {Object} object
 * @param {Array} props
 */
-function convertNestedObjects (object, props) {
+function convertNestedObjects (object = {}, props = []) {
   const convertedObject = Object.assign({}, object)
 
   for (const prop of props) {

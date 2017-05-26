@@ -229,4 +229,16 @@ describe('PropertyHelpers: Conversion of nested objects', function () {
       id: 'some-id'
     })
   })
+  it('Should do nothing if props is not passed in', function () {
+    const source = {
+      foo: 'foo',
+      bar: 'some-id'
+    }
+    const actual = propertyHelpers.convertNestedObjects(source)
+    expect(actual).to.deep.equal(source)
+  })
+  it('Should do nothing if object and props are not passed in', function () {
+    const actual = propertyHelpers.convertNestedObjects()
+    expect(actual).to.deep.equal({})
+  })
 })

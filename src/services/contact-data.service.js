@@ -37,7 +37,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
         const advisorHash = {}
 
         const interactions = yield interactionRepository.getInteractionsForContact(token, contactId)
-        const serviceDeliverys = yield serviceDeliveryRepository.getServiceDeliverysForContact(token, contactId)
+        const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForContact(token, contactId)
         const serviceOffers = yield metadataRepository.getServiceOffers(token)
 
         // Build a list of advisors we use in interactions, to help populate service deliveries
@@ -46,7 +46,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
         }
 
         // Go fetch any advisors we haven't got yet for service deliveries
-        for (const serviceDelivery of serviceDeliverys) {
+        for (const serviceDelivery of serviceDeliveries) {
           const dit_advisor = serviceDelivery.relationships.dit_advisor.data.id
           if (!advisorHash[dit_advisor]) {
             advisorHash[dit_advisor] = yield advisorRepository.getAdvisor(token, dit_advisor)
@@ -54,7 +54,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
         }
 
         // Parse the service delivery results into something that can be displayed
-        const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
+        const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
           return Object.assign({},
             serviceDelivery.attributes,
             {
@@ -66,7 +66,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
             })
         })
 
-        const combinedIteractions = [...interactions, ...parsedServiceDeliverys]
+        const combinedIteractions = [...interactions, ...parsedServiceDeliveries]
         resolve(combinedIteractions)
       } catch (error) {
         winston.error(error)
