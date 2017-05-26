@@ -5,7 +5,6 @@ const advisorRepository = require('../repos/advisor.repo')
 const interactionRepository = require('../repos/interaction.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
-const interactionDataService = require('./interaction-data.service')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but
@@ -67,17 +66,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
             })
         })
 
-        // Parse the interaction into something that can be displayed
-        const parsedInteractions = interactions.map((interaction) => {
-          return Object.assign({}, interaction, {
-            interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-            dit_advisor: advisorHash[interaction.dit_advisor],
-            service: serviceOffers.find((option) => option.id === interaction.service),
-            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team)
-          })
-        })
-
-        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliverys]
+        const combinedIteractions = [...interactions, ...parsedServiceDeliverys]
         resolve(combinedIteractions)
       } catch (error) {
         winston.error(error)
