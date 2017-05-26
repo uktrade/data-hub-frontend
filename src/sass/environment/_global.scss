@@ -23,11 +23,6 @@ body {
   min-height: 100vh;
 }
 
-.u-visuallyhidden,
-.u-visually-hidden {
-  @include visually-hidden;
-}
-
 a {
   color: $link-colour;
   text-decoration-skip: ink;

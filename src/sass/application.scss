@@ -9,8 +9,6 @@ $images-dir: '/images/';
 @import 'objects/conditional-subfields';
 @import 'objects/list';
 
-@import 'trumps/layout';
-
 //// application specific
 @import 'address';
 @import 'card';
@@ -30,6 +28,9 @@ $images-dir: '/images/';
 @import 'splitheader';
 @import 'status-bar';
 @import 'tables';
+
+@import 'trumps/utility';
+@import 'trumps/layout';
 
 .table--readonly {
   border-left-width: 5px;

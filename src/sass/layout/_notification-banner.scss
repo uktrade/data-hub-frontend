@@ -5,12 +5,6 @@
   background-color: $light-blue-25;
 }
 
-.notification-banner--js-hidden {
-  .js-enabled & {
-    display: none;
-  }
-}
-
 .notification-banner__inner {
   @include site-width-container;
   padding: ($baseline-grid-unit * 2) 0;
