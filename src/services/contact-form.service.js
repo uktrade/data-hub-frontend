@@ -1,9 +1,9 @@
 const Q = require('q')
 const {
-  getPropertyId,
-  nullEmptyFields,
+  convertNestedObjects,
   convertYesNoToBoolean,
-  convertNestedObjects
+  getPropertyId,
+  nullEmptyFields
 } = require('../lib/property-helpers')
 const contactRepository = require('../repos/contact.repo')
 

@@ -124,12 +124,12 @@ function hasProperty (object, property) {
 }
 
 module.exports = {
-  getPropertyId,
-  getPropertyName,
-  nullEmptyFields,
+  convertNestedObjects,
   convertYesNoToBoolean,
   deleteNulls,
-  hasProperty,
+  getPropertyId,
+  getPropertyName,
   hasObjectProperty,
-  convertNestedObjects
+  hasProperty,
+  nullEmptyFields
 }
