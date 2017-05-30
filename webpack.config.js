@@ -15,7 +15,8 @@ module.exports = {
     index: './src/javascripts/index',
     search: './src/javascripts/search',
     'service-delivery': './src/javascripts/service-delivery',
-    'archive-form': './src/javascripts/archive-form'
+    'archive-form': './src/javascripts/archive-form',
+    'add-another-field': './src/javascripts/add-another-field'
   },
   output: {
     path: 'build/javascripts',
