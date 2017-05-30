@@ -75,7 +75,7 @@
     "sass:watch": "npm run sass && npm run sass -- -r -w",
     "sass:compile": "npm run sass -- -x --output-style compressed",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
-    "circle": "npm run lint && nyc --reporter=html --reporter=text npm test -- --reporter mocha-circleci-reporter && npm run sass && npm run js",
+    "circle": "npm run lint && nyc --reporter=lcov npm test -- --reporter mocha-circleci-reporter && npm run sass && npm run js && codecov",
     "heroku-postbuild": "npm rebuild node-sass && npm run sass && npm run js"
   },
   "pre-commit": [
@@ -89,6 +89,7 @@
   },
   "devDependencies": {
     "chai-as-promised": "^6.0.0",
+    "codecov": "^2.2.0",
     "html": "^1.0.0",
     "js-beautify": "^1.6.14",
     "mocha-circleci-reporter": "0.0.2",
