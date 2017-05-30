@@ -29,8 +29,9 @@
  #   } %}
  #}
 
-{% set hintId = 'hint-' + name %}
+{% set hintId  = 'hint-' + name %}
 {% set variant = variant | default('radio') %}
+{% set value   = value | default('') | string %}
 
 <fieldset class="form-group{{ ' inline' if inline }}{{ ' error' if error }}">
   <legend class="form-label-bold" id="group-{{ name }}">
@@ -45,7 +46,7 @@
     {% set inputId = ['input', name, loop.index] | join('--') %}
 
     {% if variant == 'checkbox' %}
-      {% set isSelected = (value and (inputValue in value)) %}
+      {% set isSelected = (inputValue in value) %}
     {% else %}
       {% set isSelected = (inputValue == value) %}
     {% endif %}

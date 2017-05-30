@@ -17,11 +17,19 @@ function getInvestmentRequirements (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/requirements`)
 }
 
-function saveInvestmentProject (token, project) {
+function createInvestmentProject (token, body) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/project`,
     method: 'POST',
-    body: project
+    body
+  })
+}
+
+function updateInvestmentProject (token, investmentId, body) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/project`,
+    method: 'PATCH',
+    body
   })
 }
 
@@ -30,5 +38,6 @@ module.exports = {
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
-  saveInvestmentProject
+  createInvestmentProject,
+  updateInvestmentProject
 }
