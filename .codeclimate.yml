@@ -3,3 +3,12 @@ engines:
     enabled: false
   eslint:
     enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+
+ratings:
+   paths:
+   - "**.js"
