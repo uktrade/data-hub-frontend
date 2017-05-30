@@ -1,6 +1,6 @@
-@import '../environment/settings/colours';
-@import '../environment/settings/typography';
-@import '../environment/tools/mixins';
+@import '../../settings/colours';
+@import '../../settings/typography';
+@import '../../tools/mixins';
 
 .global-footer {
   background-color: $grey-3;

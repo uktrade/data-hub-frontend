@@ -3,11 +3,13 @@ $images-dir: '/images/';
 @import 'trade-elements';
 @import 'font-awesome';
 
-@import 'environment/global';
-@import 'layout';
-
-@import 'objects/conditional-subfields';
-@import 'objects/list';
+@import 'settings';
+@import 'tools';
+@import 'generic';
+@import 'elements';
+@import 'objects';
+@import 'components';
+@import 'trumps';
 
 //// application specific
 @import 'address';
@@ -19,7 +21,6 @@ $images-dir: '/images/';
 @import 'errors';
 @import 'leftnav';
 @import 'login-bar';
-@import 'local-nav';
 @import 'metadata-list';
 @import 'option-select';
 @import 'search';
@@ -28,9 +29,6 @@ $images-dir: '/images/';
 @import 'splitheader';
 @import 'status-bar';
 @import 'tables';
-
-@import 'trumps/utility';
-@import 'trumps/layout';
 
 .table--readonly {
   border-left-width: 5px;

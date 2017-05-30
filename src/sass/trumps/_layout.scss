@@ -1,9 +1,11 @@
+@import '../tools/mixins/layout';
+
 .column-two-quarters,
 .column-three-quarters {
   h1,
   h2 {
     &:first-child {
-      @media(min-width: 641px) {
+      @include media(tablet) {
         margin-top: 0;
       }
     }

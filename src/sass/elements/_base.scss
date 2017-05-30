@@ -1,3 +1,45 @@
-main {
-  display: block;
+@import "../settings/colours";
+@import "../settings/typography";
+@import "../tools/mixins/addons";
+
+html {
+  font-family: $dit-font-stack;
+  background-color: $grey-3;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+a {
+  color: $link-colour;
+  text-decoration-skip: ink;
+
+  &:hover {
+    color: $link-hover-colour;
+  }
+
+  &:visited {
+    color: $link-visited-colour;
+  }
+
+  &:active {
+    color: $link-active-colour;
+  }
+
+  &:focus {
+    background-color: $focus-colour;
+    outline: 3px solid $focus-colour;
+    text-decoration: none;
+  }
+}
+
+input,
+textarea {
+  &:focus {
+    outline: 3px solid $focus-colour;
+    outline-offset: 0;
+  }
 }

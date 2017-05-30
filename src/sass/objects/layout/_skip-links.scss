@@ -1,6 +1,6 @@
-@import '../environment/settings/colours';
-@import '../environment/settings/typography';
-@import '../environment/tools/mixins/layout';
+@import '../../settings/colours';
+@import '../../settings/typography';
+@import '../../tools/mixins/layout';
 
 .skip-links {
   background-color: $light-blue-25;
