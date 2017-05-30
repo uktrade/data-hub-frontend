@@ -17,9 +17,18 @@ function getInvestmentRequirements (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/requirements`)
 }
 
+function saveInvestmentProject (token, project) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/project`,
+    method: 'POST',
+    body: project
+  })
+}
+
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   getInvestmentValue,
-  getInvestmentRequirements
+  getInvestmentRequirements,
+  saveInvestmentProject
 }

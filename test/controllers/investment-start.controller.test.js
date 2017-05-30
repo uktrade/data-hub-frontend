@@ -48,6 +48,28 @@ describe('Investment start controller', () => {
   })
 
   describe('#getHandler', () => {
+    describe('when no company ID is present', () => {
+      it('should render company details and search', (done) => {
+        this.controller.getHandler({
+          session: {
+            token
+          },
+          query: {}
+        }, {
+          render: (template, data) => {
+            try {
+              expect(data.clientCompany).to.be.undefined
+              expect(data.clientCompanyInvestments).to.be.undefined
+              expect(data.showSearch).to.equal(false)
+              done()
+            } catch (e) {
+              done(e)
+            }
+          }
+        }, this.next)
+      })
+    })
+
     describe('when a UK client company exists', () => {
       it('should render company details and search', (done) => {
         this.controller.getHandler({
@@ -59,13 +81,17 @@ describe('Investment start controller', () => {
           }
         }, {
           render: (template, data) => {
-            expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
-            expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
+            try {
+              expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
+              expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
 
-            expect(data.clientCompany).to.deep.equal(ukCompany)
-            expect(data.clientCompanyInvestments).to.deep.equal(investmentProjects)
-            expect(data.showSearch).to.equal(true)
-            done()
+              expect(data.clientCompany).to.deep.equal(ukCompany)
+              expect(data.clientCompanyInvestments).to.deep.equal(investmentProjects)
+              expect(data.showSearch).to.equal(true)
+              done()
+            } catch (e) {
+              done(e)
+            }
           }
         }, this.next)
       })
@@ -86,13 +112,17 @@ describe('Investment start controller', () => {
           }
         }, {
           render: (template, data) => {
-            expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
-            expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
+            try {
+              expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
+              expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
 
-            expect(data.clientCompany).to.deep.equal(foreignCompany)
-            expect(data.clientCompanyInvestments).to.deep.equal(investmentProjects)
-            expect(data.showSearch).to.equal(false)
-            done()
+              expect(data.clientCompany).to.deep.equal(foreignCompany)
+              expect(data.clientCompanyInvestments).to.deep.equal(investmentProjects)
+              expect(data.showSearch).to.equal(false)
+              done()
+            } catch (e) {
+              done(e)
+            }
           }
         }, this.next)
       })
@@ -108,8 +138,12 @@ describe('Investment start controller', () => {
           }
         }, {
           render: (template, data) => {
-            expect(data.showSearch).to.equal(true)
-            done()
+            try {
+              expect(data.showSearch).to.equal(true)
+              done()
+            } catch (e) {
+              done(e)
+            }
           }
         }, this.next)
       })
@@ -127,10 +161,14 @@ describe('Investment start controller', () => {
           }
         }, {
           render: (template, data) => {
-            expect(data.searchTerm).to.equal('samsung')
-            expect(data.searchResult).to.deep.equal(searchResults)
-            expect(data.pagination).to.deep.equal({})
-            done()
+            try {
+              expect(data.searchTerm).to.equal('samsung')
+              expect(data.searchResult).to.deep.equal(searchResults)
+              expect(data.pagination).to.deep.equal({})
+              done()
+            } catch (e) {
+              done(e)
+            }
           }
         }, this.next)
       })
@@ -181,9 +219,13 @@ describe('Investment start controller', () => {
           }
         }, {
           render: (template, data) => {
-            expect(data.clientCompany).to.deep.equal(ukCompany)
-            expect(data.errors).to.have.property('isEquitySource')
-            done()
+            try {
+              expect(data.clientCompany).to.deep.equal(ukCompany)
+              expect(data.errors).to.have.property('isEquitySource')
+              done()
+            } catch (e) {
+              done(e)
+            }
           }
         }, this.next)
       })

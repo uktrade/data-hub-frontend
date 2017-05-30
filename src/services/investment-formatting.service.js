@@ -55,4 +55,54 @@ function getClosedInvestmentProjects (investmentProjects) {
     })
 }
 
-module.exports = { getInvestmentDetailsDisplay, getOpenInvestmentProjects, getClosedInvestmentProjects }
+function transformForApi (body) {
+  const project = Object.assign({}, body)
+  const transformToObject = [
+    'client_relationship_manager',
+    'referral_source_advisor',
+    'referral_source_activity',
+    'investor_company',
+    'investment_type',
+    'sector'
+  ]
+  const transformToArray = [
+    'client_contacts',
+    'business_activities'
+  ]
+
+  if (body['is-relationship-manager']) {
+    project['client_relationship_manager'] = body['is-relationship-manager']
+  }
+
+  if (body['is-referral-source']) {
+    project['referral_source_advisor'] = body['is-referral-source']
+  }
+
+  Object.keys(project).forEach((key) => {
+    if (transformToObject.includes(key)) {
+      project[key] = {
+        id: project[key]
+      }
+    } else if (transformToArray.includes(key)) {
+      project[key] = [{
+        id: project[key]
+      }]
+    }
+  })
+
+  project['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
+
+  delete project['land-date_year']
+  delete project['land-date_month']
+  delete project['is-relationship-manager']
+  delete project['is-referral-source']
+
+  return project
+}
+
+module.exports = {
+  getInvestmentDetailsDisplay,
+  getOpenInvestmentProjects,
+  getClosedInvestmentProjects,
+  transformForApi
+}
