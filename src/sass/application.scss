@@ -11,24 +11,23 @@ $images-dir: '/images/';
 @import 'components';
 @import 'trumps';
 
-//// application specific
-@import 'address';
-@import 'card';
-@import 'country-list';
-@import 'dashboard';
-@import 'facets';
-@import 'flash';
-@import 'errors';
-@import 'leftnav';
-@import 'login-bar';
-@import 'metadata-list';
-@import 'option-select';
-@import 'search';
-@import 'search-result';
-@import 'shame';
-@import 'splitheader';
-@import 'status-bar';
-@import 'tables';
+//// application specific (deprecated)
+@import '_deprecated/address';
+@import '_deprecated/card';
+@import '_deprecated/country-list';
+@import '_deprecated/dashboard';
+@import '_deprecated/facets';
+@import '_deprecated/flash';
+@import '_deprecated/errors';
+@import '_deprecated/leftnav';
+@import '_deprecated/login-bar';
+@import '_deprecated/metadata-list';
+@import '_deprecated/option-select';
+@import '_deprecated/search';
+@import '_deprecated/search-result';
+@import '_deprecated/shame';
+@import '_deprecated/splitheader';
+@import '_deprecated/tables';
 
 .table--readonly {
   border-left-width: 5px;

@@ -1,7 +1,5 @@
-@import 'colours/palette';
-@import 'conditionals';
-@import 'measurements';
-@import 'typography';
+@import '../settings/colours';
+@import '../tools/mixins/layout';
 
 .local-nav {
   @include core-19;
