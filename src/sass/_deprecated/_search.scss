@@ -40,10 +40,10 @@
   }
 
   .results-list__result > a.open::before {
-    content: '\25BC';
+    content: "\25BC";
   }
 
   .results-list__result > a.closed::before {
-    content: '\25B6';
+    content: "\25B6";
   }
 }

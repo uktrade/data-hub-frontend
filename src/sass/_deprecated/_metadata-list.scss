@@ -1,5 +1,5 @@
-@import 'colours/palette';
-@import 'typography';
+@import "colours/palette";
+@import "typography";
 
 .metadata-list {
   @include core-14;
@@ -10,7 +10,7 @@
   @include visually-hidden;
 
   &::after {
-    content: ':';
+    content: ":";
   }
 }
 

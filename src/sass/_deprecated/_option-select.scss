@@ -100,12 +100,12 @@
         cursor: pointer;
         margin-bottom: -1px;
         padding: 5px 8px;
-        background: image-url('govuk-component/option-select-toggle-sprite.png') no-repeat right 5px;
+        background: image-url("govuk-component/option-select-toggle-sprite.png") no-repeat right 5px;
         background-color: $grey-3;
 
         @include device-pixel-ratio {
           background-size: 32px 50px;
-          background: image-url('govuk-component/option-select-toggle-sprite.png') no-repeat right 5px;
+          background: image-url("govuk-component/option-select-toggle-sprite.png") no-repeat right 5px;
         }
 
         &:hover {
