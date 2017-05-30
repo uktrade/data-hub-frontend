@@ -1,0 +1,5 @@
+engines:
+  fixme:
+    enabled: false
+  eslint:
+    enabled: true
