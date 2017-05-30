@@ -56,10 +56,8 @@ module.exports = {
       sourceMap: false,
       dead_code: true
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.DedupePlugin()
   ] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.DedupePlugin()
   ]
 }
