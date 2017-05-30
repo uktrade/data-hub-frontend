@@ -7,6 +7,10 @@
 {% block head %}
   {{ super() }}
 
+  <!--[if lt IE 9]>
+    <script src="{{ asset_path }}javascripts/ie.bundle.js?{{ startTime }}"></script>
+  <![endif]-->
+
   {% include "_includes/google-tag-manager-snippet.njk" %}
 
   {% if user %}
