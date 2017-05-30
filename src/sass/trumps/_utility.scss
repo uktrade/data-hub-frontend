@@ -1,0 +1,21 @@
+@import "../tools/mixins/addons";
+
+.u-visually-hidden {
+  @include visually-hidden;
+}
+
+.u-hidden {
+  display: none !important;
+}
+
+.u-js-hidden {
+  .js-enabled & {
+    display: none !important;
+  }
+}
+
+.u-print-hide {
+  @media print {
+    display: none !important;
+  }
+}

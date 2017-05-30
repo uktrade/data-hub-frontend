@@ -1,0 +1,59 @@
+/// Media query helper
+/// ------------------
+/// Block include to support conditional content
+/// for different screen sizes. Based on a mobile
+/// first approach.
+///
+/// @prop {string} size - a set string of tablet|desktop|mobile which set to a
+/// predefined size
+/// @prop {string} max-width - a pixel size to change layout when smaller
+/// @prop {string} min-width - a pixel size to change layout when greater
+/// @prop {boolean} ignore-for-ie - whether to ignore layout for Internet Explorer
+///
+/// @example scss - change layout of element at tablet size
+///   div {
+///     border: 1px solid;
+///
+///     @include media(tablet) {
+///       width: 30%;
+///       float: left;
+///     }
+///   }
+@mixin media($size: false, $max-width: false, $min-width: false, $ignore-for-ie: false) {
+  @if $size == desktop {
+    @media (min-width: 925px) {
+      @content;
+    }
+  } @else if $size == tablet {
+    @media (min-width: 641px) {
+      @content;
+    }
+  } @else if $size == mobile {
+    @media (max-width: 640px) {
+      @content;
+    }
+  } @else if $max-width != false {
+    @media (max-width: $max-width) {
+      @content;
+    }
+  } @else if $min-width != false {
+    @media (min-width: $min-width) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+@mixin device-pixel-ratio($ratio: 2) {
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+  only screen and (min--moz-device-pixel-ratio: $ratio),
+  only screen and (  -o-min-device-pixel-ratio: #{($ratio*10)}/10),
+  only screen and (     min-device-pixel-ratio: $ratio),
+  only screen and (             min-resolution: #{($ratio*96)}dpi),
+  only screen and (             min-resolution: #{$ratio}dppx) {
+    @content;
+  }
+}

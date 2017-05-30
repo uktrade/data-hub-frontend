@@ -1,8 +1,8 @@
-{% extends "./index.njk" %}
+{% extends "company/_layout-edit.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block tabmain %}
-  {% include "messages.njk" %}
+{% block main_grid_right_column %}
+  {{ super() }}
 
   <h2 class="heading-medium">An an export summary</h2>
 

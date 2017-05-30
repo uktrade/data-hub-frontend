@@ -1,9 +1,11 @@
-{% extends "./index.njk" %}
+{% extends "company/_layout-view.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block tabmain %}
-  {% include "messages.njk" %}
+{% block main_grid_right_column %}
+  {{ super() }}
+
   <h2 class="heading-medium">Exports</h2>
+
   {{ trade.keyvaluetable(exportDetails, id="company-exports", labels=exportDetailsLabels, keyorder=exportDetailsDisplayOrder) }}
   <p class="actions">
     <a href="/company-exports/edit/{{company.id}}" class="button button-secondary">Edit summary</a>

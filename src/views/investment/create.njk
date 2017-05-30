@@ -1,222 +1,216 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "investment/_layout.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
-
+{% block main_heading %}
   <h1 class="page-heading">Add new investment project</h1>
 
   {{ trade.errorPanel(form.errors) }}
+{% endblock %}
 
-  <div class="grid-row">
-    <div class="column-three-quarters">
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Source of foreign equity investment</h2>
 
-      <h2 class="heading-medium">Source of foreign equity investment</h2>
+  <table class="table--key-value">
+    <tbody>
+      <tr>
+        <td>{{ equityCompany.name }}</td>
+      </tr>
+      <tr>
+        <td>{{ equityCompany.registered_address_country.name }}</td>
+      </tr>
+      <tr>
+        <td>{{ equityCompanyInvestments.count|default('No', true) }} investment project{{ 's' if equityCompanyInvestments.count != 1 }} in the UK</td>
+      </tr>
+    </tbody>
+  </table>
 
-      <table class="table--key-value">
-        <tbody>
-          <tr>
-            <td>{{ equityCompany.name }}</td>
-          </tr>
-          <tr>
-            <td>{{ equityCompany.registered_address_country.name }}</td>
-          </tr>
-          <tr>
-            <td>{{ equityCompanyInvestments.count|default('No', true) }} investment project{{ 's' if equityCompanyInvestments.count != 1 }} in the UK</td>
-          </tr>
-        </tbody>
-      </table>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <input type="hidden" name="investor_company" value="{{ equityCompany.id }}">
 
-      <form method="post">
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-        <input type="hidden" name="investor_company" value="{{ equityCompany.id }}">
+    {{ trade.autocomplete('client_contacts',
+      label="Client contact for this project",
+      value=form.state['client_contacts'],
+      options=form.options.contacts)
+    }}
 
-        {{ trade.autocomplete('client_contacts',
-          label="Client contact for this project",
-          value=form.state['client_contacts'],
-          options=form.options.contacts)
-        }}
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Are you the client relationship manager for this project?',
+      name: 'is-relationship-manager',
+      inline: true,
+      value: form.state['is-relationship-manager'],
+      children: [{
+        label: 'Yes',
+        value: user.id
+      }, {
+        label: 'No'
+      }]
+    } %}
 
-        {% component 'form-multiple-choice', {
-          variant: 'radio',
-          label: 'Are you the client relationship manager for this project?',
-          name: 'is-relationship-manager',
-          inline: true,
-          value: form.state['is-relationship-manager'],
-          children: [{
-            label: 'Yes',
-            value: user.id
-          }, {
-            label: 'No'
-          }]
-        } %}
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
-          {{ trade.autocomplete('client_relationship_manager',
-            label="Client relationship manager",
-            value=form.state['client_relationship_manager'],
-            options=form.options.contacts)
-          }}
-        </div>
-
-        {% component 'form-multiple-choice', {
-          variant: 'radio',
-          label: 'Are you the referral source for this project?',
-          name: 'is-referral-source',
-          inline: true,
-          value: form.state['is-referral-source'],
-          children: [{
-            label: 'Yes',
-            value: user.id
-          }, {
-            label: 'No'
-          }]
-        } %}
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
-          {{ trade.autocomplete('referral_source_advisor',
-            label="Referral source advisor",
-            value=form.state['referral_source_advisor'],
-            options=form.options.contacts)
-          }}
-        </div>
-
-        {{ trade.dropdown('referral_source_activity',
-          label='Referral source activity',
-          value=form.state['referral_source_activity'],
-          emptyLabel='Choose referral source activity',
-          options=form.options.referralSourceActivities)
-        }}
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[2].id }}">
-          {{ trade.textbox('referral_source_activity_event',
-            value=form.state['referral_source_activity_event'],
-            label='Event')
-          }}
-        </div>
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[3].id }}">
-          {{ trade.dropdown('referral_source_activity_marketing',
-            label='Marketing',
-            value=form.state['referral_source_activity_marketing'],
-            emptyLabel='Choose a marketing',
-            options=form.options.primarySectors)
-          }}
-        </div>
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[9].id }}">
-          {{ trade.dropdown('referral_source_activity_website',
-            label='Website',
-            value=form.state['referral_source_activity_website'],
-            emptyLabel='Choose a website',
-            options=form.options.primarySectors)
-          }}
-        </div>
-
-        {% component 'form-multiple-choice', {
-          variant: 'radio',
-          label: 'Type of investment',
-          name: 'investment_type',
-          value: form.state['investment_type'],
-          children: form.options.investmentTypes
-        } %}
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[1].value }}">
-          {{ trade.dropdown('fdi_type',
-            label='Type of foreign direct investment (FDI)',
-            value=form.state['fdi_type'],
-            emptyLabel='Choose a type',
-            options=form.options.primarySectors)
-          }}
-        </div>
-
-        <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[2].value }}">
-          {{ trade.dropdown('non_fdi_type',
-            label='Type of non-foreign direct investment (Non-FDI)',
-            value=form.state['non_fdi_type'],
-            emptyLabel='Choose a type',
-            options=form.options.primarySectors)
-          }}
-        </div>
-
-        {{ trade.dropdown('sector',
-          label='Primary sector',
-          value=form.state['sector'],
-          emptyLabel='Choose a sector',
-          options=form.options.primarySectors)
-        }}
-
-        {{ trade.dropdown('business_activities',
-          label='Business activity of this investment project',
-          value=form.state['business_activities'],
-          emptyLabel='Choose a business activity',
-          options=form.options.businessActivities)
-        }}
-
-        {{ trade.textbox('name',
-          value=form.state['name'],
-          label='Project name')
-        }}
-
-        {{ trade.textarea('description',
-          value=form.state['description'],
-          label='Description')
-        }}
-
-        {% component 'form-multiple-choice', {
-          variant: 'radio',
-          label: 'Can this project be shared with our local partner network, outside of DIT?',
-          name: 'project_shareable',
-          inline: true,
-          value: form.state['project_shareable'],
-          children: [{
-            label: 'Yes',
-            value: 'true'
-          }, {
-            label: 'No',
-            value: 'false'
-          }]
-        } %}
-
-        {% component 'form-multiple-choice', {
-          variant: 'radio',
-          label: 'Have we signed a non-disclosure agreement (NDA) with the client?',
-          name: 'nda_signed',
-          inline: true,
-          value: form.state['nda_signed'],
-          children: [{
-            label: 'Yes',
-            value: 'true'
-          }, {
-            label: 'No',
-            value: 'false'
-          }]
-        } %}
-
-        <div id="land-date-wrapper" class="form-group form-date ">
-          <fieldset>
-            <legend class="form-label-bold">Estimated land date</legend>
-            <span class="form-hint">When activities planned under the investment project will have fully commenced</span>
-
-            <div class="form-group form-group-month">
-              <label for="land-date_month">
-                <span class="form-hint">MM</span>
-              </label>
-              <input type="text" id="land-date_month" class="form-control" name="land-date_month" value="{{ form.state['land-date_month'] }}" maxlength="2" autocomplete="mm">
-            </div>
-
-            <div class="form-group form-group-year">
-              <label for="land-date_year">
-                <span class="form-hint">YYYY</span>
-              </label>
-              <input type="text" id="land-date_year" class="form-control" name="land-date_year" value="{{ form.state['land-date_year'] }}" maxlength="4" autocomplete="yyyy">
-            </div>
-          </fieldset>
-        </div>
-
-        {{ trade.save(backUrl ='/investment/start?client-company=' + equityCompany.id) }}
-      </form>
-
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
+      {{ trade.autocomplete('client_relationship_manager',
+        label="Client relationship manager",
+        value=form.state['client_relationship_manager'],
+        options=form.options.contacts)
+      }}
     </div>
-  </div>
 
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Are you the referral source for this project?',
+      name: 'is-referral-source',
+      inline: true,
+      value: form.state['is-referral-source'],
+      children: [{
+        label: 'Yes',
+        value: user.id
+      }, {
+        label: 'No'
+      }]
+    } %}
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
+      {{ trade.autocomplete('referral_source_advisor',
+        label="Referral source advisor",
+        value=form.state['referral_source_advisor'],
+        options=form.options.contacts)
+      }}
+    </div>
+
+    {{ trade.dropdown('referral_source_activity',
+      label='Referral source activity',
+      value=form.state['referral_source_activity'],
+      emptyLabel='Choose referral source activity',
+      options=form.options.referralSourceActivities)
+    }}
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[2].id }}">
+      {{ trade.textbox('referral_source_activity_event',
+        value=form.state['referral_source_activity_event'],
+        label='Event')
+      }}
+    </div>
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[3].id }}">
+      {{ trade.dropdown('referral_source_activity_marketing',
+        label='Marketing',
+        value=form.state['referral_source_activity_marketing'],
+        emptyLabel='Choose a marketing',
+        options=form.options.primarySectors)
+      }}
+    </div>
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[9].id }}">
+      {{ trade.dropdown('referral_source_activity_website',
+        label='Website',
+        value=form.state['referral_source_activity_website'],
+        emptyLabel='Choose a website',
+        options=form.options.primarySectors)
+      }}
+    </div>
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Type of investment',
+      name: 'investment_type',
+      value: form.state['investment_type'],
+      children: form.options.investmentTypes
+    } %}
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[1].value }}">
+      {{ trade.dropdown('fdi_type',
+        label='Type of foreign direct investment (FDI)',
+        value=form.state['fdi_type'],
+        emptyLabel='Choose a type',
+        options=form.options.primarySectors)
+      }}
+    </div>
+
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[2].value }}">
+      {{ trade.dropdown('non_fdi_type',
+        label='Type of non-foreign direct investment (Non-FDI)',
+        value=form.state['non_fdi_type'],
+        emptyLabel='Choose a type',
+        options=form.options.primarySectors)
+      }}
+    </div>
+
+    {{ trade.dropdown('sector',
+      label='Primary sector',
+      value=form.state['sector'],
+      emptyLabel='Choose a sector',
+      options=form.options.primarySectors)
+    }}
+
+    {{ trade.dropdown('business_activities',
+      label='Business activity of this investment project',
+      value=form.state['business_activities'],
+      emptyLabel='Choose a business activity',
+      options=form.options.businessActivities)
+    }}
+
+    {{ trade.textbox('name',
+      value=form.state['name'],
+      label='Project name')
+    }}
+
+    {{ trade.textarea('description',
+      value=form.state['description'],
+      label='Description')
+    }}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Can this project be shared with our local partner network, outside of DIT?',
+      name: 'project_shareable',
+      inline: true,
+      value: form.state['project_shareable'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Have we signed a non-disclosure agreement (NDA) with the client?',
+      name: 'nda_signed',
+      inline: true,
+      value: form.state['nda_signed'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    <div id="land-date-wrapper" class="form-group form-date ">
+      <fieldset>
+        <legend class="form-label-bold">Estimated land date</legend>
+        <span class="form-hint">When activities planned under the investment project will have fully commenced</span>
+
+        <div class="form-group form-group-month">
+          <label for="land-date_month">
+            <span class="form-hint">MM</span>
+          </label>
+          <input type="text" id="land-date_month" class="form-control" name="land-date_month" value="{{ form.state['land-date_month'] }}" maxlength="2" autocomplete="mm">
+        </div>
+
+        <div class="form-group form-group-year">
+          <label for="land-date_year">
+            <span class="form-hint">YYYY</span>
+          </label>
+          <input type="text" id="land-date_year" class="form-control" name="land-date_year" value="{{ form.state['land-date_year'] }}" maxlength="4" autocomplete="yyyy">
+        </div>
+      </fieldset>
+    </div>
+
+    {{ trade.save(backUrl ='/investment/start?client-company=' + equityCompany.id) }}
+  </form>
 {% endblock %}

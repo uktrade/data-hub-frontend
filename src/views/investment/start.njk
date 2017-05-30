@@ -1,161 +1,154 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "investment/_layout.njk" %}
+{% import "macros/trade.html" as trade %}
 
-{% block main %}
-
-  {% import "macros/trade.html" as trade %}
-
+{% block main_heading %}
   <h1 class="page-heading">Add new investment project</h1>
+{% endblock %}
 
-  <div class="grid-row">
-    <div class="column-three-quarters">
+{% block main_grid_right_column %}
+  {% if clientCompany %}
+    <h2 class="heading-medium">Client company</h2>
 
-      {% if clientCompany %}
-        <h2 class="heading-medium">Client company</h2>
-
-        <table class="table--key-value">
-          <tbody>
-            <tr>
-              <td>{{ clientCompany.name }}</td>
-            </tr>
-            <tr>
-              <td>{{ clientCompany.registered_address_country.name }}</td>
-            </tr>
-            <tr>
-              <td>{{ clientCompanyInvestments.count|default('No', true) }} investment project{{ 's' if clientCompanyInvestments.count != 1 }} in the UK</td>
-            </tr>
-            {% if clientCompany.classification %}
-              <tr>
-                <td>{{ clientCompany.classification.name }}</td>
-              </tr>
-            {% endif %}
-            {% if clientCompany.one_list_account_owner %}
-              <tr>
-                <td>
-                  Relationship manager: {{ clientCompany.one_list_account_owner.first_name }} {{ clientCompany.one_list_account_owner.last_name }}
-                </td>
-              </tr>
-            {% endif %}
-          </tbody>
-        </table>
-      {% endif %}
-
-      {% if showSearch or searchTerm %}
-
-        <h2 class="heading-medium">Find the source of foreign equity investment</h2>
-
-        <form class="searchbar" action="" method="get" role="search">
-          <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
-
-          <div class="form-group">
-            <label class="form-label-bold" for="search-q">Search for company name</label>
-
-            <div class="searchbar__wrapper">
-              <input class="searchbar__input form-control" id="search-q" type="search" name="q" value="{{ searchTerm }}" placeholder="Search for company name">
-              <input class="searchbar__submit" type="submit" value="Search">
-            </div>
-          </div>
-        </form>
-
-        {% if searchResult %}
-
-          <div id="result-summary" class="result-summary">
-            <span class="result-summary--result-count">{{ searchResult.total }}</span> result{{ 's' if searchResult.total != 1 }} found containing
-            <span class="result-summary--result-query">{{ searchTerm }}</span>
-          </div>
-
-          {% if searchResult.total > 0 %}
-            <ol class="results-list results-list--block">
-              {% for result in searchResult.hits %}
-                {% set company = result._source %}
-                <li class="search-result">
-                  <a href="/investment/create?equity-company={{ result._id }}" class="search-result__link">
-                    <h3 class="search-result__title">{{ company.name | highlightTerm(searchTerm) | safe }}</h3>
-
-                    <dl class="metadata-list">
-                      <dt class="metadata-list__term">Registered address</dt>
-                      <dd class="metadata-list__value metadata-list__value--block">
-                        {% set comma = joiner() %}
-                        {% for part in [company.registered_address_1, company.registered_address_2, company.registered_address_town, company.registered_address_postcode] -%}
-                          {% if part -%}
-                            {%- set address = part | highlightTerm(searchTerm) | safe -%}
-
-                            {{ comma() }}
-                            {% if loop.last -%}
-                              {{ address | upper }}
-                            {% else -%}
-                              {{ address | capitalize }}
-                            {%- endif %}
-                          {%- endif %}
-                        {%- endfor %}
-                      </dd>
-                      <dt class="metadata-list__term">Registered country</dt>
-                      <dd class="metadata-list__value">{{ company.registered_address_country }}</dd>
-                      {% if company.investments %}
-                        <dt class="metadata-list__term">Investments in the UK</dt>
-                        <dd class="metadata-list__value">{{ company.investments.count|default('No', true) }} investment project{{ 's' if company.investments.count != 1 }}</dd>
-                      {% endif %}
-                      {% if company.classification %}
-                        <dt class="metadata-list__term">Classification</dt>
-                        <dd class="metadata-list__value">tier one{{ company.classification }}</dd>
-                      {% endif %}
-                      {% if company.one_list_account_owner %}
-                        <dt class="metadata-list__term metadata-list__term--visible">Relationship manager</dt>
-                        <dd class="metadata-list__value">bob something{{ company.one_list_account_owner.first_name }} {{ company.one_list_account_owner.last_name }}</dd>
-                      {% endif %}
-                    </dl>
-                  </a>
-                </li>
-              {% endfor %}
-            </ol>
-          {% endif %}
-
-          {% if pagination|length %}
-            <div class="pagination">
-              <div>
-                {% for page in pagination %}
-                  {% if page.currentPage == true %}
-                    <div class="pagination__page">{{ page.label }}</div>
-                  {% else %}
-                    <a href="?{{ page.link }}" class="pagination__page">{{ page.label }}</a>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
-
-          <p class="infostrip">If you can’t find the company you’re looking for, <a href="/company/add-step-1">add a new compay</a>. Unfortunately you will lose your progress.</p>
+    <table class="table--key-value">
+      <tbody>
+        <tr>
+          <td>{{ clientCompany.name }}</td>
+        </tr>
+        <tr>
+          <td>{{ clientCompany.registered_address_country.name }}</td>
+        </tr>
+        <tr>
+          <td>{{ clientCompanyInvestments.count|default('No', true) }} investment project{{ 's' if clientCompanyInvestments.count != 1 }} in the UK</td>
+        </tr>
+        {% if clientCompany.classification %}
+          <tr>
+            <td>{{ clientCompany.classification.name }}</td>
+          </tr>
         {% endif %}
+        {% if clientCompany.one_list_account_owner %}
+          <tr>
+            <td>
+              Relationship manager: {{ clientCompany.one_list_account_owner.first_name }} {{ clientCompany.one_list_account_owner.last_name }}
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  {% endif %}
 
-      {% else %}
+  {% if showSearch or searchTerm %}
 
-        <form class="section archive-panel__form" method="post">
-          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-          <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
+    <h2 class="heading-medium">Find the source of foreign equity investment</h2>
 
-          <fieldset id="client-equity-source-options" class="form-group inline {% if errors.isEquitySource %}error{% endif %}">
-            <legend class="form-label-bold">
-              Will this company be the source of foreign equity investment?
-              {% if errors.isEquitySource %}
-                <span class="error-message">{{ errors.isEquitySource }}</span>
-              {% endif %}
-            </legend>
+    <form class="searchbar" action="" method="get" role="search">
+      <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
 
-            <label class="block-label selection-button-radio" for="equity-source-yes">
-              <input id="equity-source-yes" type="radio" name="is-equity-source" value="true">
-              Yes
-            </label>
-            <label class="block-label selection-button-radio" for="equity-source-no">
-              <input id="equity-source-no" type="radio" name="is-equity-source" value="false">
-              No
-            </label>
-          </fieldset>
+      <div class="form-group">
+        <label class="form-label-bold" for="search-q">Search for company name</label>
 
-          {{ trade.save(buttonText="Continue") }}
-        </form>
+        <div class="searchbar__wrapper">
+          <input class="searchbar__input form-control" id="search-q" type="search" name="q" value="{{ searchTerm }}" placeholder="Search for company name">
+          <input class="searchbar__submit" type="submit" value="Search">
+        </div>
+      </div>
+    </form>
 
+    {% if searchResult %}
+
+      <div id="result-summary" class="result-summary">
+        <span class="result-summary--result-count">{{ searchResult.total }}</span> result{{ 's' if searchResult.total != 1 }} found containing
+        <span class="result-summary--result-query">{{ searchTerm }}</span>
+      </div>
+
+      {% if searchResult.total > 0 %}
+        <ol class="results-list results-list--block">
+          {% for result in searchResult.hits %}
+            {% set company = result._source %}
+            <li class="search-result">
+              <a href="/investment/create?equity-company={{ result._id }}" class="search-result__link">
+                <h3 class="search-result__title">{{ company.name | highlightTerm(searchTerm) | safe }}</h3>
+
+                <dl class="metadata-list">
+                  <dt class="metadata-list__term">Registered address</dt>
+                  <dd class="metadata-list__value metadata-list__value--block">
+                    {% set comma = joiner() %}
+                    {% for part in [company.registered_address_1, company.registered_address_2, company.registered_address_town, company.registered_address_postcode] -%}
+                      {% if part -%}
+                        {%- set address = part | highlightTerm(searchTerm) | safe -%}
+
+                        {{ comma() }}
+                        {% if loop.last -%}
+                          {{ address | upper }}
+                        {% else -%}
+                          {{ address | capitalize }}
+                        {%- endif %}
+                      {%- endif %}
+                    {%- endfor %}
+                  </dd>
+                  <dt class="metadata-list__term">Registered country</dt>
+                  <dd class="metadata-list__value">{{ company.registered_address_country }}</dd>
+                  {% if company.investments %}
+                    <dt class="metadata-list__term">Investments in the UK</dt>
+                    <dd class="metadata-list__value">{{ company.investments.count|default('No', true) }} investment project{{ 's' if company.investments.count != 1 }}</dd>
+                  {% endif %}
+                  {% if company.classification %}
+                    <dt class="metadata-list__term">Classification</dt>
+                    <dd class="metadata-list__value">tier one{{ company.classification }}</dd>
+                  {% endif %}
+                  {% if company.one_list_account_owner %}
+                    <dt class="metadata-list__term metadata-list__term--visible">Relationship manager</dt>
+                    <dd class="metadata-list__value">bob something{{ company.one_list_account_owner.first_name }} {{ company.one_list_account_owner.last_name }}</dd>
+                  {% endif %}
+                </dl>
+              </a>
+            </li>
+          {% endfor %}
+        </ol>
       {% endif %}
 
-    </div>
-  </div>
+      {% if pagination|length %}
+        <div class="pagination">
+          <div>
+            {% for page in pagination %}
+              {% if page.currentPage == true %}
+                <div class="pagination__page">{{ page.label }}</div>
+              {% else %}
+                <a href="?{{ page.link }}" class="pagination__page">{{ page.label }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
 
+      <p class="infostrip">If you can’t find the company you’re looking for, <a href="/company/add-step-1">add a new compay</a>. Unfortunately you will lose your progress.</p>
+    {% endif %}
+
+  {% else %}
+
+    <form class="section archive-panel__form" method="post">
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
+
+      <fieldset id="client-equity-source-options" class="form-group inline {% if errors.isEquitySource %}error{% endif %}">
+        <legend class="form-label-bold">
+          Will this company be the source of foreign equity investment?
+          {% if errors.isEquitySource %}
+            <span class="error-message">{{ errors.isEquitySource }}</span>
+          {% endif %}
+        </legend>
+
+        <label class="block-label selection-button-radio" for="equity-source-yes">
+          <input id="equity-source-yes" type="radio" name="is-equity-source" value="true">
+          Yes
+        </label>
+        <label class="block-label selection-button-radio" for="equity-source-no">
+          <input id="equity-source-no" type="radio" name="is-equity-source" value="false">
+          No
+        </label>
+      </fieldset>
+
+      {{ trade.save(buttonText="Continue") }}
+    </form>
+
+  {% endif %}
 {% endblock %}

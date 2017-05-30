@@ -1,0 +1,17 @@
+{% extends "layouts/_base.njk" %}
+
+{% block body_main_content %}
+  {% block main_heading %}{% endblock %}
+
+  <div class="grid-row">
+    <div class="column-one-quarter">
+      {% block main_grid_left_column %}{% endblock %}
+    </div>
+
+    <article class="column-three-quarters">
+      {% block main_grid_right_column %}{% endblock %}
+    </article>
+  </div>
+
+  {% block main_footer %}{% endblock %}
+{% endblock %}

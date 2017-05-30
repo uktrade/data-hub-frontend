@@ -1,8 +1,9 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_header_content %}{% endblock %}
 
+{% block body_main_content %}
   <h2 class="heading-xlarge">Login</h2>
 
   {% if messages.error.length %}
@@ -33,5 +34,4 @@
     {{ trade.textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
     {{ trade.save(buttonText='Login') }}
   </form>
-
 {% endblock %}

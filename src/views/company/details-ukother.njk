@@ -1,8 +1,8 @@
-{% extends "./index.njk" %}
+{% extends "company/_layout-view.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block tabmain %}
-  {% include "messages.njk" %}
+{% block main_grid_right_column %}
+  {{ super() }}
 
   <h2 class="heading-medium">Company summary</h2>
   {{ trade.keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}

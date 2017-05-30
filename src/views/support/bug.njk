@@ -1,8 +1,7 @@
-{% extends "layouts/ukti.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
-
+{% block body_main_content %}
   <h1 class="heading-xlarge">Report a problem or leave feedback</h1>
 
   {{ trade.errorPanel(errors) }}
@@ -56,5 +55,4 @@
 
     {{ trade.save(backUrl=referer, buttonText='Send') }}
   </form>
-<script src="/javascripts/radio.bundle.js?{{ startTime }}"></script>
 {% endblock %}

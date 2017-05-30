@@ -1,0 +1,136 @@
+{%- set assetPath = asset_path | default('/') -%}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    {% block head %}
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>{% block head_title_content %}Department of International Trade{% endblock %}</title>
+      {% block head_content %}
+        <link rel="shortcut icon" href="{{ assetPath }}images/favicon-f76d9be9fd.ico" type="image/x-icon">
+        <link rel="mask-icon" href="{{ assetPath }}images/gov-ebb5423b49.uk_logotype_crown.svg" color="#0b0c0c">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ assetPath }}images/apple-touch-icon-152x152-928276216f.png">
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ assetPath }}images/apple-touch-icon-120x120-93cc374f93.png">
+        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ assetPath }}images/apple-touch-icon-76x76-502fb715e0.png">
+        <link rel="apple-touch-icon-precomposed" href="{{ assetPath }}images/apple-touch-icon-60x60-27e25ffcc8.png">
+        <meta property="og:image" content="{{ assetPath }}images/opengraph-image-f86f1d0dd1.png">
+      {% endblock %}
+      {% block head_stylesheets %}
+        <link href="{{ assetPath }}css/application.css" media="screen" rel="stylesheet" />
+      {% endblock %}
+    {% endblock %}
+    <script>(function(d){d.className=d.className.replace(/\bno-js\b/,'js-enabled')})(document.documentElement)</script>
+  </head>
+
+  <body>
+    {% block body %}
+      {% block body_skiplinks %}
+        <div class="skip-links">
+          <div class="skip-links__inner">
+            <a href="#content" class="skip-links__link">Skip to main content</a>
+          </div>
+        </div>
+      {% endblock %}
+
+      {% block body_notifications %}
+        <div class="notification-banner u-js-hidden u-print-hide" id="global-cookies-banner" role="alert">
+          <p class="notification-banner__inner">
+            GOV.UK uses cookies to make the site simpler.
+            <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a>
+          </p>
+        </div>
+      {% endblock %}
+
+      {% block body_site_header %}
+        <header role="banner" class="global-header">
+          <div class="global-header__inner">
+            {% block header_site_title %}
+              <a href="/" class="global-header__link">
+                {{ siteTitle|default('Department for International Trade') }}
+              </a>
+            {% endblock %}
+            {% block header_service_title %}
+              {% if serviceTitle %}
+                <span class="global-header__service-name">{{ serviceTitle }}</span>
+              {% endif %}
+            {% endblock %}
+          </div>
+        </header>
+      {% endblock %}
+
+      {% block body_main %}
+        <div class="main-content">
+          <main id="content" role="main" class="main-content__inner">
+            {% block body_main_header %}
+              {% if projectPhase|lower in ['alpha', 'beta'] and feedbackLink %}
+                <div class="phase-banner">
+                  <span class="phase-banner__tag">{{ projectPhase.toUpperCase() }}</span>
+                  <span class="phase-banner__message">
+                    This is a new service – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
+                  </span>
+                </div>
+              {% endif %}
+              {% block body_main_header_content %}
+                <div class="global-nav">
+                  <nav class="global-nav__navigation">
+                    <a href="/" class="global-nav__link">Home</a>
+                  </nav>
+                  {% if user.name %}
+                    <ul class="global-nav__account">
+                      <li class="global-nav__item">
+                        <span class="global-nav__username">{{ user.name }}:</span>
+                        <a href="/myaccount" class="global-nav__link">My account</a>
+                      </li>
+                      <li class="global-nav__item">
+                        <a href="/login/signout" class="global-nav__link">Sign out</a>
+                      </li>
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endblock %}
+            {% endblock %}
+            {% block body_main_content %}{% endblock %}
+          </main>
+        </div>
+      {% endblock %}
+
+      {% block body_footer %}
+        <footer class="global-footer" role="contentinfo">
+          <div class="global-footer__inner">
+            {% block body_footer_content %}
+              <div class="global-footer__links">
+                <h2 class="u-visually-hidden">Support links</h2>
+                <ul class="list-inline">
+                  <li>
+                    <a href="/terms_and_conditions">Terms and conditions</a>
+                  </li>
+                  <li>
+                    <a href="https://beta.nhs.uk/help/cookies">Cookies</a>
+                  </li>
+                </ul>
+                <div class="global-footer__open-government-licence">
+                  <a
+                    class="global-footer__ogl-logo"
+                    href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                    rel="license"
+                  >Open Government Licence</a>
+
+                  All content is available under the
+                  <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>,
+                  except where otherwise stated
+                </div>
+              </div>
+              <div class="global-footer__copyright">
+                <a
+                  href="http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/"
+                  rel="Copyright"
+                >© Crown copyright</a>
+              </div>
+            {% endblock %}
+          </div>
+        </footer>
+      {% endblock %}
+    {% endblock %}
+  </body>
+</html>

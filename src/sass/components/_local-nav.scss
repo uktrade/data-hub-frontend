@@ -1,7 +1,5 @@
-@import 'colours/palette';
-@import 'conditionals';
-@import 'measurements';
-@import 'typography';
+@import '../settings/colours';
+@import '../tools/mixins/layout';
 
 .local-nav {
   @include core-19;
@@ -19,7 +17,11 @@
 .local-nav__link {
   display: block;
   padding: $gutter-half;
-  color: $black;
+
+  &,
+  &:visited {
+    color: $black;
+  }
 
   @include media(tablet) {
     padding-left:  $gutter-two-thirds;

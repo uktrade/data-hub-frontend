@@ -1,0 +1,12 @@
+@import '../../settings/colours';
+@import '../../tools/mixins/layout';
+
+.main-content {
+  background-color: $white;
+  min-height: 60vh;
+  flex-grow: 1;
+}
+
+.main-content__inner {
+  @include site-width-container;
+}

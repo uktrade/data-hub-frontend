@@ -12,10 +12,6 @@
 
 }
 
-#content {
-  min-height: 600px;
-}
-
 .data {
   .data__description {
     padding-right: 20%;
@@ -253,4 +249,15 @@ hr {
   cursor: pointer;
   text-decoration: underline;
   margin-left: 0;
+}
+
+.js-enabled .block-label.selection-button-radio {
+  &::before,
+  &::after {
+    box-sizing: content-box;
+  }
+}
+
+.hidden {
+  display: none;
 }

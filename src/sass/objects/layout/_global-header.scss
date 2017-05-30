@@ -1,0 +1,45 @@
+@import '../../settings/colours';
+@import '../../tools/mixins/layout';
+@import '../../tools/mixins/typography';
+
+.global-header {
+  background-color: $black;
+  color: $white;
+}
+
+.global-header__inner {
+  @include site-width-container;
+  padding: ($baseline-grid-unit * 3) 0;
+}
+
+.global-header__link {
+  display: inline-block;
+  color: inherit;
+  font-size: 1.6em;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0 $baseline-grid-unit;
+  margin: 0 (-$baseline-grid-unit);
+
+  &:hover,
+  &:visited,
+  &:focus {
+    text-decoration: underline;
+    color: inherit;
+    background-color: transparent;
+  }
+}
+
+.global-header__service-name {
+  @include core-font(16);
+  color: $grey-1;
+  display: block;
+  margin-top: $baseline-grid-unit * 2;
+
+  @include media(tablet) {
+    @include core-font(20);
+    display: inline;
+    margin-left: $baseline-grid-unit * 4;
+    margin-top: 0;
+  }
+}
