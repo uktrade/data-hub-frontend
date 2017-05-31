@@ -25,7 +25,7 @@ function getServiceDelivery (token, serviceDeliveryId) {
   })
 }
 
-function getServiceDeliverysForCompany (token, companyId) {
+function getServiceDeliveriesForCompany (token, companyId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?company_id=${companyId}`)
     .then((response) => {
@@ -38,7 +38,7 @@ function getServiceDeliverysForCompany (token, companyId) {
   })
 }
 
-function getServiceDeliverysForContact (token, contactId) {
+function getServiceDeliveriesForContact (token, contactId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact_id=${contactId}`)
     .then((response) => {
@@ -54,6 +54,6 @@ function getServiceDeliverysForContact (token, contactId) {
 module.exports = {
   getServiceDelivery,
   saveServiceDelivery,
-  getServiceDeliverysForCompany,
-  getServiceDeliverysForContact
+  getServiceDeliveriesForCompany,
+  getServiceDeliveriesForContact
 }

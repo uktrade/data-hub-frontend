@@ -88,7 +88,7 @@ describe('Contact controller, edit', function () {
         }
         req = {
           session: {
-            token: '1234'
+            token: '321'
           },
           query: {},
           params: {
@@ -112,7 +112,8 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
-          expect(res.locals.company).to.deep.equal(contact.company)
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, contact.company.id)
+          expect(res.locals.company).to.deep.equal(company)
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -136,7 +137,7 @@ describe('Contact controller, edit', function () {
       beforeEach(function () {
         req = {
           session: {
-            token: '1234'
+            token: '321'
           },
           query: {
             company: '1234'
@@ -157,6 +158,7 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -206,6 +208,7 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -294,7 +297,7 @@ describe('Contact controller, edit', function () {
       }
       req = {
         session: {
-          token: '1234'
+          token: '321'
         },
         params: { id: '1234' },
         query: {},
@@ -310,7 +313,7 @@ describe('Contact controller, edit', function () {
     })
     it('should save the form data to the back end', function (done) {
       res.redirect = function () {
-        expect(saveContactFormStub).to.be.calledWith('1234', body)
+        expect(saveContactFormStub).to.be.calledWith(req.session.token, body)
         done()
       }
 
