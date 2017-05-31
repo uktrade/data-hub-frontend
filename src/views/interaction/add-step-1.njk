@@ -1,7 +1,7 @@
-{% extends "layouts/ukti-search-header.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_header_content %}
   {% if query.contactId %}
     {% set backUrl="/contact-interactions/" + query.contactId %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
@@ -11,7 +11,9 @@
   {% endif %}
 
   <h1 class="heading-xlarge">Add new interaction</h1>
+{% endblock %}
 
+{% block body_main_content %}
   <form method="POST">
     <input name="company" type="hidden" value="{{query.company}}"/>
     <input name="contact" type="hidden" value="{{query.contact}}"/>
