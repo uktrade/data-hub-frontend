@@ -50,6 +50,7 @@ module.exports = (app, config) => {
   const filters = require(`@uktrade/trade_elements/dist/nunjucks/filters`)
 
   filters.stringify = JSON.stringify
+  filters.values = Object.values
 
   Object.keys(filters).forEach((filterName) => {
     env.addFilter(filterName, filters[filterName])
