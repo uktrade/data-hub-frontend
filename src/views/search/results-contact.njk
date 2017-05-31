@@ -1,0 +1,54 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  {{ super() }}
+
+  {% if results %}
+    {% component 'results-summary', {
+      resultType: searchType,
+      total: results.count,
+      searchTerm: searchTerm
+    } %}
+
+    <ol class="results-list">
+      {% for contact in results.contacts %}
+        <li class="results-list__item">
+          <h3 class="results-list__item-header">
+            <a href="/contact/{{ contact.id }}/details?term={{ searchTerm }}">
+              {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
+            </a>
+          </h3>
+
+          <dl>
+            {% if (contact.company) %}
+              <dt class="u-visually-hidden">Company</dt>
+              <dd>{{ contact.company.name }}</dd>
+            {% endif %}
+            {% if results.job_title %}
+              <dt class="u-visually-hidden">Job Title</dt>
+              <dd>{{ results.job_title }}</dd>
+            {% endif %}
+
+            <dt class="u-visually-hidden">Address</dt>
+            <dd>
+              {{ addressFormatter([
+                 contact.registered_address_1,
+                 contact.registered_address_2,
+                 contact.registered_address_3,
+                 contact.registered_address_4,
+                 contact.registered_address_county,
+                 contact.registered_address_town,
+                 contact.registered_address_postcode
+              ]) }}
+            </dd>
+          </dl>
+        </li>
+      {% endfor %}
+    </ol>
+
+    {% component 'pagination', {
+     pages: pagination
+    } %}
+
+  {% endif %}
+{% endblock %}

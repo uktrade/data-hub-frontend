@@ -1,0 +1,31 @@
+{##
+ # @param {object[]} pages An array of page objects
+ #
+ # @return {string} HTML for pagination navigation
+ #
+ # @example
+ #   {% component 'pagination', {
+ #     pages: [
+ #       {
+ #         label: '2',
+ #         link: '?term=example&page=2',
+ #         currentPage: 'true'
+ #       }
+ #     ]
+ #   } %}
+ #}
+{% if pages | length %}
+  <nav class="pagination-nav">
+    <ul class="list-inline">
+      {% for page in pages %}
+        <li class="pagination-nav__item">
+          {% if page.currentPage %}
+            {{ page.label }}
+          {% else %}
+            <a href="?{{ page.link }}">{{ page.label }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
