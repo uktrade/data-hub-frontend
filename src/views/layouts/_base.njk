@@ -26,7 +26,6 @@
   {{ super() }}
   <!--[if gt IE 8]><!-->
     {% block javascript %}
-      <script src="{{ asset_path }}javascripts/common.js?{{ startTime }}"></script>
       <script src="{{ asset_path }}javascripts/trade-elements-components-ebe253002f.js"></script>
       <script src="{{ asset_path }}javascripts/app.bundle.js?{{ startTime }}"></script>
     {% endblock %}
