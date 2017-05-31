@@ -55,10 +55,10 @@
 
     {% if searchResult %}
 
-      <div id="result-summary" class="result-summary">
-        <span class="result-summary--result-count">{{ searchResult.total }}</span> result{{ 's' if searchResult.total != 1 }} found containing
-        <span class="result-summary--result-query">{{ searchTerm }}</span>
-      </div>
+      {% component 'result-summary', {
+        total: searchResult.total,
+        searchTerm: searchTerm
+      } %}
 
       {% if searchResult.total > 0 %}
         <ol class="results-list results-list--block">
@@ -106,19 +106,9 @@
         </ol>
       {% endif %}
 
-      {% if pagination|length %}
-        <div class="pagination">
-          <div>
-            {% for page in pagination %}
-              {% if page.currentPage == true %}
-                <div class="pagination__page">{{ page.label }}</div>
-              {% else %}
-                <a href="?{{ page.link }}" class="pagination__page">{{ page.label }}</a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
+      {% component 'pagination', {
+        pagination: pagination
+      } %}
 
       <p class="infostrip">If you can’t find the company you’re looking for, <a href="/company/add-step-1">add a new compay</a>. Unfortunately you will lose your progress.</p>
     {% endif %}
