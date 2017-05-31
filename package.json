@@ -72,9 +72,10 @@
     "js:client:watch": "webpack --watch",
     "js:server": "babel src -d build",
     "js:server:watch": "nodemon --debug src/server.js",
-    "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true",
-    "sass:watch": "npm run sass && npm run sass -- -r -w",
+    "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
+    "sass:watch": "nodemon -e scss -x 'npm run sass'",
     "sass:compile": "npm run sass -- -x --output-style compressed",
+    "css:autoprefixer": "postcss build/css/*.css --use autoprefixer -d build/css",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
     "circle": "npm run lint && nyc --reporter=lcov npm test -- --reporter mocha-circleci-reporter && npm run sass && npm run js && codeclimate-test-reporter < coverage/lcov.info",
     "heroku-postbuild": "npm rebuild node-sass && npm run sass && npm run js"
@@ -89,11 +90,13 @@
     "node": "6.10.2"
   },
   "devDependencies": {
+    "autoprefixer": "^7.1.1",
     "chai-as-promised": "^6.0.0",
     "codeclimate-test-reporter": "^0.4.1",
     "html": "^1.0.0",
     "js-beautify": "^1.6.14",
     "mocha-circleci-reporter": "0.0.2",
+    "postcss-cli": "^4.0.0",
     "pre-commit": "^1.2.2"
   }
 }
