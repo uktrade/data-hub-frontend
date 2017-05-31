@@ -1,6 +1,6 @@
-@import '../../settings/colours';
-@import '../../settings/typography';
-@import '../../tools/mixins';
+@import "../../settings/colours";
+@import "../../settings/typography";
+@import "../../tools/mixins";
 
 .global-footer {
   background-color: $grey-3;
@@ -48,13 +48,13 @@
 
 .global-footer__ogl-logo {
   @include hide-text(41px, 17px);
-  background: url('/images/open-government-licence.png') no-repeat;
+  background: url("/images/open-government-licence.png") no-repeat;
   background-size: 41px 17px;
   margin-bottom: 10px;
   display: block;
 
   @include device-pixel-ratio {
-    background-image: url('/images/open-government-licence_2x.png') no-repeat;
+    background-image: url("/images/open-government-licence_2x.png") no-repeat;
   }
 
   @include media(tablet) {
@@ -76,12 +76,12 @@
 
   a {
     display: inline-block;
-    background: url('/images/govuk-crest.png') no-repeat 50% 5px;
+    background: url("/images/govuk-crest.png") no-repeat 50% 5px;
     padding: 115px 5px 5px;
     text-decoration: none;
 
     @include device-pixel-ratio {
-      background-image: url('/images/govuk-crest-2x.png');
+      background-image: url("/images/govuk-crest-2x.png");
       background-size: 125px 102px;
     }
   }

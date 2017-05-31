@@ -23,20 +23,20 @@ table.investment-project-summary-table {
       text-align: right;
     }
 
-    [data-key='name'] {
+    [data-key="name"] {
       width: 45%;
     }
 
-    [data-key='value'] {
+    [data-key="value"] {
       width: 20%;
     }
 
-    [data-key='state'] {
+    [data-key="state"] {
       width: 20%;
     }
 
-    [data-key='land_date'],
-    [data-key='state_date'] {
+    [data-key="land_date"],
+    [data-key="state_date"] {
       width: 15%;
     }
 

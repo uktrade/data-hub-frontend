@@ -1,33 +1,33 @@
-$images-dir: '/images/';
+$images-dir: "/images/";
 
-@import 'trade-elements';
-@import 'font-awesome';
+@import "trade-elements";
+@import "font-awesome";
 
-@import 'settings';
-@import 'tools';
-@import 'generic';
-@import 'elements';
-@import 'objects';
-@import 'components';
-@import 'trumps';
+@import "settings";
+@import "tools";
+@import "generic";
+@import "elements";
+@import "objects";
+@import "components";
+@import "trumps";
 
 //// application specific (deprecated)
-@import '_deprecated/address';
-@import '_deprecated/card';
-@import '_deprecated/country-list';
-@import '_deprecated/dashboard';
-@import '_deprecated/facets';
-@import '_deprecated/flash';
-@import '_deprecated/errors';
-@import '_deprecated/leftnav';
-@import '_deprecated/login-bar';
-@import '_deprecated/metadata-list';
-@import '_deprecated/option-select';
-@import '_deprecated/search';
-@import '_deprecated/search-result';
-@import '_deprecated/shame';
-@import '_deprecated/splitheader';
-@import '_deprecated/tables';
+@import "_deprecated/address";
+@import "_deprecated/card";
+@import "_deprecated/country-list";
+@import "_deprecated/dashboard";
+@import "_deprecated/facets";
+@import "_deprecated/flash";
+@import "_deprecated/errors";
+@import "_deprecated/leftnav";
+@import "_deprecated/login-bar";
+@import "_deprecated/metadata-list";
+@import "_deprecated/option-select";
+@import "_deprecated/search";
+@import "_deprecated/search-result";
+@import "_deprecated/shame";
+@import "_deprecated/splitheader";
+@import "_deprecated/tables";
 
 .table--readonly {
   border-left-width: 5px;

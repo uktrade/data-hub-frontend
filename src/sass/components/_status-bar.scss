@@ -1,6 +1,6 @@
-@import '../settings/colours';
-@import '../settings/layout';
-@import '../tools/mixins/layout';
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/mixins/layout";
 
 .status-bar {
   @extend %contain-floats;
@@ -9,7 +9,7 @@
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 0;
