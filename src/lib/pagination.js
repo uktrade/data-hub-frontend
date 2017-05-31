@@ -9,7 +9,7 @@ function getPageIndexes (req, result) {
   let pageIndex = {}
   let currentPage = Math.max(parseInt((req.query.page || 1), 10), 1)
 
-  let totalPages = Math.ceil(result.total / 10)
+  let totalPages = Math.ceil(result.count / 10)
 
   pageIndex.startPage = Math.max((currentPage - 2), 1)
   pageIndex.endPage = Math.min((pageIndex.startPage + 4), totalPages)
@@ -35,7 +35,7 @@ function getPagination (req, result) {
   let pagination = []
   let currentPage = parseInt((req.query.page || 1), 10) || 1
 
-  if (result.total === 0) {
+  if (result.count === 0) {
     return pagination
   }
 

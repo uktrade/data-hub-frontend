@@ -1,0 +1,23 @@
+{##
+ # @param {string[]}   addressDetails - address parts
+ # @param {string}     searchTerm - term used to highlight match with address details
+ #
+ # @return {string} HTML address
+ #
+ # @example
+ #   {{ formatter([
+ #     'first line of address',
+ #     'second line of address',
+ #     'AL1 1DF'
+ #   ]) }}
+ #}
+{% macro addressFormatter(addressDetails, searchTerm) %}
+  {%- for addressDetail in addressDetails | removeFalsey -%}
+
+    {% if addressDetail %}
+      {{ addressDetail | highlight(searchTerm) -}}
+      {{ "," if not loop.last }}
+    {% endif %}
+
+  {% endfor %}
+{% endmacro %}

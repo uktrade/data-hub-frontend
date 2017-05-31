@@ -1,4 +1,4 @@
-const {renderComponentToDom} = require('../component-helper')
+const { renderComponentToDom } = require('../component-helper')
 
 describe('Pagination component', () => {
   it('should not render if pagination array not provided', () => {

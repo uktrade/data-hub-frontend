@@ -41,6 +41,7 @@ describe('Results Summary component', () => {
   it('should render with 1 result with search term', () => {
     const mockData = {
       total: 1,
+      resultType: 'company',
       searchTerm: 'example search term'
     }
     const component = renderComponentToDom(
@@ -52,7 +53,7 @@ describe('Results Summary component', () => {
     const resultsSummaryQuery = component.querySelector('.result-summary__query')
 
     expect(component.className).to.equal('results-summary')
-    expect(component.textContent).to.contain('result found containing example search term')
+    expect(component.textContent).to.contain(`${mockData.resultType} found containing ${mockData.searchTerm}`)
     expect(resultsSummaryCount.textContent).to.contain(mockData.total)
     expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
   })
@@ -60,6 +61,8 @@ describe('Results Summary component', () => {
   it('should render multiple results with search term', () => {
     const mockData = {
       total: 11,
+      resultType: 'company',
+      pluralisedResultType: 'companies',
       searchTerm: 'example search term'
     }
     const component = renderComponentToDom(
@@ -71,7 +74,48 @@ describe('Results Summary component', () => {
     const resultsSummaryQuery = component.querySelector('.result-summary__query')
 
     expect(component.className).to.equal('results-summary')
-    expect(component.textContent).to.contain('result\'s found containing example search term')
+    expect(component.textContent).to.contain(`${mockData.pluralisedResultType} found containing ${mockData.searchTerm}`)
+    expect(resultsSummaryCount.textContent).to.contain(mockData.total)
+    expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
+  })
+
+  it('should render pluralised word with multiple results', () => {
+    const mockData = {
+      total: 22,
+      resultType: 'company',
+      pluralisedResultType: 'companies',
+      searchTerm: 'example search term'
+    }
+    const component = renderComponentToDom(
+      'results-summary',
+      mockData
+    )
+
+    const resultsSummaryCount = component.querySelector('.results-summary__count')
+    const resultsSummaryQuery = component.querySelector('.result-summary__query')
+
+    expect(component.className).to.equal('results-summary')
+    expect(component.textContent).to.contain(`${mockData.pluralisedResultType} found containing ${mockData.searchTerm}`)
+    expect(resultsSummaryCount.textContent).to.contain(mockData.total)
+    expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
+  })
+
+  it('should render plural word with multiple results', () => {
+    const mockData = {
+      total: 22,
+      resultType: 'contact',
+      searchTerm: 'example search term'
+    }
+    const component = renderComponentToDom(
+      'results-summary',
+      mockData
+    )
+
+    const resultsSummaryCount = component.querySelector('.results-summary__count')
+    const resultsSummaryQuery = component.querySelector('.result-summary__query')
+
+    expect(component.className).to.equal('results-summary')
+    expect(component.textContent).to.contain(`${mockData.resultType}s found containing ${mockData.searchTerm}`)
     expect(resultsSummaryCount.textContent).to.contain(mockData.total)
     expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
   })

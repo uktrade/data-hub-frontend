@@ -1,4 +1,4 @@
-const {renderComponentToDom} = require('../component-helper')
+const { renderComponentToDom } = require('../component-helper')
 
 describe('Search Bar component', () => {
   it('should render as expected with defaults', () => {
@@ -31,7 +31,7 @@ describe('Search Bar component', () => {
       method: 'post',
       label: 'Search for company name or contact',
       searchTerm: 'mock search term',
-      placeHolder: 'mock place holder text',
+      placeholder: 'mock place holder text',
       submitText: 'mock submit text'
     }
     const component = renderComponentToDom(
@@ -48,7 +48,7 @@ describe('Search Bar component', () => {
     expect(component.method).to.equal(mockData.method)
     expect(searchInputLabel.textContent).to.equal(mockData.label)
     expect(searchInput.value).to.equal(mockData.searchTerm)
-    expect(searchInput.placeholder).to.equal(mockData.placeHolder)
+    expect(searchInput.placeholder).to.equal(mockData.placeholder)
     expect(searchSubmit.value).to.equal(mockData.submitText)
   })
 })

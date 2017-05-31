@@ -1,26 +1,24 @@
-const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
-const includes = require('lodash/includes')
 const Q = require('q')
 const winston = require('winston')
+const authorisedRequest = require('../lib/authorised-request')
+const config = require('../config')
+const { buildQueryString } = require('../lib/url-helpers')
 
-function search ({token, term, filters = [], limit = 10, page = 1}) {
-  const requestBody = {
-    term,
+function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
+  const params = {
+    term: searchTerm,
+    entity: searchType,
     limit,
-    offset: (page * limit) - limit,
-    doc_type: filters.length && filters
+    offset: (page * limit) - limit
   }
+
   const options = {
-    url: `${config.apiRoot}/search/`,
-    body: requestBody,
-    method: 'POST'
+    url: `${config.apiRoot}/v3/search${buildQueryString(params)}`,
+    method: 'GET'
   }
 
   return authorisedRequest(token, options)
     .then(result => {
-      result.facets = buildFacetViewDataObj(filters)
-      result.term = term
       result.page = page
 
       return result
@@ -57,30 +55,11 @@ function suggestCompany (token, term, types) {
     })
 }
 
-function buildFacetViewDataObj (filters) {
-  return {
-    'Category': [
-      {
-        name: 'doc_type',
-        value: 'company',
-        label: 'Company',
-        checked: includes(filters, 'company_company', 'company_companieshousecompany')
-      },
-      {
-        name: 'doc_type',
-        value: 'company_contact',
-        label: 'Contact',
-        checked: includes(filters, 'company_contact')
-      }
-    ]
-  }
-}
-
 function searchLimited (token, term) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const allResults = yield search({token, term, filters: ['company_company', 'company_companieshousecompany']})
+        const allResults = yield search({ token, term, filters: ['company_company', 'company_companieshousecompany'] })
         const filtered = allResults.hits.filter(result => (result._type === 'company_companieshousecompany' ||
           (result._source.business_type && result._source.business_type.toLowerCase() === 'private limited company') ||
           (result._source.business_type && result._source.business_type.toLowerCase() === 'public limited company')))

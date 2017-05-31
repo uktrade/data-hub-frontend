@@ -1,4 +1,4 @@
-const {renderComponentToDom} = require('../component-helper')
+const { renderComponentToDom } = require('../component-helper')
 
 describe('Search Nav component', () => {
   it('should render as expected with defaults', () => {

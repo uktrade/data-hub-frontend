@@ -32,13 +32,13 @@
             <dt class="u-visually-hidden">Address</dt>
             <dd>
               {{ addressFormatter([
-                 contact.registered_address_1,
-                 contact.registered_address_2,
-                 contact.registered_address_3,
-                 contact.registered_address_4,
-                 contact.registered_address_county,
-                 contact.registered_address_town,
-                 contact.registered_address_postcode
+                contact.registered_address_1,
+                contact.registered_address_2,
+                contact.registered_address_3,
+                contact.registered_address_4,
+                contact.registered_address_county,
+                contact.registered_address_town,
+                contact.registered_address_postcode
               ]) }}
             </dd>
           </dl>
@@ -47,7 +47,7 @@
     </ol>
 
     {% component 'pagination', {
-     pages: pagination
+      pages: pagination
     } %}
 
   {% endif %}

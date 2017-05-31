@@ -3,7 +3,11 @@
 
 {% block body_main_content %}
 
-  {{ trade.searchbar('term', label="Search for company name or contact", value=query.term) }}
+  {% component 'search-bar', {
+    action: '/search/company',
+    method: 'get',
+    label: 'Search for company name or contact'
+  } %}
 
   <div class="grid-row dashboard">
     <div class="column-half">
