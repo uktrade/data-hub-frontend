@@ -1,4 +1,6 @@
 const nunjucks = require('nunjucks')
+const _ = require('lodash')
+
 const {
   isArray,
   isPlainObject,
@@ -13,6 +15,10 @@ function isNotEmpty (value) {
 
 const filters = {
   stringify: JSON.stringify,
+
+  values: _.values,
+
+  keys: _.keys,
 
   highlight: (string, searchTerm) => {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')
