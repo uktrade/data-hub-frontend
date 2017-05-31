@@ -28,6 +28,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.1",
     "font-awesome": "^4.6.3",
+    "html5shiv": "^3.7.3",
     "istanbul": "^0.4.5",
     "jsdom": "^10.1.0",
     "lodash": "^4.16.4",

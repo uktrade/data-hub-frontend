@@ -60,5 +60,8 @@
 
     {{ trade.save(backUrl = "/company-exports/view/" + company.id) }}
   </form>
+{% endblock %}
+
+{% block js %}
   <script src="/javascripts/add-another-field.bundle.js"></script>
 {% endblock %}

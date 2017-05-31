@@ -16,7 +16,8 @@ module.exports = {
     search: './src/javascripts/search',
     'service-delivery': './src/javascripts/service-delivery',
     'archive-form': './src/javascripts/archive-form',
-    'add-another-field': './src/javascripts/add-another-field'
+    'add-another-field': './src/javascripts/add-another-field',
+    ie: ['html5shiv']
   },
   output: {
     path: 'build/javascripts',
@@ -55,10 +56,8 @@ module.exports = {
       sourceMap: false,
       dead_code: true
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.DedupePlugin()
   ] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin('common.js')
+    new webpack.optimize.DedupePlugin()
   ]
 }
