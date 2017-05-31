@@ -1,14 +1,12 @@
-const winston = require('winston')
-
 module.exports = function auth (req, res, next) {
-  winston.debug('auth:start')
+  const url = req.url
+  const passThrough = /^\/(support|ping|login)\b/.test(url) || req.session.token
 
-  if (!req.url.startsWith('/ping.xml') && !req.url.startsWith('/support') && req.url !== '/login' && req.url !== '/error' && !req.session.token) {
-    winston.debug('auth:redirect login')
-    res.redirect('/login')
-    return
+  if (passThrough) {
+    return next()
   }
 
-  winston.debug('auth:end')
-  next()
+  req.session.returnTo = req.originalUrl
+
+  return res.redirect('/login')
 }
