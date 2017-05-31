@@ -16,9 +16,9 @@
   {% include "_messages.njk" %}
 {% endblock %}
 
-{% block body %}
+{% block javascript %}
   {{ super() }}
-  {% block js %}
+  {% block javascript_edit %}
     <script src="/javascripts/company-edit.bundle.js"></script>
   {% endblock %}
 {% endblock %}
