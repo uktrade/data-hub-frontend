@@ -113,9 +113,6 @@ function transformFromApi (body) {
   formatted['land-date_year'] = date.getFullYear()
   formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
 
-  formatted['is-relationship-manager'] = formatted.client_relationship_manager
-  formatted['is-referral-source'] = formatted.referral_source_advisor
-
   return Object.assign({}, body, formatted)
 }
 

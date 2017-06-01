@@ -14,19 +14,29 @@ const investmentProjects = {
 }
 const investmentProjectSummary = {
   id: '12345',
-  investor_company: {
-    id: '67890'
-  },
-  estimated_land_date: '2018-10-01'
+  investor_company: '67890',
+  estimated_land_date: '2018-10-01',
+  client_relationship_manager: '111222',
+  referral_source_advisor: '333444',
+}
+const advisorMock = {
+  results: [
+    {
+      id: 1,
+      first_name: 'Jeff',
+      last_name: 'Major',
+    }
+  ]
 }
 
-describe('Investment start controller', () => {
+describe('Investment create controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
     this.getInflatedDitCompany = this.sandbox.stub().resolves(company)
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.getInvestmentProjectSummary = this.sandbox.stub().resolves(investmentProjectSummary)
+    this.getAdvisors = this.sandbox.stub().resolves(advisorMock)
     this.createInvestmentProject = this.sandbox.stub().resolves({})
     this.updateInvestmentProject = this.sandbox.stub().resolves({})
     this.transformToApi = this.sandbox.stub().returns({})
@@ -45,6 +55,9 @@ describe('Investment start controller', () => {
       '../services/investment-formatting.service': {
         transformToApi: this.transformToApi,
         transformFromApi: this.transformFromApi
+      },
+      '../repos/advisor.repo': {
+        getAdvisors: this.getAdvisors
       },
       '../repos/metadata.repo': {
         investmentTypeOptions: [{ id: 1, name: 'FDI' }],
@@ -102,6 +115,7 @@ describe('Investment start controller', () => {
 
               expect(data.form).to.deep.equal({
                 options: {
+                  advisors: [{ id: 1, name: 'Jeff Major' }],
                   contacts: [{ id: 1, name: 'Bob Stevens' }],
                   investmentTypes: [{ value: 1, label: 'FDI' }],
                   referralSourceActivities: [],
@@ -250,7 +264,10 @@ describe('Investment start controller', () => {
       it('should set project data on locals', (done) => {
         const req = {
           session: {
-            token: 'abcd'
+            token: 'abcd',
+            user: {
+              id: '1a2b3c4d5e'
+            }
           },
           params: {
             id: '12345'
@@ -265,10 +282,66 @@ describe('Investment start controller', () => {
               form: {
                 state: {
                   id: '12345',
-                  investor_company: {
-                    id: '67890'
-                  },
-                  estimated_land_date: '2018-10-01'
+                  investor_company: '67890',
+                  estimated_land_date: '2018-10-01',
+                  client_relationship_manager: '111222',
+                  referral_source_advisor: '333444',
+                  'is-relationship-manager': 'No',
+                  'is-referral-source': 'No',
+                }
+              }
+            })
+            done()
+          } catch (e) {
+            done(e)
+          }
+        }
+
+        this.controller.editMiddleware(req, res, next)
+      })
+    })
+
+    describe('when user id matches values for relationship manager and advisor', () => {
+      beforeEach(() => {
+        const summaryMock = {
+          id: '12345',
+          investor_company: '67890',
+          estimated_land_date: '2018-10-01',
+          client_relationship_manager: '1a2b3c4d5e',
+          referral_source_advisor: '1a2b3c4d5e',
+        }
+
+        this.getInvestmentProjectSummary.resolves(summaryMock)
+        this.transformFromApi.returns(summaryMock)
+      })
+
+      it('should set project data on locals', (done) => {
+        const req = {
+          session: {
+            token: 'abcd',
+            user: {
+              id: '1a2b3c4d5e'
+            }
+          },
+          params: {
+            id: '12345'
+          }
+        }
+        const res = { locals: {} }
+        const next = function () {
+          try {
+            expect(res.locals).to.deep.equal({
+              projectId: '12345',
+              equityCompanyId: '67890',
+              form: {
+                state: {
+                  id: '12345',
+                  investor_company: '67890',
+                  estimated_land_date: '2018-10-01',
+                  client_relationship_manager: '1a2b3c4d5e',
+                  referral_source_advisor: '1a2b3c4d5e',
+                  'is-relationship-manager': '1a2b3c4d5e',
+                  'is-referral-source': '1a2b3c4d5e',
                 }
               }
             })

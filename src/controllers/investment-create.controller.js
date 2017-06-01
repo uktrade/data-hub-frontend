@@ -8,13 +8,15 @@ const {
   updateInvestmentProject
 } = require('../repos/investment.repo')
 const { transformToApi, transformFromApi } = require('../services/investment-formatting.service')
+const { getAdvisors } = require('../repos/advisor.repo')
 const metadataRepo = require('../repos/metadata.repo')
 
 function getHandler (req, res, next) {
   const equityCompanyId = res.locals.equityCompanyId || req.query['equity-company']
   const promises = [
     getInflatedDitCompany(req.session.token, equityCompanyId),
-    getCompanyInvestmentProjects(req.session.token, equityCompanyId)
+    getCompanyInvestmentProjects(req.session.token, equityCompanyId),
+    getAdvisors(req.session.token)
   ]
 
   if (!equityCompanyId) {
@@ -22,7 +24,7 @@ function getHandler (req, res, next) {
   }
 
   Promise.all(promises)
-    .then(([equityCompany, equityCompanyInvestments]) => {
+    .then(([equityCompany, equityCompanyInvestments, advisorResponse]) => {
       const form = res.locals.form || {}
       const contacts = equityCompany.contacts.map((contact) => {
         return {
@@ -36,8 +38,15 @@ function getHandler (req, res, next) {
           label: type.name
         }
       })
+      const advisors = advisorResponse.results.map((advisor) => {
+        return {
+          id: advisor.id,
+          name: `${advisor.first_name} ${advisor.last_name}`
+        }
+      })
 
       form.options = {
+        advisors,
         contacts,
         investmentTypes,
         referralSourceActivities: metadataRepo.referralSourceActivityOptions,
@@ -85,12 +94,28 @@ function postHandler (req, res, next) {
 
 function editMiddleware (req, res, next) {
   getInvestmentProjectSummary(req.session.token, req.params.id)
-    .then((projectData) => {
-      res.locals.form = res.locals.form || {}
+    .then((response) => {
+      const projectData = transformFromApi(response)
 
-      res.locals.form.state = transformFromApi(projectData)
-      res.locals.equityCompanyId = projectData.investor_company.id
+      res.locals.form = res.locals.form || {}
+      res.locals.form.state = projectData
+      res.locals.equityCompanyId = projectData.investor_company
       res.locals.projectId = projectData.id
+
+      // TODO: This is to support the leading question of whether current
+      // user is the CRM or advisor - this journey will be changed in the
+      // future but until then this supports the settings of that data
+      if (projectData.client_relationship_manager === req.session.user.id) {
+        res.locals.form.state['is-relationship-manager'] = projectData.client_relationship_manager
+      } else {
+        res.locals.form.state['is-relationship-manager'] = 'No'
+      }
+
+      if (projectData.referral_source_advisor === req.session.user.id) {
+        res.locals.form.state['is-referral-source'] = projectData.referral_source_advisor
+      } else {
+        res.locals.form.state['is-referral-source'] = 'No'
+      }
 
       next()
     })
