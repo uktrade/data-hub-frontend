@@ -49,6 +49,13 @@ function updateInvestmentProject (token, investmentId, body) {
   })
 }
 
+function getInvestmentProjectAuditLog (token, investmentId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/audit`)
+    .then((data) => {
+      return data.results
+    })
+}
+
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
@@ -57,4 +64,5 @@ module.exports = {
   getEquityCompanyDetails,
   createInvestmentProject,
   updateInvestmentProject,
+  getInvestmentProjectAuditLog,
 }

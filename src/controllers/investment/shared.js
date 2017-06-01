@@ -27,7 +27,7 @@ function getLocalNavMiddleware (req, res, next) {
     // { label: 'Project team', slug: 'team' },
     // { label: 'Interactions', slug: 'interactions' },
     // { label: 'Evaluation', slug: 'evaluation' },
-    // { label: 'Audit history', slug: 'audit' },
+    { label: 'Audit history', slug: 'audit' },
   ]
   next()
 }

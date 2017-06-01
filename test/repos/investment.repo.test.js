@@ -8,12 +8,14 @@ const {
   getInvestmentRequirements,
   createInvestmentProject,
   updateInvestmentProject,
-} = require('~/src/repos/investment.repo')
+  getInvestmentProjectAuditLog,
+} = require(`~/src/repos/investment.repo`)
 
 const companyData = require('../data/company.json')
 const investmentProjectSummaryData = require('../data/investment/project-summary.json')
 const investmentValueData = require('../data/investment/project-value.json')
 const investmentRequirements = require('../data/investment/project-requirements.json')
+const investmentProjectAuditData = require('../data/investment/audit-log.json')
 
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
@@ -85,6 +87,18 @@ describe('Investment repository', () => {
       const actual = updateInvestmentProject('token', investmentProjectSummaryData.id, { foo: 'bar' })
 
       return expect(actual).to.eventually.deep.equal(investmentProjectSummaryData)
+    })
+  })
+
+  describe('#getInvestmentProjectAudit', () => {
+    nock(config.apiRoot)
+      .get(`/v3/investment/${investmentProjectSummaryData.id}/audit`)
+      .reply(200, investmentProjectAuditData)
+
+    it('should return an investment project audit log', () => {
+      const actual = getInvestmentProjectAuditLog('token', investmentProjectSummaryData.id)
+
+      return expect(actual).to.eventually.deep.equal(investmentProjectAuditData.results)
     })
   })
 })
