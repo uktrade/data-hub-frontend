@@ -16,6 +16,7 @@ module.exports = {
     'service-delivery': './src/javascripts/service-delivery',
     'archive-form': './src/javascripts/archive-form',
     'add-another-field': './src/javascripts/add-another-field',
+    'sortable-table': './src/javascripts/sortable-table',
     ie: ['html5shiv']
   },
   output: {
