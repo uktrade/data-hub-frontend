@@ -135,6 +135,10 @@ function containsFormData (req) {
   return (typeof req.body === 'object' && Object.keys(req.body).length > 0)
 }
 
+function isValidGuid (string) {
+  return /[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/.test(string)
+}
+
 module.exports = {
   transformErrors,
   transformV2Errors,
@@ -142,6 +146,7 @@ module.exports = {
   convertAutosuggestCollection,
   flattenIdFields,
   isBlank,
+  isValidGuid,
   toQueryString,
   containsFormData,
 }

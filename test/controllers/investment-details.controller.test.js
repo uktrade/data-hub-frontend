@@ -12,8 +12,8 @@ describe('Investment details controller', () => {
     this.getInvestmentValue = this.sandbox.stub().resolves(investmentValueData)
     this.getInvestmentRequirements = this.sandbox.stub().resolves(investmentRequirements)
 
-    this.controller = proxyquire('~/src/controllers/investment-details.controller', {
-      '../repos/investment.repo': {
+    this.controller = proxyquire('~/src/controllers/investment/details.controller', {
+      '../../repos/investment.repo': {
         getInvestmentProjectSummary: this.getInvestmentProjectSummary,
         getInvestmentValue: this.getInvestmentValue,
         getInvestmentRequirements: this.getInvestmentRequirements,
@@ -29,15 +29,6 @@ describe('Investment details controller', () => {
     it('should return investment summary for investmentId', (done) => {
       const expected = {
         'currentNavItem': 'details',
-        'localNavItems': [
-          { label: 'Project details', slug: 'details' },
-          { label: 'Client', slug: 'client' },
-          { label: 'Project team', slug: 'team' },
-          { label: 'Interactions', slug: 'interactions' },
-          { label: 'Documents', slug: 'documents' },
-          { label: 'Evaluation', slug: 'evaluation' },
-          { label: 'Audit history', slug: 'audit' },
-        ],
         project: {
           'Anonymous description': null,
           'Business activity': undefined,
@@ -96,7 +87,6 @@ describe('Investment details controller', () => {
             expect(data).to.haveOwnProperty('project')
             expect(data).to.haveOwnProperty('value')
             expect(data).to.haveOwnProperty('requirements')
-            expect(data).to.haveOwnProperty('localNavItems')
             expect(data).to.deep.equal(expected)
             done()
           } catch (error) {

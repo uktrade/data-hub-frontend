@@ -42,24 +42,24 @@ describe('Investment create controller', () => {
     this.transformToApi = this.sandbox.stub().returns({})
     this.transformFromApi = this.sandbox.stub().returns(investmentProjectSummary)
 
-    this.controller = proxyquire('~/src/controllers/investment-create.controller', {
-      '../services/company.service': {
+    this.controller = proxyquire('~/src/controllers/investment/create.controller', {
+      '../../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompany,
       },
-      '../repos/investment.repo': {
+      '../../repos/investment.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
         getInvestmentProjectSummary: this.getInvestmentProjectSummary,
         createInvestmentProject: this.createInvestmentProject,
         updateInvestmentProject: this.updateInvestmentProject,
       },
-      '../services/investment-formatting.service': {
+      '../../services/investment-formatting.service': {
         transformToApi: this.transformToApi,
         transformFromApi: this.transformFromApi,
       },
-      '../repos/adviser.repo': {
-        getAdvisers: this.getAdvisers,
+      '../../repos/advisor.repo': {
+        getAdvisors: this.getAdvisers,
       },
-      '../repos/metadata.repo': {
+      '../../repos/metadata.repo': {
         investmentTypeOptions: [{ id: 1, name: 'FDI' }],
         fdiOptions: [{ name: 'FDI Type' }],
         nonFdiOptions: [{ name: 'Non-FDI Type' }],

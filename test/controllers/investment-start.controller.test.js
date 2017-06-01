@@ -27,17 +27,17 @@ describe('Investment start controller', () => {
     this.searchForeignCompany = this.sandbox.stub().resolves(searchResults)
     this.getPagination = this.sandbox.stub().resolves({})
 
-    this.controller = proxyquire('~/src/controllers/investment-start.controller', {
-      '../services/company.service': {
+    this.controller = proxyquire('~/src/controllers/investment/start.controller', {
+      '../../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompany,
       },
-      '../repos/investment.repo': {
+      '../../repos/investment.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
-      '../services/search.service': {
-        searchForeignCompany: this.searchForeignCompany,
+      '../../services/search.service': {
+        search: this.search,
       },
-      '../lib/pagination': {
+      '../../lib/pagination': {
         getPagination: this.getPagination,
       },
     })
@@ -56,6 +56,7 @@ describe('Investment start controller', () => {
           },
           query: {},
         }, {
+          locals: {},
           render: (template, data) => {
             try {
               expect(data.clientCompany).to.be.undefined
@@ -80,6 +81,7 @@ describe('Investment start controller', () => {
             'client-company': '12345',
           },
         }, {
+          locals: {},
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -111,6 +113,7 @@ describe('Investment start controller', () => {
             'client-company': '12345',
           },
         }, {
+          locals: {},
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -137,6 +140,7 @@ describe('Investment start controller', () => {
             'show-search': true,
           },
         }, {
+          locals: {},
           render: (template, data) => {
             try {
               expect(data.showSearch).to.equal(true)
@@ -160,6 +164,7 @@ describe('Investment start controller', () => {
             'q': 'samsung',
           },
         }, {
+          locals: {},
           render: (template, data) => {
             try {
               expect(data.searchTerm).to.equal('samsung')
