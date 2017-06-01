@@ -1,6 +1,7 @@
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const TableSort = require(`${root}/src/javascripts/sortable-table`)
+const { domTokenToArray } = require('../dom-helpers')
 
 const FIRST_NAME_SELECTOR = '.js-sortable-table tbody tr:first-child td:first-child'
 const LAST_NAME_SELECTOR = '.js-sortable-table tbody tr:last-child td:first-child'
@@ -36,15 +37,6 @@ const HTML = `<html><body><table class="js-sortable-table">
         </tr>
     </tbody>
   </table></body></html>`
-
-function domTokenToArray (obj) {
-  let array = []
-  // iterate backwards ensuring that length is an UInt32
-  for (let i = obj.length >>> 0; i--;) {
-    array[i] = obj[i]
-  }
-  return array
-}
 
 describe('Sortable Table', () => {
   let document
