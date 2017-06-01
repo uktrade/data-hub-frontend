@@ -1,0 +1,68 @@
+{##
+ # @param {array[object]}     Data An array of objects to show in the table
+ # @param {string}            Variant A string or defining a style variation to apply to the table
+ #                            currently this only supports 'stripey'
+ # @param {object}  columns  	A key value pair object that lists the columns to show and their associated labels
+ #                            e.g { firstname: 'First name' }. If this isn't passed then all columns will display
+ #                            and use the keys as the headers
+ # @param {string} class
+ # @param {string} id
+ # @param {boolean} sortable default true
+ #
+ # @return {string} HTML for sortable table
+ #
+ # @example
+ #  {% component 'sortable-table',
+ #     variant='stripey',
+ #     id='example-table',
+ #     columns={
+ #       name: 'Name',
+ #       addr: 'Address'
+ #     },
+ #     data: [{
+ #       id: '134',
+ #       name: 'Fred Bloggs',
+ #       addr: '10 Fred Road, Humbleton, Berks, SL5 5RR'
+ #     },{
+ #       id: '4444',
+ #       name: 'Jane Smith',
+ #       addr: '32 Palace Place, London, SE1 1TR'
+ #     }]
+ #  %}
+ #}
+{% if (data and data.length > 0) or columns %}
+  {% if not sortable %}
+    {% set sortable = true %}
+  {% endif %}
+
+  {% if not columns and data %}
+    {% set keys = data[0] | keys %}
+    {% set headings = data[0] | keys %}
+  {% else %}
+    {% set keys = columns | keys %}
+    {% set headings = columns | values %}
+  {% endif %}
+
+  <table
+    class="data-table{% if sortable %} js-sortable-table{% endif %}{{ ' table--' + variant if variant }}{{ class if class }}"
+    id="{{ id }}">
+    <thead>
+      <tr>
+        {% for heading in headings %}
+          <th>{{ heading }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    {% if data | length %}
+      <tbody>
+        {% for record in data %}
+          <tr>
+            {% for key in keys %}
+              <td>{{ record[key] }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    {% endif %}
+  </table>
+{% endif %}

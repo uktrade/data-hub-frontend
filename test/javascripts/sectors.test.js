@@ -1,7 +1,9 @@
 /* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
+
 const Sectors = require(`${root}/src/javascripts/sectors`)
+const { domTokenToArray } = require('../dom-helpers')
 
 const HTML = `
   <html>
@@ -21,15 +23,6 @@ const HTML = `
       </form>
     </body>
   </html>`
-
-function domTokenToArray (obj) {
-  let array = []
-  // iterate backwards ensuring that length is an UInt32
-  for (let i = obj.length >>> 0; i--;) {
-    array[i] = obj[i]
-  }
-  return array
-}
 
 describe('Sector control', function () {
   let document
