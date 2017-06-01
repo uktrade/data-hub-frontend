@@ -55,7 +55,7 @@ function getClosedInvestmentProjects (investmentProjects) {
     })
 }
 
-function transformForApi (body) {
+function transformToApi (body) {
   const project = Object.assign({}, body)
   const transformToObject = [
     'client_relationship_manager',
@@ -70,13 +70,20 @@ function transformForApi (body) {
     'business_activities'
   ]
 
-  if (body['is-relationship-manager']) {
+  if (body['is-relationship-manager'] !== 'No') {
     project['client_relationship_manager'] = body['is-relationship-manager']
   }
 
-  if (body['is-referral-source']) {
+  if (body['is-referral-source'] !== 'No') {
     project['referral_source_advisor'] = body['is-referral-source']
   }
+
+  project['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
+
+  delete project['land-date_year']
+  delete project['land-date_month']
+  delete project['is-relationship-manager']
+  delete project['is-referral-source']
 
   Object.keys(project).forEach((key) => {
     if (transformToObject.includes(key)) {
@@ -90,19 +97,48 @@ function transformForApi (body) {
     }
   })
 
-  project['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
-
-  delete project['land-date_year']
-  delete project['land-date_month']
-  delete project['is-relationship-manager']
-  delete project['is-referral-source']
-
   return project
+}
+
+function transformFromApi (body) {
+  const formatted = Object.assign({}, body)
+  const flattenObj = [
+    'client_relationship_manager',
+    'referral_source_advisor',
+    'referral_source_activity',
+    'investor_company',
+    'investment_type',
+    'sector'
+  ]
+  const flattenArr = [
+    'client_contacts',
+    'business_activities'
+  ]
+
+  const date = new Date(formatted['estimated_land_date'])
+  formatted['land-date_year'] = date.getFullYear()
+  formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
+
+  delete formatted['estimated_land_date']
+
+  Object.keys(formatted).forEach((key) => {
+    if (flattenObj.includes(key)) {
+      formatted[key] = formatted[key].id
+    } else if (flattenArr.includes(key)) {
+      formatted[key] = formatted[key][0].id
+    }
+  })
+
+  formatted['is-relationship-manager'] = formatted.client_relationship_manager
+  formatted['is-referral-source'] = formatted.referral_source_advisor
+
+  return formatted
 }
 
 module.exports = {
   getInvestmentDetailsDisplay,
   getOpenInvestmentProjects,
   getClosedInvestmentProjects,
-  transformForApi
+  transformToApi,
+  transformFromApi
 }

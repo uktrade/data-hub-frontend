@@ -2,27 +2,32 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main_heading %}
-  <h1 class="page-heading">Add new investment project</h1>
-
   {{ trade.errorPanel(form.errors) }}
+
+  <h1 class="page-heading">
+    {{ 'Edit' if projectId else 'Add new' }} investment project
+  </h1>
 {% endblock %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Source of foreign equity investment</h2>
 
-  <table class="table--key-value">
-    <tbody>
-      <tr>
-        <td>{{ equityCompany.name }}</td>
-      </tr>
-      <tr>
-        <td>{{ equityCompany.registered_address_country.name }}</td>
-      </tr>
-      <tr>
-        <td>{{ equityCompanyInvestments.count|default('No', true) }} investment project{{ 's' if equityCompanyInvestments.count != 1 }} in the UK</td>
-      </tr>
-    </tbody>
-  </table>
+  {% if not projectId and equityCompany %}
+    <h2 class="heading-medium">Source of foreign equity investment</h2>
+
+    <table class="table--key-value">
+      <tbody>
+        <tr>
+          <td>{{ equityCompany.name }}</td>
+        </tr>
+        <tr>
+          <td>{{ equityCompany.registered_address_country.name }}</td>
+        </tr>
+        <tr>
+          <td>{{ equityCompanyInvestments.count|default('No', true) }} investment project{{ 's' if equityCompanyInvestments.count != 1 }} in the UK</td>
+        </tr>
+      </tbody>
+    </table>
+  {% endif %}
 
   <form method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">

@@ -1,24 +1,29 @@
 const router = require('express').Router()
 
 const { getInflatedDitCompany } = require('../services/company.service')
-const { getCompanyInvestmentProjects, saveInvestmentProject } = require('../repos/investment.repo')
-const { transformForApi } = require('../services/investment-formatting.service')
+const {
+  getCompanyInvestmentProjects,
+  getInvestmentProjectSummary,
+  createInvestmentProject,
+  updateInvestmentProject
+} = require('../repos/investment.repo')
+const { transformToApi, transformFromApi } = require('../services/investment-formatting.service')
 const metadataRepo = require('../repos/metadata.repo')
 
 function getHandler (req, res, next) {
-  const equityCompanyId = req.query['equity-company']
+  const equityCompanyId = res.locals.equityCompanyId || req.query['equity-company']
   const promises = [
     getInflatedDitCompany(req.session.token, equityCompanyId),
-    // TODO: remove this when the company endpoint returns a list of invesments
     getCompanyInvestmentProjects(req.session.token, equityCompanyId)
   ]
 
   if (!equityCompanyId) {
-    return res.redirect('/investment/start')
+    res.redirect('/investment/start')
   }
 
   Promise.all(promises)
     .then(([equityCompany, equityCompanyInvestments]) => {
+      const form = res.locals.form || {}
       const contacts = equityCompany.contacts.map((contact) => {
         return {
           id: contact.id,
@@ -31,7 +36,6 @@ function getHandler (req, res, next) {
           label: type.name
         }
       })
-      const form = res.locals.form || {}
 
       form.options = {
         contacts,
@@ -51,9 +55,17 @@ function getHandler (req, res, next) {
 }
 
 function postHandler (req, res, next) {
-  const formattedProject = transformForApi(req.body)
+  const formattedBody = transformToApi(req.body)
+  const projectId = res.locals.projectId
+  let saveMethod
 
-  saveInvestmentProject(req.session.token, formattedProject)
+  if (projectId) {
+    saveMethod = updateInvestmentProject(req.session.token, projectId, formattedBody)
+  } else {
+    saveMethod = createInvestmentProject(req.session.token, formattedBody)
+  }
+
+  saveMethod
     .then((result) => {
       res.redirect(`/investment/${result.id}`)
     })
@@ -63,6 +75,7 @@ function postHandler (req, res, next) {
 
         res.locals.form.errors = err.error
         res.locals.form.state = req.body
+
         next()
       } else {
         next(err)
@@ -70,7 +83,29 @@ function postHandler (req, res, next) {
     })
 }
 
+function editMiddleware (req, res, next) {
+  getInvestmentProjectSummary(req.session.token, req.params.id)
+    .then((projectData) => {
+      res.locals.form = res.locals.form || {}
+
+      res.locals.form.state = transformFromApi(projectData)
+      res.locals.equityCompanyId = projectData.investor_company.id
+      res.locals.projectId = projectData.id
+
+      next()
+    })
+    .catch(next)
+}
+
 router.get('/investment/create', getHandler)
 router.post('/investment/create', postHandler, getHandler)
 
-module.exports = { router, getHandler, postHandler }
+router.get('/investment/:id/details/edit', editMiddleware, getHandler)
+router.post('/investment/:id/details/edit', editMiddleware, postHandler, getHandler)
+
+module.exports = {
+  router,
+  getHandler,
+  postHandler,
+  editMiddleware
+}
