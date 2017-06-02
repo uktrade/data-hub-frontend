@@ -12,7 +12,7 @@ describe('Investment details controller', () => {
     this.getInvestmentValue = this.sandbox.stub().resolves(investmentValueData)
     this.getInvestmentRequirements = this.sandbox.stub().resolves(investmentRequirements)
 
-    this.controller = proxyquire(`${root}/src/controllers/investment-details.controller`, {
+    this.controller = proxyquire('~/src/controllers/investment-details.controller', {
       '../repos/investment.repo': {
         getInvestmentProjectSummary: this.getInvestmentProjectSummary,
         getInvestmentValue: this.getInvestmentValue,

@@ -1,7 +1,7 @@
 /* eslint handle-callback-err: 0 */
 const { render } = require('../nunjucks')
 const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../form-helpers')
-const interactionLabels = require(`${root}/src/labels/interaction-labels`)
+const interactionLabels = require('~/src/labels/interaction-labels')
 
 describe('Interaction controller, edit', function () {
   let interactionEditController
@@ -58,7 +58,7 @@ describe('Interaction controller, edit', function () {
     getInteractionTypeStub = sinon.stub().returns(emailInteractionType)
     saveInteractionFormStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
-    interactionEditController = proxyquire(`${root}/src/controllers/interaction-edit.controller`, {
+    interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
       '../services/interaction-form.service': {
         getInteractionAsFormData: getInteractionAsFormDataStub,
         saveInteractionForm: saveInteractionFormStub
@@ -467,7 +467,7 @@ describe('Interaction controller, edit', function () {
         error: { subject: ['test'] }
       })
 
-      interactionEditController = proxyquire(`${root}/src/controllers/interaction-edit.controller`, {
+      interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
         '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub
@@ -499,7 +499,7 @@ describe('Interaction controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveInteractionFormStub = sinon.stub().rejects(Error('some error'))
 
-      interactionEditController = proxyquire(`${root}/src/controllers/interaction-edit.controller`, {
+      interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
         '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
           saveInteractionForm: saveInteractionFormStub

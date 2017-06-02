@@ -8,7 +8,7 @@ describe('contact form service', function () {
   beforeEach(function () {
     throwError = false
 
-    contactFormService = proxyquire(`${root}/src/services/contact-form.service`, {
+    contactFormService = proxyquire('~/src/services/contact-form.service', {
       '../repos/contact.repo': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {

@@ -1,4 +1,4 @@
-const companyFormattingService = require(`${root}/src/services/company-formatting.service`)
+const companyFormattingService = require('~/src/services/company-formatting.service')
 
 describe('Company formatting service', () => {
   describe('get display company', () => {

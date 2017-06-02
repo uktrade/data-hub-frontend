@@ -1,4 +1,4 @@
-const pagination = require(`${root}/src/lib/pagination`)
+const pagination = require('~/src/lib/pagination')
 
 describe('Pagination', () => {
   describe('Start and end index', () => {

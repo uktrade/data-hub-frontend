@@ -1,4 +1,4 @@
-const address = require(`${root}/src/lib/address`)
+const address = require('~/src/lib/address')
 
 describe('Address formatter', function () {
   it('should format an address when it is fully populated.', function () {

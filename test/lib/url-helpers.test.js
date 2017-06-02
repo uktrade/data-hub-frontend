@@ -1,4 +1,4 @@
-const urlHelpers = require(`${root}/src/lib/url-helpers`)
+const urlHelpers = require('~/src/lib/url-helpers')
 
 describe('buildQueryString', function () {
   it('should build the expected query string for a single param', function () {

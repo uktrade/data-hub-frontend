@@ -4,7 +4,7 @@ describe('Interaction formatting service', function () {
   let interactionFormattingService
 
   beforeEach(function () {
-    interactionFormattingService = proxyquire(`${root}/src/services/interaction-formatting.service`, {
+    interactionFormattingService = proxyquire('~/src/services/interaction-formatting.service', {
       './company.service': {
         buildCompanyUrl: sinon.stub().returns('/test')
       }

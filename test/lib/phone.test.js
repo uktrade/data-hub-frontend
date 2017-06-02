@@ -1,4 +1,4 @@
-const phone = require(`${root}/src/lib/phone`)
+const phone = require('~/src/lib/phone')
 
 describe('Phone utility', function () {
   it('should format a correctly entered interational number', function () {

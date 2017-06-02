@@ -1,7 +1,7 @@
 /* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const Sectors = require(`${root}/src/javascripts/sectors`)
+const Sectors = require('~/src/javascripts/sectors')
 
 const HTML = `
   <html>

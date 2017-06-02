@@ -2,7 +2,7 @@ const resMock = {}
 
 describe('Auth middleware', () => {
   beforeEach(() => {
-    this.authMiddleware = require(`${root}/src/middleware/auth`)
+    this.authMiddleware = require('~/src/middleware/auth')
     this.sandbox = sinon.sandbox.create()
     this.nextSpy = this.sandbox.spy()
   })

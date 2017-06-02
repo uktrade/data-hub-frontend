@@ -34,7 +34,7 @@ describe('interaction form service', function () {
 
     saveInteractionStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
-    interactionFormService = proxyquire(`${root}/src/services/interaction-form.service`, {
+    interactionFormService = proxyquire('~/src/services/interaction-form.service', {
       '../repos/interaction.repo': {
         saveInteraction: saveInteractionStub
       }
@@ -129,7 +129,7 @@ describe('interaction form service', function () {
     it('should pass back any failures', function (done) {
       saveInteractionStub = sinon.stub().rejects(new Error('error'))
 
-      interactionFormService = proxyquire(`${root}/src/services/interaction-form.service`, {
+      interactionFormService = proxyquire('~/src/services/interaction-form.service', {
         '../repos/interaction.repo': {
           saveInteraction: saveInteractionStub
         }

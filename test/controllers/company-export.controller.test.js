@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const controllerUtils = require(`${root}/src/lib/controller-utils`)
+const controllerUtils = require('~/src/lib/controller-utils')
 const _company = require('../data/api-response-intermediary-company.json')
 
 describe('Company export controller', () => {
@@ -19,7 +19,7 @@ describe('Company export controller', () => {
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
 
-    this.companyExportController = proxyquire(`${root}/src/controllers/company-export.controller`, {
+    this.companyExportController = proxyquire('~/src/controllers/company-export.controller', {
       '../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompany,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinks
@@ -133,7 +133,7 @@ describe('Company export controller', () => {
 
     it('should return empty strings when no value', (done) => {
       this.company.export_to_countries = []
-      this.companyExportController = proxyquire(`${root}/src/controllers/company-export.controller`, {
+      this.companyExportController = proxyquire('~/src/controllers/company-export.controller', {
         '../services/company.service': {
           getInflatedDitCompany: this.getInflatedDitCompany
         },
@@ -359,7 +359,7 @@ describe('Company export controller', () => {
 
     it('should handle when saving throws error', (done) => {
       const error = new Error('error')
-      this.companyExportController = proxyquire(`${root}/src/controllers/company-export.controller`, {
+      this.companyExportController = proxyquire('~/src/controllers/company-export.controller', {
         '../services/company.service': {
           getInflatedDitCompany: this.getInflatedDitCompany
         },
