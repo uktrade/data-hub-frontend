@@ -46,4 +46,4 @@ function getContactLink (object) {
   return null
 }
 
-module.exports = {titleCase, newlineToBr, getContactName, getContactLink}
+module.exports = { titleCase, newlineToBr, getContactName, getContactLink }

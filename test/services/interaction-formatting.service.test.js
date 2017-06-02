@@ -93,7 +93,7 @@ describe('Interaction formatting service', function () {
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
     it('should create the alternative url for service deliveries', function () {
-      interaction.interaction_type = {id: '333', name: 'Service delivery'}
+      interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62/details')
     })
@@ -292,7 +292,7 @@ describe('Interaction formatting service', function () {
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
     it('should create the alternative url for service deliveries', function () {
-      interaction.interaction_type = {id: '333', name: 'Service delivery'}
+      interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62/details')
     })

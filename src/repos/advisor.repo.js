@@ -35,7 +35,7 @@ function advisorSearch (token, term) {
           return advisor.first_name.toLowerCase().startsWith(parts[0]) && advisor.last_name.toLowerCase().startsWith(parts[1])
         })
         .map((advisor) => {
-          return {id: advisor.id, name: `${advisor.first_name} ${advisor.last_name}`}
+          return { id: advisor.id, name: `${advisor.first_name} ${advisor.last_name}` }
         })
         .sort((a, b) => {
           if (a.name.toLowerCase() < b.name.toLowerCase()) return -1

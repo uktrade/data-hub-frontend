@@ -1,7 +1,7 @@
-const {formatLongDate, formatMediumDate} = require('../lib/date')
-const {newlineToBr, getContactLink} = require('../lib/text-formatting')
-const {getPropertyName} = require('../lib/property-helpers')
-const {buildCompanyUrl} = require('./company.service')
+const { formatLongDate, formatMediumDate } = require('../lib/date')
+const { newlineToBr, getContactLink } = require('../lib/text-formatting')
+const { getPropertyName } = require('../lib/property-helpers')
+const { buildCompanyUrl } = require('./company.service')
 
 /**
  * Returns an interaction formatted for display in the interaction detail
@@ -77,4 +77,4 @@ function getDisplayContactInteraction (interaction) {
   return result
 }
 
-module.exports = {getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction}
+module.exports = { getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction }

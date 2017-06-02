@@ -19,7 +19,7 @@ describe('isBlank', function () {
     expect(isBlank('test')).to.be.false
   })
   it('should know when it is sent a valid object', function () {
-    expect(isBlank({x: 1})).to.be.false
+    expect(isBlank({ x: 1 })).to.be.false
   })
 })
 

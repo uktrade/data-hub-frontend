@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
-const {getQueryParam, buildQueryString} = require('../lib/url-helpers')
-const {toggleClass, show} = require('../lib/element-stuff')
+const { getQueryParam, buildQueryString } = require('../lib/url-helpers')
+const { toggleClass, show } = require('../lib/element-stuff')
 
 const term = getQueryParam('term')
 

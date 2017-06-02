@@ -149,7 +149,7 @@ describe('Interaction controller, edit', function () {
       }
 
       beforeEach(function () {
-        user = {id: '1111', first_name: 'John', last_name: 'Brown'}
+        user = { id: '1111', first_name: 'John', last_name: 'Brown' }
         req = {
           session: {
             token: '1234',
@@ -204,7 +204,7 @@ describe('Interaction controller, edit', function () {
       }
 
       beforeEach(function () {
-        user = {id: '1111', first_name: 'John', last_name: 'Brown'}
+        user = { id: '1111', first_name: 'John', last_name: 'Brown' }
         req = {
           session: {
             token: '1234',
@@ -260,7 +260,7 @@ describe('Interaction controller, edit', function () {
       }
 
       beforeEach(function () {
-        user = {id: '1111', first_name: 'John', last_name: 'Brown'}
+        user = { id: '1111', first_name: 'John', last_name: 'Brown' }
         body = {
           id: '222',
           interaction_type: '111',

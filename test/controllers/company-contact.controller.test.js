@@ -290,19 +290,19 @@ describe('Company contacts controller', function () {
     })
 
     it('should render a list of un-archived contacts', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('contact-list')).to.not.be.null
       })
     })
     it('should render a list of archived contacts', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.not.be.null
       })
     })
     it('each un-archived line should include the required data', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .card')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -326,7 +326,7 @@ describe('Company contacts controller', function () {
       })
     })
     it('each archived line should include the required data', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const contactElement = document.querySelector('#archived-contact-list .contact')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -342,21 +342,21 @@ describe('Company contacts controller', function () {
       })
     })
     it('include a link to add a new contact', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
         expect(link.href).to.eq('/contact/add?company=1234')
       })
     })
     it('should not render contacts section if there are none and warn user', function () {
-      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
+      return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('contact-list')).to.be.null
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
       })
     })
     it('should not render archived contacts section if there are none', function () {
-      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
+      return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.be.null
         expect(document.getElementById('archived-title')).to.be.null

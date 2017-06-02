@@ -34,11 +34,11 @@ describe('Company controller, foreign', function () {
     registered_address_postcode: 'PR1 0LS'
   }
   const metadataRepositoryStub = {
-    regionOptions: [{id: '1', name: 'option 1'}],
-    sectorOptions: [{id: '1', name: 'option 1'}],
-    employeeOptions: [{id: '1', name: 'option 1'}],
-    turnoverOptions: [{id: '1', name: 'option 1'}],
-    businessTypeOptions: [{id: '1', name: 'Charity'}],
+    regionOptions: [{ id: '1', name: 'option 1' }],
+    sectorOptions: [{ id: '1', name: 'option 1' }],
+    employeeOptions: [{ id: '1', name: 'option 1' }],
+    turnoverOptions: [{ id: '1', name: 'option 1' }],
+    businessTypeOptions: [{ id: '1', name: 'Charity' }],
     countryOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'United Kingdom' }],
     headquarterOptions: [
       { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq' },

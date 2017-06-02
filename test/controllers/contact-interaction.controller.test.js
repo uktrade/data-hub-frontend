@@ -80,14 +80,14 @@ describe('Contact interactions controller', function () {
     })
 
     it('should render a list of interactions', function () {
-      return render('../../src/views/contact/interactions.njk', {interactions, addInteractionUrl, contact})
+      return render('../../src/views/contact/interactions.njk', { interactions, addInteractionUrl, contact })
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.not.be.null
       })
     })
 
     it('each line should include the required data', function () {
-      return render('../../src/views/contact/interactions.njk', {interactions, addInteractionUrl, contact})
+      return render('../../src/views/contact/interactions.njk', { interactions, addInteractionUrl, contact })
       .then((document) => {
         const interactionElement = document.querySelector('#interaction-list .card')
         expect(interactionElement.innerHTML).to.include('Email')
@@ -101,7 +101,7 @@ describe('Contact interactions controller', function () {
     })
 
     it('include a link to add a new interaction', function () {
-      return render('../../src/views/contact/interactions.njk', {interactions, addInteractionUrl, contact})
+      return render('../../src/views/contact/interactions.njk', { interactions, addInteractionUrl, contact })
       .then((document) => {
         const link = document.querySelector('a#add-interaction-link')
         expect(link.href).to.eq('/interaction/add?contact=1234')
@@ -109,7 +109,7 @@ describe('Contact interactions controller', function () {
     })
 
     it('should not render interactions if there are none and warn user', function () {
-      return render('../../src/views/contact/interactions.njk', {interactions: [], addInteractionUrl, contact})
+      return render('../../src/views/contact/interactions.njk', { interactions: [], addInteractionUrl, contact })
       .then((document) => {
         expect(document.getElementById('interaction-list')).to.be.null
         expect(document.querySelector('#no-interaction-warning.infostrip').textContent).to.include('You currently have no interactions for this contact.')

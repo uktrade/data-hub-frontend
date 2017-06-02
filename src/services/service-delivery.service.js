@@ -68,15 +68,15 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
         date: serviceDeliveryForm.date
       },
       relationships: {
-        company: {data: {type: 'Company', id: serviceDeliveryForm.company}},
-        dit_team: {data: {type: 'Team', id: serviceDeliveryForm.dit_team}},
-        service: {data: {type: 'Service', id: serviceDeliveryForm.service}},
-        status: {data: {type: 'ServiceDeliveryStatus', id: serviceDeliveryForm.status}},
-        contact: {data: {type: 'Contact', id: serviceDeliveryForm.contact}},
-        dit_advisor: {data: {type: 'Advisor', id: serviceDeliveryForm.dit_advisor}},
-        uk_region: {data: {type: 'UKRegion', id: serviceDeliveryForm.uk_region}},
-        sector: {data: {type: 'Sector', id: serviceDeliveryForm.sector}},
-        country_of_interest: {data: {type: 'Country', id: serviceDeliveryForm.country_of_interest}}
+        company: { data: { type: 'Company', id: serviceDeliveryForm.company } },
+        dit_team: { data: { type: 'Team', id: serviceDeliveryForm.dit_team } },
+        service: { data: { type: 'Service', id: serviceDeliveryForm.service } },
+        status: { data: { type: 'ServiceDeliveryStatus', id: serviceDeliveryForm.status } },
+        contact: { data: { type: 'Contact', id: serviceDeliveryForm.contact } },
+        dit_advisor: { data: { type: 'Advisor', id: serviceDeliveryForm.dit_advisor } },
+        uk_region: { data: { type: 'UKRegion', id: serviceDeliveryForm.uk_region } },
+        sector: { data: { type: 'Sector', id: serviceDeliveryForm.sector } },
+        country_of_interest: { data: { type: 'Country', id: serviceDeliveryForm.country_of_interest } }
       }
     }
   }
@@ -86,7 +86,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
   }
   // Only include event in the object if present
   if (serviceDeliveryForm.event) {
-    serviceDelivery.data.relationships.event = {data: {type: 'Event', id: serviceDeliveryForm.event}}
+    serviceDelivery.data.relationships.event = { data: { type: 'Event', id: serviceDeliveryForm.event } }
   }
   return serviceDelivery
 }

@@ -26,9 +26,9 @@ function getBackLink (params) {
     return { url: referrer, title: 'Back to contact' }
   } else if (referrer.includes('/interaction/')) {
     // or interaction
-    return {url: referrer, title: 'Back to interaction'}
+    return { url: referrer, title: 'Back to interaction' }
   } else if (referrer.includes('search')) {
-    return {url: referrer, title: 'Back to search'}
+    return { url: referrer, title: 'Back to search' }
   }
   return null
 }

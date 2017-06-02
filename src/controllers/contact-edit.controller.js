@@ -106,4 +106,4 @@ router.get(['/contact/add'], editDetails)
 router.get(['/contact/:contactId/edit'], getCommon, editDetails)
 router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 
-module.exports = {router, editDetails, postDetails}
+module.exports = { router, editDetails, postDetails }

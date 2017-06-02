@@ -47,4 +47,4 @@ function getDetails (req, res, next) {
 
 router.get('/contact/:contactId/details', getCommon, getDetails)
 
-module.exports = {router, getDetails, getCommon}
+module.exports = { router, getDetails, getCommon }

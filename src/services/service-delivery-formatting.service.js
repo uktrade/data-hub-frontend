@@ -1,7 +1,7 @@
-const {formatLongDate} = require('../lib/date')
-const {newlineToBr, getContactLink} = require('../lib/text-formatting')
-const {getPropertyName} = require('../lib/property-helpers')
-const {buildCompanyUrl} = require('./company.service')
+const { formatLongDate } = require('../lib/date')
+const { newlineToBr, getContactLink } = require('../lib/text-formatting')
+const { getPropertyName } = require('../lib/property-helpers')
+const { buildCompanyUrl } = require('./company.service')
 
 function getDisplayServiceDelivery (serviceDelivery) {
   if (!serviceDelivery) {
@@ -26,4 +26,4 @@ function getDisplayServiceDelivery (serviceDelivery) {
   return result
 }
 
-module.exports = {getDisplayServiceDelivery}
+module.exports = { getDisplayServiceDelivery }
