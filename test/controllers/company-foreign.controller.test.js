@@ -1,5 +1,5 @@
 const { render } = require('../nunjucks')
-const { hqLabels } = require(`${root}/src/labels/company-labels`)
+const { hqLabels } = require('~/src/labels/company-labels')
 const { expectTextFieldWithLabel, expectDropdownWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../form-helpers')
 const next = function (error) {
   throw Error(error)
@@ -58,7 +58,7 @@ describe('Company controller, foreign', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    companyControllerForeign = proxyquire(`${root}/src/controllers/company-foreign.controller`, {
+    companyControllerForeign = proxyquire('~/src/controllers/company-foreign.controller', {
       '../services/company.service': {
         getInflatedDitCompany: getInflatedDitCompanyStub
       },
@@ -478,7 +478,7 @@ describe('Company controller, foreign', function () {
         errors: { name: ['test'] }
       })
 
-      companyControllerForeign = proxyquire(`${root}/src/controllers/company-foreign.controller`, {
+      companyControllerForeign = proxyquire('~/src/controllers/company-foreign.controller', {
         '../services/company.service': {
           getInflatedDitCompany: getInflatedDitCompanyStub
         },

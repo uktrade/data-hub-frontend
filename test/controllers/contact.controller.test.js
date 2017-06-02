@@ -1,5 +1,5 @@
 const { render } = require('../nunjucks')
-const { contactDetailsLabels } = require(`${root}/src/labels/contact-labels`)
+const { contactDetailsLabels } = require('~/src/labels/contact-labels')
 const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {
@@ -63,7 +63,7 @@ describe('Contact controller', function () {
     getDisplayContactStub = sinon.stub().returns(contactFormatted)
     getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
-    contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
+    contactController = proxyquire('~/src/controllers/contact.controller', {
       '../repos/contact.repo': {
         getContact: getContactStub
       },
@@ -155,7 +155,7 @@ describe('Contact controller', function () {
     })
     it('should handle an error', function (done) {
       const error = Error('error')
-      contactController = proxyquire(`${root}/src/controllers/contact.controller`, {
+      contactController = proxyquire('~/src/controllers/contact.controller', {
         '../repos/contact.repo': {
           getContact: sinon.stub().rejects(error)
         },

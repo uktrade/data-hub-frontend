@@ -1,4 +1,4 @@
-const servicedeliveryservice = require(`${root}/src/services/service-delivery.service`)
+const servicedeliveryservice = require('~/src/services/service-delivery.service')
 
 describe('Service delivery formatting service', function () {
   describe('convertServiceDeliveryFormToApiFormat', function () {

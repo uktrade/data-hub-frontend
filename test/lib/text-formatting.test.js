@@ -1,4 +1,4 @@
-const textFormatting = require(`${root}/src/lib/text-formatting`)
+const textFormatting = require('~/src/lib/text-formatting')
 
 describe('Text formatting', function () {
   describe('title case', function () {

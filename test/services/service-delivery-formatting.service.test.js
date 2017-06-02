@@ -4,7 +4,7 @@ describe('Service delivery formatting service', function () {
   let serviceDeliveryFormattingService
 
   beforeEach(function () {
-    serviceDeliveryFormattingService = proxyquire(`${root}/src/services/service-delivery-formatting.service`, {
+    serviceDeliveryFormattingService = proxyquire('~/src/services/service-delivery-formatting.service', {
       './company.service': {
         buildCompanyUrl: sinon.stub().returns('/test')
       }

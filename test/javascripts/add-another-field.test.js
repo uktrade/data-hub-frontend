@@ -1,6 +1,6 @@
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const AddAnotherField = require(`${root}/src/javascripts/add-another-field`)
+const AddAnotherField = require('~/src/javascripts/add-another-field')
 
 const HTML = `
   <div class="country-list js-add-another-field">

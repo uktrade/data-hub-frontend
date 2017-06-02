@@ -1,5 +1,5 @@
 const nock = require('nock')
-const config = require(`${root}/src/config`)
+const config = require('~/src/config')
 
 const {
   getCompanyInvestmentProjects,
@@ -8,7 +8,7 @@ const {
   getInvestmentRequirements,
   createInvestmentProject,
   updateInvestmentProject
-} = require(`${root}/src/repos/investment.repo`)
+} = require('~/src/repos/investment.repo')
 
 const companyData = require('../data/company.json')
 const investmentProjectSummaryData = require('../data/investment/project-summary.json')

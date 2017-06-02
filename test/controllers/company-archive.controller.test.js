@@ -29,7 +29,7 @@ describe('Company controller, archive', function () {
     buildCompanyUrlStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
-    companyArchiveController = proxyquire(`${root}/src/controllers/company-archive.controller`, {
+    companyArchiveController = proxyquire('~/src/controllers/company-archive.controller', {
       '../services/company.service': {
         buildCompanyUrl: buildCompanyUrlStub
       },

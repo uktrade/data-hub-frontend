@@ -1,4 +1,4 @@
-const companyService = require(`${root}/src/services/company.service`)
+const companyService = require('~/src/services/company.service')
 
 describe('get header address', () => {
   it('should return the CDMS trading address if there is one', () => {

@@ -32,7 +32,7 @@ describe('Investment start controller', () => {
     this.transformToApi = this.sandbox.stub().returns({})
     this.transformFromApi = this.sandbox.stub().returns(investmentProjectSummary)
 
-    this.controller = proxyquire(`${root}/src/controllers/investment-create.controller`, {
+    this.controller = proxyquire('~/src/controllers/investment-create.controller', {
       '../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompany
       },

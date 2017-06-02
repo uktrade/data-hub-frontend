@@ -1,6 +1,6 @@
 describe('CRSF token', () => {
   beforeEach(() => {
-    this.csrfMiddleware = require(`${root}/src/middleware/csrf-token`)()
+    this.csrfMiddleware = require('~/src/middleware/csrf-token')()
     this.sandbox = sinon.sandbox.create()
   })
 
