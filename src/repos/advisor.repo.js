@@ -3,6 +3,10 @@ const winston = require('winston')
 const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
 
+function getAdvisors (token) {
+  return authorisedRequest(token, `${config.apiRoot}/advisor/`)
+}
+
 function getAdvisor (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/advisor/${id}/`)
 }
@@ -48,4 +52,8 @@ function advisorSearch (token, term) {
   })
 }
 
-module.exports = { getAdvisor, advisorSearch }
+module.exports = {
+  getAdvisors,
+  getAdvisor,
+  advisorSearch
+}
