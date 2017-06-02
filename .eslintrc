@@ -2,6 +2,7 @@
   "extends": "standard",
   "parser": "babel-eslint",
   "rules": {
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "object-curly-spacing": ["error", "always"]
   }
 }
