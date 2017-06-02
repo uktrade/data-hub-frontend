@@ -9,6 +9,7 @@ function getHandler (req, res, next) {
   const clientCompanyId = req.query['client-company']
   const searchTerm = req.query['q']
   const promises = []
+  const searchType = 'company'
 
   if (clientCompanyId) {
     promises.push(getInflatedDitCompany(req.session.token, clientCompanyId))
@@ -19,13 +20,12 @@ function getHandler (req, res, next) {
   }
 
   if (searchTerm) {
-    // TODO: this should only return a list of foreign companies
-    // The API doesn't currently support this feature so will implement
-    // when available
     promises.push(search({
       token: req.session.token,
       page: req.query.page,
-      term: searchTerm,
+      searchTerm,
+      searchType,
+      uk_based: false
     }))
   } else {
     promises.push(Promise.resolve())
