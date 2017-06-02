@@ -1,4 +1,5 @@
-const {formatLongDate} = require('../lib/date')
+const { formatLongDate } = require('../lib/date')
+const { mapValues, get } = require('lodash')
 
 function getInvestmentDetailsDisplay (investmentSummary) {
   if (!investmentSummary.id || !investmentSummary.investment_tier || investmentSummary.investment_tier.length === 0) return null
@@ -56,83 +57,66 @@ function getClosedInvestmentProjects (investmentProjects) {
 }
 
 function transformToApi (body) {
-  const project = Object.assign({}, body)
-  const transformToObject = [
-    'client_relationship_manager',
-    'referral_source_advisor',
-    'referral_source_activity',
-    'investor_company',
-    'investment_type',
-    'sector'
-  ]
-  const transformToArray = [
-    'client_contacts',
-    'business_activities'
-  ]
-
-  if (body['is-relationship-manager'] !== 'No') {
-    project['client_relationship_manager'] = body['is-relationship-manager']
+  const schema = {
+    'client_relationship_manager': Object,
+    'referral_source_advisor': Object,
+    'referral_source_activity': Object,
+    'investor_company': Object,
+    'investment_type': Object,
+    'sector': Object,
+    'client_contacts': Array,
+    'business_activities': Array,
   }
 
-  if (body['is-referral-source'] !== 'No') {
-    project['referral_source_advisor'] = body['is-referral-source']
+  const relationshipMgr = body['is-relationship-manager']
+  if (relationshipMgr !== 'No') {
+    body.client_relationship_manager = relationshipMgr
   }
 
-  project['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
+  const referralSource = body['is-relationship-manager']
+  if (referralSource !== 'No') {
+    body.referral_source_advisor = referralSource
+  }
 
-  delete project['land-date_year']
-  delete project['land-date_month']
-  delete project['is-relationship-manager']
-  delete project['is-referral-source']
-
-  Object.keys(project).forEach((key) => {
-    if (transformToObject.includes(key)) {
-      project[key] = {
-        id: project[key]
-      }
-    } else if (transformToArray.includes(key)) {
-      project[key] = [{
-        id: project[key]
-      }]
+  const formatted = mapValues(schema, (type, key) => {
+    if (type === Array) {
+      return [{ id: body[key] }]
     }
+    return { id: body[key] }
   })
 
-  return project
+  formatted['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
+
+  return Object.assign({}, body, formatted)
 }
 
 function transformFromApi (body) {
-  const formatted = Object.assign({}, body)
-  const flattenObj = [
-    'client_relationship_manager',
-    'referral_source_advisor',
-    'referral_source_activity',
-    'investor_company',
-    'investment_type',
-    'sector'
-  ]
-  const flattenArr = [
-    'client_contacts',
-    'business_activities'
-  ]
+  const schema = {
+    'client_relationship_manager': String,
+    'referral_source_advisor': String,
+    'referral_source_activity': String,
+    'investor_company': String,
+    'investment_type': String,
+    'sector': String,
+    'client_contacts': Array,
+    'business_activities': Array,
+  }
 
-  const date = new Date(formatted['estimated_land_date'])
+  const formatted = mapValues(schema, (type, key) => {
+    if (type === Array) {
+      return get(body, `${key}[0].id`, '')
+    }
+    return get(body, `${key}.id`)
+  })
+
+  const date = new Date(body['estimated_land_date'])
   formatted['land-date_year'] = date.getFullYear()
   formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
-
-  delete formatted['estimated_land_date']
-
-  Object.keys(formatted).forEach((key) => {
-    if (flattenObj.includes(key)) {
-      formatted[key] = formatted[key].id
-    } else if (flattenArr.includes(key)) {
-      formatted[key] = formatted[key][0].id
-    }
-  })
 
   formatted['is-relationship-manager'] = formatted.client_relationship_manager
   formatted['is-referral-source'] = formatted.referral_source_advisor
 
-  return formatted
+  return Object.assign({}, body, formatted)
 }
 
 module.exports = {
