@@ -1,0 +1,19 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/functions/typography";
+
+.results-list {
+  border-top: 1px solid $grey-1;
+  list-style: none;
+  margin-top: ($gutter / 2);
+}
+
+.results-list__item {
+  padding: $gutter 0;
+  border-bottom: 1px solid $grey-1;
+}
+
+.results-list__item-header {
+  color: $link-colour;
+  margin-bottom: ($gutter / 2);
+}

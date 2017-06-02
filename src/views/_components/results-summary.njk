@@ -1,0 +1,24 @@
+{##
+ # @param {string} [resultType=result] Type of results that have been searched for
+ # @param {string} [pluralisedResultType] Pluralised result type for when the appending of an "s" won't do
+ # @param {int} [total=0] Total number of results
+ # @param {string} searchTerm Search term used to obtain results
+ #
+ # @return {string} HTML for results summary
+ #
+ # @example
+ #   {% component 'results-summary', {
+ #     resultType: 'company',
+ #     pluralisedResultType: 'companies',
+ #     total: 4,
+ #     searchTerm: 'example search term'
+ #   } %}
+ #}
+<div class="results-summary">
+  <span class="results-summary__count">
+    {{ total | default(0) }}
+  </span> {{ (resultType | default('result')) | pluralise(total, pluralisedResultType) }} found containing
+  <span class="result-summary__query">{{ searchTerm }}</span>
+</div>
+
+

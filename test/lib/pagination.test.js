@@ -1,4 +1,7 @@
 const pagination = require('~/src/lib/pagination')
+const result = {
+  count: 0
+}
 
 describe('Pagination', () => {
   describe('Start and end index', () => {
@@ -9,9 +12,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 1000
-      }
+      result.count = 1000
 
       const pages = pagination.getPageIndexes(req, result)
 
@@ -27,9 +28,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 1000
-      }
+      result.count = 1000
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages.previousPage).to.equal(1)
@@ -44,9 +43,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 1000
-      }
+      result.count = 1000
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages.previousPage).to.equal(4)
@@ -61,9 +58,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 140
-      }
+      result.count = 140
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages.previousPage).to.equal(12)
@@ -78,9 +73,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 25
-      }
+      result.count = 25
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages).to.not.have.property('previousPage')
@@ -95,9 +88,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 25
-      }
+      result.count = 25
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages.previousPage).to.equal(1)
@@ -112,9 +103,7 @@ describe('Pagination', () => {
         }
       }
 
-      const result = {
-        total: 25
-      }
+      result.count = 25
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages).to.not.have.property('nextPage')
@@ -124,9 +113,7 @@ describe('Pagination', () => {
         query: {}
       }
 
-      const result = {
-        total: 1000
-      }
+      result.count = 1000
 
       const pages = pagination.getPageIndexes(req, result)
       expect(pages).to.not.have.property('previousPage')

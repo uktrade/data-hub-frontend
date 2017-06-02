@@ -12,7 +12,6 @@ module.exports = {
     'create-investment': './src/javascripts/create-investment',
     'expandable-card': './src/javascripts/expandable-card',
     index: './src/javascripts/index',
-    search: './src/javascripts/search',
     'service-delivery': './src/javascripts/service-delivery',
     'archive-form': './src/javascripts/archive-form',
     'add-another-field': './src/javascripts/add-another-field',

@@ -1,0 +1,205 @@
+{
+  "aggregations": [
+    {
+      "count": 3,
+      "entity": "company"
+    },
+    {
+      "count": 1,
+      "entity": "contact"
+    }
+  ],
+  "companies": [
+    {
+      "account_manager": null,
+      "alias": null,
+      "archived": false,
+      "archived_by": null,
+      "archived_on": null,
+      "archived_reason": null,
+      "business_type": {
+        "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
+        "name": "Private limited company"
+      },
+      "classification": null,
+      "company_number": null,
+      "contacts": [],
+      "created_on": "2017-05-25T11:15:27.270215",
+      "companies_house_data": {
+        "id": "company-house-id",
+        "company_number": "company-house-number"
+      },
+      "description": null,
+      "employee_range": null,
+      "export_to_countries": [],
+      "future_interest_countries": [],
+      "headquarter_type": null,
+      "id": "1fdc1d1c-d4e9-4ccb-bbbe-13948595c934",
+      "interactions": [],
+      "lead": false,
+      "modified_on": "2017-05-25T11:15:27.272221",
+      "name": "abc defg ltd",
+      "one_list_account_owner": null,
+      "parent": null,
+      "registered_address_1": "2 Foo st.",
+      "registered_address_2": null,
+      "registered_address_3": null,
+      "registered_address_4": null,
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "registered_address_county": null,
+      "registered_address_postcode": null,
+      "registered_address_town": "London",
+      "sector": {
+        "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Aircraft"
+      },
+      "trading_address_1": "1 Fake Lane",
+      "trading_address_2": null,
+      "trading_address_3": null,
+      "trading_address_4": null,
+      "trading_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "trading_address_county": null,
+      "trading_address_postcode": null,
+      "trading_address_town": "Downtown",
+      "turnover_range": null,
+      "uk_region": {
+        "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "England"
+      },
+      "website": null
+    },
+    {
+      "account_manager": null,
+      "alias": null,
+      "archived": false,
+      "archived_by": null,
+      "archived_on": null,
+      "archived_reason": null,
+      "business_type": {
+        "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
+        "name": "Private limited company"
+      },
+      "classification": null,
+      "company_number": null,
+      "contacts": [],
+      "created_on": "2017-05-25T11:15:27.281747",
+      "description": null,
+      "employee_range": null,
+      "export_to_countries": [],
+      "future_interest_countries": [],
+      "headquarter_type": null,
+      "id": "68c8528c-c4f5-4820-8d73-88bca7b460b8",
+      "interactions": [],
+      "lead": false,
+      "modified_on": "2017-05-25T11:15:27.283250",
+      "name": "abc defg us ltd",
+      "one_list_account_owner": null,
+      "parent": null,
+      "registered_address_1": "3 Foo st.",
+      "registered_address_2": null,
+      "registered_address_3": null,
+      "registered_address_4": null,
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "registered_address_county": null,
+      "registered_address_postcode": null,
+      "registered_address_town": "London",
+      "sector": {
+        "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Aircraft"
+      },
+      "trading_address_1": "1 Fake Lane",
+      "trading_address_2": null,
+      "trading_address_3": null,
+      "trading_address_4": null,
+      "trading_address_country": {
+        "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United States"
+      },
+      "trading_address_county": null,
+      "trading_address_postcode": null,
+      "trading_address_town": "Downtown",
+      "turnover_range": null,
+      "uk_region": {
+        "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "England"
+      },
+      "website": null
+    },
+    {
+      "account_manager": null,
+      "alias": null,
+      "archived": false,
+      "archived_by": null,
+      "archived_on": null,
+      "archived_reason": null,
+      "business_type": {
+        "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
+        "name": "Private limited company"
+      },
+      "classification": null,
+      "company_number": null,
+      "contacts": [
+        {
+          "first_name": "abc",
+          "id": "1b5dbe07-458e-4605-b809-8850e95522a7",
+          "last_name": "defg"
+        }
+      ],
+      "created_on": "2017-05-25T11:15:27.237129",
+      "description": null,
+      "employee_range": null,
+      "export_to_countries": [],
+      "future_interest_countries": [],
+      "headquarter_type": null,
+      "id": "6d8ac8a0-c37d-4ad9-b37d-f936671d7fe8",
+      "interactions": [],
+      "lead": false,
+      "modified_on": "2017-05-25T11:15:27.237129",
+      "name": "name0",
+      "one_list_account_owner": null,
+      "parent": null,
+      "registered_address_1": "0 Foo st.",
+      "registered_address_2": null,
+      "registered_address_3": null,
+      "registered_address_4": null,
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "registered_address_county": null,
+      "registered_address_postcode": null,
+      "registered_address_town": "London",
+      "sector": {
+        "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Aircraft"
+      },
+      "trading_address_1": "0 Fake Lane",
+      "trading_address_2": null,
+      "trading_address_3": null,
+      "trading_address_4": null,
+      "trading_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "trading_address_county": null,
+      "trading_address_postcode": null,
+      "trading_address_town": "Woodside",
+      "turnover_range": null,
+      "uk_region": {
+        "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "England"
+      },
+      "website": null
+    }
+  ],
+  "count": 3
+}

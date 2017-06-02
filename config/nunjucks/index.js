@@ -43,16 +43,16 @@ module.exports = (app, config) => {
   ], {
     autoescape: true,
     express: app,
-    watch: config.isDev
+    watch: config.isDev,
+    noCache: config.isDev
   })
+  const tradeElementsFilters = require(`@uktrade/trade_elements/dist/nunjucks/filters`)
+  const dataHubFilters = require('./filters')
+  const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)
 
   // Custom filters
-  const filters = require(`@uktrade/trade_elements/dist/nunjucks/filters`)
-
-  filters.stringify = JSON.stringify
-
-  Object.keys(filters).forEach((filterName) => {
-    env.addFilter(filterName, filters[filterName])
+  Object.keys(filters).forEach((filter) => {
+    env.addFilter(filter, filters[filter])
   })
 
   // Custom extensions

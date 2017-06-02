@@ -4,65 +4,90 @@ const { buildCompanyUrl } = require('../services/company.service')
 const searchService = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
 const Q = require('q')
+const Joi = require('joi')
+const Celebrate = require('celebrate')
 
 const router = express.Router()
 
-function buildSearchFilters (query) {
-  const docType = query.doc_type
-  const filters = []
-
-  if (docType === 'company') {
-    filters.push('company_company', 'company_companieshousecompany')
-  } else if (docType) {
-    filters.push(docType)
+function buildSearchEntityResultsData (searchEntityResults) {
+  const navItemText = {
+    company: 'Companies',
+    contact: 'Contacts'
   }
 
-  return filters
+  return searchEntityResults.map((searchEntityResult) => {
+    return Object.assign(
+      {},
+      searchEntityResult,
+      {
+        text: navItemText[searchEntityResult.entity]
+      }
+    )
+  })
 }
 
-function get (req, res, next) {
-  if (!req.query.term || req.query.term.length === 0) {
-    res.render('search/facet-search', { result: null, pagination: null, params: req.query })
-    return
+function indexAction (req, res, next) {
+  if (!req.query.term) {
+    return res.render('search/index')
   }
 
-  const filters = buildSearchFilters(req.query)
+  next()
+}
+
+const searchActionValidationSchema = Celebrate({
+  params: {
+    searchType: Joi.string().valid(
+      [
+        'company',
+        'contact'
+      ]
+    )
+  }
+})
+
+function searchAction (req, res, next) {
+  const searchType = req.params.searchType
+  const searchTerm = req.query.term
 
   searchService.search({
     token: req.session.token,
-    term: req.query.term,
-    page: req.query.page,
-    filters
+    searchTerm,
+    searchType,
+    page: req.query.page
   })
-    .then((result) => {
-      const pagination = getPagination(req, result)
-      res.render('search/facet-search', {
-        result,
-        pagination,
-        params: req.query
+    .then((results) => {
+      const pagination = getPagination(req, results)
+      const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
+
+      res.render(`search/results-${searchType}`, {
+        searchTerm,
+        searchType,
+        searchEntityResultsData,
+        results,
+        pagination
       })
     })
     .catch(next)
 }
 
 function viewCompanyResult (req, res, next) {
-  if (req.params.source === 'company_companieshousecompany') {
-    res.redirect(`/company/view/ch/${req.params.id}`)
-  } else {
-    Q.spawn(function * () {
-      try {
-        const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-        res.redirect(buildCompanyUrl(company))
-      } catch (error) {
-        next(error)
-      }
-    })
-  }
+  Q.spawn(function * () {
+    try {
+      const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
+      res.redirect(buildCompanyUrl(company))
+    } catch (error) {
+      next(error)
+    }
+  })
 }
 
-router.get('/search', get)
-router.get('/viewcompanyresult/:source/:id', viewCompanyResult)
+router.get('/search/:searchType?', searchActionValidationSchema, indexAction, searchAction)
+
+router.get('/viewcompanyresult/:id', viewCompanyResult) // TODO is this in the right controller
 
 module.exports = {
-  search: get, router, viewCompanyResult
+  router,
+  indexAction,
+  searchAction,
+  viewCompanyResult
 }

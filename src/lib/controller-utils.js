@@ -61,6 +61,7 @@ function transformV2Errors (sourceErrors) {
   return errors
 }
 
+// TODO this is very similar to /src/lib/url-helpers.buildQueryString Maybe time for a common folder?
 function encodeQueryData (data) {
   const ret = []
   for (const key in data) {
