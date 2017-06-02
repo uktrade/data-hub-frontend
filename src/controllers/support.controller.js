@@ -27,7 +27,7 @@ function getBug (req, res) {
   const sniffr = new Sniffr()
   sniffr.sniff(req.headers['user-agent'])
   data.browser = `${capitalize(sniffr.browser.name)} ${sniffr.browser.version[0]}.${sniffr.browser.version[1]} - ${capitalize(sniffr.os.name)} ${sniffr.os.version[0]}.${sniffr.os.version[1]}`
-  res.render('support/bug', {data, errors: req.errors})
+  res.render('support/bug', { data, errors: req.errors })
 }
 
 function checkForm (req) {
@@ -61,8 +61,8 @@ function postBug (req, res) {
       body: (req.body.description && req.body.description.length > 0) ? req.body.description : 'N/A'
     },
     custom_fields: [
-      {id: config.zenBrowser, value: req.body.browser},
-      {id: config.zenService, value: 'datahub_export'}
+      { id: config.zenBrowser, value: req.body.browser },
+      { id: config.zenService, value: 'datahub_export' }
     ],
     tags: [req.body.type]
   }
@@ -70,12 +70,12 @@ function postBug (req, res) {
     ticket.requester.email = req.body.email
   }
   return postToZen(ticket)
-    .then(({data}) => {
+    .then(({ data }) => {
       req.flash('success-message', `Created new bug, reference number ${data.ticket.id}`)
       res.redirect('/support/thank')
     })
     .catch((error) => {
-      req.errors = {message: error.message}
+      req.errors = { message: error.message }
       return getBug(req, res)
     })
 }

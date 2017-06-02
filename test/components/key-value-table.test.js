@@ -1,4 +1,4 @@
-const {renderComponentToDom} = require('../component-helper')
+const { renderComponentToDom } = require('../component-helper')
 
 describe('Key/value table component', () => {
   it('should not render if no items are given', () => {

@@ -41,7 +41,7 @@ function getInflatedDitCompany (token, id) {
 
         // Parse the service delivery results to expand some of the properties
         const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
-          return Object.assign({}, {id: serviceDelivery.id}, serviceDelivery.attributes, {
+          return Object.assign({}, { id: serviceDelivery.id }, serviceDelivery.attributes, {
             contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
             interaction_type: { id: null, name: 'Service delivery' },
             dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],

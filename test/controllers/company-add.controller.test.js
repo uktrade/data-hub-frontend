@@ -38,7 +38,7 @@ describe('Company add controller', function () {
 
   describe('Get step 1', function () {
     it('should return options for company types', function (done) {
-      const req = {session: {}}
+      const req = { session: {} }
       const res = {
         locals: {},
         render: function (template, options) {
@@ -67,7 +67,7 @@ describe('Company add controller', function () {
       companyAddController.getAddStepOne(req, res, next)
     })
     it('should return labels for the types and error messages', function (done) {
-      const req = {session: {}}
+      const req = { session: {} }
       const res = {
         locals: {},
         render: function (template, options) {

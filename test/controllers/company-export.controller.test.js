@@ -5,8 +5,8 @@ const _company = require('../data/api-response-intermediary-company.json')
 describe('Company export controller', () => {
   beforeEach(() => {
     this.company = Object.assign({}, _company, {
-      export_to_countries: [{id: '1234', name: 'France'}, {id: '2234', name: 'Italy'}],
-      future_interest_countries: [{id: '4321', name: 'Germany'}]
+      export_to_countries: [{ id: '1234', name: 'France' }, { id: '2234', name: 'Italy' }],
+      future_interest_countries: [{ id: '4321', name: 'Germany' }]
     })
 
     this.sandbox = sinon.sandbox.create()

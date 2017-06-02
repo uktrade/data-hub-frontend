@@ -12,7 +12,7 @@ describe('Text formatting', function () {
       expect(textFormatting.titleCase('')).to.be.null
     })
     it('should ignore none strings', function () {
-      expect(textFormatting.titleCase({test: 'thing'})).to.be.null
+      expect(textFormatting.titleCase({ test: 'thing' })).to.be.null
     })
   })
   describe('new line to br', function () {
@@ -29,7 +29,7 @@ describe('Text formatting', function () {
       expect(textFormatting.newlineToBr('')).to.be.null
     })
     it('should ignore none strings', function () {
-      expect(textFormatting.newlineToBr({test: 'test'})).to.be.null
+      expect(textFormatting.newlineToBr({ test: 'test' })).to.be.null
     })
   })
 })

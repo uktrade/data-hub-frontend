@@ -2,7 +2,7 @@ const path = require('path')
 const expect = require('chai').expect
 const html = require('html')
 const htmlBeautifier = require('js-beautify').html
-const {JSDOM} = require('jsdom')
+const { JSDOM } = require('jsdom')
 
 const nunjucksConfig = require('../config/nunjucks')
 

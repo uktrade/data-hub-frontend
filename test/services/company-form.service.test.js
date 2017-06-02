@@ -5,7 +5,7 @@ describe('company form service', function () {
   let saveCompanyStub
 
   beforeEach(function () {
-    saveCompanyStub = sinon.stub().resolves({id: '1234'})
+    saveCompanyStub = sinon.stub().resolves({ id: '1234' })
 
     companyFormService = proxyquire('~/src/services/company-form.service', {
       '../repos/company.repo': {

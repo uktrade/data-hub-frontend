@@ -2,7 +2,7 @@ const router = require('express').Router()
 const Q = require('q')
 const moment = require('moment')
 
-const {buildCompanyUrl} = require('../services/company.service')
+const { buildCompanyUrl } = require('../services/company.service')
 const {
   getInvestmentProjectSummary,
   getInvestmentValue,
