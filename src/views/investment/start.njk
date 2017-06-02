@@ -55,7 +55,9 @@
 
     {% if searchResult %}
 
-      {% component 'result-summary', {
+      {% component 'results-summary', {
+        resultType: searchType,
+        pluralisedResultType: 'companies',
         total: searchResult.total,
         searchTerm: searchTerm
       } %}
