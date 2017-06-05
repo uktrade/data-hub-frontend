@@ -1,8 +1,9 @@
+const filters = require('~/config/nunjucks/filters')
 
 describe('nunjucks filters', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.filters = require('~/config/nunjucks/filters')
+    this.filters = filters
   })
 
   afterEach(() => {
@@ -21,7 +22,7 @@ describe('nunjucks filters', () => {
 
     it('should render string without highlight', () => {
       const searchTerm = 'example term'
-      const mockString = `we should not see another term highlighted here`
+      const mockString = 'we should not see another term highlighted here'
 
       const highlightedString = this.filters.highlight(mockString, searchTerm)
 
