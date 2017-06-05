@@ -181,18 +181,20 @@ describe('Search Controller', () => {
 
   describe('searchAction method', () => {
     const searchTerm = 'mock'
-    const expectedSearchEntityResultsData = [
-      {
-        count: 3,
-        entity: 'company',
-        text: 'Companies',
-      },
-      {
-        count: 1,
-        entity: 'contact',
-        text: 'Contacts',
-      },
-    ]
+    const expectedSearchEntityResultsData = (companyCount = 3, contactCount = 1) => {
+      return [
+        {
+          count: companyCount,
+          entity: 'company',
+          text: 'Companies',
+        },
+        {
+          count: contactCount,
+          entity: 'contact',
+          text: 'Contacts',
+        },
+      ]
+    }
 
     describe('when called with "company" searchType', () => {
       const companyResponse = require('~/test/data/search/company')
@@ -232,7 +234,7 @@ describe('Search Controller', () => {
                 expect(template).to.equal(`search/results-${searchType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
                 expect(data.searchType).to.equal(searchType)
-                expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData)
+                expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData(0))
                 expect(data.results).to.deep.equal(expectedResults)
                 expect(data.pagination).to.be.a('array')
                 expect(data.pagination.length).to.equal(0)
@@ -283,7 +285,7 @@ describe('Search Controller', () => {
                 expect(template).to.equal(`search/results-${searchType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
                 expect(data.searchType).to.equal(searchType)
-                expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData)
+                expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
                 expect(data.results).to.deep.equal(expectedResults)
                 expect(data.pagination).to.be.a('array')
                 expect(data.pagination.length).to.equal(0)
