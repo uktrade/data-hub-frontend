@@ -83,10 +83,17 @@ function transformToApi (body) {
   }
 
   const formatted = mapValues(schema, (type, key) => {
-    if (type === Array) {
-      return [{ id: body[key] }]
+    const value = body[key]
+
+    if (!value) {
+      return
     }
-    return { id: body[key] }
+
+    if (type === Array) {
+      return [{ id: value }]
+    }
+
+    return { id: value }
   })
 
   formatted['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
