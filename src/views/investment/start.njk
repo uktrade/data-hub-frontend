@@ -58,23 +58,22 @@
       {% component 'results-summary', {
         resultType: searchType,
         pluralisedResultType: 'companies',
-        total: searchResult.total,
+        total: searchResult.count,
         searchTerm: searchTerm
       } %}
 
-      {% if searchResult.total > 0 %}
+      {% if searchResult.count > 0 %}
         <ol class="results-list results-list--block">
-          {% for result in searchResult.hits %}
-            {% set company = result._source %}
+          {% for result in searchResult.companies %}
             <li class="search-result">
-              <a href="/investment/create?equity-company={{ result._id }}" class="search-result__link">
-                <h3 class="search-result__title">{{ company.name | highlightTerm(searchTerm) | safe }}</h3>
+              <a href="/investment/create?equity-company={{ result.id }}" class="search-result__link">
+                <h3 class="search-result__title">{{ result.name | highlightTerm(searchTerm) | safe }}</h3>
 
                 <dl class="metadata-list">
                   <dt class="metadata-list__term">Registered address</dt>
                   <dd class="metadata-list__value metadata-list__value--block">
                     {% set comma = joiner() %}
-                    {% for part in [company.registered_address_1, company.registered_address_2, company.registered_address_town, company.registered_address_postcode] -%}
+                    {% for part in [result.registered_address_1, result.registered_address_2, result.registered_address_town, result.registered_address_postcode] -%}
                       {% if part -%}
                         {%- set address = part | highlightTerm(searchTerm) | safe -%}
 
@@ -88,18 +87,18 @@
                     {%- endfor %}
                   </dd>
                   <dt class="metadata-list__term">Registered country</dt>
-                  <dd class="metadata-list__value">{{ company.registered_address_country }}</dd>
-                  {% if company.investments %}
+                  <dd class="metadata-list__value">{{ result.registered_address_country.name }}</dd>
+                  {% if result.investments %}
                     <dt class="metadata-list__term">Investments in the UK</dt>
-                    <dd class="metadata-list__value">{{ company.investments.count|default('No', true) }} investment project{{ 's' if company.investments.count != 1 }}</dd>
+                    <dd class="metadata-list__value">{{ result.investments.count|default('No', true) }} investment project{{ 's' if result.investments.count != 1 }}</dd>
                   {% endif %}
-                  {% if company.classification %}
+                  {% if result.classification %}
                     <dt class="metadata-list__term">Classification</dt>
-                    <dd class="metadata-list__value">tier one{{ company.classification }}</dd>
+                    <dd class="metadata-list__value">tier one{{ result.classification }}</dd>
                   {% endif %}
-                  {% if company.one_list_account_owner %}
+                  {% if result.one_list_account_owner %}
                     <dt class="metadata-list__term metadata-list__term--visible">Relationship manager</dt>
-                    <dd class="metadata-list__value">bob something{{ company.one_list_account_owner.first_name }} {{ company.one_list_account_owner.last_name }}</dd>
+                    <dd class="metadata-list__value">bob something{{ result.one_list_account_owner.first_name }} {{ result.one_list_account_owner.last_name }}</dd>
                   {% endif %}
                 </dl>
               </a>
