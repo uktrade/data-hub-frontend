@@ -25,6 +25,33 @@ function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
     })
 }
 
+// TODO discuss why this needs to be a POST rather than a GET like the default `/v3/search`
+// TODO this work has been abstracted for easy removal of code once this api call has has been changed to GET
+// TODO we have query params on a POST's url
+// TODO we have a param named `original_query` that is set to `term` on the backend, this needs aligning to other endpoints and changed to `term` in the request
+function searchForeignCompany ({ token, searchTerm, page = 1, limit = 10 }) {
+  const queryParams = {
+    offset: (page * limit) - limit,
+    limit,
+  }
+  const body = {
+    original_query: searchTerm,
+    uk_based: true,
+  }
+  const options = {
+    url: `${config.apiRoot}/v3/search/company${buildQueryString(queryParams)}`,
+    method: 'POST',
+    body,
+  }
+
+  return authorisedRequest(token, options)
+    .then(result => {
+      result.page = page
+
+      return result
+    })
+}
+
 function suggestCompany (token, term, types) {
   if (!types) {
     types = ['company_company']
@@ -73,4 +100,9 @@ function searchLimited (token, term) {
   })
 }
 
-module.exports = { search, suggestCompany, searchLimited }
+module.exports = {
+  search,
+  searchForeignCompany,
+  suggestCompany,
+  searchLimited,
+}

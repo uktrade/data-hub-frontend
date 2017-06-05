@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { getInflatedDitCompany } = require('../services/company.service')
 const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
-const { search } = require('../services/search.service')
+const { searchForeignCompany } = require('../services/search.service')
 const { getPagination } = require('../lib/pagination')
 
 function getHandler (req, res, next) {
@@ -19,13 +19,10 @@ function getHandler (req, res, next) {
   }
 
   if (searchTerm) {
-    // TODO: this should only return a list of foreign companies
-    // The API doesn't currently support this feature so will implement
-    // when available
-    promises.push(search({
+    promises.push(searchForeignCompany({
       token: req.session.token,
       page: req.query.page,
-      term: searchTerm,
+      searchTerm,
     }))
   } else {
     promises.push(Promise.resolve())
