@@ -15,7 +15,7 @@ describe('Auth middleware', () => {
     describe('when request contains an allowed url', () => {
       it('call the next middleware', () => {
         const reqMock = {
-          url: '/login'
+          url: '/login',
         }
 
         this.authMiddleware(reqMock, resMock, this.nextSpy)
@@ -30,8 +30,8 @@ describe('Auth middleware', () => {
       const reqMock = {
         url: '',
         session: {
-          token: 'abcd'
-        }
+          token: 'abcd',
+        },
       }
 
       this.authMiddleware(reqMock, resMock, this.nextSpy)
@@ -45,10 +45,10 @@ describe('Auth middleware', () => {
       const reqMock = {
         url: '/protected-url',
         originalUrl: '/protected-url',
-        session: {}
+        session: {},
       }
       const resMock = {
-        redirect: this.sandbox.stub()
+        redirect: this.sandbox.stub(),
       }
 
       this.authMiddleware(reqMock, resMock, this.nextSpy)

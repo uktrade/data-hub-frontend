@@ -16,8 +16,8 @@ describe('Investment details controller', () => {
       '../repos/investment.repo': {
         getInvestmentProjectSummary: this.getInvestmentProjectSummary,
         getInvestmentValue: this.getInvestmentValue,
-        getInvestmentRequirements: this.getInvestmentRequirements
-      }
+        getInvestmentRequirements: this.getInvestmentRequirements,
+      },
     })
   })
 
@@ -36,14 +36,14 @@ describe('Investment details controller', () => {
           { label: 'Interactions', slug: 'interactions' },
           { label: 'Documents', slug: 'documents' },
           { label: 'Evaluation', slug: 'evaluation' },
-          { label: 'Audit history', slug: 'audit' }
+          { label: 'Audit history', slug: 'audit' },
         ],
         project: {
           'Anonymous description': null,
           'Business activity': undefined,
           'Client': {
             name: 'Wonka Industries',
-            url: '/company/view/foreign/6c388e5b-a098-e211-a939-e4115bead28a'
+            url: '/company/view/foreign/6c388e5b-a098-e211-a939-e4115bead28a',
           },
           'Estimated land date': 'May 2018',
           'Non-disclosure agreement': 'Not signed',
@@ -51,13 +51,13 @@ describe('Investment details controller', () => {
           'Project description': 'Stark Industries wishes to build in a new part of Manchester expanding its existing premises',
           'Shareable with UK partners': null,
           'Sub-sector': null,
-          'Type of investment': 'Commitment to invest'
+          'Type of investment': 'Commitment to invest',
         },
         projectMeta: {
           id: 'f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7',
           name: 'Skyscraper project for Stark Industries',
           phaseName: 'Prospect',
-          projectCode: 'DHP-00000003'
+          projectCode: 'DHP-00000003',
         },
         requirements: {
           'Client requirements': null,
@@ -65,7 +65,7 @@ describe('Investment details controller', () => {
           'Investment location': null,
           'Main strategic drivers': [],
           'Possible UK locations': [],
-          'UK recipient company': null
+          'UK recipient company': null,
         },
         value: {
           'Average salary': null,
@@ -77,17 +77,17 @@ describe('Investment details controller', () => {
           'Non-FDI R&D project': null,
           'R&D budget': null,
           'Safeguarded jobs': null,
-          'Total investment': null
-        }
+          'Total investment': null,
+        },
       }
 
       this.controller.getDetails({
         session: {
-          token
+          token,
         },
         params: {
-          id: investmentProjectSummaryData.id
-        }
+          id: investmentProjectSummaryData.id,
+        },
       }, {
         render: (template, data) => {
           try {
@@ -102,7 +102,7 @@ describe('Investment details controller', () => {
           } catch (error) {
             done(error)
           }
-        }
+        },
       }, this.next)
     })
   })

@@ -2,20 +2,20 @@ const token = 'abcd'
 const ukCompany = {
   id: '12345',
   name: 'Test company',
-  uk_based: true
+  uk_based: true,
 }
 const foreignCompany = {
   id: '12345',
   name: 'Test company',
-  uk_based: false
+  uk_based: false,
 }
 const investmentProjects = {
   count: 0,
-  results: []
+  results: [],
 }
 const searchResults = {
   count: 0,
-  hits: []
+  hits: [],
 }
 
 describe('Investment start controller', () => {
@@ -29,17 +29,17 @@ describe('Investment start controller', () => {
 
     this.controller = proxyquire('~/src/controllers/investment-start.controller', {
       '../services/company.service': {
-        getInflatedDitCompany: this.getInflatedDitCompany
+        getInflatedDitCompany: this.getInflatedDitCompany,
       },
       '../repos/investment.repo': {
-        getCompanyInvestmentProjects: this.getCompanyInvestmentProjects
+        getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
       '../services/search.service': {
-        search: this.search
+        search: this.search,
       },
       '../lib/pagination': {
-        getPagination: this.getPagination
-      }
+        getPagination: this.getPagination,
+      },
     })
   })
 
@@ -52,9 +52,9 @@ describe('Investment start controller', () => {
       it('should render company details and search', (done) => {
         this.controller.getHandler({
           session: {
-            token
+            token,
           },
-          query: {}
+          query: {},
         }, {
           render: (template, data) => {
             try {
@@ -65,7 +65,7 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -74,11 +74,11 @@ describe('Investment start controller', () => {
       it('should render company details and search', (done) => {
         this.controller.getHandler({
           session: {
-            token
+            token,
           },
           query: {
-            'client-company': '12345'
-          }
+            'client-company': '12345',
+          },
         }, {
           render: (template, data) => {
             try {
@@ -92,7 +92,7 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -105,11 +105,11 @@ describe('Investment start controller', () => {
       it('should render company details and no search', (done) => {
         this.controller.getHandler({
           session: {
-            token
+            token,
           },
           query: {
-            'client-company': '12345'
-          }
+            'client-company': '12345',
+          },
         }, {
           render: (template, data) => {
             try {
@@ -123,19 +123,19 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
 
       it('should render search', (done) => {
         this.controller.getHandler({
           session: {
-            token
+            token,
           },
           query: {
             'client-company': '12345',
-            'show-search': true
-          }
+            'show-search': true,
+          },
         }, {
           render: (template, data) => {
             try {
@@ -144,7 +144,7 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -153,12 +153,12 @@ describe('Investment start controller', () => {
       it('should render results', (done) => {
         this.controller.getHandler({
           session: {
-            token
+            token,
           },
           query: {
             'client-company': '12345',
-            'q': 'samsung'
-          }
+            'q': 'samsung',
+          },
         }, {
           render: (template, data) => {
             try {
@@ -169,7 +169,7 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -181,13 +181,13 @@ describe('Investment start controller', () => {
         this.controller.postHandler({
           body: {
             'client-company': '12345',
-            'is-equity-source': 'true'
-          }
+            'is-equity-source': 'true',
+          },
         }, {
           redirect: (path) => {
             expect(path).to.equal('/investment/create?equity-company=12345')
             done()
-          }
+          },
         }, this.next)
       })
     })
@@ -197,13 +197,13 @@ describe('Investment start controller', () => {
         this.controller.postHandler({
           body: {
             'client-company': '12345',
-            'is-equity-source': 'false'
-          }
+            'is-equity-source': 'false',
+          },
         }, {
           redirect: (path) => {
             expect(path).to.equal('/investment/start?client-company=12345&show-search=true')
             done()
-          }
+          },
         }, this.next)
       })
     })
@@ -212,11 +212,11 @@ describe('Investment start controller', () => {
       it('should redirect to the create step', (done) => {
         this.controller.postHandler({
           session: {
-            token
+            token,
           },
           body: {
-            'client-company': '12345'
-          }
+            'client-company': '12345',
+          },
         }, {
           render: (template, data) => {
             try {
@@ -226,7 +226,7 @@ describe('Investment start controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })

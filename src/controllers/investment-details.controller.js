@@ -6,7 +6,7 @@ const { buildCompanyUrl } = require('../services/company.service')
 const {
   getInvestmentProjectSummary,
   getInvestmentValue,
-  getInvestmentRequirements
+  getInvestmentRequirements,
 } = require('../repos/investment.repo')
 
 const localNavItems = [
@@ -16,7 +16,7 @@ const localNavItems = [
   { label: 'Interactions', slug: 'interactions' },
   { label: 'Documents', slug: 'documents' },
   { label: 'Evaluation', slug: 'evaluation' },
-  { label: 'Audit history', slug: 'audit' }
+  { label: 'Audit history', slug: 'audit' },
 ]
 
 function formatProjectStatusData (data) {
@@ -24,7 +24,7 @@ function formatProjectStatusData (data) {
     id: data.id,
     name: data.name,
     projectCode: data.project_code,
-    phaseName: data.phase.name
+    phaseName: data.phase.name,
   }
 }
 
@@ -32,7 +32,7 @@ function formatProjectData (data) {
   return {
     'Client': {
       name: data.investor_company.name,
-      url: buildCompanyUrl(data.investor_company)
+      url: buildCompanyUrl(data.investor_company),
     },
     'Type of investment': data.investment_type.name,
     'Primary sector': data.sector,
@@ -42,7 +42,7 @@ function formatProjectData (data) {
     'Non-disclosure agreement': data.nda_signed ? 'Signed' : 'Not signed',
     'Shareable with UK partners': null,
     'Anonymous description': null,
-    'Estimated land date': data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null
+    'Estimated land date': data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
   }
 }
 
@@ -57,7 +57,7 @@ function formatValueData (data) {
     'R&D budget': data.r_and_d_budget,
     'Non-FDI R&D project': data.non_fdi_r_and_d_budget,
     'New-to-world tech': data.new_tech_to_uk,
-    'Export revenue': data.export_revenue
+    'Export revenue': data.export_revenue,
   }
 }
 
@@ -68,7 +68,7 @@ function formatRequirementsData (data) {
     'Competitor countries': data.competitor_countries,
     'Possible UK locations': data.uk_region_locations,
     'Investment location': null,
-    'UK recipient company': data.uk_company
+    'UK recipient company': data.uk_company,
   }
 }
 
@@ -85,7 +85,7 @@ function getDetails (req, res, next) {
         project: formatProjectData(projectData),
         value: formatValueData(valueData),
         requirements: formatRequirementsData(requirementsData),
-        localNavItems
+        localNavItems,
       })
     } catch (error) {
       next(error)

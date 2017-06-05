@@ -25,8 +25,8 @@ describe('contact form service', function () {
 
             resolve(contactForm)
           })
-        }
-      }
+        },
+      },
     })
   })
 
@@ -44,7 +44,7 @@ describe('contact form service', function () {
         address_town: 'Town view',
         address_country: {
           id: '81756b9a-5d95-e211-a939-e4115bead28a',
-          name: 'United States'
+          name: 'United States',
         },
         address_county: 'CA',
         address_postcode: '94043',
@@ -67,13 +67,13 @@ describe('contact form service', function () {
         archived_by: null,
         title: {
           id: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-          name: 'Undefined'
+          name: 'Undefined',
         },
         company: {
           id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
-          name: 'OpenStuff'
+          name: 'OpenStuff',
         },
-        advisor: null
+        advisor: null,
       }
     })
 
@@ -100,7 +100,7 @@ describe('contact form service', function () {
         address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -140,7 +140,7 @@ describe('contact form service', function () {
         address_country: null,
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -177,7 +177,7 @@ describe('contact form service', function () {
         address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
     })
 
@@ -185,10 +185,10 @@ describe('contact form service', function () {
       const expected = {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
         company: {
-          id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a'
+          id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
         },
         title: {
-          id: '0167b456-0ddd-49bd-8184-e3227a0b6396'
+          id: '0167b456-0ddd-49bd-8184-e3227a0b6396',
         },
         first_name: 'Zac',
         last_name: 'Baman',
@@ -206,11 +206,11 @@ describe('contact form service', function () {
         address_county: 'CA',
         address_postcode: '94043',
         address_country: {
-          id: '81756b9a-5d95-e211-a939-e4115bead28a'
+          id: '81756b9a-5d95-e211-a939-e4115bead28a',
         },
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       return contactFormService.saveContactForm('1234', formData)

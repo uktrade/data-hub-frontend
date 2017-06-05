@@ -38,7 +38,7 @@ function getLtdCompanyAsFormData (company) {
     website: company.website,
     description: company.description,
     employee_range: getPropertyId(company, 'employee_range'),
-    turnover_range: getPropertyId(company, 'turnover_range')
+    turnover_range: getPropertyId(company, 'turnover_range'),
   }
 
   result = nullEmptyFields(result)
@@ -77,7 +77,7 @@ function getUkOtherCompanyAsFormData (company) {
     website: company.website,
     description: company.description,
     employee_range: getPropertyId(company, 'employee_range'),
-    turnover_range: getPropertyId(company, 'turnover_range')
+    turnover_range: getPropertyId(company, 'turnover_range'),
   }
 
   result = nullEmptyFields(result)
@@ -115,7 +115,7 @@ function getForeignCompanyAsFormData (company) {
     website: company.website,
     description: company.description,
     employee_range: getPropertyId(company, 'employee_range'),
-    turnover_range: getPropertyId(company, 'turnover_range')
+    turnover_range: getPropertyId(company, 'turnover_range'),
   }
 
   result = nullEmptyFields(result)
@@ -141,7 +141,7 @@ function getDefaultLtdFormForCH (companies_house_data) {
     registered_address_town: companies_house_data.registered_address_town,
     registered_address_county: companies_house_data.registered_address_county,
     registered_address_postcode: companies_house_data.registered_address_postcode,
-    registered_address_country: getPropertyId(companies_house_data, 'registered_address_country')
+    registered_address_country: getPropertyId(companies_house_data, 'registered_address_country'),
   }
 
   result = nullEmptyFields(result)

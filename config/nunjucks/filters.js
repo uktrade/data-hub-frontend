@@ -24,7 +24,7 @@ const filters = {
     }
 
     return string
-  }
+  },
 }
 
 module.exports = filters

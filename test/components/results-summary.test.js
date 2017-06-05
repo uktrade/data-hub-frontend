@@ -3,7 +3,7 @@ const { renderComponentToDom } = require('../component-helper')
 describe('Results Summary component', () => {
   it('should render with default values', () => {
     const mockData = {
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',
@@ -22,7 +22,7 @@ describe('Results Summary component', () => {
   it('should render with singular default values', () => {
     const mockData = {
       total: 1,
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',
@@ -42,7 +42,7 @@ describe('Results Summary component', () => {
     const mockData = {
       total: 1,
       resultType: 'company',
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',
@@ -63,7 +63,7 @@ describe('Results Summary component', () => {
       total: 11,
       resultType: 'company',
       pluralisedResultType: 'companies',
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',
@@ -84,7 +84,7 @@ describe('Results Summary component', () => {
       total: 22,
       resultType: 'company',
       pluralisedResultType: 'companies',
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',
@@ -104,7 +104,7 @@ describe('Results Summary component', () => {
     const mockData = {
       total: 22,
       resultType: 'contact',
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'results-summary',

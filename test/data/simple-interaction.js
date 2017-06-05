@@ -3,5 +3,5 @@ module.exports = {
   interaction_type: { id: '1234', name: 'Email' },
   subject: 'Subject 1234',
   date: '2017-02-14T14:49:17',
-  dit_advisor: { first_name: 'Fred', last_name: 'Smith' }
+  dit_advisor: { first_name: 'Fred', last_name: 'Smith' },
 }

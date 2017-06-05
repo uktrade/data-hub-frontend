@@ -7,5 +7,5 @@ module.exports = {
   dit_advisor: 'DIT adviser',
   service: 'Service offer',
   dit_team: 'Service provider',
-  interaction_type: 'Interaction type'
+  interaction_type: 'Interaction type',
 }

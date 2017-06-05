@@ -16,7 +16,7 @@ function getAddStepOne (req, res, next) {
     foreignOtherCompanyOptions,
     company: req.body,
     companyTypeOptions,
-    companyDetailsLabels
+    companyDetailsLabels,
   })
 }
 
@@ -47,19 +47,19 @@ function postAddStepOne (req, res, next) {
     case 'ltdchild':
       params = {
         business_type: req.body.business_type,
-        country: 'uk'
+        country: 'uk',
       }
       break
     case 'ukother':
       params = {
         business_type: req.body.business_type_uk_other,
-        country: 'uk'
+        country: 'uk',
       }
       break
     case 'foreign':
       params = {
         business_type: req.body.business_type_for_other,
-        country: 'non-uk'
+        country: 'non-uk',
       }
       break
   }

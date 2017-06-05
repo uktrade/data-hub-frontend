@@ -52,12 +52,12 @@ function createBlankInteractionForContact (token, dit_advisor, interaction_type,
           date: new Date(),
           service: {
             id: null,
-            name: null
+            name: null,
           },
           dit_team: {
             id: null,
-            name: null
-          }
+            name: null,
+          },
         })
       } catch (error) {
         reject(error)
@@ -84,12 +84,12 @@ function createBlankInteractionForCompany (token, dit_advisor, interaction_type,
           date: new Date(),
           service: {
             id: null,
-            name: null
+            name: null,
           },
           dit_team: {
             id: null,
-            name: null
-          }
+            name: null,
+          },
         })
       } catch (error) {
         reject(error)
@@ -102,5 +102,5 @@ module.exports = {
   getInteractionType,
   getHydratedInteraction,
   createBlankInteractionForCompany,
-  createBlankInteractionForContact
+  createBlankInteractionForContact,
 }

@@ -3,7 +3,7 @@ const {
   convertNestedObjects,
   convertYesNoToBoolean,
   getPropertyId,
-  nullEmptyFields
+  nullEmptyFields,
 } = require('../lib/property-helpers')
 const contactRepository = require('../repos/contact.repo')
 
@@ -40,7 +40,7 @@ function getContactAsFormData (contact) {
     address_country: getPropertyId(contact, 'address_country'),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: contact.notes
+    notes: contact.notes,
   }
 
   result = nullEmptyFields(result)

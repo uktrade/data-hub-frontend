@@ -13,8 +13,8 @@ describe('Key/value table component', () => {
       {
         items: {
           'First label': '#1 label content',
-          'Second label': '#2 label content'
-        }
+          'Second label': '#2 label content',
+        },
       }
     )
 
@@ -34,9 +34,9 @@ describe('Key/value table component', () => {
         items: {
           'First label': {
             name: '#1 label content',
-            url: '/label-1'
-          }
-        }
+            url: '/label-1',
+          },
+        },
       }
     )
 
@@ -49,9 +49,9 @@ describe('Key/value table component', () => {
       'key-value-table',
       {
         items: {
-          'First label': '#1 label content'
+          'First label': '#1 label content',
         },
-        variant: 'custom-variant'
+        variant: 'custom-variant',
       }
     )
 

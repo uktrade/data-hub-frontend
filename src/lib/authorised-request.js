@@ -29,7 +29,7 @@ function jsonReviver (key, value) {
 // script tags
 module.exports = (token, opts) => {
   const requestOptions = {
-    json: true
+    json: true,
   }
 
   if (isString(opts)) {

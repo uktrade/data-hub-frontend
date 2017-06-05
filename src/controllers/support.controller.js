@@ -15,8 +15,8 @@ function postToZen (ticket) {
     {
       auth: {
         username: `${config.zenEmail}/token`,
-        password: config.zenToken
-      }
+        password: config.zenToken,
+      },
     }
   )
 }
@@ -54,17 +54,17 @@ function postBug (req, res) {
   }
   const ticket = {
     requester: {
-      name: 'Data Hub user'
+      name: 'Data Hub user',
     },
     subject: req.body.title,
     comment: {
-      body: (req.body.description && req.body.description.length > 0) ? req.body.description : 'N/A'
+      body: (req.body.description && req.body.description.length > 0) ? req.body.description : 'N/A',
     },
     custom_fields: [
       { id: config.zenBrowser, value: req.body.browser },
-      { id: config.zenService, value: 'datahub_export' }
+      { id: config.zenService, value: 'datahub_export' },
     ],
-    tags: [req.body.type]
+    tags: [req.body.type],
   }
   if (req.body.email && req.body.email.length > 0) {
     ticket.requester.email = req.body.email

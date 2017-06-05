@@ -5,7 +5,7 @@ describe('Pagination component', () => {
     const component = renderComponentToDom(
       'pagination',
       {
-        pages: []
+        pages: [],
       }
     )
 
@@ -18,14 +18,14 @@ describe('Pagination component', () => {
         {
           label: 'example-label',
           link: 'example-link',
-          currentPage: true
+          currentPage: true,
         },
         {
           label: 'example-label-1',
           link: 'example-link-1',
-          currentPage: false
-        }
-      ]
+          currentPage: false,
+        },
+      ],
     }
     const component = renderComponentToDom(
       'pagination',

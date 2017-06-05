@@ -4,7 +4,7 @@ const config = require('../config')
 
 function saveServiceDelivery (token, serviceDelivery) {
   const options = {
-    body: serviceDelivery
+    body: serviceDelivery,
   }
   // v2 endpoint only supports POST
   options.method = 'POST'
@@ -55,5 +55,5 @@ module.exports = {
   getServiceDelivery,
   saveServiceDelivery,
   getServiceDeliveriesForCompany,
-  getServiceDeliveriesForContact
+  getServiceDeliveriesForContact,
 }

@@ -31,5 +31,5 @@ function yesNoToBoolean (value) {
 }
 
 module.exports = {
-  trimArray, joinArray, yesNoToBoolean, toArray
+  trimArray, joinArray, yesNoToBoolean, toArray,
 }

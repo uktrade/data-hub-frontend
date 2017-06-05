@@ -37,7 +37,7 @@ function getOpenInvestmentProjects (investmentProjects) {
         name: `<a href="/investmentprojects/${project.id}/">${project.name}</a>`,
         value: project.value,
         state: project.state,
-        land_date: formatLongDate(project.land_date)
+        land_date: formatLongDate(project.land_date),
       }
     })
 }
@@ -51,7 +51,7 @@ function getClosedInvestmentProjects (investmentProjects) {
         name: `<a href="/investmentprojects/${project.id}/">${project.name}</a>`,
         value: project.value,
         state: project.state,
-        state_date: formatLongDate(project.state_date)
+        state_date: formatLongDate(project.state_date),
       }
     })
 }
@@ -132,5 +132,5 @@ module.exports = {
   getOpenInvestmentProjects,
   getClosedInvestmentProjects,
   transformToApi,
-  transformFromApi
+  transformFromApi,
 }

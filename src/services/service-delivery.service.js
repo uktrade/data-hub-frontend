@@ -65,7 +65,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
       attributes: {
         subject: serviceDeliveryForm.subject,
         notes: serviceDeliveryForm.notes,
-        date: serviceDeliveryForm.date
+        date: serviceDeliveryForm.date,
       },
       relationships: {
         company: { data: { type: 'Company', id: serviceDeliveryForm.company } },
@@ -76,9 +76,9 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
         dit_advisor: { data: { type: 'Advisor', id: serviceDeliveryForm.dit_advisor } },
         uk_region: { data: { type: 'UKRegion', id: serviceDeliveryForm.uk_region } },
         sector: { data: { type: 'Sector', id: serviceDeliveryForm.sector } },
-        country_of_interest: { data: { type: 'Country', id: serviceDeliveryForm.country_of_interest } }
-      }
-    }
+        country_of_interest: { data: { type: 'Country', id: serviceDeliveryForm.country_of_interest } },
+      },
+    },
   }
 
   if (serviceDeliveryForm.id && serviceDeliveryForm.id.length > 0) {
@@ -105,8 +105,8 @@ function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
           date: new Date(),
           dit_team: {
             id: null,
-            name: null
-          }
+            name: null,
+          },
         })
       } catch (error) {
         reject(error)
@@ -123,7 +123,7 @@ function createBlankServiceDeliveryForCompany (token, dit_advisor, companyId) {
         resolve({
           company,
           dit_advisor,
-          date: new Date()
+          date: new Date(),
         })
       } catch (error) {
         reject(error)
@@ -149,7 +149,7 @@ function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
           status: { id: flatServiceDelivery.status },
           uk_region: { id: flatServiceDelivery.uk_region },
           sector: { id: flatServiceDelivery.sector },
-          country_of_interest: { id: flatServiceDelivery.country_of_interest }
+          country_of_interest: { id: flatServiceDelivery.country_of_interest },
         }
 
         if (flatServiceDelivery.contact) {
@@ -181,5 +181,5 @@ module.exports = {
   convertServiceDeliveryFormToApiFormat,
   createBlankServiceDeliveryForContact,
   createBlankServiceDeliveryForCompany,
-  convertFormBodyBackToServiceDelivery
+  convertFormBodyBackToServiceDelivery,
 }

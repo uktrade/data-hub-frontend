@@ -10,7 +10,7 @@ function getContact (token, contactId) {
 
 function saveContact (token, contact) {
   let options = {
-    body: contact
+    body: contact,
   }
 
   if (contact.id && contact.id.length > 0) {
@@ -29,7 +29,7 @@ function archiveContact (token, contactId, reason) {
   const options = {
     body: { reason },
     url: `${config.apiRoot}/v3/contact/${contactId}/archive`,
-    method: 'POST'
+    method: 'POST',
   }
   return authorisedRequest(token, options)
 }

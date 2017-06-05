@@ -6,8 +6,8 @@ describe('Interaction formatting service', function () {
   beforeEach(function () {
     interactionFormattingService = proxyquire('~/src/services/interaction-formatting.service', {
       './company.service': {
-        buildCompanyUrl: sinon.stub().returns('/test')
-      }
+        buildCompanyUrl: sinon.stub().returns('/test'),
+      },
     })
 
     interaction = {
@@ -20,7 +20,7 @@ describe('Interaction formatting service', function () {
       dit_team: { id: '222', name: 'team name' },
       contact: { id: '444', first_name: 'Fred', last_name: 'Smith' },
       company: { id: '555', name: 'Fred ltd' },
-      notes: 'Here are some notes\nline 2.'
+      notes: 'Here are some notes\nline 2.',
     }
   })
 
@@ -36,7 +36,7 @@ describe('Interaction formatting service', function () {
         date: '14 Feb 2017',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -53,7 +53,7 @@ describe('Interaction formatting service', function () {
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -70,7 +70,7 @@ describe('Interaction formatting service', function () {
         contact: '<a href="/contact/444/details">Smith</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -87,7 +87,7 @@ describe('Interaction formatting service', function () {
         contact: '<a href="/contact/444/details">Fred</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -109,7 +109,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -125,7 +125,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: null,
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -141,7 +141,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -157,7 +157,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -173,7 +173,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -189,7 +189,7 @@ describe('Interaction formatting service', function () {
         date: null,
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -205,7 +205,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: null,
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -221,7 +221,7 @@ describe('Interaction formatting service', function () {
         date: '14 February 2017',
         dit_advisor: 'John Brown',
         service: 'service name',
-        dit_team: null
+        dit_team: null,
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -238,7 +238,7 @@ describe('Interaction formatting service', function () {
         date: '14 Feb 2017',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -254,7 +254,7 @@ describe('Interaction formatting service', function () {
         advisor: null,
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -270,7 +270,7 @@ describe('Interaction formatting service', function () {
         advisor: 'John Brown',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
@@ -286,7 +286,7 @@ describe('Interaction formatting service', function () {
         advisor: 'John Brown',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
-        dit_team: 'team name'
+        dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)

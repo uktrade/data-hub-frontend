@@ -7,7 +7,7 @@ const {
   getInvestmentValue,
   getInvestmentRequirements,
   createInvestmentProject,
-  updateInvestmentProject
+  updateInvestmentProject,
 } = require('~/src/repos/investment.repo')
 
 const companyData = require('../data/company.json')

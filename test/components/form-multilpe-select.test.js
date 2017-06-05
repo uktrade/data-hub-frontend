@@ -15,9 +15,9 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
-            }
-          ]
+              value: 'marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group inline">
@@ -45,9 +45,9 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
-            }
-          ]
+              value: 'marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group error">
@@ -74,9 +74,9 @@ describe('Form multiple choice component', () => {
           error: true,
           children: [
             {
-              label: 'My marbells'
-            }
-          ]
+              label: 'My marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group error">
@@ -103,9 +103,9 @@ describe('Form multiple choice component', () => {
           optional: true,
           children: [
             {
-              label: 'My marbells'
-            }
-          ]
+              label: 'My marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group">
@@ -132,9 +132,9 @@ describe('Form multiple choice component', () => {
           hint: 'Choose an option',
           children: [
             {
-              label: 'My marbells'
-            }
-          ]
+              label: 'My marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group">
@@ -166,9 +166,9 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
-            }
-          ]
+              value: 'marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group">
@@ -196,13 +196,13 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
+              value: 'marbells',
             },
             {
               label: 'For love',
-              value: 'love'
-            }
-          ]
+              value: 'love',
+            },
+          ],
         },
         `
         <fieldset class="form-group">
@@ -238,9 +238,9 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
-            }
-          ]
+              value: 'marbells',
+            },
+          ],
         },
         `
         <fieldset class="form-group">
@@ -268,13 +268,13 @@ describe('Form multiple choice component', () => {
           children: [
             {
               label: 'My marbells',
-              value: 'marbells'
+              value: 'marbells',
             },
             {
               label: 'For love',
-              value: 'love'
-            }
-          ]
+              value: 'love',
+            },
+          ],
         },
         `
         <fieldset class="form-group">

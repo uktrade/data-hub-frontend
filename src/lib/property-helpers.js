@@ -95,7 +95,7 @@ function convertNestedObjects (object = {}, props = []) {
 
     if (value) {
       convertedObject[prop] = {
-        id: value
+        id: value,
       }
     }
   }
@@ -131,5 +131,5 @@ module.exports = {
   getPropertyName,
   hasObjectProperty,
   hasProperty,
-  nullEmptyFields
+  nullEmptyFields,
 }

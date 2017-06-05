@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   res.locals.messages = {
     success: req.flash('success-message'),
     error: req.flash('error-message'),
-    info: req.flash('info')
+    info: req.flash('info'),
   }
 
   if (formErrors && formErrors.length) {

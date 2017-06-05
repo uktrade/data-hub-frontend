@@ -5,7 +5,7 @@ const {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   createInvestmentProject,
-  updateInvestmentProject
+  updateInvestmentProject,
 } = require('../repos/investment.repo')
 const { transformToApi, transformFromApi } = require('../services/investment-formatting.service')
 const { getAdvisors } = require('../repos/advisor.repo')
@@ -16,7 +16,7 @@ function getHandler (req, res, next) {
   const promises = [
     getInflatedDitCompany(req.session.token, equityCompanyId),
     getCompanyInvestmentProjects(req.session.token, equityCompanyId),
-    getAdvisors(req.session.token)
+    getAdvisors(req.session.token),
   ]
 
   if (!equityCompanyId) {
@@ -29,19 +29,19 @@ function getHandler (req, res, next) {
       const contacts = equityCompany.contacts.map((contact) => {
         return {
           id: contact.id,
-          name: `${contact.first_name} ${contact.last_name}`
+          name: `${contact.first_name} ${contact.last_name}`,
         }
       })
       const investmentTypes = metadataRepo.investmentTypeOptions.map((type) => {
         return {
           value: type.id,
-          label: type.name
+          label: type.name,
         }
       })
       const advisors = advisorResponse.results.map((advisor) => {
         return {
           id: advisor.id,
-          name: `${advisor.first_name} ${advisor.last_name}`
+          name: `${advisor.first_name} ${advisor.last_name}`,
         }
       })
 
@@ -55,13 +55,13 @@ function getHandler (req, res, next) {
         referralSourceMarketing: metadataRepo.referralSourceMarketingOptions,
         referralSourceWebsite: metadataRepo.referralSourceWebsiteOptions,
         primarySectors: metadataRepo.sectorOptions,
-        businessActivities: metadataRepo.businessActivityOptions
+        businessActivities: metadataRepo.businessActivityOptions,
       }
 
       res.render('investment/create', {
         equityCompany,
         equityCompanyInvestments,
-        form
+        form,
       })
     })
     .catch(next)
@@ -136,5 +136,5 @@ module.exports = {
   router,
   getHandler,
   postHandler,
-  editMiddleware
+  editMiddleware,
 }

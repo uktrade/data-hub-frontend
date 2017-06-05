@@ -8,7 +8,7 @@ function getInteraction (token, interactionId) {
 
 function saveInteraction (token, interaction) {
   const options = {
-    body: interaction
+    body: interaction,
   }
 
   if (interaction.id && interaction.id.length > 0) {
@@ -47,5 +47,5 @@ function getInteractionsForContact (token, contactId) {
 module.exports = {
   saveInteraction,
   getInteraction,
-  getInteractionsForContact
+  getInteractionsForContact,
 }

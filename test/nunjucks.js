@@ -5,7 +5,7 @@ const filters = require('@uktrade/trade_elements/dist/nunjucks/filters')
 
 nunjucks.configure('views')
 const nunenv = nunjucks.configure([`${__dirname}/../src/views`, `${__dirname}/../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
-  autoescape: true
+  autoescape: true,
 })
 
 Object.keys(filters).forEach((filterName) => {

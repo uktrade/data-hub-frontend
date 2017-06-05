@@ -33,7 +33,7 @@ function getAllSubSectors (sectorName, allSectors) {
     .filter(sector => getPrimarySectorName(sector.name) === sectorName)
     .map(sector => ({
       id: sector.id,
-      name: getSubsectorName(sector.name)
+      name: getSubsectorName(sector.name),
     }))
 
   if (allSubSectors === null || allSubSectors.length === 1) return null
@@ -56,5 +56,5 @@ module.exports = {
   getAllSubSectors,
   getAllPrimarySectors,
   getSectorForName,
-  getSectorForId
+  getSectorForId,
 }

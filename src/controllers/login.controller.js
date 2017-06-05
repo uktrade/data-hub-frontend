@@ -13,14 +13,14 @@ function authenticate (username, password) {
     headers: {
       'cache-control': 'no-cache',
       'authorization': `Basic ${Buffer.from(config.api.clientId + ':' + config.api.clientSecret).toString('base64')}`,
-      'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+      'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
     },
     formData: {
       username: username,
       password: password,
-      grant_type: 'password'
+      grant_type: 'password',
     },
-    json: true
+    json: true,
   }
 
   return rp(options)

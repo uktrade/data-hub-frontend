@@ -21,7 +21,7 @@ function createInvestmentProject (token, body) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/project`,
     method: 'POST',
-    body
+    body,
   })
 }
 
@@ -29,7 +29,7 @@ function updateInvestmentProject (token, investmentId, body) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/project`,
     method: 'PATCH',
-    body
+    body,
   })
 }
 
@@ -39,5 +39,5 @@ module.exports = {
   getInvestmentValue,
   getInvestmentRequirements,
   createInvestmentProject,
-  updateInvestmentProject
+  updateInvestmentProject,
 }

@@ -25,17 +25,17 @@ describe('interaction data service', function () {
 
     interactionDataService = proxyquire('~/src/services/interaction-data.service', {
       '../repos/company.repo': {
-        getDitCompany: getDitCompanyStub
+        getDitCompany: getDitCompanyStub,
       },
       '../repos/contact.repo': {
-        getContact: getContactStub
+        getContact: getContactStub,
       },
       '../repos/interaction.repo': {
-        getInteraction: getInteractionStub
+        getInteraction: getInteractionStub,
       },
       '../repos/metadata.repo': {
-        interactionTypeOptions: [interaction_type]
-      }
+        interactionTypeOptions: [interaction_type],
+      },
     })
   })
 
@@ -54,17 +54,17 @@ describe('interaction data service', function () {
 
       interactionDataService = proxyquire('~/src/services/interaction-data.service', {
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/contact.repo': {
-          getContact: getContactStub
+          getContact: getContactStub,
         },
         '../repos/interaction.repo': {
-          getInteraction: getInteractionStub
+          getInteraction: getInteractionStub,
         },
         '../repos/metadata.repo': {
-          interactionTypeOptions: [interaction_type]
-        }
+          interactionTypeOptions: [interaction_type],
+        },
       })
       interactionDataService.getHydratedInteraction(token, '1234')
       .catch(() => {
@@ -110,17 +110,17 @@ describe('interaction data service', function () {
 
       interactionDataService = proxyquire('~/src/services/interaction-data.service', {
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/contact.repo': {
-          getContact: getContactStub
+          getContact: getContactStub,
         },
         '../repos/interaction.repo': {
-          getInteraction: getInteractionStub
+          getInteraction: getInteractionStub,
         },
         '../repos/metadata.repo': {
-          interactionTypeOptions: [interaction_type]
-        }
+          interactionTypeOptions: [interaction_type],
+        },
       })
 
       interactionDataService.createBlankInteractionForContact(token, dit_advisor, interaction_type.id, 'YYY')
@@ -133,17 +133,17 @@ describe('interaction data service', function () {
 
       interactionDataService = proxyquire('~/src/services/interaction-data.service', {
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/contact.repo': {
-          getContact: getContactStub
+          getContact: getContactStub,
         },
         '../repos/interaction.repo': {
-          getInteraction: getInteractionStub
+          getInteraction: getInteractionStub,
         },
         '../repos/metadata.repo': {
-          interactionTypeOptions: [interaction_type]
-        }
+          interactionTypeOptions: [interaction_type],
+        },
       })
       interactionDataService.createBlankInteractionForContact(token, dit_advisor, interaction_type.id, 'YYY')
       .catch((error) => {
@@ -178,17 +178,17 @@ describe('interaction data service', function () {
 
       interactionDataService = proxyquire('~/src/services/interaction-data.service', {
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/contact.repo': {
-          getContact: getContactStub
+          getContact: getContactStub,
         },
         '../repos/interaction.repo': {
-          getInteraction: getInteractionStub
+          getInteraction: getInteractionStub,
         },
         '../repos/metadata.repo': {
-          interactionTypeOptions: [interaction_type]
-        }
+          interactionTypeOptions: [interaction_type],
+        },
       })
       interactionDataService.createBlankInteractionForCompany(token, dit_advisor, interaction_type.id, 'YYY')
       .catch((error) => {

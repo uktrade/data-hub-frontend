@@ -6,5 +6,5 @@ function getInflatedContact (token = null, id) {
 }
 
 module.exports = {
-  getInflatedContact
+  getInflatedContact,
 }

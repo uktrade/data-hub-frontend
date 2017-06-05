@@ -9,12 +9,12 @@ function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
     term: searchTerm,
     entity: searchType,
     limit,
-    offset: (page * limit) - limit
+    offset: (page * limit) - limit,
   }
 
   const options = {
     url: `${config.apiRoot}/v3/search${buildQueryString(params)}`,
-    method: 'GET'
+    method: 'GET',
   }
 
   return authorisedRequest(token, options)
@@ -35,9 +35,9 @@ function suggestCompany (token, term, types) {
       term,
       doc_type: types,
       limit: 10,
-      offset: 0
+      offset: 0,
     },
-    method: 'POST'
+    method: 'POST',
   }
 
   return authorisedRequest(token, options)
@@ -47,7 +47,7 @@ function suggestCompany (token, term, types) {
         .map((hit) => ({
           name: hit._source.name,
           id: hit._id,
-          _type: hit._type
+          _type: hit._type,
         }))
     })
     .catch((error) => {

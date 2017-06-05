@@ -24,7 +24,7 @@ function getDetails (req, res, next) {
 
       res.locals.accountManagementDisplay = {
         oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
-        oneListAccountManager: 'None'
+        oneListAccountManager: 'None',
       }
       res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
       res.render('company/details-ukother')
@@ -53,7 +53,7 @@ function addDetails (req, res, next) {
     res.locals.formData = req.body
   } else {
     res.locals.formData = {
-      business_type: metadataRepository.getIdForName(metadataRepository.businessTypeOptions, req.query.business_type).id
+      business_type: metadataRepository.getIdForName(metadataRepository.businessTypeOptions, req.query.business_type).id,
     }
   }
   res.locals.businessTypeName = req.query.business_type

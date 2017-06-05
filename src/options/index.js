@@ -6,13 +6,13 @@ const investmentTierOptions = [
   'C - IST managed',
   'C - IST managed - Partner lead',
   'D - LEP managed',
-  'D - Post managed'
+  'D - Post managed',
 ]
 const managedOptions = [
   'C - IST managed',
   'C - IST managed - Partner lead',
   'D - LEP managed',
-  'D - Post managed'
+  'D - Post managed',
 ]
 
 const ukOtherCompanyOptions = [
@@ -21,7 +21,7 @@ const ukOtherCompanyOptions = [
   'Intermediary',
   'Limited partnership',
   'Partnership',
-  'Sole trader'
+  'Sole trader',
 ]
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -30,12 +30,12 @@ const foreignOtherCompanyOptions = [
   'Intermediary',
   'Limited partnership',
   'Partnership',
-  'Sole trader'
+  'Sole trader',
 ]
 
 module.exports = {
   investmentTierOptions,
   managedOptions,
   ukOtherCompanyOptions,
-  foreignOtherCompanyOptions
+  foreignOtherCompanyOptions,
 }

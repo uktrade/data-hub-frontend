@@ -29,15 +29,15 @@ describe('interaction form service', function () {
       date: '2017-01-02:T00:00:00.00Z',
       dit_advisor,
       service,
-      dit_team
+      dit_team,
     }
 
     saveInteractionStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
 
     interactionFormService = proxyquire('~/src/services/interaction-form.service', {
       '../repos/interaction.repo': {
-        saveInteraction: saveInteractionStub
-      }
+        saveInteraction: saveInteractionStub,
+      },
     })
   })
 
@@ -53,7 +53,7 @@ describe('interaction form service', function () {
         date: '2017-01-02:T00:00:00.00Z',
         dit_advisor: dit_advisor.id,
         service: service.id,
-        dit_team: dit_team.id
+        dit_team: dit_team.id,
       }
       expect(interactionFormService.getInteractionAsFormData(interaction)).to.deep.equal(expected)
     })
@@ -66,12 +66,12 @@ describe('interaction form service', function () {
         date: '2017-01-02:T00:00:00.00Z',
         service: {
           id: null,
-          name: null
+          name: null,
         },
         dit_team: {
           id: null,
-          name: null
-        }
+          name: null,
+        },
       }
       const expected = {
         id: null,
@@ -83,7 +83,7 @@ describe('interaction form service', function () {
         date: '2017-01-02:T00:00:00.00Z',
         dit_advisor: dit_advisor.id,
         service: null,
-        dit_team: null
+        dit_team: null,
       }
       expect(interactionFormService.getInteractionAsFormData(freshInteraction)).to.deep.equal(expected)
     })
@@ -103,7 +103,7 @@ describe('interaction form service', function () {
         date_day: '12',
         dit_advisor: dit_advisor.id,
         service: service.id,
-        dit_team: dit_team.id
+        dit_team: dit_team.id,
       }
     })
 
@@ -131,8 +131,8 @@ describe('interaction form service', function () {
 
       interactionFormService = proxyquire('~/src/services/interaction-form.service', {
         '../repos/interaction.repo': {
-          saveInteraction: saveInteractionStub
-        }
+          saveInteraction: saveInteractionStub,
+        },
       })
 
       interactionFormService.saveInteractionForm(token, interactionForm)
