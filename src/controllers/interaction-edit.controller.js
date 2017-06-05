@@ -5,7 +5,7 @@ const interactionLabels = require('../labels/interaction-labels')
 const contactRepository = require('../repos/contact.repo')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
-const advisorRepository = require('../repos/advisor.repo')
+const adviserRepository = require('../repos/adviser.repo')
 const interactionDataService = require('../services/interaction-data.service')
 const interactionFormService = require('../services/interaction-form.service')
 const { containsFormData } = require('../lib/controller-utils')
@@ -15,7 +15,7 @@ function editDetails (req, res, next) {
   Q.spawn(function * () {
     try {
       const token = req.session.token
-      const default_dit_advisor = req.session.user
+      const default_dit_adviser = req.session.user
 
       // Work out what to use for the form data
       // This can either be data recently posted, to be re-rendered with errors
@@ -30,12 +30,12 @@ function editDetails (req, res, next) {
         res.locals.interaction_type = res.locals.interaction.interaction_type
         res.locals.company = res.locals.interaction.company
       } else if (req.query.company) {
-        res.locals.interaction = yield interactionDataService.createBlankInteractionForCompany(token, default_dit_advisor, req.query.interaction_type, req.query.company)
+        res.locals.interaction = yield interactionDataService.createBlankInteractionForCompany(token, default_dit_adviser, req.query.interaction_type, req.query.company)
         res.locals.formData = interactionFormService.getInteractionAsFormData(res.locals.interaction)
         res.locals.company = res.locals.interaction.company
         res.locals.interaction_type = res.locals.interaction.interaction_type
       } else if (req.query.contact) {
-        res.locals.interaction = yield interactionDataService.createBlankInteractionForContact(token, default_dit_advisor, req.query.interaction_type, req.query.contact)
+        res.locals.interaction = yield interactionDataService.createBlankInteractionForContact(token, default_dit_adviser, req.query.interaction_type, req.query.contact)
         res.locals.formData = interactionFormService.getInteractionAsFormData(res.locals.interaction)
         res.locals.company = res.locals.interaction.company
         res.locals.interaction_type = res.locals.interaction.interaction_type
@@ -59,10 +59,10 @@ function editDetails (req, res, next) {
         }
       })
 
-      if (res.locals.formData.dit_advisor) {
-        res.locals.dit_advisor = yield advisorRepository.getAdvisor(req.session.token, res.locals.formData.dit_advisor)
+      if (res.locals.formData.dit_adviser) {
+        res.locals.dit_adviser = yield adviserRepository.getAdviser(req.session.token, res.locals.formData.dit_adviser)
       } else {
-        res.locals.dit_advisor = default_dit_advisor
+        res.locals.dit_adviser = default_dit_adviser
       }
 
       res.locals.serviceOfferOptions = yield metadataRepository.getServiceOffers(token)

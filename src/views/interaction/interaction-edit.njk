@@ -56,12 +56,12 @@
 
     {{ trade.date('date', label=labels.date, value=formData.date ) }}
 
-    {{ trade.autocomplete('dit_advisor',
-      label=labels.dit_advisor,
-      value=formData.dit_advisor,
-      displayvalue=dit_advisor.name,
+    {{ trade.autocomplete('dit_adviser',
+      label=labels.dit_adviser,
+      value=formData.dit_adviser,
+      displayvalue=dit_adviser.name,
       hint="Please start typing to search for an adviser",
-      error=errors.dit_advisor,
+      error=errors.dit_adviser,
       autofocus=false,
       url='/api/accountmanagerlookup?term=')
     }}

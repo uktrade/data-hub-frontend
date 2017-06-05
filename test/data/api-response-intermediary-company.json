@@ -14,7 +14,7 @@
             "company": "3f2b2a0f-0eb6-4299-8489-7390ccaa17f5",
             "contact": "12651151-2149-465e-871b-ac45bc568a62",
             "service": "9484b82b-3499-e211-a939-e4115bead28a",
-            "dit_advisor": "5707c18a-454a-4bd2-b14b-218761a684bc",
+            "dit_adviser": "5707c18a-454a-4bd2-b14b-218761a684bc",
             "dit_team": "85a963f8-9698-e211-a939-e4115bead28a",
             "interaction_type": "a6d71fdd-5d95-e211-a939-e4115bead28a"
         },
@@ -28,7 +28,7 @@
             "company": "3f2b2a0f-0eb6-4299-8489-7390ccaa17f5",
             "contact": "12651151-2149-465e-871b-ac45bc568a62",
             "service": "9484b82b-3499-e211-a939-e4115bead28a",
-            "dit_advisor": "8036f207-ae3e-e611-8d53-e4115bed50dc",
+            "dit_adviser": "8036f207-ae3e-e611-8d53-e4115bed50dc",
             "dit_team": "85a963f8-9698-e211-a939-e4115bead28a",
             "interaction_type": "a6d71fdd-5d95-e211-a939-e4115bead28a"
         },
@@ -42,7 +42,7 @@
             "company": "3f2b2a0f-0eb6-4299-8489-7390ccaa17f5",
             "contact": "12651151-2149-465e-871b-ac45bc568a62",
             "service": "9484b82b-3499-e211-a939-e4115bead28a",
-            "dit_advisor": "5707c18a-454a-4bd2-b14b-218761a684bc",
+            "dit_adviser": "5707c18a-454a-4bd2-b14b-218761a684bc",
             "dit_team": "589ed722-9798-e211-a939-e4115bead28a",
             "interaction_type": "73c226d7-5d95-e211-a939-e4115bead28a"
         }
@@ -141,7 +141,7 @@
                 "export_to_countries": [],
                 "future_interest_countries": []
             },
-            "advisor": null,
+            "adviser": null,
             "address_country": null,
             "teams": []
         }

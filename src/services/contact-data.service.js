@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const winston = require('winston')
-const advisorRepository = require('../repos/advisor.repo')
+const adviserRepository = require('../repos/adviser.repo')
 const interactionRepository = require('../repos/interaction.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
@@ -34,22 +34,22 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const advisorHash = {}
+        const adviserHash = {}
 
         const interactions = yield interactionRepository.getInteractionsForContact(token, contactId)
         const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForContact(token, contactId)
         const serviceOffers = yield metadataRepository.getServiceOffers(token)
 
-        // Build a list of advisors we use in interactions, to help populate service deliveries
+        // Build a list of advisers we use in interactions, to help populate service deliveries
         for (const interaction of interactions) {
-          advisorHash[interaction.dit_advisor.id] = interaction.dit_advisor
+          adviserHash[interaction.dit_adviser.id] = interaction.dit_adviser
         }
 
-        // Go fetch any advisors we haven't got yet for service deliveries
+        // Go fetch any advisers we haven't got yet for service deliveries
         for (const serviceDelivery of serviceDeliveries) {
-          const dit_advisor = serviceDelivery.relationships.dit_advisor.data.id
-          if (!advisorHash[dit_advisor]) {
-            advisorHash[dit_advisor] = yield advisorRepository.getAdvisor(token, dit_advisor)
+          const dit_adviser = serviceDelivery.relationships.dit_adviser.data.id
+          if (!adviserHash[dit_adviser]) {
+            adviserHash[dit_adviser] = yield adviserRepository.getAdviser(token, dit_adviser)
           }
         }
 
@@ -60,7 +60,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
             {
               id: serviceDelivery.id,
               interaction_type: { id: null, name: 'Service delivery' },
-              dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
+              dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
               service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
               dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
             })

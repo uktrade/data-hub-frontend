@@ -101,12 +101,12 @@
       options=contacts)
     }}
 
-    {{ trade.autocomplete('dit_advisor',
-      label=labels.dit_advisor,
-      value=serviceDelivery.dit_advisor.id,
-      displayvalue=serviceDelivery.dit_advisor.name,
-      hint="Please start typing to search for an advisor",
-      error=errors.advisor,
+    {{ trade.autocomplete('dit_adviser',
+      label=labels.dit_adviser,
+      value=serviceDelivery.dit_adviser.id,
+      displayvalue=serviceDelivery.dit_adviser.name,
+      hint="Please start typing to search for an adviser",
+      error=errors.adviser,
       autofocus=false,
       url='/api/accountmanagerlookup?term=')
     }}

@@ -19,7 +19,7 @@ function getInteractionAsFormData (interaction) {
     subject: interaction.subject || null,
     notes: interaction.notes || null,
     date: interaction.date || null,
-    dit_advisor: getPropertyId(interaction, 'dit_advisor'),
+    dit_adviser: getPropertyId(interaction, 'dit_adviser'),
     service: getPropertyId(interaction, 'service'),
     dit_team: getPropertyId(interaction, 'dit_team'),
   }

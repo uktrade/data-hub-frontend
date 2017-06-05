@@ -35,7 +35,7 @@ describe('Contact formatting service', function () {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
         name: 'Mr',
       },
-      advisor: null,
+      adviser: null,
       address_country: null,
     }
 

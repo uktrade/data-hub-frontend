@@ -15,7 +15,7 @@ describe('Interaction formatting service', function () {
       interaction_type: { id: '1234', name: 'Email' },
       subject: 'Subject 1234',
       date: '2017-02-14T14:49:17',
-      dit_advisor: { id: '666', name: 'John Brown' },
+      dit_adviser: { id: '666', name: 'John Brown' },
       service: { id: '333', name: 'service name' },
       dit_team: { id: '222', name: 'team name' },
       contact: { id: '444', first_name: 'Fred', last_name: 'Smith' },
@@ -31,7 +31,7 @@ describe('Interaction formatting service', function () {
         url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
         subject: 'Subject 1234',
         interaction_type: 'Email',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 Feb 2017',
         service: 'service name',
@@ -41,15 +41,15 @@ describe('Interaction formatting service', function () {
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
-    it('should handle a missing advisor', function () {
-      interaction.dit_advisor = null
+    it('should handle a missing adviser', function () {
+      interaction.dit_adviser = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
         url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: null,
+        adviser: null,
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
@@ -66,7 +66,7 @@ describe('Interaction formatting service', function () {
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         contact: '<a href="/contact/444/details">Smith</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
@@ -83,7 +83,7 @@ describe('Interaction formatting service', function () {
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         contact: '<a href="/contact/444/details">Fred</a>',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
@@ -107,15 +107,15 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: 'team name',
       }
       const actualDisplayInteraction = interactionFormattingService.getDisplayInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
-    it('should handle a missing advisor', function () {
-      interaction.dit_advisor = null
+    it('should handle a missing adviser', function () {
+      interaction.dit_adviser = null
       const expectedDisplayInteraction = {
         company: '<a href="/test">Fred ltd</a>',
         interaction_type: 'Email',
@@ -123,7 +123,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 February 2017',
-        dit_advisor: null,
+        dit_adviser: null,
         service: 'service name',
         dit_team: 'team name',
       }
@@ -139,7 +139,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Smith</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: 'team name',
       }
@@ -155,7 +155,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: 'team name',
       }
@@ -171,7 +171,7 @@ describe('Interaction formatting service', function () {
         notes: null,
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: 'team name',
       }
@@ -187,7 +187,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: null,
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: 'team name',
       }
@@ -203,7 +203,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: null,
         dit_team: 'team name',
       }
@@ -219,7 +219,7 @@ describe('Interaction formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
         date: '14 February 2017',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         service: 'service name',
         dit_team: null,
       }
@@ -234,7 +234,7 @@ describe('Interaction formatting service', function () {
         url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
         subject: 'Subject 1234',
         interaction_type: 'Email',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         date: '14 Feb 2017',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
@@ -243,15 +243,15 @@ describe('Interaction formatting service', function () {
       const actualDisplayInteraction = interactionFormattingService.getDisplayContactInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
-    it('should handle a missing advisor', function () {
-      interaction.dit_advisor = null
+    it('should handle a missing adviser', function () {
+      interaction.dit_adviser = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
         url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: null,
+        adviser: null,
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
         dit_team: 'team name',
@@ -267,7 +267,7 @@ describe('Interaction formatting service', function () {
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
         dit_team: 'team name',
@@ -283,7 +283,7 @@ describe('Interaction formatting service', function () {
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
-        advisor: 'John Brown',
+        adviser: 'John Brown',
         service: 'service name',
         notes: 'Here are some notes<br/>line 2.',
         dit_team: 'team name',

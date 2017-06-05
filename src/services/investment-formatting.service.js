@@ -8,10 +8,10 @@ function getInvestmentDetailsDisplay (investmentSummary) {
   result.account_management_tier = investmentSummary.investment_tier
 
   if (investmentSummary.investment_account_manager) {
-    result.investment_account_manager = `<a href="/advisor/${investmentSummary.investment_account_manager.id}/">${investmentSummary.investment_account_manager.name}</a>`
+    result.investment_account_manager = `<a href="/adviser/${investmentSummary.investment_account_manager.id}/">${investmentSummary.investment_account_manager.name}</a>`
   }
   if (investmentSummary.client_relationship_manager) {
-    result.client_relationship_manager = `<a href="/advisor/${investmentSummary.client_relationship_manager.id}/">${investmentSummary.client_relationship_manager.name}</a>`
+    result.client_relationship_manager = `<a href="/adviser/${investmentSummary.client_relationship_manager.id}/">${investmentSummary.client_relationship_manager.name}</a>`
   }
 
   result.ownership = investmentSummary.ownership
@@ -59,7 +59,7 @@ function getClosedInvestmentProjects (investmentProjects) {
 function transformToApi (body) {
   const schema = {
     'client_relationship_manager': Object,
-    'referral_source_advisor': Object,
+    'referral_source_adviser': Object,
     'referral_source_activity': Object,
     'referral_source_activity_marketing': Object,
     'referral_source_activity_website': Object,
@@ -79,7 +79,7 @@ function transformToApi (body) {
 
   const referralSource = body['is-relationship-manager']
   if (referralSource !== 'No') {
-    body.referral_source_advisor = referralSource
+    body.referral_source_adviser = referralSource
   }
 
   const formatted = mapValues(schema, (type, key) => {
@@ -104,7 +104,7 @@ function transformToApi (body) {
 function transformFromApi (body) {
   const schema = {
     'client_relationship_manager': String,
-    'referral_source_advisor': String,
+    'referral_source_adviser': String,
     'referral_source_activity': String,
     'investor_company': String,
     'investment_type': String,

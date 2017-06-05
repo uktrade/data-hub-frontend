@@ -16,7 +16,7 @@ function getDisplayServiceDelivery (serviceDelivery) {
     subject: serviceDelivery.subject,
     notes: newlineToBr(serviceDelivery.notes),
     date: formatLongDate(serviceDelivery.date),
-    dit_advisor: getPropertyName(serviceDelivery, 'dit_advisor'),
+    dit_adviser: getPropertyName(serviceDelivery, 'dit_adviser'),
     uk_region: getPropertyName(serviceDelivery, 'uk_region'),
     sector: getPropertyName(serviceDelivery, 'sector'),
     contact: getContactLink(serviceDelivery),

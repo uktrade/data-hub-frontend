@@ -57,7 +57,7 @@
       {{ trade.autocomplete('client_relationship_manager',
         label="Client relationship manager",
         value=form.state['client_relationship_manager'],
-        options=form.options.advisors)
+        options=form.options.advisers)
       }}
     </div>
 
@@ -76,10 +76,10 @@
     } %}
 
     <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
-      {{ trade.autocomplete('referral_source_advisor',
-        label="Referral source advisor",
-        value=form.state['referral_source_advisor'],
-        options=form.options.advisors)
+      {{ trade.autocomplete('referral_source_adviser',
+        label="Referral source adviser",
+        value=form.state['referral_source_adviser'],
+        options=form.options.advisers)
       }}
     </div>
 

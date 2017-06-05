@@ -5,7 +5,7 @@ const companyRepository = require('../repos/company.repo')
 const contactRepository = require('../repos/contact.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
-const advisorRepository = require('../repos/advisor.repo')
+const adviserRepository = require('../repos/adviser.repo')
 
 function validKey (object, key) {
   return object && object[key] && object[key].data && object[key].data.id && object[key].data.id.length > 0
@@ -31,8 +31,8 @@ function getHydratedServiceDelivery (token, serviceDeliveryId) {
         if (validKey(related, 'service')) {
           serviceDelivery.service = yield metadataRepository.getMetadataItem('service', related.service.data.id)
         }
-        if (validKey(related, 'dit_advisor')) {
-          serviceDelivery.dit_advisor = yield advisorRepository.getAdvisor(token, related.dit_advisor.data.id)
+        if (validKey(related, 'dit_adviser')) {
+          serviceDelivery.dit_adviser = yield adviserRepository.getAdviser(token, related.dit_adviser.data.id)
         }
         if (validKey(related, 'dit_team')) {
           serviceDelivery.dit_team = yield metadataRepository.getMetadataItem('team', related.dit_team.data.id)
@@ -73,7 +73,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
         service: { data: { type: 'Service', id: serviceDeliveryForm.service } },
         status: { data: { type: 'ServiceDeliveryStatus', id: serviceDeliveryForm.status } },
         contact: { data: { type: 'Contact', id: serviceDeliveryForm.contact } },
-        dit_advisor: { data: { type: 'Advisor', id: serviceDeliveryForm.dit_advisor } },
+        dit_adviser: { data: { type: 'Adviser', id: serviceDeliveryForm.dit_adviser } },
         uk_region: { data: { type: 'UKRegion', id: serviceDeliveryForm.uk_region } },
         sector: { data: { type: 'Sector', id: serviceDeliveryForm.sector } },
         country_of_interest: { data: { type: 'Country', id: serviceDeliveryForm.country_of_interest } },
@@ -91,7 +91,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
   return serviceDelivery
 }
 
-function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
+function createBlankServiceDeliveryForContact (token, dit_adviser, contactId) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
@@ -101,7 +101,7 @@ function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
         resolve({
           contact,
           company,
-          dit_advisor,
+          dit_adviser,
           date: new Date(),
           dit_team: {
             id: null,
@@ -115,14 +115,14 @@ function createBlankServiceDeliveryForContact (token, dit_advisor, contactId) {
   })
 }
 
-function createBlankServiceDeliveryForCompany (token, dit_advisor, companyId) {
+function createBlankServiceDeliveryForCompany (token, dit_adviser, companyId) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
         const company = yield companyRepository.getDitCompany(token, companyId)
         resolve({
           company,
-          dit_advisor,
+          dit_adviser,
           date: new Date(),
         })
       } catch (error) {
@@ -158,10 +158,10 @@ function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
           result.contact = { id: null }
         }
 
-        if (flatServiceDelivery.dit_advisor) {
-          result.dit_advisor = yield advisorRepository.getAdvisor(token, flatServiceDelivery.dit_advisor)
+        if (flatServiceDelivery.dit_adviser) {
+          result.dit_adviser = yield adviserRepository.getAdviser(token, flatServiceDelivery.dit_adviser)
         } else {
-          result.dit_advisor = { id: null }
+          result.dit_adviser = { id: null }
         }
 
         if (flatServiceDelivery.id) {

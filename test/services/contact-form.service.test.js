@@ -73,7 +73,7 @@ describe('contact form service', function () {
           id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
           name: 'OpenStuff',
         },
-        advisor: null,
+        adviser: null,
       }
     })
 
