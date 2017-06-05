@@ -135,7 +135,7 @@ function formatProjectData (data) {
       url: buildCompanyUrl(data.investor_company),
     },
     'Type of investment': data.investment_type.name,
-    'Primary sector': data.sector,
+    'Primary sector': get(data, 'sector.name', null),
     'Sub-sector': null,
     'Business activity': data.business_activity,
     'Project description': data.description,
