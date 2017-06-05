@@ -61,8 +61,12 @@ function transformToApi (body) {
     'client_relationship_manager': Object,
     'referral_source_advisor': Object,
     'referral_source_activity': Object,
+    'referral_source_activity_marketing': Object,
+    'referral_source_activity_website': Object,
     'investor_company': Object,
     'investment_type': Object,
+    'fdi_type': Object,
+    'non_fdi_type': Object,
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
@@ -79,10 +83,17 @@ function transformToApi (body) {
   }
 
   const formatted = mapValues(schema, (type, key) => {
-    if (type === Array) {
-      return [{ id: body[key] }]
+    const value = body[key]
+
+    if (!value) {
+      return
     }
-    return { id: body[key] }
+
+    if (type === Array) {
+      return [{ id: value }]
+    }
+
+    return { id: value }
   })
 
   formatted['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`

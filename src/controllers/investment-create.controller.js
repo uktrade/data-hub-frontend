@@ -49,7 +49,11 @@ function getHandler (req, res, next) {
         advisors,
         contacts,
         investmentTypes,
+        fdi: metadataRepo.fdiOptions,
+        nonFdi: metadataRepo.nonFdiOptions,
         referralSourceActivities: metadataRepo.referralSourceActivityOptions,
+        referralSourceMarketing: metadataRepo.referralSourceMarketingOptions,
+        referralSourceWebsite: metadataRepo.referralSourceWebsiteOptions,
         primarySectors: metadataRepo.sectorOptions,
         businessActivities: metadataRepo.businessActivityOptions
       }
