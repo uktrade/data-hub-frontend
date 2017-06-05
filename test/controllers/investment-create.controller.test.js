@@ -5,12 +5,12 @@ const company = {
   contacts: [{
     id: 1,
     first_name: 'Bob',
-    last_name: 'Stevens'
-  }]
+    last_name: 'Stevens',
+  }],
 }
 const investmentProjects = {
   count: 0,
-  results: []
+  results: [],
 }
 const investmentProjectSummary = {
   id: '12345',
@@ -25,8 +25,8 @@ const advisorMock = {
       id: 1,
       first_name: 'Jeff',
       last_name: 'Major',
-    }
-  ]
+    },
+  ],
 }
 
 describe('Investment create controller', () => {
@@ -44,20 +44,20 @@ describe('Investment create controller', () => {
 
     this.controller = proxyquire('~/src/controllers/investment-create.controller', {
       '../services/company.service': {
-        getInflatedDitCompany: this.getInflatedDitCompany
+        getInflatedDitCompany: this.getInflatedDitCompany,
       },
       '../repos/investment.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
         getInvestmentProjectSummary: this.getInvestmentProjectSummary,
         createInvestmentProject: this.createInvestmentProject,
-        updateInvestmentProject: this.updateInvestmentProject
+        updateInvestmentProject: this.updateInvestmentProject,
       },
       '../services/investment-formatting.service': {
         transformToApi: this.transformToApi,
-        transformFromApi: this.transformFromApi
+        transformFromApi: this.transformFromApi,
       },
       '../repos/advisor.repo': {
-        getAdvisors: this.getAdvisors
+        getAdvisors: this.getAdvisors,
       },
       '../repos/metadata.repo': {
         investmentTypeOptions: [{ id: 1, name: 'FDI' }],
@@ -67,8 +67,8 @@ describe('Investment create controller', () => {
         referralSourceMarketingOptions: [{ name: 'Marketing' }],
         referralSourceWebsiteOptions: [{ name: 'Website' }],
         businessActivityOptions: [],
-        sectorOptions: []
-      }
+        sectorOptions: [],
+      },
     })
   })
 
@@ -81,15 +81,15 @@ describe('Investment create controller', () => {
       it('should redirect to the start', (done) => {
         this.controller.getHandler({
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
-          query: {}
+          query: {},
         }, {
           redirect: (url) => {
             expect(url).to.equal('/investment/start')
             done()
           },
-          locals: {}
+          locals: {},
         }, this.next)
       })
     })
@@ -98,11 +98,11 @@ describe('Investment create controller', () => {
       it('should render company details', (done) => {
         this.controller.getHandler({
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
           query: {
-            'equity-company': '12345'
-          }
+            'equity-company': '12345',
+          },
         }, {
           locals: {},
           render: (template, data) => {
@@ -128,15 +128,15 @@ describe('Investment create controller', () => {
                   referralSourceMarketing: [{ name: 'Marketing' }],
                   referralSourceWebsite: [{ name: 'Website' }],
                   businessActivities: [],
-                  primarySectors: []
-                }
+                  primarySectors: [],
+                },
               })
 
               done()
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -146,16 +146,16 @@ describe('Investment create controller', () => {
     describe('when save is resolved with an object', () => {
       beforeEach(() => {
         this.createInvestmentProject = this.createInvestmentProject.resolves({
-          id: '12345'
+          id: '12345',
         })
       })
 
       it('should redirect to the investment project', (done) => {
         this.controller.postHandler({
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
-          body: {}
+          body: {},
         }, {
           redirect: (url) => {
             try {
@@ -167,7 +167,7 @@ describe('Investment create controller', () => {
               done(e)
             }
           },
-          locals: {}
+          locals: {},
         }, this.next)
       })
     })
@@ -175,19 +175,19 @@ describe('Investment create controller', () => {
     describe('when project id is set', () => {
       beforeEach(() => {
         this.updateInvestmentProject = this.updateInvestmentProject.resolves({
-          id: '5678'
+          id: '5678',
         })
       })
 
       it('should call the edit method', (done) => {
         this.controller.postHandler({
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
-          body: {}
+          body: {},
         }, {
           locals: {
-            projectId: '5678'
+            projectId: '5678',
           },
           redirect: (url) => {
             try {
@@ -198,7 +198,7 @@ describe('Investment create controller', () => {
             } catch (e) {
               done(e)
             }
-          }
+          },
         }, this.next)
       })
     })
@@ -208,19 +208,19 @@ describe('Investment create controller', () => {
         this.createInvestmentProject = this.createInvestmentProject.rejects({
           statusCode: 400,
           error: {
-            foo: 'field must not be empty'
-          }
+            foo: 'field must not be empty',
+          },
         })
       })
 
       it('should set the error to locals and continue', (done) => {
         const req = {
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
           body: {
-            foo: 'bar'
-          }
+            foo: 'bar',
+          },
         }
         const res = { locals: {} }
         const next = function () {
@@ -228,12 +228,12 @@ describe('Investment create controller', () => {
             expect(res.locals).to.deep.equal({
               form: {
                 errors: {
-                  foo: 'field must not be empty'
+                  foo: 'field must not be empty',
                 },
                 state: {
-                  foo: 'bar'
-                }
-              }
+                  foo: 'bar',
+                },
+              },
             })
             done()
           } catch (e) {
@@ -274,12 +274,12 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
             user: {
-              id: '1a2b3c4d5e'
-            }
+              id: '1a2b3c4d5e',
+            },
           },
           params: {
-            id: '12345'
-          }
+            id: '12345',
+          },
         }
         const res = { locals: {} }
         const next = function () {
@@ -296,8 +296,8 @@ describe('Investment create controller', () => {
                   referral_source_advisor: '333444',
                   'is-relationship-manager': 'No',
                   'is-referral-source': 'No',
-                }
-              }
+                },
+              },
             })
             done()
           } catch (e) {
@@ -328,12 +328,12 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
             user: {
-              id: '1a2b3c4d5e'
-            }
+              id: '1a2b3c4d5e',
+            },
           },
           params: {
-            id: '12345'
-          }
+            id: '12345',
+          },
         }
         const res = { locals: {} }
         const next = function () {
@@ -350,8 +350,8 @@ describe('Investment create controller', () => {
                   referral_source_advisor: '1a2b3c4d5e',
                   'is-relationship-manager': '1a2b3c4d5e',
                   'is-referral-source': '1a2b3c4d5e',
-                }
-              }
+                },
+              },
             })
             done()
           } catch (e) {
@@ -371,11 +371,11 @@ describe('Investment create controller', () => {
       it('should set the error to locals and continue', (done) => {
         const req = {
           session: {
-            token: 'abcd'
+            token: 'abcd',
           },
           params: {
-            id: '12345'
-          }
+            id: '12345',
+          },
         }
         const res = {}
         const next = function (err) {

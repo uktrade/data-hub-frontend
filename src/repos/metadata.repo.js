@@ -146,7 +146,7 @@ module.exports.fetchAll = (cb) => {
 
 module.exports.REASONS_FOR_ARCHIVE = [
   'Company is dissolved',
-  'Other'
+  'Other',
 ]
 
 module.exports.getServiceOffers = function (token) {

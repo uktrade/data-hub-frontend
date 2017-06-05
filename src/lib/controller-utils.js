@@ -88,7 +88,7 @@ function convertAutosuggestCollection (form, targetFieldName) {
     if (fieldName.toLocaleLowerCase().substr(0, targetFieldName.length) === lowerTargetFieldName) {
       form[targetFieldName].push({
         id: form[fieldName],
-        name: form[`${fieldName}-display`]
+        name: form[`${fieldName}-display`],
       })
       delete form[`${fieldName}-display`]
       delete form[fieldName]
@@ -143,5 +143,5 @@ module.exports = {
   flattenIdFields,
   isBlank,
   toQueryString,
-  containsFormData
+  containsFormData,
 }

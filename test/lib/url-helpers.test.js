@@ -3,7 +3,7 @@ const urlHelpers = require('~/src/lib/url-helpers')
 describe('buildQueryString', function () {
   it('should build the expected query string for a single param', function () {
     const params = {
-      mock: 'mockParam'
+      mock: 'mockParam',
     }
     const queryString = urlHelpers.buildQueryString(params)
 
@@ -14,7 +14,7 @@ describe('buildQueryString', function () {
     const params = {
       mock: 'mockParam',
       mock1: 'mockParam1',
-      mock2: 'mockParam2'
+      mock2: 'mockParam2',
     }
     const queryString = urlHelpers.buildQueryString(params)
 

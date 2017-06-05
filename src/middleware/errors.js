@@ -28,11 +28,11 @@ function catchAll (error, req, res, next) {
     .render('errors/index', {
       statusCode,
       statusMessage,
-      devErrorDetail: config.isDev && error
+      devErrorDetail: config.isDev && error,
     })
 }
 
 module.exports = {
   notFound,
-  catchAll
+  catchAll,
 }

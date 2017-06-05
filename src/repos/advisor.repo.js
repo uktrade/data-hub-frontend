@@ -55,5 +55,5 @@ function advisorSearch (token, term) {
 module.exports = {
   getAdvisors,
   getAdvisor,
-  advisorSearch
+  advisorSearch,
 }

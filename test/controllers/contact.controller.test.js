@@ -18,7 +18,7 @@ describe('Contact controller', function () {
     token = '321'
     company = {
       id: '876544',
-      name: 'Bank ltd.'
+      name: 'Bank ltd.',
     }
     companyUrl = '/company/876544'
     contact = {
@@ -49,15 +49,15 @@ describe('Contact controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
       advisor: null,
       address_country: null,
-      company
+      company,
     }
     contactFormatted = {
       id: '12651151-2149-465e-871b-ac45bc568a62',
-      name: 'fred'
+      name: 'fred',
     }
     getContactStub = sinon.stub().resolves(contact)
     getDisplayContactStub = sinon.stub().returns(contactFormatted)
@@ -65,17 +65,17 @@ describe('Contact controller', function () {
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
     contactController = proxyquire('~/src/controllers/contact.controller', {
       '../repos/contact.repo': {
-        getContact: getContactStub
+        getContact: getContactStub,
       },
       '../services/contact-formatting.service': {
-        getDisplayContact: getDisplayContactStub
+        getDisplayContact: getDisplayContactStub,
       },
       '../repos/company.repo': {
-        getDitCompany: getDitCompanyStub
+        getDitCompany: getDitCompanyStub,
       },
       '../services/company.service': {
-        buildCompanyUrl: buildCompanyUrlStub
-      }
+        buildCompanyUrl: buildCompanyUrlStub,
+      },
     })
   })
 
@@ -84,12 +84,12 @@ describe('Contact controller', function () {
       const req = {
         session: { token },
         params: {
-          contactId: '1234'
-        }
+          contactId: '1234',
+        },
       }
       const res = {
         locals: {},
-        render: function () {}
+        render: function () {},
       }
       const next = function () {
         expect(getContactStub).to.have.been.calledWith(token, req.params.contactId)
@@ -101,14 +101,14 @@ describe('Contact controller', function () {
       const req = {
         session: { token },
         params: {
-          contactId: '1234'
-        }
+          contactId: '1234',
+        },
       }
       const res = {
         locals: {
-          contact
+          contact,
         },
-        render: function () {}
+        render: function () {},
       }
       const next = function () {
         expect(getDitCompanyStub).to.have.been.calledWith(token, contact.company.id)
@@ -121,14 +121,14 @@ describe('Contact controller', function () {
       const req = {
         session: { token },
         params: {
-          contactId: '1234'
-        }
+          contactId: '1234',
+        },
       }
       const res = {
         locals: {
-          company
+          company,
         },
-        render: function () {}
+        render: function () {},
       }
       const next = function () {
         expect(buildCompanyUrlStub).to.have.been.calledWith(company)
@@ -140,12 +140,12 @@ describe('Contact controller', function () {
       const req = {
         session: { token },
         params: {
-          contactId: '1234'
-        }
+          contactId: '1234',
+        },
       }
       const res = {
         locals: {},
-        render: function () {}
+        render: function () {},
       }
       const next = function () {
         expect(res.locals.id).to.equal(req.params.contactId)
@@ -157,28 +157,28 @@ describe('Contact controller', function () {
       const error = Error('error')
       contactController = proxyquire('~/src/controllers/contact.controller', {
         '../repos/contact.repo': {
-          getContact: sinon.stub().rejects(error)
+          getContact: sinon.stub().rejects(error),
         },
         '../services/contact-formatting.service': {
-          getDisplayContact: getDisplayContactStub
+          getDisplayContact: getDisplayContactStub,
         },
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../services/company.service': {
-          buildCompanyUrl: buildCompanyUrlStub
-        }
+          buildCompanyUrl: buildCompanyUrlStub,
+        },
       })
 
       const req = {
         session: { token },
         params: {
-          contactId: '1234'
-        }
+          contactId: '1234',
+        },
       }
       const res = {
         locals: {},
-        render: function () {}
+        render: function () {},
       }
       const next = function (err) {
         expect(err.message).to.equal(error.message)
@@ -193,7 +193,7 @@ describe('Contact controller', function () {
     describe('data', function () {
       it('should include formatted contact data', function (done) {
         const req = {
-          session: {}
+          session: {},
         }
         const res = {
           locals: { contact, id: '1234', company },
@@ -202,7 +202,7 @@ describe('Contact controller', function () {
             expect(res.locals.contactDetails).to.deep.equal(contactFormatted)
             expect(res.locals.contactDetailsLabels).to.deep.equal(contactDetailsLabels)
             done()
-          }
+          },
         }
         contactController.getDetails(req, res, next)
       })
@@ -219,7 +219,7 @@ describe('Contact controller', function () {
           address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
           telephone_alternative: '07814 000 333',
           email_alternative: 'fred@gmail.com',
-          notes: 'some notes'
+          notes: 'some notes',
         }
       })
 

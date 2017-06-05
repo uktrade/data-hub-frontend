@@ -6,8 +6,8 @@ describe('Service delivery formatting service', function () {
   beforeEach(function () {
     serviceDeliveryFormattingService = proxyquire('~/src/services/service-delivery-formatting.service', {
       './company.service': {
-        buildCompanyUrl: sinon.stub().returns('/test')
-      }
+        buildCompanyUrl: sinon.stub().returns('/test'),
+      },
     })
 
     serviceDelivery = {
@@ -23,7 +23,7 @@ describe('Service delivery formatting service', function () {
       uk_region: { id: '888', name: 'London' },
       sector: { id: '999', name: 'Engineering' },
       country_of_interest: { id: '122', name: 'France' },
-      dit_team: { id: '344', name: 'team name' }
+      dit_team: { id: '344', name: 'team name' },
     }
   })
 
@@ -41,7 +41,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -60,7 +60,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -79,7 +79,7 @@ describe('Service delivery formatting service', function () {
         uk_region: 'London',
         sector: 'Engineering',
         service: null,
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -98,7 +98,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -117,7 +117,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: null,
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -136,7 +136,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: null,
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -155,7 +155,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: null,
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -174,7 +174,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -193,7 +193,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: null
+        country_of_interest: null,
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)

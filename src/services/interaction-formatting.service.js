@@ -21,7 +21,7 @@ function getDisplayInteraction (interaction) {
     dit_advisor: getPropertyName(interaction, 'dit_advisor'),
     service: getPropertyName(interaction, 'service'),
     dit_team: getPropertyName(interaction, 'dit_team'),
-    contact: getContactLink(interaction)
+    contact: getContactLink(interaction),
   }
 
   return result
@@ -47,7 +47,7 @@ function getDisplayCompanyInteraction (interaction) {
     contact: getContactLink(interaction),
     notes: newlineToBr(interaction.notes),
     service: getPropertyName(interaction, 'service'),
-    dit_team: getPropertyName(interaction, 'dit_team')
+    dit_team: getPropertyName(interaction, 'dit_team'),
   }
   return result
 }
@@ -71,7 +71,7 @@ function getDisplayContactInteraction (interaction) {
     advisor: getPropertyName(interaction, 'dit_advisor'),
     notes: newlineToBr(interaction.notes),
     service: getPropertyName(interaction, 'service'),
-    dit_team: getPropertyName(interaction, 'dit_team')
+    dit_team: getPropertyName(interaction, 'dit_team'),
   }
 
   return result

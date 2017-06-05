@@ -50,5 +50,5 @@ function parsePostcodeResult (data, postcode) {
   })
 }
 module.exports = {
-  lookupAddress
+  lookupAddress,
 }

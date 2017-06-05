@@ -55,7 +55,7 @@ function getAddStep1 (req, res) {
   res.render('interaction/add-step-1.njk', {
     query: req.query,
     interactionTypeColA,
-    interactionTypeColB
+    interactionTypeColB,
   })
 }
 
@@ -63,7 +63,7 @@ function postAddStep1 (req, res) {
   // error if no selection
   if (!req.body.interaction_type) {
     res.locals.errors = {
-      interaction_type: ['You must select an interaction type']
+      interaction_type: ['You must select an interaction type'],
     }
     return getAddStep1(req, res)
   }

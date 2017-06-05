@@ -11,7 +11,7 @@ const router = express.Router()
 const reasonForArchiveOptions = [
   'Contact has left the company',
   'Contact does not want to be contacted',
-  'Contact changed role/responsibility'
+  'Contact changed role/responsibility',
 ]
 
 function getCommon (req, res, next) {

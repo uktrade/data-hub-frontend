@@ -21,7 +21,7 @@ function getInteractionAsFormData (interaction) {
     date: interaction.date || null,
     dit_advisor: getPropertyId(interaction, 'dit_advisor'),
     service: getPropertyId(interaction, 'service'),
-    dit_team: getPropertyId(interaction, 'dit_team')
+    dit_team: getPropertyId(interaction, 'dit_team'),
   }
 
   result = nullEmptyFields(result)
@@ -59,5 +59,5 @@ function saveInteractionForm (token, interactionForm) {
 
 module.exports = {
   saveInteractionForm,
-  getInteractionAsFormData
+  getInteractionAsFormData,
 }

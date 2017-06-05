@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         req.session.user = {
           id: userInfo.id, // DIT Advisor id
           name: userInfo.name,
-          team: userInfo.dit_team
+          team: userInfo.dit_team,
         }
 
         res.locals.user = req.session.user

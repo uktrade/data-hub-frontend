@@ -27,7 +27,7 @@ function getDisplayContact (contact, company) {
     address: getContactAddress(contact, company),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: newlineToBr(contact.notes)
+    notes: newlineToBr(contact.notes),
   }
 }
 
@@ -50,7 +50,7 @@ function getDisplayCompanyContact (contact, company) {
     address: getContactAddress(contact, company),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: newlineToBr(contact.notes)
+    notes: newlineToBr(contact.notes),
   }
 }
 
@@ -67,7 +67,7 @@ function getDisplayArchivedCompanyContact (contact) {
     job_title: contact.job_title,
     reason: contact.archived_reason,
     archived_on: formatMediumDate(contact.archived_on),
-    archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`
+    archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`,
   }
 }
 

@@ -46,7 +46,7 @@ function getInflatedDitCompany (token, id) {
             interaction_type: { id: null, name: 'Service delivery' },
             dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
             service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
-            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id)
+            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
           })
         })
 
@@ -57,7 +57,7 @@ function getInflatedDitCompany (token, id) {
             interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
             dit_advisor: advisorHash[interaction.dit_advisor],
             service: serviceOffers.find((option) => option.id === interaction.service),
-            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team)
+            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
           })
         })
 
@@ -83,7 +83,7 @@ function getCompanyForSource (token, id, source) {
             company_number: id,
             companies_house_data,
             contacts: [],
-            interactions: []
+            interactions: [],
           })
           return
         }

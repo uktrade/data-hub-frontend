@@ -78,5 +78,5 @@ module.exports = {
   expectDateFieldWithLabel,
   expectDropdownWithLabel,
   expectRadioWithLabel,
-  expectHiddenField
+  expectHiddenField,
 }

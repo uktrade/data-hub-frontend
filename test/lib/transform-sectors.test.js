@@ -68,7 +68,7 @@ describe('Sectors transformer', () => {
       const sector = transformSectors.getSectorForName('Advanced Engineering', sectorList)
       expect(sector).to.eql({
         id: 'af959812-6095-e211-a939-e4115bead28a',
-        name: 'Advanced Engineering'
+        name: 'Advanced Engineering',
       })
     })
   })

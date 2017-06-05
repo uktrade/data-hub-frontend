@@ -23,7 +23,7 @@ describe('Company controller, foreign', function () {
     name: 'Freds ltd',
     business_type: {
       id: '43134234',
-      name: 'Charity'
+      name: 'Charity',
     },
     registered_address_1: '13 HOWICK PARK AVENUE',
     registered_address_2: 'PENWORTHAM',
@@ -31,7 +31,7 @@ describe('Company controller, foreign', function () {
     registered_address_4: null,
     registered_address_town: 'PRESTON',
     registered_address_county: '',
-    registered_address_postcode: 'PR1 0LS'
+    registered_address_postcode: 'PR1 0LS',
   }
   const metadataRepositoryStub = {
     regionOptions: [{ id: '1', name: 'option 1' }],
@@ -43,8 +43,8 @@ describe('Company controller, foreign', function () {
     headquarterOptions: [
       { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq' },
       { id: '43281c5e-92a4-4794-867b-b4d5f801e6f3', name: 'ghq' },
-      { id: '3e6debb4-1596-40c5-aa25-f00da0e05af9', name: 'ukhq' }
-    ]
+      { id: '3e6debb4-1596-40c5-aa25-f00da0e05af9', name: 'ukhq' },
+    ],
   }
 
   beforeEach(function () {
@@ -60,21 +60,21 @@ describe('Company controller, foreign', function () {
 
     companyControllerForeign = proxyquire('~/src/controllers/company-foreign.controller', {
       '../services/company.service': {
-        getInflatedDitCompany: getInflatedDitCompanyStub
+        getInflatedDitCompany: getInflatedDitCompanyStub,
       },
       '../services/company-formatting.service': {
         getDisplayCompany: getDisplayCompanyStub,
-        getDisplayCH: getDisplayCHStub
+        getDisplayCH: getDisplayCHStub,
       },
       '../services/company-form.service': {
         getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
-        saveCompanyForm: saveCompanyFormStub
+        saveCompanyForm: saveCompanyFormStub,
       },
       '../repos/company.repo': {
         getCHCompany: getCHCompanyStub,
-        getDitCompany: getDitCompanyStub
+        getDitCompany: getDitCompanyStub,
       },
-      '../repos/metadata.repo': metadataRepositoryStub
+      '../repos/metadata.repo': metadataRepositoryStub,
     })
   })
 
@@ -82,17 +82,17 @@ describe('Company controller, foreign', function () {
     it('should get the company details', function (done) {
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, {
         locals: {},
         render: function () {
           expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
           done()
-        }
+        },
       }, next)
     })
     it('should return the company heading name and address', function (done) {
@@ -102,16 +102,16 @@ describe('Company controller, foreign', function () {
           expect(res.locals.headingName).to.equal('Freds ltd')
           expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
           done()
-        }
+        },
       }
 
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should get not get a formatted copy of the company house data to display', function (done) {
@@ -123,16 +123,16 @@ describe('Company controller, foreign', function () {
           expect(res.locals).to.not.have.property('chDetailsLabels')
           expect(res.locals).to.not.have.property('chDetailsDisplayOrder')
           done()
-        }
+        },
       }
 
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should get formatted data for CDMS company details', function (done) {
@@ -144,16 +144,16 @@ describe('Company controller, foreign', function () {
           expect(res.locals).to.have.property('companyDetailsLabels')
           expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
           done()
-        }
+        },
       }
 
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should provide account management information', function (done) {
@@ -163,16 +163,16 @@ describe('Company controller, foreign', function () {
           expect(res.locals).to.have.property('accountManagementDisplay')
           expect(res.locals).to.have.property('accountManagementDisplayLabels')
           done()
-        }
+        },
       }
 
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should use a template for ch data', function (done) {
@@ -181,16 +181,16 @@ describe('Company controller, foreign', function () {
         render: function (template) {
           expect(template).to.equal('company/details-foreign')
           done()
-        }
+        },
       }
 
       companyControllerForeign.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
   })
@@ -199,35 +199,35 @@ describe('Company controller, foreign', function () {
       const req = {
         session: { token: '1234' },
         query: { business_type: 'charity' },
-        params: {}
+        params: {},
       }
       const res = {
         locals: {},
         render: function () {
           expect(res.locals.formData).to.deep.equal({ business_type: '1' })
           done()
-        }
+        },
       }
 
       companyControllerForeign.addDetails(req, res, next)
     })
     it('should pass an populated form if called with errors', function (done) {
       const body = {
-        sector: '1234'
+        sector: '1234',
       }
 
       const req = {
         session: { token: '1234' },
         params: { id: '00112233' },
         query: { business_type: 'charity' },
-        body
+        body,
       }
       const res = {
         locals: {},
         render: function () {
           expect(res.locals.formData).to.deep.equal(body)
           done()
-        }
+        },
       }
 
       companyControllerForeign.addDetails(req, res, next)
@@ -236,14 +236,14 @@ describe('Company controller, foreign', function () {
       const req = {
         session: { token: '1234' },
         query: { business_type: 'charity' },
-        params: { id: '00112233' }
+        params: { id: '00112233' },
       }
       const res = {
         locals: {},
         render: function (template) {
           expect(template).to.equal('company/edit-foreign')
           done()
-        }
+        },
       }
 
       companyControllerForeign.addDetails(req, res, next)
@@ -281,7 +281,7 @@ describe('Company controller, foreign', function () {
         website: 'https://www.test.com',
         description: 'This is a test',
         employee_range: '1',
-        turnover_range: '1'
+        turnover_range: '1',
       }
 
       return render('../../src/views/company/edit-foreign.njk', {
@@ -292,7 +292,7 @@ describe('Company controller, foreign', function () {
         headquarterOptions: metadataRepositoryStub.headquarterOptions,
         countryOptions: metadataRepositoryStub.countryOptions,
         hqLabels,
-        formData
+        formData,
       })
       .then((_document) => {
         document = _document
@@ -332,7 +332,7 @@ describe('Company controller, foreign', function () {
     it('should translate a company record into form data if no body posted', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { id: '9999' }
+        params: { id: '9999' },
       }
       const res = {
         locals: {},
@@ -341,20 +341,20 @@ describe('Company controller, foreign', function () {
           expect(getForeignCompanyAsFormDataStub).to.be.calledWith(company)
           expect(res.locals.formData).to.deep.equal(fakeCompanyForm)
           done()
-        }
+        },
       }
 
       companyControllerForeign.editDetails(req, res, next)
     })
     it('should pass through form data if called with errors', function (done) {
       const body = {
-        sector: '1234'
+        sector: '1234',
       }
 
       const req = {
         session: { token: '1234' },
         params: { company_number: '00112233' },
-        body
+        body,
       }
       const res = {
         locals: {},
@@ -362,27 +362,27 @@ describe('Company controller, foreign', function () {
           expect(getForeignCompanyAsFormDataStub).to.not.be.called
           expect(res.locals.formData).to.deep.equal(body)
           done()
-        }
+        },
       }
 
       companyControllerForeign.editDetails(req, res, next)
     })
     it('should render with the correct template', function (done) {
       const body = {
-        sector: '1234'
+        sector: '1234',
       }
 
       const req = {
         session: { token: '1234' },
         params: { company_number: '00112233' },
-        body
+        body,
       }
       const res = {
         locals: {},
         render: function (template) {
           expect(template).to.equal('company/edit-foreign')
           done()
-        }
+        },
       }
 
       companyControllerForeign.editDetails(req, res, next)
@@ -393,14 +393,14 @@ describe('Company controller, foreign', function () {
       const req = {
         session: { token: '1234' },
         params: { company_number: '00112233' },
-        body
+        body,
       }
       const res = {
         locals: {},
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(true)
           done()
-        }
+        },
       }
 
       companyControllerForeign.editDetails(req, res, next)
@@ -411,14 +411,14 @@ describe('Company controller, foreign', function () {
       const req = {
         session: { token: '1234' },
         params: { company_number: '00112233' },
-        body
+        body,
       }
       const res = {
         locals: {},
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(false)
           done()
-        }
+        },
       }
 
       companyControllerForeign.editDetails(req, res, next)
@@ -428,14 +428,14 @@ describe('Company controller, foreign', function () {
     it('call the company repository to save the company', function (done) {
       const body = {
         id: '1234',
-        name: 'freds'
+        name: 'freds',
       }
       const req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
         flash: flashStub,
-        body
+        body,
       }
       const res = {
         locals: {},
@@ -445,21 +445,21 @@ describe('Company controller, foreign', function () {
         },
         render: function () {
           throw Error('error')
-        }
+        },
       }
       companyControllerForeign.postDetails(req, res, next)
     })
     it('should forward to the detail screen if save is good', function (done) {
       const body = {
         id: '999',
-        name: 'freds'
+        name: 'freds',
       }
       const req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
         flash: flashStub,
-        body
+        body,
       }
       const res = {
         locals: {},
@@ -469,46 +469,46 @@ describe('Company controller, foreign', function () {
         },
         render: function () {
           throw Error('error')
-        }
+        },
       }
       companyControllerForeign.postDetails(req, res, next)
     })
     it('should re-render the edit form with form data on error', function (done) {
       saveCompanyFormStub = sinon.stub().rejects({
-        errors: { name: ['test'] }
+        errors: { name: ['test'] },
       })
 
       companyControllerForeign = proxyquire('~/src/controllers/company-foreign.controller', {
         '../services/company.service': {
-          getInflatedDitCompany: getInflatedDitCompanyStub
+          getInflatedDitCompany: getInflatedDitCompanyStub,
         },
         '../services/company-formatting.service': {
           getDisplayCompany: getDisplayCompanyStub,
-          getDisplayCH: getDisplayCHStub
+          getDisplayCH: getDisplayCHStub,
         },
         '../services/company-form.service': {
           getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
-          saveCompanyForm: saveCompanyFormStub
+          saveCompanyForm: saveCompanyFormStub,
         },
         '../repos/company.repo': {
           getCHCompany: getCHCompanyStub,
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
-        '../repos/metadata.repo': metadataRepositoryStub
+        '../repos/metadata.repo': metadataRepositoryStub,
       })
 
       const body = {
         id: '999',
-        name: 'freds'
+        name: 'freds',
       }
       const req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
         query: { business_type: 'charity' },
         params: {},
         flash: flashStub,
-        body
+        body,
       }
       const res = {
         locals: {},
@@ -519,21 +519,21 @@ describe('Company controller, foreign', function () {
           expect(template).to.equal('company/edit-foreign')
           expect(res.locals).to.have.property('errors')
           done()
-        }
+        },
       }
       companyControllerForeign.postDetails(req, res, next)
     })
     it('should flash a message to let people know they did something', function (done) {
       const body = {
         id: '1234',
-        name: 'freds'
+        name: 'freds',
       }
       const req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
         flash: flashStub,
-        body
+        body,
       }
       const res = {
         locals: {},
@@ -543,7 +543,7 @@ describe('Company controller, foreign', function () {
         },
         render: function () {
           throw Error('error')
-        }
+        },
       }
       companyControllerForeign.postDetails(req, res, next)
     })
@@ -555,11 +555,11 @@ describe('Company controller, foreign', function () {
     beforeEach(function () {
       req = {
         session: {
-          token: '1234'
-        }
+          token: '1234',
+        },
       }
       res = {
-        locals: {}
+        locals: {},
       }
     })
     it('should include the require properties in the response', function () {

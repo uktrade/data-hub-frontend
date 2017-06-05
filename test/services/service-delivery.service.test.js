@@ -15,7 +15,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
-        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d'
+        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d',
       }
       const actual = servicedeliveryservice.convertServiceDeliveryFormToApiFormat(source)
 
@@ -78,7 +78,7 @@ describe('Service delivery formatting service', function () {
         dit_advisor: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
-        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d'
+        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d',
       }
       const actual = servicedeliveryservice.convertServiceDeliveryFormToApiFormat(source)
 
@@ -143,7 +143,7 @@ describe('Service delivery formatting service', function () {
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         event: '054d059a-6c3e-445a-948f-98a41882fb84',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
-        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d'
+        country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d',
       }
       const actual = servicedeliveryservice.convertServiceDeliveryFormToApiFormat(source)
 

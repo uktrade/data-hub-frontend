@@ -4,7 +4,7 @@ describe('PropertyHelpers: Conversion of empty values to nulls in an object with
   it('Should convert an empty string to a null', function () {
     const source = {
       foo: 'foo',
-      bar: ''
+      bar: '',
     }
     const actual = propertyHelpers.nullEmptyFields(source)
     expect(actual.foo).equal('foo')
@@ -13,7 +13,7 @@ describe('PropertyHelpers: Conversion of empty values to nulls in an object with
   it('Should leave existing nulls alone', function () {
     const source = {
       foo: 'foo',
-      bar: null
+      bar: null,
     }
     const actual = propertyHelpers.nullEmptyFields(source)
     expect(actual.foo).equal('foo')
@@ -25,7 +25,7 @@ describe('PropertyHelpers: Stripping fields with null values out of an object wi
   it('Removes fields that have null values from an object', function () {
     const source = {
       foo: 'foo',
-      bar: null
+      bar: null,
     }
     const actual = propertyHelpers.deleteNulls(source)
     expect(actual.foo).equal('foo')
@@ -34,7 +34,7 @@ describe('PropertyHelpers: Stripping fields with null values out of an object wi
   it('Return an empty object if all fields are null', function () {
     const source = {
       foo: null,
-      bar: null
+      bar: null,
     }
     const actual = propertyHelpers.deleteNulls(source)
     expect(actual).to.deep.equal({})
@@ -42,7 +42,7 @@ describe('PropertyHelpers: Stripping fields with null values out of an object wi
   it('Should ignore empty strings', function () {
     const source = {
       foo: 'foo',
-      bar: ''
+      bar: '',
     }
     const actual = propertyHelpers.deleteNulls(source)
     expect(actual.foo).to.equal('foo')
@@ -51,7 +51,7 @@ describe('PropertyHelpers: Stripping fields with null values out of an object wi
   it('Should ignore false fields', function () {
     const source = {
       foo: 'foo',
-      bar: false
+      bar: false,
     }
     const actual = propertyHelpers.deleteNulls(source)
     expect(actual.foo).to.equal('foo')
@@ -65,8 +65,8 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       foo: 'bar',
       data: {
         id: '123456',
-        name: 'morph the cat'
-      }
+        name: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
     expect(actual).to.equal('morph the cat')
@@ -76,8 +76,8 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       foo: 'bar',
       data: {
         id: '123456',
-        nomme: 'morph the cat'
-      }
+        nomme: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
     expect(actual).to.eq(null)
@@ -87,8 +87,8 @@ describe('PropertyHelpers: Finding names in objects with getPropertyName', funct
       foo: 'bar',
       picard: {
         id: '123456',
-        nomme: 'morph the cat'
-      }
+        nomme: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyName(source, 'data')
     expect(actual).to.be.null
@@ -101,8 +101,8 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
       foo: 'bar',
       data: {
         id: '123456',
-        name: 'morph the cat'
-      }
+        name: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyId(source, 'data')
     expect(actual).to.equal('123456')
@@ -112,8 +112,8 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
       foo: 'bar',
       data: {
         guid: '123456',
-        name: 'morph the cat'
-      }
+        name: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyId(source, 'data')
     expect(actual).to.equal(null)
@@ -123,8 +123,8 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
       foo: 'bar',
       picard: {
         id: '123456',
-        nomme: 'morph the cat'
-      }
+        nomme: 'morph the cat',
+      },
     }
     const actual = propertyHelpers.getPropertyId(source, 'data')
     expect(actual).to.be.null
@@ -134,7 +134,7 @@ describe('PropertyHelpers: Finding IDs in objects with getPropertyId', function 
 describe('PropertyHelpers: Convert Yes and No string to true and false with convertYesNoToBoolean', function () {
   it('Should turn a Yes into a boolean true', function () {
     const source = {
-      foo: 'Yes'
+      foo: 'Yes',
     }
 
     const actual = propertyHelpers.convertYesNoToBoolean(source)
@@ -143,7 +143,7 @@ describe('PropertyHelpers: Convert Yes and No string to true and false with conv
   })
   it('Should turn a No into a boolean false', function () {
     const source = {
-      foo: 'No'
+      foo: 'No',
     }
 
     const actual = propertyHelpers.convertYesNoToBoolean(source)
@@ -153,7 +153,7 @@ describe('PropertyHelpers: Convert Yes and No string to true and false with conv
   it('Should ignore case', function () {
     const source = {
       foo: 'yES',
-      bar: 'nO'
+      bar: 'nO',
     }
 
     const actual = propertyHelpers.convertYesNoToBoolean(source)
@@ -168,8 +168,8 @@ describe('PropertyHelpers: Check if an object has a property that is also an obj
   it('Should return true if an object is found in an object', function () {
     const source = {
       foo: {
-        bar: 1
-      }
+        bar: 1,
+      },
     }
 
     const actual = propertyHelpers.hasObjectProperty(source, 'foo')
@@ -178,7 +178,7 @@ describe('PropertyHelpers: Check if an object has a property that is also an obj
   })
   it('Should return false if the property is not an object', function () {
     const source = {
-      foo: 1
+      foo: 1,
     }
 
     const actual = propertyHelpers.hasObjectProperty(source, 'foo')
@@ -191,8 +191,8 @@ describe('PropertyHelpers: Check if an object has a property with hasProperty', 
   it('Should return true if an object is found in an object', function () {
     const source = {
       foo: {
-        bar: 1
-      }
+        bar: 1,
+      },
     }
 
     const actual = propertyHelpers.hasProperty(source, 'foo')
@@ -201,7 +201,7 @@ describe('PropertyHelpers: Check if an object has a property with hasProperty', 
   })
   it('Should return false if the property does not exist', function () {
     const source = {
-      bar: 1
+      bar: 1,
     }
 
     const actual = propertyHelpers.hasProperty(source, 'foo')
@@ -214,7 +214,7 @@ describe('PropertyHelpers: Conversion of nested objects', function () {
   it('Should convert an empty string to null', function () {
     const source = {
       foo: 'foo',
-      bar: null
+      bar: null,
     }
     const actual = propertyHelpers.convertNestedObjects(source, ['bar'])
     expect(actual.bar).be.null
@@ -222,17 +222,17 @@ describe('PropertyHelpers: Conversion of nested objects', function () {
   it('Should convert a string to a nested object', function () {
     const source = {
       foo: 'foo',
-      bar: 'some-id'
+      bar: 'some-id',
     }
     const actual = propertyHelpers.convertNestedObjects(source, ['bar'])
     expect(actual.bar).to.deep.equal({
-      id: 'some-id'
+      id: 'some-id',
     })
   })
   it('Should do nothing if props is not passed in', function () {
     const source = {
       foo: 'foo',
-      bar: 'some-id'
+      bar: 'some-id',
     }
     const actual = propertyHelpers.convertNestedObjects(source)
     expect(actual).to.deep.equal(source)

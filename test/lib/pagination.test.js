@@ -1,6 +1,6 @@
 const pagination = require('~/src/lib/pagination')
 const result = {
-  count: 0
+  count: 0,
 }
 
 describe('Pagination', () => {
@@ -8,8 +8,8 @@ describe('Pagination', () => {
     it('should show 1..5 when on the first pages of many', () => {
       const req = {
         query: {
-          page: '1'
-        }
+          page: '1',
+        },
       }
 
       result.count = 1000
@@ -24,8 +24,8 @@ describe('Pagination', () => {
     it('should show 1..5 when on the second pages of many', () => {
       const req = {
         query: {
-          page: '2'
-        }
+          page: '2',
+        },
       }
 
       result.count = 1000
@@ -39,8 +39,8 @@ describe('Pagination', () => {
     it('should show 3..7 when on the fifth pages of many', () => {
       const req = {
         query: {
-          page: '5'
-        }
+          page: '5',
+        },
       }
 
       result.count = 1000
@@ -54,8 +54,8 @@ describe('Pagination', () => {
     it('should show 10..14 when on pages 13 of 14', () => {
       const req = {
         query: {
-          page: '13'
-        }
+          page: '13',
+        },
       }
 
       result.count = 140
@@ -69,8 +69,8 @@ describe('Pagination', () => {
     it('should show 1..3 when on the first pages of 25 results', () => {
       const req = {
         query: {
-          page: '1'
-        }
+          page: '1',
+        },
       }
 
       result.count = 25
@@ -84,8 +84,8 @@ describe('Pagination', () => {
     it('should show 1..3 when on the second pages of 25 results', () => {
       const req = {
         query: {
-          page: '2'
-        }
+          page: '2',
+        },
       }
 
       result.count = 25
@@ -99,8 +99,8 @@ describe('Pagination', () => {
     it('should not have a next link when on the last pages', () => {
       const req = {
         query: {
-          page: '3'
-        }
+          page: '3',
+        },
       }
 
       result.count = 25
@@ -110,7 +110,7 @@ describe('Pagination', () => {
     })
     it('should show 1..5 when many results and no page number in url', () => {
       const req = {
-        query: {}
+        query: {},
       }
 
       result.count = 1000

@@ -19,7 +19,7 @@ describe('Company controller, archive', function () {
     registered_address_4: null,
     registered_address_town: 'PRESTON',
     registered_address_county: '',
-    registered_address_postcode: 'PR1 0LS'
+    registered_address_postcode: 'PR1 0LS',
   }
   let getDitCompanyStub
   let companyArchiveController
@@ -31,13 +31,13 @@ describe('Company controller, archive', function () {
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
     companyArchiveController = proxyquire('~/src/controllers/company-archive.controller', {
       '../services/company.service': {
-        buildCompanyUrl: buildCompanyUrlStub
+        buildCompanyUrl: buildCompanyUrlStub,
       },
       '../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
         archiveCompany: companyRepositoryArchiveCompanyStub,
-        unarchiveCompany: companyRepositoryUnArchiveCompanyStub
-      }
+        unarchiveCompany: companyRepositoryUnArchiveCompanyStub,
+      },
     })
     flashStub = sinon.stub()
   })
@@ -46,16 +46,16 @@ describe('Company controller, archive', function () {
       session: { token },
       body: { archived_reason: 'test', archived_reason_other: '' },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason)
         done()
-      }
+      },
     }
 
     companyArchiveController.archiveCompany(req, res, next)
@@ -65,16 +65,16 @@ describe('Company controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason_other)
         done()
-      }
+      },
     }
 
     companyArchiveController.archiveCompany(req, res, next)
@@ -84,9 +84,9 @@ describe('Company controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
@@ -95,7 +95,7 @@ describe('Company controller, archive', function () {
         expect(buildCompanyUrlStub).to.be.calledWith(company)
         expect(url).to.equal('/testurl')
         done()
-      }
+      },
     }
 
     companyArchiveController.archiveCompany(req, res, next)
@@ -105,16 +105,16 @@ describe('Company controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('success-message', 'Updated company record')
         done()
-      }
+      },
     }
 
     companyArchiveController.archiveCompany(req, res, next)
@@ -124,16 +124,16 @@ describe('Company controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: '' },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('error-message', 'Unable to archive company, no reason given')
         done()
-      }
+      },
     }
 
     companyArchiveController.archiveCompany(req, res, next)
@@ -142,16 +142,16 @@ describe('Company controller, archive', function () {
     const req = {
       session: { token },
       params: {
-        id: company.id
+        id: company.id,
       },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(companyRepositoryUnArchiveCompanyStub).to.be.calledWith(token, company.id)
         done()
-      }
+      },
     }
 
     companyArchiveController.unarchiveCompany(req, res, next)

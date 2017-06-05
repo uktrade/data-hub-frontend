@@ -132,5 +132,5 @@ module.exports = {
   show,
   createElementFromMarkup,
   removeElement,
-  toggleVisible
+  toggleVisible,
 }

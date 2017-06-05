@@ -20,7 +20,7 @@ function getDisplayServiceDelivery (serviceDelivery) {
     uk_region: getPropertyName(serviceDelivery, 'uk_region'),
     sector: getPropertyName(serviceDelivery, 'sector'),
     contact: getContactLink(serviceDelivery),
-    country_of_interest: getPropertyName(serviceDelivery, 'country_of_interest')
+    country_of_interest: getPropertyName(serviceDelivery, 'country_of_interest'),
   }
 
   return result

@@ -2,11 +2,11 @@ describe('Dashboard service', () => {
   function getDashboardService (mockData) {
     return proxyquire('~/src/services/dashboard.service', {
       './company.service': {
-        buildCompanyUrl: sinon.stub().returns('/test')
+        buildCompanyUrl: sinon.stub().returns('/test'),
       },
       '../lib/authorised-request': () => new Promise((resolve) => {
         resolve(mockData)
-      })
+      }),
     })
   }
 
@@ -17,8 +17,8 @@ describe('Dashboard service', () => {
         subject: 'int-subject',
         company: {
           'id': 'comp-id',
-          'name': 'comp-name'
-        }
+          'name': 'comp-name',
+        },
       }],
       contacts: [{
         id: 'contact-id',
@@ -26,9 +26,9 @@ describe('Dashboard service', () => {
         last_name: 'last-name',
         company: {
           'id': 'comp-id',
-          'name': 'comp-name'
-        }
-      }]
+          'name': 'comp-name',
+        },
+      }],
     }
     const dashboardService = getDashboardService(mockHomepageData)
 
@@ -41,8 +41,8 @@ describe('Dashboard service', () => {
             url: '/interaction/int-id/details',
             company: {
               url: '/test',
-              name: 'comp-name'
-            }
+              name: 'comp-name',
+            },
           }],
           contacts: [{
             id: 'contact-id',
@@ -51,9 +51,9 @@ describe('Dashboard service', () => {
             company: {
               url: '/test',
               name: 'comp-name',
-              id: 'comp-id'
-            }
-          }]
+              id: 'comp-id',
+            },
+          }],
         })
       })
   })
@@ -63,7 +63,7 @@ describe('Dashboard service', () => {
       interactions: [{
         id: 'int-id',
         subject: 'int-subject',
-        company: null
+        company: null,
       }],
       contacts: [{
         id: 'contact-id',
@@ -71,9 +71,9 @@ describe('Dashboard service', () => {
         last_name: 'last-name',
         company: {
           'id': 'comp-id',
-          'name': 'comp-name'
-        }
-      }]
+          'name': 'comp-name',
+        },
+      }],
     }
     const dashboardService = getDashboardService(mockHomepageData)
 
@@ -86,8 +86,8 @@ describe('Dashboard service', () => {
             url: '/interaction/int-id/details',
             company: {
               url: null,
-              name: null
-            }
+              name: null,
+            },
           }],
           contacts: [{
             id: 'contact-id',
@@ -96,9 +96,9 @@ describe('Dashboard service', () => {
             company: {
               url: '/test',
               name: 'comp-name',
-              id: 'comp-id'
-            }
-          }]
+              id: 'comp-id',
+            },
+          }],
         })
       })
   })

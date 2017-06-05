@@ -8,7 +8,7 @@ const router = express.Router()
 
 const exportDetailsLabels = {
   exportToCountries: 'Currently exporting to',
-  futureInterestCountries: 'Future countries of interest'
+  futureInterestCountries: 'Future countries of interest',
 }
 
 /**
@@ -60,10 +60,10 @@ function view (req, res, next) {
       const data = {
         exportDetails: {
           exportToCountries: company.export_to_countries.map(country => country.name).join(', '),
-          futureInterestCountries: company.future_interest_countries.map(country => country.name).join()
+          futureInterestCountries: company.future_interest_countries.map(country => country.name).join(),
         },
         exportDetailsLabels,
-        exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries']
+        exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
       }
 
       res.render('company/exports-view', data)
@@ -84,7 +84,7 @@ function edit (req, res, next) {
 
       const data = {
         exportDetailsLabels,
-        countryOptions: metadataRepository.countryOptions
+        countryOptions: metadataRepository.countryOptions,
       }
 
       if (containsFormData(req)) {
@@ -125,7 +125,7 @@ function post (req, res, next) {
       flattenIdFields(company)
       const postData = Object.assign({}, company, {
         export_to_countries: req.body.export_to_countries,
-        future_interest_countries: req.body.future_interest_countries
+        future_interest_countries: req.body.future_interest_countries,
       })
 
       yield saveCompany(req.session.token, postData)

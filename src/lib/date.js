@@ -16,5 +16,5 @@ function formatMediumDate (date) {
 }
 
 module.exports = {
-  formatLongDate, formatMediumDate
+  formatLongDate, formatMediumDate,
 }

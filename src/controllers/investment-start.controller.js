@@ -25,7 +25,7 @@ function getHandler (req, res, next) {
     promises.push(search({
       token: req.session.token,
       page: req.query.page,
-      term: searchTerm
+      term: searchTerm,
     }))
   } else {
     promises.push(Promise.resolve())
@@ -50,7 +50,7 @@ function getHandler (req, res, next) {
         searchTerm,
         searchResult,
         pagination,
-        showSearch
+        showSearch,
       })
     })
     .catch(next)
@@ -70,8 +70,8 @@ function postHandler (req, res, next) {
         res.render('investment/start', {
           clientCompany,
           errors: {
-            isEquitySource: 'Please select whether this company will be the source of foreign equity'
-          }
+            isEquitySource: 'Please select whether this company will be the source of foreign equity',
+          },
         })
       })
       .catch(next)

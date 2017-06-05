@@ -46,5 +46,5 @@ function buildQueryString (params) {
 module.exports = {
   getQueryParam,
   getBackLink,
-  buildQueryString
+  buildQueryString,
 }

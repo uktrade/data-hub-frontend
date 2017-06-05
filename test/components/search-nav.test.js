@@ -5,7 +5,7 @@ describe('Search Nav component', () => {
     const component = renderComponentToDom(
       'search-nav',
       {
-        searchEntityResults: []
+        searchEntityResults: [],
       }
     )
 
@@ -18,16 +18,16 @@ describe('Search Nav component', () => {
         {
           count: 1,
           text: 'Companies',
-          entity: 'company'
+          entity: 'company',
         },
         {
           count: 2,
           text: 'Contacts',
-          entity: 'contact'
-        }
+          entity: 'contact',
+        },
       ],
       searchType: 'company',
-      searchTerm: 'example search term'
+      searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
       'search-nav',

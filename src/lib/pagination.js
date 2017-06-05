@@ -45,7 +45,7 @@ function getPagination (req, result) {
   if (currentPage > 1) {
     pagination.push({
       label: PREVIOUSLABEL,
-      link: getPageLink(currentPage - 1, req)
+      link: getPageLink(currentPage - 1, req),
     })
   }
 
@@ -53,14 +53,14 @@ function getPagination (req, result) {
     pagination.push({
       label: `${pos}`,
       link: getPageLink(pos, req),
-      currentPage: (pos === currentPage)
+      currentPage: (pos === currentPage),
     })
   }
 
   if (pageIndexes.nextPage) {
     pagination.push({
       label: NEXTLABEL,
-      link: getPageLink(pageIndexes.nextPage, req)
+      link: getPageLink(pageIndexes.nextPage, req),
     })
   }
 

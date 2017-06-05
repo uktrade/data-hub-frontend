@@ -69,8 +69,8 @@ describe('Sector control', function () {
       it('should show a dropdown of sub sectors if the chosen sector has sub sectors', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
 
         const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
@@ -87,8 +87,8 @@ describe('Sector control', function () {
       it('should not show a dropdown for sub sectors if selected sector has no sub sectors', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Advanced Engineering'
-          }
+            value: 'Advanced Engineering',
+          },
         })
 
         const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
@@ -97,13 +97,13 @@ describe('Sector control', function () {
       it('should hide the sub sector dropdown if you select a sector with sub sectors and then select one that doesnt have sub sectors', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Advanced Engineering'
-          }
+            value: 'Advanced Engineering',
+          },
         })
 
         const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
@@ -114,8 +114,8 @@ describe('Sector control', function () {
       it('should not store a value if you select a primary sector that has sub sectors', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(0)
       })
@@ -123,29 +123,29 @@ describe('Sector control', function () {
         sectorsControl.sourceSelect.selectedIndex = 1
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(0)
       })
       it('should set the original select if you select a sector that has no sub sectors', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Advanced Engineering'
-          }
+            value: 'Advanced Engineering',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(1)
       })
       it('should set the original select if you select a primary sector and then a sub sector', function () {
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         sectorsControl.handleSubsectorSelect({
           target: {
-            value: 'e9e181d2-f6a0-e211-b972-e4115bead28a'
-          }
+            value: 'e9e181d2-f6a0-e211-b972-e4115bead28a',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(2)
       })
@@ -227,8 +227,8 @@ describe('Sector control', function () {
         const sectorsControl = new Sectors(document.getElementById('sector-wrapper'), document)
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Advanced Engineering'
-          }
+            value: 'Advanced Engineering',
+          },
         })
 
         const subsectorSelectElement = document.querySelector('.subsector-wrapper select')
@@ -241,8 +241,8 @@ describe('Sector control', function () {
         document = window.document
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(0)
       })
@@ -251,8 +251,8 @@ describe('Sector control', function () {
         document = window.document
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Advanced Engineering'
-          }
+            value: 'Advanced Engineering',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(1)
       })
@@ -261,13 +261,13 @@ describe('Sector control', function () {
         document = window.document
         sectorsControl.handlePrimarySelect({
           target: {
-            value: 'Aerospace'
-          }
+            value: 'Aerospace',
+          },
         })
         sectorsControl.handleSubsectorSelect({
           target: {
-            value: 'e9e181d2-f6a0-e211-b972-e4115bead28a'
-          }
+            value: 'e9e181d2-f6a0-e211-b972-e4115bead28a',
+          },
         })
         expect(sectorsControl.sourceSelect.selectedIndex).to.eq(2)
       })

@@ -28,9 +28,9 @@ describe('Add another field', function () {
     addAnotherField = new AddAnotherField(wrapper)
     event = {
       target: {
-        blur: sinon.stub()
+        blur: sinon.stub(),
       },
-      preventDefault: sinon.stub()
+      preventDefault: sinon.stub(),
     }
   })
 

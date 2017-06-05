@@ -8,7 +8,7 @@ module.exports = (req, res) => {
       res.render('index', {
         totalDays: days,
         interactions: data.interactions,
-        contacts: data.contacts
+        contacts: data.contacts,
       })
     })
 }

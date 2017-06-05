@@ -33,15 +33,15 @@ describe('Contact formatting service', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
       advisor: null,
-      address_country: null
+      address_country: null,
     }
 
     company = {
       id: '9876',
-      'name': 'My Coorp'
+      'name': 'My Coorp',
     }
   })
   describe('contact details', function () {
@@ -53,7 +53,7 @@ describe('Contact formatting service', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         telephone_alternative: '07814 000 333',
         email_alternative: 'fred@gmail.com',
-        notes: 'some notes'
+        notes: 'some notes',
       }
 
       const actual = contactFormattingService.getDisplayContact(contact, company)
@@ -75,7 +75,7 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
-        trading_address_postcode: 'TT1 1TT'
+        trading_address_postcode: 'TT1 1TT',
       }
 
       contact.address_1 = ''
@@ -107,7 +107,7 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
-        trading_address_postcode: ''
+        trading_address_postcode: '',
       }
 
       contact.address_1 = ''
@@ -137,7 +137,7 @@ describe('Contact formatting service', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
-        telephone_alternative: '07814 000 333'
+        telephone_alternative: '07814 000 333',
       }
 
       const actual = contactFormattingService.getDisplayCompanyContact(contact, company)
@@ -159,7 +159,7 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
-        trading_address_postcode: 'TT1 1TT'
+        trading_address_postcode: 'TT1 1TT',
       }
 
       contact.address_1 = ''
@@ -191,7 +191,7 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
-        trading_address_postcode: ''
+        trading_address_postcode: '',
       }
       contact.address_1 = ''
       contact.address_2 = ''
@@ -212,7 +212,7 @@ describe('Contact formatting service', function () {
     contact.archived_reason = 'Left company'
     contact.archived_by = {
       first_name: 'Fred',
-      last_name: 'Flintstone'
+      last_name: 'Flintstone',
     }
     contact.archived_on = '2017-02-14T14:49:17'
 
@@ -222,7 +222,7 @@ describe('Contact formatting service', function () {
       job_title: 'Director',
       reason: 'Left company',
       archived_by: 'Fred Flintstone',
-      archived_on: '14 Feb 2017'
+      archived_on: '14 Feb 2017',
     }
 
     const actual = contactFormattingService.getDisplayArchivedCompanyContact(contact, company)

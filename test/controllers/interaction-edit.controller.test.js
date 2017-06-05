@@ -22,30 +22,30 @@ describe('Interaction controller, edit', function () {
   beforeEach(function () {
     company = {
       id: '1234',
-      name: 'Fred ltd.'
+      name: 'Fred ltd.',
     }
 
     emailInteractionType = {
       id: '444',
-      name: 'Email'
+      name: 'Email',
     }
 
     const contact = {
       id: '888',
       name: 'Fred Smith',
       first_name: 'Fred',
-      last_name: 'Smith'
+      last_name: 'Smith',
     }
 
     newContactInteraction = {
       contact,
       company,
-      interaction_type: emailInteractionType
+      interaction_type: emailInteractionType,
     }
 
     newCompanyInteraction = {
       company,
-      interaction_type: emailInteractionType
+      interaction_type: emailInteractionType,
     }
 
     getInteractionAsFormDataStub = sinon.stub().returns({ id: '1234', subject: 'Thing', company: '1111', contact: '2222' })
@@ -61,25 +61,25 @@ describe('Interaction controller, edit', function () {
     interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
       '../services/interaction-form.service': {
         getInteractionAsFormData: getInteractionAsFormDataStub,
-        saveInteractionForm: saveInteractionFormStub
+        saveInteractionForm: saveInteractionFormStub,
       },
       '../services/interaction-data.service': {
         createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
         createBlankInteractionForContact: createBlankInteractionForContactStub,
-        getInteractionType: getInteractionTypeStub
+        getInteractionType: getInteractionTypeStub,
       },
       '../repos/contact.repo': {
-        getContactsForCompany: getContactsForCompanyStub
+        getContactsForCompany: getContactsForCompanyStub,
       },
       '../repos/company.repo': {
-        getDitCompany: getDitCompanyStub
+        getDitCompany: getDitCompanyStub,
       },
       '../repos/advisor.repo': {
-        getAdvisor: getAdvisorStub
+        getAdvisor: getAdvisorStub,
       },
       '../repos/metadata.repo': {
-        getServiceOffers: getServiceOffersStub
-      }
+        getServiceOffers: getServiceOffersStub,
+      },
     })
   })
 
@@ -95,18 +95,18 @@ describe('Interaction controller, edit', function () {
       beforeEach(function () {
         interaction = {
           id: '1234',
-          subject: 'test'
+          subject: 'test',
         }
         req = {
           session: {
-            token: '1234'
+            token: '1234',
           },
-          query: {}
+          query: {},
         }
         res = {
           locals: {
-            interaction
-          }
+            interaction,
+          },
         }
       })
 
@@ -153,15 +153,15 @@ describe('Interaction controller, edit', function () {
         req = {
           session: {
             token: '1234',
-            user
+            user,
           },
           query: {
             contact: '888',
-            interaction_type: '999'
-          }
+            interaction_type: '999',
+          },
         }
         res = {
-          locals: {}
+          locals: {},
         }
       })
       it('should create a new interaction for a contact if just a contact is passed', function (done) {
@@ -208,15 +208,15 @@ describe('Interaction controller, edit', function () {
         req = {
           session: {
             token: '1234',
-            user
+            user,
           },
           query: {
             company: '888',
-            interaction_type: '999'
-          }
+            interaction_type: '999',
+          },
         }
         res = {
-          locals: {}
+          locals: {},
         }
       })
 
@@ -267,18 +267,18 @@ describe('Interaction controller, edit', function () {
           company: '333',
           contact: '444',
           subject: 'test subject',
-          dit_advisor: '7811'
+          dit_advisor: '7811',
         }
         req = {
           session: {
             token: '1234',
-            user
+            user,
           },
           body,
           query: {
             company: '888',
-            interaction_type: '999'
-          }
+            interaction_type: '999',
+          },
         }
         res = { locals: {} }
       })
@@ -324,14 +324,14 @@ describe('Interaction controller, edit', function () {
           id: '1234',
           name: 'Fred Smith',
           first_name: 'Fred',
-          last_name: 'Smith'
-        }
+          last_name: 'Smith',
+        },
       }
       const req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
-        query: {}
+        query: {},
       }
       const res = {
         locals: { interaction },
@@ -339,7 +339,7 @@ describe('Interaction controller, edit', function () {
           expect(getContactsForCompanyStub).to.be.calledWith(company.id)
           expect(res.locals).to.have.property('contacts')
           done()
-        }
+        },
       }
 
       interactionEditController.editDetails(req, res, next)
@@ -355,17 +355,17 @@ describe('Interaction controller, edit', function () {
           dit_advisor: '7811',
           notes: 'some notes',
           service: '3322',
-          dit_team: '9884'
+          dit_team: '9884',
         },
         company: {
           id: '1234',
-          name: 'Freds'
+          name: 'Freds',
         },
         interaction_type: {
           id: '333',
-          name: 'Email'
+          name: 'Email',
         },
-        labels: interactionLabels
+        labels: interactionLabels,
       }
 
       it('should render all the required fields on the page', function () {
@@ -406,7 +406,7 @@ describe('Interaction controller, edit', function () {
       })
       it('should render errors in a list if there are any', function () {
         locals.errors = {
-          name: ['test']
+          name: ['test'],
         }
         return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
@@ -431,18 +431,18 @@ describe('Interaction controller, edit', function () {
         contact: '444',
         subject: 'test subject',
         dit_advisor: '7811',
-        date: '2017-02-01T00:00:00:00Z'
+        date: '2017-02-01T00:00:00:00Z',
       }
 
       req = {
         session: {
-          token: '1234'
+          token: '1234',
         },
-        body
+        body,
       }
 
       res = {
-        locals: {}
+        locals: {},
       }
     })
 
@@ -464,31 +464,31 @@ describe('Interaction controller, edit', function () {
     })
     it('should re-render the edit page with the original form data on validation errors', function (done) {
       saveInteractionFormStub = sinon.stub().rejects({
-        error: { subject: ['test'] }
+        error: { subject: ['test'] },
       })
 
       interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
         '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
-          saveInteractionForm: saveInteractionFormStub
+          saveInteractionForm: saveInteractionFormStub,
         },
         '../services/interaction-data.service': {
           createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
           createBlankInteractionForContact: createBlankInteractionForContactStub,
-          getInteractionType: getInteractionTypeStub
+          getInteractionType: getInteractionTypeStub,
         },
         '../repos/contact.repo': {
-          getContactsForCompany: getContactsForCompanyStub
+          getContactsForCompany: getContactsForCompanyStub,
         },
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/advisor.repo': {
-          getAdvisor: getAdvisorStub
+          getAdvisor: getAdvisorStub,
         },
         '../repos/metadata.repo': {
-          getServiceOffers: getServiceOffersStub
-        }
+          getServiceOffers: getServiceOffersStub,
+        },
       })
 
       res.render = function (url) {
@@ -502,25 +502,25 @@ describe('Interaction controller, edit', function () {
       interactionEditController = proxyquire('~/src/controllers/interaction-edit.controller', {
         '../services/interaction-form.service': {
           getInteractionAsFormData: getInteractionAsFormDataStub,
-          saveInteractionForm: saveInteractionFormStub
+          saveInteractionForm: saveInteractionFormStub,
         },
         '../services/interaction-data.service': {
           createBlankInteractionForCompany: createBlankInteractionForCompanyStub,
           createBlankInteractionForContact: createBlankInteractionForContactStub,
-          getInteractionType: getInteractionTypeStub
+          getInteractionType: getInteractionTypeStub,
         },
         '../repos/contact.repo': {
-          getContactsForCompany: getContactsForCompanyStub
+          getContactsForCompany: getContactsForCompanyStub,
         },
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
+          getDitCompany: getDitCompanyStub,
         },
         '../repos/advisor.repo': {
-          getAdvisor: getAdvisorStub
+          getAdvisor: getAdvisorStub,
         },
         '../repos/metadata.repo': {
-          getServiceOffers: getServiceOffersStub
-        }
+          getServiceOffers: getServiceOffersStub,
+        },
       })
 
       interactionEditController.postDetails(req, res, function (error) {

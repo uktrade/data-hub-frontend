@@ -7,5 +7,5 @@ module.exports = {
   advisor: 'John Brown',
   service: 'service name',
   notes: 'Here are some notes<br/>line 2.',
-  dit_team: 'team name'
+  dit_team: 'team name',
 }

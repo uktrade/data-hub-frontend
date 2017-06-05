@@ -15,8 +15,8 @@ describe('Error Middleware Test', () => {
     this.errorsStub = (isDev) => {
       return proxyquire('../../src/middleware/errors', {
         '../config': {
-          isDev
-        }
+          isDev,
+        },
       })
     }
   })
@@ -45,10 +45,10 @@ describe('Error Middleware Test', () => {
       const mockResponse = {
         status: () => {
           return {
-            render: responseRenderSpy
+            render: responseRenderSpy,
           }
         },
-        headersSent: false
+        headersSent: false,
       }
       const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode404} error`)
@@ -63,7 +63,7 @@ describe('Error Middleware Test', () => {
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode404,
-        'statusMessage': 'Sorry we couldn\'t find that page!'
+        'statusMessage': 'Sorry we couldn\'t find that page!',
       })
       expect(this.winstonInfoStub.args[0][0] instanceof Error).to.be.true
       expect(this.winstonInfoStub.args[0][0].message).to.equal(`mock ${errorCode404} error`)
@@ -76,10 +76,10 @@ describe('Error Middleware Test', () => {
       const mockResponse = {
         status: () => {
           return {
-            render: responseRenderSpy
+            render: responseRenderSpy,
           }
         },
-        headersSent: false
+        headersSent: false,
       }
       const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode500} error`)
@@ -93,7 +93,7 @@ describe('Error Middleware Test', () => {
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode500,
-        'statusMessage': 'Sorry something has gone wrong!'
+        'statusMessage': 'Sorry something has gone wrong!',
       })
       expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
       expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
@@ -106,10 +106,10 @@ describe('Error Middleware Test', () => {
       const mockResponse = {
         status: () => {
           return {
-            render: responseRenderSpy
+            render: responseRenderSpy,
           }
         },
-        headersSent: false
+        headersSent: false,
       }
       const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode403} error`)
@@ -126,7 +126,7 @@ describe('Error Middleware Test', () => {
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode403,
-        'statusMessage': 'This form has been tampered with'
+        'statusMessage': 'This form has been tampered with',
       })
       expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
       expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode403} error`)
@@ -140,10 +140,10 @@ describe('Error Middleware Test', () => {
       const mockResponse = {
         status: () => {
           return {
-            render: responseRenderSpy
+            render: responseRenderSpy,
           }
         },
-        headersSent: false
+        headersSent: false,
       }
       const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
       const error = new Error(`mock ${errorCode500} error`)
@@ -157,7 +157,7 @@ describe('Error Middleware Test', () => {
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': false,
         'statusCode': errorCode500,
-        'statusMessage': 'Sorry something has gone wrong!'
+        'statusMessage': 'Sorry something has gone wrong!',
       })
       expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
       expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
@@ -167,7 +167,7 @@ describe('Error Middleware Test', () => {
     it('should drop through to next middleware as headers have already been sent', () => {
       const nextSpy = this.sandbox.spy()
       const mockResponse = {
-        headersSent: true
+        headersSent: true,
       }
       const error = new Error('mock headers sent error')
 

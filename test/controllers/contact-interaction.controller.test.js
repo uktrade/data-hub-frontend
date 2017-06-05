@@ -26,14 +26,14 @@ describe('Contact interactions controller', function () {
     it('should get interactions and service deliveries for a contact', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { contactId: '1' }
+        params: { contactId: '1' },
       }
       const res = {
         locals: { contact },
         render: function () {
           expect(contactDataService.getContactInteractionsAndServiceDeliveries).to.be.calledWith(req.session.token, req.params.contactId)
           done()
-        }
+        },
       }
       contactInteractionController.getInteractions(req, res, next)
     })
@@ -41,14 +41,14 @@ describe('Contact interactions controller', function () {
     it('should format interactions for display', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { contactId: '1' }
+        params: { contactId: '1' },
       }
       const res = {
         locals: { contact },
         render: function (template, options) {
           expect(interactionFormattingService.getDisplayContactInteraction).to.be.calledWith(interaction)
           done()
-        }
+        },
       }
       contactInteractionController.getInteractions(req, res, next)
     })
@@ -56,7 +56,7 @@ describe('Contact interactions controller', function () {
     it('should return a list of interactions', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { contactId: '1' }
+        params: { contactId: '1' },
       }
       const res = {
         locals: { contact },
@@ -64,7 +64,7 @@ describe('Contact interactions controller', function () {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(1)
           done()
-        }
+        },
       }
       contactInteractionController.getInteractions(req, res, next)
     })

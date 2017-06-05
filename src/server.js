@@ -76,7 +76,7 @@ const redisStore = new RedisStore({
   client,
   // config ttl defined in milliseconds
   ttl: config.session.ttl / 1000,
-  secret: config.session.secret
+  secret: config.session.secret,
 })
 
 app.use(session({
@@ -84,13 +84,13 @@ app.use(session({
   proxy: !isDev,
   cookie: {
     secure: !isDev,
-    maxAge: config.session.ttl
+    maxAge: config.session.ttl,
   },
   rolling: true,
   key: 'datahub.sid',
   secret: config.session.secret,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
 }))
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))

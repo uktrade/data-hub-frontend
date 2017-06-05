@@ -12,7 +12,7 @@ const router = express.Router()
 function buildSearchEntityResultsData (searchEntityResults) {
   const navItemText = {
     company: 'Companies',
-    contact: 'Contacts'
+    contact: 'Contacts',
   }
 
   return searchEntityResults.map((searchEntityResult) => {
@@ -20,7 +20,7 @@ function buildSearchEntityResultsData (searchEntityResults) {
       {},
       searchEntityResult,
       {
-        text: navItemText[searchEntityResult.entity]
+        text: navItemText[searchEntityResult.entity],
       }
     )
   })
@@ -39,10 +39,10 @@ const searchActionValidationSchema = Celebrate({
     searchType: Joi.string().valid(
       [
         'company',
-        'contact'
+        'contact',
       ]
-    )
-  }
+    ),
+  },
 })
 
 function searchAction (req, res, next) {
@@ -53,7 +53,7 @@ function searchAction (req, res, next) {
     token: req.session.token,
     searchTerm,
     searchType,
-    page: req.query.page
+    page: req.query.page,
   })
     .then((results) => {
       const pagination = getPagination(req, results)
@@ -64,7 +64,7 @@ function searchAction (req, res, next) {
         searchType,
         searchEntityResultsData,
         results,
-        pagination
+        pagination,
       })
     })
     .catch(next)
@@ -89,5 +89,5 @@ module.exports = {
   router,
   indexAction,
   searchAction,
-  viewCompanyResult
+  viewCompanyResult,
 }

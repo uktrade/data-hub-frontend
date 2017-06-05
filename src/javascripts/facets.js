@@ -36,7 +36,7 @@ class Facets {
   selectOptionHandler = (event) => {
     const input = event.target || event.srcElement
     const queryParams = {
-      term: decodeURIComponent(term)
+      term: decodeURIComponent(term),
     }
 
     if (input.checked) {
@@ -48,7 +48,7 @@ class Facets {
 
   clearFacetSelection = () => {
     const queryParams = {
-      term: decodeURIComponent(term)
+      term: decodeURIComponent(term),
     }
 
     this.checkboxInputs.forEach((input) => {

@@ -8,11 +8,11 @@ describe('Search service', function () {
       const searchTerm = 'testTerm'
       const searchType = 'company'
       const mockResponse = {
-        message: 'expected response'
+        message: 'expected response',
       }
       const expectedResponse = {
         message: 'expected response',
-        page: 1
+        page: 1,
       }
 
       nock(config.apiRoot)
@@ -21,14 +21,14 @@ describe('Search service', function () {
           term: searchTerm,
           entity: searchType,
           limit: 10,
-          offset: 0
+          offset: 0,
         })
         .reply(200, mockResponse)
 
       searchService.search({
         token: 'token',
         searchTerm,
-        searchType
+        searchType,
       })
         .then((response) => {
           expect(response).to.deep.equal(expectedResponse)

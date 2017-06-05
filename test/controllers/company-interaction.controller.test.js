@@ -18,18 +18,18 @@ describe('Company interactions controller', function () {
         interaction_type: { id: '1234', name: 'Email' },
         subject: 'Subject 1234',
         date: '2017-02-14T14:49:17',
-        dit_advisor: { first_name: 'Fred', last_name: 'Smith' }
+        dit_advisor: { first_name: 'Fred', last_name: 'Smith' },
       }, {
         id: '22651151-2149-465e-871b-ac45bc568a63',
         interaction_type: { id: '1234', name: 'Service delivery' },
         subject: 'Subject 1234',
         date: '2017-02-14T14:49:17',
-        dit_advisor: { first_name: 'Fred', last_name: 'Smith' }
+        dit_advisor: { first_name: 'Fred', last_name: 'Smith' },
       }],
       contacts: [
         { id: '12651151-2149-465e-871b-ac45bc568a62' },
         { id: '12651151-2149-465e-871b-ac45bc568a63' },
-        { id: '12651151-2149-465e-871b-ac45bc568a64' }
+        { id: '12651151-2149-465e-871b-ac45bc568a64' },
       ],
       export_to_countries: [],
       future_interest_countries: [],
@@ -42,7 +42,7 @@ describe('Company interactions controller', function () {
       registered_address_town: 'Windsor',
       registered_address_country: {
         id: '80756b9a-5d95-e211-a939-e4115bead28a',
-        name: 'United Kingdom'
+        name: 'United Kingdom',
       },
       registered_address_county: 'Berkshire',
       registered_address_postcode: 'SL4 4QR',
@@ -66,26 +66,26 @@ describe('Company interactions controller', function () {
       archived_by: null,
       business_type: {
         id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-        name: 'Intermediary'
+        name: 'Intermediary',
       },
       sector: {
         id: 'b722c9d2-5f95-e211-a939-e4115bead28a',
-        name: 'Aerospace : Maintenance'
+        name: 'Aerospace : Maintenance',
       },
       employee_range: null,
       turnover_range: null,
       uk_region: {
         id: '844cd12a-6095-e211-a939-e4115bead28a',
-        name: 'East Midlands'
+        name: 'East Midlands',
       },
       trading_address_country: null,
       headquarter_type: null,
-      classification: null
+      classification: null,
     }
     companyinteractioncontroller = proxyquire('~/src/controllers/company-interaction.controller', {
       '../services/company.service': {
-        getInflatedDitCompany: sinon.stub().resolves(company)
-      }
+        getInflatedDitCompany: sinon.stub().resolves(company),
+      },
     })
   })
 
@@ -93,7 +93,7 @@ describe('Company interactions controller', function () {
     it('should return a list of interactions', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { id: '1' }
+        params: { id: '1' },
       }
       const res = {
         locals: {},
@@ -101,21 +101,21 @@ describe('Company interactions controller', function () {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(2)
           done()
-        }
+        },
       }
       companyinteractioncontroller.getInteractions(req, res, next)
     })
     it('should return a url to add interactions if a valid company and has contacts', function (done) {
       const req = {
         session: { token: '1234' },
-        params: { id: '1' }
+        params: { id: '1' },
       }
       const res = {
         locals: {},
         render: function (template, options) {
           expect(res.locals).to.have.property('addInteractionUrl')
           done()
-        }
+        },
       }
       companyinteractioncontroller.getInteractions(req, res, next)
     })
@@ -124,19 +124,19 @@ describe('Company interactions controller', function () {
       company.companies_house_data = { name: 'Fred' }
       companyinteractioncontroller = proxyquire('~/src/controllers/company-interaction.controller', {
         '../services/company.service': {
-          getInflatedDitCompany: sinon.stub().resolves(company)
-        }
+          getInflatedDitCompany: sinon.stub().resolves(company),
+        },
       })
       const req = {
         session: { token: '1234' },
-        params: { id: '1' }
+        params: { id: '1' },
       }
       const res = {
         locals: {},
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
-        }
+        },
       }
       companyinteractioncontroller.getInteractions(req, res, next)
     })
@@ -144,19 +144,19 @@ describe('Company interactions controller', function () {
       company.contacts = []
       companyinteractioncontroller = proxyquire('~/src/controllers/company-interaction.controller', {
         '../services/company.service': {
-          getInflatedDitCompany: sinon.stub().resolves(company)
-        }
+          getInflatedDitCompany: sinon.stub().resolves(company),
+        },
       })
       const req = {
         session: { token: '1234' },
-        params: { id: '1' }
+        params: { id: '1' },
       }
       const res = {
         locals: {},
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
-        }
+        },
       }
       companyinteractioncontroller.getInteractions(req, res, next)
     })
@@ -173,14 +173,14 @@ describe('Company interactions controller', function () {
         subject: 'Test subject',
         date: '23 February 2017',
         advisor: 'Fred Smith',
-        contact: 'Jim Brown'
+        contact: 'Jim Brown',
       }, {
         url: '/servicedelivery/2/details',
         interaction_type: 'Service Delivery',
         subject: 'Test subject',
         date: '23 February 2017',
         advisor: 'Fred Smith',
-        contact: 'Simon Carter'
+        contact: 'Simon Carter',
       }]
 
       addInteractionUrl = '/interaction/add?company=1234'

@@ -31,5 +31,5 @@ function getItemsAddedInLastYear (items) {
 
 module.exports = {
   getTimeSinceLastAddedItem,
-  getItemsAddedInLastYear
+  getItemsAddedInLastYear,
 }

@@ -5,7 +5,7 @@ describe('Search Bar component', () => {
     const mockData = {
       action: '/example/action',
       label: 'Search for company name or contact',
-      searchTerm: 'mock search term'
+      searchTerm: 'mock search term',
     }
     const component = renderComponentToDom(
       'search-bar',
@@ -32,7 +32,7 @@ describe('Search Bar component', () => {
       label: 'Search for company name or contact',
       searchTerm: 'mock search term',
       placeholder: 'mock place holder text',
-      submitText: 'mock submit text'
+      submitText: 'mock submit text',
     }
     const component = renderComponentToDom(
       'search-bar',

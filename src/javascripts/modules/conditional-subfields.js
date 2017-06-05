@@ -144,7 +144,7 @@ const ConditionalSubfields = {
         field.dispatchEvent(event)
       })
     }
-  }
+  },
 }
 
 module.exports = ConditionalSubfields

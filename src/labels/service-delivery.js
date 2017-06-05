@@ -11,5 +11,5 @@ module.exports = {
   uk_region: 'UK region',
   sector: 'Sector',
   country_of_interest: 'Country of interest',
-  'event': 'Event'
+  'event': 'Event',
 }

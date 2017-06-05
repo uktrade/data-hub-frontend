@@ -55,7 +55,7 @@ function editDetails (req, res, next) {
       res.locals.contacts = companyContacts.map((contact) => {
         return {
           id: contact.id,
-          name: `${contact.first_name} ${contact.last_name}`
+          name: `${contact.first_name} ${contact.last_name}`,
         }
       })
 

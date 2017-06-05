@@ -30,7 +30,7 @@ const HTML = `
   </div>
 `
 const event = {
-  preventDefault: function () {}
+  preventDefault: function () {},
 }
 
 function domTokenToArray (obj) {
