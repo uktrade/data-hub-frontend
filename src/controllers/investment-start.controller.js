@@ -2,14 +2,13 @@ const router = require('express').Router()
 
 const { getInflatedDitCompany } = require('../services/company.service')
 const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
-const { search } = require('../services/search.service')
+const { searchForeignCompany } = require('../services/search.service')
 const { getPagination } = require('../lib/pagination')
 
 function getHandler (req, res, next) {
   const clientCompanyId = req.query['client-company']
   const searchTerm = req.query['q']
   const promises = []
-  const searchType = 'company'
 
   if (clientCompanyId) {
     promises.push(getInflatedDitCompany(req.session.token, clientCompanyId))
@@ -20,12 +19,10 @@ function getHandler (req, res, next) {
   }
 
   if (searchTerm) {
-    promises.push(search({
+    promises.push(searchForeignCompany({
       token: req.session.token,
       page: req.query.page,
       searchTerm,
-      searchType,
-      uk_based: false
     }))
   } else {
     promises.push(Promise.resolve())

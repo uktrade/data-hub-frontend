@@ -15,7 +15,7 @@ const investmentProjects = {
 }
 const searchResults = {
   count: 0,
-  hits: [],
+  results: [],
 }
 
 describe('Investment start controller', () => {
@@ -24,7 +24,7 @@ describe('Investment start controller', () => {
     this.next = this.sandbox.stub()
     this.getInflatedDitCompany = this.sandbox.stub().resolves(ukCompany)
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
-    this.search = this.sandbox.stub().resolves(searchResults)
+    this.searchForeignCompany = this.sandbox.stub().resolves(searchResults)
     this.getPagination = this.sandbox.stub().resolves({})
 
     this.controller = proxyquire('~/src/controllers/investment-start.controller', {
@@ -35,7 +35,7 @@ describe('Investment start controller', () => {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
       '../services/search.service': {
-        search: this.search,
+        searchForeignCompany: this.searchForeignCompany,
       },
       '../lib/pagination': {
         getPagination: this.getPagination,

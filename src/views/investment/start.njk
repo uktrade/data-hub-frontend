@@ -56,7 +56,7 @@
     {% if searchResult %}
 
       {% component 'results-summary', {
-        resultType: searchType,
+        resultType: 'company',
         pluralisedResultType: 'companies',
         total: searchResult.count,
         searchTerm: searchTerm
@@ -64,7 +64,7 @@
 
       {% if searchResult.count > 0 %}
         <ol class="results-list results-list--block">
-          {% for result in searchResult.companies %}
+          {% for result in searchResult.results %}
             <li class="search-result">
               <a href="/investment/create?equity-company={{ result.id }}" class="search-result__link">
                 <h3 class="search-result__title">{{ result.name | highlightTerm(searchTerm) | safe }}</h3>
@@ -108,7 +108,7 @@
       {% endif %}
 
       {% component 'pagination', {
-        pagination: pagination
+        pages: pagination
       } %}
 
       <p class="infostrip">If you can’t find the company you’re looking for, <a href="/company/add-step-1">add a new compay</a>. Unfortunately you will lose your progress.</p>
