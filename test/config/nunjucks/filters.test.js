@@ -1,21 +1,12 @@
 const filters = require('~/config/nunjucks/filters')
 
 describe('nunjucks filters', () => {
-  beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.filters = filters
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#highlight', () => {
     it('should render string with highlight', () => {
       const searchTerm = 'example term'
       const mockString = `we should see ${searchTerm} highlighted here`
 
-      const highlightedString = this.filters.highlight(mockString, searchTerm)
+      const highlightedString = filters.highlight(mockString, searchTerm)
 
       expect(highlightedString.val).to.equal(`we should see <span class="results-highlight">${searchTerm}</span> highlighted here`)
     })
@@ -24,7 +15,7 @@ describe('nunjucks filters', () => {
       const searchTerm = 'example term'
       const mockString = 'we should not see another term highlighted here'
 
-      const highlightedString = this.filters.highlight(mockString, searchTerm)
+      const highlightedString = filters.highlight(mockString, searchTerm)
 
       expect(highlightedString.val).to.equal(mockString)
     })
@@ -42,7 +33,7 @@ describe('nunjucks filters', () => {
         'another example value',
       ]
 
-      const arrayWithoutFalsies = this.filters.removeFalsey(mockArrayWithFalsies)
+      const arrayWithoutFalsies = filters.removeFalsey(mockArrayWithFalsies)
 
       expect(arrayWithoutFalsies).to.deep.equal([
         'example value',
@@ -55,7 +46,7 @@ describe('nunjucks filters', () => {
     it('should return pluralised string when count is 0', () => {
       const singularString = 'result'
 
-      const pluralisedString = this.filters.pluralise(singularString, 0)
+      const pluralisedString = filters.pluralise(singularString, 0)
 
       expect(pluralisedString).to.equal(`${singularString}s`)
     })
@@ -63,7 +54,7 @@ describe('nunjucks filters', () => {
     it('should return singular string string when count is 1', () => {
       const singularString = 'result'
 
-      const pluralisedString = this.filters.pluralise(singularString, 1)
+      const pluralisedString = filters.pluralise(singularString, 1)
 
       expect(pluralisedString).to.equal(singularString)
     })
@@ -72,7 +63,7 @@ describe('nunjucks filters', () => {
       const singularString = 'company'
       const customPluralisedString = 'companies'
 
-      const pluralisedString = this.filters.pluralise(singularString, 0, customPluralisedString)
+      const pluralisedString = filters.pluralise(singularString, 0, customPluralisedString)
 
       expect(pluralisedString).to.equal(customPluralisedString)
     })
@@ -81,7 +72,7 @@ describe('nunjucks filters', () => {
       const singularString = 'company'
       const customPluralisedString = 'companies'
 
-      const pluralisedString = this.filters.pluralise(singularString, 1, customPluralisedString)
+      const pluralisedString = filters.pluralise(singularString, 1, customPluralisedString)
 
       expect(pluralisedString).to.equal(singularString)
     })
@@ -89,13 +80,13 @@ describe('nunjucks filters', () => {
 
   describe('#formatNumber', () => {
     it('should correctly format number for "en-GB" locale', () => {
-      const formattedNumber = this.filters.formatNumber(12345678)
+      const formattedNumber = filters.formatNumber(12345678)
 
       expect(formattedNumber).to.equal('12,345,678')
     })
 
     it('should correctly format number for "de-DE" locale', () => {
-      const formattedNumber = this.filters.formatNumber(12345678, 'de-DE')
+      const formattedNumber = filters.formatNumber(12345678, 'de-DE')
 
       expect(formattedNumber).to.equal('12,345,678')
     })
