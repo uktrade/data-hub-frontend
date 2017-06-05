@@ -61,7 +61,11 @@ describe('Investment create controller', () => {
       },
       '../repos/metadata.repo': {
         investmentTypeOptions: [{ id: 1, name: 'FDI' }],
-        referralSourceActivityOptions: [],
+        fdiOptions: [{ name: 'FDI Type' }],
+        nonFdiOptions: [{ name: 'Non-FDI Type' }],
+        referralSourceActivityOptions: [{ name: 'Activity' }],
+        referralSourceMarketingOptions: [{ name: 'Marketing' }],
+        referralSourceWebsiteOptions: [{ name: 'Website' }],
         businessActivityOptions: [],
         sectorOptions: []
       }
@@ -118,7 +122,11 @@ describe('Investment create controller', () => {
                   advisors: [{ id: 1, name: 'Jeff Major' }],
                   contacts: [{ id: 1, name: 'Bob Stevens' }],
                   investmentTypes: [{ value: 1, label: 'FDI' }],
-                  referralSourceActivities: [],
+                  fdi: [{ name: 'FDI Type' }],
+                  nonFdi: [{ name: 'Non-FDI Type' }],
+                  referralSourceActivities: [{ name: 'Activity' }],
+                  referralSourceMarketing: [{ name: 'Marketing' }],
+                  referralSourceWebsite: [{ name: 'Website' }],
                   businessActivities: [],
                   primarySectors: []
                 }

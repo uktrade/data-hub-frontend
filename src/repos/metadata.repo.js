@@ -75,8 +75,12 @@ const metadataItems = [
   ['event', 'eventOptions'],
   ['headquarter-type', 'headquarterOptions'],
   ['referral-source-activity', 'referralSourceActivityOptions'],
+  ['referral-source-marketing', 'referralSourceMarketingOptions'],
+  ['referral-source-website', 'referralSourceWebsiteOptions'],
   ['investment-business-activity', 'businessActivityOptions'],
-  ['investment-type', 'investmentTypeOptions']
+  ['investment-type', 'investmentTypeOptions'],
+  ['fdi-type', 'fdiOptions'],
+  ['non-fdi-type', 'nonFdiOptions'],
 ]
 
 const restrictedServiceKeys = [
