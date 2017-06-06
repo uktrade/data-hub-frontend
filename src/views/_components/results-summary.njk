@@ -16,7 +16,7 @@
  #}
 <div class="results-summary">
   <span class="results-summary__count">
-    {{ total | default(0) }}
+    {{ total | default(0) | formatNumber }}
   </span> {{ (resultType | default('result')) | pluralise(total, pluralisedResultType) }} found containing
   <span class="result-summary__query">{{ searchTerm }}</span>
 </div>

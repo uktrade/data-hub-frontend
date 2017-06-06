@@ -25,6 +25,10 @@ const filters = {
 
     return string
   },
+
+  formatNumber: (number, locales = 'en-GB') => {
+    return number.toLocaleString(locales)
+  },
 }
 
 module.exports = filters

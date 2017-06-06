@@ -1,10 +1,6 @@
 {
   "aggregations": [
     {
-      "count": 3,
-      "entity": "company"
-    },
-    {
       "count": 1,
       "entity": "contact"
     }

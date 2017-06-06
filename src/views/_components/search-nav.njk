@@ -26,7 +26,7 @@
             {{ searchEntityResult.text }}
           </a>
         {% endif %}
-        <span class="search-nav__item-count">({{ searchEntityResult.count }})</span>
+        <span class="search-nav__item-count">({{ searchEntityResult.count | formatNumber }})</span>
       </li>
     {% endfor %}
   </ul>

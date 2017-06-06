@@ -9,19 +9,27 @@ const Celebrate = require('celebrate')
 
 const router = express.Router()
 
-function buildSearchEntityResultsData (searchEntityResults) {
-  const navItemText = {
-    company: 'Companies',
-    contact: 'Contacts',
-  }
+const defaultEntities = [
+  {
+    entity: 'company',
+    text: 'Companies',
+    count: 0,
+  },
+  {
+    entity: 'contact',
+    text: 'Contacts',
+    count: 0,
+  },
+]
 
-  return searchEntityResults.map((searchEntityResult) => {
+function buildSearchEntityResultsData (apiResponseEntities) {
+  return defaultEntities.map((defaultEntity) => {
     return Object.assign(
       {},
-      searchEntityResult,
-      {
-        text: navItemText[searchEntityResult.entity],
-      }
+      defaultEntity,
+      apiResponseEntities.find((apiResponseEntity) => {
+        return apiResponseEntity.entity === defaultEntity.entity
+      })
     )
   })
 }
