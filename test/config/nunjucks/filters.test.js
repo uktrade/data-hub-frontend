@@ -8,7 +8,7 @@ describe('nunjucks filters', () => {
 
       const highlightedString = filters.highlight(mockString, searchTerm)
 
-      expect(highlightedString.val).to.equal(`we should see <span class="results-highlight">${searchTerm}</span> highlighted here`)
+      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">${searchTerm}</span> highlighted here`)
     })
 
     it('should render string without highlight', () => {

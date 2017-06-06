@@ -6,7 +6,7 @@ const filters = {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')
 
     return new nunjucks.runtime.SafeString(
-      string.replace(regEx, '<span class="results-highlight">$1</span>')
+      string.replace(regEx, '<span class="u-highlight">$1</span>')
     )
   },
 
