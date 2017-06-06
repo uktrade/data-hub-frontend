@@ -65,7 +65,7 @@
     "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha --recursive --require test/common.js --ui bdd test",
     "test:watch": "npm test -- -w",
-    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov mocha --require test/common.js --ui bdd test/**/*.test.js",
+    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "eslint ./test ./src *.js",
     "lint:js:modified": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ \"$CHANGED_FILES\" ]; then eslint $(echo $CHANGED_FILES); fi",
