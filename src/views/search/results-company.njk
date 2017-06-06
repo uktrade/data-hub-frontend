@@ -33,14 +33,14 @@
             </a>
           </h3>
 
-          <dl>
+          <dl class="metadata-list">
             {% if company.companies_house_data %}
-              <dt class="u-visually-hidden">Companies House Number</dt>
-              <dd>{{ company.companies_house_data.company_number }}</dd>
+              <dt class="metadata-list__term u-visually-hidden">Companies House Number</dt>
+              <dd class="metadata-list__value">{{ company.companies_house_data.company_number }}</dd>
             {% endif %}
 
-            <dt class="u-visually-hidden">Address</dt>
-            <dd>
+            <dt class="metadata-list__term u-visually-hidden">Address</dt>
+            <dd class="metadata-list__value">
               {{ addressFormatter( [
                 company.registered_address_1,
                 company.registered_address_2,

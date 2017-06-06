@@ -1,0 +1,24 @@
+@import "../settings/colours";
+@import "../tools/functions/typography";
+
+.metadata-list {
+  @include core-font(14);
+  color: $black;
+}
+
+.metadata-list__term {
+  display: inline-block;
+
+  &::after {
+    content: ":";
+  }
+}
+
+.metadata-list__value {
+  display: inline-block;
+  padding: 0 20px 0 0;
+}
+
+.metadata-list__value--block {
+  display: block;
+}
