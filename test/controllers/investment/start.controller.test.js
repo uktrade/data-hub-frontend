@@ -35,7 +35,7 @@ describe('Investment start controller', () => {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
       '../../services/search.service': {
-        search: this.search,
+        searchForeignCompany: this.searchForeignCompany,
       },
       '../../lib/pagination': {
         getPagination: this.getPagination,

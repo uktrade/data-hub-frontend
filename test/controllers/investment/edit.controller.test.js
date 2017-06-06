@@ -1,7 +1,13 @@
 /* eslint handle-callback-err: 0 */
-const { render } = require('../nunjucks')
-const { expectHiddenField, expectTextFieldWithLabel, expectTextAreaWithLabel, expectDropdownWithLabel, expectDateFieldWithLabel } = require('../form-helpers')
+const { render } = require('../../nunjucks')
 const interactionLabels = require('~/src/labels/interaction-labels')
+const {
+  expectHiddenField,
+  expectTextFieldWithLabel,
+  expectTextAreaWithLabel,
+  expectDropdownWithLabel,
+  expectDateFieldWithLabel,
+} = require('../../form-helpers')
 
 describe('Interaction controller, edit', function () {
   let interactionEditController
@@ -369,7 +375,7 @@ describe('Interaction controller, edit', function () {
       }
 
       it('should render all the required fields on the page', function () {
-        return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
+        return render(`${__dirname}/../../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
           expectHiddenField(document, 'id', locals.formData.id)
           expectHiddenField(document, 'interaction_type', locals.formData.interaction_type)
@@ -384,7 +390,7 @@ describe('Interaction controller, edit', function () {
         })
       })
       it('should show the company name and the interaction type', function () {
-        return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
+        return render(`${__dirname}/../../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
           const companyElement = document.getElementById('company-wrapper')
           expect(companyElement.textContent).to.include('Company')
@@ -393,13 +399,13 @@ describe('Interaction controller, edit', function () {
       })
       it('should not include the id field for new interactions', function () {
         delete locals.formData.id
-        return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
+        return render(`${__dirname}/../../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
           expect(document.querySelector('[type=hidden][name=id]')).to.be.null
         })
       })
       it('should include a csrf token', function () {
-        return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
+        return render(`${__dirname}/../../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
           expect(document.querySelector('[type=hidden][name=_csrf]')).to.not.be.null
         })
@@ -408,7 +414,7 @@ describe('Interaction controller, edit', function () {
         locals.errors = {
           name: ['test'],
         }
-        return render(`${__dirname}/../../src/views/interaction/interaction-edit.njk`, locals)
+        return render(`${__dirname}/../../../src/views/interaction/interaction-edit.njk`, locals)
         .then((document) => {
           expect(document.querySelector('.error-summary-list')).to.not.be.null
         })
