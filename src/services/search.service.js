@@ -36,7 +36,7 @@ function searchForeignCompany ({ token, searchTerm, page = 1, limit = 10 }) {
   }
   const body = {
     original_query: searchTerm,
-    uk_based: true,
+    uk_based: false,
   }
   const options = {
     url: `${config.apiRoot}/v3/search/company${buildQueryString(queryParams)}`,
