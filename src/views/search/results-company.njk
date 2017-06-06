@@ -27,7 +27,7 @@
             {% set companyUrl = '/viewcompanyresult/' + company.id %}
           {% endif %}
 
-          <h3 class="results-list__item-header">
+          <h3 class="results-item__item-header">
             <a href="{{ companyUrl }}">
               {{ company.name | highlight(searchTerm) }}
             </a>
