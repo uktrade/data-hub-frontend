@@ -12,7 +12,7 @@ describe('Service delivery formatting service', function () {
         service: 'bf0c2978-ff8e-43bf-a92f-23a7ad769f97',
         status: '1af6e682-bdbc-4220-bdc0-3f7b41dba989',
         contact: 'b61af15e-b77a-4882-a6d0-926f7f4a33a2',
-        dit_advisor: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
+        dit_adviser: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
         country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d',
@@ -47,10 +47,10 @@ describe('Service delivery formatting service', function () {
       expect(actual.data.relationships.contact.data).not.to.be.null
       expect(actual.data.relationships.contact.data.type).to.equal('Contact')
       expect(actual.data.relationships.contact.data.id).to.equal('b61af15e-b77a-4882-a6d0-926f7f4a33a2')
-      expect(actual.data.relationships.dit_advisor).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data.type).to.equal('Advisor')
-      expect(actual.data.relationships.dit_advisor.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
+      expect(actual.data.relationships.dit_adviser).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data.type).to.equal('Adviser')
+      expect(actual.data.relationships.dit_adviser.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
       expect(actual.data.relationships.uk_region).not.to.be.null
       expect(actual.data.relationships.uk_region.data).not.to.be.null
       expect(actual.data.relationships.uk_region.data.type).to.equal('UKRegion')
@@ -75,7 +75,7 @@ describe('Service delivery formatting service', function () {
         service: 'bf0c2978-ff8e-43bf-a92f-23a7ad769f97',
         status: '1af6e682-bdbc-4220-bdc0-3f7b41dba989',
         contact: 'b61af15e-b77a-4882-a6d0-926f7f4a33a2',
-        dit_advisor: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
+        dit_adviser: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
         country_of_interest: '86bfa86d-a015-4260-b425-61cbf4f05a7d',
@@ -111,10 +111,10 @@ describe('Service delivery formatting service', function () {
       expect(actual.data.relationships.contact.data).not.to.be.null
       expect(actual.data.relationships.contact.data.type).to.equal('Contact')
       expect(actual.data.relationships.contact.data.id).to.equal('b61af15e-b77a-4882-a6d0-926f7f4a33a2')
-      expect(actual.data.relationships.dit_advisor).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data.type).to.equal('Advisor')
-      expect(actual.data.relationships.dit_advisor.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
+      expect(actual.data.relationships.dit_adviser).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data.type).to.equal('Adviser')
+      expect(actual.data.relationships.dit_adviser.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
       expect(actual.data.relationships.uk_region).not.to.be.null
       expect(actual.data.relationships.uk_region.data).not.to.be.null
       expect(actual.data.relationships.uk_region.data.type).to.equal('UKRegion')
@@ -139,7 +139,7 @@ describe('Service delivery formatting service', function () {
         service: 'bf0c2978-ff8e-43bf-a92f-23a7ad769f97',
         status: '1af6e682-bdbc-4220-bdc0-3f7b41dba989',
         contact: 'b61af15e-b77a-4882-a6d0-926f7f4a33a2',
-        dit_advisor: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
+        dit_adviser: 'b96465a6-cd5b-4a24-aff7-bf5bfc02243d',
         uk_region: 'ff5a57b9-2182-4010-9f94-586fad566b56',
         event: '054d059a-6c3e-445a-948f-98a41882fb84',
         sector: '8356633c-c604-4bd2-9a9a-cd19e3ed3430',
@@ -175,10 +175,10 @@ describe('Service delivery formatting service', function () {
       expect(actual.data.relationships.contact.data).not.to.be.null
       expect(actual.data.relationships.contact.data.type).to.equal('Contact')
       expect(actual.data.relationships.contact.data.id).to.equal('b61af15e-b77a-4882-a6d0-926f7f4a33a2')
-      expect(actual.data.relationships.dit_advisor).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data).not.to.be.null
-      expect(actual.data.relationships.dit_advisor.data.type).to.equal('Advisor')
-      expect(actual.data.relationships.dit_advisor.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
+      expect(actual.data.relationships.dit_adviser).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data).not.to.be.null
+      expect(actual.data.relationships.dit_adviser.data.type).to.equal('Adviser')
+      expect(actual.data.relationships.dit_adviser.data.id).to.equal('b96465a6-cd5b-4a24-aff7-bf5bfc02243d')
       expect(actual.data.relationships.uk_region).not.to.be.null
       expect(actual.data.relationships.uk_region.data).not.to.be.null
       expect(actual.data.relationships.uk_region.data.type).to.equal('UKRegion')

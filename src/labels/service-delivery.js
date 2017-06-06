@@ -7,7 +7,7 @@ module.exports = {
   notes: 'Notes',
   date: 'Service delivery start date',
   dit_team: 'Service provider',
-  dit_advisor: 'DIT advisor',
+  dit_adviser: 'DIT adviser',
   uk_region: 'UK region',
   sector: 'Sector',
   country_of_interest: 'Country of interest',

@@ -17,9 +17,9 @@ const investmentProjectSummary = {
   investor_company: '67890',
   estimated_land_date: '2018-10-01',
   client_relationship_manager: '111222',
-  referral_source_advisor: '333444',
+  referral_source_adviser: '333444',
 }
-const advisorMock = {
+const adviserMock = {
   results: [
     {
       id: 1,
@@ -36,7 +36,7 @@ describe('Investment create controller', () => {
     this.getInflatedDitCompany = this.sandbox.stub().resolves(company)
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.getInvestmentProjectSummary = this.sandbox.stub().resolves(investmentProjectSummary)
-    this.getAdvisors = this.sandbox.stub().resolves(advisorMock)
+    this.getAdvisers = this.sandbox.stub().resolves(adviserMock)
     this.createInvestmentProject = this.sandbox.stub().resolves({})
     this.updateInvestmentProject = this.sandbox.stub().resolves({})
     this.transformToApi = this.sandbox.stub().returns({})
@@ -56,8 +56,8 @@ describe('Investment create controller', () => {
         transformToApi: this.transformToApi,
         transformFromApi: this.transformFromApi,
       },
-      '../repos/advisor.repo': {
-        getAdvisors: this.getAdvisors,
+      '../repos/adviser.repo': {
+        getAdvisers: this.getAdvisers,
       },
       '../repos/metadata.repo': {
         investmentTypeOptions: [{ id: 1, name: 'FDI' }],
@@ -119,7 +119,7 @@ describe('Investment create controller', () => {
 
               expect(data.form).to.deep.equal({
                 options: {
-                  advisors: [{ id: 1, name: 'Jeff Major' }],
+                  advisers: [{ id: 1, name: 'Jeff Major' }],
                   contacts: [{ id: 1, name: 'Bob Stevens' }],
                   investmentTypes: [{ value: 1, label: 'FDI' }],
                   fdi: [{ name: 'FDI Type' }],
@@ -293,7 +293,7 @@ describe('Investment create controller', () => {
                   investor_company: '67890',
                   estimated_land_date: '2018-10-01',
                   client_relationship_manager: '111222',
-                  referral_source_advisor: '333444',
+                  referral_source_adviser: '333444',
                   'is-relationship-manager': 'No',
                   'is-referral-source': 'No',
                 },
@@ -309,14 +309,14 @@ describe('Investment create controller', () => {
       })
     })
 
-    describe('when user id matches values for relationship manager and advisor', () => {
+    describe('when user id matches values for relationship manager and adviser', () => {
       beforeEach(() => {
         const summaryMock = {
           id: '12345',
           investor_company: '67890',
           estimated_land_date: '2018-10-01',
           client_relationship_manager: '1a2b3c4d5e',
-          referral_source_advisor: '1a2b3c4d5e',
+          referral_source_adviser: '1a2b3c4d5e',
         }
 
         this.getInvestmentProjectSummary.resolves(summaryMock)
@@ -347,7 +347,7 @@ describe('Investment create controller', () => {
                   investor_company: '67890',
                   estimated_land_date: '2018-10-01',
                   client_relationship_manager: '1a2b3c4d5e',
-                  referral_source_advisor: '1a2b3c4d5e',
+                  referral_source_adviser: '1a2b3c4d5e',
                   'is-relationship-manager': '1a2b3c4d5e',
                   'is-referral-source': '1a2b3c4d5e',
                 },

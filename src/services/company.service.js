@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const winston = require('winston')
-const advisorRepository = require('../repos/advisor.repo')
+const adviserRepository = require('../repos/adviser.repo')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
@@ -19,22 +19,22 @@ function getInflatedDitCompany (token, id) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const advisorHash = {}
+        const adviserHash = {}
         const company = yield companyRepository.getDitCompany(token, id)
         const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
 
-        // Build a list of advisors to lookup
+        // Build a list of advisers to lookup
         for (const interaction of company.interactions) {
-          advisorHash[interaction.dit_advisor] = true
+          adviserHash[interaction.dit_adviser] = true
         }
         for (const serviceDelivery of serviceDeliveries) {
-          advisorHash[serviceDelivery.relationships.dit_advisor.data.id] = true
+          adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
         }
 
         // get the related adviors
-        for (const advisorId of Object.keys(advisorHash)) {
-          const advisor = yield advisorRepository.getAdvisor(token, advisorId)
-          advisorHash[advisor.id] = advisor
+        for (const adviserId of Object.keys(adviserHash)) {
+          const adviser = yield adviserRepository.getAdviser(token, adviserId)
+          adviserHash[adviser.id] = adviser
         }
 
         const serviceOffers = yield metadataRepository.getServiceOffers(token)
@@ -44,7 +44,7 @@ function getInflatedDitCompany (token, id) {
           return Object.assign({}, { id: serviceDelivery.id }, serviceDelivery.attributes, {
             contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
             interaction_type: { id: null, name: 'Service delivery' },
-            dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
+            dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
             service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
             dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
           })
@@ -55,7 +55,7 @@ function getInflatedDitCompany (token, id) {
           return Object.assign({}, interaction, {
             contact: getContactInCompanyObject(company, interaction.contact),
             interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-            dit_advisor: advisorHash[interaction.dit_advisor],
+            dit_adviser: adviserHash[interaction.dit_adviser],
             service: serviceOffers.find((option) => option.id === interaction.service),
             dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
           })

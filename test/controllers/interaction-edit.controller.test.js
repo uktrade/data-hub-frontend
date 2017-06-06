@@ -11,7 +11,7 @@ describe('Interaction controller, edit', function () {
   let getContactsForCompanyStub
   let getInteractionTypeStub
   let getDitCompanyStub
-  let getAdvisorStub
+  let getAdviserStub
   let getServiceOffersStub
   let saveInteractionFormStub
   let company
@@ -52,7 +52,7 @@ describe('Interaction controller, edit', function () {
     createBlankInteractionForCompanyStub = sinon.stub().resolves(newCompanyInteraction)
     createBlankInteractionForContactStub = sinon.stub().resolves(newContactInteraction)
     getContactsForCompanyStub = sinon.stub().resolves([contact])
-    getAdvisorStub = sinon.stub().resolves({ id: '3221', name: 'John Doe' })
+    getAdviserStub = sinon.stub().resolves({ id: '3221', name: 'John Doe' })
     getServiceOffersStub = sinon.stub().resolves([{ id: '8888', name: 'Service' }])
     getDitCompanyStub = sinon.stub().resolves(company)
     getInteractionTypeStub = sinon.stub().returns(emailInteractionType)
@@ -74,8 +74,8 @@ describe('Interaction controller, edit', function () {
       '../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
       },
-      '../repos/advisor.repo': {
-        getAdvisor: getAdvisorStub,
+      '../repos/adviser.repo': {
+        getAdviser: getAdviserStub,
       },
       '../repos/metadata.repo': {
         getServiceOffers: getServiceOffersStub,
@@ -267,7 +267,7 @@ describe('Interaction controller, edit', function () {
           company: '333',
           contact: '444',
           subject: 'test subject',
-          dit_advisor: '7811',
+          dit_adviser: '7811',
         }
         req = {
           session: {
@@ -303,10 +303,10 @@ describe('Interaction controller, edit', function () {
         }
         interactionEditController.editDetails(req, res, next)
       })
-      it('should lookup a DIT advisor details for display if required', function (done) {
+      it('should lookup a DIT adviser details for display if required', function (done) {
         res.render = function () {
-          expect(getAdvisorStub).to.be.calledWith('1234', '7811')
-          expect(res.locals).to.have.property('dit_advisor')
+          expect(getAdviserStub).to.be.calledWith('1234', '7811')
+          expect(res.locals).to.have.property('dit_adviser')
           done()
         }
         interactionEditController.editDetails(req, res, next)
@@ -352,7 +352,7 @@ describe('Interaction controller, edit', function () {
           company: '333',
           contact: '444',
           subject: 'test subject',
-          dit_advisor: '7811',
+          dit_adviser: '7811',
           notes: 'some notes',
           service: '3322',
           dit_team: '9884',
@@ -378,7 +378,7 @@ describe('Interaction controller, edit', function () {
           expectTextAreaWithLabel(document, 'notes', 'Interaction notes', locals.formData.notes)
           expectDropdownWithLabel(document, 'contact', 'Company contact', locals.formData.contact)
           expectDateFieldWithLabel(document, 'date', 'Date of interaction', locals.formData.date)
-          expectDropdownWithLabel(document, 'dit_advisor', 'DIT adviser', locals.formData.dit_advisor)
+          expectDropdownWithLabel(document, 'dit_adviser', 'DIT adviser', locals.formData.dit_adviser)
           expectDropdownWithLabel(document, 'service', 'Service offer', locals.formData.service)
           expectDropdownWithLabel(document, 'dit_team', 'Service provider', locals.formData.dit_team)
         })
@@ -430,7 +430,7 @@ describe('Interaction controller, edit', function () {
         company: '333',
         contact: '444',
         subject: 'test subject',
-        dit_advisor: '7811',
+        dit_adviser: '7811',
         date: '2017-02-01T00:00:00:00Z',
       }
 
@@ -483,8 +483,8 @@ describe('Interaction controller, edit', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/advisor.repo': {
-          getAdvisor: getAdvisorStub,
+        '../repos/adviser.repo': {
+          getAdviser: getAdviserStub,
         },
         '../repos/metadata.repo': {
           getServiceOffers: getServiceOffersStub,
@@ -515,8 +515,8 @@ describe('Interaction controller, edit', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/advisor.repo': {
-          getAdvisor: getAdvisorStub,
+        '../repos/adviser.repo': {
+          getAdviser: getAdviserStub,
         },
         '../repos/metadata.repo': {
           getServiceOffers: getServiceOffersStub,

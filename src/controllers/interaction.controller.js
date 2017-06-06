@@ -6,7 +6,7 @@ const metadataRepository = require('../repos/metadata.repo')
 const interactionDataService = require('../services/interaction-data.service')
 const { getDisplayInteraction } = require('../services/interaction-formatting.service')
 
-const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_advisor', 'service', 'dit_team']
+const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
 const router = express.Router()
 
 function getCommon (req, res, next) {

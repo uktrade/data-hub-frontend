@@ -4,7 +4,7 @@ describe('interaction form service', function () {
   let saveInteractionStub
   let company
   let contact
-  let dit_advisor
+  let dit_adviser
   let interaction_type
   let interaction
   let service
@@ -15,7 +15,7 @@ describe('interaction form service', function () {
   beforeEach(function () {
     company = { id: '1234', name: 'Fred ltd' }
     contact = { id: '3321', name: 'Fred Smith', first_name: 'Fred', last_name: 'Smith', company }
-    dit_advisor = { id: '4455', name: 'Fred Jones', first_name: 'Fred', last_name: 'Jones' }
+    dit_adviser = { id: '4455', name: 'Fred Jones', first_name: 'Fred', last_name: 'Jones' }
     interaction_type = { id: '1234', name: 'Email' }
     service = { id: '6654', name: 'Significant Assist' }
     dit_team = { id: '90934', name: 'North East' }
@@ -27,7 +27,7 @@ describe('interaction form service', function () {
       subject: 'Test subject',
       notes: 'Test notes',
       date: '2017-01-02:T00:00:00.00Z',
-      dit_advisor,
+      dit_adviser,
       service,
       dit_team,
     }
@@ -51,7 +51,7 @@ describe('interaction form service', function () {
         subject: 'Test subject',
         notes: 'Test notes',
         date: '2017-01-02:T00:00:00.00Z',
-        dit_advisor: dit_advisor.id,
+        dit_adviser: dit_adviser.id,
         service: service.id,
         dit_team: dit_team.id,
       }
@@ -62,7 +62,7 @@ describe('interaction form service', function () {
         company,
         contact: null,
         interaction_type: interaction_type,
-        dit_advisor,
+        dit_adviser,
         date: '2017-01-02:T00:00:00.00Z',
         service: {
           id: null,
@@ -81,7 +81,7 @@ describe('interaction form service', function () {
         subject: null,
         notes: null,
         date: '2017-01-02:T00:00:00.00Z',
-        dit_advisor: dit_advisor.id,
+        dit_adviser: dit_adviser.id,
         service: null,
         dit_team: null,
       }
@@ -101,7 +101,7 @@ describe('interaction form service', function () {
         date_year: '2017',
         date_month: '2',
         date_day: '12',
-        dit_advisor: dit_advisor.id,
+        dit_adviser: dit_adviser.id,
         service: service.id,
         dit_team: dit_team.id,
       }

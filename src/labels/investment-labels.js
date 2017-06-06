@@ -51,7 +51,7 @@ const detailsDisplay = {
 const referLabels = {
   referral_activity: 'Activity',
   referral_event: 'Event',
-  referral_advisor: 'Advisor',
+  referral_adviser: 'Adviser',
 }
 
 module.exports = {

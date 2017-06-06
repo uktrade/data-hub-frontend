@@ -8,7 +8,7 @@ const {
   updateInvestmentProject,
 } = require('../repos/investment.repo')
 const { transformToApi, transformFromApi } = require('../services/investment-formatting.service')
-const { getAdvisors } = require('../repos/advisor.repo')
+const { getAdvisers } = require('../repos/adviser.repo')
 const metadataRepo = require('../repos/metadata.repo')
 
 function getHandler (req, res, next) {
@@ -16,7 +16,7 @@ function getHandler (req, res, next) {
   const promises = [
     getInflatedDitCompany(req.session.token, equityCompanyId),
     getCompanyInvestmentProjects(req.session.token, equityCompanyId),
-    getAdvisors(req.session.token),
+    getAdvisers(req.session.token),
   ]
 
   if (!equityCompanyId) {
@@ -24,7 +24,7 @@ function getHandler (req, res, next) {
   }
 
   Promise.all(promises)
-    .then(([equityCompany, equityCompanyInvestments, advisorResponse]) => {
+    .then(([equityCompany, equityCompanyInvestments, adviserResponse]) => {
       const form = res.locals.form || {}
       const contacts = equityCompany.contacts.map((contact) => {
         return {
@@ -38,15 +38,15 @@ function getHandler (req, res, next) {
           label: type.name,
         }
       })
-      const advisors = advisorResponse.results.map((advisor) => {
+      const advisers = adviserResponse.results.map((adviser) => {
         return {
-          id: advisor.id,
-          name: `${advisor.first_name} ${advisor.last_name}`,
+          id: adviser.id,
+          name: `${adviser.first_name} ${adviser.last_name}`,
         }
       })
 
       form.options = {
-        advisors,
+        advisers,
         contacts,
         investmentTypes,
         fdi: metadataRepo.fdiOptions,
@@ -107,7 +107,7 @@ function editMiddleware (req, res, next) {
       res.locals.projectId = projectData.id
 
       // TODO: This is to support the leading question of whether current
-      // user is the CRM or advisor - this journey will be changed in the
+      // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
       if (projectData.client_relationship_manager === req.session.user.id) {
         res.locals.form.state['is-relationship-manager'] = projectData.client_relationship_manager
@@ -115,8 +115,8 @@ function editMiddleware (req, res, next) {
         res.locals.form.state['is-relationship-manager'] = 'No'
       }
 
-      if (projectData.referral_source_advisor === req.session.user.id) {
-        res.locals.form.state['is-referral-source'] = projectData.referral_source_advisor
+      if (projectData.referral_source_adviser === req.session.user.id) {
+        res.locals.form.state['is-referral-source'] = projectData.referral_source_adviser
       } else {
         res.locals.form.state['is-referral-source'] = 'No'
       }

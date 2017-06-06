@@ -18,13 +18,13 @@ describe('Company interactions controller', function () {
         interaction_type: { id: '1234', name: 'Email' },
         subject: 'Subject 1234',
         date: '2017-02-14T14:49:17',
-        dit_advisor: { first_name: 'Fred', last_name: 'Smith' },
+        dit_adviser: { first_name: 'Fred', last_name: 'Smith' },
       }, {
         id: '22651151-2149-465e-871b-ac45bc568a63',
         interaction_type: { id: '1234', name: 'Service delivery' },
         subject: 'Subject 1234',
         date: '2017-02-14T14:49:17',
-        dit_advisor: { first_name: 'Fred', last_name: 'Smith' },
+        dit_adviser: { first_name: 'Fred', last_name: 'Smith' },
       }],
       contacts: [
         { id: '12651151-2149-465e-871b-ac45bc568a62' },
@@ -172,14 +172,14 @@ describe('Company interactions controller', function () {
         interaction_type: 'Email',
         subject: 'Test subject',
         date: '23 February 2017',
-        advisor: 'Fred Smith',
+        adviser: 'Fred Smith',
         contact: 'Jim Brown',
       }, {
         url: '/servicedelivery/2/details',
         interaction_type: 'Service Delivery',
         subject: 'Test subject',
         date: '23 February 2017',
-        advisor: 'Fred Smith',
+        adviser: 'Fred Smith',
         contact: 'Simon Carter',
       }]
 

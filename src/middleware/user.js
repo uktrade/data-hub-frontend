@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     authorisedRequest(token, `${config.apiRoot}/whoami/`)
       .then((userInfo) => {
         req.session.user = {
-          id: userInfo.id, // DIT Advisor id
+          id: userInfo.id, // DIT Adviser id
           name: userInfo.name,
           team: userInfo.dit_team,
         }
