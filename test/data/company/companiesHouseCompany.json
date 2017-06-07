@@ -1,0 +1,26 @@
+{
+  "id": 689998,
+  "created_on": null,
+  "modified_on": null,
+  "name": "EXAMPLE LTD",
+  "registered_address_1": "PEARL ASSURANCE HOUSE",
+  "registered_address_2": "319 EXAMPLE LANE",
+  "registered_address_3": null,
+  "registered_address_4": null,
+  "registered_address_town": "LONDON",
+  "registered_address_county": "",
+  "registered_address_postcode": "N12 8LY",
+  "company_number": "06960817",
+  "company_category": "Private Limited Company",
+  "company_status": "Liquidation",
+  "sic_code_1": "82990 - Other business support service activities n.e.c.",
+  "sic_code_2": "",
+  "sic_code_3": "",
+  "sic_code_4": "",
+  "uri": "http://business.data.gov.uk/id/company/00000817",
+  "incorporation_date": "2009-07-13",
+  "registered_address_country": {
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United Kingdom"
+  }
+}

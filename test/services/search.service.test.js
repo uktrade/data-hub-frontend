@@ -1,6 +1,6 @@
 const nock = require('nock')
 const config = require('~/src/config')
-const searchService = require('~/src/services/search.service')
+const { search } = require('~/src/services/search.service')
 
 describe('Search service', function () {
   describe('searchService.search method', function () {
@@ -25,7 +25,7 @@ describe('Search service', function () {
         })
         .reply(200, mockResponse)
 
-      searchService.search({
+      search({
         token: 'token',
         searchTerm,
         searchType,

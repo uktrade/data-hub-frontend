@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { getInflatedDitCompany } = require('../../services/company.service')
 const { getCompanyInvestmentProjects } = require('../../repos/investment.repo')
-const { searchForeignCompany } = require('../../services/search.service')
+const { searchForeignCompanies } = require('../../services/search.service')
 const { getPagination } = require('../../lib/pagination')
 
 function getHandler (req, res, next) {
@@ -19,7 +19,7 @@ function getHandler (req, res, next) {
   }
 
   if (searchTerm) {
-    promises.push(searchForeignCompany({
+    promises.push(searchForeignCompanies({
       token: req.session.token,
       page: req.query.page,
       searchTerm,
