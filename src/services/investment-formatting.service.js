@@ -23,7 +23,7 @@ function transformToApi (body) {
     body.client_relationship_manager = relationshipMgr
   }
 
-  const referralSource = body['is-relationship-manager']
+  const referralSource = body['is-referral-source']
   if (referralSource !== 'No') {
     body.referral_source_adviser = referralSource
   }
@@ -52,8 +52,12 @@ function transformFromApi (body) {
     'client_relationship_manager': String,
     'referral_source_adviser': String,
     'referral_source_activity': String,
+    'referral_source_activity_marketing': String,
+    'referral_source_activity_website': String,
     'investor_company': String,
     'investment_type': String,
+    'fdi_type': String,
+    'non_fdi_type': String,
     'sector': String,
     'client_contacts': Array,
     'business_activities': Array,
