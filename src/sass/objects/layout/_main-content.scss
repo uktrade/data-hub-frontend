@@ -1,4 +1,6 @@
 @import "../../settings/colours";
+@import "../../settings/typography";
+@import "../../tools/mixins/conditionals";
 @import "../../tools/mixins/layout";
 
 .main-content {
@@ -9,4 +11,9 @@
 
 .main-content__inner {
   @include site-width-container;
+  padding-bottom: $default-spacing-unit * 2;
+
+  @include media(desktop) {
+    padding-bottom: $default-spacing-unit * 4;
+  }
 }
