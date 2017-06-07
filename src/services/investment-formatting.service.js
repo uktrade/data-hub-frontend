@@ -48,6 +48,10 @@ function transformToApi (body) {
 }
 
 function transformFromApi (body) {
+  if (!body) {
+    return
+  }
+
   const schema = {
     'client_relationship_manager': String,
     'referral_source_adviser': String,
