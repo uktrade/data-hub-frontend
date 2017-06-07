@@ -1,42 +1,22 @@
 {% extends "investment/_layout.njk" %}
 
-{% block main_heading %}
-  <h1 class="visually-hidden">Investment details</h1>
-  <h2 class="page-heading">{{ projectMeta.name }}</h2>
-
-  {% component 'project-status', projectMeta %}
-{% endblock %}
-
-{% block main_grid_left_column %}
-  <nav class="local-nav">
-    {% for item in localNavItems %}
-      <a
-        href="/investment/{{ projectMeta.id }}/{{ item.slug }}"
-        class="local-nav__link{% if currentNavItem == item.slug %} is-active{% endif %}"
-      >
-        {{ item.label }}
-      </a>
-    {% endfor %}
-  </nav>
-{% endblock %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Investment project summary</h2>
-  {% component 'key-value-table', items=project, variant='striped' %}
+  {% component 'key-value-table', items=investmentProject.details, variant='striped' %}
   <p>
-    <a href="/investment/{{ projectMeta.id }}/details/edit" class="button-secondary">Edit summary</a>
+    <a href="/investment/{{ investmentProject.meta.id }}/details/edit" class="button-secondary">Edit summary</a>
   </p>
 
   <h2 class="heading-medium">Value</h2>
-  {% component 'key-value-table', items=value, variant='striped' %}
+  {% component 'key-value-table', items=investmentProject.value, variant='striped' %}
   <p>
-    <a href="/investment/{{ projectMeta.id }}/value/start" class="button">Start</a>
+    <a href="/investment/{{ investmentProject.meta.id }}/value/create" class="button">Start</a>
   </p>
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% component 'key-value-table', items=requirements, variant='striped' %}
+  {% component 'key-value-table', items=investmentProject.requirements, variant='striped' %}
   <p>
-    <a href="/investment/{{ projectMeta.id }}/requirements/start" class="button">Start</a>
+    <a href="/investment/{{ investmentProject.meta.id }}/requirements/create" class="button">Start</a>
   </p>
 
   <h2 class="heading-medium">Referral source</h2>

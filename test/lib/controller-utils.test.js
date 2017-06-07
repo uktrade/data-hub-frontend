@@ -1,4 +1,8 @@
-const { isBlank, transformV2Errors } = require('~/src/lib/controller-utils')
+const {
+  isBlank,
+  transformV2Errors,
+  isValidGuid,
+} = require('~/src/lib/controller-utils')
 
 describe('isBlank', function () {
   it('should detects undefined variables', function () {
@@ -117,5 +121,21 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
     ]
     const actual = transformV2Errors(source)
     expect(actual.foo).to.be.defined
+  })
+})
+
+describe('isValidGuid: Check that a string is in a format of a valid GUID', () => {
+  it('Should return false when something other than string is provided', () => {
+    expect(isValidGuid({})).to.be.false
+    expect(isValidGuid(undefined)).to.be.false
+  })
+
+  it('Should return false when a string is in invalid GUID format', () => {
+    expect(isValidGuid('12345')).to.be.false
+    expect(isValidGuid('hjkas-1279as-dhjaskj-12jasdlk-asdasa')).to.be.false
+  })
+
+  it('Should return true when a string with in a valid GUID format', () => {
+    expect(isValidGuid('12345abc-1234-abcd-12ab-123456abcdef')).to.be.true
   })
 })

@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-const { getInflatedDitCompany } = require('../services/company.service')
-const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
-const { searchForeignCompany } = require('../services/search.service')
-const { getPagination } = require('../lib/pagination')
+const { getInflatedDitCompany } = require('../../services/company.service')
+const { getCompanyInvestmentProjects } = require('../../repos/investment.repo')
+const { searchForeignCompany } = require('../../services/search.service')
+const { getPagination } = require('../../lib/pagination')
 
 function getHandler (req, res, next) {
   const clientCompanyId = req.query['client-company']
@@ -75,7 +75,11 @@ function postHandler (req, res, next) {
   }
 }
 
-router.get('/investment/start', getHandler)
-router.post('/investment/start', postHandler)
+router.get('/start', getHandler)
+router.post('/start', postHandler)
 
-module.exports = { router, getHandler, postHandler }
+module.exports = {
+  router,
+  getHandler,
+  postHandler,
+}

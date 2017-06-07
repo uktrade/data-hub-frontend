@@ -1,5 +1,6 @@
 const config = require('../config')
 const authorisedRequest = require('../lib/authorised-request')
+const { getInflatedDitCompany } = require('../services/company.service')
 
 function getCompanyInvestmentProjects (token, companyId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/project?investor_company_id=${companyId}`)
@@ -15,6 +16,21 @@ function getInvestmentValue (token, investmentId) {
 
 function getInvestmentRequirements (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/requirements`)
+}
+
+function getEquityCompanyDetails (token, equityCompanyId) {
+  const promises = [
+    getInflatedDitCompany(token, equityCompanyId),
+    getCompanyInvestmentProjects(token, equityCompanyId),
+  ]
+
+  return Promise.all(promises)
+    .then(([equityCompany, equityCompanyInvestments]) => {
+      return {
+        equityCompany,
+        equityCompanyInvestments,
+      }
+    })
 }
 
 function createInvestmentProject (token, body) {
@@ -38,6 +54,7 @@ module.exports = {
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
+  getEquityCompanyDetails,
   createInvestmentProject,
   updateInvestmentProject,
 }
