@@ -1,6 +1,8 @@
 const nunjucks = require('nunjucks')
 const winston = require('winston')
 
+const templateGlobals = require('./globals')
+
 const COMPONENTS_PATH = '_components/' // relative to views path
 const COMPONENT_EXT = 'njk'
 
@@ -59,6 +61,9 @@ module.exports = (app, config) => {
   env.addExtension('ComponentExtension', new ComponentExtension(env))
 
   // Global variables
+  Object.keys(templateGlobals).forEach((global) => {
+    env.addGlobal(global, templateGlobals[global])
+  })
 
   return env
 }
