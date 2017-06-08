@@ -13,7 +13,7 @@
     <ol class="results-list">
       {% for contact in results.contacts %}
         <li class="results-list__item">
-          <h3 class="results-item__item-header">
+          <h3 class="results-list__item-header">
             <a href="/contact/{{ contact.id }}/details?term={{ searchTerm }}">
               {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
             </a>

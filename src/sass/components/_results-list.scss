@@ -9,12 +9,10 @@
 .results-list__item {
   border: solid $grey-2;
   border-width: 0 0 1px;
-  margin: 0 0 ($gutter / 2);
   padding: 0 0 ($gutter / 2);
 
   &:first-child {
     border-top-width: 1px;
-    padding-top: ($gutter / 2);
   }
 }
 
@@ -22,8 +20,7 @@
   border: 1px solid $grey-2;
   display: block;
   margin-top: -1px;
-  margin-bottom: (-$gutter / 2) - 1;
-  padding: $gutter / 2;
+  padding: 0 ($gutter / 2) ($gutter / 2);
   text-decoration: none;
 
   &:hover,
@@ -36,6 +33,6 @@
 .results-list__item-header {
   @include core-font(20);
   color: $link-colour;
-  margin: 0 0 ($gutter / 4);
+  margin: ($gutter / 2) 0 ($gutter / 4);
   text-decoration: underline;
 }
