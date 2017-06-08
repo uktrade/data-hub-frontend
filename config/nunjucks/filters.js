@@ -2,9 +2,14 @@ const nunjucks = require('nunjucks')
 const {
   isArray,
   isPlainObject,
+  isEmpty,
   pickBy,
   isNil,
 } = require('lodash')
+
+function isNotEmpty (value) {
+  return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
+}
 
 const filters = {
   stringify: JSON.stringify,
@@ -17,12 +22,12 @@ const filters = {
     )
   },
 
-  removeFalsey: (collection) => {
+  removeNilAndEmpty: (collection) => {
     if (isArray(collection)) {
-      return collection.filter(item => item)
+      return collection.filter(isNotEmpty)
     }
     if (isPlainObject(collection)) {
-      return pickBy(collection, (value) => !isNil(value) && !/^\s*$/.test(value))
+      return pickBy(collection, isNotEmpty)
     }
     return collection
   },

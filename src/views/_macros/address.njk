@@ -12,7 +12,7 @@
  #   ]) }}
  #}
 {% macro addressFormatter(addressDetails, searchTerm) %}
-  {%- for addressDetail in addressDetails | removeFalsey -%}
+  {%- for addressDetail in addressDetails | removeNilAndEmpty -%}
 
     {% if addressDetail %}
       {{ addressDetail | highlight(searchTerm) -}}

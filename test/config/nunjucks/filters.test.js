@@ -21,9 +21,9 @@ describe('nunjucks filters', () => {
     })
   })
 
-  describe('#removeFalsey', () => {
-    it('should remove falsey values from array', () => {
-      const mockArrayWithFalsies = [
+  describe('#removeNilAndEmpty', () => {
+    it('should remove nil and empty values from array', () => {
+      const mockArrayWithEmpties = [
         0,
         null,
         undefined,
@@ -33,16 +33,18 @@ describe('nunjucks filters', () => {
         'another example value',
       ]
 
-      const arrayWithoutFalsies = filters.removeFalsey(mockArrayWithFalsies)
+      const actual = filters.removeNilAndEmpty(mockArrayWithEmpties)
 
-      expect(arrayWithoutFalsies).to.deep.equal([
+      expect(actual).to.deep.equal([
+        0,
         'example value',
+        false,
         'another example value',
       ])
     })
 
-    it('should remove falsey values from object', () => {
-      const mockObjectWithFalsies = {
+    it('should remove nil and empty values from object', () => {
+      const mockObjectWithEmpties = {
         a: true,
         b: null,
         c: undefined,
@@ -50,11 +52,13 @@ describe('nunjucks filters', () => {
         e: 'value',
         f: '',
         g: false,
+        h: [],
+        i: {},
       }
 
-      const objectWithoutFalsies = filters.removeFalsey(mockObjectWithFalsies)
+      const actual = filters.removeNilAndEmpty(mockObjectWithEmpties)
 
-      expect(objectWithoutFalsies).to.deep.equal({
+      expect(actual).to.deep.equal({
         a: true,
         d: 'false',
         e: 'value',
