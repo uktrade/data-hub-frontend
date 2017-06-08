@@ -1,9 +1,9 @@
 const router = require('express').Router()
 const { get } = require('lodash')
 
-const { getProjectDetails } = require('./shared')
+const { getProjectDetails } = require('./middleware')
 
-function getDetailsHandler (req, res, next) {
+function detailsGetHandler (req, res, next) {
   if (get(res, 'locals.investmentProject')) {
     return res.render('investment/details', {
       currentNavItem: 'details',
@@ -18,10 +18,10 @@ function redirectToDetails (req, res) {
 
 router.param('id', getProjectDetails)
 router.get('/:id', redirectToDetails)
-router.get('/:id/details', getDetailsHandler)
+router.get('/:id/details', detailsGetHandler)
 
 module.exports = {
   router,
   redirectToDetails,
-  getDetailsHandler,
+  detailsGetHandler,
 }

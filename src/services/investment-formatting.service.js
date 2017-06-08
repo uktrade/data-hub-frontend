@@ -3,6 +3,8 @@ const { mapValues, get } = require('lodash')
 const { buildCompanyUrl } = require('./company.service')
 
 function transformToApi (body) {
+  if (!body) { return }
+
   const schema = {
     'client_relationship_manager': Object,
     'referral_source_adviser': Object,
@@ -48,9 +50,7 @@ function transformToApi (body) {
 }
 
 function transformFromApi (body) {
-  if (!body) {
-    return
-  }
+  if (!body) { return }
 
   const schema = {
     'client_relationship_manager': String,
@@ -75,8 +75,10 @@ function transformFromApi (body) {
   })
 
   const date = new Date(body['estimated_land_date'])
-  formatted['land-date_year'] = date.getFullYear()
-  formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
+  if (date) {
+    formatted['land-date_year'] = date.getFullYear()
+    formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
+  }
 
   return Object.assign({}, body, formatted)
 }

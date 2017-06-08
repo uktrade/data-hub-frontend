@@ -1,38 +1,17 @@
 const Q = require('q')
 const { get } = require('lodash')
-const { getAdvisers } = require('../../repos/adviser.repo')
-const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
-const { isValidGuid } = require('../../lib/controller-utils')
 const metadataRepo = require('../../repos/metadata.repo')
-
+const { getAdvisers } = require('../../repos/adviser.repo')
+const { isValidGuid } = require('../../lib/controller-utils')
+const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
 const {
   createInvestmentProject,
   updateInvestmentProject,
   getEquityCompanyDetails,
-  getInvestmentProjectSummary,
-  getInvestmentValue,
-  getInvestmentRequirements,
+  updateInvestmentValue,
 } = require('../../repos/investment.repo')
 
-const {
-  formatProjectData,
-  formatValueData,
-  formatRequirementsData,
-  formatProjectStatusData,
-} = require('../../services/investment-formatting.service')
-
-function getLocalNavMiddleware (req, res, next) {
-  res.locals.localNavItems = [
-    { label: 'Project details', slug: 'details' },
-    // { label: 'Project team', slug: 'team' },
-    // { label: 'Interactions', slug: 'interactions' },
-    // { label: 'Evaluation', slug: 'evaluation' },
-    { label: 'Audit history', slug: 'audit' },
-  ]
-  next()
-}
-
-function populateFormMiddleware (req, res, next) {
+function populateDetailsFormMiddleware (req, res, next) {
   const equityCompanyId = get(res, 'locals.equityCompany.id', req.query['equity-company'])
 
   if (!isValidGuid(equityCompanyId)) {
@@ -112,7 +91,13 @@ function populateFormMiddleware (req, res, next) {
   })
 }
 
-function postFormMiddleware (req, res, next) {
+function populateValueFormMiddleware (req, res, next) {
+  res.locals.form = get(res, 'locals.form', {})
+  res.locals.form.state = res.locals.valueData
+  next()
+}
+
+function investmentDetailsFormPostMiddleware (req, res, next) {
   const formattedBody = transformToApi(req.body)
   const projectId = res.locals.projectId || req.params.id
   let saveMethod
@@ -130,7 +115,7 @@ function postFormMiddleware (req, res, next) {
     })
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.form = res.locals.form || {}
+        res.locals.form = get(res, 'locals.form', {})
         res.locals.form.errors = err.error
         res.locals.form.state = req.body
 
@@ -141,36 +126,29 @@ function postFormMiddleware (req, res, next) {
     })
 }
 
-function getProjectDetails (req, res, next, id = req.params.id) {
-  if (!isValidGuid(id)) {
-    return next()
-  }
-  Q.spawn(function * () {
-    try {
-      const projectData = yield getInvestmentProjectSummary(req.session.token, req.params.id)
-      const valueData = yield getInvestmentValue(req.session.token, req.params.id)
-      const requirementsData = yield getInvestmentRequirements(req.session.token, req.params.id)
+function investmentValueFormPostMiddleware (req, res, next) {
+  const formattedBody = transformToApi(req.body)
 
-      res.locals.projectData = projectData
-      res.locals.equityCompany = projectData.investor_company
+  res.locals.projectId = req.params.id
 
-      res.locals.investmentProject = {
-        meta: formatProjectStatusData(projectData),
-        details: formatProjectData(projectData),
-        value: formatValueData(valueData),
-        requirements: formatRequirementsData(requirementsData),
+  updateInvestmentValue(req.session.token, res.locals.projectId, formattedBody)
+    .then(() => next())
+    .catch((err) => {
+      if (err.statusCode === 400) {
+        res.locals.form = get(res, 'locals.form', {})
+        res.locals.form.errors = err.error
+        res.locals.form.state = req.body
+
+        next()
+      } else {
+        next(err)
       }
-
-      next()
-    } catch (error) {
-      next(error)
-    }
-  })
+    })
 }
 
 module.exports = {
-  getLocalNavMiddleware,
-  getProjectDetails,
-  populateFormMiddleware,
-  postFormMiddleware,
+  investmentDetailsFormPostMiddleware,
+  investmentValueFormPostMiddleware,
+  populateDetailsFormMiddleware,
+  populateValueFormMiddleware,
 }
