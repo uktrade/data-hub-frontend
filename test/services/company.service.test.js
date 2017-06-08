@@ -1,4 +1,4 @@
-const companyService = require(`${root}/src/services/company.service`)
+const companyService = require('~/src/services/company.service')
 
 describe('get header address', () => {
   it('should return the CDMS trading address if there is one', () => {
@@ -14,7 +14,7 @@ describe('get header address', () => {
       'registered_address_town': 'London',
       'registered_address_country': {
         'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-        'name': 'United Kingdom'
+        'name': 'United Kingdom',
       },
       'registered_address_county': 'Greater London',
       'registered_address_postcode': 'SW1H 0ET',
@@ -27,8 +27,8 @@ describe('get header address', () => {
       'trading_address_postcode': 'WC1 1AA',
       'trading_address_country': {
         'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-        'name': 'United Kingdom'
-      }
+        'name': 'United Kingdom',
+      },
     }
 
     const address = companyService.getHeadingAddress(company)
@@ -48,7 +48,7 @@ describe('get header address', () => {
       'registered_address_town': 'London',
       'registered_address_country': {
         'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-        'name': 'United Kingdom'
+        'name': 'United Kingdom',
       },
       'registered_address_county': 'Greater London',
       'registered_address_postcode': 'SW1H 0ET',
@@ -59,7 +59,7 @@ describe('get header address', () => {
       'trading_address_town': null,
       'trading_address_county': null,
       'trading_address_postcode': null,
-      'trading_address_country': null
+      'trading_address_country': null,
     }
     const address = companyService.getHeadingAddress(company)
     expect(address).to.equal('Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom')
@@ -90,8 +90,8 @@ describe('get header address', () => {
         'incorporation_date': '2012-02-06',
         'registered_address_country': {
           'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom'
-        }
+          'name': 'United Kingdom',
+        },
       },
       'registered_address_1': 'Business Innovation & Skills',
       'registered_address_2': '1 Victoria Street',
@@ -100,7 +100,7 @@ describe('get header address', () => {
       'registered_address_town': 'London',
       'registered_address_country': {
         'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-        'name': 'United Kingdom'
+        'name': 'United Kingdom',
       },
       'registered_address_county': 'Greater London',
       'registered_address_postcode': 'SW1H 0ET',
@@ -111,7 +111,7 @@ describe('get header address', () => {
       'trading_address_town': null,
       'trading_address_county': null,
       'trading_address_postcode': null,
-      'trading_address_country': null
+      'trading_address_country': null,
     }
     const address = companyService.getHeadingAddress(company)
     expect(address).to.equal('52a High Street, Sheffield, S20 1ED, United Kingdom')
@@ -122,7 +122,7 @@ describe('buildCompanyUrl', () => {
   it('should return expected url for non uk based company', () => {
     const urlPath = companyService.buildCompanyUrl({
       uk_based: false,
-      id: 'mockId'
+      id: 'mockId',
     })
 
     expect(urlPath).to.equal('/company/view/foreign/mockId')
@@ -131,9 +131,9 @@ describe('buildCompanyUrl', () => {
     const urlPath = companyService.buildCompanyUrl({
       uk_based: true,
       business_type: {
-        name: 'private limited company'
+        name: 'private limited company',
       },
-      id: 'mockId'
+      id: 'mockId',
     })
 
     expect(urlPath).to.equal('/company/view/ltd/mockId')
@@ -142,9 +142,9 @@ describe('buildCompanyUrl', () => {
     const urlPath = companyService.buildCompanyUrl({
       uk_based: true,
       business_type: {
-        name: 'public limited company'
+        name: 'public limited company',
       },
-      id: 'mockId'
+      id: 'mockId',
     })
 
     expect(urlPath).to.equal('/company/view/ltd/mockId')
@@ -153,9 +153,9 @@ describe('buildCompanyUrl', () => {
     const urlPath = companyService.buildCompanyUrl({
       uk_based: true,
       business_type: {
-        name: 'PUBLIC LIMITED COMPANY'
+        name: 'PUBLIC LIMITED COMPANY',
       },
-      id: 'mockId'
+      id: 'mockId',
     })
 
     expect(urlPath).to.equal('/company/view/ltd/mockId')
@@ -164,9 +164,9 @@ describe('buildCompanyUrl', () => {
     const urlPath = companyService.buildCompanyUrl({
       uk_based: true,
       business_type: {
-        name: 'a different company type'
+        name: 'a different company type',
       },
-      id: 'mockId'
+      id: 'mockId',
     })
 
     expect(urlPath).to.equal('/company/view/ukother/mockId')

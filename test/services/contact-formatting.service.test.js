@@ -1,7 +1,8 @@
-const contactFormattingService = require(`${root}/src/services/contact-formatting.service`)
+const contactFormattingService = require('~/src/services/contact-formatting.service')
 
 describe('Contact formatting service', function () {
   let contact
+  let company
 
   beforeEach(function () {
     contact = {
@@ -32,10 +33,15 @@ describe('Contact formatting service', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
-      advisor: null,
-      address_country: null
+      adviser: null,
+      address_country: null,
+    }
+
+    company = {
+      id: '9876',
+      'name': 'My Coorp',
     }
   })
   describe('contact details', function () {
@@ -47,22 +53,14 @@ describe('Contact formatting service', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         telephone_alternative: '07814 000 333',
         email_alternative: 'fred@gmail.com',
-        notes: 'some notes'
+        notes: 'some notes',
       }
 
-      const actual = contactFormattingService.getDisplayContact(contact)
+      const actual = contactFormattingService.getDisplayContact(contact, company)
       expect(actual).to.deep.equal(expected)
     })
     it('should use a company trading address if the contact has no address but has a company trading address', function () {
-      contact.address_1 = ''
-      contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
-      contact.address_town = ''
-      contact.address_county = ''
-      contact.address_postcode = ''
-      contact.address_country = null
-      contact.company = {
+      const companyWithExpectedAddress = {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'rarble',
@@ -77,13 +75,9 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
-        trading_address_postcode: 'TT1 1TT'
+        trading_address_postcode: 'TT1 1TT',
       }
 
-      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
-    })
-    it('should use a company trading address if the contact has no address but has a company registered address', function () {
       contact.address_1 = ''
       contact.address_2 = ''
       contact.address_3 = ''
@@ -92,7 +86,13 @@ describe('Contact formatting service', function () {
       contact.address_county = ''
       contact.address_postcode = ''
       contact.address_country = null
-      contact.company = {
+      contact.company = companyWithExpectedAddress
+
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
+      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
+    })
+    it('should use a company trading address if the contact has no address but has a company registered address', function () {
+      const companyWithExpectedAddress = {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
@@ -107,10 +107,20 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
-        trading_address_postcode: ''
+        trading_address_postcode: '',
       }
 
-      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      contact.address_1 = ''
+      contact.address_2 = ''
+      contact.address_3 = ''
+      contact.address_4 = ''
+      contact.address_town = ''
+      contact.address_county = ''
+      contact.address_postcode = ''
+      contact.address_country = null
+      contact.company = companyWithExpectedAddress
+
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
       expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
@@ -127,22 +137,14 @@ describe('Contact formatting service', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
-        telephone_alternative: '07814 000 333'
+        telephone_alternative: '07814 000 333',
       }
 
-      const actual = contactFormattingService.getDisplayCompanyContact(contact)
+      const actual = contactFormattingService.getDisplayCompanyContact(contact, company)
       expect(actual).to.deep.equal(expected)
     })
     it('Should use the trading address if no contact address but has a trading address in company', function () {
-      contact.address_1 = ''
-      contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
-      contact.address_town = ''
-      contact.address_county = ''
-      contact.address_postcode = ''
-      contact.address_country = null
-      contact.company = {
+      const companyWithExpectedAddress = {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
@@ -157,13 +159,9 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
-        trading_address_postcode: 'TT1 1TT'
+        trading_address_postcode: 'TT1 1TT',
       }
 
-      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
-      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
-    })
-    it('Should use the registered address if no contact address but has a registered address in company', function () {
       contact.address_1 = ''
       contact.address_2 = ''
       contact.address_3 = ''
@@ -172,7 +170,13 @@ describe('Contact formatting service', function () {
       contact.address_county = ''
       contact.address_postcode = ''
       contact.address_country = null
-      contact.company = {
+      contact.company = companyWithExpectedAddress
+
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
+      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
+    })
+    it('Should use the registered address if no contact address but has a registered address in company', function () {
+      const companyWithExpectedAddress = {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
@@ -187,10 +191,19 @@ describe('Contact formatting service', function () {
         trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
-        trading_address_postcode: ''
+        trading_address_postcode: '',
       }
+      contact.address_1 = ''
+      contact.address_2 = ''
+      contact.address_3 = ''
+      contact.address_4 = ''
+      contact.address_town = ''
+      contact.address_county = ''
+      contact.address_postcode = ''
+      contact.address_country = null
+      contact.company = companyWithExpectedAddress
 
-      const formatted = contactFormattingService.getDisplayCompanyContact(contact)
+      const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
       expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
@@ -199,7 +212,7 @@ describe('Contact formatting service', function () {
     contact.archived_reason = 'Left company'
     contact.archived_by = {
       first_name: 'Fred',
-      last_name: 'Flintstone'
+      last_name: 'Flintstone',
     }
     contact.archived_on = '2017-02-14T14:49:17'
 
@@ -209,10 +222,10 @@ describe('Contact formatting service', function () {
       job_title: 'Director',
       reason: 'Left company',
       archived_by: 'Fred Flintstone',
-      archived_on: '14 Feb 2017'
+      archived_on: '14 Feb 2017',
     }
 
-    const actual = contactFormattingService.getDisplayArchivedCompanyContact(contact)
+    const actual = contactFormattingService.getDisplayArchivedCompanyContact(contact, company)
     expect(actual).to.deep.equal(expected)
   })
 })

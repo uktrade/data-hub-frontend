@@ -8,7 +8,7 @@ function getInteraction (token, interactionId) {
 
 function saveInteraction (token, interaction) {
   const options = {
-    body: interaction
+    body: interaction,
   }
 
   if (interaction.id && interaction.id.length > 0) {
@@ -31,10 +31,11 @@ function saveInteraction (token, interaction) {
  * @return {Array[Object]} Returns a promise that resolves to an array of API interaction objects
  */
 function getInteractionsForContact (token, contactId) {
+  // TODO deal with pagination and move to the interaction API v3 endpoints when they are ready
   return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/contact/${contactId}/`)
+    authorisedRequest(token, `${config.apiRoot}/interaction/?contact_id=${contactId}&limit=100`)
     .then((response) => {
-      resolve(response.interactions)
+      resolve(response.results)
     })
     .catch((error) => {
       winston.info(error)
@@ -46,5 +47,5 @@ function getInteractionsForContact (token, contactId) {
 module.exports = {
   saveInteraction,
   getInteraction,
-  getInteractionsForContact
+  getInteractionsForContact,
 }

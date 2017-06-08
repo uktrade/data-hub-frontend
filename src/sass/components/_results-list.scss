@@ -1,0 +1,41 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/functions/typography";
+
+.results-list {
+  list-style: none;
+}
+
+.results-list__item {
+  border: solid $grey-2;
+  border-width: 0 0 1px;
+  margin: 0 0 ($gutter / 2);
+  padding: 0 0 ($gutter / 2);
+
+  &:first-child {
+    border-top-width: 1px;
+    padding-top: ($gutter / 2);
+  }
+}
+
+.results-list__link {
+  border: 1px solid $grey-2;
+  display: block;
+  margin-top: -1px;
+  margin-bottom: (-$gutter / 2) - 1;
+  padding: $gutter / 2;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background: $grey-4;
+    border-color: $grey-1;
+  }
+}
+
+.results-list__item-header {
+  @include core-font(20);
+  color: $link-colour;
+  margin: 0 0 ($gutter / 4);
+  text-decoration: underline;
+}

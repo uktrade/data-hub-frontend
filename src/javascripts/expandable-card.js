@@ -4,7 +4,7 @@ const {
   toggleVisible,
   toggleClass,
   addClass,
-  createElementFromMarkup
+  createElementFromMarkup,
 } = require('../lib/element-stuff')
 
 /**

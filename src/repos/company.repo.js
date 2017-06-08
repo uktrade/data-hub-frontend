@@ -39,12 +39,12 @@ function saveCompany (token, company) {
         if (typeof error.error === 'string') {
           reject({
             statusCode: error.response.statusCode,
-            errors: { detail: error.response.statusMessage }
+            errors: { detail: error.response.statusMessage },
           })
         } else {
           reject({
             statusCode: error.response.statusCode,
-            errors: error.error
+            errors: error.error,
           })
         }
       }
@@ -56,7 +56,7 @@ function archiveCompany (token, companyId, reason) {
   const options = {
     body: { reason },
     url: `${config.apiRoot}/company/${companyId}/archive/`,
-    method: 'POST'
+    method: 'POST',
   }
   return authorisedRequest(token, options)
 }
@@ -70,5 +70,5 @@ module.exports = {
   getDitCompany,
   getCHCompany,
   archiveCompany,
-  unarchiveCompany
+  unarchiveCompany,
 }

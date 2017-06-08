@@ -2,12 +2,12 @@ const path = require('path')
 const expect = require('chai').expect
 const html = require('html')
 const htmlBeautifier = require('js-beautify').html
-const {JSDOM} = require('jsdom')
+const { JSDOM } = require('jsdom')
 
 const nunjucksConfig = require('../config/nunjucks')
 
 const nunjucks = nunjucksConfig(null, {
-  root: path.normalize(`${__dirname}/..`)
+  root: path.normalize(`${__dirname}/..`),
 })
 
 const COMPONENTS_PATH = '_components/'
@@ -16,11 +16,11 @@ const COMPONENT_EXT = 'njk'
 const normaliseHtml = (string) => {
   const beautiful = htmlBeautifier(string, {
     indent_size: 2,
-    max_preserve_newlines: 0
+    max_preserve_newlines: 0,
   })
 
   return html.prettyPrint(beautiful, {
-    indent_size: 2
+    indent_size: 2,
   })
 }
 
@@ -45,5 +45,5 @@ const expectComponent = (name, input, expected) => {
 
 module.exports = {
   expectComponent,
-  renderComponentToDom
+  renderComponentToDom,
 }

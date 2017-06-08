@@ -26,7 +26,7 @@ describe('Company contacts controller', function () {
       registered_address_town: 'Windsor',
       registered_address_country: {
         id: '80756b9a-5d95-e211-a939-e4115bead28a',
-        name: 'United Kingdom'
+        name: 'United Kingdom',
       },
       registered_address_county: 'Berkshire',
       registered_address_postcode: 'SL4 4QR',
@@ -50,21 +50,21 @@ describe('Company contacts controller', function () {
       archived_by: null,
       business_type: {
         id: '9bd14e94-5d95-e211-a939-e4115bead28a',
-        name: 'Intermediary'
+        name: 'Intermediary',
       },
       sector: {
         id: 'b722c9d2-5f95-e211-a939-e4115bead28a',
-        name: 'Aerospace : Maintenance'
+        name: 'Aerospace : Maintenance',
       },
       employee_range: null,
       turnover_range: null,
       uk_region: {
         id: '844cd12a-6095-e211-a939-e4115bead28a',
-        name: 'East Midlands'
+        name: 'East Midlands',
       },
       trading_address_country: null,
       headquarter_type: null,
-      classification: null
+      classification: null,
     }
 
     company.contacts = [{
@@ -96,10 +96,10 @@ describe('Company contacts controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
-      advisor: null,
-      address_country: null
+      adviser: null,
+      address_country: null,
     },
     {
       company,
@@ -130,10 +130,10 @@ describe('Company contacts controller', function () {
       archived_by: null,
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
-      advisor: null,
-      address_country: null
+      adviser: null,
+      address_country: null,
     },
     {
       company,
@@ -175,14 +175,14 @@ describe('Company contacts controller', function () {
         enabled: false,
         dit_team: '0167b456-0ddd-49bd-8184-e3227a0b6396',
         groups: [],
-        user_permissions: []
+        user_permissions: [],
       },
       title: {
         id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-        name: 'Mr'
+        name: 'Mr',
       },
-      advisor: null,
-      address_country: null
+      adviser: null,
+      address_country: null,
     }]
   })
 
@@ -194,25 +194,25 @@ describe('Company contacts controller', function () {
     beforeEach(function (done) {
       req = {
         session: {},
-        params: { id: '1' }
+        params: { id: '1' },
       }
       res = {
         locals: {
           headingName: 'Freds Company',
           headingAddress: '1234 Road, London, EC1 1AA',
-          id: '44332211'
+          id: '44332211',
         },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()
-        }
+        },
       }
 
-      companyContactController = proxyquire(`${root}/src/controllers/company-contact.controller`, {
+      companyContactController = proxyquire('~/src/controllers/company-contact.controller', {
         '../services/company.service': {
           getInflatedDitCompany: sinon.stub().resolves(company),
-          getCommonTitlesAndLinks: sinon.stub()
-        }
+          getCommonTitlesAndLinks: sinon.stub(),
+        },
       })
 
       companyContactController.getContacts(req, res, next)
@@ -263,7 +263,7 @@ describe('Company contacts controller', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
-        telephone_alternative: '07814 000 333'
+        telephone_alternative: '07814 000 333',
       }, {
         url: '/contact/12651151-2149-465e-871b-ac45bc568a63/details',
         name: 'Jane Smith',
@@ -274,7 +274,7 @@ describe('Company contacts controller', function () {
         address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         email_alternative: 'jane@gmail.com',
         notes: 'some notes',
-        telephone_alternative: '07814 000 333'
+        telephone_alternative: '07814 000 333',
       }]
 
       contactsArchived = [{
@@ -283,26 +283,26 @@ describe('Company contacts controller', function () {
         job_title: 'Director',
         reason: 'Left company',
         archived_by: 'Fred Flintstone',
-        archived_on: '14 Feb 2017'
+        archived_on: '14 Feb 2017',
       }]
 
       addContactUrl = '/contact/add?company=1234'
     })
 
     it('should render a list of un-archived contacts', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('contact-list')).to.not.be.null
       })
     })
     it('should render a list of archived contacts', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.not.be.null
       })
     })
     it('each un-archived line should include the required data', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .card')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -326,7 +326,7 @@ describe('Company contacts controller', function () {
       })
     })
     it('each archived line should include the required data', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const contactElement = document.querySelector('#archived-contact-list .contact')
         expect(contactElement.innerHTML).to.include('Fred Smith')
@@ -342,21 +342,21 @@ describe('Company contacts controller', function () {
       })
     })
     it('include a link to add a new contact', function () {
-      return render(contactTemplate, {contacts, contactsArchived, addContactUrl, company})
+      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
         expect(link.href).to.eq('/contact/add?company=1234')
       })
     })
     it('should not render contacts section if there are none and warn user', function () {
-      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
+      return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('contact-list')).to.be.null
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
       })
     })
     it('should not render archived contacts section if there are none', function () {
-      return render(contactTemplate, {contacts: [], contactsArchived: [], addContactUrl, company})
+      return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {
         expect(document.getElementById('archived-contact-list')).to.be.null
         expect(document.getElementById('archived-title')).to.be.null

@@ -174,6 +174,47 @@ Is the same as:
 } %}
 ```
 
+## Templates
+
+Templates use Nunjuck's [template inheritance](https://mozilla.github.io/nunjucks/templating.html#template-inheritance).
+There are several top level blocks which are used for injecting content during rendering. Each subsequent template
+that extends the base layout can include these additional blocks. 
+
+### Nunjucks base template blocks
+
+Template block names are structured by combining main element names to form path. e.g. `head` wraps everything inside
+the `head` element, `head_content` wraps the section that is used to contain contents of `head` element. Thus allowing
+to completely override everything inside `head` element if needed or just the section reserved for basic use cases.    
+
+- `head` - contains the whole head element
+  - `head_title_content` - contains title element content
+  - `head_content` - wraps main content for head element
+  - `head_stylesheets` - wraps stylesheet declarations
+- `body` - contains the whole body element
+  - `body_skiplinks` - wraps container with "skip to content" link (first element inside body)
+  - `body_notifications` - wraps cookie message container (above site_header, after skiplinks)
+  - `body_site_header` - wraps site header
+    - `header_site_title` - wraps the site title
+    - `header_service_title` - wraps the service title
+  - `body_main` - wraps the main content block
+    - `body_main_header` - contains the header of the main block
+    - `body_main_header_content` - contains the heading of the main block
+    - `body_main_content` - contains main content (inside main#content)
+  - `body_footer` - wraps site footer container (inside body > footer)
+  - `body_footer_content` - contains content inside site footer
+
+### Base template variables
+
+Base layout checks for certain variables.
+
+- `siteTitle` {string} - name of the site. Defaults to 'Department for International Trade'.
+- `serviceTitle` {string} - name of the service.
+- `projectPhase` {string} - phase of the project. Possible values: `alpha` and `beta`.
+
+### Template inheritance diagram
+
+<img src="./docs/layout-diagram.png?raw=true" width="500">
+
 ## Deployment
 
 Commits to `develop` are automatically deployed to a heroku instance. Pull

@@ -25,3 +25,6 @@ rules:
     - 0
   nesting-depth:
     - max-depth: 3
+  quotes:
+    - 1
+    - style: double

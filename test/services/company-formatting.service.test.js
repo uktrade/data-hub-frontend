@@ -1,4 +1,4 @@
-const companyFormattingService = require(`${root}/src/services/company-formatting.service`)
+const companyFormattingService = require('~/src/services/company-formatting.service')
 
 describe('Company formatting service', () => {
   describe('get display company', () => {
@@ -26,11 +26,11 @@ describe('Company formatting service', () => {
           'incorporation_date': '2012-02-06',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
-          }
+            'name': 'United Kingdom',
+          },
         },
         'contacts': [],
-        'interactions': []
+        'interactions': [],
       }
       const actual = companyFormattingService.getDisplayCompany(company)
       expect(actual).to.be.null
@@ -48,8 +48,8 @@ describe('Company formatting service', () => {
           'future_interest_countries': [
             {
               'id': '300be5c4-5d95-e211-a939-e4115bead28a',
-              'name': 'Sweden'
-            }
+              'name': 'Sweden',
+            },
           ],
           'uk_based': true,
           'account_manager': {
@@ -63,10 +63,10 @@ describe('Company formatting service', () => {
             'email': 'yvonne.ahern@mobile.ukti.gov.uk',
             'dit_team': {
               'id': '3a48318c-9698-e211-a939-e4115bead28a',
-              'name': 'ITFG - E-Business Operational Support Team'
+              'name': 'ITFG - E-Business Operational Support Team',
             },
             'groups': [],
-            'user_permissions': []
+            'user_permissions': [],
           },
           'registered_address_1': 'Business Innovation & Skills',
           'registered_address_2': '1 Victoria Street',
@@ -75,7 +75,7 @@ describe('Company formatting service', () => {
           'registered_address_town': 'London',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
+            'name': 'United Kingdom',
           },
           'registered_address_county': 'Greater London',
           'registered_address_postcode': 'SW1H 0ET',
@@ -96,29 +96,29 @@ describe('Company formatting service', () => {
           'trading_address_town': 'London',
           'trading_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
+            'name': 'United Kingdom',
           },
           'trading_address_county': 'Greater London',
           'trading_address_postcode': 'SW1H 0ET',
           'archived_by': null,
           'business_type': {
             'id': '98d14e94-5d95-e211-a939-e4115bead28a',
-            'name': 'Company'
+            'name': 'Company',
           },
           'headquarter_type': {
             'id': 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
-            'name': 'ehq'
+            'name': 'ehq',
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Giftware, Jewellery and Tableware'
+            'name': 'Giftware, Jewellery and Tableware',
           },
           'employee_range': null,
           'turnover_range': null,
           'uk_region': {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
-            'name': 'London'
-          }
+            'name': 'London',
+          },
         }
         const expected = {
           business_type: 'Company',
@@ -134,7 +134,7 @@ describe('Company formatting service', () => {
           employee_range: null,
           turnover_range: null,
           account_manager: 'Yvonne Ahern',
-          country: 'United Kingdom'
+          country: 'United Kingdom',
         }
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual).to.deep.equal(expected)
@@ -142,7 +142,7 @@ describe('Company formatting service', () => {
       it('should convert website to link', () => {
         const company = {
           'id': '1234',
-          'website': 'http:/www.test.com'
+          'website': 'http:/www.test.com',
         }
 
         const actual = companyFormattingService.getDisplayCompany(company)
@@ -161,7 +161,7 @@ describe('Company formatting service', () => {
           'registered_address_town': 'London',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'Spain'
+            'name': 'Spain',
           },
           'registered_address_county': 'Greater London',
           'registered_address_postcode': 'SW1H 0ET',
@@ -174,8 +174,8 @@ describe('Company formatting service', () => {
           'trading_address_postcode': 'WC1 1AA',
           'trading_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
-          }
+            'name': 'United Kingdom',
+          },
         }
 
         const actual = companyFormattingService.getDisplayCompany(company)
@@ -194,7 +194,7 @@ describe('Company formatting service', () => {
           'registered_address_town': 'London',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'Spain'
+            'name': 'Spain',
           },
           'registered_address_county': 'Greater London',
           'registered_address_postcode': 'SW1H 0ET',
@@ -207,12 +207,12 @@ describe('Company formatting service', () => {
           'trading_address_postcode': 'WC1 1AA',
           'trading_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
+            'name': 'United Kingdom',
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Computers : Tech'
-          }
+            'name': 'Computers : Tech',
+          },
         }
 
         const actual = companyFormattingService.getDisplayCompany(company)
@@ -230,8 +230,8 @@ describe('Company formatting service', () => {
           'future_interest_countries': [
             {
               'id': '300be5c4-5d95-e211-a939-e4115bead28a',
-              'name': 'Sweden'
-            }
+              'name': 'Sweden',
+            },
           ],
           'uk_based': true,
           'account_manager': {
@@ -245,10 +245,10 @@ describe('Company formatting service', () => {
             'email': 'yvonne.ahern@mobile.ukti.gov.uk',
             'dit_team': {
               'id': '3a48318c-9698-e211-a939-e4115bead28a',
-              'name': 'ITFG - E-Business Operational Support Team'
+              'name': 'ITFG - E-Business Operational Support Team',
             },
             'groups': [],
-            'user_permissions': []
+            'user_permissions': [],
           },
           'registered_address_1': 'Business Innovation & Skills',
           'registered_address_2': '1 Victoria Street',
@@ -257,7 +257,7 @@ describe('Company formatting service', () => {
           'registered_address_town': 'London',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-            'name': 'United Kingdom'
+            'name': 'United Kingdom',
           },
           'registered_address_county': 'Greater London',
           'registered_address_postcode': 'SW1H 0ET',
@@ -281,19 +281,19 @@ describe('Company formatting service', () => {
           'archived_by': null,
           'business_type': {
             'id': '98d14e94-5d95-e211-a939-e4115bead28a',
-            'name': 'Company'
+            'name': 'Company',
           },
           'sector': {
             'id': 'a638cecc-5f95-e211-a939-e4115bead28a',
-            'name': 'Giftware, Jewellery and Tableware'
+            'name': 'Giftware, Jewellery and Tableware',
           },
           'employee_range': null,
           'turnover_range': null,
           'uk_region': {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
-            'name': 'London'
+            'name': 'London',
           },
-          'trading_address_country': null
+          'trading_address_country': null,
         }
         it('and show the CDMS company type', () => {
           const actual = companyFormattingService.getDisplayCompany(company)
@@ -329,8 +329,8 @@ describe('Company formatting service', () => {
         'incorporation_date': '2012-02-06',
         'registered_address_country': {
           'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom'
-        }
+          'name': 'United Kingdom',
+        },
       }
       const actual = companyFormattingService.getDisplayCH(company)
       const expected = {
@@ -340,7 +340,7 @@ describe('Company formatting service', () => {
         name: 'Amazon Savers',
         company_status: 'Active',
         sic_code: ['82990 - Other business support service activities n.e.c.', '82991 - Other business support service activities n.e.c.'],
-        incorporation_date: '6 February 2012'
+        incorporation_date: '6 February 2012',
       }
       expect(actual).to.deep.equal(expected)
     })

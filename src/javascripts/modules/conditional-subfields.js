@@ -90,6 +90,9 @@ const ConditionalSubfields = {
   },
 
   _handleField (controlInput) {
+    if (!controlInput) {
+      return
+    }
     const subFields = this.wrapper.querySelectorAll(`[data-controlled-by="${controlInput.name}"]`)
     const tagName = controlInput.tagName
     let controlInputValue
@@ -144,7 +147,7 @@ const ConditionalSubfields = {
         field.dispatchEvent(event)
       })
     }
-  }
+  },
 }
 
 module.exports = ConditionalSubfields

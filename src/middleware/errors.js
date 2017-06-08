@@ -3,13 +3,13 @@ const winston = require('winston')
 
 function notFound (req, res, next) {
   const error = new Error('Not Found')
-  error.status = 404
+  error.statusCode = 404
 
   next(error)
 }
 
 function catchAll (error, req, res, next) {
-  const statusCode = error.status = (error.status || 500)
+  const statusCode = error.statusCode = (error.statusCode || 500)
   let statusMessage = statusCode === 404
     ? 'Sorry we couldn\'t find that page!'
     : 'Sorry something has gone wrong!'
@@ -28,11 +28,11 @@ function catchAll (error, req, res, next) {
     .render('errors/index', {
       statusCode,
       statusMessage,
-      devErrorDetail: config.isDev && error
+      devErrorDetail: config.isDev && error,
     })
 }
 
 module.exports = {
   notFound,
-  catchAll
+  catchAll,
 }

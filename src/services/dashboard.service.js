@@ -12,8 +12,8 @@ function mapContacts (contacts) {
         company: {
           url: buildCompanyUrl(contact.company),
           name: contact.company.name,
-          id: contact.company.id
-        }
+          id: contact.company.id,
+        },
       }
     })
   }
@@ -31,8 +31,8 @@ function mapInteractions (interactions) {
         subject: interaction.subject,
         company: {
           name: company ? company.name : null,
-          url: company ? buildCompanyUrl(company) : null
-        }
+          url: company ? buildCompanyUrl(company) : null,
+        },
       }
     })
   }
@@ -47,5 +47,5 @@ module.exports = {
       data.interactions = mapInteractions(data.interactions)
       return data
     })
-  }
+  },
 }

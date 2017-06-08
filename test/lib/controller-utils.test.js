@@ -1,4 +1,8 @@
-const { isBlank, transformV2Errors } = require(`${root}/src/lib/controller-utils`)
+const {
+  isBlank,
+  transformV2Errors,
+  isValidGuid,
+} = require('~/src/lib/controller-utils')
 
 describe('isBlank', function () {
   it('should detects undefined variables', function () {
@@ -19,7 +23,7 @@ describe('isBlank', function () {
     expect(isBlank('test')).to.be.false
   })
   it('should know when it is sent a valid object', function () {
-    expect(isBlank({x: 1})).to.be.false
+    expect(isBlank({ x: 1 })).to.be.false
   })
 })
 
@@ -29,9 +33,9 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
       {
         'detail': 'This combination of service and service provider does not exist.',
         'source': {
-          'pointer': '/data/relationships/service'
-        }
-      }
+          'pointer': '/data/relationships/service',
+        },
+      },
     ]
     const actual = transformV2Errors(source)
     expect(actual.Alert).to.exist
@@ -42,57 +46,57 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
       {
         'detail': 'Required',
         'source': {
-          'pointer': '/data/attributes/subject'
-        }
+          'pointer': '/data/attributes/subject',
+        },
       },
       {
         'detail': 'Required',
         'source': {
-          'pointer': '/data/attributes/notes'
-        }
+          'pointer': '/data/attributes/notes',
+        },
       },
       {
         'detail': "{'data': {'type': 'ServiceDeliveryStatus'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/status'
-        }
+          'pointer': '/data/relationships/status',
+        },
       },
       {
         'detail': "{'data': {'type': 'Contact'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/contact'
-        }
+          'pointer': '/data/relationships/contact',
+        },
       },
       {
         'detail': "{'data': {'type': 'Service'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/service'
-        }
+          'pointer': '/data/relationships/service',
+        },
       },
       {
         'detail': "{'data': {'type': 'Team'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/dit_team'
-        }
+          'pointer': '/data/relationships/dit_team',
+        },
       },
       {
         'detail': "{'data': {'type': 'Sector'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/sector'
-        }
+          'pointer': '/data/relationships/sector',
+        },
       },
       {
         'detail': "{'data': {'type': 'UKRegion'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/uk_region'
-        }
+          'pointer': '/data/relationships/uk_region',
+        },
       },
       {
         'detail': "{'data': {'type': 'Country'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/country_of_interest'
-        }
-      }
+          'pointer': '/data/relationships/country_of_interest',
+        },
+      },
     ]
     const actual = transformV2Errors(source)
     expect((Object.keys(actual)).length).to.equal(9)
@@ -111,11 +115,27 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
       {
         'detail': "{'data': {'type': 'Foo'}} has no key id",
         'source': {
-          'pointer': '/data/relationships/foo'
-        }
-      }
+          'pointer': '/data/relationships/foo',
+        },
+      },
     ]
     const actual = transformV2Errors(source)
     expect(actual.foo).to.be.defined
+  })
+})
+
+describe('isValidGuid: Check that a string is in a format of a valid GUID', () => {
+  it('Should return false when something other than string is provided', () => {
+    expect(isValidGuid({})).to.be.false
+    expect(isValidGuid(undefined)).to.be.false
+  })
+
+  it('Should return false when a string is in invalid GUID format', () => {
+    expect(isValidGuid('12345')).to.be.false
+    expect(isValidGuid('hjkas-1279as-dhjaskj-12jasdlk-asdasa')).to.be.false
+  })
+
+  it('Should return true when a string with in a valid GUID format', () => {
+    expect(isValidGuid('12345abc-1234-abcd-12ab-123456abcdef')).to.be.true
   })
 })

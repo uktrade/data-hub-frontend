@@ -1,97 +1,79 @@
 const authorisedRequest = require('../lib/authorised-request')
 const config = require('../config')
-const includes = require('lodash/includes')
-const Q = require('q')
-const winston = require('winston')
+const { buildQueryString } = require('../lib/url-helpers')
 
-function search ({token, term, filters = [], limit = 10, page = 1}) {
-  const requestBody = {
-    term,
+function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
+  const params = {
+    term: searchTerm,
+    entity: searchType,
     limit,
     offset: (page * limit) - limit,
-    doc_type: filters.length && filters
   }
+
   const options = {
-    url: `${config.apiRoot}/search/`,
-    body: requestBody,
-    method: 'POST'
+    url: `${config.apiRoot}/v3/search${buildQueryString(params)}`,
+    method: 'GET',
   }
 
   return authorisedRequest(token, options)
     .then(result => {
-      result.facets = buildFacetViewDataObj(filters)
-      result.term = term
       result.page = page
 
       return result
     })
 }
 
-function suggestCompany (token, term, types) {
-  if (!types) {
-    types = ['company_company']
+// TODO the search endpoints need aligning see Jira DH-293 for details
+function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }) {
+  const queryParams = {
+    offset: (page * limit) - limit,
+    limit,
+  }
+  const body = {
+    original_query: searchTerm,
+    uk_based: isUkBased,
   }
   const options = {
-    url: `${config.apiRoot}/search/`,
-    body: {
-      term,
-      doc_type: types,
-      limit: 10,
-      offset: 0
-    },
-    method: 'POST'
+    url: `${config.apiRoot}/v3/search/company${buildQueryString(queryParams)}`,
+    method: 'POST',
+    body,
   }
 
   return authorisedRequest(token, options)
+    .then(result => {
+      result.page = page
+
+      return result
+    })
+}
+
+function searchForeignCompanies (options) {
+  const optionsUkBasedFalse = Object.assign({}, options, { uk_based: false })
+
+  return searchCompanies(optionsUkBasedFalse)
+}
+
+function searchLimitedCompanies (options) {
+  const optionsUkBasedTrue = Object.assign({}, options, { isUkBased: true })
+
+  return searchCompanies(optionsUkBasedTrue)
     .then((result) => {
-      winston.debug('suggestion raw result', result)
-      return result.hits
-        .map((hit) => ({
-          name: hit._source.name,
-          id: hit._id,
-          _type: hit._type
-        }))
-    })
-    .catch((error) => {
-      winston.error('Error calling auth reguest for suggestions', error)
-    })
-}
+      const limitedCompanies = result.results.filter((company) => {
+        return company.company_number ||
+          (company.business_type && company.business_type.name.toLowerCase().includes('limited company'))
+      })
 
-function buildFacetViewDataObj (filters) {
-  return {
-    'Category': [
-      {
-        name: 'doc_type',
-        value: 'company',
-        label: 'Company',
-        checked: includes(filters, 'company_company', 'company_companieshousecompany')
-      },
-      {
-        name: 'doc_type',
-        value: 'company_contact',
-        label: 'Contact',
-        checked: includes(filters, 'company_contact')
-      }
-    ]
-  }
-}
-
-function searchLimited (token, term) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        const allResults = yield search({token, term, filters: ['company_company', 'company_companieshousecompany']})
-        const filtered = allResults.hits.filter(result => (result._type === 'company_companieshousecompany' ||
-          (result._source.business_type && result._source.business_type.toLowerCase() === 'private limited company') ||
-          (result._source.business_type && result._source.business_type.toLowerCase() === 'public limited company')))
-
-        resolve(filtered)
-      } catch (error) {
-        winston.error(error)
-        reject(error)
+      return {
+        page: result.page,
+        results: limitedCompanies,
+        count: result.count,
       }
     })
-  })
 }
 
-module.exports = { search, suggestCompany, searchLimited }
+module.exports = {
+  search,
+  searchCompanies,
+  searchLimitedCompanies,
+  searchForeignCompanies,
+}

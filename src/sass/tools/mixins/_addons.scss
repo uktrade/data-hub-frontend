@@ -1,0 +1,29 @@
+@import "../../settings/colours";
+@import "./conditionals";
+
+@mixin clearfix {
+  &:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+@mixin visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@mixin hide-text($width, $height) {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  width: $width;
+  height: $height;
+}

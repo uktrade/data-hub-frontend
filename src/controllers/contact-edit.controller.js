@@ -27,17 +27,23 @@ function editDetails (req, res, next) {
       // This can either be data recently posted, to be re-rendered with errors
       // or a contact that the user wishes to edit
       // or a new contact for a company
+      let companyId
+
       if (containsFormData(req)) {
+        companyId = req.body.company
         res.locals.formData = req.body
-        res.locals.company = yield companyRepository.getDitCompany(token, req.body.company)
       } else if (res.locals.contact) {
+        companyId = res.locals.contact.company.id
         res.locals.formData = contactFormService.getContactAsFormData(res.locals.contact)
-        res.locals.company = res.locals.contact.company
       } else if (req.query.company) {
-        res.locals.company = yield companyRepository.getDitCompany(token, req.query.company)
-        res.locals.formData = { company: res.locals.company.id }
+        companyId = req.query.company
+        res.locals.formData = { company: req.query.company }
       } else {
         return next('Unable to edit contact')
+      }
+
+      if (!res.locals.company) {
+        res.locals.company = yield companyRepository.getDitCompany(token, companyId)
       }
 
       if (req.params.contactId) {
@@ -100,4 +106,4 @@ router.get(['/contact/add'], editDetails)
 router.get(['/contact/:contactId/edit'], getCommon, editDetails)
 router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
 
-module.exports = {router, editDetails, postDetails}
+module.exports = { router, editDetails, postDetails }

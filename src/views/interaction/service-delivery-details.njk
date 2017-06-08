@@ -1,8 +1,11 @@
-{% extends "layouts/ukti-search-header.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_header_content %}
   <h1 class="heading-xlarge record-title">Service delivery details</h1>
-    {{ trade.keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
+{% endblock %}
+
+{% block body_main_content %}
+  {{ trade.keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
   <a class="button" href="/servicedelivery/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
 {% endblock %}

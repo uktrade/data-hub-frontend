@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const winston = require('winston')
-const advisorRepository = require('../repos/advisor.repo')
+const adviserRepository = require('../repos/adviser.repo')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
@@ -19,34 +19,34 @@ function getInflatedDitCompany (token, id) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
-        const advisorHash = {}
+        const adviserHash = {}
         const company = yield companyRepository.getDitCompany(token, id)
-        const serviceDeliverys = yield serviceDeliveryRepository.getServiceDeliverysForCompany(token, company.id)
+        const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
 
-        // Build a list of advisors to lookup
+        // Build a list of advisers to lookup
         for (const interaction of company.interactions) {
-          advisorHash[interaction.dit_advisor] = true
+          adviserHash[interaction.dit_adviser] = true
         }
-        for (const serviceDelivery of serviceDeliverys) {
-          advisorHash[serviceDelivery.relationships.dit_advisor.data.id] = true
+        for (const serviceDelivery of serviceDeliveries) {
+          adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
         }
 
         // get the related adviors
-        for (const advisorId of Object.keys(advisorHash)) {
-          const advisor = yield advisorRepository.getAdvisor(token, advisorId)
-          advisorHash[advisor.id] = advisor
+        for (const adviserId of Object.keys(adviserHash)) {
+          const adviser = yield adviserRepository.getAdviser(token, adviserId)
+          adviserHash[adviser.id] = adviser
         }
 
         const serviceOffers = yield metadataRepository.getServiceOffers(token)
 
         // Parse the service delivery results to expand some of the properties
-        const parsedServiceDeliverys = serviceDeliverys.map((serviceDelivery) => {
-          return Object.assign({}, {id: serviceDelivery.id}, serviceDelivery.attributes, {
+        const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
+          return Object.assign({}, { id: serviceDelivery.id }, serviceDelivery.attributes, {
             contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
             interaction_type: { id: null, name: 'Service delivery' },
-            dit_advisor: advisorHash[serviceDelivery.relationships.dit_advisor.data.id],
+            dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
             service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
-            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id)
+            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
           })
         })
 
@@ -55,42 +55,18 @@ function getInflatedDitCompany (token, id) {
           return Object.assign({}, interaction, {
             contact: getContactInCompanyObject(company, interaction.contact),
             interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-            dit_advisor: advisorHash[interaction.dit_advisor],
+            dit_adviser: adviserHash[interaction.dit_adviser],
             service: serviceOffers.find((option) => option.id === interaction.service),
-            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team)
+            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
           })
         })
 
-        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliverys]
+        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliveries]
 
         company.interactions = combinedIteractions
         resolve(company)
       } catch (error) {
         winston.error(error)
-        reject(error)
-      }
-    })
-  })
-}
-
-function getCompanyForSource (token, id, source) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        if (source === 'company_companieshousecompany') {
-          const companies_house_data = yield companyRepository.getCHCompany(token, id)
-          resolve({
-            company_number: id,
-            companies_house_data,
-            contacts: [],
-            interactions: []
-          })
-          return
-        }
-
-        const company = yield getInflatedDitCompany(token, id)
-        resolve(company)
-      } catch (error) {
         reject(error)
       }
     })
@@ -151,4 +127,9 @@ function getCommonTitlesAndlinks (req, res, company) {
   res.locals.companyUrl = buildCompanyUrl(company)
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, buildCompanyUrl, getCommonTitlesAndlinks, getHeadingAddress }
+module.exports = {
+  getInflatedDitCompany,
+  buildCompanyUrl,
+  getCommonTitlesAndlinks,
+  getHeadingAddress,
+}

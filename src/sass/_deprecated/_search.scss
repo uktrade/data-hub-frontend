@@ -1,0 +1,36 @@
+.grid-row > .column-one-third > .filters {
+
+  display: none;
+
+  @include media(tablet) {
+    display: block;
+  }
+
+}
+
+.meta--address {
+  text-transform: capitalize;
+}
+
+.result-list--expandable {
+  margin-bottom: 80px;
+
+  .results-list__result > a > .result-title {
+    display: inline-block;
+    margin-left: 5px;
+    text-decoration: underline;
+  }
+
+  .results-list__result > a {
+    text-decoration: none;
+    color: $link-colour;
+  }
+
+  .results-list__result > a.open::before {
+    content: "\25BC";
+  }
+
+  .results-list__result > a.closed::before {
+    content: "\25B6";
+  }
+}

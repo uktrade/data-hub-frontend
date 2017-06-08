@@ -1,5 +1,5 @@
-const transformSectors = require(`${root}/src/lib/transform-sectors`)
-const sectorList = require(`${root}/test/data/sector-list_input.json`)
+const transformSectors = require('~/src/lib/transform-sectors')
+const sectorList = require('~/test/data/sector-list_input.json')
 
 describe('Sectors transformer', () => {
   describe('Has subsector', () => {
@@ -68,7 +68,7 @@ describe('Sectors transformer', () => {
       const sector = transformSectors.getSectorForName('Advanced Engineering', sectorList)
       expect(sector).to.eql({
         id: 'af959812-6095-e211-a939-e4115bead28a',
-        name: 'Advanced Engineering'
+        name: 'Advanced Engineering',
       })
     })
   })

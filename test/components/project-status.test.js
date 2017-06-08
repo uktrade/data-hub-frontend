@@ -1,4 +1,4 @@
-const {renderComponentToDom} = require('../component-helper')
+const { renderComponentToDom } = require('../component-helper')
 
 describe('Project status component', () => {
   it('should not render if no project code is given', () => {
@@ -7,7 +7,7 @@ describe('Project status component', () => {
       {
         id: 'project id',
         name: 'Project name',
-        phaseName: 'Initial'
+        phaseName: 'Initial',
       }
     )
 
@@ -21,7 +21,7 @@ describe('Project status component', () => {
         id: 'project id',
         name: 'Project name',
         projectCode: 'PROJECT-CODE',
-        phaseName: 'Initial'
+        phaseName: 'Initial',
       }
     )
 
@@ -37,7 +37,7 @@ describe('Project status component', () => {
       {
         id: 'project id',
         name: 'Project name',
-        projectCode: 'PROJECT-CODE'
+        projectCode: 'PROJECT-CODE',
       }
     )
 

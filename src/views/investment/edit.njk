@@ -1,0 +1,12 @@
+{% extends "investment/_layout.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main_heading %}
+  <h1 class="page-heading">Edit investment project</h1>
+
+  {{ trade.errorPanel(form.errors) }}
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% include './_form.njk' %}
+{% endblock %}

@@ -1,0 +1,11 @@
+@import "../../settings/colours";
+@import "../../tools/mixins/layout";
+
+.notification-banner {
+  background-color: $light-blue-25;
+}
+
+.notification-banner__inner {
+  @include site-width-container;
+  padding: ($baseline-grid-unit * 2) 0;
+}

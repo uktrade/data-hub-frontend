@@ -1,7 +1,7 @@
-{% extends "layouts/ukti-search-header.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
+{% block body_main_header_content %}
   {% if query.contact %}
     {% set backUrl="/contact-interactions/" + query.contact %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
@@ -18,6 +18,9 @@
     {% endif %}
   </h1>
   {{ trade.errorPanel( errors, labels=labels ) }}
+{% endblock %}
+
+{% block body_main_content %}
   <form method="POST">
     <input type="hidden" name="company" value="{{serviceDelivery.company.id}}">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
@@ -98,12 +101,12 @@
       options=contacts)
     }}
 
-    {{ trade.autocomplete('dit_advisor',
-      label=labels.dit_advisor,
-      value=serviceDelivery.dit_advisor.id,
-      displayvalue=serviceDelivery.dit_advisor.name,
-      hint="Please start typing to search for an advisor",
-      error=errors.advisor,
+    {{ trade.autocomplete('dit_adviser',
+      label=labels.dit_adviser,
+      value=serviceDelivery.dit_adviser.id,
+      displayvalue=serviceDelivery.dit_adviser.name,
+      hint="Please start typing to search for an adviser",
+      error=errors.adviser,
       autofocus=false,
       url='/api/accountmanagerlookup?term=')
     }}
@@ -135,5 +138,9 @@
 
     {{ trade.save(backUrl) }}
   </form>
+{% endblock %}
+
+{% block javascript %}
+  {{ super() }}
   <script src="{{ asset_path }}javascripts/service-delivery.bundle.js"></script>
 {% endblock %}

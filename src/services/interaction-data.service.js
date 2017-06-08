@@ -28,7 +28,7 @@ function getHydratedInteraction (token, interactionId) {
   })
 }
 
-function createBlankInteractionForContact (token, dit_advisor, interaction_type, contactId) {
+function createBlankInteractionForContact (token, dit_adviser, interaction_type, contactId) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
@@ -48,16 +48,16 @@ function createBlankInteractionForContact (token, dit_advisor, interaction_type,
           contact,
           company,
           interaction_type: interaction_type_obj,
-          dit_advisor,
+          dit_adviser,
           date: new Date(),
           service: {
             id: null,
-            name: null
+            name: null,
           },
           dit_team: {
             id: null,
-            name: null
-          }
+            name: null,
+          },
         })
       } catch (error) {
         reject(error)
@@ -66,7 +66,7 @@ function createBlankInteractionForContact (token, dit_advisor, interaction_type,
   })
 }
 
-function createBlankInteractionForCompany (token, dit_advisor, interaction_type, companyId) {
+function createBlankInteractionForCompany (token, dit_adviser, interaction_type, companyId) {
   return new Promise((resolve, reject) => {
     Q.spawn(function * () {
       try {
@@ -80,16 +80,16 @@ function createBlankInteractionForCompany (token, dit_advisor, interaction_type,
           company,
           contact: null,
           interaction_type: interaction_type_obj,
-          dit_advisor,
+          dit_adviser,
           date: new Date(),
           service: {
             id: null,
-            name: null
+            name: null,
           },
           dit_team: {
             id: null,
-            name: null
-          }
+            name: null,
+          },
         })
       } catch (error) {
         reject(error)
@@ -102,5 +102,5 @@ module.exports = {
   getInteractionType,
   getHydratedInteraction,
   createBlankInteractionForCompany,
-  createBlankInteractionForContact
+  createBlankInteractionForContact,
 }

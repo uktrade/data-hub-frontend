@@ -4,10 +4,10 @@ describe('Service delivery formatting service', function () {
   let serviceDeliveryFormattingService
 
   beforeEach(function () {
-    serviceDeliveryFormattingService = proxyquire(`${root}/src/services/service-delivery-formatting.service`, {
+    serviceDeliveryFormattingService = proxyquire('~/src/services/service-delivery-formatting.service', {
       './company.service': {
-        buildCompanyUrl: sinon.stub().returns('/test')
-      }
+        buildCompanyUrl: sinon.stub().returns('/test'),
+      },
     })
 
     serviceDelivery = {
@@ -19,11 +19,11 @@ describe('Service delivery formatting service', function () {
       notes: 'Here are some notes\nline 2.',
       date: '2017-02-14T14:49:17',
       contact: { id: '444', first_name: 'Fred', last_name: 'Smith' },
-      dit_advisor: { id: '666', name: 'John Brown' },
+      dit_adviser: { id: '666', name: 'John Brown' },
       uk_region: { id: '888', name: 'London' },
       sector: { id: '999', name: 'Engineering' },
       country_of_interest: { id: '122', name: 'France' },
-      dit_team: { id: '344', name: 'team name' }
+      dit_team: { id: '344', name: 'team name' },
     }
   })
 
@@ -38,10 +38,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -57,10 +57,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -75,11 +75,11 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
         service: null,
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -95,16 +95,16 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
     })
-    it('should handle a missing advisor', function () {
-      serviceDelivery.dit_advisor = null
+    it('should handle a missing adviser', function () {
+      serviceDelivery.dit_adviser = null
       const expected = {
         company: '<a href="/test">Fred ltd</a>',
         dit_team: 'team name',
@@ -114,10 +114,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: null,
+        dit_adviser: null,
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -133,10 +133,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: null,
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -152,10 +152,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: null,
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -171,10 +171,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: null,
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: 'France'
+        country_of_interest: 'France',
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)
@@ -190,10 +190,10 @@ describe('Service delivery formatting service', function () {
         notes: 'Here are some notes<br/>line 2.',
         date: '14 February 2017',
         contact: '<a href="/contact/444/details">Fred Smith</a>',
-        dit_advisor: 'John Brown',
+        dit_adviser: 'John Brown',
         uk_region: 'London',
         sector: 'Engineering',
-        country_of_interest: null
+        country_of_interest: null,
       }
       const actual = serviceDeliveryFormattingService.getDisplayServiceDelivery(serviceDelivery)
       expect(actual).to.deep.equal(expected)

@@ -25,7 +25,7 @@ const companyDetailsLabels = {
   registered_address_country: 'Registered address country',
   business_type_for_other: 'Type of organisation',
   business_type_uk_other: 'Type of organisation',
-  headquarter_type: 'Headquarters'
+  headquarter_type: 'Headquarters',
 }
 const chDetailsLabels = {
   name: 'Registered name',
@@ -34,23 +34,23 @@ const chDetailsLabels = {
   business_type: 'Company type',
   company_status: 'Company status',
   sic_code: 'Nature of business (SIC)',
-  incorporation_date: 'Incorporated on'
+  incorporation_date: 'Incorporated on',
 }
 const companyTypeOptions = {
   ltd: 'UK private or public limited company',
   ltdchild: 'Child of a UK private or public limited company',
   ukother: 'Other type of UK organisation',
-  foreign: 'Foreign organisation'
+  foreign: 'Foreign organisation',
 }
 
 const hqLabels = {
   'ehq': 'European headquarters (EHQ)',
   'ghq': 'Global headquarters (GHQ)',
-  'ukhq': 'UK headquarters (UK HQ)'
+  'ukhq': 'UK headquarters (UK HQ)',
 }
 const accountManagementDisplayLabels = {
   oneListTier: 'One List tier',
-  oneListAccountManager: 'One List account manager'
+  oneListAccountManager: 'One List account manager',
 }
 
 module.exports = { companyDetailsLabels, chDetailsLabels, companyTypeOptions, hqLabels, accountManagementDisplayLabels }

@@ -1,0 +1,22 @@
+{% extends "layouts/_base-two-column.njk" %}
+{% from "_macros/address.njk" import addressFormatter %}
+
+{% block main_heading %}
+  {% component 'search-bar', {
+    action: '/search/' + searchType | default('company'),
+    method: 'get',
+    label: 'Search for company name or contact',
+    searchTerm: searchTerm
+  } %}
+
+  {% component 'search-nav', {
+    searchEntityResults: searchEntityResultsData,
+    searchType: searchType,
+    searchTerm: searchTerm
+  } %}
+{% endblock %}
+
+
+{% block main_grid_left_column %}
+  &nbsp; {# // TODO filters #}
+{% endblock %}

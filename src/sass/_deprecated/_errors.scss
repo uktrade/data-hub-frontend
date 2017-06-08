@@ -1,0 +1,16 @@
+.stack-trace {
+  margin-bottom: $gutter;
+}
+
+.stack-trace__heading {
+  @include heading-24;
+  margin-bottom: $gutter / 2;
+}
+
+.stack-trace__details {
+  @include core-16;
+  font-family: monospace;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}

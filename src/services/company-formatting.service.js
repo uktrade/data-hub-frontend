@@ -18,7 +18,7 @@ function getDisplayCH (companyHouseData) {
     business_type: companyHouseData.company_category,
     company_status: companyHouseData.company_status,
     registered_address: getFormattedAddress(companyHouseData, 'registered'),
-    incorporation_date: formatLongDate(companyHouseData.incorporation_date)
+    incorporation_date: formatLongDate(companyHouseData.incorporation_date),
   }
 
   displayCH.sic_code = []
@@ -41,7 +41,7 @@ function getDisplayCompany (company) {
     turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : null,
     account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : null,
     headquarter_type: (company.headquarter_type && company.headquarter_type.name && company.headquarter_type.name.length > 0) ? hqLabels[company.headquarter_type.name] : 'Not a headquarters',
-    alias: company.alias || null
+    alias: company.alias || null,
   }
 
   if (company.alias && company.alias.length > 0) displayCompany.alias = company.alias
@@ -73,7 +73,7 @@ function parseRelatedData (companies) {
     const url = buildCompanyUrl(company)
     return {
       name: `<a href="${url}">${company.alias || company.name}</a>`,
-      address
+      address,
     }
   })
 }
@@ -84,5 +84,5 @@ module.exports = {
   getDisplayCH,
   getDisplayCompany,
   parseRelatedData,
-  companyTableKeys
+  companyTableKeys,
 }

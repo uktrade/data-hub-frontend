@@ -6,5 +6,5 @@ function getCompanyForSource (token = null, id, source) {
 }
 
 module.exports = {
-  getCompanyForSource
+  getCompanyForSource,
 }

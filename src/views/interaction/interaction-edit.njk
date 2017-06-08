@@ -1,8 +1,7 @@
-{% extends "layouts/ukti-search-header.njk" %}
+{% extends "layouts/_base.njk" %}
 {% import "macros/trade.html" as trade %}
 
-{% block main %}
-{{ formData | log | safe }}
+{% block body_main_header_content %}
   {% if query.contactId %}
     {% set backUrl="/contact-interactions/" + query.contactId %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
@@ -11,8 +10,11 @@
     <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
   {% endif %}
 
-  <h1 class="heading-xlarge">Add new interaction</h2>
+  <h1 class="heading-xlarge">Add new interaction</h1>
   {{ trade.errorPanel( errors, labels=labels ) }}
+{% endblock %}
+
+{% block body_main_content %}
   <form method="POST">
     <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}">
     <input type="hidden" name="company" value="{{formData.company}}">
@@ -54,12 +56,12 @@
 
     {{ trade.date('date', label=labels.date, value=formData.date ) }}
 
-    {{ trade.autocomplete('dit_advisor',
-      label=labels.dit_advisor,
-      value=formData.dit_advisor,
-      displayvalue=dit_advisor.name,
+    {{ trade.autocomplete('dit_adviser',
+      label=labels.dit_adviser,
+      value=formData.dit_adviser,
+      displayvalue=dit_adviser.name,
       hint="Please start typing to search for an adviser",
-      error=errors.dit_advisor,
+      error=errors.dit_adviser,
       autofocus=false,
       url='/api/accountmanagerlookup?term=')
     }}

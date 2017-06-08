@@ -1,0 +1,64 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  {{ super() }}
+
+  {% if results %}
+    <div class="action-bar">
+      <a class="button button-secondary" href="/company/add-step-1/">
+        Add new company
+      </a>
+    </div>
+
+    {% component 'results-summary', {
+      resultType: searchType,
+      pluralisedResultType: 'companies',
+      total: results.count,
+      searchTerm: searchTerm
+    } %}
+
+    <ol class="results-list">
+      {% for company in results.companies %}
+        <li class="results-list__item">
+
+          {% if company.companies_house_data %}
+            {% set companyUrl = '/company/view/ch/' + company.companies_house_data.company_number %}
+          {% else %}
+            {% set companyUrl = '/viewcompanyresult/' + company.id %}
+          {% endif %}
+
+          <h3 class="results-item__item-header">
+            <a href="{{ companyUrl }}">
+              {{ company.name | highlight(searchTerm) }}
+            </a>
+          </h3>
+
+          <dl class="metadata-list">
+            {% if company.companies_house_data %}
+              <dt class="metadata-list__term u-visually-hidden">Companies House Number</dt>
+              <dd class="metadata-list__value">{{ company.companies_house_data.company_number }}</dd>
+            {% endif %}
+
+            <dt class="metadata-list__term u-visually-hidden">Address</dt>
+            <dd class="metadata-list__value">
+              {{ addressFormatter( [
+                company.registered_address_1,
+                company.registered_address_2,
+                company.registered_address_3,
+                company.registered_address_4,
+                company.registered_address_county,
+                company.registered_address_town,
+                company.registered_address_postcode
+              ]) }}
+            </dd>
+          </dl>
+        </li>
+      {% endfor %}
+    </ol>
+
+    {% component 'pagination', {
+      pages: pagination
+    } %}
+
+  {% endif %}
+{% endblock %}

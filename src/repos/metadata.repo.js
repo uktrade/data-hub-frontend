@@ -73,7 +73,14 @@ const metadataItems = [
   ['service-delivery-status', 'serviceDeliveryStatusOptions'],
   ['service', 'serviceDeliveryServiceOptions'],
   ['event', 'eventOptions'],
-  ['headquarter-type', 'headquarterOptions']
+  ['headquarter-type', 'headquarterOptions'],
+  ['referral-source-activity', 'referralSourceActivityOptions'],
+  ['referral-source-marketing', 'referralSourceMarketingOptions'],
+  ['referral-source-website', 'referralSourceWebsiteOptions'],
+  ['investment-business-activity', 'businessActivityOptions'],
+  ['investment-type', 'investmentTypeOptions'],
+  ['fdi-type', 'fdiOptions'],
+  ['non-fdi-type', 'nonFdiOptions'],
 ]
 
 const restrictedServiceKeys = [
@@ -139,7 +146,7 @@ module.exports.fetchAll = (cb) => {
 
 module.exports.REASONS_FOR_ARCHIVE = [
   'Company is dissolved',
-  'Other'
+  'Other',
 ]
 
 module.exports.getServiceOffers = function (token) {

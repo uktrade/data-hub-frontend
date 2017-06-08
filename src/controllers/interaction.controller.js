@@ -4,9 +4,9 @@ const Q = require('q')
 const interactionLabels = require('../labels/interaction-labels')
 const metadataRepository = require('../repos/metadata.repo')
 const interactionDataService = require('../services/interaction-data.service')
-const {getDisplayInteraction} = require('../services/interaction-formatting.service')
+const { getDisplayInteraction } = require('../services/interaction-formatting.service')
 
-const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_advisor', 'service', 'dit_team']
+const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -55,7 +55,7 @@ function getAddStep1 (req, res) {
   res.render('interaction/add-step-1.njk', {
     query: req.query,
     interactionTypeColA,
-    interactionTypeColB
+    interactionTypeColB,
   })
 }
 
@@ -63,7 +63,7 @@ function postAddStep1 (req, res) {
   // error if no selection
   if (!req.body.interaction_type) {
     res.locals.errors = {
-      interaction_type: ['You must select an interaction type']
+      interaction_type: ['You must select an interaction type'],
     }
     return getAddStep1(req, res)
   }

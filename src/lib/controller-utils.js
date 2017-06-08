@@ -61,6 +61,7 @@ function transformV2Errors (sourceErrors) {
   return errors
 }
 
+// TODO this is very similar to /src/lib/url-helpers.buildQueryString Maybe time for a common folder?
 function encodeQueryData (data) {
   const ret = []
   for (const key in data) {
@@ -87,7 +88,7 @@ function convertAutosuggestCollection (form, targetFieldName) {
     if (fieldName.toLocaleLowerCase().substr(0, targetFieldName.length) === lowerTargetFieldName) {
       form[targetFieldName].push({
         id: form[fieldName],
-        name: form[`${fieldName}-display`]
+        name: form[`${fieldName}-display`],
       })
       delete form[`${fieldName}-display`]
       delete form[fieldName]
@@ -107,8 +108,7 @@ function flattenIdFields (data) {
       if (Array.isArray(fieldValue)) {
         // Scan through the array of values, strip out any that are null, empty or have a null or empty id
         data[fieldName] = fieldValue
-          .filter(item =>
-            ((item && item.id && item.id !== null && item.id.length > 0) || (item !== null && item.length > 0)))
+          .filter(item => (item && item.id))
           .map(item => item.id)
       } else if (typeof fieldValue === 'object' && 'id' in fieldValue) {
         data[fieldName] = fieldValue.id
@@ -135,6 +135,10 @@ function containsFormData (req) {
   return (typeof req.body === 'object' && Object.keys(req.body).length > 0)
 }
 
+function isValidGuid (string) {
+  return /[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/.test(string)
+}
+
 module.exports = {
   transformErrors,
   transformV2Errors,
@@ -142,6 +146,7 @@ module.exports = {
   convertAutosuggestCollection,
   flattenIdFields,
   isBlank,
+  isValidGuid,
   toQueryString,
-  containsFormData
+  containsFormData,
 }

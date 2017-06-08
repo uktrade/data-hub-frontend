@@ -33,8 +33,8 @@ describe('Company controller, Companies Houe', function () {
     incorporation_date: '2017-02-15',
     registered_address_country: {
       id: '80756b9a-5d95-e211-a939-e4115bead28a',
-      name: 'United Kingdom'
-    }
+      name: 'United Kingdom',
+    },
   }
 
   beforeEach(function () {
@@ -43,19 +43,19 @@ describe('Company controller, Companies Houe', function () {
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
 
-    companyControllerCh = proxyquire(`${root}/src/controllers/company-ch.controller`, {
+    companyControllerCh = proxyquire('~/src/controllers/company-ch.controller', {
       '../services/company.service': {
-        getInflatedDitCompany: getInflatedDitCompanyStub
+        getInflatedDitCompany: getInflatedDitCompanyStub,
       },
       '../services/company-formatting.service': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
         getHeadingName: getHeadingNameStub,
-        getHeadingAddress: getHeadingAddressStub
+        getHeadingAddress: getHeadingAddressStub,
       },
       '../repos/company.repo': {
-        getCHCompany: getCHCompanyStub
-      }
+        getCHCompany: getCHCompanyStub,
+      },
     })
   })
 
@@ -63,17 +63,17 @@ describe('Company controller, Companies Houe', function () {
     it('should get the ch company details', function (done) {
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, {
         locals: {},
         render: function () {
           expect(getCHCompanyStub).to.be.calledWith('1234', '9999')
           done()
-        }
+        },
       }, next)
     })
     it('should return the company heading name and address', function (done) {
@@ -83,16 +83,16 @@ describe('Company controller, Companies Houe', function () {
           expect(res.locals.headingName).to.equal('ADALEOP LTD')
           expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
           done()
-        }
+        },
       }
 
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should get a formatted copy of the company house data to display', function (done) {
@@ -104,16 +104,16 @@ describe('Company controller, Companies Houe', function () {
           expect(res.locals).to.have.property('chDetailsLabels')
           expect(res.locals.chDetailsDisplayOrder).to.deep.equal(['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code'])
           done()
-        }
+        },
       }
 
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should not try and get formatted data for CDMS company details', function (done) {
@@ -123,16 +123,16 @@ describe('Company controller, Companies Houe', function () {
           expect(getDisplayCompanyStub).to.not.be.called
           expect(res.locals).to.not.have.property('companyDetails')
           done()
-        }
+        },
       }
 
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should not provide account management information', function (done) {
@@ -142,16 +142,16 @@ describe('Company controller, Companies Houe', function () {
           expect(res.locals).to.not.have.property('accountManagementDisplay')
           expect(res.locals).to.not.have.property('accountManagementDisplayLabels')
           done()
-        }
+        },
       }
 
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
     it('should use a template for ch data', function (done) {
@@ -160,16 +160,16 @@ describe('Company controller, Companies Houe', function () {
         render: function (template) {
           expect(template).to.equal('company/details-ch')
           done()
-        }
+        },
       }
 
       companyControllerCh.getDetails({
         session: {
-          token: '1234'
+          token: '1234',
         },
         params: {
-          id: '9999'
-        }
+          id: '9999',
+        },
       }, res, next)
     })
   })

@@ -14,14 +14,14 @@ describe('Contact controller, archive', function () {
   beforeEach(function () {
     contactRepositoryArchiveContactStub = sinon.stub().resolves(null)
     contactRepositoryUnArchiveContactStub = sinon.stub().resolves(null)
-    contactArchiveController = proxyquire(`${root}/src/controllers/contact-archive.controller`, {
+    contactArchiveController = proxyquire('~/src/controllers/contact-archive.controller', {
       '../repos/contact.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
-        unarchiveContact: contactRepositoryUnArchiveContactStub
+        unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
       'winston': {
-        error: sinon.stub()
-      }
+        error: sinon.stub(),
+      },
     })
     flashStub = sinon.stub()
   })
@@ -30,14 +30,14 @@ describe('Contact controller, archive', function () {
       session: { token },
       body: { archived_reason: 'test', archived_reason_other: '' },
       params: { id },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason)
         done()
-      }
+      },
     }
 
     contactArchiveController.archiveContact(req, res, next)
@@ -47,14 +47,14 @@ describe('Contact controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: { id },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason_other)
         done()
-      }
+      },
     }
 
     contactArchiveController.archiveContact(req, res, next)
@@ -65,14 +65,14 @@ describe('Contact controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
       params: { id },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('success-message', 'Updated contact record')
         done()
-      }
+      },
     }
 
     contactArchiveController.archiveContact(req, res, next)
@@ -82,14 +82,14 @@ describe('Contact controller, archive', function () {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: '' },
       params: { id },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('error-message', 'Unable to archive contact, no reason given')
         done()
-      }
+      },
     }
 
     contactArchiveController.archiveContact(req, res, next)
@@ -98,14 +98,14 @@ describe('Contact controller, archive', function () {
     const req = {
       session: { token },
       params: { id },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
       locals: {},
       redirect: function () {
         expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(token, id)
         done()
-      }
+      },
     }
 
     contactArchiveController.unarchiveContact(req, res, next)
@@ -113,24 +113,24 @@ describe('Contact controller, archive', function () {
   it('should handle errors when you archive a contact', function (done) {
     const error = Error('error')
     contactRepositoryArchiveContactStub = sinon.stub().rejects(error)
-    contactArchiveController = proxyquire(`${root}/src/controllers/contact-archive.controller`, {
+    contactArchiveController = proxyquire('~/src/controllers/contact-archive.controller', {
       '../repos/contact.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
-        unarchiveContact: contactRepositoryUnArchiveContactStub
+        unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
       'winston': {
-        error: sinon.stub()
-      }
+        error: sinon.stub(),
+      },
     })
 
     const req = {
       session: { token },
       params: { id },
       body: { archived_reason: 'test' },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
-      render: function () { throw Error('Should have called next') }
+      render: function () { throw Error('Should have called next') },
     }
     const next = function (_error) {
       expect(_error).to.deep.equal(error)
@@ -142,24 +142,24 @@ describe('Contact controller, archive', function () {
   it('should handle errors when you unarchive a contact', function (done) {
     const error = Error('error')
     contactRepositoryUnArchiveContactStub = sinon.stub().rejects(error)
-    contactArchiveController = proxyquire(`${root}/src/controllers/contact-archive.controller`, {
+    contactArchiveController = proxyquire('~/src/controllers/contact-archive.controller', {
       '../repos/contact.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
-        unarchiveContact: contactRepositoryUnArchiveContactStub
+        unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
       'winston': {
-        error: sinon.stub()
-      }
+        error: sinon.stub(),
+      },
     })
 
     const req = {
       session: { token },
       params: { id },
       body: { archived_reason: 'test' },
-      flash: flashStub
+      flash: flashStub,
     }
     const res = {
-      render: function () { throw Error('Should have called next') }
+      render: function () { throw Error('Should have called next') },
     }
     const next = function (_error) {
       expect(_error).to.deep.equal(error)

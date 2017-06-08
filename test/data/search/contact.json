@@ -1,0 +1,57 @@
+{
+  "aggregations": [
+    {
+      "count": 3,
+      "entity": "company"
+    },
+    {
+      "count": 1,
+      "entity": "contact"
+    }
+  ],
+  "contacts": [
+    {
+      "address_1": null,
+      "address_2": null,
+      "address_3": null,
+      "address_4": null,
+      "address_country": null,
+      "address_county": null,
+      "address_postcode": null,
+      "address_same_as_company": true,
+      "address_town": null,
+      "adviser": null,
+      "archived": false,
+      "archived_by": null,
+      "archived_on": null,
+      "archived_reason": null,
+      "company": {
+        "id": "9b7b2252-0e4a-4c30-95e1-58f61a033048",
+        "name": "name0"
+      },
+      "contactable_by_dit": false,
+      "contactable_by_dit_partners": false,
+      "contactable_by_email": true,
+      "contactable_by_phone": true,
+      "created_on": "2017-05-26T16:23:48.452484",
+      "email": "foo@bar.com",
+      "email_alternative": null,
+      "first_name": "abc",
+      "id": "a0fe73f3-6289-43c6-a9bf-2ae6cd2a7c0a",
+      "interactions": [],
+      "job_title": null,
+      "last_name": "defg",
+      "modified_on": "2017-05-26T16:23:48.454991",
+      "notes": null,
+      "primary": true,
+      "telephone_alternative": null,
+      "telephone_countrycode": "+44",
+      "telephone_number": "123456789",
+      "title": {
+        "id": "764cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Wing Commander"
+      }
+    }
+  ],
+  "count": 1
+}

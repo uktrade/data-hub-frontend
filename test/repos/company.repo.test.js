@@ -10,7 +10,7 @@ describe('Company repository', () => {
           return new Promise((resolve) => {
             resolve({
               id: '1234',
-              name: 'fred'
+              name: 'fred',
             })
           })
         }
@@ -19,7 +19,7 @@ describe('Company repository', () => {
           companyRepository = makeRepositoryWithAuthRequest(authorisedRequestStub)
         })
         it('should return data if successful', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then((data) => {
               expect(data.id).to.equal('1234')
               done()
@@ -35,14 +35,14 @@ describe('Company repository', () => {
           return new Promise((resolve, reject) => {
             reject({
               error: {
-                sector: ['error with sector']
+                sector: ['error with sector'],
               },
               message: '400 - {"sector":["error with sector"]}',
               name: 'StatusCodeError',
               response: {
                 statusCode: 400,
-                statusMessage: 'Bad Request'
-              }
+                statusMessage: 'Bad Request',
+              },
             })
           })
         }
@@ -51,7 +51,7 @@ describe('Company repository', () => {
           companyRepository = makeRepositoryWithAuthRequest(authorisedRequestStub)
         })
         it('should return an error and a formatted error response', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -62,7 +62,7 @@ describe('Company repository', () => {
             })
         })
         it('should indicate the error code', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -72,13 +72,13 @@ describe('Company repository', () => {
             })
         })
         it('should show that there was an error with a field', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
             .catch((error) => {
               expect(error.errors).to.eql({
-                sector: ['error with sector']
+                sector: ['error with sector'],
               })
               done()
             })
@@ -89,11 +89,11 @@ describe('Company repository', () => {
         const authorisedRequestStub = function () {
           return new Promise((resolve, reject) => {
             reject({
-              error: {'detail': 'Service Unavailable'},
+              error: { 'detail': 'Service Unavailable' },
               name: 'StatusCodeError',
               response: {
-                statusCode: 501
-              }
+                statusCode: 501,
+              },
             })
           })
         }
@@ -102,7 +102,7 @@ describe('Company repository', () => {
           companyRepository = makeRepositoryWithAuthRequest(authorisedRequestStub)
         })
         it('should return an error and a formatted error response', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -113,7 +113,7 @@ describe('Company repository', () => {
             })
         })
         it('should indicate the error code', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -134,8 +134,8 @@ describe('Company repository', () => {
               name: 'StatusCodeError',
               response: {
                 statusCode: 501,
-                statusMessage: 'Service Unavailable'
-              }
+                statusMessage: 'Service Unavailable',
+              },
             })
           })
         }
@@ -144,7 +144,7 @@ describe('Company repository', () => {
           companyRepository = makeRepositoryWithAuthRequest(authorisedRequestStub)
         })
         it('should return an error and a formatted error response', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -155,7 +155,7 @@ describe('Company repository', () => {
             })
         })
         it('should indicate the error code', (done) => {
-          companyRepository.saveCompany('1234', {id: '1234', name: 'fred'})
+          companyRepository.saveCompany('1234', { id: '1234', name: 'fred' })
             .then(() => {
               fail()
             })
@@ -240,8 +240,8 @@ describe('Company repository', () => {
   })
 
   function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-    return proxyquire(`${root}/src/repos/company.repo`, {
-      '../lib/authorised-request': authorisedRequestStub
+    return proxyquire('~/src/repos/company.repo', {
+      '../lib/authorised-request': authorisedRequestStub,
     })
   }
 

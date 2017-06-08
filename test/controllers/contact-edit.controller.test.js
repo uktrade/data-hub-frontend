@@ -1,7 +1,7 @@
 /* eslint handle-callback-err: 0 */
 const { render } = require('../nunjucks')
 const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../form-helpers')
-const contactLabels = require(`${root}/src/labels/contact-labels`)
+const contactLabels = require('~/src/labels/contact-labels')
 
 describe('Contact controller, edit', function () {
   let contactEditController
@@ -17,27 +17,27 @@ describe('Contact controller, edit', function () {
   beforeEach(function () {
     company = {
       id: '1234',
-      name: 'Fred ltd.'
+      name: 'Fred ltd.',
     }
 
     getDitCompanyStub = sinon.stub().resolves(company)
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
+    contactEditController = proxyquire('~/src/controllers/contact-edit.controller', {
       '../services/contact-form.service': {
         getContactAsFormData: getContactAsFormDataStub,
-        saveContactForm: saveContactFormStub
+        saveContactForm: saveContactFormStub,
       },
       '../repos/metadata.repo': {
         countryOptions: [{
           id: '986',
-          name: 'United Kingdom'
-        }]
+          name: 'United Kingdom',
+        }],
       },
       '../repos/company.repo': {
-        getDitCompany: getDitCompanyStub
-      }
+        getDitCompany: getDitCompanyStub,
+      },
     })
   })
 
@@ -80,25 +80,25 @@ describe('Contact controller, edit', function () {
           archived_by: null,
           title: {
             id: 'a26cb21e-6095-e211-a939-e4115bead28a',
-            name: 'Mr'
+            name: 'Mr',
           },
-          advisor: null,
+          adviser: null,
           address_country: null,
-          company
+          company,
         }
         req = {
           session: {
-            token: '1234'
+            token: '321',
           },
           query: {},
           params: {
-            contactId: '12651151-2149-465e-871b-ac45bc568a62'
-          }
+            contactId: '12651151-2149-465e-871b-ac45bc568a62',
+          },
         }
         res = {
           locals: {
-            contact
-          }
+            contact,
+          },
         }
       })
 
@@ -112,7 +112,8 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
-          expect(res.locals.company).to.deep.equal(contact.company)
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, contact.company.id)
+          expect(res.locals.company).to.deep.equal(company)
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -136,15 +137,15 @@ describe('Contact controller, edit', function () {
       beforeEach(function () {
         req = {
           session: {
-            token: '1234'
+            token: '321',
           },
           query: {
-            company: '1234'
+            company: '1234',
           },
-          params: {}
+          params: {},
         }
         res = {
-          locals: {}
+          locals: {},
         }
       })
 
@@ -157,6 +158,7 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -183,17 +185,17 @@ describe('Contact controller, edit', function () {
           id: '222',
           first_name: 'Fred',
           last_name: 'Smith',
-          company: '1234'
+          company: '1234',
         }
         req = {
           session: {
-            token: '321'
+            token: '321',
           },
           params: {},
           body,
           query: {
-            company: '1234'
-          }
+            company: '1234',
+          },
         }
         res = { locals: {} }
       })
@@ -206,6 +208,7 @@ describe('Contact controller, edit', function () {
       })
       it('should include an expanded company', function (done) {
         res.render = function () {
+          expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -249,11 +252,11 @@ describe('Contact controller, edit', function () {
           address_country: '123',
           telephone_alternative: '33321',
           email_alternative: 'Fred@gmail.com',
-          notes: 'some notes'
+          notes: 'some notes',
         },
         countryOptions,
         company,
-        contactLabels
+        contactLabels,
       }
     })
     it('should render all the required fields on the page', function () {
@@ -290,27 +293,27 @@ describe('Contact controller, edit', function () {
     beforeEach(function () {
       flashStub = sinon.stub()
       res = {
-        locals: {}
+        locals: {},
       }
       req = {
         session: {
-          token: '1234'
+          token: '321',
         },
         params: { id: '1234' },
         query: {},
-        flash: flashStub
+        flash: flashStub,
       }
       body = {
         id: '1234',
         first_name: 'Fred',
         last_name: 'Smith',
-        company: '1234'
+        company: '1234',
       }
       req.body = body
     })
     it('should save the form data to the back end', function (done) {
       res.redirect = function () {
-        expect(saveContactFormStub).to.be.calledWith('1234', body)
+        expect(saveContactFormStub).to.be.calledWith(req.session.token, body)
         done()
       }
 
@@ -333,23 +336,23 @@ describe('Contact controller, edit', function () {
     })
     it('should re-render the edit page with the original form data on validation errors', function (done) {
       saveContactFormStub = sinon.stub().rejects({
-        error: { name: ['test'] }
+        error: { name: ['test'] },
       })
 
-      contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
+      contactEditController = proxyquire('~/src/controllers/contact-edit.controller', {
         '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
-          saveContactForm: saveContactFormStub
+          saveContactForm: saveContactFormStub,
         },
         '../repos/metadata.repo': {
           countryOptions: [{
             id: '986',
-            name: 'United Kingdom'
-          }]
+            name: 'United Kingdom',
+          }],
         },
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
-        }
+          getDitCompany: getDitCompanyStub,
+        },
       })
 
       res.render = function (template) {
@@ -362,20 +365,20 @@ describe('Contact controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire(`${root}/src/controllers/contact-edit.controller`, {
+      contactEditController = proxyquire('~/src/controllers/contact-edit.controller', {
         '../services/contact-form.service': {
           getContactAsFormData: getContactAsFormDataStub,
-          saveContactForm: saveContactFormStub
+          saveContactForm: saveContactFormStub,
         },
         '../repos/metadata.repo': {
           countryOptions: [{
             id: '986',
-            name: 'United Kingdom'
-          }]
+            name: 'United Kingdom',
+          }],
         },
         '../repos/company.repo': {
-          getDitCompany: getDitCompanyStub
-        }
+          getDitCompany: getDitCompanyStub,
+        },
       })
 
       contactEditController.postDetails(req, res, function (error) {

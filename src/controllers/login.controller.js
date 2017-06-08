@@ -1,50 +1,50 @@
 /* eslint new-cap: 0 */
 
-const express = require('express')
+const router = require('express').Router()
 const rp = require('request-promise')
-const config = require('../config')
+const { get } = require('lodash')
 
-const router = express.Router()
+const config = require('../config')
 
 function authenticate (username, password) {
   const options = {
     method: 'POST',
-    url: (config.apiRoot + config.api.authUrl),
-
+    url: config.apiRoot + config.api.authUrl,
     headers: {
       'cache-control': 'no-cache',
       'authorization': `Basic ${Buffer.from(config.api.clientId + ':' + config.api.clientSecret).toString('base64')}`,
-      'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+      'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
     },
     formData: {
       username: username,
       password: password,
-      grant_type: 'password'
+      grant_type: 'password',
     },
-    json: true
+    json: true,
   }
 
   return rp(options)
 }
 
 function login (req, res) {
-  res.render('login.njk', { action: '/login' })
+  res.render('login.njk')
 }
 
 function loginToApi (req, res, next) {
   if (!req.body.username || !req.body.password) {
     req.flash('error-message', 'Invalid user id or password')
-    res.redirect('/login')
-    return
+    return res.redirect('/login')
   }
 
   authenticate(req.body.username, req.body.password)
     .then((data) => {
       req.session.token = data.access_token
-      res.redirect('/')
+      res.redirect(req.session.returnTo || '/')
     })
     .catch((error) => {
-      if (error.response && error.response.statusCode && error.response.statusCode === 401) {
+      const statusCode = get(error, 'response.statusCode')
+
+      if (statusCode === 401) {
         req.flash('error-message', 'Invalid user id or password')
         res.redirect('/login')
       } else {

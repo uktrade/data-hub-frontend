@@ -31,7 +31,7 @@ function getDetails (req, res, next) {
 
       res.locals.accountManagementDisplay = {
         oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
-        oneListAccountManager: 'None'
+        oneListAccountManager: 'None',
       }
       res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
 

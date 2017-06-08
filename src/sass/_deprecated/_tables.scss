@@ -1,0 +1,50 @@
+#cdms-details.table--key-value {
+  margin-top: 0;
+}
+
+.table--data {
+  margin-bottom: 20px;
+}
+
+.table-summary {
+  .actions {
+    margin: em(20) 0;
+
+    @include media(desktop) {
+      text-align: right;
+    }
+  }
+}
+
+table.investment-project-summary-table {
+  tr {
+    td:last-child,
+    th:last-child {
+      text-align: right;
+    }
+
+    [data-key="name"] {
+      width: 45%;
+    }
+
+    [data-key="value"] {
+      width: 20%;
+    }
+
+    [data-key="state"] {
+      width: 20%;
+    }
+
+    [data-key="land_date"],
+    [data-key="state_date"] {
+      width: 15%;
+    }
+
+  }
+}
+
+table.table--related-companies {
+  th {
+    width: 50%;
+  }
+}

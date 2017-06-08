@@ -1,20 +1,20 @@
-const metadatarepository = require(`${root}/src/repos/metadata.repo`)
+const metadatarepository = require('~/src/repos/metadata.repo')
 
 describe('company form service', function () {
   let companyFormService
   let saveCompanyStub
 
   beforeEach(function () {
-    saveCompanyStub = sinon.stub().resolves({id: '1234'})
+    saveCompanyStub = sinon.stub().resolves({ id: '1234' })
 
-    companyFormService = proxyquire(`${root}/src/services/company-form.service`, {
+    companyFormService = proxyquire('~/src/services/company-form.service', {
       '../repos/company.repo': {
-        saveCompany: saveCompanyStub
+        saveCompany: saveCompanyStub,
       },
       '../repos/metadata.repo': {
         businessTypeOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'Private Limited Company' }],
-        getIdForName: metadatarepository.getIdForName
-      }
+        getIdForName: metadatarepository.getIdForName,
+      },
     })
   })
 
@@ -48,7 +48,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: { id: 'e1', name: '1-100' },
-        turnover_range: null
+        turnover_range: null,
       }
       const expected = {
         id: '1234',
@@ -78,7 +78,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: 'e1',
-        turnover_range: null
+        turnover_range: null,
       }
       const actual = companyFormService.getLtdCompanyAsFormData(company)
       expect(actual).to.deep.equal(expected)
@@ -112,7 +112,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: { id: 'e1', name: '1-100' },
-        turnover_range: null
+        turnover_range: null,
       }
       const expected = {
         id: '1234',
@@ -141,7 +141,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: 'e1',
-        turnover_range: null
+        turnover_range: null,
       }
       const actual = companyFormService.getUkOtherCompanyAsFormData(company)
       expect(actual).to.deep.equal(expected)
@@ -175,7 +175,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: { id: 'e1', name: '1-100' },
-        turnover_range: null
+        turnover_range: null,
       }
       const expected = {
         id: '1234',
@@ -203,7 +203,7 @@ describe('company form service', function () {
         website: 'http://www.test.com',
         description: 'description',
         employee_range: 'e1',
-        turnover_range: null
+        turnover_range: null,
       }
       const actual = companyFormService.getForeignCompanyAsFormData(company)
       expect(actual).to.deep.equal(expected)
@@ -232,8 +232,8 @@ describe('company form service', function () {
         incorporation_date: '2017-02-15',
         registered_address_country: {
           id: '80756b9a-5d95-e211-a939-e4115bead28a',
-          name: 'United Kingdom'
-        }
+          name: 'United Kingdom',
+        },
       }
 
       const expected = {
@@ -248,7 +248,7 @@ describe('company form service', function () {
         registered_address_town: 'PRESTON',
         registered_address_county: null,
         registered_address_postcode: 'PR1 0LS',
-        registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a'
+        registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
       }
 
       const formData = companyFormService.getDefaultLtdFormForCH(chCompany)
@@ -260,7 +260,7 @@ describe('company form service', function () {
     it('saves company data to repository', function () {
       const company = {
         thing: 'yes',
-        other: 'no'
+        other: 'no',
       }
       return companyFormService.saveCompanyForm('1234', company)
         .then((result) => {
@@ -270,7 +270,7 @@ describe('company form service', function () {
     it('converts yes/no to true/false', function () {
       const company = {
         thing: 'yes',
-        other: 'no'
+        other: 'no',
       }
       return companyFormService.saveCompanyForm('1234', company)
         .then((result) => {
@@ -279,7 +279,7 @@ describe('company form service', function () {
     })
     it('nulls empty fields', function () {
       const company = {
-        thing: ''
+        thing: '',
       }
       return companyFormService.saveCompanyForm('1234', company)
         .then((result) => {
@@ -288,10 +288,10 @@ describe('company form service', function () {
     })
     it('handles errors', function () {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
-      companyFormService = proxyquire(`${root}/src/services/company-form.service`, {
+      companyFormService = proxyquire('~/src/services/company-form.service', {
         '../repos/company.repo': {
-          saveCompany: saveCompanyStub
-        }
+          saveCompany: saveCompanyStub,
+        },
       })
       const company = { thing: '' }
 

@@ -8,7 +8,7 @@ describe('contact form service', function () {
   beforeEach(function () {
     throwError = false
 
-    contactFormService = proxyquire(`${root}/src/services/contact-form.service`, {
+    contactFormService = proxyquire('~/src/services/contact-form.service', {
       '../repos/contact.repo': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {
@@ -25,8 +25,8 @@ describe('contact form service', function () {
 
             resolve(contactForm)
           })
-        }
-      }
+        },
+      },
     })
   })
 
@@ -44,7 +44,7 @@ describe('contact form service', function () {
         address_town: 'Town view',
         address_country: {
           id: '81756b9a-5d95-e211-a939-e4115bead28a',
-          name: 'United States'
+          name: 'United States',
         },
         address_county: 'CA',
         address_postcode: '94043',
@@ -67,18 +67,13 @@ describe('contact form service', function () {
         archived_by: null,
         title: {
           id: '0167b456-0ddd-49bd-8184-e3227a0b6396',
-          name: 'Undefined'
+          name: 'Undefined',
         },
         company: {
           id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
-          created_on: '2014-05-22T21:06:56',
-          modified_on: '2016-02-11T21:48:38',
-          archived: false,
-          archived_on: null,
-          archived_reason: '',
-          name: 'OpenStuff'
+          name: 'OpenStuff',
         },
-        advisor: null
+        adviser: null,
       }
     })
 
@@ -105,7 +100,7 @@ describe('contact form service', function () {
         address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -145,7 +140,7 @@ describe('contact form service', function () {
         address_country: null,
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -182,15 +177,19 @@ describe('contact form service', function () {
         address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
     })
 
     it('should accept a fully populated contact and convert it to an api format', function () {
       const expected = {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
-        company: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
-        title: '0167b456-0ddd-49bd-8184-e3227a0b6396',
+        company: {
+          id: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
+        },
+        title: {
+          id: '0167b456-0ddd-49bd-8184-e3227a0b6396',
+        },
         first_name: 'Zac',
         last_name: 'Baman',
         job_title: 'Co-founder and CEO',
@@ -206,10 +205,12 @@ describe('contact form service', function () {
         address_town: 'Town view',
         address_county: 'CA',
         address_postcode: '94043',
-        address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
+        address_country: {
+          id: '81756b9a-5d95-e211-a939-e4115bead28a',
+        },
         telephone_alternative: '999',
         email_alternative: 'fred@me.com',
-        notes: 'Some notes'
+        notes: 'Some notes',
       }
 
       return contactFormService.saveContactForm('1234', formData)

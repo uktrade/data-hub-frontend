@@ -1,0 +1,33 @@
+{% extends "layouts/dit-base.njk" %}
+
+{% set siteTitle = 'Data Hub' %}
+{% set projectPhase = 'beta' %}
+{% set feedbackLink = '/support/bug' %}
+
+{% block head %}
+  {{ super() }}
+
+  <!--[if lt IE 9]>
+    <script src="{{ asset_path }}javascripts/ie.bundle.js?{{ startTime }}"></script>
+  <![endif]-->
+
+  {% include "_includes/google-tag-manager-snippet.njk" %}
+
+  {% if user %}
+    <script>
+      if (!window.DIT) window.DIT = {};
+      window.DIT.user = {{ user | stringify | safe }};
+    </script>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  {% include "_includes/google-tag-manager-no-script.njk" %}
+  {{ super() }}
+  <!--[if gt IE 8]><!-->
+    {% block javascript %}
+      <script src="{{ asset_path }}javascripts/trade-elements-components-ebe253002f.js"></script>
+      <script src="{{ asset_path }}javascripts/app.bundle.js?{{ startTime }}"></script>
+    {% endblock %}
+  <!--<![endif]-->
+{% endblock %}

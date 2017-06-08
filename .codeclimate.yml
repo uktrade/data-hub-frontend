@@ -1,0 +1,11 @@
+engines:
+  fixme:
+    enabled: false
+  eslint:
+    enabled: true
+  duplication:
+    enabled: false
+
+ratings:
+   paths:
+   - "**.js"

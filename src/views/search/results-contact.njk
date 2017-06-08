@@ -1,0 +1,54 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  {{ super() }}
+
+  {% if results %}
+    {% component 'results-summary', {
+      resultType: searchType,
+      total: results.count,
+      searchTerm: searchTerm
+    } %}
+
+    <ol class="results-list">
+      {% for contact in results.contacts %}
+        <li class="results-list__item">
+          <h3 class="results-item__item-header">
+            <a href="/contact/{{ contact.id }}/details?term={{ searchTerm }}">
+              {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
+            </a>
+          </h3>
+
+          <dl class="metadata-list">
+            {% if (contact.company) %}
+              <dt class="metadata-list__term u-visually-hidden">Company</dt>
+              <dd class="metadata-list__value">{{ contact.company.name }}</dd>
+            {% endif %}
+            {% if results.job_title %}
+              <dt class="metadata-list__term u-visually-hidden">Job Title</dt>
+              <dd class="metadata-list__value">{{ results.job_title }}</dd>
+            {% endif %}
+
+            <dt class="metadata-list__term u-visually-hidden">Address</dt>
+            <dd class="metadata-list__value">
+              {{ addressFormatter([
+                contact.registered_address_1,
+                contact.registered_address_2,
+                contact.registered_address_3,
+                contact.registered_address_4,
+                contact.registered_address_county,
+                contact.registered_address_town,
+                contact.registered_address_postcode
+              ]) }}
+            </dd>
+          </dl>
+        </li>
+      {% endfor %}
+    </ol>
+
+    {% component 'pagination', {
+      pages: pagination
+    } %}
+
+  {% endif %}
+{% endblock %}

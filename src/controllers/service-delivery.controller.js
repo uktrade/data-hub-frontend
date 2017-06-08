@@ -11,7 +11,7 @@ const serviceDeliveryService = require('../services/service-delivery.service')
 const { getDisplayServiceDelivery } = require('../services/service-delivery-formatting.service')
 const { buildCompanyUrl } = require('../services/company.service')
 
-const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_advisor', 'uk_region', 'sector', 'contact', 'country_of_interest']
+const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_adviser', 'uk_region', 'sector', 'contact', 'country_of_interest']
 const router = express.Router()
 
 function getCommon (req, res, next) {
@@ -36,12 +36,12 @@ function getServiceDeliveryEdit (req, res, next) {
   Q.spawn(function * () {
     try {
       const token = req.session.token
-      const dit_advisor = req.session.user
+      const adviser = req.session.user
       if (!res.locals.serviceDelivery) {
         if (req.query.contact) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, dit_advisor, req.query.contact)
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForContact(token, adviser, req.query.contact)
         } else if (req.query.company) {
-          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, dit_advisor, req.query.company)
+          res.locals.serviceDelivery = yield serviceDeliveryService.createBlankServiceDeliveryForCompany(token, adviser, req.query.company)
         }
       } else {
         res.locals.backUrl = `/servicedelivery/${req.params.serviceDeliveryId}/details`
@@ -49,7 +49,7 @@ function getServiceDeliveryEdit (req, res, next) {
       res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
         return {
           id: contact.id,
-          name: `${contact.first_name} ${contact.last_name}`
+          name: `${contact.first_name} ${contact.last_name}`,
         }
       })
 

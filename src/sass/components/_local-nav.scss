@@ -1,0 +1,42 @@
+@import "../settings/colours";
+@import "../tools/mixins/layout";
+
+.local-nav {
+  @include core-19;
+  margin-left: -$gutter-half;
+  margin-right: -$gutter-half;
+
+  @include media(tablet) {
+    border-right: 1px solid $grey-2;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.local-nav__link {
+  display: block;
+  padding: $gutter-half;
+
+  &,
+  &:visited {
+    color: $black;
+  }
+
+  @include media(tablet) {
+    padding-left:  $gutter-two-thirds;
+    padding-right:  $gutter-two-thirds;
+  }
+
+  &.is-active {
+    background: $govuk-blue;
+    color: $white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+.local-nav--background .is-active {
+  background-color: $grey-1;
+}
+

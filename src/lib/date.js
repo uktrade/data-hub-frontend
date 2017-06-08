@@ -1,4 +1,4 @@
-const {longDateFormat, mediumDateFormat} = require('../config')
+const { longDateFormat, mediumDateFormat } = require('../config')
 const moment = require('moment')
 
 function formatLongDate (date) {
@@ -16,5 +16,5 @@ function formatMediumDate (date) {
 }
 
 module.exports = {
-  formatLongDate, formatMediumDate
+  formatLongDate, formatMediumDate,
 }

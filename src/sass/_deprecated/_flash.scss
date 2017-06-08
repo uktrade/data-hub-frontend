@@ -1,0 +1,8 @@
+.flash {
+  padding: 15px 20px;
+
+  &.flash--info {
+    background-color: #e5eef6;
+    border-left: 8px solid #005ea5;
+  }
+}

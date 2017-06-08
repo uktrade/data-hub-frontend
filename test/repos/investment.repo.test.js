@@ -1,17 +1,21 @@
 const nock = require('nock')
-const config = require(`${root}/src/config`)
+const config = require('~/src/config')
 
 const {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   getInvestmentValue,
-  getInvestmentRequirements
-} = require(`${root}/src/repos/investment.repo`)
+  getInvestmentRequirements,
+  createInvestmentProject,
+  updateInvestmentProject,
+  getInvestmentProjectAuditLog,
+} = require(`~/src/repos/investment.repo`)
 
 const companyData = require('../data/company.json')
 const investmentProjectSummaryData = require('../data/investment/project-summary.json')
 const investmentValueData = require('../data/investment/project-value.json')
 const investmentRequirements = require('../data/investment/project-requirements.json')
+const investmentProjectAuditData = require('../data/investment/audit-log.json')
 
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
@@ -59,6 +63,42 @@ describe('Investment repository', () => {
       const actual = getInvestmentRequirements('token', investmentProjectSummaryData.id)
 
       return expect(actual).to.eventually.deep.equal(investmentRequirements)
+    })
+  })
+
+  describe('#createInvestmentProject', () => {
+    nock(config.apiRoot)
+      .post(`/v3/investment/project`)
+      .reply(200, { id: '12345' })
+
+    it('should return an investment requirements object', () => {
+      const actual = createInvestmentProject('token', { foo: 'bar' })
+
+      return expect(actual).to.eventually.deep.equal({ id: '12345' })
+    })
+  })
+
+  describe('#updateInvestmentProject', () => {
+    nock(config.apiRoot)
+      .patch(`/v3/investment/${investmentProjectSummaryData.id}/project`)
+      .reply(200, investmentProjectSummaryData)
+
+    it('should return an investment requirements object', () => {
+      const actual = updateInvestmentProject('token', investmentProjectSummaryData.id, { foo: 'bar' })
+
+      return expect(actual).to.eventually.deep.equal(investmentProjectSummaryData)
+    })
+  })
+
+  describe('#getInvestmentProjectAudit', () => {
+    nock(config.apiRoot)
+      .get(`/v3/investment/${investmentProjectSummaryData.id}/audit`)
+      .reply(200, investmentProjectAuditData)
+
+    it('should return an investment project audit log', () => {
+      const actual = getInvestmentProjectAuditLog('token', investmentProjectSummaryData.id)
+
+      return expect(actual).to.eventually.deep.equal(investmentProjectAuditData.results)
     })
   })
 })

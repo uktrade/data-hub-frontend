@@ -1,7 +1,7 @@
-const {formatLongDate, formatMediumDate} = require('../lib/date')
-const {newlineToBr, getContactLink} = require('../lib/text-formatting')
-const {getPropertyName} = require('../lib/property-helpers')
-const {buildCompanyUrl} = require('./company.service')
+const { formatLongDate, formatMediumDate } = require('../lib/date')
+const { newlineToBr, getContactLink } = require('../lib/text-formatting')
+const { getPropertyName } = require('../lib/property-helpers')
+const { buildCompanyUrl } = require('./company.service')
 
 /**
  * Returns an interaction formatted for display in the interaction detail
@@ -18,10 +18,10 @@ function getDisplayInteraction (interaction) {
     subject: interaction.subject,
     notes: newlineToBr(interaction.notes),
     date: formatLongDate(interaction.date),
-    dit_advisor: getPropertyName(interaction, 'dit_advisor'),
+    dit_adviser: getPropertyName(interaction, 'dit_adviser'),
     service: getPropertyName(interaction, 'service'),
     dit_team: getPropertyName(interaction, 'dit_team'),
-    contact: getContactLink(interaction)
+    contact: getContactLink(interaction),
   }
 
   return result
@@ -43,11 +43,11 @@ function getDisplayCompanyInteraction (interaction) {
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     date: formatMediumDate(interaction.date),
-    advisor: getPropertyName(interaction, 'dit_advisor'),
+    adviser: getPropertyName(interaction, 'dit_adviser'),
     contact: getContactLink(interaction),
     notes: newlineToBr(interaction.notes),
     service: getPropertyName(interaction, 'service'),
-    dit_team: getPropertyName(interaction, 'dit_team')
+    dit_team: getPropertyName(interaction, 'dit_team'),
   }
   return result
 }
@@ -68,13 +68,13 @@ function getDisplayContactInteraction (interaction) {
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     date: formatMediumDate(interaction.date),
-    advisor: getPropertyName(interaction, 'dit_advisor'),
+    adviser: getPropertyName(interaction, 'dit_adviser'),
     notes: newlineToBr(interaction.notes),
     service: getPropertyName(interaction, 'service'),
-    dit_team: getPropertyName(interaction, 'dit_team')
+    dit_team: getPropertyName(interaction, 'dit_team'),
   }
 
   return result
 }
 
-module.exports = {getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction}
+module.exports = { getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction }

@@ -26,5 +26,5 @@ router.get('/api/postcodelookup/:postcode', postcodelookup)
 
 module.exports = {
   postcodelookup,
-  router
+  router,
 }

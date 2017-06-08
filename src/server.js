@@ -22,14 +22,11 @@ const auth = require('./middleware/auth')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
 
+const companyInvestmentsController = require('./controllers/company-investments.controller')
 const apiController = require('./controllers/api.controller')
 const contactController = require('./controllers/contact.controller')
 const contactEditController = require('./controllers/contact-edit.controller')
 const contactInteractionController = require('./controllers/contact-interaction.controller')
-const companyInvestmentSummaryController = require('./controllers/company-investment-summary.controller')
-const investmentStartController = require('./controllers/investment-start.controller')
-const investmentCreateController = require('./controllers/investment-create.controller')
-const investmentDetailsController = require('./controllers/investment-details.controller')
 const indexController = require('./controllers/index.controller')
 const loginController = require('./controllers/login.controller')
 const myAccountController = require('./controllers/my-account.controller')
@@ -77,7 +74,7 @@ const redisStore = new RedisStore({
   client,
   // config ttl defined in milliseconds
   ttl: config.session.ttl / 1000,
-  secret: config.session.secret
+  secret: config.session.secret,
 })
 
 app.use(session({
@@ -85,13 +82,13 @@ app.use(session({
   proxy: !isDev,
   cookie: {
     secure: !isDev,
-    maxAge: config.session.ttl
+    maxAge: config.session.ttl,
   },
   rolling: true,
   key: 'datahub.sid',
   secret: config.session.secret,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
 }))
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
@@ -133,10 +130,9 @@ app.use(require('./controllers/company-interaction.controller').router)
 app.use(require('./controllers/company-contact.controller').router)
 app.use(require('./controllers/company-add.controller').router)
 app.use(require('./controllers/company-archive.controller').router)
-app.use(companyInvestmentSummaryController.router)
-app.use(investmentStartController.router)
-app.use(investmentCreateController.router)
-app.use(investmentDetailsController.router)
+app.use(require('./controllers/company-export.controller').router)
+app.use(companyInvestmentsController.router)
+app.use(require('./controllers/investment').router)
 app.use(contactController.router)
 app.use(require('./controllers/contact-archive.controller').router)
 app.use(contactEditController.router)

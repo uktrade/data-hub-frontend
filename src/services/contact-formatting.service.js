@@ -1,12 +1,12 @@
-const {getFormattedAddress} = require('../lib/address')
-const {newlineToBr} = require('../lib/text-formatting')
-const {formatMediumDate} = require('../lib/date')
-const {formatPhone} = require('../lib/phone')
+const { getFormattedAddress } = require('../lib/address')
+const { newlineToBr } = require('../lib/text-formatting')
+const { formatMediumDate } = require('../lib/date')
+const { formatPhone } = require('../lib/phone')
 
-function getContactAddress (contact) {
+function getContactAddress (contact, company) {
   let contactAddress = getFormattedAddress(contact)
   if (!contactAddress) {
-    contactAddress = getFormattedAddress(contact.company, 'trading') || getFormattedAddress(contact.company, 'registered')
+    contactAddress = getFormattedAddress(company, 'trading') || getFormattedAddress(company, 'registered')
   }
   return contactAddress
 }
@@ -15,18 +15,19 @@ function getContactAddress (contact) {
  * Translate a raw contact object into a formatted contact
  * to display on the screen
  * @param {object} contact
+ * @param {object} company
  * @returns {object} displayContact A contact that can be put into a key value table
  *
  */
-function getDisplayContact (contact) {
+function getDisplayContact (contact, company) {
   return {
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
-    address: getContactAddress(contact),
+    address: getContactAddress(contact, company),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: newlineToBr(contact.notes)
+    notes: newlineToBr(contact.notes),
   }
 }
 
@@ -34,9 +35,10 @@ function getDisplayContact (contact) {
  * Format contact details for use in the company screen
  *
  * @param {object} contact
+ * @param {object} company
  * @returns {object} displayContact A contact that can be put into a key value table
  */
-function getDisplayCompanyContact (contact) {
+function getDisplayCompanyContact (contact, company) {
   return {
     id: contact.id,
     url: `/contact/${contact.id}/details`,
@@ -45,10 +47,10 @@ function getDisplayCompanyContact (contact) {
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
     added: formatMediumDate(contact.created_on),
-    address: getContactAddress(contact),
+    address: getContactAddress(contact, company),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
-    notes: newlineToBr(contact.notes)
+    notes: newlineToBr(contact.notes),
   }
 }
 
@@ -65,7 +67,7 @@ function getDisplayArchivedCompanyContact (contact) {
     job_title: contact.job_title,
     reason: contact.archived_reason,
     archived_on: formatMediumDate(contact.archived_on),
-    archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`
+    archived_by: `${contact.archived_by.first_name} ${contact.archived_by.last_name}`,
   }
 }
 

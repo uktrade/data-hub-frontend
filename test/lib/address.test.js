@@ -1,4 +1,4 @@
-const address = require(`${root}/src/lib/address`)
+const address = require('~/src/lib/address')
 
 describe('Address formatter', function () {
   it('should format an address when it is fully populated.', function () {
@@ -12,9 +12,9 @@ describe('Address formatter', function () {
       address_county: 'Large County',
       address_country: {
         id: '1234',
-        name: 'Country'
+        name: 'Country',
       },
-      address_postcode: 'LL1 1LL'
+      address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
     expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, Country')
@@ -28,7 +28,7 @@ describe('Address formatter', function () {
       address_4: '',
       address_town: 'Big Town',
       address_county: 'Large County',
-      address_postcode: 'LL1 1LL'
+      address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
     expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
@@ -42,7 +42,7 @@ describe('Address formatter', function () {
       trading_address_4: '',
       trading_address_town: 'Big Town',
       trading_address_county: 'Large County',
-      trading_address_postcode: 'LL1 1LL'
+      trading_address_postcode: 'LL1 1LL',
     }
 
     const actual = address.getFormattedAddress(source, 'trading')
@@ -57,7 +57,7 @@ describe('Address formatter', function () {
       address_4: '',
       address_town: '',
       address_county: '',
-      address_postcode: ''
+      address_postcode: '',
     }
     const actual = address.getFormattedAddress(source)
     expect(actual).to.be.null

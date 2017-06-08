@@ -1,4 +1,4 @@
-const {titleCase} = require('./text-formatting')
+const { titleCase } = require('./text-formatting')
 
 function getFormattedAddress (object, key) {
   if (key) {
