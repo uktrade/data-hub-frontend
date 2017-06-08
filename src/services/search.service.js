@@ -48,7 +48,7 @@ function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }
 }
 
 function searchForeignCompanies (options) {
-  const optionsUkBasedFalse = Object.assign({}, options, { uk_based: false })
+  const optionsUkBasedFalse = Object.assign({}, options, { isUkBased: false })
 
   return searchCompanies(optionsUkBasedFalse)
 }
