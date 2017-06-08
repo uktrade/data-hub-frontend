@@ -14,11 +14,13 @@ describe('Company investments controller', function () {
 
     this.getInflatedDitCompanyStub = this.sandbox.stub().resolves(company)
     this.getCompanyInvestmentProjectsStub = this.sandbox.stub().resolves(investmentProjects)
+    this.getCommonTitlesAndlinksStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
 
     this.controller = proxyquire('~/src/controllers/company-investments.controller', {
       '../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompanyStub,
+        getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
       '../repos/investment.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
@@ -33,18 +35,20 @@ describe('Company investments controller', function () {
   describe('#getAction', () => {
     describe('when a company id exists', () => {
       it('should render company details', (done) => {
-        this.controller.getAction({
+        const reqStub = {
           session: {
             token,
           },
           params: {
             id: company.id,
           },
-        }, {
+        }
+        const resStub = {
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompanyStub).to.be.calledWith(token, company.id)
               expect(this.getCompanyInvestmentProjectsStub).to.be.calledWith(token, company.id)
+              expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(reqStub, resStub, company)
 
               expect(data).to.haveOwnProperty('tab')
               expect(data.tab).to.deep.equal('investments')
@@ -62,7 +66,9 @@ describe('Company investments controller', function () {
               done(error)
             }
           },
-        }, this.nextStub)
+        }
+
+        this.controller.getAction(reqStub, resStub, this.nextStub)
       })
     })
 
