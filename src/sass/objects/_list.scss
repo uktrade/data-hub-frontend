@@ -1,3 +1,6 @@
+@import "../settings/colours";
+@import "../settings/layout";
+
 .list-unstyled,
 .list-inline {
   list-style: none;
@@ -8,4 +11,13 @@
 .list-inline li {
   margin-right: 1em;
   display: inline-block;
+}
+
+.list-lined li {
+  border-bottom: 1px solid $border-colour;
+  padding: $gutter-half $gutter-half $gutter-half 0;
+
+  &:first-child {
+    border-top: 1px solid $border-colour;
+  }
 }
