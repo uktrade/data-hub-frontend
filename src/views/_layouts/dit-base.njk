@@ -28,7 +28,7 @@
       {% block body_skiplinks %}
         <div class="skip-links">
           <div class="skip-links__inner">
-            <a href="#content" class="skip-links__link">Skip to main content</a>
+            <a href="#main-content" class="skip-links__link">Skip to main content</a>
           </div>
         </div>
       {% endblock %}
@@ -61,7 +61,7 @@
 
       {% block body_main %}
         <div class="main-content">
-          <main id="content" role="main" class="main-content__inner">
+          <main id="main-content" role="main" class="main-content__inner">
             {% block body_main_header %}
               {% if projectPhase|lower in ['alpha', 'beta'] and feedbackLink %}
                 <div class="phase-banner">

@@ -7,5 +7,6 @@
 
 .notification-banner__inner {
   @include site-width-container;
-  padding: ($baseline-grid-unit * 2) 0;
+  padding: $default-spacing-unit 0;
+  margin: 0;
 }
