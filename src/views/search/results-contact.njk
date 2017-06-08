@@ -13,24 +13,24 @@
     <ol class="results-list">
       {% for contact in results.contacts %}
         <li class="results-list__item">
-          <h3 class="results-list__item-header">
+          <h3 class="results-item__item-header">
             <a href="/contact/{{ contact.id }}/details?term={{ searchTerm }}">
               {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
             </a>
           </h3>
 
-          <dl>
+          <dl class="metadata-list">
             {% if (contact.company) %}
-              <dt class="u-visually-hidden">Company</dt>
-              <dd>{{ contact.company.name }}</dd>
+              <dt class="metadata-list__term u-visually-hidden">Company</dt>
+              <dd class="metadata-list__value">{{ contact.company.name }}</dd>
             {% endif %}
             {% if results.job_title %}
-              <dt class="u-visually-hidden">Job Title</dt>
-              <dd>{{ results.job_title }}</dd>
+              <dt class="metadata-list__term u-visually-hidden">Job Title</dt>
+              <dd class="metadata-list__value">{{ results.job_title }}</dd>
             {% endif %}
 
-            <dt class="u-visually-hidden">Address</dt>
-            <dd>
+            <dt class="metadata-list__term u-visually-hidden">Address</dt>
+            <dd class="metadata-list__value">
               {{ addressFormatter([
                 contact.registered_address_1,
                 contact.registered_address_2,
