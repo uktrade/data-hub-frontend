@@ -12,10 +12,10 @@
   <nav class="local-nav">
     <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
     {% if company.id %}
-      <a class="local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a>
+      {# <a class="local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
       <a class="local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/company-contacts/{{company.id}}">Contacts</a>
       <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/company-interactions/{{company.id}}">Interactions</a>
-      <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a>
+      {# <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
       <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/company-exports/view/{{company.id}}">Exports</a>
       <a class="local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/company/{{ company.id }}/investments">Investments</a>
     {% endif %}
