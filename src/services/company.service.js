@@ -73,30 +73,6 @@ function getInflatedDitCompany (token, id) {
   })
 }
 
-function getCompanyForSource (token, id, source) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        if (source === 'company_companieshousecompany') {
-          const companies_house_data = yield companyRepository.getCHCompany(token, id)
-          resolve({
-            company_number: id,
-            companies_house_data,
-            contacts: [],
-            interactions: [],
-          })
-          return
-        }
-
-        const company = yield getInflatedDitCompany(token, id)
-        resolve(company)
-      } catch (error) {
-        reject(error)
-      }
-    })
-  })
-}
-
 /**
  * Pass an API formatted company record in and return a path to view that company depending on company type
  *
@@ -151,4 +127,9 @@ function getCommonTitlesAndlinks (req, res, company) {
   res.locals.companyUrl = buildCompanyUrl(company)
 }
 
-module.exports = { getInflatedDitCompany, getCompanyForSource, buildCompanyUrl, getCommonTitlesAndlinks, getHeadingAddress }
+module.exports = {
+  getInflatedDitCompany,
+  buildCompanyUrl,
+  getCommonTitlesAndlinks,
+  getHeadingAddress,
+}

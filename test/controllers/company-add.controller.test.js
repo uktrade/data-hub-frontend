@@ -1,34 +1,28 @@
+const companiesHouseAndLtdCompanies = require('~/test/data/search/companiesHouseAndLtdCompanies')
+const companiesHouseCompany = require('~/test/data/company/companiesHouseCompany')
+const displayHouseCompany = require('~/test/data/company/displayCompaniesHouse')
+
 const next = function (error) {
   throw Error(error)
 }
 
 describe('Company add controller', function () {
-  let searchLimitedStub
-  let getCompanyForSourceStub
+  let searchLimitedCompaniesStub
   let getDisplayCHStub
+  let getCHCompanyStub
   let companyAddController
 
   beforeEach(function () {
-    searchLimitedStub = sinon.stub().resolves([
-      {
-        _type: 'company_company',
-        _source: {
-          id: '1234',
-          company_number: '123123',
-          name: 'freds',
-        },
-      },
-    ])
-
-    getCompanyForSourceStub = sinon.stub().resolves({ id: '9999', company_number: '8888' })
-    getDisplayCHStub = sinon.stub().resolves({ id: '1234' })
+    searchLimitedCompaniesStub = sinon.stub().resolves(companiesHouseAndLtdCompanies)
+    getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
+    getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
     companyAddController = proxyquire('~/src/controllers/company-add.controller', {
       '../services/search.service': {
-        searchLimited: searchLimitedStub,
+        searchLimitedCompanies: searchLimitedCompaniesStub,
       },
-      '../services/company.service': {
-        getCompanyForSource: getCompanyForSourceStub,
+      '../repos/company.repo': {
+        getCHCompany: getCHCompanyStub,
       },
       '../services/company-formatting.service': {
         getDisplayCH: getDisplayCHStub,
@@ -265,7 +259,7 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.business_type).to.equal('ltd')
+            expect(allOptions.businessType).to.equal('ltd')
             expect(allOptions.country).to.equal('uk')
             done()
           },
@@ -288,7 +282,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(searchLimitedStub).to.be.calledWith('1234', 'test')
+            expect(searchLimitedCompaniesStub).to.be.calledWith({ searchTerm: 'test', token: '1234' })
             done()
           },
         }
@@ -309,10 +303,8 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            const hit = allOptions.hits[0]
-            expect(hit.type).to.equal('company_company')
-            expect(hit.url).to.include('selected=1234')
-            expect(hit.name).to.equal('freds')
+            const company = allOptions.companies[0]
+            expect(company.name).to.equal('ACHME LIMITED')
             done()
           },
         }
@@ -334,9 +326,9 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.business_type).to.equal('ltd')
+            expect(allOptions.businessType).to.equal('ltd')
             expect(allOptions.country).to.equal('uk')
-            expect(allOptions.term).to.equal('test')
+            expect(allOptions.searchTerm).to.equal('test')
             done()
           },
         }
@@ -358,9 +350,9 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.business_type).to.equal('ltd')
+            expect(allOptions.businessType).to.equal('ltd')
             expect(allOptions.country).to.equal('uk')
-            expect(allOptions.term).to.equal('test')
+            expect(allOptions.searchTerm).to.equal('test')
             done()
           },
         }
@@ -377,14 +369,13 @@ describe('Company add controller', function () {
             business_type: 'ltd',
             country: 'uk',
             term: 'test',
-            selected: '9999',
-            type: 'company_company',
+            selected: '08311441',
           },
         }
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(getCompanyForSourceStub).to.be.calledWith('1234', '9999', 'company_company')
+            expect(getCHCompanyStub).to.be.calledWith('1234', '08311441')
             done()
           },
         }
@@ -399,8 +390,7 @@ describe('Company add controller', function () {
             business_type: 'ltd',
             country: 'uk',
             term: 'test',
-            selected: '1234',
-            type: 'company_company',
+            selected: '08311441',
           },
         }
         const res = {
@@ -421,101 +411,14 @@ describe('Company add controller', function () {
             business_type: 'ltd',
             country: 'uk',
             term: 'test',
-            selected: '1234',
-            type: 'company_company',
+            selected: '08311441',
           },
         }
         const res = {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.chDetailsLabels).to.deep.equal({
-              name: 'Registered name',
-              company_number: 'Companies House No',
-              registered_address: 'Registered office address',
-              business_type: 'Company type',
-              company_status: 'Company status',
-              sic_code: 'Nature of business (SIC)',
-              incorporation_date: 'Incorporated on',
-            })
-            expect(allOptions.chDetailsDisplayOrder).to.deep.equal(['business_type', 'company_status', 'incorporation_date', 'sic_code'])
-            done()
-          },
-        }
-        companyAddController.getAddStepTwo(req, res, next)
-      })
-      it('should include a link to close the selected section', function (done) {
-        const req = {
-          session: {
-            token: '1234',
-          },
-          query: {
-            business_type: 'ltd',
-            country: 'uk',
-            term: 'test',
-            selected: '1234',
-            type: 'company_company',
-          },
-        }
-        const res = {
-          locals: {},
-          render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.closeLink).to.not.include('selected')
-            done()
-          },
-        }
-        companyAddController.getAddStepTwo(req, res, next)
-      })
-      it('should provide a link to edit a DIT company record if one exists', function (done) {
-        const req = {
-          session: {
-            token: '1234',
-          },
-          query: {
-            business_type: 'ltd',
-            country: 'uk',
-            term: 'test',
-            selected: '1234',
-            type: 'company_company',
-          },
-        }
-
-        const res = {
-          locals: {},
-          render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.addLink).to.deep.equal({
-              label: 'Go to company record',
-              url: `/company/edit/ltd/9999`,
-            })
-            done()
-          },
-        }
-        companyAddController.getAddStepTwo(req, res, next)
-      })
-      it('should provide a link to add a new DIT company record for a companies house entry', function (done) {
-        const req = {
-          session: {
-            token: '1234',
-          },
-          query: {
-            business_type: 'ltd',
-            country: 'uk',
-            term: 'test',
-            selected: '1234',
-            type: 'company_companieshousecompany',
-          },
-        }
-
-        const res = {
-          locals: {},
-          render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.addLink).to.deep.equal({
-              label: 'Choose company',
-              url: `/company/add/ltd/8888`,
-            })
+            expect(allOptions.displayDetails).to.deep.equal(displayHouseCompany)
             done()
           },
         }

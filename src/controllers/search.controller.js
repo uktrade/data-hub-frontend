@@ -1,7 +1,7 @@
 const express = require('express')
 const companyRepository = require('../repos/company.repo')
 const { buildCompanyUrl } = require('../services/company.service')
-const searchService = require('../services/search.service')
+const { search } = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
 const Q = require('q')
 const Joi = require('joi')
@@ -57,7 +57,7 @@ function searchAction (req, res, next) {
   const searchType = req.params.searchType
   const searchTerm = req.query.term
 
-  searchService.search({
+  search({
     token: req.session.token,
     searchTerm,
     searchType,

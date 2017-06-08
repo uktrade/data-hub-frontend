@@ -1,11 +1,11 @@
 const express = require('express')
 const Q = require('q')
-const winston = require('winston')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
+const { getCHCompany } = require('../repos/company.repo')
 const { isBlank, toQueryString } = require('../lib/controller-utils')
-const searchService = require('../services/search.service')
-const companyService = require('../services/company.service')
-const companyFormattingService = require('../services/company-formatting.service')
+const { searchLimitedCompanies } = require('../services/search.service')
+const { getDisplayCH, getDisplayCompany } = require('../services/company-formatting.service')
+const { getPagination } = require('../lib/pagination')
 const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels/company-labels')
 
 const router = express.Router()
@@ -72,68 +72,66 @@ function postAddStepOne (req, res, next) {
 }
 
 function getAddStepTwo (req, res, next) {
-  // If there is no search, just render.
-  res.locals.companyTypeOptions = companyTypeOptions
+  const searchTerm = req.query.term
+  const currentlySelected = req.query.selected
+  const businessType = req.query.business_type
+  const country = req.query.country
+  const token = req.session.token
 
-  if (isBlank(req.query.term)) {
-    return res.render('company/add-step-2.njk', req.query)
+  if (!searchTerm) {
+    return res.render('company/add-step-2.njk', {
+      companyTypeOptions,
+      businessType,
+      country,
+    })
   }
 
   Q.spawn(function * () {
     try {
-      const companyDetails = Object.assign({}, req.query)
+      let displayDetails
+      let labels
 
-      delete companyDetails.selected
-      delete companyDetails.type
-
-      const results = yield searchService
-        .searchLimited(req.session.token, req.query.term)
-        .catch((error) => winston.error(error))
-
-      // Parse the result and generate a link for more details and indicate if this is a current ltd selected company
-      res.locals.hits = results.map((hit) => {
-        const parsedHit = hit._source
-        parsedHit.type = hit._type
-        if (hit._type === 'company_company') {
-          parsedHit.url = `/company/add-step-2/?${toQueryString(companyDetails)}&type=${parsedHit.type}&selected=${parsedHit.id}`
-        } else {
-          parsedHit.url = `/company/add-step-2/?${toQueryString(companyDetails)}&type=${parsedHit.type}&selected=${parsedHit.company_number}`
-        }
-
-        // indicate if this is the currently selected hit
-        if (!isBlank(req.query.selected)) {
-          if (req.query.type === 'company_company' && req.query.selected === parsedHit.id) {
-            parsedHit.selected = true
-          } else if (req.query.selected === parsedHit.company_number) {
-            parsedHit.selected = true
-          }
-        }
-
-        return parsedHit
+      const companiesHouseAndLtdCompanies = yield searchLimitedCompanies({
+        token,
+        searchTerm,
+      })
+      const pagination = getPagination(req, companiesHouseAndLtdCompanies.results)
+      const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
+        return company.id === currentlySelected ||
+          (company.company_number && company.company_number === currentlySelected)
       })
 
-      // if have search results, but no company is currently selected, render the page and send through previously selected company information.
-      if (isBlank(req.query.selected)) {
-        return res.render('company/add-step-2.njk', companyDetails)
+      if (highlightedCompany) {
+        if (highlightedCompany.company_number) {
+          const companiesHouseDetails = yield getCHCompany(token, highlightedCompany.company_number)
+            .then((companiesHouseData) => {
+              return {
+                company_number: highlightedCompany.company_number,
+                companies_house_data: companiesHouseData,
+                contacts: [],
+                interactions: [],
+              }
+            })
+          displayDetails = yield getDisplayCH(companiesHouseDetails.companies_house_data)
+          labels = chDetailsLabels
+        } else {
+          displayDetails = yield getDisplayCompany(highlightedCompany)
+          labels = companyDetailsLabels
+        }
       }
 
-      // Figure out if we need to fetch a CH record or a CDMS record, then go get it
-      const { selected, type } = req.query
-      res.locals.closeLink = `/company/add-step-2/?${toQueryString(companyDetails)}`
-      res.locals.company = yield companyService.getCompanyForSource(req.session.token, selected, type)
-      res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.company.companies_house_data)
-      res.locals.chDetailsLabels = chDetailsLabels
-      res.locals.chDetailsDisplayOrder = ['business_type', 'company_status', 'incorporation_date', 'sic_code']
-
-      if (req.query.type === 'company_company') {
-        res.locals.addLink = { label: 'Go to company record', url: `/company/edit/ltd/${res.locals.company.id}` }
-      } else {
-        res.locals.addLink = { label: 'Choose company', url: `/company/add/ltd/${res.locals.company.company_number}` }
-      }
-
-      res.render('company/add-step-2.njk', companyDetails)
+      res.render('company/add-step-2.njk', {
+        companyTypeOptions,
+        companies: companiesHouseAndLtdCompanies.results,
+        searchTerm,
+        currentlySelected,
+        displayDetails,
+        labels,
+        businessType,
+        country,
+        pagination,
+      })
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
