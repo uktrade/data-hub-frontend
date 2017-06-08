@@ -8,7 +8,7 @@ const investmentProjects = [{
   id: 'project-2',
 }]
 
-describe.only('Company investments controller', function () {
+describe('Company investments controller', function () {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
