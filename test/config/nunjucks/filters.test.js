@@ -40,6 +40,27 @@ describe('nunjucks filters', () => {
         'another example value',
       ])
     })
+
+    it('should remove falsey values from object', () => {
+      const mockObjectWithFalsies = {
+        a: true,
+        b: null,
+        c: undefined,
+        d: 'false',
+        e: 'value',
+        f: '',
+        g: false,
+      }
+
+      const objectWithoutFalsies = filters.removeFalsey(mockObjectWithFalsies)
+
+      expect(objectWithoutFalsies).to.deep.equal({
+        a: true,
+        d: 'false',
+        e: 'value',
+        g: false,
+      })
+    })
   })
 
   describe('#pluralise', () => {

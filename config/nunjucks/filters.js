@@ -1,4 +1,11 @@
 const nunjucks = require('nunjucks')
+const {
+  isArray,
+  isPlainObject,
+  pickBy,
+  isNil,
+} = require('lodash')
+
 const filters = {
   stringify: JSON.stringify,
 
@@ -10,8 +17,14 @@ const filters = {
     )
   },
 
-  removeFalsey: (array) => {
-    return array.filter(item => item)
+  removeFalsey: (collection) => {
+    if (isArray(collection)) {
+      return collection.filter(item => item)
+    }
+    if (isPlainObject(collection)) {
+      return pickBy(collection, (value) => !isNil(value) && !/^\s*$/.test(value))
+    }
+    return collection
   },
 
   pluralise: (string, count, pluralisedWord) => {
