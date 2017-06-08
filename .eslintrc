@@ -1,6 +1,9 @@
 {
   "extends": "standard",
   "parser": "babel-eslint",
+  "plugins": [
+    "mocha"
+  ],
   "rules": {
     "comma-dangle": [
       "error",
@@ -12,6 +15,7 @@
         "functions": "ignore"
       }
     ],
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "mocha/no-exclusive-tests": "error"
   }
 }
