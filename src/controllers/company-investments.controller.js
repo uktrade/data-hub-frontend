@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const Q = require('q')
 
-const { getInflatedDitCompany } = require('../services/company.service')
+const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/company.service')
 const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
 
 function getAction (req, res, next) {
@@ -12,6 +12,8 @@ function getAction (req, res, next) {
     try {
       const company = yield getInflatedDitCompany(token, companyId)
       const projects = yield getCompanyInvestmentProjects(token, companyId)
+
+      getCommonTitlesAndlinks(req, res, company)
 
       res.render('company/investments', {
         tab: 'investments',
