@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { mapValues, get, isPlainObject } = require('lodash')
+const { compact, mapValues, get, isPlainObject } = require('lodash')
 const { buildCompanyUrl } = require('./company.service')
 
 function transformToApi (body) {
@@ -86,12 +86,21 @@ function transformFromApi (body) {
 function transformProjectDataForView (data) {
   if (!isPlainObject(data)) { return }
 
+  function getInvestmentTypeDetails () {
+    const types = [
+      data.investment_type.name,
+      get(data, 'fdi_type.name'),
+      get(data, 'non_fdi_type.name'),
+    ]
+    return compact(types).join(', ')
+  }
+
   return Object.assign({}, data, {
     investor_company: {
       name: data.investor_company.name,
       url: buildCompanyUrl(data.investor_company),
     },
-    investment_type: data.investment_type.name,
+    investment_type: getInvestmentTypeDetails(),
     sector: get(data, 'sector.name', null),
     business_activities: data.business_activities.map(i => i.name).join(', '),
     nda_signed: data.nda_signed ? 'Signed' : 'Not signed',
