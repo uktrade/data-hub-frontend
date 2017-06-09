@@ -62,7 +62,10 @@ function archiveCompany (token, companyId, reason) {
 }
 
 function unarchiveCompany (token, companyId) {
-  return authorisedRequest(token, `${config.apiRoot}/company/${companyId}/unarchive/`)
+  return authorisedRequest(token, {
+    method: 'POST',
+    url: `${config.apiRoot}/company/${companyId}/unarchive/`,
+  })
 }
 
 module.exports = {

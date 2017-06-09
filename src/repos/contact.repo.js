@@ -35,7 +35,10 @@ function archiveContact (token, contactId, reason) {
 }
 
 function unarchiveContact (token, contactId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/unarchive`)
+  return authorisedRequest(token, {
+    method: 'POST',
+    url: `${config.apiRoot}/v3/contact/${contactId}/unarchive`,
+  })
 }
 
 function getContactsForCompany (token, companyId) {
