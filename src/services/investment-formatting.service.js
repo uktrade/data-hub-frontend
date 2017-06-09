@@ -150,9 +150,17 @@ function transformProjectValueForView (data) {
   })
 }
 
+function formatProjectTeamData (data) {
+  return {
+    client_relationship_manager: data.client_relationship_manager,
+    referral_source_adviser: data.referral_source_adviser,
+  }
+}
+
 module.exports = {
   transformProjectDataForView,
   transformProjectValueForView,
   transformToApi,
   transformFromApi,
+  formatProjectTeamData,
 }
