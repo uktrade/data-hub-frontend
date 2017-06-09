@@ -31,7 +31,7 @@
 
 {% set hintId  = 'hint-' + name %}
 {% set variant = variant | default('radio') %}
-{% set value   = value | default('') | string %}
+{% set value   = '' if value == null else value | string %}
 
 <fieldset class="form-group{{ ' inline' if inline }}{{ ' error' if error }}">
   <legend class="form-label-bold" id="group-{{ name }}">
