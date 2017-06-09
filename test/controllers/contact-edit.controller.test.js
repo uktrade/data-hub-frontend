@@ -69,8 +69,6 @@ describe('Contact controller, edit', function () {
           address_same_as_company: false,
           address_1: '10 The Street',
           address_2: 'Warble',
-          address_3: '',
-          address_4: '',
           address_town: 'Big Town',
           address_county: 'Large County',
           address_postcode: 'LL1 1LL',
