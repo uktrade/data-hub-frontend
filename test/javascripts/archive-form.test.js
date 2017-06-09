@@ -2,6 +2,7 @@
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const ArchiveForm = require('~/src/javascripts/archive-form')
+const { domTokenToArray } = require('~/test/component-helper')
 
 const HTML = `
   <div class="archive-panel js-hidden">
@@ -31,15 +32,6 @@ const HTML = `
 `
 const event = {
   preventDefault: function () {},
-}
-
-function domTokenToArray (obj) {
-  let array = []
-  // iterate backwards ensuring that length is an UInt32
-  for (let i = obj.length >>> 0; i--;) {
-    array[i] = obj[i]
-  }
-  return array
 }
 
 describe('archive form control', function () {
