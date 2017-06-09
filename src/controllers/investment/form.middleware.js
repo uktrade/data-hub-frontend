@@ -4,6 +4,7 @@ const metadataRepo = require('../../repos/metadata.repo')
 const { getAdvisers } = require('../../repos/adviser.repo')
 const { isValidGuid } = require('../../lib/controller-utils')
 const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
+const { valueLabels } = require('./labels')
 const {
   createInvestmentProject,
   updateInvestmentProject,
@@ -94,6 +95,8 @@ function populateDetailsFormMiddleware (req, res, next) {
 function populateValueFormMiddleware (req, res, next) {
   res.locals.form = get(res, 'locals.form', {})
   res.locals.form.state = res.locals.valueData
+  res.locals.form.labels = valueLabels.edit
+
   next()
 }
 

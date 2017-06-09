@@ -12,18 +12,18 @@
     {{ trade.textbox(
         'total_investment',
         value=form.state['total_investment'],
-        label='Total investment'
+        label=form.labels['total_investment']
     ) }}
 
     {{ trade.textbox(
         'foreign_equity_investment',
         value=form.state['foreign_equity_investment'],
-        label='Foreign equity investment'
+        label=form.labels['foreign_equity_investment']
     ) }}
 
     {% component 'form-multiple-choice', {
       variant: 'radio',
-      label: 'Government assistance',
+      label: form.labels['government_assistance'],
       name: 'government_assistance',
       inline: true,
       value: form.state['government_assistance'],
@@ -39,19 +39,19 @@
     {{ trade.textbox(
         'number_new_jobs',
         value=form.state['number_new_jobs'],
-        label='New jobs'
+        label=form.labels['number_new_jobs']
     ) }}
 
     {{ trade.textbox(
         'average_salary',
         value=form.state['average_salary'],
-        label='Average salary'
+        label=form.labels['average_salary']
     ) }}
 
     {{ trade.textbox(
         'number_safeguarded_jobs',
         value=form.state['number_safeguarded_jobs'],
-        label='Safeguarded jobs'
+        label=form.labels['number_safeguarded_jobs']
     ) }}
 
     {% component 'form-multiple-choice', {
@@ -60,6 +60,7 @@
       name: 'r_and_d_budget',
       inline: true,
       value: form.state['r_and_d_budget'],
+      label: form.labels['r_and_d_budget'],
       children: [{
         label: 'Yes',
         value: 'true'
@@ -71,7 +72,7 @@
 
     {% component 'form-multiple-choice', {
       variant: 'radio',
-      label: 'Non-FDI R&D project',
+      label: form.labels['non_fdi_r_and_d_budget'],
       name: 'non_fdi_r_and_d_budget',
       inline: true,
       value: form.state['non_fdi_r_and_d_budget'],
@@ -86,7 +87,7 @@
 
     {% component 'form-multiple-choice', {
       variant: 'radio',
-      label: 'New-to-world tech',
+      label: form.labels['new_tech_to_uk'],
       name: 'new_tech_to_uk',
       inline: true,
       value: form.state['new_tech_to_uk'],
@@ -101,7 +102,7 @@
 
     {% component 'form-multiple-choice', {
       variant: 'radio',
-      label: 'Export revenue',
+      label: form.labels['export_revenue'],
       name: 'export_revenue',
       inline: true,
       value: form.state['export_revenue'],
