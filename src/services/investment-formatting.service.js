@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { compact, mapValues, get, isPlainObject } = require('lodash')
+const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
 const { buildCompanyUrl } = require('./company.service')
 
 function transformToApi (body) {
@@ -108,8 +108,48 @@ function transformProjectDataForView (data) {
   })
 }
 
+function transformProjectValueForView (data) {
+  if (!isPlainObject(data)) { return }
+
+  function formatNumber (number) {
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 0,
+    }).format(number)
+  }
+
+  function formatBoolean (boolean, { suffix = '', pos = 'Yes', neg = 'No' }) {
+    if (isNull(boolean)) { return null }
+    return (data.government_assistance ? pos : neg) + suffix
+  }
+
+  return Object.assign({}, data, {
+    total_investment: formatNumber(data.total_investment),
+    foreign_equity_investment: formatNumber(data.foreign_equity_investment),
+    number_new_jobs: data.number_new_jobs && `${data.number_new_jobs} new jobs`,
+    number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
+    government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
+    r_and_d_budget: formatBoolean(data.r_and_d_budget, { pos: 'Has', suffix: ' R&D budget' }),
+    non_fdi_r_and_d_budget: formatBoolean(data.non_fdi_r_and_d_budget, {
+      pos: 'Has',
+      suffix: ' linked non-FDI R&D projects',
+    }),
+    new_tech_to_uk: formatBoolean(data.new_tech_to_uk, {
+      pos: 'Has',
+      suffix: ' new-to-world tech, business model or IP',
+    }),
+    export_revenue: formatBoolean(data.export_revenue, {
+      pos: 'Yes, will',
+      neg: 'No, will not',
+      suffix: ' create significant export revenue',
+    }),
+  })
+}
+
 module.exports = {
   transformProjectDataForView,
+  transformProjectValueForView,
   transformToApi,
   transformFromApi,
 }

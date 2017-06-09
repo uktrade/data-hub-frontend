@@ -4,15 +4,19 @@ const { get } = require('lodash')
 const { getProjectDetails } = require('./shared.middleware')
 const { detailsLabels, valueLabels } = require('./labels')
 const { getDataLabels } = require('../../lib/controller-utils')
-const { transformProjectDataForView } = require('../../services/investment-formatting.service')
+const {
+  transformProjectDataForView,
+  transformProjectValueForView,
+} = require('../../services/investment-formatting.service')
 
 function detailsGetHandler (req, res, next) {
   if (get(res, 'locals.projectData')) {
     const transformedDetails = transformProjectDataForView(res.locals.projectData, detailsLabels.view)
+    const transformedValue = transformProjectValueForView(res.locals.valueData, valueLabels.view)
 
     return res.render('investment/details', {
       details: getDataLabels(transformedDetails, detailsLabels.view),
-      values: getDataLabels(res.locals.valueData, valueLabels.view),
+      values: getDataLabels(transformedValue, valueLabels.view),
       currentNavItem: 'details',
     })
   }
