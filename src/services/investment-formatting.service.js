@@ -112,6 +112,8 @@ function transformProjectValueForView (data) {
   if (!isPlainObject(data)) { return }
 
   function formatNumber (number) {
+    if (isNull(number)) { return null }
+
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: 'GBP',
