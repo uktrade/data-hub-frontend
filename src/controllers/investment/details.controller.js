@@ -1,11 +1,18 @@
 const router = require('express').Router()
 const { get } = require('lodash')
 
-const { getProjectDetails } = require('./middleware')
+const { getProjectDetails } = require('./shared.middleware')
+const { detailsLabels, valueLabels } = require('./labels')
+const { getDataLabels } = require('../../lib/controller-utils')
+const { transformProjectDataForView } = require('../../services/investment-formatting.service')
 
 function detailsGetHandler (req, res, next) {
-  if (get(res, 'locals.investmentProject')) {
+  if (get(res, 'locals.projectData')) {
+    const transformedDetails = transformProjectDataForView(res.locals.projectData, detailsLabels.view)
+
     return res.render('investment/details', {
+      details: getDataLabels(transformedDetails, detailsLabels.view),
+      values: getDataLabels(res.locals.valueData, valueLabels.view),
       currentNavItem: 'details',
     })
   }

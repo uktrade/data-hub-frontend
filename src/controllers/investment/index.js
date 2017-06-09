@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { getLocalNavMiddleware } = require('./middleware')
+const { getLocalNavMiddleware } = require('./shared.middleware')
 const startController = require('./start.controller')
 const createController = require('./create.controller')
 const detailsController = require('./details.controller')

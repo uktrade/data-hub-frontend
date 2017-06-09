@@ -2,20 +2,24 @@
 
 {% macro renderButton(endpoint, label, isSecondary) %}
   <p>
-    <a href="/investment/{{ investmentProject.meta.id }}/edit-{{ endpoint }}" class="button{{ '-secondary' if isSecondary }}">
+    <a href="/investment/{{ projectData.id }}/edit-{{ endpoint }}" class="button{{ '-secondary' if isSecondary }}">
       {{ label }}
     </a>
   </p>
 {% endmacro %}
 
+{% set details = details | removeNilAndEmpty %}
+{% set values = values | removeNilAndEmpty %}
+{% set requirements = requirements | removeNilAndEmpty %}
+
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Investment project summary</h2>
-  {% component 'key-value-table', items=investmentProject.details|removeNilAndEmpty, variant='striped' %}
+  {% component 'key-value-table', items=details, variant='striped' %}
   {{ renderButton('details', 'Edit summary', true) }}
 
   <h2 class="heading-medium">Value</h2>
-  {% if investmentProject.value | removeNilAndEmpty | length %}
-    {% component 'key-value-table', items=investmentProject.value, variant='striped' %}
+  {% if values | length %}
+    {% component 'key-value-table', items=values, variant='striped' %}
     {{ renderButton('value', 'Edit value', true) }}
   {% else %}
     {{ renderButton('value', 'Add value') }}
@@ -23,19 +27,9 @@
 
   <h2 class="heading-medium">Requirements and location</h2>
   {% if investmentProject.requirements | removeNilAndEmpty | length %}
-    {% component 'key-value-table', items=investmentProject.requirements, variant='striped' %}
+    {% component 'key-value-table', items=requirements, variant='striped' %}
     {{ renderButton('requirements', 'Edit requirements', true) }}
   {% else %}
     {{ renderButton('requirements', 'Add requirements') }}
   {% endif %}
-
-  <h2 class="heading-medium">Referral source</h2>
-  {% component 'key-value-table', {
-    items: {
-      'Activity': null,
-      'Event': null,
-      'Adviser': null
-    },
-    variant: 'striped'
-  } %}
 {% endblock %}

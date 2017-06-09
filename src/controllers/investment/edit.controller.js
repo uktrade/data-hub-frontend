@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { getProjectDetails } = require('./middleware')
+const { getProjectDetails } = require('./shared.middleware')
 
 const {
   investmentDetailsFormPostMiddleware,

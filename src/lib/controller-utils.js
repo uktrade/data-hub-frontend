@@ -139,7 +139,18 @@ function isValidGuid (string) {
   return /[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/.test(string)
 }
 
+function getDataLabels (data, labels) {
+  if (!data) { return }
+  if (!labels) { return data }
+
+  return Object.keys(labels).reduce((obj, key) => {
+    obj[labels[key]] = data[key]
+    return obj
+  }, {})
+}
+
 module.exports = {
+  getDataLabels,
   transformErrors,
   transformV2Errors,
   encodeQueryData,

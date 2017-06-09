@@ -1,9 +1,9 @@
 const moment = require('moment')
-const { mapValues, get } = require('lodash')
+const { mapValues, get, isPlainObject } = require('lodash')
 const { buildCompanyUrl } = require('./company.service')
 
 function transformToApi (body) {
-  if (!body) { return }
+  if (!isPlainObject(body)) { return }
 
   const schema = {
     'client_relationship_manager': Object,
@@ -50,7 +50,7 @@ function transformToApi (body) {
 }
 
 function transformFromApi (body) {
-  if (!body) { return }
+  if (!isPlainObject(body)) { return }
 
   const schema = {
     'client_relationship_manager': String,
@@ -83,64 +83,24 @@ function transformFromApi (body) {
   return Object.assign({}, body, formatted)
 }
 
-function formatProjectData (data) {
-  return {
-    'Client': {
+function transformProjectDataForView (data) {
+  if (!isPlainObject(data)) { return }
+
+  return Object.assign({}, data, {
+    investor_company: {
       name: data.investor_company.name,
       url: buildCompanyUrl(data.investor_company),
     },
-    'Type of investment': data.investment_type.name,
-    'Primary sector': get(data, 'sector.name', null),
-    'Sub-sector': null,
-    'Business activity': data.business_activity,
-    'Project description': data.description,
-    'Non-disclosure agreement': data.nda_signed ? 'Signed' : 'Not signed',
-    'Shareable with UK partners': null,
-    'Anonymous description': null,
-    'Estimated land date': data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
-  }
-}
-
-function formatValueData (data) {
-  return {
-    'Total investment': data.total_investment,
-    'Foreign equity investment': data.foreign_equity_investment,
-    'Government assistance': data.government_assistance,
-    'New jobs': data.number_new_jobs,
-    'Average salary': data.average_salary,
-    'Safeguarded jobs': data.number_safeguarded_jobs,
-    'R&D budget': data.r_and_d_budget,
-    'Non-FDI R&D project': data.non_fdi_r_and_d_budget,
-    'New-to-world tech': data.new_tech_to_uk,
-    'Export revenue': data.export_revenue,
-  }
-}
-
-function formatRequirementsData (data) {
-  return {
-    'Main strategic drivers': data.strategic_drivers,
-    'Client requirements': data.client_requirements,
-    'Competitor countries': data.competitor_countries,
-    'Possible UK locations': data.uk_region_locations,
-    'Investment location': null,
-    'UK recipient company': data.uk_company,
-  }
-}
-
-function formatProjectStatusData (data) {
-  return {
-    id: data.id,
-    name: data.name,
-    projectCode: data.project_code,
-    phaseName: data.phase.name,
-  }
+    investment_type: data.investment_type.name,
+    sector: get(data, 'sector.name', null),
+    business_activities: data.business_activities.map(i => i.name).join(', '),
+    nda_signed: data.nda_signed ? 'Signed' : 'Not signed',
+    estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
+  })
 }
 
 module.exports = {
-  formatProjectData,
-  formatValueData,
-  formatRequirementsData,
-  formatProjectStatusData,
+  transformProjectDataForView,
   transformToApi,
   transformFromApi,
 }

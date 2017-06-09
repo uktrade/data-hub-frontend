@@ -7,13 +7,6 @@ const {
   getInvestmentRequirements,
 } = require('../../repos/investment.repo')
 
-const {
-  formatProjectData,
-  formatValueData,
-  formatRequirementsData,
-  formatProjectStatusData,
-} = require('../../services/investment-formatting.service')
-
 function getLocalNavMiddleware (req, res, next) {
   res.locals.localNavItems = [
     { label: 'Project details', slug: 'details' },
@@ -32,18 +25,15 @@ function getProjectDetails (req, res, next, id = req.params.id) {
   Q.spawn(function * () {
     try {
       const projectData = yield getInvestmentProjectSummary(req.session.token, req.params.id)
-      const valueData = yield getInvestmentValue(req.session.token, req.params.id)
-      const requirementsData = yield getInvestmentRequirements(req.session.token, req.params.id)
-
+      res.locals.valueData = yield getInvestmentValue(req.session.token, req.params.id)
+      res.locals.requirementsData = yield getInvestmentRequirements(req.session.token, req.params.id)
       res.locals.projectData = projectData
-      res.locals.valueData = valueData
       res.locals.equityCompany = projectData.investor_company
 
-      res.locals.investmentProject = {
-        meta: formatProjectStatusData(projectData),
-        details: formatProjectData(projectData),
-        value: formatValueData(valueData),
-        requirements: formatRequirementsData(requirementsData),
+      res.locals.projectStatus = {
+        id: projectData.id,
+        projectCode: projectData.project_code,
+        phaseName: projectData.phase.name,
       }
 
       next()
