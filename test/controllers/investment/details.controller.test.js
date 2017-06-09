@@ -1,3 +1,5 @@
+const investmentProjectData = require('../../data/investment/project-summary.json')
+
 describe('Investment details controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
@@ -10,15 +12,15 @@ describe('Investment details controller', () => {
     this.sandbox.restore()
   })
 
-  describe('#getDetailsHandler', () => {
+  describe('#detailsGetHandler', () => {
     it('should return investment details with currentNavItem set to details', (done) => {
-      this.controller.getDetailsHandler({
+      this.controller.detailsGetHandler({
         session: {
           token: 'abcd',
         },
       }, {
         locals: {
-          investmentProject: {},
+          projectData: investmentProjectData,
         },
         render: (template, data) => {
           try {

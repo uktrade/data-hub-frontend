@@ -2,6 +2,7 @@ const {
   isBlank,
   transformV2Errors,
   isValidGuid,
+  getDataLabels,
 } = require('~/src/lib/controller-utils')
 
 describe('isBlank', function () {
@@ -125,17 +126,44 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
 })
 
 describe('isValidGuid: Check that a string is in a format of a valid GUID', () => {
-  it('Should return false when something other than string is provided', () => {
+  it('should return false when something other than string is provided', () => {
     expect(isValidGuid({})).to.be.false
     expect(isValidGuid(undefined)).to.be.false
   })
 
-  it('Should return false when a string is in invalid GUID format', () => {
+  it('should return false when a string is in invalid GUID format', () => {
     expect(isValidGuid('12345')).to.be.false
     expect(isValidGuid('hjkas-1279as-dhjaskj-12jasdlk-asdasa')).to.be.false
   })
 
-  it('Should return true when a string with in a valid GUID format', () => {
+  it('should return true when a string with in a valid GUID format', () => {
     expect(isValidGuid('12345abc-1234-abcd-12ab-123456abcdef')).to.be.true
+  })
+})
+
+describe('#getDataLabels', () => {
+  const mockData = {
+    a: 'A',
+    b: 'B',
+  }
+
+  const mockLabels = {
+    a: 'Label A',
+    b: 'Label B',
+  }
+
+  it('should return undefined if no data if given', () => {
+    expect(getDataLabels(null)).to.be.undefined
+  })
+
+  it('should return same object if labels object is not given', () => {
+    expect(getDataLabels(mockData)).to.deep.equal(mockData)
+  })
+
+  it('should return same object if labels object is not given', () => {
+    expect(getDataLabels(mockData, mockLabels)).to.deep.equal({
+      'Label A': 'A',
+      'Label B': 'B',
+    })
   })
 })

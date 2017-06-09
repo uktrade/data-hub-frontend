@@ -10,10 +10,10 @@ describe('Investment create controller', () => {
     this.sandbox.restore()
   })
 
-  describe('#getHandler', () => {
+  describe('#createGetHandler', () => {
     describe('when no company ID is provided', () => {
       it('should redirect to the start', (done) => {
-        this.controller.getHandler({
+        this.controller.createGetHandler({
           session: {
             token: 'abcd',
           },
@@ -29,7 +29,7 @@ describe('Investment create controller', () => {
 
     describe('when a the company exists', () => {
       it('should render create investment view', (done) => {
-        this.controller.getHandler({
+        this.controller.createGetHandler({
           session: {
             token: 'abcd',
           },
@@ -52,10 +52,10 @@ describe('Investment create controller', () => {
     })
   })
 
-  describe('#postHandler', () => {
+  describe('#createPostHandler', () => {
     describe('when resultId is set', () => {
       it('should redirect to the investment project', (done) => {
-        this.controller.postHandler({
+        this.controller.createPostHandler({
           session: {
             token: 'abcd',
           },
@@ -78,7 +78,7 @@ describe('Investment create controller', () => {
 
     describe('when form errors exist', () => {
       it('should render create investment form', (done) => {
-        this.controller.postHandler({
+        this.controller.createPostHandler({
           session: {
             token: 'abcd',
           },
