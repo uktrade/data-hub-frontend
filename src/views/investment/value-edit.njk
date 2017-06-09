@@ -1,0 +1,120 @@
+{% extends "investment/_layout.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Add new investment value</h2>
+
+  {{ trade.errorPanel(form.errors) }}
+
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ trade.textbox(
+        'total_investment',
+        value=form.state['total_investment'],
+        label=form.labels['total_investment']
+    ) }}
+
+    {{ trade.textbox(
+        'foreign_equity_investment',
+        value=form.state['foreign_equity_investment'],
+        label=form.labels['foreign_equity_investment']
+    ) }}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels['government_assistance'],
+      name: 'government_assistance',
+      inline: true,
+      value: form.state['government_assistance'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {{ trade.textbox(
+        'number_new_jobs',
+        value=form.state['number_new_jobs'],
+        label=form.labels['number_new_jobs']
+    ) }}
+
+    {{ trade.textbox(
+        'average_salary',
+        value=form.state['average_salary'],
+        label=form.labels['average_salary']
+    ) }}
+
+    {{ trade.textbox(
+        'number_safeguarded_jobs',
+        value=form.state['number_safeguarded_jobs'],
+        label=form.labels['number_safeguarded_jobs']
+    ) }}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'R&D budget',
+      name: 'r_and_d_budget',
+      inline: true,
+      value: form.state['r_and_d_budget'],
+      label: form.labels['r_and_d_budget'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels['non_fdi_r_and_d_budget'],
+      name: 'non_fdi_r_and_d_budget',
+      inline: true,
+      value: form.state['non_fdi_r_and_d_budget'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels['new_tech_to_uk'],
+      name: 'new_tech_to_uk',
+      inline: true,
+      value: form.state['new_tech_to_uk'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels['export_revenue'],
+      name: 'export_revenue',
+      inline: true,
+      value: form.state['export_revenue'],
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {{ trade.save(backUrl='/investment/' + projectData.id) }}
+  </form>
+{% endblock %}

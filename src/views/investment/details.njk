@@ -1,31 +1,35 @@
 {% extends "investment/_layout.njk" %}
 
+{% macro renderButton(endpoint, label, isSecondary) %}
+  <p>
+    <a href="/investment/{{ projectData.id }}/edit-{{ endpoint }}" class="button{{ '-secondary' if isSecondary }}">
+      {{ label }}
+    </a>
+  </p>
+{% endmacro %}
+
+{% set details = details | removeNilAndEmpty %}
+{% set values = values | removeNilAndEmpty %}
+{% set requirements = requirements | removeNilAndEmpty %}
+
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Investment project summary</h2>
-  {% component 'key-value-table', items=investmentProject.details, variant='striped' %}
-  <p>
-    <a href="/investment/{{ investmentProject.meta.id }}/details/edit" class="button-secondary">Edit summary</a>
-  </p>
+  {% component 'key-value-table', items=details, variant='striped' %}
+  {{ renderButton('details', 'Edit summary', true) }}
 
   <h2 class="heading-medium">Value</h2>
-  {% component 'key-value-table', items=investmentProject.value, variant='striped' %}
-  <p>
-    <a href="/investment/{{ investmentProject.meta.id }}/value/create" class="button">Start</a>
-  </p>
+  {% if values | length %}
+    {% component 'key-value-table', items=values, variant='striped' %}
+    {{ renderButton('value', 'Edit value', true) }}
+  {% else %}
+    {{ renderButton('value', 'Add value') }}
+  {% endif %}
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% component 'key-value-table', items=investmentProject.requirements, variant='striped' %}
-  <p>
-    <a href="/investment/{{ investmentProject.meta.id }}/requirements/create" class="button">Start</a>
-  </p>
-
-  <h2 class="heading-medium">Referral source</h2>
-  {% component 'key-value-table', {
-    items: {
-      'Activity': null,
-      'Event': null,
-      'Adviser': null
-    },
-    variant: 'striped'
-  } %}
+  {% if investmentProject.requirements | removeNilAndEmpty | length %}
+    {% component 'key-value-table', items=requirements, variant='striped' %}
+    {{ renderButton('requirements', 'Edit requirements', true) }}
+  {% else %}
+    {{ renderButton('requirements', 'Add requirements') }}
+  {% endif %}
 {% endblock %}

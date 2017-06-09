@@ -185,8 +185,8 @@
     </fieldset>
   </div>
 
-  {% if investmentProject %}
-    {% set backUrl = '/investment/' + investmentProject.meta.id %}
+  {% if projectData %}
+    {% set backUrl = '/investment/' + projectData.id %}
   {% else %}
     {% set backUrl = '/investment/start?client-company=' + equityCompany.id %}
   {% endif %}
