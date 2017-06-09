@@ -17,7 +17,7 @@ function formatAuditLog (logEntry) {
 function getInvestmentAudit (req, res, next) {
   Q.spawn(function * () {
     try {
-      if (get(res, 'locals.investmentProject')) {
+      if (get(res, 'locals.projectData')) {
         const rawAuditLog = yield getInvestmentProjectAuditLog(req.session.token, req.params.id)
         const auditLog = rawAuditLog.map(formatAuditLog)
 
