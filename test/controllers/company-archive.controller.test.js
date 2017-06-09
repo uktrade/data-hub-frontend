@@ -15,8 +15,6 @@ describe('Company controller, archive', function () {
     name: 'ADALEOP LTD',
     registered_address_1: '13 HOWICK PARK AVENUE',
     registered_address_2: 'PENWORTHAM',
-    registered_address_3: null,
-    registered_address_4: null,
     registered_address_town: 'PRESTON',
     registered_address_county: '',
     registered_address_postcode: 'PR1 0LS',

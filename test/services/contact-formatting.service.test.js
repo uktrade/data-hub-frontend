@@ -22,8 +22,6 @@ describe('Contact formatting service', function () {
       address_same_as_company: false,
       address_1: '10 The Street',
       address_2: 'Warble',
-      address_3: '',
-      address_4: '',
       address_town: 'Big Town',
       address_county: 'Large County',
       address_postcode: 'LL1 1LL',
@@ -64,15 +62,11 @@ describe('Contact formatting service', function () {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'rarble',
-        registered_address_3: '',
-        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
         trading_address_1: '30 The Street',
         trading_address_2: 'Tarble',
-        trading_address_3: '',
-        trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
         trading_address_postcode: 'TT1 1TT',
@@ -80,8 +74,6 @@ describe('Contact formatting service', function () {
 
       contact.address_1 = ''
       contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
       contact.address_town = ''
       contact.address_county = ''
       contact.address_postcode = ''
@@ -96,15 +88,11 @@ describe('Contact formatting service', function () {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
-        registered_address_3: '',
-        registred_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
         trading_address_1: '',
         trading_address_2: '',
-        trading_address_3: '',
-        trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
         trading_address_postcode: '',
@@ -112,8 +100,6 @@ describe('Contact formatting service', function () {
 
       contact.address_1 = ''
       contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
       contact.address_town = ''
       contact.address_county = ''
       contact.address_postcode = ''
@@ -148,15 +134,11 @@ describe('Contact formatting service', function () {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
-        registered_address_3: '',
-        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
         trading_address_1: '30 The Street',
         trading_address_2: 'Tarble',
-        trading_address_3: '',
-        trading_address_4: '',
         trading_address_town: 'Medium Town',
         trading_address_county: 'Medium County',
         trading_address_postcode: 'TT1 1TT',
@@ -164,8 +146,6 @@ describe('Contact formatting service', function () {
 
       contact.address_1 = ''
       contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
       contact.address_town = ''
       contact.address_county = ''
       contact.address_postcode = ''
@@ -180,23 +160,17 @@ describe('Contact formatting service', function () {
         id: '1234',
         registered_address_1: '20 The Street',
         registered_address_2: 'Rarble',
-        registered_address_3: '',
-        registered_address_4: '',
         registered_address_town: 'Small Town',
         registered_address_county: 'Small County',
         registered_address_postcode: 'RR1 1PP',
         trading_address_1: '',
         trading_address_2: '',
-        trading_address_3: '',
-        trading_address_4: '',
         trading_address_town: '',
         trading_address_county: '',
         trading_address_postcode: '',
       }
       contact.address_1 = ''
       contact.address_2 = ''
-      contact.address_3 = ''
-      contact.address_4 = ''
       contact.address_town = ''
       contact.address_county = ''
       contact.address_postcode = ''

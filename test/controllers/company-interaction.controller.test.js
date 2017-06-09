@@ -37,8 +37,6 @@ describe('Company interactions controller', function () {
       account_manager: null,
       registered_address_1: 'Annexe -  Blackthorn Cottage',
       registered_address_2: 'Chawridge Lane',
-      registered_address_3: '',
-      registered_address_4: '',
       registered_address_town: 'Windsor',
       registered_address_country: {
         id: '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -58,8 +56,6 @@ describe('Company interactions controller', function () {
       website: null,
       trading_address_1: '',
       trading_address_2: '',
-      trading_address_3: '',
-      trading_address_4: '',
       trading_address_town: '',
       trading_address_county: '',
       trading_address_postcode: '',

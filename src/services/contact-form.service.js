@@ -32,8 +32,6 @@ function getContactAsFormData (contact) {
     address_same_as_company: (contact.address_same_as_company) ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
-    address_3: contact.address_3,
-    address_4: contact.address_4,
     address_town: contact.address_town,
     address_county: contact.address_county,
     address_postcode: contact.address_postcode,
