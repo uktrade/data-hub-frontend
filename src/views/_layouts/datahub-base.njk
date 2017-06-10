@@ -17,6 +17,35 @@
   {% endif %}
 {% endblock %}
 
+{% block header_menu %}
+  <nav>
+    <ul class="proposition-menu">
+      {% if user %}
+        <li class="proposition-menu__item">
+          <a href="/" class="proposition-menu__link{{ ' is-active' if currentPath == '/' }}">Dashboard</a>
+        </li>
+      {% endif %}
+      {% if feedbackLink %}
+        <li class="proposition-menu__item">
+          <a href="{{ feedbackLink }}" class="proposition-menu__link{{ ' is-active' if '/support' in currentPath }}">Support</a>
+        </li>
+      {% endif %}
+      {% if user %}
+        <li class="proposition-menu__item">
+          <a href="/myaccount" class="proposition-menu__link{{ ' is-active' if currentPath == '/myaccount' }}">{{ user.name }}</a>
+        </li>
+      {% endif %}
+      <li class="proposition-menu__item">
+        {% if user %}
+          <a href="/login/signout" class="proposition-menu__link">Sign out</a>
+        {% else %}
+          <a href="/login" class="proposition-menu__link">Sign in</a>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
 {% block body %}
   {% include "_includes/google-tag-manager-no-script.njk" %}
   {{ super() }}

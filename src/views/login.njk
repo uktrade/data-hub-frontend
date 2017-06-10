@@ -4,7 +4,7 @@
 {% block body_main_header_content %}{% endblock %}
 
 {% block body_main_content %}
-  <h2 class="heading-xlarge">Login</h2>
+  <h2 class="heading-xlarge">Sign in</h2>
 
   {% if messages.error.length %}
     <div class="flash-message error-message">
@@ -30,8 +30,8 @@
 
   <form action="" method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    {{ trade.textbox('username', label="Username", error=errors.username, autofocus=true) }}
+    {{ trade.textbox('username', label="Email address", error=errors.username, autofocus=true) }}
     {{ trade.textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
-    {{ trade.save(buttonText='Login') }}
+    {{ trade.save(buttonText='Sign in') }}
   </form>
 {% endblock %}
