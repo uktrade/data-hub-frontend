@@ -11,6 +11,7 @@
 
 .main-content__inner {
   @include site-width-container;
+  border-top: 10px solid $govuk-blue;
   padding-bottom: $default-spacing-unit * 2;
 
   @include media(desktop) {

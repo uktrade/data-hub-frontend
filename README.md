@@ -46,14 +46,14 @@ To start the server just:
 
     docker-compose up
 
-The server starts in developer mode, which means that when you make local changes it will auto-compile 
-sass or javavscript, and will restart nodejs when server side changes are made. A container with redis will also start, this is linked to the data hub container. 
+The server starts in developer mode, which means that when you make local changes it will auto-compile
+sass or javavscript, and will restart nodejs when server side changes are made. A container with redis will also start, this is linked to the data hub container.
 
 You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
 a remote debug session over port 5858 if using webstorm/Intellij or Visual Studio Code
 
 #### Environment Variables
-Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) in an environment file. If you wish to send through environment variables to the docker containers please add them into the `.env` file in the projects root. 
+Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) in an environment file. If you wish to send through environment variables to the docker containers please add them into the `.env` file in the projects root.
 
 ### Native install
 
@@ -161,7 +161,7 @@ res.render('some-page', {
 })
 ```
 ```njk
-{% component 'person', personData, gender='male' %} 
+{% component 'person', personData, gender='male' %}
 ```
 
 Is the same as:
@@ -178,7 +178,7 @@ Is the same as:
 
 Templates use Nunjuck's [template inheritance](https://mozilla.github.io/nunjucks/templating.html#template-inheritance).
 There are several top level blocks which are used for injecting content during rendering. Each subsequent template
-that extends the base layout can include these additional blocks. 
+that extends the base layout can include these additional blocks.
 
 ### Nunjucks base template blocks
 
@@ -195,10 +195,9 @@ to completely override everything inside `head` element if needed or just the se
   - `body_notifications` - wraps cookie message container (above site_header, after skiplinks)
   - `body_site_header` - wraps site header
     - `header_site_title` - wraps the site title
-    - `header_service_title` - wraps the service title
+    - `header_menu` - wraps the header menu
   - `body_main` - wraps the main content block
     - `body_main_header` - contains the header of the main block
-    - `body_main_header_content` - contains the heading of the main block
     - `body_main_content` - contains main content (inside main#content)
   - `body_footer` - wraps site footer container (inside body > footer)
   - `body_footer_content` - contains content inside site footer
@@ -209,6 +208,7 @@ Base layout checks for certain variables.
 
 - `siteTitle` {string} - name of the site. Defaults to 'Department for International Trade'.
 - `serviceTitle` {string} - name of the service.
+- `phaseBanner` {boolean} - whether to show the separate phase banner or default to phase tag in the global header. Possible values: `true` and `false`.
 - `projectPhase` {string} - phase of the project. Possible values: `alpha` and `beta`.
 
 ### Template inheritance diagram

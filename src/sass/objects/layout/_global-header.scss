@@ -8,38 +8,61 @@
 }
 
 .global-header__inner {
+  @include clearfix;
   @include site-width-container;
   padding: ($baseline-grid-unit * 3) 0;
 }
 
-.global-header__link {
+.global-header__site-title {
+  word-spacing: -4px;
+
+  @include media(tablet) {
+    float: left;
+  }
+
+  .phase-badge {
+    margin-top: 5px;
+  }
+}
+
+.global-header__logo {
+  border-bottom: 1px solid transparent;
   display: inline-block;
   color: inherit;
-  font-size: 1.6em;
-  font-weight: 600;
   text-decoration: none;
-  padding: 0 $baseline-grid-unit;
-  margin: 0 (-$baseline-grid-unit);
+  padding: 0;
+  margin: 0 $default-spacing-unit 0 0;
 
   &:hover,
   &:visited,
   &:focus {
-    text-decoration: underline;
     color: inherit;
     background-color: transparent;
+  }
+
+  &:hover {
+    border-color: inherit;
+  }
+}
+
+.global-header__site-name {
+  @include bold-font(36);
+  letter-spacing: 1px;
+  line-height: .9;
+
+  @include media(tablet) {
+    line-height: .9;
+    font-size: 30px;
   }
 }
 
 .global-header__service-name {
-  @include core-font(16);
-  color: $grey-1;
-  display: block;
-  margin-top: $baseline-grid-unit * 2;
+  @include core-font(24);
+  color: inherit;
+  line-height: .9;
+  margin-left: $baseline-grid-unit * 2;
 
   @include media(tablet) {
-    @include core-font(20);
-    display: inline;
-    margin-left: $baseline-grid-unit * 4;
-    margin-top: 0;
+    line-height: .9;
   }
 }
