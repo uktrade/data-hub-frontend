@@ -14,6 +14,7 @@ module.exports = function locals (req, res, next) {
   res.locals.env = config.env
   res.locals.googleTagManagerKey = config.googleTagManagerKey
   res.locals.query = req.query
+  res.locals.currentPath = req.path
   winston.debug('locals:end')
   next()
 }

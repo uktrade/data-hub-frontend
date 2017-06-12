@@ -1,0 +1,61 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/mixins/addons";
+@import "../tools/mixins/conditionals";
+@import "../tools/mixins/layout";
+
+.proposition-menu {
+  @include bold-font(14);
+  color: $white;
+  margin: 0;
+  padding: $baseline-grid-unit 0 0;
+
+  @include media(tablet) {
+    @include bold-font(16);
+    float: right;
+  }
+}
+
+.proposition-menu__item {
+  border-bottom: 1px solid $grey-1;
+  display: block;
+
+  @include media(tablet) {
+    border-bottom: 0;
+    float: left;
+    padding-left: $default-spacing-unit;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.proposition-menu__link {
+  color: inherit;
+  display: block;
+  padding: $baseline-grid-unit;
+  text-decoration: none;
+
+  &:active,
+  &:visited,
+  &:hover {
+    color: inherit;
+  }
+
+  &:focus {
+    color: $black;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @include media(tablet) {
+    padding: 0;
+  }
+
+  &.is-active {
+    color: $light-blue;
+  }
+}

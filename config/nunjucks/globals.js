@@ -1,5 +1,6 @@
 module.exports = {
-  siteTitle: 'Data Hub',
-  projectPhase: 'beta',
+  siteTitle: 'DIT',
+  serviceTitle: 'Data Hub',
+  projectPhase: 'alpha',
   feedbackLink: '/support/bug',
 }
