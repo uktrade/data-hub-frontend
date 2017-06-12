@@ -81,6 +81,7 @@ const metadataItems = [
   ['investment-type', 'investmentTypeOptions'],
   ['fdi-type', 'fdiOptions'],
   ['non-fdi-type', 'nonFdiOptions'],
+  ['salary-range', 'salaryRangeOptions'],
 ]
 
 const restrictedServiceKeys = [

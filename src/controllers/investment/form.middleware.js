@@ -94,8 +94,13 @@ function populateDetailsFormMiddleware (req, res, next) {
 
 function populateValueFormMiddleware (req, res, next) {
   res.locals.form = get(res, 'locals.form', {})
-  res.locals.form.state = res.locals.valueData
   res.locals.form.labels = valueLabels.edit
+  res.locals.form.state = Object.assign({}, res.locals.valueData, {
+    average_salary: get(res.locals.valueData, 'average_salary.id'),
+  })
+  res.locals.form.options = {
+    averageSalaryRange: metadataRepo.salaryRangeOptions,
+  }
 
   next()
 }
@@ -130,9 +135,13 @@ function investmentDetailsFormPostMiddleware (req, res, next) {
 }
 
 function investmentValueFormPostMiddleware (req, res, next) {
-  const formattedBody = transformToApi(req.body)
-
   res.locals.projectId = req.params.id
+
+  const formattedBody = Object.assign({}, req.body, {
+    average_salary: {
+      id: req.body.average_salary,
+    },
+  })
 
   updateInvestmentValue(req.session.token, res.locals.projectId, formattedBody)
     .then(() => next())
