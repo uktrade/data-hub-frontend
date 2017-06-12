@@ -2,7 +2,7 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Add new investment value</h2>
+  <h2 class="heading-medium">Edit value</h2>
 
   {{ trade.errorPanel(form.errors) }}
 
@@ -42,10 +42,11 @@
         label=form.labels['number_new_jobs']
     ) }}
 
-    {{ trade.textbox(
-        'average_salary',
-        value=form.state['average_salary'],
-        label=form.labels['average_salary']
+    {{ trade.dropdown('average_salary',
+      label=form.labels['average_salary'],
+      value=form.state['average_salary'],
+      emptyLabel='Choose an average salary',
+      options=form.options.averageSalaryRange
     ) }}
 
     {{ trade.textbox(

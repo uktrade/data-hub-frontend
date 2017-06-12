@@ -112,6 +112,8 @@ function transformProjectValueForView (data) {
   if (!isPlainObject(data)) { return }
 
   function formatNumber (number) {
+    if (isNull(number)) { return null }
+
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: 'GBP',
@@ -131,6 +133,7 @@ function transformProjectValueForView (data) {
     number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
     r_and_d_budget: formatBoolean(data.r_and_d_budget, { pos: 'Has', suffix: ' R&D budget' }),
+    average_salary: get(data, 'average_salary.name'),
     non_fdi_r_and_d_budget: formatBoolean(data.non_fdi_r_and_d_budget, {
       pos: 'Has',
       suffix: ' linked non-FDI R&D projects',
