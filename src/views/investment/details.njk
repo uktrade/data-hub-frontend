@@ -30,6 +30,19 @@
     {{ renderButton('value', 'Add value') }}
   {% endif %}
 
+{% if not projectData.archived %}
+  <h2 class="heading-medium">Archive project</h2>
+  <p>Archive this project if it has been lost or abandoned</p>
+
+  {% component 'archive-form',
+    {
+      label: 'Archive reason',
+      options: ['Abandoned', 'Lost'],
+      csrfToken: csrfToken
+    }
+  %}
+{% endif %}
+
   <h2 class="heading-medium">Requirements and location</h2>
   {% if requirements | removeNilAndEmpty | length %}
     {% component 'key-value-table', items=requirements, variant='striped' %}

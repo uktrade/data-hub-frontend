@@ -1,0 +1,47 @@
+{##
+ # @param {string}    label
+ # @param {string[]}  options
+ # @param {string}    value
+ # @param {string}    csrfToken
+ # @param {string}
+ #
+ # @example
+ # {% component 'archive-form', {
+ #    label: 'Archive reason',
+ #    options: ['Reason 1', 'Reason 2']
+ #    error: 'Provide a value'
+ #  } %}
+ #
+#}
+<div class="archive-form js-archiveForm">
+  <a href="?action=showarchive" class="button js-revealButton">Archive</a>
+
+  <form class="archive-form__form js-form {% if errorr %}error{% else %}hidden{% endif %}" method="POST">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <fieldset class="js-fieldset">
+      <legend class="visually-hidden" aria-visible="false">Archive reason</legend>
+      <div class="form-group {% if error %}form-group-error{% endif %}" id="archived_reason-wrapper">
+        <label class="form-label-bold" for="archived_reason">
+          {{ label }}
+          {% if error %}<span class="error-message js-errorMessage">{{ error }}</span>{% endif %}
+        </label>
+
+        <select id="archived_reason" class="form-control" name="archived_reason">
+          <option value="">Select a value</option>
+          {% for option in options %}
+            <option value="{{ option }}" >{{ option }}</option>
+          {% endfor %}
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-bold" for="archived_reason_other">Other</label>
+        <input id="archived_reason_other" class="form-control" name="archived_reason_other" type="text">
+      </div>
+    </fieldset>
+    <div class="save-bar">
+      <button class="button button--save" type="submit">Archive</button>
+    </div>
+  </form>
+</div>

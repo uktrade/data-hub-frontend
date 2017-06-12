@@ -76,6 +76,23 @@ function updateInvestmentRequirements (token, investmentId, body) {
   })
 }
 
+function archiveInvestmentProject (token, investmentId, reason) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/archive`,
+    method: 'POST',
+    body: {
+      reason,
+    },
+  })
+}
+
+function unarchiveInvestmentProject (token, investmentId) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/unarchive`,
+    method: 'POST',
+  })
+}
+
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
@@ -88,4 +105,6 @@ module.exports = {
   updateInvestmentValue,
   updateInvestmentRequirements,
   getInvestmentProjectAuditLog,
+  archiveInvestmentProject,
+  unarchiveInvestmentProject,
 }
