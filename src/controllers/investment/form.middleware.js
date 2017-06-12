@@ -5,6 +5,11 @@ const { getAdvisers } = require('../../repos/adviser.repo')
 const { isValidGuid } = require('../../lib/controller-utils')
 const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
 const { valueLabels } = require('./labels')
+const interactionFormattingService = require('../../services/interaction-formatting.service')
+const {
+  createInvestmentInteraction,
+  updateInvestmentInteraction,
+} = require('../../repos/interaction.repo')
 const {
   createInvestmentProject,
   updateInvestmentProject,
@@ -158,9 +163,69 @@ function investmentValueFormPostMiddleware (req, res, next) {
     })
 }
 
+function populateInteractionsFormMiddleware (req, res, next) {
+  Q.spawn(function * () {
+    try {
+      const interactionTypes = metadataRepo.interactionTypeOptions
+      const advisersResponse = yield getAdvisers(req.session.token)
+      const contacts = res.locals.projectData.client_contacts
+
+      const advisers = advisersResponse.results.map((adviser) => {
+        return {
+          id: adviser.id,
+          name: `${adviser.first_name} ${adviser.last_name}`,
+        }
+      })
+
+      res.locals.form = res.locals.form || {}
+      res.locals.form.state = res.locals.interaction
+      res.locals.form.options = {
+        advisers,
+        contacts,
+        interactionTypes,
+      }
+
+      next()
+    } catch (error) {
+      next(error)
+    }
+  })
+}
+
+function interactionDetailsFormPostMiddleware (req, res, next) {
+  const formattedBody = interactionFormattingService.transformToApi(req.body)
+  const interactionId = req.params.interactionId
+  let saveMethod
+
+  if (interactionId) {
+    saveMethod = updateInvestmentInteraction(req.session.token, interactionId, formattedBody)
+  } else {
+    saveMethod = createInvestmentInteraction(req.session.token, formattedBody)
+  }
+
+  saveMethod
+    .then((result) => {
+      res.locals.resultId = result.id
+      next()
+    })
+    .catch((err) => {
+      if (err.statusCode === 400) {
+        res.locals.form = get(res, 'locals.form', {})
+        res.locals.form.errors = err.error
+        res.locals.form.state = req.body
+
+        next()
+      } else {
+        next(err)
+      }
+    })
+}
+
 module.exports = {
   investmentDetailsFormPostMiddleware,
   investmentValueFormPostMiddleware,
   populateDetailsFormMiddleware,
   populateValueFormMiddleware,
+  interactionDetailsFormPostMiddleware,
+  populateInteractionsFormMiddleware,
 }

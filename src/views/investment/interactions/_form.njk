@@ -1,0 +1,42 @@
+<form method="post">
+  <input type="hidden" name="investment_project" value="{{ projectStatus.id }}">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+  {{ trade.dropdown('interaction_type',
+    label='Interaction Type',
+    emptyLabel='Select interaction',
+    value=form.state['interaction_type'],
+    options=form.options.interactionTypes)
+  }}
+
+  {{ trade.textbox('subject',
+    label='Subject',
+    value=form.state['subject'],
+    error=form.errors.subject)
+  }}
+
+  {{ trade.textarea('notes',
+    label='Interaction notes',
+    value=form.state['notes'],
+    error=form.errors.notes)
+  }}
+
+  {{ trade.autocomplete('contact',
+    label='Interaction contact',
+    value=form.state['contact'],
+    options=form.options.contacts)
+  }}
+
+  {{ trade.date('date',
+    label='Date of interaction',
+    value=form.state['date'])
+  }}
+
+  {{ trade.autocomplete('dit_adviser',
+    label='DIT adviser',
+    value=form.state['dit_adviser'],
+    options=form.options.advisers)
+  }}
+
+  {{ trade.save(backUrl) }}
+</form>

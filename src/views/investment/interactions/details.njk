@@ -1,0 +1,25 @@
+{% extends "investment/_layout.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main_heading %}
+  <h1 class="page-heading">Investment Interaction Details</h1>
+{% endblock %}
+
+{% block main_grid_left_column %}{% endblock %}
+
+{% block main_grid_right_column %}
+  {{ trade.keyvaluetable(
+    interactionDetails,
+    stripey=true,
+    labels=interactionLabels,
+    keyorder=[
+      'interaction_type',
+      'subject',
+      'notes',
+      'contact',
+      'date',
+      'dit_adviser'
+    ])
+  }}
+  <a class="button button-secondary" href="/investment/{{ projectData.id }}/interaction/{{ interaction.id }}/edit">Edit interaction</a>
+{% endblock %}
