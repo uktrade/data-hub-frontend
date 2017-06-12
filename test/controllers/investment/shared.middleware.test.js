@@ -1,4 +1,4 @@
-describe('Investment index controller', () => {
+describe('Investment shared middleware', () => {
   beforeEach(() => {
     this.controller = require('~/src/controllers/investment/shared.middleware')
     this.sandbox = sinon.sandbox.create()
