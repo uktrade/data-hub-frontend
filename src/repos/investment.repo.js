@@ -18,6 +18,10 @@ function getInvestmentRequirements (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/requirements`)
 }
 
+function getInvestmentTeam (token, investmentId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/team`)
+}
+
 function getEquityCompanyDetails (token, equityCompanyId) {
   const promises = [
     getInflatedDitCompany(token, equityCompanyId),
@@ -69,6 +73,7 @@ module.exports = {
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
+  getInvestmentTeam,
   getEquityCompanyDetails,
   createInvestmentProject,
   updateInvestmentProject,
