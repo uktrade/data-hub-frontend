@@ -80,11 +80,12 @@ function getDisplayContactInteraction (interaction) {
 }
 
 function transformInteractionDataForView (data) {
-  if (!isPlainObject(data)) {
-    return
-  }
+  if (!isPlainObject(data)) { return }
+
+  const companyUrl = buildCompanyUrl(data.company)
 
   return Object.assign({}, data, {
+    company: `<a href="${companyUrl}">${data.company.name}</a>`,
     interaction_type: get(data, 'interaction_type.name'),
     subject: get(data, 'subject'),
     notes: newlineToBr(data.notes),
@@ -95,9 +96,7 @@ function transformInteractionDataForView (data) {
 }
 
 function transformFromApi (body) {
-  if (!isPlainObject(body)) {
-    return
-  }
+  if (!isPlainObject(body)) { return }
 
   const schema = {
     'interaction_type': Object,
@@ -122,9 +121,7 @@ function transformFromApi (body) {
 }
 
 function transformToApi (body) {
-  if (!isPlainObject(body)) {
-    return
-  }
+  if (!isPlainObject(body)) { return }
 
   const schema = {
     'investment_project': Object,

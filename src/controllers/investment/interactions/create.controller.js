@@ -15,11 +15,14 @@ function postAddInteractionHandler (req, res, next) {
     return next()
   }
 
-  return res.redirect(`/investment/${res.locals.projectData.id}/interaction/${res.locals.resultId}/details`)
+  req.flash('success-message', 'Investment Interaction successfully created')
+  return res.redirect(`/investment/${res.locals.projectData.id}/interactions`)
 }
 
 router.param('id', getProjectDetails)
-router.route('/:id/interaction/create')
+
+router
+  .route('/:id/interaction/create')
   .get(populateInteractionsFormMiddleware, getAddInteractionHandler)
   .post(
     populateInteractionsFormMiddleware,

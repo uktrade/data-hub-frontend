@@ -11,8 +11,8 @@ const {
 
 function detailsGetHandler (req, res, next) {
   if (get(res, 'locals.projectData')) {
-    const transformedDetails = transformProjectDataForView(res.locals.projectData, detailsLabels.view)
-    const transformedValue = transformProjectValueForView(res.locals.valueData, valueLabels.view)
+    const transformedDetails = transformProjectDataForView(res.locals.projectData)
+    const transformedValue = transformProjectValueForView(res.locals.valueData)
 
     return res.render('investment/details', {
       details: getDataLabels(transformedDetails, detailsLabels.view),

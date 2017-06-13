@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
-const interactionLabels = require('../../../labels/interaction-labels')
+const { interactionsLabels } = require('../labels')
+const { getDataLabels } = require('../../../lib/controller-utils')
 const {
   getInteractionDetails,
   getProjectDetails,
@@ -8,13 +9,15 @@ const {
 
 function getInteractionDetailsHandler (req, res, next) {
   return res.render('investment/interactions/details', {
-    interactionLabels,
+    details: getDataLabels(res.locals.interactionDetails, interactionsLabels.view),
   })
 }
 
 router.param('id', getProjectDetails)
 router.param('interactionId', getInteractionDetails)
-router.route('/:id/interaction/:interactionId/details')
+
+router
+  .route('/:id/interaction/:interactionId/details')
   .get(getInteractionDetailsHandler)
 
 module.exports = {

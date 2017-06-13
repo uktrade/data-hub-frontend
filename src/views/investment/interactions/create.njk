@@ -2,14 +2,13 @@
 {% import "macros/trade.html" as trade %}
 
 {% block main_heading %}
-  <h1 class="page-heading">Create Investment Interaction</h1>
-  {{ trade.errorPanel(
-    form.errors)
-  }}
+  {{ super() }}
+  {{ trade.errorPanel(form.errors) }}
 {% endblock %}
 
 {% block main_grid_left_column %}{% endblock %}
 
 {% block main_grid_right_column %}
+  <h2 class="heading-medium">Create Investment Interaction</h2>
   {% include './_form.njk' %}
 {% endblock %}

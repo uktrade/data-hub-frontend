@@ -15,7 +15,7 @@ function getInvestmentInteractions (req, res, next) {
 
         return res.render('investment/interactions/index', {
           currentNavItem: 'interactions',
-          interactions: interactions,
+          interactions,
         })
       }
       next()
@@ -26,6 +26,7 @@ function getInvestmentInteractions (req, res, next) {
 }
 
 router.param('id', getProjectDetails)
+
 router.get('/:id/interactions', getInvestmentInteractions)
 
 module.exports = {

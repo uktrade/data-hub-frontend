@@ -4,8 +4,11 @@ const metadataRepo = require('../../repos/metadata.repo')
 const { getAdvisers } = require('../../repos/adviser.repo')
 const { isValidGuid } = require('../../lib/controller-utils')
 const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
-const { valueLabels } = require('./labels')
 const interactionFormattingService = require('../../services/interaction-formatting.service')
+const {
+  valueLabels,
+  interactionsLabels,
+} = require('./labels')
 const {
   createInvestmentInteraction,
   updateInvestmentInteraction,
@@ -178,6 +181,7 @@ function populateInteractionsFormMiddleware (req, res, next) {
       })
 
       res.locals.form = res.locals.form || {}
+      res.locals.form.labels = interactionsLabels.edit
       res.locals.form.state = res.locals.interaction
       res.locals.form.options = {
         advisers,
