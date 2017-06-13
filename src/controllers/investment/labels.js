@@ -52,14 +52,6 @@ const labels = {
       dit_adviser: 'DIT adviser',
       interaction_type: 'Interaction type',
     },
-    edit: {
-      interaction_type: 'Interaction Type',
-      subject: 'Subject',
-      notes: 'Interaction notes',
-      contact: 'Interaction contact',
-      date: 'Date of interaction',
-      dit_adviser: 'DIT adviser',
-    },
   },
 }
 
