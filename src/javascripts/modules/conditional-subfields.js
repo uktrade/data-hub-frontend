@@ -35,6 +35,7 @@
  */
 
 const uniq = require('lodash/uniq')
+const includes = require('lodash/includes')
 
 const { addClass, removeClass } = require('../../lib/element-stuff.js')
 
@@ -84,7 +85,7 @@ const ConditionalSubfields = {
   onChange (evt) {
     const field = evt.target
 
-    if (this.controllers.includes(field.name)) {
+    if (includes(this.controllers, field.name)) {
       this._handleField(field)
     }
   },
@@ -111,7 +112,7 @@ const ConditionalSubfields = {
       }
     }
 
-    subFields.forEach((subField) => {
+    Array.from(subFields).forEach((subField) => {
       const value = subField.getAttribute('data-control-value') + ''
       let isVisible
 
@@ -138,7 +139,7 @@ const ConditionalSubfields = {
     if (!isVisible && !subField.getAttribute('data-persist-values')) {
       const children = subField.querySelectorAll('input, select, checkbox, textarea')
 
-      children.forEach((field) => {
+      Array.from(children).forEach((field) => {
         field.value = ''
         field.checked = false
 

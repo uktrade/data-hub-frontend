@@ -1,20 +1,20 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block main_heading %}
-  {% if investmentProject.meta %}
+  {% if projectData %}
     <h1 class="visually-hidden">Investment details</h1>
-    <h2 class="page-heading">{{ investmentProject.meta.name }}</h2>
-    {% component 'project-status', investmentProject.meta %}
+    <h2 class="page-heading">{{ projectData.name }}</h2>
+    {% component 'project-status', projectStatus %}
   {% endif %}
 {% endblock %}
 
 {% block main_grid_left_column %}
   {% if localNavItems %}
-    <nav class="local-nav {{ 'local-nav--background' if variant == 'edit' }}">
+    <nav class="local-nav {{ 'local-nav--background' if variant in ['edit', 'create'] }}">
       {% for item in localNavItems %}
         {% set isSelected = currentNavItem == item.slug %}
         <a
-          href="/investment/{{ investmentProject.meta.id }}/{{ item.slug }}"
+          href="/investment/{{ projectData.id }}/{{ item.slug }}"
           class="local-nav__link {{ 'is-active' if isSelected}}"
         >
           {{ item.label }}

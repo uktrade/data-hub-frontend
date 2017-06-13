@@ -18,6 +18,10 @@ function getInvestmentRequirements (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/requirements`)
 }
 
+function getInvestmentTeam (token, investmentId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/team`)
+}
+
 function getEquityCompanyDetails (token, equityCompanyId) {
   const promises = [
     getInflatedDitCompany(token, equityCompanyId),
@@ -56,13 +60,23 @@ function getInvestmentProjectAuditLog (token, investmentId) {
     })
 }
 
+function updateInvestmentValue (token, investmentId, body) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/value`,
+    method: 'PATCH',
+    body,
+  })
+}
+
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
+  getInvestmentTeam,
   getEquityCompanyDetails,
   createInvestmentProject,
   updateInvestmentProject,
+  updateInvestmentValue,
   getInvestmentProjectAuditLog,
 }

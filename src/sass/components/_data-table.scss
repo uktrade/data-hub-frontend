@@ -1,0 +1,28 @@
+@import "../settings/colours";
+
+.data-table {
+
+  &.is-sortable {
+    thead th {
+      cursor: pointer;
+    }
+
+    .is-descending {
+      &::after {
+        content: "\00a0\00a0\25BC";
+      }
+    }
+
+    .is-ascending   {
+      &::after {
+        content: "\00a0\00a0\25B2";
+      }
+    }
+  }
+}
+
+.data-table--striped {
+  tbody tr:nth-child(odd) {
+    background: $highlight-colour;
+  }
+}

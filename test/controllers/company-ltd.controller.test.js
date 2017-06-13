@@ -25,8 +25,6 @@ describe('Company controller, ltd', function () {
     name: 'ADALEOP LTD',
     registered_address_1: '13 HOWICK PARK AVENUE',
     registered_address_2: 'PENWORTHAM',
-    registered_address_3: null,
-    registered_address_4: null,
     registered_address_town: 'PRESTON',
     registered_address_county: '',
     registered_address_postcode: 'PR1 0LS',
@@ -51,8 +49,6 @@ describe('Company controller, ltd', function () {
     name: 'ADALEOP LTD',
     registered_address_1: '13 HOWICK PARK AVENUE',
     registered_address_2: 'PENWORTHAM',
-    registered_address_3: null,
-    registered_address_4: null,
     registered_address_town: 'PRESTON',
     registered_address_county: '',
     registered_address_postcode: 'PR1 0LS',
@@ -312,8 +308,6 @@ describe('Company controller, ltd', function () {
         name: 'Fred ltd',
         registered_address_1: 'add1',
         registered_address_2: 'add2',
-        registered_address_3: 'add3',
-        registered_address_4: 'add4',
         registered_address_town: 'town',
         registered_address_county: 'county',
         registered_address_postcode: 'postcode',
@@ -361,8 +355,6 @@ describe('Company controller, ltd', function () {
       expectHiddenField(document, 'name', formData.name)
       expectHiddenField(document, 'registered_address_1', formData.registered_address_1)
       expectHiddenField(document, 'registered_address_2', formData.registered_address_2)
-      expectHiddenField(document, 'registered_address_3', formData.registered_address_3)
-      expectHiddenField(document, 'registered_address_4', formData.registered_address_4)
       expectHiddenField(document, 'registered_address_town', formData.registered_address_town)
       expectHiddenField(document, 'registered_address_county', formData.registered_address_county)
       expectHiddenField(document, 'registered_address_postcode', formData.registered_address_postcode)

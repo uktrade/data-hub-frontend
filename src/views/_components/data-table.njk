@@ -1,0 +1,55 @@
+{##
+ # @param {object[]} data              Objects to show in the table
+ # @param {object}   [columns]         Key/value pair of columns to show and their label
+ # @param {string}   [variant=striped] Variant of table to display
+ # @param {boolean}  [sortable=false]  Adds ability to sort each column
+ #
+ # @return {string} HTML for table
+ #
+ # @example
+ #  {% component 'data-table', {
+ #     variant: 'striped',
+ #     columns: {
+ #       name: 'Name',
+ #       addr: 'Address'
+ #     },
+ #     data: [{
+ #       id: '134',
+ #       name: 'Fred Bloggs',
+ #       addr: '10 Fred Road, Humbleton, Berks, SL5 5RR'
+ #     }, {
+ #       id: '4444',
+ #       name: 'Jane Smith',
+ #       addr: '32 Palace Place, London, SE1 1TR'
+ #     }]
+ #  } %}
+ #}
+{% if data.length %}
+  {% set sortable = sortable | default(false) %}
+  {% set keys = data[0] | keys %}
+  {% set headings = data[0] | keys %}
+
+  {% if columns %}
+    {% set keys = columns | keys %}
+    {% set headings = columns | values %}
+  {% endif %}
+
+  <table class="data-table{% if sortable %} is-sortable js-SortableTable{% endif %}{{ ' data-table--' + variant if variant }}">
+    <thead>
+      <tr>
+        {% for heading in headings %}
+          <th>{{ heading }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in data %}
+        <tr>
+          {% for key in keys %}
+            <td>{{ record[key] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}

@@ -46,15 +46,19 @@
         <header role="banner" class="global-header">
           <div class="global-header__inner">
             {% block header_site_title %}
-              <a href="/" class="global-header__link">
-                {{ siteTitle|default('Department for International Trade') }}
-              </a>
+              <div class="global-header__site-title">
+                <a href="/" class="global-header__logo">
+                  <span class="global-header__site-name">{{ siteTitle|default('Department for International Trade') }}</span>
+                  {% if serviceTitle %}
+                    <span class="global-header__service-name">{{ serviceTitle }}</span>
+                  {% endif %}
+                </a>
+                {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta'] %}
+                  <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
+                {% endif %}
+              </div>
             {% endblock %}
-            {% block header_service_title %}
-              {% if serviceTitle %}
-                <span class="global-header__service-name">{{ serviceTitle }}</span>
-              {% endif %}
-            {% endblock %}
+            {% block header_menu %}{% endblock %}
           </div>
         </header>
       {% endblock %}
@@ -63,32 +67,17 @@
         <div class="main-content">
           <main id="main-content" role="main" class="main-content__inner">
             {% block body_main_header %}
-              {% if projectPhase|lower in ['alpha', 'beta'] and feedbackLink %}
+              {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta'] or feedbackLink) %}
                 <div class="phase-banner">
-                  <span class="phase-banner__tag">{{ projectPhase.toUpperCase() }}</span>
+                  <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
                   <span class="phase-banner__message">
-                    This is a new service – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
+                    This is a new service
+                    {% if feedbackLink %}
+                    – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
+                    {% endif %}
                   </span>
                 </div>
               {% endif %}
-              {% block body_main_header_content %}
-                <div class="global-nav">
-                  <nav class="global-nav__navigation">
-                    <a href="/" class="global-nav__link">Home</a>
-                  </nav>
-                  {% if user.name %}
-                    <ul class="global-nav__account">
-                      <li class="global-nav__item">
-                        <span class="global-nav__username">{{ user.name }}:</span>
-                        <a href="/myaccount" class="global-nav__link">My account</a>
-                      </li>
-                      <li class="global-nav__item">
-                        <a href="/login/signout" class="global-nav__link">Sign out</a>
-                      </li>
-                    </ul>
-                  {% endif %}
-                </div>
-              {% endblock %}
             {% endblock %}
             {% block body_main_content %}{% endblock %}
           </main>
@@ -103,10 +92,7 @@
                 <h2 class="u-visually-hidden">Support links</h2>
                 <ul class="list-inline">
                   <li>
-                    <a href="/terms_and_conditions">Terms and conditions</a>
-                  </li>
-                  <li>
-                    <a href="https://beta.nhs.uk/help/cookies">Cookies</a>
+                    <a href="https://www.gov.uk/help/cookies">Cookies</a>
                   </li>
                 </ul>
                 <div class="global-footer__open-government-licence">

@@ -39,8 +39,6 @@
       "parent": null,
       "registered_address_1": "2 Foo st.",
       "registered_address_2": null,
-      "registered_address_3": null,
-      "registered_address_4": null,
       "registered_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"
@@ -54,8 +52,6 @@
       },
       "trading_address_1": "1 Fake Lane",
       "trading_address_2": null,
-      "trading_address_3": null,
-      "trading_address_4": null,
       "trading_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"
@@ -99,8 +95,6 @@
       "parent": null,
       "registered_address_1": "3 Foo st.",
       "registered_address_2": null,
-      "registered_address_3": null,
-      "registered_address_4": null,
       "registered_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"
@@ -114,8 +108,6 @@
       },
       "trading_address_1": "1 Fake Lane",
       "trading_address_2": null,
-      "trading_address_3": null,
-      "trading_address_4": null,
       "trading_address_country": {
         "id": "81756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United States"
@@ -165,8 +157,6 @@
       "parent": null,
       "registered_address_1": "0 Foo st.",
       "registered_address_2": null,
-      "registered_address_3": null,
-      "registered_address_4": null,
       "registered_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"
@@ -180,8 +170,6 @@
       },
       "trading_address_1": "0 Fake Lane",
       "trading_address_2": null,
-      "trading_address_3": null,
-      "trading_address_4": null,
       "trading_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"

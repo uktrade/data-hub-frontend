@@ -6,6 +6,8 @@
     {{ headingName }}
     <span class="post-header">{{ headingAddress }}</span>
   </h2>
+
+  {% include "./_archive.njk" %}
 {% endblock %}
 
 {% block main_grid_left_column %}
@@ -24,4 +26,9 @@
 
 {% block main_grid_right_column %}
   {% include "_messages.njk" %}
+{% endblock %}
+
+{% block javascript %}
+  {{ super() }}
+  <script src="/javascripts/archive-form.bundle.js"></script>
 {% endblock %}

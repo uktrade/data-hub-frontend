@@ -1,6 +1,24 @@
 const nunjucks = require('nunjucks')
+const _ = require('lodash')
+
+const {
+  isArray,
+  isPlainObject,
+  isEmpty,
+  pickBy,
+  isNil,
+} = require('lodash')
+
+function isNotEmpty (value) {
+  return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
+}
+
 const filters = {
   stringify: JSON.stringify,
+
+  values: _.values,
+
+  keys: _.keys,
 
   highlight: (string, searchTerm) => {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')
@@ -10,8 +28,14 @@ const filters = {
     )
   },
 
-  removeFalsey: (array) => {
-    return array.filter(item => item)
+  removeNilAndEmpty: (collection) => {
+    if (isArray(collection)) {
+      return collection.filter(isNotEmpty)
+    }
+    if (isPlainObject(collection)) {
+      return pickBy(collection, isNotEmpty)
+    }
+    return collection
   },
 
   pluralise: (string, count, pluralisedWord) => {

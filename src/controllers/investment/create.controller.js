@@ -1,27 +1,32 @@
 const router = require('express').Router()
 
-const { populateFormMiddleware, postFormMiddleware } = require('./shared')
+const { getProjectDetails } = require('./shared.middleware')
 
-function getHandler (req, res) {
+const {
+  populateDetailsFormMiddleware,
+  investmentDetailsFormPostMiddleware,
+} = require('./form.middleware')
+
+function createGetHandler (req, res) {
   if (!res.locals.equityCompany) {
     return res.redirect('/investment/start')
   }
-
   return res.render('investment/create')
 }
 
-function postHandler (req, res) {
+function createPostHandler (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment/create')
   }
   return res.redirect(`/investment/${res.locals.resultId}`)
 }
 
-router.get('/create', populateFormMiddleware, getHandler)
-router.post('/create', populateFormMiddleware, postFormMiddleware, postHandler)
+router.param('id', getProjectDetails)
+router.get('/create', populateDetailsFormMiddleware, createGetHandler)
+router.post('/create', populateDetailsFormMiddleware, investmentDetailsFormPostMiddleware, createPostHandler)
 
 module.exports = {
   router,
-  getHandler,
-  postHandler,
+  createGetHandler,
+  createPostHandler,
 }
