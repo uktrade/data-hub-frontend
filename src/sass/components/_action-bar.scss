@@ -1,3 +1,6 @@
+@import "../settings/layout";
+
 .action-bar {
   text-align: right;
+  margin-bottom: $gutter / 2;
 }

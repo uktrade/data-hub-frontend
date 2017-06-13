@@ -95,3 +95,4 @@ document.querySelectorAll('.card--expandable')
   .forEach((expandableCard) => new ExpandableCard(expandableCard))
 
 module.exports = ExpandableCard
+// TODO - look if this can be replaced by details-list.js

@@ -1,73 +1,73 @@
 {% extends "investment/_layout.njk" %}
 
+{% block main_heading %}
+  {% include "_messages.njk" %}
+  {{ super() }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Investment Interactions</h2>
+  <div class="action-bar">
+    <a href="/investment/{{ projectStatus.id }}/interaction/create" class="button">Add new interaction</a>
+  </div>
   <p>
-    <a href="/investment/{{ projectStatus.id }}/interaction/create" class="button-secondary">Create new interaction</a>
-  </p>
-  <p>
-    An interaction could be a meeting, call, email or another activity associated ith this investment.
+    An interaction could be a meeting, call, email or another activity associated with this investment.
   </p>
 
   {% if interactions | length %}
-    <ul class="lined-list">
+    <ul class="details-list">
 
       {% for interaction in interactions %}
 
-        {# TODO this has been set do to the interaction.url property pointing to the central interaction location
-           this needs to be aligned in the API ideally #}
-        {% set interactionDetailsUrl = '/investment/' + projectData.id + '/interaction/' + interaction.id + '/details'  %}
+        {# TODO this ideally needs to be set in the API layer #}
+        {% set interactionDetailsUrl = '/investment/' + projectData.id + '/interaction/' + interaction.id + '/edit' %}
 
-        <li class="lined-list__item">
-          <div class="card card--expandable" id="{{ interaction.id }}">
-            <a class="card__title" href="{{ interactionDetailsUrl }}">{{ interaction.subject }}</a>
-            <div class="split-data">
-              <div>
-                <div class="card__metadata">
-                  <strong>Type:</strong>
-                  {{ interaction.interaction_type }}
-                </div>
-                <div class="card__metadata">
-                  <strong>Adviser:</strong>
-                  {{ interaction.adviser | safe }}
-                </div>
-                <div class="card__metadata">
-                  <strong>Adviser team:</strong>
-                  {{ interaction.dit_team }}
-                </div>
-                <div class="card__metadata">
-                  <strong>Contact:</strong>
-                  {{ interaction.contact | safe }}
-                </div>
+        <li class="details-list__item">
+          <div class="js-details-expandable" id="{{ interaction.id }}">
+            <a class="details-list__item-heading js-details-heading" href="{{ interactionDetailsUrl }}">
+              {{ interaction.subject }}
+            </a>
+            <dl>
+              <div class="details-list__item-section">
+                <dt class="details-list__item-title">Type:</dt>
+                <dd class="details-list__item-description">{{ interaction.interaction_type }}</dd>
               </div>
-              <div>
-                <div class="card__metadata">
-                  <strong>Date:</strong>
-                  {{ interaction.date }}
-                </div>
+              <div class="details-list__item-section">
+                <dt class="details-list__item-title">Adviser:</dt>
+                <dd class="details-list__item-description">{{ interaction.adviser | safe }}</dd>
               </div>
-            </div>
-            <div class="card__subsection">
-              <table class="table--key-value table--plain">
-                <tbody>
-                <tr>
-                  <th>Interaction notes</th>
-                  <td>{{ interaction.notes | safe }}</td>
-                </tr>
-                </tbody>
-              </table>
-              <p><a class="button button-secondary" href="{{ interactionDetailsUrl }}">View interaction details</a></p>
+              <div class="details-list__item-section">
+                <dt class="details-list__item-title">Adviser team:</dt>
+                <dd class="details-list__item-description">{{ interaction.dit_team }}</dd>
+              </div>
+              <div class="details-list__item-section">
+                <dt class="details-list__item-title">Contact:</dt>
+                <dd class="details-list__item-description">{{ interaction.contact | safe }}</dd>
+              </div>
+              <div class="details-list__item-section">
+                <dt class="details-list__item-title">Date:</dt>
+                <dd class="details-list__item-description">{{ interaction.date }}</dd>
+              </div>
+            </dl>
+            <div class="js-details-reveal">
+              <dl>
+                <div class="details-list__item-section">
+                  <dt class="details-list__item-title">Interaction notes:</dt>
+                  <dd class="details-list__item-description">{{ interaction.notes | safe }}</dd>
+                </div>
+              </dl>
+              <p><a class="button button-secondary" href="{{ interactionDetailsUrl }}">Edit Interaction</a></p>
             </div>
           </div>
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p id="no-interaction-warning" class="infostrip">You currently have no interactions for this company.</p>
+    <p class="infostrip">You currently have no interactions for this company.</p>
   {% endif %}
 {% endblock %}
 
 {% block javascript %}
   {{ super() }}
-  <script src="/javascripts/expandable-card.bundle.js"></script>
+  <script src="/javascripts/details-list.bundle.js"></script>
 {% endblock %}
