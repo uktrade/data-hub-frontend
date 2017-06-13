@@ -79,22 +79,6 @@ function getDisplayContactInteraction (interaction) {
   return result
 }
 
-function transformInteractionDataForView (data) {
-  if (!isPlainObject(data)) { return }
-
-  const companyUrl = buildCompanyUrl(data.company)
-
-  return Object.assign({}, data, {
-    company: `<a href="${companyUrl}">${data.company.name}</a>`,
-    interaction_type: get(data, 'interaction_type.name'),
-    subject: get(data, 'subject'),
-    notes: newlineToBr(data.notes),
-    date: formatMediumDate(data.date),
-    dit_adviser: get(data, 'dit_adviser.name'),
-    contact: getContactLink(data),
-  })
-}
-
 function transformFromApi (body) {
   if (!isPlainObject(body)) { return }
 
@@ -153,5 +137,4 @@ module.exports = {
   getDisplayContactInteraction,
   transformFromApi,
   transformToApi,
-  transformInteractionDataForView,
 }

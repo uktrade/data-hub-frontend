@@ -3,10 +3,7 @@ const { isValidGuid } = require('../../lib/controller-utils')
 
 const { getInteraction } = require('../../repos/interaction.repo')
 const { getAdviser } = require('../../repos/adviser.repo')
-const {
-  transformInteractionDataForView,
-  transformFromApi,
-} = require('../../services/interaction-formatting.service')
+const { transformFromApi } = require('../../services/interaction-formatting.service')
 const {
   getInvestmentProjectSummary,
   getInvestmentValue,
@@ -62,7 +59,6 @@ function getInteractionDetails (req, res, next, interactionId = req.params.inter
     try {
       const interactionResponse = yield getInteraction(req.session.token, interactionId)
 
-      res.locals.interactionDetails = transformInteractionDataForView(interactionResponse)
       res.locals.interaction = transformFromApi(interactionResponse)
 
       next()

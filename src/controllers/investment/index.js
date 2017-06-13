@@ -10,7 +10,6 @@ const teamController = require('./team.controller')
 const interactionsController = require('./interactions/index.controller')
 const createInteractionController = require('./interactions/create.controller')
 const editInteractionController = require('./interactions/edit.controller')
-const detailsInteractionController = require('./interactions/details.controller')
 
 function handleEmptyMiddleware (req, res, next) {
   if (req.path === '/') {
@@ -31,8 +30,7 @@ router.use(
   teamController.router,
   interactionsController.router,
   createInteractionController.router,
-  editInteractionController.router,
-  detailsInteractionController.router
+  editInteractionController.router
 )
 
 module.exports = {
