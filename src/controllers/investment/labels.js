@@ -43,14 +43,13 @@ const labels = {
     },
   },
   interactionsLabels: {
-    view: {
-      company: 'Company',
+    edit: {
+      interaction_type: 'Interaction Type',
       subject: 'Subject',
       notes: 'Interaction notes',
-      contact: 'Company contact',
+      contact: 'Interaction contact',
       date: 'Date of interaction',
       dit_adviser: 'DIT adviser',
-      interaction_type: 'Interaction type',
     },
   },
 }
