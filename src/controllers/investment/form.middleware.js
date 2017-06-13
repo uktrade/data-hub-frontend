@@ -149,6 +149,8 @@ function investmentValueFormPostMiddleware (req, res, next) {
     average_salary: {
       id: req.body.average_salary,
     },
+    client_cannot_provide_total_investment: req.body.client_cannot_provide_total_investment === 'on',
+    client_cannot_provide_foreign_investment: req.body.client_cannot_provide_foreign_investment === 'on',
   })
 
   updateInvestmentValue(req.session.token, res.locals.projectId, formattedBody)
