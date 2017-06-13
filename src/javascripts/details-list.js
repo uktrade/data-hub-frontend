@@ -42,8 +42,6 @@ class ExpandableDetails {
 }
 
 document.querySelectorAll('.js-details-expandable')
-  .forEach((element) => {
-    return new ExpandableDetails(element)
-  })
+  .forEach((element) => new ExpandableDetails(element))
 
 module.exports = ExpandableDetails
