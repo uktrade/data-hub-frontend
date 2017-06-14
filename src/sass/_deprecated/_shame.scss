@@ -251,10 +251,15 @@ hr {
   margin-left: 0;
 }
 
-.js-enabled .block-label.selection-button-radio {
+.js-enabled .block-label.selection-button-radio,
+.js-enabled .block-label.selection-button-checkbox {
   &::before,
   &::after {
     box-sizing: content-box;
+  }
+
+  &::after {
+    -ms-transform: rotate(-45deg);
   }
 }
 

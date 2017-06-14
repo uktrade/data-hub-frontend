@@ -27,6 +27,8 @@ describe('Investment form middleware', () => {
 
       expect(this.resMock.locals.form.labels).to.be.an('object').that.has.keys([
         'average_salary',
+        'client_cannot_provide_foreign_investment',
+        'client_cannot_provide_total_investment',
         'export_revenue',
         'foreign_equity_investment',
         'government_assistance',

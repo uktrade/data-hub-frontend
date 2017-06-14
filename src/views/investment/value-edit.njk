@@ -15,11 +15,33 @@
         label=form.labels['total_investment']
     ) }}
 
+    <div class="form-group">
+      <label class="block-label selection-button-checkbox{% if form.state['client_cannot_provide_total_investment'] %} selected{% endif %}">
+        <input
+          type="checkbox"
+          name="client_cannot_provide_total_investment"
+          {% if form.state['client_cannot_provide_total_investment'] %}checked{% endif %}
+        >
+        {{ form.labels['client_cannot_provide_total_investment'] }}
+      </label>
+    </div>
+
     {{ trade.textbox(
         'foreign_equity_investment',
         value=form.state['foreign_equity_investment'],
         label=form.labels['foreign_equity_investment']
     ) }}
+
+    <div class="form-group">
+      <label class="block-label selection-button-checkbox{% if form.state['client_cannot_provide_foreign_investment'] %} selected{% endif %}">
+        <input
+          type="checkbox"
+          name="client_cannot_provide_foreign_investment"
+          {% if form.state['client_cannot_provide_foreign_investment'] %}checked{% endif %}
+        >
+        {{ form.labels['client_cannot_provide_foreign_investment'] }}
+      </label>
+    </div>
 
     {% component 'form-multiple-choice', {
       variant: 'radio',

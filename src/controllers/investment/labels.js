@@ -31,6 +31,8 @@ const labels = {
       non_fdi_r_and_d_budget: 'Is this project associated with a non-FDI R&D project?',
       new_tech_to_uk: 'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
       export_revenue: 'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
+      client_cannot_provide_total_investment: 'Client cannot provide this information',
+      client_cannot_provide_foreign_investment: 'Client cannot provide this information',
     },
   },
   requirementsLabels: {
