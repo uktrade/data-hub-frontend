@@ -1,5 +1,6 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
+const { get } = require('lodash')
 const winston = require('winston')
 const adviserRepository = require('../repos/adviser.repo')
 const companyRepository = require('../repos/company.repo')
@@ -82,7 +83,7 @@ function getInflatedDitCompany (token, id) {
  */
 function buildCompanyUrl (company) {
   const companyPath = '/company/view'
-  const businessType = company.business_type && (company.business_type.name && company.business_type.name.toLowerCase())
+  const businessType = get(company, 'business_type.name', '').toLowerCase()
   let urlPath
 
   if (!company.uk_based) {
