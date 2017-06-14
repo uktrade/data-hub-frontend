@@ -41,7 +41,7 @@ class ExpandableDetails {
   }
 
   static init () {
-    document.querySelectorAll('.js-details-expandable')
+    Array.from(document.querySelectorAll('.js-details-expandable'))
       .forEach((element) => new ExpandableDetails(element))
   }
 }
