@@ -1,6 +1,6 @@
 {
   "name": "data-hub-fe-beta2",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "description": "Data Hub Beta 2",
   "main": "src/server.js",
   "repository": {
