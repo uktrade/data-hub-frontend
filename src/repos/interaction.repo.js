@@ -44,8 +44,32 @@ function getInteractionsForContact (token, contactId) {
   })
 }
 
+// TODO we have multiple ways of doing things in this file - this needs tidying up
+function getInteractionsForInvestment (token, investmentId) {
+  return authorisedRequest(token, `${config.apiRoot}/interaction/?investment_project_id=${investmentId}`)
+}
+
+function createInvestmentInteraction (token, body) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/interaction/`,
+    method: 'POST',
+    body,
+  })
+}
+
+function updateInvestmentInteraction (token, interactionId, body) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/interaction/${interactionId}/`,
+    method: 'PUT',
+    body,
+  })
+}
+
 module.exports = {
   saveInteraction,
   getInteraction,
   getInteractionsForContact,
+  getInteractionsForInvestment,
+  createInvestmentInteraction,
+  updateInvestmentInteraction,
 }
