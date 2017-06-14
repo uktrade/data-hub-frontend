@@ -3,14 +3,14 @@ const {
   toggleVisible,
   toggleClass,
   addClass,
-} = require('../lib/element-stuff')
+} = require('../../lib/element-stuff')
 
 class ExpandableDetails {
   constructor (element) {
     this.hash = window.location.hash.substr(1)
-    this.cacheElements(element)
-    this.addListeners()
 
+    this.cacheElements(element)
+    this.attachEvents()
     this.setInitialState()
   }
 
@@ -20,11 +20,11 @@ class ExpandableDetails {
     this.revealElement = element.querySelector('.js-details-reveal')
   }
 
-  addListeners () {
-    this.headingElement.addEventListener('click', this.toggle.bind(this), true)
+  attachEvents () {
+    this.headingElement.addEventListener('click', this.handleToggleClick.bind(this))
   }
 
-  toggle (event) {
+  handleToggleClick (event) {
     event.preventDefault()
 
     this.headingElement.blur()
@@ -39,9 +39,11 @@ class ExpandableDetails {
       addClass(this.element, 'is-open')
     }
   }
-}
 
-document.querySelectorAll('.js-details-expandable')
-  .forEach((element) => new ExpandableDetails(element))
+  static init () {
+    document.querySelectorAll('.js-details-expandable')
+      .forEach((element) => new ExpandableDetails(element))
+  }
+}
 
 module.exports = ExpandableDetails

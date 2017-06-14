@@ -13,7 +13,7 @@
 }
 
 .details-list__item-section {
-  @include grid-row
+  @include grid-row;
   margin-bottom: $gutter / 4;
 }
 
