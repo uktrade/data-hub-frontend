@@ -9,6 +9,7 @@ const {
   keys,
   values,
   flatten,
+  map,
 } = require('lodash')
 
 function isNotEmpty (value) {
@@ -19,10 +20,9 @@ const filters = {
   stringify: JSON.stringify,
 
   values,
-
   keys,
-
   flatten,
+  map,
 
   highlight: (string, searchTerm) => {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')

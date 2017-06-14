@@ -29,7 +29,7 @@
   {% endif %}
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% if investmentProject.requirements | removeNilAndEmpty | length %}
+  {% if requirements | removeNilAndEmpty | length %}
     {% component 'key-value-table', items=requirements, variant='striped' %}
     {{ renderButton('requirements', 'Edit requirements', true) }}
   {% else %}

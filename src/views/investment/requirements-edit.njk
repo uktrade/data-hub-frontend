@@ -1,0 +1,92 @@
+{% extends "investment/_layout.njk" %}
+{% import "macros/trade.html" as trade %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Edit requirements and location</h2>
+
+  {{ trade.errorPanel(form.errors) }}
+
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="form-group">
+      {% set strategicDriversIds = form.state.strategic_drivers|map('id') %}
+      <label for="competitor_countries" class="form-label-bold">{{ form.labels.strategic_drivers }}</label>
+      <select name="strategic_drivers" id="strategic_drivers" class="form-control">
+        <option>Choose a strategic driver</option>
+        {% for item in form.options.strategicDriverOptions %}
+          <option value="{{ item.id }}" {% if item.id in strategicDriversIds %}selected{% endif %}>
+            {{ item.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {{ trade.textarea("client_requirements",
+      label=form.labels.client_requirements,
+      value=form.state.client_requirements)
+    }}
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels.client_considering_other_countries,
+      name: 'client_considering_other_countries',
+      inline: true,
+      value: form.state.client_considering_other_countries,
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    <div
+      class="panel panel-border-narrow js-ConditionalSubfield"
+      data-controlled-by="client_considering_other_countries"
+      data-control-value="true"
+    >
+      <div class="form-group">
+        {% set countryIds = form.state.competitor_countries|map('id') %}
+        <label for="competitor_countries" class="form-label-bold">{{ form.labels.competitor_countries }}</label>
+        <select name="competitor_countries" id="competitor_countries" class="form-control">
+          {% for item in form.options.countryOptions %}
+            <option value="{{ item.id }}" {% if item.id in countryIds %}selected{% endif %}>
+              {{ item.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      {% set regionIds = form.state.uk_region_locations|map('id') %}
+      <label for="uk_region_locations" class="form-label-bold">{{ form.labels.uk_region_locations }}</label>
+      <select name="uk_region_locations" id="uk_region_locations" class="form-control">
+        {% for item in form.options.regionOptions %}
+          <option value="{{ item.id }}" {% if item.id in regionIds %}selected{% endif %}>
+            {{ item.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: form.labels.site_decided,
+      name: 'site_decided',
+      inline: true,
+      value: form.state.site_decided,
+      children: [{
+        label: 'Yes',
+        value: 'true'
+      }, {
+        label: 'No',
+        value: 'false'
+      }]
+    } %}
+
+    {{ trade.save(backUrl='/investment/' + projectData.id) }}
+  </form>
+{% endblock %}

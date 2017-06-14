@@ -5,8 +5,10 @@ const { getProjectDetails } = require('./shared.middleware')
 const {
   investmentDetailsFormPostMiddleware,
   investmentValueFormPostMiddleware,
+  investmentRequirementsFormPostMiddleware,
   populateDetailsFormMiddleware,
   populateValueFormMiddleware,
+  populateRequirementsFormMiddleware,
 } = require('./form.middleware')
 
 const templateData = {
@@ -24,6 +26,10 @@ function editValueGet (req, res) {
   res.render('investment/value-edit', templateData)
 }
 
+function editRequirementsGet (req, res) {
+  res.render('investment/requirements-edit', templateData)
+}
+
 function editDetailsPost (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment/details-edit', templateData)
@@ -38,11 +44,20 @@ function editValuePost (req, res) {
   return res.redirect(`/investment/${res.locals.projectId}`)
 }
 
+function editRequirementsPost (req, res) {
+  if (res.locals.form.errors) {
+    return res.render('investment/requirements-edit', templateData)
+  }
+  return res.redirect(`/investment/${res.locals.projectId}`)
+}
+
 router.param('id', getProjectDetails)
 router.get('/:id/edit-details', populateDetailsFormMiddleware, editDetailsGet)
 router.get('/:id/edit-value', populateValueFormMiddleware, editValueGet)
+router.get('/:id/edit-requirements', populateRequirementsFormMiddleware, editRequirementsGet)
 router.post('/:id/edit-details', populateDetailsFormMiddleware, investmentDetailsFormPostMiddleware, editDetailsPost)
 router.post('/:id/edit-value', populateValueFormMiddleware, investmentValueFormPostMiddleware, editValuePost)
+router.post('/:id/edit-requirements', populateRequirementsFormMiddleware, investmentRequirementsFormPostMiddleware, editRequirementsPost)
 
 module.exports = {
   router,

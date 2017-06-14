@@ -1,5 +1,5 @@
 const Q = require('q')
-const { get } = require('lodash')
+const { get, flatten } = require('lodash')
 const metadataRepo = require('../../repos/metadata.repo')
 const { getAdvisers } = require('../../repos/adviser.repo')
 const { isValidGuid } = require('../../lib/controller-utils')
@@ -8,6 +8,7 @@ const interactionFormattingService = require('../../services/interaction-formatt
 const {
   valueLabels,
   interactionsLabels,
+  requirementsLabels,
 } = require('./labels')
 const {
   createInvestmentInteraction,
@@ -15,9 +16,10 @@ const {
 } = require('../../repos/interaction.repo')
 const {
   createInvestmentProject,
-  updateInvestmentProject,
   getEquityCompanyDetails,
+  updateInvestmentProject,
   updateInvestmentValue,
+  updateInvestmentRequirements,
 } = require('../../repos/investment.repo')
 
 function populateDetailsFormMiddleware (req, res, next) {
@@ -108,6 +110,20 @@ function populateValueFormMiddleware (req, res, next) {
   })
   res.locals.form.options = {
     averageSalaryRange: metadataRepo.salaryRangeOptions,
+  }
+
+  next()
+}
+
+function populateRequirementsFormMiddleware (req, res, next) {
+  res.locals.form = get(res, 'locals.form', {})
+  res.locals.form.labels = requirementsLabels.edit
+  res.locals.form.state = res.locals.requirementsData
+
+  res.locals.form.options = {
+    countryOptions: metadataRepo.countryOptions,
+    regionOptions: metadataRepo.regionOptions,
+    strategicDriverOptions: metadataRepo.strategicDriverOptions,
   }
 
   next()
@@ -227,11 +243,37 @@ function interactionDetailsFormPostMiddleware (req, res, next) {
     })
 }
 
+function investmentRequirementsFormPostMiddleware (req, res, next) {
+  res.locals.projectId = req.params.id
+
+  const formattedBody = Object.assign({}, req.body, {
+    strategic_drivers: flatten([req.body.strategic_drivers]),
+    competitor_countries: flatten([req.body.competitor_countries]),
+    uk_region_locations: flatten([req.body.uk_region_locations]),
+  })
+
+  updateInvestmentRequirements(req.session.token, res.locals.projectId, formattedBody)
+  .then(() => next())
+  .catch((err) => {
+    if (err.statusCode === 400) {
+      res.locals.form = get(res, 'locals.form', {})
+      res.locals.form.errors = err.error
+      res.locals.form.state = req.body
+
+      next()
+    } else {
+      next(err)
+    }
+  })
+}
+
 module.exports = {
   investmentDetailsFormPostMiddleware,
   investmentValueFormPostMiddleware,
+  investmentRequirementsFormPostMiddleware,
   populateDetailsFormMiddleware,
   populateValueFormMiddleware,
   interactionDetailsFormPostMiddleware,
   populateInteractionsFormMiddleware,
+  populateRequirementsFormMiddleware,
 }
