@@ -42,6 +42,16 @@ const labels = {
       uk_company: 'UK recipient company',
     },
   },
+  interactionsLabels: {
+    edit: {
+      interaction_type: 'Interaction Type',
+      subject: 'Subject',
+      notes: 'Interaction notes',
+      contact: 'Interaction contact',
+      date: 'Date of interaction',
+      dit_adviser: 'DIT adviser',
+    },
+  },
 }
 
 labels.valueLabels.edit = Object.assign({}, labels.valueLabels.view, labels.valueLabels.edit)

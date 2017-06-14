@@ -1,7 +1,9 @@
 const { formatLongDate, formatMediumDate } = require('../lib/date')
 const { newlineToBr, getContactLink } = require('../lib/text-formatting')
+const toISOString = require('../lib/date/toISOString')
 const { getPropertyName } = require('../lib/property-helpers')
 const { buildCompanyUrl } = require('./company.service')
+const { mapValues, get, isPlainObject } = require('lodash')
 
 /**
  * Returns an interaction formatted for display in the interaction detail
@@ -77,4 +79,62 @@ function getDisplayContactInteraction (interaction) {
   return result
 }
 
-module.exports = { getDisplayInteraction, getDisplayCompanyInteraction, getDisplayContactInteraction }
+function transformFromApi (body) {
+  if (!isPlainObject(body)) { return }
+
+  const schema = {
+    'interaction_type': Object,
+    'subject': String,
+    'notes': String,
+    'date': String,
+    'contact': Object,
+    'dit_adviser': Object,
+  }
+
+  const formatted = mapValues(schema, (type, key) => {
+    if (type === Array) {
+      return get(body, `${key}[0].id`, '')
+    } else if (type === Object) {
+      return get(body, `${key}.id`)
+    } else {
+      return get(body, key)
+    }
+  })
+
+  return Object.assign({}, body, formatted)
+}
+
+function transformToApi (body) {
+  if (!isPlainObject(body)) { return }
+
+  const schema = {
+    'investment_project': Object,
+    'interaction_type': Object,
+    'dit_adviser': Object,
+    'contact': Object,
+    'subject': Object,
+    'notes': Object,
+  }
+
+  const formatted = mapValues(schema, (type, key) => {
+    const value = body[key]
+
+    if (!value) {
+      return
+    }
+
+    return value
+  })
+
+  formatted['date'] = toISOString(body['date_day'], (body['date_month'] - 1), body['date_year'])
+
+  return Object.assign({}, body, formatted)
+}
+
+module.exports = {
+  getDisplayInteraction,
+  getDisplayCompanyInteraction,
+  getDisplayContactInteraction,
+  transformFromApi,
+  transformToApi,
+}
