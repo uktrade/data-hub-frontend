@@ -10,13 +10,14 @@ const {
 } = require('../form.middleware')
 
 function getEditInteractionHandler (req, res, next) {
-  return res.render('investment/interactions/edit')
+  res.render('investment/interactions/edit')
 }
 
 function postCreateInteractionHandler (req, res, next) {
   if (res.locals.form.errors) {
     return next()
   }
+
   req.flash('success-message', 'Investment Interaction successfully updated')
   return res.redirect(`/investment/${res.locals.projectData.id}/interactions`)
 }

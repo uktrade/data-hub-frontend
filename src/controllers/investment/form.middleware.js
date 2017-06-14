@@ -180,7 +180,7 @@ function populateInteractionsFormMiddleware (req, res, next) {
         }
       })
 
-      res.locals.form = res.locals.form || {}
+      res.locals.form = get(res, 'locals.form', {})
       res.locals.form.labels = interactionsLabels.edit
       res.locals.form.state = res.locals.interaction
       res.locals.form.options = {
