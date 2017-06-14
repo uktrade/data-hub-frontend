@@ -1,5 +1,4 @@
 /* eslint prefer-promise-reject-errors: 0 */
-require('babel-polyfill')
 
 describe('Company repository', () => {
   describe('Save company', () => {
