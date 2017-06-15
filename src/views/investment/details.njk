@@ -13,6 +13,8 @@
 {% set requirements = requirements | removeNilAndEmpty %}
 
 {% block main_grid_right_column %}
+  {{ super() }}
+
   <h2 class="heading-medium">Investment project summary</h2>
   {% component 'key-value-table', items=details, variant='striped' %}
   {{ renderButton('details', 'Edit summary', true) }}

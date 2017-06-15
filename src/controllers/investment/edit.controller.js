@@ -34,21 +34,24 @@ function editDetailsPost (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment/details-edit', templateData)
   }
-  return res.redirect(`/investment/${res.locals.resultId}`)
+  req.flash('success-message', 'Updated investment details')
+  return res.redirect(`/investment/${res.locals.resultId}/details`)
 }
 
 function editValuePost (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment/value-edit', templateData)
   }
-  return res.redirect(`/investment/${res.locals.projectId}`)
+  req.flash('success-message', 'Updated investment value')
+  return res.redirect(`/investment/${res.locals.projectId}/details`)
 }
 
 function editRequirementsPost (req, res) {
   if (res.locals.form.errors) {
+    req.flash('success-message', 'Updated investment requirements')
     return res.render('investment/requirements-edit', templateData)
   }
-  return res.redirect(`/investment/${res.locals.projectId}`)
+  return res.redirect(`/investment/${res.locals.projectId}/details`)
 }
 
 router.param('id', getProjectDetails)
