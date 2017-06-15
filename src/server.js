@@ -10,6 +10,7 @@ const session = require('express-session')
 const url = require('url')
 const winston = require('winston')
 const csrf = require('csurf')
+const slashify = require('slashify')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
@@ -108,6 +109,7 @@ app.use(user)
 app.use(headers)
 
 // routing
+app.use(slashify())
 app.use('/', router)
 
 app.use(errors.notFound)

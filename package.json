@@ -53,6 +53,7 @@
     "sass-lint": "^1.10.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.10.0",
+    "slashify": "^1.0.0",
     "sniffr": "^1.1.4",
     "standard": "^10.0.2",
     "uglify": "^0.1.5",
