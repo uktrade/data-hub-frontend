@@ -1,6 +1,6 @@
 const winston = require('winston')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
+const config = require('../../config')
 
 function getInteraction (token, interactionId) {
   return authorisedRequest(token, `${config.apiRoot}/interaction/${interactionId}/`)

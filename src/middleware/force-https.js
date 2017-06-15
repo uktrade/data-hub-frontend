@@ -1,4 +1,4 @@
-const { isDev } = require('../config')
+const { isDev } = require('../../config')
 const winston = require('winston')
 
 module.exports = function forceHttps (req, res, next) {

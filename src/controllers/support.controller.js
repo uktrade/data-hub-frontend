@@ -2,7 +2,7 @@ const express = require('express')
 const axios = require('axios')
 const Sniffr = require('sniffr')
 
-const config = require('../config')
+const config = require('../../config')
 
 const router = express.Router()
 

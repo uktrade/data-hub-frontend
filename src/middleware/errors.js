@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../../config')
 const winston = require('winston')
 
 function notFound (req, res, next) {

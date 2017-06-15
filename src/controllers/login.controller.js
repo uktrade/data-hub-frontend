@@ -4,7 +4,7 @@ const router = require('express').Router()
 const rp = require('request-promise')
 const { get } = require('lodash')
 
-const config = require('../config')
+const config = require('../../config')
 
 function authenticate (username, password) {
   const options = {

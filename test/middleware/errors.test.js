@@ -14,7 +14,7 @@ describe('Error Middleware Test', () => {
 
     this.errorsStub = (isDev) => {
       return proxyquire('../../src/middleware/errors', {
-        '../config': {
+        '../../config': {
           isDev,
         },
       })

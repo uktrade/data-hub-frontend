@@ -1,5 +1,5 @@
 const nock = require('nock')
-const config = require('~/src/config')
+const config = require('~/config')
 
 const {
   getCompanyInvestmentProjects,

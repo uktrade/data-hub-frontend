@@ -1,6 +1,6 @@
 const winston = require('winston')
 const pjson = require('../../package.json')
-const config = require('../config')
+const config = require('../../config')
 
 const startTime = new Date().getTime()
 

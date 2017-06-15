@@ -1,7 +1,7 @@
 const Q = require('q')
 const winston = require('winston')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
+const config = require('../../config')
 
 function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/`)

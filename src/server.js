@@ -1,7 +1,7 @@
 require('dotenv').config()
 const bodyParser = require('body-parser')
 const compression = require('compression')
-const config = require('./config')
+const config = require('../config')
 const express = require('express')
 const flash = require('connect-flash')
 const redis = require('redis')
