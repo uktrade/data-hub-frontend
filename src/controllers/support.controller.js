@@ -90,8 +90,10 @@ function thank (req, res) {
   })
 }
 
-router.get('/bug', getBug)
-router.post('/bug', postBug)
-router.get('/thank-you', thank)
+router
+  .route('/support/bug')
+  .get(getBug)
+  .post(postBug)
+router.get('/support/thank-you', thank)
 
 module.exports = { router }

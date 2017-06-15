@@ -63,8 +63,10 @@ function logout (req, res) {
   res.redirect('/login')
 }
 
-router.get('/', login)
-router.post('/', loginToApi)
-router.get('/signout', logout)
+router
+  .route('/login')
+  .get(login)
+  .post(loginToApi)
+router.get('/login/signout', logout)
 
 module.exports = { router }

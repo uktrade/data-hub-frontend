@@ -8,6 +8,6 @@ function myAccount (req, res) {
   })
 }
 
-router.get('/', myAccount)
+router.get('/myaccount', myAccount)
 
 module.exports = { router }

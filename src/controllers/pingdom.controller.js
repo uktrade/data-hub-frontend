@@ -1,3 +1,4 @@
+const router = require('express').Router()
 const axios = require('axios')
 const config = require('../../config')
 
@@ -22,4 +23,6 @@ function get (req, res) {
     .catch(error => returnError(res, error))
 }
 
-module.exports = { get }
+router.get('/ping.xml', get)
+
+module.exports = { router }
