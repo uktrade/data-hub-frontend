@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
 const { get } = require('lodash')
-const winston = require('winston')
+const logger = require('../../config/logger')
 const adviserRepository = require('../repos/adviser.repo')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
@@ -67,7 +67,7 @@ function getInflatedDitCompany (token, id) {
         company.interactions = combinedIteractions
         resolve(company)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })

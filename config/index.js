@@ -2,7 +2,6 @@ const path = require('path')
 
 const port = process.env.PORT || 3000
 const isDev = (process.env.NODE_ENV !== 'production')
-const defaultLogLevel = isDev ? 'debug' : 'error'
 
 module.exports = {
   root: path.normalize(`${__dirname}/..`),
@@ -31,7 +30,7 @@ module.exports = {
     // 2 hour timeout
     ttl: process.env.SESSION_TTL || (2 * 60 * 60 * 1000),
   },
-  logLevel: process.env.LOG_LEVEL || defaultLogLevel,
+  logLevel: process.env.LOG_LEVEL || isDev ? 'debug' : 'error',
   zenUrl: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
   zenToken: process.env.ZEN_TOKEN,
   zenEmail: process.env.ZEN_EMAIL,

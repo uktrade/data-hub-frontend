@@ -19,9 +19,6 @@ describe('Contact controller, archive', function () {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
-      'winston': {
-        error: sinon.stub(),
-      },
     })
     flashStub = sinon.stub()
   })
@@ -118,9 +115,6 @@ describe('Contact controller, archive', function () {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
-      'winston': {
-        error: sinon.stub(),
-      },
     })
 
     const req = {
@@ -146,9 +140,6 @@ describe('Contact controller, archive', function () {
       '../repos/contact.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
-      },
-      'winston': {
-        error: sinon.stub(),
       },
     })
 

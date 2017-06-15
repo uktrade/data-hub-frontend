@@ -1,5 +1,4 @@
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 
 const interactionFormattingService = require('../services/interaction-formatting.service')
@@ -19,7 +18,6 @@ function getInteractions (req, res, next) {
 
       res.render('contact/interactions')
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })

@@ -1,6 +1,5 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const { getFormattedAddress } = require('../lib/address')
 const companyRepository = require('../repos/company.repo')
@@ -26,7 +25,6 @@ function getDetails (req, res, next) {
 
       res.render('company/details-ch')
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })

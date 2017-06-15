@@ -1,11 +1,11 @@
-const winston = require('winston')
+const logger = require('../../config/logger')
 const pjson = require('../../package.json')
 const config = require('../../config')
 
 const startTime = new Date().getTime()
 
 module.exports = function locals (req, res, next) {
-  winston.debug('locals:start')
+  logger.debug('locals:start')
   res.locals.baseUrl = req.baseUrl
   res.locals.releaseVersion = pjson.version
   res.locals.startTime = startTime
@@ -15,6 +15,6 @@ module.exports = function locals (req, res, next) {
   res.locals.googleTagManagerKey = config.googleTagManagerKey
   res.locals.query = req.query
   res.locals.currentPath = req.path
-  winston.debug('locals:end')
+  logger.debug('locals:end')
   next()
 }

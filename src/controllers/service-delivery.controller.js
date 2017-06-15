@@ -1,6 +1,5 @@
 /* eslint camelcase: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const serviceDeliverylabels = require('../labels/service-delivery')
 const { transformV2Errors } = require('../lib/controller-utils')
@@ -66,7 +65,6 @@ function getServiceDeliveryEdit (req, res, next) {
 
       res.render('interaction/service-delivery-edit')
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
@@ -93,7 +91,7 @@ function postServiceDeliveryEdit (req, res, next) {
             res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
             res.locals.title = 'Edit service delivery'
           } catch (error) {
-            winston.error(error)
+            return next(error)
           }
           return getServiceDeliveryEdit(req, res, next)
         }

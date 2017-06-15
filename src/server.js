@@ -8,7 +8,6 @@ const redis = require('redis')
 const redisCrypto = require('connect-redis-crypto')
 const session = require('express-session')
 const url = require('url')
-const winston = require('winston')
 const csrf = require('csurf')
 const slashify = require('slashify')
 
@@ -22,13 +21,13 @@ const user = require('./middleware/user')
 const auth = require('./middleware/auth')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
+const logger = require('../config/logger')
 
 const router = require('../config/routes')
 
 const isDev = config.isDev
 const app = express()
 app.disable('x-powered-by')
-winston.level = config.logLevel
 
 const RedisStore = redisCrypto(session)
 
@@ -45,17 +44,17 @@ if (config.redis.url) {
 }
 
 client.on('error', (e) => {
-  winston.log('error', 'Error connecting to redis')
-  winston.log('error', e)
+  logger.log('error', 'Error connecting to redis')
+  logger.log('error', e)
   throw e
 })
 
 client.on('connect', () => {
-  winston.log('info', 'connected to redis')
+  logger.log('info', 'connected to redis')
 })
 
 client.on('ready', () => {
-  winston.log('info', 'connection to redis is ready to use')
+  logger.log('info', 'connection to redis is ready to use')
 })
 
 const redisStore = new RedisStore({
@@ -117,14 +116,14 @@ app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
   if (errors) {
-    winston.log('error', 'Unable to load all metadataRepository, cannot start app')
+    logger.log('error', 'Unable to load all metadataRepository, cannot start app')
 
     for (const err of errors) {
       throw err
     }
   } else {
     app.listen(config.port, () => {
-      winston.log('info', 'app listening on port %s', config.port)
+      logger.log('info', 'app listening on port %s', config.port)
     })
   }
 })

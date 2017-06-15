@@ -1,6 +1,6 @@
 const nunjucks = require('nunjucks')
-const winston = require('winston')
 
+const logger = require('../logger')
 const templateGlobals = require('./globals')
 
 const COMPONENTS_PATH = '_components/' // relative to views path
@@ -31,7 +31,7 @@ function ComponentExtension (env) {
         result = e.message
       }
 
-      winston.error(result)
+      logger.error(result)
     }
 
     return new nunjucks.runtime.SafeString(result)

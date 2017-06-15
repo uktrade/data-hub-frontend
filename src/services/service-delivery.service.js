@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
-const winston = require('winston')
+const logger = require('../../config/logger')
 const companyRepository = require('../repos/company.repo')
 const contactRepository = require('../repos/contact.repo')
 const metadataRepository = require('../repos/metadata.repo')
@@ -169,7 +169,7 @@ function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
         }
         resolve(result)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })

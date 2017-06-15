@@ -1,6 +1,5 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const companyRepository = require('../repos/company.repo')
 const companyService = require('../services/company.service')
@@ -22,7 +21,6 @@ function archiveCompany (req, res, next) {
 
       res.redirect(url)
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
@@ -37,7 +35,6 @@ function unarchiveCompany (req, res, next) {
       req.flash('success-message', 'Updated company record')
       res.redirect(url)
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })

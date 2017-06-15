@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 const Q = require('q')
-const winston = require('winston')
+const logger = require('../../config/logger')
 const adviserRepository = require('../repos/adviser.repo')
 const interactionRepository = require('../repos/interaction.repo')
 const metadataRepository = require('../repos/metadata.repo')
@@ -23,7 +23,7 @@ function getInflatedContact (token, contact) {
       try {
         resolve(contact)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })
@@ -69,7 +69,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
         const combinedIteractions = [...interactions, ...parsedServiceDeliveries]
         resolve(combinedIteractions)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })
