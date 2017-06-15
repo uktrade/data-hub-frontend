@@ -1,13 +1,13 @@
 const path = require('path')
 
-const port = process.env.PORT || 3000
 const isDev = (process.env.NODE_ENV !== 'production')
 
 module.exports = {
   root: path.normalize(`${__dirname}/..`),
   env: process.env.NODE_ENV,
+  ci: process.env.CI,
   isDev,
-  port,
+  port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {
     authUrl: '/token/',

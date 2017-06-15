@@ -10,6 +10,7 @@ const session = require('express-session')
 const url = require('url')
 const csrf = require('csurf')
 const slashify = require('slashify')
+const churchill = require('churchill')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
@@ -28,6 +29,10 @@ const router = require('../config/routes')
 const isDev = config.isDev
 const app = express()
 app.disable('x-powered-by')
+
+if (!config.ci) {
+  app.use(churchill(logger))
+}
 
 const RedisStore = redisCrypto(session)
 
