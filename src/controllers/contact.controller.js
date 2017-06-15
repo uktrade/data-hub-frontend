@@ -22,6 +22,7 @@ function getCommon (req, res, next) {
       res.locals.company = yield companyRepository.getDitCompany(req.session.token, res.locals.contact.company.id)
       res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.company)
       res.locals.reasonForArchiveOptions = reasonForArchiveOptions
+      res.locals.title = [`${res.locals.contact.first_name} ${res.locals.contact.last_name}`, 'Contacts']
 
       next()
     } catch (error) {
@@ -33,12 +34,10 @@ function getCommon (req, res, next) {
 function getDetails (req, res, next) {
   try {
     res.locals.tab = 'details'
-    res.locals.contactDetails = contactFormattingService.getDisplayContact(
-      res.locals.contact,
-      res.locals.company
-    )
+    res.locals.contactDetails = contactFormattingService.getDisplayContact(res.locals.contact, res.locals.company)
     res.locals.contactDetailsLabels = contactDetailsLabels
     res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
+
     res.render('contact/details')
   } catch (error) {
     next(error)

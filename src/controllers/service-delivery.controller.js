@@ -62,6 +62,7 @@ function getServiceDeliveryEdit (req, res, next) {
       res.locals.statusOptions = metadataRepository.serviceDeliveryStatusOptions
       res.locals.eventOptions = metadataRepository.eventOptions
       res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
+      res.locals.title = 'Add service delivery'
 
       res.render('interaction/service-delivery-edit')
     } catch (error) {
@@ -90,6 +91,7 @@ function postServiceDeliveryEdit (req, res, next) {
           res.locals.errors = transformV2Errors(response.error.errors)
           try {
             res.locals.serviceDelivery = yield serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
+            res.locals.title = 'Edit service delivery'
           } catch (error) {
             winston.error(error)
           }

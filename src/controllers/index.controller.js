@@ -6,6 +6,7 @@ module.exports = (req, res) => {
   dashboardService.getHomepageData(req.session.token, days)
     .then((data) => {
       res.render('index', {
+        title: 'Dashboard',
         totalDays: days,
         interactions: data.interactions,
         contacts: data.contacts,

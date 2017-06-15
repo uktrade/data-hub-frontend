@@ -10,6 +10,7 @@ const {
 } = require('../form.middleware')
 
 function getEditInteractionHandler (req, res, next) {
+  res.locals.title.unshift('Edit interaction')
   res.render('investment/interactions/edit')
 }
 

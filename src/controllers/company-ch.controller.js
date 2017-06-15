@@ -22,6 +22,7 @@ function getDetails (req, res, next) {
       res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
       res.locals.chDetailsLabels = chDetailsLabels
       res.locals.addUrl = `/company/add/ltd/${company.company_number}`
+      res.locals.title = [company.name, 'Companies']
 
       res.render('company/details-ch')
     } catch (error) {

@@ -34,6 +34,7 @@ function getDetails (req, res, next) {
         oneListAccountManager: 'None',
       }
       res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
+      res.locals.title = [company.name, 'Companies']
 
       res.render('company/details-ltd')
     } catch (error) {
@@ -71,6 +72,7 @@ function addDetails (req, res, next) {
         res.locals.formData = companyFormService.getDefaultLtdFormForCH(res.locals.chCompany)
       }
       res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
+      res.locals.title = 'Add company'
       res.render(`company/edit-ltd`)
     } catch (error) {
       next(error)
@@ -83,9 +85,11 @@ function editDetails (req, res, next) {
     try {
       if (containsFormData(req)) {
         res.locals.formData = req.body
+        res.locals.title = ['Edit company', 'Companies']
       } else {
         const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
         res.locals.formData = companyFormService.getLtdCompanyAsFormData(company)
+        res.locals.title = ['Edit', company.name, 'Companies']
       }
       res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
       res.render(`company/edit-ltd`)

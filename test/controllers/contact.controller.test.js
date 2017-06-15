@@ -86,7 +86,9 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {},
+        locals: {
+          title: [],
+        },
         render: function () {},
       }
       const next = function () {
@@ -105,6 +107,7 @@ describe('Contact controller', function () {
       const res = {
         locals: {
           contact,
+          title: [],
         },
         render: function () {},
       }
@@ -125,6 +128,7 @@ describe('Contact controller', function () {
       const res = {
         locals: {
           company,
+          title: [],
         },
         render: function () {},
       }
@@ -142,7 +146,9 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {},
+        locals: {
+          title: [],
+        },
         render: function () {},
       }
       const next = function () {
@@ -175,7 +181,9 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {},
+        locals: {
+          title: [],
+        },
         render: function () {},
       }
       const next = function (err) {
@@ -194,7 +202,12 @@ describe('Contact controller', function () {
           session: {},
         }
         const res = {
-          locals: { contact, id: '1234', company },
+          locals: {
+            contact,
+            company,
+            id: '1234',
+            title: [],
+          },
           render: function (url, options) {
             expect(getDisplayContactStub).to.be.calledWith(contact, company)
             expect(res.locals.contactDetails).to.deep.equal(contactFormatted)

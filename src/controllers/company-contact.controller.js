@@ -29,6 +29,8 @@ function getContacts (req, res, next) {
         .map(contact => getDisplayArchivedCompanyContact(contact))
 
       res.locals.addContactUrl = `/contact/add?company=${res.locals.company.id}`
+      res.locals.title = ['Contacts', res.locals.company.name, 'Companies']
+
       res.render('company/contacts')
     } catch (error) {
       next(error)

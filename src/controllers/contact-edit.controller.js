@@ -48,8 +48,10 @@ function editDetails (req, res, next) {
 
       if (req.params.contactId) {
         res.locals.backUrl = `/contact/${req.params.contactId}/details`
+        res.locals.title.unshift('Edit')
       } else if (req.query.company) {
         res.locals.backUrl = `/company-contacts/${req.query.company}`
+        res.locals.title = `Add contact at ${res.locals.company.name}`
       }
 
       // Labels and options needed for the form and error display
