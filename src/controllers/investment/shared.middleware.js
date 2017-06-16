@@ -29,10 +29,11 @@ function getProjectDetails (req, res, next, id = req.params.id) {
   Q.spawn(function * () {
     try {
       const projectData = yield getInvestmentProjectSummary(req.session.token, req.params.id)
-      res.locals.valueData = yield getInvestmentValue(req.session.token, req.params.id)
+      const valueData = yield getInvestmentValue(req.session.token, req.params.id)
       res.locals.requirementsData = yield getInvestmentRequirements(req.session.token, req.params.id)
       res.locals.teamData = yield getInvestmentTeam(req.session.token, req.params.id)
       res.locals.projectData = projectData
+      res.locals.valueData = valueData
       res.locals.equityCompany = projectData.investor_company
 
       res.locals.projectData.referral_source_adviser = yield getAdviser(req.session.token, projectData.referral_source_adviser.id)
@@ -42,6 +43,7 @@ function getProjectDetails (req, res, next, id = req.params.id) {
         id: projectData.id,
         projectCode: projectData.project_code,
         phaseName: projectData.phase.name,
+        valuation: valueData.value_complete ? 'Project valued' : 'Not yet valued',
       }
 
       res.locals.title = [projectData.name, 'Investments', projectData.investor_company.name]

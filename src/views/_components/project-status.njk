@@ -1,9 +1,8 @@
 {##
  # @param {string} projectCode Project code
  #
- # @param {string} [id] Project id
- # @param {string} [name] Project name
  # @param {string} [phaseName] Name of project phase
+ # @param {string} [valuation] Valuation status
  #
  # @return {string} HTML for project status
  #
@@ -22,12 +21,20 @@
         {{ projectCode }}
       </dd>
     </dl>
-    {% if phaseName %}
+    {% if phaseName or valuation %}
       <dl class="status-bar__section column-one-quarter">
-        <dt>Phase</dt>
-        <dd class="status-bar__section-title">
-          {{ phaseName }} stage
-        </dd>
+        {% if phaseName %}
+          <dt>Phase</dt>
+          <dd class="status-bar__section-title">
+            {{ phaseName }} stage
+          </dd>
+        {% endif %}
+        {% if valuation %}
+          <dt>Valuation</dt>
+          <dd>
+            {{ valuation }}
+          </dd>
+        {% endif %}
       </dl>
     {% endif %}
   </div>
