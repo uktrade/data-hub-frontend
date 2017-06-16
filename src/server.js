@@ -22,6 +22,7 @@ const user = require('./middleware/user')
 const auth = require('./middleware/auth')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
+const trimBodyParams = require('./middleware/trimBodyParams')
 const logger = require('../config/logger')
 
 const router = require('../config/routes')
@@ -112,6 +113,7 @@ app.use(auth)
 app.use(user)
 app.use(headers)
 
+app.post('*', trimBodyParams())
 // routing
 app.use(slashify())
 app.use('/', router)
