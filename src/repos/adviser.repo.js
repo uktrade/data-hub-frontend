@@ -1,7 +1,8 @@
 const Q = require('q')
-const winston = require('winston')
+
+const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
+const config = require('../../config')
 
 function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/`)
@@ -45,7 +46,7 @@ function adviserSearch (token, term) {
 
         resolve(filtered)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })

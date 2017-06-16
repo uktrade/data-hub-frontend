@@ -1,7 +1,7 @@
-const winston = require('winston')
+const logger = require('../../config/logger')
 
 module.exports = (req, res, next) => {
-  winston.debug('flash:start')
+  logger.debug('flash:start')
   const formErrors = req.flash('error')
 
   res.locals.messages = {
@@ -14,6 +14,6 @@ module.exports = (req, res, next) => {
     res.locals.messages.formErrors = formErrors
   }
 
-  winston.debug('flash:end')
+  logger.debug('flash:end')
   next()
 }

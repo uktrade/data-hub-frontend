@@ -1,6 +1,5 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const contactRepository = require('../repos/contact.repo')
 const router = express.Router()
@@ -19,7 +18,6 @@ function archiveContact (req, res, next) {
 
       res.redirect(`/contact/${req.params.id}/details`)
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
@@ -32,7 +30,6 @@ function unarchiveContact (req, res, next) {
       req.flash('success-message', 'Updated contact record')
       res.redirect(`/contact/${req.params.id}/details`)
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })

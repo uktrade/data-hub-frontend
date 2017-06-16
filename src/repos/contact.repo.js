@@ -1,8 +1,8 @@
-const winston = require('winston')
 const Q = require('q')
 
+const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
+const config = require('../../config')
 
 function getContact (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}`)
@@ -48,7 +48,7 @@ function getContactsForCompany (token, companyId) {
         const company = yield authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
         resolve(company.contacts)
       } catch (error) {
-        winston.error(error)
+        logger.error(error)
         reject(error)
       }
     })

@@ -1,6 +1,6 @@
-const winston = require('winston')
+const config = require('../../config')
+const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
 
 function saveServiceDelivery (token, serviceDelivery) {
   const options = {
@@ -19,7 +19,7 @@ function getServiceDelivery (token, serviceDeliveryId) {
       resolve(response.data)
     })
     .catch((error) => {
-      winston.error(error)
+      logger.error(error)
       reject(error)
     })
   })
@@ -32,7 +32,7 @@ function getServiceDeliveriesForCompany (token, companyId) {
       resolve(response.data)
     })
     .catch((error) => {
-      winston.info(error)
+      logger.error(error)
       resolve([])
     })
   })
@@ -45,7 +45,7 @@ function getServiceDeliveriesForContact (token, contactId) {
       resolve(response.data)
     })
     .catch((error) => {
-      winston.info(error)
+      logger.error(error)
       resolve([])
     })
   })

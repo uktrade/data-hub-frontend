@@ -1,6 +1,6 @@
-const winston = require('winston')
+const config = require('../../config')
+const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
 
 function getInteraction (token, interactionId) {
   return authorisedRequest(token, `${config.apiRoot}/interaction/${interactionId}/`)
@@ -38,7 +38,7 @@ function getInteractionsForContact (token, contactId) {
       resolve(response.results)
     })
     .catch((error) => {
-      winston.info(error)
+      logger.error(error)
       resolve([])
     })
   })

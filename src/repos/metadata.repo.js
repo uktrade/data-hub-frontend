@@ -1,6 +1,6 @@
-const winston = require('winston')
+const config = require('../../config')
+const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
-const config = require('../config')
 
 let redisClient
 
@@ -23,7 +23,7 @@ function getMetadata (path, key) {
             resolve(responseData)
           })
           .catch((reponseError) => {
-            winston.log('error', 'Error fetching metadataRepository for url: %s', url)
+            logger.error('Error fetching metadataRepository for url: %s', url)
             reject(reponseError)
             throw reponseError
           })
@@ -38,7 +38,7 @@ function getMetadata (path, key) {
       return responseData
     })
     .catch((err) => {
-      winston.log('error', 'Error fetching metadataRepository for url: %s', url)
+      logger.error('Error fetching metadataRepository for url: %s', url)
       throw err
     })
 }
@@ -122,7 +122,7 @@ module.exports.fetchAll = (cb) => {
   function checkResults () {
     completeRequests += 1
     if (completeRequests === totalRequests) {
-      winston.log('debug', 'All metadataRepository requests complete')
+      logger.debug('All metadataRepository requests complete')
       cb(caughtErrors)
     }
   }

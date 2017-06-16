@@ -1,5 +1,5 @@
-const config = require('../config')
-const winston = require('winston')
+const config = require('../../config')
+const logger = require('../../config/logger')
 
 function notFound (req, res, next) {
   const error = new Error('Not Found')
@@ -22,7 +22,7 @@ function catchAll (error, req, res, next) {
     return next(error)
   }
 
-  winston[statusCode === 404 ? 'info' : 'error'](error)
+  logger[statusCode === 404 ? 'info' : 'error'](error)
 
   res.status(statusCode)
     .render('errors/index', {

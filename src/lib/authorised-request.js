@@ -1,10 +1,11 @@
 const request = require('request-promise')
-const winston = require('winston')
+
+const logger = require('../../config/logger')
 
 function stripScript (text) {
   const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
   while (SCRIPT_REGEX.test(text)) {
-    winston.warn('Found script tag in response')
+    logger.warn('Found script tag in response')
     text = text.replace(SCRIPT_REGEX, '')
   }
   return text
@@ -58,7 +59,7 @@ module.exports = (token, opts) => {
     requestOptions.headers.Authorization = `Bearer ${token}`
   }
 
-  winston.debug('Send authorised request: ', requestOptions)
+  logger.debug('Send authorised request: ', requestOptions)
   requestOptions.jsonReviver = jsonReviver
 
   return request(requestOptions)

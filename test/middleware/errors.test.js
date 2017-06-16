@@ -1,5 +1,4 @@
 const proxyquire = require('proxyquire')
-const winston = require('winston')
 
 const errorCode404 = 404
 const errorCode403 = 403
@@ -9,13 +8,17 @@ const isDev = true
 describe('Error Middleware Test', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.winstonErrorStub = this.sandbox.stub(winston, 'error')
-    this.winstonInfoStub = this.sandbox.stub(winston, 'info')
+    this.winstonErrorStub = this.sandbox.stub()
+    this.winstonInfoStub = this.sandbox.stub()
 
     this.errorsStub = (isDev) => {
       return proxyquire('../../src/middleware/errors', {
-        '../config': {
+        '../../config': {
           isDev,
+        },
+        '../../config/logger': {
+          error: this.winstonErrorStub,
+          info: this.winstonInfoStub,
         },
       })
     }

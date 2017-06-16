@@ -1,4 +1,4 @@
-const config = require('../config')
+const config = require('../../config')
 const authorisedRequest = require('../lib/authorised-request')
 const { getInflatedDitCompany } = require('../services/company.service')
 

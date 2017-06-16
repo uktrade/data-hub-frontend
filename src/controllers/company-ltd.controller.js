@@ -1,6 +1,5 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const winston = require('winston')
 const Q = require('q')
 const companyService = require('../services/company.service')
 const companyFormService = require('../services/company-form.service')
@@ -38,7 +37,6 @@ function getDetails (req, res, next) {
 
       res.render('company/details-ltd')
     } catch (error) {
-      winston.error(error)
       next(error)
     }
   })
@@ -107,7 +105,6 @@ function postDetails (req, res, next) {
         req.flash('success-message', 'Updated company record')
         res.redirect(`/company/view/ltd/${savedCompany.id}`)
       } catch (response) {
-        winston.debug(response)
         if (response.errors) {
           // Leeloo has inconsistant structure to return errors.
           // Get the errors and then re-render the edit page.

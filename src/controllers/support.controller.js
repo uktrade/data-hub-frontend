@@ -2,7 +2,7 @@ const express = require('express')
 const axios = require('axios')
 const Sniffr = require('sniffr')
 
-const config = require('../config')
+const config = require('../../config')
 
 const router = express.Router()
 
@@ -90,8 +90,10 @@ function thank (req, res) {
   })
 }
 
-router.get('/bug', getBug)
-router.post('/bug', postBug)
-router.get('/thank-you', thank)
+router
+  .route('/support/bug')
+  .get(getBug)
+  .post(postBug)
+router.get('/support/thank-you', thank)
 
 module.exports = { router }
