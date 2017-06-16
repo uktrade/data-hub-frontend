@@ -1,5 +1,5 @@
 const { render } = require('../nunjucks')
-const contactTemplate = '../../src/views/company/contacts.njk'
+const contactTemplate = `${rootPath}/src/views/company/contacts.njk`
 
 describe('Company contacts controller', function () {
   let company

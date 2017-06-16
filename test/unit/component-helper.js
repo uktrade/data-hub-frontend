@@ -7,7 +7,7 @@ const { JSDOM } = require('jsdom')
 const nunjucksConfig = require('~/config/nunjucks')
 
 const nunjucks = nunjucksConfig(null, {
-  root: path.normalize(`${__dirname}/..`),
+  root: path.normalize(rootPath),
 })
 
 const COMPONENTS_PATH = '_components/'

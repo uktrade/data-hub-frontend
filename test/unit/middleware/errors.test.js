@@ -12,7 +12,7 @@ describe('Error Middleware Test', () => {
     this.winstonInfoStub = this.sandbox.stub()
 
     this.errorsStub = (isDev) => {
-      return proxyquire('../../src/middleware/errors', {
+      return proxyquire('~/src/middleware/errors', {
         '../../config': {
           isDev,
         },

@@ -5,7 +5,8 @@
   "globals": {
     "expect": true,
     "proxyquire": true,
-    "sinon": true
+    "sinon": true,
+    "rootPath": true
   },
   "rules": {
     "no-unused-expressions": 0

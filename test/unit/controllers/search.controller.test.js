@@ -197,7 +197,7 @@ describe('Search Controller', () => {
     }
 
     describe('when called with "company" searchType', () => {
-      const companyResponse = require('~/test/data/search/company')
+      const companyResponse = require('~/test/unit/data/search/company')
 
       it('should render results page for company', (done) => {
         const token = '1234'
@@ -249,7 +249,7 @@ describe('Search Controller', () => {
     })
 
     describe('when called with "contact" searchType', () => {
-      const contactResponse = require('~/test/data/search/contact')
+      const contactResponse = require('~/test/unit/data/search/contact')
 
       it('should render results page for contact', (done) => {
         const searchType = 'contact'
