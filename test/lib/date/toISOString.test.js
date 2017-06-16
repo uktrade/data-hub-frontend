@@ -21,9 +21,10 @@ describe('Date toISOString helper', () => {
     })
 
     it('without args should set date to now', () => {
+      const dateStringWithoutSeconds = (new Date()).toISOString().split(':').splice(0, 2).join(':')
       const isoString = toISOString()
 
-      expect(isoString).to.equal((new Date()).toISOString())
+      expect(isoString).to.include(dateStringWithoutSeconds)
     })
   })
 })

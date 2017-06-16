@@ -1,3 +1,4 @@
+const { isEmpty } = require('lodash')
 const router = require('express').Router()
 
 const { getProjectDetails } = require('../shared.middleware')
@@ -6,13 +7,14 @@ const {
   interactionDetailsFormPostMiddleware,
 } = require('../form.middleware')
 
-function getAddInteractionHandler (req, res, next) {
+function createGetInteractionHandler (req, res, next) {
   res.locals.title.unshift('Add interaction')
-  return res.render('investment/interactions/create')
+
+  return res.render('investment/interaction/create')
 }
 
-function postAddInteractionHandler (req, res, next) {
-  if (res.locals.form.errors) {
+function createPostInteractionHandler (req, res, next) {
+  if (!isEmpty(res.locals.form.errors)) {
     return next()
   }
 
@@ -24,16 +26,16 @@ router.param('id', getProjectDetails)
 
 router
   .route('/:id/interaction/create')
-  .get(populateInteractionsFormMiddleware, getAddInteractionHandler)
+  .get(populateInteractionsFormMiddleware, createGetInteractionHandler)
   .post(
     populateInteractionsFormMiddleware,
     interactionDetailsFormPostMiddleware,
-    postAddInteractionHandler,
-    getAddInteractionHandler
+    createPostInteractionHandler,
+    createGetInteractionHandler
   )
 
 module.exports = {
   router,
-  getAddInteractionHandler,
-  postAddInteractionHandler,
+  createGetInteractionHandler,
+  createPostInteractionHandler,
 }
