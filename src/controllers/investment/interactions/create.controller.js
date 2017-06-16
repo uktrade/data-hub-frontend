@@ -7,6 +7,7 @@ const {
 } = require('../form.middleware')
 
 function getAddInteractionHandler (req, res, next) {
+  res.locals.title.unshift('Add interaction')
   return res.render('investment/interactions/create')
 }
 

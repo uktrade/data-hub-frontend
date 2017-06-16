@@ -29,6 +29,8 @@ function getInteractions (req, res, next) {
         res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
       }
 
+      res.locals.title = ['Interactions', res.locals.company.name, 'Companies']
+
       res.render('company/interactions')
     } catch (error) {
       next(error)

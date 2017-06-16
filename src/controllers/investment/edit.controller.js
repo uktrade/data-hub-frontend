@@ -15,10 +15,12 @@ const templateData = {
 }
 
 function editDetailsGet (req, res) {
+  res.locals.title.unshift('Edit details')
   res.render('investment/details-edit', templateData)
 }
 
 function editValueGet (req, res) {
+  res.locals.title.unshift('Edit value')
   res.render('investment/value-edit', templateData)
 }
 

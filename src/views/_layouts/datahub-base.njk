@@ -17,6 +17,8 @@
   {% endif %}
 {% endblock %}
 
+{% block head_title_content %}{{ [title, 'DIT Data Hub'] | flatten | removeNilAndEmpty | join(' - ') }}{% endblock %}
+
 {% block header_menu %}
   <nav>
     <ul class="proposition-menu">

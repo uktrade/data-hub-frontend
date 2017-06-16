@@ -27,7 +27,11 @@ function getBug (req, res) {
   const sniffr = new Sniffr()
   sniffr.sniff(req.headers['user-agent'])
   data.browser = `${capitalize(sniffr.browser.name)} ${sniffr.browser.version[0]}.${sniffr.browser.version[1]} - ${capitalize(sniffr.os.name)} ${sniffr.os.version[0]}.${sniffr.os.version[1]}`
-  res.render('support/bug', { data, errors: req.errors })
+  res.render('support/bug', {
+    title: 'Support',
+    data,
+    errors: req.errors,
+  })
 }
 
 function checkForm (req) {
@@ -72,7 +76,7 @@ function postBug (req, res) {
   return postToZen(ticket)
     .then(({ data }) => {
       req.flash('success-message', `Created new bug, reference number ${data.ticket.id}`)
-      res.redirect('/support/thank')
+      res.redirect('/support/thank-you')
     })
     .catch((error) => {
       req.errors = { message: error.message }
@@ -81,11 +85,13 @@ function postBug (req, res) {
 }
 
 function thank (req, res) {
-  res.render('support/thank')
+  res.render('support/thank', {
+    title: ['Thank you', 'Support'],
+  })
 }
 
 router.get('/bug', getBug)
 router.post('/bug', postBug)
-router.get('/thank', thank)
+router.get('/thank-you', thank)
 
 module.exports = { router }

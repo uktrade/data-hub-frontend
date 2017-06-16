@@ -26,6 +26,7 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         projectData: {},
+        title: [],
       },
       render: (template, data) => {
         try {
@@ -58,6 +59,7 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         projectData: {},
+        title: [],
       },
       render: (template, data) => {
         try {
@@ -106,6 +108,7 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         projectData: {},
+        title: [],
       },
       render: (template, data) => {
         try {
@@ -152,6 +155,7 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         projectData: {},
+        title: [],
       },
       render: (template, data) => {
         try {
@@ -198,6 +202,7 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         projectData: {},
+        title: [],
       },
       render: (template, data) => {
         try {

@@ -68,6 +68,7 @@ function searchAction (req, res, next) {
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
       res.render(`search/results-${searchType}`, {
+        title: [searchTerm, `Search results`],
         searchTerm,
         searchType,
         searchEntityResultsData,

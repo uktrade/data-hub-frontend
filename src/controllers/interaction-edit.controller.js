@@ -68,6 +68,7 @@ function editDetails (req, res, next) {
       res.locals.serviceOfferOptions = yield metadataRepository.getServiceOffers(token)
       res.locals.serviceProviderOptions = metadataRepository.teams
       res.locals.labels = interactionLabels
+      res.locals.title = `Add interaction for ${res.locals.company.name}`
 
       res.render('interaction/interaction-edit')
     } catch (error) {

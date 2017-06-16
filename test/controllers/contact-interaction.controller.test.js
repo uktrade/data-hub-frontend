@@ -29,7 +29,10 @@ describe('Contact interactions controller', function () {
         params: { contactId: '1' },
       }
       const res = {
-        locals: { contact },
+        locals: {
+          contact,
+          title: [],
+        },
         render: function () {
           expect(contactDataService.getContactInteractionsAndServiceDeliveries).to.be.calledWith(req.session.token, req.params.contactId)
           done()
@@ -44,7 +47,10 @@ describe('Contact interactions controller', function () {
         params: { contactId: '1' },
       }
       const res = {
-        locals: { contact },
+        locals: {
+          contact,
+          title: [],
+        },
         render: function (template, options) {
           expect(interactionFormattingService.getDisplayContactInteraction).to.be.calledWith(interaction)
           done()
@@ -59,7 +65,10 @@ describe('Contact interactions controller', function () {
         params: { contactId: '1' },
       }
       const res = {
-        locals: { contact },
+        locals: {
+          contact,
+          title: [],
+        },
         render: function (template, options) {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(1)

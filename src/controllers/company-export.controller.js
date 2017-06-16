@@ -38,6 +38,8 @@ function common (req, res) {
       try {
         res.locals.tab = 'exports'
         res.locals.company = yield getInflatedDitCompany(req.session.token, req.params.id)
+        res.locals.title = ['Exports', res.locals.company.name, 'Companies']
+
         getCommonTitlesAndlinks(req, res, res.locals.company)
         resolve()
       } catch (error) {
@@ -94,6 +96,8 @@ function edit (req, res, next) {
         data.export_to_countries = res.locals.company.export_to_countries.map(country => country.id)
         data.future_interest_countries = res.locals.company.future_interest_countries.map(country => country.id)
       }
+
+      res.locals.title.unshift('Edit')
 
       res.render('company/exports-edit', data)
     } catch (error) {

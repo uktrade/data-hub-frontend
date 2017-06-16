@@ -15,6 +15,8 @@ function getInteractions (req, res, next) {
       res.locals.interactions = interactions.map(interaction => interactionFormattingService.getDisplayContactInteraction(interaction))
       res.locals.addInteractionUrl = `/interaction/add-step-1/?contact=${res.locals.contact.id}`
 
+      res.locals.title.unshift('Interactions')
+
       res.render('contact/interactions')
     } catch (error) {
       winston.error(error)

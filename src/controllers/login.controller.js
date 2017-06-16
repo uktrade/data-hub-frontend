@@ -27,7 +27,9 @@ function authenticate (username, password) {
 }
 
 function login (req, res) {
-  res.render('login.njk')
+  res.render('login.njk', {
+    title: 'Sign in',
+  })
 }
 
 function loginToApi (req, res, next) {
@@ -54,6 +56,7 @@ function loginToApi (req, res, next) {
 }
 
 function logout (req, res) {
+  req.session.returnTo = null
   req.session.token = null
   req.session.user = null
   req.flash('success-message', 'Signed out')

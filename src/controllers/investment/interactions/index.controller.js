@@ -13,6 +13,8 @@ function getInvestmentInteractions (req, res, next) {
         const interactionsResponse = yield getInteractionsForInvestment(req.session.token, req.params.id)
         const interactions = interactionsResponse.results.map(getDisplayCompanyInteraction)
 
+        res.locals.title.unshift('Interactions')
+
         return res.render('investment/interactions/index', {
           currentNavItem: 'interactions',
           interactions,

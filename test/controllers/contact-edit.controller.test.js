@@ -96,6 +96,7 @@ describe('Contact controller, edit', function () {
         res = {
           locals: {
             contact,
+            title: [],
           },
         }
       })
@@ -143,7 +144,9 @@ describe('Contact controller, edit', function () {
           params: {},
         }
         res = {
-          locals: {},
+          locals: {
+            title: [],
+          },
         }
       })
 
@@ -195,7 +198,11 @@ describe('Contact controller, edit', function () {
             company: '1234',
           },
         }
-        res = { locals: {} }
+        res = {
+          locals: {
+            title: [],
+          },
+        }
       })
       it('should use the pre posted form for edit', function (done) {
         res.render = function () {

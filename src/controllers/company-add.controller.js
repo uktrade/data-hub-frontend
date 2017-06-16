@@ -12,6 +12,7 @@ const router = express.Router()
 
 function getAddStepOne (req, res, next) {
   res.render('company/add-step-1.njk', {
+    title: 'Add company',
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
     company: req.body,
@@ -80,6 +81,7 @@ function getAddStepTwo (req, res, next) {
 
   if (!searchTerm) {
     return res.render('company/add-step-2.njk', {
+      title: 'Add company',
       companyTypeOptions,
       businessType,
       country,

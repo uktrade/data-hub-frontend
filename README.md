@@ -198,6 +198,7 @@ to completely override everything inside `head` element if needed or just the se
     - `header_menu` - wraps the header menu
   - `body_main` - wraps the main content block
     - `body_main_header` - contains the header of the main block
+    - `body_main_header_content` - contains the heading of the main block
     - `body_main_content` - contains main content (inside main#content)
   - `body_footer` - wraps site footer container (inside body > footer)
   - `body_footer_content` - contains content inside site footer

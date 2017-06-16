@@ -27,6 +27,7 @@ function getDetails (req, res, next) {
         oneListAccountManager: 'None',
       }
       res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
+      res.locals.title = [company.name, 'Companies']
 
       res.render('company/details-foreign')
     } catch (error) {
@@ -58,7 +59,9 @@ function addDetails (req, res, next) {
   }
   res.locals.businessTypeName = req.query.business_type
   res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
-  res.render(`company/edit-foreign`)
+  res.locals.title = 'Add company'
+
+  res.render('company/edit-foreign')
 }
 
 function editDetails (req, res, next) {
@@ -72,6 +75,7 @@ function editDetails (req, res, next) {
       }
       res.locals.businessTypeName = company.business_type.name
       res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
+      res.locals.title = ['Edit', company.name, 'Companies']
       res.render(`company/edit-foreign`)
     } catch (error) {
       next(error)

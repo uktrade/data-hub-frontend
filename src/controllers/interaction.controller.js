@@ -53,6 +53,7 @@ function getAddStep1 (req, res) {
   }
 
   res.render('interaction/add-step-1.njk', {
+    title: ['Interaction type', 'Add interaction'],
     query: req.query,
     interactionTypeColA,
     interactionTypeColB,
@@ -77,10 +78,12 @@ function postAddStep1 (req, res) {
 }
 
 function getInteractionDetails (req, res, next) {
-  res.locals.interactionDetails = getDisplayInteraction(res.locals.interaction)
-  res.locals.interactionLabels = interactionLabels
-  res.locals.interactionDisplayOrder = interactonDisplayOrder
-  res.render('interaction/interaction-details')
+  res.render('interaction/interaction-details', {
+    title: `Interaction with ${res.locals.interaction.company.name}`,
+    interactionDetails: getDisplayInteraction(res.locals.interaction),
+    interactionLabels: interactionLabels,
+    interactionDisplayOrder: interactonDisplayOrder,
+  })
 }
 
 router.get('/interaction/add-step-1/', getAddStep1)

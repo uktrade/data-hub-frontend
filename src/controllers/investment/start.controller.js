@@ -42,6 +42,7 @@ function getHandler (req, res, next) {
       }
 
       res.render('investment/start', {
+        title: 'Add investment project',
         clientCompany,
         clientCompanyInvestments,
         searchTerm,
@@ -65,6 +66,7 @@ function postHandler (req, res, next) {
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
         res.render('investment/start', {
+          title: 'Add investment project',
           clientCompany,
           errors: {
             isEquitySource: 'Please select whether this company will be the source of foreign equity',

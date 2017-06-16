@@ -44,6 +44,8 @@ function getProjectDetails (req, res, next, id = req.params.id) {
         phaseName: projectData.phase.name,
       }
 
+      res.locals.title = [projectData.name, 'Investments', projectData.investor_company.name]
+
       next()
     } catch (error) {
       next(error)

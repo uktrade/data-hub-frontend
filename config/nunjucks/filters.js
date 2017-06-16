@@ -1,5 +1,4 @@
 const nunjucks = require('nunjucks')
-const _ = require('lodash')
 
 const {
   isArray,
@@ -7,6 +6,9 @@ const {
   isEmpty,
   pickBy,
   isNil,
+  keys,
+  values,
+  flatten,
 } = require('lodash')
 
 function isNotEmpty (value) {
@@ -16,9 +18,11 @@ function isNotEmpty (value) {
 const filters = {
   stringify: JSON.stringify,
 
-  values: _.values,
+  values,
 
-  keys: _.keys,
+  keys,
+
+  flatten,
 
   highlight: (string, searchTerm) => {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')
