@@ -35,3 +35,4 @@ stats.json
 .nyc_output
 coverage
 test-results.xml
+selenium-debug.log
