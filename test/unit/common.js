@@ -9,6 +9,7 @@ chai.use(require('chai-as-promised'))
 global.expect = chai.expect
 global.sinon = sinon
 global.proxyquire = proxyquire
+global.rootPath = `${process.cwd()}`
 
 chai.config.truncateThreshold = 0
 

@@ -2,7 +2,7 @@
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 const ArchiveForm = require('~/src/javascripts/archive-form')
-const { domTokenToArray } = require('~/test/component-helper')
+const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `
   <div class="archive-panel js-hidden">

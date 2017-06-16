@@ -1,4 +1,4 @@
-const investmentProjectAuditData = require('~/test/data/investment/audit-log.json')
+const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
 
 const token = 'abcd'
 

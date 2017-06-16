@@ -3,12 +3,15 @@ const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
 const tradeElementsFilters = require(`@uktrade/trade_elements/dist/nunjucks/filters`)
-const dataHubFilters = require('../config/nunjucks/filters')
+const dataHubFilters = require('~/config/nunjucks/filters')
 
 const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)
 
 nunjucks.configure('views')
-const nunenv = nunjucks.configure([`${__dirname}/../src/views`, `${__dirname}/../node_modules/@uktrade/trade_elements/dist/nunjucks`], {
+const nunenv = nunjucks.configure([
+  `${rootPath}/src/views`,
+  `${rootPath}/node_modules/@uktrade/trade_elements/dist/nunjucks`,
+], {
   autoescape: true,
 })
 
