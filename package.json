@@ -68,6 +68,7 @@
     "build": "npm run clean && npm run sass:compile && npm run js",
     "test": "mocha",
     "test:watch": "npm test -- -w",
+    "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test",
     "lint": "npm run lint:js && npm run lint:sass",
     "lint:js": "eslint ./test ./src *.js",
@@ -99,11 +100,17 @@
   },
   "devDependencies": {
     "chai-as-promised": "^6.0.0",
+    "chromedriver": "^2.30.1",
     "codeclimate-test-reporter": "^0.4.1",
+    "cucumber": "^2.3.1",
     "eslint-plugin-mocha": "^4.9.0",
     "html": "^1.0.0",
     "js-beautify": "^1.6.14",
     "mocha-circleci-reporter": "0.0.2",
-    "pre-commit": "^1.2.2"
+    "nightwatch": "^0.9.16",
+    "nightwatch-cucumber": "^7.1.9",
+    "pre-commit": "^1.2.2",
+    "selenium-server": "^3.4.0",
+    "shortid": "^2.2.8"
   }
 }
