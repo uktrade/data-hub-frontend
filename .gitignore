@@ -32,7 +32,9 @@ npm*.log
 yarn-error.log
 stats.json
 
+# Tests
 .nyc_output
 coverage
 test-results.xml
 selenium-debug.log
+test/acceptance/screenshots/

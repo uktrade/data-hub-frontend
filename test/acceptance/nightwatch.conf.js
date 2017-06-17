@@ -28,6 +28,11 @@ module.exports = {
   test_settings: {
     default: {
       launch_url: '',
+      screenshots: {
+        enabled: true,
+        on_failure: true,
+        path: 'test/acceptance/screenshots',
+      },
       desiredCapabilities: {
         browserName: 'chrome',
         javascriptEnabled: true,
