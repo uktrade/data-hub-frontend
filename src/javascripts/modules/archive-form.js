@@ -1,87 +1,153 @@
-/* eslint no-new: 0 */
-const { hide, show, removeClass, addClass } = require('../../lib/element-stuff')
+const { hide, show, addClass, insertAfter } = require('../../lib/element-stuff')
 
-class ArchiveForm {
-  constructor (element) {
-    if (!element) return
+/**
+ * ArchiveForm
+ *
+ * Enhances the archive form so that it is hidden from view until shown by the user
+ * and then when the user submits the form it carries out local validation before the form
+ * can be submitted
+ */
+const ArchiveForm = {
 
-    this.cacheElements(element)
+  selector: '.js-archiveForm',
+
+  init (wrapper = document) {
+    this.wrapper = wrapper
+    this.cacheElements()
     this.attachEvents()
 
-    show(this.showArchiveFormButton)
-    hide(this.archiveForm)
+    // If the form contains an error, show it expanded so the user
+    // can see the error, otherwise hide it until asked to show it.
+    if (this.errorElement) {
+      this.showForm()
+    } else {
+      this.hideForm()
+    }
 
-    this.dropdownChange()
+    return this
+  },
 
-    removeClass(this.archivePanelWrapper, 'js-hidden')
-    this.showingError = false
-  }
+  /**
+   *
+   * Finds important elements for this component and caches them
+   * to make it easier to use them
+   */
+  cacheElements () {
+    this.archiveForm = this.wrapper.querySelector(this.selector)
+    this.document = (typeof document !== 'undefined') ? document : this.archiveForm.ownerDocument
 
-  cacheElements (element) {
-    this.archivePanelWrapper = element
-    this.showArchiveFormButton = this.archivePanelWrapper.querySelector('.archive-panel__show-button')
-    this.hideArchiveFormButton = this.archivePanelWrapper.querySelector('.js-button-cancel')
-    this.archiveForm = this.archivePanelWrapper.querySelector('.archive-panel__form')
-    this.dropdownElement = this.archivePanelWrapper.querySelector('select[name=archived_reason]')
-    this.otherTextWrapper = this.archivePanelWrapper.querySelector('#archived_reason_other-wrapper')
-    this.otherTextInput = this.otherTextWrapper.querySelector('input')
-  }
+    this.reasonLabel = this.archiveForm.querySelector('[for="archived_reason"]')
+    this.reasonInputElement = this.archiveForm.querySelector('[name=archived_reason]')
+    this.otherTextInput = this.archiveForm.querySelector('[name=archived_reason_other]')
+    this.fieldset = this.archiveForm.querySelector('fieldset')
+    this.otherTextWrapper = this.otherTextInput.parentElement
+    const saveButton = this.archiveForm.querySelector('[type="submit"]')
 
+    this.errorElement = this.archiveForm.querySelector('.js-errorMessage')
+
+    // Add buttons that should only be visable to JS users
+
+    this.hideArchiveFormButton = this.createCancelButton()
+    insertAfter(this.hideArchiveFormButton, saveButton)
+
+    this.showArchiveFormButton = this.createShowButton()
+    this.archiveForm.parentNode.insertBefore(this.showArchiveFormButton, this.archiveForm)
+  },
+
+  createShowButton () {
+    const showArchiveFormButton = this.document.createElement('a')
+    showArchiveFormButton.classList.add('button')
+    showArchiveFormButton.href = '#'
+    showArchiveFormButton.textContent = 'Archive'
+    return showArchiveFormButton
+  },
+
+  createCancelButton () {
+    const hideArchiveFormButton = this.document.createElement('a')
+    hideArchiveFormButton.classList.add('button-link')
+    hideArchiveFormButton.href = '#'
+    hideArchiveFormButton.textContent = 'Cancel'
+
+    return hideArchiveFormButton
+  },
+
+  /**
+   * Attaches event handlers to key elements within the component.
+   *
+   */
+  attachEvents () {
+    this.showArchiveFormButton.addEventListener('click', this.showForm.bind(this), true)
+    this.hideArchiveFormButton.addEventListener('click', this.hideForm.bind(this), true)
+    this.archiveForm.addEventListener('submit', this.validateForm.bind(this), true)
+  },
+
+  /**
+   * Shows an error, if one has not already been shown. Key styles are
+   * added to make it obvious to the user that there is an issue
+   *
+   */
   showError () {
-    if (this.showingError) return
-    const label = this.archivePanelWrapper.querySelector('#archived_reason-wrapper label')
-    label.innerHTML = label.innerHTML + '<span class="error-message">You cannot archive a company without a reason</span>'
-    addClass(this.archivePanelWrapper, 'error')
-    this.showingError = true
-  }
+    if (this.errorElement) {
+      return
+    }
 
-  showFormClick (event) {
-    event.preventDefault()
+    this.errorElement = this.document.createElement('span')
+    this.errorElement.classList.add('error-message')
+    this.errorElement.textContent = 'You must provide a reason to archive.'
+
+    this.reasonLabel.appendChild(this.errorElement)
+    addClass(this.fieldset, 'error')
+  },
+
+  /**
+   * Make the archive form visible. If called from an event handler
+   * then the default event behaviour is cancelled so that the browser does not
+   * try and navigate to a url
+   *
+   * @param {object} event
+   *
+   */
+  showForm (event) {
+    if (event) {
+      event.preventDefault()
+    }
+
     hide(this.showArchiveFormButton)
     show(this.archiveForm)
-  }
+  },
 
-  hideFormClick (event) {
-    event.preventDefault()
+  /**
+   * Hides the form if it is visible, normally then the user cancels the form
+   * The event is cancelled to stop the page jumping.
+   *
+   * @param {any} event
+   *
+   */
+  hideForm (event) {
+    if (event) {
+      event.preventDefault()
+    }
+
     hide(this.archiveForm)
     show(this.showArchiveFormButton)
-  }
+  },
 
-  dropdownChange () {
-    const value = this.dropdownElement.value
-    if (value === 'Other') {
-      show(this.otherTextWrapper)
-    } else {
-      hide(this.otherTextWrapper)
-      this.otherTextInput.value = ''
-    }
-  }
-
+  /**
+   * Checks that the user has provided an archive reason, otherwise an error
+   * is displayed and the form does not submit.
+   *
+   * @param {any} event
+   *
+   */
   validateForm (event) {
-    if (this.dropdownElement.value === '' ||
-      (this.dropdownElement.value === 'Other' && this.otherTextInput.value === '')) {
+    if (this.reasonInputElement.value === '' ||
+      (this.reasonInputElement.value.toLowerCase() === 'other' && this.otherTextInput.value === '')) {
       this.showError()
       event.preventDefault()
       return false
     }
-
     return true
-  }
-
-  attachEvents () {
-    this.showArchiveFormButton.addEventListener('click', this.showFormClick.bind(this), true)
-    this.hideArchiveFormButton.addEventListener('click', this.hideFormClick.bind(this), true)
-    this.dropdownElement.addEventListener('change', this.dropdownChange.bind(this), true)
-    this.archiveForm.addEventListener('submit', this.validateForm, true)
-  }
-
-  static init () {
-  // If this control is loaded on a real page, activate,
-  // otherwise it's being used in a test container
-    if (typeof document !== 'undefined') {
-      new ArchiveForm(document.querySelector('.archive-panel'))
-    }
-  }
+  },
 }
 
 module.exports = ArchiveForm

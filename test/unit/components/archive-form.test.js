@@ -6,32 +6,27 @@ const ArchiveForm = require('~/src/javascripts/modules/archive-form')
 const { domTokenToArray } = require('~/test/component-helper')
 
 const HTML = `
-  <div class="js-archiveForm">
-    <p class="hidden js-revealButton" aria-hidden="true">
-      <a href="#">Archive company</a>
-    </p>
-    <form action="/company/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-form" method="POST">
-      <input type="hidden" name="_csrf" value="1234">
-      <fieldset class="js-fieldset">
+  <form action="/company/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-archiveForm" method="POST">
+    <input type="hidden" name="_csrf" value="1234">
+    <fieldset>
       <legend class="visually-hidden" aria-visible="false">Archive reason</legend>
-        <div class='form-group' id="archived_reason-wrapper">
-          <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
-          <select id="archived_reason" class="form-control" name="archived_reason">
-            <option value=''>Select a value</option>
-            <option value='Company is dissolved'>Company is dissolved</option>
-            <option value='Other'>Other</option>
-          </select>
-        </div>
-        <div class="form-group " id="archived_reason_other-wrapper">
-          <label class="form-label-bold" for="archived_reason_other">Other</label>
-          <input id="archived_reason_other" class="form-control" name="archived_reason_other" type="text" />
-        </div>
-      </fieldset>
-      <div class="save-bar">
-        <button class="button button--save" type="submit">Archive</button>
+      <div class='form-group' id="archived_reason-wrapper">
+        <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
+        <select id="archived_reason" class="form-control" name="archived_reason">
+          <option value=''>Select a value</option>
+          <option value='Company is dissolved'>Company is dissolved</option>
+          <option value='Other'>Other</option>
+        </select>
       </div>
-    </form>
-  </div>
+      <div class="form-group " id="archived_reason_other-wrapper">
+        <label class="form-label-bold" for="archived_reason_other">Other</label>
+        <input id="archived_reason_other" class="form-control" name="archived_reason_other" type="text" />
+      </div>
+    </fieldset>
+    <div class="save-bar">
+      <button class="button button--save" type="submit">Archive</button>
+    </div>
+  </form>
 `
 const event = {
   preventDefault: function () {},
@@ -41,10 +36,8 @@ describe('archive form control', function () {
   beforeEach(() => {
     const { window } = new JSDOM(HTML)
     this.document = window.document
-    this.wrapper = this.document.querySelector('.js-archiveForm')
-    this.archiveFormControl = new ArchiveForm(this.wrapper)
-    this.form = this.document.querySelector('.js-form')
-    this.showButton = this.document.querySelector('.js-revealButton')
+    this.form = this.document.querySelector('.js-archiveForm')
+    this.archiveFormControl = new ArchiveForm(this.form)
     this.otherWrapper = this.document.querySelector('#archived_reason_other-wrapper')
     this.otherField = this.document.querySelector('#archived_reason_other')
     this.dropdownField = this.document.querySelector('#archived_reason')
@@ -54,20 +47,34 @@ describe('archive form control', function () {
     expect(domTokenToArray(this.form.classList)).to.include('hidden')
   })
 
+  it('should clear the js-hidden class once ready', () => {
+    const fieldSet = this.form.querySelector('fieldset')
+    expect(domTokenToArray(fieldSet.classList)).to.not.include('js-hidden')
+  })
+
+  it('it should add a button to reveal the form', () => {
+    const prev = this.form.previousSibling
+    expect(domTokenToArray(prev.classList)).to.include('button')
+    expect(prev.textContent).to.include('Archive')
+  })
+
   it('should show the reveal button', () => {
-    expect(domTokenToArray(this.showButton.classList)).to.not.include('hidden')
+    const revealButton = this.form.previousSibling
+    expect(domTokenToArray(revealButton.classList)).to.not.include('hidden')
   })
 
   it('should show the form when you press the reveal button', () => {
+    const revealButton = this.form.previousSibling
     this.archiveFormControl.showForm(event)
     expect(domTokenToArray(this.form.classList)).to.not.include('hidden')
-    expect(domTokenToArray(this.showButton.classList)).to.include('hidden')
+    expect(domTokenToArray(revealButton.classList)).to.include('hidden')
   })
 
   it('hide the form when you press cancel', () => {
+    const revealButton = this.form.previousSibling
     this.archiveFormControl.hideForm(event)
     expect(domTokenToArray(this.form.classList)).to.include('hidden')
-    expect(domTokenToArray(this.showButton.classList)).to.not.include('hidden')
+    expect(domTokenToArray(revealButton.classList)).to.not.include('hidden')
   })
 
   it('should hide the other field when the form is revealed if it has no value', () => {
@@ -104,15 +111,11 @@ describe('archive form control', function () {
     expect(this.otherField.value).to.include('')
   })
 
-  it('removes the js hidden class, used to avoid flicker when the page starts', () => {
-    expect(domTokenToArray(this.wrapper.classList)).to.not.include('js-hidden')
-  })
-
   it('should alert the user if then try to submit a form with no value', () => {
     const valid = this.archiveFormControl.validateForm(event)
     expect(valid).to.equal(false)
 
-    const fieldsetElement = this.wrapper.querySelector('.js-fieldset')
+    const fieldsetElement = this.form.querySelector('fieldset')
     expect(domTokenToArray(fieldsetElement.classList)).to.include('error')
     const errorMessage = this.document.querySelector('#archived_reason-wrapper .form-label-bold .error-message')
     expect(errorMessage).to.not.be.null

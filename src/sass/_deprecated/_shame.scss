@@ -263,7 +263,8 @@ hr {
   }
 }
 
-.hidden {
+.hidden,
+.js-enabled .js-hidden  {
   display: none;
 }
 
