@@ -7,9 +7,9 @@ const detailsController = require('./details.controller')
 const editController = require('./edit.controller')
 const auditController = require('./audit.controller')
 const teamController = require('./team.controller')
-const interactionsController = require('./interactions/index.controller')
-const createInteractionController = require('./interactions/create.controller')
-const editInteractionController = require('./interactions/edit.controller')
+const interactionsController = require('./interaction/index.controller')
+const createInteractionController = require('./interaction/create.controller')
+const editInteractionController = require('./interaction/edit.controller')
 const archiveController = require('./archive.controller')
 
 function handleEmptyMiddleware (req, res, next) {

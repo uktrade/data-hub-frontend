@@ -1,9 +1,8 @@
-/* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
 const ArchiveForm = require('~/src/javascripts/modules/archive-form')
-const { domTokenToArray } = require('~/test/component-helper')
+const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `
   <form action="/company/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-archiveForm" method="POST">
@@ -37,7 +36,7 @@ describe('archive form control', function () {
     const { window } = new JSDOM(HTML)
     this.document = window.document
     this.form = this.document.querySelector('.js-archiveForm')
-    this.archiveFormControl = new ArchiveForm(this.form)
+    this.archiveFormControl = ArchiveForm.init(this.document)
     this.otherWrapper = this.document.querySelector('#archived_reason_other-wrapper')
     this.otherField = this.document.querySelector('#archived_reason_other')
     this.dropdownField = this.document.querySelector('#archived_reason')
@@ -75,40 +74,6 @@ describe('archive form control', function () {
     this.archiveFormControl.hideForm(event)
     expect(domTokenToArray(this.form.classList)).to.include('hidden')
     expect(domTokenToArray(revealButton.classList)).to.not.include('hidden')
-  })
-
-  it('should hide the other field when the form is revealed if it has no value', () => {
-    this.archiveFormControl.showForm(event)
-    expect(domTokenToArray(this.otherWrapper.classList)).to.include('hidden')
-  })
-
-  it('should show the other field when the form is revealed and it has a value', () => {
-    this.otherField.value = 'Fred'
-    this.archiveFormControl.showForm(event)
-    expect(domTokenToArray(this.otherWrapper.classList)).to.include('hidden')
-  })
-
-  it('should show the other field if the dropdown changes to other', () => {
-    this.dropdownField.value = 'Other'
-    this.archiveFormControl.reasonUpdate()
-    expect(domTokenToArray(this.otherWrapper.classList)).to.not.include('hidden')
-  })
-
-  it('should hide the other field if the dropdown changes to other then back to a valid value', () => {
-    this.dropdownField.value = 'Other'
-    this.archiveFormControl.reasonUpdate()
-    this.dropdownField.value = 'Company is dissolved'
-    this.archiveFormControl.reasonUpdate()
-    expect(domTokenToArray(this.otherWrapper.classList)).to.include('hidden')
-  })
-
-  it('should clear the other value if the field is not needed', () => {
-    this.dropdownField.value = 'Other'
-    this.otherField.value = 'Something'
-    this.archiveFormControl.reasonUpdate()
-    this.dropdownField.value = 'Company is dissolved'
-    this.archiveFormControl.reasonUpdate()
-    expect(this.otherField.value).to.include('')
   })
 
   it('should alert the user if then try to submit a form with no value', () => {

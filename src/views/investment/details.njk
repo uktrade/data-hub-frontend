@@ -34,14 +34,12 @@
   <h2 class="heading-medium">Archive project</h2>
   <p>Archive this project if it has been lost or abandoned</p>
 
-  {% component 'archive-form',
-    {
-      label: 'Archive reason',
-      options: ['Abandoned', 'Lost'],
-      csrfToken: csrfToken,
-      error: form.errors.reason
-    }
-  %}
+  {% component 'archive-form', {
+    label: 'Archive reason',
+    options: ['Abandoned', 'Lost'],
+    csrfToken: csrfToken,
+    error: form.errors.reason
+  } %}
 {% endif %}
 
   <h2 class="heading-medium">Requirements and location</h2>
