@@ -95,7 +95,7 @@
   "author": "Zac Tolley <zac@thetolleys.com>",
   "license": "MIT",
   "engines": {
-    "node": "6.10.2"
+    "node": "8.1.0"
   },
   "devDependencies": {
     "chai-as-promised": "^6.0.0",
