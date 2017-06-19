@@ -1,4 +1,3 @@
-const Q = require('q')
 const interactionRepository = require('../repos/interaction.repo')
 const { getPropertyId, nullEmptyFields } = require('../lib/property-helpers')
 
@@ -37,23 +36,21 @@ function getInteractionAsFormData (interaction) {
  * format after the server has saved it
  */
 function saveInteractionForm (token, interactionForm) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        const dataToSave = nullEmptyFields(interactionForm)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const dataToSave = nullEmptyFields(interactionForm)
 
-        // convert the date entered
-        dataToSave.date = `${dataToSave.date_year}-${dataToSave.date_month}-${dataToSave.date_day}T00:00:00.00Z`
-        delete dataToSave.date_year
-        delete dataToSave.date_month
-        delete dataToSave.date_day
+      // convert the date entered
+      dataToSave.date = `${dataToSave.date_year}-${dataToSave.date_month}-${dataToSave.date_day}T00:00:00.00Z`
+      delete dataToSave.date_year
+      delete dataToSave.date_month
+      delete dataToSave.date_day
 
-        const savedInteraction = yield interactionRepository.saveInteraction(token, dataToSave)
-        resolve(savedInteraction)
-      } catch (error) {
-        reject(error)
-      }
-    })
+      const savedInteraction = await interactionRepository.saveInteraction(token, dataToSave)
+      resolve(savedInteraction)
+    } catch (error) {
+      reject(error)
+    }
   })
 }
 

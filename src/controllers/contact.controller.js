@@ -1,5 +1,4 @@
 const express = require('express')
-const Q = require('q')
 
 const contactRepository = require('../repos/contact.repo')
 const companyRepository = require('../repos/company.repo')
@@ -14,21 +13,19 @@ const reasonForArchiveOptions = [
   'Contact changed role/responsibility',
 ]
 
-function getCommon (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      res.locals.id = req.params.contactId
-      res.locals.contact = yield contactRepository.getContact(req.session.token, req.params.contactId)
-      res.locals.company = yield companyRepository.getDitCompany(req.session.token, res.locals.contact.company.id)
-      res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.company)
-      res.locals.reasonForArchiveOptions = reasonForArchiveOptions
-      res.locals.title = [`${res.locals.contact.first_name} ${res.locals.contact.last_name}`, 'Contacts']
+async function getCommon (req, res, next) {
+  try {
+    res.locals.id = req.params.contactId
+    res.locals.contact = await contactRepository.getContact(req.session.token, req.params.contactId)
+    res.locals.company = await companyRepository.getDitCompany(req.session.token, res.locals.contact.company.id)
+    res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.company)
+    res.locals.reasonForArchiveOptions = reasonForArchiveOptions
+    res.locals.title = [`${res.locals.contact.first_name} ${res.locals.contact.last_name}`, 'Contacts']
 
-      next()
-    } catch (error) {
-      next(error)
-    }
-  })
+    next()
+  } catch (error) {
+    next(error)
+  }
 }
 
 function getDetails (req, res, next) {

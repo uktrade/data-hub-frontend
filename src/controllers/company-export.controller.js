@@ -1,5 +1,4 @@
 const express = require('express')
-const Q = require('q')
 const metadataRepository = require('../repos/metadata.repo')
 const { saveCompany, getDitCompany } = require('../repos/company.repo')
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/company.service')
@@ -33,19 +32,17 @@ function normaliseToArray (formValue) {
  *
  */
 function common (req, res) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        res.locals.tab = 'exports'
-        res.locals.company = yield getInflatedDitCompany(req.session.token, req.params.id)
-        res.locals.title = ['Exports', res.locals.company.name, 'Companies']
+  return new Promise(async (resolve, reject) => {
+    try {
+      res.locals.tab = 'exports'
+      res.locals.company = await getInflatedDitCompany(req.session.token, req.params.id)
+      res.locals.title = ['Exports', res.locals.company.name, 'Companies']
 
-        getCommonTitlesAndlinks(req, res, res.locals.company)
-        resolve()
-      } catch (error) {
-        reject(error)
-      }
-    })
+      getCommonTitlesAndlinks(req, res, res.locals.company)
+      resolve()
+    } catch (error) {
+      reject(error)
+    }
   })
 }
 
@@ -53,64 +50,60 @@ function common (req, res) {
  *
  *  view gathers and formats the export data for display
  */
-function view (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      yield common(req, res)
-      const company = res.locals.company
+async function view (req, res, next) {
+  try {
+    await common(req, res)
+    const company = res.locals.company
 
-      const data = {
-        exportDetails: {
-          exportToCountries: company.export_to_countries.map(country => country.name).join(', '),
-          futureInterestCountries: company.future_interest_countries.map(country => country.name).join(),
-        },
-        exportDetailsLabels,
-        exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
-      }
-
-      res.render('company/exports-view', data)
-    } catch (error) {
-      next(error)
+    const data = {
+      exportDetails: {
+        exportToCountries: company.export_to_countries.map(country => country.name).join(', '),
+        futureInterestCountries: company.future_interest_countries.map(country => country.name).join(),
+      },
+      exportDetailsLabels,
+      exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
     }
-  })
+
+    res.render('company/exports-view', data)
+  } catch (error) {
+    next(error)
+  }
 }
 
 /**
  *
  * Edit gathers export data, or uses already posted data and sent it to the view for allow editing
  */
-function edit (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      yield common(req, res)
+async function edit (req, res, next) {
+  try {
+    await common(req, res)
 
-      const data = {
-        exportDetailsLabels,
-        countryOptions: metadataRepository.countryOptions,
-      }
-
-      if (containsFormData(req)) {
-        data.export_to_countries = req.body.export_to_countries
-        data.future_interest_countries = req.body.future_interest_countries
-      } else {
-        data.export_to_countries = res.locals.company.export_to_countries.map(country => country.id)
-        data.future_interest_countries = res.locals.company.future_interest_countries.map(country => country.id)
-      }
-
-      res.locals.title.unshift('Edit')
-
-      res.render('company/exports-edit', data)
-    } catch (error) {
-      next(error)
+    const data = {
+      exportDetailsLabels,
+      countryOptions: metadataRepository.countryOptions,
     }
-  })
+
+    if (containsFormData(req)) {
+      data.export_to_countries = req.body.export_to_countries
+      data.future_interest_countries = req.body.future_interest_countries
+    } else {
+      data.export_to_countries = res.locals.company.export_to_countries.map(country => country.id)
+      data.future_interest_countries = res.locals.company.future_interest_countries.map(country => country.id)
+    }
+
+    res.locals.title.unshift('Edit')
+
+    res.render('company/exports-edit', data)
+  } catch (error) {
+    next(error)
+  }
 }
 
 /**
  *
  * Accept export data posted to the server and attempt to save it and handle errors
  */
-function post (req, res, next) {
+async function post (req, res, next) {
   req.body.export_to_countries = normaliseToArray(req.body.export_to_countries)
   req.body.future_interest_countries = normaliseToArray(req.body.future_interest_countries)
 
@@ -123,21 +116,19 @@ function post (req, res, next) {
     return edit(req, res, next)
   }
 
-  Q.spawn(function * () {
-    try {
-      const company = yield getDitCompany(req.session.token, req.params.id)
-      flattenIdFields(company)
-      const postData = Object.assign({}, company, {
-        export_to_countries: req.body.export_to_countries,
-        future_interest_countries: req.body.future_interest_countries,
-      })
+  try {
+    const company = await getDitCompany(req.session.token, req.params.id)
+    flattenIdFields(company)
+    const postData = Object.assign({}, company, {
+      export_to_countries: req.body.export_to_countries,
+      future_interest_countries: req.body.future_interest_countries,
+    })
 
-      yield saveCompany(req.session.token, postData)
-      res.redirect(`/company-exports/view/${req.params.id}`)
-    } catch (errors) {
-      next(errors)
-    }
-  })
+    await saveCompany(req.session.token, postData)
+    res.redirect(`/company-exports/view/${req.params.id}`)
+  } catch (errors) {
+    next(errors)
+  }
 }
 
 router.get('/company-exports/view/:id', view)

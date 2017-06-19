@@ -1,6 +1,5 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const Q = require('q')
 const companyService = require('../services/company.service')
 const { getDisplayCompanyInteraction } = require('../services/interaction-formatting.service')
 const router = express.Router()
@@ -11,31 +10,29 @@ const router = express.Router()
  *  Gets a list of interactions associated with a company
  *  Furthermore the controller extracts only the fields required and pre-formats them to make layout easier.
  */
-function getInteractions (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      res.locals.tab = 'interactions'
-      const company = res.locals.company = yield companyService.getInflatedDitCompany(req.session.token, req.params.id)
-      companyService.getCommonTitlesAndlinks(req, res, company)
+async function getInteractions (req, res, next) {
+  try {
+    res.locals.tab = 'interactions'
+    const company = res.locals.company = await companyService.getInflatedDitCompany(req.session.token, req.params.id)
+    companyService.getCommonTitlesAndlinks(req, res, company)
 
-      res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
+    res.locals.interactions = res.locals.company.interactions.map(interaction => getDisplayCompanyInteraction(interaction))
 
-      // Only allow a link to add an interaction if the company has contacts
-      if (company.id && company.contacts && company.contacts.length > 0) {
-        res.locals.addInteractionUrl = `/interaction/add-step-1/?company=${company.id}`
-      }
-
-      if (!company.contacts || company.contacts.length === 0) {
-        res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
-      }
-
-      res.locals.title = ['Interactions', res.locals.company.name, 'Companies']
-
-      res.render('company/interactions')
-    } catch (error) {
-      next(error)
+    // Only allow a link to add an interaction if the company has contacts
+    if (company.id && company.contacts && company.contacts.length > 0) {
+      res.locals.addInteractionUrl = `/interaction/add-step-1/?company=${company.id}`
     }
-  })
+
+    if (!company.contacts || company.contacts.length === 0) {
+      res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
+    }
+
+    res.locals.title = ['Interactions', res.locals.company.name, 'Companies']
+
+    res.render('company/interactions')
+  } catch (error) {
+    next(error)
+  }
 }
 
 router.get('/company-interactions/:id', getInteractions)

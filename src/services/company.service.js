@@ -1,5 +1,4 @@
 /* eslint camelcase: 0 */
-const Q = require('q')
 const { get } = require('lodash')
 const logger = require('../../config/logger')
 const adviserRepository = require('../repos/adviser.repo')
@@ -17,60 +16,58 @@ function getContactInCompanyObject (company, contactId) {
 }
 
 function getInflatedDitCompany (token, id) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        const adviserHash = {}
-        const company = yield companyRepository.getDitCompany(token, id)
-        const serviceDeliveries = yield serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
+  return new Promise(async (resolve, reject) => {
+    try {
+      const adviserHash = {}
+      const company = await companyRepository.getDitCompany(token, id)
+      const serviceDeliveries = await serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
 
-        // Build a list of advisers to lookup
-        for (const interaction of company.interactions) {
-          adviserHash[interaction.dit_adviser] = true
-        }
-        for (const serviceDelivery of serviceDeliveries) {
-          adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
-        }
-
-        // get the related adviors
-        for (const adviserId of Object.keys(adviserHash)) {
-          const adviser = yield adviserRepository.getAdviser(token, adviserId)
-          adviserHash[adviser.id] = adviser
-        }
-
-        const serviceOffers = yield metadataRepository.getServiceOffers(token)
-
-        // Parse the service delivery results to expand some of the properties
-        const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
-          return Object.assign({}, { id: serviceDelivery.id }, serviceDelivery.attributes, {
-            contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
-            interaction_type: { id: null, name: 'Service delivery' },
-            dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
-            service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
-            dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
-          })
-        })
-
-        // Parse the interaction results to expand some of the properties
-        const parsedInteractions = company.interactions.map((interaction) => {
-          return Object.assign({}, interaction, {
-            contact: getContactInCompanyObject(company, interaction.contact),
-            interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-            dit_adviser: adviserHash[interaction.dit_adviser],
-            service: serviceOffers.find((option) => option.id === interaction.service),
-            dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
-          })
-        })
-
-        const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliveries]
-
-        company.interactions = combinedIteractions
-        resolve(company)
-      } catch (error) {
-        logger.error(error)
-        reject(error)
+      // Build a list of advisers to lookup
+      for (const interaction of company.interactions) {
+        adviserHash[interaction.dit_adviser] = true
       }
-    })
+      for (const serviceDelivery of serviceDeliveries) {
+        adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
+      }
+
+      // get the related adviors
+      for (const adviserId of Object.keys(adviserHash)) {
+        const adviser = await adviserRepository.getAdviser(token, adviserId)
+        adviserHash[adviser.id] = adviser
+      }
+
+      const serviceOffers = await metadataRepository.getServiceOffers(token)
+
+      // Parse the service delivery results to expand some of the properties
+      const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
+        return Object.assign({}, { id: serviceDelivery.id }, serviceDelivery.attributes, {
+          contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
+          interaction_type: { id: null, name: 'Service delivery' },
+          dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
+          service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
+          dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
+        })
+      })
+
+      // Parse the interaction results to expand some of the properties
+      const parsedInteractions = company.interactions.map((interaction) => {
+        return Object.assign({}, interaction, {
+          contact: getContactInCompanyObject(company, interaction.contact),
+          interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
+          dit_adviser: adviserHash[interaction.dit_adviser],
+          service: serviceOffers.find((option) => option.id === interaction.service),
+          dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
+        })
+      })
+
+      const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliveries]
+
+      company.interactions = combinedIteractions
+      resolve(company)
+    } catch (error) {
+      logger.error(error)
+      reject(error)
+    }
   })
 }
 

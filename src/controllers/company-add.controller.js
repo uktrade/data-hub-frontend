@@ -1,5 +1,4 @@
 const express = require('express')
-const Q = require('q')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos/company.repo')
 const { isBlank, toQueryString } = require('../lib/controller-utils')
@@ -72,7 +71,7 @@ function postAddStepOne (req, res, next) {
   return res.redirect(`/company/add-step-2/?${toQueryString(params)}`)
 }
 
-function getAddStepTwo (req, res, next) {
+async function getAddStepTwo (req, res, next) {
   const searchTerm = req.query.term
   const currentlySelected = req.query.selected
   const businessType = req.query.business_type
@@ -88,55 +87,53 @@ function getAddStepTwo (req, res, next) {
     })
   }
 
-  Q.spawn(function * () {
-    try {
-      let displayDetails
-      let labels
+  try {
+    let displayDetails
+    let labels
 
-      const companiesHouseAndLtdCompanies = yield searchLimitedCompanies({
-        token,
-        searchTerm,
-      })
-      const pagination = getPagination(req, companiesHouseAndLtdCompanies.results)
-      const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
-        return company.id === currentlySelected ||
-          (company.company_number && company.company_number === currentlySelected)
-      })
+    const companiesHouseAndLtdCompanies = await searchLimitedCompanies({
+      token,
+      searchTerm,
+    })
+    const pagination = getPagination(req, companiesHouseAndLtdCompanies.results)
+    const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
+      return company.id === currentlySelected ||
+        (company.company_number && company.company_number === currentlySelected)
+    })
 
-      if (highlightedCompany) {
-        if (highlightedCompany.company_number) {
-          const companiesHouseDetails = yield getCHCompany(token, highlightedCompany.company_number)
-            .then((companiesHouseData) => {
-              return {
-                company_number: highlightedCompany.company_number,
-                companies_house_data: companiesHouseData,
-                contacts: [],
-                interactions: [],
-              }
-            })
-          displayDetails = yield getDisplayCH(companiesHouseDetails.companies_house_data)
-          labels = chDetailsLabels
-        } else {
-          displayDetails = yield getDisplayCompany(highlightedCompany)
-          labels = companyDetailsLabels
-        }
+    if (highlightedCompany) {
+      if (highlightedCompany.company_number) {
+        const companiesHouseDetails = await getCHCompany(token, highlightedCompany.company_number)
+          .then((companiesHouseData) => {
+            return {
+              company_number: highlightedCompany.company_number,
+              companies_house_data: companiesHouseData,
+              contacts: [],
+              interactions: [],
+            }
+          })
+        displayDetails = await getDisplayCH(companiesHouseDetails.companies_house_data)
+        labels = chDetailsLabels
+      } else {
+        displayDetails = await getDisplayCompany(highlightedCompany)
+        labels = companyDetailsLabels
       }
-
-      res.render('company/add-step-2.njk', {
-        companyTypeOptions,
-        companies: companiesHouseAndLtdCompanies.results,
-        searchTerm,
-        currentlySelected,
-        displayDetails,
-        labels,
-        businessType,
-        country,
-        pagination,
-      })
-    } catch (error) {
-      next(error)
     }
-  })
+
+    res.render('company/add-step-2.njk', {
+      companyTypeOptions,
+      companies: companiesHouseAndLtdCompanies.results,
+      searchTerm,
+      currentlySelected,
+      displayDetails,
+      labels,
+      businessType,
+      country,
+      pagination,
+    })
+  } catch (error) {
+    next(error)
+  }
 }
 
 router.get('/company/add-step-1/', getAddStepOne)

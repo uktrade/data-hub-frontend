@@ -1,5 +1,4 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
-const Q = require('q')
 const config = require('../../config')
 const authorisedRequest = require('../lib/authorised-request')
 
@@ -13,42 +12,40 @@ function getCHCompany (token, id) {
 }
 
 function saveCompany (token, company) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        const parsedCompany = Object.assign({}, company)
-        delete parsedCompany.companies_house_data
-        delete parsedCompany.contacts
-        delete parsedCompany.interactions
+  return new Promise(async (resolve, reject) => {
+    try {
+      const parsedCompany = Object.assign({}, company)
+      delete parsedCompany.companies_house_data
+      delete parsedCompany.contacts
+      delete parsedCompany.interactions
 
-        let method
-        let url
+      let method
+      let url
 
-        if (parsedCompany.id && parsedCompany.id.length > 0) {
-          method = 'PUT'
-          url = `${config.apiRoot}/company/${parsedCompany.id}/`
-        } else {
-          delete parsedCompany.id
-          method = 'POST'
-          url = `${config.apiRoot}/company/`
-        }
-
-        const data = yield authorisedRequest(token, { url, method, body: parsedCompany })
-        resolve(data)
-      } catch (error) {
-        if (typeof error.error === 'string') {
-          reject({
-            statusCode: error.response.statusCode,
-            errors: { detail: error.response.statusMessage },
-          })
-        } else {
-          reject({
-            statusCode: error.response.statusCode,
-            errors: error.error,
-          })
-        }
+      if (parsedCompany.id && parsedCompany.id.length > 0) {
+        method = 'PUT'
+        url = `${config.apiRoot}/company/${parsedCompany.id}/`
+      } else {
+        delete parsedCompany.id
+        method = 'POST'
+        url = `${config.apiRoot}/company/`
       }
-    })
+
+      const data = await authorisedRequest(token, { url, method, body: parsedCompany })
+      resolve(data)
+    } catch (error) {
+      if (typeof error.error === 'string') {
+        reject({
+          statusCode: error.response.statusCode,
+          errors: { detail: error.response.statusMessage },
+        })
+      } else {
+        reject({
+          statusCode: error.response.statusCode,
+          errors: error.error,
+        })
+      }
+    }
   })
 }
 

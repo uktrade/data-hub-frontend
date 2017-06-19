@@ -1,4 +1,3 @@
-const Q = require('q')
 const {
   convertNestedObjects,
   convertYesNoToBoolean,
@@ -54,18 +53,16 @@ function getContactAsFormData (contact) {
  * format after the server has saved it
  */
 function saveContactForm (token, contactForm) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        let dataToSave = convertYesNoToBoolean(contactForm)
-        dataToSave = nullEmptyFields(dataToSave)
-        dataToSave = convertNestedObjects(dataToSave, ['title', 'company', 'address_country'])
-        const savedContact = yield contactRepository.saveContact(token, dataToSave)
-        resolve(savedContact)
-      } catch (error) {
-        reject(error)
-      }
-    })
+  return new Promise(async (resolve, reject) => {
+    try {
+      let dataToSave = convertYesNoToBoolean(contactForm)
+      dataToSave = nullEmptyFields(dataToSave)
+      dataToSave = convertNestedObjects(dataToSave, ['title', 'company', 'address_country'])
+      const savedContact = await contactRepository.saveContact(token, dataToSave)
+      resolve(savedContact)
+    } catch (error) {
+      reject(error)
+    }
   })
 }
 
