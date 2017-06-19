@@ -13,6 +13,8 @@
 {% set requirements = requirements | removeNilAndEmpty %}
 
 {% block main_grid_right_column %}
+  {{ super() }}
+
   <h2 class="heading-medium">Investment project summary</h2>
   {% component 'key-value-table', items=details, variant='striped' %}
   {{ renderButton('details', 'Edit summary', true) }}
@@ -29,7 +31,7 @@
   {% endif %}
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% if investmentProject.requirements | removeNilAndEmpty | length %}
+  {% if requirements | removeNilAndEmpty | length %}
     {% component 'key-value-table', items=requirements, variant='striped' %}
     {{ renderButton('requirements', 'Edit requirements', true) }}
   {% else %}

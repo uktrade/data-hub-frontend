@@ -266,3 +266,13 @@ hr {
 .hidden {
   display: none;
 }
+
+select.form-control {
+  height: 38px;
+  line-height: 38px;
+  outline: 0;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $focus-colour;
+  }
+}

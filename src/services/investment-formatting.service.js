@@ -150,6 +150,20 @@ function transformProjectValueForView (data) {
   })
 }
 
+function transformProjectRequirementsForView (data) {
+  if (!isPlainObject(data)) { return }
+
+  const strategicDrivers = get(data, 'strategic_drivers', [])
+  const competitorCountries = get(data, 'competitor_countries', [])
+  const regionLocations = get(data, 'uk_region_locations', [])
+
+  return Object.assign({}, data, {
+    strategic_drivers: strategicDrivers.map(driver => driver.name).join(', '),
+    competitor_countries: competitorCountries.map(country => country.name).join(', '),
+    uk_region_locations: regionLocations.map(region => region.name).join(', '),
+  })
+}
+
 function formatProjectTeamData (data) {
   return {
     client_relationship_manager: data.client_relationship_manager,
@@ -160,6 +174,7 @@ function formatProjectTeamData (data) {
 module.exports = {
   transformProjectDataForView,
   transformProjectValueForView,
+  transformProjectRequirementsForView,
   transformToApi,
   transformFromApi,
   formatProjectTeamData,
