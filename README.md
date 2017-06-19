@@ -59,9 +59,11 @@ Docker Compose [supports declaring default environment variables](https://docs.d
 
 #### Dependencies
 
-* [Node.js](https://nodejs.org/en/) (>= 6.9.1)
+* [Node.js](https://nodejs.org/en/) (>= 8.0.0)
 * [Yarn](https://yarnpkg.com/en/docs/install) (>= 0.23.4)
 * [Redis](https://redis.io/)
+
+The project is using ES6 async/await therefore Node 8 is required.
 
 ### Installation
 
