@@ -39,4 +39,5 @@ module.exports = {
   zenService: process.env.ZEN_SERVICE,
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
+  trustProtoHeader: typeof process.env.DYNO !== 'undefined',
 }

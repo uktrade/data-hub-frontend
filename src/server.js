@@ -14,7 +14,6 @@ const churchill = require('churchill')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
-const forceHttps = require('./middleware/force-https')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
 const metadata = require('./repos/metadata.repo')
@@ -23,6 +22,7 @@ const auth = require('./middleware/auth')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
 const logger = require('../config/logger')
+const sslify = require('./middleware/sslify')
 
 const router = require('../config/routes')
 
@@ -69,6 +69,16 @@ const redisStore = new RedisStore({
   secret: config.session.secret,
 })
 
+app.use(sslify.setSecure({
+  trustProtoHeader: config.trustProtoHeader,
+}))
+
+if (!isDev) {
+  app.use(sslify.enforceHTTPS({
+    trustProtoHeader: config.trustProtoHeader,
+  }))
+}
+
 app.use(session({
   store: redisStore,
   proxy: !isDev,
@@ -104,7 +114,6 @@ app.use('/javascripts', express.static(`${__dirname}/../node_modules/@uktrade/tr
 
 app.use('/fonts', express.static(`${__dirname}/../node_modules/font-awesome/fonts`))
 
-app.use(forceHttps)
 app.use(flash())
 app.use(locals)
 app.use(datahubFlash)
