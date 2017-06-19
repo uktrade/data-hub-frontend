@@ -1,6 +1,5 @@
 /* eslint camelcase: 0, no-unused-expressions: 0 */
 
-const Q = require('q')
 const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../lib/property-helpers')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
@@ -134,18 +133,16 @@ function getDefaultLtdFormForCH (companies_house_data) {
   return result
 }
 
-function saveCompanyForm (token, companyForm) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        let dataToSave = convertYesNoToBoolean(companyForm)
-        dataToSave = nullEmptyFields(dataToSave)
-        const savedContact = yield companyRepository.saveCompany(token, dataToSave)
-        resolve(savedContact)
-      } catch (error) {
-        reject(error)
-      }
-    })
+async function saveCompanyForm (token, companyForm) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let dataToSave = convertYesNoToBoolean(companyForm)
+      dataToSave = nullEmptyFields(dataToSave)
+      const savedContact = await companyRepository.saveCompany(token, dataToSave)
+      resolve(savedContact)
+    } catch (error) {
+      reject(error)
+    }
   })
 }
 

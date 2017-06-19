@@ -1,5 +1,3 @@
-const Q = require('q')
-
 const logger = require('../../config/logger')
 const authorisedRequest = require('../lib/authorised-request')
 const config = require('../../config')
@@ -42,16 +40,14 @@ function unarchiveContact (token, contactId) {
 }
 
 function getContactsForCompany (token, companyId) {
-  return new Promise((resolve, reject) => {
-    Q.spawn(function * () {
-      try {
-        const company = yield authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
-        resolve(company.contacts)
-      } catch (error) {
-        logger.error(error)
-        reject(error)
-      }
-    })
+  return new Promise(async (resolve, reject) => {
+    try {
+      const company = await authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
+      resolve(company.contacts)
+    } catch (error) {
+      logger.error(error)
+      reject(error)
+    }
   })
 }
 

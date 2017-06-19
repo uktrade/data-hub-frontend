@@ -3,7 +3,6 @@ const companyRepository = require('../repos/company.repo')
 const { buildCompanyUrl } = require('../services/company.service')
 const { search } = require('../services/search.service')
 const getPagination = require('../lib/pagination').getPagination
-const Q = require('q')
 const Joi = require('joi')
 const Celebrate = require('celebrate')
 
@@ -79,15 +78,13 @@ function searchAction (req, res, next) {
     .catch(next)
 }
 
-function viewCompanyResult (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      const company = yield companyRepository.getDitCompany(req.session.token, req.params.id)
-      res.redirect(buildCompanyUrl(company))
-    } catch (error) {
-      next(error)
-    }
-  })
+async function viewCompanyResult (req, res, next) {
+  try {
+    const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
+    res.redirect(buildCompanyUrl(company))
+  } catch (error) {
+    next(error)
+  }
 }
 
 router.get('/search/:searchType?', searchActionValidationSchema, indexAction, searchAction)

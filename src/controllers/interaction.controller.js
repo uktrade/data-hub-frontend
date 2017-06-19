@@ -1,6 +1,5 @@
 /* eslint camelcase: 0 */
 const express = require('express')
-const Q = require('q')
 const interactionLabels = require('../labels/interaction-labels')
 const metadataRepository = require('../repos/metadata.repo')
 const interactionDataService = require('../services/interaction-data.service')
@@ -9,18 +8,16 @@ const { getDisplayInteraction } = require('../services/interaction-formatting.se
 const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
 const router = express.Router()
 
-function getCommon (req, res, next) {
-  Q.spawn(function * () {
-    try {
-      const token = req.session.token
-      if (req.params.interactionId && req.params.interactionId !== 'add') {
-        res.locals.interaction = yield interactionDataService.getHydratedInteraction(token, req.params.interactionId)
-      }
-      next()
-    } catch (error) {
-      next(error)
+async function getCommon (req, res, next) {
+  try {
+    const token = req.session.token
+    if (req.params.interactionId && req.params.interactionId !== 'add') {
+      res.locals.interaction = await interactionDataService.getHydratedInteraction(token, req.params.interactionId)
     }
-  })
+    next()
+  } catch (error) {
+    next(error)
+  }
 }
 
 function getAddStep1 (req, res) {
