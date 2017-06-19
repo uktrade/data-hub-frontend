@@ -27,6 +27,7 @@ node_modules/
 test.sh
 apitest.js
 reports
+.idea/
 .env
 npm*.log
 yarn-error.log
