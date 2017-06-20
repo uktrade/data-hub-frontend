@@ -18,11 +18,11 @@ function createGetHandler (req, res) {
 
 function createPostHandler (req, res) {
   if (res.locals.form.errors) {
-    return res.render('investment/create')
+    return res.render('investment/create', {
+      title: 'Add investment project',
+    })
   }
-  return res.redirect(`/investment/${res.locals.resultId}`, {
-    title: 'Add investment project',
-  })
+  return res.redirect(`/investment/${res.locals.resultId}`)
 }
 
 router.param('id', getProjectDetails)
