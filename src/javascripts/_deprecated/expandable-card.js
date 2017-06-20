@@ -5,7 +5,7 @@ const {
   toggleClass,
   addClass,
   createElementFromMarkup,
-} = require('../lib/element-stuff')
+} = require('../../lib/element-stuff')
 
 /**
  * Allow markup to indicate a hidden section containing sub
@@ -89,10 +89,12 @@ class ExpandableCard {
 
     hide(this.subsectionElement)
   }
-}
 
-document.querySelectorAll('.card--expandable')
-  .forEach((expandableCard) => new ExpandableCard(expandableCard))
+  static init () {
+    document.querySelectorAll('.card--expandable')
+      .forEach((expandableCard) => expandableCard && new ExpandableCard(expandableCard))
+  }
+}
 
 module.exports = ExpandableCard
 // TODO - look if this can be replaced by details-list.js

@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show, removeClass, addClass } = require('../lib/element-stuff')
+const { hide, show, removeClass, addClass } = require('../../lib/element-stuff')
 
 class ArchiveForm {
   constructor (element) {
@@ -74,12 +74,14 @@ class ArchiveForm {
     this.dropdownElement.addEventListener('change', this.dropdownChange.bind(this), true)
     this.archiveForm.addEventListener('submit', this.validateForm, true)
   }
-}
 
-// If this control is loaded on a real page, activate,
-// otherwise it's being used in a test container
-if (typeof document !== 'undefined') {
-  new ArchiveForm(document.querySelector('.archive-panel'))
+  static init () {
+  // If this control is loaded on a real page, activate,
+  // otherwise it's being used in a test container
+    if (typeof document !== 'undefined') {
+      new ArchiveForm(document.querySelector('.archive-panel'))
+    }
+  }
 }
 
 module.exports = ArchiveForm

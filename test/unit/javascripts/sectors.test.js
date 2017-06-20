@@ -1,8 +1,8 @@
 /* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const Sectors = require('~/src/javascripts/sectors')
-const { domTokenToArray } = require('../component-helper')
+const Sectors = require('~/src/javascripts/_deprecated/sectors')
+const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `
   <html>

@@ -17,8 +17,3 @@
     <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/contact-interactions/{{id}}">Interactions</a>
   </nav>
 {% endblock %}
-
-{% block javascript %}
-  {{ super() }}
-  <script src="/javascripts/archive-form.bundle.js"></script>
-{% endblock %}

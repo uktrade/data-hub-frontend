@@ -1,4 +1,4 @@
-const { insertAfter } = require('../lib/element-stuff')
+const { insertAfter } = require('../../lib/element-stuff')
 const { guid } = require('@uktrade/trade_elements')
 
 class AddAnotherField {
@@ -34,11 +34,13 @@ class AddAnotherField {
 
     insertAfter(newFormGroup, lastFormGroup)
   }
-}
 
-if (typeof document !== 'undefined') {
-  document.querySelectorAll('.js-add-another-field')
-    .forEach((element) => new AddAnotherField(element))
+  static init () {
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll('.js-add-another-field')
+        .forEach((element) => element && new AddAnotherField(element))
+    }
+  }
 }
 
 module.exports = AddAnotherField

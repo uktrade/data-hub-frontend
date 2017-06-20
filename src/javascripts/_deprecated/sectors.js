@@ -1,6 +1,6 @@
 /* eslint no-new: 0 */
-const { createElementFromMarkup, removeElement, hide, insertAfter } = require('../lib/element-stuff')
-const transformSectors = require('../lib/transform-sectors')
+const { createElementFromMarkup, removeElement, hide, insertAfter } = require('../../lib/element-stuff')
+const transformSectors = require('../../lib/transform-sectors')
 
 const PRIMARYPANELMARKUP = `
   <div class="form-group primary-sector-wrapper">
@@ -157,12 +157,16 @@ class Sectors {
     }
     this.sourceSelect.selectedIndex = index
   }
-}
 
-// If this control is loaded on a real page, activate
-if (typeof document !== 'undefined') {
-  const element = document.getElementById('sector-wrapper')
-  new Sectors(element)
+  static init () {
+    if (typeof document === 'undefined') {
+      return
+    }
+    const element = document.getElementById('sector-wrapper')
+    if (element) {
+      Sectors(element)
+    }
+  }
 }
 
 module.exports = Sectors
