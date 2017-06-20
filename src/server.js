@@ -11,10 +11,10 @@ const url = require('url')
 const csrf = require('csurf')
 const slashify = require('slashify')
 const churchill = require('churchill')
+const enforce = require('express-sslify')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
-const forceHttps = require('./middleware/force-https')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
 const metadata = require('./repos/metadata.repo')
@@ -28,10 +28,17 @@ const router = require('../config/routes')
 
 const isDev = config.isDev
 const app = express()
+
 app.disable('x-powered-by')
 
 if (!config.ci) {
   app.use(churchill(logger))
+}
+
+if (!isDev) {
+  app.use(enforce.HTTPS({
+    trustProtoHeader: true,
+  }))
 }
 
 const RedisStore = redisCrypto(session)
@@ -40,9 +47,7 @@ let client
 
 if (config.redis.url) {
   const redisURL = url.parse(config.redis.url)
-  /* eslint-disable camelcase */
   client = redis.createClient(redisURL.port, redisURL.hostname, { no_ready_check: true })
-  /* eslint-enable camelcase */
   client.auth(redisURL.auth.split(':')[1])
 } else {
   client = redis.createClient(config.redis.port, config.redis.host)
@@ -104,7 +109,6 @@ app.use('/javascripts', express.static(`${__dirname}/../node_modules/@uktrade/tr
 
 app.use('/fonts', express.static(`${__dirname}/../node_modules/font-awesome/fonts`))
 
-app.use(forceHttps)
 app.use(flash())
 app.use(locals)
 app.use(datahubFlash)
