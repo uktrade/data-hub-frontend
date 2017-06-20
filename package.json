@@ -59,7 +59,7 @@
     "standard": "^10.0.2",
     "uglify": "^0.1.5",
     "wavy": "^1.0.4",
-    "webpack": "^1.14.0",
+    "webpack": "^3.0.0",
     "winston": "^2.3.0"
   },
   "scripts": {

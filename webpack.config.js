@@ -1,8 +1,10 @@
 const webpack = require('webpack')
-const prod = process.env.NODE_ENV === 'production'
+const path = require('path')
 
-module.exports = {
-  devtool: prod ? 'hidden-source-map' : 'source-map',
+const isProd = process.env.NODE_ENV === 'production'
+
+const webpackConfig = {
+  devtool: 'source=map',
   entry: {
     app: './src/javascripts/app.js',
     'company-add': './src/javascripts/company-add',
@@ -17,12 +19,8 @@ module.exports = {
     'add-another-field': './src/javascripts/add-another-field',
     ie: ['html5shiv'],
   },
-  output: {
-    path: 'build/javascripts',
-    filename: '[name].bundle.js',
-  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js)$/,
         loader: 'babel-loader',
@@ -33,13 +31,22 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['', '.js'],
     modules: [
-      'src',
       'node_modules',
+      path.resolve(__dirname, 'src'),
     ],
   },
-  plugins: prod ? [
+  output: {
+    path: path.resolve(__dirname, 'build/javascripts'),
+    filename: '[name].bundle.js',
+  },
+  plugins: [],
+}
+
+if (isProd) {
+  webpackConfig.devtool = 'hidden-source-map'
+
+  webpackConfig.plugins.push(
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
@@ -55,8 +62,7 @@ module.exports = {
       sourceMap: false,
       dead_code: true,
     }),
-    new webpack.optimize.DedupePlugin(),
-  ] : [
-    new webpack.optimize.DedupePlugin(),
-  ],
+  )
 }
+
+module.exports = webpackConfig
