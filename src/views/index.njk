@@ -60,8 +60,3 @@
     </div>
   </div>
 {% endblock %}
-
-{% block javascript %}
-  {{ super() }}
-  <script src="{{ asset_path }}javascripts/index.bundle.js?{{ startTime }}"></script>
-{% endblock %}

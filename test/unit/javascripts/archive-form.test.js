@@ -1,7 +1,7 @@
 /* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const ArchiveForm = require('~/src/javascripts/archive-form')
+const ArchiveForm = require('~/src/javascripts/_deprecated/archive-form')
 const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `

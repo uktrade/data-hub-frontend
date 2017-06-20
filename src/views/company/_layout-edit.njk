@@ -15,10 +15,3 @@
 {% block main_grid_right_column %}
   {% include "_messages.njk" %}
 {% endblock %}
-
-{% block javascript %}
-  {{ super() }}
-  {% block javascript_edit %}
-    <script src="/javascripts/company-edit.bundle.js"></script>
-  {% endblock %}
-{% endblock %}
