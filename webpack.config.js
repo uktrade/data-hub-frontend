@@ -10,8 +10,6 @@ const webpackConfig = {
     'company-add': './src/javascripts/company-add',
     'company-edit': './src/javascripts/company-edit',
     'contact-edit': './src/javascripts/contact-edit',
-    investment: './src/javascripts/investment',
-    'create-investment': './src/javascripts/create-investment',
     'expandable-card': './src/javascripts/expandable-card',
     index: './src/javascripts/index',
     'service-delivery': './src/javascripts/service-delivery',
