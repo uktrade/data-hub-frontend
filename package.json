@@ -36,6 +36,7 @@
     "express-session": "^1.14.1",
     "express-sslify": "^1.2.0",
     "extract-text-webpack-plugin": "^2.1.2",
+    "faker": "^4.1.0",
     "fast-sass-loader": "^1.2.5",
     "file-loader": "^0.11.2",
     "font-awesome": "^4.6.3",
