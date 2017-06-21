@@ -1,6 +1,7 @@
 require('dotenv').config()
 const seleniumServer = require('selenium-server')
 const chromedriver = require('chromedriver')
+const geckodriver = require('geckodriver')
 
 require('nightwatch-cucumber')({
   cucumberArgs: [
@@ -23,6 +24,7 @@ module.exports = {
     port: process.env.QA_SELENIUM_PORT,
     cli_args: {
       'webdriver.chrome.driver': chromedriver.path,
+      'webdriver.firefox.driver': geckodriver.path,
     },
   },
   test_settings: {
@@ -35,6 +37,7 @@ module.exports = {
       },
       desiredCapabilities: {
         browserName: 'chrome',
+        acceptInsecureCerts: true,
         javascriptEnabled: true,
       },
     },
