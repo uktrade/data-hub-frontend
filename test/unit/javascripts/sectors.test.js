@@ -1,7 +1,7 @@
 /* eslint no-new: 0 */
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
-const Sectors = require('~/src/javascripts/_deprecated/sectors')
+const Sectors = require('~/assets/javascripts/_deprecated/sectors')
 const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `

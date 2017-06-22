@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { get } = require('lodash')
 
 const { getProjectDetails } = require('./shared.middleware')
-const { formatLongDate } = require('../../lib/date')
+const { formatLongDate } = require('../../../common/date')
 const { getInvestmentProjectAuditLog } = require('../../repos/investment.repo')
 
 function formatAuditLog (logEntry) {

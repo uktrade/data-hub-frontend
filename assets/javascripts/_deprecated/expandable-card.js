@@ -5,7 +5,7 @@ const {
   toggleClass,
   addClass,
   createElementFromMarkup,
-} = require('../../lib/element-stuff')
+} = require('./lib/element-stuff')
 
 /**
  * Allow markup to indicate a hidden section containing sub

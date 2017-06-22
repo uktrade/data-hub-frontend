@@ -1,4 +1,4 @@
-const { insertAfter } = require('../../lib/element-stuff')
+const { insertAfter } = require('./lib/element-stuff')
 const { guid } = require('@uktrade/trade_elements')
 
 class AddAnotherField {

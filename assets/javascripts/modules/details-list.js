@@ -3,7 +3,7 @@ const {
   toggleVisible,
   toggleClass,
   addClass,
-} = require('../../lib/element-stuff')
+} = require('../_deprecated/lib/element-stuff')
 
 class ExpandableDetails {
   constructor (element) {

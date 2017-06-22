@@ -1,4 +1,4 @@
-const elementStuff = require('../../lib/element-stuff')
+const elementStuff = require('./lib/element-stuff')
 
 const HIDE = 'hide'
 const SHOW = 'show'
