@@ -66,8 +66,9 @@
     "clean": "rm -rf build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass:compile && npm run js",
-    "test": "mocha --recursive test/unit/",
-    "test:watch": "npm test -- -w",
+    "test": "npm run test:unit && npm run test:acceptance",
+    "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./test/unit --opts ./test/unit/mocha.opts",
+    "test:watch": "npm run test:unit -- -w",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test",
     "lint": "npm run lint:js && npm run lint:sass",
@@ -86,7 +87,7 @@
     "sass:compile": "npm run sass -- -x --output-style compressed",
     "css:autoprefixer": "postcss build/css/*.css --use autoprefixer -d build/css",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
-    "circle": "npm run lint && nyc --reporter=lcov npm test -- --reporter mocha-circleci-reporter && npm run sass && npm run js && codeclimate-test-reporter < coverage/lcov.info",
+    "circle": "npm run lint && nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && npm run sass && npm run js && codeclimate-test-reporter < coverage/lcov.info",
     "heroku-postbuild": "npm rebuild node-sass && npm run sass && npm run js"
   },
   "pre-commit": [
