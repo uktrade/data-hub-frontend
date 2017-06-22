@@ -72,11 +72,14 @@
           <div class="global-header__inner">
             {% block header_site_title %}
               <div class="global-header__site-title">
-                <a href="/" class="global-header__logo">
-                  <span class="global-header__site-name">{{ siteTitle|default(titleDefault) }}</span>
-                  {% if serviceTitle %}
-                    <span class="global-header__service-name">{{ serviceTitle }}</span>
-                  {% endif %}
+                <a href="/" class="global-header__link">
+                  <span class="global-header__crest"></span>
+                  <span class="global-header__logo">
+                    <span class="global-header__site-name">{{ siteTitle|default(titleDefault) }}</span>
+                    {% if serviceTitle %}
+                      <span class="global-header__service-name">{{ serviceTitle }}</span>
+                    {% endif %}
+                  </span>
                 </a>
                 {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta'] %}
                   <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
