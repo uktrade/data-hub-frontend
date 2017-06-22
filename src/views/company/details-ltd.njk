@@ -35,7 +35,8 @@
       label: 'Archive reason',
       options: ['Company is dissolved'],
       csrfToken: csrfToken,
-      error: form.errors.reason
+      error: form.errors.reason,
+      url: '/company/archive/' + company.id
     } %}
   {% endif %}
 {% endblock %}

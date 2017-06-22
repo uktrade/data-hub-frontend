@@ -36,17 +36,15 @@ const ArchiveForm = {
     this.archiveForm = this.wrapper.querySelector(this.selector)
     this.document = (typeof document !== 'undefined') ? document : this.archiveForm.ownerDocument
 
-    this.reasonLabel = this.archiveForm.querySelector('[for="archived_reason"]')
+    this.archivedReasonLabel = this.archiveForm.querySelector('[for="archived_reason"]')
     this.reasonInputElement = this.archiveForm.querySelector('[name=archived_reason]')
-    this.otherTextInput = this.archiveForm.querySelector('[name=archived_reason_other]')
+    this.otherReasonTextInput = this.archiveForm.querySelector('[name=archived_reason_other]')
     this.fieldset = this.archiveForm.querySelector('fieldset')
-    this.otherTextWrapper = this.otherTextInput.parentElement
     const saveButton = this.archiveForm.querySelector('[type="submit"]')
 
     this.errorElement = this.archiveForm.querySelector('.js-errorMessage')
 
     // Add buttons that should only be visable to JS users
-
     this.hideArchiveFormButton = this.createCancelButton()
     insertAfter(this.hideArchiveFormButton, saveButton)
 
@@ -95,7 +93,7 @@ const ArchiveForm = {
     this.errorElement.classList.add('error-message')
     this.errorElement.textContent = 'You must provide a reason to archive.'
 
-    this.reasonLabel.appendChild(this.errorElement)
+    this.archivedReasonLabel.appendChild(this.errorElement)
     addClass(this.fieldset, 'error')
   },
 
@@ -141,7 +139,7 @@ const ArchiveForm = {
    */
   validateForm (event) {
     if (this.reasonInputElement.value === '' ||
-      (this.reasonInputElement.value.toLowerCase() === 'other' && this.otherTextInput.value === '')) {
+      (this.reasonInputElement.value.toLowerCase() === 'other' && this.otherReasonTextInput.value === '')) {
       this.showError()
       event.preventDefault()
       return false
