@@ -22,7 +22,6 @@
   },
   "intermediate_company": null,
   "investment_recipient_company": null,
-  "client_contacts": [],
   "client_relationship_manager": null,
   "referral_source_adviser": null,
   "referral_source_activity": null,
@@ -33,5 +32,11 @@
   "non_fdi_type": null,
   "sector": null,
   "business_activities": [],
-  "project_section_complete": true
+  "project_section_complete": true,
+  "client_contacts": [
+    {
+      "name": "Alex Murphy",
+      "id": "6ec33fcf-f547-4dfd-8b8e-2e0a4784c853"
+    }
+  ]
 }

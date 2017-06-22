@@ -66,7 +66,7 @@
     "clean": "rm -rf build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && npm run sass:compile && npm run js",
-    "test": "mocha test/unit/**/*.test.js",
+    "test": "mocha --recursive test/unit/",
     "test:watch": "npm test -- -w",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test",

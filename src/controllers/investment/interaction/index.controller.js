@@ -5,7 +5,7 @@ const { getDisplayCompanyInteraction } = require('../../../services/interaction-
 const { getInteractionsForInvestment } = require('../../../repos/interaction.repo')
 const { getProjectDetails } = require('../shared.middleware')
 
-async function getInvestmentInteractions (req, res, next) {
+async function indexGetHandler (req, res, next) {
   try {
     if (get(res, 'locals.projectData')) {
       const interactionsResponse = await getInteractionsForInvestment(req.session.token, req.params.id)
@@ -13,7 +13,7 @@ async function getInvestmentInteractions (req, res, next) {
 
       res.locals.title.unshift('Interactions')
 
-      return res.render('investment/interactions/index', {
+      return res.render('investment/interaction/index', {
         currentNavItem: 'interactions',
         interactions,
       })
@@ -26,9 +26,9 @@ async function getInvestmentInteractions (req, res, next) {
 
 router.param('id', getProjectDetails)
 
-router.get('/:id/interactions', getInvestmentInteractions)
+router.get('/:id/interactions', indexGetHandler)
 
 module.exports = {
   router,
-  getInvestmentInteractions,
+  indexGetHandler,
 }

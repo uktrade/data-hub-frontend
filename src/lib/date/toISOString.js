@@ -1,10 +1,14 @@
-module.exports = function toISOString (day, month, year) {
+module.exports = function toISOString (year, month, day, hours = 12, mins = 0) {
   let isoString
+  let now = new Date()
 
   if (day && month && year) {
-    isoString = (new Date(year, month, day)).toISOString()
+    const dateDetails = [ year, month, day, hours, mins ]
+      .map((value) => parseInt(value, 10))
+
+    isoString = (new Date(...dateDetails)).toISOString()
   } else {
-    isoString = (new Date()).toISOString()
+    isoString = now.toISOString()
   }
 
   return isoString

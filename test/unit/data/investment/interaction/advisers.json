@@ -1,0 +1,21 @@
+{
+  "count": 1,
+  "results": [
+    {
+      "id": "0513453c-86bc-e211-a646-e4115bead28a",
+      "name": "Tom Thumb",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "Tom",
+      "last_name": "Thumb",
+      "email": "tom.thumb@test-email.com",
+      "use_cdms_auth": false,
+      "dit_team": {
+        "id": "b83ade1c-9798-e211-a939-e4115bead28a",
+        "name": "Achme Hub"
+      },
+      "groups": [],
+      "user_permissions": []
+    }
+  ]
+}

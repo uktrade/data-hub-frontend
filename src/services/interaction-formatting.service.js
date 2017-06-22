@@ -126,7 +126,7 @@ function transformToApi (body) {
     return value
   })
 
-  formatted['date'] = toISOString(body['date_day'], (body['date_month'] - 1), body['date_year'])
+  formatted['date'] = toISOString(body['date_year'], (body['date_month'] - 1), body['date_day'])
 
   return Object.assign({}, body, formatted)
 }
