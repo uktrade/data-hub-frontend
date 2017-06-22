@@ -83,7 +83,7 @@
     "js:client": "webpack",
     "js:client:watch": "webpack --watch",
     "js:server:watch": "nodemon --inspect src/server.js --ignore build/",
-    "sass": "node-sass src/sass/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
+    "sass": "node-sass assets/stylesheets/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
     "sass:watch": "nodemon -e scss -x 'npm run sass'",
     "sass:compile": "npm run sass -- -x --output-style compressed",
     "css:autoprefixer": "postcss build/css/*.css --use autoprefixer -d build/css",
