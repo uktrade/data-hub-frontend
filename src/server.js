@@ -1,4 +1,5 @@
 require('dotenv').config()
+const path = require('path')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const config = require('../config')
@@ -12,6 +13,7 @@ const csrf = require('csurf')
 const slashify = require('slashify')
 const churchill = require('churchill')
 const enforce = require('express-sslify')
+const favicon = require('serve-favicon')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
@@ -99,6 +101,7 @@ app.set('view engine', 'njk')
 nunjucks(app, config)
 
 // Static files
+app.use(favicon(path.join(config.root, 'src/public/assets/images', 'favicon.ico')))
 app.use('/javascripts', express.static(`${__dirname}/../build/javascripts`))
 app.use('/css', express.static(`${__dirname}/../build/css`))
 app.use(express.static(`${__dirname}/../src/public`))

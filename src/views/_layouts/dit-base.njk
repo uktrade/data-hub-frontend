@@ -9,12 +9,11 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>{% block head_title_content %}{{ title | default(titleDefault) }}{% endblock %}</title>
       {% block head_content %}
-        <link rel="shortcut icon" href="{{ assetPath }}images/favicon-f76d9be9fd.ico" type="image/x-icon">
-        <link rel="mask-icon" href="{{ assetPath }}images/gov-ebb5423b49.uk_logotype_crown.svg" color="#0b0c0c">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ assetPath }}images/apple-touch-icon-152x152-928276216f.png">
-        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ assetPath }}images/apple-touch-icon-120x120-93cc374f93.png">
-        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ assetPath }}images/apple-touch-icon-76x76-502fb715e0.png">
-        <link rel="apple-touch-icon-precomposed" href="{{ assetPath }}images/apple-touch-icon-60x60-27e25ffcc8.png">
+        <!--[if IE]><link rel="shortcut icon" href="{{ assetPath }}assets/images/favicon.ico" type="image/x-icon"><![endif]-->
+        <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
+        <link rel="apple-touch-icon" href="{{ assetPath }}assets/images/apple-touch-icon.png">
+        <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
+        <link rel="icon" href="{{ assetPath }}assets/images/favicon-192x192.png" type="image/png">
         <meta property="og:image" content="{{ assetPath }}images/opengraph-image-f86f1d0dd1.png">
       {% endblock %}
       {% block head_stylesheets %}
