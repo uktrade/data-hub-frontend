@@ -1,4 +1,5 @@
 {%- set assetPath = asset_path | default('/') -%}
+{%- set titleDefault = 'Department for International Trade' -%}
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -6,18 +7,42 @@
       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title>{% block head_title_content %}Department for International Trade{% endblock %}</title>
+      <title>{% block head_title_content %}{{ title | default(titleDefault) }}{% endblock %}</title>
+      {% if description -%}
+        <meta name="description" content="{{ description }}">
+      {% endif -%}
+
       {% block head_content %}
-        <link rel="shortcut icon" href="{{ assetPath }}images/favicon-f76d9be9fd.ico" type="image/x-icon">
-        <link rel="mask-icon" href="{{ assetPath }}images/gov-ebb5423b49.uk_logotype_crown.svg" color="#0b0c0c">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ assetPath }}images/apple-touch-icon-152x152-928276216f.png">
-        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ assetPath }}images/apple-touch-icon-120x120-93cc374f93.png">
-        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ assetPath }}images/apple-touch-icon-76x76-502fb715e0.png">
-        <link rel="apple-touch-icon-precomposed" href="{{ assetPath }}images/apple-touch-icon-60x60-27e25ffcc8.png">
-        <meta property="og:image" content="{{ assetPath }}images/opengraph-image-f86f1d0dd1.png">
+        <!--[if IE]><link rel="shortcut icon" href="{{ assetPath }}assets/images/favicon.ico" type="image/x-icon"><![endif]-->
+        <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
+        <link rel="apple-touch-icon" href="{{ assetPath }}assets/images/apple-touch-icon.png">
+        <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
+        <link rel="icon" href="{{ assetPath }}assets/images/favicon-192x192.png" type="image/png">
+
+        <!-- opengraph -->
+        <meta property="og:url" content="{{ CANONICAL_URL }}">
+        <meta property="og:site_name" content="{{ [siteTitle, serviceTitle] | removeNilAndEmpty | join(' ') }}">
+        <meta property="og:title" content="{{ title | default(titleDefault) }}">
+        {% if description  -%}
+          <meta property="og:description" content="{{ description }}">
+        {% endif -%}
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:image" content="{{ assetPath }}assets/images/opengraph-image.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="1200">
+
+        <!-- twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:domain" content="{{ BASE_URL }}">
+        <meta name="twitter:title" content="{{ title | default(titleDefault) }}">
+        {% if description  -%}
+          <meta name="twitter:description" content="{{ description }}">
+        {% endif -%}
       {% endblock %}
+
       {% block head_stylesheets %}
-        <link href="{{ assetPath }}css/application.css" media="screen" rel="stylesheet" />
+        <link href="{{ assetPath }}css/application.css" media="screen" rel="stylesheet">
       {% endblock %}
     {% endblock %}
     <script>(function(d){d.className=d.className.replace(/\bno-js\b/,'js-enabled')})(document.documentElement)</script>
@@ -47,11 +72,14 @@
           <div class="global-header__inner">
             {% block header_site_title %}
               <div class="global-header__site-title">
-                <a href="/" class="global-header__logo">
-                  <span class="global-header__site-name">{{ siteTitle|default('Department for International Trade') }}</span>
-                  {% if serviceTitle %}
-                    <span class="global-header__service-name">{{ serviceTitle }}</span>
-                  {% endif %}
+                <a href="/" class="global-header__link">
+                  <span class="global-header__crest"></span>
+                  <span class="global-header__logo">
+                    <span class="global-header__site-name">{{ siteTitle|default(titleDefault) }}</span>
+                    {% if serviceTitle %}
+                      <span class="global-header__service-name">{{ serviceTitle }}</span>
+                    {% endif %}
+                  </span>
                 </a>
                 {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta'] %}
                   <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>

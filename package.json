@@ -52,6 +52,7 @@
     "request": "^2.74.0",
     "request-promise": "^4.1.1",
     "sass-lint": "^1.10.2",
+    "serve-favicon": "^2.4.3",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.10.0",
     "slashify": "^1.0.0",

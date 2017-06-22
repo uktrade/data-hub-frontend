@@ -10,59 +10,70 @@
 .global-header__inner {
   @include clearfix;
   @include site-width-container;
-  padding: ($baseline-grid-unit * 3) 0;
+  padding: 10px 0;
 }
 
 .global-header__site-title {
-  word-spacing: -4px;
-
   @include media(tablet) {
     float: left;
   }
 
   .phase-badge {
-    margin-top: 5px;
+    margin-top: 6px;
   }
 }
 
-.global-header__logo {
-  border-bottom: 1px solid transparent;
+.global-header__crest {
+  background: url("../../assets/images/dit-crest__white.png") 6px 0 no-repeat $black;
+  background-size: contain;
+  border-left: 2px solid $white;
+  display: inline-block;
+  height: 30px;
+  margin-right: 8px;
+  width: 36px;
+  vertical-align: text-bottom;
+
+  @include device-pixel-ratio(2) {
+    background-image: url("../../assets/images/dit-crest__white@2x.png");
+    background-size: 28px 30px;
+  }
+}
+
+.global-header__link {
   display: inline-block;
   color: inherit;
   text-decoration: none;
   padding: 0;
-  margin: 0 $default-spacing-unit 0 0;
+  position: relative;
+  margin: 0 ($baseline-grid-unit * 3) 0 0;
 
   &:hover,
   &:visited,
   &:focus {
     color: inherit;
-    background-color: transparent;
-  }
-
-  &:hover {
-    border-color: inherit;
   }
 }
 
+.global-header__logo {
+  border-bottom: 1px solid transparent;
+  margin-left: -4px;
+}
+
+.global-header__link:hover .global-header__logo {
+  border-color: $white;
+}
+
 .global-header__site-name {
+  @include visually-hidden;
+}
+
+.global-header__service-name {
   @include bold-font(36);
-  letter-spacing: 1px;
+  color: inherit;
   line-height: .9;
 
   @include media(tablet) {
     line-height: .9;
     font-size: 30px;
-  }
-}
-
-.global-header__service-name {
-  @include core-font(24);
-  color: inherit;
-  line-height: .9;
-  margin-left: $baseline-grid-unit * 2;
-
-  @include media(tablet) {
-    line-height: .9;
   }
 }

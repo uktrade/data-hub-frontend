@@ -1,5 +1,7 @@
 {% extends "_layouts/dit-base.njk" %}
 
+{% set title = [title, 'DIT Data Hub'] | flatten | removeNilAndEmpty | join(' - ') %}
+
 {% block head %}
   {{ super() }}
 
@@ -16,8 +18,6 @@
     </script>
   {% endif %}
 {% endblock %}
-
-{% block head_title_content %}{{ [title, 'DIT Data Hub'] | flatten | removeNilAndEmpty | join(' - ') }}{% endblock %}
 
 {% block header_menu %}
   <nav>
