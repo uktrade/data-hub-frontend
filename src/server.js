@@ -38,6 +38,7 @@ if (!config.ci) {
 }
 
 if (!isDev) {
+  app.enable('trust proxy')
   app.use(enforce.HTTPS({
     trustProtoHeader: true,
   }))

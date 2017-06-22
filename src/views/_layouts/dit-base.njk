@@ -8,14 +8,39 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       <title>{% block head_title_content %}{{ title | default(titleDefault) }}{% endblock %}</title>
+      {% if description -%}
+        <meta name="description" content="{{ description }}">
+      {% endif -%}
+
       {% block head_content %}
         <!--[if IE]><link rel="shortcut icon" href="{{ assetPath }}assets/images/favicon.ico" type="image/x-icon"><![endif]-->
         <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
         <link rel="apple-touch-icon" href="{{ assetPath }}assets/images/apple-touch-icon.png">
         <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
         <link rel="icon" href="{{ assetPath }}assets/images/favicon-192x192.png" type="image/png">
-        <meta property="og:image" content="{{ assetPath }}images/opengraph-image-f86f1d0dd1.png">
+
+        <!-- opengraph -->
+        <meta property="og:url" content="{{ CANONICAL_URL }}">
+        <meta property="og:site_name" content="{{ [siteTitle, serviceTitle] | removeNilAndEmpty | join(' ') }}">
+        <meta property="og:title" content="{{ title | default(titleDefault) }}">
+        {% if description  -%}
+          <meta property="og:description" content="{{ description }}">
+        {% endif -%}
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:image" content="{{ assetPath }}assets/images/opengraph-image.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="1200">
+
+        <!-- twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:domain" content="{{ BASE_URL }}">
+        <meta name="twitter:title" content="{{ title | default(titleDefault) }}">
+        {% if description  -%}
+          <meta name="twitter:description" content="{{ description }}">
+        {% endif -%}
       {% endblock %}
+
       {% block head_stylesheets %}
         <link href="{{ assetPath }}css/application.css" media="screen" rel="stylesheet">
       {% endblock %}
