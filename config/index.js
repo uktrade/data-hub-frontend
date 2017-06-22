@@ -30,7 +30,7 @@ module.exports = {
     // 2 hour timeout
     ttl: process.env.SESSION_TTL || (2 * 60 * 60 * 1000),
   },
-  logLevel: process.env.LOG_LEVEL || isDev ? 'debug' : 'error',
+  logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
   zenUrl: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
   zenToken: process.env.ZEN_TOKEN,
   zenEmail: process.env.ZEN_EMAIL,
