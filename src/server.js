@@ -102,10 +102,10 @@ app.set('view engine', 'njk')
 nunjucks(app, config)
 
 // Static files
-app.use(favicon(path.join(config.root, 'src/public/assets/images', 'favicon.ico')))
-app.use('/javascripts', express.static(`${__dirname}/../build/javascripts`))
-app.use('/css', express.static(`${__dirname}/../build/css`))
-app.use(express.static(`${__dirname}/../src/public`))
+app.use(favicon(path.join(config.root, 'public/assets/images', 'favicon.ico')))
+app.use(express.static(path.join(config.root, 'public')))
+app.use('/javascripts', express.static(path.join(config.root, 'build/javascripts')))
+app.use('/css', express.static(path.join(config.root, 'build/css')))
 
 app.use('/images', express.static(`${__dirname}/../node_modules/@uktrade/trade_elements/dist/images`))
 app.use('/css', express.static(`${__dirname}/../node_modules/@uktrade/trade_elements/dist/css`))
