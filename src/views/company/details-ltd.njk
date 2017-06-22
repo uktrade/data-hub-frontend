@@ -26,4 +26,17 @@
       <p class="footnote">You do not have perission to edit the Account management section</strong></p>
     </div>
   {% endif %}
+
+  {% if not company.archived %}
+    <h2 class="heading-medium">Archive company</h2>
+    <p>Archive this company if it is no longer required or active.</p>
+
+    {% component 'archive-form', {
+      label: 'Archive reason',
+      options: ['Company is dissolved'],
+      csrfToken: csrfToken,
+      error: form.errors.reason,
+      url: '/company/archive/' + company.id
+    } %}
+  {% endif %}
 {% endblock %}

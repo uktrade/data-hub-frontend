@@ -9,6 +9,8 @@ const {
   createInvestmentProject,
   updateInvestmentProject,
   getInvestmentProjectAuditLog,
+  archiveInvestmentProject,
+  unarchiveInvestmentProject,
 } = require(`~/src/repos/investment.repo`)
 
 const companyData = require('../data/company.json')
@@ -99,6 +101,26 @@ describe('Investment repository', () => {
       const actual = getInvestmentProjectAuditLog('token', investmentProjectSummaryData.id)
 
       return expect(actual).to.eventually.deep.equal(investmentProjectAuditData.results)
+    })
+  })
+
+  describe('#archiveInvestmentProject', () => {
+    nock(config.apiRoot)
+      .post(`/v3/investment/${investmentProjectSummaryData.id}/archive`, { reason: 'test' })
+      .reply(200, investmentProjectAuditData)
+
+    it('should call archive url and post reason', () => {
+      return archiveInvestmentProject('token', investmentProjectSummaryData.id, 'test')
+    })
+  })
+
+  describe('#unarchiveInvestmentProject', () => {
+    nock(config.apiRoot)
+      .post(`/v3/investment/${investmentProjectSummaryData.id}/unarchive`)
+      .reply(200, investmentProjectAuditData)
+
+    it('should call unarchive url', () => {
+      return unarchiveInvestmentProject('token', investmentProjectSummaryData.id)
     })
   })
 })

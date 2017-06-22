@@ -276,3 +276,7 @@ select.form-control {
     box-shadow: 0 0 0 3px $focus-colour;
   }
 }
+
+fieldset.error {
+  margin-bottom: 20px;
+}

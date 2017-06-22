@@ -7,7 +7,14 @@
     <span class="post-header">{{ headingAddress }}</span>
   </h2>
 
-  {% include "./_archive.njk" %}
+  {% if company.archived %}
+    <p class="infostrip">
+      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+      <strong>Reason:</strong> {{company.archived_reason}}<br>
+      <br>
+      <a href="/company/unarchive/{{company.id}}">Unarchive</a>
+    </p>
+  {% endif %}
 {% endblock %}
 
 {% block main_grid_left_column %}

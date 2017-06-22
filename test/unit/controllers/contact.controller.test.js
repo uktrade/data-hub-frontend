@@ -1,4 +1,3 @@
-const { render } = require('../nunjucks')
 const { contactDetailsLabels } = require('~/src/labels/contact-labels')
 const next = function (error) { console.log(error) }
 
@@ -216,58 +215,6 @@ describe('Contact controller', function () {
           },
         }
         contactController.getDetails(req, res, next)
-      })
-    })
-    describe('markup', function () {
-      let contactDetails
-
-      beforeEach(function () {
-        contactDetails = {
-          title: 'Mr',
-          job_title: 'Director',
-          telephone_number: '+44 7814 333 777',
-          email: 'fred@test.com',
-          address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
-          telephone_alternative: '07814 000 333',
-          email_alternative: 'fred@gmail.com',
-          notes: 'some notes',
-        }
-      })
-
-      it('should render a contact details section', function () {
-        return render(`${rootPath}/src/views/contact/details.njk`, { contact, contactDetails, contactDetailsLabels })
-        .then((document) => {
-          expect(document.getElementById('contact-details')).to.not.be.null
-        })
-      })
-      it('should include the contact details in a key value table', function () {
-        return render(`${rootPath}/src/views/contact/details.njk`, { contact, contactDetails, contactDetailsLabels })
-        .then((document) => {
-          const details = document.getElementById('contact-details')
-          expect(details.innerHTML).to.include(contactDetails.title)
-          expect(details.innerHTML).to.include(contactDetails.job_title)
-          expect(details.innerHTML).to.include(contactDetails.telephone_number)
-          expect(details.innerHTML).to.include(contactDetails.email)
-          expect(details.innerHTML).to.include(contactDetails.address)
-          expect(details.innerHTML).to.include(contactDetails.telephone_alternative)
-          expect(details.innerHTML).to.include(contactDetails.email_alternative)
-          expect(details.innerHTML).to.include(contactDetails.notes)
-        })
-      })
-      it('should display the contact name and address in a heading', function () {
-        return render(`${rootPath}/src/views/contact/details.njk`, { contact, contactDetails, contactDetailsLabels })
-        .then((document) => {
-          const heading = document.querySelector('h2.page-heading')
-          expect(heading.innerHTML).to.include('Fred Smith')
-          expect(heading.innerHTML).to.include('Bank ltd')
-        })
-      })
-      it('should indicate primary contacts', function () {
-        return render(`${rootPath}/src/views/contact/details.njk`, { contact, contactDetails, contactDetailsLabels })
-        .then((document) => {
-          const heading = document.querySelector('h2.page-heading')
-          expect(heading.innerHTML).to.include('<span class="status-badge status-badge--fuschia ">Primary</span>')
-        })
       })
     })
   })

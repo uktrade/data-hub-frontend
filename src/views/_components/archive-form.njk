@@ -1,0 +1,34 @@
+{% import "macros/trade.html" as trade %}
+{##
+ # @param {string}    label      The label to display above the dropdown list of reasons
+ # @param {string[]}  options    A list of possible reasons why the entity needs to be arhived. The control will add the 'Other' option
+ # @param {string}    csrfToken  The CSRF token to be inserted into the form
+ # @param {string}    [url]      url to post data too
+ #
+ # @example
+ # {% component 'archive-form', {
+ #    label: 'Archive reason',
+ #    options: ['Reason 1', 'Reason 2'],
+ #    error: 'Provide a value'
+ #  } %}
+ #
+#}
+{% set radioOptions = options | arrayToLabelValues %}
+{% set radioOptions = radioOptions | pushToArray({label:'Other', value: 'Other'}) %}
+
+<form class="archive-form js-archiveForm" method="POST" {% if url %}action="{{ url }}{% endif %}">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+  {% component 'form-multiple-choice', {
+    variant:  'radio',
+    label: label,
+    name:  'archived_reason',
+    children: radioOptions
+  } %}
+
+  <div class="js-ConditionalSubfield" data-controlled-by="archived_reason" data-control-value="Other">
+    {{ trade.textbox("archived_reason_other", label="Other") }}
+  </div>
+
+  {{ trade.save(buttonText="Archive") }}
+</form>

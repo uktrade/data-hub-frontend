@@ -57,6 +57,22 @@ const filters = {
   formatNumber: (number, locales = 'en-GB') => {
     return number.toLocaleString(locales)
   },
+
+  pushToArray: (value, newItem) => {
+    value.push(newItem)
+    return value
+  },
+
+  arrayToLabelValues: (items) => {
+    const result = []
+    for (const item of items) {
+      result.push({
+        label: item,
+        value: item,
+      })
+    }
+    return result
+  },
 }
 
 module.exports = filters

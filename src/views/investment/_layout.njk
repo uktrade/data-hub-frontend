@@ -5,6 +5,16 @@
     <h1 class="visually-hidden">Investment details</h1>
     <h2 class="page-heading">{{ projectData.name }}</h2>
     {% component 'project-status', projectStatus %}
+
+    {% if projectData.archived %}
+      <p class="infostrip">
+        This investment project was archived on {{ projectData.archived_on | formatDate }} by {{ projectData.archived_by.first_name }} {{ projectData.archived_by.last_name }}. <br>
+        <strong>Archive reason:</strong> {{ projectData.archived_reason }}<br>
+        <br>
+        <a href="/investment/{{ projectData.id }}/unarchive">Unarchive</a>
+      </p>
+    {% endif %}
+
   {% endif %}
 {% endblock %}
 
