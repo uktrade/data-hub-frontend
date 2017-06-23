@@ -8,7 +8,6 @@
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "dependencies": {
-    "@uktrade/trade_elements": "^3.2.1",
     "autoprefixer": "^7.1.1",
     "axios": "^0.15.2",
     "babel-core": "^6.23.1",
@@ -33,6 +32,8 @@
     "express-session": "^1.14.1",
     "express-sslify": "^1.2.0",
     "font-awesome": "^4.6.3",
+    "govuk-elements-sass": "^2.2.1",
+    "govuk_frontend_toolkit": "^5.0.2",
     "html5shiv": "^3.7.3",
     "istanbul": "^0.4.5",
     "joi": "^10.5.2",
@@ -83,7 +84,7 @@
     "js:client": "webpack",
     "js:client:watch": "webpack --watch",
     "js:server:watch": "nodemon --inspect src/server.js --ignore build/",
-    "sass": "node-sass assets/stylesheets/application.scss build/css/application.css --include-path ./node_modules/@uktrade/trade_elements/dist/sass/ --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
+    "sass": "node-sass assets/stylesheets/application.scss build/css/application.css --include-path node_modules/govuk_frontend_toolkit/stylesheets --include-path ./node_modules/govuk-elements-sass/public/sass --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
     "sass:watch": "nodemon -e scss -x 'npm run sass'",
     "sass:compile": "npm run sass -- -x --output-style compressed",
     "css:autoprefixer": "postcss build/css/*.css --use autoprefixer -d build/css",
