@@ -1,6 +1,6 @@
-const config = require('../../config')
-const logger = require('../../config/logger')
-const authorisedRequest = require('../lib/authorised-request')
+const config = require('../../../config')
+const logger = require('../../../config/logger')
+const authorisedRequest = require('../../lib/authorised-request')
 
 function saveServiceDelivery (token, serviceDelivery) {
   const options = {

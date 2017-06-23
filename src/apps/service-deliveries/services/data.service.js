@@ -1,10 +1,10 @@
 /* eslint camelcase: 0 */
-const logger = require('../../config/logger')
-const companyRepository = require('../repos/company.repo')
-const contactsRepository = require('../apps/contacts/contacts.repo')
-const metadataRepository = require('../repos/metadata.repo')
-const serviceDeliveryRepository = require('../repos/service-delivery.repo')
-const adviserRepository = require('../repos/adviser.repo')
+const logger = require('../../../../config/logger')
+const companyRepository = require('../../../repos/company.repo')
+const contactsRepository = require('../../../apps/contacts/contacts.repo')
+const metadataRepository = require('../../../repos/metadata.repo')
+const serviceDeliveryRepository = require('../service-deliveries.repo')
+const adviserRepository = require('../../../repos/adviser.repo')
 
 function validKey (object, key) {
   return object && object[key] && object[key].data && object[key].data.id && object[key].data.id.length > 0

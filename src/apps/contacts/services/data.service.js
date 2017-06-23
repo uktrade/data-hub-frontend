@@ -3,7 +3,7 @@ const logger = require('../../../../config/logger')
 const adviserRepository = require('../../../repos/adviser.repo')
 const interactionRepository = require('../../../repos/interaction.repo')
 const metadataRepository = require('../../../repos/metadata.repo')
-const serviceDeliveryRepository = require('../../../repos/service-delivery.repo')
+const serviceDeliveryRepository = require('../../service-deliveries/service-deliveries.repo')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but
