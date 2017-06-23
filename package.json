@@ -1,11 +1,11 @@
 {
-  "name": "data-hub-fe-beta2",
+  "name": "data-hub-frontend",
   "version": "1.4.8",
-  "description": "Data Hub Beta 2",
+  "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/uktrade/data-hub-fe-beta2"
+    "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "dependencies": {
     "@uktrade/trade_elements": "^3.2.1",
@@ -95,7 +95,12 @@
     "lint:sass:modified",
     "lint:js:modified"
   ],
-  "author": "Zac Tolley <zac@thetolleys.com>",
+  "contributors": [
+    "Ben Chidgey <ben@feedmypixel.com> (http://feedmypixel.com)",
+    "Dom Smith <dom@teneightfive.com> (http://github.com/teneightfive)",
+    "Tyom Semonov (https://github.com/tyom)",
+    "Zac Tolley <zac@thetolleys.com>"
+  ],
   "license": "MIT",
   "engines": {
     "node": "8.1.0"
