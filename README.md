@@ -1,4 +1,4 @@
-# Data hub Beta 2
+# Data Hub frontend
 
 An express application that fetches data from a back end JSON based api and renders it to the screen.
 This front end layer is primarily turning requests from the browser into back end API calls and then
@@ -9,6 +9,26 @@ access it, no matter what their limitation.
 
 In order to use the application the front end layer must be run, with a small number of settings,
 and be provided with a back end server to provide the API, data storage and search engine capabilities.
+
+## Table of Contents
+- [Getting started](#getting-started)
+  - [Docker](#docker)
+    - [docker-compose.yml](#docker-composeyml)
+    - [Environment Variables](#environment-variables)
+  - [Native install](#native-install)
+    - [Dependencies](#dependencies)
+  - [Installation](#installation)
+    - [Run in production mode](#run-in-production-mode)
+    - [Run in development mode](#run-in-development-mode)
+  - [Other Scripts](#other-scripts)
+- [Making changes](#making-changes)
+- [Components](#components)
+- [Templates](#templates)
+  - [Nunjucks base template blocks](#nunjucks-base-template-blocks)
+  - [Base template variables](#base-template-variables)
+  - [Template inheritance diagram](#template-inheritance-diagram)
+- [Deployment](#deployment)
+
 
 ## Getting started
 
