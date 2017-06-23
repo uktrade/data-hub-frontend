@@ -1,6 +1,6 @@
 /* eslint new-cap: 0 */
 const express = require('express')
-const contactRepository = require('../repos/contact.repo')
+const contactRepository = require('./contact.repo')
 const router = express.Router()
 
 async function archiveContact (req, res, next) {

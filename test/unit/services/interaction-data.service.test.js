@@ -27,7 +27,7 @@ describe('interaction data service', function () {
       '../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
       },
-      '../repos/contact.repo': {
+      '../apps/contacts/contact.repo': {
         getContact: getContactStub,
       },
       '../repos/interaction.repo': {
@@ -56,7 +56,7 @@ describe('interaction data service', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/contact.repo': {
+        '../apps/contacts/contact.repo': {
           getContact: getContactStub,
         },
         '../repos/interaction.repo': {
@@ -112,7 +112,7 @@ describe('interaction data service', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/contact.repo': {
+        '../apps/contacts/contact.repo': {
           getContact: getContactStub,
         },
         '../repos/interaction.repo': {
@@ -135,7 +135,7 @@ describe('interaction data service', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/contact.repo': {
+        '../apps/contacts/contact.repo': {
           getContact: getContactStub,
         },
         '../repos/interaction.repo': {
@@ -180,7 +180,7 @@ describe('interaction data service', function () {
         '../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../repos/contact.repo': {
+        '../apps/contacts/contact.repo': {
           getContact: getContactStub,
         },
         '../repos/interaction.repo': {

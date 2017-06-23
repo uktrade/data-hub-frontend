@@ -1,4 +1,4 @@
-const contactFormattingService = require('~/src/services/contact-formatting.service')
+const contactFormattingService = require('~/src/apps/contacts/contact-formatting.service')
 
 describe('Contact formatting service', function () {
   let contact

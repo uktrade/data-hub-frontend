@@ -1,10 +1,10 @@
 const express = require('express')
 
-const contactRepository = require('../repos/contact.repo')
-const companyRepository = require('../repos/company.repo')
-const contactFormattingService = require('../services/contact-formatting.service')
-const companyService = require('../services/company.service')
-const { contactDetailsLabels } = require('../labels/contact-labels')
+const contactRepository = require('./contact.repo')
+const companyRepository = require('../../repos/company.repo')
+const contactFormattingService = require('./contact-formatting.service')
+const companyService = require('../../services/company.service')
+const { contactDetailsLabels } = require('./labels')
 const router = express.Router()
 
 const reasonForArchiveOptions = [

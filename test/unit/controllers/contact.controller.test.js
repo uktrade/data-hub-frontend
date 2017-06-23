@@ -1,4 +1,4 @@
-const { contactDetailsLabels } = require('~/src/labels/contact-labels')
+const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
 const next = function (error) { console.log(error) }
 
 describe('Contact controller', function () {
@@ -60,17 +60,17 @@ describe('Contact controller', function () {
     getDisplayContactStub = sinon.stub().returns(contactFormatted)
     getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
-    contactController = proxyquire('~/src/controllers/contact.controller', {
-      '../repos/contact.repo': {
+    contactController = proxyquire('~/src/apps/contacts/contact.controller', {
+      './contact.repo': {
         getContact: getContactStub,
       },
-      '../services/contact-formatting.service': {
+      './contact-formatting.service': {
         getDisplayContact: getDisplayContactStub,
       },
-      '../repos/company.repo': {
+      '../../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
       },
-      '../services/company.service': {
+      '../../services/company.service': {
         buildCompanyUrl: buildCompanyUrlStub,
       },
     })
@@ -158,17 +158,17 @@ describe('Contact controller', function () {
     })
     it('should handle an error', function (done) {
       const error = Error('error')
-      contactController = proxyquire('~/src/controllers/contact.controller', {
-        '../repos/contact.repo': {
+      contactController = proxyquire('~/src/apps/contacts/contact.controller', {
+        './contact.repo': {
           getContact: sinon.stub().rejects(error),
         },
-        '../services/contact-formatting.service': {
+        './contact-formatting.service': {
           getDisplayContact: getDisplayContactStub,
         },
-        '../repos/company.repo': {
+        '../../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../services/company.service': {
+        '../../services/company.service': {
           buildCompanyUrl: buildCompanyUrlStub,
         },
       })
