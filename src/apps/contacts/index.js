@@ -1,6 +1,6 @@
 const router = require('./router')
 const labels = require('./labels')
-const repo = require('./contact.repo')
+const repository = require('./contacts.repo')
 const controllers = {
   details: require('./contact.controller'),
   interactions: require('./contact-interaction.controller'),
@@ -16,7 +16,7 @@ const services = {
 module.exports = {
   router,
   labels,
-  repo,
+  repository,
   controllers,
   services,
 }

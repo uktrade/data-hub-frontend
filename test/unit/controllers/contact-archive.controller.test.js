@@ -15,7 +15,7 @@ describe('Contact controller, archive', function () {
     contactRepositoryArchiveContactStub = sinon.stub().resolves(null)
     contactRepositoryUnArchiveContactStub = sinon.stub().resolves(null)
     contactArchiveController = proxyquire('~/src/apps/contacts/contact-archive.controller', {
-      './contact.repo': {
+      './contacts.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
@@ -111,7 +111,7 @@ describe('Contact controller, archive', function () {
     const error = Error('error')
     contactRepositoryArchiveContactStub = sinon.stub().rejects(error)
     contactArchiveController = proxyquire('~/src/apps/contacts/contact-archive.controller', {
-      './contact.repo': {
+      './contacts.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
       },
@@ -137,7 +137,7 @@ describe('Contact controller, archive', function () {
     const error = Error('error')
     contactRepositoryUnArchiveContactStub = sinon.stub().rejects(error)
     contactArchiveController = proxyquire('~/src/apps/contacts/contact-archive.controller', {
-      './contact.repo': {
+      './contacts.repo': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
       },

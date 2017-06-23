@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const logger = require('../../config/logger')
 const companyRepository = require('../repos/company.repo')
-const contactRepository = require('../apps/contacts/contact.repo')
+const contactsRepository = require('../apps/contacts/contacts.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
 const adviserRepository = require('../repos/adviser.repo')
@@ -21,7 +21,7 @@ function getHydratedServiceDelivery (token, serviceDeliveryId) {
         serviceDelivery.company = await companyRepository.getDitCompany(token, related.company.data.id)
       }
       if (validKey(related, 'contact')) {
-        serviceDelivery.contact = await contactRepository.getContact(token, related.contact.data.id)
+        serviceDelivery.contact = await contactsRepository.getContact(token, related.contact.data.id)
       }
       if (validKey(related, 'event')) {
         serviceDelivery.event = await metadataRepository.getMetadataItem('event', related.event.data.id)
@@ -91,7 +91,7 @@ function convertServiceDeliveryFormToApiFormat (serviceDeliveryForm) {
 function createBlankServiceDeliveryForContact (token, dit_adviser, contactId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const contact = await contactRepository.getContact(token, contactId)
+      const contact = await contactsRepository.getContact(token, contactId)
       const company = await companyRepository.getDitCompany(token, contact.company.id)
 
       resolve({
@@ -145,7 +145,7 @@ function convertFormBodyBackToServiceDelivery (token, flatServiceDelivery) {
       }
 
       if (flatServiceDelivery.contact) {
-        result.contact = await contactRepository.getContact(token, flatServiceDelivery.contact)
+        result.contact = await contactsRepository.getContact(token, flatServiceDelivery.contact)
       } else {
         result.contact = { id: null }
       }

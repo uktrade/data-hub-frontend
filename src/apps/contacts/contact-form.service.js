@@ -4,7 +4,7 @@ const {
   getPropertyId,
   nullEmptyFields,
 } = require('../../lib/property-helpers')
-const contactRepository = require('./contact.repo')
+const contactsRepository = require('./contacts.repo')
 
 /**
  * Accepts an API contact object and converts it into a format compatible with a HTML form
@@ -58,7 +58,7 @@ function saveContactForm (token, contactForm) {
       let dataToSave = convertYesNoToBoolean(contactForm)
       dataToSave = nullEmptyFields(dataToSave)
       dataToSave = convertNestedObjects(dataToSave, ['title', 'company', 'address_country'])
-      const savedContact = await contactRepository.saveContact(token, dataToSave)
+      const savedContact = await contactsRepository.saveContact(token, dataToSave)
       resolve(savedContact)
     } catch (error) {
       reject(error)

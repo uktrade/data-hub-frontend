@@ -1,11 +1,11 @@
-const contactRepository = require('./contact.repo')
+const contactsRepository = require('./contacts.repo')
 
 async function archiveContact (req, res, next) {
   try {
     const reason = (req.body.archived_reason !== 'Other') ? req.body.archived_reason : req.body.archived_reason_other
 
     if (reason.length > 0) {
-      await contactRepository.archiveContact(req.session.token, req.params.id, reason)
+      await contactsRepository.archiveContact(req.session.token, req.params.id, reason)
       req.flash('success-message', 'Updated contact record')
     } else {
       req.flash('error-message', 'Unable to archive contact, no reason given')
@@ -19,7 +19,7 @@ async function archiveContact (req, res, next) {
 
 async function unarchiveContact (req, res, next) {
   try {
-    await contactRepository.unarchiveContact(req.session.token, req.params.id)
+    await contactsRepository.unarchiveContact(req.session.token, req.params.id)
     req.flash('success-message', 'Updated contact record')
     res.redirect(`/contact/${req.params.id}/details`)
   } catch (error) {

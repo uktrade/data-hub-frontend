@@ -61,7 +61,7 @@ describe('Contact controller', function () {
     getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
     contactController = proxyquire('~/src/apps/contacts/contact.controller', {
-      './contact.repo': {
+      './contacts.repo': {
         getContact: getContactStub,
       },
       './contact-formatting.service': {
@@ -159,7 +159,7 @@ describe('Contact controller', function () {
     it('should handle an error', function (done) {
       const error = Error('error')
       contactController = proxyquire('~/src/apps/contacts/contact.controller', {
-        './contact.repo': {
+        './contacts.repo': {
           getContact: sinon.stub().rejects(error),
         },
         './contact-formatting.service': {
