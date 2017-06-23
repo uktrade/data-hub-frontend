@@ -1,10 +1,10 @@
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
-    return proxyquire('~/src/services/dashboard.service', {
-      './company.service': {
+    return proxyquire('~/src/apps/dashboard/dashboard.service', {
+      '../../services/company.service': {
         buildCompanyUrl: sinon.stub().returns('/test'),
       },
-      '../lib/authorised-request': () => new Promise((resolve) => {
+      '../../lib/authorised-request': () => new Promise((resolve) => {
         resolve(mockData)
       }),
     })
