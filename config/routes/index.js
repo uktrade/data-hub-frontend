@@ -1,3 +1,5 @@
+const router = require('express').Router()
+
 const routers = []
 const controllers = [
   '../../src/apps/contacts/router',
@@ -26,7 +28,13 @@ const controllers = [
 ]
 
 controllers.forEach((ctrl) => {
-  routers.push(require(ctrl).router)
+  const appRouter = require(ctrl)
+
+  if (appRouter.hasOwnProperty('path')) {
+    routers.push(router.use(appRouter.path, appRouter.router))
+  } else {
+    routers.push(appRouter.router)
+  }
 })
 
 module.exports = routers

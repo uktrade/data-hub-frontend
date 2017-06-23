@@ -1,13 +1,9 @@
-const express = require('express')
-const { containsFormData } = require('../../lib/controller-utils')
-const contactFormService = require('./contact-form.service')
-const { contactLabels } = require('./labels')
-const metadataRepository = require('../../repos/metadata.repo')
-const companyRepository = require('../../repos/company.repo')
-const { getCommon } = require('./contact.controller')
-const { buildCompanyUrl } = require('../../services/company.service')
-
-const router = express.Router()
+const { containsFormData } = require('../../../lib/controller-utils')
+const contactFormService = require('../services/form.service')
+const { contactLabels } = require('../labels')
+const metadataRepository = require('../../../repos/metadata.repo')
+const companyRepository = require('../../../repos/company.repo')
+const { buildCompanyUrl } = require('../../../services/company.service')
 
 /**
  * GET the edit detail screen, used for editing contacts.
@@ -97,8 +93,7 @@ function postDetails (req, res, next) {
   })
 }
 
-router.get(['/contact/add'], editDetails)
-router.get(['/contact/:contactId/edit'], getCommon, editDetails)
-router.post(['/contact/:contactId/edit', '/contact/add'], postDetails)
-
-module.exports = { router, editDetails, postDetails }
+module.exports = {
+  editDetails,
+  postDetails,
+}

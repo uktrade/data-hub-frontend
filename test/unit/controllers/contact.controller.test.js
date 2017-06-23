@@ -60,17 +60,17 @@ describe('Contact controller', function () {
     getDisplayContactStub = sinon.stub().returns(contactFormatted)
     getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns(companyUrl)
-    contactController = proxyquire('~/src/apps/contacts/contact.controller', {
-      './contact.repo': {
+    contactController = proxyquire('~/src/apps/contacts/controllers/details.controller', {
+      '../contacts.repo': {
         getContact: getContactStub,
       },
-      './contact-formatting.service': {
+      '../services/formatting.service': {
         getDisplayContact: getDisplayContactStub,
       },
-      '../../repos/company.repo': {
+      '../../../repos/company.repo': {
         getDitCompany: getDitCompanyStub,
       },
-      '../../services/company.service': {
+      '../../../services/company.service': {
         buildCompanyUrl: buildCompanyUrlStub,
       },
     })
@@ -158,17 +158,17 @@ describe('Contact controller', function () {
     })
     it('should handle an error', function (done) {
       const error = Error('error')
-      contactController = proxyquire('~/src/apps/contacts/contact.controller', {
-        './contact.repo': {
+      contactController = proxyquire('~/src/apps/contacts/controllers/details.controller', {
+        '../contacts.repo': {
           getContact: sinon.stub().rejects(error),
         },
-        './contact-formatting.service': {
+        '../services/formatting.service': {
           getDisplayContact: getDisplayContactStub,
         },
-        '../../repos/company.repo': {
+        '../../../repos/company.repo': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../services/company.service': {
+        '../../../services/company.service': {
           buildCompanyUrl: buildCompanyUrlStub,
         },
       })

@@ -1,9 +1,9 @@
 /* eslint camelcase: 0 */
-const logger = require('../../../config/logger')
-const adviserRepository = require('../../repos/adviser.repo')
-const interactionRepository = require('../../repos/interaction.repo')
-const metadataRepository = require('../../repos/metadata.repo')
-const serviceDeliveryRepository = require('../../repos/service-delivery.repo')
+const logger = require('../../../../config/logger')
+const adviserRepository = require('../../../repos/adviser.repo')
+const interactionRepository = require('../../../repos/interaction.repo')
+const metadataRepository = require('../../../repos/metadata.repo')
+const serviceDeliveryRepository = require('../../../repos/service-delivery.repo')
 
 /**
  * Accepts an API contact object and inflates it to pull in related contact data but

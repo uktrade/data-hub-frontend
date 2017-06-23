@@ -1,5 +1,5 @@
 const { render } = require('../nunjucks')
-const contactDataService = require('~/src/apps/contacts/contact-data.service')
+const contactDataService = require('~/src/apps/contacts/services/data.service')
 const interactionFormattingService = require('~/src/services/interaction-formatting.service')
 
 const next = function (error) {
@@ -13,7 +13,7 @@ describe('Contact interactions controller', function () {
   let contact
 
   beforeEach(function () {
-    contactInteractionController = require('~/src/apps/contacts/contact-interaction.controller')
+    contactInteractionController = require('~/src/apps/contacts/controllers/interactions.controller')
     contact = require('../data/simple-contact')
     interaction = require('../data/simple-interaction')
     formattedInteraction = require('../data/formatted-contact-interaction')

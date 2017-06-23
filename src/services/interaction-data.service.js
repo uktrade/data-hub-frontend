@@ -1,6 +1,6 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const companyRepository = require('../repos/company.repo')
-const contactRepository = require('../apps/contacts/contact.repo')
+const contactsRepository = require('../apps/contacts/contacts.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const interactionRepository = require('../repos/interaction.repo')
 
@@ -32,7 +32,7 @@ function createBlankInteractionForContact (token, dit_adviser, interaction_type,
         return reject('Missing parameter')
       }
 
-      const contact = await contactRepository.getContact(token, contactId)
+      const contact = await contactsRepository.getContact(token, contactId)
 
       if (!contact.company || !contact.company.id) {
         return reject('Invalid contact')
