@@ -41,14 +41,13 @@ function ComponentExtension (env) {
 module.exports = (app, config) => {
   const env = nunjucks.configure([
     `${config.root}/src/views`,
-    `${config.root}/node_modules/@uktrade/trade_elements/dist/nunjucks`,
   ], {
     autoescape: true,
     express: app,
     watch: config.isDev,
     noCache: config.isDev,
   })
-  const tradeElementsFilters = require(`@uktrade/trade_elements/dist/nunjucks/filters`)
+  const tradeElementsFilters = require('./trade-elements-filters')
   const dataHubFilters = require('./filters')
   const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)
 
