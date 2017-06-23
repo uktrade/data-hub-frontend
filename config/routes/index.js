@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const routers = []
 const controllers = [
+  '../../src/apps/auth/router',
   '../../src/apps/contacts/router',
   '../../src/apps/dashboard/router',
   '../../src/apps/search/router',
@@ -10,7 +11,6 @@ const controllers = [
 
   '../../src/controllers/api.controller',
   '../../src/controllers/pingdom.controller',
-  '../../src/controllers/login.controller',
   '../../src/controllers/my-account.controller',
   '../../src/controllers/interaction.controller',
   '../../src/controllers/interaction-edit.controller',

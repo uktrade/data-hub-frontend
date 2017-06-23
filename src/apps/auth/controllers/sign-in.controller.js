@@ -1,10 +1,7 @@
-/* eslint new-cap: 0 */
-
-const router = require('express').Router()
 const rp = require('request-promise')
 const { get } = require('lodash')
 
-const config = require('../../config')
+const config = require('../../../../config')
 
 function authenticate (username, password) {
   const options = {
@@ -26,13 +23,13 @@ function authenticate (username, password) {
   return rp(options)
 }
 
-function login (req, res) {
+function getHandler (req, res) {
   res.render('login.njk', {
     title: 'Sign in',
   })
 }
 
-function loginToApi (req, res, next) {
+function postHandler (req, res, next) {
   if (!req.body.username || !req.body.password) {
     req.flash('error-message', 'Invalid user id or password')
     return res.redirect('/login')
@@ -55,18 +52,7 @@ function loginToApi (req, res, next) {
     })
 }
 
-function logout (req, res) {
-  req.session.returnTo = null
-  req.session.token = null
-  req.session.user = null
-  req.flash('success-message', 'Signed out')
-  res.redirect('/login')
+module.exports = {
+  getHandler,
+  postHandler,
 }
-
-router
-  .route('/login')
-  .get(login)
-  .post(loginToApi)
-router.get('/login/signout', logout)
-
-module.exports = { router }
