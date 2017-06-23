@@ -1,0 +1,58 @@
+{##
+ # Textbox
+ #
+ # @param {string} [variant]  Type of text box (default|multiline)
+ # @param {string} [label]    Label for the form element
+ # @param {string} [name]     Name for the form element
+ #
+ # @param {string} [value]        The current value - Used to prefill the field (optional)
+ # @param {string} [error]        Whether to display an error on the field (optional)
+ # @param {bool}   [optional]     Whether the field is optional or not (optional)
+ # @param {bool}   [autofocus]    Whether the field should have focus
+ # @param {bool}   [autocomplete] Set if autocomplete should be turned off
+ #
+ #
+ # @example
+ #   {% component 'textbox', {
+ #     variant:  'multiline',
+ #     label: 'How old are you?',
+ #     name:  'age'
+ #   } %}
+ #}
+{% set hintId = 'hint-' + name %}
+
+<div class="textbox{{ ' has-error' if error }}">
+  <label for="input-{{ name }}" class="textbox__label">
+    {{ label }} {% if optional %}(optional){% endif %}
+    {% if hint %}
+      <span class="form-label__hint" id="{{ hintId }}">{{ hint }}</span>
+    {% endif %}
+  </label>
+
+  {% if variant == 'large' %}
+    <textarea
+      name="{{ name }}"
+      id="input-{{ name }}"
+      rows="4"
+      class="textbox__input">{{ value }}</textarea>
+  {% else %}
+    <input
+      type="text"
+      name="{{ name }}"
+      id="input-{{ name }}"
+      class="textbox__input"
+      {% if value %}
+        value="{{ value }}"
+      {% endif %}
+      {% if hint %}
+        aria-describedby="{{ hintId }}"
+      {% endif %}
+      {% if(autocomplete == false)%}
+        autocomplete="off"
+      {% endif %}
+      {% if autofocus %}
+       autofocus
+      {% endif %}
+    >
+  </div>
+  {% endif %}

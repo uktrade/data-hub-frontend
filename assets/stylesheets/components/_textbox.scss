@@ -1,0 +1,37 @@
+@import "../generic/form-control";
+@import "../settings/colours";
+
+.textbox {
+  @extend %form-control;
+}
+
+.textbox__label {
+  color: $black;
+  display: block;
+  font-weight: 700;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.textbox__hint {
+  color: $secondary-text-colour;
+  display: block;
+  font-weight: normal;
+}
+
+.textbox__input {
+  border: 2px solid $black;
+  display: block;
+  font-weight: 400px;
+  padding: 5px 4px 4px;
+  width: 100%;
+  max-width: 540px;
+
+  &:focus {
+    outline: 3px solid $yellow;
+  }
+
+  .has-error & {
+    border: 2px solid $error-colour;
+  }
+}
