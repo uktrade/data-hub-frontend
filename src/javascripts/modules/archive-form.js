@@ -14,6 +14,9 @@ const ArchiveForm = {
   init (wrapper = document) {
     this.wrapper = wrapper
     this.cacheElements()
+
+    if (!this.archiveForm) { return }
+
     this.attachEvents()
 
     // If the form contains an error, show it expanded so the user
@@ -34,8 +37,10 @@ const ArchiveForm = {
    */
   cacheElements () {
     this.archiveForm = this.wrapper.querySelector(this.selector)
-    this.document = (typeof document !== 'undefined') ? document : this.archiveForm.ownerDocument
 
+    if (!this.archiveForm) { return }
+
+    this.document = (typeof document !== 'undefined') ? document : this.archiveForm.ownerDocument
     this.archivedReasonLabel = this.archiveForm.querySelector('[for="archived_reason"]')
     this.reasonInputElement = this.archiveForm.querySelector('[name=archived_reason]')
     this.otherReasonTextInput = this.archiveForm.querySelector('[name=archived_reason_other]')
