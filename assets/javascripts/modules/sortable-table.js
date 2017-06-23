@@ -1,7 +1,7 @@
 const { guid } = require('@uktrade/trade_elements')
 
-const { parseDateString } = require('../../lib/date')
-const { addClass, removeClass } = require('../../lib/element-stuff')
+const { parseDateString } = require('../../../common/date')
+const { addClass, removeClass } = require('../_deprecated/lib/element-stuff')
 
 function isDate (text) {
   return parseDateString(text) !== null

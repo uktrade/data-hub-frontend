@@ -1,6 +1,6 @@
 const { getFormattedAddress } = require('../lib/address')
 const { newlineToBr } = require('../lib/text-formatting')
-const { formatMediumDate } = require('../lib/date')
+const { formatMediumDate } = require('../../common/date')
 const { formatPhone } = require('../lib/phone')
 
 function getContactAddress (contact, company) {

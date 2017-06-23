@@ -1,8 +1,8 @@
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels/company-labels')
 const { getFormattedAddress } = require('../lib/address')
 const { titleCase } = require('../lib/text-formatting')
-const { formatLongDate } = require('../lib/date')
-const { getPrimarySectorName } = require('../lib/transform-sectors')
+const { formatLongDate } = require('../../common/date')
+const { getPrimarySectorName } = require('../../common/transform-sectors')
 const { buildCompanyUrl } = require('./company.service')
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
