@@ -1,9 +1,5 @@
-const express = require('express')
-
 const interactionFormattingService = require('../../services/interaction-formatting.service')
 const contactDataService = require('./contact-data.service')
-const { getCommon } = require('./contact.controller')
-const router = express.Router()
 
 async function getInteractions (req, res, next) {
   try {
@@ -20,6 +16,6 @@ async function getInteractions (req, res, next) {
   }
 }
 
-router.get('/contact-interactions/:contactId', getCommon, getInteractions)
-
-module.exports = { router, getInteractions }
+module.exports = {
+  getInteractions,
+}

@@ -5,13 +5,24 @@ const contactEditController = require('./contact-edit.controller')
 const contactArchiveController = require('./contact-archive.controller')
 const contactInteractionController = require('./contact-interaction.controller')
 
-router.use(
-  contactController.router,
-  contactEditController.router,
-  contactArchiveController.router,
-  contactInteractionController.router,
-)
+router.get('/:contactId/details', contactController.getCommon, contactController.getDetails)
+
+router
+  .route('/add')
+  .get(contactEditController.editDetails)
+  .post(contactEditController.postDetails)
+
+router
+  .route('/:contactId/edit')
+  .get(contactController.getCommon, contactEditController.editDetails)
+  .post(contactEditController.postDetails)
+
+router.post('/:id/archive', contactArchiveController.archiveContact)
+router.get('/:id/unarchive', contactArchiveController.unarchiveContact)
+
+router.get('/interactions/:contactId', contactController.getCommon, contactInteractionController.getInteractions)
 
 module.exports = {
+  path: '/contact',
   router,
 }

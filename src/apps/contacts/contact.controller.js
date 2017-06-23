@@ -1,11 +1,8 @@
-const express = require('express')
-
 const contactRepository = require('./contact.repo')
 const companyRepository = require('../../repos/company.repo')
 const contactFormattingService = require('./contact-formatting.service')
 const companyService = require('../../services/company.service')
 const { contactDetailsLabels } = require('./labels')
-const router = express.Router()
 
 const reasonForArchiveOptions = [
   'Contact has left the company',
@@ -41,6 +38,7 @@ function getDetails (req, res, next) {
   }
 }
 
-router.get('/contact/:contactId/details', getCommon, getDetails)
-
-module.exports = { router, getDetails, getCommon }
+module.exports = {
+  getDetails,
+  getCommon,
+}

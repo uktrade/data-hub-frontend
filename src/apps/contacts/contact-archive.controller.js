@@ -1,7 +1,4 @@
-/* eslint new-cap: 0 */
-const express = require('express')
 const contactRepository = require('./contact.repo')
-const router = express.Router()
 
 async function archiveContact (req, res, next) {
   try {
@@ -30,7 +27,7 @@ async function unarchiveContact (req, res, next) {
   }
 }
 
-router.post('/contact/:id/archive', archiveContact)
-router.get('/contact/:id/unarchive', unarchiveContact)
-
-module.exports = { router, archiveContact, unarchiveContact }
+module.exports = {
+  archiveContact,
+  unarchiveContact,
+}
