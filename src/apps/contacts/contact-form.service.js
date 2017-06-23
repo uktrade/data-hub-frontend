@@ -3,8 +3,8 @@ const {
   convertYesNoToBoolean,
   getPropertyId,
   nullEmptyFields,
-} = require('../lib/property-helpers')
-const contactRepository = require('../repos/contact.repo')
+} = require('../../lib/property-helpers')
+const contactRepository = require('./contact.repo')
 
 /**
  * Accepts an API contact object and converts it into a format compatible with a HTML form

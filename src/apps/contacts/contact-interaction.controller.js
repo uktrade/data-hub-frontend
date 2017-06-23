@@ -1,7 +1,7 @@
 const express = require('express')
 
-const interactionFormattingService = require('../services/interaction-formatting.service')
-const contactDataService = require('../services/contact-data.service')
+const interactionFormattingService = require('../../services/interaction-formatting.service')
+const contactDataService = require('./contact-data.service')
 const { getCommon } = require('./contact.controller')
 const router = express.Router()
 

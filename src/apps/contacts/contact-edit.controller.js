@@ -1,11 +1,11 @@
 const express = require('express')
-const { containsFormData } = require('../lib/controller-utils')
-const contactFormService = require('../services/contact-form.service')
-const { contactLabels } = require('../labels/contact-labels')
-const metadataRepository = require('../repos/metadata.repo')
-const companyRepository = require('../repos/company.repo')
-const { getCommon } = require('../controllers/contact.controller')
-const { buildCompanyUrl } = require('../services/company.service')
+const { containsFormData } = require('../../lib/controller-utils')
+const contactFormService = require('./contact-form.service')
+const { contactLabels } = require('./labels')
+const metadataRepository = require('../../repos/metadata.repo')
+const companyRepository = require('../../repos/company.repo')
+const { getCommon } = require('./contact.controller')
+const { buildCompanyUrl } = require('../../services/company.service')
 
 const router = express.Router()
 

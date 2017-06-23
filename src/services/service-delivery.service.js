@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const logger = require('../../config/logger')
 const companyRepository = require('../repos/company.repo')
-const contactRepository = require('../repos/contact.repo')
+const contactRepository = require('../apps/contacts/contact.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const serviceDeliveryRepository = require('../repos/service-delivery.repo')
 const adviserRepository = require('../repos/adviser.repo')

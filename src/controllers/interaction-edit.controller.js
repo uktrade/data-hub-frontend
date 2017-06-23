@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const express = require('express')
 const interactionLabels = require('../labels/interaction-labels')
-const contactRepository = require('../repos/contact.repo')
+const contactRepository = require('../apps/contacts/contact.repo')
 const companyRepository = require('../repos/company.repo')
 const metadataRepository = require('../repos/metadata.repo')
 const adviserRepository = require('../repos/adviser.repo')
