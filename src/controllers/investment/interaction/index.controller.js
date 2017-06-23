@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const { get } = require('lodash')
 
-const { getDisplayCompanyInteraction } = require('../../../services/interaction-formatting.service')
-const { getInteractionsForInvestment } = require('../../../repos/interaction.repo')
+const { getDisplayCompanyInteraction } = require('../../../apps/interactions/services/formatting.service')
+const { getInteractionsForInvestment } = require('../../../apps/interactions/interactions.repo')
 const { getProjectDetails } = require('../shared.middleware')
 
 async function indexGetHandler (req, res, next) {

@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 const express = require('express')
 const companyService = require('../services/company.service')
-const { getDisplayCompanyInteraction } = require('../services/interaction-formatting.service')
+const { getDisplayCompanyInteraction } = require('../apps/interactions/services/formatting.service')
 const router = express.Router()
 
 /**

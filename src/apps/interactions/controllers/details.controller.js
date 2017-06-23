@@ -1,12 +1,10 @@
 /* eslint camelcase: 0 */
-const express = require('express')
-const interactionLabels = require('../labels/interaction-labels')
-const metadataRepository = require('../repos/metadata.repo')
-const interactionDataService = require('../services/interaction-data.service')
-const { getDisplayInteraction } = require('../services/interaction-formatting.service')
+const interactionLabels = require('../labels')
+const metadataRepository = require('../../../repos/metadata.repo')
+const interactionDataService = require('../services/data.service')
+const { getDisplayInteraction } = require('../services/formatting.service')
 
 const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
-const router = express.Router()
 
 async function getCommon (req, res, next) {
   try {
@@ -83,9 +81,9 @@ function getInteractionDetails (req, res, next) {
   })
 }
 
-router.get('/interaction/add-step-1/', getAddStep1)
-router.post('/interaction/add-step-1/', postAddStep1)
-router.get('/interaction/:interactionId/*', getCommon)
-router.get('/interaction/:interactionId/details', getInteractionDetails)
-
-module.exports = { router }
+module.exports = {
+  getAddStep1,
+  postAddStep1,
+  getCommon,
+  getInteractionDetails,
+}

@@ -1,6 +1,6 @@
 const { render } = require('../nunjucks')
 const contactDataService = require('~/src/apps/contacts/services/data.service')
-const interactionFormattingService = require('~/src/services/interaction-formatting.service')
+const interactionFormattingService = require('~/src/apps/interactions/services/formatting.service')
 
 const next = function (error) {
   throw Error(error)
