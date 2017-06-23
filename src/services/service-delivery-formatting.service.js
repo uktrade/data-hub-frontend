@@ -1,4 +1,4 @@
-const { formatLongDate } = require('../lib/date')
+const { formatLongDate } = require('../../common/date')
 const { newlineToBr, getContactLink } = require('../lib/text-formatting')
 const { getPropertyName } = require('../lib/property-helpers')
 const { buildCompanyUrl } = require('./company.service')

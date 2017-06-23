@@ -1,4 +1,4 @@
-const { formatLongDate, formatMediumDate } = require('../lib/date')
+const { formatLongDate, formatMediumDate } = require('../../common/date')
 const { newlineToBr, getContactLink } = require('../lib/text-formatting')
 const toISOString = require('../lib/date/toISOString')
 const { getPropertyName } = require('../lib/property-helpers')

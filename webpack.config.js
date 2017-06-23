@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const webpackConfig = {
   devtool: 'source-map',
   entry: {
-    app: './src/javascripts/app.js',
+    app: './assets/javascripts/app.js',
     ie: ['html5shiv'],
   },
   module: {

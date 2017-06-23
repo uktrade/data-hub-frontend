@@ -1,4 +1,4 @@
-const { hide, show, addClass, insertAfter } = require('../../lib/element-stuff')
+const { hide, show, addClass, insertAfter } = require('../_deprecated/lib/element-stuff')
 
 /**
  * ArchiveForm
