@@ -1,5 +1,4 @@
-const router = require('express').Router()
-const dashboardService = require('../services/dashboard.service')
+const dashboardService = require('./dashboard.service')
 
 function getHandler (req, res) {
   const days = 15
@@ -15,6 +14,6 @@ function getHandler (req, res) {
     })
 }
 
-router.get('/', getHandler)
-
-module.exports = { router }
+module.exports = {
+  getHandler,
+}
