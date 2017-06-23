@@ -53,6 +53,7 @@
     "nunjucks": "^3.0.0",
     "nyc": "^10.2.0",
     "postcss-cli": "^4.0.0",
+    "postcss-loader": "^2.0.6",
     "proxyquire": "^1.7.10",
     "request": "^2.74.0",
     "request-promise": "^4.1.1",
@@ -91,10 +92,6 @@
     "js:client": "webpack",
     "js:client:watch": "webpack --watch",
     "js:server:watch": "nodemon --inspect src/server.js --ignore build/",
-    "sass": "node-sass assets/stylesheets/application.scss build/css/application.css --include-path node_modules/govuk_frontend_toolkit/stylesheets --include-path ./node_modules/govuk-elements-sass/public/sass --include-path ./node_modules/font-awesome/scss/ --source-map true --source-map-contents true && npm run css:autoprefixer",
-    "sass:watch": "nodemon -e scss -x 'npm run sass'",
-    "sass:compile": "npm run sass -- -x --output-style compressed",
-    "css:autoprefixer": "postcss build/css/*.css --use autoprefixer -d build/css",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
     "circle": "npm run lint && nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && npm run sass && npm run js && codeclimate-test-reporter < coverage/lcov.info",
     "heroku-postbuild": "npm rebuild node-sass && npm run sass && npm run js"

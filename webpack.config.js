@@ -36,6 +36,15 @@ const webpackConfig = {
                 sourceMap: true,
               },
             },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: (loader) => [
+                  require('autoprefixer')(),
+                ],
+                sourceMap: true,
+              },
+            },
             'resolve-url-loader',
             {
               loader: 'sass-loader',
