@@ -1,0 +1,100 @@
+@import "shims";
+@import "conditionals";
+@import "measurements";
+@import "colours/palette";
+@import "typography";
+@import "colours";
+
+#global-header{
+  background-color: $black;
+
+  .header-wrapper {
+    @extend %site-width-container;
+    padding: 8px 0;
+  }
+  .header-global {
+    @include media(tablet) {
+      display: inline-block;
+      margin: 5px 0 2px;
+    }
+
+    color: $white;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 1em;
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    margin-bottom: -3px;
+    padding-top: 2px;
+    border-bottom: 1px solid transparent;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      border-bottom-color: $white;
+    }
+  }
+  .top-menu {
+    @include media(tablet) {
+      display: inline-block;
+      float: right;
+      width: 50%;
+      padding-top: 4px;
+    }
+
+    a {
+      @include core-16;
+      color: $white;
+      display: block;
+      float: right;
+      text-decoration: none;
+      padding-top: 6px;
+      @include media(desktop) {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &::after {
+        display: inline-block;
+        font-size: 8px;
+        height: 8px;
+        padding-left: 5px;
+        vertical-align: middle;
+        content: " \25BC";
+      }
+
+      &.js-hidden::after {
+        content: " \25B2";
+      }
+    }
+  }
+}
+
+// Global header bar
+#global-header-bar {
+  @extend %site-width-container;
+  height: 10px;
+  background-color: $govuk-blue;
+}
+
+// Global cookie message
+.js-enabled #global-cookie-message {
+  display: none; // shown with JS, always on for non-JS
+}
+
+#global-cookie-message {
+  width: 100%;
+  background-color: $light-blue-25;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  p {
+    @extend %site-width-container;
+    @include core-16;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

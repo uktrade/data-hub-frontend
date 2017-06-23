@@ -1,0 +1,117 @@
+.table--key-value {
+
+  margin: 20px 0;
+
+  tbody {
+    th {
+      vertical-align: top;
+      width: 40%;
+
+      @include media(tablet) {
+        width: 30%;
+      }
+    }
+
+    td::first-letter {
+      text-transform: capitalize;
+    }
+
+    tr:first-child {
+      td,
+      th {
+        border-top: 1px solid $border-colour;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.table--readonly {
+
+  border-left: 5px solid $border-colour;
+
+  tbody {
+
+    display: block;
+    padding: 0 0 0 20px;
+
+    tr {
+      td,
+      th {
+        border-bottom: 1px solid $border-colour;
+        color: $black;
+      }
+
+      &:last-child {
+        td,
+        th {
+          border-bottom: 0;
+        }
+      }
+
+      .spacer {
+        border-bottom: 0;
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+.table--striped {
+  tr:nth-child(odd) {
+    background: $highlight-colour;
+  }
+}
+
+.table--sortable thead tr {
+  th {
+    cursor: pointer;
+
+    &.table--sortable__sort-desc {
+      &::after {
+        content: "\00a0\00a0\25BC";
+      }
+    }
+
+    &.table--sortable__sort-asc  {
+      &::after {
+        content: "\00a0\00a0\25B2";
+      }
+    }
+  }
+}
+
+table.table--key-value.table--small {
+  th {
+    @include core-16;
+    color: $secondary-text-colour;
+  }
+
+  td {
+    @include core-16
+  }
+}
+
+.table--key-value.table--plain {
+  tr {
+    th, td {
+      border-bottom: 0;
+    }
+
+    th {
+      color: $secondary-text-colour;
+    }
+
+    &:first-child {
+      td,
+      th {
+        border-top: 0;
+      }
+    }
+  }
+}

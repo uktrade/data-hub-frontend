@@ -1,0 +1,23 @@
+$font-family-sans-serif: Arial, "Helvetica Neue", Helvetica, sans-serif !default;
+
+html body main {
+  button,
+  input,
+  table,
+  td,
+  th {
+    font-family: $font-family-sans-serif;
+  }
+}
+
+$toolkit-font-stack: $font-family-sans-serif;
+$toolkit-font-stack-tabular: $font-family-sans-serif;
+
+.heading-xlarge {
+  margin-top: 0.625em;
+  margin-bottom: 1.25em;
+}
+
+.lede {
+  margin-bottom: 60px;
+}

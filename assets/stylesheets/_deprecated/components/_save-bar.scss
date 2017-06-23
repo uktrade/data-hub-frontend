@@ -1,0 +1,18 @@
+.save {
+  float: none;
+  clear: both;
+  margin: 30px 0;
+
+  &.confirm-bar {
+
+    background: $grey-3;
+    max-width: 425px;
+    padding: 10px 13px 15px 10px;
+    margin: 0 10px 10px 0;
+
+    .button-warning {
+      margin-left: 0;
+    }
+
+  }
+}

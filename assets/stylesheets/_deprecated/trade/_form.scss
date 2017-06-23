@@ -1,0 +1,26 @@
+.form-group.form-group--compact {
+  margin-bottom: 10px;
+}
+
+.form-section.form-section--compact {
+  margin-bottom: $gutter / 3;
+
+  @include media(tablet) {
+    margin-bottom: $gutter / 2;
+  }
+}
+
+.form-control {
+  + p {
+    margin-top: em(5);
+  }
+
+  @include media(tablet) {
+    width: 66%;
+  }
+}
+
+.form-label.hidden,
+.form-label-bold.hidden {
+  display: none;
+}

@@ -1,20 +1,20 @@
-const guid = require('../_deprecated/trade-elements/lib/guid')
-
-const { parseDateString } = require('../../../common/date')
-const { addClass, removeClass } = require('../_deprecated/lib/element-stuff')
+/* eslint-disable */
+const {addClass, removeClass} = require('../lib/elementstuff')
 
 function isDate (text) {
-  return parseDateString(text) !== null
+  return text.length === 10 && text.charAt(2) === '/' && text.charAt(5) === '/'
 }
 
-function convertToDate (dateString) {
-  return parseDateString(dateString)
+function convertToDate (string) {
+  const parts = string.split('/')
+  return new Date(parts[2], parts[1] - 1, parts[0])
 }
 
-const ASC_CLASS = 'is-ascending'
-const DESC_CLASS = 'is-descending'
+const ASC_CLASS = 'table--sortable__sort-asc'
+const DESC_CLASS = 'table--sortable__sort-desc'
 
-class SortableTable {
+class TableSort {
+
   constructor (element, document) {
     this.element = element
     this.cacheElements()
@@ -31,28 +31,32 @@ class SortableTable {
   }
 
   attachEvents () {
-    this.headingElements.forEach((element) => {
-      element.addEventListener('click', this.handleHeadingClick.bind(this))
-    })
+    for (let pos = 0; pos < this.headingElements.length; pos += 1) {
+      const element = this.headingElements.item(pos)
+      element.addEventListener('click', this.handleHeadingClick)
+    }
   }
 
   parseTable () {
-    this.keys = SortableTable.assignTableKeys(this.headingElements)
-    this.data = SortableTable.parseTableBody(this.element, this.keys)
+    this.keys = TableSort.parseTableHeader(this.headingElements)
+    this.data = TableSort.parseTableBody(this.element, this.keys)
   }
 
-  handleHeadingClick (event) {
+  handleHeadingClick = (event) => {
     const key = event.target.getAttribute('data-key')
 
-    if (this.currentKey && key === this.currentKey) {
+    if (!this.currentKey) {
+      this.sortAsc = true
+      this.currentKey = key
+    } else if (key === this.currentKey) {
       this.sortAsc = !this.sortAsc
     } else {
       this.sortAsc = true
       this.currentKey = key
     }
 
-    this.data = SortableTable.sort(this.data, key, this.sortAsc)
-    this.tableBody.innerHTML = SortableTable.render(this.data)
+    this.data = TableSort.sort(this.data, key, this.sortAsc)
+    this.tableBody.innerHTML = TableSort.render(this.data)
 
     this.clearSortClasses()
 
@@ -68,14 +72,12 @@ class SortableTable {
     removeClass(this.headingElements, DESC_CLASS)
   }
 
-  static assignTableKeys (headingElements) {
+  static parseTableHeader (headingElements) {
     let keys = []
     // parse the headings into an array of keys.
-    headingElements.forEach((headingElement) => {
-      const key = guid()
-      keys.push(key)
-      headingElement.setAttribute('data-key', key)
-    })
+    for (let pos = 0; pos < headingElements.length; pos += 1) {
+      keys.push(headingElements.item(pos).getAttribute('data-key'))
+    }
 
     return keys
   }
@@ -106,14 +108,9 @@ class SortableTable {
         bValue = convertToDate(bValue)
       }
 
-      let result
-      if (aValue < bValue) {
-        result = -1
-      } else if (aValue > bValue) {
-        result = 1
-      } else {
-        result = 0
-      }
+      let result = 0
+      if (aValue < bValue) result = -1
+      if (aValue > bValue) result = 1
 
       if (!sortAsc) {
         result = result - (result * 2)
@@ -136,13 +133,13 @@ class SortableTable {
     return html
   }
 
-  static init () {
-    const elements = document.querySelectorAll('.js-SortableTable')
+  static activateAll () {
+    const elements = document.querySelectorAll('.js-table--sortable')
     for (let pos = 0; pos < elements.length; pos += 1) {
       const element = elements.item(pos)
-      new SortableTable(element)   // eslint-disable-line no-new
+      new TableSort(element)   // eslint-disable-line no-new
     }
   }
 }
 
-module.exports = SortableTable
+module.exports = TableSort

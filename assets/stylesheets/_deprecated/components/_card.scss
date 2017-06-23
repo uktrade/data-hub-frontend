@@ -1,0 +1,20 @@
+.card {
+  margin: 15px 0;
+
+  & > a {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  .split-data {
+    @extend %contain-floats;
+    box-sizing: border-box;
+  }
+
+  .split-data > div,
+  .split-data > dl {
+    float: left;
+    width: 50%;
+  }
+
+}
