@@ -122,7 +122,7 @@ app.use(headers)
 
 // routing
 app.use(slashify())
-app.use('/', router)
+app.use(router)
 
 app.use(errors.notFound)
 app.use(errors.catchAll)
