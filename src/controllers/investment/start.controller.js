@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { getInflatedDitCompany } = require('../../services/company.service')
 const { getCompanyInvestmentProjects } = require('../../repos/investment.repo')
-const { searchForeignCompanies } = require('../../services/search.service')
+const { searchForeignCompanies } = require('../../apps/search/search.service')
 const { getPagination } = require('../../lib/pagination')
 
 function getHandler (req, res, next) {

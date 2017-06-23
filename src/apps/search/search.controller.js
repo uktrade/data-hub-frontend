@@ -1,12 +1,9 @@
-const express = require('express')
-const companyRepository = require('../repos/company.repo')
-const { buildCompanyUrl } = require('../services/company.service')
-const { search } = require('../services/search.service')
-const getPagination = require('../lib/pagination').getPagination
+const companyRepository = require('../../repos/company.repo')
+const { buildCompanyUrl } = require('../../services/company.service')
+const { search } = require('./search.service')
+const getPagination = require('../../lib/pagination').getPagination
 const Joi = require('joi')
 const Celebrate = require('celebrate')
-
-const router = express.Router()
 
 const defaultEntities = [
   {
@@ -87,13 +84,9 @@ async function viewCompanyResult (req, res, next) {
   }
 }
 
-router.get('/search/:searchType?', searchActionValidationSchema, indexAction, searchAction)
-
-router.get('/viewcompanyresult/:id', viewCompanyResult) // TODO is this in the right controller
-
 module.exports = {
-  router,
   indexAction,
   searchAction,
+  searchActionValidationSchema,
   viewCompanyResult,
 }

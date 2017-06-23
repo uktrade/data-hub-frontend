@@ -1,6 +1,6 @@
 const nock = require('nock')
 const config = require('~/config')
-const { search } = require('~/src/services/search.service')
+const { search } = require('~/src/apps/search/search.service')
 
 describe('Search service', function () {
   describe('searchService.search method', function () {

@@ -4,13 +4,13 @@ const routers = []
 const controllers = [
   '../../src/apps/contacts/router',
   '../../src/apps/dashboard/router',
+  '../../src/apps/search/router',
   '../../src/apps/support/router',
 
   '../../src/controllers/api.controller',
   '../../src/controllers/pingdom.controller',
   '../../src/controllers/login.controller',
   '../../src/controllers/my-account.controller',
-  '../../src/controllers/search.controller',
   '../../src/controllers/interaction.controller',
   '../../src/controllers/interaction-edit.controller',
   '../../src/controllers/service-delivery.controller',
