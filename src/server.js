@@ -53,14 +53,12 @@ app.set('view engine', 'njk')
 nunjucks(app, config)
 
 // Static files
-app.use(favicon(path.join(config.root, 'public/assets/images', 'favicon.ico')))
+app.use(favicon(path.join(config.root, 'public/images', 'favicon.ico')))
 app.use(express.static(path.join(config.root, 'public')))
 app.use('/javascripts', express.static(path.join(config.root, 'build/javascripts')))
 app.use('/css', express.static(path.join(config.root, 'build/css')))
-
-app.use('/images', express.static(`${__dirname}/../assets/images/_deprecated/`))
-
-app.use('/fonts', express.static(`${__dirname}/../node_modules/font-awesome/fonts`))
+app.use('/images', express.static(path.join(config.root, 'build/images')))
+app.use('/fonts', express.static(path.join(config.root, 'node_modules/font-awesome/fonts')))
 
 app.use(flash())
 app.use(locals)

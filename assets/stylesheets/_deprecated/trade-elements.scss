@@ -4,7 +4,7 @@ $asset-path: "../" !default;
 @import "trade/govuk/font_stack";
 
 // Elements
-@import "govuk-elements";
+@import "~govuk-elements-sass/public/sass/govuk-elements";
 
 // Trade Elements
 @import "trade/errors";
