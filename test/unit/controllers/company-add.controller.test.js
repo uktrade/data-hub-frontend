@@ -18,7 +18,7 @@ describe('Company add controller', function () {
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
     companyAddController = proxyquire('~/src/controllers/company-add.controller', {
-      '../services/search.service': {
+      '../apps/search/search.service': {
         searchLimitedCompanies: searchLimitedCompaniesStub,
       },
       '../repos/company.repo': {

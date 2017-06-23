@@ -1,6 +1,6 @@
-const authorisedRequest = require('../lib/authorised-request')
-const config = require('../../config')
-const { buildQueryString } = require('../lib/url-helpers')
+const authorisedRequest = require('../../lib/authorised-request')
+const config = require('../../../config')
+const { buildQueryString } = require('../../lib/url-helpers')
 
 function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
   const params = {
