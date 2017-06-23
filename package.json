@@ -93,7 +93,7 @@
     "heroku-postbuild": "npm rebuild node-sass && npm run build",
     "watch:test": "npm run test:unit -- -w",
     "watch:js:client": "webpack --watch",
-    "watch:js:server": "nodemon --inspect src/server.js --ignore build/"
+    "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect src/server.js --ignore build/"
   },
   "pre-commit": [
     "lint:modified:styles",
