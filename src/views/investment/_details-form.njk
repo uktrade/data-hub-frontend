@@ -2,7 +2,7 @@
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   <input type="hidden" name="investor_company" value="{{ equityCompany.id }}">
 
-  {{ trade.autocomplete('client_contacts',
+  {{ automplete('client_contacts',
     label="Client contact for this project",
     value=form.state['client_contacts'],
     options=form.options.contacts)
@@ -23,7 +23,7 @@
   } %}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
-    {{ trade.autocomplete('client_relationship_manager',
+    {{ automplete('client_relationship_manager',
       label="Client relationship manager",
       value=form.state['client_relationship_manager'],
       options=form.options.advisers)
@@ -45,14 +45,14 @@
   } %}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
-    {{ trade.autocomplete('referral_source_adviser',
+    {{ automplete('referral_source_adviser',
       label="Referral source adviser",
       value=form.state['referral_source_adviser'],
       options=form.options.advisers)
     }}
   </div>
 
-  {{ trade.dropdown('referral_source_activity',
+  {{ dropdown('referral_source_activity',
     label='Referral source activity',
     value=form.state['referral_source_activity'],
     emptyLabel='Choose referral source activity',
@@ -60,14 +60,14 @@
   }}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[2].id }}">
-    {{ trade.textbox('referral_source_activity_event',
+    {{ textbox('referral_source_activity_event',
       value=form.state['referral_source_activity_event'],
       label='Event')
     }}
   </div>
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[3].id }}">
-    {{ trade.dropdown('referral_source_activity_marketing',
+    {{ dropdown('referral_source_activity_marketing',
       label='Marketing',
       value=form.state['referral_source_activity_marketing'],
       emptyLabel='Choose a marketing',
@@ -76,7 +76,7 @@
   </div>
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[9].id }}">
-    {{ trade.dropdown('referral_source_activity_website',
+    {{ dropdown('referral_source_activity_website',
       label='Website',
       value=form.state['referral_source_activity_website'],
       emptyLabel='Choose a website',
@@ -93,7 +93,7 @@
   } %}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[1].value }}">
-    {{ trade.dropdown('fdi_type',
+    {{ dropdown('fdi_type',
       label='Type of foreign direct investment (FDI)',
       value=form.state['fdi_type'],
       emptyLabel='Choose a type',
@@ -102,7 +102,7 @@
   </div>
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[2].value }}">
-    {{ trade.dropdown('non_fdi_type',
+    {{ dropdown('non_fdi_type',
       label='Type of non-foreign direct investment (Non-FDI)',
       value=form.state['non_fdi_type'],
       emptyLabel='Choose a type',
@@ -110,26 +110,26 @@
     }}
   </div>
 
-  {{ trade.dropdown('sector',
+  {{ dropdown('sector',
     label='Primary sector',
     value=form.state['sector'],
     emptyLabel='Choose a sector',
     options=form.options.primarySectors)
   }}
 
-  {{ trade.dropdown('business_activities',
+  {{ dropdown('business_activities',
     label='Business activity of this investment project',
     value=form.state['business_activities'],
     emptyLabel='Choose a business activity',
     options=form.options.businessActivities)
   }}
 
-  {{ trade.textbox('name',
+  {{ textbox('name',
     value=form.state['name'],
     label='Project name')
   }}
 
-  {{ trade.textarea('description',
+  {{ textarea('description',
     value=form.state['description'],
     label='Description')
   }}
@@ -190,5 +190,5 @@
   {% else %}
     {% set backUrl = '/investment/start?client-company=' + equityCompany.id %}
   {% endif %}
-  {{ trade.save(backUrl=backUrl) }}
+  {{ save(backUrl=backUrl) }}
 </form>

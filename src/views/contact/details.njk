@@ -1,11 +1,11 @@
 {% extends "contact/_layout.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block main_grid_right_column %}
   {% include "_messages.njk" %}
 
   <h2 class="heading-medium">Contact Details</h2>
-  {{ trade.keyvaluetable(
+  {{ keyvaluetable(
       contactDetails,
       stripey=true,
       labels=contactDetailsLabels,

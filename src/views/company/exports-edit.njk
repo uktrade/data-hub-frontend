@@ -1,12 +1,11 @@
 {% extends "company/_layout-edit.njk" %}
-{% import "macros/trade.html" as trade %}
 
 {% block main_grid_right_column %}
   {{ super() }}
 
   <h2 class="heading-medium">An an export summary</h2>
 
-  {{ trade.errorPanel( errors, labels=exportDetailsLabels ) }}
+  {{ errorPanel( errors, labels=exportDetailsLabels ) }}
 
   <form method="POST">
     <input type="hidden" name="id" value="{{company.id}}">
@@ -15,7 +14,7 @@
     <div class="section country-list js-add-another-field">
       {% if export_to_countries and export_to_countries.length > 0 %}
         {% for country in export_to_countries %}
-          {{ trade.dropdown("export_to_countries",
+          {{ dropdown("export_to_countries",
             label="Specify if this company is currently exporting to a market (optional)",
             emptyLabel="Select country",
             value=country,
@@ -24,7 +23,7 @@
           }}
         {% endfor %}
       {% else %}
-        {{ trade.dropdown("export_to_countries",
+        {{ dropdown("export_to_countries",
           label="Specify if this company is currently exporting to a market (optional)",
           emptyLabel="Select country",
           id="export_to_countries_new",
@@ -38,7 +37,7 @@
     <div class="section country-list js-add-another-field">
       {% if future_interest_countries and future_interest_countries.length > 0 %}
         {% for country in future_interest_countries %}
-          {{ trade.dropdown("future_interest_countries",
+          {{ dropdown("future_interest_countries",
             label="Future countries of interest if known (optional)",
             emptyLabel="Select country",
             value=country,
@@ -47,7 +46,7 @@
           }}
         {% endfor %}
       {% else %}
-        {{ trade.dropdown("future_interest_countries",
+        {{ dropdown("future_interest_countries",
           label="Future countries of interest if known (optional)",
           emptyLabel="Select country",
           id="future_interest_countries_new",
@@ -58,6 +57,6 @@
       <input class="button--link js-add_button" type="submit" name="addFutureInterestCountry" value="Add country">
     </div>
 
-    {{ trade.save(backUrl = "/company-exports/view/" + company.id) }}
+    {{ save(backUrl = "/company-exports/view/" + company.id) }}
   </form>
 {% endblock %}

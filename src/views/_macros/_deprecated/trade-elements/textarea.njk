@@ -1,0 +1,14 @@
+{% macro textarea(name, label, value="", hint, id="", class, error) %}
+  {% if id == "" %}
+    {% set id = name.replace('.','-') %}
+  {% endif %}
+
+  <div class="form-group{% if error %} error{% endif %} {{ class }}" id="{{ name }}-wrapper">
+    <label class="form-label-bold" for="{{ id }}">
+      {{ label }}
+      {% if hint %}<span class="form-hint">{{ hint }}</span>{% endif %}
+      {% if error %}<span class="error-message">{{ error }}</span>{% endif %}
+    </label>
+    <textarea id="{{ id }}" class="form-control" name="{{ name }}" rows="5">{{ value }}</textarea>
+  </div>
+{% endmacro %}

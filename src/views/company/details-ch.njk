@@ -1,5 +1,4 @@
 {% extends "company/_layout-view.njk" %}
-{% import "macros/trade.html" as trade %}
 
 {% block main_grid_right_column %}
   {{ super() }}
@@ -7,7 +6,7 @@
   <h2 class="heading-medium">Company summary</h2>
 
   <div class="dark-panel">
-    {{ trade.keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, readonly=true) }}
+    {{ keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, readonly=true) }}
     <p class="footnote">Powered by data from <strong>Companies House</strong></p>
   </div>
 

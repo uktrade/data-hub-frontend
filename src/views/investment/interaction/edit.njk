@@ -1,9 +1,9 @@
 {% extends "investment/_layout.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block main_heading %}
   {{ super() }}
-  {{ trade.errorPanel(form.errors) }}
+  {{ errorPanel(form.errors) }}
 {% endblock %}
 
 {% block main_grid_left_column %}{% endblock %}

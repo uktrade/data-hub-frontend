@@ -1,5 +1,5 @@
 {% extends "investment/_layout.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block main_heading %}
   <h1 class="page-heading">Add investment project</h1>
@@ -140,7 +140,7 @@
         </label>
       </fieldset>
 
-      {{ trade.save(buttonText="Continue") }}
+      {{ save(buttonText="Continue") }}
     </form>
 
   {% else %}

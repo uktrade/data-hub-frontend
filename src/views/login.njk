@@ -1,5 +1,4 @@
 {% extends "_layouts/datahub-base.njk" %}
-{% import "macros/trade.html" as trade %}
 
 {% block body_main_header_content %}{% endblock %}
 
@@ -26,12 +25,12 @@
     </div>
   {% endif %}
 
-  {{ trade.errorPanel( messages.formErrors ) }}
+  {{ errorPanel( messages.formErrors ) }}
 
   <form action="" method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    {{ trade.textbox('username', label="Email address", error=errors.username, autofocus=true) }}
-    {{ trade.textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
-    {{ trade.save(buttonText='Sign in') }}
+    {{ textbox('username', label="Email address", error=errors.username, autofocus=true) }}
+    {{ textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
+    {{ save(buttonText='Sign in') }}
   </form>
 {% endblock %}
