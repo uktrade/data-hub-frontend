@@ -1,16 +1,14 @@
 /* eslint camelcase: 0 */
-const express = require('express')
-const serviceDeliverylabels = require('../labels/service-delivery')
-const { transformV2Errors } = require('../lib/controller-utils')
-const { nullEmptyFields, deleteNulls } = require('../lib/property-helpers')
-const metadataRepository = require('../repos/metadata.repo')
-const serviceDeliveryRepository = require('../repos/service-delivery.repo')
-const serviceDeliveryService = require('../services/service-delivery.service')
-const { getDisplayServiceDelivery } = require('../services/service-delivery-formatting.service')
-const { buildCompanyUrl } = require('../services/company.service')
+const serviceDeliverylabels = require('./labels')
+const { transformV2Errors } = require('../../lib/controller-utils')
+const { nullEmptyFields, deleteNulls } = require('../../lib/property-helpers')
+const metadataRepository = require('../../repos/metadata.repo')
+const serviceDeliveryRepository = require('./service-deliveries.repo')
+const serviceDeliveryService = require('./services/data.service')
+const { getDisplayServiceDelivery } = require('./services/formatting.service')
+const { buildCompanyUrl } = require('../../services/company.service')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_adviser', 'uk_region', 'sector', 'contact', 'country_of_interest']
-const router = express.Router()
 
 async function getCommon (req, res, next) {
   try {
@@ -103,9 +101,9 @@ function getServiceDeliveryDetails (req, res, next) {
   res.render('interaction/service-delivery-details')
 }
 
-router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
-router.get(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], getServiceDeliveryEdit)
-router.post(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'], postServiceDeliveryEdit)
-router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
-
-module.exports = { router }
+module.exports = {
+  getCommon,
+  getServiceDeliveryDetails,
+  getServiceDeliveryEdit,
+  postServiceDeliveryEdit,
+}

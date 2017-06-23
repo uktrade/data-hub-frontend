@@ -5,6 +5,7 @@ const controllers = [
   '../../src/apps/contacts/router',
   '../../src/apps/dashboard/router',
   '../../src/apps/search/router',
+  '../../src/apps/service-deliveries/router',
   '../../src/apps/support/router',
 
   '../../src/controllers/api.controller',
@@ -13,7 +14,6 @@ const controllers = [
   '../../src/controllers/my-account.controller',
   '../../src/controllers/interaction.controller',
   '../../src/controllers/interaction-edit.controller',
-  '../../src/controllers/service-delivery.controller',
   '../../src/controllers/company-ch.controller',
   '../../src/controllers/company-foreign.controller',
   '../../src/controllers/company-ltd.controller',
