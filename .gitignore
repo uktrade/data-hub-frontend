@@ -32,6 +32,7 @@ reports
 npm*.log
 yarn-error.log
 stats.json
+package-lock.json
 
 # Tests
 .nyc_output
