@@ -1,4 +1,4 @@
-const { guid } = require('@uktrade/trade_elements')
+const guid = require('../_deprecated/trade-elements/lib/guid')
 
 const { parseDateString } = require('../../../common/date')
 const { addClass, removeClass } = require('../_deprecated/lib/element-stuff')

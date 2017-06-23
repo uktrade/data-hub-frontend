@@ -1,10 +1,10 @@
 {% extends "investment/_layout.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Edit requirements and location</h2>
 
-  {{ trade.errorPanel(form.errors) }}
+  {{ errorPanel(form.errors) }}
 
   <form method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -22,7 +22,7 @@
       </select>
     </div>
 
-    {{ trade.textarea("client_requirements",
+    {{ textarea("client_requirements",
       label=form.labels.client_requirements,
       value=form.state.client_requirements)
     }}
@@ -87,6 +87,6 @@
       }]
     } %}
 
-    {{ trade.save(backUrl='/investment/' + projectData.id) }}
+    {{ save(backUrl='/investment/' + projectData.id) }}
   </form>
 {% endblock %}

@@ -1,0 +1,48 @@
+.status-badge {
+  @include core-19;
+  @include border-radius(5px);
+  display: inline-block;
+  font-weight: normal;
+  border: 2px solid $black;
+  padding: 2px 10px 2px;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+.status-badge--prospect,
+.status-badge--turquoise {
+  color: $turquoise;
+  border-color: $turquoise;
+}
+
+.status-badge--primary-contact,
+.status-badge--fuschia {
+  color: $fuschia;
+  border-color: $fuschia;
+}
+
+.status-badge--green,
+.status-badge--action {
+  color: $button-colour;
+  border-color: $button-colour;
+}
+
+.status-badge--small {
+  @include core-16
+}
+
+.status-badge--xsmall {
+  @include bold-14;
+  margin: 0;
+}
+
+.badged-heading {
+  @include bold-19;
+  padding: 4px 0 2px;
+  position: relative;
+  margin: 0 0 10px;
+
+  .status-badge {
+    top: 0;
+  }
+}

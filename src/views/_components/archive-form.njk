@@ -1,4 +1,3 @@
-{% import "macros/trade.html" as trade %}
 {##
  # @param {string}    label      The label to display above the dropdown list of reasons
  # @param {string[]}  options    A list of possible reasons why the entity needs to be arhived. The control will add the 'Other' option
@@ -27,8 +26,8 @@
   } %}
 
   <div class="js-ConditionalSubfield" data-controlled-by="archived_reason" data-control-value="Other">
-    {{ trade.textbox("archived_reason_other", label="Other") }}
+    {{ textbox("archived_reason_other", label="Other") }}
   </div>
 
-  {{ trade.save(buttonText="Archive") }}
+  {{ save(buttonText="Archive") }}
 </form>

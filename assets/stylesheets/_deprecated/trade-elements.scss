@@ -1,0 +1,38 @@
+$gt-big-phone: ">414px";
+$asset-path: "../" !default;
+
+@import "trade/govuk/font_stack";
+
+// Elements
+@import "govuk-elements";
+
+// Trade Elements
+@import "trade/errors";
+@import "trade/form";
+
+strong {
+  @include bold-19;
+}
+
+.column-three-quarters {
+  @include grid-column( 3/4 );
+}
+
+// Component styles
+@import "components/autocomplete";
+@import "components/backlink";
+@import "components/button";
+@import "components/card";
+@import "components/flash-message";
+@import "components/headings";
+@import "components/horizontal_tabs";
+@import "components/infostrip";
+@import "components/list";
+@import "components/pagination";
+@import "components/panel";
+@import "components/radio-hide";
+@import "components/save-bar";
+@import "components/search_results";
+@import "components/searchbar";
+@import "components/status-badge";
+@import "components/table";

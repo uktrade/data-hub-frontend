@@ -1,15 +1,15 @@
 {% extends "investment/_layout.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Edit value</h2>
 
-  {{ trade.errorPanel(form.errors) }}
+  {{ errorPanel(form.errors) }}
 
   <form method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {{ trade.textbox(
+    {{ textbox(
         'total_investment',
         value=form.state['total_investment'],
         label=form.labels['total_investment']
@@ -26,7 +26,7 @@
       </label>
     </div>
 
-    {{ trade.textbox(
+    {{ textbox(
         'foreign_equity_investment',
         value=form.state['foreign_equity_investment'],
         label=form.labels['foreign_equity_investment']
@@ -58,20 +58,20 @@
       }]
     } %}
 
-    {{ trade.textbox(
+    {{ textbox(
         'number_new_jobs',
         value=form.state['number_new_jobs'],
         label=form.labels['number_new_jobs']
     ) }}
 
-    {{ trade.dropdown('average_salary',
+    {{ dropdown('average_salary',
       label=form.labels['average_salary'],
       value=form.state['average_salary'],
       emptyLabel='Choose an average salary',
       options=form.options.averageSalaryRange
     ) }}
 
-    {{ trade.textbox(
+    {{ textbox(
         'number_safeguarded_jobs',
         value=form.state['number_safeguarded_jobs'],
         label=form.labels['number_safeguarded_jobs']
@@ -138,6 +138,6 @@
       }]
     } %}
 
-    {{ trade.save(backUrl='/investment/' + projectData.id) }}
+    {{ save(backUrl='/investment/' + projectData.id) }}
   </form>
 {% endblock %}

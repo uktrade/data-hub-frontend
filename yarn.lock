@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@uktrade/trade_elements@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@uktrade/trade_elements/-/trade_elements-3.2.1.tgz#d91baef370d72ac29c0941f8229f0a6c13396c2e"
-  dependencies:
-    axios "^0.15.3"
-
 a-sync-waterfall@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/a-sync-waterfall/-/a-sync-waterfall-1.0.0.tgz#38e8319d79379e24628845b53b96722b29e0e47c"
@@ -329,7 +323,7 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios@^0.15.2, axios@^0.15.3:
+axios@^0.15.2:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
   dependencies:
@@ -2987,6 +2981,16 @@ got@^3.2.0:
     prepend-http "^1.0.0"
     read-all-stream "^3.0.0"
     timed-out "^2.0.0"
+
+govuk-elements-sass@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/govuk-elements-sass/-/govuk-elements-sass-2.2.1.tgz#da4df6e803c3b07daa251ff59b922066b6229277"
+  dependencies:
+    govuk_frontend_toolkit "^5.0.2"
+
+govuk_frontend_toolkit@^5.0.2:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/govuk_frontend_toolkit/-/govuk_frontend_toolkit-5.2.0.tgz#f5f6c5ae48e431ecb97d8b808b1e8db7782abc7f"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"

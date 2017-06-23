@@ -1,5 +1,4 @@
 {% extends "company/_layout-edit.njk" %}
-{% import "macros/trade.html" as trade %}
 
 {% block main_heading %}
   <h1 class="page-heading">Add company</h1>
@@ -47,7 +46,7 @@
 
           {% if isSelected %}
             <div class="panel panel-border-wide">
-                {{ trade.keyvaluetable(
+                {{ keyvaluetable(
                   displayDetails,
                   labels=labels,
                   keyorder=[

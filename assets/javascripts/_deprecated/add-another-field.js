@@ -1,5 +1,5 @@
 const { insertAfter } = require('./lib/element-stuff')
-const { guid } = require('@uktrade/trade_elements')
+const guid = require('./trade-elements/lib/guid')
 
 class AddAnotherField {
   constructor (wrapperElement) {

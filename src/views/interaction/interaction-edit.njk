@@ -1,5 +1,5 @@
 {% extends "_layouts/datahub-base.njk" %}
-{% import "macros/trade.html" as trade %}
+
 
 {% block body_main_header_content %}
   {% if query.contactId %}
@@ -11,7 +11,7 @@
   {% endif %}
 
   <h1 class="heading-xlarge">Add interaction for {{ company.name }}</h1>
-  {{ trade.errorPanel( errors, labels=labels ) }}
+  {{ errorPanel( errors, labels=labels ) }}
 {% endblock %}
 
 {% block body_main_content %}
@@ -33,19 +33,19 @@
       <strong>{{ interaction_type.name }}</strong>
     </div>
 
-    {{ trade.textbox("subject",
+    {{ textbox("subject",
       label=labels.subject,
       value=formData.subject,
       error=errors.subject)
     }}
 
-    {{ trade.textarea("notes",
+    {{ textarea("notes",
       label=labels.notes,
       value=formData.notes,
       error=errors.notes
     ) }}
 
-    {{ trade.autocomplete("contact",
+    {{ automplete("contact",
       label=labels.contact,
       emptyLabel="Pick a contact",
       hint="Please start typing to search for a contact",
@@ -54,9 +54,9 @@
       options=contacts)
     }}
 
-    {{ trade.date('date', label=labels.date, value=formData.date ) }}
+    {{ date('date', label=labels.date, value=formData.date ) }}
 
-    {{ trade.autocomplete('dit_adviser',
+    {{ automplete('dit_adviser',
       label=labels.dit_adviser,
       value=formData.dit_adviser,
       displayvalue=dit_adviser.name,
@@ -66,7 +66,7 @@
       url='/api/accountmanagerlookup?term=')
     }}
 
-    {{ trade.autocomplete("service",
+    {{ automplete("service",
       label="Service offer",
       emptyLabel="Pick a service",
       hint="Please start typing to search for a service",
@@ -75,7 +75,7 @@
       options=serviceOfferOptions)
     }}
 
-    {{ trade.autocomplete("dit_team",
+    {{ automplete("dit_team",
       label="Service provider",
       emptyLabel="Pick a provider",
       hint="Please start typing to search for a provider",
@@ -85,6 +85,6 @@
     }}
 
 
-    {{ trade.save(backUrl) }}
+    {{ save(backUrl) }}
   </form>
 {% endblock %}

@@ -8,6 +8,7 @@ const webpackConfig = {
   entry: {
     app: './assets/javascripts/app.js',
     ie: ['html5shiv'],
+    'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
   module: {
     rules: [

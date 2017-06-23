@@ -1,0 +1,13 @@
+.back-link {
+  display: inline-block;
+  padding-left: 20px;
+  position: relative;
+  margin: em(20) 0 0;
+
+  &::before {
+    content: "<";
+    left: 0;
+    position: absolute;
+  }
+
+}

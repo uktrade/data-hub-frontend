@@ -1,0 +1,24 @@
+.flash-message {
+
+  padding: 1em 0.75em;
+  margin-bottom: 3em;
+
+  &.success-message {
+
+    border: 4px solid $turquoise;
+  }
+
+  &.error-message {
+
+    border: 4px solid $red;
+  }
+
+  .flash-message-content {
+
+    @include bold-24;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -107,9 +107,7 @@ app.use(express.static(path.join(config.root, 'public')))
 app.use('/javascripts', express.static(path.join(config.root, 'build/javascripts')))
 app.use('/css', express.static(path.join(config.root, 'build/css')))
 
-app.use('/images', express.static(`${__dirname}/../node_modules/@uktrade/trade_elements/dist/images`))
-app.use('/css', express.static(`${__dirname}/../node_modules/@uktrade/trade_elements/dist/css`))
-app.use('/javascripts', express.static(`${__dirname}/../node_modules/@uktrade/trade_elements/dist/javascripts`))
+app.use('/images', express.static(`${__dirname}/../assets/images/_deprecated/`))
 
 app.use('/fonts', express.static(`${__dirname}/../node_modules/font-awesome/fonts`))
 

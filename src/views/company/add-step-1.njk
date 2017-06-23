@@ -1,5 +1,4 @@
 {% extends "company/_layout-edit.njk" %}
-{% import "macros/trade.html" as trade %}
 
 {% block main_heading %}
   <h1 class="page-heading">Add company</h1>
@@ -13,7 +12,7 @@
     {% endfor %}
   {% endif %}
 
-  {{ trade.errorPanel( errors, labels=companyDetailsLabels ) }}
+  {{ errorPanel( errors, labels=companyDetailsLabels ) }}
   <form id="company-add-form" data-step="1" method="post">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -31,7 +30,7 @@
         <span class="form-hint">UK organisation not registered with Companies House</span>
       </label>
       <div id="other-uk-type-wrapper" class='panel panel-border-narrow hidden'>
-        {{ trade.dropdown("business_type_uk_other",
+        {{ dropdown("business_type_uk_other",
           label="Type of organisation",
           emptyLabel="Select type",
           value=company.business_type_uk_other,
@@ -44,7 +43,7 @@
         {{companyTypeOptions.foreign}}
       </label>
       <div id="other-for-type-wrapper" class='panel panel-border-narrow hidden'>
-        {{ trade.dropdown("business_type_for_other",
+        {{ dropdown("business_type_for_other",
           label="Type of organisation",
           emptyLabel="Select type",
           value=company.business_type_for_other,
