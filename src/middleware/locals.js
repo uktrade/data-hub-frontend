@@ -10,7 +10,6 @@ module.exports = function locals (req, res, next) {
 
   res.locals.releaseVersion = pjson.version
   res.locals.startTime = startTime
-  res.locals.asset_path = `${baseUrl}/`
   res.locals.referer = req.headers.referer
   res.locals.env = config.env
   res.locals.googleTagManagerKey = config.googleTagManagerKey

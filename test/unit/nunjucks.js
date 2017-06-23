@@ -18,6 +18,8 @@ Object.keys(filters).forEach((filterName) => {
   nunenv.addFilter(filterName, filters[filterName])
 })
 
+nunenv.addGlobal('getAssetPath', () => {})
+
 function render (template, options) {
   return new Promise((resolve, reject) => {
     try {

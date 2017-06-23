@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -13,7 +14,7 @@ const webpackConfig = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'javascripts/[name].bundle.js',
+    filename: 'javascripts/[name].[chunkhash:8].js',
     publicPath: '/',
   },
   module: {
@@ -60,15 +61,13 @@ const webpackConfig = {
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=fonts/[name].[ext]',
+        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
       },
       {
         test: /\.(png|svg|jpe?g)$/,
         loader: [
-          'file-loader?name=images/[name]-[hash:8].[ext]',
-          {
-            loader: 'image-webpack-loader',
-          },
+          'file-loader?name=images/[name].[hash:8].[ext]',
+          'image-webpack-loader',
         ],
       },
     ],
@@ -81,9 +80,7 @@ const webpackConfig = {
   },
   plugins: [
     new ExtractTextPlugin('css/main-[hash:8].css'),
-    new WebpackAssetsManifest({
-      output: './webpack.assets.json',
-    }),
+    new WebpackAssetsManifest(),
   ],
 }
 

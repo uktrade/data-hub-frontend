@@ -71,6 +71,7 @@
     "uglify": "^0.1.5",
     "wavy": "^1.0.4",
     "webpack": "^3.0.0",
+    "webpack-assets-manifest": "^0.7.0",
     "winston": "^2.3.0"
   },
   "scripts": {
