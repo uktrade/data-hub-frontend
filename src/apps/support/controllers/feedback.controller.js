@@ -1,10 +1,7 @@
-const express = require('express')
 const axios = require('axios')
 const Sniffr = require('sniffr')
 
-const config = require('../../config')
-
-const router = express.Router()
+const config = require('../../../../config')
 
 function capitalize (string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
@@ -84,16 +81,7 @@ function postBug (req, res) {
     })
 }
 
-function thank (req, res) {
-  res.render('support/thank', {
-    title: ['Thank you', 'Support'],
-  })
+module.exports = {
+  getBug,
+  postBug,
 }
-
-router
-  .route('/support/bug')
-  .get(getBug)
-  .post(postBug)
-router.get('/support/thank-you', thank)
-
-module.exports = { router }
