@@ -1,8 +1,8 @@
-const contactsRepository = require('./contacts.repo')
-const companyRepository = require('../../repos/company.repo')
-const contactFormattingService = require('./contact-formatting.service')
-const companyService = require('../../services/company.service')
-const { contactDetailsLabels } = require('./labels')
+const contactsRepository = require('../contacts.repo')
+const companyRepository = require('../../../repos/company.repo')
+const contactFormattingService = require('../services/formatting.service')
+const companyService = require('../../../services/company.service')
+const { contactDetailsLabels } = require('../labels')
 
 const reasonForArchiveOptions = [
   'Contact has left the company',

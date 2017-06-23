@@ -1,4 +1,4 @@
-const contactsRepository = require('./contacts.repo')
+const contactsRepository = require('../contacts.repo')
 
 async function archiveContact (req, res, next) {
   try {

@@ -1,9 +1,9 @@
-const { containsFormData } = require('../../lib/controller-utils')
-const contactFormService = require('./contact-form.service')
-const { contactLabels } = require('./labels')
-const metadataRepository = require('../../repos/metadata.repo')
-const companyRepository = require('../../repos/company.repo')
-const { buildCompanyUrl } = require('../../services/company.service')
+const { containsFormData } = require('../../../lib/controller-utils')
+const contactFormService = require('../services/form.service')
+const { contactLabels } = require('../labels')
+const metadataRepository = require('../../../repos/metadata.repo')
+const companyRepository = require('../../../repos/company.repo')
+const { buildCompanyUrl } = require('../../../services/company.service')
 
 /**
  * GET the edit detail screen, used for editing contacts.

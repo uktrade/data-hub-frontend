@@ -1,5 +1,5 @@
-const interactionFormattingService = require('../../services/interaction-formatting.service')
-const contactDataService = require('./contact-data.service')
+const interactionFormattingService = require('../../../services/interaction-formatting.service')
+const contactDataService = require('../services/data.service')
 
 async function getInteractions (req, res, next) {
   try {

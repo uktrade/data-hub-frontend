@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-const contactController = require('./contact.controller')
-const contactEditController = require('./contact-edit.controller')
-const contactArchiveController = require('./contact-archive.controller')
-const contactInteractionController = require('./contact-interaction.controller')
+const contactController = require('./controllers/details.controller')
+const contactEditController = require('./controllers/edit.controller')
+const contactArchiveController = require('./controllers/archive.controller')
+const contactInteractionController = require('./controllers/interactions.controller')
 
 router.get('/:contactId/details', contactController.getCommon, contactController.getDetails)
 

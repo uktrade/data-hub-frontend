@@ -1,7 +1,7 @@
 /* eslint new-cap: 0 */
 const express = require('express')
 const companyService = require('../services/company.service')
-const { getDisplayCompanyContact, getDisplayArchivedCompanyContact } = require('../apps/contacts/contact-formatting.service')
+const { getDisplayCompanyContact, getDisplayArchivedCompanyContact } = require('../apps/contacts/services/formatting.service')
 const router = express.Router()
 
 /**
