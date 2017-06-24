@@ -1,4 +1,4 @@
-const { getInflatedDitCompany } = require('../../../services/company.service')
+const { getInflatedDitCompany } = require('../../companies/services/data.service')
 const { getCompanyInvestmentProjects } = require('../investment-projects.repo')
 const { searchForeignCompanies } = require('../../search/search.service')
 const { getPagination } = require('../../../lib/pagination')

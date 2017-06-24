@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const interactionLabels = require('../labels')
 const contactsRepository = require('../../contacts/contacts.repo')
-const companyRepository = require('../../../repos/company.repo')
+const companyRepository = require('../../companies/repository')
 const metadataRepository = require('../../../repos/metadata.repo')
 const adviserRepository = require('../../../repos/adviser.repo')
 const interactionDataService = require('../services/data.service')

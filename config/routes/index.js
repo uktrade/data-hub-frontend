@@ -13,17 +13,7 @@ const controllers = [
   '../../src/apps/search/router',
   '../../src/apps/service-deliveries/router',
   '../../src/apps/support/router',
-
-  '../../src/controllers/company-ch.controller',
-  '../../src/controllers/company-foreign.controller',
-  '../../src/controllers/company-ltd.controller',
-  '../../src/controllers/company-ukother.controller',
-  '../../src/controllers/company-interaction.controller',
-  '../../src/controllers/company-contact.controller',
-  '../../src/controllers/company-investments.controller',
-  '../../src/controllers/company-export.controller',
-  '../../src/controllers/company-add.controller',
-  '../../src/controllers/company-archive.controller',
+  '../../src/apps/companies/router',
 ]
 
 controllers.forEach((ctrl) => {

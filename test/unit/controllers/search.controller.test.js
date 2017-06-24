@@ -9,7 +9,7 @@ describe('Search controller', function () {
   describe('view company result', function () {
     it('should route a uk private ltd company', function (done) {
       const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../../repos/company.repo': {
+        '../companies/repository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -39,7 +39,7 @@ describe('Search controller', function () {
     })
     it('should route a uk public ltd company', function (done) {
       const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../../repos/company.repo': {
+        '../companies/repository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -69,7 +69,7 @@ describe('Search controller', function () {
     })
     it('should route a uk public other company', function (done) {
       const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../../repos/company.repo': {
+        '../companies/repository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -99,7 +99,7 @@ describe('Search controller', function () {
     })
     it('should route a foreign company', function (done) {
       const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../../repos/company.repo': {
+        '../companies/repository': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: false,

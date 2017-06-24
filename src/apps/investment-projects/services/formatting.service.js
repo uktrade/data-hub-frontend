@@ -1,6 +1,6 @@
 const moment = require('moment')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
-const { buildCompanyUrl } = require('../../../services/company.service')
+const { buildCompanyUrl } = require('../../companies/services/data.service')
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }

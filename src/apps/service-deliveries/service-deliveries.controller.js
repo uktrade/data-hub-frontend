@@ -6,7 +6,7 @@ const metadataRepository = require('../../repos/metadata.repo')
 const serviceDeliveryRepository = require('./service-deliveries.repo')
 const serviceDeliveryService = require('./services/data.service')
 const { getDisplayServiceDelivery } = require('./services/formatting.service')
-const { buildCompanyUrl } = require('../../services/company.service')
+const { buildCompanyUrl } = require('../companies/services/data.service')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_adviser', 'uk_region', 'sector', 'contact', 'country_of_interest']
 
