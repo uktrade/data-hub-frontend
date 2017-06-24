@@ -90,7 +90,7 @@ The project is using ES6 async/await therefore Node 8 is required.
 1. Clone repository and change directory:
 
    ```
-   git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2 && cd data-hub-fe-beta2
+   git clone https://github.com/UKTradeInvestment/data-hub-frontend && cd data-hub-frontend
    ```
 
 2. Install node dependencies:
