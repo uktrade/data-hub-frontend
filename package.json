@@ -81,7 +81,7 @@
     "develop": "run-p watch:js:*",
     "watch:test": "npm run test:unit -- -w",
     "watch:js:client": "webpack --watch",
-    "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect src/server.js --ignore build/",
+    "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
     "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
     "lint": "npm-run-all lint:all:*",
     "lint:all:js": "eslint ./test ./src ./assets ./config *.js",
