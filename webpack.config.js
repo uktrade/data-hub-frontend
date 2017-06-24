@@ -47,7 +47,8 @@ const common = {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: true,
+                sourceMap: !isProd,
+                minimize: isProd,
               },
             },
             {
