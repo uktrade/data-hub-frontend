@@ -16,7 +16,8 @@
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-preset-es2015": "^6.14.0",
     "body-parser": "^1.15.2",
-    "browser-sync": "^2.14.2",
+    "browser-sync": "^2.18.12",
+    "browser-sync-webpack-plugin": "^1.1.4",
     "celebrate": "^4.0.1",
     "chai": "^3.5.0",
     "churchill": "^1.2.0",
@@ -72,6 +73,7 @@
     "wavy": "^1.0.4",
     "webpack": "^3.0.0",
     "webpack-assets-manifest": "^0.7.0",
+    "webpack-merge": "^4.1.0",
     "winston": "^2.3.0"
   },
   "scripts": {
@@ -82,7 +84,6 @@
     "watch:test": "npm run test:unit -- -w",
     "watch:js:client": "webpack --watch",
     "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
-    "sync": "browser-sync start --proxy http://localhost:3000 --files build/css/*.css build/javascripts/*.js",
     "lint": "npm-run-all lint:all:*",
     "lint:all:js": "eslint ./test ./src ./assets ./config *.js",
     "lint:all:styles": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",

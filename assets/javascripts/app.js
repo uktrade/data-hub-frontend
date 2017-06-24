@@ -1,5 +1,3 @@
-require('../stylesheets/application.scss')
-
 require('core-js/fn/array/from')
 const ConditionalSubfields = require('./modules/conditional-subfields')
 const SortableTable = require('./modules/sortable-table')

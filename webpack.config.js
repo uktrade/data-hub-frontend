@@ -1,20 +1,22 @@
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const webpackConfig = {
+const common = {
   devtool: 'source-map',
   entry: {
+    styles: './assets/stylesheets/application.scss',
     app: './assets/javascripts/app.js',
     ie: ['html5shiv'],
     'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'javascripts/[name].[chunkhash:8].js',
     publicPath: '/',
   },
   module: {
@@ -25,6 +27,17 @@ const webpackConfig = {
         query: {
           cacheDirectory: './babel_cache',
         },
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
+      },
+      {
+        test: /\.(png|svg|jpe?g)$/,
+        loader: [
+          'file-loader?name=images/[name].[hash:8].[ext]',
+          'image-webpack-loader',
+        ],
       },
       {
         test: /\.scss$/,
@@ -59,17 +72,6 @@ const webpackConfig = {
           ],
         }),
       },
-      {
-        test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
-      },
-      {
-        test: /\.(png|svg|jpe?g)$/,
-        loader: [
-          'file-loader?name=images/[name].[hash:8].[ext]',
-          'image-webpack-loader',
-        ],
-      },
     ],
   },
   resolve: {
@@ -79,15 +81,37 @@ const webpackConfig = {
     ],
   },
   plugins: [
-    new ExtractTextPlugin('css/main-[hash:8].css'),
     new WebpackAssetsManifest(),
   ],
 }
 
-if (isProd) {
-  webpackConfig.devtool = 'hidden-source-map'
+const develop = merge.smart(common, {
+  output: {
+    filename: 'javascripts/[name].js',
+  },
+  plugins: [
+    new ExtractTextPlugin('css/[name].css'),
+    new BrowserSyncPlugin({
+      port: 3001,
+      proxy: `http://localhost:${config.port}`,
+      open: false,
+      files: [
+        'build/css/*.css',
+        'build/javascripts/*.js',
+        'build/images/*',
+      ],
+    }, {
+      reload: false,
+    }),
+  ],
+})
 
-  webpackConfig.plugins.push(
+const prod = merge.smart(common, {
+  devtool: 'hidden-source-map',
+  output: {
+    filename: 'javascripts/[name].[chunkhash:8].js',
+  },
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
@@ -103,7 +127,12 @@ if (isProd) {
       sourceMap: false,
       dead_code: true,
     }),
-  )
-}
+    new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
+  ],
+})
 
-module.exports = webpackConfig
+if (isProd) {
+  module.exports = prod
+} else {
+  module.exports = develop
+}
