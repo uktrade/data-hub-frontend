@@ -5,12 +5,12 @@ const controllers = [
   '../../src/apps/auth/router',
   '../../src/apps/contacts/router',
   '../../src/apps/dashboard/router',
+  '../../src/apps/pingdom/router',
   '../../src/apps/search/router',
   '../../src/apps/service-deliveries/router',
   '../../src/apps/support/router',
 
   '../../src/controllers/api.controller',
-  '../../src/controllers/pingdom.controller',
   '../../src/controllers/my-account.controller',
   '../../src/controllers/interaction.controller',
   '../../src/controllers/interaction-edit.controller',
