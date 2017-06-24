@@ -1,5 +1,5 @@
 /* eslint-disable */
-const {addClass, removeClass} = require('../lib/elementstuff')
+const {addClass, removeClass} = require('../../lib/element-stuff')
 
 function isDate (text) {
   return text.length === 10 && text.charAt(2) === '/' && text.charAt(5) === '/'

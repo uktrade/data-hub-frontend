@@ -1,5 +1,5 @@
 /* eslint-disable */
-const {addClass, removeClass} = require('../lib/elementstuff')
+const {addClass, removeClass} = require('../../lib/element-stuff')
 
 function addEventListenerList (list, event, fn) {
   for (const element of list) {

@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { addClass, removeClass } = require('../lib/elementstuff')
+const { addClass, removeClass } = require('../../lib/element-stuff')
 
 const radioElements = document.querySelectorAll('.block-label input[type="radio"]')
 
