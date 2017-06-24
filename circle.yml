@@ -4,7 +4,7 @@ machine:
     version: 8.1.0
 dependencies:
   override:
-    - yarn install && npm rebuild node-sass
+    - yarn install && npm rebuild
 test:
   override:
     - yarn circle:
