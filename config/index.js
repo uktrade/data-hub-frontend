@@ -1,9 +1,11 @@
 const path = require('path')
 
 const isDev = (process.env.NODE_ENV !== 'production')
+const root = path.normalize(`${__dirname}/..`)
 
-module.exports = {
-  root: path.normalize(`${__dirname}/..`),
+const config = {
+  root,
+  buildDir: path.join(root, '.build'),
   env: process.env.NODE_ENV,
   ci: process.env.CI,
   isDev,
@@ -41,3 +43,5 @@ module.exports = {
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
 }
+
+module.exports = config

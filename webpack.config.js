@@ -16,7 +16,7 @@ const common = {
     'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: config.buildDir,
     publicPath: '/',
   },
   module: {
@@ -97,9 +97,9 @@ const develop = merge.smart(common, {
       proxy: `http://localhost:${config.port}`,
       open: false,
       files: [
-        'build/css/*.css',
-        'build/javascripts/*.js',
-        'build/images/*',
+        '.build/css/*.css',
+        '.build/js/*.js',
+        '.build/images/*',
       ],
     }, {
       reload: false,

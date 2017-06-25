@@ -77,7 +77,7 @@
     "winston": "^2.3.0"
   },
   "scripts": {
-    "clean": "del build",
+    "clean": "del .build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && webpack",
     "develop": "run-p watch:js:*",
