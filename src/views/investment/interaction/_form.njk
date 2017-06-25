@@ -21,7 +21,7 @@
     error=form.errors.notes)
   }}
 
-  {{ automplete('contact',
+  {{ autocomplete('contact',
     label=form.labels['contact'],
     value=form.state['contact'],
     options=form.options.contacts)
@@ -32,7 +32,7 @@
     value=form.state['date'])
   }}
 
-  {{ automplete('dit_adviser',
+  {{ autocomplete('dit_adviser',
     label=form.labels['dit_adviser'],
     value=form.state['dit_adviser'],
     options=form.options.advisers)

@@ -2,7 +2,7 @@
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   <input type="hidden" name="investor_company" value="{{ equityCompany.id }}">
 
-  {{ automplete('client_contacts',
+  {{ autocomplete('client_contacts',
     label="Client contact for this project",
     value=form.state['client_contacts'],
     options=form.options.contacts)
@@ -23,7 +23,7 @@
   } %}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
-    {{ automplete('client_relationship_manager',
+    {{ autocomplete('client_relationship_manager',
       label="Client relationship manager",
       value=form.state['client_relationship_manager'],
       options=form.options.advisers)
@@ -45,7 +45,7 @@
   } %}
 
   <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
-    {{ automplete('referral_source_adviser',
+    {{ autocomplete('referral_source_adviser',
       label="Referral source adviser",
       value=form.state['referral_source_adviser'],
       options=form.options.advisers)

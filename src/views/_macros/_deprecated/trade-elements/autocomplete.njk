@@ -1,3 +1,5 @@
+{% from "_macros/_deprecated/trade-elements/dropdown.njk" import dropdown %}
+
 {% macro autocomplete(name, label, value='', displayvalue, hint, id, class, error, url, options) %}
 
   {% if not id %}
