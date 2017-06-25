@@ -62,7 +62,7 @@ const common = {
             },
             'resolve-url-loader',
             {
-              loader: 'sass-loader',
+              loader: 'fast-sass-loader',
               options: {
                 sourceMap: true, // required for resolve-url-loader
                 includePaths: [
