@@ -88,7 +88,7 @@ const common = {
 
 const develop = merge.smart(common, {
   output: {
-    filename: 'javascripts/[name].js',
+    filename: 'js/[name].js',
   },
   plugins: [
     new ExtractTextPlugin('css/[name].css'),
@@ -110,7 +110,7 @@ const develop = merge.smart(common, {
 const prod = merge.smart(common, {
   devtool: 'hidden-source-map',
   output: {
-    filename: 'javascripts/[name].[chunkhash:8].js',
+    filename: 'js/[name].[chunkhash:8].js',
   },
   plugins: [
     new webpack.DefinePlugin({
