@@ -48,7 +48,7 @@ const common = {
               loader: 'css-loader',
               options: {
                 sourceMap: config.isDev,
-                minimize: !config.isDev,
+                minimize: config.isProd,
               },
             },
             {
@@ -57,14 +57,14 @@ const common = {
                 plugins: (loader) => [
                   require('autoprefixer')(),
                 ],
-                sourceMap: true,
+                sourceMap: config.isDev,
               },
             },
             'resolve-url-loader',
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: true,
+                sourceMap: true, // required for resolve-url-loader
                 includePaths: [
                   path.resolve(__dirname, 'node_modules/govuk_frontend_toolkit/stylesheets'),
                 ],
@@ -108,7 +108,7 @@ const develop = merge.smart(common, {
 })
 
 const prod = merge.smart(common, {
-  devtool: 'hidden-source-map',
+  devtool: false,
   output: {
     filename: 'js/[name].[chunkhash:8].js',
   },
