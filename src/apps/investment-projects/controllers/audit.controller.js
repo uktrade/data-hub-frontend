@@ -1,9 +1,7 @@
-const router = require('express').Router()
 const { get } = require('lodash')
 
-const { getProjectDetails } = require('./shared.middleware')
-const { formatLongDate } = require('../../../common/date')
-const { getInvestmentProjectAuditLog } = require('../../repos/investment.repo')
+const { formatLongDate } = require('../../../../common/date')
+const { getInvestmentProjectAuditLog } = require('../investment-projects.repo')
 
 function formatAuditLog (logEntry) {
   return {
@@ -33,11 +31,7 @@ async function getInvestmentAudit (req, res, next) {
   }
 }
 
-router.param('id', getProjectDetails)
-router.get('/:id/audit', getInvestmentAudit)
-
 module.exports = {
-  router,
   getInvestmentAudit,
   formatAuditLog,
 }

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/company.service')
-const { getCompanyInvestmentProjects } = require('../repos/investment.repo')
+const { getCompanyInvestmentProjects } = require('../apps/investment-projects/investment-projects.repo')
 
 async function getAction (req, res, next) {
   const token = req.session.token

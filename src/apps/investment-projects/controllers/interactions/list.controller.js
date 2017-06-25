@@ -1,9 +1,7 @@
-const router = require('express').Router()
 const { get } = require('lodash')
 
-const { getDisplayCompanyInteraction } = require('../../../apps/interactions/services/formatting.service')
-const { getInteractionsForInvestment } = require('../../../apps/interactions/interactions.repo')
-const { getProjectDetails } = require('../shared.middleware')
+const { getDisplayCompanyInteraction } = require('../../../interactions/services/formatting.service')
+const { getInteractionsForInvestment } = require('../../../interactions/interactions.repo')
 
 async function indexGetHandler (req, res, next) {
   try {
@@ -24,11 +22,6 @@ async function indexGetHandler (req, res, next) {
   }
 }
 
-router.param('id', getProjectDetails)
-
-router.get('/:id/interactions', indexGetHandler)
-
 module.exports = {
-  router,
   indexGetHandler,
 }

@@ -1,14 +1,21 @@
-const { isValidGuid } = require('../../lib/controller-utils')
+const { isValidGuid } = require('../../../lib/controller-utils')
 
-const { getInteraction } = require('../../apps/interactions/interactions.repo')
-const { getAdviser } = require('../../repos/adviser.repo')
-const { transformFromApi } = require('../../apps/interactions/services/formatting.service')
+const { getInteraction } = require('../../interactions/interactions.repo')
+const { getAdviser } = require('../../../repos/adviser.repo')
+const { transformFromApi } = require('../../interactions/services/formatting.service')
 const {
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
   getInvestmentTeam,
-} = require('../../repos/investment.repo')
+} = require('../investment-projects.repo')
+
+function handleEmptyMiddleware (req, res, next) {
+  if (req.path === '/') {
+    return res.redirect(`/investment/start`)
+  }
+  next()
+}
 
 function getLocalNavMiddleware (req, res, next) {
   res.locals.localNavItems = [
@@ -68,6 +75,7 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 }
 
 module.exports = {
+  handleEmptyMiddleware,
   getLocalNavMiddleware,
   getProjectDetails,
   getInteractionDetails,

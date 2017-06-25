@@ -1,11 +1,6 @@
-/* eslint new-cap: 0 */
-const express = require('express')
 const { get } = require('lodash')
-const { getProjectDetails } = require('./shared.middleware')
-const investmentRepository = require('../../repos/investment.repo')
-const { detailsGetHandler } = require('./details.controller')
 
-const router = express.Router()
+const investmentRepository = require('../investment-projects.repo')
 
 async function archiveInvestmentProjectHandler (req, res, next) {
   try {
@@ -42,8 +37,7 @@ async function unarchiveInvestmentProjectHandler (req, res, next) {
   }
 }
 
-router.param('id', getProjectDetails)
-router.post('/:id/details', archiveInvestmentProjectHandler, detailsGetHandler)
-router.get('/:id/unarchive', unarchiveInvestmentProjectHandler)
-
-module.exports = { router, archiveInvestmentProjectHandler, unarchiveInvestmentProjectHandler }
+module.exports = {
+  archiveInvestmentProjectHandler,
+  unarchiveInvestmentProjectHandler,
+}

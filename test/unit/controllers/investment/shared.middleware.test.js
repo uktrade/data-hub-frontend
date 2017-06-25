@@ -9,8 +9,8 @@ describe('Investment shared middleware', () => {
     this.nextSpy = this.sandbox.spy()
     this.resMock = { locals: {} }
 
-    this.controller = proxyquire('~/src/controllers/investment/shared.middleware', {
-      '../../apps/interactions/interactions.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/shared', {
+      '../../interactions/interactions.repo': {
         getInteraction: this.getInteractionStub,
       },
     })
@@ -26,6 +26,33 @@ describe('Investment shared middleware', () => {
 
       expect(this.resMock.locals).to.haveOwnProperty('localNavItems')
       expect(this.nextSpy.calledOnce).to.be.true
+    })
+  })
+
+  describe('#handleEmptyMiddleware', () => {
+    it('should redirect to start when no sub-routes are given', (done) => {
+      const nextSpy = this.sandbox.spy()
+
+      this.controller.handleEmptyMiddleware({
+        path: '/',
+      }, {
+        locals: {},
+        redirect (url) {
+          expect(url).to.equal('/investment/start')
+          done()
+        },
+      }, nextSpy)
+    })
+
+    it('should pass to the next middleware for any other path', () => {
+      const nextSpy = this.sandbox.spy()
+      const mockRes = { locals: {} }
+
+      this.controller.handleEmptyMiddleware({
+        path: '/create',
+      }, mockRes, nextSpy)
+
+      expect(nextSpy.calledOnce).to.be.true
     })
   })
 
@@ -70,8 +97,8 @@ describe('Investment shared middleware - error testing', () => {
     this.nextSpy = this.sandbox.spy()
     this.resMock = { locals: {} }
 
-    this.controller = proxyquire('~/src/controllers/investment/shared.middleware', {
-      '../../apps/interactions/interactions.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/shared', {
+      '../../interactions/interactions.repo': {
         getInteraction: this.getInteractionStub,
       },
     })

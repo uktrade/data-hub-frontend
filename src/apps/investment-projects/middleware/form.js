@@ -1,25 +1,26 @@
 const { get, flatten } = require('lodash')
-const metadataRepo = require('../../repos/metadata.repo')
-const { getAdvisers } = require('../../repos/adviser.repo')
-const { isValidGuid } = require('../../lib/controller-utils')
-const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
-const interactionFormattingService = require('../../apps/interactions/services/formatting.service')
+
+const metadataRepo = require('../../../repos/metadata.repo')
+const { getAdvisers } = require('../../../repos/adviser.repo')
+const { isValidGuid } = require('../../../lib/controller-utils')
+const { transformToApi, transformFromApi } = require('../services/formatting.service')
+const interactionFormattingService = require('../../interactions/services/formatting.service')
 const {
   valueLabels,
   interactionsLabels,
   requirementsLabels,
-} = require('./labels')
+} = require('../labels')
 const {
   createInvestmentInteraction,
   updateInvestmentInteraction,
-} = require('../../apps/interactions/interactions.repo')
+} = require('../../interactions/interactions.repo')
 const {
   createInvestmentProject,
   getEquityCompanyDetails,
   updateInvestmentProject,
   updateInvestmentValue,
   updateInvestmentRequirements,
-} = require('../../repos/investment.repo')
+} = require('../investment-projects.repo')
 
 async function populateDetailsFormMiddleware (req, res, next) {
   const equityCompanyId = get(res, 'locals.equityCompany.id', req.query['equity-company'])

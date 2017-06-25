@@ -6,7 +6,7 @@ describe('Investment Interactions edit controller', () => {
     this.nextStub = this.sandbox.stub()
     this.flashStub = this.sandbox.stub()
 
-    this.controller = require('~/src/controllers/investment/interaction/edit.controller')
+    this.controller = require('~/src/apps/investment-projects/controllers/interactions/edit.controller')
   })
 
   afterEach(() => {
