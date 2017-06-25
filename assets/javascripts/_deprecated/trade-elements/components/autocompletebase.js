@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { addClass, removeClass, insertAfter, findDoc, createElementFromMarkup } = require('../lib/elementstuff')
+const { addClass, removeClass, insertAfter, findDoc, createElementFromMarkup } = require('../../lib/element-stuff')
 const eventsToSuppress = [40, 38, 9, 13, 27]
 
 function arrayIncludes (array, item) {

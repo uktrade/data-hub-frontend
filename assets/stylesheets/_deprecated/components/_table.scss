@@ -68,24 +68,6 @@
   }
 }
 
-.table--sortable thead tr {
-  th {
-    cursor: pointer;
-
-    &.table--sortable__sort-desc {
-      &::after {
-        content: "\00a0\00a0\25BC";
-      }
-    }
-
-    &.table--sortable__sort-asc  {
-      &::after {
-        content: "\00a0\00a0\25B2";
-      }
-    }
-  }
-}
-
 table.table--key-value.table--small {
   th {
     @include core-16;
