@@ -1,8 +1,14 @@
 @import "../generic/form-control";
 @import "../settings/colours";
+@import "../settings/layout";
 
 .textbox {
-  @extend %form-control;
+  margin-bottom: $form-vertical-spacing;
+  box-sizing: border-box;
+
+  &.has-error {
+    border-left: 2px solid $error-colour;
+  }
 }
 
 .textbox__label {
@@ -16,22 +22,22 @@
 .textbox__hint {
   color: $secondary-text-colour;
   display: block;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .textbox__input {
   border: 2px solid $black;
   display: block;
-  font-weight: 400px;
+  font-weight: 400;
   padding: 5px 4px 4px;
   width: 100%;
-  max-width: 540px;
+  max-width: $max-field-width;
 
   &:focus {
     outline: 3px solid $yellow;
   }
 
-  .has-error & {
-    border: 2px solid $error-colour;
+  .has-error {
+    border-color: $error-colour;
   }
 }
