@@ -46,7 +46,7 @@
       Service delivery
     </div>
 
-    {{ automplete("dit_team",
+    {{ autocomplete("dit_team",
       label="Service provider",
       emptyLabel="Pick a provider",
       hint="Please start typing to search for a provider",
@@ -55,7 +55,7 @@
       options=serviceProviderOptions)
     }}
 
-    {{ automplete('service',
+    {{ autocomplete('service',
       label=labels.service,
       value=serviceDelivery.service.id,
       hint="Please start typing to search for a service",
@@ -92,7 +92,7 @@
 
     {{ date('date', label='Service delivery start date', value=serviceDelivery.date ) }}
 
-    {{ automplete("contact",
+    {{ autocomplete("contact",
       label=labels.contact,
       emptyLabel="Pick a contact",
       hint="Please start typing to search for a contact",
@@ -101,7 +101,7 @@
       options=contacts)
     }}
 
-    {{ automplete('dit_adviser',
+    {{ autocomplete('dit_adviser',
       label=labels.dit_adviser,
       value=serviceDelivery.dit_adviser.id,
       displayvalue=serviceDelivery.dit_adviser.name,
