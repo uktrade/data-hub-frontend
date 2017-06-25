@@ -3,7 +3,7 @@ const metadataRepo = require('../../repos/metadata.repo')
 const { getAdvisers } = require('../../repos/adviser.repo')
 const { isValidGuid } = require('../../lib/controller-utils')
 const { transformToApi, transformFromApi } = require('../../services/investment-formatting.service')
-const interactionFormattingService = require('../../services/interaction-formatting.service')
+const interactionFormattingService = require('../../apps/interactions/services/formatting.service')
 const {
   valueLabels,
   interactionsLabels,
@@ -12,7 +12,7 @@ const {
 const {
   createInvestmentInteraction,
   updateInvestmentInteraction,
-} = require('../../repos/interaction.repo')
+} = require('../../apps/interactions/interactions.repo')
 const {
   createInvestmentProject,
   getEquityCompanyDetails,

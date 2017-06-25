@@ -8,7 +8,7 @@ describe('Investment Interactions Index controller', () => {
     this.next = this.sandbox.stub()
     this.getInteractionsForInvestmentStub = this.sandbox.stub().resolves(interactionsListData)
     this.controller = proxyquire('~/src/controllers/investment/interaction/index.controller', {
-      '../../../repos/interaction.repo': {
+      '../../../apps/interactions/interactions.repo': {
         getInteractionsForInvestment: this.getInteractionsForInvestmentStub,
       },
     })

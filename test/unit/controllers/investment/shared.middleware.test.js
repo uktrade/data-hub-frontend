@@ -10,7 +10,7 @@ describe('Investment shared middleware', () => {
     this.resMock = { locals: {} }
 
     this.controller = proxyquire('~/src/controllers/investment/shared.middleware', {
-      '../../repos/interaction.repo': {
+      '../../apps/interactions/interactions.repo': {
         getInteraction: this.getInteractionStub,
       },
     })
@@ -71,7 +71,7 @@ describe('Investment shared middleware - error testing', () => {
     this.resMock = { locals: {} }
 
     this.controller = proxyquire('~/src/controllers/investment/shared.middleware', {
-      '../../repos/interaction.repo': {
+      '../../apps/interactions/interactions.repo': {
         getInteraction: this.getInteractionStub,
       },
     })

@@ -1,5 +1,5 @@
-const interactionRepository = require('../repos/interaction.repo')
-const { getPropertyId, nullEmptyFields } = require('../lib/property-helpers')
+const interactionRepository = require('../interactions.repo')
+const { getPropertyId, nullEmptyFields } = require('../../../lib/property-helpers')
 
 /**
  * Accepts an API interaction object and converts it into a format compatible with a HTML form

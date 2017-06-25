@@ -1,14 +1,12 @@
 /* eslint camelcase: 0 */
-const express = require('express')
-const interactionLabels = require('../labels/interaction-labels')
-const contactsRepository = require('../apps/contacts/contacts.repo')
-const companyRepository = require('../repos/company.repo')
-const metadataRepository = require('../repos/metadata.repo')
-const adviserRepository = require('../repos/adviser.repo')
-const interactionDataService = require('../services/interaction-data.service')
-const interactionFormService = require('../services/interaction-form.service')
-const { containsFormData } = require('../lib/controller-utils')
-const router = express.Router()
+const interactionLabels = require('../labels')
+const contactsRepository = require('../../contacts/contacts.repo')
+const companyRepository = require('../../../repos/company.repo')
+const metadataRepository = require('../../../repos/metadata.repo')
+const adviserRepository = require('../../../repos/adviser.repo')
+const interactionDataService = require('../services/data.service')
+const interactionFormService = require('../services/form.service')
+const { containsFormData } = require('../../../lib/controller-utils')
 
 async function editDetails (req, res, next) {
   try {
@@ -93,7 +91,7 @@ async function postDetails (req, res, next) {
   }
 }
 
-router.get(['/interaction/add/', '/interaction/:interactionId/edit', '/interaction/edit/'], editDetails)
-router.post(['/interaction/add/', '/interaction/:interactionId/edit', '/interaction/edit/'], postDetails)
-
-module.exports = { router, editDetails, postDetails }
+module.exports = {
+  editDetails,
+  postDetails,
+}
