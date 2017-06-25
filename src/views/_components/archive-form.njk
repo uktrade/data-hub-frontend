@@ -26,8 +26,13 @@
   } %}
 
   <div class="js-ConditionalSubfield" data-controlled-by="archived_reason" data-control-value="Other">
-    {{ textbox("archived_reason_other", label="Other") }}
+    <div class="form-group">
+      <label class="form-label-bold">Other</label>
+      <input class="form-control" type="text" name="archived_reason_other">
+    </div>
   </div>
 
-  {{ save(buttonText="Archive") }}
+  <div class="save-bar">
+    <button class="button button--save" type="submit">Archive</button>
+  </div>
 </form>
