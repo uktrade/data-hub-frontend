@@ -9,6 +9,7 @@ const config = {
   env: process.env.NODE_ENV,
   ci: process.env.CI,
   isDev,
+  isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {

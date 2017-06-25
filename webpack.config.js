@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
-const isProd = process.env.NODE_ENV === 'production'
+const config = require('./config')
 
 const common = {
   devtool: 'source-map',
@@ -47,8 +47,8 @@ const common = {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: !isProd,
-                minimize: isProd,
+                sourceMap: config.isDev,
+                minimize: !config.isDev,
               },
             },
             {
@@ -125,14 +125,14 @@ const prod = merge.smart(common, {
       output: {
         comments: false,
       },
-      sourceMap: false,
+      sourceMap: true,
       dead_code: true,
     }),
     new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
   ],
 })
 
-if (isProd) {
+if (config.isProd) {
   module.exports = prod
 } else {
   module.exports = develop
