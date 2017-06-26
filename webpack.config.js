@@ -1,23 +1,77 @@
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const WebpackAssetsManifest = require('webpack-assets-manifest')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
-const isProd = process.env.NODE_ENV === 'production'
+const config = require('./config')
 
-const webpackConfig = {
+const common = {
   devtool: 'source-map',
   entry: {
+    styles: './assets/stylesheets/application.scss',
     app: './assets/javascripts/app.js',
     ie: ['html5shiv'],
     'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
+  output: {
+    path: config.buildDir,
+    publicPath: '/',
+  },
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.js$/,
         loader: 'babel-loader',
         query: {
           cacheDirectory: './babel_cache',
         },
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]',
+      },
+      {
+        test: /\.(png|svg|jpe?g)$/,
+        loader: [
+          'file-loader?name=images/[name].[hash:8].[ext]',
+          'image-webpack-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: config.isDev,
+                minimize: config.isProd,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: (loader) => [
+                  require('autoprefixer')(),
+                ],
+                sourceMap: config.isDev,
+              },
+            },
+            'resolve-url-loader',
+            {
+              loader: 'fast-sass-loader',
+              options: {
+                sourceMap: true, // required for resolve-url-loader
+                includePaths: [
+                  path.resolve(__dirname, 'node_modules/govuk_frontend_toolkit/stylesheets'),
+                ],
+              },
+            },
+          ],
+        }),
       },
     ],
   },
@@ -27,17 +81,38 @@ const webpackConfig = {
       path.resolve(__dirname, 'src'),
     ],
   },
-  output: {
-    path: path.resolve(__dirname, 'build/javascripts'),
-    filename: '[name].bundle.js',
-  },
-  plugins: [],
+  plugins: [
+    new WebpackAssetsManifest(),
+  ],
 }
 
-if (isProd) {
-  webpackConfig.devtool = 'hidden-source-map'
+const develop = merge.smart(common, {
+  output: {
+    filename: 'js/[name].js',
+  },
+  plugins: [
+    new ExtractTextPlugin('css/[name].css'),
+    new BrowserSyncPlugin({
+      port: 3001,
+      proxy: `http://localhost:${config.port}`,
+      open: false,
+      files: [
+        '.build/css/*.css',
+        '.build/js/*.js',
+        '.build/images/*',
+      ],
+    }, {
+      reload: false,
+    }),
+  ],
+})
 
-  webpackConfig.plugins.push(
+const prod = merge.smart(common, {
+  devtool: false,
+  output: {
+    filename: 'js/[name].[chunkhash:8].js',
+  },
+  plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
@@ -50,10 +125,15 @@ if (isProd) {
       output: {
         comments: false,
       },
-      sourceMap: false,
+      sourceMap: true,
       dead_code: true,
     }),
-  )
-}
+    new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
+  ],
+})
 
-module.exports = webpackConfig
+if (config.isProd) {
+  module.exports = prod
+} else {
+  module.exports = develop
+}

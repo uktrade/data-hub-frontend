@@ -18,7 +18,7 @@
   {{ super() }}
 
   <!--[if lt IE 9]>
-    <script src="{{ asset_path }}javascripts/ie.bundle.js?{{ startTime }}"></script>
+    <script src="{{ getAssetPath('ie.js') }}"></script>
   <![endif]-->
 
   {% include "_includes/google-tag-manager-snippet.njk" %}
@@ -65,8 +65,8 @@
   {{ super() }}
   <!--[if gt IE 8]><!-->
     {% block javascript %}
-      <script src="{{ asset_path }}javascripts/trade-elements-components.bundle.js?{{ startTime }}"></script>
-      <script src="{{ asset_path }}javascripts/app.bundle.js?{{ startTime }}"></script>
+      <script src="{{ getAssetPath('trade-elements-components.js') }}"></script>
+      <script src="{{ getAssetPath('app.js') }}"></script>
     {% endblock %}
   <!--<![endif]-->
 {% endblock %}

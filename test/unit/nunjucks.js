@@ -19,6 +19,8 @@ Object.keys(filters).forEach((filterName) => {
 })
 
 function render (template, options) {
+  options.getAssetPath = () => {} // Stub method set in middleware locals
+
   return new Promise((resolve, reject) => {
     try {
       const markup = nunjucks.render(template, options)

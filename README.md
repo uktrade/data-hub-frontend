@@ -54,6 +54,7 @@ This file expects the following environment variables:
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
 | REDIS_URL | A full length url to conenct to redis |
 | REDISTOGO_URL | Probably for use with heroku |
+| ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
 | ZEN_TOKEN | Zendesk auth token |
 | ZEN_DOMAIN | Domain used on Zendesk |
 | ZEN_EMAIL | Zendesk email address |
@@ -90,7 +91,7 @@ The project is using ES6 async/await therefore Node 8 is required.
 1. Clone repository and change directory:
 
    ```
-   git clone https://github.com/UKTradeInvestment/data-hub-fe-beta2 && cd data-hub-fe-beta2
+   git clone https://github.com/UKTradeInvestment/data-hub-frontend && cd data-hub-frontend
    ```
 
 2. Install node dependencies:

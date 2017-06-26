@@ -1,12 +1,15 @@
 const path = require('path')
 
 const isDev = (process.env.NODE_ENV !== 'production')
+const root = path.normalize(`${__dirname}/..`)
 
-module.exports = {
-  root: path.normalize(`${__dirname}/..`),
+const config = {
+  root,
+  buildDir: path.join(root, '.build'),
   env: process.env.NODE_ENV,
   ci: process.env.CI,
   isDev,
+  isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {
@@ -30,6 +33,7 @@ module.exports = {
     // 2 hour timeout
     ttl: process.env.SESSION_TTL || (2 * 60 * 60 * 1000),
   },
+  assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
   zenUrl: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
   zenToken: process.env.ZEN_TOKEN,
@@ -40,3 +44,5 @@ module.exports = {
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
 }
+
+module.exports = config

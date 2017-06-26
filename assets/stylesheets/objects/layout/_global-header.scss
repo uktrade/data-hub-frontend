@@ -24,7 +24,7 @@
 }
 
 .global-header__crest {
-  background: url("../../assets/images/dit-crest__white.png") 6px 0 no-repeat $black;
+  background: url("../../../images/dit-crest__white.png") 6px 0 no-repeat $black;
   background-size: contain;
   border-left: 2px solid $white;
   display: inline-block;
@@ -34,7 +34,7 @@
   vertical-align: text-bottom;
 
   @include device-pixel-ratio(2) {
-    background-image: url("../../assets/images/dit-crest__white@2x.png");
+    background-image: url("../../../images/dit-crest__white@2x.png");
     background-size: 28px 30px;
   }
 }
