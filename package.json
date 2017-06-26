@@ -82,7 +82,7 @@
     "build": "npm run clean && webpack",
     "develop": "run-p watch:js:*",
     "watch:test": "npm run test:unit -- -w",
-    "watch:js:client": "webpack --watch",
+    "watch:js:client": "webpack --watch --progress",
     "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
     "lint": "npm-run-all lint:all:*",
     "lint:all:js": "eslint ./test ./src ./assets ./config *.js",
