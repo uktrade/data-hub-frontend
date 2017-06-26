@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-const contactController = require('./controllers/details.controller')
-const contactEditController = require('./controllers/edit.controller')
-const contactArchiveController = require('./controllers/archive.controller')
-const contactInteractionController = require('./controllers/interactions.controller')
+const contactController = require('./controllers/details')
+const contactEditController = require('./controllers/edit')
+const contactArchiveController = require('./controllers/archive')
+const contactInteractionController = require('./controllers/interactions')
 
 router.get('/:contactId/details', contactController.getCommon, contactController.getDetails)
 
@@ -22,7 +22,4 @@ router.get('/:id/unarchive', contactArchiveController.unarchiveContact)
 
 router.get('/interactions/:contactId', contactController.getCommon, contactInteractionController.getInteractions)
 
-module.exports = {
-  path: '/contact',
-  router,
-}
+module.exports = router

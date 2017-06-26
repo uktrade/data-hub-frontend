@@ -1,6 +1,6 @@
-const data = require('./data.service')
-const form = require('./form.service')
-const formatting = require('./formatting.service')
+const data = require('./data')
+const form = require('./form')
+const formatting = require('./formatting')
 
 module.exports = {
   data,

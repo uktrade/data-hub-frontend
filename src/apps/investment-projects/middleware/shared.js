@@ -1,14 +1,14 @@
 const { isValidGuid } = require('../../../lib/controller-utils')
 
-const { getInteraction } = require('../../interactions/interactions.repo')
-const { getAdviser } = require('../../adviser/repository')
-const { transformFromApi } = require('../../interactions/services/formatting.service')
+const { getInteraction } = require('../../interactions/repos')
+const { getAdviser } = require('../../adviser/repos')
+const { transformFromApi } = require('../../interactions/services/formatting')
 const {
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
   getInvestmentTeam,
-} = require('../investment-projects.repo')
+} = require('../repos')
 
 function handleEmptyMiddleware (req, res, next) {
   if (req.path === '/') {

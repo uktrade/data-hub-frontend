@@ -1,5 +1,5 @@
-const feedback = require('./feedback.controller')
-const thankYou = require('./thank-you.controller')
+const feedback = require('./feedback')
+const thankYou = require('./thank-you')
 
 module.exports = {
   feedback,

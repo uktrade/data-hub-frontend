@@ -23,7 +23,7 @@ const errors = require('./middleware/errors')
 const sessionStore = require('./middleware/session-store')
 const logger = require('../config/logger')
 
-const router = require('../config/routes')
+const routers = require('./apps/routers')
 
 const app = express()
 
@@ -69,7 +69,7 @@ app.use(headers)
 
 // routing
 app.use(slashify())
-app.use(router)
+app.use(routers)
 
 app.use(errors.notFound)
 app.use(errors.catchAll)

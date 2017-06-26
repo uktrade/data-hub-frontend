@@ -1,10 +1,10 @@
 const { get, flatten } = require('lodash')
 
 const metadataRepo = require('../../../lib/metadata')
-const { getAdvisers } = require('../../adviser/repository')
+const { getAdvisers } = require('../../adviser/repos')
 const { isValidGuid } = require('../../../lib/controller-utils')
-const { transformToApi, transformFromApi } = require('../services/formatting.service')
-const interactionFormattingService = require('../../interactions/services/formatting.service')
+const { transformToApi, transformFromApi } = require('../services/formatting')
+const interactionFormattingService = require('../../interactions/services/formatting')
 const {
   valueLabels,
   interactionsLabels,
@@ -13,14 +13,14 @@ const {
 const {
   createInvestmentInteraction,
   updateInvestmentInteraction,
-} = require('../../interactions/interactions.repo')
+} = require('../../interactions/repos')
 const {
   createInvestmentProject,
   getEquityCompanyDetails,
   updateInvestmentProject,
   updateInvestmentValue,
   updateInvestmentRequirements,
-} = require('../investment-projects.repo')
+} = require('../repos')
 
 async function populateDetailsFormMiddleware (req, res, next) {
   const equityCompanyId = get(res, 'locals.equityCompany.id', req.query['equity-company'])

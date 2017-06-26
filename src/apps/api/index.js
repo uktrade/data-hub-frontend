@@ -1,9 +1,7 @@
-const router = require('./router')
-const apiController = require('./api.controller')
+const router = require('express').Router()
+const { postcodeLookupHandler } = require('./controllers')
 
 module.exports = {
-  router,
-  controllers: {
-    api: apiController,
-  },
+  mountpath: '/api',
+  router: router.get('/postcodelookup/:postcode', postcodeLookupHandler),
 }

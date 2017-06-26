@@ -5,7 +5,7 @@ const {
   getServiceDeliveryEdit,
   postServiceDeliveryEdit,
   getServiceDeliveryDetails,
-} = require('./service-deliveries.controller')
+} = require('./controllers')
 
 router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 
@@ -16,6 +16,4 @@ router
   .get(getServiceDeliveryEdit)
   .post(postServiceDeliveryEdit)
 
-module.exports = {
-  router,
-}
+module.exports = router
