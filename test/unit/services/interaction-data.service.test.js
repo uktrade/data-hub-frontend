@@ -33,7 +33,7 @@ describe('interaction data service', function () {
       '../interactions.repo': {
         getInteraction: getInteractionStub,
       },
-      '../../../repos/metadata.repo': {
+      '../../../lib/metadata': {
         interactionTypeOptions: [interaction_type],
       },
     })
@@ -62,7 +62,7 @@ describe('interaction data service', function () {
         '../interactions.repo': {
           getInteraction: getInteractionStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           interactionTypeOptions: [interaction_type],
         },
       })
@@ -118,7 +118,7 @@ describe('interaction data service', function () {
         '../interactions.repo': {
           getInteraction: getInteractionStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           interactionTypeOptions: [interaction_type],
         },
       })
@@ -141,7 +141,7 @@ describe('interaction data service', function () {
         '../interactions.repo': {
           getInteraction: getInteractionStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           interactionTypeOptions: [interaction_type],
         },
       })
@@ -186,7 +186,7 @@ describe('interaction data service', function () {
         '../interactions.repo': {
           getInteraction: getInteractionStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           interactionTypeOptions: [interaction_type],
         },
       })

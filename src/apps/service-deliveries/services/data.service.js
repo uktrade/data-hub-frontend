@@ -2,9 +2,9 @@
 const logger = require('../../../../config/logger')
 const companyRepository = require('../../companies/repository')
 const contactsRepository = require('../../../apps/contacts/contacts.repo')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const serviceDeliveryRepository = require('../service-deliveries.repo')
-const adviserRepository = require('../../../repos/adviser.repo')
+const adviserRepository = require('../../adviser/repository')
 
 function validKey (object, key) {
   return object && object[key] && object[key].data && object[key].data.id && object[key].data.id.length > 0

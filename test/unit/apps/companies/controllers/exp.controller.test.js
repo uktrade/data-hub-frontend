@@ -28,7 +28,7 @@ describe('Company export controller', () => {
         getDitCompany: this.getDitCompany,
         saveCompany: this.saveCompany,
       },
-      '../../../../repos/metadata.repo': {
+      '../../../lib/metadata': {
         countryOptions: [{
           id: '1234',
           name: 'France',
@@ -137,7 +137,7 @@ describe('Company export controller', () => {
         '../services/data.service': {
           getInflatedDitCompany: this.getInflatedDitCompany,
         },
-        '../../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           getDitcompany: this.getDitCompany,
           saveCompany: this.saveCompany,
         },
@@ -367,7 +367,7 @@ describe('Company export controller', () => {
           getDitCompany: this.getDitCompany,
           saveCompany: this.saveCompany,
         },
-        '../../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           countryOptions: [{
             id: '1234',
             name: 'France',

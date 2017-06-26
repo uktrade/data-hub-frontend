@@ -1,5 +1,5 @@
 const { lookupAddress } = require('./api.service')
-const metadata = require('../../repos/metadata.repo')
+const metadata = require('../../lib/metadata')
 
 async function postcodeLookupHandler (req, res) {
   try {

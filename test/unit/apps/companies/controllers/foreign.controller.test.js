@@ -72,7 +72,7 @@ describe('Company controller, foreign', function () {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub,
       },
-      '../../../repos/metadata.repo': metadataRepositoryStub,
+      '../../../lib/metadata': metadataRepositoryStub,
     })
   })
 
@@ -490,7 +490,7 @@ describe('Company controller, foreign', function () {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub,
         },
-        '../../../../repos/metadata.repo': metadataRepositoryStub,
+        '../../../lib/metadata': metadataRepositoryStub,
       })
 
       const body = {

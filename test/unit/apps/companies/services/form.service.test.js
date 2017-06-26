@@ -1,4 +1,4 @@
-const metadatarepository = require('~/src/repos/metadata.repo')
+const metadatarepository = require('~/src/lib/metadata')
 
 describe('company form service', function () {
   let companyFormService
@@ -11,7 +11,7 @@ describe('company form service', function () {
       '../repository': {
         saveCompany: saveCompanyStub,
       },
-      '../../../repos/metadata.repo': {
+      '../../../lib/metadata': {
         businessTypeOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'Private Limited Company' }],
         getIdForName: metadatarepository.getIdForName,
       },

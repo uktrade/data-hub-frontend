@@ -1,7 +1,7 @@
 const { isValidGuid } = require('../../../lib/controller-utils')
 
 const { getInteraction } = require('../../interactions/interactions.repo')
-const { getAdviser } = require('../../../repos/adviser.repo')
+const { getAdviser } = require('../../adviser/repository')
 const { transformFromApi } = require('../../interactions/services/formatting.service')
 const {
   getInvestmentProjectSummary,

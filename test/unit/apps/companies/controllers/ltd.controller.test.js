@@ -95,7 +95,7 @@ describe('Company controller, ltd', function () {
         getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
         saveCompanyForm: saveCompanyFormStub,
       },
-      '../../../../repos/metadata.repo': metadataRepositoryStub,
+      '../../../lib/metadata': metadataRepositoryStub,
     })
   })
 
@@ -545,7 +545,7 @@ describe('Company controller, ltd', function () {
           getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
           saveCompanyForm: saveCompanyFormStub,
         },
-        '../../../../repos/metadata.repo': metadataRepositoryStub,
+        '../../../lib/metadata': metadataRepositoryStub,
       })
 
       const body = {
