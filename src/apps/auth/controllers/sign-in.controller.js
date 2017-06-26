@@ -24,7 +24,7 @@ function authenticate (username, password) {
 }
 
 function getHandler (req, res) {
-  res.render('login.njk', {
+  res.render('auth/views/login', {
     title: 'Sign in',
   })
 }

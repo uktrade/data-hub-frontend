@@ -52,7 +52,7 @@ async function editDetails (req, res, next) {
     res.locals.countryOptions = metadataRepository.countryOptions
     res.locals.companyUrl = buildCompanyUrl(res.locals.company)
 
-    res.render('contact/edit')
+    res.render('contacts/views/edit')
   } catch (error) {
     next(error)
   }

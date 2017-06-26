@@ -1,0 +1,62 @@
+{% extends "./_layout-edit.njk" %}
+
+{% block main_grid_right_column %}
+  {{ super() }}
+
+  <h2 class="heading-medium">An an export summary</h2>
+
+  {{ errorPanel( errors, labels=exportDetailsLabels ) }}
+
+  <form method="POST">
+    <input type="hidden" name="id" value="{{company.id}}">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <div class="section country-list js-add-another-field">
+      {% if export_to_countries and export_to_countries.length > 0 %}
+        {% for country in export_to_countries %}
+          {{ dropdown("export_to_countries",
+            label="Specify if this company is currently exporting to a market (optional)",
+            emptyLabel="Select country",
+            value=country,
+            id="export_to_countries_" + loop.index,
+            options=countryOptions)
+          }}
+        {% endfor %}
+      {% else %}
+        {{ dropdown("export_to_countries",
+          label="Specify if this company is currently exporting to a market (optional)",
+          emptyLabel="Select country",
+          id="export_to_countries_new",
+          value="",
+          options=countryOptions)
+        }}
+      {% endif %}
+      <input class="button--link js-add_button" type="submit" name="addExportToCountry" value="Add country">
+    </div>
+
+    <div class="section country-list js-add-another-field">
+      {% if future_interest_countries and future_interest_countries.length > 0 %}
+        {% for country in future_interest_countries %}
+          {{ dropdown("future_interest_countries",
+            label="Future countries of interest if known (optional)",
+            emptyLabel="Select country",
+            value=country,
+            id="future_interest_countries_" + loop.index,
+            options=countryOptions)
+          }}
+        {% endfor %}
+      {% else %}
+        {{ dropdown("future_interest_countries",
+          label="Future countries of interest if known (optional)",
+          emptyLabel="Select country",
+          id="future_interest_countries_new",
+          value="",
+          options=countryOptions)
+        }}
+      {% endif %}
+      <input class="button--link js-add_button" type="submit" name="addFutureInterestCountry" value="Add country">
+    </div>
+
+    {{ save(backUrl = "/company-exports/view/" + company.id) }}
+  </form>
+{% endblock %}

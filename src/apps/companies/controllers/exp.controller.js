@@ -62,7 +62,7 @@ async function view (req, res, next) {
       exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
     }
 
-    res.render('company/exports-view', data)
+    res.render('companies/views/exports-view', data)
   } catch (error) {
     next(error)
   }
@@ -91,7 +91,7 @@ async function edit (req, res, next) {
 
     res.locals.title.unshift('Edit')
 
-    res.render('company/exports-edit', data)
+    res.render('companies/views/exports-edit', data)
   } catch (error) {
     next(error)
   }

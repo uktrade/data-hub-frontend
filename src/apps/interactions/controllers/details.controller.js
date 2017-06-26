@@ -47,7 +47,7 @@ function getAddStep1 (req, res) {
     interactionTypeColB.push(selectableTypes[pos])
   }
 
-  res.render('interaction/add-step-1.njk', {
+  res.render('interactions/views/add-step-1.njk', {
     title: ['Interaction type', 'Add interaction'],
     query: req.query,
     interactionTypeColA,
@@ -73,7 +73,7 @@ function postAddStep1 (req, res) {
 }
 
 function getInteractionDetails (req, res, next) {
-  res.render('interaction/interaction-details', {
+  res.render('interactions/views/details', {
     title: `Interaction with ${res.locals.interaction.company.name}`,
     interactionDetails: getDisplayInteraction(res.locals.interaction),
     interactionLabels: interactionLabels,

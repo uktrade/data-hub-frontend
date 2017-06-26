@@ -1,5 +1,5 @@
 function getHandler (req, res) {
-  res.render('myaccount/index', {
+  res.render('account/views/account', {
     title: 'Your account',
   })
 }

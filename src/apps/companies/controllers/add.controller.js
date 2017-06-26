@@ -7,7 +7,7 @@ const { getPagination } = require('../../../lib/pagination')
 const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels')
 
 function getAddStepOne (req, res, next) {
-  res.render('company/add-step-1.njk', {
+  res.render('companies/views/add-step-1.njk', {
     title: 'Add company',
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
@@ -76,7 +76,7 @@ async function getAddStepTwo (req, res, next) {
   const token = req.session.token
 
   if (!searchTerm) {
-    return res.render('company/add-step-2.njk', {
+    return res.render('companies/views/add-step-2.njk', {
       title: 'Add company',
       companyTypeOptions,
       businessType,
@@ -117,7 +117,7 @@ async function getAddStepTwo (req, res, next) {
       }
     }
 
-    res.render('company/add-step-2.njk', {
+    res.render('companies/views/add-step-2.njk', {
       companyTypeOptions,
       companies: companiesHouseAndLtdCompanies.results,
       searchTerm,

@@ -1,0 +1,44 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_heading %}
+  {% if projectData %}
+    <h1 class="visually-hidden">Investment details</h1>
+    <h2 class="page-heading">{{ projectData.name }}</h2>
+    {% component 'project-status', projectStatus %}
+
+    {% if projectData.archived %}
+      <p class="infostrip">
+        This investment project was archived on {{ projectData.archived_on | formatDate }} by {{ projectData.archived_by.first_name }} {{ projectData.archived_by.last_name }}. <br>
+        <strong>Archive reason:</strong> {{ projectData.archived_reason }}<br>
+        <br>
+        <a href="/investment/{{ projectData.id }}/unarchive">Unarchive</a>
+      </p>
+    {% endif %}
+
+  {% endif %}
+{% endblock %}
+
+{% block main_grid_left_column %}
+  {% if localNavItems %}
+    <nav class="local-nav {{ 'local-nav--background' if variant in ['edit', 'create'] }}">
+      {% for item in localNavItems %}
+        {% set isSelected = currentNavItem == item.slug %}
+        <a
+          href="/investment/{{ projectData.id }}/{{ item.slug }}"
+          class="local-nav__link {{ 'is-active' if isSelected}}"
+        >
+          {{ item.label }}
+        </a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% include "_includes/messages.njk" %}
+{% endblock %}
+
+{% block javascript %}
+  {{ super() }}
+  <script src="/javascripts/investment.bundle.js"></script>
+{% endblock %}
