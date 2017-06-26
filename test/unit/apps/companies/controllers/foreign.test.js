@@ -177,8 +177,12 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/details-foreign')
-          done()
+          try {
+            expect(template).to.equal('companies/views/details-foreign')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -239,7 +243,7 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-foreign')
+          expect(template).to.equal('companies/views/edit-foreign')
           done()
         },
       }
@@ -280,7 +284,7 @@ describe('Company controller, foreign', function () {
         turnover_range: '1',
       }
 
-      return render('../../src/views/company/edit-foreign.njk', {
+      return render('../../src/apps/companies/views/edit-foreign.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
@@ -376,8 +380,12 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-foreign')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-foreign')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -512,9 +520,13 @@ describe('Company controller, foreign', function () {
           throw Error('error')
         },
         render: function (template) {
-          expect(template).to.equal('company/edit-foreign')
-          expect(res.locals).to.have.property('errors')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-foreign')
+            expect(res.locals).to.have.property('errors')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
       companyControllerForeign.postDetails(req, res, next)

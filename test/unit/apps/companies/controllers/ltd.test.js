@@ -200,8 +200,12 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/details-ltd')
-          done()
+          try {
+            expect(template).to.equal('companies/views/details-ltd')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -278,8 +282,12 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-ltd')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ltd')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -328,7 +336,7 @@ describe('Company controller, ltd', function () {
         turnover_range: '1',
       }
 
-      return render('../../src/views/company/edit-ltd.njk', {
+      return render('../../src/apps/companies/views/edit-ltd.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
@@ -430,8 +438,12 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-ltd')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ltd')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -566,9 +578,13 @@ describe('Company controller, ltd', function () {
           throw Error('error')
         },
         render: function (template) {
-          expect(template).to.equal('company/edit-ltd')
-          expect(res.locals).to.have.property('errors')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ltd')
+            expect(res.locals).to.have.property('errors')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
       companyControllerLtd.postDetails(req, res, next)

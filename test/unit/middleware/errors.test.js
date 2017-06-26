@@ -62,7 +62,7 @@ describe('Error Middleware Test', () => {
       expect(responsestatusCodeSpy.calledOnce).to.be.true
       expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode404)
       expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors/index')
+      expect(responseRenderSpy.args[0][0]).to.equal('errors')
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode404,
@@ -92,7 +92,7 @@ describe('Error Middleware Test', () => {
       expect(responsestatusCodeSpy.calledOnce).to.be.true
       expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode500)
       expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors/index')
+      expect(responseRenderSpy.args[0][0]).to.equal('errors')
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode500,
@@ -125,7 +125,7 @@ describe('Error Middleware Test', () => {
       expect(responsestatusCodeSpy.calledOnce).to.be.true
       expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode403)
       expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors/index')
+      expect(responseRenderSpy.args[0][0]).to.equal('errors')
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': error,
         'statusCode': errorCode403,
@@ -156,7 +156,7 @@ describe('Error Middleware Test', () => {
       expect(responsestatusCodeSpy.calledOnce).to.be.true
       expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode500)
       expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors/index')
+      expect(responseRenderSpy.args[0][0]).to.equal('errors')
       expect(responseRenderSpy.args[0][1]).to.eql({
         'devErrorDetail': false,
         'statusCode': errorCode500,

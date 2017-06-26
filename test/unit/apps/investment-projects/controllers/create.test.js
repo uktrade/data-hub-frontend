@@ -41,7 +41,7 @@ describe('Investment create controller', () => {
           },
           render: (template) => {
             try {
-              expect(template).to.equal('investment/create')
+              expect(template).to.equal('investment-projects/views/create')
               done()
             } catch (e) {
               done(e)
@@ -90,7 +90,7 @@ describe('Investment create controller', () => {
           },
           render: (template) => {
             try {
-              expect(template).to.equal('investment/create')
+              expect(template).to.equal('investment-projects/views/create')
               done()
             } catch (e) {
               done(e)

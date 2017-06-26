@@ -11,7 +11,7 @@ async function getAction (req, res, next) {
 
     getCommonTitlesAndlinks(req, res, company)
 
-    res.render('company/investments', {
+    res.render('companies/views/investments', {
       title: ['Investments', company.name, 'Companies'],
       tab: 'investments',
       company,

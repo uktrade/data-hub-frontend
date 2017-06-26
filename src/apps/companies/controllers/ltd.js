@@ -30,7 +30,7 @@ async function getDetails (req, res, next) {
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
     res.locals.title = [company.name, 'Companies']
 
-    res.render('company/details-ltd')
+    res.render('companies/views/details-ltd')
   } catch (error) {
     next(error)
   }
@@ -64,7 +64,7 @@ async function addDetails (req, res, next) {
     }
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
     res.locals.title = 'Add company'
-    res.render(`company/edit-ltd`)
+    res.render(`companies/views/edit-ltd`)
   } catch (error) {
     next(error)
   }
@@ -81,7 +81,7 @@ async function editDetails (req, res, next) {
       res.locals.title = ['Edit', company.name, 'Companies']
     }
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
-    res.render(`company/edit-ltd`)
+    res.render(`companies/views/edit-ltd`)
   } catch (error) {
     next(error)
   }

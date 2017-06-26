@@ -32,7 +32,7 @@ function buildSearchEntityResultsData (apiResponseEntities) {
 
 function indexAction (req, res, next) {
   if (!req.query.term) {
-    return res.render('search/index')
+    return res.render('search/views/index')
   }
 
   next()
@@ -63,7 +63,7 @@ function searchAction (req, res, next) {
       const pagination = getPagination(req, results)
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
-      res.render(`search/results-${searchType}`, {
+      res.render(`search/views/results-${searchType}`, {
         title: [searchTerm, `Search results`],
         searchTerm,
         searchType,

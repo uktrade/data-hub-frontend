@@ -177,8 +177,12 @@ describe('Company controller, uk other', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/details-ukother')
-          done()
+          try {
+            expect(template).to.equal('companies/views/details-ukother')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -240,8 +244,12 @@ describe('Company controller, uk other', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-ukother')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ukother')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -281,7 +289,7 @@ describe('Company controller, uk other', function () {
         turnover_range: '1',
       }
 
-      return render(`${rootPath}/src/views/company/edit-ukother.njk`, {
+      return render('../../src/apps/companies/views/edit-ukother.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
@@ -383,8 +391,12 @@ describe('Company controller, uk other', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/edit-ukother')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ukother')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
@@ -525,9 +537,13 @@ describe('Company controller, uk other', function () {
           throw Error('error')
         },
         render: function (template) {
-          expect(template).to.equal('company/edit-ukother')
-          expect(res.locals).to.have.property('errors')
-          done()
+          try {
+            expect(template).to.equal('companies/views/edit-ukother')
+            expect(res.locals).to.have.property('errors')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
       companyControllerUkOther.postDetails(req, res, next)

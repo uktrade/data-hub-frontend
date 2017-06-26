@@ -1,0 +1,14 @@
+{% extends "../_layout.njk" %}
+
+
+{% block main_heading %}
+  {{ super() }}
+  {{ errorPanel(form.errors) }}
+{% endblock %}
+
+{% block main_grid_left_column %}{% endblock %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Add investment interaction</h2>
+  {% include './_form.njk' %}
+{% endblock %}

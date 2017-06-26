@@ -57,7 +57,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
     res.locals.title = 'Add service delivery'
 
-    res.render('interaction/service-delivery-edit')
+    res.render('service-deliveries/views/edit')
   } catch (error) {
     next(error)
   }
@@ -98,7 +98,7 @@ function getServiceDeliveryDetails (req, res, next) {
   res.locals.serviceDeliveryDetails = getDisplayServiceDelivery(res.locals.serviceDelivery)
   res.locals.serviceDeliveryLabels = serviceDeliverylabels
   res.locals.serviceDeliveryDisplayOrder = serviceDeliveryDisplayOrder
-  res.render('interaction/service-delivery-details')
+  res.render('service-deliveries/views/details')
 }
 
 module.exports = {

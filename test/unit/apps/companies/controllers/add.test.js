@@ -218,7 +218,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            expect(template).to.equal('company/add-step-2.njk')
+            expect(template).to.equal('companies/views/add-step-2.njk')
             done()
           },
         }

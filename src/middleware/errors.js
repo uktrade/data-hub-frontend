@@ -25,7 +25,7 @@ function catchAll (error, req, res, next) {
   logger[statusCode === 404 ? 'info' : 'error'](error)
 
   res.status(statusCode)
-    .render('errors/index', {
+    .render('errors', {
       statusCode,
       statusMessage,
       devErrorDetail: config.isDev && error,

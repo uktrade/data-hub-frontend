@@ -24,7 +24,7 @@ function getBug (req, res) {
   const sniffr = new Sniffr()
   sniffr.sniff(req.headers['user-agent'])
   data.browser = `${capitalize(sniffr.browser.name)} ${sniffr.browser.version[0]}.${sniffr.browser.version[1]} - ${capitalize(sniffr.os.name)} ${sniffr.os.version[0]}.${sniffr.os.version[1]}`
-  res.render('support/bug', {
+  res.render('support/views/feedback', {
     title: 'Support',
     data,
     errors: req.errors,

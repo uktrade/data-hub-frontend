@@ -265,7 +265,7 @@ describe('Contact controller, edit', function () {
       }
     })
     it('should render all the required fields on the page', function () {
-      return render(`${rootPath}/src/views/contact/edit.njk`, locals)
+      return render('../../src/apps/contacts/views/edit.njk', locals)
       .then((document) => {
         expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
         expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
@@ -361,9 +361,13 @@ describe('Contact controller, edit', function () {
       })
 
       res.render = function (template) {
-        expect(template).to.equal('contact/edit')
-        expect(res.locals).to.have.property('errors')
-        done()
+        try {
+          expect(template).to.equal('contacts/views/edit')
+          expect(res.locals).to.have.property('errors')
+          done()
+        } catch (e) {
+          done(e)
+        }
       }
       contactEditController.postDetails(req, res, next)
     })

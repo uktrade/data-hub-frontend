@@ -11,7 +11,7 @@ async function indexGetHandler (req, res, next) {
 
       res.locals.title.unshift('Interactions')
 
-      return res.render('investment/interaction/index', {
+      return res.render('investment-projects/views/interactions/index', {
         currentNavItem: 'interactions',
         interactions,
       })

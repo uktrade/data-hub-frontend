@@ -153,7 +153,7 @@ describe('Search Controller', () => {
           },
           {
             render: (template) => {
-              expect(template).to.equal('search/index')
+              expect(template).to.equal('search/views/index')
               done()
             },
           }, this.next
@@ -231,7 +231,7 @@ describe('Search Controller', () => {
           {
             render: (template, data) => {
               try {
-                expect(template).to.equal(`search/results-${searchType}`)
+                expect(template).to.equal(`search/views/results-${searchType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
                 expect(data.searchType).to.equal(searchType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData(0))
@@ -282,7 +282,7 @@ describe('Search Controller', () => {
           {
             render: (template, data) => {
               try {
-                expect(template).to.equal(`search/results-${searchType}`)
+                expect(template).to.equal(`search/views/results-${searchType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
                 expect(data.searchType).to.equal(searchType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
