@@ -5,7 +5,7 @@ function getHandler (req, res) {
 
   dashboardService.getHomepageData(req.session.token, days)
     .then((data) => {
-      res.render('index', {
+      res.render('dashboard/views/dashboard', {
         title: 'Dashboard',
         totalDays: days,
         interactions: data.interactions,

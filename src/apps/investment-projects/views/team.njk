@@ -1,0 +1,57 @@
+{% extends "./_layout.njk" %}
+
+{% set phase = projectData.phase.name %}
+{% set crm = projectData.client_relationship_manager %}
+{% set rsa = projectData.referral_source_adviser %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Client relationship management</h2>
+
+  {% component 'data-table', {
+    columns: {
+      adviser: 'Adviser',
+      role: 'Role',
+      team: 'Team'
+    },
+    data: [{
+      adviser: crm.first_name + ' ' + crm.last_name,
+      role: 'Client relationship manager',
+      team: crm.dit_team.name
+    }]
+  } %}
+
+  <a href="/investment/{{ projectData.id }}/edit-details" class="button button-secondary">Change</a>
+
+  <h2 class="heading-medium">Project management</h2>
+
+  {% if phase == 'Prospect' %}
+    <p class="infostrip">Will be assigned during "Assign PM" stage.</p>
+  {% elif phase == 'Assign PM' %}
+    <p class="infostrip">Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.</p>
+
+    <p><a href="" class="button">Assign</a></p>
+  {% else %}
+    {# TODO: Add list of project managers #}
+  {% endif %}
+
+  <h2 class="heading-medium">Specialist team members</h2>
+
+  {% component 'data-table', {
+    columns: {
+      adviser: 'Adviser',
+      role: 'Role',
+      team: 'Team'
+    },
+    data: [{
+      adviser: rsa.first_name + ' ' + rsa.last_name,
+      role: 'Referral source adviser',
+      team: crm.dit_team.name
+    }]
+  } %}
+
+  <a href="/investment/{{ projectData.id }}/edit-details" class="button button-secondary">Change</a>
+
+  <h2 class="heading-medium">Success verifier</h2>
+
+  <p class="infostrip">Will be assigned during "Verify win" stage.</p>
+{% endblock %}

@@ -32,7 +32,7 @@ function getDetails (req, res, next) {
     res.locals.contactDetailsLabels = contactDetailsLabels
     res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
 
-    res.render('contact/details')
+    res.render('contacts/views/details')
   } catch (error) {
     next(error)
   }

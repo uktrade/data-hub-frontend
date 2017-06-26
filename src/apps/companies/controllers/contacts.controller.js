@@ -26,7 +26,7 @@ async function getContacts (req, res, next) {
     res.locals.addContactUrl = `/contact/add?company=${res.locals.company.id}`
     res.locals.title = ['Contacts', res.locals.company.name, 'Companies']
 
-    res.render('company/contacts')
+    res.render('companies/views/contacts')
   } catch (error) {
     next(error)
   }

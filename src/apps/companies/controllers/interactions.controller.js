@@ -26,7 +26,7 @@ async function getInteractions (req, res, next) {
 
     res.locals.title = ['Interactions', res.locals.company.name, 'Companies']
 
-    res.render('company/interactions')
+    res.render('companies/views/interactions')
   } catch (error) {
     next(error)
   }

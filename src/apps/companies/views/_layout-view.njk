@@ -1,0 +1,36 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_heading %}
+  <h1 class="visually-hidden">Company Details</h1>
+  <h2 class="page-heading">
+    {{ headingName }}
+    <span class="post-header">{{ headingAddress }}</span>
+  </h2>
+
+  {% if company.archived %}
+    <p class="infostrip">
+      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+      <strong>Reason:</strong> {{company.archived_reason}}<br>
+      <br>
+      <a href="/company/unarchive/{{company.id}}">Unarchive</a>
+    </p>
+  {% endif %}
+{% endblock %}
+
+{% block main_grid_left_column %}
+  <nav class="local-nav">
+    <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
+    {% if company.id %}
+      {# <a class="local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
+      <a class="local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/company-contacts/{{company.id}}">Contacts</a>
+      <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/company-interactions/{{company.id}}">Interactions</a>
+      {# <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
+      <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/company-exports/view/{{company.id}}">Exports</a>
+      <a class="local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/company/{{ company.id }}/investments">Investments</a>
+    {% endif %}
+  </nav>
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% include "_includes/messages.njk" %}
+{% endblock %}

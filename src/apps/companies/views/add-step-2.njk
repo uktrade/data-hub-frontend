@@ -1,0 +1,89 @@
+{% extends "./_layout-edit.njk" %}
+
+{% block main_heading %}
+  <h1 class="page-heading">Add company</h1>
+{% endblock %}
+
+{% block main_grid_right_column %}
+  <div class="key-value key-value--vertical">
+    <div id="business-type" class="key-value__key form-label-bold">Business type
+      <a href="/company/add-step-1" class="button-link">Change</a>
+    </div>
+    <div class="key-value__value" aria-labelledby="business-type">{{ companyTypeOptions[businessType] }}</div>
+  </div>
+
+  <form class="searchbar searchbar--show-label" action="/company/add-step-2/" method="get" role="search">
+    <input type="hidden" name="business_type" value="{{ businessType }}">
+    <input type="hidden" name="country" value="{{ country }}">
+
+    <div class="form-group">
+      <label class="form-label-bold" for="search-term">
+        Find the parent company's Companies House record
+        <span class="form-hint">Search for the registered company name, company number or address</span>
+      </label>
+      <div class="searchbar__wrapper">
+        <input class="searchbar__input form-control" id="search-term" type="search" name="term" value="{{ searchTerm }}" placeholder="Search for company">
+        <input class="searchbar__submit" type="submit" value="Search">
+      </div>
+    </div>
+  </form>
+
+  {% if companies %}
+    <ol class="results-list result-list--expandable">
+      {% for company in companies %}
+        <li class="results-list__result">
+          {% set isSelected = currentlySelected and (company.id == currentlySelected or company.company_number == currentlySelected) %}
+
+          {% if isSelected %}
+            <a class="open" href="/company/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}">
+              <h3 class="result-title">{{company.name}}</h3>
+            </a>
+          {% else %}
+            <a class="closed" href="/company/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}&selected={{ company.company_number if company.company_number else company.id }}">
+              <h3 class="result-title">{{ company.name }}</h3>
+            </a>
+          {% endif %}
+
+          {% if isSelected %}
+            <div class="panel panel-border-wide">
+                {{ keyvaluetable(
+                  displayDetails,
+                  labels=labels,
+                  keyorder=[
+                    'business_type',
+                    'company_status',
+                    'incorporation_date',
+                    'sic_code'
+                  ],
+                  class="table--small"
+                ) }}
+
+                {% if company.company_number %}
+                  {% set href = '/company/add/ltd/' + company.company_number %}
+                  {% set label = 'Choose company' %}
+                {% else %}
+                  {% set href = '/company/edit/ltd/' + company.id %}
+                  {% set label = 'Go to company record' %}
+                {% endif %}
+
+                {% if company.company_number %}
+                  <div class="table_footnote">Data from <strong>Companies House</strong></div>
+                {% endif %}
+                <a class="button" href="{{ href }}">{{ label }}</a>
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+
+    <p class="infostrip">
+      if you can't find the company you're looking for, try a different search term. check
+      the company's website or any email correspondence that contains company registration details
+    </p>
+
+    {% component 'pagination', {
+      pages: pagination
+    } %}
+
+  {% endif %}
+{% endblock %}

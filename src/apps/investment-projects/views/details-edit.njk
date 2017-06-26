@@ -1,0 +1,10 @@
+{% extends "./_layout.njk" %}
+
+
+{% block main_grid_right_column %}
+  <h1 class="heading-medium">Update investment project summary</h1>
+
+  {{ errorPanel(form.errors) }}
+
+  {% include './_details-form.njk' %}
+{% endblock %}

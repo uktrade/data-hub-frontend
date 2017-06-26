@@ -40,6 +40,7 @@ function ComponentExtension (env) {
 
 module.exports = (app, config) => {
   const env = nunjucks.configure([
+    `${config.root}/src/apps`,
     `${config.root}/src/views`,
   ], {
     autoescape: true,

@@ -1,0 +1,41 @@
+{% extends "./_layout-view.njk" %}
+
+{% block main_grid_right_column %}
+  {{ super() }}
+
+  <h2 class="heading-medium">Company summary</h2>
+
+  {% if chDetails %}
+    <div class="dark-panel">
+      {{ keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, readonly=true) }}
+      <p class="footnote">Powered by data from <strong>Companies House</strong></p>
+    </div>
+  {% endif %}
+
+  {% if companyDetails %}
+    {{ keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
+  {% endif %}
+
+  <p><a href="/company/edit/ltd/{{company.id}}" class="button">Edit</a></p>
+
+  {% if accountManagementDisplay %}
+    <div class="section">
+      <h2 class="heading-medium">Account management</h2>
+      {{ keyvaluetable(accountManagementDisplay, stripey=true, labels=accountManagementDisplayLabels) }}
+      <p class="footnote">You do not have perission to edit the Account management section</strong></p>
+    </div>
+  {% endif %}
+
+  {% if not company.archived %}
+    <h2 class="heading-medium">Archive company</h2>
+    <p>Archive this company if it is no longer required or active.</p>
+
+    {% component 'archive-form', {
+      label: 'Archive reason',
+      options: ['Company is dissolved'],
+      csrfToken: csrfToken,
+      error: form.errors.reason,
+      url: '/company/archive/' + company.id
+    } %}
+  {% endif %}
+{% endblock %}

@@ -3,7 +3,7 @@ const { isEmpty } = require('lodash')
 function createGetInteractionHandler (req, res, next) {
   res.locals.title.unshift('Add interaction')
 
-  return res.render('investment/interaction/create')
+  return res.render('investment-projects/views/interactions/create')
 }
 
 function createPostInteractionHandler (req, res, next) {
