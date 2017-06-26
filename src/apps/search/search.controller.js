@@ -1,5 +1,5 @@
-const companyRepository = require('../../repos/company.repo')
-const { buildCompanyUrl } = require('../../services/company.service')
+const companyRepository = require('../companies/repository')
+const { buildCompanyUrl } = require('../companies/services/data.service')
 const { search } = require('./search.service')
 const getPagination = require('../../lib/pagination').getPagination
 const Joi = require('joi')

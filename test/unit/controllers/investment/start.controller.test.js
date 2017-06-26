@@ -28,7 +28,7 @@ describe('Investment start controller', () => {
     this.getPagination = this.sandbox.stub().resolves({})
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/start.controller', {
-      '../../../services/company.service': {
+      '../../companies/services/data.service': {
         getInflatedDitCompany: this.getInflatedDitCompany,
       },
       '../investment-projects.repo': {

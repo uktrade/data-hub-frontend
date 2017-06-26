@@ -1,6 +1,6 @@
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
-const { getInflatedDitCompany } = require('../../services/company.service')
+const { getInflatedDitCompany } = require('../companies/services/data.service')
 
 function getCompanyInvestmentProjects (token, companyId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/project?investor_company_id=${companyId}`)

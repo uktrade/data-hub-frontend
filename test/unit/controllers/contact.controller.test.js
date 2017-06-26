@@ -67,10 +67,10 @@ describe('Contact controller', function () {
       '../services/formatting.service': {
         getDisplayContact: getDisplayContactStub,
       },
-      '../../../repos/company.repo': {
+      '../../companies/repository': {
         getDitCompany: getDitCompanyStub,
       },
-      '../../../services/company.service': {
+      '../../companies/services/data.service': {
         buildCompanyUrl: buildCompanyUrlStub,
       },
     })
@@ -165,10 +165,10 @@ describe('Contact controller', function () {
         '../services/formatting.service': {
           getDisplayContact: getDisplayContactStub,
         },
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../../services/company.service': {
+        '../../companies/services/data.service': {
           buildCompanyUrl: buildCompanyUrlStub,
         },
       })

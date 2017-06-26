@@ -5,7 +5,7 @@ describe('Interaction formatting service', function () {
 
   beforeEach(function () {
     interactionFormattingService = proxyquire('~/src/apps/interactions/services/formatting.service', {
-      '../../../services/company.service': {
+      '../../companies/services/data.service': {
         buildCompanyUrl: sinon.stub().returns('/test'),
       },
     })

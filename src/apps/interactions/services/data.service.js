@@ -1,6 +1,6 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
-const companyRepository = require('../../../repos/company.repo')
-const contactsRepository = require('../../../apps/contacts/contacts.repo')
+const companyRepository = require('../../companies/repository')
+const contactsRepository = require('../../contacts/contacts.repo')
 const metadataRepository = require('../../../repos/metadata.repo')
 const interactionRepository = require('../interactions.repo')
 

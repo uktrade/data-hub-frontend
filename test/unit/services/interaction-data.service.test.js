@@ -24,10 +24,10 @@ describe('interaction data service', function () {
     getInteractionStub = sinon.stub().resolves(interaction)
 
     interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-      '../../../repos/company.repo': {
+      '../../companies/repository': {
         getDitCompany: getDitCompanyStub,
       },
-      '../../../apps/contacts/contacts.repo': {
+      '../../contacts/contacts.repo': {
         getContact: getContactStub,
       },
       '../interactions.repo': {
@@ -53,10 +53,10 @@ describe('interaction data service', function () {
       getInteractionStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../../apps/contacts/contacts.repo': {
+        '../../contacts/contacts.repo': {
           getContact: getContactStub,
         },
         '../interactions.repo': {
@@ -109,7 +109,7 @@ describe('interaction data service', function () {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
         '../../../apps/contacts/contacts.repo': {
@@ -132,7 +132,7 @@ describe('interaction data service', function () {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
         '../../../apps/contacts/contacts.repo': {
@@ -177,10 +177,10 @@ describe('interaction data service', function () {
       getDitCompanyStub = sinon.stub().rejects(new Error('error'))
 
       interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../../apps/contacts/contacts.repo': {
+        '../../contacts/contacts.repo': {
           getContact: getContactStub,
         },
         '../interactions.repo': {

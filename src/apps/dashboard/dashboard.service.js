@@ -1,6 +1,6 @@
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
-const { buildCompanyUrl } = require('../../services/company.service')
+const { buildCompanyUrl } = require('../companies/services/data.service')
 
 function mapContacts (contacts) {
   if (contacts && (typeof contacts.map) === 'function') {

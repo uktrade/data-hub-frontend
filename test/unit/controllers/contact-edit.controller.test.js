@@ -35,7 +35,7 @@ describe('Contact controller, edit', function () {
           name: 'United Kingdom',
         }],
       },
-      '../../../repos/company.repo': {
+      '../../companies/repository': {
         getDitCompany: getDitCompanyStub,
       },
     })
@@ -355,7 +355,7 @@ describe('Contact controller, edit', function () {
             name: 'United Kingdom',
           }],
         },
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
       })
@@ -381,7 +381,7 @@ describe('Contact controller, edit', function () {
             name: 'United Kingdom',
           }],
         },
-        '../../../repos/company.repo': {
+        '../../companies/repository': {
           getDitCompany: getDitCompanyStub,
         },
       })
