@@ -1,7 +1,7 @@
-const details = require('./controllers/details.controller')
-const interactions = require('./controllers/interactions.controller')
-const edit = require('./controllers/edit.controller')
-const archive = require('./controllers/archive.controller')
+const details = require('./details.controller')
+const interactions = require('./interactions.controller')
+const edit = require('./edit.controller')
+const archive = require('./archive.controller')
 
 module.exports = {
   details,
