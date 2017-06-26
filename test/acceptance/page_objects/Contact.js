@@ -1,5 +1,3 @@
-// const shortId = require('shortid')
-// const { getRandomNumber } = require('../../helper')
 const faker = require('faker')
 
 module.exports = {
@@ -68,10 +66,6 @@ module.exports = {
       locateStrategy: 'xpath',
     },
     selectAnUkAddressFromList: '#address-wrapper div:nth-child(3) select option:nth-child(3)',
-    // selectAnUkAddressFromList: {
-    //   selector: ".//*[@id='address-wrapper']/div[3]/select/option[3]",
-    //   locateStrategy: 'xpath',
-    // },
   },
 
   commands: [
@@ -82,11 +76,15 @@ module.exports = {
           .submitForm('@searchForm')
       },
 
+      clickOnFirstCompanyFromList () {
+        return this
+          .click('@firstCompanyFromList')
+      },
+
       navigateToContactsPage () {
         return this
           .click('@firstCompanyFromList')
           .click('@contactsTab')
-          // .api.pause()
       },
 
       createNewPrimaryContact (firstName, lastName) {
@@ -118,7 +116,6 @@ module.exports = {
           .setValue('@contactAlternatePhonenumber', '666555444')
           .setValue('@contactAlternativeEmail', lastName + firstName + '@dit.gov.uk')
           .setValue('@contactNotes', faker.name.jobDescriptor() + firstName)
-          .api.pause()
           .submitForm('form')
       },
 
@@ -138,7 +135,6 @@ module.exports = {
           .click('@selectUkAddressDropdown')
           .waitForElementPresent('@selectAnUkAddressFromList', 5000)
           .click('@selectAnUkAddressFromList')
-          // .api.keys(this.api.keys.TAB)
           .setValue('@contactAlternatePhonenumber', '666555444')
           .setValue('@contactAlternativeEmail', lastName + firstName + '@dit.gov.uk')
           .setValue('@contactNotes', faker.name.jobDescriptor() + firstName)

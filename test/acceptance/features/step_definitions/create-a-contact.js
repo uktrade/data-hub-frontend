@@ -58,6 +58,11 @@ defineSupportCode(({ Given, Then, When }) => {
       })
   })
 
+  Then(/^I see the contact creation confirmation message$/, async () => {
+    await Company
+      .verify.containsText('@flashInfo', 'Added new contact')
+  })
+
   Then(/^I verify my newly added contact in company profile$/, async () => {
     await Company
       .navigate()

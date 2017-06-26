@@ -55,10 +55,7 @@ module.exports = {
       selector: '//*[@id="main-content"]/div/article/form/div[5]/select',
       locateStrategy: 'xpath',
     },
-    newCompanySectorOption: {
-      selector: '//*[@id="main-content"]/div/article/form/div[5]/select/option[13]',
-      locateStrategy: 'xpath',
-    },
+    newCompanySectorOption: '#sector option:nth-child(16)',
     newCompanyWebsiteField: '#website',
     newCompanyDescription: '#description',
     newCompanyNumberOfEmployeesField: '#employee_range',
