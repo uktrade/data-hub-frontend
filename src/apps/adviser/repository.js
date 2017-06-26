@@ -1,6 +1,6 @@
-const logger = require('../../config/logger')
-const authorisedRequest = require('../lib/authorised-request')
-const config = require('../../config')
+const config = require('../../../config')
+const logger = require('../../../config/logger')
+const authorisedRequest = require('../../lib/authorised-request')
 
 function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/`)

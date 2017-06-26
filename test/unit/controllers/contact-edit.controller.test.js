@@ -29,7 +29,7 @@ describe('Contact controller, edit', function () {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub,
       },
-      '../../../repos/metadata.repo': {
+      '../../../lib/metadata': {
         countryOptions: [{
           id: '986',
           name: 'United Kingdom',
@@ -349,7 +349,7 @@ describe('Contact controller, edit', function () {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           countryOptions: [{
             id: '986',
             name: 'United Kingdom',
@@ -375,7 +375,7 @@ describe('Contact controller, edit', function () {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
         },
-        '../../../repos/metadata.repo': {
+        '../../../lib/metadata': {
           countryOptions: [{
             id: '986',
             name: 'United Kingdom',

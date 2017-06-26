@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 const interactionLabels = require('../labels')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const interactionDataService = require('../services/data.service')
 const { getDisplayInteraction } = require('../services/formatting.service')
 

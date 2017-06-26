@@ -1,7 +1,7 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const companyRepository = require('../../companies/repository')
 const contactsRepository = require('../../contacts/contacts.repo')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const interactionRepository = require('../interactions.repo')
 
 function getInteractionType (interactionTypeId) {

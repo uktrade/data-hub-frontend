@@ -1,4 +1,4 @@
-const { countryOptions } = require('../../../repos/metadata.repo')
+const { countryOptions } = require('../../../lib/metadata')
 const { saveCompany, getDitCompany } = require('../repository')
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data.service')
 const { containsFormData, flattenIdFields } = require('../../../lib/controller-utils')

@@ -2,7 +2,7 @@
 
 const { getPropertyId, nullEmptyFields, convertYesNoToBoolean } = require('../../../lib/property-helpers')
 const companyRepository = require('../repository')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 
 function getLtdCompanyAsFormData (company) {
   if (!company) {

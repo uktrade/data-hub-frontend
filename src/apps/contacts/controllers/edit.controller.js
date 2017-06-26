@@ -1,7 +1,7 @@
 const { containsFormData } = require('../../../lib/controller-utils')
 const contactFormService = require('../services/form.service')
 const { contactLabels } = require('../labels')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const companyRepository = require('../../companies/repository')
 const { buildCompanyUrl } = require('../../companies/services/data.service')
 
