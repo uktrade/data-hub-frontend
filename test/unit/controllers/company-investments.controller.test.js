@@ -22,7 +22,7 @@ describe('Company investments controller', function () {
         getInflatedDitCompany: this.getInflatedDitCompanyStub,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
-      '../repos/investment.repo': {
+      '../apps/investment-projects/investment-projects.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
     })

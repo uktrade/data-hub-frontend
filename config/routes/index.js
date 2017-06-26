@@ -8,6 +8,7 @@ const controllers = [
   '../../src/apps/contacts/router',
   '../../src/apps/dashboard/router',
   '../../src/apps/interactions/router',
+  '../../src/apps/investment-projects/router',
   '../../src/apps/pingdom/router',
   '../../src/apps/search/router',
   '../../src/apps/service-deliveries/router',
@@ -23,7 +24,6 @@ const controllers = [
   '../../src/controllers/company-export.controller',
   '../../src/controllers/company-add.controller',
   '../../src/controllers/company-archive.controller',
-  '../../src/controllers/investment',
 ]
 
 controllers.forEach((ctrl) => {

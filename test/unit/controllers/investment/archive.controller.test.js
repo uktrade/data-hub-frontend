@@ -8,8 +8,8 @@ describe('Investment archive controller', function () {
     this.token = '1234'
     this.archiveInvestmentProject = this.sandbox.stub().resolves(investmentProjectData)
     this.unarchiveInvestmentProject = this.sandbox.stub().resolves(investmentProjectData)
-    this.controller = proxyquire('~/src/controllers/investment/archive.controller', {
-      '../../repos/investment.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive.controller', {
+      '../investment-projects.repo': {
         archiveInvestmentProject: this.archiveInvestmentProject,
         unarchiveInvestmentProject: this.unarchiveInvestmentProject,
       },
@@ -113,8 +113,8 @@ describe('Investment archive controller', function () {
       })
     })
     it('should pass on the form values and error if validation failed.', (done) => {
-      this.controller = proxyquire('~/src/controllers/investment/archive.controller', {
-        '../../repos/investment.repo': {
+      this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive.controller', {
+        '../investment-projects.repo': {
           archiveInvestmentProject: this.sandbox.stub().rejects({
             statusCode: 400,
             error: 'Some error',
@@ -145,8 +145,8 @@ describe('Investment archive controller', function () {
     })
     it('should call the error page if any other error occours', (done) => {
       const error = new Error()
-      this.controller = proxyquire('~/src/controllers/investment/archive.controller', {
-        '../../repos/investment.repo': {
+      this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive.controller', {
+        '../investment-projects.repo': {
           archiveInvestmentProject: this.sandbox.stub().rejects(error),
           unarchiveInvestmentProject: this.unarchiveInvestmentProject,
         },

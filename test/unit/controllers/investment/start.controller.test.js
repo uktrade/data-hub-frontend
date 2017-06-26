@@ -27,17 +27,17 @@ describe('Investment start controller', () => {
     this.searchForeignCompanies = this.sandbox.stub().resolves(searchResults)
     this.getPagination = this.sandbox.stub().resolves({})
 
-    this.controller = proxyquire('~/src/controllers/investment/start.controller', {
-      '../../services/company.service': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/start.controller', {
+      '../../../services/company.service': {
         getInflatedDitCompany: this.getInflatedDitCompany,
       },
-      '../../repos/investment.repo': {
+      '../investment-projects.repo': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
-      '../../apps/search/search.service': {
+      '../../search/search.service': {
         searchForeignCompanies: this.searchForeignCompanies,
       },
-      '../../lib/pagination': {
+      '../../../lib/pagination': {
         getPagination: this.getPagination,
       },
     })

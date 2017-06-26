@@ -8,8 +8,8 @@ describe('Investment audit controller', () => {
     this.next = this.sandbox.stub()
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(investmentProjectAuditData.results)
 
-    this.controller = proxyquire('~/src/controllers/investment/audit.controller', {
-      '../../repos/investment.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit.controller', {
+      '../investment-projects.repo': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
     })
@@ -86,8 +86,8 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(badDate)
 
-    this.controller = proxyquire('~/src/controllers/investment/audit.controller', {
-      '../../repos/investment.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit.controller', {
+      '../investment-projects.repo': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
     })
@@ -133,8 +133,8 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(nullChangeSet)
 
-    this.controller = proxyquire('~/src/controllers/investment/audit.controller', {
-      '../../repos/investment.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit.controller', {
+      '../investment-projects.repo': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
     })
@@ -180,8 +180,8 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(emptyChangeSet)
 
-    this.controller = proxyquire('~/src/controllers/investment/audit.controller', {
-      '../../repos/investment.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit.controller', {
+      '../investment-projects.repo': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
     })

@@ -11,7 +11,7 @@ const {
   getInvestmentProjectAuditLog,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
-} = require(`~/src/repos/investment.repo`)
+} = require(`~/src/apps/investment-projects/investment-projects.repo`)
 
 const companyData = require('../data/company.json')
 const investmentProjectSummaryData = require('../data/investment/project-summary.json')

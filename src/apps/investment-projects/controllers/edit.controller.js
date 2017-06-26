@@ -1,16 +1,3 @@
-const router = require('express').Router()
-
-const { getProjectDetails } = require('./shared.middleware')
-
-const {
-  investmentDetailsFormPostMiddleware,
-  investmentValueFormPostMiddleware,
-  investmentRequirementsFormPostMiddleware,
-  populateDetailsFormMiddleware,
-  populateValueFormMiddleware,
-  populateRequirementsFormMiddleware,
-} = require('./form.middleware')
-
 const templateData = {
   currentNavItem: 'details',
   variant: 'edit',
@@ -54,14 +41,11 @@ function editRequirementsPost (req, res) {
   return res.redirect(`/investment/${res.locals.projectId}/details`)
 }
 
-router.param('id', getProjectDetails)
-router.get('/:id/edit-details', populateDetailsFormMiddleware, editDetailsGet)
-router.get('/:id/edit-value', populateValueFormMiddleware, editValueGet)
-router.get('/:id/edit-requirements', populateRequirementsFormMiddleware, editRequirementsGet)
-router.post('/:id/edit-details', populateDetailsFormMiddleware, investmentDetailsFormPostMiddleware, editDetailsPost)
-router.post('/:id/edit-value', populateValueFormMiddleware, investmentValueFormPostMiddleware, editValuePost)
-router.post('/:id/edit-requirements', populateRequirementsFormMiddleware, investmentRequirementsFormPostMiddleware, editRequirementsPost)
-
 module.exports = {
-  router,
+  editDetailsGet,
+  editValueGet,
+  editRequirementsGet,
+  editDetailsPost,
+  editValuePost,
+  editRequirementsPost,
 }

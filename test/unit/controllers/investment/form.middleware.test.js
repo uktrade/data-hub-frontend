@@ -11,7 +11,7 @@ const metadataRepositoryStub = {
     { id: '70c226d7-5d95-e211-a939-e4115bead28a', name: 'example' },
   ],
 }
-const { interactionsLabels } = require('~/src/controllers/investment/labels')
+const { interactionsLabels } = require('~/src/apps/investment-projects/labels')
 const errorMsg = 'mock error'
 
 describe('Investment form middleware', () => {
@@ -23,9 +23,9 @@ describe('Investment form middleware', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/controllers/investment/form.middleware', {
-      '../../repos/metadata.repo': metadataRepositoryStub,
-      '../../repos/adviser.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
+      '../../../repos/metadata.repo': metadataRepositoryStub,
+      '../../../repos/adviser.repo': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -141,8 +141,8 @@ describe('Investment form middleware - error testing', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/controllers/investment/form.middleware', {
-      '../../repos/adviser.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
+      '../../../repos/adviser.repo': {
         getAdvisers: this.getAdvisersStub,
       },
     })
