@@ -1,7 +1,7 @@
 const { get, flatten } = require('lodash')
 
-const metadataRepo = require('../../../repos/metadata.repo')
-const { getAdvisers } = require('../../../repos/adviser.repo')
+const metadataRepo = require('../../../lib/metadata')
+const { getAdvisers } = require('../../adviser/repository')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { transformToApi, transformFromApi } = require('../services/formatting.service')
 const interactionFormattingService = require('../../interactions/services/formatting.service')

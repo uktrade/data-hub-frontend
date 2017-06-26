@@ -1,9 +1,9 @@
 /* eslint camelcase: 0 */
 const { get } = require('lodash')
 const logger = require('../../../../config/logger')
-const adviserRepository = require('../../../repos/adviser.repo')
+const adviserRepository = require('../../adviser/repository')
 const companyRepository = require('../repository')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const serviceDeliveryRepository = require('../../service-deliveries/service-deliveries.repo')
 const interactionDataService = require('../../interactions/services/data.service')
 const { getFormattedAddress } = require('../../../lib/address')

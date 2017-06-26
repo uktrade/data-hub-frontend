@@ -3,7 +3,7 @@ const companyFormService = require('../services/form.service')
 const companyService = require('../services/data.service')
 const companyFormattingService = require('../services/formatting.service')
 const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
-const metadataRepository = require('../../../repos/metadata.repo')
+const metadataRepository = require('../../../lib/metadata')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 

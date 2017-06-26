@@ -2,7 +2,7 @@
 const serviceDeliverylabels = require('./labels')
 const { transformV2Errors } = require('../../lib/controller-utils')
 const { nullEmptyFields, deleteNulls } = require('../../lib/property-helpers')
-const metadataRepository = require('../../repos/metadata.repo')
+const metadataRepository = require('../../lib/metadata')
 const serviceDeliveryRepository = require('./service-deliveries.repo')
 const serviceDeliveryService = require('./services/data.service')
 const { getDisplayServiceDelivery } = require('./services/formatting.service')
