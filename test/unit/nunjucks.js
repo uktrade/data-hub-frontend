@@ -18,9 +18,9 @@ Object.keys(filters).forEach((filterName) => {
   nunenv.addFilter(filterName, filters[filterName])
 })
 
-nunenv.addGlobal('getAssetPath', () => {})
-
 function render (template, options) {
+  options.getAssetPath = () => {} // Stub method set in middleware locals
+
   return new Promise((resolve, reject) => {
     try {
       const markup = nunjucks.render(template, options)
