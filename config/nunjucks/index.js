@@ -3,7 +3,7 @@ const nunjucks = require('nunjucks')
 const logger = require('../logger')
 const templateGlobals = require('./globals')
 
-const COMPONENTS_PATH = '_components/' // relative to views path
+const COMPONENTS_PATH = '_components/' // relative to templates path
 const COMPONENT_EXT = 'njk'
 
 function ComponentExtension (env) {
@@ -41,7 +41,7 @@ function ComponentExtension (env) {
 module.exports = (app, config) => {
   const env = nunjucks.configure([
     `${config.root}/src/apps`,
-    `${config.root}/src/views`,
+    `${config.root}/src/templates`,
   ], {
     autoescape: true,
     express: app,
