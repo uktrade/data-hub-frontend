@@ -1,6 +1,5 @@
 const { formatLongDate, formatMediumDate } = require('../../../../common/date')
 const { newlineToBr, getContactLink } = require('../../../lib/text-formatting')
-const toISOString = require('../../../lib/date/toISOString')
 const { getPropertyName } = require('../../../lib/property-helpers')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { mapValues, get, isPlainObject } = require('lodash')
@@ -126,7 +125,7 @@ function transformToApi (body) {
     return value
   })
 
-  formatted['date'] = toISOString(body['date_year'], (body['date_month'] - 1), body['date_day'])
+  formatted['date'] = new Date(body['date_year'], (body['date_month'] - 1), body['date_day']).toISOString()
 
   return Object.assign({}, body, formatted)
 }

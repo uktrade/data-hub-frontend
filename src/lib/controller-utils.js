@@ -100,6 +100,7 @@ function flattenIdFields (data) {
   }
 }
 
+// TODO: remove this in favour of a validation library like Joi or express validator
 function isBlank (thing) {
   return (!thing || thing.length === 0)
 }
