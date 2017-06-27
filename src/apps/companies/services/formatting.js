@@ -1,6 +1,7 @@
+const { title } = require('case')
+
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels')
 const { getFormattedAddress } = require('../../../lib/address')
-const { titleCase } = require('../../../lib/text-formatting')
 const { formatLongDate } = require('../../../../common/date')
 const { getPrimarySectorName } = require('../../../../common/transform-sectors')
 const { buildCompanyUrl } = require('./data')
@@ -13,7 +14,7 @@ function getDisplayCH (companyHouseData) {
   if (!companyHouseData) return null
 
   const displayCH = {
-    name: titleCase(companyHouseData.name),
+    name: title(companyHouseData.name),
     company_number: companyHouseData.company_number,
     business_type: companyHouseData.company_category,
     company_status: companyHouseData.company_status,

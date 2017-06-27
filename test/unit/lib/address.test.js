@@ -15,7 +15,7 @@ describe('Address formatter', function () {
       address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
-    expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, Country')
+    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL, Country')
   })
   it('ignores blank address lines', function () {
     const source = {
@@ -31,7 +31,7 @@ describe('Address formatter', function () {
       address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
-    expect(actual).equal('10 The Street, Big Town, LL1 1LL, Country')
+    expect(actual).equal('10 the Street, Big Town, LL1 1LL, Country')
   })
   it('should add United Kingdom to the address if no country is provided.', function () {
     const source = {
@@ -43,7 +43,7 @@ describe('Address formatter', function () {
       address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
-    expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
+    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
   })
   it('should format an address with field names containing a prefix', function () {
     const source = {
@@ -56,7 +56,7 @@ describe('Address formatter', function () {
     }
 
     const actual = address.getFormattedAddress(source, 'trading')
-    expect(actual).equal('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
+    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
   })
   it('should return null when the address is empty', function () {
     const source = {
