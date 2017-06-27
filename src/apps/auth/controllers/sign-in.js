@@ -24,7 +24,7 @@ function authenticate (username, password) {
 }
 
 function getHandler (req, res) {
-  res.render('auth/views/login', {
+  res.render('auth/views/sign-in', {
     title: 'Sign in',
   })
 }
@@ -32,7 +32,7 @@ function getHandler (req, res) {
 function postHandler (req, res, next) {
   if (!req.body.username || !req.body.password) {
     req.flash('error-message', 'Invalid user id or password')
-    return res.redirect('/login')
+    return res.redirect('/sign-in')
   }
 
   authenticate(req.body.username, req.body.password)
@@ -45,7 +45,7 @@ function postHandler (req, res, next) {
 
       if (statusCode === 401) {
         req.flash('error-message', 'Invalid user id or password')
-        res.redirect('/login')
+        res.redirect('/sign-in')
       } else {
         next(error)
       }

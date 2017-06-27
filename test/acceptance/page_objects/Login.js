@@ -1,5 +1,5 @@
 module.exports = {
-  url: `${process.env.QA_HOST}/login`,
+  url: `${process.env.QA_HOST}/sign-in`,
   props: {
     email: process.env.QA_USER_EMAIL,
     password: process.env.QA_USER_PASSWORD,
@@ -7,7 +7,7 @@ module.exports = {
   elements: {
     form: 'form',
     signOutButton: {
-      selector: '//a[contains(@href, "signout")]',
+      selector: '//a[contains(@href, "sign-out")]',
       locateStrategy: 'xpath',
     },
     flashMessage: '.flash-message',
