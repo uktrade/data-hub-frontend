@@ -237,7 +237,33 @@ Base layout checks for certain variables.
 
 ### Template inheritance diagram
 
-<img src="./docs/layout-diagram.png?raw=true" width="500">
+```
+layouts/
+
+    +-> dit-base.njk
+    |
++-> +-+ datahub-base.njk <-----+
+|                              |
+| +++-> _base-two-column.njk +-+
+| |||
+| |||   contact/
+| |||
+| ||+---+ _layout.njk <--------+
+| ||                           |
+| ||      details.njk +--------+
+| ||
+| ||    company/
+| ||
+| |+-----+ _layout-edit.njk <--+
+| |                            |
+| +------+ _layout.view.njk <-+|
+|                             ||
+|           details-ltd.njk +-+|
+|                              |
+|           edit-ltd.njk +-----+
+|
++-----+ login.njk
+```
 
 ## Deployment
 
