@@ -4,7 +4,7 @@ const feedbackController = require('./controllers/feedback')
 const thankyouController = require('./controllers/thank-you')
 
 router
-  .route('/bug')
+  .route('/feedback')
   .get(feedbackController.getBug)
   .post(feedbackController.postBug)
 
