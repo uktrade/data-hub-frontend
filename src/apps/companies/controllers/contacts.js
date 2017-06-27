@@ -23,7 +23,7 @@ async function getContacts (req, res, next) {
       .filter(contact => contact.archived === true)
       .map(contact => getDisplayArchivedCompanyContact(contact))
 
-    res.locals.addContactUrl = `/contact/add?company=${res.locals.company.id}`
+    res.locals.addContactUrl = `/contacts/create?company=${res.locals.company.id}`
     res.locals.title = ['Contacts', res.locals.company.name, 'Companies']
 
     res.render('companies/views/contacts')

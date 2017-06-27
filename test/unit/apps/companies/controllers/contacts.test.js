@@ -218,7 +218,7 @@ describe('Company contacts controller', function () {
     })
     it('should return the required fields to list un-archived contacts', function () {
       const contact = locals.contacts[0]
-      expect(contact.url).to.equal('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
+      expect(contact.url).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
       expect(contact.name).to.equal('Fred Smith')
       expect(contact.job_title).to.equal('Director')
       expect(contact.telephone_number).to.equal('+44 7814 333 777')
@@ -227,13 +227,13 @@ describe('Company contacts controller', function () {
     })
     it('should return the required fields to list archived contacts', function () {
       const contact = locals.contactsArchived[0]
-      expect(contact.url).to.equal('/contact/12651151-2149-465e-871b-ac45bc568a64/details')
+      expect(contact.url).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a64')
       expect(contact.name).to.equal('Jane Smith')
       expect(contact.job_title).to.equal('Director')
       expect(contact.reason).to.equal('Contact has left the company')
     })
     it('should return a link to add a new contact', function () {
-      expect(locals.addContactUrl).to.equal('/contact/add?company=3f2b2a0f-0eb6-4299-8489-7390ccaa17f5')
+      expect(locals.addContactUrl).to.equal('/contacts/create?company=3f2b2a0f-0eb6-4299-8489-7390ccaa17f5')
     })
   })
 
@@ -276,7 +276,7 @@ describe('Company contacts controller', function () {
         archived_on: '14 Feb 2017',
       }]
 
-      addContactUrl = '/contact/add?company=1234'
+      addContactUrl = '/contacts/create?company=1234'
     })
 
     it('should render a list of un-archived contacts', function () {
@@ -335,7 +335,7 @@ describe('Company contacts controller', function () {
       return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
-        expect(link.href).to.eq('/contact/add?company=1234')
+        expect(link.href).to.eq('/contacts/create?company=1234')
       })
     })
     it('should not render contacts section if there are none and warn user', function () {

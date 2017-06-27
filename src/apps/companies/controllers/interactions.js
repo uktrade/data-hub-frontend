@@ -21,7 +21,7 @@ async function getInteractions (req, res, next) {
     }
 
     if (!company.contacts || company.contacts.length === 0) {
-      res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
+      res.locals.addContact = `/contacts/create?company=${res.locals.company.id}`
     }
 
     res.locals.title = ['Interactions', res.locals.company.name, 'Companies']

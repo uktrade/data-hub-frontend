@@ -47,7 +47,7 @@ describe('Dashboard service', () => {
           contacts: [{
             id: 'contact-id',
             name: 'first-name last-name',
-            url: '/contact/contact-id/details',
+            url: '/contacts/contact-id',
             company: {
               url: '/test',
               name: 'comp-name',
@@ -92,7 +92,7 @@ describe('Dashboard service', () => {
           contacts: [{
             id: 'contact-id',
             name: 'first-name last-name',
-            url: '/contact/contact-id/details',
+            url: '/contacts/contact-id',
             company: {
               url: '/test',
               name: 'comp-name',

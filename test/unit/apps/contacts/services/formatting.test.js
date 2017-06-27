@@ -114,7 +114,7 @@ describe('Contact formatting service', function () {
     it('Should convert a typical contact into its company display format', function () {
       const expected = {
         id: '12651151-2149-465e-871b-ac45bc568a62',
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
         name: 'Fred Smith',
         job_title: 'Director',
         telephone_number: '+44 7814 333 777',
@@ -191,7 +191,7 @@ describe('Contact formatting service', function () {
     contact.archived_on = '2017-02-14T14:49:17'
 
     const expected = {
-      url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+      url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
       name: 'Fred Smith',
       job_title: 'Director',
       reason: 'Left company',
