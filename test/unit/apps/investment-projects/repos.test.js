@@ -13,11 +13,11 @@ const {
   unarchiveInvestmentProject,
 } = require('~/src/apps/investment-projects/repos')
 
-const companyData = require('../data/company.json')
-const investmentProjectSummaryData = require('../data/investment/project-summary.json')
-const investmentValueData = require('../data/investment/project-value.json')
-const investmentRequirements = require('../data/investment/project-requirements.json')
-const investmentProjectAuditData = require('../data/investment/audit-log.json')
+const companyData = require('~/test/unit/data/company.json')
+const investmentProjectSummaryData = require('~/test/unit/data/investment/project-summary.json')
+const investmentValueData = require('~/test/unit/data/investment/project-value.json')
+const investmentRequirements = require('~/test/unit/data/investment/project-requirements.json')
+const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
 
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {

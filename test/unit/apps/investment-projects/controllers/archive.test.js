@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const investmentProjectData = require('../../data/investment/project-summary.json')
+const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
 
 describe('Investment archive controller', function () {
   beforeEach(() => {
