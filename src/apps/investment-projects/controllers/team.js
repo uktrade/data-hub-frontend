@@ -1,7 +1,7 @@
 function getTeamHandler (req, res, next) {
   res.locals.title.unshift('Team')
 
-  res.render('investment/team', {
+  res.render('investment-projects/views/team', {
     currentNavItem: 'team',
   })
 }

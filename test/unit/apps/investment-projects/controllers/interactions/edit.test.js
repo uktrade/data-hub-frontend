@@ -26,7 +26,7 @@ describe('Investment Interactions edit controller', () => {
         },
         render: (template) => {
           try {
-            expect(template).to.equal('investment/interaction/edit')
+            expect(template).to.equal('investment-projects/views/interactions/edit')
             done()
           } catch (e) {
             done(e)

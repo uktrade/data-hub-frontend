@@ -34,7 +34,7 @@ describe('Investment Interactions Index controller', () => {
         },
         render: (template, data) => {
           try {
-            expect(template).to.equal('investment/interaction/index')
+            expect(template).to.equal('investment-projects/views/interactions/index')
             expect(data.currentNavItem).to.equal('interactions')
             expect(data.interactions).to.deep.equal(interactionCompanyDisplayFormated)
             done()

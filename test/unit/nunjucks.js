@@ -9,7 +9,8 @@ const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)
 
 nunjucks.configure('views')
 const nunenv = nunjucks.configure([
-  `${rootPath}/src/views`,
+  `${rootPath}/src/apps`,
+  `${rootPath}/src/templates`,
 ], {
   autoescape: true,
 })

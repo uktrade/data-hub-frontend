@@ -24,7 +24,7 @@ describe('Investment details controller', () => {
         },
         render: (template, data) => {
           try {
-            expect(template).to.equal('investment/details')
+            expect(template).to.equal('investment-projects/views/details')
             expect(data.currentNavItem).to.equal('details')
             done()
           } catch (error) {

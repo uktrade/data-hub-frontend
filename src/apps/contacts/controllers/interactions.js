@@ -10,7 +10,7 @@ async function getInteractions (req, res, next) {
 
     res.locals.title.unshift('Interactions')
 
-    res.render('contact/interactions')
+    res.render('contacts/views/interactions')
   } catch (error) {
     next(error)
   }

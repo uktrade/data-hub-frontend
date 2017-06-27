@@ -39,7 +39,7 @@ function getHandler (req, res, next) {
         showSearch = true
       }
 
-      res.render('investment/start', {
+      res.render('investment-projects/views/start', {
         title: 'Add investment project',
         clientCompany,
         clientCompanyInvestments,
@@ -63,7 +63,7 @@ function postHandler (req, res, next) {
   } else {
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
-        res.render('investment/start', {
+        res.render('investment-projects/views/start', {
           title: 'Add investment project',
           clientCompany,
           errors: {

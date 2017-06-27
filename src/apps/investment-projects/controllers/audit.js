@@ -19,7 +19,7 @@ async function getInvestmentAudit (req, res, next) {
 
       res.locals.title.unshift('Audit history')
 
-      return res.render('investment/audit', {
+      return res.render('investment-projects/views/audit', {
         currentNavItem: 'audit',
         auditLog,
       })

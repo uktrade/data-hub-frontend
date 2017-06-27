@@ -2,7 +2,7 @@ const next = function (error) {
   throw Error(error)
 }
 
-describe('Company controller, Companies Houe', function () {
+describe('Company controller, Companies House', function () {
   let getInflatedDitCompanyStub
   let getCHCompanyStub
   let getDisplayCHStub
@@ -156,8 +156,12 @@ describe('Company controller, Companies Houe', function () {
       const res = {
         locals: {},
         render: function (template) {
-          expect(template).to.equal('company/details-ch')
-          done()
+          try {
+            expect(template).to.equal('companies/views/details-ch')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }
 
