@@ -24,6 +24,10 @@ function authenticate (username, password) {
 }
 
 function getHandler (req, res) {
+  if (req.session.user) {
+    return res.redirect('/')
+  }
+
   res.render('auth/views/sign-in', {
     title: 'Sign in',
   })
