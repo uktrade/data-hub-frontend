@@ -17,7 +17,7 @@
     border-left: 8px solid $grey-2;
 
     @media(min-width: 640px) {
-      left: $gutter-half;
+      left: ($gutter / 2);
     }
   }
 }
@@ -25,7 +25,7 @@
 .status-bar__section {
   &:first-child {
     @include media(tablet) {
-      padding-left: $gutter-half + $gutter-two-thirds;
+      padding-left: ($gutter / 2) + (($gutter / 3) * 2);
     }
   }
 

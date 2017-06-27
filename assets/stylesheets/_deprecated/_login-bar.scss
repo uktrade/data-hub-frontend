@@ -1,6 +1,8 @@
+@import "../tools/mixins/layout";
+
 .login-bar {
 
-  @include core-19;
+  @include core-font(20);
   line-height: 2;
   border-bottom: 1px solid $border-colour;
   overflow: hidden;

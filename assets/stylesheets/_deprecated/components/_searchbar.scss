@@ -1,3 +1,5 @@
+@import "../../tools/mixins/layout";
+
 .searchbar {
   @extend %contain-floats;
   margin: 20px 0 25px;

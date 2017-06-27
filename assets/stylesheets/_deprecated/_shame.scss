@@ -1,3 +1,5 @@
+@import "../tools/mixins/typography";
+
 .back-link {
   display: inline-block;
   padding-left: 20px;
@@ -23,7 +25,7 @@
 }
 
 strong {
-  @include bold-19;
+  @include core-font(20);
 }
 
 hr {
@@ -57,7 +59,7 @@ hr {
 }
 
 .saving {
-  @include bold-24;
+  @include bold-font(24);
   margin-top: 40px;
 }
 
@@ -102,7 +104,7 @@ hr {
 }
 
 .form-label-bold .button-link {
-  @include core-19
+  @include core-font(20)
 }
 
 .column-three-quarters .form-control {
@@ -186,12 +188,12 @@ hr {
 }
 
 .table_footnote {
-  @include core-16;
+  @include core-font(16);
   color: #6f777b;
   margin-bottom: 15px;
 
   strong {
-    @include bold-16;
+    @include bold-font(16);
   }
 }
 

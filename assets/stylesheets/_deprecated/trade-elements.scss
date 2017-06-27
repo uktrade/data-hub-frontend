@@ -1,17 +1,33 @@
 $gt-big-phone: ">414px";
 $asset-path: "../" !default;
 
-@import "trade/govuk/font_stack";
+@import "../tools/mixins/typography";
+@import "../settings/layout";
+@import "../settings/colours";
 
-// Elements
-@import "~govuk-elements-sass/public/sass/govuk-elements";
+// GOV UK
+@import "~govuk_frontend_toolkit/stylesheets/grid_layout";
+@import "~govuk_frontend_toolkit/stylesheets/typography";
+@import "~govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
+@import "~govuk-elements-sass/public/sass/elements/helpers";
+@import "~govuk-elements-sass/public/sass/elements/reset";
+@import "~govuk-elements-sass/public/sass/elements/forms";
+@import "~govuk-elements-sass/public/sass/elements/forms/form-block-labels";
+@import "~govuk-elements-sass/public/sass/elements/forms/form-date";
+@import "~govuk-elements-sass/public/sass/elements/forms/form-validation";
+@import "~govuk-elements-sass/public/sass/elements/tables";
+@import "~govuk-elements-sass/public/sass/elements/buttons";
+@import "~govuk-elements-sass/public/sass/elements/elements-typography";
+@import "~govuk-elements-sass/public/sass/elements/layout";
+@import "~govuk-elements-sass/public/sass/elements/lists";
+
 
 // Trade Elements
 @import "trade/errors";
 @import "trade/form";
 
 strong {
-  @include bold-19;
+  @include bold-font(20);
 }
 
 .column-three-quarters {

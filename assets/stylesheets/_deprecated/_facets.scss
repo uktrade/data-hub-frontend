@@ -1,3 +1,5 @@
+@import "../tools/mixins/typography";
+
 .facets {
   .controls {
     float: right;
@@ -12,7 +14,7 @@
   }
 
   .clear-filter-button {
-    @include core-19;
+    @include core-font(20);
     color: $black;
     cursor: pointer;
     margin-right: 10px;

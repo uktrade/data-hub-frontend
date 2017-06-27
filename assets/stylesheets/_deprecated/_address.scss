@@ -1,3 +1,6 @@
+@import "../tools/mixins/layout";
+@import "../tools/mixins/typography";
+
 .fieldset--address {
 
   .fieldset--address__legend {
@@ -26,7 +29,7 @@
 
     .button {
       @include button ($grey-2);
-      @include core-16(1.4);
+      @include core-font(16);
       margin: 10px 0 0;
       width: 100%;
 
