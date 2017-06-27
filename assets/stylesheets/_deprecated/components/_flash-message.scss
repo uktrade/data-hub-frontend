@@ -15,7 +15,7 @@
 
   .flash-message-content {
 
-    @include bold-24;
+    @include bold-font(24);
 
     &:last-of-type {
       margin-bottom: 0;

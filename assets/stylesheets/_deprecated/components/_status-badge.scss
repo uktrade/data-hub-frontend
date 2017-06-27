@@ -1,5 +1,7 @@
+@import "../../tools/mixins/typography";
+
 .status-badge {
-  @include core-19;
+  @include core-font(20);
   @include border-radius(5px);
   display: inline-block;
   font-weight: normal;
@@ -28,16 +30,16 @@
 }
 
 .status-badge--small {
-  @include core-16
+  @include core-font(16)
 }
 
 .status-badge--xsmall {
-  @include bold-14;
+  @include bold-font(14);
   margin: 0;
 }
 
 .badged-heading {
-  @include bold-19;
+  @include bold-font(20);
   padding: 4px 0 2px;
   position: relative;
   margin: 0 0 10px;

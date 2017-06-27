@@ -92,7 +92,7 @@
 ///
 /// @example scss - Set font size to 19px with normal weight
 ///   h1 {
-///     @include core-font(19);
+///     @include core-font(20);
 ///   }
 @mixin core-font($font-size) {
   @if map-has-key($type-settings-map, $font-size) {

@@ -1,13 +1,15 @@
+@import "../../tools/mixins/typography";
+
 .result-summary {
-  @include core-19;
+  @include core-font(20);
   margin: 0 0 20px;
 
   .result-summary--result-count {
-    @include bold-27;
+    @include bold-font(24);
   }
 
   .result-summary--result-query {
-    @include bold-19;
+    @include bold-font(20);
   }
 
 }
@@ -18,7 +20,7 @@
   padding: 0;
 
   strong {
-    @include bold-19;
+    @include bold-font(20);
   }
 
   .results-list__result {
@@ -31,13 +33,13 @@
     }
 
     .result-title {
-      @include core-19(1.5);
+      @include core-font(20);
       margin: 0 0 5px;
       padding: 0;
       text-transform: capitalize;
 
       strong {
-        @include bold-19;
+        @include bold-font(20);
       }
 
       a.close-link {

@@ -4,7 +4,7 @@
 
   .pre-header,
   .post-header {
-    @include core-16;
+    @include core-font(16);
     padding-top: 9px;
     padding-bottom: 6px;
     display: block;

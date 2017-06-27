@@ -1,10 +1,12 @@
 @import "../settings/colours";
+@import "../settings/layout";
 @import "../tools/mixins/layout";
+@import "../tools/mixins/typography";
 
 .local-nav {
-  @include core-19;
-  margin-left: -$gutter-half;
-  margin-right: -$gutter-half;
+  @include core-font(20);
+  margin-left: -($gutter / 2);
+  margin-right: -($gutter / 2);
 
   @include media(tablet) {
     border-right: 1px solid $grey-2;
@@ -16,7 +18,7 @@
 
 .local-nav__link {
   display: block;
-  padding: $gutter-half;
+  padding: ($gutter / 2);
 
   &,
   &:visited {
@@ -24,8 +26,8 @@
   }
 
   @include media(tablet) {
-    padding-left:  $gutter-two-thirds;
-    padding-right:  $gutter-two-thirds;
+    padding-left:  (($gutter / 3) * 2);
+    padding-right:  (($gutter / 3) * 2);
   }
 
   &.is-active {

@@ -1,3 +1,6 @@
+@import "../../tools/mixins/layout";
+@import "../../tools/mixins/typography";
+
 .autocomplete__container {
   position: relative;
 
@@ -14,7 +17,7 @@
   }
 
   .autocomplete__suggestion {
-    @include core-19;
+    @include core-font(20);
     padding: 0 5px;
     background: $white;
 
@@ -27,7 +30,7 @@
     }
 
     strong {
-      @include bold-19;
+      @include bold-font(20);
     }
 
     &.autocomplete__suggestion--active,

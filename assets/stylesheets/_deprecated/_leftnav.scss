@@ -1,3 +1,5 @@
+@import "../tools/mixins/layout";
+
 .left-nav-container {
 
   @extend %contain-floats;
@@ -14,7 +16,7 @@
     }
 
     nav a {
-      @include core-19;
+      @include core-font(20);
       display: block;
       color: $black;
       text-decoration: underline;

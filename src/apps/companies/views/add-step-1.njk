@@ -17,7 +17,7 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     <fieldset class='form-group {% if errors.business_type %}error{% endif %}'>
-      <legend class='heading-medium visually-hidden'>Company type</legend>
+      <legend class='heading-medium u-visually-hidden'>Company type</legend>
 
       <label class="block-label form-label-bold selection-button-radio {% if company.business_type == "ltd" %}selected{% endif %}" for="ltd">
         <input id="ltd" type="radio" name="business_type" value="ltd" {% if company.business_type == "ltd" %}checked{% endif %}>

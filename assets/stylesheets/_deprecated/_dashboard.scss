@@ -1,14 +1,16 @@
+@import "../tools/mixins/typography";
+
 .dashboard-section {
 
   border-top: 5px solid $black;
-  @include core-16;
+  @include core-font(16);
 
   &:first-child {
     margin-top: 1.5em;
   }
 
   .dashboard-section-title {
-    @include bold-24;
+    @include bold-font(24);
     margin: 20px 0;
   }
 

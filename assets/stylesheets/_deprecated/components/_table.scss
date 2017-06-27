@@ -1,3 +1,6 @@
+@import "../../tools/mixins/layout";
+@import "../../tools/mixins/typography";
+
 .table--key-value {
 
   margin: 20px 0;
@@ -70,12 +73,12 @@
 
 table.table--key-value.table--small {
   th {
-    @include core-16;
+    @include core-font(16);
     color: $secondary-text-colour;
   }
 
   td {
-    @include core-16
+    @include core-font(16)
   }
 }
 

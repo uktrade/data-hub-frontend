@@ -1,7 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block main_heading %}
-  <h1 class="visually-hidden">Contact Details</h1>
+  <h1 class="u-visually-hidden">Contact Details</h1>
   <h2 class="page-heading">
     {{contact.first_name}} {{contact.last_name}}
     {% if contact.primary == true %}{{ statusbadge('Primary', variation="fuschia") }}{% endif %}
