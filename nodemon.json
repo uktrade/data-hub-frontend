@@ -4,8 +4,7 @@
     "common/",
     "config/**/*.js",
     "public/",
-    "src/**/*.js",
-    "src/**/*.njk"
+    "src/**/*.js"
   ],
   "ignore": [
     ".build/"
