@@ -6,7 +6,7 @@
       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title>{% block head_title_content %}{{ title | default(titleDefault) }}{% endblock %}</title>
+      <title>{% block head_title_content %}{{ pageTitle | default(titleDefault) }}{% endblock %}</title>
       {% if description -%}
         <meta name="description" content="{{ description }}">
       {% endif -%}
