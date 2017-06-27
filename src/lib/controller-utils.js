@@ -61,23 +61,6 @@ function transformV2Errors (sourceErrors) {
   return errors
 }
 
-// TODO this is very similar to /src/lib/url-helpers.buildQueryString Maybe time for a common folder?
-function encodeQueryData (data) {
-  const ret = []
-  for (const key in data) {
-    const item = data[key]
-
-    if (Array.isArray(item)) {
-      for (const innerValue of item) {
-        ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(innerValue))
-      }
-    } else {
-      ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(item))
-    }
-  }
-  return ret.join('&')
-}
-
 function convertAutosuggestCollection (form, targetFieldName) {
   const lowerTargetFieldName = targetFieldName.toLocaleLowerCase()
   const fieldNames = Object.keys(form)
@@ -121,16 +104,6 @@ function isBlank (thing) {
   return (!thing || thing.length === 0)
 }
 
-function toQueryString (obj) {
-  const parts = []
-  for (const i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      parts.push(`${encodeURIComponent(i)}=${encodeURIComponent(obj[i])}`)
-    }
-  }
-  return parts.join('&')
-}
-
 function containsFormData (req) {
   return (typeof req.body === 'object' && Object.keys(req.body).length > 0)
 }
@@ -153,11 +126,9 @@ module.exports = {
   getDataLabels,
   transformErrors,
   transformV2Errors,
-  encodeQueryData,
   convertAutosuggestCollection,
   flattenIdFields,
   isBlank,
   isValidGuid,
-  toQueryString,
   containsFormData,
 }

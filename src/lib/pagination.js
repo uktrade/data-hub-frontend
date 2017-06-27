@@ -1,4 +1,4 @@
-const { encodeQueryData } = require('./controller-utils')
+const { buildQueryString } = require('./url-helpers')
 
 const NEXTLABEL = 'Next'
 const PREVIOUSLABEL = 'Previous'
@@ -76,7 +76,7 @@ function getPageLink (page, req) {
   let params = req.query
   delete params.page
   params.page = page
-  return encodeQueryData(params)
+  return buildQueryString(params)
 }
 
 module.exports = { getPageIndexes, getPagination, getPageLink }
