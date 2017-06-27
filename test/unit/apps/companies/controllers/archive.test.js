@@ -27,11 +27,11 @@ describe('Company controller, archive', function () {
     buildCompanyUrlStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
     companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
-    companyArchiveController = proxyquire('~/src/apps/companies/controllers/archive.controller', {
-      '../services/data.service': {
+    companyArchiveController = proxyquire('~/src/apps/companies/controllers/archive', {
+      '../services/data': {
         buildCompanyUrl: buildCompanyUrlStub,
       },
-      '../repository': {
+      '../repos': {
         getDitCompany: getDitCompanyStub,
         archiveCompany: companyRepositoryArchiveCompanyStub,
         unarchiveCompany: companyRepositoryUnArchiveCompanyStub,

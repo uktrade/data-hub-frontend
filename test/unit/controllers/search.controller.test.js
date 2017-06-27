@@ -8,8 +8,8 @@ const next = function (error) {
 describe('Search controller', function () {
   describe('view company result', function () {
     it('should route a uk private ltd company', function (done) {
-      const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../companies/repository': {
+      const searchController = proxyquire('~/src/apps/search/controllers', {
+        '../companies/repos': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -38,8 +38,8 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a uk public ltd company', function (done) {
-      const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../companies/repository': {
+      const searchController = proxyquire('~/src/apps/search/controllers', {
+        '../companies/repos': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -68,8 +68,8 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a uk public other company', function (done) {
-      const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../companies/repository': {
+      const searchController = proxyquire('~/src/apps/search/controllers', {
+        '../companies/repos': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: true,
@@ -98,8 +98,8 @@ describe('Search controller', function () {
       searchController.viewCompanyResult(req, res, next)
     })
     it('should route a foreign company', function (done) {
-      const searchController = proxyquire('~/src/apps/search/search.controller', {
-        '../companies/repository': {
+      const searchController = proxyquire('~/src/apps/search/controllers', {
+        '../companies/repos': {
           getDitCompany: sinon.stub().resolves({
             id: '9999',
             uk_based: false,
@@ -134,7 +134,7 @@ describe('Search Controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
-    this.controller = require('~/src/apps/search/search.controller')
+    this.controller = require('~/src/apps/search/controllers')
   })
 
   afterEach(() => {

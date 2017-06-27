@@ -3,7 +3,7 @@ describe('Investment create controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
 
-    this.controller = require('~/src/apps/investment-projects/controllers/create.controller')
+    this.controller = require('~/src/apps/investment-projects/controllers/create')
   })
 
   afterEach(() => {

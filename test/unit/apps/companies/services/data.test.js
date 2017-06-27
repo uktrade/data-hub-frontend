@@ -1,4 +1,4 @@
-const companyService = require('data.js')
+const companyService = require('~/src/apps/companies/services/data')
 
 describe('Company data service', () => {
   describe('get header address', () => {

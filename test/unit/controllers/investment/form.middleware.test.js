@@ -25,7 +25,7 @@ describe('Investment form middleware', () => {
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
       '../../../lib/metadata': metadataRepositoryStub,
-      '../../adviser/repository': {
+      '../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -142,7 +142,7 @@ describe('Investment form middleware - error testing', () => {
     }
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
-      '../../adviser/repository': {
+      '../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })

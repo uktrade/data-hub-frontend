@@ -23,14 +23,14 @@ describe('interaction data service', function () {
     getDitCompanyStub = sinon.stub().resolves(company)
     getInteractionStub = sinon.stub().resolves(interaction)
 
-    interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-      '../../companies/repository': {
+    interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
+      '../../companies/repos': {
         getDitCompany: getDitCompanyStub,
       },
-      '../../contacts/contacts.repo': {
+      '../../contacts/repos': {
         getContact: getContactStub,
       },
-      '../interactions.repo': {
+      '../repos': {
         getInteraction: getInteractionStub,
       },
       '../../../lib/metadata': {
@@ -52,14 +52,14 @@ describe('interaction data service', function () {
     it('should throw an error if fetching something fails', function (done) {
       getInteractionStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../companies/repository': {
+      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../contacts/contacts.repo': {
+        '../../contacts/repos': {
           getContact: getContactStub,
         },
-        '../interactions.repo': {
+        '../repos': {
           getInteraction: getInteractionStub,
         },
         '../../../lib/metadata': {
@@ -108,14 +108,14 @@ describe('interaction data service', function () {
     it('should throw an error if something goes wrong', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../companies/repository': {
+      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../../apps/contacts/contacts.repo': {
+        '../../../apps/contacts/contacts': {
           getContact: getContactStub,
         },
-        '../interactions.repo': {
+        '../repos': {
           getInteraction: getInteractionStub,
         },
         '../../../lib/metadata': {
@@ -131,14 +131,14 @@ describe('interaction data service', function () {
     it('should throw null for a contact with an invalid company', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../companies/repository': {
+      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../../apps/contacts/contacts.repo': {
+        '../../../apps/contacts/repos': {
           getContact: getContactStub,
         },
-        '../interactions.repo': {
+        '../repos': {
           getInteraction: getInteractionStub,
         },
         '../../../lib/metadata': {
@@ -176,14 +176,14 @@ describe('interaction data service', function () {
     it('should throw an error if something goes wrong', function (done) {
       getDitCompanyStub = sinon.stub().rejects(new Error('error'))
 
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data.service', {
-        '../../companies/repository': {
+      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
-        '../../contacts/contacts.repo': {
+        '../../contacts/repos': {
           getContact: getContactStub,
         },
-        '../interactions.repo': {
+        '../repos': {
           getInteraction: getInteractionStub,
         },
         '../../../lib/metadata': {

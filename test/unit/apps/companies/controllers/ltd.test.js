@@ -78,19 +78,19 @@ describe('Company controller, ltd', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd.controller', {
-      '../services/data.service': {
+    companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
+      '../services/data': {
         getInflatedDitCompany: getInflatedDitCompanyStub,
       },
-      '../services/formatting.service': {
+      '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
       },
-      '../repository': {
+      '../repos': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub,
       },
-      '../services/form.service': {
+      '../services/form': {
         getLtdCompanyAsFormData: getLtdCompanyAsFormDataStub,
         getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
         saveCompanyForm: saveCompanyFormStub,
@@ -528,19 +528,19 @@ describe('Company controller, ltd', function () {
         errors: { name: ['test'] },
       })
 
-      companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd.controller', {
-        '../services/data.service': {
+      companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
+        '../services/data': {
           getInflatedDitCompany: getInflatedDitCompanyStub,
         },
-        '../services/formatting.service': {
+        '../services/formatting': {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub,
         },
-        '../repository': {
+        '../repos': {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub,
         },
-        '../services/form.service': {
+        '../services/form': {
           getLtdCompanyAsFormData: getLtdCompanyAsFormDataStub,
           getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
           saveCompanyForm: saveCompanyFormStub,

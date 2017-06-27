@@ -8,8 +8,8 @@ describe('contact form service', function () {
   beforeEach(function () {
     throwError = false
 
-    contactFormService = proxyquire('~/src/apps/contacts/services/form.service', {
-      '../contacts.repo': {
+    contactFormService = proxyquire('~/src/apps/contacts/services/form', {
+      '../repos': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {
           return new Promise((resolve, reject) => {

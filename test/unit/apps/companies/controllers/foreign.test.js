@@ -56,19 +56,19 @@ describe('Company controller, foreign', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign.controller', {
-      '../services/data.service': {
+    companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign', {
+      '../services/data': {
         getInflatedDitCompany: getInflatedDitCompanyStub,
       },
-      '../services/formatting.service': {
+      '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
       },
-      '../services/form.service': {
+      '../services/form': {
         getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
         saveCompanyForm: saveCompanyFormStub,
       },
-      '../repository': {
+      '../repos': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub,
       },
@@ -474,19 +474,19 @@ describe('Company controller, foreign', function () {
         errors: { name: ['test'] },
       })
 
-      companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign.controller', {
-        '../services/data.service': {
+      companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign', {
+        '../services/data': {
           getInflatedDitCompany: getInflatedDitCompanyStub,
         },
-        '../services/formatting.service': {
+        '../services/formatting': {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub,
         },
-        '../services/form.service': {
+        '../services/form': {
           getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
           saveCompanyForm: saveCompanyFormStub,
         },
-        '../repository': {
+        '../repos': {
           getCHCompany: getCHCompanyStub,
           getDitCompany: getDitCompanyStub,
         },

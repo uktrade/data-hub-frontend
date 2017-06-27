@@ -19,12 +19,12 @@ describe('Company export controller', () => {
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
 
-    this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp.controller', {
-      '../services/data.service': {
+    this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
+      '../services/data': {
         getInflatedDitCompany: this.getInflatedDitCompany,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinks,
       },
-      '../repository': {
+      '../repos': {
         getDitCompany: this.getDitCompany,
         saveCompany: this.saveCompany,
       },
@@ -133,8 +133,8 @@ describe('Company export controller', () => {
 
     it('should return empty strings when no value', (done) => {
       this.company.export_to_countries = []
-      this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp.controller', {
-        '../services/data.service': {
+      this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
+        '../services/data': {
           getInflatedDitCompany: this.getInflatedDitCompany,
         },
         '../../../lib/metadata': {
@@ -359,11 +359,11 @@ describe('Company export controller', () => {
 
     it('should handle when saving throws error', (done) => {
       const error = new Error('error')
-      this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp.controller', {
-        '../services/data.service': {
+      this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
+        '../services/data': {
           getInflatedDitCompany: this.getInflatedDitCompany,
         },
-        '../repository': {
+        '../repos': {
           getDitCompany: this.getDitCompany,
           saveCompany: this.saveCompany,
         },

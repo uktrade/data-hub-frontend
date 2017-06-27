@@ -5,7 +5,7 @@ describe('Investment details controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
 
-    this.controller = require('~/src/apps/investment-projects/controllers/details.controller')
+    this.controller = require('~/src/apps/investment-projects/controllers/details')
   })
 
   afterEach(() => {

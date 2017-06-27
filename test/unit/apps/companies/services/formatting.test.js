@@ -1,4 +1,4 @@
-const companyFormattingService = require('formatting.js')
+const companyFormattingService = require('~/src/apps/companies/services/formatting')
 
 describe('Company formatting service', () => {
   describe('get display company', () => {

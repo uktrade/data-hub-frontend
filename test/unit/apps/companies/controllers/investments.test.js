@@ -17,12 +17,12 @@ describe('Company investments controller', function () {
     this.getCommonTitlesAndlinksStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/investments.controller', {
-      '../services/data.service': {
+    this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
+      '../services/data': {
         getInflatedDitCompany: this.getInflatedDitCompanyStub,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
-      '../../investment-projects/investment-projects.repo': {
+      '../../investment-projects/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
     })

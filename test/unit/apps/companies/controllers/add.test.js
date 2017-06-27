@@ -17,14 +17,14 @@ describe('Company add controller', function () {
     getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
-    companyAddController = proxyquire('~/src/apps/companies/controllers/add.controller', {
-      '../../search/search.service': {
+    companyAddController = proxyquire('~/src/apps/companies/controllers/add', {
+      '../../search/services': {
         searchLimitedCompanies: searchLimitedCompaniesStub,
       },
-      '../repository': {
+      '../repos': {
         getCHCompany: getCHCompanyStub,
       },
-      '../services/formatting.service': {
+      '../services/formatting': {
         getDisplayCH: getDisplayCHStub,
       },
     })
