@@ -1,8 +1,8 @@
-const router = require('./router')
-const { getHandler } = require('./pingdom.controller')
+const router = require('express').Router()
+const { getHandler } = require('./controllers')
 
 module.exports = {
-  router,
+  router: router.get('/ping.xml', getHandler),
   controllers: {
     getHandler,
   },

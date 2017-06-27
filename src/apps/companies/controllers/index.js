@@ -1,13 +1,13 @@
-const addController = require('./add.controller')
-const archiveController = require('./archive.controller')
-const chController = require('./ch.controller')
-const contactsController = require('./contacts.controller')
-const expController = require('./exp.controller')
-const foreignController = require('./foreign.controller')
-const interactionsController = require('./interactions.controller')
-const investmentsController = require('./investments.controller')
-const ltdController = require('./ltd.controller')
-const ukotherController = require('./ukother.controller')
+const addController = require('./add')
+const archiveController = require('./archive')
+const chController = require('./ch')
+const contactsController = require('./contacts')
+const expController = require('./exp')
+const foreignController = require('./foreign')
+const interactionsController = require('./interactions')
+const investmentsController = require('./investments')
+const ltdController = require('./ltd')
+const ukotherController = require('./ukother')
 
 module.exports = {
   addController,

@@ -1,7 +1,6 @@
 const router = require('./router')
-const controllers = require('./controllers')
 
 module.exports = {
+  mountpath: '/login',
   router,
-  controllers,
 }

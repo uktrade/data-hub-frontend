@@ -78,7 +78,4 @@ router
     interactions.edit.editGetInteractionHandler
   )
 
-module.exports = {
-  path: '/investment',
-  router,
-}
+module.exports = router

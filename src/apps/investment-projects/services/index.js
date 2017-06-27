@@ -1,4 +1,4 @@
-const formatting = require('./formatting.service')
+const formatting = require('./formatting')
 
 module.exports = {
   formatting,

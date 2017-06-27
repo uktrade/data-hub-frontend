@@ -1,10 +1,10 @@
-const archive = require('./archive.controller')
-const audit = require('./audit.controller')
-const create = require('./create.controller')
-const details = require('./details.controller')
-const edit = require('./edit.controller')
-const start = require('./start.controller')
-const team = require('./team.controller')
+const archive = require('./archive')
+const audit = require('./audit')
+const create = require('./create')
+const details = require('./details')
+const edit = require('./edit')
+const start = require('./start')
+const team = require('./team')
 const interactions = require('./interactions')
 
 module.exports = {

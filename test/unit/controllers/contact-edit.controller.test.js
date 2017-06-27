@@ -24,8 +24,8 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    contactEditController = proxyquire('~/src/apps/contacts/controllers/edit.controller', {
-      '../services/form.service': {
+    contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+      '../services/form': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub,
       },
@@ -35,7 +35,7 @@ describe('Contact controller, edit', function () {
           name: 'United Kingdom',
         }],
       },
-      '../../companies/repository': {
+      '../../companies/repos': {
         getDitCompany: getDitCompanyStub,
       },
     })
@@ -344,8 +344,8 @@ describe('Contact controller, edit', function () {
         error: { name: ['test'] },
       })
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit.controller', {
-        '../services/form.service': {
+      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+        '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
         },
@@ -355,7 +355,7 @@ describe('Contact controller, edit', function () {
             name: 'United Kingdom',
           }],
         },
-        '../../companies/repository': {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
       })
@@ -370,8 +370,8 @@ describe('Contact controller, edit', function () {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit.controller', {
-        '../services/form.service': {
+      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+        '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
         },
@@ -381,7 +381,7 @@ describe('Contact controller, edit', function () {
             name: 'United Kingdom',
           }],
         },
-        '../../companies/repository': {
+        '../../companies/repos': {
           getDitCompany: getDitCompanyStub,
         },
       })

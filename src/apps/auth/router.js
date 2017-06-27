@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
-const signinController = require('./controllers/sign-in.controller')
-const signoutController = require('./controllers/sign-out.controller')
+const signinController = require('./controllers/sign-in')
+const signoutController = require('./controllers/sign-out')
 
 router
   .route('/')
@@ -10,7 +10,4 @@ router
 
 router.get('/signout', signoutController.getHandler)
 
-module.exports = {
-  path: '/login',
-  router,
-}
+module.exports = router

@@ -1,5 +1,5 @@
-const signIn = require('./sign-in.controller')
-const signOut = require('./sign-out.controller')
+const signIn = require('./sign-in')
+const signOut = require('./sign-out')
 
 module.exports = {
   signIn,

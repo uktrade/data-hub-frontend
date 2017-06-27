@@ -1,9 +1,14 @@
-const router = require('./router')
-const accountController = require('./account.controller')
+const router = require('express').Router()
+
+function getHandler (req, res) {
+  res.render('myaccount/index', {
+    title: 'Your account',
+  })
+}
 
 module.exports = {
-  router,
+  router: router.get('/myaccount', getHandler),
   controllers: {
-    account: accountController,
+    getHandler,
   },
 }

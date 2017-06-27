@@ -1,6 +1,6 @@
-const create = require('./create.controller')
-const edit = require('./edit.controller')
-const list = require('./list.controller')
+const create = require('./create')
+const edit = require('./edit')
+const list = require('./list')
 
 module.exports = {
   create,

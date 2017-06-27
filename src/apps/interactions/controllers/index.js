@@ -1,5 +1,5 @@
-const details = require('./details.controller')
-const edit = require('./edit.controller')
+const details = require('./details')
+const edit = require('./edit')
 
 module.exports = {
   details,

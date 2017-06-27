@@ -7,8 +7,8 @@ describe('Investment Interactions Index controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
     this.getInteractionsForInvestmentStub = this.sandbox.stub().resolves(interactionsListData)
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/interactions/list.controller', {
-      '../../../interactions/interactions.repo': {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/interactions/list', {
+      '../../../interactions/repos': {
         getInteractionsForInvestment: this.getInteractionsForInvestmentStub,
       },
     })

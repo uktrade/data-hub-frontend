@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
-const feedbackController = require('./controllers/feedback.controller')
-const thankyouController = require('./controllers/thank-you.controller')
+const feedbackController = require('./controllers/feedback')
+const thankyouController = require('./controllers/thank-you')
 
 router
   .route('/bug')
@@ -10,7 +10,4 @@ router
 
 router.get('/thank-you', thankyouController.get)
 
-module.exports = {
-  path: '/support',
-  router,
-}
+module.exports = router

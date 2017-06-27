@@ -73,6 +73,4 @@ router
 router.get('/company-interactions/:id', interactionsController.getInteractions)
 router.get('/company/:id/investments', investmentsController.getAction)
 
-module.exports = {
-  router,
-}
+module.exports = router
