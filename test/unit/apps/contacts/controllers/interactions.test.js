@@ -1,4 +1,4 @@
-const { render } = require('../nunjucks')
+const { render } = require('~/test/unit/nunjucks')
 const contactDataService = require('~/src/apps/contacts/services/data')
 const interactionFormattingService = require('~/src/apps/interactions/services/formatting')
 
@@ -14,9 +14,9 @@ describe('Contact interactions controller', function () {
 
   beforeEach(function () {
     contactInteractionController = require('~/src/apps/contacts/controllers/interactions')
-    contact = require('../data/simple-contact')
-    interaction = require('../data/simple-interaction')
-    formattedInteraction = require('../data/formatted-contact-interaction')
+    contact = require('~/test/unit/data/simple-contact')
+    interaction = require('~/test/unit/data/simple-interaction')
+    formattedInteraction = require('~/test/unit/data/formatted-contact-interaction')
 
     contactDataService.getContactInteractionsAndServiceDeliveries = sinon.stub().resolves([interaction])
     interactionFormattingService.getDisplayContactInteraction = sinon.stub().resolves(formattedInteraction)

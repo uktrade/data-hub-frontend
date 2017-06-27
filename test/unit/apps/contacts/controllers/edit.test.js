@@ -1,6 +1,6 @@
 /* eslint handle-callback-err: 0 */
-const { render } = require('../nunjucks')
-const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('../form-helpers')
+const { render } = require('~/test/unit/nunjucks')
+const { expectTextFieldWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('~/test/unit/form-helpers')
 const contactLabels = require('~/src/apps/contacts/labels')
 
 describe('Contact controller, edit', function () {

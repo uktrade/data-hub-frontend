@@ -1,4 +1,3 @@
-
 describe('Service delivery formatting service', function () {
   let serviceDelivery
   let serviceDeliveryFormattingService
