@@ -1,6 +1,9 @@
 {
   "restartable": "rs",
   "watch": [
+    "common/",
+    "config/**/*.js",
+    "public/",
     "src/**/*.js"
   ],
   "ignore": [
