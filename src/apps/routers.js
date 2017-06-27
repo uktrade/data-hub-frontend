@@ -14,7 +14,7 @@ subApps.forEach(subAppDir => {
     } else if (subApp.router) {
       appsRouters.push(router.use(subApp.router))
     } else {
-      appsRouters.push(() => {}) // add dummy router as fallback
+      appsRouters.push((req, res, next) => next())
     }
   } catch (err) {
     logger.warn(err.message)
