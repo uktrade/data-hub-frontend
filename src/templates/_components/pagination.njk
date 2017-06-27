@@ -22,7 +22,7 @@
           {% if page.currentPage %}
             {{ page.label }}
           {% else %}
-            <a href="?{{ page.link }}">{{ page.label }}</a>
+            <a href="{{ page.link }}">{{ page.label }}</a>
           {% endif %}
         </li>
       {% endfor %}

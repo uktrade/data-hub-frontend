@@ -48,7 +48,7 @@ describe('Contact formatting service', function () {
         job_title: 'Director',
         telephone_number: '+44 7814 333 777',
         email: 'fred@test.com',
-        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
+        address: '10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         telephone_alternative: '07814 000 333',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
@@ -81,7 +81,7 @@ describe('Contact formatting service', function () {
       contact.company = companyWithExpectedAddress
 
       const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
-      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
+      expect(formatted.address).to.equal('30 the Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
     })
     it('should use a company trading address if the contact has no address but has a company registered address', function () {
       const companyWithExpectedAddress = {
@@ -107,7 +107,7 @@ describe('Contact formatting service', function () {
       contact.company = companyWithExpectedAddress
 
       const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
-      expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
+      expect(formatted.address).to.equal('20 the Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
   describe('company contact', function () {
@@ -120,7 +120,7 @@ describe('Contact formatting service', function () {
         telephone_number: '+44 7814 333 777',
         email: 'fred@test.com',
         added: '14 Feb 2017',
-        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
+        address: '10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
         telephone_alternative: '07814 000 333',
@@ -153,7 +153,7 @@ describe('Contact formatting service', function () {
       contact.company = companyWithExpectedAddress
 
       const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
-      expect(formatted.address).to.equal('30 The Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
+      expect(formatted.address).to.equal('30 the Street, Tarble, Medium Town, Medium County, TT1 1TT, United Kingdom')
     })
     it('Should use the registered address if no contact address but has a registered address in company', function () {
       const companyWithExpectedAddress = {
@@ -178,7 +178,7 @@ describe('Contact formatting service', function () {
       contact.company = companyWithExpectedAddress
 
       const formatted = contactFormattingService.getDisplayCompanyContact(contact, companyWithExpectedAddress)
-      expect(formatted.address).to.equal('20 The Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
+      expect(formatted.address).to.equal('20 the Street, Rarble, Small Town, Small County, RR1 1PP, United Kingdom')
     })
   })
 

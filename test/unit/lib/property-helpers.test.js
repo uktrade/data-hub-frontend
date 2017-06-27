@@ -164,52 +164,6 @@ describe('PropertyHelpers: Convert Yes and No string to true and false with conv
   })
 })
 
-describe('PropertyHelpers: Check if an object has a property that is also an object with hasObjectProperty', function () {
-  it('Should return true if an object is found in an object', function () {
-    const source = {
-      foo: {
-        bar: 1,
-      },
-    }
-
-    const actual = propertyHelpers.hasObjectProperty(source, 'foo')
-    expect(actual).to.be.true
-    expect(typeof actual).to.equal('boolean')
-  })
-  it('Should return false if the property is not an object', function () {
-    const source = {
-      foo: 1,
-    }
-
-    const actual = propertyHelpers.hasObjectProperty(source, 'foo')
-    expect(actual).to.be.false
-    expect(typeof actual).to.equal('boolean')
-  })
-})
-
-describe('PropertyHelpers: Check if an object has a property with hasProperty', function () {
-  it('Should return true if an object is found in an object', function () {
-    const source = {
-      foo: {
-        bar: 1,
-      },
-    }
-
-    const actual = propertyHelpers.hasProperty(source, 'foo')
-    expect(actual).to.be.true
-    expect(typeof actual).to.equal('boolean')
-  })
-  it('Should return false if the property does not exist', function () {
-    const source = {
-      bar: 1,
-    }
-
-    const actual = propertyHelpers.hasProperty(source, 'foo')
-    expect(actual).to.be.false
-    expect(typeof actual).to.equal('boolean')
-  })
-})
-
 describe('PropertyHelpers: Conversion of nested objects', function () {
   it('Should convert an empty string to null', function () {
     const source = {

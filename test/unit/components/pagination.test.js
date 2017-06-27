@@ -17,12 +17,12 @@ describe('Pagination component', () => {
       pages: [
         {
           label: 'example-label',
-          link: 'example-link',
+          link: '?example-link',
           currentPage: true,
         },
         {
           label: 'example-label-1',
-          link: 'example-link-1',
+          link: '?example-link-1',
           currentPage: false,
         },
       ],
@@ -36,7 +36,7 @@ describe('Pagination component', () => {
 
     expect(component.className).to.equal('pagination-nav')
     expect(paginationNavItems[0].textContent).to.contain(mockData.pages[0].label)
-    expect(paginationNavItems[1].querySelector('a').href).to.equal(`?${mockData.pages[1].link}`)
+    expect(paginationNavItems[1].querySelector('a').href).to.equal(`${mockData.pages[1].link}`)
     expect(paginationNavItems[1].textContent).to.contain(mockData.pages[1].label)
   })
 })

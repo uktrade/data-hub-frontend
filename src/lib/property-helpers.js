@@ -103,33 +103,11 @@ function convertNestedObjects (object = {}, props = []) {
   return convertedObject
 }
 
-/**
- * Determine if an object has a property, and that property is also an object.
- *
- * @param {any} object
- * @param {any} property
- * @returns
- */
-function hasObjectProperty (object, property) {
-  return (object &&
-  object.hasOwnProperty(property) &&
-  object[property] !== null &&
-  typeof object[property] === 'object')
-}
-
-function hasProperty (object, property) {
-  return (object &&
-  object.hasOwnProperty(property) &&
-  object[property] !== null)
-}
-
 module.exports = {
   convertNestedObjects,
   convertYesNoToBoolean,
   deleteNulls,
   getPropertyId,
   getPropertyName,
-  hasObjectProperty,
-  hasProperty,
   nullEmptyFields,
 }
