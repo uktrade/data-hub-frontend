@@ -100,6 +100,7 @@ const develop = merge.smart(common, {
         '.build/css/*.css',
         '.build/js/*.js',
         '.build/images/*',
+        'src/**/*.njk',
       ],
     }, {
       reload: false,
