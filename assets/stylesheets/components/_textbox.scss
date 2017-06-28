@@ -1,0 +1,43 @@
+@import "../generic/form-control";
+@import "../settings/colours";
+@import "../settings/layout";
+
+.textbox {
+  margin-bottom: $form-vertical-spacing;
+  box-sizing: border-box;
+
+  &.has-error {
+    border-left: 2px solid $error-colour;
+  }
+}
+
+.textbox__label {
+  color: $black;
+  display: block;
+  font-weight: 700;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.textbox__hint {
+  color: $secondary-text-colour;
+  display: block;
+  font-weight: 400;
+}
+
+.textbox__input {
+  border: 2px solid $black;
+  display: block;
+  font-weight: 400;
+  padding: 5px 4px 4px;
+  width: 100%;
+  max-width: $max-field-width;
+
+  &:focus {
+    outline: 3px solid $yellow;
+  }
+
+  .has-error {
+    border-color: $error-colour;
+  }
+}
