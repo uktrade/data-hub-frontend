@@ -36,12 +36,12 @@
 
     <div class="form-group">
       <div class="form-label-bold">Trading address (optional)</div>
-      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}hidden{% endif %}" type="button">Add trading address</button>
-      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
+      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}u-hidden{% endif %}" type="button">Add trading address</button>
+      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} u-hidden{% endif %}" type="button">Remove trading address</button>
     </div>
 
     <fieldset id="trading-address-wrapper"
-      class="fieldset--address lookup-address-js{%if showTradingAddress == false %} hidden{% endif %}">
+      class="fieldset--address lookup-address-js{%if showTradingAddress == false %} u-hidden{% endif %}">
       <div class="key-value key-value--vertical form-group">
         <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
         <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>

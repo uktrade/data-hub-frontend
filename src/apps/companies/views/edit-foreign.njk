@@ -35,11 +35,11 @@
 
     <div class="form-group">
       <div class="form-label-bold">Trading address (optional)</div>
-      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}hidden{% endif %}" type="button">Add trading address</button>
-      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
+      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}u-hidden{% endif %}" type="button">Add trading address</button>
+      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} u-hidden{% endif %}" type="button">Remove trading address</button>
     </div>
 
-    <fieldset id="trading-address-wrapper" class="fieldset--address{%if showTradingAddress == false %} hidden{% endif %}">
+    <fieldset id="trading-address-wrapper" class="fieldset--address{%if showTradingAddress == false %} u-hidden{% endif %}">
       {{ textbox("trading_address_1", label="Business and street (optional)", value=formData.trading_address_1, error=errors.trading_address_1) }}
       {{ textbox("trading_address_2", value=formData.trading_address_2, error=errors.trading_address_2) }}
       {{ textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}

@@ -29,7 +29,7 @@
         {{companyTypeOptions.ukother}}
         <span class="form-hint">UK organisation not registered with Companies House</span>
       </label>
-      <div id="other-uk-type-wrapper" class='panel panel-border-narrow hidden'>
+      <div id="other-uk-type-wrapper" class='panel panel-border-narrow u-hidden'>
         {{ dropdown("business_type_uk_other",
           label="Type of organisation",
           emptyLabel="Select type",
@@ -42,7 +42,7 @@
         <input id="foreign" type="radio" name="business_type" value="foreign" {% if company.business_type == "foreign" %}checked{% endif %}>
         {{companyTypeOptions.foreign}}
       </label>
-      <div id="other-for-type-wrapper" class='panel panel-border-narrow hidden'>
+      <div id="other-for-type-wrapper" class='panel panel-border-narrow u-hidden'>
         {{ dropdown("business_type_for_other",
           label="Type of organisation",
           emptyLabel="Select type",

@@ -29,7 +29,7 @@ class AutocompleteBase {
   }
 
   hideCurrentControl () {
-    addClass(this.element, 'hidden')
+    addClass(this.element, 'u-hidden')
   }
 
   createInput () {
