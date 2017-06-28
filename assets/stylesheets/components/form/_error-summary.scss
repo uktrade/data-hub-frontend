@@ -1,0 +1,26 @@
+@import "../../settings";
+
+.c-error-summary {
+  border: 5px solid $error-colour;
+  padding: $default-spacing-unit;
+  max-width: 40em;
+}
+
+.c-error-summary__heading {
+  margin-top: 0;
+}
+
+.c-error-summary__list {
+  font-weight: 600;
+  list-style: square;
+  padding-left: 1em;
+  color: $error-colour;
+
+  a {
+    color: $error-colour;
+  }
+}
+
+.c-error-summary__list-item {
+  margin-top: 5px;
+}
