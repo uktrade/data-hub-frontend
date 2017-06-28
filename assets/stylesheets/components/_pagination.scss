@@ -2,13 +2,12 @@
 @import "../settings/layout";
 @import "../tools/mixins/typography";
 
-// TODO rename once pagination from Trade Elements has gone
-.pagination-nav {
+.pagination {
   margin: $gutter 0;
   text-align: center;
 }
 
-.pagination-nav__item {
+.pagination__item {
   @include core-font(20);
   margin: ($gutter / 8);
   padding: ($gutter / 8);

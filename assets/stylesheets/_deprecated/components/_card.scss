@@ -7,7 +7,7 @@
   }
 
   .split-data {
-    @extend %contain-floats;
+    overflow: hidden;
     box-sizing: border-box;
   }
 

@@ -1,23 +1,7 @@
-@import "../tools/mixins/layout";
-@import "../tools/mixins/typography";
+@import "~govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
+@import "../tools/mixins";
 
 .fieldset--address {
-
-  .fieldset--address__legend {
-    margin-bottom: 10px;
-
-    @include media(tablet) {
-      margin-bottom: 20px;
-    }
-  }
-
-  .autosuggest__suggestions {
-    width: 100%;
-
-    @include media(tablet) {
-      width: 66%;
-    }
-  }
 
   .form-group.form-group--postcode {
     .form-control.postcode-lookup-value  {
@@ -38,11 +22,6 @@
         width: auto;
       }
     }
-  }
-
-  .reveal-manual-entry {
-    display: block;
-    margin-bottom: 20px;
   }
 }
 

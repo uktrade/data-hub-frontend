@@ -1,66 +1,7 @@
 @import "../tools/mixins/typography";
 
-.back-link {
-  display: inline-block;
-  padding-left: 20px;
-  position: relative;
-  margin: em(20) 0 0;
-
-  &::before {
-    content: "<";
-    left: 0;
-    position: absolute;
-  }
-
-}
-
-.data {
-  .data__description {
-    padding-right: 20%;
-  }
-}
-
-.lede {
-  margin-bottom: 60px;
-}
-
-strong {
-  @include core-font(20);
-}
-
-hr {
-  clear: both;
-  width: 100%;
-}
-
-.indented-info {
-  @extend %contain-floats;
-  clear: both;
-  padding: 5px 0 10px 10px;
-  border-left: 5px solid $border-colour;
-  margin: 0 0 30px;
-}
-
-.indented-info.error {
-  border-left: 5px solid $error-colour;
-
-  .error {
-    border-left: 0;
-    padding-left: 0;
-  }
-}
-
 .fieldset--address {
   margin-bottom: 40px;
-}
-
-.contact-interactions .interaction-table .contact {
-  display: none;
-}
-
-.saving {
-  @include bold-font(24);
-  margin-top: 40px;
 }
 
 .dark-panel {
@@ -87,104 +28,12 @@ hr {
   margin-bottom: 30px;
 }
 
-#global-header-bar {
-  display: none;
-}
-
-#details {
-  .table--striped {
-    tr:nth-child(even) {
-      background: $highlight-colour;
-    }
-
-    tr:nth-child(odd) {
-      background: $white;
-    }
-  }
-}
-
 .form-label-bold .button-link {
   @include core-font(20)
 }
 
 .column-three-quarters .form-control {
   width: 100%;
-}
-
-.invresult {
-  padding: 14px 0;
-  border-top: 1px solid $border-colour;
-}
-
-.invresults {
-  border-bottom: 1px solid $border-colour;
-  clear: both;
-}
-
-.clickable {
-  color: $link-colour;
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.unclickable {
-  color: $black;
-  font-weight: bold;
-}
-
-.tightertopmargin {
-  margin-top: 0 !important;
-}
-
-.textbox_fullwidth {
-  width: 100%
-}
-
-.textbox_fullwidth input {
-  width: 100%;
-  margin : 0.6em 0;
-  padding: 0.3em 0;
-}
-
-.inset {
-  border-left: 10px solid $grey-2;
-  padding-left: 20px;
-  clear: both;
-  overflow: hidden;
-}
-
-.noformgroup {
-  margin-bottom: 0 !important;
-}
-
-.hybridformgroup {
-  margin-bottom: 30px;
-}
-
-.inv-month-year-date-control div {
-  float:left;
-  padding-right: 20px
-
-}
-
-.inv-month-year-date-control .inv-month {
-  width: 60px;
-}
-
-
-.inv-month-year-date-control .inv-year {
-  width: 100px;
-}
-
-.afterfloat {
-  clear: both;
-  padding-top: 30px
-}
-
-.projectname {
-  width: 60%;
-  float: right;
 }
 
 .table_footnote {
@@ -206,7 +55,7 @@ hr {
 }
 
 .split-header {
-  @extend %contain-floats;
+  overflow: hidden;
 
   > * {
     float: right;
@@ -263,10 +112,6 @@ hr {
   &::after {
     -ms-transform: rotate(-45deg);
   }
-}
-
-.hidden {
-  display: none;
 }
 
 select.form-control {

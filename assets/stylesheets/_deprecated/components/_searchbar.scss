@@ -1,7 +1,6 @@
-@import "../../tools/mixins/layout";
+@import "../../tools/mixins";
 
 .searchbar {
-  @extend %contain-floats;
   margin: 20px 0 25px;
 
   @include media(tablet) {
@@ -20,7 +19,7 @@
 
   .searchbar__input {
     box-sizing: border-box;
-    font-size: em(19);
+    font-size: 19px;
     width: 100%;
     padding: 10px 15px;
     margin: 0;

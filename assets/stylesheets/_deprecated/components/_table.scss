@@ -1,5 +1,4 @@
-@import "../../tools/mixins/layout";
-@import "../../tools/mixins/typography";
+@import "../../tools/mixins";
 
 .table--key-value {
 
@@ -31,37 +30,6 @@
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-}
-
-.table--readonly {
-
-  border-left: 5px solid $border-colour;
-
-  tbody {
-
-    display: block;
-    padding: 0 0 0 20px;
-
-    tr {
-      td,
-      th {
-        border-bottom: 1px solid $border-colour;
-        color: $black;
-      }
-
-      &:last-child {
-        td,
-        th {
-          border-bottom: 0;
-        }
-      }
-
-      .spacer {
-        border-bottom: 0;
-        padding-right: 5px;
-      }
-    }
   }
 }
 

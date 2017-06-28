@@ -1,7 +1,6 @@
-@import "../tools/mixins/layout";
+@import "../tools/mixins";
 
 .split-header {
-  @extend %contain-floats;
   margin-bottom: 20px;
 
   @include media(tablet) {
