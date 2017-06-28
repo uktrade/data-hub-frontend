@@ -6,5 +6,5 @@
 
 {% block body_main_content %}
   {{ keyvaluetable(interactionDetails, stripey=true, labels=interactionLabels, keyorder=interactionDisplayOrder) }}
-  <a class="button button-secondary" href="/interaction/{{interaction.id}}/edit">Edit interaction</a>
+  <a class="button button-secondary" href="{{interaction.id}}/edit">Edit interaction</a>
 {% endblock %}

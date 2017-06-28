@@ -5,20 +5,20 @@ const editController = require('./controllers/edit')
 
 router.param('interactionId', detailsController.getCommon)
 
+router.get('/create', (req, res) => { res.redirect('create/1') })
 router
-  .route('/add-step-1/')
+  .route('/create/1')
   .get(detailsController.getAddStep1)
   .post(detailsController.postAddStep1)
 
 router
   .route([
-    '/add/',
+    '/create/2',
     '/:interactionId/edit',
-    '/edit/',
   ])
   .get(editController.editDetails)
   .post(editController.postDetails)
 
-router.get('/:interactionId/details', detailsController.getInteractionDetails)
+router.get('/:interactionId', detailsController.getInteractionDetails)
 
 module.exports = router

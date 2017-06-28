@@ -26,7 +26,7 @@ function mapInteractions (interactions) {
     return interactions.map((interaction) => {
       const company = typeof interaction.company === 'object' && interaction.company !== null ? interaction.company : null
       return {
-        url: `/interaction/${interaction.id}/details`,
+        url: `/interactions/${interaction.id}`,
         id: interaction.id,
         subject: interaction.subject,
         company: {

@@ -38,7 +38,7 @@ describe('Dashboard service', () => {
           interactions: [{
             id: 'int-id',
             subject: 'int-subject',
-            url: '/interaction/int-id/details',
+            url: '/interactions/int-id',
             company: {
               url: '/test',
               name: 'comp-name',
@@ -83,7 +83,7 @@ describe('Dashboard service', () => {
           interactions: [{
             id: 'int-id',
             subject: 'int-subject',
-            url: '/interaction/int-id/details',
+            url: '/interactions/int-id',
             company: {
               url: null,
               name: null,

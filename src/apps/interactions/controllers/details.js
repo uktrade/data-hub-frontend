@@ -69,7 +69,7 @@ function postAddStep1 (req, res) {
     return res.redirect(`/servicedelivery/edit/?company=${req.body.company}&contact=${req.body.contact}`)
   }
 
-  return res.redirect(`/interaction/add/?company=${req.body.company}&contact=${req.body.contact}&interaction_type=${req.body.interaction_type}`)
+  return res.redirect(`2?company=${req.body.company}&contact=${req.body.contact}&interaction_type=${req.body.interaction_type}`)
 }
 
 function getInteractionDetails (req, res, next) {

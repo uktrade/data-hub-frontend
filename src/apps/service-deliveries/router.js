@@ -9,10 +9,10 @@ const {
 
 router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
 
-router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
+router.get('/servicedelivery/:serviceDeliveryId', getServiceDeliveryDetails)
 
 router
-  .route(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'])
+  .route('/servicedelivery/:serviceDeliveryId/edit')
   .get(getServiceDeliveryEdit)
   .post(postServiceDeliveryEdit)
 

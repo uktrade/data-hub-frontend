@@ -28,7 +28,7 @@ describe('Interaction formatting service', function () {
     it('should return the required fields for the display interaction', function () {
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         subject: 'Subject 1234',
         interaction_type: 'Email',
         adviser: 'John Brown',
@@ -45,7 +45,7 @@ describe('Interaction formatting service', function () {
       interaction.dit_adviser = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -62,7 +62,7 @@ describe('Interaction formatting service', function () {
       interaction.contact.first_name = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -79,7 +79,7 @@ describe('Interaction formatting service', function () {
       interaction.contact.last_name = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -95,7 +95,7 @@ describe('Interaction formatting service', function () {
     it('should create the alternative url for service deliveries', function () {
       interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
-      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62/details')
+      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62')
     })
   })
   describe('Interaction details', function () {
@@ -231,7 +231,7 @@ describe('Interaction formatting service', function () {
     it('should return the required fields for the display interaction', function () {
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         subject: 'Subject 1234',
         interaction_type: 'Email',
         adviser: 'John Brown',
@@ -247,7 +247,7 @@ describe('Interaction formatting service', function () {
       interaction.dit_adviser = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -263,7 +263,7 @@ describe('Interaction formatting service', function () {
       interaction.contact.first_name = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -279,7 +279,7 @@ describe('Interaction formatting service', function () {
       interaction.contact.last_name = null
       const expectedDisplayInteraction = {
         id: '22651151-2149-465e-871b-ac45bc568a62',
-        url: '/interaction/22651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         date: '14 Feb 2017',
@@ -294,7 +294,7 @@ describe('Interaction formatting service', function () {
     it('should create the alternative url for service deliveries', function () {
       interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayContactInteraction(interaction)
-      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62/details')
+      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62')
     })
   })
 })

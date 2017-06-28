@@ -1,6 +1,6 @@
 const router = require('./router')
 
 module.exports = {
-  mountpath: '/interaction',
+  mountpath: '/interactions',
   router,
 }

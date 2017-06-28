@@ -36,11 +36,11 @@ function getDisplayInteraction (interaction) {
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayCompanyInteraction (interaction) {
-  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
+  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interactions'
 
   const result = {
     id: interaction.id,
-    url: `/${type}/${interaction.id}/details`,
+    url: `/${type}/${interaction.id}`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     date: formatMediumDate(interaction.date),
@@ -61,11 +61,11 @@ function getDisplayCompanyInteraction (interaction) {
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayContactInteraction (interaction) {
-  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interaction'
+  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interactions'
 
   const result = {
     id: interaction.id,
-    url: `/${type}/${interaction.id}/details`,
+    url: `/${type}/${interaction.id}`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     date: formatMediumDate(interaction.date),
