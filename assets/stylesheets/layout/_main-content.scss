@@ -1,7 +1,7 @@
-@import "../../settings/colours";
-@import "../../settings/typography";
-@import "../../tools/mixins/conditionals";
-@import "../../tools/mixins/layout";
+@import "../settings/colours";
+@import "../settings/typography";
+@import "../tools/mixins/conditionals";
+@import "../tools/mixins/layout";
 
 .main-content {
   background-color: $white;
