@@ -3,7 +3,7 @@ describe('Investment create controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
 
-    this.controller = require('~/src/apps/investment-projects/controllers/create')
+    this.controller = require('~/src/apps/investment-projects/controllers/create-2')
   })
 
   afterEach(() => {
@@ -20,8 +20,12 @@ describe('Investment create controller', () => {
         }, {
           locals: {},
           redirect: (url) => {
-            expect(url).to.equal('/investment/start')
-            done()
+            try {
+              expect(url).to.equal('/investment-projects/create/1')
+              done()
+            } catch (e) {
+              done(e)
+            }
           },
         }, this.next)
       })
@@ -41,7 +45,7 @@ describe('Investment create controller', () => {
           },
           render: (template) => {
             try {
-              expect(template).to.equal('investment-projects/views/create')
+              expect(template).to.equal('investment-projects/views/create-2')
               done()
             } catch (e) {
               done(e)
@@ -66,7 +70,7 @@ describe('Investment create controller', () => {
           },
           redirect: (url) => {
             try {
-              expect(url).to.equal('/investment/12345')
+              expect(url).to.equal('/investment-projects/12345')
               done()
             } catch (e) {
               done(e)
@@ -90,7 +94,7 @@ describe('Investment create controller', () => {
           },
           render: (template) => {
             try {
-              expect(template).to.equal('investment-projects/views/create')
+              expect(template).to.equal('investment-projects/views/create-2')
               done()
             } catch (e) {
               done(e)

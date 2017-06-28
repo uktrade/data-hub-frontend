@@ -68,7 +68,7 @@
         <ol class="results-list">
           {% for result in searchResult.results %}
             <li class="results-list__item">
-              <a href="/investment/create?equity-company={{ result.id }}" class="results-list__link">
+              <a href="2?equity-company={{ result.id }}" class="results-list__link">
                 <h3 class="results-list__item-header">{{ result.name | highlight(searchTerm) }}</h3>
 
                 <dl class="metadata-list">

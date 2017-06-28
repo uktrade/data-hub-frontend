@@ -29,7 +29,7 @@ function detailsGetHandler (req, res, next) {
 }
 
 function redirectToDetails (req, res) {
-  res.redirect(`/investment/${req.params.id}/details`)
+  res.redirect(`${req.params.id}/details`)
 }
 
 module.exports = {

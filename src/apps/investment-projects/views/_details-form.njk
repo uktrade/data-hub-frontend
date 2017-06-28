@@ -186,9 +186,9 @@
   </div>
 
   {% if projectData %}
-    {% set backUrl = '/investment/' + projectData.id %}
+    {% set backUrl = '/investment-projects/' + projectData.id %}
   {% else %}
-    {% set backUrl = '/investment/start?client-company=' + equityCompany.id %}
+    {% set backUrl = '/investment-projects/create/1?client-company=' + equityCompany.id %}
   {% endif %}
   {{ save(backUrl=backUrl) }}
 </form>

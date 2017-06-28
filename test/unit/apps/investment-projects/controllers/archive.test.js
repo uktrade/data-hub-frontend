@@ -206,8 +206,12 @@ describe('Investment archive controller', function () {
         flash: this.flashStub,
       }, {
         redirect: (url) => {
-          expect(url).to.equal(`/investment/${investmentProjectData.id}/details`)
-          done()
+          try {
+            expect(url).to.equal('details')
+            done()
+          } catch (e) {
+            done(e)
+          }
         },
       }, this.next)
     })

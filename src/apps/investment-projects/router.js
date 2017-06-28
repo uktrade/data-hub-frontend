@@ -5,12 +5,12 @@ const {
   form,
 } = require('./middleware')
 const {
+  createStep1,
+  createStep2,
   archive,
   audit,
-  create,
   details,
   edit,
-  start,
   team,
   interactions,
 } = require('./controllers')
@@ -26,15 +26,17 @@ router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)
 
 router.get('/:id/audit', audit.getInvestmentAudit)
 
-router
-  .route('/create')
-  .get(form.populateDetailsFormMiddleware, create.createGetHandler)
-  .post(form.populateDetailsFormMiddleware, form.investmentDetailsFormPostMiddleware, create.createPostHandler)
+router.get('/create', (req, res) => { res.redirect('create/1') })
 
 router
-  .route('/start')
-  .get(start.getHandler)
-  .post(start.postHandler)
+  .route('/create/1')
+  .get(createStep1.getHandler)
+  .post(createStep1.postHandler)
+
+router
+  .route('/create/2')
+  .get(form.populateDetailsFormMiddleware, createStep2.createGetHandler)
+  .post(form.populateDetailsFormMiddleware, form.investmentDetailsFormPostMiddleware, createStep2.createPostHandler)
 
 router.get('/:id', details.redirectToDetails)
 router.get('/:id/details', details.detailsGetHandler)
@@ -59,7 +61,7 @@ router.get('/:id/team', team.getTeamHandler)
 router.get('/:id/interactions', interactions.list.indexGetHandler)
 
 router
-  .route('/:id/interaction/create')
+  .route('/:id/interactions/create')
   .get(form.populateInteractionsFormMiddleware, interactions.create.createGetInteractionHandler)
   .post(
     form.populateInteractionsFormMiddleware,
@@ -69,7 +71,7 @@ router
   )
 
 router
-  .route('/:id/interaction/:interactionId/edit')
+  .route('/:id/interactions/:interactionId/edit')
   .get(form.populateInteractionsFormMiddleware, interactions.edit.editGetInteractionHandler)
   .post(
     form.populateInteractionsFormMiddleware,
