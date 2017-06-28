@@ -7,7 +7,10 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    interactionsTab: '.local-nav a:nth-child(3)',
+    interactionsTab: {
+      selector: "//nav/a[contains(@href, 'interactions')]",
+      locateStrategy: 'xpath',
+    },
     addInteractionButton: '#add-interaction-link',
     businessCardRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(1)',
     emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(2)',

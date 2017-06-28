@@ -1,5 +1,14 @@
 const faker = require('faker')
 
+function generateEmail (firstName, lastName, isAlternative) {
+  const suffix = '@example.com'
+  let emailParts = [firstName, lastName]
+  if (isAlternative) {
+    return emailParts.reverse().join('.') + suffix
+  }
+  return emailParts.join('.') + suffix
+}
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
@@ -70,12 +79,6 @@ module.exports = {
 
   commands: [
     {
-      findCompany (name) {
-        return this
-          .setValue('#search', name)
-          .submitForm('@searchForm')
-      },
-
       clickOnFirstCompanyFromList () {
         return this
           .click('@firstCompanyFromList')
@@ -83,7 +86,7 @@ module.exports = {
 
       navigateToContactsPage () {
         return this
-          .click('@firstCompanyFromList')
+          .clickOnFirstCompanyFromList()
           .click('@contactsTab')
       },
 
@@ -96,10 +99,10 @@ module.exports = {
           .click('@contactPrimaryContactNo')
           .setValue('@contactTelephoneCountryCode', faker.random.number())
           .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
-          .setValue('@contactEmailAddress', firstName + lastName + '@dit.gov.uk')
+          .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
           .setValue('@contactAlternatePhonenumber', '666555444')
-          .setValue('@contactAlternativeEmail', lastName + firstName + '@dit.gov.uk')
-          .setValue('@contactNotes', faker.name.jobDescriptor() + firstName)
+          .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
+          .setValue('@contactNotes', `${faker.name.jobDescriptor() + firstName}`)
           .submitForm('form')
       },
 
@@ -112,10 +115,10 @@ module.exports = {
           .click('@contactPrimaryContactYes')
           .setValue('@contactTelephoneCountryCode', faker.random.number())
           .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
-          .setValue('@contactEmailAddress', firstName + lastName + '@dit.gov.uk')
+          .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
           .setValue('@contactAlternatePhonenumber', '666555444')
-          .setValue('@contactAlternativeEmail', lastName + firstName + '@dit.gov.uk')
-          .setValue('@contactNotes', faker.name.jobDescriptor() + firstName)
+          .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
+          .setValue('@contactNotes', `${faker.name.jobDescriptor()}${firstName}`)
           .submitForm('form')
       },
 
@@ -128,7 +131,7 @@ module.exports = {
           .click('@contactPrimaryContactNo')
           .setValue('@contactTelephoneCountryCode', faker.random.number())
           .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
-          .setValue('@contactEmailAddress', firstName + lastName + '@dit.gov.uk')
+          .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
           .click('@contactSameAddressNo')
           .setValue('@ukPostcode', 'EC2Y 9AE')
           .click('@findUkAddressButton')
@@ -136,8 +139,8 @@ module.exports = {
           .waitForElementPresent('@selectAnUkAddressFromList', 5000)
           .click('@selectAnUkAddressFromList')
           .setValue('@contactAlternatePhonenumber', '666555444')
-          .setValue('@contactAlternativeEmail', lastName + firstName + '@dit.gov.uk')
-          .setValue('@contactNotes', faker.name.jobDescriptor() + firstName)
+          .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
+          .setValue('@contactNotes', `${faker.name.jobDescriptor() + firstName}`)
           .submitForm('form')
       },
     },

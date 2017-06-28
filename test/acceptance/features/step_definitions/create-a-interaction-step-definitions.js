@@ -105,7 +105,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .navigateToInteractionsPage()
       .clickAddInteractionButton()
       .clickServiceDeliveryRadioButton()
-      // .enterNewInteractionDetails(subject)
       .setAdditionalFieldsForServiceDelivery(subject)
   })
 
