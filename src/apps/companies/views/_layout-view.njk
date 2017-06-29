@@ -1,11 +1,9 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block main_heading %}
+{% block body_main_header_content %}
   <h1 class="u-visually-hidden">Company Details</h1>
-  <h2 class="page-heading">
-    {{ headingName }}
-    <span class="post-header">{{ headingAddress }}</span>
-  </h2>
+  <h2 class="page-heading">{{ headingName }}</h2>
+  <p>{{ headingAddress }}</p>
 
   {% if company.archived %}
     <p class="infostrip">
