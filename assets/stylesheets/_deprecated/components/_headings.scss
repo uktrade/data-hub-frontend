@@ -1,20 +1,4 @@
 .page-heading {
   @extend .heading-large;
   margin: 30px 0;
-
-  .pre-header,
-  .post-header {
-    @include core-font(16);
-    padding-top: 9px;
-    padding-bottom: 6px;
-    display: block;
-  }
-
-  .pre-header {
-    color: $secondary-text-colour;
-  }
-
-  .post-header {
-    color: $black;
-  }
 }

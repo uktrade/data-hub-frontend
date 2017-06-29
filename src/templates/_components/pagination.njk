@@ -15,10 +15,10 @@
  #   } %}
  #}
 {% if pages | length %}
-  <nav class="pagination-nav">
+  <nav class="pagination">
     <ul class="list-inline">
       {% for page in pages %}
-        <li class="pagination-nav__item">
+        <li class="pagination__item">
           {% if page.currentPage %}
             {{ page.label }}
           {% else %}

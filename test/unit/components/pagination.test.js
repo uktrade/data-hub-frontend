@@ -32,11 +32,11 @@ describe('Pagination component', () => {
       mockData
     )
 
-    const paginationNavItems = component.querySelectorAll('.pagination-nav__item')
+    const paginationItems = component.querySelectorAll('.pagination__item')
 
-    expect(component.className).to.equal('pagination-nav')
-    expect(paginationNavItems[0].textContent).to.contain(mockData.pages[0].label)
-    expect(paginationNavItems[1].querySelector('a').href).to.equal(`${mockData.pages[1].link}`)
-    expect(paginationNavItems[1].textContent).to.contain(mockData.pages[1].label)
+    expect(component.className).to.equal('pagination')
+    expect(paginationItems[0].textContent).to.contain(mockData.pages[0].label)
+    expect(paginationItems[1].querySelector('a').href).to.equal(`${mockData.pages[1].link}`)
+    expect(paginationItems[1].textContent).to.contain(mockData.pages[1].label)
   })
 })

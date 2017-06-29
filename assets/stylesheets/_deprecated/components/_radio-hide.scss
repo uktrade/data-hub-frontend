@@ -1,7 +1,0 @@
-@import "../../tools/mixins/layout";
-
-.form-group__radiohide.inline .block-label {
-  @include media(tablet) {
-    margin-bottom: 10px;
-  }
-}
