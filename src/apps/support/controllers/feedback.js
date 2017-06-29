@@ -72,7 +72,7 @@ function postBug (req, res) {
   }
   return postToZen(ticket)
     .then(({ data }) => {
-      req.flash('success-message', `Created new bug, reference number ${data.ticket.id}`)
+      req.flash('success', `Created new bug, reference number ${data.ticket.id}`)
       res.redirect('/support/thank-you')
     })
     .catch((error) => {

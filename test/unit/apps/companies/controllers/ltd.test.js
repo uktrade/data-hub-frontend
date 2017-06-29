@@ -604,7 +604,7 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         redirect: function () {
-          expect(flashStub).to.be.calledWith('success-message', 'Updated company record')
+          expect(flashStub).to.be.calledWith('success', 'Updated company record')
           done()
         },
         render: function () {

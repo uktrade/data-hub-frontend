@@ -11,7 +11,7 @@ function createPostInteractionHandler (req, res, next) {
     return next()
   }
 
-  req.flash('success-message', 'Investment Interaction successfully created')
+  req.flash('success', 'Investment Interaction successfully created')
   return res.redirect(`/investment-projects/${res.locals.projectData.id}/interactions`)
 }
 

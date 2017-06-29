@@ -11,7 +11,7 @@ function editPostInteractionHandler (req, res, next) {
     return next()
   }
 
-  req.flash('success-message', 'Investment Interaction successfully updated')
+  req.flash('success', 'Investment Interaction successfully updated')
   return res.redirect(`/investment/${res.locals.projectData.id}/interactions`)
 }
 

@@ -1,0 +1,52 @@
+.c-messages {
+  // TODO: remove in favour of assemblies that handle consistent spacing
+  // between elements
+  margin-top: $default-spacing-unit;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.c-messages__item {
+  @include bold-font(20);
+  border: 5px solid;
+  padding: $default-spacing-unit 90px $default-spacing-unit $default-spacing-unit;
+  position: relative;
+
+  + * {
+    margin-top: $default-spacing-unit;
+  }
+}
+
+.c-messages__close {
+  @include bold-font(16);
+  position: absolute;
+  top: $default-spacing-unit;
+  right: $default-spacing-unit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.c-messages__item--info {
+  border-color: $govuk-blue;
+  color: $govuk-blue;
+}
+
+.c-messages__item--success {
+  border-color: $button-colour;
+  color: $button-colour;
+}
+
+.c-messages__item--warning {
+  border-color: darken($orange, 20);
+  color: darken($orange, 20);
+}
+
+.c-messages__item--error {
+  border-color: $error-colour;
+  color: $error-colour;
+}
