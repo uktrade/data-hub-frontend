@@ -66,7 +66,7 @@ async function editDetails (req, res, next) {
     res.locals.labels = interactionLabels
     res.locals.title = `Add interaction for ${res.locals.company.name}`
 
-    res.render('interactions/view/edit')
+    res.render('interactions/views/edit')
   } catch (error) {
     console.log(error)
     next(error)
