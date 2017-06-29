@@ -21,15 +21,15 @@ const CompanyAdd = {
 
     function updateVisibility () {
       if (otherUkField.checked === true) {
-        removeClass(otherUkTypeWrapper, 'hidden')
+        removeClass(otherUkTypeWrapper, 'u-hidden')
       } else {
-        addClass(otherUkTypeWrapper, 'hidden')
+        addClass(otherUkTypeWrapper, 'u-hidden')
       }
 
       if (otherForeignField.checked === true) {
-        removeClass(otherForeignTypeWrapper, 'hidden')
+        removeClass(otherForeignTypeWrapper, 'u-hidden')
       } else {
-        addClass(otherForeignTypeWrapper, 'hidden')
+        addClass(otherForeignTypeWrapper, 'u-hidden')
       }
     }
 

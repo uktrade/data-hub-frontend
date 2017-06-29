@@ -43,7 +43,7 @@ describe('archive form control', function () {
   })
 
   it('should hide the form initially', () => {
-    expect(domTokenToArray(this.form.classList)).to.include('hidden')
+    expect(domTokenToArray(this.form.classList)).to.include('u-hidden')
   })
 
   it('should clear the js-hidden class once ready', () => {
@@ -59,21 +59,21 @@ describe('archive form control', function () {
 
   it('should show the reveal button', () => {
     const revealButton = this.form.previousSibling
-    expect(domTokenToArray(revealButton.classList)).to.not.include('hidden')
+    expect(domTokenToArray(revealButton.classList)).to.not.include('u-hidden')
   })
 
   it('should show the form when you press the reveal button', () => {
     const revealButton = this.form.previousSibling
     this.archiveFormControl.showForm(event)
-    expect(domTokenToArray(this.form.classList)).to.not.include('hidden')
-    expect(domTokenToArray(revealButton.classList)).to.include('hidden')
+    expect(domTokenToArray(this.form.classList)).to.not.include('u-hidden')
+    expect(domTokenToArray(revealButton.classList)).to.include('u-hidden')
   })
 
   it('hide the form when you press cancel', () => {
     const revealButton = this.form.previousSibling
     this.archiveFormControl.hideForm(event)
-    expect(domTokenToArray(this.form.classList)).to.include('hidden')
-    expect(domTokenToArray(revealButton.classList)).to.not.include('hidden')
+    expect(domTokenToArray(this.form.classList)).to.include('u-hidden')
+    expect(domTokenToArray(revealButton.classList)).to.not.include('u-hidden')
   })
 
   it('should alert the user if then try to submit a form with no value', () => {

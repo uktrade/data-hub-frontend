@@ -48,12 +48,12 @@
 
     <div class="form-group">
       <div class="form-label-bold">Trading address (optional)</div>
-      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}hidden{% endif %}" type="button">Add trading address</button>
-      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} hidden{% endif %}" type="button">Remove trading address</button>
+      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}u-hidden{% endif %}" type="button">Add trading address</button>
+      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} u-hidden{% endif %}" type="button">Remove trading address</button>
     </div>
 
     <fieldset id="trading-address-wrapper"
-      class="fieldset--address lookup-address-js{%if showTradingAddress == false %} hidden{% endif %}">
+      class="fieldset--address lookup-address-js{%if showTradingAddress == false %} u-hidden{% endif %}">
 
       <div class="form-group form-group--postcode">{# hide for none js #}
         <label class="form-label-bold">Postcode</label>

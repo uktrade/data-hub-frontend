@@ -34,7 +34,7 @@ describe('Sector control', function () {
   })
 
   it('should hide the original element', function () {
-    expect(domTokenToArray(document.querySelector('#sector-wrapper').classList)).to.include('hidden')
+    expect(domTokenToArray(document.querySelector('#sector-wrapper').classList)).to.include('u-hidden')
   })
   it('should read the data from the original dropdown and add a primary dropdown listing the primary sectors', function () {
     const primaryDropdownOptionElements = document.querySelectorAll('.primary-sector-wrapper select option')

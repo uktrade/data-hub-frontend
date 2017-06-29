@@ -51,7 +51,7 @@ function toggleClass (element, className) {
 }
 
 function toggleVisible (element) {
-  if (hasClass(element, 'hidden')) {
+  if (hasClass(element, 'u-hidden')) {
     show(element)
   } else {
     hide(element)
@@ -98,12 +98,12 @@ function insertAfter (newElement, targetElement) {
 }
 
 function hide (element) {
-  addClass(element, 'hidden')
+  addClass(element, 'u-hidden')
   element.setAttribute('aria-hidden', true)
 }
 
 function show (element) {
-  removeClass(element, 'hidden')
+  removeClass(element, 'u-hidden')
   element.setAttribute('aria-hidden', false)
 }
 
