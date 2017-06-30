@@ -27,7 +27,7 @@ module.exports = function locals (req, res, next) {
     CANONICAL_URL: baseUrl + req.originalUrl,
 
     getAssetPath (asset) {
-      const assetsUrl = config.assetsHost || baseUrl
+      const assetsUrl = `${config.assetsHost || baseUrl}/assets`
       const webpackAssetPath = webpackManifest[asset]
 
       if (webpackAssetPath) {
