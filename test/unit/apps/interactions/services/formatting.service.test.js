@@ -95,7 +95,7 @@ describe('Interaction formatting service', function () {
     it('should create the alternative url for service deliveries', function () {
       interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayCompanyInteraction(interaction)
-      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62')
+      expect(actual.url).to.equal('/service-deliveries/22651151-2149-465e-871b-ac45bc568a62')
     })
   })
   describe('Interaction details', function () {
@@ -294,7 +294,7 @@ describe('Interaction formatting service', function () {
     it('should create the alternative url for service deliveries', function () {
       interaction.interaction_type = { id: '333', name: 'Service delivery' }
       const actual = interactionFormattingService.getDisplayContactInteraction(interaction)
-      expect(actual.url).to.equal('/servicedelivery/22651151-2149-465e-871b-ac45bc568a62')
+      expect(actual.url).to.equal('/service-deliveries/22651151-2149-465e-871b-ac45bc568a62')
     })
   })
 })

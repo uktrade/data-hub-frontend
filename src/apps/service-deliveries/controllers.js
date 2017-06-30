@@ -37,7 +37,7 @@ async function getServiceDeliveryEdit (req, res, next) {
         res.locals.serviceDelivery = await serviceDeliveryService.createBlankServiceDeliveryForCompany(token, adviser, req.query.company)
       }
     } else {
-      res.locals.backUrl = `/servicedelivery/${req.params.serviceDeliveryId}/details`
+      res.locals.backUrl = `/service-deliveries/${req.params.serviceDeliveryId}/details`
     }
     res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
       return {
@@ -74,7 +74,7 @@ async function postServiceDeliveryEdit (req, res, next) {
     req.body = deleteNulls(nullEmptyFields(req.body))
     const deliveryToSave = await serviceDeliveryService.convertServiceDeliveryFormToApiFormat(req.body)
     const result = await serviceDeliveryRepository.saveServiceDelivery(req.session.token, deliveryToSave)
-    res.redirect(`/servicedelivery/${result.data.id}/details`)
+    res.redirect(`/service-deliveries/${result.data.id}/details`)
   } catch (response) {
     try {
       if (response.error && response.error.errors) {

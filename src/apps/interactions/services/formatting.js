@@ -36,7 +36,7 @@ function getDisplayInteraction (interaction) {
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayCompanyInteraction (interaction) {
-  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interactions'
+  const type = (interaction.interaction_type.name === 'Service delivery') ? 'service-deliveries' : 'interactions'
 
   const result = {
     id: interaction.id,
@@ -61,7 +61,7 @@ function getDisplayCompanyInteraction (interaction) {
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayContactInteraction (interaction) {
-  const type = (interaction.interaction_type.name === 'Service delivery') ? 'servicedelivery' : 'interactions'
+  const type = (interaction.interaction_type.name === 'Service delivery') ? 'service-deliveries' : 'interactions'
 
   const result = {
     id: interaction.id,
