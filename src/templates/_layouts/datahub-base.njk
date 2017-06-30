@@ -17,10 +17,6 @@
 {% block head %}
   {{ super() }}
 
-  <!--[if lt IE 9]>
-    <script src="{{ getAssetPath('ie.js') }}"></script>
-  <![endif]-->
-
   {% include "_includes/google-tag-manager-snippet.njk" %}
 
   {% if user %}
