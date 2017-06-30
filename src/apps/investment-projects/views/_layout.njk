@@ -11,7 +11,7 @@
         This investment project was archived on {{ projectData.archived_on | formatDate }} by {{ projectData.archived_by.first_name }} {{ projectData.archived_by.last_name }}. <br>
         <strong>Archive reason:</strong> {{ projectData.archived_reason }}<br>
         <br>
-        <a href="/investment/{{ projectData.id }}/unarchive">Unarchive</a>
+        <a href="unarchive">Unarchive</a>
       </p>
     {% endif %}
 
@@ -24,7 +24,7 @@
       {% for item in localNavItems %}
         {% set isSelected = currentNavItem == item.slug %}
         <a
-          href="/investment/{{ projectData.id }}/{{ item.slug }}"
+          href="{{ item.slug }}"
           class="local-nav__link {{ 'is-active' if isSelected}}"
         >
           {{ item.label }}

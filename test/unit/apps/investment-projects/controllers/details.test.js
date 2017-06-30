@@ -46,7 +46,7 @@ describe('Investment details controller', () => {
         },
       }, {
         redirect: (url) => {
-          expect(url).to.equal('/investment/12345abc-1234-abcd-12ab-123456abcdef/details')
+          expect(url).to.equal('12345abc-1234-abcd-12ab-123456abcdef/details')
           done()
         },
       }, this.next)

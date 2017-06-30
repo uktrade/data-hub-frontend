@@ -15,7 +15,7 @@ describe('Auth middleware', () => {
     describe('when request contains an allowed url', () => {
       it('call the next middleware', () => {
         const reqMock = {
-          url: '/login',
+          url: '/sign-in',
         }
 
         this.authMiddleware(reqMock, resMock, this.nextSpy)
@@ -56,7 +56,7 @@ describe('Auth middleware', () => {
       expect(reqMock.session).to.have.property('returnTo')
       expect(reqMock.session.returnTo).to.equal('/protected-url')
       expect(this.nextSpy).not.to.be.called
-      expect(resMock.redirect).to.be.calledWith('/login')
+      expect(resMock.redirect).to.be.calledWith('/sign-in')
     })
   })
 })

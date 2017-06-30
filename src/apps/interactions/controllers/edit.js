@@ -44,7 +44,7 @@ async function editDetails (req, res, next) {
     } else if (req.query && req.query.contact) {
       res.locals.backUrl = `/contact/interactions/${req.query.contact}`
     } else if (res.locals.interaction) {
-      res.locals.backUrl = `/interaction/${res.locals.interaction.id}/details`
+      res.locals.backUrl = `/interactions/${res.locals.interaction.id}`
     }
 
     const companyContacts = await contactsRepository.getContactsForCompany(req.session.token, res.locals.formData.company)
@@ -76,7 +76,7 @@ async function editDetails (req, res, next) {
 async function postDetails (req, res, next) {
   try {
     const result = await interactionFormService.saveInteractionForm(req.session.token, req.body)
-    res.redirect(`/interaction/${result.id}/details`)
+    res.redirect(`/interactions/${result.id}`)
   } catch (errors) {
     if (errors.error) {
       if (errors.error.errors) {

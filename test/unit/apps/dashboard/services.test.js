@@ -38,7 +38,7 @@ describe('Dashboard service', () => {
           interactions: [{
             id: 'int-id',
             subject: 'int-subject',
-            url: '/interaction/int-id/details',
+            url: '/interactions/int-id',
             company: {
               url: '/test',
               name: 'comp-name',
@@ -47,7 +47,7 @@ describe('Dashboard service', () => {
           contacts: [{
             id: 'contact-id',
             name: 'first-name last-name',
-            url: '/contact/contact-id/details',
+            url: '/contacts/contact-id',
             company: {
               url: '/test',
               name: 'comp-name',
@@ -83,7 +83,7 @@ describe('Dashboard service', () => {
           interactions: [{
             id: 'int-id',
             subject: 'int-subject',
-            url: '/interaction/int-id/details',
+            url: '/interactions/int-id',
             company: {
               url: null,
               name: null,
@@ -92,7 +92,7 @@ describe('Dashboard service', () => {
           contacts: [{
             id: 'contact-id',
             name: 'first-name last-name',
-            url: '/contact/contact-id/details',
+            url: '/contacts/contact-id',
             company: {
               url: '/test',
               name: 'comp-name',

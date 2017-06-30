@@ -3,7 +3,7 @@ function getHandler (req, res) {
   req.session.token = null
   req.session.user = null
   req.flash('success-message', 'Signed out')
-  res.redirect('/login')
+  res.redirect('/sign-in')
 }
 
 module.exports = {

@@ -6,5 +6,5 @@
 
 {% block body_main_content %}
   {{ keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
-  <a class="button" href="/servicedelivery/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
+  <a class="button" href="/service-deliveries/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
 {% endblock %}

@@ -171,7 +171,7 @@ describe('Company interactions controller', function () {
         adviser: 'Fred Smith',
         contact: 'Jim Brown',
       }, {
-        url: '/servicedelivery/2/details',
+        url: '/service-deliveries/2/details',
         interaction_type: 'Service Delivery',
         subject: 'Test subject',
         date: '23 February 2017',

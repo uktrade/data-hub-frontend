@@ -17,11 +17,11 @@ async function getInteractions (req, res, next) {
 
     // Only allow a link to add an interaction if the company has contacts
     if (company.id && company.contacts && company.contacts.length > 0) {
-      res.locals.addInteractionUrl = `/interaction/add-step-1/?company=${company.id}`
+      res.locals.addInteractionUrl = `/interactions/create/1?company=${company.id}`
     }
 
     if (!company.contacts || company.contacts.length === 0) {
-      res.locals.addContact = `/contact/add?company=${res.locals.company.id}`
+      res.locals.addContact = `/contacts/create?company=${res.locals.company.id}`
     }
 
     res.locals.title = ['Interactions', res.locals.company.name, 'Companies']

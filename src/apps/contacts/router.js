@@ -5,10 +5,10 @@ const contactEditController = require('./controllers/edit')
 const contactArchiveController = require('./controllers/archive')
 const contactInteractionController = require('./controllers/interactions')
 
-router.get('/:contactId/details', contactController.getCommon, contactController.getDetails)
+router.get('/:contactId', contactController.getCommon, contactController.getDetails)
 
 router
-  .route('/add')
+  .route('/create')
   .get(contactEditController.editDetails)
   .post(contactEditController.postDetails)
 
@@ -20,6 +20,6 @@ router
 router.post('/:id/archive', contactArchiveController.archiveContact)
 router.get('/:id/unarchive', contactArchiveController.unarchiveContact)
 
-router.get('/interactions/:contactId', contactController.getCommon, contactInteractionController.getInteractions)
+router.get('/:contactId/interactions', contactController.getCommon, contactInteractionController.getInteractions)
 
 module.exports = router

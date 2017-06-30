@@ -39,7 +39,7 @@ function getHandler (req, res, next) {
         showSearch = true
       }
 
-      res.render('investment-projects/views/start', {
+      res.render('investment-projects/views/create-1', {
         title: 'Add investment project',
         clientCompany,
         clientCompanyInvestments,
@@ -57,13 +57,13 @@ function postHandler (req, res, next) {
   const clientCompanyId = req.body['client-company']
 
   if (isEquitySource === 'true') {
-    res.redirect(`/investment/create?equity-company=${clientCompanyId}`)
+    res.redirect(`2?equity-company=${clientCompanyId}`)
   } else if (isEquitySource === 'false') {
-    res.redirect(`/investment/start?client-company=${clientCompanyId}&show-search=true`)
+    res.redirect(`1?client-company=${clientCompanyId}&show-search=true`)
   } else {
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
-        res.render('investment-projects/views/start', {
+        res.render('investment-projects/views/create-1', {
           title: 'Add investment project',
           clientCompany,
           errors: {

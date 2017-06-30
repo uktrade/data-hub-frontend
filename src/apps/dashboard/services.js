@@ -6,7 +6,7 @@ function mapContacts (contacts) {
   if (contacts && (typeof contacts.map) === 'function') {
     return contacts.map((contact) => {
       return {
-        url: `/contact/${contact.id}/details`,
+        url: `/contacts/${contact.id}`,
         name: `${contact.first_name} ${contact.last_name}`,
         id: contact.id,
         company: {
@@ -26,7 +26,7 @@ function mapInteractions (interactions) {
     return interactions.map((interaction) => {
       const company = typeof interaction.company === 'object' && interaction.company !== null ? interaction.company : null
       return {
-        url: `/interaction/${interaction.id}/details`,
+        url: `/interactions/${interaction.id}`,
         id: interaction.id,
         subject: interaction.subject,
         company: {

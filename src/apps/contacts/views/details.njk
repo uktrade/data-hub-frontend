@@ -16,7 +16,7 @@
 
   {% if not contact.archived %}
     <p>
-      <a href="/contact/{{id}}/edit" class="button">Edit contact details</a>
+      <a href="/contacts/{{id}}/edit" class="button">Edit contact details</a>
     </p>
 
     <h2 class="heading-medium">Archive contact</h2>
@@ -27,7 +27,7 @@
       options: reasonForArchiveOptions,
       csrfToken: csrfToken,
       error: form.errors.reason,
-      url: '/contact/' + contact.id + '/archive'
+      url: '/contacts/' + contact.id + '/archive'
     } %}
   {% endif %}
 {% endblock %}

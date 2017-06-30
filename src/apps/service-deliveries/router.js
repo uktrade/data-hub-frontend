@@ -7,12 +7,12 @@ const {
   getServiceDeliveryDetails,
 } = require('./controllers')
 
-router.get('/servicedelivery/:serviceDeliveryId/*', getCommon)
+router.get('/:serviceDeliveryId/*', getCommon)
 
-router.get('/servicedelivery/:serviceDeliveryId/details', getServiceDeliveryDetails)
+router.get('/:serviceDeliveryId', getServiceDeliveryDetails)
 
 router
-  .route(['/servicedelivery/:serviceDeliveryId/edit', '/servicedelivery/edit/'])
+  .route('/:serviceDeliveryId/edit')
   .get(getServiceDeliveryEdit)
   .post(postServiceDeliveryEdit)
 

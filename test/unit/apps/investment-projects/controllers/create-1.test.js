@@ -27,7 +27,7 @@ describe('Investment start controller', () => {
     this.searchForeignCompanies = this.sandbox.stub().resolves(searchResults)
     this.getPagination = this.sandbox.stub().resolves({})
 
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/start', {
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/create-1', {
       '../../companies/services/data': {
         getInflatedDitCompany: this.getInflatedDitCompany,
       },
@@ -190,7 +190,7 @@ describe('Investment start controller', () => {
           },
         }, {
           redirect: (path) => {
-            expect(path).to.equal('/investment/create?equity-company=12345')
+            expect(path).to.equal('2?equity-company=12345')
             done()
           },
         }, this.next)
@@ -206,7 +206,7 @@ describe('Investment start controller', () => {
           },
         }, {
           redirect: (path) => {
-            expect(path).to.equal('/investment/start?client-company=12345&show-search=true')
+            expect(path).to.equal('1?client-company=12345&show-search=true')
             done()
           },
         }, this.next)
