@@ -55,10 +55,7 @@ nunjucks(app, config)
 // Static files
 app.use(favicon(path.join(config.root, 'public/images', 'favicon.ico')))
 app.use(express.static(path.join(config.root, 'public')))
-app.use('/js', express.static(path.join(config.buildDir, 'js')))
-app.use('/css', express.static(path.join(config.buildDir, 'css')))
-app.use('/images', express.static(path.join(config.buildDir, 'images')))
-app.use('/fonts', express.static(path.join(config.buildDir, 'fonts')))
+app.use('/assets', express.static(config.buildDir))
 
 app.use(flash())
 app.use(locals)
