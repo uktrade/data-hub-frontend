@@ -17,7 +17,7 @@ const common = {
   },
   output: {
     path: config.buildDir,
-    publicPath: '/',
+    publicPath: '/assets/',
   },
   module: {
     rules: [

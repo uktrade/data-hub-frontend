@@ -1,6 +1,6 @@
 module.exports = function auth (req, res, next) {
   const url = req.url
-  const passThrough = /^\/(support|ping|login)\b/.test(url) || req.session.token
+  const passThrough = /^\/(support|ping|login|assets)\b/.test(url) || req.session.token
 
   if (passThrough) {
     return next()
