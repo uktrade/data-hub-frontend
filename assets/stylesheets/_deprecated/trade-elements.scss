@@ -7,6 +7,7 @@ $asset-path: "../" !default;
 @import "~govuk_frontend_toolkit/stylesheets/typography";
 @import "~govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
 // GOV UK Elements
+@import "~govuk-elements-sass/public/sass/elements/helpers";
 @import "~govuk-elements-sass/public/sass/elements/reset";
 @import "~govuk-elements-sass/public/sass/elements/forms";
 @import "~govuk-elements-sass/public/sass/elements/forms/form-block-labels";
