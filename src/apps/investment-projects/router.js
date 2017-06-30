@@ -31,6 +31,11 @@ router
   .get(form.populateDetailsFormMiddleware, create.createGetHandler)
   .post(form.populateDetailsFormMiddleware, form.investmentDetailsFormPostMiddleware, create.createPostHandler)
 
+router
+  .route('/start')
+  .get(start.getHandler)
+  .post(start.postHandler)
+
 router.get('/:id', details.redirectToDetails)
 router.get('/:id/details', details.detailsGetHandler)
 
@@ -48,11 +53,6 @@ router
   .route('/:id/edit-requirements')
   .get(form.populateRequirementsFormMiddleware, edit.editRequirementsGet)
   .post(form.populateRequirementsFormMiddleware, form.investmentRequirementsFormPostMiddleware, edit.editRequirementsPost)
-
-router
-  .route('/start')
-  .get(start.getHandler)
-  .post(start.postHandler)
 
 router.get('/:id/team', team.getTeamHandler)
 
