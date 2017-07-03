@@ -76,10 +76,17 @@
 {% macro FormGroup(props) %}
   {% set groupElement = props.element or 'div' %}
   {% set labelElement = 'label' if groupElement == 'div' else 'legend' %}
+  {% set isConditional = props.condition %}
   {% if props.label and props.name -%}
     <{{ groupElement }}
-      class="c-form-group {{ 'has-error' if props.error }} {{ 'c-form-group--' + props.modifier if props.modifier}}"
+      class="c-form-group {{ 'has-error' if props.error }} {{ 'c-form-group--' + props.modifier if props.modifier}} {{ 'js-ConditionalSubfield' if isConditional }}"
+      {% if isConditional %}
+        data-controlled-by="{{ props.condition.name }}"
+        data-control-value="{{ props.condition.value }}"
+      {% endif %}
       id="group-{{ props.fieldId }}"
+      data-name="{{ props.name }}"
+      {% if props.toggles %}data-toggles='{{ props.toggles|stringify|safe }}'{% endif %}
     >
       <{{ labelElement }} class="c-form-group__label" for="{{ props.fieldId }}">
         <span class="c-form-group__label-text">
@@ -251,10 +258,11 @@
             <span class="c-multiple-choice__hint">{{ option.hint }}</span>
           {% endif %}
         </label>
+
+        {% for child in optionChildren %}
+          {{ child }}
+        {% endfor %}
       </div>
-      {% for child in optionChildren %}
-        {{ child }}
-      {% endfor %}
     {% endfor %}
 
     {% for child in fieldChildren %}
