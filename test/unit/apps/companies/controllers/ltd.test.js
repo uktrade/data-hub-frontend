@@ -84,10 +84,14 @@ describe('Company controller, ltd', function () {
       },
       '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
+      },
+      '../../companies-house/services/formatting': {
         getDisplayCH: getDisplayCHStub,
       },
-      '../repos': {
+      '../../companies-house/repos': {
         getCHCompany: getCHCompanyStub,
+      },
+      '../repos': {
         getDitCompany: getDitCompanyStub,
       },
       '../services/form': {
@@ -546,10 +550,14 @@ describe('Company controller, ltd', function () {
         },
         '../services/formatting': {
           getDisplayCompany: getDisplayCompanyStub,
+        },
+        '../../companies-house/services/formatting': {
           getDisplayCH: getDisplayCHStub,
         },
-        '../repos': {
+        '../../companies-house/repos': {
           getCHCompany: getCHCompanyStub,
+        },
+        '../repos': {
           getDitCompany: getDitCompanyStub,
         },
         '../services/form': {

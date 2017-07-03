@@ -2,6 +2,8 @@ const companyService = require('../services/data')
 const companyFormService = require('../services/form')
 const companyFormattingService = require('../services/formatting')
 const companyRepository = require('../repos')
+const { getCHCompany } = require('../../companies-house/repos')
+const { getDisplayCH } = require('../../companies-house/services/formatting')
 const metadataRepository = require('../../../lib/metadata')
 const { companyDetailsLabels, chDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
@@ -18,7 +20,7 @@ async function getDetails (req, res, next) {
     res.locals.companyDetailsLabels = companyDetailsLabels
 
     if (company.companies_house_data) {
-      res.locals.chDetails = companyFormattingService.getDisplayCH(company.companies_house_data)
+      res.locals.chDetails = getDisplayCH(company.companies_house_data)
       res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
       res.locals.chDetailsLabels = chDetailsLabels
     }
@@ -54,8 +56,8 @@ function editCommon (req, res, next) {
 
 async function addDetails (req, res, next) {
   try {
-    res.locals.chCompany = await companyRepository.getCHCompany(req.session.token, req.params.company_number)
-    res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.chCompany)
+    res.locals.chCompany = await getCHCompany(req.session.token, req.params.company_number)
+    res.locals.chDetails = getDisplayCH(res.locals.chCompany)
 
     if (containsFormData(req)) {
       res.locals.formData = req.body

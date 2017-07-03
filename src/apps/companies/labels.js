@@ -27,15 +27,7 @@ const companyDetailsLabels = {
   business_type_uk_other: 'Type of organisation',
   headquarter_type: 'Headquarters',
 }
-const chDetailsLabels = {
-  name: 'Registered name',
-  company_number: 'Companies House No',
-  registered_address: 'Registered office address',
-  business_type: 'Company type',
-  company_status: 'Company status',
-  sic_code: 'Nature of business (SIC)',
-  incorporation_date: 'Incorporated on',
-}
+
 const companyTypeOptions = {
   ltd: 'UK private or public limited company',
   ltdchild: 'Child of a UK private or public limited company',
@@ -53,4 +45,9 @@ const accountManagementDisplayLabels = {
   oneListAccountManager: 'One List account manager',
 }
 
-module.exports = { companyDetailsLabels, chDetailsLabels, companyTypeOptions, hqLabels, accountManagementDisplayLabels }
+module.exports = {
+  companyDetailsLabels,
+  companyTypeOptions,
+  hqLabels,
+  accountManagementDisplayLabels,
+}
