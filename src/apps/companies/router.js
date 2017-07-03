@@ -23,7 +23,7 @@ router.get('/company/add-step-2/', addController.getAddStepTwo)
 router.post('/company/archive/:id', archiveController.postArchiveCompany)
 router.get('/company/unarchive/:id', archiveController.getUnarchiveCompany)
 
-router.get('company/view/ch/:id', chController.getDetails)
+router.get('/company/view/ch/:id', chController.getDetails)
 
 router.get('/company-contacts/:id', contactsController.getContacts)
 
