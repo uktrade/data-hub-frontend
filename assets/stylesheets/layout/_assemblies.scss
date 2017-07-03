@@ -1,0 +1,20 @@
+@import "../settings";
+
+// Form assemblies
+// Define how components stack in views
+
+* + {
+  .c-form-group,
+  .c-error-summary {
+    margin-top: $default-spacing-unit * 2;
+  }
+
+  .c-multiple-choice {
+    margin-top: $default-spacing-unit / 2;
+  }
+
+  .c-form-group--subfield {
+    margin-top: $default-spacing-unit / 2;
+    margin-bottom: $default-spacing-unit;
+  }
+}

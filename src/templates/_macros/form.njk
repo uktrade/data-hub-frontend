@@ -1,0 +1,272 @@
+{##
+ # Render form errors summary
+ # @param {object} errors - A form error object
+ # @param {string} errors.summary - A helpful summary
+ # @param {object} errors.messages - A dictionary of errors with field name as key and message as value
+ #}
+{% macro ErrorSummary(errors) %}
+  {% if errors.messages | length %}
+    <div class="c-error-summary">
+      <h1 class="c-error-summary__heading heading-medium">This form has errors</h1>
+      {% if errors.summary %}
+        <p>{{ errors.summary }}</p>
+      {% endif %}
+      <ul class="c-error-summary__list">
+        {% for name, message in errors.messages %}
+          <li class="c-error-summary__list-item">
+            <a href="#group-field-{{ name }}">{{ message }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{##
+ # Render form with form errors and CSRF token
+ # @param {object} props - A form object
+ # @param {string} [props.method=POST] - Form method
+ # @param {string} [props.action] - Form action url
+ # @param {object} [props.errors] - Object containing form errors
+ # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
+ #
+ # @callback {function} caller - Required inner contents
+ #}
+{% macro Form(props) %}
+  {% set method = props.method or 'POST' -%}
+  <form
+    method="{{ method }}"
+    {% if props.action %}action="{{ props.action }}"{% endif -%}
+  >
+    {{ ErrorSummary(props.errors) }}
+    {{ CSRF(csrfToken) }}
+    {{ caller() }}
+    {% if not form.disableFormActions %}
+      <div class="c-form-group">
+        <button class="button">Submit</button>
+      </div>
+    {% endif %}
+  </form>
+{% endmacro %}
+
+{##
+ # Render hidden input with CSRF value
+ # @param {string} token - CSRF token
+ #}
+{% macro CSRF(token) %}
+  {% if token -%}
+    <input type="hidden" name="_csrf" value="{{ token }}">
+  {%- endif %}
+{% endmacro %}
+
+{##
+ # Render form group container with label hint and field error message
+ # @param {object} props - An object containing group properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} props.label - Field label
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.element=div] - Group element
+ # @param {string} [props.modifier] - Group modifier
+ # @param {boolean} [props.optional] - Marks field as optional
+ # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
+ # @param {string} [props.condition.value] - Name of the field that controls this form group if it is a subfield
+ #}
+{% macro FormGroup(props) %}
+  {% set groupElement = props.element or 'div' %}
+  {% set labelElement = 'label' if groupElement == 'div' else 'legend' %}
+  {% set isConditional = props.condition %}
+  {% if props.label and props.name -%}
+    <{{ groupElement }}
+      class="c-form-group {{ 'has-error' if props.error }} {{ 'c-form-group--' + props.modifier if props.modifier}} {{ 'js-ConditionalSubfield' if isConditional }}"
+      {% if isConditional %}
+        data-controlled-by="{{ props.condition.name }}"
+        data-control-value="{{ props.condition.value }}"
+      {% endif %}
+      id="group-{{ props.fieldId }}"
+      data-name="{{ props.name }}"
+      {% if props.toggles %}data-toggles='{{ props.toggles|stringify|safe }}'{% endif %}
+    >
+      <{{ labelElement }} class="c-form-group__label" for="{{ props.fieldId }}">
+        <span class="c-form-group__label-text">
+          {{ props.label }} {{ ' (optional)' if props.optional }}
+        </span>
+        {% if props.hint %}
+          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
+        {% endif %}
+        {% if props.error %}
+          <span class="c-form-group__error-message">{{ props.error }}</span>
+        {% endif %}
+      </{{ labelElement }}>
+      {{ caller() }}
+    </{{ groupElement }}>
+  {%- endif %}
+{% endmacro %}
+
+{##
+ # Render form group with a text field and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {string} [props.type] - Field type
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.modifier] - Field modifier
+ # @param {boolean} [props.optional] - Marks field as optional
+ #}
+{% macro TextField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier })) %}
+    {% if props.type === 'textarea' %}
+      {{ TextArea(props) }}
+    {% else %}
+      {{ Input(props) }}
+    {% endif %}
+  {% endcall %}
+{% endmacro %}
+
+{##
+ # Render form group with a multi choice field (dropdown, radio, checkboxes)
+ # and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {sops.t} [props.type] - Field type
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {boolean} [props.optional] - Marks field as optional
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro MultipleChoiceField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+  {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, element: element })) %}
+    {% if props.type in ['checkbox', 'radio'] %}
+      {{ MultipleChoice(props) }}
+    {% else %}
+      {% call SelectBox(props) %}
+        {{ props.caller() if props.caller }}
+      {% endcall %}
+    {% endif %}
+  {% endcall %}
+{% endmacro %}
+
+{##
+ # Render input field (form-control)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} [props.type] - Field type
+ # @param {string} [props.value] - Field type
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string} [props.modifier] - form-control modifier
+ # @param {string} [props.error] - Mark form-control with error
+ #}
+{% macro Input(props) %}
+  <input
+    name="{{ props.name }}"
+    type="{{ props.type if props.type else 'text' }}"
+    id="{{ props.fieldId }}"
+    {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
+    value="{{ props.value }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+  >
+{% endmacro %}
+
+{##
+ # Render textarea field (form-control)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} [props.value] - Field type
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string} [props.modifier] - form-control modifier
+ # @param {string} [props.error] - Mark form-control with error
+ #}
+{% macro TextArea(props) %}
+  <textarea
+    name="{{ props.name }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    id="{{ props.fieldId }}"
+    placeholder="{{ props.placeholder }}"
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    rows="8"
+  >{{ props.value }}</textarea>
+{% endmacro %}
+
+{##
+ # Render select field (form-control)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} [props.options] - Field options
+ # @param {string} [props.modifier] - form-control modifier
+ # @param {string} [props.error] - Mark form-control with error
+ # @param {string} [props.selected] - Selected field value
+ #
+ # @callback {function} caller - Optional inner contents
+ #}
+{% macro SelectBox(props) %}
+  <select
+    id="{{ props.fieldId }}"
+    name="{{ props.name }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+  >
+    {{ caller() if caller }}
+    {% for option in props.options %}
+      <option value="{{ option.value }}" {% if props.selected == option.value %}selected{% endif %}>
+        {{ option.label }}
+      </option>
+    {% endfor %}
+  </select>
+{% endmacro %}
+
+{##
+ # Render checkbox or radio button (multiple-choice)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} props.options - Field options
+ # @param {string} [props.selected] - Checked field value
+ # @param {string} [props.children] - Main field subfields
+ # @param {string} [props.options[].subfield] - Field options subfields
+ #}
+{% macro MultipleChoice(props) %}
+  {% if props.type in ['checkbox', 'radio'] %}
+    {% set fieldChildren = props.children or [] %}
+
+    {% for option in props.options %}
+      {% set selected = props.selected or [] %}
+      {% set optionChildren = option.children or [] %}
+      <div class="c-multiple-choice">
+        <input
+          class="c-multiple-choice__input"
+          type="{{ props.type }}"
+          name="{{ props.name }}"
+          value="{{ option.value }}"
+          id="{{ props.fieldId }}-{{ loop.index }}"
+          {% if option.value in selected %}checked{% endif %}
+          {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+        >
+        <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
+          <span class="c-multiple-choice__label-text">{{ option.label }}</span>
+          {% if option.hint %}
+            <span class="c-multiple-choice__hint">{{ option.hint }}</span>
+          {% endif %}
+        </label>
+
+        {% for child in optionChildren %}
+          {{ child }}
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    {% for child in fieldChildren %}
+      {{ child }}
+    {% endfor %}
+  {% endif %}
+{% endmacro %}

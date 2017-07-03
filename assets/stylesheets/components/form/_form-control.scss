@@ -1,0 +1,58 @@
+@import "../../settings";
+
+.c-form-control {
+  border: 2px solid $text-colour;
+  background-color: $white;
+  display: inline-block;
+  height: 2em;
+  padding: $default-spacing-unit / 2;
+  font-size: 1em;
+  line-height: 1;
+  outline: 0;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $focus-colour;
+  }
+
+  &[type="text"],
+  &[type="password"] {
+    width: 100%;
+  }
+
+  &::placeholder {
+    color: $grey-2;
+  }
+}
+
+// sass-lint:disable no-qualifying-elements
+textarea.c-form-control {
+  min-height: 8em;
+  max-height: 50vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+select.c-form-control {
+  width: 100%;
+  padding: 0 $default-spacing-unit / 2;
+  border-radius: 0;
+  appearance: none;
+  line-height: 1.2;
+  background: url("../../../images/icon-triangle.svg") no-repeat right 8px top 50%;
+
+  &:-moz-focusring {
+    color: transparent;
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+.c-form-control.has-error {
+  border-color: $error-colour;
+}
+
+.c-form-control--short {
+  max-width: 10em;
+}

@@ -1,6 +1,7 @@
 const nunjucks = require('nunjucks')
 
 const {
+  assign,
   isArray,
   isPlainObject,
   isEmpty,
@@ -18,7 +19,7 @@ function isNotEmpty (value) {
 
 const filters = {
   stringify: JSON.stringify,
-
+  assign,
   values,
   keys,
   flatten,

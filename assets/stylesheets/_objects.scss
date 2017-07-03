@@ -1,10 +1,10 @@
 @import "objects/list";
 @import "objects/conditional-subfields";
 
-@import "objects/layout/global-header";
-@import "objects/layout/global-footer";
-@import "objects/layout/global-nav";
-@import "objects/layout/main-content";
-@import "objects/layout/notification-banner";
-@import "objects/layout/phase-banner";
-@import "objects/layout/skip-links";
+@import "objects/base/global-header";
+@import "objects/base/global-footer";
+@import "objects/base/global-nav";
+@import "objects/base/main-content";
+@import "objects/base/notification-banner";
+@import "objects/base/phase-banner";
+@import "objects/base/skip-links";

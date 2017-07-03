@@ -1,0 +1,106 @@
+{% extends "_layouts/datahub-base.njk" %}
+
+{% block body_main_header_content %}
+  <h1 class="heading-xlarge">{{ title }}</h1>
+{% endblock %}
+
+{% block body_main_content %}
+
+  <h2 class="page-heading">Form elements</h2>
+
+  {% call Form(form) %}
+    {{ TextField({
+      name: 'name',
+      label: 'Company name',
+      placeholder: 'e.g. Hooli',
+      error: form.errors.messages.name,
+      value: form.state.name
+    }) }}
+
+    {{ TextField({
+      name: 'description',
+      label: 'Describe yourself',
+      placeholder: 'Lorem ipsum',
+      type: 'textarea',
+      hint: 'A few words about yourself',
+      optional: true,
+      error: form.errors.messages.description,
+      value: form.state.description
+    }) }}
+
+    {{ MultipleChoiceField({
+      name: 'country',
+      label: 'Country',
+      error: form.errors.messages.country,
+      options: form.options.countries,
+      selected: form.state.country
+    }) }}
+
+    {% call MultipleChoiceField({
+        name: 'sectors',
+        label: 'Sectors',
+        options: form.options.sectors,
+        selected: form.state.sectors
+      })
+    %}
+      <option value="">-- Select sector --</option>
+    {% endcall %}
+
+    {{ MultipleChoiceField({
+        type: 'checkbox',
+        name: 'strategicDrivers',
+        label: 'Strategic drivers',
+        options: form.options.strategicDrivers,
+        selected: form.state.strategicDrivers
+      })
+    }}
+
+    {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'averageSalary',
+        label: 'Average salary range',
+        options: form.options.averageSalaryRange,
+        error: form.errors.messages.averageSalary,
+        selected: form.state.averageSalary
+      })
+    }}
+
+    {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'businessType',
+        label: 'Company type',
+        selected: form.state.businessType,
+        error: form.errors.messages.businessType,
+        options: [
+          {
+            value: 'ltd',
+            label: 'UK private or public limited company',
+            hint: 'Must be a company registered with Companies House'
+          }, {
+            value: 'ukother',
+            label: 'Other type of UK organisation',
+            hint: 'UK organisation not registered with Companies House',
+            children:  [
+              MultipleChoiceField({
+                name: 'foreignOtherCompany',
+                label: 'Type of organisation',
+                error: form.errors.messages.foreignOtherCompany,
+                selected: form.state.foreignOtherCompany,
+                options: form.options.foreignOtherCompany,
+                condition: {
+                  name: 'businessType',
+                  value: 'ukother'
+                },
+                modifier: 'subfield'
+              })
+            ]
+          }, {
+            value: 'foreign',
+            label: 'Foreign organisation'
+          }
+        ]
+      })
+    }}
+  {% endcall %}
+
+{% endblock %}
