@@ -1,40 +1,10 @@
-const companyService = require('../services/data')
 const companyFormService = require('../services/form')
 const companyFormattingService = require('../services/formatting')
 const companyRepository = require('../repos')
 const metadataRepository = require('../../../lib/metadata')
-const { companyDetailsLabels, chDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
-const companyWithCHKeys = ['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
-
-async function getDetails (req, res, next) {
-  try {
-    res.locals.tab = 'details'
-    const company = res.locals.company = await companyService.getInflatedDitCompany(req.session.token, req.params.id)
-    companyService.getCommonTitlesAndlinks(req, res, company)
-    res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
-    res.locals.companyDetailsDisplayOrder = companyWithCHKeys
-    res.locals.companyDetailsLabels = companyDetailsLabels
-
-    if (company.companies_house_data) {
-      res.locals.chDetails = companyFormattingService.getDisplayCH(company.companies_house_data)
-      res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
-      res.locals.chDetailsLabels = chDetailsLabels
-    }
-
-    res.locals.accountManagementDisplay = {
-      oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
-      oneListAccountManager: 'None',
-    }
-    res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
-    res.locals.title = [company.name, 'Companies']
-
-    res.render('companies/views/details-ltd')
-  } catch (error) {
-    next(error)
-  }
-}
 
 function editCommon (req, res, next) {
   res.locals.chDetailsLabels = chDetailsLabels
@@ -92,7 +62,7 @@ function postDetails (req, res, next) {
     try {
       const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
       req.flash('success-message', 'Updated company record')
-      res.redirect(`/company/view/ltd/${savedCompany.id}`)
+      res.redirect(`/companies/${savedCompany.id}/details`)
     } catch (response) {
       if (response.errors) {
         // Leeloo has inconsistant structure to return errors.
@@ -118,7 +88,6 @@ function postDetails (req, res, next) {
 }
 
 module.exports = {
-  getDetails,
   editDetails,
   addDetails,
   postDetails,

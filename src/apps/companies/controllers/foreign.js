@@ -1,33 +1,8 @@
 const companyRepository = require('../repos')
 const companyFormService = require('../services/form')
-const companyService = require('../services/data')
-const companyFormattingService = require('../services/formatting')
-const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels, hqLabels } = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
-const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
-
-async function getDetails (req, res, next) {
-  try {
-    res.locals.tab = 'details'
-    const company = res.locals.company = await companyService.getInflatedDitCompany(req.session.token, req.params.id)
-    companyService.getCommonTitlesAndlinks(req, res, company)
-    res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
-    res.locals.companyDetailsDisplayOrder = companyWithoutCHKeys
-    res.locals.companyDetailsLabels = companyDetailsLabels
-
-    res.locals.accountManagementDisplay = {
-      oneListTier: (company.classification && company.classification !== null && company.classification.name) ? company.classification.name : 'None',
-      oneListAccountManager: 'None',
-    }
-    res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
-    res.locals.title = [company.name, 'Companies']
-
-    res.render('companies/views/details-foreign')
-  } catch (error) {
-    next(error)
-  }
-}
 
 function editCommon (req, res, next) {
   res.locals.regionOptions = metadataRepository.regionOptions
@@ -78,7 +53,7 @@ function postDetails (req, res, next) {
     try {
       const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
       req.flash('success-message', 'Updated company record')
-      res.redirect(`/company/view/foreign/${savedCompany.id}`)
+      res.redirect(`/companies/${savedCompany.id}/details`)
     } catch (response) {
       if (response.errors) {
         // Leeloo has inconsistant structure to return errors.
@@ -104,7 +79,6 @@ function postDetails (req, res, next) {
 }
 
 module.exports = {
-  getDetails,
   editDetails,
   addDetails,
   postDetails,
