@@ -21,7 +21,7 @@ function editDetailsPost (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment-projects/views/details-edit', templateData)
   }
-  req.flash('success-message', 'Updated investment details')
+  req.flash('success', 'Updated investment details')
   return res.redirect(`/investment/${res.locals.resultId}/details`)
 }
 
@@ -29,13 +29,13 @@ function editValuePost (req, res) {
   if (res.locals.form.errors) {
     return res.render('investment-projects/views/value-edit', templateData)
   }
-  req.flash('success-message', 'Updated investment value')
+  req.flash('success', 'Updated investment value')
   return res.redirect(`/investment/${res.locals.projectId}/details`)
 }
 
 function editRequirementsPost (req, res) {
   if (res.locals.form.errors) {
-    req.flash('success-message', 'Updated investment requirements')
+    req.flash('success', 'Updated investment requirements')
     return res.render('investment-projects/views/requirements-edit', templateData)
   }
   return res.redirect(`/investment/${res.locals.projectId}/details`)

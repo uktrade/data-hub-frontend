@@ -58,6 +58,11 @@
   </nav>
 {% endblock %}
 
+{% block body_main_header %}
+  {% component 'messages', { messages: messages } %}
+  {{ super() }}
+{% endblock %}
+
 {% block body %}
   {% include "_includes/google-tag-manager-no-script.njk" %}
   {{ super() }}

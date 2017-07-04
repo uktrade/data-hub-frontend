@@ -110,7 +110,7 @@ describe('Company controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('success-message', 'Updated company record')
+        expect(flashStub).to.be.calledWith('success', 'Updated company record')
         done()
       },
     }
@@ -129,7 +129,7 @@ describe('Company controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('error-message', 'Unable to archive company, no reason given')
+        expect(flashStub).to.be.calledWith('error', 'Unable to archive company, no reason given')
         done()
       },
     }

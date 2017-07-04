@@ -227,7 +227,7 @@ describe('Investment archive controller', function () {
         flash: this.flashStub,
       }, {
         redirect: () => {
-          expect(this.flashStub).to.be.calledWith('success-message', 'Updated investment project')
+          expect(this.flashStub).to.be.calledWith('success', 'Updated investment project')
           done()
         },
       }, this.next)

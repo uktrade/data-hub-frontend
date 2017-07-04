@@ -396,7 +396,7 @@ describe('Contact controller, edit', function () {
     })
     it('should send a flash message to let the user know they just updated a contact', function (done) {
       res.redirect = function (url) {
-        expect(flashStub).to.be.calledWith('success-message', 'Updated contact record')
+        expect(flashStub).to.be.calledWith('success', 'Updated contact record')
         done()
       }
       contactEditController.postDetails(req, res, next)
@@ -404,7 +404,7 @@ describe('Contact controller, edit', function () {
     it('should send a flash message to let the user know they just added a contact', function (done) {
       delete body.id
       res.redirect = function (url) {
-        expect(flashStub).to.be.calledWith('success-message', 'Added new contact')
+        expect(flashStub).to.be.calledWith('success', 'Added new contact')
         done()
       }
       contactEditController.postDetails(req, res, next)

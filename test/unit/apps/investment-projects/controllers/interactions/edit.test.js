@@ -55,7 +55,7 @@ describe('Investment Interactions edit controller', () => {
           redirect: (url) => {
             try {
               expect(url).to.equal(`/investment/${investmentProjectData.id}/interactions`)
-              expect(this.flashStub).to.calledWith('success-message', 'Investment Interaction successfully updated')
+              expect(this.flashStub).to.calledWith('success', 'Investment Interaction successfully updated')
               done()
             } catch (e) {
               done(e)

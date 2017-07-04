@@ -67,7 +67,7 @@ describe('Contact controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('success-message', 'Updated contact record')
+        expect(flashStub).to.be.calledWith('success', 'Updated contact record')
         done()
       },
     }
@@ -84,7 +84,7 @@ describe('Contact controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('error-message', 'Unable to archive contact, no reason given')
+        expect(flashStub).to.be.calledWith('error', 'Unable to archive contact, no reason given')
         done()
       },
     }
