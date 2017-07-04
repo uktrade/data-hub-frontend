@@ -29,11 +29,13 @@
  # @param {string} [props.action] - Form action url
  # @param {object} [props.errors] - Object containing form errors
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
+ # @param {string} [props.buttonText=Save] - Text for submit button
  #
  # @callback {function} caller - Required inner contents
  #}
 {% macro Form(props) %}
   {% set method = props.method or 'POST' -%}
+  {% set buttonText = props.buttonText or 'Save' %}
   <form
     method="{{ method }}"
     {% if props.action %}action="{{ props.action }}"{% endif -%}
@@ -41,9 +43,9 @@
     {{ ErrorSummary(props.errors) }}
     {{ CSRF(csrfToken) }}
     {{ caller() }}
-    {% if not form.disableFormActions %}
+    {% if not props.disableFormActions %}
       <div class="c-form-group">
-        <button class="button">Submit</button>
+        <button class="button">{{ buttonText }}</button>
       </div>
     {% endif %}
   </form>
