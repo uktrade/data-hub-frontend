@@ -52,3 +52,13 @@ legend.c-form-group__label {
     padding-left: ($default-spacing-unit * 2) - 4;
   }
 }
+
+.c-form-group--inline {
+  @include media(tablet) {
+    .c-multiple-choice {
+      display: inline-block;
+      margin-top: 0;
+      margin-right: $default-spacing-unit;
+    }
+  }
+}
