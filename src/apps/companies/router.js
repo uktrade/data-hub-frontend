@@ -1,10 +1,15 @@
 const router = require('express').Router()
 
 const {
+  chDisplayData,
+  companyData,
+} = require('./middleware')
+
+const {
   addController,
   archiveController,
-  chController,
   contactsController,
+  detailsController,
   expController,
   foreignController,
   interactionsController,
@@ -23,8 +28,6 @@ router.get('/company/add-step-2/', addController.getAddStepTwo)
 router.post('/company/archive/:id', archiveController.postArchiveCompany)
 router.get('/company/unarchive/:id', archiveController.getUnarchiveCompany)
 
-router.get('/company/view/ch/:id', chController.getDetails)
-
 router.get('/company-contacts/:id', contactsController.getContacts)
 
 router.get('/company-exports/view/:id', expController.view)
@@ -33,8 +36,6 @@ router
   .route('/company-exports/edit/:id')
   .get(expController.edit)
   .post(expController.post)
-
-router.get('/company/view/ltd/:id', ltdController.getDetails)
 
 router
   .route('/company/edit/ltd/:id')
@@ -46,8 +47,6 @@ router
   .get(foreignController.editCommon, ltdController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/company/view/ukother/:id', ukotherController.getDetails)
-
 router
   .route('/company/edit/ukother/:id')
   .get(foreignController.editCommon, ukotherController.editDetails)
@@ -58,8 +57,6 @@ router
   .get(foreignController.editCommon, ukotherController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/company/view/foreign/:id', foreignController.getDetails)
-
 router
   .route('/company/edit/foreign/:id')
   .get(foreignController.editCommon, foreignController.editDetails)
@@ -69,6 +66,11 @@ router
   .route('/company/add/foreign')
   .get(foreignController.editCommon, foreignController.addDetails)
   .post(foreignController.postDetails)
+
+router.use('/companies/:id', companyData)
+router.get('/companies/:id/*', chDisplayData)
+
+router.get('/companies/:id/details', detailsController.getDetails)
 
 router.get('/company-interactions/:id', interactionsController.getInteractions)
 router.get('/company/:id/investments', investmentsController.getAction)

@@ -1,5 +1,3 @@
-const companyRepository = require('../companies/repos')
-const { buildCompanyUrl } = require('../companies/services/data')
 const { search } = require('./services')
 const getPagination = require('../../lib/pagination').getPagination
 const Joi = require('joi')
@@ -75,18 +73,8 @@ function searchAction (req, res, next) {
     .catch(next)
 }
 
-async function viewCompanyResult (req, res, next) {
-  try {
-    const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
-    res.redirect(buildCompanyUrl(company))
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   indexAction,
   searchAction,
   searchActionValidationSchema,
-  viewCompanyResult,
 }

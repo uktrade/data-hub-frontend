@@ -99,126 +99,6 @@ describe('Company controller, ltd', function () {
     })
   })
 
-  describe('get details', function () {
-    it('should get the company details', function (done) {
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, {
-        locals: {},
-        render: function () {
-          expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
-          done()
-        },
-      }, next)
-    })
-    it('should return the company heading name and address', function (done) {
-      const res = {
-        locals: {},
-        render: function () {
-          expect(res.locals.headingName).to.equal('ADALEOP LTD')
-          expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
-          done()
-        },
-      }
-
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, res, next)
-    })
-    it('should get a formatted copy of the company house data to display', function (done) {
-      const res = {
-        locals: {},
-        render: function () {
-          expect(getDisplayCHStub).to.be.calledWith(chCompany)
-          expect(res.locals).to.have.property('chDetails')
-          expect(res.locals).to.have.property('chDetailsLabels')
-          expect(res.locals.chDetailsDisplayOrder).to.deep.equal(['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code'])
-          done()
-        },
-      }
-
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, res, next)
-    })
-    it('should get formatted data for CDMS company details', function (done) {
-      const res = {
-        locals: {},
-        render: function () {
-          expect(getDisplayCompanyStub).to.be.calledWith(company)
-          expect(res.locals).to.have.property('companyDetails')
-          expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
-          done()
-        },
-      }
-
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, res, next)
-    })
-    it('should provide account management information', function (done) {
-      const res = {
-        locals: {},
-        render: function () {
-          expect(res.locals).to.have.property('accountManagementDisplay')
-          expect(res.locals).to.have.property('accountManagementDisplayLabels')
-          done()
-        },
-      }
-
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, res, next)
-    })
-    it('should use a template for ltd data', function (done) {
-      const res = {
-        locals: {},
-        render: function (template) {
-          try {
-            expect(template).to.equal('companies/views/details-ltd')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }
-
-      companyControllerLtd.getDetails({
-        session: {
-          token: '1234',
-        },
-        params: {
-          id: '9999',
-        },
-      }, res, next)
-    })
-  })
   describe('add details', function () {
     it('should create form defaults for an empty company', function (done) {
       const req = {
@@ -526,7 +406,7 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ltd/999')
+          expect(url).to.equal('/companies/999/details')
           done()
         },
         render: function () {

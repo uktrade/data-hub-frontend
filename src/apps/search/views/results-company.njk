@@ -24,7 +24,7 @@
           {% if company.companies_house_data %}
             {% set companyUrl = '/company/view/ch/' + company.companies_house_data.company_number %}
           {% else %}
-            {% set companyUrl = '/viewcompanyresult/' + company.id %}
+            {% set companyUrl = '/companies/' + company.id + '/details'%}
           {% endif %}
 
           <h3 class="results-list__item-header">

@@ -8,6 +8,9 @@ const serviceDeliveryRepository = require('../../service-deliveries/repos')
 const interactionDataService = require('../../interactions/services/data')
 const { getFormattedAddress } = require('../../../lib/address')
 
+const FOREIGN = 'FOREIGN'
+const LTD = 'LTD'
+const UKOTHER = 'UKOTHER'
 function getContactInCompanyObject (company, contactId) {
   for (const contact of company.contacts) {
     if (contact.id === contactId) return contact
@@ -79,19 +82,7 @@ function getInflatedDitCompany (token, id) {
  * @returns {string} urlPath
  */
 function buildCompanyUrl (company) {
-  const companyPath = '/company/view'
-  const businessType = get(company, 'business_type.name', '').toLowerCase()
-  let urlPath
-
-  if (!company.uk_based) {
-    urlPath = `${companyPath}/foreign/${company.id}`
-  } else if (businessType.includes('limited company')) {
-    urlPath = `${companyPath}/ltd/${company.id}`
-  } else {
-    urlPath = `${companyPath}/ukother/${company.id}`
-  }
-
-  return urlPath
+  return `/companies/${company.id}/details`
 }
 
 function getHeadingAddress (company) {
@@ -122,12 +113,28 @@ function getHeadingName (company) {
 function getCommonTitlesAndlinks (req, res, company) {
   res.locals.headingName = getHeadingName(company)
   res.locals.headingAddress = getHeadingAddress(company)
-  res.locals.companyUrl = buildCompanyUrl(company)
+  res.locals.companyUrl = `/companies/${company.id}/details`
+}
+
+function getCompanyType (company) {
+  const businessType = get(company, 'business_type.name', '').toLowerCase()
+  if (!company.uk_based) {
+    return FOREIGN
+  } else if (businessType.includes('limited company')) {
+    return LTD
+  } else {
+    return UKOTHER
+  }
 }
 
 module.exports = {
   getInflatedDitCompany,
   buildCompanyUrl,
   getCommonTitlesAndlinks,
+  getCompanyType,
   getHeadingAddress,
+  getHeadingName,
+  UKOTHER,
+  LTD,
+  FOREIGN,
 }

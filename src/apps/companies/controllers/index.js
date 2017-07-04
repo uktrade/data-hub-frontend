@@ -2,6 +2,7 @@ const addController = require('./add')
 const archiveController = require('./archive')
 const chController = require('./ch')
 const contactsController = require('./contacts')
+const detailsController = require('./details')
 const expController = require('./exp')
 const foreignController = require('./foreign')
 const interactionsController = require('./interactions')
@@ -14,6 +15,7 @@ module.exports = {
   archiveController,
   chController,
   contactsController,
+  detailsController,
   expController,
   foreignController,
   interactionsController,
