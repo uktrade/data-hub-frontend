@@ -5,55 +5,51 @@
 {% endblock %}
 
 {% block body_main_content %}
-  {{ errorPanel(errors) }}
+  {% call Form(form | assign({buttonText: 'Send'})) %}
+    {{ TextField({
+      name: 'title',
+      label: 'Title',
+      hint: 'A brief summary of your feedback/problem',
+      error: form.errors.messages.title,
+      value: form.data.title
+    }) }}
 
-  {% if messages.success.length %}
-    <div class="flash-message success-message">
-      <p class="flash-message-content">
-        {% for message in messages.success %}
-          {{ message }}<br>
-        {% endfor %}
-      </p>
-    </div>
-  {% endif %}
+    {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'feedbackType',
+        modifier: 'inline',
+        label: 'Problem or feedback?',
+        error: form.errors.messages.feedbackType,
+        options: form.options.feedbackType,
+        selected: form.data.feedbackType
+    }) }}
 
-  {{ errorPanel( messages.formErrors ) }}
+    {{ TextField({
+      optional: true,
+      type: 'textarea',
+      name: 'description',
+      label: 'Description',
+      hint: 'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
+      error: form.errors.messages.description,
+      value: form.data.description
+    }) }}
 
-  <form action="{{ action }}" method="post">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    {{ TextField({
+      optional: true,
+      name: 'email',
+      label: 'Email',
+      hint: 'If you wish to be contacted, please provide your email address',
+      error: errors.messages.email,
+      value: form.data.email
+    }) }}
 
-    {{ textbox('title', label="Title", hint="A brief summary of your feedback/problem", error=errors.title, autofocus=true, value=data.title) }}
-    {{ textarea('description', label="Description", hint="If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.", error=errors.steps, autofocus=true, value=data.steps) }}
-    {{ textbox('email', label="Email", hint="If you wish to be contacted, please provide your email address",error=errors.name, autofocus=true, value=data.name) }}
-    {{ textbox('browser', label="Web browser", hint="The name of the web browser and version you were using", error=errors.browser, autofocus=true, value=data.browser) }}
-
-    <div id="type-wrapper" class="inline form-group {% if errors.type %}error{% endif %}">
-      <fieldset>
-        <legend>
-          <span class="form-label-bold">Problem or feedback?</span>
-          {% if errors.type %}<span class="error-message">{{ errors.type }}</span>{% endif %}
-        </legend>
-        <label class="block-label selection-button-radio" for="bug">
-          <input
-            id="bug"
-            type="radio"
-            name="type"
-            value="bug"
-          >
-          Problem
-        </label>
-        <label class="block-label selection-button-radio" for="feedback">
-          <input
-            id="feedback"
-            type="radio"
-            name="type"
-            value="feedback"
-          >
-          Feedback
-        </label>
-      </fieldset>
-    </div>
-
-    {{ save(backUrl=referer, buttonText='Send') }}
-  </form>
+    {{ TextField({
+      optional: true,
+      name: 'browser',
+      label: 'Web browser',
+      hint: 'The name of the web browser and version you were using',
+      error: form.errors.messages.browser,
+      value: form.data.browser
+    }) }}
+  {% endcall %}
 {% endblock %}
