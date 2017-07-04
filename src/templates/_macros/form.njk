@@ -5,19 +5,21 @@
  # @param {object} errors.messages - A dictionary of errors with field name as key and message as value
  #}
 {% macro ErrorSummary(errors) %}
-  {% if errors.messages | length %}
-    <div class="c-error-summary">
-      <h1 class="c-error-summary__heading heading-medium">This form has errors</h1>
+  {% if errors.messages | length or errors.summary %}
+    <div class="c-form-errors js-FormErrors" role="alert">
+      <h1 class="c-form-errors__heading heading-medium">There was a problem submitting this form</h1>
       {% if errors.summary %}
-        <p>{{ errors.summary }}</p>
+        <p class="c-form-errors__summary">{{ errors.summary }}</p>
       {% endif %}
-      <ul class="c-error-summary__list">
-        {% for name, message in errors.messages %}
-          <li class="c-error-summary__list-item">
-            <a href="#group-field-{{ name }}">{{ message }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+      {% if errors.messages | length %}
+        <ul class="c-form-errors__list">
+          {% for name, message in errors.messages %}
+            <li class="c-form-errors__list-item">
+              <a href="#group-field-{{ name }}">{{ message }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </div>
   {% endif %}
 {% endmacro %}
@@ -29,13 +31,13 @@
  # @param {string} [props.action] - Form action url
  # @param {object} [props.errors] - Object containing form errors
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
- # @param {string} [props.buttonText=Save] - Text for submit button
+ # @param {string} [props.buttonText=Submit] - Text for submit button
  #
  # @callback {function} caller - Required inner contents
  #}
 {% macro Form(props) %}
   {% set method = props.method or 'POST' -%}
-  {% set buttonText = props.buttonText or 'Save' %}
+  {% set buttonText = props.buttonText or 'Submit' %}
   <form
     method="{{ method }}"
     {% if props.action %}action="{{ props.action }}"{% endif -%}
