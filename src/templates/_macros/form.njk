@@ -176,6 +176,7 @@
     {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
     value="{{ props.value }}"
     class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
 {% endmacro %}
@@ -197,6 +198,7 @@
     id="{{ props.fieldId }}"
     placeholder="{{ props.placeholder }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% if props.autofocus %}autofocus{% endif %}
     rows="8"
   >{{ props.value }}</textarea>
 {% endmacro %}
