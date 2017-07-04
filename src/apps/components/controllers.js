@@ -39,7 +39,12 @@ function renderFormElements (req, res) {
   })
 }
 
+function renderMessages (req, res) {
+  return res.render('components/views/messages')
+}
+
 module.exports = {
   renderIndex,
   renderFormElements,
+  renderMessages,
 }

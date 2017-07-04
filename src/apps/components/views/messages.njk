@@ -1,0 +1,20 @@
+{% extends "_layouts/datahub-base.njk" %}
+
+{% block body_main_header_content %}
+  <h1 class="heading-xlarge">{{ title }}</h1>
+{% endblock %}
+
+{% block body_main_content %}
+
+  <h2 class="page-heading">Application messages</h2>
+
+  {% component 'messages', {
+    messages: {
+      info: ['An information message'],
+      success: ['A success message'],
+      warning: ['A warning message'],
+      error: ['An error message']
+    }
+  } %}
+
+{% endblock %}
