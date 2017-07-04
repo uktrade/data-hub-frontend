@@ -1,13 +1,13 @@
 const router = require('express').Router()
 
-const feedbackController = require('./controllers/feedback')
-const thankyouController = require('./controllers/thank-you')
+const { populateFormData, validateForm, submitForm } = require('./middleware')
+const { renderFeedbackPage, renderThankYouPage } = require('./controllers')
 
 router
   .route('/feedback')
-  .get(feedbackController.getBug)
-  .post(feedbackController.postBug)
+  .get(populateFormData, renderFeedbackPage)
+  .post(populateFormData, validateForm, submitForm, renderFeedbackPage)
 
-router.get('/thank-you', thankyouController.get)
+router.get('/thank-you', renderThankYouPage)
 
 module.exports = router
