@@ -5,10 +5,16 @@
 {% endblock %}
 
 {% block body_main_content %}
-  <form action="" method="post">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    {{ textbox('username', label="Email address", error=errors.username, autofocus=true) }}
-    {{ textbox('password', label="Password", error=errors.password, type='password', autocomplete=false) }}
-    {{ save(buttonText='Sign in') }}
-  </form>
+  {% call Form(form | assign({ buttonText: 'Sign in' })) %}
+    {{ TextField({
+      autofocus: true,
+      name: 'username',
+      label: 'Email address'
+    }) }}
+    {{ TextField({
+      type: 'password',
+      name: 'password',
+      label: 'Password'
+    }) }}
+  {% endcall %}
 {% endblock %}

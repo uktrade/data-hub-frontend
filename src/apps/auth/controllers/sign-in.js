@@ -35,8 +35,12 @@ function getHandler (req, res) {
 
 function postHandler (req, res, next) {
   if (!req.body.username || !req.body.password) {
-    req.flash('error', 'Invalid user id or password')
-    return res.redirect('/sign-in')
+    res.locals.form = Object.assign({}, res.locals.form, {
+      errors: {
+        summary: 'Please provide email and password',
+      },
+    })
+    return getHandler(req, res)
   }
 
   authenticate(req.body.username, req.body.password)
@@ -48,7 +52,7 @@ function postHandler (req, res, next) {
       const statusCode = get(error, 'response.statusCode')
 
       if (statusCode === 401) {
-        req.flash('error', 'Invalid user id or password')
+        req.flash('error', 'Invalid email or password')
         res.redirect('/sign-in')
       } else {
         next(error)
