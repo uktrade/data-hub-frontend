@@ -5,8 +5,10 @@
   <h2 class="page-heading">
     {{contact.first_name}} {{contact.last_name}}
     {% if contact.primary == true %}{{ statusbadge('Primary', variation="fuschia") }}{% endif %}
-    <span class="post-header"><a href="{{companyUrl}}">{{contact.company.name}}</a></span>
   </h2>
+  <p>
+    <a href="{{companyUrl}}">{{contact.company.name}}</a>
+  </p>
 
   {% if contact.archived %}
     <p class="infostrip">
