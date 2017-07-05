@@ -2,7 +2,7 @@
 
 {% block body_main_header_content %}
   {% if query.contactId %}
-    {% set backUrl="/contact/interactions/" + query.contactId %}
+    {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
   {% elseif query.companyId %}
     {% set backUrl="/company-interactions/" + query.companyId %}

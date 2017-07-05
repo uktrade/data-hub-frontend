@@ -42,7 +42,7 @@ async function editDetails (req, res, next) {
     if (req.query && req.query.company) {
       res.locals.backUrl = `/company-interactions/${req.query.company}`
     } else if (req.query && req.query.contact) {
-      res.locals.backUrl = `/contact/interactions/${req.query.contact}`
+      res.locals.backUrl = `/contacts/${req.query.contact}/interactions`
     } else if (res.locals.interaction) {
       res.locals.backUrl = `/interactions/${res.locals.interaction.id}`
     }
