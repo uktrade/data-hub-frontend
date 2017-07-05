@@ -2,6 +2,7 @@ const nunjucks = require('nunjucks')
 
 const {
   assign,
+  concat,
   isArray,
   isPlainObject,
   isEmpty,
@@ -20,6 +21,7 @@ function isNotEmpty (value) {
 const filters = {
   stringify: JSON.stringify,
   assign,
+  concat,
   values,
   keys,
   flatten,
@@ -57,11 +59,6 @@ const filters = {
 
   formatNumber: (number, locales = 'en-GB') => {
     return number.toLocaleString(locales)
-  },
-
-  pushToArray: (value, newItem) => {
-    value.push(newItem)
-    return value
   },
 
   arrayToLabelValues: (items) => {
