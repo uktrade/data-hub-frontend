@@ -5,9 +5,8 @@
   background-color: $white;
   display: inline-block;
   height: 2em;
-  padding: $default-spacing-unit / 2;
+  padding: 0 ($default-spacing-unit / 2);
   font-size: 1em;
-  line-height: 1;
   outline: 0;
 
   &:focus {
@@ -28,16 +27,16 @@
 textarea.c-form-control {
   min-height: 8em;
   max-height: 50vh;
+  padding-top: $default-spacing-unit / 2;
+  padding-bottom: $default-spacing-unit / 2;
   width: 100%;
   max-width: 100%;
 }
 
 select.c-form-control {
   width: 100%;
-  padding: 0 $default-spacing-unit / 2;
   border-radius: 0;
   appearance: none;
-  line-height: 1.2;
   background: url("../../../images/icon-triangle.svg") no-repeat right 8px top 50%;
 
   &:-moz-focusring {
