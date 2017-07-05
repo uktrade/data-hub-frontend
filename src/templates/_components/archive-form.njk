@@ -12,8 +12,7 @@
  #  } %}
  #
 #}
-{% set radioOptions = options | arrayToLabelValues %}
-{% set radioOptions = radioOptions | pushToArray({label:'Other', value: 'Other'}) %}
+{% set radioOptions = options | concat('Other') | arrayToLabelValues %}
 
 <form class="archive-form js-archiveForm" method="POST" {% if url %}action="{{ url }}{% endif %}">
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
