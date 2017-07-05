@@ -1,8 +1,5 @@
 const logger = require('../../config/logger')
-const pjson = require('../../package.json')
 const config = require('../../config')
-
-const startTime = new Date().getTime()
 
 let webpackManifest = {}
 try {
@@ -12,19 +9,13 @@ try {
 }
 
 module.exports = function locals (req, res, next) {
-  logger.debug('locals:start')
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
 
   res.locals = Object.assign({}, res.locals, {
-    releaseVersion: pjson.version,
-    startTime: startTime,
-    referer: req.headers.referer,
-    env: config.env,
-    googleTagManagerKey: config.googleTagManagerKey,
-    query: req.query,
-    currentPath: req.path,
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.originalUrl,
+    CURRENT_PATH: req.path,
+    GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
 
     getAssetPath (asset) {
       const assetsUrl = config.assetsHost || baseUrl
@@ -37,7 +28,5 @@ module.exports = function locals (req, res, next) {
       return `${assetsUrl}/${asset}`
     },
   })
-
-  logger.debug('locals:end')
   next()
 }
