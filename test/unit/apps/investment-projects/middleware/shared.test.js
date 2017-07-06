@@ -38,7 +38,7 @@ describe('Investment shared middleware', () => {
       }, {
         locals: {},
         redirect (url) {
-          expect(url).to.equal('/investment/start')
+          expect(url).to.equal('/investment-projects/start')
           done()
         },
       }, nextSpy)

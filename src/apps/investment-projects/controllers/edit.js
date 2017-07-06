@@ -22,7 +22,7 @@ function editDetailsPost (req, res) {
     return res.render('investment-projects/views/details-edit', templateData)
   }
   req.flash('success', 'Updated investment details')
-  return res.redirect(`/investment/${res.locals.resultId}/details`)
+  return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
 }
 
 function editValuePost (req, res) {
@@ -30,7 +30,7 @@ function editValuePost (req, res) {
     return res.render('investment-projects/views/value-edit', templateData)
   }
   req.flash('success', 'Updated investment value')
-  return res.redirect(`/investment/${res.locals.projectId}/details`)
+  return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }
 
 function editRequirementsPost (req, res) {
@@ -38,7 +38,7 @@ function editRequirementsPost (req, res) {
     req.flash('success', 'Updated investment requirements')
     return res.render('investment-projects/views/requirements-edit', templateData)
   }
-  return res.redirect(`/investment/${res.locals.projectId}/details`)
+  return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }
 
 module.exports = {
