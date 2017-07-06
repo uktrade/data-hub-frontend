@@ -6,9 +6,9 @@ defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
   const Investment = client.page.InvestmentProject()
-  const randomCompanyName = `TestingNewCompany-1206-1`
-  const fixedCompanyName = `Sony`
-  let projectName = ''
+  const randomCompanyName = 'Lambda plc'
+  const fixedCompanyName = 'Sony'
+  let projectName
   let actualName
   let actualAdviserName
 
@@ -41,10 +41,10 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I see the Investment project creation confirmation message$/, async () => {
     await Investment
-      .getText('@projectNameFromSummaryPage', function (result) {
+      .getText('@projectNameFromSummaryPage', (result) => {
         Investment.assert.equal(result.value, projectName)
       })
-      .getText('@projectSummaryTitle', function (result) {
+      .getText('@projectSummaryTitle', (result) => {
         Investment.assert.equal(result.value, 'Investment project summary')
       })
   })
@@ -57,16 +57,16 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnFirstCompanyFromList()
     await Investment
       .clickInvestmentsTab()
-      .getText('@projectNameFromCompanyProfile', function (result) {
+      .getText('@projectNameFromCompanyProfile', (result) => {
         Investment.assert.equal(result.value, projectName)
       })
   })
 
-  Then(/^I verify Type of Investment is shown as "([^"]*)"$/, async (type) => {
+  Then(/^I verify Type of Investment is shown as "([^"]*)"$/, async (typeOfInvestment) => {
     await Investment
       .clickOnProjectNameFromCompanyProfile()
-      .getText('@typeOfInvestmentFromProjectDetails', function (result) {
-        Investment.assert.equal(result.value, type)
+      .getText('@typeOfInvestmentFromProjectDetails', (result) => {
+        Investment.assert.equal(result.value, typeOfInvestment)
       })
   })
 
@@ -80,11 +80,11 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentClientRelationManager(projectName)
-    .setValue('@clientRelationshipManager', 'a')
-          .getText('@clientRelationshipManagerList', function (result) {
-            actualName = result.value
-          })
-          .click('@clientRelationshipManagerList')
+      .setValue('@clientRelationshipManager', 'a')
+      .getText('@clientRelationshipManagerList', (result) => {
+        actualName = result.value
+      })
+      .click('@clientRelationshipManagerList')
       .submitTheForm()
   })
 
@@ -92,7 +92,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
-      .getText('@clientRelationsshipManagementAdviserName', function (result) {
+      .getText('@clientRelationsshipManagementAdviserName', (result) => {
         Investment.assert.equal(result.value, actualName)
       })
   })
@@ -107,11 +107,11 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentReferralSourceAdviser(projectName)
-    .setValue('@referralSourceAdviser', 'a')
-          .getText('@referralSourceAdviserList', function (result) {
-            actualName = result.value
-          })
-          .click('@referralSourceAdviserList')
+      .setValue('@referralSourceAdviser', 'a')
+      .getText('@referralSourceAdviserList', (result) => {
+        actualName = result.value
+      })
+      .click('@referralSourceAdviserList')
       .submitTheForm()
   })
 
@@ -119,7 +119,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
-      .getText('@referralSourceAdviserName', function (result) {
+      .getText('@referralSourceAdviserName', (result) => {
         Investment.assert.equal(result.value, actualName)
       })
   })
@@ -133,17 +133,17 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnFirstCompanyFromList()
     await Investment
       .clickInvestmentsTab()
-      .createNewInvestmentProjectWithDifferentClientRelationManagerAndReferralSourceAdviser(projectName)
+      .createNewInvestmentProjectWithDifferentClientAndReferralDetails(projectName)
       .setValue('@clientRelationshipManager', 'a')
-          .getText('@clientRelationshipManagerList', function (result) {
-            actualName = result.value
-          })
-          .click('@clientRelationshipManagerList')
-    .setValue('@referralSourceAdviser', 'a')
-          .getText('@referralSourceAdviserList', function (result) {
-            actualAdviserName = result.value
-          })
-          .click('@referralSourceAdviserList')
+      .getText('@clientRelationshipManagerList', (result) => {
+        actualName = result.value
+      })
+      .click('@clientRelationshipManagerList')
+      .setValue('@referralSourceAdviser', 'a')
+      .getText('@referralSourceAdviserList', (result) => {
+        actualAdviserName = result.value
+      })
+      .click('@referralSourceAdviserList')
       .submitTheForm()
   })
 
@@ -151,10 +151,10 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
-      .getText('@clientRelationsshipManagementAdviserName', function (result) {
+      .getText('@clientRelationsshipManagementAdviserName', (result) => {
         Investment.assert.equal(result.value, actualName)
       })
-      .getText('@referralSourceAdviserName', function (result) {
+      .getText('@referralSourceAdviserName', (result) => {
         Investment.assert.equal(result.value, actualAdviserName)
       })
   })
@@ -170,10 +170,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
       .click('@typeOfFDI')
-          .getText('@typeOfFDIList', function (result) {
-            actualName = result.value
-          })
-          .click('@typeOfFDIList')
+      .getText('@typeOfFDIList', (result) => {
+        actualName = result.value
+      })
+      .click('@typeOfFDIList')
       .submitTheForm()
   })
 
@@ -203,7 +203,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickEquitySourceNo()
       .submitForm('form')
       .enterSourceCompanySearch(fixedCompanyName)
-    .submitForm('form')
+      .submitForm('form')
       .clickOnCompanyFromList()
     await Investment
       .createNewInvestmentProjectAsNonForeignEquityInvestment(projectName)
@@ -217,7 +217,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnFirstCompanyFromList()
     await Investment
       .clickInvestmentsTab()
-      .getText('@projectNameFromCompanyProfile', function (result) {
+      .getText('@projectNameFromCompanyProfile', (result) => {
         Investment.assert.equal(result.value, projectName)
       })
   })

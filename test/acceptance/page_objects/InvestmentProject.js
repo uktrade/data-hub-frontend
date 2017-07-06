@@ -2,8 +2,6 @@ const faker = require('faker')
 
 module.exports = {
   url: process.env.QA_HOST,
-  props: {
-  },
   elements: {
     investmentsTab: {
       selector: "//nav/a[contains(@href, 'investments')]",
@@ -24,7 +22,6 @@ module.exports = {
     },
     clientRelationshipManager: '#client_relationship_manager-wrapper input',
     clientRelationshipManagerList: '#client_relationship_manager-wrapper ul li:nth-child(4)',
-    // clientRelationsshipManagerName: '#referral_source_adviser-wrapper select option[selected=selected]',
     referralSourceAdviser: '#referral_source_adviser-wrapper input',
     referralSourceAdviserList: '#referral_source_adviser-wrapper ul li:nth-child(4)',
     referralSourceYes: {
@@ -108,6 +105,7 @@ module.exports = {
       locateStrategy: 'xpath',
     },
   },
+
   commands: [
     {
       clickInvestmentsTab () {
@@ -232,12 +230,16 @@ module.exports = {
         return this
           .click('@firstCompanyFromList')
       },
+      submitTheForm () {
+        return this
+        .submitForm('form')
+      },
 
       createNewInvestmentProject (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
@@ -251,14 +253,14 @@ module.exports = {
           .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
-        .submitForm('form')
+          .submitTheForm()
       },
 
       createNewInvestmentProjectWithDifferentClientRelationManager (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerNo()
           .clickReferralSourceYes()
@@ -273,15 +275,12 @@ module.exports = {
           .enterLandMonth()
           .enterLandYear()
       },
-      submitTheForm () {
-        return this
-        .submitForm('form')
-      },
+
       createNewInvestmentProjectWithDifferentReferralSourceAdviser (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceNo()
@@ -296,11 +295,12 @@ module.exports = {
           .enterLandMonth()
           .enterLandYear()
       },
-      createNewInvestmentProjectWithDifferentClientRelationManagerAndReferralSourceAdviser (projectName) {
+
+      createNewInvestmentProjectWithDifferentClientAndReferralDetails (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerNo()
           .clickReferralSourceNo()
@@ -315,11 +315,12 @@ module.exports = {
           .enterLandMonth()
           .enterLandYear()
       },
+
       createNewInvestmentProjectWithFDIasInvestmentType (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
@@ -335,11 +336,12 @@ module.exports = {
           .enterLandMonth()
           .enterLandYear()
       },
+
       createNewInvestmentProjectWithNonFDIasInvestmentType (projectName) {
         return this
           .clickAddInvestmentProjectButton()
           .clickEquitySourceYes()
-          .submitForm('form')
+          .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
@@ -371,7 +373,7 @@ module.exports = {
           .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
-        .submitForm('form')
+          .submitTheForm()
       },
     },
   ],
