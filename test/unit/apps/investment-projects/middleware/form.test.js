@@ -1,5 +1,5 @@
 const interactionTransformedFromApiData = require('~/test/unit/data/investment/interaction/interaction-transformed-from-api.json')
-const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
 const metadataRepositoryStub = {
   salaryRangeOptions: [
@@ -57,7 +57,7 @@ describe('Investment form middleware', () => {
     })
 
     it('should set form state', () => {
-      this.resMock.locals.valueData = {
+      this.resMock.locals.investmentData = {
         average_salary: {
           id: 'abcd',
         },
@@ -83,7 +83,7 @@ describe('Investment form middleware', () => {
         { id: mockAdviser.id, name: mockAdviser.name },
       ]
 
-      this.resMock.locals.projectData = investmentProjectData
+      this.resMock.locals.investmentData = investmentData
       this.resMock.locals.interaction = interactionTransformedFromApiData
 
       this.controller.populateInteractionsFormMiddleware({
@@ -92,14 +92,14 @@ describe('Investment form middleware', () => {
         },
       }, this.resMock, () => {
         expect(this.resMock.locals).to.deep.equal({
-          projectData: investmentProjectData,
+          investmentData,
           interaction: interactionTransformedFromApiData,
           form: {
             labels: interactionsLabels.edit,
             state: interactionTransformedFromApiData,
             options: {
               advisers: expectedAdvisors,
-              contacts: investmentProjectData.client_contacts,
+              contacts: investmentData.client_contacts,
               interactionTypes: metadataRepositoryStub.interactionTypeOptions,
             },
           },
@@ -115,7 +115,7 @@ describe('Investment form middleware', () => {
         { id: mockAdviser.id, name: mockAdviser.name },
       ]
 
-      this.resMock.locals.projectData = investmentProjectData
+      this.resMock.locals.investmentData = investmentData
 
       this.controller.populateInteractionsFormMiddleware({
         session: {
@@ -125,7 +125,7 @@ describe('Investment form middleware', () => {
         expect(this.resMock.locals.form.labels).to.eql(interactionsLabels.edit)
         expect(this.resMock.locals.form.options.interactionTypes).to.deep.equal(metadataRepositoryStub.interactionTypeOptions)
         expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisors)
-        expect(this.resMock.locals.form.options.contacts).to.deep.equal(investmentProjectData.client_contacts)
+        expect(this.resMock.locals.form.options.contacts).to.deep.equal(investmentData.client_contacts)
         done()
       })
     })

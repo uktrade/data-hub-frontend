@@ -1,4 +1,4 @@
-const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const interactionsListData = require('~/test/unit/data/investment/interaction/interactions.json')
 const interactionCompanyDisplayFormated = require('~/test/unit/data/investment/interaction/interaction-formatted.json')
 
@@ -30,7 +30,7 @@ describe('Investment Interactions Index controller', () => {
       }, {
         locals: {
           title: [],
-          projectData: investmentProjectData,
+          investmentData,
         },
         render: (template, data) => {
           try {

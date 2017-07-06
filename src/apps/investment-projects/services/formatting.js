@@ -83,7 +83,7 @@ function transformFromApi (body) {
   return Object.assign({}, body, formatted)
 }
 
-function transformProjectDataForView (data) {
+function transformInvestmentDataForView (data) {
   if (!isPlainObject(data)) { return }
 
   function getInvestmentTypeDetails () {
@@ -108,7 +108,7 @@ function transformProjectDataForView (data) {
   })
 }
 
-function transformProjectValueForView (data) {
+function transformInvestmentValueForView (data) {
   if (!isPlainObject(data)) { return }
 
   function formatNumber (number) {
@@ -150,7 +150,7 @@ function transformProjectValueForView (data) {
   })
 }
 
-function transformProjectRequirementsForView (data) {
+function transformInvestmentRequirementsForView (data) {
   if (!isPlainObject(data)) { return }
 
   const strategicDrivers = get(data, 'strategic_drivers', [])
@@ -164,18 +164,10 @@ function transformProjectRequirementsForView (data) {
   })
 }
 
-function formatProjectTeamData (data) {
-  return {
-    client_relationship_manager: data.client_relationship_manager,
-    referral_source_adviser: data.referral_source_adviser,
-  }
-}
-
 module.exports = {
-  transformProjectDataForView,
-  transformProjectValueForView,
-  transformProjectRequirementsForView,
+  transformInvestmentDataForView,
+  transformInvestmentValueForView,
+  transformInvestmentRequirementsForView,
   transformToApi,
   transformFromApi,
-  formatProjectTeamData,
 }

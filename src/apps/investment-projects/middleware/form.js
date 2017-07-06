@@ -17,9 +17,7 @@ const {
 const {
   createInvestmentProject,
   getEquityCompanyDetails,
-  updateInvestmentProject,
-  updateInvestmentValue,
-  updateInvestmentRequirements,
+  updateInvestment,
 } = require('../repos')
 
 async function populateDetailsFormMiddleware (req, res, next) {
@@ -57,12 +55,12 @@ async function populateDetailsFormMiddleware (req, res, next) {
       }
     })
 
-    const projectData = transformFromApi(res.locals.projectData)
+    const investmentData = transformFromApi(res.locals.investmentData)
 
     res.locals.equityCompany = equityCompany
     res.locals.equityCompanyInvestment = equityCompanyInvestment
     res.locals.form = res.locals.form || {}
-    res.locals.form.state = projectData
+    res.locals.form.state = investmentData
 
     res.locals.form.options = {
       advisers,
@@ -81,14 +79,14 @@ async function populateDetailsFormMiddleware (req, res, next) {
       // TODO: This is to support the leading question of whether current
       // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
-      if (projectData.client_relationship_manager === req.session.user.id) {
-        res.locals.form.state['is-relationship-manager'] = projectData.client_relationship_manager
+      if (investmentData.client_relationship_manager === req.session.user.id) {
+        res.locals.form.state['is-relationship-manager'] = investmentData.client_relationship_manager
       } else {
         res.locals.form.state['is-relationship-manager'] = 'No'
       }
 
-      if (projectData.referral_source_adviser === req.session.user.id) {
-        res.locals.form.state['is-referral-source'] = projectData.referral_source_adviser
+      if (investmentData.referral_source_adviser === req.session.user.id) {
+        res.locals.form.state['is-referral-source'] = investmentData.referral_source_adviser
       } else {
         res.locals.form.state['is-referral-source'] = 'No'
       }
@@ -103,8 +101,8 @@ async function populateDetailsFormMiddleware (req, res, next) {
 function populateValueFormMiddleware (req, res, next) {
   res.locals.form = get(res, 'locals.form', {})
   res.locals.form.labels = valueLabels.edit
-  res.locals.form.state = Object.assign({}, res.locals.valueData, {
-    average_salary: get(res.locals.valueData, 'average_salary.id'),
+  res.locals.form.state = Object.assign({}, res.locals.investmentData, {
+    average_salary: get(res.locals.investmentData, 'average_salary.id'),
   })
   res.locals.form.options = {
     averageSalaryRange: metadataRepo.salaryRangeOptions,
@@ -116,7 +114,7 @@ function populateValueFormMiddleware (req, res, next) {
 function populateRequirementsFormMiddleware (req, res, next) {
   res.locals.form = get(res, 'locals.form', {})
   res.locals.form.labels = requirementsLabels.edit
-  res.locals.form.state = res.locals.requirementsData
+  res.locals.form.state = res.locals.investmentData
 
   res.locals.form.options = {
     countryOptions: metadataRepo.countryOptions,
@@ -133,7 +131,7 @@ function investmentDetailsFormPostMiddleware (req, res, next) {
   let saveMethod
 
   if (projectId) {
-    saveMethod = updateInvestmentProject(req.session.token, projectId, formattedBody)
+    saveMethod = updateInvestment(req.session.token, projectId, formattedBody)
   } else {
     saveMethod = createInvestmentProject(req.session.token, formattedBody)
   }
@@ -167,7 +165,7 @@ function investmentValueFormPostMiddleware (req, res, next) {
     client_cannot_provide_foreign_investment: req.body.client_cannot_provide_foreign_investment === 'on',
   })
 
-  updateInvestmentValue(req.session.token, res.locals.projectId, formattedBody)
+  updateInvestment(req.session.token, res.locals.projectId, formattedBody)
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {
@@ -186,7 +184,7 @@ async function populateInteractionsFormMiddleware (req, res, next) {
   try {
     const interactionTypes = metadataRepo.interactionTypeOptions
     const advisersResponse = await getAdvisers(req.session.token)
-    const contacts = res.locals.projectData.client_contacts
+    const contacts = res.locals.investmentData.client_contacts
 
     const advisers = advisersResponse.results.map((adviser) => {
       return {
@@ -248,7 +246,7 @@ function investmentRequirementsFormPostMiddleware (req, res, next) {
     uk_region_locations: flatten([req.body.uk_region_locations]),
   })
 
-  updateInvestmentRequirements(req.session.token, res.locals.projectId, formattedBody)
+  updateInvestment(req.session.token, res.locals.projectId, formattedBody)
   .then(() => next())
   .catch((err) => {
     if (err.statusCode === 400) {

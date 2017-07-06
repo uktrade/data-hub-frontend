@@ -1,13 +1,13 @@
 /* eslint camelcase: 0 */
-const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 
 describe('Investment archive controller', function () {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
     this.token = '1234'
-    this.archiveInvestmentProject = this.sandbox.stub().resolves(investmentProjectData)
-    this.unarchiveInvestmentProject = this.sandbox.stub().resolves(investmentProjectData)
+    this.archiveInvestmentProject = this.sandbox.stub().resolves(investmentData)
+    this.unarchiveInvestmentProject = this.sandbox.stub().resolves(investmentData)
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
       '../repos': {
         archiveInvestmentProject: this.archiveInvestmentProject,
@@ -33,12 +33,12 @@ describe('Investment archive controller', function () {
           archived_reason,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals: {},
       }, () => {
-        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentProjectData.id, archived_reason)
+        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentData.id, archived_reason)
         done()
       })
     })
@@ -53,19 +53,19 @@ describe('Investment archive controller', function () {
           archived_reason_other,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals: {},
       }, () => {
-        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentProjectData.id, archived_reason_other)
+        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentData.id, archived_reason_other)
         done()
       })
     })
     it('should update the investment project being displayed with the reason selected', (done) => {
       const archived_reason = 'test'
       const locals = {
-        projectData: {},
+        investmentData: {},
       }
 
       this.controller.archiveInvestmentProjectHandler({
@@ -74,15 +74,15 @@ describe('Investment archive controller', function () {
           archived_reason,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals,
       }, () => {
-        expect(locals.projectData.archived).to.equal(true)
-        expect(locals.projectData.archived_reason).to.equal(archived_reason)
-        expect(locals.projectData.archived_by).to.deep.equal(this.session.user)
-        expect(locals.projectData).to.have.property('archived_on')
+        expect(locals.investmentData.archived).to.equal(true)
+        expect(locals.investmentData.archived_reason).to.equal(archived_reason)
+        expect(locals.investmentData.archived_by).to.deep.equal(this.session.user)
+        expect(locals.investmentData).to.have.property('archived_on')
         done()
       })
     })
@@ -90,7 +90,7 @@ describe('Investment archive controller', function () {
       const archived_reason = 'Other'
       const archived_reason_other = 'something else'
       const locals = {
-        projectData: {},
+        investmentData: {},
       }
 
       this.controller.archiveInvestmentProjectHandler({
@@ -100,15 +100,15 @@ describe('Investment archive controller', function () {
           archived_reason_other,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals,
       }, () => {
-        expect(locals.projectData.archived).to.equal(true)
-        expect(locals.projectData.archived_reason).to.equal(archived_reason_other)
-        expect(locals.projectData.archived_by).to.deep.equal(this.session.user)
-        expect(locals.projectData).to.have.property('archived_on')
+        expect(locals.investmentData.archived).to.equal(true)
+        expect(locals.investmentData.archived_reason).to.equal(archived_reason_other)
+        expect(locals.investmentData.archived_by).to.deep.equal(this.session.user)
+        expect(locals.investmentData).to.have.property('archived_on')
         done()
       })
     })
@@ -124,7 +124,7 @@ describe('Investment archive controller', function () {
       })
 
       const locals = {
-        projectData: {},
+        investmentData: {},
       }
       const body = {
         archived_reason: 'Stuff',
@@ -134,7 +134,7 @@ describe('Investment archive controller', function () {
         session: this.session,
         body,
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals,
@@ -153,7 +153,7 @@ describe('Investment archive controller', function () {
       })
 
       const locals = {
-        projectData: {},
+        investmentData: {},
       }
       const body = {
         archived_reason: 'Stuff',
@@ -163,7 +163,7 @@ describe('Investment archive controller', function () {
         session: this.session,
         body,
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
       }, {
         locals,
@@ -181,12 +181,12 @@ describe('Investment archive controller', function () {
           token: this.token,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
         flash: this.flashStub,
       }, {
         redirect: () => {
-          expect(this.unarchiveInvestmentProject).to.be.calledWith(this.token, investmentProjectData.id)
+          expect(this.unarchiveInvestmentProject).to.be.calledWith(this.token, investmentData.id)
           done()
         },
       }, this.next)
@@ -201,7 +201,7 @@ describe('Investment archive controller', function () {
           archived_reason: 'test',
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
         flash: this.flashStub,
       }, {
@@ -222,7 +222,7 @@ describe('Investment archive controller', function () {
           token: this.token,
         },
         params: {
-          id: investmentProjectData.id,
+          id: investmentData.id,
         },
         flash: this.flashStub,
       }, {

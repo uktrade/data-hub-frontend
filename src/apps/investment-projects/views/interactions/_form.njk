@@ -1,5 +1,5 @@
 <form method="post">
-  <input type="hidden" name="investment_project" value="{{ projectStatus.id }}">
+  <input type="hidden" name="investment_project" value="{{ investmentStatus.id }}">
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
   {{ dropdown('interaction_type',
@@ -38,5 +38,5 @@
     options=form.options.advisers)
   }}
 
-  {{ save('/investment-projects/' + projectStatus.id + '/interactions') }}
+  {{ save('/investment-projects/' + investmentStatus.id + '/interactions') }}
 </form>

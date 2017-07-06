@@ -7,16 +7,16 @@ const {
 } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const {
-  transformProjectDataForView,
-  transformProjectValueForView,
-  transformProjectRequirementsForView,
+  transformInvestmentDataForView,
+  transformInvestmentValueForView,
+  transformInvestmentRequirementsForView,
 } = require('../services/formatting')
 
 function detailsGetHandler (req, res, next) {
-  if (get(res, 'locals.projectData')) {
-    const transformedDetails = transformProjectDataForView(res.locals.projectData)
-    const transformedValue = transformProjectValueForView(res.locals.valueData)
-    const transformedRequirements = transformProjectRequirementsForView(res.locals.requirementsData)
+  if (get(res, 'locals.investmentData')) {
+    const transformedDetails = transformInvestmentDataForView(res.locals.investmentData)
+    const transformedValue = transformInvestmentValueForView(res.locals.investmentData)
+    const transformedRequirements = transformInvestmentRequirementsForView(res.locals.investmentData)
 
     return res.render('investment-projects/views/details', {
       details: getDataLabels(transformedDetails, detailsLabels.view),
