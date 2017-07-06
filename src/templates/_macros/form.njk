@@ -40,7 +40,8 @@
   {% set buttonText = props.buttonText or 'Submit' %}
   <form
     method="{{ method }}"
-    {% if props.action %}action="{{ props.action }}"{% endif -%}
+    {% if props.action %}action="{{ props.action }}"{% endif %}
+    {% if props.class %}class="{{ props.class }}"{% endif %}
   >
     {{ ErrorSummary(props.errors) }}
     {{ CSRF(csrfToken) }}
@@ -222,7 +223,7 @@
   >
     {{ caller() if caller }}
     {% for option in props.options %}
-      <option value="{{ option.value }}" {% if props.selected == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if props.selected and props.selected == option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}

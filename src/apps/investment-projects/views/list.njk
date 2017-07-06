@@ -1,0 +1,119 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_header_content %}
+  <h1 class="page-heading">Investment projects</h1>
+{% endblock %}
+
+{% block main_grid_left_column %}
+  {% call Form({ class: 'c-filters', buttonText: 'Refresh results' }) %}
+    <h2 class="heading-medium">Filter results</h2>
+
+    <div class="c-filters__filter">
+      {{ TextField({
+        label: 'Name contains',
+        name: 'contains',
+        placeholder: 'keywords'
+      }) }}
+    </div>
+
+    <div class="c-filters__filter">
+      {{ MultipleChoiceField({
+        label: 'Phase',
+        name: 'phase',
+        options: [
+          { label: 'All phases' },
+          { label: 'Prospect' },
+          { label: 'Complete' }
+        ]
+      }) }}
+    </div>
+
+    <div class="c-filters__filter">
+      {{ MultipleChoiceField({
+        label: 'Investment type',
+        name: 'investmentType',
+        options: [
+          { label: 'All types' },
+          { label: 'Commitment to invest' },
+          { label: 'FDI' },
+          { label: 'Non-FDI' }
+        ]
+      }) }}
+    </div>
+
+    <div class="c-filters__filter">
+      {{ TextField({
+        label: 'Estimated land date before',
+        name: 'landDateBefore',
+        placeholder: 'e.g. 12/07/2018'
+      }) }}
+    </div>
+
+    <div class="c-filters__filter">
+      {{ TextField({
+        label: 'Estimated land date after',
+        name: 'landDateAfter',
+        placeholder: 'e.g. 01/09/2017'
+      }) }}
+    </div>
+  {% endcall %}
+{% endblock %}
+
+{% block main_grid_right_column %}
+  <article class="c-filter-results">
+    <header class="c-filter-results__summary">
+      <span class="c-filter-results__count">{{ resultCount }}</span>
+      <span>investment projects</span>
+    </header>
+    <ul class="c-filter-results__list">
+      {% for project in results %}
+        {{ project|log|safe }}
+        <li class="c-filter-results__list-item">
+          <h3 class="c-filter-results__name">
+            <a href="/investment-projects/{{ project.id }}">{{ project.name }}</a>
+          </h3>
+          <p class="c-filter-results__description">
+            {{ project.description }}
+          </p>
+
+          <dl class="c-filter-results__meta">
+            <dt class="c-filter-results__meta-label u-visually-hidden">Project code</dt>
+            <dd class="c-filter-results__meta-value">
+              {{ project.project_code }}
+            </dd>
+            <dt class="c-filter-results__meta-label">Estimated land date</dt>
+            <dd class="c-filter-results__meta-value">
+              {{ project.estimated_land_date }}
+            </dd>
+            <dt class="c-filter-results__meta-label">Type</dt>
+            <dd class="c-filter-results__meta-value">
+              <a href="#">{{ project.investment_type.name }}</a>
+            </dd>
+          </dl>
+
+          <dl class="c-filter-results__meta">
+            <dt class="c-filter-results__meta-label">Phase</dt>
+            <dd class="c-filter-results__meta-value">
+              <a href="#">{{ project.phase.name }}</a>
+            </dd>
+            <dt class="c-filter-results__meta-label">Investor</dt>
+            <dd class="c-filter-results__meta-value">
+              <a href="/viewcompanyresult/{{ project.investor_company.id }}">{{ project.investor_company.name }}</a>
+            </dd>
+          </dl>
+        </li>
+      {% endfor %}
+      {% if results|length < resultCount %}
+        <nav>
+          <ul>
+            {#{% for page in range(0, resultCount) %}#}
+              {#<li>#}
+                {#<a href="#">1</a>#}
+              {#</li>#}
+            {#{% end %}#}
+          </ul>
+        </nav>
+      {% endif %}
+    </ul>
+  </article>
+{% endblock %}

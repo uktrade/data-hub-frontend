@@ -4,18 +4,12 @@ const { getInteraction } = require('../../interactions/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const {
+  getInvestmentCollection,
   getInvestmentProjectSummary,
   getInvestmentValue,
   getInvestmentRequirements,
   getInvestmentTeam,
 } = require('../repos')
-
-function handleEmptyMiddleware (req, res, next) {
-  if (req.path === '/') {
-    return res.redirect(`/investment/start`)
-  }
-  next()
-}
 
 function getLocalNavMiddleware (req, res, next) {
   res.locals.localNavItems = [
@@ -74,9 +68,21 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
   }
 }
 
+async function getInvestmentProjectsCollection (req, res, next) {
+  try {
+    const response = await getInvestmentCollection(req.session.token)
+    console.log(response)
+    res.locals.resultCount = response.count
+    res.locals.results = response.results
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  handleEmptyMiddleware,
   getLocalNavMiddleware,
   getProjectDetails,
   getInteractionDetails,
+  getInvestmentProjectsCollection,
 }

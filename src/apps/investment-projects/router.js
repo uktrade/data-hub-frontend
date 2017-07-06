@@ -15,11 +15,15 @@ const {
   interactions,
 } = require('./controllers')
 
-router.use(shared.handleEmptyMiddleware)
+const { renderInvestmentList } = require('./controllers/list')
+const { getInvestmentProjectsCollection } = require('./middleware/shared')
+
 router.use(shared.getLocalNavMiddleware)
 
 router.param('id', shared.getProjectDetails)
 router.param('interactionId', shared.getInteractionDetails)
+
+router.get('/', getInvestmentProjectsCollection, renderInvestmentList)
 
 router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
 router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)

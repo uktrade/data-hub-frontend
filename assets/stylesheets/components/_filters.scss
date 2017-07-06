@@ -1,0 +1,30 @@
+@import "../settings";
+
+.c-filters {
+  h2 {
+    margin-top: 0;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  > .c-form-group {
+    margin-top: $default-spacing-unit;
+  }
+}
+
+.c-filters__filter {
+  font-size: .8em;
+  background: $grey-3;
+  margin: $default-spacing-unit (-$default-spacing-unit / 2);
+  padding: $default-spacing-unit / 2;
+
+  .c-form-control {
+    border: 1px solid $grey-1;
+
+    &:focus {
+      border-color: $black;
+    }
+  }
+}

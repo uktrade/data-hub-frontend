@@ -2,6 +2,10 @@ const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
 const { getInflatedDitCompany } = require('../companies/services/data')
 
+function getInvestmentCollection (token) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment?limit=20`)
+}
+
 function getCompanyInvestmentProjects (token, companyId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/project?investor_company_id=${companyId}`)
 }
@@ -94,6 +98,7 @@ function unarchiveInvestmentProject (token, investmentId) {
 }
 
 module.exports = {
+  getInvestmentCollection,
   getCompanyInvestmentProjects,
   getInvestmentProjectSummary,
   getInvestmentValue,

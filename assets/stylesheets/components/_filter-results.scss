@@ -1,0 +1,69 @@
+@import "../settings";
+
+.c-filter-results__summary {
+  padding-bottom: $default-spacing-unit / 2;
+
+  > span {
+    vertical-align: top;
+    font-weight: 600;
+  }
+}
+
+.c-filter-results__count {
+  display: inline-block;
+  font-size: 3em;
+  line-height: 1.1;
+  margin-top: -.1em;
+}
+
+.c-filter-results__name {
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 600;
+
+  a:link,
+  a:visited {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.c-filter-results__description {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: .8em;
+  margin-right: 10%;
+}
+
+.c-filter-results__list-item {
+  border-top: 1px solid $grey-2;
+  padding: ($default-spacing-unit / 2) 0;
+}
+
+.c-filter-results__meta {
+  font-size: .8em;
+  margin-top: $default-spacing-unit / 2;
+}
+
+.c-filter-results__meta-label,
+.c-filter-results__meta-value {
+  display: inline-block;
+}
+
+.c-filter-results__meta-label {
+  color: $grey-1;
+
+  &::after {
+    content: ":";
+  }
+}
+
+.c-filter-results__meta-value {
+  margin-right: $default-spacing-unit;
+}
+
