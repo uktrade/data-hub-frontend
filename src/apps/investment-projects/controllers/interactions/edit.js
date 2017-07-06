@@ -12,7 +12,7 @@ function editPostInteractionHandler (req, res, next) {
   }
 
   req.flash('success', 'Investment Interaction successfully updated')
-  return res.redirect(`/investment/${res.locals.projectData.id}/interactions`)
+  return res.redirect(`/investment-projects/${res.locals.projectData.id}/interactions`)
 }
 
 module.exports = {
