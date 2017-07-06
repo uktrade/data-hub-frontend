@@ -5,12 +5,12 @@ const contactEditController = require('./controllers/edit')
 const contactArchiveController = require('./controllers/archive')
 const contactInteractionController = require('./controllers/interactions')
 
-router.get('/:contactId', contactController.getCommon, contactController.getDetails)
-
 router
   .route('/create')
   .get(contactEditController.editDetails)
   .post(contactEditController.postDetails)
+
+router.get('/:contactId', contactController.getCommon, contactController.getDetails)
 
 router
   .route('/:contactId/edit')
