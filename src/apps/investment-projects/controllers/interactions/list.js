@@ -5,7 +5,7 @@ const { getInteractionsForInvestment } = require('../../../interactions/repos')
 
 async function indexGetHandler (req, res, next) {
   try {
-    if (get(res, 'locals.projectData')) {
+    if (get(res, 'locals.investmentData')) {
       const interactionsResponse = await getInteractionsForInvestment(req.session.token, req.params.id)
       const interactions = interactionsResponse.results.map(getDisplayCompanyInteraction)
 

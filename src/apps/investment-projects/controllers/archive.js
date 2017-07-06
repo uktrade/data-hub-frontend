@@ -8,7 +8,7 @@ async function archiveInvestmentProjectHandler (req, res, next) {
     const reason = (req.body.archived_reason === 'Other') ? req.body.archived_reason_other : req.body.archived_reason
     await investmentRepository.archiveInvestmentProject(req.session.token, req.params.id, reason)
 
-    res.locals.projectData = Object.assign({}, res.locals.projectData, {
+    res.locals.investmentData = Object.assign({}, res.locals.investmentData, {
       archived: true,
       archived_reason: reason,
       archived_by: req.session.user,

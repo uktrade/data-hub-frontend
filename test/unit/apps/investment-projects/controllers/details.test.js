@@ -1,4 +1,4 @@
-const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 
 describe('Investment details controller', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('Investment details controller', () => {
         },
       }, {
         locals: {
-          projectData: investmentProjectData,
+          investmentData,
         },
         render: (template, data) => {
           try {

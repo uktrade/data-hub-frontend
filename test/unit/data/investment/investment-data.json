@@ -1,0 +1,101 @@
+{
+  "id": "e34c6cbe-6004-4cb3-a503-283d8c8d4af6",
+  "name": "New hotel",
+  "project_code": "DHP-00000016",
+  "description": "asdasd",
+  "nda_signed": false,
+  "estimated_land_date": "2018-10-01",
+  "actual_land_date": null,
+  "project_shareable": false,
+  "not_shareable_reason": null,
+  "approved_commitment_to_invest": null,
+  "approved_fdi": null,
+  "approved_good_value": null,
+  "approved_high_value": null,
+  "approved_landed": null,
+  "approved_non_fdi": null,
+  "investment_type": {
+    "name": "Commitment to invest",
+    "id": "031269ab-b7ec-40e9-8a4e-7371404f0622"
+  },
+  "phase": {
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+  },
+  "investor_company": {
+    "name": "Achme",
+    "id": "dcdabbc9-1781-e411-8955-e4115bead28a"
+  },
+  "intermediate_company": null,
+  "client_contacts": [
+    {
+      "name": "Fred Smith",
+      "id": "64f7aa36-0334-4628-a7c3-682328d613f6"
+    }
+  ],
+  "client_relationship_manager": {
+    "first_name": "Monica",
+    "last_name": "Moorthy",
+    "id": "05346184-9b98-e211-a939-e4115bead28a"
+  },
+  "referral_source_adviser": {
+    "first_name": "Antony",
+    "last_name": "Stokesy",
+    "id": "0541c504-9898-e211-a939-e4115bead28a"
+  },
+  "referral_source_activity": {
+    "name": "Cold call",
+    "id": "0c4f8e74-d34f-4aca-b764-a44cdc2d0087"
+  },
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": "",
+  "fdi_type": null,
+  "non_fdi_type": null,
+  "sector": {
+    "name": "AchmeSpace : Component Manufacturing : Engines",
+    "id": "b122c9d2-5f95-e211-a939-e4115bead28a"
+  },
+  "business_activities": [
+    {
+      "name": "European headquarters",
+      "id": "fc68d540-a00a-40f8-8b39-05e12fcb856f"
+    }
+  ],
+  "archived": false,
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": "2017-06-02T10:03:52.309504",
+  "modified_on": "2017-06-06T14:46:13.692841",
+  "total_investment": null,
+  "foreign_equity_investment": null,
+  "government_assistance": null,
+  "number_new_jobs": null,
+  "average_salary": null,
+  "number_safeguarded_jobs": null,
+  "r_and_d_budget": null,
+  "non_fdi_r_and_d_budget": null,
+  "new_tech_to_uk": null,
+  "export_revenue": null,
+  "value_complete": false,
+  "client_cannot_provide_total_investment": null,
+  "client_cannot_provide_foreign_investment": null,
+  "client_requirements": null,
+  "site_decided": null,
+  "address_line_1": null,
+  "address_line_2": null,
+  "address_line_3": null,
+  "address_line_postcode": null,
+  "competitor_countries": [],
+  "uk_region_locations": [],
+  "strategic_drivers": [],
+  "client_considering_other_countries": null,
+  "uk_company": null,
+  "requirements_complete": false,
+  "project_manager": null,
+  "project_assurance_adviser": null,
+  "project_manager_team": null,
+  "project_assurance_team": null,
+  "team_complete": true
+}

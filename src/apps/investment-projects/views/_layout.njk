@@ -1,15 +1,15 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block body_main_header_content %}
-  {% if projectData %}
+  {% if investmentData %}
     <h1 class="u-visually-hidden">Investment details</h1>
-    <h2 class="page-heading">{{ projectData.name }}</h2>
-    {% component 'project-status', projectStatus %}
+    <h2 class="page-heading">{{ investmentData.name }}</h2>
+    {% component 'investment-status', investmentStatus %}
 
-    {% if projectData.archived %}
+    {% if investmentData.archived %}
       <p class="infostrip">
-        This investment project was archived on {{ projectData.archived_on | formatDate }} by {{ projectData.archived_by.first_name }} {{ projectData.archived_by.last_name }}. <br>
-        <strong>Archive reason:</strong> {{ projectData.archived_reason }}<br>
+        This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>
+        <strong>Archive reason:</strong> {{ investmentData.archived_reason }}<br>
         <br>
         <a href="unarchive">Unarchive</a>
       </p>

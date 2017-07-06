@@ -18,7 +18,7 @@ const {
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
 
-router.param('id', shared.getProjectDetails)
+router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
 
 router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)

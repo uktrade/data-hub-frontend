@@ -1,4 +1,4 @@
-const investmentProjectData = require('~/test/unit/data/investment/project-summary.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 
 describe('Investment Interactions edit controller', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('Investment Interactions edit controller', () => {
       }, {
         locals: {
           title: [],
-          projectData: investmentProjectData,
+          investmentData,
         },
         render: (template) => {
           try {
@@ -50,11 +50,11 @@ describe('Investment Interactions edit controller', () => {
             form: {
               errors: {},
             },
-            projectData: investmentProjectData,
+            investmentData,
           },
           redirect: (url) => {
             try {
-              expect(url).to.equal(`/investment-projects/${investmentProjectData.id}/interactions`)
+              expect(url).to.equal(`/investment-projects/${investmentData.id}/interactions`)
               expect(this.flashStub).to.calledWith('success', 'Investment Interaction successfully updated')
               done()
             } catch (e) {

@@ -12,7 +12,7 @@ function createPostInteractionHandler (req, res, next) {
   }
 
   req.flash('success', 'Investment Interaction successfully created')
-  return res.redirect(`/investment-projects/${res.locals.projectData.id}/interactions`)
+  return res.redirect(`/investment-projects/${res.locals.investmentData.id}/interactions`)
 }
 
 module.exports = {

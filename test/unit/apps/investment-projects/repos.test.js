@@ -2,21 +2,16 @@ const nock = require('nock')
 const config = require('~/config')
 
 const {
+  getInvestment,
+  updateInvestment,
   getCompanyInvestmentProjects,
-  getInvestmentProjectSummary,
-  getInvestmentValue,
-  getInvestmentRequirements,
   createInvestmentProject,
-  updateInvestmentProject,
-  getInvestmentProjectAuditLog,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
 } = require('~/src/apps/investment-projects/repos')
 
 const companyData = require('~/test/unit/data/company.json')
-const investmentProjectSummaryData = require('~/test/unit/data/investment/project-summary.json')
-const investmentValueData = require('~/test/unit/data/investment/project-value.json')
-const investmentRequirements = require('~/test/unit/data/investment/project-requirements.json')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
 
 describe('Investment repository', () => {
@@ -32,39 +27,15 @@ describe('Investment repository', () => {
     })
   })
 
-  describe('#getInvestmentProjectSummary', () => {
+  describe('#getInvestment', () => {
     nock(config.apiRoot)
-      .get(`/v3/investment/${investmentProjectSummaryData.id}/project`)
-      .reply(200, investmentProjectSummaryData)
+      .get(`/v3/investment/${investmentData.id}`)
+      .reply(200, investmentData)
 
-    it('should return an investment project summary object', () => {
-      const actual = getInvestmentProjectSummary('token', investmentProjectSummaryData.id)
+    it('should return an investment object', () => {
+      const actual = getInvestment('token', investmentData.id)
 
-      return expect(actual).to.eventually.deep.equal(investmentProjectSummaryData)
-    })
-  })
-
-  describe('#getInvestmentValue', () => {
-    nock(config.apiRoot)
-      .get(`/v3/investment/${investmentProjectSummaryData.id}/value`)
-      .reply(200, investmentValueData)
-
-    it('should return an investment value object', () => {
-      const actual = getInvestmentValue('token', investmentProjectSummaryData.id)
-
-      return expect(actual).to.eventually.deep.equal(investmentValueData)
-    })
-  })
-
-  describe('#getInvestmentRequirements', () => {
-    nock(config.apiRoot)
-      .get(`/v3/investment/${investmentProjectSummaryData.id}/requirements`)
-      .reply(200, investmentRequirements)
-
-    it('should return an investment requirements object', () => {
-      const actual = getInvestmentRequirements('token', investmentProjectSummaryData.id)
-
-      return expect(actual).to.eventually.deep.equal(investmentRequirements)
+      return expect(actual).to.eventually.deep.equal(investmentData)
     })
   })
 
@@ -80,47 +51,37 @@ describe('Investment repository', () => {
     })
   })
 
-  describe('#updateInvestmentProject', () => {
+  describe('#updateInvestment', () => {
+    const appendedData = { foo: 'bar' }
+
     nock(config.apiRoot)
-      .patch(`/v3/investment/${investmentProjectSummaryData.id}/project`)
-      .reply(200, investmentProjectSummaryData)
+      .patch(`/v3/investment/${investmentData.id}`)
+      .reply(200, investmentData)
 
     it('should return an investment requirements object', () => {
-      const actual = updateInvestmentProject('token', investmentProjectSummaryData.id, { foo: 'bar' })
+      const actual = updateInvestment('token', investmentData.id, appendedData)
 
-      return expect(actual).to.eventually.deep.equal(investmentProjectSummaryData)
-    })
-  })
-
-  describe('#getInvestmentProjectAudit', () => {
-    nock(config.apiRoot)
-      .get(`/v3/investment/${investmentProjectSummaryData.id}/audit`)
-      .reply(200, investmentProjectAuditData)
-
-    it('should return an investment project audit log', () => {
-      const actual = getInvestmentProjectAuditLog('token', investmentProjectSummaryData.id)
-
-      return expect(actual).to.eventually.deep.equal(investmentProjectAuditData.results)
+      return expect(actual).to.eventually.deep.equal(investmentData)
     })
   })
 
   describe('#archiveInvestmentProject', () => {
     nock(config.apiRoot)
-      .post(`/v3/investment/${investmentProjectSummaryData.id}/archive`, { reason: 'test' })
+      .post(`/v3/investment/${investmentData.id}/archive`, { reason: 'test' })
       .reply(200, investmentProjectAuditData)
 
     it('should call archive url and post reason', () => {
-      return archiveInvestmentProject('token', investmentProjectSummaryData.id, 'test')
+      return archiveInvestmentProject('token', investmentData.id, 'test')
     })
   })
 
   describe('#unarchiveInvestmentProject', () => {
     nock(config.apiRoot)
-      .post(`/v3/investment/${investmentProjectSummaryData.id}/unarchive`)
+      .post(`/v3/investment/${investmentData.id}/unarchive`)
       .reply(200, investmentProjectAuditData)
 
     it('should call unarchive url', () => {
-      return unarchiveInvestmentProject('token', investmentProjectSummaryData.id)
+      return unarchiveInvestmentProject('token', investmentData.id)
     })
   })
 })

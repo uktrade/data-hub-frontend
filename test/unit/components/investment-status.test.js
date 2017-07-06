@@ -1,9 +1,9 @@
 const { renderComponentToDom } = require('../component-helper')
 
-describe('Project status component', () => {
+describe('Investment status component', () => {
   it('should not render if no project code is given', () => {
     const component = renderComponentToDom(
-      'project-status',
+      'investment-status',
       {
         id: 'project id',
         name: 'Project name',
@@ -16,7 +16,7 @@ describe('Project status component', () => {
 
   it('should render with all section titles', () => {
     const component = renderComponentToDom(
-      'project-status',
+      'investment-status',
       {
         id: 'project id',
         name: 'Project name',
@@ -33,7 +33,7 @@ describe('Project status component', () => {
 
   it('should render one section title when phaseName is not given', () => {
     const component = renderComponentToDom(
-      'project-status',
+      'investment-status',
       {
         id: 'project id',
         name: 'Project name',
