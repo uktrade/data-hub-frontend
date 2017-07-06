@@ -119,7 +119,7 @@ describe('Contact controller, edit', function () {
       })
       it('should provide a back link to the contact', function (done) {
         res.render = function () {
-          expect(res.locals.backUrl).to.equal('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
+          expect(res.locals.backUrl).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
           done()
         }
         contactEditController.editDetails(req, res, next)
@@ -334,7 +334,7 @@ describe('Contact controller, edit', function () {
     })
     it('should redirect the user to the contact detail screen if editing an existing contact', function (done) {
       res.redirect = function (url) {
-        expect(url).to.equal('/contact/1234/details')
+        expect(url).to.equal('/contacts/1234')
         done()
       }
       contactEditController.postDetails(req, res, next)
