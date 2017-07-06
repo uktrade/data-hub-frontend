@@ -12,7 +12,7 @@ const {
 
 function handleEmptyMiddleware (req, res, next) {
   if (req.path === '/') {
-    return res.redirect(`/investment-projects/start`)
+    return res.redirect(`/investment-projects/create`)
   }
   next()
 }

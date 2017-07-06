@@ -26,7 +26,7 @@ async function populateDetailsFormMiddleware (req, res, next) {
   const equityCompanyId = get(res, 'locals.equityCompany.id', req.query['equity-company'])
 
   if (!isValidGuid(equityCompanyId)) {
-    return res.redirect('/investment-projects/start')
+    return res.redirect('/investment-projects/create')
   }
 
   try {
