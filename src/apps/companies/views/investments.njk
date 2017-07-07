@@ -10,10 +10,10 @@
   </div>
 
   {% if projects.results %}
-    <ol class="results-list">
+    <ol class="c-entity-list">
       {% for project in projects.results %}
-        <li class="results-list__item">
-          <h2 class="results-list__item-header">
+        <li class="c-entity-list__item">
+          <h2 class="c-entity-list__item-header">
             <a href="/investment-projects/{{ project.id }}">{{ project.name}}</a>
           </h2>
 

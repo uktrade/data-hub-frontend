@@ -2,11 +2,7 @@
 @import "../settings/layout";
 @import "../tools/functions/typography";
 
-.results-list {
-  list-style: none;
-}
-
-.results-list__item {
+.c-entity-list__item {
   border: solid $grey-2;
   border-width: 0 0 1px;
   padding: 0 0 ($gutter / 2);
@@ -16,7 +12,7 @@
   }
 }
 
-.results-list__link {
+.c-entity-list__link {
   border: 1px solid $grey-2;
   display: block;
   margin-top: -1px;
@@ -30,7 +26,7 @@
   }
 }
 
-.results-list__item-header {
+.c-entity-list__item-header {
   @include core-font(20);
   color: $link-colour;
   margin: ($gutter / 2) 0 ($gutter / 4);

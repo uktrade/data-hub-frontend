@@ -10,10 +10,10 @@
       searchTerm: searchTerm
     } %}
 
-    <ol class="results-list">
+    <ol class="c-entity-list">
       {% for contact in results.contacts %}
-        <li class="results-list__item">
-          <h3 class="results-list__item-header">
+        <li class="c-entity-list__item">
+          <h3 class="c-entity-list__item-header">
             <a href="/contacts/{{ contact.id }}">
               {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
             </a>

@@ -17,9 +17,9 @@
       searchTerm: searchTerm
     } %}
 
-    <ol class="results-list">
+    <ol class="c-entity-list">
       {% for company in results.companies %}
-        <li class="results-list__item">
+        <li class="c-entity-list__item">
 
           {% if company.companies_house_data %}
             {% set companyUrl = '/company/view/ch/' + company.companies_house_data.company_number %}
@@ -27,7 +27,7 @@
             {% set companyUrl = '/viewcompanyresult/' + company.id %}
           {% endif %}
 
-          <h3 class="results-list__item-header">
+          <h3 class="c-entity-list__item-header">
             <a href="{{ companyUrl }}">
               {{ company.name | highlight(searchTerm) }}
             </a>
