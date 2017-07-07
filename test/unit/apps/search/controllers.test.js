@@ -31,7 +31,7 @@ describe('Search controller', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ltd/9999')
+          expect(url).to.equal('/companies/view/ltd/9999')
           done()
         },
       }
@@ -61,7 +61,7 @@ describe('Search controller', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ltd/9999')
+          expect(url).to.equal('/companies/view/ltd/9999')
           done()
         },
       }
@@ -91,7 +91,7 @@ describe('Search controller', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ukother/9999')
+          expect(url).to.equal('/companies/view/ukother/9999')
           done()
         },
       }
@@ -121,7 +121,7 @@ describe('Search controller', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/foreign/9999')
+          expect(url).to.equal('/companies/view/foreign/9999')
           done()
         },
       }

@@ -123,7 +123,7 @@ async function post (req, res, next) {
     })
 
     await saveCompany(req.session.token, postData)
-    res.redirect(`/company-exports/view/${req.params.id}`)
+    res.redirect(`/companies/${req.params.id}/exports`)
   } catch (errors) {
     next(errors)
   }

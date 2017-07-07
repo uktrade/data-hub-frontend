@@ -15,7 +15,7 @@ async function getDetails (req, res, next) {
     res.locals.chDetails = getDisplayCH(company)
     res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
     res.locals.chDetailsLabels = chDetailsLabels
-    res.locals.addUrl = `/company/add/ltd/${company.company_number}`
+    res.locals.addUrl = `/companies/add/ltd/${company.company_number}`
     res.locals.title = [company.name, 'Companies']
 
     res.render('companies/views/details-ch')

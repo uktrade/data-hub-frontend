@@ -79,7 +79,7 @@ function getInflatedDitCompany (token, id) {
  * @returns {string} urlPath
  */
 function buildCompanyUrl (company) {
-  const companyPath = '/company/view'
+  const companyPath = '/companies/view'
   const businessType = get(company, 'business_type.name', '').toLowerCase()
   let urlPath
 

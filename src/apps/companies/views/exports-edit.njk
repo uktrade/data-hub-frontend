@@ -57,6 +57,6 @@
       <input class="button--link js-add_button" type="submit" name="addFutureInterestCountry" value="Add country">
     </div>
 
-    {{ save(backUrl = "/company-exports/view/" + company.id) }}
+    {{ save(backUrl = "/companies/" + company.id + "/exports") }}
   </form>
 {% endblock %}

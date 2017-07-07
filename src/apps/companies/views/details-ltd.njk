@@ -16,7 +16,7 @@
     {{ keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
   {% endif %}
 
-  <p><a href="/company/edit/ltd/{{company.id}}" class="button">Edit</a></p>
+  <p><a href="/companies/edit/ltd/{{company.id}}" class="button">Edit</a></p>
 
   {% if accountManagementDisplay %}
     <div class="section">
@@ -35,7 +35,7 @@
       options: ['Company is dissolved'],
       csrfToken: csrfToken,
       error: form.errors.reason,
-      url: '/company/archive/' + company.id
+      url: '/companies/archive/' + company.id
     } %}
   {% endif %}
 {% endblock %}

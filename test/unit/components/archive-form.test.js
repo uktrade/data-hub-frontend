@@ -5,7 +5,7 @@ const ArchiveForm = require('~/assets/javascripts/modules/archive-form')
 const { domTokenToArray } = require('~/test/unit/component-helper')
 
 const HTML = `
-  <form action="/company/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-archiveForm" method="POST">
+  <form action="/companies/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-archiveForm" method="POST">
     <input type="hidden" name="_csrf" value="1234">
     <fieldset>
       <legend class="visually-hidden" aria-visible="false">Archive reason</legend>

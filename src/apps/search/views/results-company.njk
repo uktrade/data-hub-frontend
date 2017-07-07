@@ -5,7 +5,7 @@
 
   {% if results %}
     <div class="action-bar">
-      <a class="button button-secondary" href="/company/add-step-1/">
+      <a class="button button-secondary" href="/companies/add-step-1/">
         Add company
       </a>
     </div>
@@ -22,7 +22,7 @@
         <li class="c-entity-list__item">
 
           {% if company.companies_house_data %}
-            {% set companyUrl = '/company/view/ch/' + company.companies_house_data.company_number %}
+            {% set companyUrl = '/companies/view/ch/' + company.companies_house_data.company_number %}
           {% else %}
             {% set companyUrl = '/viewcompanyresult/' + company.id %}
           {% endif %}

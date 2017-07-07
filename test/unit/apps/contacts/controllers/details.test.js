@@ -19,7 +19,7 @@ describe('Contact controller', function () {
       id: '876544',
       name: 'Bank ltd.',
     }
-    companyUrl = '/company/876544'
+    companyUrl = '/companies/876544'
     contact = {
       id: '12651151-2149-465e-871b-ac45bc568a62',
       created_on: '2017-02-14T14:49:17',

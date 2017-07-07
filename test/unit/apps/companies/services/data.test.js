@@ -77,7 +77,7 @@ describe('Company data service', () => {
           'sic_code_2': '82991 - Other business support service activities n.e.c.',
           'sic_code_3': '',
           'sic_code_4': '',
-          'uri': 'http://business.data.gov.uk/id/company/07937720',
+          'uri': 'http://business.data.gov.uk/id/companies/07937720',
           'incorporation_date': '2012-02-06',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -112,7 +112,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/company/view/foreign/mockId')
+      expect(urlPath).to.equal('/companies/view/foreign/mockId')
     })
     it('should return expected url for private ltd company', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -123,7 +123,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/company/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/view/ltd/mockId')
     })
     it('should return expected url for public ltd company', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -134,7 +134,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/company/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/view/ltd/mockId')
     })
     it('should return expected url for public ltd company with caps case', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -145,7 +145,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/company/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/view/ltd/mockId')
     })
     it('should return expected url uk non public, private ltd', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -156,7 +156,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/company/view/ukother/mockId')
+      expect(urlPath).to.equal('/companies/view/ukother/mockId')
     })
   })
 })
