@@ -18,3 +18,9 @@
     margin-bottom: $default-spacing-unit;
   }
 }
+
+// Main assemblies
+
+.main-content__header .search-bar {
+  margin-bottom: (-$default-spacing-unit * 2) - 4;
+}
