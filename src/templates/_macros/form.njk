@@ -163,6 +163,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} [props.type] - Field type
+ # @param {string} [props.class] - Field class name
  # @param {string} [props.value] - Field type
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.modifier] - form-control modifier
@@ -175,7 +176,7 @@
     id="{{ props.fieldId }}"
     {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
     value="{{ props.value }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
@@ -187,6 +188,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} [props.value] - Field type
+ # @param {string} [props.class] - Field class name
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
@@ -194,7 +196,7 @@
 {% macro TextArea(props) %}
   <textarea
     name="{{ props.name }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     id="{{ props.fieldId }}"
     placeholder="{{ props.placeholder }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
