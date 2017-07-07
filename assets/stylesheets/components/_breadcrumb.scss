@@ -1,0 +1,43 @@
+@import "../settings/colours";
+@import "../settings/layout";
+@import "../tools/mixins";
+
+.c-breadcrumb {
+  margin-top: $default-spacing-unit / 2;
+}
+
+.c-breadcrumb__item {
+  @include core-font(16);
+  background: url("../../images/separator.png") left center no-repeat;
+  background-size: contain;
+  display: inline-block;
+  margin: 0 0 0 $default-spacing-unit / 2;
+  padding: 0 0 0 $default-spacing-unit;
+
+  @include device-pixel-ratio(2) {
+    background-image: url("../../images/separator@2x.png");
+    background-size: 6px 11px;
+  }
+
+  &:first-child {
+    background: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+.c-breadcrumb__link {
+  color: $black;
+
+  &:link,
+  &:active,
+  &:hover,
+  &:visited {
+    color: $black;
+    text-decoration: underline;
+  }
+
+  &.is-active {
+    text-decoration: none;
+  }
+}
