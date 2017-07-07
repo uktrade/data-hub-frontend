@@ -1,0 +1,38 @@
+{##
+ # Family: Control
+ #
+ # @param {object[]} items - List of breadcrumb items
+ #
+ # @return {string} HTML for breadcrumb
+ #
+ # @example
+ #   {% component 'breadcrumb', {
+ #     items: [{
+ #       name: 'Home',
+ #       url: '/'
+ #     }, {
+ #       name: 'Second level',
+ #       url: '/second-level'
+ #     }]
+ #   } %}
+ #}
+
+{% if items|length > 1 %}
+  <nav aria-label="Breadcrumbs">
+    <ul class="c-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+      {% for breadcrumb in items %}
+        <li class="c-breadcrumb__item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          {% if loop.last %}
+            <a href="#main-content" class="c-breadcrumb__link is-active" itemprop="url">
+              <span itemprop="name">{{ breadcrumb.name }}</span>
+            </a>
+          {% else %}
+            <a href="{{ breadcrumb.url }}" class="c-breadcrumb__link" itemprop="url">
+              <span itemprop="name">{{ breadcrumb.name }}</span>
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
