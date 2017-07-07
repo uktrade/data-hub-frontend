@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { handleFormPost } = require('./middleware')
+const { handleFormPost, handleEntitySearch } = require('./middleware')
 const {
   renderEntityList,
   renderFormElements,
@@ -14,7 +14,7 @@ router
   .get('/breadcrumbs', renderBreadcrumbs)
   .get('/messages', renderMessages)
   .get('/entity-list', renderEntityList)
-  .get('/form', renderFormElements)
+  .get('/form', handleEntitySearch, renderFormElements)
   .post('/form', handleFormPost, renderFormElements)
 
 module.exports = router
