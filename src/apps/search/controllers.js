@@ -1,62 +1,24 @@
+const { find } = require('lodash')
+
 const companyRepository = require('../companies/repos')
 const { buildCompanyUrl } = require('../companies/services/data')
-const { search } = require('./services')
+const { entities, search, buildSearchEntityResultsData } = require('./services')
 const getPagination = require('../../lib/pagination').getPagination
-const Joi = require('joi')
-const Celebrate = require('celebrate')
 
-const defaultEntities = [
-  {
-    entity: 'company',
-    text: 'Companies',
-    count: 0,
-  },
-  {
-    entity: 'contact',
-    text: 'Contacts',
-    count: 0,
-  },
-]
+function searchAction (req, res, next) {
+  const searchTerm = req.query.term
+  const entity = find(entities, { path: req.params.searchPath })
 
-function buildSearchEntityResultsData (apiResponseEntities) {
-  return defaultEntities.map((defaultEntity) => {
-    return Object.assign(
-      {},
-      defaultEntity,
-      apiResponseEntities.find((apiResponseEntity) => {
-        return apiResponseEntity.entity === defaultEntity.entity
-      })
-    )
-  })
-}
-
-function indexAction (req, res, next) {
-  if (!req.query.term) {
+  if (!entity) {
     return res.render('search/views/index')
   }
 
-  next()
-}
-
-const searchActionValidationSchema = Celebrate({
-  params: {
-    searchType: Joi.string().valid(
-      [
-        'company',
-        'contact',
-      ]
-    ),
-  },
-})
-
-function searchAction (req, res, next) {
-  const searchType = req.params.searchType
-  const searchTerm = req.query.term
+  const searchEntity = entity.entity
 
   search({
-    token: req.session.token,
+    searchEntity,
     searchTerm,
-    searchType,
+    token: req.session.token,
     page: req.query.page,
   })
     .then((results) => {
@@ -64,10 +26,11 @@ function searchAction (req, res, next) {
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
       req.breadcrumbs('Search')
-      res.render(`search/views/results-${searchType}`, {
+      res.render(`search/views/results-${searchEntity}`, {
         title: [searchTerm, `Search results`],
         searchTerm,
-        searchType,
+        searchEntity,
+        searchPath: entity.path,
         searchEntityResultsData,
         results,
         pagination,
@@ -86,8 +49,6 @@ async function viewCompanyResult (req, res, next) {
 }
 
 module.exports = {
-  indexAction,
   searchAction,
-  searchActionValidationSchema,
   viewCompanyResult,
 }
