@@ -244,7 +244,7 @@ describe('Company contacts controller', function () {
 
     beforeEach(function () {
       contacts = [{
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
         name: 'Fred Smith',
         job_title: 'Director',
         telephone_number: '+44 7814 333 777',
@@ -255,7 +255,7 @@ describe('Company contacts controller', function () {
         notes: 'some notes',
         telephone_alternative: '07814 000 333',
       }, {
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a63/details',
+        url: '/contacts/12651151-2149-465e-871b-ac45bc568a63',
         name: 'Jane Smith',
         job_title: 'Director',
         telephone_number: '+44 7814 333 777',
@@ -268,7 +268,7 @@ describe('Company contacts controller', function () {
       }]
 
       contactsArchived = [{
-        url: '/contact/12651151-2149-465e-871b-ac45bc568a62/details',
+        url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
         name: 'Fred Smith',
         job_title: 'Director',
         reason: 'Left company',
@@ -296,7 +296,7 @@ describe('Company contacts controller', function () {
       .then((document) => {
         const contactElement = document.querySelector('#contact-list .card')
         expect(contactElement.innerHTML).to.include('Fred Smith')
-        expect(contactElement.innerHTML).to.include('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
+        expect(contactElement.innerHTML).to.include('/contacts/12651151-2149-465e-871b-ac45bc568a62')
         expect(contactElement.innerHTML).to.include('Job title:')
         expect(contactElement.innerHTML).to.include('Director')
         expect(contactElement.innerHTML).to.include('Telephone:')
@@ -328,7 +328,7 @@ describe('Company contacts controller', function () {
         expect(contactElement.innerHTML).to.include('14 Feb 2017')
         expect(contactElement.innerHTML).to.include('Archived by:')
         expect(contactElement.innerHTML).to.include('Fred Flintstone')
-        expect(contactElement.innerHTML).to.include('/contact/12651151-2149-465e-871b-ac45bc568a62/details')
+        expect(contactElement.innerHTML).to.include('/contacts/12651151-2149-465e-871b-ac45bc568a62')
       })
     })
     it('include a link to add a new contact', function () {

@@ -25,7 +25,7 @@ function getContactName (contact) {
 
 function getContactLink (object) {
   if (object.contact) {
-    return `<a href="/contact/${object.contact.id}/details">${getContactName(object.contact)}</a>`
+    return `<a href="/contacts/${object.contact.id}">${getContactName(object.contact)}</a>`
   }
   return null
 }

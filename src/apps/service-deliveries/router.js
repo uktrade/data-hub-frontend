@@ -9,7 +9,7 @@ const {
 
 router.get('/:serviceDeliveryId/*', getCommon)
 
-router.get('/:serviceDeliveryId', getServiceDeliveryDetails)
+router.get('/:serviceDeliveryId', getCommon, getServiceDeliveryDetails)
 
 router
   .route('/:serviceDeliveryId/edit')

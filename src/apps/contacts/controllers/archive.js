@@ -11,7 +11,7 @@ async function archiveContact (req, res, next) {
       req.flash('error', 'Unable to archive contact, no reason given')
     }
 
-    res.redirect(`/contact/${req.params.id}/details`)
+    res.redirect(`/contacts/${req.params.id}`)
   } catch (error) {
     next(error)
   }
@@ -21,7 +21,7 @@ async function unarchiveContact (req, res, next) {
   try {
     await contactsRepository.unarchiveContact(req.session.token, req.params.id)
     req.flash('success', 'Updated contact record')
-    res.redirect(`/contact/${req.params.id}/details`)
+    res.redirect(`/contacts/${req.params.id}`)
   } catch (error) {
     next(error)
   }
