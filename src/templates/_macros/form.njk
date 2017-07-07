@@ -290,6 +290,7 @@
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.selected] - Selected field value
+ # @param {string} [props.initialOption] - Initial option label to use for empty value
  #
  # @callback {function} [caller] - Optional inner contents
  #}
@@ -301,6 +302,9 @@
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {{ caller() if caller }}
+    {% if props.initialOption %}
+      <option value="">{{ props.initialOption }}</option>
+    {% endif %}
     {% for option in props.options %}
       <option value="{{ option.value }}" {% if props.selected == option.value %}selected{% endif %}>
         {{ option.label }}
