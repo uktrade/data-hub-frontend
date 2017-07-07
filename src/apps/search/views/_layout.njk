@@ -2,18 +2,15 @@
 {% from "_macros/address.njk" import addressFormatter %}
 
 {% block body_main_header_content %}
-  {% component 'search-bar', {
-    action: '/search/' + searchType | default('company'),
-    method: 'get',
-    label: 'Search for company name or contact',
-    searchTerm: searchTerm
-  } %}
-
-  {% component 'search-nav', {
-    searchEntityResults: searchEntityResultsData,
+  {{ EntitySearchForm({
+    inputName: 'term',
+    modifier: 'global',
+    action: '/search/company',
+    searchTerm: searchTerm,
     searchType: searchType,
-    searchTerm: searchTerm
-  } %}
+    inputLabel: 'Search for company name or contact',
+    aggregations: searchEntityResultsData
+  }) }}
 {% endblock %}
 
 

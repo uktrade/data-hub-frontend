@@ -13,7 +13,7 @@ module.exports = {
     flashMessage: '.flash-message',
     usernameField: '#username',
     passwordField: '#password',
-    searchBar: 'form.search-bar',
+    searchBar: '.c-entity-search',
   },
   commands: [
     {
