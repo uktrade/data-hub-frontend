@@ -59,7 +59,9 @@
 {% endblock %}
 
 {% block body_main_header %}
-  {% component 'breadcrumbs', { items: BREADCRUMBS } %}
+  {% block body_main_header_breadcrumbs %}
+    {% component 'breadcrumbs', { items: BREADCRUMBS } %}
+  {% endblock %}
   {% component 'messages', { messages: messages } %}
   {{ super() }}
 {% endblock %}
