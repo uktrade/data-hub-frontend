@@ -74,12 +74,14 @@
  # @param {string} [props.element=div] - Group element
  # @param {string} [props.modifier] - Group modifier
  # @param {boolean} [props.optional] - Marks field as optional
+ # @param {boolean} [props.isLabelHidden=false] - Whether input label should be hidden
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
  # @param {string} [props.condition.value] - Name of the field that controls this form group if it is a subfield
  #}
 {% macro FormGroup(props) %}
   {% set groupElement = props.element or 'div' %}
   {% set labelElement = 'label' if groupElement == 'div' else 'legend' %}
+  {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
   {% if props.label and props.name -%}
     <{{ groupElement }}
@@ -90,7 +92,7 @@
         data-control-value="{{ props.condition.value }}"
       {% endif %}
     >
-      <{{ labelElement }} class="c-form-group__label" for="{{ props.fieldId }}">
+      <{{ labelElement }} class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}" for="{{ props.fieldId }}">
         <span class="c-form-group__label-text">
           {{ props.label }} {{ ' (optional)' if props.optional }}
         </span>
