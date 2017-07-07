@@ -16,6 +16,7 @@ module.exports = function locals (req, res, next) {
     CANONICAL_URL: baseUrl + req.originalUrl,
     CURRENT_PATH: req.path,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
+    BREADCRUMBS: req.breadcrumbs(),
 
     getAssetPath (asset) {
       const assetsUrl = config.assetsHost || baseUrl
