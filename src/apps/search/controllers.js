@@ -63,6 +63,7 @@ function searchAction (req, res, next) {
       const pagination = getPagination(req, results)
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
+      req.breadcrumbs('Search')
       res.render(`search/views/results-${searchType}`, {
         title: [searchTerm, `Search results`],
         searchTerm,

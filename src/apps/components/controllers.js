@@ -27,6 +27,7 @@ const foreignOtherCompanyOptions = [
 ]
 
 function renderFormElements (req, res) {
+  req.breadcrumbs('Form')
   return res.render('components/views/form', {
     title: 'Form Elements',
     form: Object.assign({}, res.locals.form, {
@@ -42,6 +43,7 @@ function renderFormElements (req, res) {
 }
 
 function renderMessages (req, res) {
+  req.breadcrumbs('Application messages')
   return res.render('components/views/messages', {
     title: 'Application messages',
   })

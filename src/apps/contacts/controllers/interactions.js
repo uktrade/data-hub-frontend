@@ -9,6 +9,7 @@ async function getInteractions (req, res, next) {
     res.locals.addInteractionUrl = `/interactions/create/1?contact=${res.locals.contact.id}`
 
     res.locals.title.unshift('Interactions')
+    req.breadcrumbs('Interactions')
 
     res.render('contacts/views/interactions')
   } catch (error) {

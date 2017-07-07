@@ -31,8 +31,13 @@ describe('Error Middleware Test', () => {
   describe('notFound method', () => {
     it('should log a 404 and drop through to next middleware', () => {
       const nextSpy = this.sandbox.spy()
+      const mockResponse = {
+        locals: {
+          BREADCRUMBS: [],
+        },
+      }
 
-      this.errorsStub(isDev).notFound(null, null, nextSpy)
+      this.errorsStub(isDev).notFound(null, mockResponse, nextSpy)
 
       expect(nextSpy.calledOnce).to.be.true
       expect(nextSpy.args[0][0] instanceof Error).to.be.true
@@ -50,6 +55,9 @@ describe('Error Middleware Test', () => {
           return {
             render: responseRenderSpy,
           }
+        },
+        locals: {
+          BREADCRUMBS: [],
         },
         headersSent: false,
       }
@@ -82,6 +90,9 @@ describe('Error Middleware Test', () => {
             render: responseRenderSpy,
           }
         },
+        locals: {
+          BREADCRUMBS: [],
+        },
         headersSent: false,
       }
       const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
@@ -111,6 +122,9 @@ describe('Error Middleware Test', () => {
           return {
             render: responseRenderSpy,
           }
+        },
+        locals: {
+          BREADCRUMBS: [],
         },
         headersSent: false,
       }
@@ -145,6 +159,9 @@ describe('Error Middleware Test', () => {
           return {
             render: responseRenderSpy,
           }
+        },
+        locals: {
+          BREADCRUMBS: [],
         },
         headersSent: false,
       }

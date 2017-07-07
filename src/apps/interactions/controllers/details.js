@@ -11,6 +11,7 @@ async function getCommon (req, res, next) {
     const token = req.session.token
     if (req.params.interactionId && req.params.interactionId !== 'add') {
       res.locals.interaction = await interactionDataService.getHydratedInteraction(token, req.params.interactionId)
+      req.breadcrumbs('Interaction')
     }
     next()
   } catch (error) {

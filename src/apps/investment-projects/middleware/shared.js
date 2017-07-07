@@ -12,6 +12,7 @@ function handleEmptyMiddleware (req, res, next) {
 }
 
 function getLocalNavMiddleware (req, res, next) {
+  req.breadcrumbs('Project details')
   res.locals.localNavItems = [
     { label: 'Project details', slug: 'details' },
     { label: 'Project team', slug: 'team' },
