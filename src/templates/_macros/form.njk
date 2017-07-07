@@ -190,6 +190,8 @@
  # @param {string} [props.error] - Field error
  # @param {string} [props.modifier] - Field modifier
  # @param {boolean} [props.optional] - Marks field as optional
+ #
+ # @param {function} [props.caller] - Optional inner contents
  #}
 {% macro TextField(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
@@ -289,7 +291,7 @@
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.selected] - Selected field value
  #
- # @callback {function} caller - Optional inner contents
+ # @callback {function} [caller] - Optional inner contents
  #}
 {% macro SelectBox(props) %}
   <select
