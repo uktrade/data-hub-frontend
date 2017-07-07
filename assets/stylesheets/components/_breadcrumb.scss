@@ -2,11 +2,7 @@
 @import "../settings/layout";
 @import "../tools/mixins";
 
-.c-breadcrumb {
-  margin-top: $default-spacing-unit / 2;
-}
-
-.c-breadcrumb__item {
+.c-breadcrumb__list-item {
   @include core-font(16);
   background: url("../../images/separator.png") left center no-repeat;
   background-size: 6px 11px;
