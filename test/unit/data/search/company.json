@@ -1,6 +1,14 @@
 {
   "aggregations": [
     {
+      "count": 0,
+      "entity": "company"
+    },
+    {
+      "count": 5,
+      "entity": "investment_project"
+    },
+    {
       "count": 1,
       "entity": "contact"
     }

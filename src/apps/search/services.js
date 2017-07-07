@@ -15,6 +15,12 @@ const entities = [
     text: 'Contacts',
     count: 0,
   },
+  {
+    entity: 'investment_project',
+    path: 'investment-projects',
+    text: 'Investment projects',
+    count: 0,
+  },
 ]
 
 function search ({ token, searchTerm, searchEntity, limit = 10, page = 1 }) {

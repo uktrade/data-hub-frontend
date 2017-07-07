@@ -186,6 +186,12 @@ describe('Search Controller', () => {
           path: 'contacts',
           text: 'Contacts',
         },
+        {
+          count: investmentCount,
+          entity: 'investment_project',
+          path: 'investment-projects',
+          text: 'Investment projects',
+        },
       ]
     }
 
@@ -262,6 +268,59 @@ describe('Search Controller', () => {
             offset: 0,
           })
           .reply(200, contactResponse)
+
+        this.controller.searchAction(
+          {
+            session: {
+              token: '1234',
+            },
+            query: {
+              term: searchTerm,
+            },
+            params: {
+              searchPath,
+            },
+            breadcrumbs: sinon.stub(),
+          },
+          {
+            render: (template, data) => {
+              try {
+                expect(template).to.equal(`search/views/results-${entityType}`)
+                expect(data.searchTerm).to.equal(searchTerm)
+                expect(data.searchEntity).to.equal(entityType)
+                expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
+                expect(data.results).to.deep.equal(expectedResults)
+                expect(data.pagination).to.be.a('array')
+                expect(data.pagination.length).to.equal(0)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            },
+          }, this.next
+        )
+      })
+    })
+
+    describe('when called with "investment-projects" searchPath', () => {
+      const investmentResponse = require('~/test/unit/data/search/investment')
+
+      it('should render results page for contact', (done) => {
+        const entityType = 'investment_project'
+        const searchPath = 'investment-projects'
+        const expectedResults = Object.assign({}, investmentResponse, {
+          page: 1,
+        })
+
+        nock(config.apiRoot)
+          .get(`/v3/search`)
+          .query({
+            term: searchTerm,
+            entity: entityType,
+            limit: 10,
+            offset: 0,
+          })
+          .reply(200, investmentResponse)
 
         this.controller.searchAction(
           {
