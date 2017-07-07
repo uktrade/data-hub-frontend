@@ -227,6 +227,7 @@ describe('Search Controller', () => {
             params: {
               searchType,
             },
+            breadcrumbs: sinon.stub(),
           },
           {
             render: (template, data) => {
@@ -278,6 +279,7 @@ describe('Search Controller', () => {
             params: {
               searchType,
             },
+            breadcrumbs: sinon.stub(),
           },
           {
             render: (template, data) => {

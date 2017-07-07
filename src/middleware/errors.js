@@ -4,6 +4,7 @@ const logger = require('../../config/logger')
 function notFound (req, res, next) {
   const error = new Error('Not Found')
   error.statusCode = 404
+  res.locals.BREADCRUMBS = null
 
   next(error)
 }
@@ -24,6 +25,7 @@ function catchAll (error, req, res, next) {
 
   logger[statusCode === 404 ? 'info' : 'error'](error)
 
+  res.locals.BREADCRUMBS = null
   res.status(statusCode)
     .render('errors', {
       statusCode,

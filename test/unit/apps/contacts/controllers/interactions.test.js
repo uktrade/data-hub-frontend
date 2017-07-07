@@ -27,6 +27,7 @@ describe('Contact interactions controller', function () {
       const req = {
         session: { token: '1234' },
         params: { contactId: '1' },
+        breadcrumbs: sinon.stub(),
       }
       const res = {
         locals: {
@@ -45,6 +46,7 @@ describe('Contact interactions controller', function () {
       const req = {
         session: { token: '1234' },
         params: { contactId: '1' },
+        breadcrumbs: sinon.stub(),
       }
       const res = {
         locals: {
@@ -63,6 +65,7 @@ describe('Contact interactions controller', function () {
       const req = {
         session: { token: '1234' },
         params: { contactId: '1' },
+        breadcrumbs: sinon.stub(),
       }
       const res = {
         locals: {

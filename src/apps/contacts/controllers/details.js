@@ -12,12 +12,20 @@ const reasonForArchiveOptions = [
 
 async function getCommon (req, res, next) {
   try {
+    const token = req.session.token
+    const contact = res.locals.contact = await contactsRepository.getContact(token, req.params.contactId)
+    const company = res.locals.company = await companyRepository.getDitCompany(token, contact.company.id)
+    const name = `${contact.first_name} ${contact.last_name}`
+
     res.locals.id = req.params.contactId
-    res.locals.contact = await contactsRepository.getContact(req.session.token, req.params.contactId)
-    res.locals.company = await companyRepository.getDitCompany(req.session.token, res.locals.contact.company.id)
-    res.locals.companyUrl = companyService.buildCompanyUrl(res.locals.company)
+    res.locals.companyUrl = companyService.buildCompanyUrl(company)
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
-    res.locals.title = [`${res.locals.contact.first_name} ${res.locals.contact.last_name}`, 'Contacts']
+    res.locals.title = [name, 'Contacts']
+
+    req.breadcrumbs({
+      name,
+      url: `/contacts/${contact.id}`,
+    })
 
     next()
   } catch (error) {

@@ -5,6 +5,7 @@ function renderFeedbackPage (req, res) {
 }
 
 function renderThankYouPage (req, res) {
+  req.breadcrumbs('Thank you')
   res.render('support/views/thank-you', {
     title: ['Thank you', 'Support'],
   })

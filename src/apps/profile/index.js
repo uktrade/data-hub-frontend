@@ -1,8 +1,9 @@
 const router = require('express').Router()
 
 function getHandler (req, res) {
+  req.breadcrumbs('Your profile')
   res.render('profile/views/profile', {
-    title: 'Your account',
+    title: 'Your profile',
   })
 }
 
