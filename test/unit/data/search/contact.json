@@ -7,6 +7,10 @@
     {
       "count": 1,
       "entity": "contact"
+    },
+    {
+      "count": 5,
+      "entity": "investment_project"
     }
   ],
   "contacts": [

@@ -1,0 +1,179 @@
+{
+  "aggregations": [
+    {
+      "count": 3,
+      "entity": "company"
+    },
+    {
+      "count": 5,
+      "entity": "investment_project"
+    },
+    {
+      "count": 1,
+      "entity": "contact"
+    }
+  ],
+  "investment_projects": [
+    {
+      "id": "b18df0fe-ac47-4b67-b972-c1c449688054",
+      "business_activities": [],
+      "client_contacts": [],
+      "investor_company": {
+          "id": "6c388e5b-a098-e211-a939-e4115bead28a",
+          "name": "Samsung SDS"
+      },
+      "investment_type": {
+          "id": "031269ab-b7ec-40e9-8a4e-7371404f0622",
+          "name": "Commitment to invest"
+      },
+      "phase": {
+          "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
+          "name": "Prospect"
+      },
+      "project_code": "DHP-00000002",
+      "created_on": null,
+      "modified_on": null,
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "name": "Marriot Hotels - New hotel in Manchester",
+      "description": "Marriott hotels wishes to open in a new part of Manchester under-served by its existing hotels",
+      "nda_signed": false,
+      "estimated_land_date": "2018-05-01",
+      "project_shareable": null,
+      "not_shareable_reason": null,
+      "actual_land_date": null,
+      "approved_commitment_to_invest": null,
+      "approved_fdi": null,
+      "approved_good_value": null,
+      "approved_high_value": null,
+      "approved_landed": null,
+      "approved_non_fdi": null,
+      "intermediate_company": null,
+      "client_relationship_manager": null,
+      "referral_source_adviser": null,
+      "referral_source_activity": null,
+      "referral_source_activity_website": null,
+      "referral_source_activity_marketing": null,
+      "referral_source_activity_event": null,
+      "fdi_type": null,
+      "non_fdi_type": null,
+      "sector": null,
+      "client_cannot_provide_total_investment": null,
+      "total_investment": null,
+      "client_cannot_provide_foreign_investment": null,
+      "foreign_equity_investment": null,
+      "government_assistance": null,
+      "number_new_jobs": null,
+      "average_salary": null,
+      "number_safeguarded_jobs": null,
+      "r_and_d_budget": null,
+      "non_fdi_r_and_d_budget": null,
+      "new_tech_to_uk": null,
+      "export_revenue": null,
+      "client_requirements": null,
+      "site_decided": null,
+      "address_line_1": null,
+      "address_line_2": null,
+      "address_line_3": null,
+      "address_line_postcode": null,
+      "uk_company": null,
+      "project_manager": null,
+      "project_assurance_adviser": null
+  },
+  {
+      "id": "b0f0713c-e318-434c-9945-6c996b475728",
+      "business_activities": [
+          {
+              "id": "7e7fbced-143a-43ac-822b-a8411e7400b4",
+              "name": "Distribution"
+          }
+      ],
+      "client_contacts": [
+          {
+              "id": "64f7aa36-0334-4628-a7c3-682328d613f6",
+              "first_name": "Fred",
+              "last_name": "Smith"
+          }
+      ],
+      "client_relationship_manager": {
+          "id": "8036f207-ae3e-e611-8d53-e4115bed50dc",
+          "name": "Test CMU 1"
+      },
+      "investor_company": {
+          "id": "dcdabbc9-1781-e411-8955-e4115bead28a",
+          "name": "Samsung"
+      },
+      "investment_type": {
+          "id": "031269ab-b7ec-40e9-8a4e-7371404f0622",
+          "name": "Commitment to invest"
+      },
+      "phase": {
+          "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
+          "name": "Prospect"
+      },
+      "referral_source_activity": {
+          "id": "7d98f3a6-3e3f-40ac-a6f3-3f0c251ec1d2",
+          "name": "Direct enquiry"
+      },
+      "referral_source_adviser": {
+          "id": "8036f207-ae3e-e611-8d53-e4115bed50dc",
+          "first_name": "Test",
+          "last_name": "CMU 1"
+      },
+      "sector": {
+          "id": "e9e181d2-f6a0-e211-b972-e4115bead28a",
+          "name": "Aerospace : Component Manufacturing"
+      },
+      "project_code": "DHP-00000019",
+      "created_on": "2017-06-05T11:05:26.518645",
+      "modified_on": "2017-06-28T13:07:33.521523",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": "",
+      "archived_by": null,
+      "name": "New project name",
+      "description": "sdadas",
+      "nda_signed": true,
+      "estimated_land_date": "2018-10-01",
+      "project_shareable": true,
+      "not_shareable_reason": null,
+      "actual_land_date": null,
+      "approved_commitment_to_invest": null,
+      "approved_fdi": null,
+      "approved_good_value": null,
+      "approved_high_value": null,
+      "approved_landed": null,
+      "approved_non_fdi": null,
+      "intermediate_company": null,
+      "referral_source_activity_website": null,
+      "referral_source_activity_marketing": null,
+      "referral_source_activity_event": "",
+      "fdi_type": null,
+      "non_fdi_type": null,
+      "client_cannot_provide_total_investment": null,
+      "total_investment": null,
+      "client_cannot_provide_foreign_investment": null,
+      "foreign_equity_investment": null,
+      "government_assistance": null,
+      "number_new_jobs": null,
+      "average_salary": null,
+      "number_safeguarded_jobs": null,
+      "r_and_d_budget": null,
+      "non_fdi_r_and_d_budget": null,
+      "new_tech_to_uk": null,
+      "export_revenue": null,
+      "client_requirements": null,
+      "site_decided": null,
+      "address_line_1": null,
+      "address_line_2": null,
+      "address_line_3": null,
+      "address_line_postcode": null,
+      "uk_company": null,
+      "project_manager": null,
+      "project_assurance_adviser": null
+  }
+  ],
+  "count": 2
+}
