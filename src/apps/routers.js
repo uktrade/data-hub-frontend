@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const fs = require('fs')
+
+const { addBaseBreadcrumb } = require('./middleware')
 const logger = require('../../config/logger')
 
 const appsRouters = []
@@ -10,7 +12,7 @@ subApps.forEach(subAppDir => {
     const subApp = require(`./${subAppDir}`)
 
     if (subApp.mountpath) {
-      appsRouters.push(router.use(subApp.mountpath, subApp.router))
+      appsRouters.push(router.use(subApp.mountpath, addBaseBreadcrumb(subApp.displayName), subApp.router))
     } else if (subApp.router) {
       appsRouters.push(router.use(subApp.router))
     } else {
