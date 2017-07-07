@@ -6,7 +6,7 @@ describe('Search service', function () {
   describe('searchService.search method', function () {
     it('the result should contain correct details', function () {
       const searchTerm = 'testTerm'
-      const searchType = 'company'
+      const searchEntity = 'company'
       const mockResponse = {
         message: 'expected response',
       }
@@ -19,7 +19,7 @@ describe('Search service', function () {
         .get(`/v3/search`)
         .query({
           term: searchTerm,
-          entity: searchType,
+          entity: searchEntity,
           limit: 10,
           offset: 0,
         })
@@ -28,7 +28,7 @@ describe('Search service', function () {
       search({
         token: 'token',
         searchTerm,
-        searchType,
+        searchEntity,
       })
         .then((response) => {
           expect(response).to.deep.equal(expectedResponse)

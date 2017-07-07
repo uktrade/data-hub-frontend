@@ -63,7 +63,7 @@
  # @param {string} [props.inputHint] - Hint for input
  # @param {string} [props.method=GET] - Form method
  # @param {string} [props.modifier] - Search form modifier (e.g. global)
- # @param {string} [props.searchType=company] - Search type
+ # @param {string} [props.entityType=company] - Search entity type
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
  # @param {array} [props.aggregations] - Search aggregations summary
@@ -73,7 +73,7 @@
   {% set inputName = props.inputName | default('term') -%}
   {% set inputPlaceholder = props.inputPlaceholder | default(props.inputLabel) -%}
   {% set isLabelHidden = props.isLabelHidden | default(true) %}
-  {% set searchType = props.searchType | default('company') %}
+  {% set entityType = props.entityType | default('company') %}
   <form
     method="{{ method }}"
     action="{{ props.action }}"
@@ -102,12 +102,12 @@
       <nav class="c-entity-search__aggregations">
         <ul>
           {% for item in props.aggregations %}
-            {% set isCurrentPage = item.entity === searchType %}
+            {% set isCurrentPage = item.entity === entityType %}
             <li class="c-entity-search__aggregations-item {{ 'is-active' if isCurrentPage }}">
               {% if isCurrentPage %}
                 {{ item.text }}
               {% else %}
-                <a class="c-entity-search__aggregations-link" href="/search/{{ item.entity }}?term={{ props.searchTerm }}">{{ item.text }}</a>
+                <a class="c-entity-search__aggregations-link" href="/search/{{ item.path }}?term={{ props.searchTerm }}">{{ item.text }}</a>
               {% endif %}
               <span class="c-entity-search__aggregations-count">({{ item.count | formatNumber }})</span>
             </li>

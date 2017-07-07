@@ -1,4 +1,4 @@
-const { search } = require('../search/services')
+const { search, buildSearchEntityResultsData } = require('../search/services')
 
 function handleFormPost (req, res, next) {
   res.locals.form = Object.assign({}, res.locals.form, {
@@ -17,40 +17,14 @@ function handleFormPost (req, res, next) {
   next()
 }
 
-const defaultEntities = [
-  {
-    entity: 'company',
-    text: 'Companies',
-    count: 0,
-  },
-  {
-    entity: 'contact',
-    text: 'Contacts',
-    count: 0,
-  },
-]
-
-function buildSearchEntityResultsData (apiResponseEntities) {
-  return defaultEntities.map((defaultEntity) => {
-    return Object.assign(
-      {},
-      defaultEntity,
-      apiResponseEntities.find((apiResponseEntity) => {
-        return apiResponseEntity.entity === defaultEntity.entity
-      })
-    )
-  })
-}
-
 async function handleEntitySearch (req, res, next) {
   const searchTerm = req.query.term
-  const searchType = 'company'
 
   if (searchTerm) {
     const results = await search({
-      token: req.session.token,
       searchTerm,
-      searchType,
+      token: req.session.token,
+      searchEntity: 'company',
     })
 
     res.locals.entitySearch = Object.assign({}, res.locals.entitySearch, {

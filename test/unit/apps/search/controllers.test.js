@@ -127,6 +127,35 @@ describe('Search controller', function () {
       }
       searchController.viewCompanyResult(req, res, next)
     })
+    it('should call next if no company is found', function (done) {
+      const searchController = proxyquire('~/src/apps/search/controllers', {
+        '../companies/repos': {
+          getDitCompany: sinon.stub().resolves(undefined),
+        },
+      })
+      const req = {
+        session: {
+          token: '1234',
+        },
+        params: {
+          id: '9999',
+        },
+      }
+      const res = {
+        locals: {},
+      }
+      const nextStub = (error) => {
+        try {
+          expect(() => {
+            throw error
+          }).to.throw()
+          done()
+        } catch (e) {
+          done(e)
+        }
+      }
+      searchController.viewCompanyResult(req, res, nextStub)
+    })
   })
 })
 
@@ -141,67 +170,32 @@ describe('Search Controller', () => {
     this.sandbox.restore()
   })
 
-  describe('indexAction method', () => {
-    describe('when query param term is not provided', () => {
-      it('should render index page', (done) => {
-        this.controller.indexAction(
-          {
-            session: {
-              token: '1234',
-            },
-            query: {},
-          },
-          {
-            render: (template) => {
-              expect(template).to.equal('search/views/index')
-              done()
-            },
-          }, this.next
-        )
-      })
-    })
-
-    describe('when query param term is provided', () => {
-      it('should drop through to next middleware', () => {
-        this.controller.indexAction(
-          {
-            session: {
-              token: '1234',
-            },
-            query: {
-              term: 'mock term',
-            },
-          }, {}, this.next
-        )
-
-        expect(this.next.calledOnce).to.be.true
-      })
-    })
-  })
-
   describe('searchAction method', () => {
     const searchTerm = 'mock'
-    const expectedSearchEntityResultsData = (companyCount = 3, contactCount = 1) => {
+    const expectedSearchEntityResultsData = (companyCount = 3, contactCount = 1, investmentCount = 5) => {
       return [
         {
           count: companyCount,
           entity: 'company',
+          path: 'companies',
           text: 'Companies',
         },
         {
           count: contactCount,
           entity: 'contact',
+          path: 'contacts',
           text: 'Contacts',
         },
       ]
     }
 
-    describe('when called with "company" searchType', () => {
+    describe('when called with "companies" searchPath', () => {
       const companyResponse = require('~/test/unit/data/search/company')
 
       it('should render results page for company', (done) => {
         const token = '1234'
-        const searchType = 'company'
+        const entityType = 'company'
+        const searchPath = 'companies'
         const expectedResults = Object.assign({}, companyResponse, {
           page: 1,
         })
@@ -210,7 +204,7 @@ describe('Search Controller', () => {
           .get(`/v3/search`)
           .query({
             term: searchTerm,
-            entity: searchType,
+            entity: entityType,
             limit: 10,
             offset: 0,
           })
@@ -225,16 +219,16 @@ describe('Search Controller', () => {
               term: searchTerm,
             },
             params: {
-              searchType,
+              searchPath,
             },
             breadcrumbs: sinon.stub(),
           },
           {
             render: (template, data) => {
               try {
-                expect(template).to.equal(`search/views/results-${searchType}`)
+                expect(template).to.equal(`search/views/results-${entityType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
-                expect(data.searchType).to.equal(searchType)
+                expect(data.searchEntity).to.equal(entityType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData(0))
                 expect(data.results).to.deep.equal(expectedResults)
                 expect(data.pagination).to.be.a('array')
@@ -249,11 +243,12 @@ describe('Search Controller', () => {
       })
     })
 
-    describe('when called with "contact" searchType', () => {
+    describe('when called with "contacts" searchPath', () => {
       const contactResponse = require('~/test/unit/data/search/contact')
 
       it('should render results page for contact', (done) => {
-        const searchType = 'contact'
+        const entityType = 'contact'
+        const searchPath = 'contacts'
         const expectedResults = Object.assign({}, contactResponse, {
           page: 1,
         })
@@ -262,7 +257,7 @@ describe('Search Controller', () => {
           .get(`/v3/search`)
           .query({
             term: searchTerm,
-            entity: searchType,
+            entity: entityType,
             limit: 10,
             offset: 0,
           })
@@ -277,20 +272,48 @@ describe('Search Controller', () => {
               term: searchTerm,
             },
             params: {
-              searchType,
+              searchPath,
             },
             breadcrumbs: sinon.stub(),
           },
           {
             render: (template, data) => {
               try {
-                expect(template).to.equal(`search/views/results-${searchType}`)
+                expect(template).to.equal(`search/views/results-${entityType}`)
                 expect(data.searchTerm).to.equal(searchTerm)
-                expect(data.searchType).to.equal(searchType)
+                expect(data.searchEntity).to.equal(entityType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
                 expect(data.results).to.deep.equal(expectedResults)
                 expect(data.pagination).to.be.a('array')
                 expect(data.pagination.length).to.equal(0)
+                done()
+              } catch (e) {
+                done(e)
+              }
+            },
+          }, this.next
+        )
+      })
+    })
+
+    describe('when called with an incorrect searchPath', () => {
+      it('should render the search index route', (done) => {
+        this.controller.searchAction(
+          {
+            session: {
+              token: '1234',
+            },
+            query: {
+              term: searchTerm,
+            },
+            params: {
+              searchPath: 'dummy-path',
+            },
+          },
+          {
+            render: (template, data) => {
+              try {
+                expect(template).to.equal('search/views/index')
                 done()
               } catch (e) {
                 done(e)

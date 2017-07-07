@@ -2,10 +2,25 @@ const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
 const { buildQueryString } = require('../../lib/url-helpers')
 
-function search ({ token, searchTerm, searchType, limit = 10, page = 1 }) {
+const entities = [
+  {
+    entity: 'company',
+    path: 'companies',
+    text: 'Companies',
+    count: 0,
+  },
+  {
+    entity: 'contact',
+    path: 'contacts',
+    text: 'Contacts',
+    count: 0,
+  },
+]
+
+function search ({ token, searchTerm, searchEntity, limit = 10, page = 1 }) {
   const params = {
     term: searchTerm,
-    entity: searchType,
+    entity: searchEntity,
     limit,
     offset: (page * limit) - limit,
   }
@@ -71,9 +86,23 @@ function searchLimitedCompanies (options) {
     })
 }
 
+function buildSearchEntityResultsData (apiResponseEntities) {
+  return entities.map((defaultEntity) => {
+    return Object.assign(
+      {},
+      defaultEntity,
+      apiResponseEntities.find((apiResponseEntity) => {
+        return apiResponseEntity.entity === defaultEntity.entity
+      })
+    )
+  })
+}
+
 module.exports = {
+  entities,
   search,
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,
+  buildSearchEntityResultsData,
 }

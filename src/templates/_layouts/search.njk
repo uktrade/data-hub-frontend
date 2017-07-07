@@ -1,0 +1,39 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block body_main_header_content %}
+  {{ EntitySearchForm({
+    inputName: 'term',
+    modifier: 'global',
+    action: '/search/' + searchPath | default('companies'),
+    searchTerm: searchTerm,
+    entityType: searchEntity,
+    inputLabel: 'Search for company, contact or investment project',
+    aggregations: searchEntityResultsData
+  }) }}
+{% endblock %}
+
+
+{% block main_grid_left_column %}
+  &nbsp; {# // TODO filters #}
+{% endblock %}
+
+
+{% block main_grid_right_column %}
+  {% if results %}
+    {% block actions %}{% endblock %}
+
+    {% block search_results_summary %}
+      {% component 'results-summary', {
+        resultType: searchEntity | replace('_', ' '),
+        total: results.count,
+        searchTerm: searchTerm
+      } %}
+    {% endblock %}
+
+    {% block search_results %}{% endblock %}
+
+    {% component 'pagination', {
+      pages: pagination
+    } %}
+  {% endif %}
+{% endblock %}
