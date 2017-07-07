@@ -121,12 +121,14 @@
  #}
 {% macro TextField(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
-  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier })) %}
+  {% set innerContent = caller() if caller else null %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, innerContent: innerContent })) %}
     {% if props.type === 'textarea' %}
       {{ TextArea(props) }}
     {% else %}
       {{ Input(props) }}
     {% endif %}
+    {{ props.innerContent }}
   {% endcall %}
 {% endmacro %}
 
