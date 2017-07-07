@@ -20,22 +20,24 @@ function getAddStepOne (req, res, next) {
 
 function postAddStepOne (req, res, next) {
   // validate, if bad then generate errors, and show form again
-  const errors = {}
+  const errorMessages = {}
 
   if (isBlank(req.body.business_type)) {
-    errors.business_type = ['You must select a company type']
+    errorMessages.business_type = ['You must select a company type']
   }
 
   if (req.body.business_type === 'ukother' && isBlank(req.body.business_type_uk_other)) {
-    errors.business_type_uk_other = ['You must select the type of business']
+    errorMessages.business_type_uk_other = ['You must select the type of business']
   }
 
   if (req.body.business_type === 'foreign' && isBlank(req.body.business_type_for_other)) {
-    errors.business_type_for_other = ['You must select the type of business']
+    errorMessages.business_type_for_other = ['You must select the type of business']
   }
 
-  if (Object.keys(errors).length > 0) {
-    res.locals.errors = errors
+  if (Object.keys(errorMessages).length > 0) {
+    res.locals.errors = {
+      messages: errorMessages,
+    }
     return getAddStepOne(req, res)
   }
 

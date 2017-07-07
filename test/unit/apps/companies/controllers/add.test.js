@@ -33,27 +33,20 @@ describe('Company add controller', function () {
   describe('Get step 1', function () {
     it('should return options for company types', function (done) {
       const req = { session: {} }
+      const expected = [
+        { label: 'Charity', value: 'Charity' },
+        { label: 'Government dept', value: 'Government dept' },
+        { label: 'Intermediary', value: 'Intermediary' },
+        { label: 'Limited partnership', value: 'Limited partnership' },
+        { label: 'Partnership', value: 'Partnership' },
+        { label: 'Sole trader', value: 'Sole trader' },
+      ]
       const res = {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
-          expect(allOptions.ukOtherCompanyOptions).to.deep.equal([
-            'Charity',
-            'Government dept',
-            'Intermediary',
-            'Limited partnership',
-            'Partnership',
-            'Sole trader',
-          ])
-          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal([
-            'Charity',
-            'Company',
-            'Government dept',
-            'Intermediary',
-            'Limited partnership',
-            'Partnership',
-            'Sole trader',
-          ])
+          expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expected)
+          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expected)
           done()
         },
       }
@@ -163,7 +156,7 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.errors).to.have.property('business_type')
+            expect(allOptions.errors.messages).to.have.property('business_type')
             done()
           },
         }
@@ -180,7 +173,7 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.errors).to.have.property('business_type_uk_other')
+            expect(allOptions.errors.messages).to.have.property('business_type_uk_other')
             done()
           },
         }
@@ -197,7 +190,7 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
-            expect(allOptions.errors).to.have.property('business_type_for_other')
+            expect(allOptions.errors.messages).to.have.property('business_type_for_other')
             done()
           },
         }
