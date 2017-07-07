@@ -1,4 +1,6 @@
 const metadata = require('../../lib/metadata')
+const authorisedRequest = require('../../lib/authorised-request')
+const config = require('../../../config')
 
 function renderIndex (req, res) {
   return res.render('components/views/index', {
@@ -43,8 +45,17 @@ function renderMessages (req, res) {
   return res.render('components/views/messages')
 }
 
+async function renderEntityList (req, res) {
+  return res.render('components/views/entity-list', {
+    investmentProjects: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`),
+    companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),
+    contactsSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`),
+  })
+}
+
 module.exports = {
-  renderIndex,
+  renderEntityList,
   renderFormElements,
+  renderIndex,
   renderMessages,
 }
