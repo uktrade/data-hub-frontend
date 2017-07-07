@@ -22,7 +22,7 @@
         <li class="c-entity-list__item">
 
           {% if company.companies_house_data %}
-            {% set companyUrl = '/company/view/ch/' + company.companies_house_data.company_number %}
+            {% set companyUrl = '/companies-house/' + company.companies_house_data.company_number + '/details' %}
           {% else %}
             {% set companyUrl = '/viewcompanyresult/' + company.id %}
           {% endif %}

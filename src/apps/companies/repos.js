@@ -7,10 +7,6 @@ function getDitCompany (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/company/${id}/`)
 }
 
-function getCHCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/ch-company/${id}/`)
-}
-
 function saveCompany (token, company) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -68,7 +64,6 @@ function unarchiveCompany (token, companyId) {
 module.exports = {
   saveCompany,
   getDitCompany,
-  getCHCompany,
   archiveCompany,
   unarchiveCompany,
 }

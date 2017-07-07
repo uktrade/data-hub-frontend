@@ -1,35 +1,10 @@
-const { title } = require('case')
-
-const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels, hqLabels } = require('../labels')
 const { getFormattedAddress } = require('../../../lib/address')
-const { formatLongDate } = require('../../../../common/date')
 const { getPrimarySectorName } = require('../../../../common/transform-sectors')
 const { buildCompanyUrl } = require('./data')
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
-const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
 const companyTableKeys = ['name', 'address']
-
-function getDisplayCH (companyHouseData) {
-  if (!companyHouseData) return null
-
-  const displayCH = {
-    name: title(companyHouseData.name),
-    company_number: companyHouseData.company_number,
-    business_type: companyHouseData.company_category,
-    company_status: companyHouseData.company_status,
-    registered_address: getFormattedAddress(companyHouseData, 'registered'),
-    incorporation_date: formatLongDate(companyHouseData.incorporation_date),
-  }
-
-  displayCH.sic_code = []
-  if (companyHouseData.sic_code_1 && companyHouseData.sic_code_1.length > 0) displayCH.sic_code.push(companyHouseData.sic_code_1)
-  if (companyHouseData.sic_code_2 && companyHouseData.sic_code_1.length > 0) displayCH.sic_code.push(companyHouseData.sic_code_2)
-  if (companyHouseData.sic_code_3 && companyHouseData.sic_code_1.length > 0) displayCH.sic_code.push(companyHouseData.sic_code_3)
-  if (companyHouseData.sic_code_4 && companyHouseData.sic_code_1.length > 0) displayCH.sic_code.push(companyHouseData.sic_code_4)
-
-  return displayCH
-}
 
 function getDisplayCompany (company) {
   if (!company.id) return null
@@ -81,8 +56,6 @@ function parseRelatedData (companies) {
 
 module.exports = {
   companyDetailsDisplayOrder,
-  chDetailsDisplayOrder,
-  getDisplayCH,
   getDisplayCompany,
   parseRelatedData,
   companyTableKeys,

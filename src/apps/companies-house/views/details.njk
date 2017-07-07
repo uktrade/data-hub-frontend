@@ -1,0 +1,26 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block body_main_header_content %}
+  <h1 class="u-visually-hidden">Company Details</h1>
+  <h2 class="page-heading">
+    {{ headingName }}
+  </h2>
+{% endblock %}
+
+{% block main_grid_left_column %}
+  <nav class="local-nav">
+    <a class="local-nav__link is-active" href="/companies-house/{{companiesHouse.company_number}}/details">Company details</a>
+  </nav>
+{% endblock %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Company summary</h2>
+
+  <div class="dark-panel">
+    {{ keyvaluetable(companiesHouseDetails, labels=companiesHouseDetailsLabels, keyorder=companiesHouseDetailsDisplayOrder, readonly=true) }}
+    <p class="footnote">Powered by data from <strong>Companies House</strong></p>
+  </div>
+
+  <p><a href="{{addUrl}}" class="button">Add</a></p>
+
+{% endblock %}
