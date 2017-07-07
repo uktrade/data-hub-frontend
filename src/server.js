@@ -10,6 +10,7 @@ const slashify = require('slashify')
 const churchill = require('churchill')
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
+const breadcrumbs = require('express-breadcrumbs')
 
 const nunjucks = require('../config/nunjucks')
 const datahubFlash = require('./middleware/flash')
@@ -59,6 +60,9 @@ app.use('/js', express.static(path.join(config.buildDir, 'js')))
 app.use('/css', express.static(path.join(config.buildDir, 'css')))
 app.use('/images', express.static(path.join(config.buildDir, 'images')))
 app.use('/fonts', express.static(path.join(config.buildDir, 'fonts')))
+
+app.use(breadcrumbs.init())
+app.use(breadcrumbs.setHome())
 
 app.use(flash())
 app.use(locals)
