@@ -6,10 +6,12 @@ const {
   renderFormElements,
   renderIndex,
   renderMessages,
+  renderBreadcrumbs,
 } = require('./controllers')
 
 router
   .get('/', renderIndex)
+  .get('/breadcrumbs', renderBreadcrumbs)
   .get('/messages', renderMessages)
   .get('/entity-list', renderEntityList)
   .get('/form', renderFormElements)

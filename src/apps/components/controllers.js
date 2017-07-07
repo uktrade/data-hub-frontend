@@ -28,7 +28,7 @@ const foreignOtherCompanyOptions = [
 
 function renderFormElements (req, res) {
   return res.render('components/views/form', {
-    title: 'Data Hub Form Elements',
+    title: 'Form Elements',
     form: Object.assign({}, res.locals.form, {
       options: {
         countries: metadata.countryOptions.map(transformOption),
@@ -42,7 +42,15 @@ function renderFormElements (req, res) {
 }
 
 function renderMessages (req, res) {
-  return res.render('components/views/messages')
+  return res.render('components/views/messages', {
+    title: 'Application messages',
+  })
+}
+
+function renderBreadcrumbs (req, res) {
+  return res.render('components/views/breadcrumbs', {
+    title: 'Breadcrumbs',
+  })
 }
 
 async function renderEntityList (req, res) {
@@ -58,4 +66,5 @@ module.exports = {
   renderFormElements,
   renderIndex,
   renderMessages,
+  renderBreadcrumbs,
 }
