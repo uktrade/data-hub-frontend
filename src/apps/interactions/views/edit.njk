@@ -5,7 +5,7 @@
     {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
     <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
   {% elseif query.companyId %}
-    {% set backUrl="/company-interactions/" + query.companyId %}
+    {% set backUrl="/companies/" + query.companyId + "/interactions" %}
     <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
   {% endif %}
 

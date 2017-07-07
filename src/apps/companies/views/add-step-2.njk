@@ -7,12 +7,12 @@
 {% block main_grid_right_column %}
   <div class="key-value key-value--vertical">
     <div id="business-type" class="key-value__key form-label-bold">Business type
-      <a href="/company/add-step-1" class="button-link">Change</a>
+      <a href="/companies/add-step-1" class="button-link">Change</a>
     </div>
     <div class="key-value__value" aria-labelledby="business-type">{{ companyTypeOptions[businessType] }}</div>
   </div>
 
-  <form class="searchbar searchbar--show-label" action="/company/add-step-2/" method="get" role="search">
+  <form class="searchbar searchbar--show-label" action="/companies/add-step-2/" method="get" role="search">
     <input type="hidden" name="business_type" value="{{ businessType }}">
     <input type="hidden" name="country" value="{{ country }}">
 
@@ -35,11 +35,11 @@
           {% set isSelected = currentlySelected and (company.id == currentlySelected or company.company_number == currentlySelected) %}
 
           {% if isSelected %}
-            <a class="open" href="/company/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}">
+            <a class="open" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}">
               <h3 class="result-title">{{company.name}}</h3>
             </a>
           {% else %}
-            <a class="closed" href="/company/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}&selected={{ company.company_number if company.company_number else company.id }}">
+            <a class="closed" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}&selected={{ company.company_number if company.company_number else company.id }}">
               <h3 class="result-title">{{ company.name }}</h3>
             </a>
           {% endif %}
@@ -59,10 +59,10 @@
                 ) }}
 
                 {% if company.company_number %}
-                  {% set href = '/company/add/ltd/' + company.company_number %}
+                  {% set href = '/companies/add/ltd/' + company.company_number %}
                   {% set label = 'Choose company' %}
                 {% else %}
-                  {% set href = '/company/edit/ltd/' + company.id %}
+                  {% set href = '/companies/edit/ltd/' + company.id %}
                   {% set label = 'Go to company record' %}
                 {% endif %}
 

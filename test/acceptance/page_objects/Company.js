@@ -9,7 +9,7 @@ module.exports = {
     searchResults: '.c-entity-list',
     searchResultsItem: '.c-entity-list__item',
     addNewCompanyButton: {
-      selector: '//a[contains(@href, \'/company/add-step-1/\')]',
+      selector: '//a[contains(@href, \'/companies/add-step-1/\')]',
       locateStrategy: 'xpath',
     },
     companyAddForm: '#company-add-form',

@@ -5,7 +5,7 @@
 
   <h2 class="heading-medium">Company summary</h2>
   {{ keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
-  <p><a href="/company/edit/ukother/{{company.id}}" class="button">Edit</a></p>
+  <p><a href="/companies/edit/ukother/{{company.id}}" class="button">Edit</a></p>
 
   {% if accountManagementDisplay %}
     <div class="section">
@@ -24,7 +24,7 @@
       options: ['Company is dissolved'],
       csrfToken: csrfToken,
       error: form.errors.reason,
-      url: '/company/archive/' + company.id
+      url: '/companies/archive/' + company.id
     } %}
   {% endif %}
 {% endblock %}

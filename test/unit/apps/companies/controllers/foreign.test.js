@@ -468,7 +468,7 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/foreign/999')
+          expect(url).to.equal('/companies/view/foreign/999')
           done()
         },
         render: function () {

@@ -43,7 +43,7 @@ async function editDetails (req, res, next) {
       res.locals.backUrl = `/contacts/${req.params.contactId}`
       res.locals.title.unshift('Edit')
     } else if (req.query.company) {
-      res.locals.backUrl = `/company-contacts/${req.query.company}`
+      res.locals.backUrl = `/companies/${req.query.company}/contacts`
       res.locals.title = `Add contact at ${res.locals.company.name}`
     }
 
@@ -76,7 +76,7 @@ function postDetails (req, res, next) {
         res.redirect(`/contacts/${req.body.id}`)
       } else {
         req.flash('success', 'Added new contact')
-        res.redirect(`/company-contacts/${req.body.company}`)
+        res.redirect(`/companies/${req.body.company}/contacts`)
       }
     } catch (errors) {
       if (errors.error) {

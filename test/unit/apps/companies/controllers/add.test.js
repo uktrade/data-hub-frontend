@@ -1,6 +1,6 @@
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
-const companiesHouseCompany = require('~/test/unit/data/company/companiesHouseCompany')
-const displayHouseCompany = require('~/test/unit/data/company/displayCompaniesHouse')
+const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany')
+const displayHouseCompany = require('~/test/unit/data/companies/displayCompaniesHouse')
 
 const next = function (error) {
   throw Error(error)
@@ -112,7 +112,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add-step-2/?business_type=ltd&country=uk')
+            expect(url).to.equal('/companies/add-step-2/?business_type=ltd&country=uk')
             done()
           },
         }
@@ -129,7 +129,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add/ukother?business_type=Charity&country=uk')
+            expect(url).to.equal('/companies/add/ukother?business_type=Charity&country=uk')
             done()
           },
         }
@@ -146,7 +146,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/company/add/foreign?business_type=Charity&country=non-uk')
+            expect(url).to.equal('/companies/add/foreign?business_type=Charity&country=non-uk')
             done()
           },
         }

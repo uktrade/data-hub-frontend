@@ -78,7 +78,7 @@ function postDetails (req, res, next) {
     try {
       const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
       req.flash('success', 'Updated company record')
-      res.redirect(`/company/view/foreign/${savedCompany.id}`)
+      res.redirect(`/companies/view/foreign/${savedCompany.id}`)
     } catch (response) {
       if (response.errors) {
         // Leeloo has inconsistant structure to return errors.

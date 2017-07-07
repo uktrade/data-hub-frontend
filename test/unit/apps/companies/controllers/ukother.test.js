@@ -483,7 +483,7 @@ describe('Company controller, uk other', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ukother/999')
+          expect(url).to.equal('/companies/view/ukother/999')
           done()
         },
         render: function () {

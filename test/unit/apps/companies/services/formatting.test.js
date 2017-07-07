@@ -20,7 +20,7 @@ describe('Company formatting service', () => {
           'sic_code_2': '',
           'sic_code_3': '',
           'sic_code_4': '',
-          'uri': 'http://business.data.gov.uk/id/company/07937720',
+          'uri': 'http://business.data.gov.uk/id/companies/07937720',
           'incorporation_date': '2012-02-06',
           'registered_address_country': {
             'id': '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -303,7 +303,7 @@ describe('Company formatting service', () => {
         'sic_code_2': '82991 - Other business support service activities n.e.c.',
         'sic_code_3': '',
         'sic_code_4': '',
-        'uri': 'http://business.data.gov.uk/id/company/07937720',
+        'uri': 'http://business.data.gov.uk/id/companies/07937720',
         'incorporation_date': '2012-02-06',
         'registered_address_country': {
           'id': '80756b9a-5d95-e211-a939-e4115bead28a',

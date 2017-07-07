@@ -65,10 +65,10 @@ function postAddStepOne (req, res, next) {
   const queryString = buildQueryString(params)
 
   if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
-    return res.redirect(`/company/add/${req.body.business_type + queryString}`)
+    return res.redirect(`/companies/add/${req.body.business_type + queryString}`)
   }
 
-  return res.redirect(`/company/add-step-2/${queryString}`)
+  return res.redirect(`/companies/add-step-2/${queryString}`)
 }
 
 async function getAddStepTwo (req, res, next) {

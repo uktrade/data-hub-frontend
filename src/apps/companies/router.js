@@ -14,63 +14,63 @@ const {
 } = require('./controllers')
 
 router
-  .route('/company/add-step-1/')
+  .route('/add-step-1/')
   .get(addController.getAddStepOne)
   .post(addController.postAddStepOne)
 
-router.get('/company/add-step-2/', addController.getAddStepTwo)
+router.get('/add-step-2/', addController.getAddStepTwo)
 
-router.post('/company/archive/:id', archiveController.postArchiveCompany)
-router.get('/company/unarchive/:id', archiveController.getUnarchiveCompany)
+router.post('/archive/:id', archiveController.postArchiveCompany)
+router.get('/unarchive/:id', archiveController.getUnarchiveCompany)
 
-router.get('/company/view/ch/:id', chController.getDetails)
+router.get('/view/ch/:id', chController.getDetails)
 
-router.get('/company-contacts/:id', contactsController.getContacts)
+router.get('/:id/contacts/', contactsController.getContacts)
 
-router.get('/company-exports/view/:id', expController.view)
+router.get('/:id/exports', expController.view)
 
 router
-  .route('/company-exports/edit/:id')
+  .route('/:id/exports/edit')
   .get(expController.edit)
   .post(expController.post)
 
-router.get('/company/view/ltd/:id', ltdController.getDetails)
+router.get('/view/ltd/:id', ltdController.getDetails)
 
 router
-  .route('/company/edit/ltd/:id')
+  .route('/edit/ltd/:id')
   .get(foreignController.editCommon, ltdController.editDetails)
   .post(foreignController.postDetails)
 
 router
-  .route('/company/add/ltd')
+  .route('/add/ltd')
   .get(foreignController.editCommon, ltdController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/company/view/ukother/:id', ukotherController.getDetails)
+router.get('/view/ukother/:id', ukotherController.getDetails)
 
 router
-  .route('/company/edit/ukother/:id')
+  .route('/edit/ukother/:id')
   .get(foreignController.editCommon, ukotherController.editDetails)
   .post(foreignController.postDetails)
 
 router
-  .route('/company/add/ukother')
+  .route('/add/ukother')
   .get(foreignController.editCommon, ukotherController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/company/view/foreign/:id', foreignController.getDetails)
+router.get('/view/foreign/:id', foreignController.getDetails)
 
 router
-  .route('/company/edit/foreign/:id')
+  .route('/edit/foreign/:id')
   .get(foreignController.editCommon, foreignController.editDetails)
   .post(foreignController.postDetails)
 
 router
-  .route('/company/add/foreign')
+  .route('/add/foreign')
   .get(foreignController.editCommon, foreignController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/company-interactions/:id', interactionsController.getInteractions)
-router.get('/company/:id/investments', investmentsController.getAction)
+router.get('/:id/interactions', interactionsController.getInteractions)
+router.get('/:id/investments', investmentsController.getAction)
 
 module.exports = router

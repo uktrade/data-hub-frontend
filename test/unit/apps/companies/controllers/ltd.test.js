@@ -35,7 +35,7 @@ describe('Company controller, ltd', function () {
     sic_code_2: '',
     sic_code_3: '',
     sic_code_4: '',
-    uri: 'http://business.data.gov.uk/id/company/10620176',
+    uri: 'http://business.data.gov.uk/id/companies/10620176',
     incorporation_date: '2017-02-15',
     registered_address_country: {
       id: '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -526,7 +526,7 @@ describe('Company controller, ltd', function () {
       const res = {
         locals: {},
         redirect: function (url) {
-          expect(url).to.equal('/company/view/ltd/999')
+          expect(url).to.equal('/companies/view/ltd/999')
           done()
         },
         render: function () {
