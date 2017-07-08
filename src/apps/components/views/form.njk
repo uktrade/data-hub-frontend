@@ -80,6 +80,27 @@
       })
     }}
 
+    {% call Fieldset({
+      legend: 'A conditional set of fields',
+      modifier: 'subfield',
+      condition: {
+        name: 'averageSalary',
+        value: '2943bf3d-32dd-43be-8ad4-969b006dee7b'
+      }
+    }) %}
+      {{ TextField({
+        name: 'firstName',
+        label: 'First name',
+        value: form.state.firstName
+      }) }}
+
+      {{ TextField({
+        name: 'lastName',
+        label: 'Last name',
+        value: form.state.lastName
+      }) }}
+    {% endcall %}
+
     {{ MultipleChoiceField({
         type: 'radio',
         name: 'businessType',
@@ -117,6 +138,21 @@
         ]
       })
     }}
+
+    {% call Fieldset({ legend: 'A set of fields' }) %}
+      {{ TextField({
+        name: 'firstName',
+        label: 'First name',
+        value: form.state.firstName
+      }) }}
+
+      {{ TextField({
+        name: 'lastName',
+        label: 'Last name',
+        value: form.state.lastName
+      }) }}
+    {% endcall %}
+
   {% endcall %}
 
 {% endblock %}
