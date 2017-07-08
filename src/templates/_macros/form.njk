@@ -30,6 +30,7 @@
  # @param {string} [props.method=POST] - Form method
  # @param {string} [props.action] - Form action url
  # @param {object} [props.errors] - Object containing form errors
+ # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
  # @param {string} [props.buttonText=Submit] - Text for submit button
  #
@@ -44,7 +45,14 @@
   >
     {{ ErrorSummary(props.errors) }}
     {{ CSRF(csrfToken) }}
+    {% if props.hiddenFields|length %}
+      {% for fieldName, fieldValue in props.hiddenFields | removeNilAndEmpty %}
+        <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+      {% endfor %}
+    {% endif %}
+
     {{ caller() }}
+
     {% if not props.disableFormActions %}
       <div class="c-form-group">
         <button class="button">{{ buttonText }}</button>
