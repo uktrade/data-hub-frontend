@@ -163,7 +163,12 @@
   {% if props.label and props.name -%}
     <{{ groupElement }}
       id="group-{{ props.fieldId }}"
-      class="c-form-group {{ 'has-error' if props.error }} {{ 'c-form-group--' + props.modifier if props.modifier}} {{ 'js-ConditionalSubfield' if isConditional }}"
+      class="
+        c-form-group
+        {{ 'has-error' if props.error }}
+        {{ 'c-form-group--' + props.modifier if props.modifier}}
+        {{ 'js-ConditionalSubfield' if isConditional }}
+      "
       {% if isConditional %}
         data-controlled-by="{{ props.condition.name }}"
         data-control-value="{{ props.condition.value }}"
