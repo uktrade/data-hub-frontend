@@ -168,6 +168,7 @@
         {{ 'has-error' if props.error }}
         {{ 'c-form-group--' + props.modifier if props.modifier}}
         {{ 'js-ConditionalSubfield' if isConditional }}
+        {{ props.class if props.class }}
       "
       {% if isConditional %}
         data-controlled-by="{{ props.condition.name }}"
@@ -206,7 +207,12 @@
 #}
 {% macro Fieldset(props) %}
   <fieldset
-    class="c-form-fieldset {{ 'js-ConditionalSubfield' if props.condition }} {{ 'c-form-fieldset--' + props.modifier if props.modifier }}"
+    class="
+      c-form-fieldset
+      {{ props.class if props.class }}
+      {{ 'js-ConditionalSubfield' if props.condition }}
+      {{ 'c-form-fieldset--' + props.modifier if props.modifier }}
+    "
     {% if props.condition %}
       data-controlled-by="{{ props.condition.name }}"
       data-control-value="{{ props.condition.value }}"
