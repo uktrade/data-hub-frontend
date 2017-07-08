@@ -77,7 +77,7 @@ describe('Nunjucks form macros', () => {
           name: 'firstName',
           label: 'First name',
         })
-        expect(component.querySelector('label').textContent.trim()).to.equal('First name  (optional)')
+        expect(component.querySelector('label').textContent.trim()).to.equal('First name (optional)')
       })
 
       it('should render label with text optional when given "optional" flag', () => {
@@ -86,7 +86,7 @@ describe('Nunjucks form macros', () => {
           name: 'firstName',
           label: 'First name',
         })
-        expect(component.querySelector('label').textContent.trim()).to.equal('First name  (optional)')
+        expect(component.querySelector('label').textContent.trim()).to.equal('First name (optional)')
       })
 
       it('should render label with hint when hint text is given', () => {
