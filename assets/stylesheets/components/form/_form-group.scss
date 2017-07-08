@@ -59,9 +59,14 @@ legend.c-form-group__label {
 
 .c-form-group--inline {
   @include media(tablet) {
+    .c-form-control,
     .c-multiple-choice {
+      width: auto;
       display: inline-block;
       margin-top: 0;
+    }
+
+    .c-multiple-choice {
       margin-right: $default-spacing-unit;
     }
   }
