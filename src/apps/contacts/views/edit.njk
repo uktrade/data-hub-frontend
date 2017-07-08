@@ -14,92 +14,187 @@
 {% block main_grid_left_column %}{% endblock %}
 
 {% block main_grid_right_column %}
-  {{ errorPanel( errors, labels=contactLabels ) }}
+  {% call Form({
+    buttonText: 'Save',
+    errors: errors,
+    hiddenFields: {
+      company: formData.company,
+      id: formData.id
+    }
+  }) %}
 
-  <form method="POST">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <input type="hidden" name="company" value="{{formData.company}}">
-    {% if formData.id %}
-      <input type="hidden" name="id" value="{{formData.id}}">
-    {% endif %}
+    {{ TextField({
+      name: 'first_name',
+      label: 'First name',
+      value: formData.first_name,
+      error: errors.messages.first_name
+    }) }}
 
-    <div class='form-group'>
-      <div class='form-label-bold'>Company</div>
-      <a href="{{ companyUrl }}">{{ company.name }}</a>
-    </div>
+    {{ TextField({
+      name: 'last_name',
+      label: 'Last name',
+      value: formData.last_name,
+      error: errors.messages.last_name
+    }) }}
 
-    {{ textbox("first_name", label="First name", value=formData.first_name, error=errors.first_name) }}
-    {{ textbox("last_name", label="Last name", value=formData.last_name, error=errors.last_name) }}
-    {{ textbox("job_title", label="Job Title", value=formData.job_title, error=errors.job_title) }}
+    {{ TextField({
+      name: 'job_title',
+      label: 'Job title',
+      value: formData.job_title,
+      error: errors.messages.job_title
+    }) }}
 
-    <fieldset id="primary-wrapper" class="form-group inline">
-      <legend class="form-label-bold">Is this person a primary contact?</legend>
-      <label
-        class="block-label selection-button-radio{% if formData.primary == 'yes' %} selected{% endif %}">
-        <input name="primary" type="radio" value="yes" {% if formData.primary == 'yes' %}checked{% endif %}>
-        Yes
-      </label>
-      <label
-        class="block-label selection-button-radio{% if formData.primary != 'yes' %} selected{% endif %}">
-        <input name="primary" type="radio" value="no" {% if not formData.primary or formData.primary != 'yes' %}checked{% endif %}>
-        No
-      </label>
-    </fieldset>
+    {{ MultipleChoiceField({
+      name: 'primary',
+      type: 'radio',
+      label: 'Is this person a primary contact?',
+      modifier: 'inline',
+      selected: formData.primary,
+      error: errors.messages.primary,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    }) }}
 
-    {{ textbox("telephone_countrycode", label="Telephone country code", value=formData.telephone_countrycode, error=errors.telephone_countrycode) }}
-    {{ textbox("telephone_number", label="Telephone", value=formData.telephone_number, error=errors.telephone_number) }}
-    {{ textbox("email", label="Email", value=formData.email, error=errors.email) }}
+    {{ TextField({
+      name: 'telephone_countrycode',
+      label: 'Telephone country code',
+      value: formData.telephone_countrycode,
+      error: errors.messages.telephone_countrycode
+    }) }}
 
-    <fieldset class="form-group inline" id="address_same_as_company-wrapper">
-      <legend class="form-label-bold">Is the contact's address the same as the company address?</legend>
-      <label
-        class="block-label selection-button-radio{% if not formData.address_same_as_company or formData.address_same_as_company != 'no' %} selected{% endif %}">
-        <input id="address-same-radio" name="address_same_as_company" type="radio" value="yes" {% if not formData.address_same_as_company or formData.address_same_as_company != 'no' %}checked{% endif %}>
-        Yes
-      </label>
-      <label
-        class="block-label selection-button-radio{% if formData.address_same_as_company == 'no' %} selected{% endif %}">
-        <input name="address_same_as_company" type="radio" value="no" {% if formData.address_same_as_company == 'no' %}checked{% endif %}>
-        No
-      </label>
-    </fieldset>
+    {{ TextField({
+      name: 'telephone_number',
+      label: 'Telephone number',
+      value: formData.telephone_number,
+      error: errors.messages.telephone_number
+    }) }}
 
-    <fieldset id="address-wrapper" class="fieldset--address lookup-address-js">
-      <div class="form-group">
-        <legend class="form-label-bold">Contact address</legend>
+    {{ TextField({
+      name: 'email',
+      label: 'Email',
+      value: formData.email,
+      error: errors.messages.email
+    }) }}
+
+    {{ MultipleChoiceField({
+      name: 'address_same_as_company',
+      type: 'radio',
+      label: 'Is the contact’s address the same as the company address?',
+      modifier: 'inline',
+      selected: formData.address_same_as_company,
+      error: errors.messages.address_same_as_company,
+      options: [
+        { label: 'Yes', value: 'yes' },
+        { label: 'No', value: 'no' }
+      ]
+    }) }}
+
+    {# TODO: Refactor postcode look up logic #}
+    {% call Fieldset({
+      legend: 'Contact address',
+      modifier: 'subfield',
+      class: 'lookup-address-js',
+      condition: {
+        name: 'address_same_as_company',
+        value: 'no'
+      }
+    }) %}
+      <div class="u-no-js-hidden">
+        <div class="c-form-group c-form-group--inline">
+          <label class="c-form-group__label" for="postcodeLookup">
+            <span class="c-form-group__label-text">Postcode look up</span>
+          </label>
+          <input id="field-postcode-lookup" class="c-form-control postcode-lookup-value postcode-lookup-field" autoComplete="off">
+          <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
+        </div>
+
+        <div class="c-form-group form-group--address-suggestions">
+          <label class="c-form-group__label" for="field-postcode-address-suggestions">
+            <span class="c-form-group__label-text">Select an address from the drop down</span>
+          </label>
+          <select class="c-form-control" id="field-postcode-address-suggestions">
+            <option>Please enter a postcode to lookup your address</option>
+          </select>
+        </div>
       </div>
 
-      <div class="form-group form-group--postcode">{# hide for none js #}
-        <label class="form-label-bold">Postcode look up</label>
-        <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-        <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
-      </div>
+      {{ TextField({
+        name: 'address_1',
+        label: 'Business and street',
+        value: formData.address_1,
+        error: errors.messages.address_1,
+        optional: true
+      }) }}
 
-      {# dropdown of suggestions #}
-      <div class="form-group form-group--address-suggestions">
-        <label class="form-label-bold">Select an address from the drop down</label>
-        <select class="form-control">
-        <option value="">Please enter a postcode to lookup your address</option>
-        </select>
-      </div>
+      {{ TextField({
+        name: 'address_2',
+        label: 'Second line of address',
+        value: formData.address_2,
+        error: errors.messages.address_2,
+        isLabelHidden: true,
+        optional: true
+      }) }}
 
-      {{ textbox("address_1", label="Business and street (optional)", value=formData.address_1, error=errors.address_1) }}
-      {{ textbox("address_2", value=formData.address_2, error=errors.address_2) }}
-      {{ textbox("address_town", label="Town or city (optional)", value=formData.address_town, error=errors.address_town) }}
-      {{ textbox("address_county", label="County (optional)", value=formData.address_county, error=errors.address_county) }}
-      {{ textbox("address_postcode", label="Postcode (optional)", value=formData.address_postcode, error=errors.address_postcode) }}
-      {{ dropdown("address_country", label="Country", emptyLabel="Pick a value", value=formData.address_country, options=countryOptions, error=errors.address_country) }}
-    </fieldset>
+      {{ TextField({
+        name: 'address_town',
+        label: 'Town or city',
+        value: formData.address_town,
+        error: errors.messages.address_town,
+        optional: true
+      }) }}
 
-    {{ textbox("telephone_alternative", label="Alternative phone (optional)", value=formData.telephone_alternative, error=errors.telephone_alternative) }}
-    {{ textbox("email_alternative", label="Alternative email (optional)", value=formData.email_alternative, error=errors.email_alternative) }}
+      {{ TextField({
+        name: 'address_county',
+        label: 'County',
+        value: formData.address_county,
+        error: errors.messages.address_county,
+        optional: true
+      }) }}
 
-    {{ textarea("notes", label="Notes (optional)", value=formData.notes, error=errors.notes) }}
+      {{ TextField({
+        name: 'address_postcode',
+        label: 'Postcode',
+        class: 'u-js-hidden',
+        value: formData.address_postcode,
+        error: errors.messages.address_postcode,
+        optional: true
+      }) }}
 
-    {% if backUrl %}
-      {{ save(buttonText="Save", backUrl=backUrl) }}
-    {% else %}
-      {{ save(buttonText="Save") }}
-    {% endif %}
-  </form>
+      {{ MultipleChoiceField({
+        name: 'address_country',
+        label: 'Country',
+        selected: formData.address_country,
+        error: errors.messages.address_country,
+        initialOption: 'Select country',
+        options: countryOptions
+      }) }}
+    {% endcall %}
+
+    {{ TextField({
+      name: 'telephone_alternative',
+      label: 'Alternative phone',
+      value: formData.telephone_alternative,
+      error: errors.messages.telephone_alternative,
+      optional: true
+    }) }}
+
+    {{ TextField({
+      name: 'email_alternative',
+      label: 'Alternative email',
+      value: formData.email_alternative,
+      error: errors.messages.email_alternative,
+      optional: true
+    }) }}
+
+    {{ TextField({
+      type: 'textarea',
+      name: 'notes',
+      label: 'Notes',
+      value: formData.notes,
+      error: errors.messages.notes,
+      optional: true
+    }) }}
+  {% endcall %}
 {% endblock %}
