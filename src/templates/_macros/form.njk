@@ -195,6 +195,34 @@
 {% endmacro %}
 
 {##
+ # Render form fieldset with inner content
+ # @param {object} props - An object containing field properties
+ # @param {string} props.legend - Fieldset legend
+ # @param {string} [props.modifier] - Fieldset modifier
+ # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
+ # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
+ #
+ # @callback {function} caller - Inner contents
+#}
+{% macro Fieldset(props) %}
+  <fieldset
+    class="c-form-fieldset {{ 'js-ConditionalSubfield' if props.condition }} {{ 'c-form-fieldset--' + props.modifier if props.modifier }}"
+    {% if props.condition %}
+      data-controlled-by="{{ props.condition.name }}"
+      data-control-value="{{ props.condition.value }}"
+    {% endif %}
+  >
+    {% if props.legend %}
+      <legend class="c-form-fieldset__legend">
+        <span class="c-form-fieldset__legend-text">{{ props.legend }}</span>
+      </legend>
+    {% endif %}
+
+    {{ caller() }}
+  </fieldset>
+{% endmacro %}
+
+{##
  # Render form group with a text field and corresponding label, hint and error message
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
