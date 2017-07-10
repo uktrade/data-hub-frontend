@@ -16,7 +16,6 @@ function transformOption (option) {
 }
 
 const foreignOtherCompanyOptions = [
-  '-- Select type --',
   'Charity',
   'Company',
   'Government dept',

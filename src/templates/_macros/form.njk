@@ -291,8 +291,6 @@
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.selected] - Selected field value
  # @param {string} [props.initialOption] - Initial option label to use for empty value
- #
- # @callback {function} [caller] - Optional inner contents
  #}
 {% macro SelectBox(props) %}
   <select
@@ -301,7 +299,6 @@
     class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
-    {{ caller() if caller }}
     {% if props.initialOption %}
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
