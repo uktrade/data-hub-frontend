@@ -16,6 +16,7 @@ const {
 } = require('./controllers')
 
 const detailsFormMiddleware = require('./middleware/forms/details')
+const valueFormMiddleware = require('./middleware/forms/value')
 
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
@@ -50,8 +51,8 @@ router
 
 router
   .route('/:id/edit-value')
-  .get(form.populateValueFormMiddleware, edit.editValueGet)
-  .post(form.populateValueFormMiddleware, form.investmentValueFormPostMiddleware, edit.editValuePost)
+  .get(valueFormMiddleware.populateForm, edit.editValueGet)
+  .post(valueFormMiddleware.populateForm, valueFormMiddleware.handleFormPost, edit.editValuePost)
 
 router
   .route('/:id/edit-requirements')
