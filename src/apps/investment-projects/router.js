@@ -1,9 +1,6 @@
 const router = require('express').Router()
 
-const {
-  shared,
-  form,
-} = require('./middleware')
+const { shared } = require('./middleware')
 const {
   createStep1,
   createStep2,
@@ -17,6 +14,8 @@ const {
 
 const detailsFormMiddleware = require('./middleware/forms/details')
 const valueFormMiddleware = require('./middleware/forms/value')
+const requirementsMiddleware = require('./middleware/forms/requirements')
+const interactionsMiddleware = require('./middleware/forms/interactions')
 
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
@@ -56,8 +55,8 @@ router
 
 router
   .route('/:id/edit-requirements')
-  .get(form.populateRequirementsFormMiddleware, edit.editRequirementsGet)
-  .post(form.populateRequirementsFormMiddleware, form.investmentRequirementsFormPostMiddleware, edit.editRequirementsPost)
+  .get(requirementsMiddleware.populateForm, edit.editRequirementsGet)
+  .post(requirementsMiddleware.populateForm, requirementsMiddleware.handleFormPost, edit.editRequirementsPost)
 
 router.get('/:id/team', team.getTeamHandler)
 
@@ -65,20 +64,20 @@ router.get('/:id/interactions', interactions.list.indexGetHandler)
 
 router
   .route('/:id/interactions/create')
-  .get(form.populateInteractionsFormMiddleware, interactions.create.createGetInteractionHandler)
+  .get(interactionsMiddleware.populateForm, interactions.create.createGetInteractionHandler)
   .post(
-    form.populateInteractionsFormMiddleware,
-    form.interactionDetailsFormPostMiddleware,
+    interactionsMiddleware.populateForm,
+    interactionsMiddleware.handleFormPost,
     interactions.create.createPostInteractionHandler,
     interactions.create.createGetInteractionHandler
   )
 
 router
   .route('/:id/interactions/:interactionId/edit')
-  .get(form.populateInteractionsFormMiddleware, interactions.edit.editGetInteractionHandler)
+  .get(interactionsMiddleware.populateForm, interactions.edit.editGetInteractionHandler)
   .post(
-    form.populateInteractionsFormMiddleware,
-    form.interactionDetailsFormPostMiddleware,
+    interactionsMiddleware.populateForm,
+    interactionsMiddleware.handleFormPost,
     interactions.edit.editPostInteractionHandler,
     interactions.edit.editGetInteractionHandler
   )

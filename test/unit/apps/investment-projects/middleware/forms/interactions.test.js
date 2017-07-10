@@ -14,7 +14,7 @@ const metadataRepositoryStub = {
 const { interactionsLabels } = require('~/src/apps/investment-projects/labels')
 const errorMsg = 'mock error'
 
-describe('Investment form middleware', () => {
+describe('Investment form middleware - interactions', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
@@ -23,9 +23,9 @@ describe('Investment form middleware', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
-      '../../../lib/metadata': metadataRepositoryStub,
-      '../../adviser/repos': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/interactions', {
+      '../../../../lib/metadata': metadataRepositoryStub,
+      '../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -45,7 +45,7 @@ describe('Investment form middleware', () => {
       this.resMock.locals.investmentData = investmentData
       this.resMock.locals.interaction = interactionTransformedFromApiData
 
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
@@ -76,7 +76,7 @@ describe('Investment form middleware', () => {
 
       this.resMock.locals.investmentData = investmentData
 
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
@@ -100,8 +100,8 @@ describe('Investment form middleware - error testing', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
-      '../../adviser/repos': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/interactions', {
+      '../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -113,7 +113,7 @@ describe('Investment form middleware - error testing', () => {
 
   describe('#populateInteractionsFormMiddleware', () => {
     it('should call next with errors', (done) => {
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
