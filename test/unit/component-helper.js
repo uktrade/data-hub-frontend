@@ -11,7 +11,8 @@ const nunjucks = nunjucksConfig(null, {
 })
 
 const COMPONENTS_PATH = '_components/'
-const COMPONENT_EXT = 'njk'
+const MACROS_PATH = '_macros/'
+const EXT = 'njk'
 
 const normaliseHtml = (string) => {
   const beautiful = htmlBeautifier(string, {
@@ -24,14 +25,31 @@ const normaliseHtml = (string) => {
   })
 }
 
+function getMacros (fileName) {
+  const filePath = `${MACROS_PATH}${fileName}.${EXT}`
+
+  return {
+    render (macroName, props) {
+      const importString = `{% from "${filePath}" import ${macroName} %}`
+      const macroOutput = nunjucks.renderString(`${importString} {{ ${macroName}(${JSON.stringify(props)}) }}`)
+      return normaliseHtml(macroOutput)
+    },
+
+    renderToDom (macroName, props) {
+      const macroOutput = this.render(macroName, props)
+      return (new JSDOM(macroOutput)).window.document.body.firstElementChild
+    },
+  }
+}
+
 const renderComponent = (name, input) => {
-  const componentPath = `${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`
+  const componentPath = `${COMPONENTS_PATH}${name}.${EXT}`
   return normaliseHtml(nunjucks.render(componentPath, input))
 }
 
 const renderComponentToDom = (name, input) => {
   const renderedComponent = renderComponent(name, input)
-  return (new JSDOM(renderedComponent)).window.document.body.querySelector('body>:first-child')
+  return (new JSDOM(renderedComponent)).window.document.body.firstElementChild
 }
 
 const expectComponent = (name, input, expected) => {
@@ -54,6 +72,7 @@ function domTokenToArray (obj) {
 
 module.exports = {
   expectComponent,
+  getMacros,
   renderComponentToDom,
   domTokenToArray,
 }
