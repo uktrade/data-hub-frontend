@@ -5,7 +5,25 @@
 {% endblock %}
 
 {% block body_main_content %}
+  <h2 class="page-heading">Search</h2>
 
+  <h3 class="heading-small">Simple</h3>
+  {{ EntitySearchForm({
+    inputName: 'term',
+    inputLabel: 'Search for a company name or contact',
+    searchTerm: entitySearch.searchTerm
+  }) }}
+
+  <h3 class="heading-small">Global</h3>
+  {{ EntitySearchForm({
+    inputName: 'term',
+    modifier: 'global',
+    inputLabel: 'Search for a company name or contact',
+    searchTerm: entitySearch.searchTerm,
+    aggregations: entitySearch.searchEntityResultsData
+  }) }}
+
+  <h2 class="page-heading">Standard</h2>
   {% call Form(form) %}
     {{ TextField({
       name: 'name',

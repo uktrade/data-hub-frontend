@@ -1,0 +1,52 @@
+@import "../../settings";
+@import "../../tools/mixins/addons";
+
+$search-button-width: 50px;
+
+.c-entity-search__input {
+  padding-right: $search-button-width + ($default-spacing-unit / 2);
+}
+
+.c-entity-search__button {
+  @include hide-text($search-button-width, 100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  padding: 0;
+  background: $govuk-blue url("../../../images/_deprecated/search-button.png") no-repeat 8px 50%; // TODO convert to SVG
+
+  &:focus {
+    outline: 3px solid $focus-colour;
+  }
+}
+
+.c-entity-search--global {
+  background-color: $grey-3;
+  padding: $default-spacing-unit;
+
+  .c-form-group {
+    font-size: 1.1em;
+    max-width: none;
+  }
+}
+
+.c-entity-search__aggregations {
+  margin-top: $default-spacing-unit;
+  margin-bottom: -$default-spacing-unit;
+}
+
+.c-entity-search__aggregations-item {
+  display: inline-block;
+  padding: $default-spacing-unit / 2;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.c-entity-search__aggregations-count {
+  margin-left: 5px;
+}
+
+.c-entity-search__aggregations-item.is-active {
+  background-color: $white;
+}

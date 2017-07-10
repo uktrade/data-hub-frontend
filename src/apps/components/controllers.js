@@ -30,6 +30,9 @@ function renderFormElements (req, res) {
   req.breadcrumbs('Form')
   return res.render('components/views/form', {
     title: 'Form Elements',
+    entitySearch: Object.assign({}, res.locals.entitySearch, {
+      searchTerm: req.query.term,
+    }),
     form: Object.assign({}, res.locals.form, {
       options: {
         countries: metadata.countryOptions.map(transformOption),

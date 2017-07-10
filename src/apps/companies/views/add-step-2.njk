@@ -12,21 +12,19 @@
     <div class="key-value__value" aria-labelledby="business-type">{{ companyTypeOptions[businessType] }}</div>
   </div>
 
-  <form class="searchbar searchbar--show-label" action="/companies/add-step-2/" method="get" role="search">
-    <input type="hidden" name="business_type" value="{{ businessType }}">
-    <input type="hidden" name="country" value="{{ country }}">
-
-    <div class="form-group">
-      <label class="form-label-bold" for="search-term">
-        Find the parent company's Companies House record
-        <span class="form-hint">Search for the registered company name, company number or address</span>
-      </label>
-      <div class="searchbar__wrapper">
-        <input class="searchbar__input form-control" id="search-term" type="search" name="term" value="{{ searchTerm }}" placeholder="Search for company">
-        <input class="searchbar__submit" type="submit" value="Search">
-      </div>
-    </div>
-  </form>
+  {{ EntitySearchForm({
+    inputName: 'term',
+    inputLabel: 'Find the parent company’s Companies House record',
+    inputPlaceholder: 'Search for company',
+    inputHint: 'Search for the registered company name, company number or address',
+    searchTerm: searchTerm,
+    isLabelHidden: false,
+    hiddenFields: {
+      business_type: businessType,
+      country: country
+    },
+    action: '/companies/add-step-2'
+  }) }}
 
   {% if companies %}
     <ol class="results-list result-list--expandable">

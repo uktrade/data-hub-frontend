@@ -5,7 +5,7 @@ module.exports = {
   },
   elements: {
     searchField: '#search',
-    searchForm: '.search-bar',
+    searchForm: '.c-entity-search',
     searchResults: '.c-entity-list',
     searchResultsItem: '.c-entity-list__item',
     addNewCompanyButton: {

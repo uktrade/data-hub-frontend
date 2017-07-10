@@ -4,6 +4,10 @@
   max-width: 40em;
 }
 
+.c-form-group__inner {
+  position: relative;
+}
+
 .c-form-group__label {
   display: table;
   line-height: 1.1;

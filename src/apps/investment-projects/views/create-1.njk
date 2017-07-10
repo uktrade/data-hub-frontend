@@ -39,21 +39,16 @@
   {% endif %}
 
   {% if showSearch or searchTerm %}
-
     <h2 class="heading-medium">Find the source of foreign equity investment</h2>
 
-    <form class="searchbar" action="" method="get" role="search">
-      <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
-
-      <div class="form-group">
-        <label class="form-label-bold" for="search-q">Search for company name</label>
-
-        <div class="searchbar__wrapper">
-          <input class="searchbar__input form-control" id="search-q" type="search" name="q" value="{{ searchTerm }}" placeholder="Search for company name">
-          <input class="searchbar__submit" type="submit" value="Search">
-        </div>
-      </div>
-    </form>
+    {{ EntitySearchForm({
+      inputName: 'q',
+      inputLabel: 'Search for company name',
+      searchTerm: searchTerm,
+      hiddenFields: {
+        'client-company': clientCompany.id
+      }
+    }) }}
 
     {% if searchResult %}
 
