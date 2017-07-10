@@ -1,0 +1,33 @@
+@import "../../settings";
+
+.c-form-fieldset {
+  border: 1px solid $grey-2;
+  padding: $default-spacing-unit;
+  width: auto;
+}
+
+.c-form-fieldset__legend {
+  margin-left: -$default-spacing-unit / 2;
+  font-size: 24px;
+  color: $grey-1;
+}
+
+.c-form-fieldset__legend-text {
+  margin: 0 $default-spacing-unit / 2;
+}
+
+// Modifiers
+.c-form-fieldset--subfield {
+  position: relative;
+  margin-left: $default-spacing-unit * 2;
+
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-left: 5px solid $grey-2;
+    margin-left: -$default-spacing-unit;
+    content: "";
+  }
+}

@@ -7,6 +7,34 @@ function expectHiddenField (rootElement, name, value) {
   }
 }
 
+// TODO: Temporary solution to fix tests for new form refactor
+// (based on expectTextFieldWithLabel)
+function expectField (rootElement, name, label, value) {
+  const wrapper = rootElement.querySelector(`#group-field-${name}`)
+  expect(wrapper).to.not.be.null
+  const labelElement = wrapper.querySelector('label')
+  expect(labelElement).to.not.be.null
+  expect(labelElement.textContent).to.include(label)
+  const input = wrapper.querySelector(`[name=${name}]`)
+  expect(input).to.not.be.null
+
+  if (value) {
+    expect(input.value).to.equal(value)
+  }
+}
+
+// TODO: Temporary solution to fix tests for new form refactor
+// (based on expectRadioWithLabel)
+function expectRadioField (rootElement, name, label, value) {
+  const wrapper = rootElement.querySelector(`#group-field-${name}`)
+  expect(wrapper).to.not.be.null
+  const selectedInput = wrapper.querySelector('input[type=radio]:checked')
+  expect(selectedInput.value).to.equal(value)
+  const legend = wrapper.querySelector('legend')
+  expect(legend).to.not.be.null
+  expect(legend.textContent).to.include(label)
+}
+
 function expectTextFieldWithLabel (rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`div#${name}-wrapper`)
   expect(wrapper).to.not.be.null
@@ -79,4 +107,6 @@ module.exports = {
   expectDropdownWithLabel,
   expectRadioWithLabel,
   expectHiddenField,
+  expectField,
+  expectRadioField,
 }

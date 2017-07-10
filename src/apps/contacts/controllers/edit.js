@@ -49,7 +49,12 @@ async function editDetails (req, res, next) {
 
     // Labels and options needed for the form and error display
     res.locals.contactLabels = contactLabels
-    res.locals.countryOptions = metadataRepository.countryOptions
+    res.locals.countryOptions = metadataRepository.countryOptions.map(item => {
+      return {
+        value: item.id,
+        label: item.name,
+      }
+    })
     res.locals.companyUrl = buildCompanyUrl(res.locals.company)
 
     res.render('contacts/views/edit')
@@ -81,9 +86,13 @@ function postDetails (req, res, next) {
     } catch (errors) {
       if (errors.error) {
         if (errors.error.errors) {
-          res.locals.errors = errors.error.errors
+          res.locals.errors = {
+            messages: errors.error.errors,
+          }
         } else {
-          res.locals.errors = errors.error
+          res.locals.errors = {
+            messages: errors.error,
+          }
         }
         editDetails(req, res, next)
       } else {

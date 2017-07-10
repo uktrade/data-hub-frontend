@@ -15,7 +15,7 @@ router.get('/:contactId', contactController.getCommon, contactController.getDeta
 router
   .route('/:contactId/edit')
   .get(contactController.getCommon, contactEditController.editDetails)
-  .post(contactEditController.postDetails)
+  .post(contactController.getCommon, contactEditController.postDetails)
 
 router.post('/:id/archive', contactArchiveController.archiveContact)
 router.get('/:id/unarchive', contactArchiveController.unarchiveContact)
