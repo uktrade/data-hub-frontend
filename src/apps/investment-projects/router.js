@@ -15,6 +15,8 @@ const {
   interactions,
 } = require('./controllers')
 
+const detailsFormMiddleware = require('./middleware/forms/details')
+
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
 
@@ -35,16 +37,16 @@ router
 
 router
   .route('/create/2')
-  .get(form.populateDetailsFormMiddleware, createStep2.createGetHandler)
-  .post(form.populateDetailsFormMiddleware, form.investmentDetailsFormPostMiddleware, createStep2.createPostHandler)
+  .get(detailsFormMiddleware.populateForm, createStep2.createGetHandler)
+  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, createStep2.createPostHandler)
 
 router.get('/:id', details.redirectToDetails)
 router.get('/:id/details', details.detailsGetHandler)
 
 router
   .route('/:id/edit-details')
-  .get(form.populateDetailsFormMiddleware, edit.editDetailsGet)
-  .post(form.populateDetailsFormMiddleware, form.investmentDetailsFormPostMiddleware, edit.editDetailsPost)
+  .get(detailsFormMiddleware.populateForm, edit.editDetailsGet)
+  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, edit.editDetailsPost)
 
 router
   .route('/:id/edit-value')
