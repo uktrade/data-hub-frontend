@@ -10,6 +10,7 @@ Feature: Create a new company
     When I create a new “UK private or public limited company”
     Then I see the creation confirmation message
     And I verify that my newly created company is present in search results
+    And I logout of Data Hub website
 
   @company-create-ukother
   Scenario: Create a New Other type of UK organisation
@@ -18,6 +19,7 @@ Feature: Create a new company
     When I create a new “Other type of UK Organisation”
     Then I see the creation confirmation message
     And I verify that my newly created company is present in search results
+    And I logout of Data Hub website
 
   @company-create-foreign
   Scenario: Create a New Foreign Organisation
@@ -26,3 +28,4 @@ Feature: Create a new company
     When I create a new “Foreign organisation”
     Then I see the creation confirmation message
     And I verify that my newly created company is present in search results
+    And I logout of Data Hub website

@@ -6,13 +6,13 @@ defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
   const Interaction = client.page.Interaction()
-  const randomCompanyName = `TestingNewCompany-1206-1`
-  let subject = ''
+  const foreignCompanyName = 'Lambda plc'
+  let subject
 
   When(/^I navigate to Interactions page of any company$/, async () => {
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -28,7 +28,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -42,7 +42,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -56,7 +56,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -70,7 +70,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -84,7 +84,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -98,7 +98,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -112,7 +112,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -126,7 +126,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -140,7 +140,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -154,7 +154,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -168,7 +168,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -182,7 +182,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -196,7 +196,7 @@ defineSupportCode(({ Given, Then, When }) => {
     subject = faker.random.word()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -209,7 +209,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify my newly added Interaction in company profile$/, async () => {
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Interaction
@@ -223,8 +223,8 @@ defineSupportCode(({ Given, Then, When }) => {
     await Company
       .navigate()
     await Interaction
-    .verify.containsText('@interactionUnderSearchPage', randomCompanyName)
-    .verify.containsText('@interactionUnderSearchPage', subject)
+      .verify.containsText('@interactionUnderSearchPage', foreignCompanyName)
+      .verify.containsText('@interactionUnderSearchPage', subject)
   })
 
   Then(/^I see the edit interaction button to confirm successful adding$/, async () => {

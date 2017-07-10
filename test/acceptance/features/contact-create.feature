@@ -8,6 +8,7 @@ Feature: Create New Contact
     Given I am an authenticated user on Data Hub website
     When I navigate to Contacts page of any company
     Then I verify an option to add a new contact
+    And I logout of Data Hub website
 
   @contact-create-primary
   Scenario: Add a new Primary Contact
@@ -15,6 +16,7 @@ Feature: Create New Contact
     When I add a new Primary Contact
     Then I see the contact creation confirmation message
     And I verify my newly added contact in company profile
+    And I logout of Data Hub website
 
   @contact-create-primary-new-company-address
   Scenario: Add a new Primary Contact with new Company address
@@ -22,6 +24,7 @@ Feature: Create New Contact
     When I add a new Primary Contact with a new company address
     Then I see the contact creation confirmation message
     And I verify my newly added contact in company profile
+    And I logout of Data Hub website
 
   @contact-create-non-primary
   Scenario: Add a new non-Primary Contact
@@ -29,6 +32,7 @@ Feature: Create New Contact
     When I add a new non Primary Contact
     Then I see the contact creation confirmation message
     And I verify my newly added contact in company profile
+    And I logout of Data Hub website
 
   @contact-create-verify
   Scenario: Verify newly added contact under search landing page
@@ -36,4 +40,4 @@ Feature: Create New Contact
     When I add a new Primary Contact
     Then I see the contact creation confirmation message
     And I verify my newly added contact under search landing page
-
+    And I logout of Data Hub website

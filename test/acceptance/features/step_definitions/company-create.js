@@ -4,9 +4,10 @@ const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
+  const Login = client.page.Login()
 
   Given(/^I am an authenticated user on Data Hub website$/, async () => {
-    await client.page.Login().navigate().logIn()
+    await client.page.Login().navigate().authenticate()
   })
 
   When(/^I create a new “Foreign organisation”$/, async () => {
@@ -46,5 +47,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .navigate()
       .findCompany(Company.newlyCreatedCompanyName)
       .verify.visible('@searchResultsItem')
+  })
+
+  Then(/^I logout of Data Hub website$/, async () => {
+    await Login
+      .click('@signOutButton')
   })
 })

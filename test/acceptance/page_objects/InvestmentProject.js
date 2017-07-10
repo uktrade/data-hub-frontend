@@ -74,11 +74,8 @@ module.exports = {
     },
     landMonth: '#land-date_month',
     landYear: '#land-date_year',
-    projectNameFromCompanyProfile: '.c-entity-list li:last-child a',
-    projectNameFromSummaryPage: {
-      selector: ".//*[@id='main-content']/h2",
-      locateStrategy: 'xpath',
-    },
+    projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
+    projectNameFromSummaryPage: '.page-heading',
     projectSummaryTitle: {
       selector: ".//*[@id='main-content']/div[2]/article/h2[1]",
       locateStrategy: 'xpath',

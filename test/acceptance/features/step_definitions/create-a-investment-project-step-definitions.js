@@ -6,8 +6,8 @@ defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
   const Investment = client.page.InvestmentProject()
-  const randomCompanyName = 'Lambda plc'
-  const fixedCompanyName = 'Sony'
+  const foreignCompanyName = 'Lambda plc'
+  const ukLtdCompanyName = 'Venus ltd'
   let projectName
   let actualName
   let actualAdviserName
@@ -15,7 +15,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I navigate to Investments page of any company$/, async () => {
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -31,7 +31,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -52,7 +52,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify my newly created Investment project in company profile$/, async () => {
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -74,7 +74,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -101,7 +101,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -128,7 +128,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -163,7 +163,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -181,7 +181,7 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
@@ -194,15 +194,13 @@ defineSupportCode(({ Given, Then, When }) => {
     projectName = faker.commerce.productName()
     await Company
       .navigate()
-      .findCompany(randomCompanyName)
+      .findCompany(ukLtdCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
       .clickInvestmentsTab()
       .clickAddInvestmentProjectButton()
-      .clickEquitySourceNo()
-      .submitForm('form')
-      .enterSourceCompanySearch(fixedCompanyName)
+      .enterSourceCompanySearch(foreignCompanyName)
       .submitForm('form')
       .clickOnCompanyFromList()
     await Investment
@@ -212,7 +210,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify my newly created foreign equity Investment project in company profile$/, async () => {
     await Company
       .navigate()
-      .findCompany(fixedCompanyName)
+      .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
     await Investment
