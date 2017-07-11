@@ -14,7 +14,7 @@ const metadataRepositoryStub = {
 const { interactionsLabels } = require('~/src/apps/investment-projects/labels')
 const errorMsg = 'mock error'
 
-describe('Investment form middleware', () => {
+describe('Investment form middleware - interactions', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
@@ -23,9 +23,9 @@ describe('Investment form middleware', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
-      '../../../lib/metadata': metadataRepositoryStub,
-      '../../adviser/repos': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/interactions', {
+      '../../../../lib/metadata': metadataRepositoryStub,
+      '../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -33,47 +33,6 @@ describe('Investment form middleware', () => {
 
   afterEach(() => {
     this.sandbox.restore()
-  })
-
-  describe('#populateValueFormMiddleware', () => {
-    it('should set form labels', () => {
-      this.controller.populateValueFormMiddleware({}, this.resMock, this.nextSpy)
-
-      expect(this.resMock.locals.form.labels).to.be.an('object').that.has.keys([
-        'average_salary',
-        'client_cannot_provide_foreign_investment',
-        'client_cannot_provide_total_investment',
-        'export_revenue',
-        'foreign_equity_investment',
-        'government_assistance',
-        'new_tech_to_uk',
-        'non_fdi_r_and_d_budget',
-        'number_new_jobs',
-        'number_safeguarded_jobs',
-        'r_and_d_budget',
-        'total_investment',
-      ])
-      expect(this.nextSpy.calledOnce).to.be.true
-    })
-
-    it('should set form state', () => {
-      this.resMock.locals.investmentData = {
-        average_salary: {
-          id: 'abcd',
-        },
-      }
-      this.controller.populateValueFormMiddleware({}, this.resMock, this.nextSpy)
-
-      expect(this.resMock.locals.form.state.average_salary).to.equal('abcd')
-      expect(this.nextSpy.calledOnce).to.be.true
-    })
-
-    it('should set form options (dropdown)', () => {
-      this.controller.populateValueFormMiddleware({}, this.resMock, this.nextSpy)
-
-      expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.include({ id: '1', name: 'Below 10k' })
-      expect(this.nextSpy.calledOnce).to.be.true
-    })
   })
 
   describe('#populateInteractionsFormMiddleware', () => {
@@ -86,7 +45,7 @@ describe('Investment form middleware', () => {
       this.resMock.locals.investmentData = investmentData
       this.resMock.locals.interaction = interactionTransformedFromApiData
 
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
@@ -117,7 +76,7 @@ describe('Investment form middleware', () => {
 
       this.resMock.locals.investmentData = investmentData
 
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
@@ -141,8 +100,8 @@ describe('Investment form middleware - error testing', () => {
       locals: {},
     }
 
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/form', {
-      '../../adviser/repos': {
+    this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/interactions', {
+      '../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
     })
@@ -154,7 +113,7 @@ describe('Investment form middleware - error testing', () => {
 
   describe('#populateInteractionsFormMiddleware', () => {
     it('should call next with errors', (done) => {
-      this.controller.populateInteractionsFormMiddleware({
+      this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
