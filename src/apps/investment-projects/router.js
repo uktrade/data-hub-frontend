@@ -17,6 +17,7 @@ const detailsFormMiddleware = require('./middleware/forms/details')
 const valueFormMiddleware = require('./middleware/forms/value')
 const requirementsMiddleware = require('./middleware/forms/requirements')
 const interactionsMiddleware = require('./middleware/forms/interactions')
+const projectManagementForm = require('./middleware/forms/project-management')
 
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
@@ -59,7 +60,17 @@ router
   .get(requirementsMiddleware.populateForm, edit.editRequirementsGet)
   .post(requirementsMiddleware.populateForm, requirementsMiddleware.handleFormPost, edit.editRequirementsPost)
 
-router.get('/:id/team', team.getTeamHandler)
+router.get('/:id/team', team.details.getDetailsHandler)
+router
+  .route('/:id/edit-project-management')
+  .get(shared.getBriefInvestmentSummary, projectManagementForm.populateForm, team.editProjectManagement.getHandler)
+  .post(
+    shared.getBriefInvestmentSummary,
+    projectManagementForm.populateForm,
+    projectManagementForm.handleFormPost,
+    team.editProjectManagement.postHandler,
+    team.editProjectManagement.getHandler
+  )
 
 router.get('/:id/interactions', interactions.list.indexGetHandler)
 
