@@ -105,7 +105,7 @@
 
     {% call TextField({
       type: 'search',
-      class: 'c-entity-search__input',
+      inputClass: 'c-entity-search__input',
       name: props.inputName,
       value: props.searchTerm,
       hint: props.inputHint,
@@ -244,6 +244,8 @@
  # @param {string} props.name - Field name
  # @param {string} props.label - Field label
  # @param {string} [props.type] - Field type
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.inputClass] - Input class name
  # @param {string} [props.hint] - Field hint
  # @param {string} [props.error] - Field error
  # @param {string} [props.modifier] - Field modifier
@@ -254,11 +256,11 @@
 {% macro TextField(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
   {% set innerContent = caller() if caller else null %}
-  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, innerContent: innerContent })) %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, innerContent: innerContent, class: props.groupClass })) %}
     {% if props.type === 'textarea' %}
-      {{ TextArea(props) }}
+      {{ TextArea(props | assign({ class: props.inputClass })) }}
     {% else %}
-      {{ Input(props) }}
+      {{ Input(props | assign({ class: props.inputClass })) }}
     {% endif %}
   {% endcall %}
 {% endmacro %}
@@ -273,6 +275,8 @@
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.hint] - Field hint
  # @param {string} [props.error] - Field error
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.inputClass] - Input class name
  # @param {boolean} [props.optional] - Marks field as optional
  #
  # @param {function} [props.caller] - Optional inner contents
@@ -280,11 +284,11 @@
 {% macro MultipleChoiceField(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
   {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
-  {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, element: element })) %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, element: element, class: groupClass })) %}
     {% if props.type in ['checkbox', 'radio'] %}
       {{ MultipleChoice(props) }}
     {% else %}
-      {% call SelectBox(props) %}
+      {% call SelectBox(props | assign({ class: inputClass })) %}
         {{ props.caller() if props.caller }}
       {% endcall %}
     {% endif %}
@@ -344,6 +348,7 @@
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
+ # @param {string} [props.class] - Field class name
  # @param {string} [props.options] - Field options
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
@@ -354,7 +359,7 @@
   <select
     id="{{ props.fieldId }}"
     name="{{ props.name }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }}"
+    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.initialOption %}
