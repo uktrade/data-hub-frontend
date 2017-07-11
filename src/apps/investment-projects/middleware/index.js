@@ -1,7 +1,7 @@
-const form = require('./form')
+const forms = require('./forms')
 const shared = require('./shared')
 
 module.exports = {
-  form,
+  forms,
   shared,
 }

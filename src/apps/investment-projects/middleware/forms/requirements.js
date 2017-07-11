@@ -1,5 +1,5 @@
 const { get, flatten } = require('lodash')
-const { requirementsLabels } = require('../labels')
+const { requirementsLabels } = require('../../labels')
 const metadataRepo = require('../../../../lib/metadata')
 const { updateInvestment } = require('../../repos')
 
