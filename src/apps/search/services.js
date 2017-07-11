@@ -35,8 +35,8 @@ function searchInvestmentProjects ({ token, searchTerm, requestBody, limit = 10,
   })
     .then(result => {
       return {
+        limit,
         count: result.count,
-        limit: result.limit,
         page: result.page,
         items: result.results,
       }

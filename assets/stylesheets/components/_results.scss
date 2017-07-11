@@ -1,0 +1,115 @@
+@import "../settings";
+@import "../tools";
+
+.c-results__summary {
+  @include core-font(24);
+
+  border-bottom: 5px solid $text-colour;
+  margin-bottom: $default-spacing-unit / 2;
+  padding-bottom: $default-spacing-unit / 2;
+}
+
+.c-results__count {
+  @include bold-font(36);
+}
+
+.c-results__summary-filters {
+  @include core-font(16);
+}
+
+.c-results__summary-filter {
+  color: $text-colour;
+  display: inline-block;
+  margin-top: $default-spacing-unit / 2;
+  padding: 0 ($default-spacing-unit / 2);
+  background: $grey-4;
+}
+
+.c-results__summary-filter-type {
+  color: $grey-1;
+
+  &::after {
+    content: ":";
+  }
+}
+
+.c-results__summary-filter-name {
+  font-weight: 600;
+}
+
+.c-results__summary-filter-remove {
+  text-decoration: none;
+  display: inline-block;
+  float: right;
+  font-size: 24px;
+  line-height: 1;
+  margin: 0 0 0 $default-spacing-unit / 2;
+
+  &:link,
+  &:visited {
+    color: $text-colour;
+  }
+
+  &:hover {
+    color: $red;
+  }
+}
+
+.c-results__summary__filter-remove-all {
+  @include core-font(16);
+
+  margin-top: $default-spacing-unit / (3 / 2);
+
+  @include media(tablet) {
+    margin-top: $default-spacing-unit;
+  }
+
+  &:link,
+  &:visited {
+    color: $link-colour;
+  }
+}
+
+.c-results__sort {
+  @include clearfix;
+  @include core-font(16);
+
+  margin-top: $default-spacing-unit / 2;
+  margin-bottom: $default-spacing-unit / 2;
+
+  .button {
+    padding: 0 ($default-spacing-unit / 2);
+    line-height: 30px;
+    width: auto;
+  }
+}
+
+.c-results__sort-form {
+  margin-top: $default-spacing-unit / 2;
+  display: flex;
+
+  .c-form-group--inline {
+    display: flex;
+    align-items: center;
+  }
+
+  .c-form-group__label {
+    margin-bottom: 0;
+    margin-right: $default-spacing-unit / 2;
+  }
+
+  @include media(tablet) {
+    margin-top: 0;
+    float: right;
+  }
+
+  .button {
+    margin-left: $default-spacing-unit / 2;
+    margin-bottom: 2px;
+  }
+}
+
+.c-results__page-summary {
+  color: $grey-1;
+  line-height: $default-spacing-unit * 2;
+}

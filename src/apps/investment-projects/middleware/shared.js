@@ -1,18 +1,11 @@
 const { get } = require('lodash')
 
 const { isValidGuid } = require('../../../lib/controller-utils')
-const { getInteraction } = require('../../interactions/repos')
 const { getDitCompany } = require('../../companies/repos')
+const { getInteraction } = require('../../interactions/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
-
-function handleEmptyMiddleware (req, res, next) {
-  if (req.path === '/') {
-    return res.redirect(`/investment-projects/create`)
-  }
-  next()
-}
 
 async function getInvestmentDetails (req, res, next, id = req.params.id) {
   if (!isValidGuid(id)) {
@@ -71,7 +64,6 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 }
 
 module.exports = {
-  handleEmptyMiddleware,
   getInvestmentDetails,
   getInteractionDetails,
 }

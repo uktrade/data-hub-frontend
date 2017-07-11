@@ -39,6 +39,11 @@
         <li class="proposition-menu__item">
           <a href="/" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/' }}">Dashboard</a>
         </li>
+        <li class="proposition-menu__item">
+          <a href="/investment-projects" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/investment-projects' }}">
+            Investment projects
+          </a>
+        </li>
       {% endif %}
       {% if feedbackLink %}
         <li class="proposition-menu__item">

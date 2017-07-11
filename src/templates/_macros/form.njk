@@ -416,7 +416,7 @@
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in props.options %}
-      <option value="{{ option.value }}" {% if props.value == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if option.value and props.value === option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}
