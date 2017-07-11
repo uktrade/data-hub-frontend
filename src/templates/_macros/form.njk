@@ -32,6 +32,8 @@
  # @param {object} [props.errors] - Object containing form errors
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
+ # @param {string} [props.class] - Form class name
+ # @param {string} [props.role] - Form role attribute value
  # @param {string} [props.buttonText=Submit] - Text for submit button
  #
  # @callback {function} caller - Required inner contents
@@ -42,9 +44,15 @@
   <form
     method="{{ method }}"
     {% if props.action %}action="{{ props.action }}"{% endif -%}
+    {% if props.class %}class="{{ props.class }}"{% endif %}
+    {% if props.role %}role="{{ props.role }}"{% endif %}
   >
     {{ ErrorSummary(props.errors) }}
-    {{ CSRF(csrfToken) }}
+
+    {% if method|lower === 'post' %}
+      {{ CSRF(csrfToken) }}
+    {% endif %}
+
     {% if props.hiddenFields|length %}
       {% for fieldName, fieldValue in props.hiddenFields | removeNilAndEmpty %}
         <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
@@ -82,26 +90,28 @@
   {% set inputPlaceholder = props.inputPlaceholder | default(props.inputLabel) -%}
   {% set isLabelHidden = props.isLabelHidden | default(true) %}
   {% set entityType = props.entityType | default('company') %}
-  <form
-    method="{{ method }}"
-    action="{{ props.action }}"
-    class="c-entity-search {{ 'c-entity-search--' + props.modifier if props.modifier}}"
-    role="search"
-  >
-    {% if props.hiddenFields|length %}
-      {% for fieldName, fieldValue in props.hiddenFields %}
-        <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
-      {% endfor %}
-    {% endif %}
+  {% set modifier = 'c-entity-search--' + props.modifier if props.modifier %}
+
+  {% call Form(props | assign({
+    class: 'c-entity-search ' + modifier,
+    role: 'search',
+    method: method,
+    disableFormActions: true,
+    inputName: inputName,
+    inputPlaceholder: inputPlaceholder,
+    isLabelHidden: isLabelHidden,
+    entityType: entityType
+  })) %}
+
     {% call TextField({
       type: 'search',
-      name: inputName,
+      class: 'c-entity-search__input',
+      name: props.inputName,
       value: props.searchTerm,
       hint: props.inputHint,
-      class: 'c-entity-search__input',
       label: props.inputLabel,
-      placeholder: inputPlaceholder,
-      isLabelHidden: isLabelHidden
+      placeholder: props.inputPlaceholder,
+      isLabelHidden: props.isLabelHidden
     }) %}
       <button class="c-entity-search__button">Search</button>
     {% endcall %}
@@ -110,7 +120,7 @@
       <nav class="c-entity-search__aggregations">
         <ul>
           {% for item in props.aggregations %}
-            {% set isCurrentPage = item.entity === entityType %}
+            {% set isCurrentPage = item.entity === props.entityType %}
             <li class="c-entity-search__aggregations-item {{ 'is-active' if isCurrentPage }}">
               {% if isCurrentPage %}
                 {{ item.text }}
@@ -123,7 +133,7 @@
         </ul>
       </nav>
     {% endif %}
-  </form>
+  {% endcall %}
 {% endmacro %}
 
 {##
