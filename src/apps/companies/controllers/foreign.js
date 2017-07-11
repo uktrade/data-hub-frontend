@@ -21,9 +21,10 @@ async function getDetails (req, res, next) {
       oneListAccountManager: 'None',
     }
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
-    res.locals.title = [company.name, 'Companies']
 
-    res.render('companies/views/details-foreign')
+    res
+      .breadcrumb(company.name)
+      .render('companies/views/details-foreign')
   } catch (error) {
     next(error)
   }
@@ -51,9 +52,10 @@ function addDetails (req, res, next) {
   }
   res.locals.businessTypeName = req.query.business_type
   res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
-  res.locals.title = 'Add company'
 
-  res.render('companies/views/edit-foreign')
+  res
+    .breadcrumb('Add company')
+    .render('companies/views/edit-foreign')
 }
 
 async function editDetails (req, res, next) {
@@ -66,8 +68,11 @@ async function editDetails (req, res, next) {
     }
     res.locals.businessTypeName = company.business_type.name
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
-    res.locals.title = ['Edit', company.name, 'Companies']
-    res.render(`companies/views/edit-foreign`)
+
+    res
+      .breadcrumb(company.name, `/companies/view/foreign/${company.id}`)
+      .breadcrumb('Edit')
+      .render(`companies/views/edit-foreign`)
   } catch (error) {
     next(error)
   }

@@ -5,6 +5,7 @@ describe('Investment Interactions edit controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.nextStub = this.sandbox.stub()
     this.flashStub = this.sandbox.stub()
+    this.breadcrumbStub = function () { return this }
 
     this.controller = require('~/src/apps/investment-projects/controllers/interactions/edit')
   })
@@ -21,9 +22,9 @@ describe('Investment Interactions edit controller', () => {
         },
       }, {
         locals: {
-          title: [],
           investmentData,
         },
+        breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
             expect(template).to.equal('investment-projects/views/interactions/edit')
@@ -46,12 +47,12 @@ describe('Investment Interactions edit controller', () => {
           flash: this.flashStub,
         }, {
           locals: {
-            title: [],
             form: {
               errors: {},
             },
             investmentData,
           },
+          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal(`/investment-projects/${investmentData.id}/interactions`)
@@ -73,13 +74,13 @@ describe('Investment Interactions edit controller', () => {
           },
         }, {
           locals: {
-            title: [],
             form: {
               errors: {
                 subject: 'example error',
               },
             },
           },
+          breadcrumb: this.breadcrumbStub,
         }, this.nextStub)
 
         expect(this.nextStub).to.be.calledOnce

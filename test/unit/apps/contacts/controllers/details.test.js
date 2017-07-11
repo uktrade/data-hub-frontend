@@ -74,6 +74,8 @@ describe('Contact controller', function () {
         buildCompanyUrl: buildCompanyUrlStub,
       },
     })
+
+    this.breadcrumbStub = function () { return this }
   })
 
   describe('getCommon', function () {
@@ -85,9 +87,7 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {
-          title: [],
-        },
+        breadcrumb: this.breadcrumbStub,
         render: function () {},
       }
       const next = function () {
@@ -106,8 +106,8 @@ describe('Contact controller', function () {
       const res = {
         locals: {
           contact,
-          title: [],
         },
+        breadcrumb: this.breadcrumbStub,
         render: function () {},
       }
       const next = function () {
@@ -127,8 +127,8 @@ describe('Contact controller', function () {
       const res = {
         locals: {
           company,
-          title: [],
         },
+        breadcrumb: this.breadcrumbStub,
         render: function () {},
       }
       const next = function () {
@@ -145,9 +145,8 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {
-          title: [],
-        },
+        locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {},
       }
       const next = function () {
@@ -180,9 +179,7 @@ describe('Contact controller', function () {
         },
       }
       const res = {
-        locals: {
-          title: [],
-        },
+        breadcrumb: this.breadcrumbStub,
         render: function () {},
       }
       const next = function (err) {
@@ -205,8 +202,8 @@ describe('Contact controller', function () {
             contact,
             company,
             id: '1234',
-            title: [],
           },
+          breadcrumb: this.breadcrumbStub,
           render: function (url, options) {
             expect(getDisplayContactStub).to.be.calledWith(contact, company)
             expect(res.locals.contactDetails).to.deep.equal(contactFormatted)

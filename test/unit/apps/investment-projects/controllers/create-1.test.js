@@ -26,6 +26,7 @@ describe('Investment start controller', () => {
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.searchForeignCompanies = this.sandbox.stub().resolves(searchResults)
     this.getPagination = this.sandbox.stub().resolves({})
+    this.breadcrumbStub = function () { return this }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/create-1', {
       '../../companies/services/data': {
@@ -57,6 +58,7 @@ describe('Investment start controller', () => {
           query: {},
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.clientCompany).to.be.undefined
@@ -82,6 +84,7 @@ describe('Investment start controller', () => {
           },
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -114,6 +117,7 @@ describe('Investment start controller', () => {
           },
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -141,6 +145,7 @@ describe('Investment start controller', () => {
           },
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.showSearch).to.equal(true)
@@ -165,6 +170,7 @@ describe('Investment start controller', () => {
           },
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.searchTerm).to.equal('samsung')
@@ -223,6 +229,7 @@ describe('Investment start controller', () => {
             'client-company': '12345',
           },
         }, {
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.clientCompany).to.deep.equal(ukCompany)

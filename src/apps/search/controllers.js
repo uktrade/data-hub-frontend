@@ -25,16 +25,16 @@ function searchAction (req, res, next) {
       const pagination = getPagination(req, results)
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
-      req.breadcrumbs('Search')
-      res.render(`search/views/results-${searchEntity}`, {
-        title: [searchTerm, `Search results`],
-        searchTerm,
-        searchEntity,
-        searchPath: entity.path,
-        searchEntityResultsData,
-        results,
-        pagination,
-      })
+      res
+        .breadcrumb('Search')
+        .render(`search/views/results-${searchEntity}`, {
+          searchTerm,
+          searchEntity,
+          searchPath: entity.path,
+          searchEntityResultsData,
+          results,
+          pagination,
+        })
     })
     .catch(next)
 }

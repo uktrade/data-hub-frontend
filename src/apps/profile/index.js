@@ -1,10 +1,9 @@
 const router = require('express').Router()
 
 function getHandler (req, res) {
-  req.breadcrumbs('Your profile')
-  res.render('profile/views/profile', {
-    title: 'Your profile',
-  })
+  res
+    .breadcrumb('Your profile')
+    .render('profile/views/profile')
 }
 
 module.exports = {

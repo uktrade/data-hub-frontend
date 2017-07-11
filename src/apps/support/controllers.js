@@ -1,14 +1,11 @@
 function renderFeedbackPage (req, res) {
-  res.render('support/views/feedback', {
-    title: 'Feedback',
-  })
+  res.render('support/views/feedback')
 }
 
 function renderThankYouPage (req, res) {
-  req.breadcrumbs('Thank you')
-  res.render('support/views/thank-you', {
-    title: ['Thank you', 'Support'],
-  })
+  res
+    .breadcrumb('Thank you')
+    .render('support/views/thank-you')
 }
 
 module.exports = {

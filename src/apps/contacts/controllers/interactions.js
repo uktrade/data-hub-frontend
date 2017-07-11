@@ -8,10 +8,9 @@ async function getInteractions (req, res, next) {
     res.locals.interactions = interactions.map(interaction => interactionFormattingService.getDisplayContactInteraction(interaction))
     res.locals.addInteractionUrl = `/interactions/create/1?contact=${res.locals.contact.id}`
 
-    res.locals.title.unshift('Interactions')
-    req.breadcrumbs('Interactions')
-
-    res.render('contacts/views/interactions')
+    res
+      .breadcrumb('Interactions')
+      .render('contacts/views/interactions')
   } catch (error) {
     next(error)
   }

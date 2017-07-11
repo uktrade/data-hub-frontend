@@ -24,9 +24,10 @@ async function getInteractions (req, res, next) {
       res.locals.addContact = `/contacts/create?company=${res.locals.company.id}`
     }
 
-    res.locals.title = ['Interactions', res.locals.company.name, 'Companies']
-
-    res.render('companies/views/interactions')
+    res
+      .breadcrumb(res.locals.company.name, `/viewcompanyresult/${res.locals.company.id}`)
+      .breadcrumb('Interactions')
+      .render('companies/views/interactions')
   } catch (error) {
     next(error)
   }

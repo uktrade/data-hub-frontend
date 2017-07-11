@@ -18,6 +18,7 @@ describe('Company controller, ltd', function () {
   let fakeCompanyForm
   let saveCompanyFormStub
   let flashStub
+
   const chCompany = {
     id: '972173',
     created_on: '2017-04-11T10:28:30.639369',
@@ -78,6 +79,8 @@ describe('Company controller, ltd', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
+    this.breadcrumbStub = function () { return this }
+
     companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
       '../services/data': {
         getInflatedDitCompany: getInflatedDitCompanyStub,
@@ -110,6 +113,7 @@ describe('Company controller, ltd', function () {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
           done()
@@ -119,6 +123,7 @@ describe('Company controller, ltd', function () {
     it('should return the company heading name and address', function (done) {
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals.headingName).to.equal('ADALEOP LTD')
           expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
@@ -138,6 +143,7 @@ describe('Company controller, ltd', function () {
     it('should get a formatted copy of the company house data to display', function (done) {
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
           expect(res.locals).to.have.property('chDetails')
@@ -159,6 +165,7 @@ describe('Company controller, ltd', function () {
     it('should get formatted data for CDMS company details', function (done) {
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
@@ -180,6 +187,7 @@ describe('Company controller, ltd', function () {
     it('should provide account management information', function (done) {
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals).to.have.property('accountManagementDisplay')
           expect(res.locals).to.have.property('accountManagementDisplayLabels')
@@ -199,6 +207,7 @@ describe('Company controller, ltd', function () {
     it('should use a template for ltd data', function (done) {
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/details-ltd')
@@ -227,6 +236,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDefaultLtdFormForCHStub).to.be.calledWith(chCompany)
           expect(res.locals.formData).to.deep.equal(fakeCompanyForm)
@@ -248,6 +258,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals.formData).to.deep.equal(body)
           done()
@@ -263,6 +274,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getCHCompanyStub).to.be.calledWith('1234', '00112233')
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
@@ -281,6 +293,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/edit-ltd')
@@ -393,6 +406,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
           expect(getLtdCompanyAsFormDataStub).to.be.calledWith(company)
@@ -415,6 +429,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDitCompanyStub).to.not.be.called
           expect(getLtdCompanyAsFormDataStub).to.not.be.called
@@ -437,6 +452,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/edit-ltd')
@@ -459,6 +475,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(true)
           done()
@@ -477,6 +494,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(false)
           done()
@@ -501,6 +519,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           expect(saveCompanyFormStub).to.be.calledWith('1234', body)
           done()
@@ -525,6 +544,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/ltd/999')
           done()
@@ -574,6 +594,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           throw Error('error')
         },
@@ -603,6 +624,7 @@ describe('Company controller, ltd', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           expect(flashStub).to.be.calledWith('success', 'Updated company record')
           done()
@@ -626,6 +648,7 @@ describe('Company controller, ltd', function () {
       }
       res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
       }
     })
     it('should include the require properties in the response', function () {

@@ -28,9 +28,9 @@ function getHandler (req, res) {
     return res.redirect('/')
   }
 
-  res.render('auth/views/sign-in', {
-    title: 'Sign in',
-  })
+  res
+    .title('Sign in')
+    .render('auth/views/sign-in')
 }
 
 function postHandler (req, res, next) {

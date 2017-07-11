@@ -9,12 +9,12 @@ async function indexGetHandler (req, res, next) {
       const interactionsResponse = await getInteractionsForInvestment(req.session.token, req.params.id)
       const interactions = interactionsResponse.results.map(getDisplayCompanyInteraction)
 
-      res.locals.title.unshift('Interactions')
-
-      return res.render('investment-projects/views/interactions/index', {
-        currentNavItem: 'interactions',
-        interactions,
-      })
+      return res
+        .breadcrumb('Interactions')
+        .render('investment-projects/views/interactions/index', {
+          currentNavItem: 'interactions',
+          interactions,
+        })
     }
     next()
   } catch (error) {

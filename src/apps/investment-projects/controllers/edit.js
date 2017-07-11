@@ -4,13 +4,15 @@ const templateData = {
 }
 
 function editDetailsGet (req, res) {
-  res.locals.title.unshift('Edit details')
-  res.render('investment-projects/views/details-edit', templateData)
+  res
+    .breadcrumb('Edit details')
+    .render('investment-projects/views/details-edit', templateData)
 }
 
 function editValueGet (req, res) {
-  res.locals.title.unshift('Edit value')
-  res.render('investment-projects/views/value-edit', templateData)
+  res
+    .breadcrumb('Edit value')
+    .render('investment-projects/views/value-edit', templateData)
 }
 
 function editRequirementsGet (req, res) {

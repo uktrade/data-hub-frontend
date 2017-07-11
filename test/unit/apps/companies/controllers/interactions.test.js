@@ -83,6 +83,8 @@ describe('Company interactions controller', function () {
         getInflatedDitCompany: sinon.stub().resolves(company),
       },
     })
+
+    this.breadcrumbStub = function () { return this }
   })
 
   describe('data', function () {
@@ -93,6 +95,7 @@ describe('Company interactions controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(2)
@@ -108,6 +111,7 @@ describe('Company interactions controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.have.property('addInteractionUrl')
           done()
@@ -129,6 +133,7 @@ describe('Company interactions controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
@@ -149,6 +154,7 @@ describe('Company interactions controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
