@@ -33,7 +33,6 @@
     "dotenv": "^4.0.0",
     "eslint": "^3.17.0",
     "express": "^4.14.0",
-    "express-breadcrumbs": "^0.0.2",
     "express-session": "^1.14.1",
     "express-sslify": "^1.2.0",
     "extract-text-webpack-plugin": "^2.1.2",

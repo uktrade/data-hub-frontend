@@ -15,7 +15,7 @@
 {% from "_macros/form.njk" import Fieldset, TextField, MultipleChoiceField %}
 {% from "_macros/address.njk" import addressFormatter %}
 
-{% set pageTitle = [title, 'DIT Data Hub'] | flatten | removeNilAndEmpty | join(' - ') %}
+{% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
 
 {% block head %}
   {{ super() }}

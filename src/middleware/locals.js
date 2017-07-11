@@ -10,13 +10,30 @@ try {
 
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
+  const breadcrumbItems = res.breadcrumb()
 
   res.locals = Object.assign({}, res.locals, {
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.originalUrl,
     CURRENT_PATH: req.path,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
-    BREADCRUMBS: req.breadcrumbs(),
+    BREADCRUMBS: breadcrumbItems,
+
+    getPageTitle: () => {
+      const items = breadcrumbItems.map(item => item.name)
+      const title = res.locals.title
+
+      if (title) {
+        if (items.length === 1) {
+          return title
+        }
+
+        items.pop()
+        items.push(title)
+      }
+
+      return items.reverse().slice(0, -1)
+    },
 
     getAssetPath (asset) {
       const assetsUrl = config.assetsHost || baseUrl
