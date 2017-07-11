@@ -163,8 +163,16 @@
   "client_considering_other_countries": true,
   "uk_company": null,
   "requirements_complete": false,
-  "project_manager": null,
-  "project_assurance_adviser": null,
+  "project_manager": {
+    "id": "1234",
+    "first_name": "Fred",
+    "last_name": "Smith"
+  },
+  "project_assurance_adviser": {
+    "id": "2234",
+    "first_name": "John",
+    "last_name": "Brown"
+  },
   "project_manager_team": null,
   "project_assurance_team": null,
   "team_complete": true,

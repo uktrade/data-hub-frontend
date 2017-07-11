@@ -94,6 +94,20 @@ const labels = {
       investment_land_date: 'Land date',
     },
   },
+  projectManagementEditLabels: {
+    project_manager: 'Project manager',
+    project_assurance_adviser: 'Project assurance adviser',
+  },
+  briefInvestmentSummaryLabels: {
+    sector: 'Primary sector',
+    investor_company: 'Client company',
+    website: 'Website',
+    account_tier: 'Account tier',
+    uk_region_locations: 'Possible UK locations',
+    competitor_countries: 'Competitor countries',
+    estimated_land_date: 'Estimated land date',
+    total_investment: 'Total investment',
+  },
 }
 
 labels.valueLabels.edit = Object.assign({}, labels.valueLabels.view, labels.valueLabels.edit)
