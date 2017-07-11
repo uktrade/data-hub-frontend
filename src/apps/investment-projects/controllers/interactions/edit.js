@@ -1,9 +1,9 @@
 const { isEmpty } = require('lodash')
 
 function editGetInteractionHandler (req, res, next) {
-  res.locals.title.unshift('Edit interaction')
-
-  res.render('investment-projects/views/interactions/edit')
+  res
+    .breadcrumb('Edit interaction')
+    .render('investment-projects/views/interactions/edit')
 }
 
 function editPostInteractionHandler (req, res, next) {

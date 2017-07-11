@@ -39,15 +39,16 @@ function getHandler (req, res, next) {
         showSearch = true
       }
 
-      res.render('investment-projects/views/create-1', {
-        title: 'Add investment project',
-        clientCompany,
-        clientCompanyInvestments,
-        searchTerm,
-        searchResult,
-        pagination,
-        showSearch,
-      })
+      res
+        .breadcrumb('Add investment project')
+        .render('investment-projects/views/create-1', {
+          clientCompany,
+          clientCompanyInvestments,
+          searchTerm,
+          searchResult,
+          pagination,
+          showSearch,
+        })
     })
     .catch(next)
 }
@@ -63,13 +64,14 @@ function postHandler (req, res, next) {
   } else {
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
-        res.render('investment-projects/views/create-1', {
-          title: 'Add investment project',
-          clientCompany,
-          errors: {
-            isEquitySource: 'Please select whether this company will be the source of foreign equity',
-          },
-        })
+        res
+          .breadcrumb('Add investment project')
+          .render('investment-projects/views/create-1', {
+            clientCompany,
+            errors: {
+              isEquitySource: 'Please select whether this company will be the source of foreign equity',
+            },
+          })
       })
       .catch(next)
   }

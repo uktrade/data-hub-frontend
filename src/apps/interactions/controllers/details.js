@@ -11,7 +11,6 @@ async function getCommon (req, res, next) {
     const token = req.session.token
     if (req.params.interactionId && req.params.interactionId !== 'add') {
       res.locals.interaction = await interactionDataService.getHydratedInteraction(token, req.params.interactionId)
-      req.breadcrumbs('Interaction')
     }
     next()
   } catch (error) {
@@ -48,12 +47,13 @@ function getAddStep1 (req, res) {
     interactionTypeColB.push(selectableTypes[pos])
   }
 
-  res.render('interactions/views/add-step-1.njk', {
-    title: ['Interaction type', 'Add interaction'],
-    query: req.query,
-    interactionTypeColA,
-    interactionTypeColB,
-  })
+  res
+    .breadcrumb('Add interaction')
+    .render('interactions/views/add-step-1.njk', {
+      query: req.query,
+      interactionTypeColA,
+      interactionTypeColB,
+    })
 }
 
 function postAddStep1 (req, res) {
@@ -74,12 +74,13 @@ function postAddStep1 (req, res) {
 }
 
 function getInteractionDetails (req, res, next) {
-  res.render('interactions/views/details', {
-    title: `Interaction with ${res.locals.interaction.company.name}`,
-    interactionDetails: getDisplayInteraction(res.locals.interaction),
-    interactionLabels: interactionLabels,
-    interactionDisplayOrder: interactonDisplayOrder,
-  })
+  res
+    .breadcrumb(`Interaction with ${res.locals.interaction.company.name}`)
+    .render('interactions/views/details', {
+      interactionDetails: getDisplayInteraction(res.locals.interaction),
+      interactionLabels: interactionLabels,
+      interactionDisplayOrder: interactonDisplayOrder,
+    })
 }
 
 module.exports = {

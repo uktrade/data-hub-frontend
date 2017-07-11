@@ -2,6 +2,7 @@ describe('Investment create controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
+    this.breadcrumbStub = function () { return this }
 
     this.controller = require('~/src/apps/investment-projects/controllers/create-2')
   })
@@ -19,6 +20,7 @@ describe('Investment create controller', () => {
           },
         }, {
           locals: {},
+          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal('/investment-projects/create/1')
@@ -43,6 +45,7 @@ describe('Investment create controller', () => {
               id: '12345',
             },
           },
+          breadcrumb: this.breadcrumbStub,
           render: (template) => {
             try {
               expect(template).to.equal('investment-projects/views/create-2')
@@ -68,6 +71,7 @@ describe('Investment create controller', () => {
             resultId: '12345',
             form: {},
           },
+          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal('/investment-projects/12345')
@@ -92,6 +96,7 @@ describe('Investment create controller', () => {
               errors: {},
             },
           },
+          breadcrumb: this.breadcrumbStub,
           render: (template) => {
             try {
               expect(template).to.equal('investment-projects/views/create-2')

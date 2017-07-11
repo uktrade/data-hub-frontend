@@ -2868,12 +2868,6 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-express-breadcrumbs@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/express-breadcrumbs/-/express-breadcrumbs-0.0.2.tgz#3e1c6804c1884cc7917a725743860d4953c13798"
-  dependencies:
-    lodash "~2.1.0"
-
 express-session@^1.14.1:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.15.3.tgz#db545f0435a7b1b228ae02da8197f65141735c67"
@@ -5133,10 +5127,6 @@ lodash@^3.10.1:
 lodash@~0.9.2:
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-0.9.2.tgz#8f3499c5245d346d682e5b0d3b40767e09f1a92c"
-
-lodash@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.1.0.tgz#0637eaaa36a8a1cfc865c3adfb942189bfb0998d"
 
 lodash@~2.4.1:
   version "2.4.2"

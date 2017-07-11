@@ -15,17 +15,12 @@ async function getCommon (req, res, next) {
     const token = req.session.token
     const contact = res.locals.contact = await contactsRepository.getContact(token, req.params.contactId)
     const company = res.locals.company = await companyRepository.getDitCompany(token, contact.company.id)
-    const name = `${contact.first_name} ${contact.last_name}`
 
     res.locals.id = req.params.contactId
     res.locals.companyUrl = companyService.buildCompanyUrl(company)
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
-    res.locals.title = [name, 'Contacts']
 
-    req.breadcrumbs({
-      name,
-      url: `/contacts/${contact.id}`,
-    })
+    res.breadcrumb(`${contact.first_name} ${contact.last_name}`, `/contacts/${contact.id}`)
 
     next()
   } catch (error) {

@@ -1,7 +1,7 @@
-function addBaseBreadcrumb (name) {
+function setHomeBreadcrumb (name) {
   return function (req, res, next) {
     if (name) {
-      req.breadcrumbs({
+      res.breadcrumb({
         name,
         url: req.baseUrl,
       })
@@ -11,5 +11,5 @@ function addBaseBreadcrumb (name) {
 }
 
 module.exports = {
-  addBaseBreadcrumb,
+  setHomeBreadcrumb,
 }

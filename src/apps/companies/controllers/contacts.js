@@ -24,9 +24,11 @@ async function getContacts (req, res, next) {
       .map(contact => getDisplayArchivedCompanyContact(contact))
 
     res.locals.addContactUrl = `/contacts/create?company=${res.locals.company.id}`
-    res.locals.title = ['Contacts', res.locals.company.name, 'Companies']
 
-    res.render('companies/views/contacts')
+    res
+      .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
+      .breadcrumb('Contacts')
+      .render('companies/views/contacts')
   } catch (error) {
     next(error)
   }

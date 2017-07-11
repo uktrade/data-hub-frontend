@@ -26,29 +26,31 @@ const foreignOtherCompanyOptions = [
 ]
 
 function renderFormElements (req, res) {
-  req.breadcrumbs('Form')
-  return res.render('components/views/form', {
-    title: 'Form Elements',
-    entitySearch: Object.assign({}, res.locals.entitySearch, {
-      searchTerm: req.query.term,
-    }),
-    form: Object.assign({}, res.locals.form, {
-      options: {
-        countries: metadata.countryOptions.map(transformOption),
-        averageSalaryRange: metadata.salaryRangeOptions.map(transformOption),
-        strategicDrivers: metadata.strategicDriverOptions.map(transformOption),
-        sectors: metadata.sectorOptions.map(transformOption),
-        foreignOtherCompany: foreignOtherCompanyOptions.map(i => ({ value: i, label: i })),
-      },
-    }),
-  })
+  return res
+    .breadcrumb('Form')
+    .render('components/views/form', {
+      title: 'Form Elements',
+      entitySearch: Object.assign({}, res.locals.entitySearch, {
+        searchTerm: req.query.term,
+      }),
+      form: Object.assign({}, res.locals.form, {
+        options: {
+          countries: metadata.countryOptions.map(transformOption),
+          averageSalaryRange: metadata.salaryRangeOptions.map(transformOption),
+          strategicDrivers: metadata.strategicDriverOptions.map(transformOption),
+          sectors: metadata.sectorOptions.map(transformOption),
+          foreignOtherCompany: foreignOtherCompanyOptions.map(i => ({ value: i, label: i })),
+        },
+      }),
+    })
 }
 
 function renderMessages (req, res) {
-  req.breadcrumbs('Application messages')
-  return res.render('components/views/messages', {
-    title: 'Application messages',
-  })
+  return res
+    .breadcrumb('Application messages')
+    .render('components/views/messages', {
+      title: 'Application messages',
+    })
 }
 
 function renderBreadcrumbs (req, res) {

@@ -17,12 +17,12 @@ async function getInvestmentAudit (req, res, next) {
       const rawAuditLog = await getInvestmentProjectAuditLog(req.session.token, req.params.id)
       const auditLog = rawAuditLog.map(formatAuditLog)
 
-      res.locals.title.unshift('Audit history')
-
-      return res.render('investment-projects/views/audit', {
-        currentNavItem: 'audit',
-        auditLog,
-      })
+      return res
+        .breadcrumb('Audit history')
+        .render('investment-projects/views/audit', {
+          currentNavItem: 'audit',
+          auditLog,
+        })
     }
 
     return next()

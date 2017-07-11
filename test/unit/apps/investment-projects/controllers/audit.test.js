@@ -7,6 +7,7 @@ describe('Investment audit controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(investmentProjectAuditData.results)
+    this.breadcrumbStub = function () { return this }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {
@@ -26,8 +27,8 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         investmentData: {},
-        title: [],
       },
+      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(this.getInvestmentProjectAuditLog).to.be.calledWith(token, '9999')
@@ -59,8 +60,8 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         investmentData: {},
-        title: [],
       },
+      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -108,8 +109,8 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         investmentData: {},
-        title: [],
       },
+      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -155,8 +156,8 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         investmentData: {},
-        title: [],
       },
+      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -202,8 +203,8 @@ describe('Investment audit controller', () => {
     }, {
       locals: {
         investmentData: {},
-        title: [],
       },
+      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)

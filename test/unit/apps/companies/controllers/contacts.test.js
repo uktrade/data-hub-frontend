@@ -192,6 +192,7 @@ describe('Company contacts controller', function () {
           headingAddress: '1234 Road, London, EC1 1AA',
           id: '44332211',
         },
+        breadcrumb: function () { return this },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()

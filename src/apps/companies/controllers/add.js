@@ -9,7 +9,6 @@ const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('.
 
 function getAddStepOne (req, res, next) {
   res.render('companies/views/add-step-1.njk', {
-    title: 'Add company',
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
     company: req.body,
@@ -82,7 +81,6 @@ async function getAddStepTwo (req, res, next) {
 
   if (!searchTerm) {
     return res.render('companies/views/add-step-2.njk', {
-      title: 'Add company',
       companyTypeOptions,
       businessType,
       country,

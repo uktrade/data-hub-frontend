@@ -7,9 +7,7 @@ describe('Investment shared middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.getInteractionStub = this.sandbox.stub().resolves(interactionData)
     this.nextSpy = this.sandbox.spy()
-    this.reqMock = {
-      breadcrumbs: this.sandbox.spy(),
-    }
+    this.reqMock = {}
     this.resMock = { locals: {} }
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/shared', {
@@ -27,7 +25,6 @@ describe('Investment shared middleware', () => {
     it('should return local nav items', () => {
       this.controller.getLocalNavMiddleware(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.reqMock.breadcrumbs.calledOnce).to.be.true
       expect(this.resMock.locals).to.haveOwnProperty('localNavItems')
       expect(this.nextSpy.calledOnce).to.be.true
     })

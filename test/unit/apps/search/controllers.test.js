@@ -6,6 +6,10 @@ const next = function (error) {
 }
 
 describe('Search controller', function () {
+  beforeEach(() => {
+    this.breadcrumbStub = function () { return this }
+  })
+
   describe('view company result', function () {
     it('should route a uk private ltd company', function (done) {
       const searchController = proxyquire('~/src/apps/search/controllers', {
@@ -30,6 +34,7 @@ describe('Search controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/ltd/9999')
           done()
@@ -60,6 +65,7 @@ describe('Search controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/ltd/9999')
           done()
@@ -90,6 +96,7 @@ describe('Search controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/ukother/9999')
           done()
@@ -120,6 +127,7 @@ describe('Search controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/foreign/9999')
           done()
@@ -143,6 +151,7 @@ describe('Search controller', function () {
       }
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbStub,
       }
       const nextStub = (error) => {
         try {
@@ -164,6 +173,7 @@ describe('Search Controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
     this.controller = require('~/src/apps/search/controllers')
+    this.breadcrumbStub = function () { return this }
   })
 
   afterEach(() => {
@@ -227,9 +237,9 @@ describe('Search Controller', () => {
             params: {
               searchPath,
             },
-            breadcrumbs: sinon.stub(),
           },
           {
+            breadcrumb: this.breadcrumbStub,
             render: (template, data) => {
               try {
                 expect(template).to.equal(`search/views/results-${entityType}`)
@@ -280,9 +290,9 @@ describe('Search Controller', () => {
             params: {
               searchPath,
             },
-            breadcrumbs: sinon.stub(),
           },
           {
+            breadcrumb: this.breadcrumbStub,
             render: (template, data) => {
               try {
                 expect(template).to.equal(`search/views/results-${entityType}`)
@@ -333,9 +343,9 @@ describe('Search Controller', () => {
             params: {
               searchPath,
             },
-            breadcrumbs: sinon.stub(),
           },
           {
+            breadcrumb: this.breadcrumbStub,
             render: (template, data) => {
               try {
                 expect(template).to.equal(`search/views/results-${entityType}`)

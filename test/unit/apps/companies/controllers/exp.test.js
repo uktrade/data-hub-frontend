@@ -18,6 +18,7 @@ describe('Company export controller', () => {
     this.saveCompany = this.sandbox.stub().resolves(this.company)
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
+    this.breadcrumbsStub = function () { return this }
 
     this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
       '../services/data': {
@@ -58,6 +59,7 @@ describe('Company export controller', () => {
 
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
       }
 
       return this.companyExportController.common(req, res)
@@ -78,6 +80,7 @@ describe('Company export controller', () => {
 
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
       }
 
       return this.companyExportController.common(req, res)
@@ -99,6 +102,7 @@ describe('Company export controller', () => {
 
       const res = {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
       }
 
       return this.companyExportController.common(req, res)
@@ -121,6 +125,7 @@ describe('Company export controller', () => {
         locals: {
           company: this.company,
         },
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.exportDetails).to.deep.equal({
             exportToCountries: 'France, Italy',
@@ -158,6 +163,7 @@ describe('Company export controller', () => {
         locals: {
           company: this.company,
         },
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.exportDetails.exportToCountries).to.equal('')
           done()
@@ -179,6 +185,7 @@ describe('Company export controller', () => {
         locals: {
           company: this.company,
         },
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data).to.have.property('exportDetailsDisplayOrder')
           expect(data).to.have.property('exportDetailsLabels')
@@ -206,6 +213,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.export_to_countries).to.deep.equal(export_to_countries)
           expect(data.future_interest_countries).to.deep.equal(future_interest_countries)
@@ -227,6 +235,7 @@ describe('Company export controller', () => {
         locals: {
           company: this.company,
         },
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.export_to_countries).to.deep.equal(['1234', '2234'])
           expect(data.future_interest_countries).to.deep.equal(['4321'])
@@ -243,6 +252,7 @@ describe('Company export controller', () => {
         locals: {
           company: this.company,
         },
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data).to.have.property('exportDetailsLabels')
           done()
@@ -267,6 +277,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         redirect: (url) => {
           expect(this.getDitCompany).to.be.calledWith('1234', this.company.id)
           expect(controllerUtils.flattenIdFields).to.be.calledWith(this.company)
@@ -300,6 +311,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         redirect: (url) => {
           const firstCallArgs = this.saveCompany.firstCall.args[1]
           expect(firstCallArgs.export_to_countries).to.deep.equal(export_to_countries)
@@ -327,6 +339,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         redirect: (url) => {
           expect(this.saveCompany.firstCall.args[1].future_interest_countries).to.be.deep.equal(['4321'])
           done()
@@ -350,6 +363,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         redirect: (url) => {
           expect(this.saveCompany.firstCall.args[1].export_to_countries).to.deep.equal(['1234'])
           done()
@@ -388,6 +402,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
       }, (_error) => {
         expect(_error).to.deep.equal(error)
         done()
@@ -410,6 +425,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.export_to_countries).to.deep.equal(['888', '333', ''])
           done()
@@ -433,6 +449,7 @@ describe('Company export controller', () => {
         },
       }, {
         locals: {},
+        breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.future_interest_countries).to.deep.equal(['555', '666', ''])
           done()

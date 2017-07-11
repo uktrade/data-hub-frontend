@@ -24,6 +24,8 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
+    this.breadcrumbStub = function () { return this }
+
     contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
       '../services/form': {
         getContactAsFormData: getContactAsFormDataStub,
@@ -96,8 +98,8 @@ describe('Contact controller, edit', function () {
         res = {
           locals: {
             contact,
-            title: [],
           },
+          breadcrumb: this.breadcrumbStub,
         }
       })
 
@@ -144,9 +146,8 @@ describe('Contact controller, edit', function () {
           params: {},
         }
         res = {
-          locals: {
-            title: [],
-          },
+          locals: {},
+          breadcrumb: this.breadcrumbStub,
         }
       })
 
@@ -199,9 +200,8 @@ describe('Contact controller, edit', function () {
           },
         }
         res = {
-          locals: {
-            title: [],
-          },
+          locals: {},
+          breadcrumb: this.breadcrumbStub,
         }
       })
       it('should use the pre posted form for edit', function (done) {

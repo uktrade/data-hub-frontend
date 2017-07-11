@@ -34,7 +34,9 @@ function common (req, res) {
     try {
       res.locals.tab = 'exports'
       res.locals.company = await getInflatedDitCompany(req.session.token, req.params.id)
-      res.locals.title = ['Exports', res.locals.company.name, 'Companies']
+
+      res.breadcrumb(res.locals.company.name, `/viewcompanyresult/${res.locals.company.id}`)
+      res.breadcrumb('Exports', `/companies/${res.locals.company.id}/exports`)
 
       getCommonTitlesAndlinks(req, res, res.locals.company)
       resolve()
@@ -89,9 +91,9 @@ async function edit (req, res, next) {
       data.future_interest_countries = res.locals.company.future_interest_countries.map(country => country.id)
     }
 
-    res.locals.title.unshift('Edit')
-
-    res.render('companies/views/exports-edit', data)
+    res
+      .breadcrumb('Edit')
+      .render('companies/views/exports-edit', data)
   } catch (error) {
     next(error)
   }

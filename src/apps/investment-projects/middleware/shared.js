@@ -12,7 +12,6 @@ function handleEmptyMiddleware (req, res, next) {
 }
 
 function getLocalNavMiddleware (req, res, next) {
-  req.breadcrumbs('Project details')
   res.locals.localNavItems = [
     { label: 'Project details', slug: 'details' },
     { label: 'Project team', slug: 'team' },
@@ -40,7 +39,10 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
     }
 
-    res.locals.title = [investmentData.name, 'Investments', investmentData.investor_company.name]
+    res.breadcrumb({
+      name: investmentData.name,
+      url: `/investment-projects/${investmentData.id}`,
+    })
 
     next()
   } catch (error) {
