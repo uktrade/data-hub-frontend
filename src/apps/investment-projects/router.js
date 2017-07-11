@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const { shared } = require('./middleware')
+const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
   createStep1,
   createStep2,
@@ -63,9 +64,9 @@ router
 router.get('/:id/team', team.details.getDetailsHandler)
 router
   .route('/:id/edit-project-management')
-  .get(shared.getBriefInvestmentSummary, projectManagementForm.populateForm, team.editProjectManagement.getHandler)
+  .get(getBriefInvestmentSummary, projectManagementForm.populateForm, team.editProjectManagement.getHandler)
   .post(
-    shared.getBriefInvestmentSummary,
+    getBriefInvestmentSummary,
     projectManagementForm.populateForm,
     projectManagementForm.handleFormPost,
     team.editProjectManagement.postHandler,

@@ -1,7 +1,7 @@
 const details = require('./details')
-const editProjectManager = require('./edit-pm')
+const editProjectManagement = require('./edit-project-management')
 
 module.exports = {
   details,
-  editProjectManager,
+  editProjectManagement,
 }
