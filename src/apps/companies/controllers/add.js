@@ -4,7 +4,7 @@ const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
 const { getDisplayCH, getDisplayCompany } = require('../services/formatting')
-const { getPagination } = require('../../../lib/pagination')
+const { buildPagination } = require('../../../lib/pagination')
 const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels')
 
 function getAddStepOne (req, res, next) {
@@ -95,7 +95,8 @@ async function getAddStepTwo (req, res, next) {
       token,
       searchTerm,
     })
-    const pagination = getPagination(req, companiesHouseAndLtdCompanies.results)
+    const companies = companiesHouseAndLtdCompanies.results
+    companies.pagination = buildPagination(req, companiesHouseAndLtdCompanies.results)
     const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
       return company.id === currentlySelected ||
         (company.company_number && company.company_number === currentlySelected)
@@ -122,14 +123,13 @@ async function getAddStepTwo (req, res, next) {
 
     res.render('companies/views/add-step-2.njk', {
       companyTypeOptions,
-      companies: companiesHouseAndLtdCompanies.results,
+      companies,
       searchTerm,
       currentlySelected,
       displayDetails,
       labels,
       businessType,
       country,
-      pagination,
     })
   } catch (error) {
     next(error)

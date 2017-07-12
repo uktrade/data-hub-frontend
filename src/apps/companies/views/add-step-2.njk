@@ -79,9 +79,7 @@
       the company's website or any email correspondence that contains company registration details
     </p>
 
-    {% component 'pagination', {
-      pages: pagination
-    } %}
+    {{ Pagination(companies.pagination) }}
 
   {% endif %}
 {% endblock %}

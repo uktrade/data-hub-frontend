@@ -1,7 +1,7 @@
 const { getInflatedDitCompany } = require('../../companies/services/data')
 const { getCompanyInvestmentProjects } = require('../repos')
 const { searchForeignCompanies } = require('../../search/services')
-const { getPagination } = require('../../../lib/pagination')
+const { buildPagination } = require('../../../lib/pagination')
 
 function getHandler (req, res, next) {
   const clientCompanyId = req.query['client-company']
@@ -29,10 +29,9 @@ function getHandler (req, res, next) {
   Promise.all(promises)
     .then(([clientCompany, clientCompanyInvestments, searchResult]) => {
       let showSearch = req.query['show-search'] || false
-      let pagination
 
       if (searchResult) {
-        pagination = getPagination(req, searchResult)
+        searchResult.pagination = buildPagination(req, searchResult)
       }
 
       if (clientCompanyId && clientCompany.uk_based) {
@@ -46,7 +45,6 @@ function getHandler (req, res, next) {
           clientCompanyInvestments,
           searchTerm,
           searchResult,
-          pagination,
           showSearch,
         })
     })
