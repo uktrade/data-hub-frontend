@@ -6,7 +6,9 @@
 * + {
   .c-form-group,
   .c-form-fieldset,
-  .c-error-summary {
+  .c-error-summary,
+  .c-entity-search,
+  .results-summary {
     margin-top: $default-spacing-unit * 2;
   }
 
@@ -15,16 +17,9 @@
   }
 
   .c-form-fieldset--subfield,
-  .c-form-group--subfield {
+  .c-form-group--subfield,
+  .c-pagination {
     margin-top: $default-spacing-unit;
     margin-bottom: $default-spacing-unit;
-  }
-
-  .c-entity-search {
-    margin-top: $default-spacing-unit * 2;
-  }
-
-  .results-summary {
-    margin-top: $default-spacing-unit * 2;
   }
 }

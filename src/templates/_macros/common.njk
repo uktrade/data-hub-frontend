@@ -1,0 +1,51 @@
+{##
+ # Render pagination
+ # @param {object} pagination - An object containing pagination properties
+ # @param {boolean} [showPages=true] - A flag to enable or disable showing page numbers
+ #
+ # Pagination object has the following structure:
+ #
+ # {
+ #   totalPages: 6,
+ #   currentPage: 1,
+ #   prev: null,
+ #   next: '?page=2',
+ #   pages: [
+ #     { label: 1, url: '?page=1' },
+ #     { label: 2, url: '?page=2' },
+ #     { label: 3, url: '?page=3' },
+ #     { label: 4, url: '?page=4' },
+ #     { label: '…' },
+ #     { label: 6, url: '?page=6' },
+ #   ]
+ # }
+ #}
+{% macro Pagination(pagination, showPages=true) %}
+  {% if pagination %}
+    <nav class="c-pagination {{ 'c-pagination--pageless' if not showPages }}">
+      {% if pagination.prev %}
+        <a href="{{ pagination.prev }}" class="c-pagination__label c-pagination__label--prev">Previous</a>
+      {% endif %}
+      {% if showPages %}
+        <ul class="c-pagination__list">
+          {% for page in pagination.pages %}
+            <li class="c-pagination__list-item">
+              {% if page.url %}
+                <a href="{{ page.url }}" class="c-pagination__label {{ 'is-current' if page.label == pagination.currentPage }}">
+                  {{ page.label }}
+                </a>
+              {% else %}
+                <span class="c-pagination__label c-pagination__label--truncation">
+                  {{ page.label }}
+                </span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if pagination.next %}
+        <a href="{{ pagination.next }}" class="c-pagination__label c-pagination__label--next">Next</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% endmacro %}

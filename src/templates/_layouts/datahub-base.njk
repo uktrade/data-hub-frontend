@@ -13,6 +13,7 @@
 
 {% from "_macros/form.njk" import EntitySearchForm, Form with context %}
 {% from "_macros/form.njk" import Fieldset, TextField, MultipleChoiceField %}
+{% from "_macros/common.njk" import Pagination %}
 {% from "_macros/address.njk" import addressFormatter %}
 
 {% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
