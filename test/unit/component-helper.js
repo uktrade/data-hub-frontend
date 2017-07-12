@@ -29,14 +29,15 @@ function getMacros (fileName) {
   const filePath = `${MACROS_PATH}${fileName}.${EXT}`
 
   return {
-    render (macroName, props) {
+    render (macroName, props, ...rest) {
       const importString = `{% from "${filePath}" import ${macroName} %}`
-      const macroOutput = nunjucks.renderString(`${importString} {{ ${macroName}(${JSON.stringify(props)}) }}`)
+      const args = rest.length ? `,${[...rest].map(JSON.stringify)}` : ''
+      const macroOutput = nunjucks.renderString(`${importString} {{ ${macroName}(${JSON.stringify(props)}${args}) }}`)
       return normaliseHtml(macroOutput)
     },
 
-    renderToDom (macroName, props) {
-      const macroOutput = this.render(macroName, props)
+    renderToDom (macroName, props, ...rest) {
+      const macroOutput = this.render(macroName, props, ...rest)
       return (new JSDOM(macroOutput)).window.document.body.firstElementChild
     },
   }
