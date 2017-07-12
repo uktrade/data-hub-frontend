@@ -9,14 +9,13 @@
 .c-breadcrumb__item {
   @include core-font(16);
   background: url("../../images/separator.png") left center no-repeat;
-  background-size: contain;
+  background-size: 6px 11px;
   display: inline-block;
   margin: 0 0 0 $default-spacing-unit / 2;
   padding: 0 0 0 $default-spacing-unit;
 
   @include device-pixel-ratio(2) {
     background-image: url("../../images/separator@2x.png");
-    background-size: 6px 11px;
   }
 
   &:first-child {
