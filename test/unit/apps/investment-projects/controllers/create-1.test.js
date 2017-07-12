@@ -25,7 +25,7 @@ describe('Investment start controller', () => {
     this.getInflatedDitCompany = this.sandbox.stub().resolves(ukCompany)
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.searchForeignCompanies = this.sandbox.stub().resolves(searchResults)
-    this.getPagination = this.sandbox.stub().resolves({})
+    this.buildPagination = this.sandbox.stub().returns(null)
     this.breadcrumbStub = function () { return this }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/create-1', {
@@ -39,7 +39,7 @@ describe('Investment start controller', () => {
         searchForeignCompanies: this.searchForeignCompanies,
       },
       '../../../lib/pagination': {
-        getPagination: this.getPagination,
+        buildPagination: this.buildPagination,
       },
     })
   })
@@ -175,7 +175,7 @@ describe('Investment start controller', () => {
             try {
               expect(data.searchTerm).to.equal('samsung')
               expect(data.searchResult).to.deep.equal(searchResults)
-              expect(data.pagination).to.deep.equal({})
+              expect(data.searchResult.pagination).to.be.null
               done()
             } catch (e) {
               done(e)

@@ -1,125 +1,107 @@
-const pagination = require('~/src/lib/pagination')
-const result = {
-  count: 0,
-}
+const { getPageLink, buildPagination } = require('~/src/lib/pagination')
 
 describe('Pagination', () => {
-  describe('Start and end index', () => {
-    it('should show 1..5 when on the first pages of many', () => {
-      const req = {
-        query: {
-          page: '1',
-        },
-      }
+  describe('#getPageLink', () => {
+    const reqMock = { query: { term: 'samsung' } }
 
-      result.count = 1000
-
-      const pages = pagination.getPageIndexes(req, result)
-
-      expect(pages).to.not.have.property('previousPage')
-      expect(pages.nextPage).to.equal(2)
-      expect(pages.startPage).to.equal(1)
-      expect(pages.endPage).to.equal(5)
+    it('should return a query string for query object', () => {
+      expect(getPageLink(1, reqMock)).to.equal('?term=samsung&page=1')
     })
-    it('should show 1..5 when on the second pages of many', () => {
-      const req = {
-        query: {
-          page: '2',
-        },
-      }
+  })
 
-      result.count = 1000
+  describe('#buildPagination', () => {
+    const reqMock = { query: { term: 'samsung' } }
 
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages.previousPage).to.equal(1)
-      expect(pages.nextPage).to.equal(3)
-      expect(pages.startPage).to.equal(1)
-      expect(pages.endPage).to.equal(5)
+    it('should return null if current page is not given', () => {
+      const actual = buildPagination(reqMock, { limit: 10, count: 20 })
+      expect(actual).to.be.null
     })
-    it('should show 3..7 when on the fifth pages of many', () => {
-      const req = {
-        query: {
-          page: '5',
-        },
-      }
 
-      result.count = 1000
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages.previousPage).to.equal(4)
-      expect(pages.nextPage).to.equal(6)
-      expect(pages.startPage).to.equal(3)
-      expect(pages.endPage).to.equal(7)
+    it('should return null if count is not given', () => {
+      const actual = buildPagination(reqMock, { limit: 10 })
+      expect(actual).to.be.null
     })
-    it('should show 10..14 when on pages 13 of 14', () => {
-      const req = {
-        query: {
-          page: '13',
-        },
+
+    it('should return pagination object when all required props a given', () => {
+      const actual = buildPagination(reqMock, { count: 10, limit: 5, page: 1 })
+      const expected = {
+        totalPages: 2,
+        currentPage: 1,
+        prev: null,
+        next: '?term=samsung&page=2',
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+        ],
       }
-
-      result.count = 140
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages.previousPage).to.equal(12)
-      expect(pages.nextPage).to.equal(14)
-      expect(pages.startPage).to.equal(10)
-      expect(pages.endPage).to.equal(14)
+      expect(actual).to.deep.equal(expected)
     })
-    it('should show 1..3 when on the first pages of 25 results', () => {
-      const req = {
-        query: {
-          page: '1',
-        },
+
+    it('should return pagination object with correct current page', () => {
+      const actual = buildPagination(reqMock, { count: 10, limit: 5, page: 2 })
+      const expected = {
+        totalPages: 2,
+        currentPage: 2,
+        prev: '?term=samsung&page=1',
+        next: null,
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+        ],
       }
-
-      result.count = 25
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages).to.not.have.property('previousPage')
-      expect(pages.nextPage).to.equal(2)
-      expect(pages.startPage).to.equal(1)
-      expect(pages.endPage).to.equal(3)
+      expect(actual).to.deep.equal(expected)
     })
-    it('should show 1..3 when on the second pages of 25 results', () => {
-      const req = {
-        query: {
-          page: '2',
-        },
+
+    it('should return pagination object with truncation', () => {
+      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 1 }, 2)
+      const expected = {
+        totalPages: 5,
+        currentPage: 1,
+        prev: null,
+        next: '?term=samsung&page=2',
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: '…' },
+          { label: 5, url: '?term=samsung&page=5' },
+        ],
       }
-
-      result.count = 25
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages.previousPage).to.equal(1)
-      expect(pages.nextPage).to.equal(3)
-      expect(pages.startPage).to.equal(1)
-      expect(pages.endPage).to.equal(3)
+      expect(actual).to.deep.equal(expected)
     })
-    it('should not have a next link when on the last pages', () => {
-      const req = {
-        query: {
-          page: '3',
-        },
+
+    it('should return pagination object without truncation when it’s not needed', () => {
+      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 1 }, 4)
+      const expected = {
+        totalPages: 5,
+        currentPage: 1,
+        prev: null,
+        next: '?term=samsung&page=2',
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: 3, url: '?term=samsung&page=3' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
+        ],
       }
-
-      result.count = 25
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages).to.not.have.property('nextPage')
+      expect(actual).to.deep.equal(expected)
     })
-    it('should show 1..5 when many results and no page number in url', () => {
-      const req = {
-        query: {},
+
+    it('should return pagination object with truncation in right place when current page is changed', () => {
+      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 4 }, 2)
+      const expected = {
+        totalPages: 5,
+        currentPage: 4,
+        prev: '?term=samsung&page=3',
+        next: '?term=samsung&page=5',
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: '…' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
+        ],
       }
-
-      result.count = 1000
-
-      const pages = pagination.getPageIndexes(req, result)
-      expect(pages).to.not.have.property('previousPage')
-      expect(pages.nextPage).to.equal(2)
-      expect(pages.startPage).to.equal(1)
-      expect(pages.endPage).to.equal(5)
+      expect(actual).to.deep.equal(expected)
     })
   })
 })

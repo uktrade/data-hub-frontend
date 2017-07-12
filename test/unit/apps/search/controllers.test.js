@@ -214,6 +214,7 @@ describe('Search Controller', () => {
         const searchPath = 'companies'
         const expectedResults = Object.assign({}, companyResponse, {
           page: 1,
+          pagination: null,
         })
 
         nock(config.apiRoot)
@@ -247,8 +248,6 @@ describe('Search Controller', () => {
                 expect(data.searchEntity).to.equal(entityType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData(0))
                 expect(data.results).to.deep.equal(expectedResults)
-                expect(data.pagination).to.be.a('array')
-                expect(data.pagination.length).to.equal(0)
                 done()
               } catch (e) {
                 done(e)
@@ -267,6 +266,7 @@ describe('Search Controller', () => {
         const searchPath = 'contacts'
         const expectedResults = Object.assign({}, contactResponse, {
           page: 1,
+          pagination: null,
         })
 
         nock(config.apiRoot)
@@ -300,8 +300,6 @@ describe('Search Controller', () => {
                 expect(data.searchEntity).to.equal(entityType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
                 expect(data.results).to.deep.equal(expectedResults)
-                expect(data.pagination).to.be.a('array')
-                expect(data.pagination.length).to.equal(0)
                 done()
               } catch (e) {
                 done(e)
@@ -320,6 +318,7 @@ describe('Search Controller', () => {
         const searchPath = 'investment-projects'
         const expectedResults = Object.assign({}, investmentResponse, {
           page: 1,
+          pagination: null,
         })
 
         nock(config.apiRoot)
@@ -353,8 +352,6 @@ describe('Search Controller', () => {
                 expect(data.searchEntity).to.equal(entityType)
                 expect(data.searchEntityResultsData).to.deep.equal(expectedSearchEntityResultsData())
                 expect(data.results).to.deep.equal(expectedResults)
-                expect(data.pagination).to.be.a('array')
-                expect(data.pagination.length).to.equal(0)
                 done()
               } catch (e) {
                 done(e)

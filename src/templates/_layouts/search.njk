@@ -32,8 +32,6 @@
 
     {% block search_results %}{% endblock %}
 
-    {% component 'pagination', {
-      pages: pagination
-    } %}
+    {{ Pagination(results.pagination) }}
   {% endif %}
 {% endblock %}

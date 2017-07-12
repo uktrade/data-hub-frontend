@@ -1,14 +1,32 @@
-@import "../settings/colours";
-@import "../settings/layout";
-@import "../tools/mixins/typography";
+@import "../settings";
 
-.pagination {
-  margin: $gutter 0;
+.c-pagination {
   text-align: center;
+  line-height: 1;
 }
 
-.pagination__item {
-  @include core-font(20);
-  margin: ($gutter / 8);
-  padding: ($gutter / 8);
+.c-pagination__list {
+  display: inline-block;
+}
+
+.c-pagination__list-item {
+  display: inline-block;
+}
+
+.c-pagination__label {
+  display: inline-block;
+  padding: ($default-spacing-unit / 2) $default-spacing-unit;
+  background-color: $grey-4;
+
+  &.is-current {
+    background-color: $white;
+    color: $text-colour;
+    text-decoration: none;
+  }
+}
+
+.c-pagination__label--truncation {
+  background-color: transparent;
+  padding-right: $default-spacing-unit / 2;
+  padding-left: $default-spacing-unit / 2;
 }

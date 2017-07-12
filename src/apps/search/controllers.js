@@ -3,7 +3,7 @@ const { find } = require('lodash')
 const companyRepository = require('../companies/repos')
 const { buildCompanyUrl } = require('../companies/services/data')
 const { entities, search, buildSearchEntityResultsData } = require('./services')
-const getPagination = require('../../lib/pagination').getPagination
+const { buildPagination } = require('../../lib/pagination')
 
 function searchAction (req, res, next) {
   const searchTerm = req.query.term
@@ -22,7 +22,7 @@ function searchAction (req, res, next) {
     page: req.query.page,
   })
     .then((results) => {
-      const pagination = getPagination(req, results)
+      results.pagination = buildPagination(req, results)
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
       res
@@ -33,7 +33,6 @@ function searchAction (req, res, next) {
           searchPath: entity.path,
           searchEntityResultsData,
           results,
-          pagination,
         })
     })
     .catch(next)
