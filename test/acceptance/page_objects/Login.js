@@ -11,9 +11,10 @@ module.exports = {
       locateStrategy: 'xpath',
     },
     flashMessage: '.flash-message',
-    usernameField: '#username',
-    passwordField: '#password',
-    searchBar: '.c-entity-search',
+    usernameField: '#field-username',
+    passwordField: '#field-password',
+    searchBar: '#field-term',
+    breadcrumbHome: '.c-breadcrumb li:nth-child(1) a',
   },
   commands: [
     {

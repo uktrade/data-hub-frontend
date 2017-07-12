@@ -4,12 +4,12 @@ module.exports = {
     parentCompanySearchTerm: 'Apple Cake',
   },
   elements: {
-    searchField: '#search',
-    searchForm: '.c-entity-search',
+    searchField: '#field-term',
+    searchForm: '.c-entity-search__button',
     searchResults: '.c-entity-list',
-    searchResultsItem: '.c-entity-list__item',
+    searchResultsItem: '.c-entity-list li:first-child span',
     addNewCompanyButton: {
-      selector: '//a[contains(@href, \'/companies/add-step-1/\')]',
+      selector: '//a[contains(@href, "/companies/add-step-1/")]',
       locateStrategy: 'xpath',
     },
     companyAddForm: '#company-add-form',

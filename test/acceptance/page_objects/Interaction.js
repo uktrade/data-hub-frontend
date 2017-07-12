@@ -13,18 +13,18 @@ module.exports = {
     },
     addInteractionButton: '#add-interaction-link',
     businessCardRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(1)',
-    emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(3)',
-    faceToFaceRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(4)',
-    faxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(5)',
-    letterFaxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(6)',
-    serviceDeliveryRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(7)',
-    smsRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(1)',
-    socialMediaRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(2)',
-    telephoneRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(3)',
-    telexRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(4)',
-    uktiWebsiteRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(6)',
+    emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(2)',
+    faceToFaceRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(3)',
+    faxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(4)',
+    letterFaxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(5)',
+    serviceDeliveryRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(6)',
+    smsRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(7)',
+    socialMediaRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(1)',
+    telephoneRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(2)',
+    telexRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(3)',
+    uktiWebsiteRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(4)',
     undefinedRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(5)',
-    videoTeleconfRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(7)',
+    videoTeleconfRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(6)',
     interactionPageTitle: '#main-content h1',
     interactionPageCompanyName: '#company-wrapper strong',
     interactionPageType: '#main-content form div:nth-child(5) strong',
@@ -40,7 +40,7 @@ module.exports = {
     interactionPageServiceOfferList: '#service-wrapper ul li:nth-child(1)',
     interactionPageServiceProvider: '#dit_team-wrapper input',
     interactionPageServiceProviderList: '#dit_team-wrapper ul li:nth-child(1)',
-    subjectFromInteractionTab: '#interaction-list li:nth-child(1) div:nth-child(1) span:nth-child(2)',
+    subjectFromInteractionTab: '#interaction-list li:last-child div:nth-child(1) span:nth-child(2)',
     interactionUnderSearchPage: '#interactions-list li:nth-child(1)',
     pickaEvent: '#event option:nth-child(2)',
     pickaStatus: '#status option:nth-child(2)',
@@ -48,7 +48,7 @@ module.exports = {
     pickaSector: '#sector option:nth-child(2)',
     countryOfInterest: '#country_of_interest-wrapper input',
     countryOfInterestList: '#country_of_interest-wrapper ul li:nth-child(6)',
-    editInteractionButton: '#main-content a:nth-child(3)',
+    editInteractionButton: '#main-content a:nth-child(4)',
   },
   commands: [
     {
@@ -114,54 +114,54 @@ module.exports = {
       },
       getInteractionPageTitle () {
         return this
-        .getText('@interactionPageTitle', (title))
+          .getText('@interactionPageTitle', (title))
       },
       getInteractionPageCompanyName () {
         return this
-        .getText('@interactionPageCompanyName', (companyName))
+          .getText('@interactionPageCompanyName', (companyName))
       },
       getInteractionPageInteractionType () {
         return this
-        .getText('@interactionPageType', (type))
+          .getText('@interactionPageType', (type))
       },
       enterSubject (subject) {
         return this
-        .setValue('@interactionPageSubject', subject)
+          .setValue('@interactionPageSubject', subject)
       },
       enterNotes (notes) {
         return this
-        .setValue('@interactionPageNotes', notes)
+          .setValue('@interactionPageNotes', notes)
       },
       enterCompanyContact (contactName) {
         return this
-        .setValue('@interactionPageCompanyContact', contactName)
-        .click('@interactionPageCompanyContactList')
+          .setValue('@interactionPageCompanyContact', contactName)
+          .click('@interactionPageCompanyContactList')
       },
       enterDateOfInteraction (date) {
         return this
-        .setValue('@interactionPageDateOfInteraction', date)
+          .setValue('@interactionPageDateOfInteraction', date)
       },
       enterMonthOfInteraction (month) {
         return this
-        .setValue('@interactionPageMonthOfInteraction', month)
+          .setValue('@interactionPageMonthOfInteraction', month)
       },
       enterYearOfInteraction (year) {
         return this
-        .setValue('@interactionPageYearOfInteraction', year)
+          .setValue('@interactionPageYearOfInteraction', year)
       },
       enterDITadviser (ditAdviser) {
         return this
-        .setValue('@interactionPageDITadviser', ditAdviser)
+          .setValue('@interactionPageDITadviser', ditAdviser)
       },
       enterServiceOffer (serviceAdviser) {
         return this
-        .setValue('@interactionPageServiceOffer', serviceAdviser)
-        .click('@interactionPageServiceOfferList')
+          .setValue('@interactionPageServiceOffer', serviceAdviser)
+          .click('@interactionPageServiceOfferList')
       },
       enterServiceProvider (serviceProvider) {
         return this
-        .setValue('@interactionPageServiceProvider', serviceProvider)
-        .click('@interactionPageServiceProviderList')
+          .setValue('@interactionPageServiceProvider', serviceProvider)
+          .click('@interactionPageServiceProviderList')
       },
       navigateToInteractionsPage () {
         return this
@@ -175,15 +175,15 @@ module.exports = {
           .enterCompanyContact('a')
           .enterServiceOffer('a')
           .enterServiceProvider('a')
-        .submitForm('form')
+          .submitForm('form')
       },
       selectEvent () {
         return this
-        .click('@pickaEvent')
+          .click('@pickaEvent')
       },
       selectStatus () {
         return this
-        .click('@pickaStatus')
+          .click('@pickaStatus')
       },
       selectUKRegion () {
         return this
@@ -210,7 +210,7 @@ module.exports = {
           .selectUKRegion()
           .selectSector()
           .selectCountryOfInterest()
-        .submitForm('form')
+          .submitForm('form')
       },
     },
   ],
