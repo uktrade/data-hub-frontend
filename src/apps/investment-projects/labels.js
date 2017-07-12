@@ -16,7 +16,7 @@ const labels = {
       foreign_equity_investment: 'Foreign equity investment',
       government_assistance: 'Government assistance',
       number_new_jobs: 'New jobs',
-      average_salary: 'Average salary',
+      average_salary: 'Average salary of new jobs',
       number_safeguarded_jobs: 'Safeguarded jobs',
       r_and_d_budget: 'R&D budget',
       non_fdi_r_and_d_budget: 'Non-FDI R&D project',
