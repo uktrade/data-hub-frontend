@@ -1,8 +1,4 @@
-{% extends "_layouts/datahub-base.njk" %}
-
-{% block body_main_header_content %}
-  <h1 class="heading-xlarge">{{ title }}</h1>
-{% endblock %}
+{% extends "./_layout.njk" %}
 
 {% block body_main_content %}
   <ul>
@@ -18,6 +14,9 @@
     </li>
     <li>
       <a href="components/breadcrumbs">Breadcrumbs</a>
+    </li>
+    <li>
+      <a href="components/pagination">Pagination</a>
     </li>
   </ul>
 {% endblock %}
