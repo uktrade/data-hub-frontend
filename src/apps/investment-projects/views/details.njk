@@ -19,6 +19,17 @@
   {% component 'key-value-table', items=details, variant='striped' %}
   {{ renderButton('details', 'Edit summary', true) }}
 
+  <h2 class="heading-medium">Requirements and location</h2>
+  {% if requirements | removeNilAndEmpty | length %}
+    {% component 'key-value-table', items=requirements, variant='striped' %}
+    {{ renderButton('requirements', 'Edit requirements', true) }}
+  {% else %}
+    <p class="infostrip">
+      Please complete this section to move to Assign PM stage
+    </p>
+    {{ renderButton('requirements', 'Add requirements') }}
+  {% endif %}
+
   <h2 class="heading-medium">Value</h2>
   {% if values | length %}
     {% component 'key-value-table', items=values, variant='striped' %}
@@ -42,14 +53,4 @@
   } %}
 {% endif %}
 
-  <h2 class="heading-medium">Requirements and location</h2>
-  {% if requirements | removeNilAndEmpty | length %}
-    {% component 'key-value-table', items=requirements, variant='striped' %}
-    {{ renderButton('requirements', 'Edit requirements', true) }}
-  {% else %}
-    <p class="infostrip">
-      Please complete this section to move to Assign PM stage
-    </p>
-    {{ renderButton('requirements', 'Add requirements') }}
-  {% endif %}
 {% endblock %}
