@@ -1,9 +1,11 @@
 {% extends "_layouts/datahub-base.njk" %}
 
-{% block body_main_content %}
-  <h1 class="heading-medium error">{{ statusCode }}</h1>
+{% block body_main_header_content %}
+  <h1 class="heading-large">{{ statusCode }}</h1>
   <p>{{ statusMessage }}</p>
+{% endblock %}
 
+{% block body_main_content %}
   {% if devErrorDetail %}
     <dl class="stack-trace">
       <dt class="stack-trace__heading">{{ devErrorDetail.message }}</dt>
