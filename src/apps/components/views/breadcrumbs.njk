@@ -1,16 +1,18 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  {% component 'breadcrumbs', {
-    items: [{
-      url: '/',
-      name: 'Home'
-    }, {
-      url: '/second-level',
-      name: 'Second level'
-    }, {
-      url: '/second-level/third-level',
-      name: 'Third level'
-    }]
-  } %}
+  {% call Example() %}
+    {% component 'breadcrumbs', {
+      items: [{
+        url: '/',
+        name: 'Home'
+      }, {
+        url: '/second-level',
+        name: 'Second level'
+      }, {
+        url: '/second-level/third-level',
+        name: 'Third level'
+      }]
+    } %}
+  {% endcall %}
 {% endblock %}

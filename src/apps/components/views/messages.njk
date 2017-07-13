@@ -1,12 +1,14 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  {% component 'messages', {
-    messages: {
-      info: ['An information message'],
-      success: ['A success message'],
-      warning: ['A warning message'],
-      error: ['An error message']
-    }
-  } %}
+  {% call Example() %}
+    {% component 'messages', {
+      messages: {
+        info: ['An information message'],
+        success: ['A success message'],
+        warning: ['A warning message'],
+        error: ['An error message']
+      }
+    } %}
+  {% endcall %}
 {% endblock %}

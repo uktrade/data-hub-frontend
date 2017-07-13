@@ -1,0 +1,12 @@
+{% macro Example(title) %}
+  <article class="example" {% if title %}id="{{ title | urlencode }}"{% endif %}>
+    <header class="example__header">
+      {% if title %}
+        <h3 class="example__title">{{ title }}</h3>
+      {% endif %}
+    </header>
+    <div class="example__preview">
+      {{ caller() }}
+    </div>
+  </article>
+{% endmacro %}
