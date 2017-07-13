@@ -1,6 +1,6 @@
 {% extends "./_layout.njk" %}
 
-{% set phase = investmentData.phase.name %}
+{% set stage = investmentData.stage.name %}
 {% set crm = investmentData.client_relationship_manager %}
 {% set rsa = investmentData.referral_source_adviser %}
 
@@ -24,9 +24,9 @@
 
   <h2 class="heading-medium">Project management</h2>
 
-  {% if phase == 'Prospect' %}
+  {% if stage == 'Prospect' %}
     <p class="infostrip">Will be assigned during "Assign PM" stage.</p>
-  {% elif phase == 'Assign PM' %}
+  {% elif stage == 'Assign PM' %}
     <p class="infostrip">Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.</p>
 
     <p><a href="" class="button">Assign</a></p>

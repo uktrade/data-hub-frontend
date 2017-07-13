@@ -35,7 +35,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
     res.locals.investmentStatus = {
       id: investmentData.id,
       projectCode: investmentData.project_code,
-      phaseName: investmentData.phase.name,
+      stageName: investmentData.stage.name,
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
     }
 

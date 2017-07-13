@@ -1,7 +1,7 @@
 {##
  # @param {string} projectCode Project code
  #
- # @param {string} [phaseName] Name of project phase
+ # @param {string} [stageName] Name of project stage
  # @param {string} [valuation] Valuation status
  #
  # @return {string} HTML for project status
@@ -9,7 +9,7 @@
  # @example
  #   {% component 'investment-status', {
  #     projectCode: 'DHP-0000001
- #     phaseName: 'Prospect'
+ #     stageName: 'Prospect'
  #   } %}
  #}
 
@@ -21,12 +21,12 @@
         {{ projectCode }}
       </dd>
     </dl>
-    {% if phaseName or valuation %}
+    {% if stageName or valuation %}
       <dl class="status-bar__section column-one-quarter">
-        {% if phaseName %}
-          <dt>Phase</dt>
+        {% if stageName %}
+          <dt>Stage</dt>
           <dd class="status-bar__section-title">
-            {{ phaseName }} stage
+            {{ stageName }} stage
           </dd>
         {% endif %}
         {% if valuation %}

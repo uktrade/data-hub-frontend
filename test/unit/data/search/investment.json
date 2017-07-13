@@ -26,7 +26,7 @@
           "id": "031269ab-b7ec-40e9-8a4e-7371404f0622",
           "name": "Commitment to invest"
       },
-      "phase": {
+      "stage": {
           "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
           "name": "Prospect"
       },
@@ -109,7 +109,7 @@
           "id": "031269ab-b7ec-40e9-8a4e-7371404f0622",
           "name": "Commitment to invest"
       },
-      "phase": {
+      "stage": {
           "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
           "name": "Prospect"
       },

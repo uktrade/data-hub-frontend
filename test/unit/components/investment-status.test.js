@@ -7,7 +7,7 @@ describe('Investment status component', () => {
       {
         id: 'project id',
         name: 'Project name',
-        phaseName: 'Initial',
+        stageName: 'Initial',
       }
     )
 
@@ -21,7 +21,7 @@ describe('Investment status component', () => {
         id: 'project id',
         name: 'Project name',
         projectCode: 'PROJECT-CODE',
-        phaseName: 'Initial',
+        stageName: 'Initial',
       }
     )
 
@@ -31,7 +31,7 @@ describe('Investment status component', () => {
     expect(sectionTitles[1].textContent).to.contain('Initial stage')
   })
 
-  it('should render one section title when phaseName is not given', () => {
+  it('should render one section title when stageName is not given', () => {
     const component = renderComponentToDom(
       'investment-status',
       {
