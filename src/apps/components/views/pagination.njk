@@ -1,0 +1,49 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  <h3 class="heading-medium">Standard</h3>
+  {{
+    Pagination({
+      totalPages: 2,
+      currentPage: 1,
+      prev: null,
+      next: '?term=samsung&page=2',
+      pages: [
+        { label: 1, url: '?term=samsung&page=1' },
+        { label: 2, url: '?term=samsung&page=2' }
+      ]
+    })
+  }}
+
+  <h3 class="heading-medium">Showing truncation</h3>
+  {{
+    Pagination({
+      totalPages: 5,
+      currentPage: 1,
+      prev: null,
+      next: '?term=samsung&page=2',
+      pages: [
+        { label: 1, url: '?term=samsung&page=1' },
+        { label: 2, url: '?term=samsung&page=2' },
+        { label: '…' },
+        { label: 5, url: '?term=samsung&page=5' }
+      ]
+    })
+  }}
+
+  <h3 class="heading-medium">Pageless</h3>
+  {{
+    Pagination({
+      totalPages: 5,
+      currentPage: 4,
+      prev: '?term=samsung&page=3',
+      next: '?term=samsung&page=5',
+      pages: [
+        { label: 1, url: '?term=samsung&page=1' },
+        { label: '…' },
+        { label: 4, url: '?term=samsung&page=4' },
+        { label: 5, url: '?term=samsung&page=5' }
+      ]
+    }, showPages=false)
+  }}
+{% endblock %}

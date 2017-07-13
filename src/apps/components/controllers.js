@@ -57,7 +57,9 @@ function renderBreadcrumbs (req, res) {
 }
 
 function renderPagination (req, res) {
-  return res.render('components/views/pagination')
+  return res
+    .breadcrumb('Pagination')
+    .render('components/views/pagination')
 }
 
 async function renderEntityList (req, res) {
