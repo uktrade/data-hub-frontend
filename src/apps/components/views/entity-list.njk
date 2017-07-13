@@ -1,110 +1,108 @@
-{% extends "_layouts/datahub-base.njk" %}
+{% extends "./_layout.njk" %}
 
 {% from "_macros/address.njk" import addressFormatter %}
 
-{% block body_main_header_content %}
-  <h1 class="heading-xlarge">Entity list</h1>
-{% endblock %}
-
 {% block body_main_content %}
-  <h2 class="heading-medium">Investments</h2>
+  {% call Example('Investment projects') %}
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <ul class="c-entity-list">
+          {% for project in investmentProjects.results %}
+            <li class="c-entity-list__item">
+              <h3 class="c-entity-list__item-header">
+                <a href="/investment-projects/{{ project.id }}">{{ project.name}}</a>
+              </h3>
+              <dl class="metadata-list">
+                <dt class="metadata-list__term">Land date</dt>
+                <dd class="metadata-list__value">{{ project.estimated_land_date | formatDate('MMM YYYY') }}</dd>
 
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <ul class="c-entity-list">
-        {% for project in investmentProjects.results %}
-          <li class="c-entity-list__item">
-            <h3 class="c-entity-list__item-header">
-              <a href="/investment-projects/{{ project.id }}">{{ project.name}}</a>
-            </h3>
-            <dl class="metadata-list">
-              <dt class="metadata-list__term">Land date</dt>
-              <dd class="metadata-list__value">{{ project.estimated_land_date | formatDate('MMM YYYY') }}</dd>
+                <dt class="metadata-list__term u-visually-hidden">Type of investment</dt>
+                <dd class="metadata-list__value">{{ project.investment_type.name }}</dd>
 
-              <dt class="metadata-list__term u-visually-hidden">Type of investment</dt>
-              <dd class="metadata-list__value">{{ project.investment_type.name }}</dd>
+                <dt class="metadata-list__term u-visually-hidden">Phase</dt>
+                <dd class="metadata-list__value">{{ project.phase.name }}</dd>
 
-              <dt class="metadata-list__term u-visually-hidden">Phase</dt>
-              <dd class="metadata-list__value">{{ project.phase.name }}</dd>
-
-              <dt class="metadata-list__term u-visually-hidden">Sector</dt>
-              <dd class="metadata-list__value">{{ project.sector.name }}</dd>
-            </dl>
-          </li>
-        {% endfor %}
-      </ul>
+                <dt class="metadata-list__term u-visually-hidden">Sector</dt>
+                <dd class="metadata-list__value">{{ project.sector.name }}</dd>
+              </dl>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </div>
+  {% endcall %}
 
-  <h2 class="heading-medium">Companies</h2>
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <ul class="c-entity-list">
-        {% for company in companiesSearch.companies %}
-          <li class="c-entity-list__item">
-            <h3 class="c-entity-list__item-header">
-              <a href="/viewcompanyresult/{{ company.id }}">{{ company.name}}</a>
-            </h3>
+  {% call Example('Companies') %}
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <ul class="c-entity-list">
+          {% for company in companiesSearch.companies %}
+            <li class="c-entity-list__item">
+              <h3 class="c-entity-list__item-header">
+                <a href="/viewcompanyresult/{{ company.id }}">{{ company.name}}</a>
+              </h3>
 
-            <dl class="metadata-list">
-              {% if company.companies_house_data %}
-                <dt class="metadata-list__term u-visually-hidden">Companies House Number</dt>
-                <dd class="metadata-list__value">{{ company.companies_house_data.company_number }}</dd>
-              {% endif %}
+              <dl class="metadata-list">
+                {% if company.companies_house_data %}
+                  <dt class="metadata-list__term u-visually-hidden">Companies House Number</dt>
+                  <dd class="metadata-list__value">{{ company.companies_house_data.company_number }}</dd>
+                {% endif %}
 
-              <dt class="metadata-list__term u-visually-hidden">Address</dt>
-              <dd class="metadata-list__value">
-                {{ addressFormatter( [
-                  company.registered_address_1,
-                  company.registered_address_2,
-                  company.registered_address_county,
-                  company.registered_address_town,
-                  company.registered_address_postcode
-                ]) }}
-              </dd>
-            </dl>
-          </li>
-        {% endfor %}
-      </ul>
+                <dt class="metadata-list__term u-visually-hidden">Address</dt>
+                <dd class="metadata-list__value">
+                  {{ addressFormatter( [
+                    company.registered_address_1,
+                    company.registered_address_2,
+                    company.registered_address_county,
+                    company.registered_address_town,
+                    company.registered_address_postcode
+                  ]) }}
+                </dd>
+              </dl>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </div>
+  {% endcall %}
 
-  <h2 class="heading-medium">Contacts</h2>
-  <div class="grid-row">
-    <div class="column-two-thirds">
-      <ul class="c-entity-list">
-        {% for contact in contactsSearch.contacts %}
-          <li class="c-entity-list__item">
-            <h3 class="c-entity-list__item-header">
-              <a href="/contacts/{{ contact.id }}">
-                {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
-              </a>
-            </h3>
+  {% call Example('Contacts') %}
+    <div class="grid-row">
+      <div class="column-two-thirds">
+        <ul class="c-entity-list">
+          {% for contact in contactsSearch.contacts %}
+            <li class="c-entity-list__item">
+              <h3 class="c-entity-list__item-header">
+                <a href="/contacts/{{ contact.id }}">
+                  {{ (contact.first_name + ' ' + contact.last_name) | highlight(searchTerm) }}
+                </a>
+              </h3>
 
-            <dl class="metadata-list">
-              {% if (contact.company) %}
-                <dt class="metadata-list__term u-visually-hidden">Company</dt>
-                <dd class="metadata-list__value">{{ contact.company.name }}</dd>
-              {% endif %}
-              {% if results.job_title %}
-                <dt class="metadata-list__term u-visually-hidden">Job Title</dt>
-                <dd class="metadata-list__value">{{ results.job_title }}</dd>
-              {% endif %}
+              <dl class="metadata-list">
+                {% if (contact.company) %}
+                  <dt class="metadata-list__term u-visually-hidden">Company</dt>
+                  <dd class="metadata-list__value">{{ contact.company.name }}</dd>
+                {% endif %}
+                {% if results.job_title %}
+                  <dt class="metadata-list__term u-visually-hidden">Job Title</dt>
+                  <dd class="metadata-list__value">{{ results.job_title }}</dd>
+                {% endif %}
 
-              <dt class="metadata-list__term u-visually-hidden">Address</dt>
-              <dd class="metadata-list__value">
-                {{ addressFormatter([
-                  contact.registered_address_1,
-                  contact.registered_address_2,
-                  contact.registered_address_county,
-                  contact.registered_address_town,
-                  contact.registered_address_postcode
-                ]) }}
-            </dl>
-          </li>
-        {% endfor %}
-      </ul>
+                <dt class="metadata-list__term u-visually-hidden">Address</dt>
+                <dd class="metadata-list__value">
+                  {{ addressFormatter([
+                    contact.registered_address_1,
+                    contact.registered_address_2,
+                    contact.registered_address_county,
+                    contact.registered_address_town,
+                    contact.registered_address_postcode
+                  ]) }}
+              </dl>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
-  </div>
+  {% endcall %}
 
 {% endblock %}

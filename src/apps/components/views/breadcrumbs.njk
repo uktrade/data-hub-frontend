@@ -1,22 +1,18 @@
-{% extends "_layouts/datahub-base.njk" %}
-
-{% block body_main_header_content %}
-  <h1 class="heading-xlarge">{{ title }}</h1>
-{% endblock %}
+{% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-
-  {% component 'breadcrumbs', {
-    items: [{
-      url: '/',
-      name: 'Home'
-    }, {
-      url: '/second-level',
-      name: 'Second level'
-    }, {
-      url: '/second-level/third-level',
-      name: 'Third level'
-    }]
-  } %}
-
+  {% call Example() %}
+    {% component 'breadcrumbs', {
+      items: [{
+        url: '/',
+        name: 'Home'
+      }, {
+        url: '/second-level',
+        name: 'Second level'
+      }, {
+        url: '/second-level/third-level',
+        name: 'Third level'
+      }]
+    } %}
+  {% endcall %}
 {% endblock %}

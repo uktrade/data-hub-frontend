@@ -7,6 +7,7 @@ const {
   renderIndex,
   renderMessages,
   renderBreadcrumbs,
+  renderPagination,
 } = require('./controllers')
 
 router
@@ -14,6 +15,7 @@ router
   .get('/breadcrumbs', renderBreadcrumbs)
   .get('/messages', renderMessages)
   .get('/entity-list', renderEntityList)
+  .get('/pagination', renderPagination)
   .get('/form', handleEntitySearch, renderFormElements)
   .post('/form', handleFormPost, renderFormElements)
 

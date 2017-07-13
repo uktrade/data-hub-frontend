@@ -1,156 +1,157 @@
-{% extends "_layouts/datahub-base.njk" %}
-
-{% block body_main_header_content %}
-  <h1 class="heading-xlarge">{{ title }}</h1>
-{% endblock %}
+{% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  <h2 class="page-heading">Search</h2>
+  <h2 class="page-heading">Entity search</h2>
 
-  <h3 class="heading-small">Simple</h3>
-  {{ EntitySearchForm({
-    inputName: 'term',
-    inputLabel: 'Search for a company name or contact',
-    searchTerm: entitySearch.searchTerm
-  }) }}
+  {% call Example('Simple') %}
+    {{ EntitySearchForm({
+      inputName: 'term',
+      inputLabel: 'Search for a company name or contact',
+      searchTerm: entitySearch.searchTerm
+    }) }}
+  {% endcall %}
 
-  <h3 class="heading-small">Global</h3>
-  {{ EntitySearchForm({
-    inputName: 'term',
-    modifier: 'global',
-    inputLabel: 'Search for a company name or contact',
-    searchTerm: entitySearch.searchTerm,
-    aggregations: entitySearch.searchEntityResultsData
-  }) }}
+  {% call Example('Global') %}
+    {{ EntitySearchForm({
+      inputName: 'term',
+      modifier: 'global',
+      inputLabel: 'Search for a company name or contact',
+      searchTerm: entitySearch.searchTerm,
+      aggregations: entitySearch.searchEntityResultsData
+    }) }}
+  {% endcall %}
 
   <h2 class="page-heading">Standard</h2>
-  {% call Form(form) %}
-    {{ TextField({
-      name: 'name',
-      label: 'Company name',
-      placeholder: 'e.g. Hooli',
-      error: form.errors.messages.name,
-      value: form.state.name
-    }) }}
+  {% call Example() %}
+    {% call Form(form) %}
+      {{ TextField({
+        name: 'name',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name
+      }) }}
 
-    {{ TextField({
-      name: 'description',
-      label: 'Describe yourself',
-      placeholder: 'Lorem ipsum',
-      type: 'textarea',
-      hint: 'A few words about yourself',
-      optional: true,
-      error: form.errors.messages.description,
-      value: form.state.description
-    }) }}
+      {{ TextField({
+        name: 'description',
+        label: 'Describe yourself',
+        placeholder: 'Lorem ipsum',
+        type: 'textarea',
+        hint: 'A few words about yourself',
+        optional: true,
+        error: form.errors.messages.description,
+        value: form.state.description
+      }) }}
 
-    {{ MultipleChoiceField({
-      name: 'country',
-      label: 'Country',
-      error: form.errors.messages.country,
-      options: form.options.countries,
-      selected: form.state.country
-    }) }}
-
-  {{ MultipleChoiceField({
-      name: 'sectors',
-      label: 'Sectors',
-      options: form.options.sectors,
-      selected: form.state.sectors,
-      initialOption: '-- Select sector --'
-    })
-  }}
+      {{ MultipleChoiceField({
+        name: 'country',
+        label: 'Country',
+        error: form.errors.messages.country,
+        options: form.options.countries,
+        selected: form.state.country
+      }) }}
 
     {{ MultipleChoiceField({
-        type: 'checkbox',
-        name: 'strategicDrivers',
-        label: 'Strategic drivers',
-        options: form.options.strategicDrivers,
-        selected: form.state.strategicDrivers
+        name: 'sectors',
+        label: 'Sectors',
+        options: form.options.sectors,
+        selected: form.state.sectors,
+        initialOption: '-- Select sector --'
       })
     }}
 
-    {{ MultipleChoiceField({
-        type: 'radio',
-        name: 'averageSalary',
-        label: 'Average salary range',
-        options: form.options.averageSalaryRange,
-        error: form.errors.messages.averageSalary,
-        selected: form.state.averageSalary
-      })
-    }}
+      {{ MultipleChoiceField({
+          type: 'checkbox',
+          name: 'strategicDrivers',
+          label: 'Strategic drivers',
+          options: form.options.strategicDrivers,
+          selected: form.state.strategicDrivers
+        })
+      }}
 
-    {% call Fieldset({
-      legend: 'A conditional set of fields',
-      modifier: 'subfield',
-      condition: {
-        name: 'averageSalary',
-        value: '2943bf3d-32dd-43be-8ad4-969b006dee7b'
-      }
-    }) %}
-      {{ TextField({
-        name: 'firstName',
-        label: 'First name',
-        value: form.state.firstName
-      }) }}
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'averageSalary',
+          label: 'Average salary range',
+          options: form.options.averageSalaryRange,
+          error: form.errors.messages.averageSalary,
+          selected: form.state.averageSalary
+        })
+      }}
 
-      {{ TextField({
-        name: 'lastName',
-        label: 'Last name',
-        value: form.state.lastName
-      }) }}
-    {% endcall %}
+      {% call Fieldset({
+        legend: 'A conditional set of fields',
+        modifier: 'subfield',
+        condition: {
+          name: 'averageSalary',
+          value: '2943bf3d-32dd-43be-8ad4-969b006dee7b'
+        }
+      }) %}
+        {{ TextField({
+          name: 'firstName',
+          label: 'First name',
+          value: form.state.firstName
+        }) }}
 
-    {{ MultipleChoiceField({
-        type: 'radio',
-        name: 'businessType',
-        label: 'Company type',
-        selected: form.state.businessType,
-        error: form.errors.messages.businessType,
-        options: [
-          {
-            value: 'ltd',
-            label: 'UK private or public limited company',
-            hint: 'Must be a company registered with Companies House'
-          }, {
-            value: 'ukother',
-            label: 'Other type of UK organisation',
-            hint: 'UK organisation not registered with Companies House',
-            children:  [
-              MultipleChoiceField({
-                name: 'foreignOtherCompany',
-                label: 'Type of organisation',
-                error: form.errors.messages.foreignOtherCompany,
-                selected: form.state.foreignOtherCompany,
-                options: form.options.foreignOtherCompany,
-                initialOption: '-- Select company --',
-                condition: {
-                  name: 'businessType',
-                  value: 'ukother'
-                },
-                modifier: 'subfield'
-              })
-            ]
-          }, {
-            value: 'foreign',
-            label: 'Foreign organisation'
-          }
-        ]
-      })
-    }}
+        {{ TextField({
+          name: 'lastName',
+          label: 'Last name',
+          value: form.state.lastName
+        }) }}
+      {% endcall %}
 
-    {% call Fieldset({ legend: 'A set of fields' }) %}
-      {{ TextField({
-        name: 'firstName',
-        label: 'First name',
-        value: form.state.firstName
-      }) }}
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'businessType',
+          label: 'Company type',
+          selected: form.state.businessType,
+          error: form.errors.messages.businessType,
+          options: [
+            {
+              value: 'ltd',
+              label: 'UK private or public limited company',
+              hint: 'Must be a company registered with Companies House'
+            }, {
+              value: 'ukother',
+              label: 'Other type of UK organisation',
+              hint: 'UK organisation not registered with Companies House',
+              children:  [
+                MultipleChoiceField({
+                  name: 'foreignOtherCompany',
+                  label: 'Type of organisation',
+                  error: form.errors.messages.foreignOtherCompany,
+                  selected: form.state.foreignOtherCompany,
+                  options: form.options.foreignOtherCompany,
+                  initialOption: '-- Select company --',
+                  condition: {
+                    name: 'businessType',
+                    value: 'ukother'
+                  },
+                  modifier: 'subfield'
+                })
+              ]
+            }, {
+              value: 'foreign',
+              label: 'Foreign organisation'
+            }
+          ]
+        })
+      }}
 
-      {{ TextField({
-        name: 'lastName',
-        label: 'Last name',
-        value: form.state.lastName
-      }) }}
+      {% call Fieldset({ legend: 'A set of fields' }) %}
+        {{ TextField({
+          name: 'firstName',
+          label: 'First name',
+          value: form.state.firstName
+        }) }}
+
+        {{ TextField({
+          name: 'lastName',
+          label: 'Last name',
+          value: form.state.lastName
+        }) }}
+      {% endcall %}
+
     {% endcall %}
 
   {% endcall %}

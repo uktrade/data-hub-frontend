@@ -27,9 +27,8 @@ const foreignOtherCompanyOptions = [
 
 function renderFormElements (req, res) {
   return res
-    .breadcrumb('Form')
+    .breadcrumb('Form elements')
     .render('components/views/form', {
-      title: 'Form Elements',
       entitySearch: Object.assign({}, res.locals.entitySearch, {
         searchTerm: req.query.term,
       }),
@@ -48,23 +47,29 @@ function renderFormElements (req, res) {
 function renderMessages (req, res) {
   return res
     .breadcrumb('Application messages')
-    .render('components/views/messages', {
-      title: 'Application messages',
-    })
+    .render('components/views/messages')
 }
 
 function renderBreadcrumbs (req, res) {
-  return res.render('components/views/breadcrumbs', {
-    title: 'Breadcrumbs',
-  })
+  return res
+    .breadcrumb('Breadcrumbs')
+    .render('components/views/breadcrumbs')
+}
+
+function renderPagination (req, res) {
+  return res
+    .breadcrumb('Pagination')
+    .render('components/views/pagination')
 }
 
 async function renderEntityList (req, res) {
-  return res.render('components/views/entity-list', {
-    investmentProjects: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`),
-    companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),
-    contactsSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`),
-  })
+  return res
+    .breadcrumb('Entity list')
+    .render('components/views/entity-list', {
+      investmentProjects: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`),
+      companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),
+      contactsSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`),
+    })
 }
 
 module.exports = {
@@ -73,4 +78,5 @@ module.exports = {
   renderIndex,
   renderMessages,
   renderBreadcrumbs,
+  renderPagination,
 }
