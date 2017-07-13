@@ -69,7 +69,7 @@ module.exports = {
     {
       findCompany (name) {
         return this
-          .setValue('#search', name)
+          .setValue('@searchField', name)
           .submitForm('@searchForm')
       },
 
