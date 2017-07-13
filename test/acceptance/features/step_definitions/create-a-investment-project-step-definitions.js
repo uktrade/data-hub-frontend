@@ -219,4 +219,18 @@ defineSupportCode(({ Given, Then, When }) => {
         Investment.assert.equal(result.value, projectName)
       })
   })
+
+  When(/^I search for my newly created Investment project$/, async () => {
+    await Company
+      .navigate()
+      .findCompany(projectName)
+  })
+
+  Then(/^I verify it is displayed in the search results$/, async () => {
+    await Investment
+      .clickOnInvestmentProjectsTabUnderSearch()
+      .getText('@projectNameFromCompanyProfile', (result) => {
+        Investment.assert.equal(result.value, projectName)
+      })
+  })
 })

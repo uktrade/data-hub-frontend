@@ -77,11 +77,11 @@ module.exports = {
     projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
     projectNameFromSummaryPage: '.page-heading',
     projectSummaryTitle: {
-      selector: ".//*[@id='main-content']/div[2]/article/h2[1]",
+      selector: ".//*[@id='main-content']/div/article/h2[1]",
       locateStrategy: 'xpath',
     },
     projectTeamTab: {
-      selector: "//a[contains(@href, '/team')]",
+      selector: "//a[contains(@href, 'team')]",
       locateStrategy: 'xpath',
     },
     clientRelationsshipManagementAdviserName: {
@@ -96,9 +96,13 @@ module.exports = {
       selector: '//article/table[1]/tbody/tr[2]/td',
       locateStrategy: 'xpath',
     },
-    sourceCompanySearch: '#search-q',
+    sourceCompanySearch: '#field-q',
     firstCompanyFromList: {
       selector: ".//*[@id='main-content']/div/article/ol/li[1]//h3",
+      locateStrategy: 'xpath',
+    },
+    investmentprojecttab: {
+      selector: "//a[contains(@href, 'investment-projects')]",
       locateStrategy: 'xpath',
     },
   },
@@ -230,6 +234,10 @@ module.exports = {
       submitTheForm () {
         return this
         .submitForm('form')
+      },
+      clickOnInvestmentProjectsTabUnderSearch () {
+        return this
+        .click('@investmentprojecttab')
       },
 
       createNewInvestmentProject (projectName) {

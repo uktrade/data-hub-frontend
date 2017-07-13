@@ -79,3 +79,29 @@ Feature: Create a new Investment project
     Then I see the Investment project creation confirmation message
     And I verify my newly created foreign equity Investment project in company profile
     And I logout of Data Hub website
+
+  @search-FDItype-investment
+  Scenario: Search for newly created FDI Investment project
+
+    Given I am an authenticated user on Data Hub website
+    When I create a new Investment project with FDI as Investment type
+    Then I see the Investment project creation confirmation message
+    When I search for my newly created Investment project
+    Then I verify it is displayed in the search results
+
+  @search-nonFDItype-investment
+  Scenario: Search for newly created Non-FDI Investment project
+
+    Given I am an authenticated user on Data Hub website
+    When I create a new Investment project with Non-FDI as Investment type
+    Then I see the Investment project creation confirmation message
+    When I search for my newly created Investment project
+    Then I verify it is displayed in the search results
+
+  @search-commitment-to-invest-type-investment
+  Scenario: Search for newly created commitment to invest type Investment project
+
+    Given I am an authenticated user on Data Hub website
+    When I create a new Investment project as a source of foreign equity investment
+    And I search for my newly created Investment project
+    Then I verify it is displayed in the search results

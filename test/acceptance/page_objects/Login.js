@@ -29,6 +29,15 @@ module.exports = {
           .submitForm('@form')
           .waitForElementVisible('@searchBar', 1000)
       },
+
+      authenticate () {
+        this.api.element('css selector', '#field-username', (result) => {
+          if (result.value.ELEMENT) {
+            return this.logIn()
+          }
+          return this.waitForElementVisible('@searchBar', 1000)
+        })
+      },
     },
   ],
 }

@@ -23,29 +23,20 @@ module.exports = {
     },
     addContactButton: '#add-contact-link',
     noContactWarning: '#no-contact-warning',
-    contactFirstname: '#first_name',
-    contactLastname: '#last_name',
-    contactJobTitle: '#job_title',
-    contactPrimaryContactYes: {
-      selector: ".//*[@id='primary-wrapper']/label[1]/input",
-      locateStrategy: 'xpath',
-    },
-    contactPrimaryContactNo: {
-      selector: ".//*[@id='primary-wrapper']/label[2]/input",
-      locateStrategy: 'xpath',
-    },
-    contactTelephoneCountryCode: '#telephone_countrycode',
-    contactTelephoneNumber: '#telephone_number',
-    contactEmailAddress: '#email',
-    contactSameAddressYes: '#address-same-radio',
-    contactSameAddressNo: {
-      selector: ".//*[@id='address_same_as_company-wrapper']/label[2]",
-      locateStrategy: 'xpath',
-    },
-    contactCountry: '#address_country',
-    contactAlternatePhonenumber: '#telephone_alternative',
-    contactAlternativeEmail: '#email_alternative',
-    contactNotes: '#notes',
+    contactFirstname: '#field-first_name',
+    contactLastname: '#field-last_name',
+    contactJobTitle: '#field-job_title',
+    contactPrimaryContactYes: '#field-primary-1',
+    contactPrimaryContactNo: '#field-primary-2',
+    contactTelephoneCountryCode: '#field-telephone_countrycode',
+    contactTelephoneNumber: '#field-telephone_number',
+    contactEmailAddress: '#field-email',
+    contactSameAddressYes: '#field-address_same_as_company-1',
+    contactSameAddressNo: '#field-address_same_as_company-2',
+    contactCountry: '#field-address_country',
+    contactAlternatePhonenumber: '#field-telephone_alternative',
+    contactAlternativeEmail: '#field-email_alternative',
+    contactNotes: '#field-notes',
     contactCancelButton: {
       selector: '//a[contains(@class, "button-cancel")]',
       locateStrategy: 'xpath',
@@ -100,6 +91,7 @@ module.exports = {
           .setValue('@contactTelephoneCountryCode', faker.random.number())
           .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
           .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
+          .click('@contactSameAddressYes')
           .setValue('@contactAlternatePhonenumber', '666555444')
           .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
           .setValue('@contactNotes', `${faker.name.jobDescriptor() + firstName}`)
@@ -116,6 +108,7 @@ module.exports = {
           .setValue('@contactTelephoneCountryCode', faker.random.number())
           .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
           .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
+          .click('@contactSameAddressYes')
           .setValue('@contactAlternatePhonenumber', '666555444')
           .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
           .setValue('@contactNotes', `${faker.name.jobDescriptor()}${firstName}`)
