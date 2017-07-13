@@ -9,7 +9,6 @@
   margin-right: -($gutter / 2);
 
   @include media(tablet) {
-    border-right: 1px solid $grey-2;
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;
@@ -18,16 +17,19 @@
 
 .local-nav__link {
   display: block;
-  padding: ($gutter / 2);
+  padding: ($default-spacing-unit / 2) $default-spacing-unit;
 
-  &,
+  &:link,
   &:visited {
-    color: $black;
+    color: $link-colour;
+    text-decoration: none;
   }
 
-  @include media(tablet) {
-    padding-left:  (($gutter / 3) * 2);
-    padding-right:  (($gutter / 3) * 2);
+  &:hover,
+  &:focus {
+    background-color: $grey-4;
+    color: $text-colour;
+    background-color: $grey-4;
   }
 
   &.is-active {
