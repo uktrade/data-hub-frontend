@@ -1,3 +1,5 @@
+@import "../settings";
+
 .c-messages {
   // TODO: remove in favour of assemblies that handle consistent spacing
   // between elements
@@ -13,6 +15,7 @@
   border: 5px solid;
   padding: $default-spacing-unit 90px $default-spacing-unit $default-spacing-unit;
   position: relative;
+  background-color: $white;
 
   + * {
     margin-top: $default-spacing-unit;

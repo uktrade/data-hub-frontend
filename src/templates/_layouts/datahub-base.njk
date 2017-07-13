@@ -60,10 +60,9 @@
   </nav>
 {% endblock %}
 
-{% block body_main_header %}
+{% block body_main_header_info %}
   {% component 'breadcrumbs', { items: BREADCRUMBS } %}
   {% component 'messages', { messages: messages } %}
-  {{ super() }}
 {% endblock %}
 
 {% block body %}

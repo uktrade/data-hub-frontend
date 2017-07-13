@@ -1,6 +1,7 @@
 @import "../settings";
+@import "../tools/mixins/layout";
 
-// Form assemblies
+// View assemblies
 // Define how components stack in views
 
 * + {
@@ -8,7 +9,8 @@
   .c-form-fieldset,
   .c-error-summary,
   .c-entity-search,
-  .results-summary {
+  .results-summary,
+  .c-entity-search {
     margin-top: $default-spacing-unit * 2;
   }
 
