@@ -230,8 +230,8 @@ function transformBriefInvestmentSummary (data) {
   if (!isPlainObject(data)) { return }
 
   const investorCompany = data.investor_company
-  const competitorCountries = get(data, 'competitor_countries', [])
-  const regionLocations = get(data, 'uk_region_locations', [])
+  const competitorCountries = data.competitor_countries || []
+  const regionLocations = data.uk_region_locations || []
 
   return {
     sector: get(data, 'sector.name', null),

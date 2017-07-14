@@ -1,7 +1,20 @@
+const { projectManagementTableLabels } = require('../../labels')
+const { transformProjectManagementForView } = require('../../services/formatting')
+
 function getDetailsHandler (req, res, next) {
-  res.render('investment-projects/views/team/details', {
-    currentNavItem: 'team',
-  })
+  try {
+    const projectManagementData = transformProjectManagementForView(res.locals.investmentData)
+
+    res
+      .breadcrumb('Project team')
+      .render('investment-projects/views/team/details', {
+        currentNavItem: 'team',
+        projectManagementData,
+        projectManagementTableLabels,
+      })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
