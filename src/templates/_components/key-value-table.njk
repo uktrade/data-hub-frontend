@@ -21,6 +21,12 @@
           <td>
             {% if data.url %}
               <a href="{{ data.url }}">{{ data.name }}</a>
+            {% elif data | isArray %}
+              <ul>
+               {% for item in data %}
+                <li>{{ item }}</li>
+               {% endfor %}
+              </ul>
             {% else %}
               {{ data }}
             {% endif %}

@@ -1,0 +1,29 @@
+{% extends "./_layout.njk" %}
+
+{% set verfied = investmentStatus.phaseName | lower == 'won' %}
+
+{% block main_grid_right_column %}
+
+  {% if verfied %}
+    <p class="infostrip">
+      The evaluation section has been now been verified.
+    </p>
+  {% endif %}
+
+  <h2 class="heading-medium">Project value (Test D)</h2>
+  {% component 'key-value-table', items=value | provideDefault('Not Known') %}
+
+  <h2 class="heading-medium">FDI (Test A)</h2>
+  {% component 'key-value-table', items=fdi | provideDefault('Not Known') %}
+
+  <h2 class="heading-medium">Project Landing (Test C)</h2>
+  {% component 'key-value-table', items=landing | provideDefault('Not Known') %}
+
+  {% if not verfied %}
+    <p>
+      <a href="{# TODO #}" class="button">
+        Verify win
+      </a>
+    </p>
+  {% endif %}
+{% endblock %}
