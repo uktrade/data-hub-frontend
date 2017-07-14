@@ -173,8 +173,13 @@
     "first_name": "John",
     "last_name": "Brown"
   },
-  "project_manager_team": null,
-  "project_assurance_team": null,
-  "team_complete": true,
-  "team_members": []
+  "project_manager_team": {
+    "id": "1111",
+    "name": "Team A"
+  },
+  "project_assurance_team":  {
+    "id": "1111",
+    "name": "Team B"
+  },
+  "team_complete": true
 }

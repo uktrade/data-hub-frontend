@@ -2,6 +2,7 @@ const { get } = require('lodash')
 
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getInteraction } = require('../../interactions/repos')
+const { getDitCompany } = require('../../companies/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const { getInvestment } = require('../repos')
 

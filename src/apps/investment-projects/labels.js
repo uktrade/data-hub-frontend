@@ -98,6 +98,11 @@ const labels = {
     project_manager: 'Project manager',
     project_assurance_adviser: 'Project assurance adviser',
   },
+  projectManagementTableLabels: {
+    role: 'Role',
+    adviser: 'Adviser',
+    team: 'Team',
+  },
   briefInvestmentSummaryLabels: {
     sector: 'Primary sector',
     investor_company: 'Client company',
