@@ -66,7 +66,7 @@
     {{ caller() }}
 
     {% if not props.disableFormActions %}
-      <div class="c-form-group">
+      <div class="c-form-group c-form-group--actions">
         <button class="button">{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
