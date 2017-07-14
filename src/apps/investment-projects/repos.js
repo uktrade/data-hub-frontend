@@ -3,7 +3,7 @@ const authorisedRequest = require('../../lib/authorised-request')
 const { getInflatedDitCompany } = require('../companies/services/data')
 
 function getCompanyInvestmentProjects (token, companyId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/project?investor_company_id=${companyId}`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment?investor_company_id=${companyId}`)
 }
 
 function getInvestment (token, investmentId) {
@@ -35,7 +35,7 @@ function getEquityCompanyDetails (token, equityCompanyId) {
 
 function createInvestmentProject (token, body) {
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/investment/project`,
+    url: `${config.apiRoot}/v3/investment`,
     method: 'POST',
     body,
   })
