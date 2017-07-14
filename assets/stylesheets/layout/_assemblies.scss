@@ -25,3 +25,7 @@
     margin-bottom: $default-spacing-unit;
   }
 }
+
+[type="hidden"] + .c-form-group {
+  margin-top: 0;
+}
