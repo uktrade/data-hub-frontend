@@ -23,8 +23,8 @@
               <a href="{{ data.url }}">{{ data.name }}</a>
             {% elif data | isArray %}
               <ul>
-               {% for item in data %}
-                <li>{{ item }}</li>
+               {% for item in data | removeNilAndEmpty %}
+                <li>{{ item }}{{ "," if not loop.last }}</li>
                {% endfor %}
               </ul>
             {% else %}

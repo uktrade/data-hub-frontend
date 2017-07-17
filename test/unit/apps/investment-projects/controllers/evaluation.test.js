@@ -144,7 +144,14 @@ describe('Investment evaluation controller', () => {
         url: '/companies/view/ltd/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
       },
       'Companies House Number': '08311441',
-      'Registered Address': 'FIRST FLOOR ACHME HOUSE, KIRKDALE ROAD, LEYTONSTONE, United Kingdom, LONDON, E134 1HP',
+      'Registered Address': [
+        'FIRST FLOOR ACHME HOUSE',
+        'KIRKDALE ROAD',
+        'LEYTONSTONE',
+        'United Kingdom',
+        'LONDON',
+        'E134 1HP',
+      ],
       'Land date': '21st July 2018',
     }
 

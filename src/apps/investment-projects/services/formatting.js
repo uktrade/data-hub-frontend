@@ -226,7 +226,7 @@ function transformInvestmentLandingForView (data) {
       get(data, 'uk_company.registered_address_country.name'),
       get(data, 'uk_company.registered_address_county'),
       get(data, 'uk_company.registered_address_postcode'),
-    ].join(', ') : null,
+    ] : null,
     investment_land_date: data.actual_land_date ? moment(data.actual_land_date).format('Do MMMM YYYY') : null,
   })
 }
