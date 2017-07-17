@@ -8,6 +8,7 @@ const {
   audit,
   details,
   edit,
+  evaluation,
   team,
   interactions,
 } = require('./controllers')
@@ -71,6 +72,8 @@ router
     interactions.create.createPostInteractionHandler,
     interactions.create.createGetInteractionHandler
   )
+
+router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 
 router
   .route('/:id/interactions/:interactionId/edit')

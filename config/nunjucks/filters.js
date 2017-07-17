@@ -26,6 +26,7 @@ const filters = {
   keys,
   flatten,
   map,
+  isArray,
 
   highlight: (string, searchTerm) => {
     const regEx = new RegExp(`(${searchTerm})`, 'gi')
@@ -33,6 +34,28 @@ const filters = {
     return new nunjucks.runtime.SafeString(
       string.replace(regEx, '<span class="u-highlight">$1</span>')
     )
+  },
+
+  collectionDefault: (collection, defaultValue = 'Not found') => {
+    const isEmptyObjOrArray = (value) => {
+      return ((isPlainObject(value) || isArray(value)) && isEmpty(value))
+    }
+
+    if (isArray(collection)) {
+      return collection.slice().map((element) => {
+        return !element || isEmptyObjOrArray(element) ? defaultValue : element
+      })
+    }
+    if (isPlainObject(collection)) {
+      const obj = Object.assign({}, collection)
+
+      Object.keys(obj).forEach((key) => {
+        if (!obj[key] || isEmptyObjOrArray(obj[key])) {
+          obj[key] = defaultValue
+        }
+      })
+      return obj
+    }
   },
 
   removeNilAndEmpty: (collection) => {

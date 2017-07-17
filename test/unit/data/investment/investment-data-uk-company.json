@@ -1,0 +1,313 @@
+{
+  "id": "32fe267d-34fe-4467-92be-20b34f3715eb",
+  "name": "Example Project",
+  "project_code": "DHP-00000117",
+  "description": "Example Description",
+  "nda_signed": false,
+  "estimated_land_date": "2017-12-22",
+  "actual_land_date": "2018-07-21",
+  "project_shareable": true,
+  "not_shareable_reason": "",
+  "likelihood_of_landing": 0,
+  "priority": null,
+  "approved_commitment_to_invest": null,
+  "approved_fdi": true,
+  "approved_good_value": null,
+  "approved_high_value": null,
+  "approved_landed": null,
+  "approved_non_fdi": null,
+  "investment_type": {
+    "name": "FDI",
+    "id": "3e143372-496c-4d1e-8278-6fdd3da9b48b"
+  },
+  "stage": {
+    "name": "Verify win",
+    "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3"
+  },
+  "phase": {
+    "name": "Verify win",
+    "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3"
+  },
+  "investor_company": {
+    "name": "amazing tables Ltd.",
+    "id": "6c997f91-a098-e211-a939-e4115bead28a",
+    "trading_name": null,
+    "companies_house_data": null,
+    "interactions": [],
+    "contacts": [],
+    "export_to_countries": [],
+    "future_interest_countries": [],
+    "uk_based": false,
+    "account_manager": null,
+    "registered_address_1": "The octagon",
+    "registered_address_2": "13A, A.J ACHME Drive,",
+    "registered_address_town": "Victoria island",
+    "registered_address_country": {
+      "id": "4561b8be-5d95-e211-a939-e4115bead28a",
+      "name": "Nigeria"
+    },
+    "registered_address_county": "lagos,Nigeria",
+    "registered_address_postcode": null,
+    "created_on": "2008-03-18T09:10:03",
+    "modified_on": "2017-07-14T10:33:06.406791",
+    "archived": false,
+    "archived_on": null,
+    "archived_reason": "",
+    "company_number": null,
+    "alias": null,
+    "description": "",
+    "website": "www.achme.com/africa/",
+    "trading_address_1": null,
+    "trading_address_2": null,
+    "trading_address_town": null,
+    "trading_address_county": null,
+    "trading_address_postcode": null,
+    "archived_by": null,
+    "business_type": {
+      "id": "98d14e94-5d95-e211-a939-e4115bead28a",
+      "name": "Company"
+    },
+    "sector": {
+      "id": "b3959812-6095-e211-a939-e4115bead28a",
+      "name": "ICT"
+    },
+    "employee_range": null,
+    "turnover_range": null,
+    "uk_region": {
+      "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
+      "name": "Undefined"
+    },
+    "trading_address_country": null,
+    "headquarter_type": null,
+    "classification": {
+      "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
+      "name": "Tier A - Strategic Account"
+    },
+    "parent": null,
+    "one_list_account_owner": null
+  },
+  "intermediate_company": null,
+  "client_contacts": [
+    {
+      "name": "Martin  Georgeman",
+      "id": "ff7edd7e-fa98-e211-a939-e4115bead28a"
+    }
+  ],
+  "client_relationship_manager": {
+    "first_name": "Abdul",
+    "last_name": "RandomPerson",
+    "id": "3d3a5718-48b5-e511-88b6-e4115bead28a"
+  },
+  "referral_source_adviser": {
+    "first_name": "Abdul",
+    "last_name": "Fayer",
+    "id": "1119a99e-9798-e211-a939-e4115bead28a"
+  },
+  "referral_source_activity": {
+    "name": "Cold call",
+    "id": "0c4f8e74-d34f-4aca-b764-a44cdc2d0087"
+  },
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": null,
+  "fdi_type": {
+    "name": "Creation of new site or activity",
+    "id": "f8447013-cfdc-4f35-a146-6619665388b3"
+  },
+  "non_fdi_type": null,
+  "sector": {
+    "name": "Automotive : Motorsport",
+    "id": "b922c9d2-5f95-e211-a939-e4115bead28a"
+  },
+  "business_activities": [
+    {
+      "name": "European headquarters",
+      "id": "fc68d540-a00a-40f8-8b39-05e12fcb856f"
+    },
+    {
+      "name": "Manufacturing",
+      "id": "77be20b3-05bf-4e06-a517-6989f8b9b922"
+    },
+    {
+      "name": "Research & development (R&D)",
+      "id": "c40e4af0-382e-44a7-b756-97f180230096"
+    },
+    {
+      "name": "Shared service centre",
+      "id": "93959cec-7250-4c0a-9466-af4ebaf4a676"
+    }
+  ],
+  "archived": false,
+  "archived_on": null,
+  "archived_reason": "",
+  "archived_by": null,
+  "created_on": "2017-07-13T13:57:59.144972",
+  "modified_on": "2017-07-13T13:59:24.239881",
+  "total_investment": "40000000000",
+  "foreign_equity_investment": "400000",
+  "government_assistance": true,
+  "number_new_jobs": 456,
+  "average_salary": {
+    "name": "£25,000 – £29,000",
+    "id": "7e54d92f-d816-4918-8fdf-9553189d13d5"
+  },
+  "number_safeguarded_jobs": 10,
+  "r_and_d_budget": true,
+  "non_fdi_r_and_d_budget": false,
+  "new_tech_to_uk": true,
+  "export_revenue": false,
+  "value_complete": true,
+  "client_cannot_provide_total_investment": false,
+  "client_cannot_provide_foreign_investment": false,
+  "client_requirements": "Some client requirments",
+  "site_decided": true,
+  "address_line_1": "10 Achme Ltd",
+  "address_line_2": "Achme Road",
+  "address_line_3": null,
+  "address_line_postcode": "ACH3ME",
+  "competitor_countries": [
+    {
+      "name": "Angola",
+      "id": "985f66a0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Aruba",
+      "id": "9e5f66a0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Australia",
+      "id": "9f5f66a0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "uk_region_locations": [
+    {
+      "name": "East Midlands",
+      "id": "844cd12a-6095-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "FDI Hub",
+      "id": "804cd12a-6095-e211-a939-e4115bead28a"
+    }
+  ],
+  "strategic_drivers": [
+    {
+      "name": "Access to market",
+      "id": "382aa6d1-a362-4166-a09d-f579d9f3be75"
+    },
+    {
+      "name": "Other",
+      "id": "611a661c-08fe-4924-8847-f3b1fb021313"
+    }
+  ],
+  "client_considering_other_countries": true,
+  "uk_company": {
+    "name": "AITCH (Bananas are us) LIMITED",
+    "id": "f91c0685-e2ac-41e7-8500-cdd0ad747a97",
+    "trading_name": null,
+    "companies_house_data": {
+      "id": 7405782,
+      "created_on": "2017-06-16T14:45:35.216391",
+      "modified_on": "2017-06-16T14:45:35.216397",
+      "name": "AITCH (Bananas are us) LIMITED",
+      "registered_address_1": "FIRST FLOOR ACHME HOUSE",
+      "registered_address_2": "KIRKDALE ROAD",
+      "registered_address_town": "LEYTONSTONE",
+      "registered_address_county": "LONDON",
+      "registered_address_postcode": "RER 1HP",
+      "company_number": "08311441",
+      "company_category": "Private Limited Company",
+      "company_status": "Active",
+      "sic_code_1": "41100 - Development of building projects",
+      "sic_code_2": "",
+      "sic_code_3": "",
+      "sic_code_4": "",
+      "uri": "http://business.random.gov.uk/id/company/08311441",
+      "incorporation_date": "2012-11-28",
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      }
+    },
+    "interactions": [],
+    "contacts": [],
+    "export_to_countries": [],
+    "future_interest_countries": [],
+    "uk_based": true,
+    "account_manager": null,
+    "registered_address_1": "FIRST FLOOR ACHME HOUSE",
+    "registered_address_2": "KIRKDALE ROAD",
+    "registered_address_town": "LEYTONSTONE",
+    "registered_address_country": {
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+      "name": "United Kingdom"
+    },
+    "registered_address_county": "LONDON",
+    "registered_address_postcode": "E134 1HP",
+    "created_on": "2017-05-04T15:26:21.437150",
+    "modified_on": "2017-05-04T15:26:21.437150",
+    "archived": false,
+    "archived_on": null,
+    "archived_reason": null,
+    "company_number": "08311441",
+    "alias": null,
+    "description": "test\r\n\r\ntest\r\n\r\ntest",
+    "website": "http://moo.com",
+    "trading_address_1": null,
+    "trading_address_2": null,
+    "trading_address_town": null,
+    "trading_address_county": null,
+    "trading_address_postcode": null,
+    "archived_by": null,
+    "business_type": {
+      "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
+      "name": "Private limited company"
+    },
+    "sector": {
+      "id": "bb22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Automotive : Component Manufacturing : Electronic Components"
+    },
+    "employee_range": {
+      "id": "3fafd8d0-5d95-e211-a939-e4115bead28a",
+      "name": "50 to 249",
+      "order": 300
+    },
+    "turnover_range": {
+      "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
+      "name": "£33.5M+",
+      "order": 400
+    },
+    "uk_region": {
+      "id": "924cd12a-6095-e211-a939-e4115bead28a",
+      "name": "Jersey"
+    },
+    "trading_address_country": null,
+    "headquarter_type": null,
+    "classification": {
+      "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
+      "name": "Undefined"
+    },
+    "parent": null,
+    "one_list_account_owner": null
+  },
+  "requirements_complete": true,
+  "project_manager": {
+    "first_name": "Abderezak",
+    "last_name": "Bouhaceine",
+    "id": "0919a99e-9798-e211-a939-e4115bead28a"
+  },
+  "project_assurance_adviser": {
+    "first_name": "Kristoffer",
+    "last_name": "Limpin",
+    "id": "9e2389cf-d851-e311-a56a-e4115bead28a"
+  },
+  "project_manager_team": {
+    "name": "British Embassy Algiers Algeria",
+    "id": "346e1abc-9698-e211-a939-e4115bead28a"
+  },
+  "project_assurance_team": {
+    "name": "British Embassy Manila Philippines",
+    "id": "1a8433c8-9698-e211-a939-e4115bead28a"
+  },
+  "team_complete": true,
+  "team_members": []
+}

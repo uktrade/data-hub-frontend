@@ -1,0 +1,20 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+
+  {% if verfied %}
+    <p class="infostrip">
+      The evaluation section has been now been verified.
+    </p>
+  {% endif %}
+
+  <h2 class="heading-medium">Project value (Test D)</h2>
+  {% component 'key-value-table', items=value | collectionDefault('Not Known') %}
+
+  <h2 class="heading-medium">FDI (Test A)</h2>
+  {% component 'key-value-table', items=fdi | collectionDefault('Not Known') %}
+
+  <h2 class="heading-medium">Project Landing (Test C)</h2>
+  {% component 'key-value-table', items=landing | collectionDefault('Not Known') %}
+
+{% endblock %}

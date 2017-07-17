@@ -1,6 +1,7 @@
 const moment = require('moment')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
 const { buildCompanyUrl } = require('../../companies/services/data')
+const metadataRepository = require('../../../lib/metadata')
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }
@@ -147,6 +148,11 @@ function transformInvestmentValueForView (data) {
       neg: 'No, will not',
       suffix: ' create significant export revenue',
     }),
+    sector_name: get(data, 'sector.name'),
+    account_tier: get(data, 'investor_company.classification.name'),
+    business_activities: data.business_activities.filter((activity) => {
+      return /^(european|global) headquarters$/i.test(activity.name)
+    }).length ? 'Yes' : 'No',
   })
 }
 
@@ -164,10 +170,73 @@ function transformInvestmentRequirementsForView (data) {
   })
 }
 
+function transformInvestmentFDIForView (data) {
+  if (!isPlainObject(data)) {
+    return
+  }
+
+  const [
+    { name: commitmentToInvestName },
+    { name: fdiName },
+    { name: nonFdiName },
+  ] = metadataRepository.investmentTypeOptions
+
+  return Object.assign({}, {
+    type_of_investment: [
+      {
+        displayText: commitmentToInvestName,
+        isApproved: data.approved_commitment_to_invest,
+      },
+      {
+        displayText: fdiName,
+        isApproved: data.approved_fdi,
+      },
+      {
+        displayText: nonFdiName,
+        isApproved: data.approved_non_fdi,
+      },
+    ].reduce((displayText, investmentDetail) => {
+      return investmentDetail.isApproved ? investmentDetail.displayText : displayText
+    }, 'Does not apply'),
+    foreign_investor: {
+      name: data.investor_company.name,
+      url: buildCompanyUrl(data.investor_company),
+    },
+    foreign_country: get(data, 'investor_company.registered_address_country.name'),
+    uk_company: data.uk_company ? {
+      name: data.uk_company.name,
+      url: buildCompanyUrl(data.uk_company),
+    } : null,
+    investor_retain_voting_power: data.uk_company ? 'Yes' : 'No',
+  })
+}
+
+function transformInvestmentLandingForView (data) {
+  if (!isPlainObject(data)) {
+    return
+  }
+
+  return Object.assign({}, {
+    uk_company: data.uk_company ? { name: data.uk_company.name, url: buildCompanyUrl(data.uk_company) } : null,
+    company_number: get(data, 'uk_company.company_number'),
+    registered_address: data.uk_company ? [
+      get(data, 'uk_company.registered_address_1'),
+      get(data, 'uk_company.registered_address_2'),
+      get(data, 'uk_company.registered_address_town'),
+      get(data, 'uk_company.registered_address_country.name'),
+      get(data, 'uk_company.registered_address_county'),
+      get(data, 'uk_company.registered_address_postcode'),
+    ] : null,
+    investment_land_date: data.actual_land_date ? moment(data.actual_land_date).format('Do MMMM YYYY') : null,
+  })
+}
+
 module.exports = {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
   transformInvestmentRequirementsForView,
+  transformInvestmentFDIForView,
+  transformInvestmentLandingForView,
   transformToApi,
   transformFromApi,
 }
