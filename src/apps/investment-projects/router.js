@@ -73,9 +73,7 @@ router
     interactions.create.createGetInteractionHandler
   )
 
-router
-  .route('/:id/evaluation')
-  .get(evaluation.renderEvaluationPage)
+router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 
 router
   .route('/:id/interactions/:interactionId/edit')

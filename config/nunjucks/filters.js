@@ -36,7 +36,7 @@ const filters = {
     )
   },
 
-  provideDefault: (collection, defaultValue = 'Not found') => {
+  collectionDefault: (collection, defaultValue = 'Not found') => {
     const isEmptyObjOrArray = (value) => {
       return ((isPlainObject(value) || isArray(value)) && isEmpty(value))
     }
