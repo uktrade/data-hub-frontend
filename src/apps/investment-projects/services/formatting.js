@@ -181,23 +181,18 @@ function transformInvestmentFDIForView (data) {
     { name: nonFdiName },
   ] = metadataRepository.investmentTypeOptions
 
-  return Object.assign({}, {
-    type_of_investment: [
-      {
-        displayText: commitmentToInvestName,
-        isApproved: data.approved_commitment_to_invest,
-      },
-      {
-        displayText: fdiName,
-        isApproved: data.approved_fdi,
-      },
-      {
-        displayText: nonFdiName,
-        isApproved: data.approved_non_fdi,
-      },
-    ].reduce((displayText, investmentDetail) => {
+  function approvedInvestmentText (investments, defaultText) {
+    return investments.reduce((displayText, investmentDetail) => {
       return investmentDetail.isApproved ? investmentDetail.displayText : displayText
-    }, 'Does not apply'),
+    }, defaultText)
+  }
+
+  return {
+    type_of_investment: approvedInvestmentText([
+      { displayText: commitmentToInvestName, isApproved: data.approved_commitment_to_invest },
+      { displayText: fdiName, isApproved: data.approved_fdi },
+      { displayText: nonFdiName, isApproved: data.approved_non_fdi },
+    ], 'Does not apply'),
     foreign_investor: {
       name: data.investor_company.name,
       url: buildCompanyUrl(data.investor_company),
@@ -208,7 +203,7 @@ function transformInvestmentFDIForView (data) {
       url: buildCompanyUrl(data.uk_company),
     } : null,
     investor_retain_voting_power: data.uk_company ? 'Yes' : 'No',
-  })
+  }
 }
 
 function transformInvestmentLandingForView (data) {
