@@ -103,5 +103,25 @@ describe('Pagination', () => {
       }
       expect(actual).to.deep.equal(expected)
     })
+
+    it('should return pagination object with no truncation when block start page is close to first or last pages', () => {
+      const actual = buildPagination(reqMock, { count: 21, limit: 3, page: 4 }, 4)
+      const expected = {
+        totalPages: 7,
+        currentPage: 4,
+        prev: '?term=samsung&page=3',
+        next: '?term=samsung&page=5',
+        pages: [
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: 3, url: '?term=samsung&page=3' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
+          { label: 6, url: '?term=samsung&page=6' },
+          { label: 7, url: '?term=samsung&page=7' },
+        ],
+      }
+      expect(actual).to.deep.equal(expected)
+    })
   })
 })

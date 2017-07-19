@@ -1,6 +1,24 @@
 @import "../settings";
+@import "../tools/mixins";
+
+@mixin _pageless {
+  .c-pagination__list {
+    display: none;
+  }
+
+  .c-pagination__label--prev,
+  .c-pagination__label--next {
+    float: left;
+    font-size: 24px;
+  }
+
+  .c-pagination__label--next {
+    float: right;
+  }
+}
 
 .c-pagination {
+  @include clearfix;
   text-align: center;
   line-height: 1;
 }
@@ -29,4 +47,12 @@
   background-color: transparent;
   padding-right: $default-spacing-unit / 2;
   padding-left: $default-spacing-unit / 2;
+}
+
+@include media(mobile) {
+  @include _pageless;
+}
+
+.c-pagination--pageless {
+  @include _pageless;
 }

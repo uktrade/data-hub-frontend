@@ -1,4 +1,4 @@
-const { range, take, uniq, get } = require('lodash')
+const { range, take, get } = require('lodash')
 const { buildQueryString } = require('./url-helpers')
 
 function getPageLink (page, req) {
@@ -9,15 +9,15 @@ function getPageLink (page, req) {
 }
 
 function truncatePages (pagination, blockSize) {
+  const TRUNCATION_SYMBOL = '…'
   const pages = pagination.pages
 
-  if (!pages.length) { return pagination }
+  if (pages.length <= blockSize) { return pagination }
 
   const currentPageNum = pagination.currentPage
   const currentPageIndex = pagination.currentPage - 1
   const firstPage = pages[0]
   const lastPage = pages[pages.length - 1]
-  const truncationSymbol = '…'
 
   const blockPivot = Math.round(blockSize / 2)
   const startOfCurrentBlock = Math.abs(currentPageNum - blockPivot)
@@ -25,20 +25,26 @@ function truncatePages (pagination, blockSize) {
   const blockStartIndex = Math.min(startOfCurrentBlock, startOfLastBlock, currentPageIndex)
 
   let truncatedPages = take(pages.slice(blockStartIndex), blockSize)
-  truncatedPages.unshift(firstPage)
-  truncatedPages.push(lastPage)
+  const firstOfTruncatedPagesNum = truncatedPages[0].label
+  const lastOfTruncatedPagesNum = truncatedPages[truncatedPages.length - 1].label
 
-  truncatedPages = uniq(truncatedPages)
-
-  if (pagination.totalPages > blockSize + 1) {
-    // Add truncation after the first page number
-    if (currentPageNum > firstPage.label + blockPivot) {
-      truncatedPages.splice(1, 0, { label: truncationSymbol })
-    }
-    // Add truncation before the last page number
-    if (currentPageNum < lastPage.label - blockPivot) {
-      truncatedPages.splice(-1, 0, { label: truncationSymbol })
-    }
+  if (firstOfTruncatedPagesNum > 3) {
+    truncatedPages.unshift({ label: TRUNCATION_SYMBOL })
+  }
+  if (firstOfTruncatedPagesNum === 3) {
+    truncatedPages.unshift(pages[1])
+  }
+  if (firstOfTruncatedPagesNum > 1) {
+    truncatedPages.unshift(firstPage)
+  }
+  if (lastOfTruncatedPagesNum < lastPage.label - 2) {
+    truncatedPages.push({ label: TRUNCATION_SYMBOL })
+  }
+  if (lastOfTruncatedPagesNum === lastPage.label - 2) {
+    truncatedPages.push(pages[pages.length - 2])
+  }
+  if (lastOfTruncatedPagesNum < lastPage.label) {
+    truncatedPages.push(lastPage)
   }
 
   pagination.pages = truncatedPages
