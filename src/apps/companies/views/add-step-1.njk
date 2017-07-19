@@ -10,7 +10,7 @@
       type: 'radio',
       name: 'business_type',
       label: 'Company type',
-      selected: company.business_type,
+      value: company.business_type,
       error: errors.messages.business_type,
       options: [
         {
@@ -26,7 +26,7 @@
               name: 'business_type_uk_other',
               label: 'Type of organisation',
               error: errors.messages.business_type_uk_other,
-              selected: company.business_type_uk_other,
+              value: company.business_type_uk_other,
               options: ukOtherCompanyOptions,
               initialOption: 'Select type',
               modifier: 'subfield',
@@ -44,7 +44,7 @@
               name: 'business_type_for_other',
               label: 'Type of organisation',
               error: errors.messages.business_type_for_other,
-              selected: company.business_type_for_other,
+              value: company.business_type_for_other,
               options: foreignOtherCompanyOptions,
               initialOption: 'Select type',
               modifier: 'subfield',

@@ -35,12 +35,15 @@
  # @param {string} [props.class] - Form class name
  # @param {string} [props.role] - Form role attribute value
  # @param {string} [props.buttonText=Submit] - Text for submit button
+ # @param {string} [props.returnText=Back] - Text for return link
+ # @param {string} [props.returnLink] - Location for return link
  #
  # @callback {function} caller - Required inner contents
  #}
 {% macro Form(props) %}
   {% set method = props.method or 'POST' -%}
   {% set buttonText = props.buttonText or 'Submit' %}
+  {% set returnText = props.returnText or 'Back' %}
   <form
     method="{{ method }}"
     {% if props.action %}action="{{ props.action }}"{% endif -%}
@@ -64,6 +67,9 @@
     {% if not props.disableFormActions %}
       <div class="c-form-group">
         <button class="button">{{ buttonText }}</button>
+        {% if props.returnLink %}
+          <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
+        {% endif %}
       </div>
     {% endif %}
   </form>
@@ -296,13 +302,30 @@
 {% endmacro %}
 
 {##
+ # Render form group with a text field and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.modifier] - Field modifier
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro HiddenField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+  {{ Input(props | assign({
+    type: 'hidden',
+    fieldId: fieldId
+  })) }}
+{% endmacro %}
+
+{##
  # Render input field (form-control)
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} [props.type] - Field type
  # @param {string} [props.class] - Field class name
- # @param {string} [props.value] - Field type
+ # @param {string} [props.value] - Initial value to set
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
@@ -352,7 +375,7 @@
  # @param {string} [props.options] - Field options
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
- # @param {string} [props.selected] - Selected field value
+ # @param {string} [props.value] - Selected field value
  # @param {string} [props.initialOption] - Initial option label to use for empty value
  #}
 {% macro SelectBox(props) %}
@@ -366,7 +389,7 @@
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in props.options %}
-      <option value="{{ option.value }}" {% if props.selected == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if props.value == option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}
@@ -379,7 +402,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} props.options - Field options
- # @param {string} [props.selected] - Checked field value
+ # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
  #}
@@ -388,7 +411,7 @@
     {% set fieldChildren = props.children or [] %}
 
     {% for option in props.options %}
-      {% set selected = props.selected or [] %}
+      {% set selected = props.value or [] %}
       {% set optionChildren = option.children or [] %}
       <div class="c-multiple-choice">
         <input
