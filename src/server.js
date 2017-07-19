@@ -10,6 +10,7 @@ const slashify = require('slashify')
 const churchill = require('churchill')
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
+const cookieParser = require('cookie-parser')
 
 const title = require('./middleware/title')
 const breadcrumbs = require('./middleware/breadcrumbs')
@@ -42,6 +43,7 @@ if (!config.isDev) {
   }))
 }
 
+app.use(cookieParser())
 app.use(sessionStore)
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
