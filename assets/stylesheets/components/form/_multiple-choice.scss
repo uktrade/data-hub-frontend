@@ -5,21 +5,42 @@
   clear: left;
 }
 
+@mixin _scale-input($font-size) {
+  $input-size: $font-size * 2;
+
+  width: $input-size;
+  height: $input-size;
+
+  &[type="checkbox"] + .c-multiple-choice__label::after {
+    border-width: 0 0 5px 5px;
+    width: round($input-size / 1.7);
+    height: round($input-size / 3);
+  }
+
+  & + .c-multiple-choice__label {
+    &::before {
+      height: $input-size;
+      width: $input-size;
+    }
+
+    &::after {
+      border: ceil($font-size / 2) solid $text-colour;
+      left: floor($font-size / 2);
+      top: floor($font-size / 2);
+    }
+  }
+}
+
 .c-multiple-choice__input {
   position: absolute;
   top: 0;
   left: 0;
   margin: auto;
-  width: 2em;
-  height: 2em;
   opacity: 0;
 
   &[type="checkbox"] + .c-multiple-choice__label::after {
-    border-width: 0 0 .3em .3em;
     transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
-    width: 22px;
-    height: 13px;
   }
 
   &[type="radio"] + .c-multiple-choice__label {
@@ -29,34 +50,25 @@
     }
   }
 
-  + .c-multiple-choice__label {
+  & + .c-multiple-choice__label {
     &::before,
     &::after {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
       margin: auto;
-      border: 2px solid $text-colour;
     }
 
     &::before {
-      height: 2em;
-      width: 2em;
+      border: 2px solid $text-colour;
+      background-color: $white;
+      top: 0;
+      left: 0;
     }
 
     &::after {
       height: 0;
       width: 0;
-      border-width: 10px;
-      left: 6px;
-      top: 6px;
       visibility: hidden;
-
-      @include media(tablet) {
-        top: 9px;
-        left: 9px;
-      }
     }
   }
 
@@ -81,4 +93,22 @@
   display: block;
   margin-top: 5px;
   color: $grey-1;
+}
+
+.c-multiple-choice__input {
+  @include _scale-input(19px);
+}
+
+// Modifiers
+
+.c-form-group--small {
+  font-size: 16px;
+
+  .c-multiple-choice__input {
+    @include _scale-input(16px);
+  }
+
+  .c-multiple-choice__label {
+    padding-left: round($default-spacing-unit * 3 * (16 / 19));
+  }
 }

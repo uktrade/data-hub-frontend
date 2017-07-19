@@ -22,7 +22,7 @@
   {% endcall %}
 
   <h2 class="page-heading">Standard</h2>
-  {% call Example() %}
+  {% call Example('Normal size') %}
     {% call Form(form) %}
       {{ TextField({
         name: 'name',
@@ -151,9 +151,41 @@
           value: form.state.lastName
         }) }}
       {% endcall %}
-
     {% endcall %}
+  {% endcall %}
 
+  {% call Example('Small size') %}
+    {% call Form(form) %}
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        modifier: 'small'
+      }) }}
+
+      {{ MultipleChoiceField({
+          type: 'checkbox',
+          name: 'strategicDrivers-small',
+          label: 'Strategic drivers',
+          options: form.options.strategicDrivers,
+          selected: form.state.strategicDrivers,
+          modifier: 'small'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'averageSalary-small',
+          label: 'Average salary range',
+          options: form.options.averageSalaryRange,
+          error: form.errors.messages.averageSalary,
+          selected: form.state.averageSalary,
+          modifier: 'small'
+        })
+      }}
+    {% endcall %}
   {% endcall %}
 
 {% endblock %}
