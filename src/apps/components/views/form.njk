@@ -48,14 +48,14 @@
         label: 'Country',
         error: form.errors.messages.country,
         options: form.options.countries,
-        selected: form.state.country
+        value: form.state.country
       }) }}
 
     {{ MultipleChoiceField({
         name: 'sectors',
         label: 'Sectors',
         options: form.options.sectors,
-        selected: form.state.sectors,
+        value: form.state.sectors,
         initialOption: '-- Select sector --'
       })
     }}
@@ -65,7 +65,7 @@
           name: 'strategicDrivers',
           label: 'Strategic drivers',
           options: form.options.strategicDrivers,
-          selected: form.state.strategicDrivers
+          value: form.state.strategicDrivers
         })
       }}
 
@@ -75,7 +75,7 @@
           label: 'Average salary range',
           options: form.options.averageSalaryRange,
           error: form.errors.messages.averageSalary,
-          selected: form.state.averageSalary
+          value: form.state.averageSalary
         })
       }}
 
@@ -104,7 +104,7 @@
           type: 'radio',
           name: 'businessType',
           label: 'Company type',
-          selected: form.state.businessType,
+          value: form.state.businessType,
           error: form.errors.messages.businessType,
           options: [
             {
@@ -120,7 +120,7 @@
                   name: 'foreignOtherCompany',
                   label: 'Type of organisation',
                   error: form.errors.messages.foreignOtherCompany,
-                  selected: form.state.foreignOtherCompany,
+                  value: form.state.foreignOtherCompany,
                   options: form.options.foreignOtherCompany,
                   initialOption: '-- Select company --',
                   condition: {

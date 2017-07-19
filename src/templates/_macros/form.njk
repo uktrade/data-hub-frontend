@@ -308,7 +308,7 @@
  # @param {string} props.fieldId - Field id
  # @param {string} [props.type] - Field type
  # @param {string} [props.class] - Field class name
- # @param {string} [props.value] - Field type
+ # @param {string} [props.value] - Initial value to set
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
@@ -358,7 +358,7 @@
  # @param {string} [props.options] - Field options
  # @param {string} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
- # @param {string} [props.selected] - Selected field value
+ # @param {string} [props.value] - Selected field value
  # @param {string} [props.initialOption] - Initial option label to use for empty value
  #}
 {% macro SelectBox(props) %}
@@ -372,7 +372,7 @@
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in props.options %}
-      <option value="{{ option.value }}" {% if props.selected == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if props.value == option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}
@@ -385,7 +385,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} props.options - Field options
- # @param {string} [props.selected] - Checked field value
+ # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
  #}
@@ -394,7 +394,7 @@
     {% set fieldChildren = props.children or [] %}
 
     {% for option in props.options %}
-      {% set selected = props.selected or [] %}
+      {% set selected = props.value or [] %}
       {% set optionChildren = option.children or [] %}
       <div class="c-multiple-choice">
         <input
