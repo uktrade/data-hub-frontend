@@ -45,6 +45,10 @@ module.exports = function locals (req, res, next) {
 
       return `${assetsUrl}/${asset}`
     },
+
+    getLocal (key) {
+      return res.locals[key]
+    },
   })
   next()
 }
