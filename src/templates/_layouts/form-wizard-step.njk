@@ -1,0 +1,28 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block body_main_header_content %}
+  <h1 class="page-heading">{{ pageHeading }}</h1>
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% block form %}
+    {% call MultiStepForm({
+      buttonText: 'Continue',
+      returnLink: backLink,
+      errors: errors
+    }) %}
+
+      {% block fields %}
+        {% for key, props in options.fields %}
+          {% if props.fieldType %}
+            {{ callAsMacro(props.fieldType)(props | assign({
+              name: key,
+              value: values[key]
+            })) }}
+          {% endif %}
+        {% endfor %}
+      {% endblock %}
+
+    {% endcall %}
+  {% endblock %}
+{% endblock %}

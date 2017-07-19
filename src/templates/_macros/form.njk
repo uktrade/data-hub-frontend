@@ -44,6 +44,7 @@
   {% set method = props.method or 'POST' -%}
   {% set buttonText = props.buttonText or 'Submit' %}
   {% set returnText = props.returnText or 'Back' %}
+
   <form
     method="{{ method }}"
     {% if props.action %}action="{{ props.action }}"{% endif -%}
@@ -52,12 +53,12 @@
   >
     {{ ErrorSummary(props.errors) }}
 
-    {% if method|lower === 'post' %}
-      {{ CSRF(csrfToken) }}
-    {% endif %}
+    {% set hiddenFields = props.hiddenFields | default({}) | assign({
+      '_csrf': csrfToken if method|lower === 'post'
+    }) %}
 
-    {% if props.hiddenFields|length %}
-      {% for fieldName, fieldValue in props.hiddenFields | removeNilAndEmpty %}
+    {% if hiddenFields|length %}
+      {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}
         <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
       {% endfor %}
     {% endif %}
@@ -73,6 +74,25 @@
       </div>
     {% endif %}
   </form>
+{% endmacro %}
+
+{##
+ # Render multi-step form
+ # @param {object} props - A form object
+ #}
+{% macro MultiStepForm(props) %}
+  {% set formContent = caller() if caller else null %}
+  {% set method = props.method or 'POST' -%}
+  {% set hiddenFields = props.hiddenFields | default({}) | assign({
+    'x-csrf-token': getLocal('csrf-token') if method|lower === 'post'
+  }) %}
+
+  {% call Form(props | assign({
+    formContent: formContent,
+    hiddenFields: hiddenFields
+  })) %}
+    {{ props.formContent }}
+  {% endcall %}
 {% endmacro %}
 
 {##
@@ -140,16 +160,6 @@
       </nav>
     {% endif %}
   {% endcall %}
-{% endmacro %}
-
-{##
- # Render hidden input with CSRF value
- # @param {string} token - CSRF token
- #}
-{% macro CSRF(token) %}
-  {% if token -%}
-    <input type="hidden" name="_csrf" value="{{ token }}">
-  {%- endif %}
 {% endmacro %}
 
 {##
