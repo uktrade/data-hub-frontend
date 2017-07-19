@@ -10,6 +10,7 @@ loggingTransports.push(new (winston.transports.Console)({
   json: false,
   colorize: true,
   handleExceptions: true,
+  humanReadableUnhandledException: true,
 }))
 
 if (config.env === 'production') {
