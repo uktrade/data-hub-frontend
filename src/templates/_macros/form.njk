@@ -302,6 +302,23 @@
 {% endmacro %}
 
 {##
+ # Render form group with a text field and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.modifier] - Field modifier
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro HiddenField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+  {{ Input(props | assign({
+    type: 'hidden',
+    fieldId: fieldId
+  })) }}
+{% endmacro %}
+
+{##
  # Render input field (form-control)
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
