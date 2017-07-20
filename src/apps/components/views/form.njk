@@ -217,4 +217,65 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Light version') %}
+    <p>
+      {{ EntitySearchForm({
+        inputName: 'term-light',
+        inputLabel: 'Search for a company name or contact',
+        inputPlaceholder: '',
+        searchTerm: entitySearch.searchTermLight,
+        isLabelHidden: false,
+        fieldModifier: 'light'
+      }) }}
+    </p>
+
+    {% call Form(form) %}
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        modifier: 'light'
+      }) }}
+
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'gender',
+          label: 'Gender',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: 'light'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          type: 'checkbox',
+          name: 'filterBy',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          initialOption: 'All',
+          selected: form.state.filterBy,
+          modifier: 'light'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          name: 'averageSalary-light',
+          label: 'Average salary range',
+          options: form.options.averageSalaryRange,
+          error: form.errors.messages.averageSalaryLight,
+          selected: form.state.averageSalaryLight,
+          modifier: 'light'
+        })
+      }}
+    {% endcall %}
+  {% endcall %}
+
 {% endblock %}
