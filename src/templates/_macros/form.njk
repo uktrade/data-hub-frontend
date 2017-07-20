@@ -105,6 +105,7 @@
  # @param {string} [props.inputHint] - Hint for input
  # @param {string} [props.method=GET] - Form method
  # @param {string, array} [props.modifier] - Search form modifier (e.g. global)
+ # @param {string, array} [props.fieldModifier] - Form field modifier
  # @param {string} [props.entityType=company] - Search entity type
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
@@ -126,7 +127,8 @@
     inputName: inputName,
     inputPlaceholder: inputPlaceholder,
     isLabelHidden: isLabelHidden,
-    entityType: entityType
+    entityType: entityType,
+    fieldModifier: props.fieldModifier
   })) %}
 
     {% call TextField({
@@ -137,7 +139,8 @@
       hint: props.inputHint,
       label: props.inputLabel,
       placeholder: props.inputPlaceholder,
-      isLabelHidden: props.isLabelHidden
+      isLabelHidden: props.isLabelHidden,
+      modifier: props.fieldModifier
     }) %}
       <button class="c-entity-search__button">Search</button>
     {% endcall %}
