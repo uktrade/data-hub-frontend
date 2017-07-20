@@ -167,6 +167,7 @@ function transformInvestmentRequirementsForView (data) {
     strategic_drivers: strategicDrivers.map(driver => driver.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
+    uk_company: get(data, 'uk_company.name'),
   })
 }
 
