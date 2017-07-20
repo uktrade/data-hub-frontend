@@ -59,7 +59,7 @@ describe('Investment project, project management team, edit controller', () => {
         breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
-            expect(this.getDataLabelsStub).to.be.calledWith(briefInvestmentSummaryData, briefInvestmentSummaryLabels)
+            expect(this.getDataLabelsStub).to.be.calledWith(briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
             done()
           } catch (e) {
             done(e)

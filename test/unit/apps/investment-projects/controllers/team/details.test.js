@@ -1,6 +1,6 @@
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const controller = require('~/src/apps/investment-projects/controllers/team/details')
-const { projectManagementTableLabels } = require('~/src/apps/investment-projects/labels')
+const { projectManagementLabels } = require('~/src/apps/investment-projects/labels')
 
 describe('Investment team details controller', () => {
   beforeEach(() => {
@@ -123,7 +123,7 @@ describe('Investment team details controller', () => {
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
-        expect(options.projectManagementTableLabels).to.deep.equal(projectManagementTableLabels)
+        expect(options.projectManagementLabels).to.deep.equal(projectManagementLabels)
         done()
       },
     }, this.nextStub)

@@ -1,6 +1,6 @@
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
-const { projectManagementEditLabels } = require('~/src/apps/investment-projects/labels')
+const { projectManagementLabels } = require('~/src/apps/investment-projects/labels')
 
 describe('Investment form middleware - project magement', () => {
   describe('#populateForm', () => {
@@ -65,7 +65,7 @@ describe('Investment form middleware - project magement', () => {
           token: 'mock-token',
         },
       }, this.resMock, () => {
-        expect(this.resMock.locals.form.labels).to.deep.equal(projectManagementEditLabels)
+        expect(this.resMock.locals.form.labels).to.deep.equal(projectManagementLabels.edit)
         done()
       })
     })
