@@ -1,0 +1,32 @@
+{% extends "../_layout.njk" %}
+
+{% set phase = investmentData.stage.name %}
+{% set crm = investmentData.client_relationship_manager %}
+{% set rsa = investmentData.referral_source_adviser %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Assign project management</h2>
+
+  {% component 'key-value-table', items=briefInvestmentSummary, variant='striped' %}
+
+  {% call Form(form) %}
+    {{ MultipleChoiceField({
+      name: 'project_assurance_adviser',
+      label: form.labels.project_assurance_adviser,
+      error: form.errors.project_assurance_adviser,
+      options: form.options.advisers,
+      value: form.state.project_assurance_adviser,
+      initialOption: 'Select an adviser'
+    }) }}
+
+    {{ MultipleChoiceField({
+      name: 'project_manager',
+      label: form.labels.project_manager,
+      error: form.errors.project_manager,
+      options: form.options.advisers,
+      value: form.state.project_manager,
+      initialOption: 'Select an adviser'
+    }) }}
+
+  {% endcall %}
+{% endblock %}
