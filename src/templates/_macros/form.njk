@@ -104,7 +104,7 @@
  # @param {string} [props.inputName=term] - Search input name
  # @param {string} [props.inputHint] - Hint for input
  # @param {string} [props.method=GET] - Form method
- # @param {string} [props.modifier] - Search form modifier (e.g. global)
+ # @param {string, array} [props.modifier] - Search form modifier (e.g. global)
  # @param {string} [props.entityType=company] - Search entity type
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
@@ -116,7 +116,7 @@
   {% set inputPlaceholder = props.inputPlaceholder | default(props.inputLabel) -%}
   {% set isLabelHidden = props.isLabelHidden | default(true) %}
   {% set entityType = props.entityType | default('company') %}
-  {% set modifier = 'c-entity-search--' + props.modifier if props.modifier %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-entity-search--') if props.modifier %}
 
   {% call Form(props | assign({
     class: 'c-entity-search ' + modifier,
@@ -171,7 +171,7 @@
  # @param {string} [props.hint] - Field hint
  # @param {string} [props.error] - Field error
  # @param {string} [props.element=div] - Group element
- # @param {string} [props.modifier] - Group modifier
+ # @param {string, array} [props.modifier] - Group modifier
  # @param {boolean} [props.optional] - Marks field as optional
  # @param {boolean} [props.isLabelHidden=false] - Whether input label should be hidden
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
@@ -186,14 +186,16 @@
   {% set labelElement = 'label' if groupElement == 'div' else 'legend' %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
+
   {% if props.label and props.name -%}
     <{{ groupElement }}
       id="group-{{ props.fieldId }}"
       class="
         c-form-group
         {{ 'has-error' if props.error }}
-        {{ 'c-form-group--' + props.modifier if props.modifier}}
         {{ 'js-ConditionalSubfield' if isConditional }}
+        {{ modifier }}
         {{ props.class if props.class }}
       "
       {% if isConditional %}
@@ -225,19 +227,21 @@
  # Render form fieldset with inner content
  # @param {object} props - An object containing field properties
  # @param {string} props.legend - Fieldset legend
- # @param {string} [props.modifier] - Fieldset modifier
+ # @param {string, array} [props.modifier] - Fieldset modifier
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
  # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
  #
  # @callback {function} caller - Inner contents
 #}
 {% macro Fieldset(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
+
   <fieldset
     class="
       c-form-fieldset
       {{ props.class if props.class }}
+      {{ modifier }}
       {{ 'js-ConditionalSubfield' if props.condition }}
-      {{ 'c-form-fieldset--' + props.modifier if props.modifier }}
     "
     {% if props.condition %}
       data-controlled-by="{{ props.condition.name }}"
@@ -264,7 +268,7 @@
  # @param {string} [props.inputClass] - Input class name
  # @param {string} [props.hint] - Field hint
  # @param {string} [props.error] - Field error
- # @param {string} [props.modifier] - Field modifier
+ # @param {string, array} [props.modifier] - Field modifier
  # @param {boolean} [props.optional] - Marks field as optional
  #
  # @param {function} [props.caller] - Optional inner contents
@@ -272,6 +276,7 @@
 {% macro TextField(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
   {% set innerContent = caller() if caller else null %}
+
   {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, innerContent: innerContent, class: props.groupClass })) %}
     {% if props.type === 'textarea' %}
       {{ TextArea(props | assign({ class: props.inputClass })) }}
@@ -316,7 +321,7 @@
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
  # @param {string} [props.groupClass] - Group class name
- # @param {string} [props.modifier] - Field modifier
+ # @param {string, array} [props.modifier] - Field modifier
  #
  # @param {function} [props.caller] - Optional inner contents
  #}
@@ -337,17 +342,19 @@
  # @param {string} [props.class] - Field class name
  # @param {string} [props.value] - Initial value to set
  # @param {string} [props.placeholder] - Field placeholder
- # @param {string} [props.modifier] - form-control modifier
+ # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  #}
 {% macro Input(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+
   <input
     name="{{ props.name }}"
     type="{{ props.type if props.type else 'text' }}"
     id="{{ props.fieldId }}"
     {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
     value="{{ props.value }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
@@ -361,13 +368,15 @@
  # @param {string} [props.value] - Field type
  # @param {string} [props.class] - Field class name
  # @param {string} [props.placeholder] - Field placeholder
- # @param {string} [props.modifier] - form-control modifier
+ # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  #}
 {% macro TextArea(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+
   <textarea
     name="{{ props.name }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     id="{{ props.fieldId }}"
     placeholder="{{ props.placeholder }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
@@ -383,16 +392,18 @@
  # @param {string} props.fieldId - Field id
  # @param {string} [props.class] - Field class name
  # @param {string} [props.options] - Field options
- # @param {string} [props.modifier] - form-control modifier
+ # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.value] - Selected field value
  # @param {string} [props.initialOption] - Initial option label to use for empty value
  #}
 {% macro SelectBox(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+
   <select
     id="{{ props.fieldId }}"
     name="{{ props.name }}"
-    class="c-form-control {{ 'c-form-control--' + props.modifier if props.modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.initialOption %}
@@ -415,6 +426,7 @@
  # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
+ # @param {string} [props.initialOption] - Initial option label to use for empty value in select box
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}

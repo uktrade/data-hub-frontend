@@ -79,6 +79,35 @@
         })
       }}
 
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'feedbackType',
+          modifier: 'inline',
+          label: 'Inline inputs',
+          error: form.errors.messages.feedbackType,
+          options: [
+            { value: 'yes', label: 'Yes' },
+            { value: 'no', label: 'No' }
+          ],
+          value: form.data.feedbackType
+      }) }}
+
+      {% call Fieldset({ legend: 'Inline text fields' }) %}
+        {{ TextField({
+          name: 'firstName',
+          label: 'First name',
+          value: form.state.firstNameInline,
+          modifier: 'inline'
+        }) }}
+
+        {{ TextField({
+          name: 'lastName',
+          label: 'Last name',
+          value: form.state.lastNameInline,
+          modifier: 'inline'
+        }) }}
+      {% endcall %}
+
       {% call Fieldset({
         legend: 'A conditional set of fields',
         modifier: 'subfield',

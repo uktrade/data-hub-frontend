@@ -3,6 +3,7 @@
 .c-form-group {
   max-width: 40em;
 
+  [type="hidden"] + &,
   .c-form-fieldset__legend + & {
     margin-top: 0;
   }
@@ -56,6 +57,19 @@
 
 .c-form-group--inline {
   @include media(tablet) {
+    vertical-align: top;
+
+    &,
+    .c-form-group__inner {
+      display: inline-block;
+    }
+
+    .c-form-group__label:not(legend) {
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: $default-spacing-unit / 2;
+    }
+
     .c-form-control,
     .c-multiple-choice {
       width: auto;
@@ -65,6 +79,11 @@
 
     .c-multiple-choice {
       margin-right: $default-spacing-unit;
+    }
+
+    & + & {
+      margin-left: $default-spacing-unit;
+      margin-top: 0;
     }
   }
 }
