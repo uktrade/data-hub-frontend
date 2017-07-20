@@ -426,6 +426,7 @@
  # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
+ # @param {string} [props.initialOption] - Initial option label to use for empty value in select box
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
