@@ -206,7 +206,10 @@
         data-control-value="{{ props.condition.value }}"
       {% endif %}
     >
-      <{{ labelElement }} class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}" for="{{ props.fieldId }}">
+      <{{ labelElement }}
+        class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}"
+        {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
+      >
         <span class="c-form-group__label-text">
           {{ props.label }} {{ '(optional)' if props.optional }}
         </span>
