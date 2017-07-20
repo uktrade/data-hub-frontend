@@ -435,6 +435,22 @@
   {% if props.type in ['checkbox', 'radio'] %}
     {% set fieldChildren = props.children or [] %}
 
+    {% if props.type == 'radio' and props.initialOption %}
+      <div class="c-multiple-choice">
+        <input
+          class="c-multiple-choice__input"
+          type="{{ props.type }}"
+          name="{{ props.name }}"
+          id="{{ props.fieldId }}-0"
+          value=""
+          {% if not props.value %}checked{% endif %}
+        >
+        <label class="c-multiple-choice__label" for="{{ props.fieldId }}-0">
+          <span class="c-multiple-choice__label-text">{{ props.initialOption }}</span>
+        </label>
+      </div>
+    {% endif %}
+
     {% for option in props.options %}
       {% set selected = props.value or [] %}
       {% set optionChildren = option.children or [] %}

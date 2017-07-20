@@ -243,6 +243,7 @@
           type: 'radio',
           name: 'gender',
           label: 'Gender',
+          initialOption: 'Unspecified',
           options: [
             { label: 'Male' },
             { label: 'Female' }
@@ -260,7 +261,6 @@
             { label: 'Quality' },
             { label: 'Quanitity' }
           ],
-          initialOption: 'All',
           selected: form.state.filterBy,
           modifier: 'light'
         })
