@@ -1,4 +1,4 @@
-const { projectManagementTableLabels } = require('../../labels')
+const { projectManagementLabels } = require('../../labels')
 const { transformProjectManagementForView } = require('../../services/formatting')
 
 function getDetailsHandler (req, res, next) {
@@ -10,7 +10,7 @@ function getDetailsHandler (req, res, next) {
       .render('investment-projects/views/team/details', {
         currentNavItem: 'team',
         projectManagementData,
-        projectManagementTableLabels,
+        projectManagementLabels,
       })
   } catch (error) {
     next(error)

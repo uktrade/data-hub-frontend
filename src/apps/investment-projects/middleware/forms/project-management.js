@@ -1,7 +1,7 @@
 const { get } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
 const { updateInvestment } = require('../../repos')
-const { projectManagementEditLabels } = require('../../labels')
+const { projectManagementLabels } = require('../../labels')
 
 async function populateForm (req, res, next) {
   try {
@@ -17,7 +17,7 @@ async function populateForm (req, res, next) {
     .filter(adviser => adviser.label.trim().length > 0)
 
     res.locals.form = Object.assign({}, res.locals.form, {
-      labels: projectManagementEditLabels,
+      labels: projectManagementLabels.edit,
       state: {
         project_manager: get(investmentData, 'project_manager.id'),
         project_assurance_adviser: get(investmentData, 'project_assurance_adviser.id'),
@@ -31,6 +31,7 @@ async function populateForm (req, res, next) {
 
     next()
   } catch (error) {
+    console.log('EH:', error)
     next(error)
   }
 }

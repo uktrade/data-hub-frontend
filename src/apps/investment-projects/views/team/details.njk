@@ -28,7 +28,7 @@
     <p class="infostrip">Will be assigned during "Assign PM" stage.</p>
   {% elif projectManagementData %}
     {% component 'data-table', {
-      columns: projectManagementTableLabels,
+      columns: projectManagementLabels.view,
       data: projectManagementData
     } %}
     <p><a href="edit-project-management" class="button button-secondary">Change</a></p>

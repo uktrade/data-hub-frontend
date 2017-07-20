@@ -4,7 +4,7 @@ const { briefInvestmentSummaryLabels } = require('../../labels')
 const { getDataLabels } = require('../../../../lib/controller-utils')
 
 function getHandler (req, res, next) {
-  const briefInvestmentSummary = getDataLabels(res.locals.briefInvestmentSummaryData, briefInvestmentSummaryLabels)
+  const briefInvestmentSummary = getDataLabels(res.locals.briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
 
   res
     .breadcrumb('Project management')

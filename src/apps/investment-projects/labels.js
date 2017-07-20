@@ -94,24 +94,28 @@ const labels = {
       investment_land_date: 'Land date',
     },
   },
-  projectManagementEditLabels: {
-    project_manager: 'Project manager',
-    project_assurance_adviser: 'Project assurance adviser',
-  },
-  projectManagementTableLabels: {
-    role: 'Role',
-    adviser: 'Adviser',
-    team: 'Team',
+  projectManagementLabels: {
+    edit: {
+      project_manager: 'Project manager',
+      project_assurance_adviser: 'Project assurance adviser',
+    },
+    view: {
+      role: 'Role',
+      adviser: 'Adviser',
+      team: 'Team',
+    },
   },
   briefInvestmentSummaryLabels: {
-    sector: 'Primary sector',
-    investor_company: 'Client company',
-    website: 'Website',
-    account_tier: 'Account tier',
-    uk_region_locations: 'Possible UK locations',
-    competitor_countries: 'Competitor countries',
-    estimated_land_date: 'Estimated land date',
-    total_investment: 'Total investment',
+    view: {
+      sector: 'Primary sector',
+      investor_company: 'Client company',
+      website: 'Website',
+      account_tier: 'Account tier',
+      uk_region_locations: 'Possible UK locations',
+      competitor_countries: 'Competitor countries',
+      estimated_land_date: 'Estimated land date',
+      total_investment: 'Total investment',
+    },
   },
 }
 
