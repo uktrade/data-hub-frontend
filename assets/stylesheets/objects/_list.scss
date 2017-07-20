@@ -21,3 +21,8 @@
     border-top: 1px solid $border-colour;
   }
 }
+
+.list-disc {
+  list-style: disc outside;
+  padding-left: 1em;
+}
