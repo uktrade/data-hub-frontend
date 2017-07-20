@@ -429,6 +429,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} props.options - Field options
+ # @param {string, array} [props.modifier] - multiple-choice field modifier
  # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
@@ -437,9 +438,10 @@
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
     {% set fieldChildren = props.children or [] %}
+    {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
 
     {% if props.type == 'radio' and props.initialOption %}
-      <div class="c-multiple-choice">
+      <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
           type="{{ props.type }}"
@@ -457,7 +459,7 @@
     {% for option in props.options %}
       {% set selected = props.value or [] %}
       {% set optionChildren = option.children or [] %}
-      <div class="c-multiple-choice">
+      <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
           type="{{ props.type }}"
