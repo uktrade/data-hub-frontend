@@ -41,12 +41,16 @@ describe('Company add controller', function () {
         { label: 'Partnership', value: 'Partnership' },
         { label: 'Sole trader', value: 'Sole trader' },
       ]
+      const expectedForeign = [
+        { label: 'Company', value: 'Company' },
+        ...expected,
+      ]
       const res = {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expected)
-          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expected)
+          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expectedForeign)
           done()
         },
       }
