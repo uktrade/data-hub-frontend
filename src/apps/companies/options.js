@@ -12,7 +12,7 @@ const ukOtherCompanyOptions = [
   }
 })
 
-const foreignOtherCompanyOptions = [...ukOtherCompanyOptions]
+const foreignOtherCompanyOptions = [{ label: 'Company', value: 'Company' }, ...ukOtherCompanyOptions]
 
 module.exports = {
   ukOtherCompanyOptions,
