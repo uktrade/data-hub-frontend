@@ -1,4 +1,4 @@
-const { countryOptions } = require('../../../lib/metadata')
+const metadataRepo = require('../../../lib/metadata')
 const { saveCompany, getDitCompany } = require('../repos')
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
 const { containsFormData, flattenIdFields } = require('../../../lib/controller-utils')
@@ -78,6 +78,7 @@ async function edit (req, res, next) {
   try {
     await common(req, res)
 
+    const countryOptions = metadataRepo.countryOptions
     const data = {
       exportDetailsLabels,
       countryOptions,
