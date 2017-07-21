@@ -24,13 +24,21 @@ function getInflatedDitCompany (token, id) {
 
       // Build a list of advisers to lookup
       for (const interaction of company.interactions) {
-        adviserHash[interaction.dit_adviser] = true
+        const adviserId = get(interaction, 'dit_adviser.id')
+
+        if (adviserId) {
+          adviserHash[adviserId] = true
+        }
       }
       for (const serviceDelivery of serviceDeliveries) {
-        adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
+        const adviserId = get(serviceDelivery, 'relationships.dit_adviser.data.id')
+
+        if (adviserId) {
+          adviserHash[adviserId] = true
+        }
       }
 
-      // get the related adviors
+      // get the related advisers
       for (const adviserId of Object.keys(adviserHash)) {
         const adviser = await adviserRepository.getAdviser(token, adviserId)
         adviserHash[adviser.id] = adviser
