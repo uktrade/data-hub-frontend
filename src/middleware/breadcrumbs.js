@@ -27,6 +27,21 @@ function init () {
     return findIndex(breadcrumbs, breadcrumb) !== -1
   }
 
+  function updateBreadcrumb (existingName, { name, url }) {
+    const index = findIndex(breadcrumbs, (breadcrumb) => {
+      return breadcrumb.name.toLowerCase() === existingName.toLowerCase()
+    })
+
+    if (index >= 0) {
+      if (name) {
+        breadcrumbs[index].name = name
+      }
+      if (url) {
+        breadcrumbs[index].url = url
+      }
+    }
+  }
+
   function addBreadcrumbs (name, url) {
     if (arguments.length === 1) {
       if (isArray(name)) {
@@ -51,11 +66,11 @@ function init () {
           url: url,
         })
       }
-    } else {
-      return breadcrumbs
     }
+  }
 
-    return this
+  function getBreadcrumbs () {
+    return breadcrumbs
   }
 
   function cleanBreadcrumbs () {
@@ -64,7 +79,19 @@ function init () {
 
   return function (req, res, next) {
     cleanBreadcrumbs()
-    res.breadcrumb = addBreadcrumbs
+
+    res.breadcrumb = {
+      add: (...args) => {
+        addBreadcrumbs(...args)
+        return res
+      },
+      get: getBreadcrumbs,
+      update: (existingName, { name, url }) => {
+        updateBreadcrumb(existingName, { name, url })
+        return res
+      },
+    }
+
     next()
   }
 }
@@ -89,12 +116,12 @@ function setHome (options = {}) {
   const homeUrl = options.url || '/'
 
   return function (req, res, next) {
-    const homeBreadcrumb = find(res.breadcrumb(), (breadcrumb) => {
+    const homeBreadcrumb = find(res.breadcrumb.get(), (breadcrumb) => {
       return breadcrumb._home
     })
 
     if (!homeBreadcrumb) {
-      res.breadcrumb({
+      res.breadcrumb.add({
         name: homeName,
         url: homeUrl,
         _home: true,

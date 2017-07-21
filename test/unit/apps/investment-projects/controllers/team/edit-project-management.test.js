@@ -7,7 +7,13 @@ describe('Investment project, project management team, edit controller', () => {
     this.nextStub = this.sandbox.stub()
     this.flashStub = this.sandbox.stub()
     this.getDataLabelsStub = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/edit-project-management', {
       '../../../../lib/controller-utils': {
@@ -26,11 +32,10 @@ describe('Investment project, project management team, edit controller', () => {
         session: {
           token: 'abcd',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {
           investmentData,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
             expect(template).to.equal('investment-projects/views/team/edit-project-management')
@@ -39,7 +44,7 @@ describe('Investment project, project management team, edit controller', () => {
             done(e)
           }
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
 
     it('should get formatted data for summary view', (done) => {
@@ -51,12 +56,11 @@ describe('Investment project, project management team, edit controller', () => {
         session: {
           token: 'abcd',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {
           investmentData,
           briefInvestmentSummaryData,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
             expect(this.getDataLabelsStub).to.be.calledWith(briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
@@ -65,7 +69,7 @@ describe('Investment project, project management team, edit controller', () => {
             done(e)
           }
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
   })
 
@@ -77,14 +81,13 @@ describe('Investment project, project management team, edit controller', () => {
             token: 'abcd',
           },
           flash: this.flashStub,
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             form: {
               errors: {},
             },
             investmentData,
           },
-          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
@@ -94,7 +97,7 @@ describe('Investment project, project management team, edit controller', () => {
               done(e)
             }
           },
-        }, this.nextStub)
+        }), this.nextStub)
       })
     })
 
@@ -104,7 +107,7 @@ describe('Investment project, project management team, edit controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             form: {
               errors: {
@@ -112,8 +115,7 @@ describe('Investment project, project management team, edit controller', () => {
               },
             },
           },
-          breadcrumb: this.breadcrumbStub,
-        }, this.nextStub)
+        }), this.nextStub)
 
         expect(this.nextStub).to.be.calledOnce
       })

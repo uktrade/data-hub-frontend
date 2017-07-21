@@ -26,8 +26,8 @@ async function getContacts (req, res, next) {
     res.locals.addContactUrl = `/contacts/create?company=${res.locals.company.id}`
 
     res
-      .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
-      .breadcrumb('Contacts')
+      .breadcrumb.add(res.locals.company.name, `/companies/${res.locals.company.id}`)
+      .breadcrumb.add('Contacts')
       .render('companies/views/contacts')
   } catch (error) {
     next(error)

@@ -6,7 +6,13 @@ describe('Investment Interactions Index controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
     this.getInteractionsForInvestmentStub = this.sandbox.stub().resolves(interactionsListData)
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/interactions/list', {
       '../../../interactions/repos': {
@@ -28,11 +34,10 @@ describe('Investment Interactions Index controller', () => {
         params: {
           id: 'example-id-1234',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {
           investmentData,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, data) => {
           try {
             expect(template).to.equal('investment-projects/views/interactions/index')
@@ -43,7 +48,7 @@ describe('Investment Interactions Index controller', () => {
             done(error)
           }
         },
-      }, this.next)
+      }), this.next)
     })
   })
 })

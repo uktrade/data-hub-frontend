@@ -79,7 +79,13 @@ describe('Company controller, ltd', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
       '../services/data': {
@@ -111,25 +117,23 @@ describe('Company controller, ltd', function () {
         params: {
           id: '9999',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
           done()
         },
-      }, next)
+      }), next)
     })
     it('should return the company heading name and address', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals.headingName).to.equal('ADALEOP LTD')
           expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
           done()
         },
-      }
+      })
 
       companyControllerLtd.getDetails({
         session: {
@@ -141,9 +145,8 @@ describe('Company controller, ltd', function () {
       }, res, next)
     })
     it('should get a formatted copy of the company house data to display', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
           expect(res.locals).to.have.property('chDetails')
@@ -151,7 +154,7 @@ describe('Company controller, ltd', function () {
           expect(res.locals.chDetailsDisplayOrder).to.deep.equal(['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code'])
           done()
         },
-      }
+      })
 
       companyControllerLtd.getDetails({
         session: {
@@ -163,9 +166,8 @@ describe('Company controller, ltd', function () {
       }, res, next)
     })
     it('should get formatted data for CDMS company details', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
@@ -173,7 +175,7 @@ describe('Company controller, ltd', function () {
           expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
           done()
         },
-      }
+      })
 
       companyControllerLtd.getDetails({
         session: {
@@ -185,15 +187,14 @@ describe('Company controller, ltd', function () {
       }, res, next)
     })
     it('should provide account management information', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals).to.have.property('accountManagementDisplay')
           expect(res.locals).to.have.property('accountManagementDisplayLabels')
           done()
         },
-      }
+      })
 
       companyControllerLtd.getDetails({
         session: {
@@ -205,9 +206,8 @@ describe('Company controller, ltd', function () {
       }, res, next)
     })
     it('should use a template for ltd data', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/details-ltd')
@@ -216,7 +216,7 @@ describe('Company controller, ltd', function () {
             done(e)
           }
         },
-      }
+      })
 
       companyControllerLtd.getDetails({
         session: {
@@ -234,15 +234,14 @@ describe('Company controller, ltd', function () {
         session: { token: '1234' },
         params: { company_number: '00112233' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDefaultLtdFormForCHStub).to.be.calledWith(chCompany)
           expect(res.locals.formData).to.deep.equal(fakeCompanyForm)
           done()
         },
-      }
+      })
 
       companyControllerLtd.addDetails(req, res, next)
     })
@@ -256,14 +255,13 @@ describe('Company controller, ltd', function () {
         params: { company_number: '00112233' },
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals.formData).to.deep.equal(body)
           done()
         },
-      }
+      })
 
       companyControllerLtd.addDetails(req, res, next)
     })
@@ -272,9 +270,8 @@ describe('Company controller, ltd', function () {
         session: { token: '1234' },
         params: { company_number: '00112233' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getCHCompanyStub).to.be.calledWith('1234', '00112233')
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
@@ -282,7 +279,7 @@ describe('Company controller, ltd', function () {
           expect(res.locals).to.have.property('chDetails')
           done()
         },
-      }
+      })
 
       companyControllerLtd.addDetails(req, res, next)
     })
@@ -291,9 +288,8 @@ describe('Company controller, ltd', function () {
         session: { token: '1234' },
         params: { company_number: '00112233' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/edit-ltd')
@@ -302,7 +298,7 @@ describe('Company controller, ltd', function () {
             done(e)
           }
         },
-      }
+      })
 
       companyControllerLtd.addDetails(req, res, next)
     })
@@ -404,16 +400,15 @@ describe('Company controller, ltd', function () {
         session: { token: '1234' },
         params: { id: '9999' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
           expect(getLtdCompanyAsFormDataStub).to.be.calledWith(company)
           expect(res.locals.formData).to.deep.equal(fakeCompanyForm)
           done()
         },
-      }
+      })
 
       companyControllerLtd.editDetails(req, res, next)
     })
@@ -427,16 +422,15 @@ describe('Company controller, ltd', function () {
         params: { company_number: '00112233' },
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDitCompanyStub).to.not.be.called
           expect(getLtdCompanyAsFormDataStub).to.not.be.called
           expect(res.locals.formData).to.deep.equal(body)
           done()
         },
-      }
+      })
 
       companyControllerLtd.editDetails(req, res, next)
     })
@@ -450,9 +444,8 @@ describe('Company controller, ltd', function () {
         params: { company_number: '00112233' },
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/edit-ltd')
@@ -461,7 +454,7 @@ describe('Company controller, ltd', function () {
             done(e)
           }
         },
-      }
+      })
 
       companyControllerLtd.editDetails(req, res, next)
     })
@@ -473,14 +466,13 @@ describe('Company controller, ltd', function () {
         params: { company_number: '00112233' },
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(true)
           done()
         },
-      }
+      })
 
       companyControllerLtd.editDetails(req, res, next)
     })
@@ -492,14 +484,13 @@ describe('Company controller, ltd', function () {
         params: { company_number: '00112233' },
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           expect(res.locals.showTradingAddress).to.equal(false)
           done()
         },
-      }
+      })
 
       companyControllerLtd.editDetails(req, res, next)
     })
@@ -517,9 +508,8 @@ describe('Company controller, ltd', function () {
         flash: flashStub,
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           expect(saveCompanyFormStub).to.be.calledWith('1234', body)
           done()
@@ -527,7 +517,7 @@ describe('Company controller, ltd', function () {
         render: function () {
           throw Error('error')
         },
-      }
+      })
       companyControllerLtd.postDetails(req, res, next)
     })
     it('should forward to the detail screen if save is good', function (done) {
@@ -542,9 +532,8 @@ describe('Company controller, ltd', function () {
         flash: flashStub,
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         redirect: function (url) {
           expect(url).to.equal('/companies/view/ltd/999')
           done()
@@ -552,7 +541,7 @@ describe('Company controller, ltd', function () {
         render: function () {
           throw Error('error')
         },
-      }
+      })
       companyControllerLtd.postDetails(req, res, next)
     })
     it('should re-render the edit form with form data on error', function (done) {
@@ -592,9 +581,8 @@ describe('Company controller, ltd', function () {
         flash: flashStub,
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           throw Error('error')
         },
@@ -607,7 +595,7 @@ describe('Company controller, ltd', function () {
             done(e)
           }
         },
-      }
+      })
       companyControllerLtd.postDetails(req, res, next)
     })
     it('should flash a message to let people know they did something', function (done) {
@@ -622,9 +610,8 @@ describe('Company controller, ltd', function () {
         flash: flashStub,
         body,
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         redirect: function () {
           expect(flashStub).to.be.calledWith('success', 'Updated company record')
           done()
@@ -632,7 +619,7 @@ describe('Company controller, ltd', function () {
         render: function () {
           throw Error('error')
         },
-      }
+      })
       companyControllerLtd.postDetails(req, res, next)
     })
   })
@@ -646,10 +633,9 @@ describe('Company controller, ltd', function () {
           token: '1234',
         },
       }
-      res = {
+      res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
-      }
+      })
     })
     it('should include the require properties in the response', function () {
       companyControllerLtd.editCommon(req, res)

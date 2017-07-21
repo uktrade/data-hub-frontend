@@ -1,6 +1,6 @@
 function render (req, res) {
   return res
-    .breadcrumb('Add investment project')
+    .breadcrumb.add('Add investment project')
     .render('investment-projects/views/create-2')
 }
 

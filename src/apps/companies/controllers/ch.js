@@ -18,7 +18,7 @@ async function getDetails (req, res, next) {
     res.locals.addUrl = `/companies/add/ltd/${company.company_number}`
 
     res
-      .breadcrumb(company.name)
+      .breadcrumb.add(company.name)
       .render('companies/views/details-ch')
   } catch (error) {
     next(error)

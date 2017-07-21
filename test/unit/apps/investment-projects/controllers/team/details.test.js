@@ -6,7 +6,13 @@ describe('Investment team details controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.nextStub = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
     this.reqStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/edit-project-management', {
@@ -26,16 +32,15 @@ describe('Investment team details controller', () => {
       data.project_manager = null
       data.project_assurance_adviser = null
 
-      controller.getDetailsHandler(this.reqStub, {
+      controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
         locals: {
           investmentData: data,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, options) => {
           expect(options.projectManagementData).to.deep.equal(null)
           done()
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
 
     it('should return formatted data for the project manager and assurance adviser if there are both', (done) => {
@@ -49,16 +54,15 @@ describe('Investment team details controller', () => {
         team: 'Team A',
       }]
 
-      controller.getDetailsHandler(this.reqStub, {
+      controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
         locals: {
           investmentData: Object.assign({}, investmentData),
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, options) => {
           expect(options.projectManagementData).to.deep.equal(expectedProjectManagementData)
           done()
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
 
     it('should return formatted data for project manager, and todo for assurance officer if no assurance officer', (done) => {
@@ -76,16 +80,15 @@ describe('Investment team details controller', () => {
         team: 'Team A',
       }]
 
-      controller.getDetailsHandler(this.reqStub, {
+      controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
         locals: {
           investmentData: data,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, options) => {
           expect(options.projectManagementData).to.deep.equal(expectedProjectManagementData)
           done()
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
 
     it('should return formatted data for assurance adviser and todo for project manager is there is no project manager', (done) => {
@@ -103,42 +106,39 @@ describe('Investment team details controller', () => {
         team: null,
       }]
 
-      controller.getDetailsHandler(this.reqStub, {
+      controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
         locals: {
           investmentData: data,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, options) => {
           expect(options.projectManagementData).to.deep.equal(expectedProjectManagementData)
           done()
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
   })
 
   it('should return labels for the table', (done) => {
-    controller.getDetailsHandler(this.reqStub, {
+    controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
       locals: {
         investmentData: Object.assign({}, investmentData),
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
         expect(options.projectManagementLabels).to.deep.equal(projectManagementLabels)
         done()
       },
-    }, this.nextStub)
+    }), this.nextStub)
   })
 
   it('should use the correct template to render', (done) => {
-    controller.getDetailsHandler(this.reqStub, {
+    controller.getDetailsHandler(this.reqStub, Object.assign(this.resMock, {
       locals: {
         investmentData: Object.assign({}, investmentData),
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
         expect(template).to.equal('investment-projects/views/team/details')
         done()
       },
-    }, this.nextStub)
+    }), this.nextStub)
   })
 })

@@ -9,6 +9,14 @@ describe('Company contacts controller', function () {
   }
 
   beforeEach(function () {
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
+
     company = {
       id: '3f2b2a0f-0eb6-4299-8489-7390ccaa17f5',
       name: 'Fred',
@@ -186,18 +194,17 @@ describe('Company contacts controller', function () {
         session: {},
         params: { id: '1' },
       }
-      res = {
+      res = Object.assign(this.resMock, {
         locals: {
           headingName: 'Freds Company',
           headingAddress: '1234 Road, London, EC1 1AA',
           id: '44332211',
         },
-        breadcrumb: function () { return this },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()
         },
-      }
+      })
 
       companyContactController = proxyquire('~/src/apps/companies/controllers/contacts', {
         '../services/data': {

@@ -26,7 +26,13 @@ describe('Investment start controller', () => {
     this.getCompanyInvestmentProjects = this.sandbox.stub().resolves(investmentProjects)
     this.searchForeignCompanies = this.sandbox.stub().resolves(searchResults)
     this.buildPagination = this.sandbox.stub().returns(null)
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/create-1', {
       '../../companies/services/data': {
@@ -56,9 +62,8 @@ describe('Investment start controller', () => {
             token,
           },
           query: {},
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.clientCompany).to.be.undefined
@@ -69,7 +74,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
 
@@ -82,9 +87,8 @@ describe('Investment start controller', () => {
           query: {
             'client-company': '12345',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -98,7 +102,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
 
@@ -115,9 +119,8 @@ describe('Investment start controller', () => {
           query: {
             'client-company': '12345',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompany).to.be.calledWith(token, '12345')
@@ -131,7 +134,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
 
       it('should render search', (done) => {
@@ -143,9 +146,8 @@ describe('Investment start controller', () => {
             'client-company': '12345',
             'show-search': true,
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.showSearch).to.equal(true)
@@ -154,7 +156,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
 
@@ -168,9 +170,8 @@ describe('Investment start controller', () => {
             'client-company': '12345',
             'q': 'samsung',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(data.searchTerm).to.equal('samsung')
@@ -181,7 +182,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
   })
@@ -228,8 +229,7 @@ describe('Investment start controller', () => {
           body: {
             'client-company': '12345',
           },
-        }, {
-          breadcrumb: this.breadcrumbStub,
+        }, Object.assign(this.resMock, {
           render: (template, data) => {
             try {
               expect(data.clientCompany).to.deep.equal(ukCompany)
@@ -239,7 +239,7 @@ describe('Investment start controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
   })

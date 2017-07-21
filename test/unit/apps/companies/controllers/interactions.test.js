@@ -84,7 +84,13 @@ describe('Company interactions controller', function () {
       },
     })
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
   })
 
   describe('data', function () {
@@ -93,15 +99,14 @@ describe('Company interactions controller', function () {
         session: { token: '1234' },
         params: { id: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(2)
           done()
         },
-      }
+      })
       companyinteractioncontroller.getInteractions(req, res, next)
     })
     it('should return a url to add interactions if a valid company and has contacts', function (done) {
@@ -109,14 +114,13 @@ describe('Company interactions controller', function () {
         session: { token: '1234' },
         params: { id: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.have.property('addInteractionUrl')
           done()
         },
-      }
+      })
       companyinteractioncontroller.getInteractions(req, res, next)
     })
     it('should not return a url to add interactions if not a valid company', function (done) {
@@ -131,14 +135,13 @@ describe('Company interactions controller', function () {
         session: { token: '1234' },
         params: { id: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
         },
-      }
+      })
       companyinteractioncontroller.getInteractions(req, res, next)
     })
     it('should not return a url to add interactions if no contacts', function (done) {
@@ -152,14 +155,13 @@ describe('Company interactions controller', function () {
         session: { token: '1234' },
         params: { id: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.not.have.property('addInteractionUrl')
           done()
         },
-      }
+      })
       companyinteractioncontroller.getInteractions(req, res, next)
     })
   })

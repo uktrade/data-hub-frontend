@@ -13,8 +13,12 @@ describe('Investment evaluation controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
-    this.breadcrumbStub = function () {
-      return this
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
     }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/evaluation', {
@@ -34,11 +38,10 @@ describe('Investment evaluation controller', () => {
         session: {
           token: 'abcd',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {
           investmentData,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template, data) => {
           try {
             expect(template).to.equal('investment-projects/views/evaluation')
@@ -48,7 +51,7 @@ describe('Investment evaluation controller', () => {
             done(error)
           }
         },
-      }, this.next)
+      }), this.next)
     })
   })
 
@@ -89,11 +92,10 @@ describe('Investment evaluation controller', () => {
       session: {
         token: 'abcd',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData,
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(template).to.equal('investment-projects/views/evaluation')
@@ -106,7 +108,7 @@ describe('Investment evaluation controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
 
   it('should return evaluation details with correct investment data with UK company', (done) => {
@@ -159,11 +161,10 @@ describe('Investment evaluation controller', () => {
       session: {
         token: 'abcd',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: investmentDataUkCompany,
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(template).to.equal('investment-projects/views/evaluation')
@@ -176,6 +177,6 @@ describe('Investment evaluation controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
 })

@@ -2,7 +2,7 @@ const { isEmpty } = require('lodash')
 
 function createGetInteractionHandler (req, res, next) {
   return res
-    .breadcrumb('Add interaction')
+    .breadcrumb.add('Add interaction')
     .render('investment-projects/views/interactions/create')
 }
 

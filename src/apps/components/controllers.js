@@ -27,7 +27,7 @@ const foreignOtherCompanyOptions = [
 
 function renderFormElements (req, res) {
   return res
-    .breadcrumb('Form elements')
+    .breadcrumb.add('Form elements')
     .render('components/views/form', {
       entitySearch: Object.assign({}, res.locals.entitySearch, {
         searchTerm: req.query.term,
@@ -46,25 +46,25 @@ function renderFormElements (req, res) {
 
 function renderMessages (req, res) {
   return res
-    .breadcrumb('Application messages')
+    .breadcrumb.add('Application messages')
     .render('components/views/messages')
 }
 
 function renderBreadcrumbs (req, res) {
   return res
-    .breadcrumb('Breadcrumbs')
+    .breadcrumb.add('Breadcrumbs')
     .render('components/views/breadcrumbs')
 }
 
 function renderPagination (req, res) {
   return res
-    .breadcrumb('Pagination')
+    .breadcrumb.add('Pagination')
     .render('components/views/pagination')
 }
 
 async function renderEntityList (req, res) {
   return res
-    .breadcrumb('Entity list')
+    .breadcrumb.add('Entity list')
     .render('components/views/entity-list', {
       investmentProjects: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`),
       companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),

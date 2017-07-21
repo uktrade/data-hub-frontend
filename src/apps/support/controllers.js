@@ -4,7 +4,7 @@ function renderFeedbackPage (req, res) {
 
 function renderThankYouPage (req, res) {
   res
-    .breadcrumb('Thank you')
+    .breadcrumb.add('Thank you')
     .render('support/views/thank-you')
 }
 

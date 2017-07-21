@@ -50,7 +50,11 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
     }
 
-    res.breadcrumb({
+    res.breadcrumb.update('Investment projects', {
+      url: `/companies/${investmentData.investor_company.id}/investments`,
+    })
+
+    res.breadcrumb.add({
       name: investmentData.name,
       url: `/investment-projects/${investmentData.id}`,
     })

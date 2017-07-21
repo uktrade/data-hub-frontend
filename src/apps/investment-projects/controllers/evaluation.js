@@ -19,7 +19,7 @@ function renderEvaluationPage (req, res, next) {
 
   if (get(res, 'locals.investmentData')) {
     return res
-      .breadcrumb('Evaluation')
+      .breadcrumb.add('Evaluation')
       .render('investment-projects/views/evaluation', {
         value: getDataLabels(transformedValue, evaluationValueLabels.view),
         fdi: getDataLabels(Object.assign({}, transformedValue, transformedFDI), evaluationFdiLabels.view),

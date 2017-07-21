@@ -13,6 +13,13 @@ describe('Company add controller', function () {
   let companyAddController
 
   beforeEach(function () {
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
     searchLimitedCompaniesStub = sinon.stub().resolves(companiesHouseAndLtdCompanies)
     getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
@@ -56,7 +63,7 @@ describe('Company add controller', function () {
     })
     it('should return labels for the types and error messages', function (done) {
       const req = { session: {} }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
@@ -69,14 +76,14 @@ describe('Company add controller', function () {
           expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
           done()
         },
-      }
+      })
 
       companyAddController.getAddStepOne(req, res, next)
     })
     it('should pass through the request body to show previosuly selected options', function (done) {
       const body = { business_type: '1231231231232' }
       const req = { body, session: {} }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
@@ -89,7 +96,7 @@ describe('Company add controller', function () {
           expect(allOptions.company).to.deep.equal(body)
           done()
         },
-      }
+      })
 
       companyAddController.getAddStepOne(req, res, next)
     })
@@ -103,13 +110,13 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           redirect: function (url) {
             expect(url).to.equal('/companies/add-step-2/?business_type=ltd&country=uk')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
       it('should forward the user to add screen when adding uk other', function (done) {
@@ -120,13 +127,13 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           redirect: function (url) {
             expect(url).to.equal('/companies/add/ukother?business_type=Charity&country=uk')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
       it('should forward the user to add screen when adding a foreign company', function (done) {
@@ -137,13 +144,13 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           redirect: function (url) {
             expect(url).to.equal('/companies/add/foreign?business_type=Charity&country=non-uk')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
     })
@@ -153,14 +160,14 @@ describe('Company add controller', function () {
           body: {},
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.errors.messages).to.have.property('business_type')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
       it('should show an error if other uk selected but no option selected from the list', function (done) {
@@ -170,14 +177,14 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.errors.messages).to.have.property('business_type_uk_other')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
       it('should show an error if foreign selected but no option selected from the list', function (done) {
@@ -187,14 +194,14 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.errors.messages).to.have.property('business_type_for_other')
             done()
           },
-        }
+        })
         companyAddController.postAddStepOne(req, res, next)
       })
     })
@@ -209,13 +216,13 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             expect(template).to.equal('companies/views/add-step-2.njk')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should pass the company type labels', function (done) {
@@ -226,7 +233,7 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
@@ -238,7 +245,7 @@ describe('Company add controller', function () {
             })
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should pass through the query variables', function (done) {
@@ -249,7 +256,7 @@ describe('Company add controller', function () {
           },
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
@@ -257,7 +264,7 @@ describe('Company add controller', function () {
             expect(allOptions.country).to.equal('uk')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
     })
@@ -273,13 +280,13 @@ describe('Company add controller', function () {
             term: 'test',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             expect(searchLimitedCompaniesStub).to.be.calledWith({ searchTerm: 'test', token: '1234' })
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include parsed search results in page', function (done) {
@@ -293,7 +300,7 @@ describe('Company add controller', function () {
             term: 'test',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
@@ -301,7 +308,7 @@ describe('Company add controller', function () {
             expect(company.name).to.equal('ACHME LIMITED')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include business information after search in page when selected is blank', function (done) {
@@ -316,7 +323,7 @@ describe('Company add controller', function () {
             selected: '',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
@@ -325,7 +332,7 @@ describe('Company add controller', function () {
             expect(allOptions.searchTerm).to.equal('test')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include business information after search in page when selected has a value', function (done) {
@@ -340,7 +347,7 @@ describe('Company add controller', function () {
             selected: '9999',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
@@ -349,7 +356,7 @@ describe('Company add controller', function () {
             expect(allOptions.searchTerm).to.equal('test')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
     })
@@ -366,13 +373,13 @@ describe('Company add controller', function () {
             selected: '08311441',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             expect(getCHCompanyStub).to.be.calledWith('1234', '08311441')
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should parse the CH details for display', function (done) {
@@ -387,13 +394,13 @@ describe('Company add controller', function () {
             selected: '08311441',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             expect(getDisplayCHStub).to.have.been.called
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
       it('should include labels and display order for the table', function (done) {
@@ -408,14 +415,14 @@ describe('Company add controller', function () {
             selected: '08311441',
           },
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {},
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.displayDetails).to.deep.equal(displayHouseCompany)
             done()
           },
-        }
+        })
         companyAddController.getAddStepTwo(req, res, next)
       })
     })

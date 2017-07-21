@@ -51,7 +51,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
 
     res
-      .breadcrumb('Add service delivery')
+      .breadcrumb.add('Add service delivery')
       .render('service-deliveries/views/edit')
   } catch (error) {
     next(error)
@@ -76,7 +76,7 @@ async function postServiceDeliveryEdit (req, res, next) {
         res.locals.errors = transformV2Errors(response.error.errors)
         try {
           res.locals.serviceDelivery = await serviceDeliveryService.convertFormBodyBackToServiceDelivery(req.session.token, req.body)
-          res.breadcrumb('Edit service delivery')
+          res.breadcrumb.add('Edit service delivery')
         } catch (error) {
           return next(error)
         }
