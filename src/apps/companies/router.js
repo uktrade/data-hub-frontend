@@ -42,6 +42,11 @@ router
   .post(foreignController.postDetails)
 
 router
+  .route('/add/ltd/:id')
+  .get(foreignController.editCommon, ltdController.addDetails)
+  .post(foreignController.postDetails)
+
+router
   .route('/add/ltd')
   .get(foreignController.editCommon, ltdController.addDetails)
   .post(foreignController.postDetails)

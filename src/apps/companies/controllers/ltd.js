@@ -54,8 +54,9 @@ function editCommon (req, res, next) {
 }
 
 async function addDetails (req, res, next) {
+  const companyNumber = req.params.company_number || req.params.id
   try {
-    res.locals.chCompany = await companyRepository.getCHCompany(req.session.token, req.params.company_number)
+    res.locals.chCompany = await companyRepository.getCHCompany(req.session.token, companyNumber)
     res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.chCompany)
 
     if (containsFormData(req)) {
