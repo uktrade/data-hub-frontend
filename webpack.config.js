@@ -7,6 +7,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 const config = require('./config')
 
+const webpackConfigs = {}
+
 const common = {
   devtool: 'source-map',
   entry: {
@@ -85,7 +87,7 @@ const common = {
   ],
 }
 
-const develop = merge.smart(common, {
+webpackConfigs.develop = merge.smart(common, {
   output: {
     filename: 'js/[name].js',
   },
@@ -107,7 +109,7 @@ const develop = merge.smart(common, {
   ],
 })
 
-const prod = merge.smart(common, {
+webpackConfigs.prod = merge.smart(common, {
   devtool: false,
   output: {
     filename: 'js/[name].[chunkhash:8].js',
@@ -132,8 +134,11 @@ const prod = merge.smart(common, {
   ],
 })
 
-if (config.isProd) {
-  module.exports = prod
-} else {
-  module.exports = develop
-}
+webpackConfigs.docker = merge.smart(webpackConfigs.develop, {
+  watchOptions: {
+    poll: 1000,
+  },
+})
+
+const webpackEnv = process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
+module.exports = webpackConfigs[webpackEnv]

@@ -2,14 +2,13 @@ version: "3"
 services:
   redis:
     image: redis
-  datahub-invest-fe:
+  datahub-fe:
     env_file:
      - .env
     build:
       context: .
     ports:
       - 3000:3000
-      - 5858:5858
       - 9229:9229
     environment:
      - API_ROOT
@@ -17,9 +16,26 @@ services:
      - API_CLIENT_SECRET
      - POSTCODE_KEY
     volumes:
+      - ./assets:/usr/src/app/assets
+      - ./common:/usr/src/app/common
+      - ./config:/usr/src/app/config
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
-      - ./build:/usr/src/app/build
-    command: npm run develop
+    command: ./node_modules/.bin/nodemon $NODE_DEBUG_OPTION --inspect -L
     links:
       - redis
+  webpack:
+    build:
+      context: .
+    ports:
+      - 3001:3001
+      - 3002:3002
+    environment:
+      - WEBPACK_ENV="docker"
+    volumes:
+      - ./assets:/usr/src/app/assets
+      - ./common:/usr/src/app/common
+      - ./config:/usr/src/app/config
+    command: ./node_modules/.bin/webpack --watch --watch-poll --progress
+    links:
+      - datahub-fe

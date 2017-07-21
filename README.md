@@ -61,6 +61,7 @@ This file expects the following environment variables:
 | ZEN_BROWSER | Zendesk browser ID |
 | ZEN_IMPACT | Zendesk impact ID |
 | ZEN_SERVICE | Zendesk service ID |
+| WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
 
 Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
