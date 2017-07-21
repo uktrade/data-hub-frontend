@@ -66,7 +66,7 @@
     {{ caller() }}
 
     {% if not props.disableFormActions %}
-      <div class="c-form-group">
+      <div class="c-form-group c-form-group--actions">
         <button class="button">{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
@@ -105,6 +105,7 @@
  # @param {string} [props.inputHint] - Hint for input
  # @param {string} [props.method=GET] - Form method
  # @param {string, array} [props.modifier] - Search form modifier (e.g. global)
+ # @param {string, array} [props.fieldModifier] - Form field modifier
  # @param {string} [props.entityType=company] - Search entity type
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
@@ -126,7 +127,8 @@
     inputName: inputName,
     inputPlaceholder: inputPlaceholder,
     isLabelHidden: isLabelHidden,
-    entityType: entityType
+    entityType: entityType,
+    fieldModifier: props.fieldModifier
   })) %}
 
     {% call TextField({
@@ -137,7 +139,8 @@
       hint: props.inputHint,
       label: props.inputLabel,
       placeholder: props.inputPlaceholder,
-      isLabelHidden: props.isLabelHidden
+      isLabelHidden: props.isLabelHidden,
+      modifier: props.fieldModifier
     }) %}
       <button class="c-entity-search__button">Search</button>
     {% endcall %}
@@ -203,7 +206,10 @@
         data-control-value="{{ props.condition.value }}"
       {% endif %}
     >
-      <{{ labelElement }} class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}" for="{{ props.fieldId }}">
+      <{{ labelElement }}
+        class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}"
+        {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
+      >
         <span class="c-form-group__label-text">
           {{ props.label }} {{ '(optional)' if props.optional }}
         </span>
@@ -423,6 +429,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} props.options - Field options
+ # @param {string, array} [props.modifier] - multiple-choice field modifier
  # @param {string} [props.value] - Checked field value
  # @param {string} [props.children] - Main field subfields
  # @param {string} [props.options[].subfield] - Field options subfields
@@ -431,11 +438,28 @@
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
     {% set fieldChildren = props.children or [] %}
+    {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
+
+    {% if props.type == 'radio' and props.initialOption %}
+      <div class="c-multiple-choice {{ modifier }}">
+        <input
+          class="c-multiple-choice__input"
+          type="{{ props.type }}"
+          name="{{ props.name }}"
+          id="{{ props.fieldId }}-0"
+          value=""
+          {% if not props.value %}checked{% endif %}
+        >
+        <label class="c-multiple-choice__label" for="{{ props.fieldId }}-0">
+          <span class="c-multiple-choice__label-text">{{ props.initialOption }}</span>
+        </label>
+      </div>
+    {% endif %}
 
     {% for option in props.options %}
       {% set selected = props.value or [] %}
       {% set optionChildren = option.children or [] %}
-      <div class="c-multiple-choice">
+      <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
           type="{{ props.type }}"
