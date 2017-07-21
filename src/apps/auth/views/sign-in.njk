@@ -1,5 +1,9 @@
 {% extends "_layouts/datahub-base.njk" %}
 
+{% block local_header %}
+  {{ LocalHeader({ pageHeading: 'Sign in', messages: messages }) }}
+{% endblock %}
+
 {% block body_main_content %}
   {% call Form(form | assign({ buttonText: 'Sign in' })) %}
     {{ TextField({
