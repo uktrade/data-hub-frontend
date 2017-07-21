@@ -25,7 +25,7 @@ module.exports = function locals (req, res, next) {
 
       if (title) {
         if (items.length === 1) {
-          return title
+          return [title]
         }
 
         items.pop()
