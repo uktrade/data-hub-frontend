@@ -1,25 +1,28 @@
 {% extends "_layouts/datahub-base.njk" %}
 
-{% block body_main_header_content %}
-  {% if query.contact %}
-    {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
-    <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
-  {% elseif query.company %}
-    {% set backUrl="/companies/" + query.company + "/interactions" %}
-    <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
-  {% endif %}
-
-  <h1 class="heading-xlarge">
-    {% if serviceDelivery.id %}
-      Edit service delivery
-    {% else %}
-      Add service delivery
+{% block local_header %}
+  {% set pageHeadingBefore %}
+    {% if query.contact %}
+      {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
+      <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
+    {% elseif query.company %}
+      {% set backUrl="/companies/" + query.company + "/interactions" %}
+      <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
     {% endif %}
-  </h1>
-  {{ errorPanel( errors, labels=labels ) }}
+  {% endset %}
+
+  {{
+    LocalHeader({
+      pageHeadingBefore: pageHeadingBefore,
+      pageHeading: 'Edit service delivery' if serviceDelivery.id else 'Add service delivery',
+      breadcrumbs: BREADCRUMBS,
+      modifier: 'light-banner'
+    })
+  }}
 {% endblock %}
 
 {% block body_main_content %}
+  {{ errorPanel( errors, labels=labels ) }}
   <form method="POST">
     <input type="hidden" name="company" value="{{serviceDelivery.company.id}}">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">

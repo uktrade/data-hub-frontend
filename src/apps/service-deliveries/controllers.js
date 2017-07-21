@@ -51,7 +51,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
 
     res
-      .breadcrumb('Add service delivery')
+      .breadcrumb('Edit service delivery')
       .render('service-deliveries/views/edit')
   } catch (error) {
     next(error)
@@ -90,10 +90,15 @@ async function postServiceDeliveryEdit (req, res, next) {
 }
 
 function getServiceDeliveryDetails (req, res, next) {
-  res.locals.serviceDeliveryDetails = getDisplayServiceDelivery(res.locals.serviceDelivery)
-  res.locals.serviceDeliveryLabels = serviceDeliverylabels
-  res.locals.serviceDeliveryDisplayOrder = serviceDeliveryDisplayOrder
-  res.render('service-deliveries/views/details')
+  res.locals = Object.assign({}, res.locals, {
+    serviceDeliveryDetails: getDisplayServiceDelivery(res.locals.serviceDelivery),
+    serviceDeliveryLabels: serviceDeliverylabels,
+    serviceDeliveryDisplayOrder: serviceDeliveryDisplayOrder,
+  })
+
+  res
+    .breadcrumb('Service delivery details')
+    .render('service-deliveries/views/details')
 }
 
 module.exports = {

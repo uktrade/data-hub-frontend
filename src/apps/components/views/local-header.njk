@@ -1,0 +1,56 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  {% call Example('Standard') %}
+    {{
+      LocalHeader({
+        pageHeadingBefore: '<strong>Strong text before <a href="#">with a link</a></strong>',
+        pageHeading: 'Standard header',
+        breadcrumbs: BREADCRUMBS
+      })
+    }}
+  {% endcall %}
+
+  {% call Example('Light banner') %}
+    {{
+      LocalHeader({
+        pageHeading: 'Light banner',
+        breadcrumbs: BREADCRUMBS,
+        modifier: 'light-banner'
+      })
+    }}
+  {% endcall %}
+
+  {% call Example('Light banner + keyline') %}
+    {{
+      LocalHeader({
+        pageHeadingBefore: '<em>Emphasied text before</em>',
+        pageHeading: 'Light banner with keyline',
+        breadcrumbs: BREADCRUMBS,
+        modifier: ['light-banner', 'keyline']
+      })
+    }}
+  {% endcall %}
+
+  {% call Example('Dark banner') %}
+    {{
+      LocalHeader({
+        pageHeadingBefore: 'Raw text before',
+        pageHeading: 'Dark banner',
+        breadcrumbs: BREADCRUMBS,
+        modifier: 'dark-banner'
+      })
+    }}
+  {% endcall %}
+
+  {% call Example('Dark banner + keyline') %}
+    {{
+      LocalHeader({
+        pageHeadingBefore: '<strong>Strong text before</strong>',
+        pageHeading: 'Dark banner with keyline',
+        breadcrumbs: BREADCRUMBS,
+        modifier: ['dark-banner', 'keyline']
+      })
+    }}
+  {% endcall %}
+{% endblock %}
