@@ -1,7 +1,7 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  {% call Example('Standard') %}
+  {% call Example('Standard', true) %}
     {{
       LocalHeader({
         pageHeadingBefore: '<strong>Strong text before <a href="#">with a link</a></strong>',
@@ -11,7 +11,7 @@
     }}
   {% endcall %}
 
-  {% call Example('Light banner') %}
+  {% call Example('Light banner', true) %}
     {{
       LocalHeader({
         pageHeading: 'Light banner',
@@ -21,7 +21,7 @@
     }}
   {% endcall %}
 
-  {% call Example('Light banner + keyline') %}
+  {% call Example('Light banner + keyline', true) %}
     {{
       LocalHeader({
         pageHeadingBefore: '<em>Emphasied text before</em>',
@@ -32,7 +32,7 @@
     }}
   {% endcall %}
 
-  {% call Example('Dark banner') %}
+  {% call Example('Dark banner', true) %}
     {{
       LocalHeader({
         pageHeadingBefore: 'Raw text before',
@@ -43,7 +43,7 @@
     }}
   {% endcall %}
 
-  {% call Example('Dark banner + keyline') %}
+  {% call Example('Dark banner + keyline', true) %}
     {{
       LocalHeader({
         pageHeadingBefore: '<strong>Strong text before</strong>',

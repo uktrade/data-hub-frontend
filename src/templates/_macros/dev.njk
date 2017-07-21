@@ -1,5 +1,5 @@
-{% macro Example(title) %}
-  <article class="example" {% if title %}id="{{ title | urlencode }}"{% endif %}>
+{% macro Example(title, isWide = false) %}
+  <article class="example {{ 'example--wide' if isWide }}" {% if title %}id="{{ title | urlencode }}"{% endif %}>
     <header class="example__header">
       {% if title %}
         <h3 class="example__title">{{ title }}</h3>
