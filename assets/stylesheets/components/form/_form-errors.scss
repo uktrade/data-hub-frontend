@@ -4,6 +4,7 @@
   border: 5px solid $error-colour;
   padding: $default-spacing-unit;
   max-width: 40em;
+  margin-bottom: $default-spacing-unit * 2;
 
   &:focus {
     outline: 3px solid $focus-colour;
