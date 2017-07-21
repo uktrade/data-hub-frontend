@@ -1,19 +1,24 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="u-visually-hidden">Company Details</h1>
-  <h2 class="page-heading">{{ headingName }}</h2>
-  <p>{{ headingAddress }}</p>
-
-  {% if company.archived %}
-    <p class="infostrip">
-      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
-      <strong>Reason:</strong> {{company.archived_reason}}<br>
-      <br>
-      <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
-    </p>
-  {% endif %}
+{% block local_header %}
+  {% call LocalHeader({
+      pageHeading: headingName,
+      breadcrumbs: BREADCRUMBS,
+      modifier: 'light-banner'
+    })
+  %}
+    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+    {% if company.archived %}
+      <p class="infostrip">
+        This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+        <strong>Reason:</strong> {{company.archived_reason}}<br>
+        <br>
+        <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 {% endblock %}
+
 
 {% block main_grid_left_column %}
   <nav class="local-nav">

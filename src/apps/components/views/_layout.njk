@@ -1,11 +1,3 @@
 {% extends "_layouts/datahub-base.njk" %}
 
-{% set heading = title or getPageTitle()[0] %}
-
 {% from "_macros/dev.njk" import Example %}
-
-{% if heading %}
-  {% block body_main_header_content %}
-    <h1 class="heading-xlarge">{{ heading }}</h1>
-  {% endblock %}
-{% endif %}

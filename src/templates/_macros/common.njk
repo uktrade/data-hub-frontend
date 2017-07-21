@@ -49,3 +49,45 @@
     </nav>
   {% endif %}
 {% endmacro %}
+
+{##
+ # Render page local header
+ # @param {object} props - An object containing local header properties
+ # @param {string} [pageHeading] - page heading
+ # @param {string} [pageHeadingBefore] - a string before heading (safe to render HTML)
+ # @param {string} [pageHeadingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {object} [breadcrumbs] - an object containing page breadcrumbs
+ # @param {object} [messages] - an object containing flash messages
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro LocalHeader(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
+
+  {% if props %}
+    <header class="c-local-header {{ modifier }}">
+      <div class="container">
+        {% if props.breadcrumbs|length %}
+          {% component 'breadcrumbs', { items: props.breadcrumbs } %}
+        {% endif %}
+        {% if props.messages|length %}
+          {% component 'messages', { messages: props.messages } %}
+        {% endif %}
+
+        {% if props.pageHeadingBefore %}
+          <div class="c-local-header__heading-before">
+            {{ props.pageHeadingBefore | safe }}
+          </div>
+        {% endif %}
+
+        {% if props.pageHeading %}
+          <h1 class="c-local-header__heading">
+            {{ props.pageHeading }} {{ props.pageHeadingSuffix | safe }}
+          </h1>
+        {% endif %}
+
+        {{ caller() if caller }}
+      </div>
+    </header>
+  {% endif %}
+{% endmacro %}

@@ -1,11 +1,11 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="page-heading">
-    {% if formData.id %}
-      Edit company
-    {% else %}
-      Add company
-    {% endif %}
-  </h1>
+{% block local_header %}
+  {{
+    LocalHeader({
+      pageHeading: 'Edit company' if formData.id else 'Add company',
+      breadcrumbs: BREADCRUMBS,
+      modifier: 'light-banner'
+    })
+  }}
 {% endblock %}

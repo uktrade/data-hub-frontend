@@ -13,7 +13,7 @@
 
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/form.njk" import Fieldset, TextField, MultipleChoiceField, HiddenField %}
-{% from "_macros/common.njk" import Pagination %}
+{% from "_macros/common.njk" import LocalHeader, Pagination %}
 {% from "_macros/address.njk" import addressFormatter %}
 
 {% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
@@ -60,9 +60,13 @@
   </nav>
 {% endblock %}
 
-{% block body_main_header_info %}
-  {% component 'breadcrumbs', { items: BREADCRUMBS } %}
-  {% component 'messages', { messages: messages } %}
+{% block body_main_header %}
+  {{ super() }}
+  {% block local_header %}
+    {% set pageTitle = getPageTitle() %}
+    {% set pageHeading = pageHeading or pageTitle[0] %}
+    {{ LocalHeader({ pageHeading: pageHeading, breadcrumbs: BREADCRUMBS, messages: messages, modifier: 'light-banner' }) }}
+  {% endblock %}
 {% endblock %}
 
 {% block body %}

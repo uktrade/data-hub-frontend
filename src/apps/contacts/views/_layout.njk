@@ -1,23 +1,26 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="u-visually-hidden">Contact Details</h1>
-  <h2 class="page-heading">
-    {{contact.first_name}} {{contact.last_name}}
-    {% if contact.primary == true %}{{ statusbadge('Primary', variation="fuschia") }}{% endif %}
-  </h2>
-  <p>
+{% block local_header %}
+  {% set pageHeadingBefore %}
     <a href="{{companyUrl}}">{{contact.company.name}}</a>
-  </p>
+  {% endset %}
 
-  {% if contact.archived %}
-    <p class="infostrip">
-      This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
-      <strong>Reason:</strong> {{contact.archived_reason}}<br>
-      <br>
-      <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
-    </p>
-  {% endif %}
+  {% call LocalHeader({
+    pageHeadingBefore: pageHeadingBefore,
+    pageHeading: contact.first_name + ' ' + contact.last_name,
+    pageHeadingSuffix: statusbadge('Primary', variation="fuschia") if contact.primary,
+    breadcrumbs: BREADCRUMBS,
+    modifier: 'light-banner'
+  }) %}
+    {% if contact.archived %}
+      <p class="infostrip">
+        This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
+        <strong>Reason:</strong> {{contact.archived_reason}}<br>
+        <br>
+        <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 {% endblock %}
 
 {% block main_grid_left_column %}

@@ -1,9 +1,16 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  {% if investmentData %}
-    <h1 class="u-visually-hidden">Investment details</h1>
-    <h2 class="page-heading">{{ investmentData.name }}</h2>
+{% block local_header %}
+  {% set pageHeadingBefore %}
+    <a href="{{ investmentStatus.company.url }}">{{ investmentStatus.company.name }}</a>
+  {% endset %}
+
+  {% call LocalHeader({
+    pageHeadingBefore: pageHeadingBefore,
+    pageHeading: investmentData.name,
+    breadcrumbs: BREADCRUMBS,
+    modifier: 'light-banner'
+  }) %}
     {% component 'investment-status', investmentStatus %}
 
     {% if investmentData.archived %}
@@ -14,8 +21,7 @@
         <a href="unarchive">Unarchive</a>
       </p>
     {% endif %}
-
-  {% endif %}
+  {% endcall %}
 {% endblock %}
 
 {% block main_grid_left_column %}

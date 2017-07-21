@@ -1,0 +1,79 @@
+@import "../tools/mixins";
+
+.c-local-header {
+  padding-top: $default-spacing-unit * 4;
+  position: relative;
+
+  &[class*="c-local-header--"] {
+    padding-bottom: $default-spacing-unit * 2;
+  }
+
+  .c-breadcrumb {
+    position: absolute;
+    top: $default-spacing-unit;
+  }
+
+  .c-messages {
+    margin-top: -$default-spacing-unit * 2;
+    margin-bottom: $default-spacing-unit * 2;
+  }
+
+  .status-bar {
+    margin-top: $default-spacing-unit * 2;
+    margin-bottom: -$default-spacing-unit;
+  }
+
+  .c-entity-search__aggregations {
+    margin-bottom: -$default-spacing-unit * 2;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-top: 10px solid $govuk-blue;
+    max-width: 100%;
+    width: $site-width;
+    margin: 0 auto;
+
+    @include media($max-width: $site-width) {
+      width: auto;
+      left: $default-spacing-unit;
+      right: $default-spacing-unit;
+    }
+  }
+}
+
+.c-local-header__heading-before {
+  @include core-font(20);
+  color: $grey-1;
+}
+
+.c-local-header__heading {
+  @include bold-font(36);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+* + .c-local-header__heading-after {
+  margin-top: $default-spacing-unit / 2;
+  margin-bottom: 0;
+}
+
+.c-local-header--light-banner {
+  background-color: $grey-4;
+}
+
+.c-local-header--dark-banner {
+  background-color: $grey-3;
+
+  &.c-local-header--keyline {
+    border-bottom: 1px solid $grey-2;
+  }
+}
+
+.c-local-header--keyline {
+  border-bottom: 1px solid $grey-3;
+}
