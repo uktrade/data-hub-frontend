@@ -4,6 +4,7 @@ const { isValidGuid } = require('../../../lib/controller-utils')
 const { getInteraction } = require('../../interactions/repos')
 const { getDitCompany } = require('../../companies/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
+const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
 
 function handleEmptyMiddleware (req, res, next) {
@@ -48,6 +49,10 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       projectCode: investmentData.project_code,
       stageName: investmentData.stage.name,
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+      company: {
+        name: investmentData.investor_company.name,
+        url: buildCompanyUrl(investmentData.investor_company),
+      },
     }
 
     res.breadcrumb({
