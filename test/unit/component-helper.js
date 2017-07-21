@@ -41,7 +41,7 @@ function getMacros (fileName) {
         {% endcall %}
       `)
     } else {
-      macroOutput = nunjucks.renderString(`${importString} {{ ${name}(${JSON.stringify(props)}${args}) }}`)
+      macroOutput = nunjucks.renderString(`${importString} {{ ${name}(${JSON.stringify(props, undefined, 1)}${args}) }}`)
     }
 
     return normaliseHtml(macroOutput)
