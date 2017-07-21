@@ -99,7 +99,7 @@
             {% block body_main_phase_banner %}
               {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta'] or feedbackLink) %}
                 <div class="phase-banner">
-                  <div class="container">
+                  <div class="l-container">
                     <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
                     <span class="phase-banner__message">
                       This is a new service
@@ -112,7 +112,7 @@
               {% endif %}
             {% endblock %}
           {% endblock %}
-          <div class="main-content__inner container">
+          <div class="main-content__inner l-container">
             {% block body_main_content %}{% endblock %}
           </div>
         </main>
