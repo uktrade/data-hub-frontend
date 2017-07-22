@@ -23,8 +23,5 @@
 {% endblock %}
 
 {% block main_grid_left_column %}
-  <nav class="c-local-nav">
-    <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/contacts/{{id}}">Details</a>
-    <a class="c-local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/contacts/{{id}}/interactions">Interactions</a>
-  </nav>
+  {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}
