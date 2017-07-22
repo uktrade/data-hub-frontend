@@ -64,8 +64,8 @@
   {{ super() }}
   {% block local_header %}
     {% set pageTitle = getPageTitle() %}
-    {% set pageHeading = pageHeading or pageTitle[0] %}
-    {{ LocalHeader({ pageHeading: pageHeading, breadcrumbs: BREADCRUMBS, messages: messages, modifier: 'light-banner' }) }}
+    {% set heading = heading or pageTitle[0] %}
+    {{ LocalHeader({ heading: heading, breadcrumbs: BREADCRUMBS, messages: messages, modifier: 'light-banner' }) }}
   {% endblock %}
 {% endblock %}
 

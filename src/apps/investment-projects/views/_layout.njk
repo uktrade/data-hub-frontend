@@ -1,13 +1,13 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {% set pageHeadingBefore %}
+  {% set headingBefore %}
     <a href="{{ investmentStatus.company.url }}">{{ investmentStatus.company.name }}</a>
   {% endset %}
 
   {% call LocalHeader({
-    pageHeadingBefore: pageHeadingBefore,
-    pageHeading: investmentData.name,
+    headingBefore: headingBefore,
+    heading: investmentData.name,
     breadcrumbs: BREADCRUMBS,
     modifier: 'light-banner'
   }) %}

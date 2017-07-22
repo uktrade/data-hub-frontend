@@ -4,8 +4,8 @@
   {% call Example('Standard', true) %}
     {{
       LocalHeader({
-        pageHeadingBefore: '<strong>Strong text before <a href="#">with a link</a></strong>',
-        pageHeading: 'Standard header',
+        headingBefore: '<strong>Strong text before <a href="#">with a link</a></strong>',
+        heading: 'Standard header',
         breadcrumbs: BREADCRUMBS
       })
     }}
@@ -14,7 +14,7 @@
   {% call Example('Light banner', true) %}
     {{
       LocalHeader({
-        pageHeading: 'Light banner',
+        heading: 'Light banner',
         breadcrumbs: BREADCRUMBS,
         modifier: 'light-banner'
       })
@@ -24,8 +24,8 @@
   {% call Example('Light banner + keyline', true) %}
     {{
       LocalHeader({
-        pageHeadingBefore: '<em>Emphasied text before</em>',
-        pageHeading: 'Light banner with keyline',
+        headingBefore: '<em>Emphasied text before</em>',
+        heading: 'Light banner with keyline',
         breadcrumbs: BREADCRUMBS,
         modifier: ['light-banner', 'keyline']
       })
@@ -35,8 +35,8 @@
   {% call Example('Dark banner', true) %}
     {{
       LocalHeader({
-        pageHeadingBefore: 'Raw text before',
-        pageHeading: 'Dark banner',
+        headingBefore: 'Raw text before',
+        heading: 'Dark banner',
         breadcrumbs: BREADCRUMBS,
         modifier: 'dark-banner'
       })
@@ -46,8 +46,8 @@
   {% call Example('Dark banner + keyline', true) %}
     {{
       LocalHeader({
-        pageHeadingBefore: '<strong>Strong text before</strong>',
-        pageHeading: 'Dark banner with keyline',
+        headingBefore: '<strong>Strong text before</strong>',
+        heading: 'Dark banner with keyline',
         breadcrumbs: BREADCRUMBS,
         modifier: ['dark-banner', 'keyline']
       })

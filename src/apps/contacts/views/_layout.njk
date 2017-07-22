@@ -1,14 +1,14 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {% set pageHeadingBefore %}
+  {% set headingBefore %}
     <a href="{{companyUrl}}">{{contact.company.name}}</a>
   {% endset %}
 
   {% call LocalHeader({
-    pageHeadingBefore: pageHeadingBefore,
-    pageHeading: contact.first_name + ' ' + contact.last_name,
-    pageHeadingSuffix: statusbadge('Primary', variation="fuschia") if contact.primary,
+    headingBefore: headingBefore,
+    heading: contact.first_name + ' ' + contact.last_name,
+    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary,
     breadcrumbs: BREADCRUMBS,
     modifier: 'light-banner'
   }) %}

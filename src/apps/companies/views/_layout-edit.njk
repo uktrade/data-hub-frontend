@@ -3,7 +3,7 @@
 {% block local_header %}
   {{
     LocalHeader({
-      pageHeading: 'Edit company' if formData.id else 'Add company',
+      heading: 'Edit company' if formData.id else 'Add company',
       breadcrumbs: BREADCRUMBS,
       modifier: 'light-banner'
     })

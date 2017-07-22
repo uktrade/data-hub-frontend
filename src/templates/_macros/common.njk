@@ -53,9 +53,10 @@
 {##
  # Render page local header
  # @param {object} props - An object containing local header properties
- # @param {string} [pageHeading] - page heading
- # @param {string} [pageHeadingBefore] - a string before heading (safe to render HTML)
- # @param {string} [pageHeadingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {string} [heading] - page heading
+ # @param {string} [heading] - page heading
+ # @param {string} [headingBefore] - a string before heading (safe to render HTML)
+ # @param {string} [headingSuffix] - a string suffix for heading (safe to render HTML)
  # @param {object} [breadcrumbs] - an object containing page breadcrumbs
  # @param {object} [messages] - an object containing flash messages
  #
@@ -65,7 +66,7 @@
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}
-    <header class="c-local-header {{ modifier }}">
+    <header class="c-local-header {{ modifier }}" aria-label="local header">
       <div class="l-container">
         {% if props.breadcrumbs|length %}
           {% component 'breadcrumbs', { items: props.breadcrumbs } %}
@@ -74,15 +75,15 @@
           {% component 'messages', { messages: props.messages } %}
         {% endif %}
 
-        {% if props.pageHeadingBefore %}
+        {% if props.headingBefore %}
           <div class="c-local-header__heading-before">
-            {{ props.pageHeadingBefore | safe }}
+            {{ props.headingBefore | safe }}
           </div>
         {% endif %}
 
-        {% if props.pageHeading %}
+        {% if props.heading %}
           <h1 class="c-local-header__heading">
-            {{ props.pageHeading }} {{ props.pageHeadingSuffix | safe }}
+            {{ props.heading }} {{ props.headingSuffix | safe }}
           </h1>
         {% endif %}
 

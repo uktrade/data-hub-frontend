@@ -12,7 +12,7 @@ describe('LocalHeader macro', () => {
   describe('valid props', () => {
     it('should render page heading', () => {
       const component = commonMacros.renderToDom('LocalHeader', {
-        pageHeading: 'I am hot',
+        heading: 'I am hot',
       })
       expect(component.className.trim()).to.equal('c-local-header')
       expect(component.querySelector('.c-local-header__heading').textContent.trim()).to.equal('I am hot')
@@ -73,7 +73,7 @@ describe('LocalHeader macro', () => {
 
   it('should render local header with string heading heading', () => {
     const component = commonMacros.renderToDom('LocalHeader', {
-      pageHeadingBefore: '<strong>Superb</strong>',
+      headingBefore: '<strong>Superb</strong>',
     })
 
     const headingBeforeEl = component.querySelector('.c-local-header__heading-before')
@@ -83,8 +83,8 @@ describe('LocalHeader macro', () => {
 
   it('should render local header with string heading suffix', () => {
     const component = commonMacros.renderToDom('LocalHeader', {
-      pageHeading: 'Tyom',
-      pageHeadingSuffix: '<strong>S</strong>',
+      heading: 'Tyom',
+      headingSuffix: '<strong>S</strong>',
     })
 
     const headingEl = component.querySelector('.c-local-header__heading')

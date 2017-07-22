@@ -1,15 +1,14 @@
 {% extends "./_layout.njk" %}
 
 {% block local_header %}
-  {% set pageHeadingBefore %}
-    <div class="u-visually-hidden">Company:</div>
+  {% set headingBefore %}
     <a href="{{companyUrl}}">{{contact.company.name}}</a>
   {% endset %}
 
   {{
     LocalHeader({
-      pageHeadingBefore: pageHeadingBefore,
-      pageHeading: 'Edit contact' if formData.id else 'Add contact',
+      headingBefore: headingBefore,
+      heading: 'Edit contact' if formData.id else 'Add contact',
       breadcrumbs: BREADCRUMBS,
       modifier: 'light-banner'
     })
