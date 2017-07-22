@@ -70,7 +70,7 @@
       {% endblock %}
 
       {% block body_site_header %}
-        <header role="banner" class="global-header">
+        <header class="global-header" aria-label="global header">
           <div class="global-header__inner">
             {% block header_site_title %}
               <div class="global-header__site-title">
@@ -94,7 +94,7 @@
       {% endblock %}
 
       {% block body_main %}
-        <main class="main-content" id="main-content" role="main">
+        <main class="main-content" id="main-content">
           {% block body_main_header %}
             {% block body_main_phase_banner %}
               {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta'] or feedbackLink) %}

@@ -146,7 +146,7 @@
     {% endcall %}
 
     {% if props.aggregations|length %}
-      <nav class="c-entity-search__aggregations">
+      <nav class="c-entity-search__aggregations" aria-label="search results aggregation options">
         <ul>
           {% for item in props.aggregations %}
             {% set isCurrentPage = item.entity === props.entityType %}
