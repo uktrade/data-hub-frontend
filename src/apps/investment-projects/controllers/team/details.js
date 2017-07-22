@@ -8,7 +8,6 @@ function getDetailsHandler (req, res, next) {
     res
       .breadcrumb('Project team')
       .render('investment-projects/views/team/details', {
-        currentNavItem: 'team',
         projectManagementData,
         projectManagementLabels,
       })

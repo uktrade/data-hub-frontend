@@ -24,17 +24,5 @@
 {% endblock %}
 
 {% block main_grid_left_column %}
-  {% if localNavItems %}
-    <nav class="c-local-nav {{ 'c-local-nav--background' if variant in ['edit', 'create'] }}">
-      {% for item in localNavItems %}
-        {% set isSelected = currentNavItem == item.slug %}
-        <a
-          href="{{ item.slug }}"
-          class="c-local-nav__link {{ 'is-active' if isSelected}}"
-        >
-          {{ item.label }}
-        </a>
-      {% endfor %}
-    </nav>
-  {% endif %}
+  {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}

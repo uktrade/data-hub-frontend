@@ -12,7 +12,6 @@ async function indexGetHandler (req, res, next) {
       return res
         .breadcrumb('Interactions')
         .render('investment-projects/views/interactions/index', {
-          currentNavItem: 'interactions',
           interactions,
         })
     }
