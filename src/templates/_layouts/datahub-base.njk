@@ -14,7 +14,7 @@
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/form.njk" import Fieldset, TextField, MultipleChoiceField, HiddenField %}
 {% from "_macros/common.njk" import LocalHeader with context %}
-{% from "_macros/common.njk" import Pagination %}
+{% from "_macros/common.njk" import Pagination, LocalNav %}
 {% from "_macros/address.njk" import addressFormatter %}
 
 {% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}

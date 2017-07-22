@@ -20,15 +20,15 @@
 
 
 {% block main_grid_left_column %}
-  <nav class="local-nav">
-    <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
+  <nav class="c-local-nav">
+    <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
     {% if company.id %}
-      {# <a class="local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
-      <a class="local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
-      <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
-      {# <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
-      <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Exports</a>
-      <a class="local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investments</a>
+      {# <a class="c-local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
+      <a class="c-local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
+      <a class="c-local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
+      {# <a class="c-local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
+      <a class="c-local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Exports</a>
+      <a class="c-local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investments</a>
     {% endif %}
   </nav>
 {% endblock %}

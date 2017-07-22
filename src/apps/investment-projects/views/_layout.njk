@@ -25,12 +25,12 @@
 
 {% block main_grid_left_column %}
   {% if localNavItems %}
-    <nav class="local-nav {{ 'local-nav--background' if variant in ['edit', 'create'] }}">
+    <nav class="c-local-nav {{ 'c-local-nav--background' if variant in ['edit', 'create'] }}">
       {% for item in localNavItems %}
         {% set isSelected = currentNavItem == item.slug %}
         <a
           href="{{ item.slug }}"
-          class="local-nav__link {{ 'is-active' if isSelected}}"
+          class="c-local-nav__link {{ 'is-active' if isSelected}}"
         >
           {{ item.label }}
         </a>
