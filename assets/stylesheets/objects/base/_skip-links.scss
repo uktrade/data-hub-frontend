@@ -18,8 +18,7 @@
   position: absolute;
 
   &:focus {
-    background-color: $light-blue-25;
-    border: 3px solid $yellow;
+    margin: 3px 0;
     color: $black;
     outline: 0;
     position: static;
