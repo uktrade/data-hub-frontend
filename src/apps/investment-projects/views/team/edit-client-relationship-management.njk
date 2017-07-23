@@ -1,0 +1,30 @@
+{% extends "../_layout.njk" %}
+
+{% set phase = investmentData.stage.name %}
+{% set crm = investmentData.client_relationship_manager %}
+{% set rsa = investmentData.referral_source_adviser %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Edit client relationship management</h2>
+
+  {% call Form(form) %}
+    {{ MultipleChoiceField({
+      name: 'client_relationship_manager',
+      label: form.labels.client_relationship_manager,
+      error: form.errors.client_relationship_manager,
+      options: form.options.advisers,
+      value: form.state.client_relationship_manager,
+      initialOption: '-- Select an adviser --'
+    }) }}
+
+    {{ MultipleChoiceField({
+      name: 'account_manager',
+      label: form.labels.account_manager,
+      error: form.errors.account_manager,
+      options: form.options.advisers,
+      value: form.state.account_manager,
+      initialOption: '-- Select an adviser --'
+    }) }}
+
+  {% endcall %}
+{% endblock %}
