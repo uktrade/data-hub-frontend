@@ -1,4 +1,5 @@
 /* eslint prefer-promise-reject-errors: 0 */
+const companyData = require('~/test/unit/data/company.json')
 
 describe('Company repository', () => {
   describe('Save company', () => {
@@ -235,6 +236,36 @@ describe('Company repository', () => {
             throw Error(error)
           })
       })
+    })
+  })
+
+  describe('Update company', () => {
+    beforeEach(() => {
+      this.sandbox = sinon.sandbox.create()
+      this.authorisedRequestStub = this.sandbox.stub().resolves(companyData)
+      this.repo = proxyquire('~/src/apps/companies/repos', {
+        '../../lib/authorised-request': this.authorisedRequestStub,
+        '../../../config': {
+          apiRoot: 'http://test.com',
+        },
+      })
+    })
+
+    afterEach(() => {
+      this.sandbox.restore()
+    })
+
+    it('should make the correct call to the API', () => {
+      return this.repo.updateCompany('1234', '999', { account_manager: '8888' })
+        .then(() => {
+          expect(this.authorisedRequestStub).to.be.calledWith('1234', {
+            url: 'http://test.com/v3/company/999',
+            method: 'PATCH',
+            body: {
+              account_manager: '8888',
+            },
+          })
+        })
     })
   })
 
