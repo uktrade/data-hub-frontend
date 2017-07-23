@@ -37,7 +37,7 @@ class AddAnotherField {
 
   static init () {
     if (typeof document !== 'undefined') {
-      document.querySelectorAll('.js-add-another-field')
+      Array.from(document.querySelectorAll('.js-add-another-field'))
         .forEach((element) => element && new AddAnotherField(element))
     }
   }

@@ -91,7 +91,7 @@ class ExpandableCard {
   }
 
   static init () {
-    document.querySelectorAll('.card--expandable')
+    Array.from(document.querySelectorAll('.card--expandable'))
       .forEach((expandableCard) => expandableCard && new ExpandableCard(expandableCard))
   }
 }
