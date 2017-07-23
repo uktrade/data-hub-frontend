@@ -274,6 +274,27 @@ function transformProjectManagementForView (investmentData) {
   return null
 }
 
+function transformClientRelationshipManagementForView (investmentData) {
+  const crm = investmentData.client_relationship_manager
+
+  const result = [{
+    role: 'Client relationship manager',
+    adviser: crm.first_name + ' ' + crm.last_name,
+    team: crm.dit_team.name,
+  }]
+
+  const accountManager = get(investmentData, 'investor_company.accountManager.id', null)
+  if (accountManager) {
+    result.push({
+      advisor: get(investmentData, 'investor_company.accountManager.name', null),
+      role: 'Account manager',
+      team: get(investmentData, 'investor_company.accountManager.dit_team.name', null),
+    })
+  }
+
+  return result
+}
+
 module.exports = {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
@@ -284,4 +305,5 @@ module.exports = {
   transformFromApi,
   transformBriefInvestmentSummary,
   transformProjectManagementForView,
+  transformClientRelationshipManagementForView,
 }
