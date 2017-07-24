@@ -41,6 +41,7 @@ module.exports = (token, opts) => {
     requestOptions.url = opts.url
     requestOptions.headers = opts.headers || {}
     requestOptions.method = opts.method || 'GET'
+    requestOptions.qs = opts.qs
 
     if (opts.body) {
       requestOptions.body = opts.body
