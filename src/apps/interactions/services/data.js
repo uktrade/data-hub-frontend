@@ -17,7 +17,8 @@ function getHydratedInteraction (token, interactionId) {
   return new Promise(async (resolve, reject) => {
     try {
       const interaction = await interactionRepository.getInteraction(token, interactionId)
-      interaction.company = await companyRepository.getDitCompany(token, interaction.company.id)
+      const companyId = interaction.company ? interaction.company.id : interaction.contact.company.id
+      interaction.company = await companyRepository.getDitCompany(token, companyId)
       resolve(interaction)
     } catch (error) {
       reject(error)
