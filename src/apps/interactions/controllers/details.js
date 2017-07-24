@@ -67,7 +67,7 @@ function postAddStep1 (req, res) {
 
   // redirect to edit, passing param
   if (req.body.interaction_type === '999') {
-    return res.redirect(`/service-deliveries/edit/?company=${req.body.company}&contact=${req.body.contact}`)
+    return res.redirect(`/service-deliveries/create/?company=${req.body.company}&contact=${req.body.contact}`)
   }
 
   return res.redirect(`2?company=${req.body.company}&contact=${req.body.contact}&interaction_type=${req.body.interaction_type}`)
