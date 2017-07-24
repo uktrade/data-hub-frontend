@@ -13,13 +13,7 @@ const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status',
 async function getCommon (req, res, next) {
   try {
     const token = req.session.token
-    // if we are creating a new service delivery then the id comes through as edit
-    // @TODO make the routes a bit more sensible
-    if (req.params.serviceDeliveryId === 'edit') {
-      return {}
-    } else {
-      res.locals.serviceDelivery = await serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
-    }
+    res.locals.serviceDelivery = await serviceDeliveryService.getHydratedServiceDelivery(token, req.params.serviceDeliveryId)
     next()
   } catch (error) {
     next(error)

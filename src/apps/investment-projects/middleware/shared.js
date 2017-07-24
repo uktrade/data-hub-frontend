@@ -1,6 +1,8 @@
-const { isValidGuid } = require('../../../lib/controller-utils')
+const { get } = require('lodash')
 
+const { isValidGuid } = require('../../../lib/controller-utils')
 const { getInteraction } = require('../../interactions/repos')
+const { getDitCompany } = require('../../companies/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const { getInvestment } = require('../repos')
 
@@ -28,6 +30,15 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
   }
   try {
     const investmentData = await getInvestment(req.session.token, req.params.id)
+    const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
+    const ukCompanyId = get(investmentData, 'uk_company.id')
+
+    investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
+
+    if (ukCompanyId) {
+      const companyDetails = await getDitCompany(req.session.token, ukCompanyId)
+      investmentData.uk_company = Object.assign({}, investmentData.uk_company, companyDetails)
+    }
 
     res.locals.investmentData = investmentData
     res.locals.equityCompany = investmentData.investor_company

@@ -1,6 +1,17 @@
 const moment = require('moment')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
 const { buildCompanyUrl } = require('../../companies/services/data')
+const metadataRepository = require('../../../lib/metadata')
+
+function formatCurrency (number) {
+  if (isNull(number)) { return null }
+
+  return new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency: 'GBP',
+    minimumFractionDigits: 0,
+  }).format(number)
+}
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }
@@ -111,24 +122,14 @@ function transformInvestmentDataForView (data) {
 function transformInvestmentValueForView (data) {
   if (!isPlainObject(data)) { return }
 
-  function formatNumber (number) {
-    if (isNull(number)) { return null }
-
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-    }).format(number)
-  }
-
   function formatBoolean (boolean, { suffix = '', pos = 'Yes', neg = 'No' }) {
     if (isNull(boolean)) { return null }
     return (data.government_assistance ? pos : neg) + suffix
   }
 
   return Object.assign({}, data, {
-    total_investment: formatNumber(data.total_investment),
-    foreign_equity_investment: formatNumber(data.foreign_equity_investment),
+    total_investment: formatCurrency(data.total_investment),
+    foreign_equity_investment: formatCurrency(data.foreign_equity_investment),
     number_new_jobs: data.number_new_jobs && `${data.number_new_jobs} new jobs`,
     number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
@@ -147,6 +148,11 @@ function transformInvestmentValueForView (data) {
       neg: 'No, will not',
       suffix: ' create significant export revenue',
     }),
+    sector_name: get(data, 'sector.name'),
+    account_tier: get(data, 'investor_company.classification.name'),
+    business_activities: data.business_activities.filter((activity) => {
+      return /^(european|global) headquarters$/i.test(activity.name)
+    }).length ? 'Yes' : 'No',
   })
 }
 
@@ -161,13 +167,121 @@ function transformInvestmentRequirementsForView (data) {
     strategic_drivers: strategicDrivers.map(driver => driver.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
+    uk_company: get(data, 'uk_company.name'),
   })
+}
+
+function transformInvestmentFDIForView (data) {
+  if (!isPlainObject(data)) {
+    return
+  }
+
+  const [
+    { name: commitmentToInvestName },
+    { name: fdiName },
+    { name: nonFdiName },
+  ] = metadataRepository.investmentTypeOptions
+
+  function approvedInvestmentText (investments, defaultText) {
+    return investments.reduce((displayText, investmentDetail) => {
+      return investmentDetail.isApproved ? investmentDetail.displayText : displayText
+    }, defaultText)
+  }
+
+  return {
+    type_of_investment: approvedInvestmentText([
+      { displayText: commitmentToInvestName, isApproved: data.approved_commitment_to_invest },
+      { displayText: fdiName, isApproved: data.approved_fdi },
+      { displayText: nonFdiName, isApproved: data.approved_non_fdi },
+    ], 'Does not apply'),
+    foreign_investor: {
+      name: data.investor_company.name,
+      url: buildCompanyUrl(data.investor_company),
+    },
+    foreign_country: get(data, 'investor_company.registered_address_country.name'),
+    uk_company: data.uk_company ? {
+      name: data.uk_company.name,
+      url: buildCompanyUrl(data.uk_company),
+    } : null,
+    investor_retain_voting_power: data.uk_company ? 'Yes' : 'No',
+  }
+}
+
+function transformInvestmentLandingForView (data) {
+  if (!isPlainObject(data)) {
+    return
+  }
+
+  return Object.assign({}, {
+    uk_company: data.uk_company ? { name: data.uk_company.name, url: buildCompanyUrl(data.uk_company) } : null,
+    company_number: get(data, 'uk_company.company_number'),
+    registered_address: data.uk_company ? [
+      data.uk_company.registered_address_1,
+      data.uk_company.registered_address_2,
+      data.uk_company.registered_address_town,
+      data.uk_company.registered_address_country.name,
+      data.uk_company.registered_address_county,
+      data.uk_company.registered_address_postcode,
+    ].filter((address) => address) : null,
+    investment_land_date: data.actual_land_date ? moment(data.actual_land_date).format('Do MMMM YYYY') : null,
+  })
+}
+
+function transformBriefInvestmentSummary (data) {
+  if (!isPlainObject(data)) { return }
+
+  const investorCompany = data.investor_company
+  const competitorCountries = data.competitor_countries || []
+  const regionLocations = data.uk_region_locations || []
+
+  return {
+    sector: get(data, 'sector.name', null),
+    investor_company: {
+      name: investorCompany.name,
+      url: buildCompanyUrl(investorCompany),
+    },
+    website: (investorCompany.website) ? `<a href="${investorCompany.website}">${investorCompany.website}</a>` : '',
+    account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',
+    uk_region_locations: regionLocations.map(region => region.name).join(', '),
+    competitor_countries: competitorCountries.map(country => country.name).join(', '),
+    estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
+    total_investment: formatCurrency(data.total_investment),
+  }
+}
+
+function getAdviserName (investmentData, key) {
+  if (!get(investmentData, key)) {
+    return 'To do'
+  }
+
+  const adviserName = get(investmentData, `${key}.first_name`, '') + ' ' + get(investmentData, `${key}.last_name`, '')
+  return adviserName.trim()
+}
+
+function transformProjectManagementForView (investmentData) {
+  if (investmentData.project_manager || investmentData.project_assurance_adviser) {
+    return [{
+      role: 'Project assuranace adviser',
+      adviser: getAdviserName(investmentData, 'project_assurance_adviser'),
+      team: get(investmentData, 'project_assurance_team.name', null),
+    }, {
+      role: 'Project manager',
+      adviser: getAdviserName(investmentData, 'project_manager'),
+      team: get(investmentData, 'project_manager_team.name', null),
+    }]
+  }
+
+  return null
 }
 
 module.exports = {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
   transformInvestmentRequirementsForView,
+  transformInvestmentFDIForView,
+  transformInvestmentLandingForView,
   transformToApi,
   transformFromApi,
+  transformBriefInvestmentSummary,
+  transformProjectManagementForView,
 }

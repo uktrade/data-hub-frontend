@@ -3,6 +3,7 @@
 .c-form-group {
   max-width: 40em;
 
+  [type="hidden"] + &,
   .c-form-fieldset__legend + & {
     margin-top: 0;
   }
@@ -56,6 +57,19 @@
 
 .c-form-group--inline {
   @include media(tablet) {
+    vertical-align: top;
+
+    &,
+    .c-form-group__inner {
+      display: inline-block;
+    }
+
+    .c-form-group__label:not(legend) {
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: $default-spacing-unit / 2;
+    }
+
     .c-form-control,
     .c-multiple-choice {
       width: auto;
@@ -66,5 +80,31 @@
     .c-multiple-choice {
       margin-right: $default-spacing-unit;
     }
+
+    & + & {
+      margin-left: $default-spacing-unit;
+      margin-top: 0;
+    }
   }
+}
+
+.c-form-group--light {
+  .c-form-control,
+  .c-multiple-choice__input + .c-multiple-choice__label::before {
+    border: 1px solid $grey-1;
+  }
+
+  .c-form-control:focus,
+  .c-multiple-choice__input:checked + .c-multiple-choice__label::before,
+  .c-multiple-choice__input:focus + .c-multiple-choice__label::before {
+    border-color: $black;
+  }
+}
+
+.c-form-group--small {
+  font-size: 16px;
+}
+
+.c-form-group--smaller {
+  font-size: 14px;
 }

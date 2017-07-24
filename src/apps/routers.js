@@ -2,24 +2,19 @@ const router = require('express').Router()
 const fs = require('fs')
 
 const { setHomeBreadcrumb } = require('./middleware')
-const logger = require('../../config/logger')
 
 const appsRouters = []
 const subApps = fs.readdirSync(__dirname)
 
 subApps.forEach(subAppDir => {
-  try {
-    const subApp = require(`./${subAppDir}`)
+  const subApp = require(`./${subAppDir}`)
 
-    if (subApp.mountpath) {
-      appsRouters.push(router.use(subApp.mountpath, setHomeBreadcrumb(subApp.displayName), subApp.router))
-    } else if (subApp.router) {
-      appsRouters.push(router.use(subApp.router))
-    } else {
-      appsRouters.push((req, res, next) => next())
-    }
-  } catch (err) {
-    logger.warn(err.message)
+  if (subApp.mountpath) {
+    appsRouters.push(router.use(subApp.mountpath, setHomeBreadcrumb(subApp.displayName), subApp.router))
+  } else if (subApp.router) {
+    appsRouters.push(router.use(subApp.router))
+  } else {
+    appsRouters.push((req, res, next) => next())
   }
 })
 

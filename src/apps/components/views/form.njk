@@ -22,7 +22,7 @@
   {% endcall %}
 
   <h2 class="page-heading">Standard</h2>
-  {% call Example() %}
+  {% call Example('Normal size') %}
     {% call Form(form) %}
       {{ TextField({
         name: 'name',
@@ -48,14 +48,14 @@
         label: 'Country',
         error: form.errors.messages.country,
         options: form.options.countries,
-        selected: form.state.country
+        value: form.state.country
       }) }}
 
     {{ MultipleChoiceField({
         name: 'sectors',
         label: 'Sectors',
         options: form.options.sectors,
-        selected: form.state.sectors,
+        value: form.state.sectors,
         initialOption: '-- Select sector --'
       })
     }}
@@ -65,7 +65,7 @@
           name: 'strategicDrivers',
           label: 'Strategic drivers',
           options: form.options.strategicDrivers,
-          selected: form.state.strategicDrivers
+          value: form.state.strategicDrivers
         })
       }}
 
@@ -75,9 +75,38 @@
           label: 'Average salary range',
           options: form.options.averageSalaryRange,
           error: form.errors.messages.averageSalary,
-          selected: form.state.averageSalary
+          value: form.state.averageSalary
         })
       }}
+
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'feedbackType',
+          modifier: 'inline',
+          label: 'Inline inputs',
+          error: form.errors.messages.feedbackType,
+          options: [
+            { value: 'yes', label: 'Yes' },
+            { value: 'no', label: 'No' }
+          ],
+          value: form.data.feedbackType
+      }) }}
+
+      {% call Fieldset({ legend: 'Inline text fields' }) %}
+        {{ TextField({
+          name: 'firstName',
+          label: 'First name',
+          value: form.state.firstNameInline,
+          modifier: 'inline'
+        }) }}
+
+        {{ TextField({
+          name: 'lastName',
+          label: 'Last name',
+          value: form.state.lastNameInline,
+          modifier: 'inline'
+        }) }}
+      {% endcall %}
 
       {% call Fieldset({
         legend: 'A conditional set of fields',
@@ -104,7 +133,7 @@
           type: 'radio',
           name: 'businessType',
           label: 'Company type',
-          selected: form.state.businessType,
+          value: form.state.businessType,
           error: form.errors.messages.businessType,
           options: [
             {
@@ -120,7 +149,7 @@
                   name: 'foreignOtherCompany',
                   label: 'Type of organisation',
                   error: form.errors.messages.foreignOtherCompany,
-                  selected: form.state.foreignOtherCompany,
+                  value: form.state.foreignOtherCompany,
                   options: form.options.foreignOtherCompany,
                   initialOption: '-- Select company --',
                   condition: {
@@ -151,9 +180,102 @@
           value: form.state.lastName
         }) }}
       {% endcall %}
-
     {% endcall %}
+  {% endcall %}
 
+  {% call Example('Small size') %}
+    {% call Form(form) %}
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        modifier: 'small'
+      }) }}
+
+      {{ MultipleChoiceField({
+          type: 'checkbox',
+          name: 'strategicDrivers-small',
+          label: 'Strategic drivers',
+          options: form.options.strategicDrivers,
+          selected: form.state.strategicDrivers,
+          modifier: 'small'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'averageSalary-small',
+          label: 'Average salary range',
+          options: form.options.averageSalaryRange,
+          error: form.errors.messages.averageSalary,
+          selected: form.state.averageSalary,
+          modifier: 'small'
+        })
+      }}
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Light version') %}
+    <p>
+      {{ EntitySearchForm({
+        inputName: 'term-light',
+        inputLabel: 'Search for a company name or contact',
+        inputPlaceholder: '',
+        searchTerm: entitySearch.searchTermLight,
+        isLabelHidden: false,
+        fieldModifier: 'light'
+      }) }}
+    </p>
+
+    {% call Form(form) %}
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        modifier: 'light'
+      }) }}
+
+      {{ MultipleChoiceField({
+          type: 'radio',
+          name: 'gender',
+          label: 'Gender',
+          initialOption: 'Unspecified',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: 'light'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          type: 'checkbox',
+          name: 'filterBy',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          selected: form.state.filterBy,
+          modifier: 'light'
+        })
+      }}
+
+      {{ MultipleChoiceField({
+          name: 'averageSalary-light',
+          label: 'Average salary range',
+          options: form.options.averageSalaryRange,
+          error: form.errors.messages.averageSalaryLight,
+          selected: form.state.averageSalaryLight,
+          modifier: 'light'
+        })
+      }}
+    {% endcall %}
   {% endcall %}
 
 {% endblock %}

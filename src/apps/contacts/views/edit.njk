@@ -49,7 +49,7 @@
       type: 'radio',
       label: 'Is this person a primary contact?',
       modifier: 'inline',
-      selected: formData.primary,
+      value: formData.primary,
       error: errors.messages.primary,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -83,7 +83,7 @@
       type: 'radio',
       label: 'Is the contact’s address the same as the company address?',
       modifier: 'inline',
-      selected: formData.address_same_as_company,
+      value: formData.address_same_as_company,
       error: errors.messages.address_same_as_company,
       options: [
         { label: 'Yes', value: 'yes' },
@@ -165,7 +165,7 @@
       {{ MultipleChoiceField({
         name: 'address_country',
         label: 'Country',
-        selected: formData.address_country,
+        value: formData.address_country,
         error: errors.messages.address_country,
         initialOption: 'Select country',
         options: countryOptions

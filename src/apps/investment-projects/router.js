@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const { shared } = require('./middleware')
+const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
   createStep1,
   createStep2,
@@ -8,6 +9,7 @@ const {
   audit,
   details,
   edit,
+  evaluation,
   team,
   interactions,
 } = require('./controllers')
@@ -16,6 +18,7 @@ const detailsFormMiddleware = require('./middleware/forms/details')
 const valueFormMiddleware = require('./middleware/forms/value')
 const requirementsMiddleware = require('./middleware/forms/requirements')
 const interactionsMiddleware = require('./middleware/forms/interactions')
+const projectManagementForm = require('./middleware/forms/project-management')
 
 router.use(shared.handleEmptyMiddleware)
 router.use(shared.getLocalNavMiddleware)
@@ -58,7 +61,17 @@ router
   .get(requirementsMiddleware.populateForm, edit.editRequirementsGet)
   .post(requirementsMiddleware.populateForm, requirementsMiddleware.handleFormPost, edit.editRequirementsPost)
 
-router.get('/:id/team', team.getTeamHandler)
+router.get('/:id/team', team.details.getDetailsHandler)
+router
+  .route('/:id/edit-project-management')
+  .get(getBriefInvestmentSummary, projectManagementForm.populateForm, team.editProjectManagement.getHandler)
+  .post(
+    getBriefInvestmentSummary,
+    projectManagementForm.populateForm,
+    projectManagementForm.handleFormPost,
+    team.editProjectManagement.postHandler,
+    team.editProjectManagement.getHandler
+  )
 
 router.get('/:id/interactions', interactions.list.indexGetHandler)
 
@@ -71,6 +84,8 @@ router
     interactions.create.createPostInteractionHandler,
     interactions.create.createGetInteractionHandler
   )
+
+router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 
 router
   .route('/:id/interactions/:interactionId/edit')

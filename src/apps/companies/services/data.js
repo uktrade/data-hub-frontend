@@ -30,7 +30,7 @@ function getInflatedDitCompany (token, id) {
         adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
       }
 
-      // get the related adviors
+      // get the related advisers
       for (const adviserId of Object.keys(adviserHash)) {
         const adviser = await adviserRepository.getAdviser(token, adviserId)
         adviserHash[adviser.id] = adviser

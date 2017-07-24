@@ -39,6 +39,8 @@ select.c-form-control {
   border-radius: 0;
   appearance: none;
   background: $white url("../../../images/icon-triangle.svg") no-repeat right 8px top 50%;
+  background-size: .8em;
+  padding-right: $default-spacing-unit * 2;
 
   &:-moz-focusring {
     color: transparent;
@@ -46,6 +48,14 @@ select.c-form-control {
 
   &::-ms-expand {
     display: none;
+  }
+
+  // IE9
+  @media all and (min-width:0\0) and (min-resolution:.001dpcm) {
+    & {
+      background-image: none;
+      padding: 0 !important;
+    }
   }
 }
 

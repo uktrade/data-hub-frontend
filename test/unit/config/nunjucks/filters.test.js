@@ -116,4 +116,59 @@ describe('nunjucks filters', () => {
       expect(formattedNumber).to.equal('12,345,678')
     })
   })
+
+  describe('#collectionDefault', () => {
+    const mockObjectWithEmpties = {
+      a: true,
+      b: null,
+      c: undefined,
+      d: 'false',
+      e: 'value',
+      f: '',
+      g: false,
+      h: [],
+      i: {},
+    }
+    const mockArrayWithEmpties = Object.values(mockObjectWithEmpties)
+
+    function expectedWithDefaults (expectedDefault, isArray = false) {
+      const expected = {
+        a: true,
+        b: expectedDefault,
+        c: expectedDefault,
+        d: 'false',
+        e: 'value',
+        f: expectedDefault,
+        g: expectedDefault,
+        h: expectedDefault,
+        i: expectedDefault,
+      }
+
+      if (isArray) {
+        return Object.values(expected)
+      }
+      return expected
+    }
+
+    it('should correctly provide default for empty values in object', () => {
+      const expectedDefault = 'Not found'
+      const collectionDefault = filters.collectionDefault(mockObjectWithEmpties)
+
+      expect(collectionDefault).to.deep.equal(expectedWithDefaults(expectedDefault))
+    })
+
+    it('should correctly provide argument default for empty values in object', () => {
+      const argumentDefault = 'Currently unknown'
+      const collectionDefault = filters.collectionDefault(mockObjectWithEmpties, argumentDefault)
+
+      expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault))
+    })
+
+    it('should correctly provide argument default for empty values in array', () => {
+      const argumentDefault = 'This is really not known'
+      const collectionDefault = filters.collectionDefault(mockArrayWithEmpties, argumentDefault)
+
+      expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault, true))
+    })
+  })
 })

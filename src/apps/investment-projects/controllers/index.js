@@ -4,8 +4,9 @@ const archive = require('./archive')
 const audit = require('./audit')
 const details = require('./details')
 const edit = require('./edit')
-const team = require('./team')
+const evaluation = require('./evaluation')
 const interactions = require('./interactions')
+const team = require('./team')
 
 module.exports = {
   createStep1,
@@ -14,6 +15,7 @@ module.exports = {
   audit,
   details,
   edit,
-  team,
+  evaluation,
   interactions,
+  team,
 }
