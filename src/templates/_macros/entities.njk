@@ -1,0 +1,26 @@
+{% macro MetaItem (props) %}
+  {% set tagModifier = props.tagModifier | concat('') | reverse | join(' c-tag--') if props.tagModifier %}
+  {% set isLabelHidden = props.isLabelHidden | default(false) %}
+  {% set tagClass = 'c-tag ' + tagModifier if props.isTag %}
+  {% set metaItemValue = props.data | formatDate('MMMM DD, YYYY') if 'date' in props.name else props.data.name | default(props.data) %}
+
+  {% if props.label and props.data %}
+    <div class="c-meta-item">
+      {% if props.label %}
+        <span class="c-meta-item__label {{ 'u-visually-hidden' if isLabelHidden or props.isTag}}">
+          {{ props.label }}:
+        </span>
+      {% endif %}
+      {% if props.url %}
+        <a
+          class="c-meta-item__value js-xhr {{ tagClass }} {{ 'is-selected' if props.isSelected }}"
+          href="{{ props.url }}"
+        >
+          {{- metaItemValue -}}
+        </a>
+      {% else %}
+        <span class="c-meta-item__value {{ tagClass }}">{{ metaItemValue }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
