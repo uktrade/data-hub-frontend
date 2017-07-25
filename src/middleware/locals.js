@@ -1,5 +1,8 @@
+const { omit } = require('lodash')
+
 const logger = require('../../config/logger')
 const config = require('../../config')
+const { buildQueryString } = require('../lib/url-helpers')
 
 let webpackManifest = {}
 try {
@@ -49,6 +52,15 @@ module.exports = function locals (req, res, next) {
 
     getLocal (key) {
       return res.locals[key]
+    },
+
+    buildQuery ({ include = {}, excludeKeys = [], query = req.query }) {
+      return buildQueryString(
+        Object.assign(
+          include,
+          omit(query, [...excludeKeys], 'page'),
+        )
+      )
     },
 
     trans (key) {
