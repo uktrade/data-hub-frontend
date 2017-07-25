@@ -1,5 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% from "_macros/entities.njk" import Entity with context %}
+
 {% block main_grid_left_column %}
   {% include './_filters-form.njk' %}
 {% endblock %}
@@ -10,7 +12,8 @@
     <header class="c-results__summary">
       <div class="u-clearfix">
         <div class="u-float-left">
-          <span class="c-results__count">{{ results.count }}</span> projects {{ 'matching' if form.data.filters | length }}
+          <span class="c-results__count">{{ results.count }}</span> projects
+          {{ 'matching' if form.data.filters | length }}
         </div>
         {% if form.data.filters|length > 1 %}
           <a href="?custom=true" class="c-results__summary__filter-remove-all u-float-right js-xhr" aria-label="Reset filter results">
@@ -25,10 +28,16 @@
             {% if selectedFilter|length %}
               <span class="c-results__summary-filter">
                 <span class="c-results__summary-filter-type">{{ selectedFilter.label }}</span>
-                <span class="c-results__summary-filter-name">{{ selectedFilter.value }}</span>
+                <span class="c-results__summary-filter-name">
+                  {%- if 'date' in name -%}
+                    {{ selectedFilter.value | formatDate('MMMM DD, YYYY') }}
+                  {%- else -%}
+                    {{ selectedFilter.value }}
+                  {%- endif -%}
+                </span>
                 <a
                   class="c-results__summary-filter-remove js-xhr"
-                  href="{{ buildUrlWithoutFilters(name) }}"
+                  href="{{ buildQuery({ include: { custom: true }, excludeKeys: [name] }) }}"
                   aria-label="Remove filter"
                 >×</a>
               </span>
@@ -67,65 +76,7 @@
     <ol class="c-entity-list">
       {% for project in results.items %}
         <li class="c-entity-list__item">
-          <h3 class="c-entity-list__item-header">
-            <a href="/investment-projects/{{ project.id }}">{{ project.name }}</a>
-          </h3>
-
-          <dl class="metadata-list">
-            <dt class="metadata-list__term u-visually-hidden">Project code</dt>
-            <dd class="metadata-list__value">
-              {{ project.project_code }}
-            </dd>
-            <dt class="metadata-list__term">Estimated land date</dt>
-            <dd class="metadata-list__value">
-              {{ project.estimated_land_date }}
-            </dd>
-            <dt class="metadata-list__term">Type</dt>
-            <dd class="metadata-list__value">
-              <a
-                href="{{ buildUrlWithFilters({ investment_type: project.investment_type.id }) }}"
-                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.investment_type }}"
-              >
-                {{ project.investment_type.name }}
-              </a>
-            </dd>
-          </dl>
-
-          <dl class="metadata-list">
-            <dt class="metadata-list__term">Stage</dt>
-            <dd class="metadata-list__value">
-              <a
-                href="{{ buildUrlWithFilters({ stage: project.stage.id }) }}"
-                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.stage }}"
-              >
-                {{ project.stage.name }}
-              </a>
-            </dd>
-            {% if project.total_investment %}
-              <dt class="metadata-list__term">Investment value</dt>
-              <dd class="metadata-list__value">
-                £{{ project.total_investment | formatNumber }}
-              </dd>
-            {% endif %}
-            <dt class="metadata-list__term">Investor</dt>
-            <dd class="metadata-list__value">
-              <a
-                href="{{  buildUrlWithFilters({ investor_company: project.investor_company.id }) }}"
-                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.investor_company }}"
-              >
-                {{ project.investor_company.name }}
-              </a>
-            </dd>
-            <dt class="metadata-list__term">Sector</dt>
-            <dd class="metadata-list__value">
-              <a
-                href="{{  buildUrlWithFilters({ sector: project.sector.id }) }}"
-                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.sector }}"
-              >
-                {{ project.sector.name }}
-              </a>
-            </dd>
-          </dl>
+          {{ Entity(project) }}
         </li>
       {% endfor %}
     </ol>

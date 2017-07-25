@@ -14,7 +14,9 @@ describe('Investment projects collection middleware', () => {
       session: { token: 'abcd' },
     }
     this.res = {
-      locals: {},
+      locals: {
+        buildQuery: this.sandbox.spy(),
+      },
     }
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/collection', {
@@ -64,66 +66,6 @@ describe('Investment projects collection middleware', () => {
       })
     })
 
-    describe('expose #buildUrlWithoutFilters on locals', () => {
-      beforeEach(async () => {
-        this.req.query = {
-          stage: 'i1',
-          sector: 's1',
-          page: 1,
-        }
-        await this.controller.getInvestmentProjectsCollection(this.req, this.res, this.next)
-      })
-
-      it('should return query string with ?custom=true added', () => {
-        const actual = this.res.locals.buildUrlWithoutFilters()
-        expect(actual).to.equal('?custom=true&stage=i1&sector=s1')
-      })
-
-      it('should return query string with page removed', () => {
-        const actual = this.res.locals.buildUrlWithoutFilters()
-        expect(actual).to.not.contain('page=1')
-      })
-
-      it('should return query string with stage removed', () => {
-        const actual = this.res.locals.buildUrlWithoutFilters('stage')
-        expect(actual).to.equal('?custom=true&sector=s1')
-      })
-
-      it('should return query string with all filters removed', () => {
-        const actual = this.res.locals.buildUrlWithoutFilters('stage', 'sector')
-        expect(actual).to.equal('?custom=true')
-      })
-    })
-
-    describe('expose #buildUrlWithFilters on locals', () => {
-      beforeEach(async () => {
-        this.req.query = {
-          stage: 'i1',
-          sector: 's1',
-          page: 1,
-        }
-        await this.controller.getInvestmentProjectsCollection(this.req, this.res, this.next)
-      })
-
-      it('should return query string with ?custom=true added', () => {
-        const actual = this.res.locals.buildUrlWithFilters()
-        expect(actual).to.equal('?custom=true&stage=i1&sector=s1')
-      })
-
-      it('should return query string with page removed', () => {
-        const actual = this.res.locals.buildUrlWithFilters()
-        expect(actual).to.not.contain('page=1')
-      })
-
-      it('should return query string with stage removed', () => {
-        const actual = this.res.locals.buildUrlWithFilters({
-          stage: 'i3',
-          estimated_land_date: '2018',
-        })
-        expect(actual).to.equal('?custom=true&stage=i3&sector=s1&estimated_land_date=2018')
-      })
-    })
-
     describe('expose additional properties on locals', () => {
       beforeEach(async () => {
         this.req.query = {
@@ -140,6 +82,7 @@ describe('Investment projects collection middleware', () => {
         expect(actual).to.have.property('page')
         expect(actual).to.have.property('items')
         expect(actual).to.have.property('pagination')
+        expect(this.res.locals.buildQuery).to.have.been.called
       })
 
       it('should add form.options property on locals with available filter options', () => {
