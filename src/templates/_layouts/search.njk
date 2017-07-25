@@ -1,7 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ modifier: 'dark-banner', breadcrumbs: BREADCRUMBS, messages: messages }) %}
+  {% call LocalHeader({ modifier: 'dark-banner' }) %}
     {{ EntitySearchForm({
       inputName: 'term',
       modifier: 'global',
