@@ -105,15 +105,15 @@ describe('nunjucks filters', () => {
 
   describe('#formatNumber', () => {
     it('should correctly format number for "en-GB" locale', () => {
-      const formattedNumber = filters.formatNumber(12345678)
+      const formattedNumber = filters.formatNumber(12345678.1)
 
-      expect(formattedNumber).to.equal('12,345,678')
+      expect(formattedNumber).to.equal('12,345,678.1')
     })
 
     it('should correctly format number for "de-DE" locale', () => {
-      const formattedNumber = filters.formatNumber(12345678, 'de-DE')
+      const formattedNumber = filters.formatNumber(12345678.1, 'de-DE')
 
-      expect(formattedNumber).to.equal('12,345,678')
+      expect(formattedNumber).to.equal('12.345.678,1')
     })
   })
 
