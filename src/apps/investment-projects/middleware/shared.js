@@ -14,17 +14,6 @@ function handleEmptyMiddleware (req, res, next) {
   next()
 }
 
-function getLocalNavMiddleware (req, res, next) {
-  res.locals.localNavItems = [
-    { label: 'Project details', slug: 'details' },
-    { label: 'Project team', slug: 'team' },
-    { label: 'Interactions', slug: 'interactions' },
-    { label: 'Evaluation', slug: 'evaluation' },
-    { label: 'Audit history', slug: 'audit' },
-  ]
-  next()
-}
-
 async function getInvestmentDetails (req, res, next, id = req.params.id) {
   if (!isValidGuid(id)) {
     return next()
@@ -83,7 +72,6 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 
 module.exports = {
   handleEmptyMiddleware,
-  getLocalNavMiddleware,
   getInvestmentDetails,
   getInteractionDetails,
 }

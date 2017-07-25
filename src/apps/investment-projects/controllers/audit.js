@@ -20,7 +20,6 @@ async function getInvestmentAudit (req, res, next) {
       return res
         .breadcrumb('Audit history')
         .render('investment-projects/views/audit', {
-          currentNavItem: 'audit',
           auditLog,
         })
     }

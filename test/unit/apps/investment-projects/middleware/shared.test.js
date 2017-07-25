@@ -21,15 +21,6 @@ describe('Investment shared middleware', () => {
     this.sandbox.restore()
   })
 
-  describe('#getLocalNavMiddleware', () => {
-    it('should return local nav items', () => {
-      this.controller.getLocalNavMiddleware(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.resMock.locals).to.haveOwnProperty('localNavItems')
-      expect(this.nextSpy.calledOnce).to.be.true
-    })
-  })
-
   describe('#handleEmptyMiddleware', () => {
     it('should redirect to start when no sub-routes are given', (done) => {
       const nextSpy = this.sandbox.spy()

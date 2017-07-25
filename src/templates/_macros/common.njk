@@ -94,3 +94,22 @@
     </header>
   {% endif %}
 {% endmacro %}
+
+{##
+ # Render local nav
+ # @param {object} props
+ # @param {string} [props.modifier] - nav modifier
+ # @param {string} [props.items] - nav items
+ #
+ #}
+{% macro LocalNav(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-nav--') if props.modifier %}
+
+  {% if props|length %}
+    <nav class="c-local-nav {{ modifier }}" aria-label="local navigation">
+      {% for item in props.items %}
+        <a class="c-local-nav__link {{ 'is-active' if item.isActive }}" href="{{item.url}}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+{% endmacro %}
