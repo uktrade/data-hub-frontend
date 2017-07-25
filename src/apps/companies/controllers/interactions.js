@@ -25,8 +25,8 @@ async function getInteractions (req, res, next) {
     }
 
     res
-      .breadcrumb(res.locals.company.name, `/viewcompanyresult/${res.locals.company.id}`)
-      .breadcrumb('Interactions')
+      .breadcrumb.add(res.locals.company.name, `/viewcompanyresult/${res.locals.company.id}`)
+      .breadcrumb.add('Interactions')
       .render('companies/views/interactions')
   } catch (error) {
     next(error)

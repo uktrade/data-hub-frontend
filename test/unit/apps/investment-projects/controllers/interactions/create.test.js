@@ -5,7 +5,13 @@ describe('Investment Interactions create controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.nextStub = this.sandbox.stub()
     this.flashStub = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     this.controller = require('~/src/apps/investment-projects/controllers/interactions/create')
   })
@@ -20,11 +26,10 @@ describe('Investment Interactions create controller', () => {
         session: {
           token: 'abcd',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {
           investmentData,
         },
-        breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
             expect(template).to.equal('investment-projects/views/interactions/create')
@@ -33,7 +38,7 @@ describe('Investment Interactions create controller', () => {
             done(e)
           }
         },
-      }, this.nextStub)
+      }), this.nextStub)
     })
   })
 
@@ -45,14 +50,13 @@ describe('Investment Interactions create controller', () => {
             token: 'abcd',
           },
           flash: this.flashStub,
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             form: {
               errors: {},
             },
             investmentData,
           },
-          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal(`/investment-projects/${investmentData.id}/interactions`)
@@ -62,7 +66,7 @@ describe('Investment Interactions create controller', () => {
               done(e)
             }
           },
-        }, this.nextStub)
+        }), this.nextStub)
       })
     })
 
@@ -72,7 +76,7 @@ describe('Investment Interactions create controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             form: {
               errors: {
@@ -80,8 +84,7 @@ describe('Investment Interactions create controller', () => {
               },
             },
           },
-          breadcrumb: this.breadcrumbStub,
-        }, this.nextStub)
+        }), this.nextStub)
 
         expect(this.nextStub).to.be.calledOnce
       })

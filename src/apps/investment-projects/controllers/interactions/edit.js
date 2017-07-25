@@ -2,7 +2,7 @@ const { isEmpty } = require('lodash')
 
 function editGetInteractionHandler (req, res, next) {
   res
-    .breadcrumb('Edit interaction')
+    .breadcrumb.add('Edit interaction')
     .render('investment-projects/views/interactions/edit')
 }
 

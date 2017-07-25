@@ -7,8 +7,8 @@ function getHandler (req, res, next) {
   const briefInvestmentSummary = getDataLabels(res.locals.briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
 
   res
-    .breadcrumb('Project team', 'team')
-    .breadcrumb('Project management')
+    .breadcrumb.add('Project team', 'team')
+    .breadcrumb.add('Project management')
     .render('investment-projects/views/team/edit-project-management', {
       currentNavItem: 'team',
       variant: 'edit',

@@ -39,7 +39,7 @@ function getHandler (req, res, next) {
       }
 
       res
-        .breadcrumb('Add investment project')
+        .breadcrumb.add('Add investment project')
         .render('investment-projects/views/create-1', {
           clientCompany,
           clientCompanyInvestments,
@@ -63,7 +63,7 @@ function postHandler (req, res, next) {
     getInflatedDitCompany(req.session.token, clientCompanyId)
       .then((clientCompany) => {
         res
-          .breadcrumb('Add investment project')
+          .breadcrumb.add('Add investment project')
           .render('investment-projects/views/create-1', {
             clientCompany,
             errors: {

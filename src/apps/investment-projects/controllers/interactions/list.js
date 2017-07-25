@@ -10,7 +10,7 @@ async function indexGetHandler (req, res, next) {
       const interactions = interactionsResponse.results.map(getDisplayCompanyInteraction)
 
       return res
-        .breadcrumb('Interactions')
+        .breadcrumb.add('Interactions')
         .render('investment-projects/views/interactions/index', {
           currentNavItem: 'interactions',
           interactions,

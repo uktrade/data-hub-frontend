@@ -7,7 +7,13 @@ describe('Investment audit controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
     this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(investmentProjectAuditData.results)
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {
@@ -24,11 +30,10 @@ describe('Investment audit controller', () => {
       params: {
         id: '9999',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: {},
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(this.getInvestmentProjectAuditLog).to.be.calledWith(token, '9999')
@@ -37,7 +42,7 @@ describe('Investment audit controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
   it('should send a parsed copy of audit data to the view', (done) => {
     const expected = [{
@@ -57,11 +62,10 @@ describe('Investment audit controller', () => {
       params: {
         id: '9999',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: {},
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -70,7 +74,7 @@ describe('Investment audit controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
   it('should handle audit entry containing an empty timestamp', (done) => {
     const badDate = [{
@@ -106,11 +110,10 @@ describe('Investment audit controller', () => {
       params: {
         id: '9999',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: {},
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -119,7 +122,7 @@ describe('Investment audit controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
   it('should handle when changes is null', (done) => {
     const nullChangeSet = [{
@@ -153,11 +156,10 @@ describe('Investment audit controller', () => {
       params: {
         id: '9999',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: {},
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -166,7 +168,7 @@ describe('Investment audit controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
   it('should handle when the changeset is empty', (done) => {
     const emptyChangeSet = [{
@@ -200,11 +202,10 @@ describe('Investment audit controller', () => {
       params: {
         id: '9999',
       },
-    }, {
+    }, Object.assign(this.resMock, {
       locals: {
         investmentData: {},
       },
-      breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
           expect(data.auditLog).to.deep.equal(expected)
@@ -213,6 +214,6 @@ describe('Investment audit controller', () => {
           done(error)
         }
       },
-    }, this.next)
+    }), this.next)
   })
 })

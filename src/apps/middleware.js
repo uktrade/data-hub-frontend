@@ -1,7 +1,7 @@
 function setHomeBreadcrumb (name) {
   return function (req, res, next) {
     if (name) {
-      res.breadcrumb({
+      res.breadcrumb.add({
         name,
         url: req.baseUrl,
       })

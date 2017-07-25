@@ -48,7 +48,7 @@ function getAddStep1 (req, res) {
   }
 
   res
-    .breadcrumb('Add interaction')
+    .breadcrumb.add('Add interaction')
     .render('interactions/views/add-step-1.njk', {
       query: req.query,
       interactionTypeColA,
@@ -75,7 +75,7 @@ function postAddStep1 (req, res) {
 
 function getInteractionDetails (req, res, next) {
   res
-    .breadcrumb(`Interaction with ${res.locals.interaction.company.name}`)
+    .breadcrumb.add(`Interaction with ${res.locals.interaction.company.name}`)
     .render('interactions/views/details', {
       interactionDetails: getDisplayInteraction(res.locals.interaction),
       interactionLabels: interactionLabels,

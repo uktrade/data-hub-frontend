@@ -2,7 +2,13 @@ describe('Investment create controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     this.controller = require('~/src/apps/investment-projects/controllers/create-2')
   })
@@ -18,9 +24,8 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal('/investment-projects/create/1')
@@ -29,7 +34,7 @@ describe('Investment create controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
 
@@ -39,13 +44,12 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             equityCompany: {
               id: '12345',
             },
           },
-          breadcrumb: this.breadcrumbStub,
           render: (template) => {
             try {
               expect(template).to.equal('investment-projects/views/create-2')
@@ -54,7 +58,7 @@ describe('Investment create controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
   })
@@ -66,12 +70,11 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             resultId: '12345',
             form: {},
           },
-          breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
               expect(url).to.equal('/investment-projects/12345')
@@ -80,7 +83,7 @@ describe('Investment create controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
 
@@ -90,13 +93,12 @@ describe('Investment create controller', () => {
           session: {
             token: 'abcd',
           },
-        }, {
+        }, Object.assign(this.resMock, {
           locals: {
             form: {
               errors: {},
             },
           },
-          breadcrumb: this.breadcrumbStub,
           render: (template) => {
             try {
               expect(template).to.equal('investment-projects/views/create-2')
@@ -105,7 +107,7 @@ describe('Investment create controller', () => {
               done(e)
             }
           },
-        }, this.next)
+        }), this.next)
       })
     })
   })

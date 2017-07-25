@@ -30,7 +30,7 @@ async function getDetails (req, res, next) {
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
 
     res
-      .breadcrumb(company.name)
+      .breadcrumb.add(company.name)
       .render('companies/views/details-ltd')
   } catch (error) {
     next(error)
@@ -66,7 +66,7 @@ async function addDetails (req, res, next) {
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
 
     res
-      .breadcrumb('Add company')
+      .breadcrumb.add('Add company')
       .render(`companies/views/edit-ltd`)
   } catch (error) {
     next(error)
@@ -77,12 +77,12 @@ async function editDetails (req, res, next) {
   try {
     if (containsFormData(req)) {
       res.locals.formData = req.body
-      res.breadcrumb('Edit company')
+      res.breadcrumb.add('Edit company')
     } else {
       const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
       res.locals.formData = companyFormService.getLtdCompanyAsFormData(company)
-      res.breadcrumb(company.name, `/viewcompanyresult/${company.id}`)
-      res.breadcrumb('Edit')
+      res.breadcrumb.add(company.name, `/viewcompanyresult/${company.id}`)
+      res.breadcrumb.add('Edit')
     }
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
     res.render(`companies/views/edit-ltd`)

@@ -26,7 +26,7 @@ function searchAction (req, res, next) {
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
       res
-        .breadcrumb('Search')
+        .breadcrumb.add('Search')
         .render(`search/views/results-${searchEntity}`, {
           searchTerm,
           searchEntity,

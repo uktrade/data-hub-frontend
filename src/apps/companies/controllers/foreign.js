@@ -23,7 +23,7 @@ async function getDetails (req, res, next) {
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
 
     res
-      .breadcrumb(company.name)
+      .breadcrumb.add(company.name)
       .render('companies/views/details-foreign')
   } catch (error) {
     next(error)
@@ -54,7 +54,7 @@ function addDetails (req, res, next) {
   res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
 
   res
-    .breadcrumb('Add company')
+    .breadcrumb.add('Add company')
     .render('companies/views/edit-foreign')
 }
 
@@ -70,8 +70,8 @@ async function editDetails (req, res, next) {
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
 
     res
-      .breadcrumb(company.name, `/companies/view/foreign/${company.id}`)
-      .breadcrumb('Edit')
+      .breadcrumb.add(company.name, `/companies/view/foreign/${company.id}`)
+      .breadcrumb.add('Edit')
       .render(`companies/views/edit-foreign`)
   } catch (error) {
     next(error)

@@ -75,7 +75,13 @@ describe('Contact controller', function () {
       },
     })
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
   })
 
   describe('getCommon', function () {
@@ -86,10 +92,9 @@ describe('Contact controller', function () {
           contactId: '1234',
         },
       }
-      const res = {
-        breadcrumb: this.breadcrumbStub,
+      const res = Object.assign(this.resMock, {
         render: function () {},
-      }
+      })
       const next = function () {
         expect(getContactStub).to.have.been.calledWith(token, req.params.contactId)
         done()
@@ -103,13 +108,12 @@ describe('Contact controller', function () {
           contactId: '1234',
         },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {
           contact,
         },
-        breadcrumb: this.breadcrumbStub,
         render: function () {},
-      }
+      })
       const next = function () {
         expect(getDitCompanyStub).to.have.been.calledWith(token, contact.company.id)
         expect(getContactStub).to.have.been.calledWith(token, req.params.contactId)
@@ -124,13 +128,12 @@ describe('Contact controller', function () {
           contactId: '1234',
         },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {
           company,
         },
-        breadcrumb: this.breadcrumbStub,
         render: function () {},
-      }
+      })
       const next = function () {
         expect(buildCompanyUrlStub).to.have.been.calledWith(company)
         done()
@@ -144,11 +147,10 @@ describe('Contact controller', function () {
           contactId: '1234',
         },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {},
-      }
+      })
       const next = function () {
         expect(res.locals.id).to.equal(req.params.contactId)
         done()
@@ -178,10 +180,9 @@ describe('Contact controller', function () {
           contactId: '1234',
         },
       }
-      const res = {
-        breadcrumb: this.breadcrumbStub,
+      const res = Object.assign(this.resMock, {
         render: function () {},
-      }
+      })
       const next = function (err) {
         expect(err.message).to.equal(error.message)
         done()
@@ -197,20 +198,19 @@ describe('Contact controller', function () {
         const req = {
           session: {},
         }
-        const res = {
+        const res = Object.assign(this.resMock, {
           locals: {
             contact,
             company,
             id: '1234',
           },
-          breadcrumb: this.breadcrumbStub,
           render: function (url, options) {
             expect(getDisplayContactStub).to.be.calledWith(contact, company)
             expect(res.locals.contactDetails).to.deep.equal(contactFormatted)
             expect(res.locals.contactDetailsLabels).to.deep.equal(contactDetailsLabels)
             done()
           },
-        }
+        })
         contactController.getDetails(req, res, next)
       })
     })

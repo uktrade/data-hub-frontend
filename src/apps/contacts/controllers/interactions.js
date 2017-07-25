@@ -9,7 +9,7 @@ async function getInteractions (req, res, next) {
     res.locals.addInteractionUrl = `/interactions/create/1?contact=${res.locals.contact.id}`
 
     res
-      .breadcrumb('Interactions')
+      .breadcrumb.add('Interactions')
       .render('contacts/views/interactions')
   } catch (error) {
     next(error)

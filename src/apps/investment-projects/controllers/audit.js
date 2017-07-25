@@ -18,7 +18,7 @@ async function getInvestmentAudit (req, res, next) {
       const auditLog = rawAuditLog.map(formatAuditLog)
 
       return res
-        .breadcrumb('Audit history')
+        .breadcrumb.add('Audit history')
         .render('investment-projects/views/audit', {
           currentNavItem: 'audit',
           auditLog,

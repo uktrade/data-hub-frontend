@@ -41,10 +41,10 @@ async function editDetails (req, res, next) {
 
     if (req.params.contactId) {
       res.locals.backUrl = `/contacts/${req.params.contactId}`
-      res.breadcrumb('Edit')
+      res.breadcrumb.add('Edit')
     } else if (req.query.company) {
       res.locals.backUrl = `/companies/${req.query.company}/contacts`
-      res.breadcrumb(`Add contact at ${res.locals.company.name}`)
+      res.breadcrumb.add(`Add contact at ${res.locals.company.name}`)
     }
 
     // Labels and options needed for the form and error display

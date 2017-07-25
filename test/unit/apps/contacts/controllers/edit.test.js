@@ -24,7 +24,13 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
       '../services/form': {
@@ -95,12 +101,11 @@ describe('Contact controller, edit', function () {
             contactId: '12651151-2149-465e-871b-ac45bc568a62',
           },
         }
-        res = {
+        res = Object.assign(this.resMock, {
           locals: {
             contact,
           },
-          breadcrumb: this.breadcrumbStub,
-        }
+        })
       })
 
       it('should create a form based on the existing contact', function (done) {
@@ -145,10 +150,9 @@ describe('Contact controller, edit', function () {
           },
           params: {},
         }
-        res = {
+        res = Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
-        }
+        })
       })
 
       it('should return a form pre-populated with just the company id', function (done) {
@@ -199,10 +203,9 @@ describe('Contact controller, edit', function () {
             company: '1234',
           },
         }
-        res = {
+        res = Object.assign(this.resMock, {
           locals: {},
-          breadcrumb: this.breadcrumbStub,
-        }
+        })
       })
       it('should use the pre posted form for edit', function (done) {
         res.render = function () {

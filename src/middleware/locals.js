@@ -10,7 +10,7 @@ try {
 
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
-  const breadcrumbItems = res.breadcrumb()
+  const breadcrumbItems = res.breadcrumb.get()
 
   res.locals = Object.assign({}, res.locals, {
     BASE_URL: baseUrl,

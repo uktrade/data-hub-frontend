@@ -65,7 +65,7 @@ async function editDetails (req, res, next) {
     res.locals.serviceProviderOptions = metadataRepository.teams
     res.locals.labels = interactionLabels
     res
-      .breadcrumb(`Add interaction for ${res.locals.company.name}`)
+      .breadcrumb.add(`Add interaction for ${res.locals.company.name}`)
       .render('interactions/views/edit')
   } catch (error) {
     console.log(error)

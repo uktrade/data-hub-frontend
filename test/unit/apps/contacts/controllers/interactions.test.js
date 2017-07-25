@@ -21,7 +21,13 @@ describe('Contact interactions controller', function () {
     contactDataService.getContactInteractionsAndServiceDeliveries = sinon.stub().resolves([interaction])
     interactionFormattingService.getDisplayContactInteraction = sinon.stub().resolves(formattedInteraction)
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
   })
 
   describe('data', function () {
@@ -30,16 +36,15 @@ describe('Contact interactions controller', function () {
         session: { token: '1234' },
         params: { contactId: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {
           contact,
         },
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(contactDataService.getContactInteractionsAndServiceDeliveries).to.be.calledWith(req.session.token, req.params.contactId)
           done()
         },
-      }
+      })
       contactInteractionController.getInteractions(req, res, next)
     })
 
@@ -48,16 +53,15 @@ describe('Contact interactions controller', function () {
         session: { token: '1234' },
         params: { contactId: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {
           contact,
         },
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(interactionFormattingService.getDisplayContactInteraction).to.be.calledWith(interaction)
           done()
         },
-      }
+      })
       contactInteractionController.getInteractions(req, res, next)
     })
 
@@ -66,17 +70,16 @@ describe('Contact interactions controller', function () {
         session: { token: '1234' },
         params: { contactId: '1' },
       }
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {
           contact,
         },
-        breadcrumb: this.breadcrumbStub,
         render: function (template, options) {
           expect(res.locals).to.have.property('interactions')
           expect(res.locals.interactions).to.have.length(1)
           done()
         },
-      }
+      })
       contactInteractionController.getInteractions(req, res, next)
     })
   })

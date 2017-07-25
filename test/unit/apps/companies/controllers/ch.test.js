@@ -41,7 +41,13 @@ describe('Company controller, Companies House', function () {
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
 
-    this.breadcrumbStub = function () { return this }
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
 
     companyControllerCh = proxyquire('~/src/apps/companies/controllers/ch', {
       '../services/data': {
@@ -68,25 +74,23 @@ describe('Company controller, Companies House', function () {
         params: {
           id: '9999',
         },
-      }, {
+      }, Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getCHCompanyStub).to.be.calledWith('1234', '9999')
           done()
         },
-      }, next)
+      }), next)
     })
     it('should return the company heading name and address', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals.headingName).to.equal('ADALEOP LTD')
           expect(res.locals.headingAddress).to.equal('13 Howick Park Avenue, Penwortham, Preston, PR1 0LS, United Kingdom')
           done()
         },
-      }
+      })
 
       companyControllerCh.getDetails({
         session: {
@@ -98,9 +102,8 @@ describe('Company controller, Companies House', function () {
       }, res, next)
     })
     it('should get a formatted copy of the company house data to display', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
           expect(res.locals).to.have.property('chDetails')
@@ -108,7 +111,7 @@ describe('Company controller, Companies House', function () {
           expect(res.locals.chDetailsDisplayOrder).to.deep.equal(['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code'])
           done()
         },
-      }
+      })
 
       companyControllerCh.getDetails({
         session: {
@@ -120,15 +123,14 @@ describe('Company controller, Companies House', function () {
       }, res, next)
     })
     it('should not try and get formatted data for CDMS company details', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(getDisplayCompanyStub).to.not.be.called
           expect(res.locals).to.not.have.property('companyDetails')
           done()
         },
-      }
+      })
 
       companyControllerCh.getDetails({
         session: {
@@ -140,15 +142,14 @@ describe('Company controller, Companies House', function () {
       }, res, next)
     })
     it('should not provide account management information', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function () {
           expect(res.locals).to.not.have.property('accountManagementDisplay')
           expect(res.locals).to.not.have.property('accountManagementDisplayLabels')
           done()
         },
-      }
+      })
 
       companyControllerCh.getDetails({
         session: {
@@ -160,9 +161,8 @@ describe('Company controller, Companies House', function () {
       }, res, next)
     })
     it('should use a template for ch data', function (done) {
-      const res = {
+      const res = Object.assign(this.resMock, {
         locals: {},
-        breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
             expect(template).to.equal('companies/views/details-ch')
@@ -171,7 +171,7 @@ describe('Company controller, Companies House', function () {
             done(e)
           }
         },
-      }
+      })
 
       companyControllerCh.getDetails({
         session: {

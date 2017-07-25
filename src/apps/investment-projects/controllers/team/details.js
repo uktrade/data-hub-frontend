@@ -6,7 +6,7 @@ function getDetailsHandler (req, res, next) {
     const projectManagementData = transformProjectManagementForView(res.locals.investmentData)
 
     res
-      .breadcrumb('Project team')
+      .breadcrumb.add('Project team')
       .render('investment-projects/views/team/details', {
         currentNavItem: 'team',
         projectManagementData,

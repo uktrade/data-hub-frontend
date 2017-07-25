@@ -20,7 +20,7 @@ async function getCommon (req, res, next) {
     res.locals.companyUrl = companyService.buildCompanyUrl(company)
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
 
-    res.breadcrumb(`${contact.first_name} ${contact.last_name}`, `/contacts/${contact.id}`)
+    res.breadcrumb.add(`${contact.first_name} ${contact.last_name}`, `/contacts/${contact.id}`)
 
     next()
   } catch (error) {

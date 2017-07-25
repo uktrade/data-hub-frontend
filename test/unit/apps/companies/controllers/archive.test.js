@@ -23,6 +23,13 @@ describe('Company controller, archive', function () {
   let companyArchiveController
 
   beforeEach(function () {
+    this.resMock = {
+      breadcrumb: {
+        add: () => this.resMock,
+        update: () => this.resMock,
+        get: () => [],
+      },
+    }
     getDitCompanyStub = sinon.stub().resolves(company)
     buildCompanyUrlStub = sinon.stub().returns('/testurl')
     companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
@@ -48,13 +55,13 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function () {
         expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason)
         done()
       },
-    }
+    })
 
     companyArchiveController.postArchiveCompany(req, res, next)
   })
@@ -67,13 +74,13 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function () {
         expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason_other)
         done()
       },
-    }
+    })
 
     companyArchiveController.postArchiveCompany(req, res, next)
   })
@@ -86,7 +93,7 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function (url) {
         expect(getDitCompanyStub).to.be.calledWith(token, company.id)
@@ -94,7 +101,7 @@ describe('Company controller, archive', function () {
         expect(url).to.equal('/testurl')
         done()
       },
-    }
+    })
 
     companyArchiveController.postArchiveCompany(req, res, next)
   })
@@ -107,13 +114,13 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('success', 'Updated company record')
         done()
       },
-    }
+    })
 
     companyArchiveController.postArchiveCompany(req, res, next)
   })
@@ -126,13 +133,13 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function (url) {
         expect(flashStub).to.be.calledWith('error', 'Unable to archive company, no reason given')
         done()
       },
-    }
+    })
 
     companyArchiveController.postArchiveCompany(req, res, next)
   })
@@ -144,13 +151,13 @@ describe('Company controller, archive', function () {
       },
       flash: flashStub,
     }
-    const res = {
+    const res = Object.assign(this.resMock, {
       locals: {},
       redirect: function () {
         expect(companyRepositoryUnArchiveCompanyStub).to.be.calledWith(token, company.id)
         done()
       },
-    }
+    })
 
     companyArchiveController.getUnarchiveCompany(req, res, next)
   })

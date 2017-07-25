@@ -5,13 +5,13 @@ const templateData = {
 
 function editDetailsGet (req, res) {
   res
-    .breadcrumb('Edit details')
+    .breadcrumb.add('Edit details')
     .render('investment-projects/views/details-edit', templateData)
 }
 
 function editValueGet (req, res) {
   res
-    .breadcrumb('Edit value')
+    .breadcrumb.add('Edit value')
     .render('investment-projects/views/value-edit', templateData)
 }
 

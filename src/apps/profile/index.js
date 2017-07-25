@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 function getHandler (req, res) {
   res
-    .breadcrumb('Your profile')
+    .breadcrumb.add('Your profile')
     .render('profile/views/profile')
 }
 
