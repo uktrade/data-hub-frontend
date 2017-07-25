@@ -12,44 +12,6 @@ describe('OMIS create base controller', () => {
     this.sandbox.restore()
   })
 
-  describe('locals()', () => {
-    describe('when the parent class returns an empty object', () => {
-      beforeEach(() => {
-        FormController.prototype.locals = this.sandbox.stub().returns({})
-      })
-
-      it('should return an object with only new properties', () => {
-        const locals = this.controller.locals(globalReq, globalRes)
-
-        expect(locals).to.have.property('pageHeading')
-        expect(Object.keys(locals).length).to.equal(1)
-      })
-    })
-
-    describe('when the parent class returns an object', () => {
-      beforeEach(() => {
-        FormController.prototype.locals = this.sandbox.stub().returns({
-          foo: 'bar',
-          fizz: 'buzz',
-        })
-      })
-
-      it('should append new properties', () => {
-        const locals = this.controller.locals(globalReq, globalRes)
-
-        expect(locals).to.have.property('foo')
-        expect(locals.foo).to.equal('bar')
-
-        expect(locals).to.have.property('fizz')
-        expect(locals.fizz).to.equal('buzz')
-
-        expect(locals).to.have.property('pageHeading')
-
-        expect(Object.keys(locals).length).to.equal(3)
-      })
-    })
-  })
-
   describe('errorHandler()', () => {
     beforeEach(() => {
       this.nextSpy = this.sandbox.spy()

@@ -1,7 +1,9 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="page-heading">{{ heading }}</h1>
+{% block local_header %}
+  {% set pageTitle = getPageTitle() %}
+  {% set heading = heading or pageTitle[0] %}
+  {{ LocalHeader({ heading: heading }) }}
 {% endblock %}
 
 {% block main_grid_right_column %}
