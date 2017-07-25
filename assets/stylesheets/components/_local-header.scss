@@ -26,24 +26,6 @@
   .c-entity-search__aggregations {
     margin-bottom: -$default-spacing-unit * 2;
   }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    border-top: 10px solid $govuk-blue;
-    max-width: 100%;
-    width: $site-width;
-    margin: 0 auto;
-
-    @include media($max-width: $site-width) {
-      width: auto;
-      left: $default-spacing-unit;
-      right: $default-spacing-unit;
-    }
-  }
 }
 
 .c-local-header__heading-before {

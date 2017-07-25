@@ -1,9 +1,29 @@
 @import "../../settings";
 
 .main-content {
+  position: relative;
   background-color: $white;
   min-height: 60vh;
   flex-grow: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-top: 10px solid $govuk-blue;
+    max-width: 100%;
+    width: $site-width;
+    margin: 0 auto;
+
+    @include media($max-width: $site-width) {
+      width: auto;
+      left: $default-spacing-unit;
+      right: $default-spacing-unit;
+    }
+  }
 }
 
 .main-content__inner {
