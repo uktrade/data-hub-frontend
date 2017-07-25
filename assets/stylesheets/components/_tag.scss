@@ -1,0 +1,48 @@
+@import "../settings";
+
+@mixin _style-tag($colour: $text-colour, $hover: $colour) {
+  border: 2px solid rgba($text-colour, .15);
+  border-radius: 4px;
+  color: inherit;
+  transition: 60ms;
+  cursor: default;
+
+  &:link,
+  &:visited {
+    color: $colour;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba($hover, .3);
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: $hover;
+    }
+
+    &:active,
+    &.is-selected {
+      background-color: $hover;
+      border-color: $hover;
+      color: $white;
+    }
+  }
+}
+
+.c-tag {
+  @include _style-tag($green);
+
+  padding: ($baseline-grid-unit / 2) $baseline-grid-unit;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:link,
+  &:visited {
+    background-color: $white;
+  }
+}
+
+.c-tag--alt {
+  @include _style-tag($purple);
+}
