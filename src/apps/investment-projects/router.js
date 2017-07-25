@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+const localNavMiddleware = require('../../middleware/local-nav')
+
 const { shared } = require('./middleware')
 const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
@@ -20,8 +22,16 @@ const requirementsMiddleware = require('./middleware/forms/requirements')
 const interactionsMiddleware = require('./middleware/forms/interactions')
 const projectManagementForm = require('./middleware/forms/project-management')
 
+const LOCAL_NAV = [
+  { path: '../details', label: 'Project details' },
+  { path: '../team', label: 'Project team' },
+  { path: '../interactions', label: 'Interactions' },
+  { path: '../evaluation', label: 'Evaluations' },
+  { path: '../audit', label: 'Audit history' },
+]
+
 router.use(shared.handleEmptyMiddleware)
-router.use(shared.getLocalNavMiddleware)
+router.use(localNavMiddleware(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)

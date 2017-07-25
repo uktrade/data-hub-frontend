@@ -1,13 +1,13 @@
 @import "../settings";
+@import "../tools/mixins/layout";
 
-// Form assemblies
+// View assemblies
 // Define how components stack in views
 
 * + {
   .c-form-group,
   .c-form-fieldset,
   .c-error-summary,
-  .c-entity-search,
   .results-summary {
     margin-top: $default-spacing-unit * 2;
   }
@@ -22,4 +22,8 @@
     margin-top: $default-spacing-unit;
     margin-bottom: $default-spacing-unit;
   }
+}
+
+[type="hidden"] + .c-form-group {
+  margin-top: 0;
 }

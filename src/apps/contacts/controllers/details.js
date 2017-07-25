@@ -10,6 +10,10 @@ const reasonForArchiveOptions = [
   'Contact changed role/responsibility',
 ]
 
+function redirectToDetails (req, res) {
+  res.redirect(`${req.params.contactId}/details`)
+}
+
 async function getCommon (req, res, next) {
   try {
     const token = req.session.token
@@ -42,6 +46,7 @@ function getDetails (req, res, next) {
 }
 
 module.exports = {
+  redirectToDetails,
   getDetails,
   getCommon,
 }

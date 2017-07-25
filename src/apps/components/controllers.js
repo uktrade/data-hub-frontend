@@ -56,6 +56,12 @@ function renderBreadcrumbs (req, res) {
     .render('components/views/breadcrumbs')
 }
 
+function renderLocalHeader (req, res) {
+  return res
+    .breadcrumb('Local header')
+    .render('components/views/local-header')
+}
+
 function renderPagination (req, res) {
   return res
     .breadcrumb('Pagination')
@@ -77,6 +83,7 @@ module.exports = {
   renderFormElements,
   renderIndex,
   renderMessages,
+  renderLocalHeader,
   renderBreadcrumbs,
   renderPagination,
 }

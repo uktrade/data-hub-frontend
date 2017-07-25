@@ -22,7 +22,6 @@ function detailsGetHandler (req, res, next) {
       details: getDataLabels(transformedDetails, detailsLabels.view),
       values: getDataLabels(transformedValue, valueLabels.view),
       requirements: getDataLabels(transformedRequirements, requirementsLabels.view),
-      currentNavItem: 'details',
     })
   }
   return next()

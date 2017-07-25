@@ -13,7 +13,8 @@
 
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/form.njk" import Fieldset, TextField, MultipleChoiceField, HiddenField %}
-{% from "_macros/common.njk" import Pagination %}
+{% from "_macros/common.njk" import LocalHeader with context %}
+{% from "_macros/common.njk" import Pagination, LocalNav %}
 {% from "_macros/address.njk" import addressFormatter %}
 
 {% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
@@ -32,7 +33,7 @@
 {% endblock %}
 
 {% block header_menu %}
-  <nav>
+  <nav aria-label="global nav">
     <ul class="proposition-menu">
       {% if user %}
         <li class="proposition-menu__item">
@@ -61,9 +62,12 @@
 {% endblock %}
 
 {% block body_main_header %}
-  {% component 'breadcrumbs', { items: BREADCRUMBS } %}
-  {% component 'messages', { messages: messages } %}
   {{ super() }}
+  {% block local_header %}
+    {% set pageTitle = getPageTitle() %}
+    {% set heading = heading or pageTitle[0] %}
+    {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
+  {% endblock %}
 {% endblock %}
 
 {% block body %}

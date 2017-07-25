@@ -49,3 +49,67 @@
     </nav>
   {% endif %}
 {% endmacro %}
+
+{##
+ # Render page local header
+ # @param {object} props - An object containing local header properties
+ # @param {string} [heading] - page heading
+ # @param {string} [heading] - page heading
+ # @param {string} [headingBefore] - a string before heading (safe to render HTML)
+ # @param {string} [headingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {object} [breadcrumbs] - an object containing page breadcrumbs
+ # @param {object} [messages] - an object containing flash messages
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro LocalHeader(props) %}
+  {% set breadcrumbs = props.breadcrumbs | default(BREADCRUMBS) %}
+  {% set messages = props.messages | default(messages) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
+
+  {% if props %}
+    <header class="c-local-header {{ modifier }}" aria-label="local header">
+      <div class="l-container">
+        {% if breadcrumbs|length %}
+          {% component 'breadcrumbs', { items: breadcrumbs } %}
+        {% endif %}
+        {% if messages|length %}
+          {% component 'messages', { messages: messages } %}
+        {% endif %}
+
+        {% if props.headingBefore %}
+          <div class="c-local-header__heading-before">
+            {{ props.headingBefore | safe }}
+          </div>
+        {% endif %}
+
+        {% if props.heading %}
+          <h1 class="c-local-header__heading">
+            {{ props.heading }} {{ props.headingSuffix | safe }}
+          </h1>
+        {% endif %}
+
+        {{ caller() if caller }}
+      </div>
+    </header>
+  {% endif %}
+{% endmacro %}
+
+{##
+ # Render local nav
+ # @param {object} props
+ # @param {string} [props.modifier] - nav modifier
+ # @param {string} [props.items] - nav items
+ #
+ #}
+{% macro LocalNav(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-nav--') if props.modifier %}
+
+  {% if props|length %}
+    <nav class="c-local-nav {{ modifier }}" aria-label="local navigation">
+      {% for item in props.items %}
+        <a class="c-local-nav__link {{ 'is-active' if item.isActive }}" href="{{item.url}}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+  {% endif %}
+{% endmacro %}

@@ -4,23 +4,13 @@ const { isValidGuid } = require('../../../lib/controller-utils')
 const { getInteraction } = require('../../interactions/repos')
 const { getDitCompany } = require('../../companies/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
+const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
 
 function handleEmptyMiddleware (req, res, next) {
   if (req.path === '/') {
     return res.redirect(`/investment-projects/create`)
   }
-  next()
-}
-
-function getLocalNavMiddleware (req, res, next) {
-  res.locals.localNavItems = [
-    { label: 'Project details', slug: 'details' },
-    { label: 'Project team', slug: 'team' },
-    { label: 'Interactions', slug: 'interactions' },
-    { label: 'Evaluation', slug: 'evaluation' },
-    { label: 'Audit history', slug: 'audit' },
-  ]
   next()
 }
 
@@ -48,6 +38,10 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       projectCode: investmentData.project_code,
       stageName: investmentData.stage.name,
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+      company: {
+        name: investmentData.investor_company.name,
+        url: buildCompanyUrl(investmentData.investor_company),
+      },
     }
 
     res.breadcrumb({
@@ -78,7 +72,6 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 
 module.exports = {
   handleEmptyMiddleware,
-  getLocalNavMiddleware,
   getInvestmentDetails,
   getInteractionDetails,
 }

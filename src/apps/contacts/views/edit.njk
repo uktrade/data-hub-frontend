@@ -1,14 +1,17 @@
 {% extends "./_layout.njk" %}
 
+{% block local_header %}
+  {% set headingBefore %}
+    <a href="{{companyUrl}}">{{contact.company.name}}</a>
+  {% endset %}
 
-{% block main_heading %}
-  <h1 class="page-heading">
-    {% if formData and formData.id %}
-      Edit contact
-    {% else %}
-      Add contact
-    {% endif %}
-  </h1>
+  {{
+    LocalHeader({
+      headingBefore: headingBefore,
+      heading: 'Edit contact' if formData.id else 'Add contact',
+      modifier: 'light-banner'
+    })
+  }}
 {% endblock %}
 
 {% block main_grid_left_column %}{% endblock %}

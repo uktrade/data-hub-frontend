@@ -1,20 +1,17 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  {{ EntitySearchForm({
-    inputName: 'term',
-    modifier: 'global',
-    action: '/search/' + searchPath | default('companies'),
-    searchTerm: searchTerm,
-    entityType: searchEntity,
-    inputLabel: 'Search for company, contact or investment project',
-    aggregations: searchEntityResultsData
-  }) }}
-{% endblock %}
-
-
-{% block main_grid_left_column %}
-  &nbsp; {# // TODO filters #}
+{% block local_header %}
+  {% call LocalHeader({ modifier: 'dark-banner' }) %}
+    {{ EntitySearchForm({
+      inputName: 'term',
+      modifier: 'global',
+      action: '/search/' + searchPath | default('companies'),
+      searchTerm: searchTerm,
+      entityType: searchEntity,
+      inputLabel: 'Search for company, contact or investment project',
+      aggregations: searchEntityResultsData
+    }) }}
+  {% endcall %}
 {% endblock %}
 
 

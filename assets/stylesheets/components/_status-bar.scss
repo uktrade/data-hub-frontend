@@ -3,8 +3,6 @@
 @import "../tools/mixins";
 
 .status-bar {
-  margin-top: 30px;
-  margin-bottom: 30px;
   position: relative;
 
   &::before {

@@ -24,7 +24,6 @@ function renderEvaluationPage (req, res, next) {
         value: getDataLabels(transformedValue, evaluationValueLabels.view),
         fdi: getDataLabels(Object.assign({}, transformedValue, transformedFDI), evaluationFdiLabels.view),
         landing: getDataLabels(transformedLanding, evaluationLandingLabels.view),
-        currentNavItem: 'evaluation',
       })
   }
 
