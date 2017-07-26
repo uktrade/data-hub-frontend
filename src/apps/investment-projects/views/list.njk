@@ -13,7 +13,7 @@
           <span class="c-results__count">{{ results.count }}</span> projects {{ 'matching' if form.data.filters | length }}
         </div>
         {% if form.data.filters|length > 1 %}
-          <a href="?custom=true" class="c-results__summary__filter-remove-all u-float-right" aria-label="Reset filter results">
+          <a href="?custom=true" class="c-results__summary__filter-remove-all u-float-right js-xhr" aria-label="Reset filter results">
             Remove all filters
           </a>
         {% endif %}
@@ -27,7 +27,7 @@
                 <span class="c-results__summary-filter-type">{{ selectedFilter.label }}</span>
                 <span class="c-results__summary-filter-name">{{ selectedFilter.value }}</span>
                 <a
-                  class="c-results__summary-filter-remove"
+                  class="c-results__summary-filter-remove js-xhr"
                   href="{{ buildUrlWithoutFilters(name) }}"
                   aria-label="Remove filter"
                 >×</a>
@@ -48,7 +48,7 @@
 
         {% call Form({
           method: 'get',
-          class: 'c-results__sort-form',
+          class: 'c-results__sort-form js-AutoSubmit',
           disableFormActions: true,
           hiddenFields: form.data.filters | assign({ custom: true })
         }) %}
@@ -59,7 +59,7 @@
             options: form.options.sortby,
             modifier: ['small', 'inline', 'light']
           }) }}
-          <button class="button button-secondary">Sort</button>
+          <button class="button button-secondary u-js-hidden">Sort</button>
         {% endcall %}
       </div>
     {% endif %}
@@ -84,7 +84,7 @@
             <dd class="metadata-list__value">
               <a
                 href="{{ buildUrlWithFilters({ investment_type: project.investment_type.id }) }}"
-                class="metadata-list__link {{ 'is-active' if form.data.filters.investment_type }}"
+                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.investment_type }}"
               >
                 {{ project.investment_type.name }}
               </a>
@@ -96,7 +96,7 @@
             <dd class="metadata-list__value">
               <a
                 href="{{ buildUrlWithFilters({ stage: project.stage.id }) }}"
-                class="metadata-list__link {{ 'is-active' if form.data.filters.stage }}"
+                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.stage }}"
               >
                 {{ project.stage.name }}
               </a>
@@ -111,7 +111,7 @@
             <dd class="metadata-list__value">
               <a
                 href="{{  buildUrlWithFilters({ investor_company: project.investor_company.id }) }}"
-                class="metadata-list__link {{ 'is-active' if form.data.filters.investor_company }}"
+                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.investor_company }}"
               >
                 {{ project.investor_company.name }}
               </a>
@@ -120,7 +120,7 @@
             <dd class="metadata-list__value">
               <a
                 href="{{  buildUrlWithFilters({ sector: project.sector.id }) }}"
-                class="metadata-list__link {{ 'is-active' if form.data.filters.sector }}"
+                class="metadata-list__link js-xhr {{ 'is-active' if form.data.filters.sector }}"
               >
                 {{ project.sector.name }}
               </a>

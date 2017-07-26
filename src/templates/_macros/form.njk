@@ -34,6 +34,7 @@
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
  # @param {string} [props.class] - Form class name
  # @param {string} [props.role] - Form role attribute value
+ # @param {string} [props.actionsClass] - Custom class name for actions container
  # @param {string} [props.buttonText=Submit] - Text for submit button
  # @param {string} [props.returnText=Back] - Text for return link
  # @param {string} [props.returnLink] - Location for return link
@@ -66,7 +67,7 @@
     {{ caller() }}
 
     {% if not props.disableFormActions %}
-      <div class="c-form-group c-form-group--actions">
+      <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
         <button class="button">{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>

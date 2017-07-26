@@ -18,6 +18,7 @@ module.exports = function locals (req, res, next) {
     CURRENT_PATH: req.path,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     BREADCRUMBS: breadcrumbItems,
+    IS_XHR: req.xhr,
 
     getPageTitle: () => {
       const items = breadcrumbItems.map(item => item.name)
