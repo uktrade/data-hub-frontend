@@ -50,6 +50,10 @@ module.exports = function locals (req, res, next) {
     getLocal (key) {
       return res.locals[key]
     },
+
+    trans (key) {
+      return req.translate(key)
+    },
   })
   next()
 }
