@@ -21,6 +21,8 @@ const valueFormMiddleware = require('./middleware/forms/value')
 const requirementsMiddleware = require('./middleware/forms/requirements')
 const interactionsMiddleware = require('./middleware/forms/interactions')
 const projectManagementForm = require('./middleware/forms/project-management')
+const { renderInvestmentList } = require('./controllers/list')
+const { setDefaults, getInvestmentProjectsCollection } = require('./middleware/collection')
 
 const LOCAL_NAV = [
   { path: '../details', label: 'Project details' },
@@ -30,11 +32,12 @@ const LOCAL_NAV = [
   { path: '../audit', label: 'Audit history' },
 ]
 
-router.use(shared.handleEmptyMiddleware)
 router.use(localNavMiddleware(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
+
+router.get('/', setDefaults, getInvestmentProjectsCollection, renderInvestmentList)
 
 router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
 router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)

@@ -1,5 +1,3 @@
-{% extends "./dit-base.njk" %}
-
 {# // TODO remove these as they are refactored #}
 {% from "_macros/_deprecated/trade-elements/autocomplete.njk" import autocomplete %}
 {% from "_macros/_deprecated/trade-elements/date.njk" import date %}
@@ -16,6 +14,12 @@
 {% from "_macros/common.njk" import LocalHeader with context %}
 {% from "_macros/common.njk" import Pagination, LocalNav %}
 {% from "_macros/address.njk" import addressFormatter %}
+
+{% if IS_XHR %}
+  {% extends "./xhr.njk" %}
+{% else %}
+  {% extends "./dit-base.njk" %}
+{% endif %}
 
 {% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
 
@@ -38,6 +42,11 @@
       {% if user %}
         <li class="proposition-menu__item">
           <a href="/" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/' }}">Dashboard</a>
+        </li>
+        <li class="proposition-menu__item">
+          <a href="/investment-projects" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/investment-projects' }}">
+            Investment projects
+          </a>
         </li>
       {% endif %}
       {% if feedbackLink %}

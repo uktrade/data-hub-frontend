@@ -23,23 +23,49 @@ const entities = [
   },
 ]
 
-function search ({ token, searchTerm, searchEntity, limit = 10, page = 1 }) {
-  const params = {
+function searchInvestmentProjects ({ token, searchTerm, requestBody, limit = 10, page = 1 }) {
+  return search({
+    token,
+    searchTerm,
+    requestBody,
+    limit,
+    page,
+    searchEntity: 'investment_project',
+    isAggregation: false,
+  })
+    .then(result => {
+      return {
+        limit,
+        count: result.count,
+        page: result.page,
+        items: result.results,
+      }
+    })
+}
+
+function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
+  const searchUrl = `${config.apiRoot}/v3/search`
+  let options = {
+    url: isAggregation ? searchUrl : `${searchUrl}/${searchEntity}`,
+    method: isAggregation ? 'GET' : 'POST',
+  }
+  requestBody = Object.assign({}, requestBody, {
     term: searchTerm,
-    entity: searchEntity,
     limit,
     offset: (page * limit) - limit,
-  }
+  })
 
-  const options = {
-    url: `${config.apiRoot}/v3/search${buildQueryString(params)}`,
-    method: 'GET',
+  if (isAggregation) {
+    options.qs = Object.assign(requestBody, {
+      entity: searchEntity,
+    })
+  } else {
+    options.body = requestBody
   }
 
   return authorisedRequest(token, options)
     .then(result => {
       result.page = page
-
       return result
     })
 }
@@ -107,6 +133,7 @@ function buildSearchEntityResultsData (apiResponseEntities) {
 module.exports = {
   entities,
   search,
+  searchInvestmentProjects,
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,

@@ -16,6 +16,14 @@
     margin-top: $default-spacing-unit / 2;
   }
 
+  .c-multiple-choice--smaller {
+    margin-top: $baseline-grid-unit;
+  }
+
+  .metadata-list {
+    margin-top: $default-spacing-unit / 4;
+  }
+
   .c-form-fieldset--subfield,
   .c-form-group--subfield,
   .c-pagination {

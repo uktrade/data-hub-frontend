@@ -28,7 +28,5 @@
 
 .c-entity-list__item-header {
   @include core-font(20);
-  color: $link-colour;
-  margin: ($gutter / 2) 0 ($gutter / 4);
-  text-decoration: underline;
+  margin: ($default-spacing-unit / 2) 0;
 }
