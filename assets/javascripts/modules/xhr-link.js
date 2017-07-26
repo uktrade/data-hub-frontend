@@ -1,5 +1,4 @@
 const queryString = require('query-string')
-const AutoSubmit = require('./auto-submit')
 const XHR = require('../lib/xhr')
 
 const XhrLink = {
@@ -25,9 +24,7 @@ const XhrLink = {
 
     evt.preventDefault()
 
-    XHR
-      .request(path, params)
-      .then(() => AutoSubmit.hideActionButtons())
+    XHR.request(path, params)
   },
 }
 
