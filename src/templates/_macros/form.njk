@@ -214,11 +214,11 @@
         <span class="c-form-group__label-text">
           {{ props.label }} {{ '(optional)' if props.optional }}
         </span>
-        {% if props.hint %}
-          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
-        {% endif %}
         {% if props.error %}
           <span class="c-form-group__error-message">{{ props.error }}</span>
+        {% endif %}
+        {% if props.hint %}
+          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
         {% endif %}
       </{{ labelElement }}>
 
