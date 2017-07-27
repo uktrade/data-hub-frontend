@@ -32,7 +32,7 @@ function transformInvestmentProjectIntoListItem ({
         name: 'investment_type',
         label: 'Investment type',
         value: investment_type,
-        tagModifier: 'alt',
+        tagModifier: 'secondary',
         isTag: true,
       },
       {
