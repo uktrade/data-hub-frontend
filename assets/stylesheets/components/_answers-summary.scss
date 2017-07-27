@@ -1,0 +1,51 @@
+@import "../settings";
+@import "../tools/mixins";
+
+.c-answers-summary {
+  border-top: 1px solid $grey-2;
+}
+
+.c-answers-summary__title,
+.c-answers-summary__content,
+.c-answers-summary__control {
+  border-bottom: 0;
+  display: block;
+  margin: 0;
+  padding: ($default-spacing-unit / 2) ($default-spacing-unit / 4) 0;
+
+  @include media(tablet) {
+    border-top: 1px solid $grey-2;
+    border-bottom: 1px solid $grey-2;
+    display: table-cell;
+    padding: $default-spacing-unit $baseline-grid-unit * 2;
+  }
+}
+
+.c-answers-summary__title {
+  @include bold-font(16);
+  padding-top: $default-spacing-unit;
+
+  @include media(tablet) {
+    width: 25%;
+  }
+}
+
+.c-answers-summary__control {
+  border-bottom: 1px solid $grey-2;
+  padding-bottom: $default-spacing-unit / 2;
+  text-align: left;
+
+  @include media(tablet) {
+    padding-bottom: $default-spacing-unit;
+    text-align: right;
+  }
+
+  .button {
+    @include core-font(16);
+    margin-bottom: $default-spacing-unit;
+
+    @include media(tablet) {
+      margin-bottom: 0;
+    }
+  }
+}

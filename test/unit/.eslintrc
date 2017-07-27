@@ -6,7 +6,9 @@
     "expect": true,
     "proxyquire": true,
     "sinon": true,
-    "rootPath": true
+    "rootPath": true,
+    "globalReq": true,
+    "globalRes": true
   },
   "rules": {
     "no-unused-expressions": 0

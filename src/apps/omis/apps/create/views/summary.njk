@@ -1,0 +1,43 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% set heading = 'Check order details' %}
+
+{% block form %}
+  {% call MultiStepForm({
+    buttonText: 'Create order'
+  }) %}
+
+    <table class="c-answers-summary">
+      <caption class="c-answers-summary__heading">Client</caption>
+      <tr>
+        <th class="c-answers-summary__title" scope="row">Company</th>
+        <td class="c-answers-summary__content">{{ values.company.name }}</td>
+        <td class="c-answers-summary__control"></td>
+      </tr>
+      <tr>
+        <th class="c-answers-summary__title" scope="row">Contact</th>
+        <td class="c-answers-summary__content">{{ values.contact }}</td>
+        <td class="c-answers-summary__control"><a class="button button-secondary" href="client-details/edit">Change</a></td>
+      </tr>
+    </table>
+
+    <table class="c-answers-summary">
+      <caption class="c-answers-summary__heading">Market of interest</caption>
+      <tr>
+        <th class="c-answers-summary__title" scope="row">Primary market</th>
+        <td class="c-answers-summary__content">{{ values.primary_market.name }}</td>
+        <td class="c-answers-summary__control"><a class="button button-secondary" href="market/edit">Change</a></td>
+      </tr>
+    </table>
+
+    <table class="c-answers-summary">
+      <caption class="c-answers-summary__heading">Team</caption>
+      <tr>
+        <th class="c-answers-summary__title" scope="row">ITA</th>
+        <td class="c-answers-summary__content">{{ values.ita.name if values.ita else 'Not selected' }}</td>
+        <td class="c-answers-summary__control"><a class="button button-secondary" href="assign-ita/edit">Change</a></td>
+      </tr>
+    </table>
+
+  {% endcall %}
+{% endblock %}
