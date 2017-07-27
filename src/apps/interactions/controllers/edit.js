@@ -7,6 +7,7 @@ const adviserRepository = require('../../adviser/repos')
 const interactionDataService = require('../services/data')
 const interactionFormService = require('../services/form')
 const { containsFormData } = require('../../../lib/controller-utils')
+const { transformContactToOption } = require('../../transformers')
 
 async function editDetails (req, res, next) {
   try {
@@ -48,12 +49,7 @@ async function editDetails (req, res, next) {
     }
 
     const companyContacts = await contactsRepository.getContactsForCompany(req.session.token, res.locals.formData.company)
-    res.locals.contacts = companyContacts.map((contact) => {
-      return {
-        id: contact.id,
-        name: `${contact.first_name} ${contact.last_name}`,
-      }
-    })
+    res.locals.contacts = companyContacts.map(transformContactToOption)
 
     if (res.locals.formData.dit_adviser) {
       res.locals.dit_adviser = await adviserRepository.getAdviser(req.session.token, res.locals.formData.dit_adviser)

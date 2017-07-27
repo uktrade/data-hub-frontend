@@ -3,18 +3,14 @@ const { getAdvisers } = require('../../../adviser/repos')
 const { updateCompany } = require('../../../companies/repos')
 const { updateInvestment } = require('../../repos')
 const { clientRelationshipManagementLabels } = require('../../labels')
+const { transformObjectToOption } = require('../../../transformers')
 
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
 
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map((adviser) => {
-      return {
-        value: adviser.id,
-        label: `${adviser.first_name} ${adviser.last_name}`,
-      }
-    })
+    const advisers = advisersResponse.results.map(transformObjectToOption)
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,

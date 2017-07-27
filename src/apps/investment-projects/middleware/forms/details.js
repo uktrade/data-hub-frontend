@@ -5,6 +5,10 @@ const { isValidGuid } = require('../../../../lib/controller-utils')
 const metadataRepo = require('../../../../lib/metadata')
 const { getAdvisers } = require('../../../adviser/repos')
 const {
+  transformObjectToOption,
+  transformContactToOption,
+} = require('../../../transformers')
+const {
   createInvestmentProject,
   getEquityCompanyDetails,
   updateInvestment,
@@ -24,27 +28,9 @@ async function populateForm (req, res, next) {
       equityCompanyInvestment,
     } = await getEquityCompanyDetails(req.session.token, equityCompanyId)
 
-    const contacts = equityCompany.contacts.map((contact) => {
-      return {
-        id: contact.id,
-        name: `${contact.first_name} ${contact.last_name}`,
-      }
-    })
-
-    const advisers = advisersResponse.results.map((adviser) => {
-      return {
-        id: adviser.id,
-        name: `${adviser.first_name} ${adviser.last_name}`,
-      }
-    })
-
-    const investmentTypes = metadataRepo.investmentTypeOptions.map((type) => {
-      return {
-        value: type.id,
-        label: type.name,
-      }
-    })
-
+    const contacts = equityCompany.contacts.map(transformContactToOption)
+    const advisers = advisersResponse.results.map(transformObjectToOption)
+    const investmentTypes = metadataRepo.investmentTypeOptions.map(transformObjectToOption)
     const investmentData = transformFromApi(res.locals.investmentData)
 
     res.locals.equityCompany = equityCompany

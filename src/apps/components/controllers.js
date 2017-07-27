@@ -1,18 +1,15 @@
 const metadata = require('../../lib/metadata')
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
+const {
+  transformObjectToOption,
+  transformStringToOption,
+} = require('../transformers')
 
 function renderIndex (req, res) {
   return res.render('components/views/index', {
     title: 'Data Hub Components',
   })
-}
-
-function transformOption (option) {
-  return {
-    value: option.id,
-    label: option.name,
-  }
 }
 
 const foreignOtherCompanyOptions = [
@@ -34,11 +31,11 @@ function renderFormElements (req, res) {
       }),
       form: Object.assign({}, res.locals.form, {
         options: {
-          countries: metadata.countryOptions.map(transformOption),
-          averageSalaryRange: metadata.salaryRangeOptions.map(transformOption),
-          strategicDrivers: metadata.strategicDriverOptions.map(transformOption),
-          sectors: metadata.sectorOptions.map(transformOption),
-          foreignOtherCompany: foreignOtherCompanyOptions.map(i => ({ value: i, label: i })),
+          countries: metadata.countryOptions.map(transformObjectToOption),
+          averageSalaryRange: metadata.salaryRangeOptions.map(transformObjectToOption),
+          strategicDrivers: metadata.strategicDriverOptions.map(transformObjectToOption),
+          sectors: metadata.sectorOptions.map(transformObjectToOption),
+          foreignOtherCompany: foreignOtherCompanyOptions.map(transformStringToOption),
         },
       }),
     })

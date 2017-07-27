@@ -4,15 +4,8 @@ const { buildPagination } = require('../../../lib/pagination')
 const { buildQueryString } = require('../../../lib/url-helpers')
 const metadataRepo = require('../../../lib/metadata')
 const { collectionFilterLabels } = require('../labels')
-
 const { searchInvestmentProjects } = require('../../search/services')
-
-function transformMetadataToOption (item) {
-  return {
-    value: item.id,
-    label: item.name,
-  }
-}
+const { transformObjectToOption } = require('../../transformers')
 
 const currentYear = (new Date()).getFullYear()
 const RANGE_FROM_DATE = `${currentYear}-04-05`
@@ -43,9 +36,9 @@ function setDefaults (req, res, next) {
 
 async function getInvestmentProjectsCollection (req, res, next) {
   const formOptions = {
-    stage: metadataRepo.investmentStageOptions.map(transformMetadataToOption),
-    investment_type: metadataRepo.investmentTypeOptions.map(transformMetadataToOption),
-    sector: metadataRepo.sectorOptions.map(transformMetadataToOption),
+    stage: metadataRepo.investmentStageOptions.map(transformObjectToOption),
+    investment_type: metadataRepo.investmentTypeOptions.map(transformObjectToOption),
+    sector: metadataRepo.sectorOptions.map(transformObjectToOption),
     sortby: SORTBY_OPTIONS,
   }
 
