@@ -1,71 +1,44 @@
 const transformers = require('~/src/apps/transformers')
 
 describe('Global transformers', () => {
-  describe('transformToOptions()', () => {
-    context('with default value iteratee', () => {
-      it('should map id and name to value and label', () => {
-        const options = transformers.transformToOptions([{
-          id: '1',
-          name: 'One',
-        }, {
-          id: '2',
-          name: 'Two',
-        }])
+  describe('transformObjectToOption()', () => {
+    it('should return value and label from id and name', () => {
+      const option = transformers.transformObjectToOption({
+        id: '1',
+        name: 'One',
+        foo: 'bar',
+      })
 
-        expect(options).to.deep.equal([{
-          value: '1',
-          label: 'One',
-        }, {
-          value: '2',
-          label: 'Two',
-        }])
+      expect(option).to.deep.equal({
+        value: '1',
+        label: 'One',
       })
     })
+  })
+  describe('transformStringToOption()', () => {
+    it('should return value and label from string', () => {
+      const option = transformers.transformStringToOption('One')
 
-    context('when custom value iteratee is supplied', () => {
-      it('should map those values to value and label', () => {
-        const items = [{
-          id: '1',
-          custom: 'Custom iteratee one',
-        }, {
-          id: '2',
-          custom: 'Custom iteratee two',
-        }]
-        const iteratee = (item) => {
-          return item.custom
-        }
-        const options = transformers.transformToOptions(items, iteratee)
-
-        expect(options).to.deep.equal([{
-          value: '1',
-          label: 'Custom iteratee one',
-        }, {
-          value: '2',
-          label: 'Custom iteratee two',
-        }])
+      expect(option).to.deep.equal({
+        value: 'One',
+        label: 'One',
       })
     })
   })
 
-  describe('transformContactsToOptions()', () => {
-    it('should map id and first_name/last_name to value and label', () => {
-      const options = transformers.transformContactsToOptions([{
+  describe('transformContactToOption()', () => {
+    it('should return value and label from id and first_name/last_name', () => {
+      const option = transformers.transformContactToOption({
         id: '1',
         first_name: 'Steve',
         last_name: 'George',
-      }, {
-        id: '2',
-        first_name: 'Graham',
-        last_name: 'Nice',
-      }])
+        foo: 'bar',
+      })
 
-      expect(options).to.deep.equal([{
+      expect(option).to.deep.equal({
         value: '1',
         label: 'Steve George',
-      }, {
-        value: '2',
-        label: 'Graham Nice',
-      }])
+      })
     })
   })
 })
