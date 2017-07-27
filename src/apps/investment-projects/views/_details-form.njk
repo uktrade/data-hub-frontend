@@ -8,27 +8,29 @@
     options=form.options.contacts)
   }}
 
-  {% component 'form-multiple-choice', {
-    variant: 'radio',
-    label: 'Are you the client relationship manager for this project?',
-    name: 'is-relationship-manager',
-    inline: true,
-    value: form.state['is-relationship-manager'],
-    children: [{
-      label: 'Yes',
-      value: user.id
-    }, {
-      label: 'No'
-    }]
-  } %}
+  {% if not investmentData.id %}
+    {% component 'form-multiple-choice', {
+      variant: 'radio',
+      label: 'Are you the client relationship manager for this project?',
+      name: 'is-relationship-manager',
+      inline: true,
+      value: form.state['is-relationship-manager'],
+      children: [{
+        label: 'Yes',
+        value: user.id
+      }, {
+        label: 'No'
+      }]
+    } %}
 
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
-    {{ autocomplete('client_relationship_manager',
-      label="Client relationship manager",
-      value=form.state['client_relationship_manager'],
-      options=form.options.advisers)
-    }}
-  </div>
+    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
+      {{ autocomplete('client_relationship_manager',
+        label="Client relationship manager",
+        value=form.state['client_relationship_manager'],
+        options=form.options.advisers)
+      }}
+    </div>
+  {% endif %}
 
   {% component 'form-multiple-choice', {
     variant: 'radio',
