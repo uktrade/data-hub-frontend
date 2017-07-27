@@ -12,6 +12,75 @@ describe('OMIS create base controller', () => {
     this.sandbox.restore()
   })
 
+  describe('getErrors()', () => {
+    beforeEach(() => {
+      this.getErrorsStub = this.sandbox.stub()
+
+      FormController.prototype.getErrors = this.getErrorsStub
+    })
+
+    context('when parent returns empty errors object', () => {
+      beforeEach(() => {
+        this.getErrorsStub = this.getErrorsStub.returns({})
+      })
+
+      it('should set an empty message property', () => {
+        const errors = this.controller.getErrors(globalReq, globalRes)
+
+        expect(errors).to.deep.equal({
+          messages: {},
+        })
+      })
+    })
+
+    context('when parent returns an errors object', () => {
+      beforeEach(() => {
+        this.getErrorsStub = this.getErrorsStub.returns({
+          fieldOne: {
+            key: 'fieldOne',
+            type: 'required',
+            message: 'cannot not be blank',
+            url: '/step-url',
+          },
+          fieldTwo: {
+            key: 'fieldTwo',
+            type: 'required',
+            message: 'cannot not be blank',
+            url: '/step-url',
+          },
+        })
+        this.reqMock = Object.assign({}, globalReq, {
+          translate: (key) => {
+            return key
+          },
+        })
+      })
+
+      it('should transform and append messages property', () => {
+        const errors = this.controller.getErrors(this.reqMock, globalRes)
+
+        expect(errors).to.deep.equal({
+          fieldOne: {
+            key: 'fieldOne',
+            type: 'required',
+            message: 'cannot not be blank',
+            url: '/step-url',
+          },
+          fieldTwo: {
+            key: 'fieldTwo',
+            type: 'required',
+            message: 'cannot not be blank',
+            url: '/step-url',
+          },
+          messages: {
+            fieldOne: 'fields.fieldOne.label cannot not be blank',
+            fieldTwo: 'fields.fieldTwo.label cannot not be blank',
+          },
+        })
+      })
+    })
+  })
+
   describe('errorHandler()', () => {
     beforeEach(() => {
       this.nextSpy = this.sandbox.spy()
