@@ -44,7 +44,7 @@ describe('Investment project data transformers', () => {
       expect(firstItem.meta[1].name).to.equal('investment_type')
       expect(firstItem.meta[1].label).to.be.a('string')
       expect(firstItem.meta[1].value).to.be.an('object')
-      expect(firstItem.meta[1].tagModifier).to.equal('alt')
+      expect(firstItem.meta[1].tagModifier).to.equal('secondary')
 
       expect(firstItem.meta[3].name).to.equal('estimated_land_date')
       expect(firstItem.meta[3].isInert).to.be.true
