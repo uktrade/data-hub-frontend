@@ -12,12 +12,12 @@ const XhrLink = {
   handleClick (evt) {
     const target = evt.target || evt.srcElement
     const url = target.getAttribute('href')
-
-    if (!url || url.match(/^http:\/\//)) { return }
-    const path = url.match(/^(.*)\?/)[1]
-
     const hasXhrClass = target.classList.contains(this.selector.substring(1))
     const shouldXhr = target.tagName === 'A' && this.isGlobal ? true : hasXhrClass
+
+    if (!url || url.match(/^http:\/\//)) { return }
+    const path = url.replace(/(\?.*)/, '')
+
     const params = queryString.parse(url)
 
     if (!shouldXhr) { return }
