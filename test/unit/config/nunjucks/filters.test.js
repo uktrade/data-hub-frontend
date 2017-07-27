@@ -109,12 +109,6 @@ describe('nunjucks filters', () => {
 
       expect(formattedNumber).to.equal('12,345,678.1')
     })
-
-    it('should correctly format number for "de-DE" locale', () => {
-      const formattedNumber = filters.formatNumber(12345678.1, 'de-DE')
-
-      expect(formattedNumber).to.equal('12.345.678,1')
-    })
   })
 
   describe('#collectionDefault', () => {
