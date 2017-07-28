@@ -1,7 +1,7 @@
 const { sortBy } = require('lodash')
 
 const Controller = require('./base')
-const { transformContactsToOptions } = require('../../../../transformers')
+const { transformContactToOption } = require('../../../../transformers')
 
 class CompanyDetailsController extends Controller {
   configure (req, res, next) {
@@ -9,7 +9,7 @@ class CompanyDetailsController extends Controller {
     let contacts = []
 
     if (company) {
-      contacts = transformContactsToOptions(company.contacts)
+      contacts = company.contacts.map(transformContactToOption)
       contacts = sortBy(contacts, 'label')
     }
 

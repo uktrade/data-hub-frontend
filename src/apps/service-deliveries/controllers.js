@@ -7,6 +7,7 @@ const serviceDeliveryRepository = require('./repos')
 const serviceDeliveryService = require('./services/data')
 const { getDisplayServiceDelivery } = require('./services/formatting')
 const { buildCompanyUrl } = require('../companies/services/data')
+const { transformContactToOption } = require('../transformers')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_adviser', 'uk_region', 'sector', 'contact', 'country_of_interest']
 
@@ -33,13 +34,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     } else {
       res.locals.backUrl = `/service-deliveries/${req.params.serviceDeliveryId}`
     }
-    res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
-      return {
-        id: contact.id,
-        name: `${contact.first_name} ${contact.last_name}`,
-      }
-    })
-
+    res.locals.contacts = res.locals.serviceDelivery.company.contacts.map(transformContactToOption)
     res.locals.labels = serviceDeliverylabels
     res.locals.serviceProviderOptions = metadataRepository.teams
     res.locals.serviceOptions = metadataRepository.serviceDeliveryServiceOptions

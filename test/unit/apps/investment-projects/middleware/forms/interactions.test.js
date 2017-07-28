@@ -39,7 +39,7 @@ describe('Investment form middleware - interactions', () => {
     it('should call next', (done) => {
       const mockAdviser = advisorData.results[0]
       const expectedAdvisors = [
-        { id: mockAdviser.id, name: mockAdviser.name },
+        { value: mockAdviser.id, label: mockAdviser.name },
       ]
 
       this.resMock.locals.investmentData = investmentData
@@ -50,28 +50,32 @@ describe('Investment form middleware - interactions', () => {
           token: 'mock-token',
         },
       }, this.resMock, () => {
-        expect(this.resMock.locals).to.deep.equal({
-          investmentData,
-          interaction: interactionTransformedFromApiData,
-          form: {
-            labels: interactionsLabels.edit,
-            state: interactionTransformedFromApiData,
-            options: {
-              advisers: expectedAdvisors,
-              contacts: investmentData.client_contacts,
-              interactionTypes: metadataRepositoryStub.interactionTypeOptions,
+        try {
+          expect(this.resMock.locals).to.deep.equal({
+            investmentData,
+            interaction: interactionTransformedFromApiData,
+            form: {
+              labels: interactionsLabels.edit,
+              state: interactionTransformedFromApiData,
+              options: {
+                advisers: expectedAdvisors,
+                contacts: investmentData.client_contacts,
+                interactionTypes: metadataRepositoryStub.interactionTypeOptions,
+              },
             },
-          },
-        })
+          })
 
-        done()
+          done()
+        } catch (error) {
+          done(error)
+        }
       })
     })
 
     it('should set correct form data', (done) => {
       const mockAdviser = advisorData.results[0]
       const expectedAdvisors = [
-        { id: mockAdviser.id, name: mockAdviser.name },
+        { value: mockAdviser.id, label: mockAdviser.name },
       ]
 
       this.resMock.locals.investmentData = investmentData
@@ -81,11 +85,15 @@ describe('Investment form middleware - interactions', () => {
           token: 'mock-token',
         },
       }, this.resMock, () => {
-        expect(this.resMock.locals.form.labels).to.eql(interactionsLabels.edit)
-        expect(this.resMock.locals.form.options.interactionTypes).to.deep.equal(metadataRepositoryStub.interactionTypeOptions)
-        expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisors)
-        expect(this.resMock.locals.form.options.contacts).to.deep.equal(investmentData.client_contacts)
-        done()
+        try {
+          expect(this.resMock.locals.form.labels).to.eql(interactionsLabels.edit)
+          expect(this.resMock.locals.form.options.interactionTypes).to.deep.equal(metadataRepositoryStub.interactionTypeOptions)
+          expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisors)
+          expect(this.resMock.locals.form.options.contacts).to.deep.equal(investmentData.client_contacts)
+          done()
+        } catch (error) {
+          done(error)
+        }
       })
     })
   })

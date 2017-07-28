@@ -4,6 +4,7 @@ const metadataRepo = require('../../../../lib/metadata')
 const { getAdvisers } = require('../../../adviser/repos')
 const interactionFormattingService = require('../../../interactions/services/formatting')
 const { interactionsLabels } = require('../../labels')
+const { transformObjectToOption } = require('../../../transformers')
 const {
   createInvestmentInteraction,
   updateInvestmentInteraction,
@@ -14,13 +15,7 @@ async function populateForm (req, res, next) {
     const interactionTypes = metadataRepo.interactionTypeOptions
     const advisersResponse = await getAdvisers(req.session.token)
     const contacts = res.locals.investmentData.client_contacts
-
-    const advisers = advisersResponse.results.map((adviser) => {
-      return {
-        id: adviser.id,
-        name: `${adviser.first_name} ${adviser.last_name}`,
-      }
-    })
+    const advisers = advisersResponse.results.map(transformObjectToOption)
 
     res.locals.form = get(res, 'locals.form', {})
     res.locals.form.labels = interactionsLabels.edit

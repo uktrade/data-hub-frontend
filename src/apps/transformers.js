@@ -1,19 +1,28 @@
-function transformToOptions (items, labelIteratee = (item) => item.name) {
-  return items.map((item) => {
-    return {
-      value: item.id,
-      label: labelIteratee(item),
-    }
-  })
+/* eslint-disable camelcase */
+
+function transformObjectToOption ({ id, name }) {
+  return {
+    value: id,
+    label: name,
+  }
 }
 
-function transformContactsToOptions (items) {
-  return transformToOptions(items, (item) => {
-    return `${item.first_name} ${item.last_name}`
-  })
+function transformStringToOption (string) {
+  return {
+    value: string,
+    label: string,
+  }
+}
+
+function transformContactToOption ({ id, first_name, last_name }) {
+  return {
+    value: id,
+    label: `${first_name} ${last_name}`,
+  }
 }
 
 module.exports = {
-  transformToOptions,
-  transformContactsToOptions,
+  transformObjectToOption,
+  transformStringToOption,
+  transformContactToOption,
 }
