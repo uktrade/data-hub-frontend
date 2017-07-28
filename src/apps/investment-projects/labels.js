@@ -1,3 +1,9 @@
+const roleAdviserTeam = {
+  role: 'Role',
+  adviser: 'Adviser',
+  team: 'Team',
+}
+
 const labels = {
   detailsLabels: {
     view: {
@@ -99,11 +105,7 @@ const labels = {
       project_manager: 'Project manager',
       project_assurance_adviser: 'Project assurance adviser',
     },
-    view: {
-      role: 'Role',
-      adviser: 'Adviser',
-      team: 'Team',
-    },
+    view: roleAdviserTeam,
   },
   briefInvestmentSummaryLabels: {
     view: {
@@ -128,15 +130,15 @@ const labels = {
     },
   },
   clientRelationshipManagementLabels: {
-    view: {
-      role: 'Role',
-      adviser: 'Adviser',
-      team: 'Team',
-    },
+    view: roleAdviserTeam,
     edit: {
       client_relationship_manager: 'Client relationship manager',
       account_manager: 'Account manager',
     },
+  },
+  teamMembersLabels: {
+    view: roleAdviserTeam,
+    edit: roleAdviserTeam,
   },
 }
 
