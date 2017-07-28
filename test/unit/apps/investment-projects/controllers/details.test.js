@@ -13,7 +13,7 @@ describe('Investment details controller', () => {
   })
 
   describe('#detailsGetHandler', () => {
-    it('should return investment details with currentNavItem set to details', (done) => {
+    it('should return investment details', (done) => {
       this.controller.detailsGetHandler({
         session: {
           token: 'abcd',
