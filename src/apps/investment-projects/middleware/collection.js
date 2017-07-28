@@ -1,9 +1,12 @@
-const { get, pick, pickBy, omit } = require('lodash')
+const { get, pick, pickBy } = require('lodash')
 
 const { buildPagination } = require('../../../lib/pagination')
-const { buildQueryString } = require('../../../lib/url-helpers')
 const metadataRepo = require('../../../lib/metadata')
 const { collectionFilterLabels } = require('../labels')
+const {
+  transformInvestmentProjectToListItem,
+} = require('../transformers')
+
 const { searchInvestmentProjects } = require('../../search/services')
 const { transformObjectToOption } = require('../../transformers')
 
@@ -19,6 +22,20 @@ const SORTBY_OPTIONS = [
   { value: 'total_investment:desc', label: 'Investment value: high to low' },
   { value: 'total_investment:asc', label: 'Investment value: low to high' },
 ]
+
+function augmentProjectListItem (listItem) {
+  listItem.meta.forEach(metaItem => {
+    const name = metaItem.name
+    const itemQuery = { custom: true, [name]: get(metaItem, 'value.id', metaItem.value) }
+    const isLink = !metaItem.isInert
+
+    if (isLink) {
+      metaItem.url = this.locals.buildQuery({ include: itemQuery })
+      metaItem.isSelected = get(this.locals, `form.data.filters.${name}`, false)
+    }
+  })
+  return listItem
+}
 
 function setDefaults (req, res, next) {
   req.query = Object.assign({}, {
@@ -72,25 +89,6 @@ async function getInvestmentProjectsCollection (req, res, next) {
       return result
     },
 
-    buildUrlWithoutFilters (...names) {
-      return buildQueryString(
-        Object.assign(
-          { custom: true },
-          omit(requestBody, [...names], 'page'),
-        )
-      )
-    },
-
-    buildUrlWithFilters (filtersObj) {
-      return buildQueryString(
-        Object.assign(
-          { custom: true },
-          omit(requestBody, 'page'),
-          filtersObj,
-        ),
-      )
-    },
-
     form: {
       data: {
         filters: selectedFilters,
@@ -102,8 +100,11 @@ async function getInvestmentProjectsCollection (req, res, next) {
   })
 
   try {
-    res.locals.results = await searchInvestmentProjects({ token: req.session.token, requestBody, limit: 20, page })
+    res.locals.results = await searchInvestmentProjects({ token: req.session.token, requestBody, limit: 10, page })
       .then(result => {
+        result.items = result.items
+          .map(transformInvestmentProjectToListItem)
+          .map(augmentProjectListItem.bind(res))
         result.pagination = buildPagination(req, result)
         return result
       })
