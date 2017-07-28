@@ -8,19 +8,11 @@
   <h2 class="heading-medium">Client relationship management</h2>
 
   {% component 'data-table', {
-    columns: {
-      adviser: 'Adviser',
-      role: 'Role',
-      team: 'Team'
-    },
-    data: [{
-      adviser: crm.first_name + ' ' + crm.last_name,
-      role: 'Client relationship manager',
-      team: crm.dit_team.name
-    }]
+    columns: clientRelationshipManagementLabels.view,
+    data: clientRelationshipManagementData
   } %}
 
-  <a href="edit-details" class="button button-secondary">Change</a>
+  <a href="edit-client-relationship-management" class="button button-secondary">Change</a>
 
   <h2 class="heading-medium">Project management</h2>
 

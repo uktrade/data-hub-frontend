@@ -65,10 +65,19 @@ function unarchiveCompany (token, companyId) {
   })
 }
 
+function updateCompany (token, companyId, body) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company/${companyId}`,
+    method: 'PATCH',
+    body,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
   getCHCompany,
   archiveCompany,
   unarchiveCompany,
+  updateCompany,
 }

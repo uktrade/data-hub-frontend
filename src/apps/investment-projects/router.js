@@ -21,6 +21,7 @@ const valueFormMiddleware = require('./middleware/forms/value')
 const requirementsFormMiddleware = require('./middleware/forms/requirements')
 const interactionsFormMiddleware = require('./middleware/forms/interactions')
 const projectManagementFormMiddleware = require('./middleware/forms/project-management')
+const clientRelationshipManagementFormMiddleware = require('./middleware/forms/client-relationship-management')
 const { renderInvestmentList } = require('./controllers/list')
 const { setDefaults, getInvestmentProjectsCollection } = require('./middleware/collection')
 
@@ -84,6 +85,19 @@ router
     projectManagementFormMiddleware.handleFormPost,
     team.editProjectManagement.postHandler,
     team.editProjectManagement.getHandler
+  )
+
+router
+  .route('/:id/edit-client-relationship-management')
+  .get(
+    clientRelationshipManagementFormMiddleware.populateForm,
+    team.editClientRelationshipManagement.getHandler
+  )
+  .post(
+    clientRelationshipManagementFormMiddleware.populateForm,
+    clientRelationshipManagementFormMiddleware.handleFormPost,
+    team.editClientRelationshipManagement.postHandler,
+    team.editClientRelationshipManagement.getHandler
   )
 
 router.get('/:id/interactions', interactions.list.indexGetHandler)

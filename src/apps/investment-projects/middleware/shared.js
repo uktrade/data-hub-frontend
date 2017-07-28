@@ -3,6 +3,7 @@ const { get } = require('lodash')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getInteraction } = require('../../interactions/repos')
+const { getAdviser } = require('../../adviser/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
@@ -22,6 +23,9 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       const companyDetails = await getDitCompany(req.session.token, ukCompanyId)
       investmentData.uk_company = Object.assign({}, investmentData.uk_company, companyDetails)
     }
+
+    const clientRelationshipManager = await getAdviser(req.session.token, investmentData.client_relationship_manager.id)
+    investmentData.client_relationship_manager = clientRelationshipManager
 
     res.locals.investmentData = investmentData
     res.locals.equityCompany = investmentData.investor_company
