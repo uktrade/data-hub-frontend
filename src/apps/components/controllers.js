@@ -2,6 +2,9 @@ const metadata = require('../../lib/metadata')
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
 
+const { buildPagination } = require('../../lib/pagination')
+const { transformInvestmentProjectIntoListItem } = require('../investment-projects/transformers')
+
 function renderIndex (req, res) {
   return res.render('components/views/index', {
     title: 'Data Hub Components',
@@ -69,10 +72,19 @@ function renderPagination (req, res) {
 }
 
 async function renderEntityList (req, res) {
+  const investmentProjects = await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`)
+    .then(result => {
+      result.page = 1
+      result.limit = 10
+      result.pagination = buildPagination(req, result)
+      result.items = result.results.map(transformInvestmentProjectIntoListItem)
+      return result
+    })
+
   return res
     .breadcrumb('Entity list')
     .render('components/views/entity-list', {
-      investmentProjects: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`),
+      investmentProjects,
       companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),
       contactsSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`),
     })

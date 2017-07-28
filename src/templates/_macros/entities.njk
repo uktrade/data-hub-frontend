@@ -1,0 +1,89 @@
+{##
+ # Render entity component
+ # @param {object} props
+ # @param {string} props.id - entity id
+ # @param {string} props.name - entity name
+ # @param {string} props.type - entity type (e.g. 'date' to format dates)
+ # @param {array} [props.metaTags{}] - an array of metadata item objects
+ # @param {array} [props.metaItems{}] - an array of metadata item objects
+ #}
+{% macro Entity (props) %}
+  {% if props.name and props.id and props.type %}
+    {% set metaTags = props.meta | filter(['isTag', true]) %}
+    {% set metaItems = props.meta | filter(['isTag', false]) %}
+
+    <div class="c-entity c-entity--{{ props.type }}">
+      {% if props.code %}
+        <div class="c-entity__code">{{ props.code }}</div>
+      {% endif %}
+
+      <div class="c-entity__header">
+        <h3 class="c-entity__title">
+          <a href="/{{ props.type }}s/{{ props.id }}">{{ props.name }}</a>
+        </h3>
+
+        {% if metaTags | length %}
+          <div class="c-entity__tags">
+            {% for metaTag in metaTags %}
+              {{ MetaItem(metaTag) }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if metaItems | length %}
+        <div class="c-entity__content">
+          {% for metaItem in metaItems %}
+            {{ MetaItem(metaItem) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{##
+ # Render meta data item
+ # @param {object} props
+ # @param {string} props.label - metadata item label
+ # @param {string} props.data - metadata item data
+ # @param {string} props.data.id - API data id
+ # @param {string} props.data.name - API data label
+ # @param {string} [props.type] - value type (e.g. 'date' to format dates)
+ # @param {string} [props.url] - link URL
+ # @param {string} [props.isSelected] - whether the anchor should be have 'is-selected' state
+ # @param {string} [props.isInert] - whether the value should be inert even if it has URL
+ # @param {string} [props.isTag] - whether the the CSS c-tag component should be applied to anchor
+ # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
+ # @param {string} [props.tagModifier] - modifier for tag link if isTag=true
+ #}
+{% macro MetaItem (props) %}
+  {% set tagModifier = props.tagModifier | concat('') | reverse | join(' c-tag--') if props.tagModifier %}
+  {% set isLabelHidden = props.isLabelHidden | default(false) %}
+  {% set tagClass = 'c-tag ' + tagModifier if props.isTag %}
+  {% if props.name and 'date' in props.name %}
+    {% set metaItemValue = props.value | formatDate('MMMM D, YYYY')  %}
+  {% else %}
+    {% set metaItemValue = props.value.name | default(props.value) %}
+  {% endif %}
+
+  {% if props.label and metaItemValue %}
+    <div class="c-meta-item">
+      {% if props.label %}
+        <span class="c-meta-item__label {{ 'u-visually-hidden' if isLabelHidden or props.isTag}}">
+          {{ props.label }}:
+        </span>
+      {% endif %}
+      {% if props.url and not props.isInert %}
+        <a
+          class="c-meta-item__value js-xhr {{ tagClass }} {{ 'is-selected' if props.isSelected }}"
+          href="{{ props.url }}"
+        >
+          {{- metaItemValue -}}
+        </a>
+      {% else %}
+        <span class="c-meta-item__value {{ tagClass }}">{{ metaItemValue }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}

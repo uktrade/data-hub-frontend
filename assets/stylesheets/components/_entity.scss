@@ -1,0 +1,66 @@
+@import "../tools";
+
+.c-entity__title {
+  @include bold-font(20);
+
+  margin: 0;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@include media(tablet) {
+  .c-entity__header,
+  .c-entity__content {
+    @include clearfix;
+  }
+
+  .c-entity__title {
+    float: left;
+  }
+
+  .c-entity__tags {
+    float: right;
+  }
+
+  .c-entity__content {
+    .c-meta-item:nth-child(odd) {
+      float: left;
+      clear: both;
+    }
+
+    .c-meta-item:nth-child(even) {
+      float: right;
+    }
+  }
+}
+
+.c-entity__code,
+.c-entity__content,
+.c-entity__tags {
+  @include core-font(14);
+}
+
+.c-entity__content .c-meta-item {
+  display: block;
+}
+
+.c-entity__tags {
+  margin: 20 - 14px 0;
+}
+
+.c-entity__code {
+  color: $grey-1;
+}
+
+
+// Assemblies
+
+.c-entity__header + .c-entity__content {
+  margin-top: $baseline-grid-unit;
+}
