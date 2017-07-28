@@ -1,0 +1,145 @@
+{% from './common.njk' import Pagination %}
+{% from './entities.njk' import Entity %}
+{% from './form.njk' import Form, MultipleChoiceField %}
+
+{##
+ # Render results filters form
+ # @param {object} props - component props
+ # @param {array}  props.filters - a list of form field components
+ # @param {text}   [props.heading=Filter results] - filters heading text
+ # @param {object} [props.selectedSorting] - object containing selected sorting (query)
+#}
+{% macro ResultsFilters(props) %}
+  {% set heading = props.heading | default('Filter results') %}
+  {% set selectedSorting = props.selectedSorting | assign({ custom: true }) %}
+
+  {% if props.filters|length %}
+    {% call Form({
+      method: 'get',
+      class: 'c-filters js-AutoSubmit',
+      buttonText: 'Refresh results',
+      actionsClass: 'u-js-hidden',
+      hiddenFields: selectedSorting
+    }) %}
+      <header class="u-clearfix">
+        <h2 class="c-filters__heading">{{ heading }}</h2>
+      </header>
+      {% for filter in props.filters %}
+        {{ filter | safe }}
+      {% endfor %}
+    {% endcall %}
+  {% endif %}
+{% endmacro %}
+
+{##
+ # Render results summary
+ # @param {object}   [props] - component props
+ # @param {string}   [props.count] - result count
+ # @param {string}   [props.el=div] - HTML element used for rendering component
+ # @param {string}   [props.countLabel=result] - text to show next to count (singular)
+ # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
+ # @param {object}   [props.selectedFiltersHumanised] - an object containing selected filters (containing labels for option values)
+#}
+{% macro ResultsSummary(props) %}
+  {% set buildQuery = buildQuery or props.buildQuery %}
+  {% set el = props.el | default('div') %}
+  {% set count = props.count | default('0') %}
+  {% set countLabel = props.countLabel | default('result') %}
+
+  <{{ el }} class="c-results-summary">
+    <div class="u-clearfix">
+      <div class="u-float-left">
+        <span class="c-results-summary__count">{{ count }}</span> {{ countLabel | pluralise(count) }}
+        {{ 'matching' if props.selectedFiltersHumanised | length }}
+      </div>
+      {% if props.selectedFiltersHumanised | length > 1 %}
+        <a
+          href="?custom=true"
+          class="c-results-summary__filter-remove-all u-float-right js-xhr"
+          aria-label="Reset filter results"
+        >
+          Remove all filters
+        </a>
+      {% endif %}
+    </div>
+
+    {% if props.selectedFiltersHumanised | length %}
+      <div class="c-results-summary__filters">
+        {% for name, filterObj in props.selectedFiltersHumanised %}
+          <span class="c-results-summary__filter">
+            <span class="c-results-summary__filter-type">{{ filterObj.label }}</span>
+            <span class="c-results-summary__filter-name">
+              {%- if 'date' in name -%}
+                {{ filterObj.value | formatDate('MMMM D, YYYY') }}
+              {%- else -%}
+                {{ filterObj.value }}
+              {%- endif -%}
+            </span>
+            <a
+              class="c-results-summary__filter-remove js-xhr"
+              href="{{ buildQuery({ include: { custom: true }, excludeKeys: [name] }) }}"
+              aria-label="Remove filter"
+            >×</a>
+          </span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </{{ el }}>
+{% endmacro %}
+
+{##
+ # Render results component
+ # @param {object}  [props] - component props
+ # @param {object}  [props.summaryEl] - results summary HTML element
+ # @param {array{}} [props.items] - results items
+ # @param {object}  [props.pagination] - results pagination
+ # @param {object}  [props.selectedFilters={}] - object containing selected filters (query)
+ # @param {array}   [props.sortingOptions] - object containing options for sort field
+#}
+{% macro Results(props) %}
+  {% set selectedFilters = props.selectedFilters %}
+
+  <article class="c-results">
+    {{ ResultsSummary(props | assign({ el: props.summaryEl })) }}
+
+    {% if props.items|length %}
+      <div class="c-results__sort">
+        {% if props.pagination %}
+          <span class="c-results__page-summary">
+            Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
+          </span>
+        {% endif %}
+
+        {% if props.sortingOptions | length %}
+          {% call Form({
+            method: 'get',
+            class: 'c-results__sort-form js-AutoSubmit',
+            disableFormActions: true,
+            hiddenFields: selectedFilters | assign({ custom: true })
+          }) %}
+            {{ MultipleChoiceField({
+              name: 'sortby',
+              label: 'Sort by',
+              value: props.selectedSorting,
+              options: props.sortingOptions,
+              modifier: ['small', 'inline', 'light']
+            }) }}
+            <button class="button button-secondary u-js-hidden">Sort</button>
+          {% endcall %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if props.items | length %}
+      <ol class="c-entity-list">
+        {% for project in props.items %}
+          <li class="c-entity-list__item">
+            {{ Entity(project) }}
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+
+    {{ Pagination(props.pagination) }}
+  </article>
+{% endmacro %}
