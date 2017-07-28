@@ -30,7 +30,7 @@
                 <span class="c-results__summary-filter-type">{{ selectedFilter.label }}</span>
                 <span class="c-results__summary-filter-name">
                   {%- if 'date' in name -%}
-                    {{ selectedFilter.value | formatDate('MMMM DD, YYYY') }}
+                    {{ selectedFilter.value | formatDate('MMMM D, YYYY') }}
                   {%- else -%}
                     {{ selectedFilter.value }}
                   {%- endif -%}
