@@ -10,14 +10,14 @@ describe('Investment projects collection middleware', () => {
 
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
-    this.req = {
+    this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
-    }
-    this.res = {
+    })
+    this.res = Object.assign({}, globalRes, {
       locals: {
         buildQuery: this.sandbox.spy(),
       },
-    }
+    })
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/collection', {
       '../../../lib/metadata': {
@@ -41,72 +41,71 @@ describe('Investment projects collection middleware', () => {
     this.sandbox.restore()
   })
 
-  describe('#getInvestmentProjectsCollection', () => {
-    describe('expose #findFilter on locals', () => {
-      beforeEach(async () => {
-        await this.controller.getInvestmentProjectsCollection(this.req, this.res, this.next)
-      })
-
-      it('should return undefined if filter not found in options', () => {
-        const actual = this.res.locals.findFilter('stage', 'non-existent')
-        expect(actual).to.be.undefined
-        expect(this.next).to.be.calledOnce
-      })
-
-      it('should return label with value prop is absent', () => {
-        const actual = this.res.locals.findFilter('estimated_land_date_before', '2018')
-        expect(actual).to.be.deep.equal({ label: 'Estimated land date before', value: '2018' })
-        expect(this.next).to.be.calledOnce
-      })
-
-      it('should return filter from options', () => {
-        const actual = this.res.locals.findFilter('sector', 's1')
-        expect(actual).to.be.deep.equal({ label: 'Sector', value: 'Sector #1' })
-        expect(this.next).to.be.calledOnce
-      })
+  describe('#getInvestmentFilters', () => {
+    beforeEach(async () => {
+      this.req.query = {
+        stage: 'i1',
+        sector: 's1',
+        sortby: 'name:asc',
+      }
+      await this.controller.getInvestmentFilters(this.req, this.res, this.next)
     })
 
-    describe('expose additional properties on locals', () => {
-      beforeEach(async () => {
-        this.req.query = {
-          stage: 'i1',
-          sector: 's1',
-          sortby: 'name:asc',
-        }
-        await this.controller.getInvestmentProjectsCollection(this.req, this.res, this.next)
-      })
+    it('should set selectedFiltersHumanised property on locals', () => {
+      expect(this.res.locals.selectedFiltersHumanised.stage).to.deep.equal(
+        { value: 'Investment stage #1', label: 'Stage' },
+        { value: 'Sector #1', label: 'Sector' }
+      )
+      expect(this.next).to.have.been.calledOnce
+    })
 
-      it('should add results property on locals with pagination', () => {
-        const actual = this.res.locals.results
-        expect(actual).to.have.property('limit')
-        expect(actual).to.have.property('page')
-        expect(actual).to.have.property('items')
-        expect(actual).to.have.property('pagination')
-        expect(this.res.locals.buildQuery).to.have.been.called
-      })
+    it('should set form.options property on locals with available filter options', () => {
+      const actual = this.res.locals.form.options
+      expect(actual).to.have.property('stage')
+      expect(actual).to.have.property('investment_type')
+      expect(actual).to.have.property('sector')
+      expect(this.next).to.have.been.calledOnce
+    })
 
-      it('should add form.options property on locals with available filter options', () => {
-        const actual = this.res.locals.form.options
-        expect(actual).to.have.property('stage')
-        expect(actual).to.have.property('investment_type')
-        expect(actual).to.have.property('sector')
-      })
+    it('should set form.options.sortby property on locals with available sorting modes', () => {
+      const actual = this.res.locals.form.options.sortby
+      expect(actual).to.have.length(6)
+      expect(this.next).to.have.been.calledOnce
+    })
 
-      it('should add form.options.sortby property on locals with available sorting modes', () => {
-        const actual = this.res.locals.form.options.sortby
-        expect(actual).to.have.length(6)
-      })
+    it('should set form.data.filters property on locals', () => {
+      const actual = this.res.locals.form.data.filters
+      expect(actual).to.have.property('stage')
+      expect(actual).to.have.property('sector')
+      expect(this.next).to.have.been.calledOnce
+    })
 
-      it('should add form.data.filters property on locals', () => {
-        const actual = this.res.locals.form.data.filters
-        expect(actual).to.have.property('stage')
-        expect(actual).to.have.property('sector')
-      })
+    it('should set form.data.sorting property on locals with available sorting modes', () => {
+      const actual = this.res.locals.form.data.sorting
+      expect(actual).to.deep.equal({ sortby: 'name:asc' })
+      expect(this.next).to.have.been.calledOnce
+    })
+  })
 
-      it('should add form.data.sorting property on locals with available sorting modes', () => {
-        const actual = this.res.locals.form.data.sorting
-        expect(actual).to.deep.equal({ sortby: 'name:asc' })
-      })
+  describe('#getInvestmentProjectsCollection', () => {
+    beforeEach(async () => {
+      this.req.query = {
+        stage: 'i1',
+        sector: 's1',
+        sortby: 'name:asc',
+      }
+      await this.controller.getInvestmentProjectsCollection(this.req, this.res, this.next)
+    })
+
+    it('should set results property on locals with pagination', () => {
+      const actual = this.res.locals.results
+      expect(actual).to.have.property('limit')
+      expect(actual).to.have.property('page')
+      expect(actual).to.have.property('items')
+      expect(actual).to.have.property('pagination')
+      expect(actual.count).to.equal(3)
+      expect(this.res.locals.buildQuery).to.have.been.called
+      expect(this.next).to.have.been.calledOnce
     })
   })
 
@@ -120,6 +119,7 @@ describe('Investment projects collection middleware', () => {
       expect(actual).to.have.ownProperty('estimated_land_date_before')
       expect(actual).to.have.ownProperty('estimated_land_date_after')
       expect(actual).to.have.ownProperty('sortby')
+      expect(this.next).to.have.been.calledOnce
     })
   })
 })
