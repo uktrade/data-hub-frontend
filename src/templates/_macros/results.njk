@@ -77,7 +77,7 @@
             </span>
             <a
               class="c-results-summary__filter-remove js-xhr"
-              href="{{ buildQuery({ include: { custom: true }, excludeKeys: [name] }) }}"
+              href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
               aria-label="Remove filter"
             >×</a>
           </span>

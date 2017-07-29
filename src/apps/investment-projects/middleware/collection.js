@@ -1,4 +1,5 @@
 const { get, pick, pickBy } = require('lodash')
+const queryString = require('query-string')
 
 const { buildPagination } = require('../../../lib/pagination')
 const metadataRepo = require('../../../lib/metadata')
@@ -26,11 +27,14 @@ const SORTBY_OPTIONS = [
 function augmentProjectListItem (listItem) {
   listItem.meta.forEach(metaItem => {
     const name = metaItem.name
-    const itemQuery = { custom: true, [name]: get(metaItem, 'value.id', metaItem.value) }
-    const isLink = !metaItem.isInert
+    const itemQuery = Object.assign(
+      {},
+      get(this.locals, 'form.data.filters', {}),
+      { custom: true, [name]: get(metaItem, 'value.id', metaItem.value) },
+    )
 
-    if (isLink) {
-      metaItem.url = this.locals.buildQuery({ include: itemQuery })
+    if (!metaItem.isInert) {
+      metaItem.url = `?${queryString.stringify(itemQuery)}`
       metaItem.isSelected = get(this.locals, `form.data.filters.${name}`, false)
     }
   })

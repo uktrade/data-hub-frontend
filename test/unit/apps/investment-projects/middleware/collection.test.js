@@ -13,11 +13,7 @@ describe('Investment projects collection middleware', () => {
     this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
     })
-    this.res = Object.assign({}, globalRes, {
-      locals: {
-        buildQuery: this.sandbox.spy(),
-      },
-    })
+    this.res = Object.assign({}, globalRes)
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/collection', {
       '../../../lib/metadata': {
@@ -104,7 +100,6 @@ describe('Investment projects collection middleware', () => {
       expect(actual).to.have.property('items')
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
-      expect(this.res.locals.buildQuery).to.have.been.called
       expect(this.next).to.have.been.calledOnce
     })
   })
