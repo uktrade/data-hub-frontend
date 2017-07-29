@@ -29,7 +29,7 @@ describe('Investment evaluation controller', () => {
   })
 
   describe('#renderEvaluationPage', () => {
-    it('should return evaluation details with currentNavItem set to evaluation', (done) => {
+    it('should return evaluation details', (done) => {
       this.controller.renderEvaluationPage({
         session: {
           token: 'abcd',

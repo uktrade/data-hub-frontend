@@ -20,7 +20,7 @@ describe('Investment Interactions Index controller', () => {
   })
 
   describe('#indexGetHandler', () => {
-    it('should return interactions with currentNavItem set to interactions', (done) => {
+    it('should return interactions', (done) => {
       this.controller.indexGetHandler({
         session: {
           token: 'abcd',
