@@ -1,8 +1,5 @@
-const { omit } = require('lodash')
-
 const logger = require('../../config/logger')
 const config = require('../../config')
-const { buildQueryString } = require('../lib/url-helpers')
 
 let webpackManifest = {}
 try {
@@ -22,6 +19,7 @@ module.exports = function locals (req, res, next) {
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
+    QUERY: req.query,
 
     getPageTitle: () => {
       const items = breadcrumbItems.map(item => item.name)
@@ -52,15 +50,6 @@ module.exports = function locals (req, res, next) {
 
     getLocal (key) {
       return res.locals[key]
-    },
-
-    buildQuery ({ include = {}, excludeKeys = [], query = req.query }) {
-      return buildQueryString(
-        Object.assign(
-          include,
-          omit(query, [...excludeKeys], 'page'),
-        )
-      )
     },
 
     trans (key) {
