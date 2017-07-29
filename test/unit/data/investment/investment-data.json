@@ -181,5 +181,6 @@
     "id": "1111",
     "name": "Team B"
   },
-  "team_complete": true
+  "team_complete": true,
+  "team_members": []
 }

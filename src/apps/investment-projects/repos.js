@@ -65,6 +65,25 @@ function unarchiveInvestmentProject (token, investmentId) {
   })
 }
 
+async function updateInvestmentTeamMembers (token, investmentId, investmentTeamMembers) {
+  // Todo - Delete all existing records before saving (in case an advisor was changes.)
+
+  // Loop through each of the team members, saving it
+  /*
+  for (const investmentTeamMember of investmentTeamMembers) {
+    await authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/investment/${investmentId}/team-member`,
+      mothod: 'POST',
+      body: {
+        investment_project: investmentId,
+        adviser: investmentTeamMember.adviser,
+        role: investmentTeamMember.role,
+      },
+    })
+  }
+  */
+}
+
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestment,
@@ -74,4 +93,5 @@ module.exports = {
   getInvestmentProjectAuditLog,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
+  updateInvestmentTeamMembers,
 }
