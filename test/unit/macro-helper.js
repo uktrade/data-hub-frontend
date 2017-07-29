@@ -11,46 +11,53 @@ const nunjucks = nunjucksConfig(null, {
 const MACROS_PATH = '_macros/'
 const EXT = 'njk'
 
+function propsToJson (...props) {
+  return `${[...props]
+  .map(prop => JSON.stringify(prop, undefined, 1))
+  .join(', ')}`
+}
+
 function getMacros (fileName) {
   const filePath = `${MACROS_PATH}${fileName}.${EXT}`
 
-  function renderMacro (name, caller, props, ...rest) {
+  function renderMacro (name, { caller = null, context = {}, params = [] } = {}) {
     const importString = `{% from "${filePath}" import ${name} %}`
-    const args = rest.length ? `,${[...rest].map(JSON.stringify)}` : ''
     let macroOutput
+
+    const macroSignature = `${name}(${propsToJson(...params)})`
 
     if (caller) {
       macroOutput = nunjucks.renderString(`
         ${importString}
-        {% call ${name}(${JSON.stringify(props, undefined, 1)}${args}) %}
+        {% call ${macroSignature} %}
           ${caller.join(' ')}
         {% endcall %}
-      `)
+      `, context)
     } else {
-      macroOutput = nunjucks.renderString(`${importString} {{ ${name}(${JSON.stringify(props, undefined, 1)}${args}) }}`)
+      macroOutput = nunjucks.renderString(`${importString} {{ ${macroSignature} }}`, context)
     }
 
     return normaliseHtml(macroOutput)
   }
 
   return {
-    render (macroName, props, ...rest) {
-      return renderMacro(macroName, null, props, ...rest)
+    render (macroName, ...params) {
+      return renderMacro(macroName, { params })
     },
 
-    renderWithCaller (macroName, caller, props, ...rest) {
-      return renderMacro(macroName, caller, props, ...rest)
+    renderWithCaller (macroName, caller, ...params) {
+      return renderMacro(macroName, { caller, params })
     },
 
-    renderToDom (macroName, props, ...rest) {
-      const macroOutput = this.render(macroName, props, ...rest)
+    renderToDom (macroName, ...params) {
+      const macroOutput = this.render(macroName, ...params)
       return (new JSDOM(macroOutput)).window.document.body.firstElementChild
     },
 
-    renderWithCallerToDom (macroName, props, ...rest) {
+    renderWithCallerToDom (macroName, ...params) {
       return function (...caller) {
         if (!caller.length) { return null }
-        const macroOutput = this.renderWithCaller(macroName, caller, props, ...rest)
+        const macroOutput = this.renderWithCaller(macroName, caller, ...params)
         return (new JSDOM(macroOutput)).window.document.body.firstElementChild
       }.bind(this)
     },
