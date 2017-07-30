@@ -130,4 +130,31 @@ describe('Investment project formatting service', () => {
       expect(actualResult).to.deep.equal(expectedResult)
     })
   })
+
+  describe('#transformTeamMembersForView', () => {
+    it('should return a formatted version of team member data', () => {
+      const teamMembers = [{
+        adviser: {
+          id: '1234',
+          first_name: 'Fred',
+          last_name: 'Smith',
+          name: 'Fred Smith',
+          dit_team: {
+            id: '444',
+            name: 'Freds Team',
+          },
+        },
+        role: 'Director',
+      }]
+
+      const expected = [{
+        adviser: 'Fred Smith',
+        team: 'Freds Team',
+        role: 'Director',
+      }]
+
+      const actual = teamMembers.map(formattingService.transformTeamMembersForView)
+      expect(actual).to.deep.equal(expected)
+    })
+  })
 })

@@ -1,9 +1,5 @@
 {% extends "../_layout.njk" %}
 
-{% set stage = investmentData.stage.name %}
-{% set crm = investmentData.client_relationship_manager %}
-{% set rsa = investmentData.referral_source_adviser %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Client relationship management</h2>
 
@@ -32,16 +28,8 @@
   <h2 class="heading-medium">Specialist team members</h2>
 
   {% component 'data-table', {
-    columns: {
-      adviser: 'Adviser',
-      role: 'Role',
-      team: 'Team'
-    },
-    data: [{
-      adviser: rsa.first_name + ' ' + rsa.last_name,
-      role: 'Referral source adviser',
-      team: crm.dit_team.name
-    }]
+    columns: teamMembersLabels.view,
+    data: teamMembersData
   } %}
 
   <a href="edit-team-members" class="button button-secondary">Change</a>

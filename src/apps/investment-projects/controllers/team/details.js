@@ -1,17 +1,22 @@
 const {
   projectManagementLabels,
   clientRelationshipManagementLabels,
+  teamMembersLabels,
 } = require('../../labels')
 
 const {
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
+  transformTeamMembersForView,
 } = require('../../services/formatting')
 
 function getDetailsHandler (req, res, next) {
   try {
-    const projectManagementData = transformProjectManagementForView(res.locals.investmentData)
-    const clientRelationshipManagementData = transformClientRelationshipManagementForView(res.locals.investmentData)
+    const investmentData = res.locals.investmentData
+
+    const projectManagementData = transformProjectManagementForView(investmentData)
+    const clientRelationshipManagementData = transformClientRelationshipManagementForView(investmentData)
+    const teamMembersData = investmentData.team_members.map(transformTeamMembersForView)
 
     res
       .breadcrumb('Project team')
@@ -20,6 +25,8 @@ function getDetailsHandler (req, res, next) {
         projectManagementLabels,
         clientRelationshipManagementData,
         clientRelationshipManagementLabels,
+        teamMembersData,
+        teamMembersLabels,
       })
   } catch (error) {
     next(error)

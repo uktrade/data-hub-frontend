@@ -2,7 +2,11 @@ const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
-const { getBriefInvestmentSummary } = require('./middleware/team')
+const {
+  getBriefInvestmentSummary,
+  expandTeamMembers,
+} = require('./middleware/team')
+
 const {
   createStep1,
   createStep2,
@@ -75,7 +79,7 @@ router
   .get(requirementsFormMiddleware.populateForm, edit.editRequirementsGet)
   .post(requirementsFormMiddleware.populateForm, requirementsFormMiddleware.handleFormPost, edit.editRequirementsPost)
 
-router.get('/:id/team', team.details.getDetailsHandler)
+router.get('/:id/team', expandTeamMembers, team.details.getDetailsHandler)
 
 router
   .route('/:id/edit-project-management')
