@@ -6,6 +6,7 @@ const {
   isArray,
   isPlainObject,
   isEmpty,
+  isString,
   pickBy,
   filter,
   isNil,
@@ -31,8 +32,9 @@ const filters = {
   isArray,
 
   highlight: (string, searchTerm) => {
-    const regEx = new RegExp(`(${searchTerm})`, 'gi')
+    if (!isString(string)) { return }
 
+    const regEx = new RegExp(`(${searchTerm})`, 'gi')
     return new nunjucks.runtime.SafeString(
       string.replace(regEx, '<span class="u-highlight">$1</span>')
     )

@@ -11,17 +11,20 @@
         </h3>
 
         <dl class="metadata-list">
+          <dt class="metadata-list__term">Investor</dt>
+          <dd class="metadata-list__value">{{ project.investor_company.name | highlight(searchTerm) }}</dd>
+
           <dt class="metadata-list__term">Land date</dt>
           <dd class="metadata-list__value">{{ project.estimated_land_date | formatDate('MMM YYYY') }}</dd>
 
           <dt class="metadata-list__term u-visually-hidden">Type of investment</dt>
-          <dd class="metadata-list__value">{{ project.investment_type.name }}</dd>
+          <dd class="metadata-list__value">{{ project.investment_type.name | highlight(searchTerm) }}</dd>
 
           <dt class="metadata-list__term u-visually-hidden">Stage</dt>
-          <dd class="metadata-list__value">{{ project.stage.name }}</dd>
+          <dd class="metadata-list__value">{{ project.stage.name | highlight(searchTerm) }}</dd>
 
           <dt class="metadata-list__term u-visually-hidden">Sector</dt>
-          <dd class="metadata-list__value">{{ project.sector.name }}</dd>
+          <dd class="metadata-list__value">{{ project.sector.name | highlight(searchTerm) }}</dd>
         </dl>
       </li>
     {% endfor %}
