@@ -78,6 +78,32 @@
 {% endmacro %}
 
 {##
+ # Render simple form with inline button for posting hidden values
+ # @param {object} props - A form object
+ #}
+{% macro InlineForm(props) %}
+  {% set hiddenFields = props.hiddenFields | assign({'_csrf': csrfToken}) %}
+  {% set buttonText = props.buttonText or 'Submit' %}
+
+  {{ ErrorSummary(props.errors) }}
+  <form
+    method="POST"
+    {% if props.action %}action="{{ props.action }}"{% endif -%}
+    {% if props.class %}class="{{ props.class }}"{% endif %}
+  >
+    {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}
+      <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+    {% endfor %}
+
+    {{ caller() }}
+
+    {% if not props.disableFormActions %}
+      <button class="button">{{ buttonText }}</button>
+    {% endif %}
+  </form>
+{% endmacro %}
+
+{##
  # Render multi-step form
  # @param {object} props - A form object
  #}

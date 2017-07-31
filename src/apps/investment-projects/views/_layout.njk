@@ -11,6 +11,10 @@
     modifier: 'light-banner'
   }) %}
     {% component 'investment-status', investmentStatus %}
+    {% component 'investment-stage', {
+      investmentStatus: investmentStatus,
+      investmentProjectStages: investmentProjectStages
+    } %}
 
     {% if investmentData.archived %}
       <p class="infostrip">
@@ -20,6 +24,31 @@
         <a href="unarchive">Unarchive</a>
       </p>
     {% endif %}
+  {% endcall %}
+
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% set formContent %}
+    <p>
+      {% if investmentStatus.currentStage.isComplete %}
+        You have added all required information to complete this stage.
+      {% else %}
+        Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+      {% endif %}
+    </p>
+  {% endset %}
+
+  {% call InlineForm(form | assign({
+    buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
+    action: 'change-project-stage',
+    class: 'flash flash--info',
+    disableFormActions: true if not investmentStatus.currentStage.isComplete,
+    hiddenFields: {
+      next_project_stage: investmentStatus.nextStage.id
+    }
+  })) %}
+  {{ formContent | safe }}
   {% endcall %}
 {% endblock %}
 

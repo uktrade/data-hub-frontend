@@ -1,0 +1,13 @@
+<div class="c-progress">
+  <ol class="c-progress__bar c-progress__bar--{{ investmentStatus.currentStage.name | lower | replace(' ', '-') }}-stage">
+    {% for stage in investmentProjectStages %}
+      <li class="c-progress__stage c-progress__stage--part-{{ loop.index }}
+        {{- ' c-progress__stage--active' if investmentStatus.currentStage.name == stage.name -}}
+        {{- ' c-progress__stage--reset' if loop.index0 > investmentStatus.currentStage.index -}}
+      ">
+        <span class="c-progress__stage-title">{{ stage.name }}</span>
+      </li>
+    {% endfor %}
+  </ol>
+</div>
+
