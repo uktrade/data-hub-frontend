@@ -6,10 +6,6 @@
   border: solid $grey-2;
   border-width: 0 0 1px;
   padding: $default-spacing-unit 0;
-
-  &:first-child {
-    border-top-width: 1px;
-  }
 }
 
 .c-entity-list__link {

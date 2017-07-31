@@ -20,7 +20,6 @@
 .c-results-summary {
   @include core-font(24);
   border-bottom: 5px solid $text-colour;
-  margin-bottom: $default-spacing-unit / 2;
   padding-bottom: $default-spacing-unit / 2;
 }
 
