@@ -508,7 +508,7 @@
  # @param {string} [props.inputName] - The base input name for date field names
  # @param {string} [props.inputValue] - Field values
  #}
-{% macro DateField(props) %}
+{% macro DateFieldset(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
