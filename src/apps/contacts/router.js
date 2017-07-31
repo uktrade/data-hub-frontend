@@ -1,24 +1,23 @@
 const router = require('express').Router()
 
-const { setLocalNav } = require('../middleware')
-const { getCommon, getDetails, redirectToDetails } = require('./controllers/details')
+const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
+const { getCommon, getDetails } = require('./controllers/details')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { getInteractions } = require('./controllers/interactions')
 
 const LOCAL_NAV = [
-  { path: '../details', label: 'Details' },
-  { path: '../interactions', label: 'Interactions' },
+  { path: 'details', label: 'Details' },
+  { path: 'interactions', label: 'Interactions' },
 ]
-
-router.use(setLocalNav(LOCAL_NAV))
 
 router
   .route('/create')
   .get(editDetails)
   .post(postDetails)
 
-router.get('/:contactId', redirectToDetails)
+router.use('/:contactId', setLocalNav(LOCAL_NAV))
+router.get('/:contactId', redirectToFirstNavItem)
 router.get('/:contactId/details', getCommon, getDetails)
 
 router

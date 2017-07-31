@@ -27,11 +27,6 @@ function detailsGetHandler (req, res, next) {
   return next()
 }
 
-function redirectToDetails (req, res) {
-  res.redirect(`${req.params.id}/details`)
-}
-
 module.exports = {
-  redirectToDetails,
   detailsGetHandler,
 }

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { setLocalNav } = require('../middleware')
+const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
 const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
@@ -25,14 +25,14 @@ const { renderInvestmentList } = require('./controllers/list')
 const { setDefaults, getInvestmentProjectsCollection } = require('./middleware/collection')
 
 const LOCAL_NAV = [
-  { path: '../details', label: 'Project details' },
-  { path: '../team', label: 'Project team' },
-  { path: '../interactions', label: 'Interactions' },
-  { path: '../evaluation', label: 'Evaluations' },
-  { path: '../audit', label: 'Audit history' },
+  { path: 'details', label: 'Project details' },
+  { path: 'team', label: 'Project team' },
+  { path: 'interactions', label: 'Interactions' },
+  { path: 'evaluation', label: 'Evaluations' },
+  { path: 'audit', label: 'Audit history' },
 ]
 
-router.use(setLocalNav(LOCAL_NAV))
+router.use('/:id/', setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
@@ -56,7 +56,7 @@ router
   .get(detailsFormMiddleware.populateForm, createStep2.createGetHandler)
   .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, createStep2.createPostHandler)
 
-router.get('/:id', details.redirectToDetails)
+router.get('/:id', redirectToFirstNavItem)
 router.get('/:id/details', details.detailsGetHandler)
 
 router
