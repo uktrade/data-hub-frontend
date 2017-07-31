@@ -27,7 +27,9 @@
 }
 
 .u-highlight {
-  font-weight: bold !important;
+  background-color: $yellow-25;
+  border-bottom: 1px solid $yellow;
+  padding: 2px 1px;
 }
 
 .u-clearfix {

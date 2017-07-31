@@ -5,7 +5,7 @@
 .c-entity-list__item {
   padding: $default-spacing-unit 0;
 
-  + & {
+  & + & {
     border-top: 1px solid $grey-2;
   }
 }

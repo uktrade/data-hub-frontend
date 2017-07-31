@@ -48,7 +48,7 @@
               company.registered_address_county,
               company.registered_address_town,
               company.registered_address_postcode
-            ]) }}
+            ]) | highlight(searchTerm) }}
           </dd>
         </dl>
       </li>
