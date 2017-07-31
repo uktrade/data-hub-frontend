@@ -1,4 +1,4 @@
-const { getMacros } = require('~/test/unit/component-helper')
+const { getMacros } = require('~/test/unit/macro-helper')
 const entitiesMacros = getMacros('entities')
 
 describe('Entities macros', () => {

@@ -3,84 +3,71 @@
 {% from "_macros/entities.njk" import Entity with context %}
 
 {% block main_grid_left_column %}
-  {% include './_filters-form.njk' %}
+  {{
+    ResultsFilters({
+      selectedSorting: form.data.sorting,
+      filters: [
+        MultipleChoiceField({
+          type: 'radio',
+          name: 'stage',
+          label: form.labels.stage,
+          value: form.data.filters.stage,
+          initialOption: 'All stages',
+          options: form.options.stage,
+          modifier: ['smaller', 'light']
+        }),
+
+        MultipleChoiceField({
+          type: 'radio',
+          name: 'investment_type',
+          label: form.labels.investment_type,
+          value: form.data.filters.investment_type,
+          options: form.options.investment_type,
+          initialOption: 'All types',
+          modifier: ['smaller', 'light']
+        }),
+
+        MultipleChoiceField({
+          name: 'sector',
+          label: form.labels.sector,
+          value: form.data.filters.sector,
+          options: form.options.sector,
+          initialOption: 'All sectors',
+          modifier: ['smaller', 'light']
+        }),
+
+        TextField({
+          label: form.labels.estimated_land_date_before,
+          name: 'estimated_land_date_before',
+          placeholder: 'e.g. 2018-07-18',
+          hint: 'YYYY-MM-DD',
+          value: form.data.filters.estimated_land_date_before,
+          modifier: ['small', 'light']
+        }),
+
+        TextField({
+          label: form.labels.estimated_land_date_after,
+          name: 'estimated_land_date_after',
+          placeholder: 'e.g. 2017-09-01',
+          hint: 'YYYY-MM-DD',
+          value: form.data.filters.estimated_land_date_after,
+          modifier: ['small', 'light']
+        })
+      ]
+    })
+  }}
 {% endblock %}
 
 {% block main_grid_right_column %}
-  <article class="c-results">
-
-    <header class="c-results__summary">
-      <div class="u-clearfix">
-        <div class="u-float-left">
-          <span class="c-results__count">{{ results.count }}</span> projects
-          {{ 'matching' if form.data.filters | length }}
-        </div>
-        {% if form.data.filters|length > 1 %}
-          <a href="?custom=true" class="c-results__summary__filter-remove-all u-float-right js-xhr" aria-label="Reset filter results">
-            Remove all filters
-          </a>
-        {% endif %}
-      </div>
-      {% if form.data.filters|length %}
-        <div class="c-results__summary-filters">
-          {% for name, value in form.data.filters %}
-            {% set selectedFilter = findFilter(name, value) %}
-            {% if selectedFilter|length %}
-              <span class="c-results__summary-filter">
-                <span class="c-results__summary-filter-type">{{ selectedFilter.label }}</span>
-                <span class="c-results__summary-filter-name">
-                  {%- if 'date' in name -%}
-                    {{ selectedFilter.value | formatDate('MMMM D, YYYY') }}
-                  {%- else -%}
-                    {{ selectedFilter.value }}
-                  {%- endif -%}
-                </span>
-                <a
-                  class="c-results__summary-filter-remove js-xhr"
-                  href="{{ buildQuery({ include: { custom: true }, excludeKeys: [name] }) }}"
-                  aria-label="Remove filter"
-                >×</a>
-              </span>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-    </header>
-
-    {% if results.items|length %}
-      <div class="c-results__sort">
-        {% if results.pagination %}
-          <span class="c-results__page-summary">
-            Page {{ results.pagination.currentPage }} of {{ results.pagination.totalPages }}
-          </span>
-        {% endif %}
-
-        {% call Form({
-          method: 'get',
-          class: 'c-results__sort-form js-AutoSubmit',
-          disableFormActions: true,
-          hiddenFields: form.data.filters | assign({ custom: true })
-        }) %}
-          {{ MultipleChoiceField({
-            name: 'sortby',
-            label: 'Sort by',
-            value: form.data.sorting.sortby,
-            options: form.options.sortby,
-            modifier: ['small', 'inline', 'light']
-          }) }}
-          <button class="button button-secondary u-js-hidden">Sort</button>
-        {% endcall %}
-      </div>
-    {% endif %}
-
-    <ol class="c-entity-list">
-      {% for project in results.items %}
-        <li class="c-entity-list__item">
-          {{ Entity(project) }}
-        </li>
-      {% endfor %}
-    </ol>
-
-    {{ Pagination(results.pagination) }}
-  </article>
+  {{
+    Results(results | assign({
+      el: 'header',
+      sortingOptions: form.options.sortby,
+      selectedFilters: form.data.filters,
+      selectedSorting: form.data.sorting.sortby,
+      selectedFiltersHumanised: selectedFiltersHumanised,
+      countLabel: 'project',
+      query: QUERY
+    }))
+  }}
 {% endblock %}

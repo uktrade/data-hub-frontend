@@ -3,12 +3,10 @@
 @import "../tools/functions/typography";
 
 .c-entity-list__item {
-  border: solid $grey-2;
-  border-width: 0 0 1px;
   padding: $default-spacing-unit 0;
 
-  &:first-child {
-    border-top-width: 1px;
+  + & {
+    border-top: 1px solid $grey-2;
   }
 }
 

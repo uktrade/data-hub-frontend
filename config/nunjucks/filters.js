@@ -71,7 +71,7 @@ const filters = {
   },
 
   pluralise: (string, count, pluralisedWord) => {
-    if (count !== 1) {
+    if (parseInt(count, 10) !== 1) {
       if (pluralisedWord) {
         string = pluralisedWord
       } else {

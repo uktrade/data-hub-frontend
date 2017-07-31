@@ -1,4 +1,5 @@
 const { get, pick, pickBy } = require('lodash')
+const queryString = require('query-string')
 
 const { buildPagination } = require('../../../lib/pagination')
 const metadataRepo = require('../../../lib/metadata')
@@ -26,11 +27,14 @@ const SORTBY_OPTIONS = [
 function augmentProjectListItem (listItem) {
   listItem.meta.forEach(metaItem => {
     const name = metaItem.name
-    const itemQuery = { custom: true, [name]: get(metaItem, 'value.id', metaItem.value) }
-    const isLink = !metaItem.isInert
+    const itemQuery = Object.assign(
+      {},
+      get(this.locals, 'form.data.filters', {}),
+      { custom: true, [name]: get(metaItem, 'value.id', metaItem.value) },
+    )
 
-    if (isLink) {
-      metaItem.url = this.locals.buildQuery({ include: itemQuery })
+    if (!metaItem.isInert) {
+      metaItem.url = `?${queryString.stringify(itemQuery)}`
       metaItem.isSelected = get(this.locals, `form.data.filters.${name}`, false)
     }
   })
@@ -51,7 +55,7 @@ function setDefaults (req, res, next) {
   next()
 }
 
-async function getInvestmentProjectsCollection (req, res, next) {
+function getInvestmentFilters (req, res, next) {
   const formOptions = {
     stage: metadataRepo.investmentStageOptions.map(transformObjectToOption),
     investment_type: metadataRepo.investmentTypeOptions.map(transformObjectToOption),
@@ -60,9 +64,8 @@ async function getInvestmentProjectsCollection (req, res, next) {
   }
 
   const query = pickBy(req.query)
-  const page = parseInt(query.page, 10) || 1
-  const selectedSorting = pick(query, ['sortby'])
-  const selectedFilters = pick(query, [
+  const selectedSortingQuery = pick(query, ['sortby'])
+  const selectedFiltersQuery = pick(query, [
     'stage',
     'sector',
     'investment_type',
@@ -71,33 +74,44 @@ async function getInvestmentProjectsCollection (req, res, next) {
     'estimated_land_date_after',
   ])
 
-  const requestBody = Object.assign({}, selectedFilters, selectedSorting)
+  const selectedFiltersHumanised = Object.keys(selectedFiltersQuery).reduce((filtersObj, filterName) => {
+    const options = get(formOptions, filterName, [])
+    const label = collectionFilterLabels.edit[filterName] || filterName
+    let value = selectedFiltersQuery[filterName]
+
+    if (options.length) {
+      const option = options.find(x => x.value === value)
+      if (!option) { return }
+      value = option.label
+    }
+
+    filtersObj[filterName] = {
+      value,
+      label,
+    }
+
+    return filtersObj
+  }, {})
 
   res.locals = Object.assign({}, res.locals, {
-    findFilter (filterName, filterValue) {
-      const options = get(formOptions, filterName, [])
-      const result = {
-        value: filterValue,
-        label: get(res.locals, `form.labels.${filterName}`, filterName),
-      }
-
-      if (options.length) {
-        const optionValue = options.find(x => x.value === filterValue)
-        if (!optionValue) { return }
-        result.value = optionValue.label
-      }
-      return result
-    },
-
+    selectedFiltersHumanised,
     form: {
       data: {
-        filters: selectedFilters,
-        sorting: selectedSorting,
+        filters: selectedFiltersQuery,
+        sorting: selectedSortingQuery,
       },
       options: formOptions,
       labels: collectionFilterLabels.edit,
     },
   })
+
+  next()
+}
+
+async function getInvestmentProjectsCollection (req, res, next) {
+  const page = parseInt(req.query.page, 10) || 1
+  const formData = get(res, 'locals.form.data', {})
+  const requestBody = Object.assign({}, formData.filters, formData.sorting)
 
   try {
     res.locals.results = await searchInvestmentProjects({ token: req.session.token, requestBody, limit: 10, page })
@@ -116,6 +130,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
 }
 
 module.exports = {
+  getInvestmentFilters,
   getInvestmentProjectsCollection,
   setDefaults,
 }

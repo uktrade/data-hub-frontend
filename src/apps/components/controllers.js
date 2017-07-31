@@ -68,6 +68,12 @@ function renderPagination (req, res) {
     .render('components/views/pagination')
 }
 
+function renderResults (req, res) {
+  return res
+    .breadcrumb('Results')
+    .render('components/views/results')
+}
+
 async function renderEntityList (req, res) {
   const investmentProjects = await authorisedRequest(req.session.token, `${config.apiRoot}/v3/investment?limit=10`)
     .then(result => {
@@ -96,4 +102,5 @@ module.exports = {
   renderLocalHeader,
   renderBreadcrumbs,
   renderPagination,
+  renderResults,
 }

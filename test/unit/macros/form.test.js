@@ -1,4 +1,4 @@
-const { getMacros } = require('~/test/unit/component-helper')
+const { getMacros } = require('~/test/unit/macro-helper')
 
 describe('Nunjucks form macros', () => {
   const macros = getMacros('form')
