@@ -358,7 +358,6 @@
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
- # @param {string} [props.maxlength] - maxlength Input attribute
  #}
 {% macro Input(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
