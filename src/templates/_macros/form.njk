@@ -234,6 +234,8 @@
  # Render form fieldset with inner content
  # @param {object} props - An object containing field properties
  # @param {string} props.legend - Fieldset legend
+ # @param {string} props.hint - Fieldset hint
+ # @param {string} props.fieldId - Field id
  # @param {string, array} [props.modifier] - Fieldset modifier
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
  # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
@@ -254,11 +256,16 @@
       data-controlled-by="{{ props.condition.name }}"
       data-control-value="{{ props.condition.value }}"
     {% endif %}
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.legend %}
       <legend class="c-form-fieldset__legend">
         <span class="c-form-fieldset__legend-text">{{ props.legend }}</span>
       </legend>
+    {% endif %}
+
+    {% if props.hint %}
+      <span id="hint-{{ props.fieldId }}" class="c-form-fieldset__hint">{{ props.hint }}</span>
     {% endif %}
 
     {{ caller() }}
@@ -351,6 +358,7 @@
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
+ # @param {string} [props.maxlength] - maxlength Input attribute
  #}
 {% macro Input(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
@@ -364,6 +372,7 @@
     class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% if props.maxlength %}maxlength="{{ props.maxlength }}"{% endif %}
   >
 {% endmacro %}
 
@@ -487,4 +496,50 @@
       {{ child }}
     {% endfor %}
   {% endif %}
+{% endmacro %}
+
+{##
+ # Render form group date pattern with Year, Month, Day and corresponding label, hints and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.inputName] - The base input name for date field names
+ # @param {string} [props.inputValue] - Field values
+ #}
+{% macro DateField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
+    {{ TextField({
+      inputClass: 'c-form-control--small',
+      name: props.inputName + '_day',
+      value: props.inputValue.day,
+      label: 'Day',
+      hint: 'dd',
+      maxlength: 2,
+      modifier: 'inline'
+    }) }}
+
+    {{ TextField({
+      inputClass: 'c-form-control--small',
+      name: props.inputName + '_month',
+      value: props.inputValue.month,
+      label: 'Month',
+      hint: 'mm',
+      maxlength: 2,
+      modifier: 'inline'
+    }) }}
+
+    {{ TextField({
+      inputClass: 'c-form-control--medium',
+      name: props.inputName + '_year',
+      value: props.inputValue.year,
+      label: 'Year',
+      hint: 'yyyy',
+      maxlength: 4,
+      modifier: 'inline'
+    }) }}
+  {% endcall %}
 {% endmacro %}
