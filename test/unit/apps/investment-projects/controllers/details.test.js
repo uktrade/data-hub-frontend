@@ -33,22 +33,4 @@ describe('Investment details controller', () => {
       }, this.next)
     })
   })
-
-  describe('#redirectToDetails', () => {
-    it('should redirect to details when a valid investment project GUID is given', (done) => {
-      this.controller.redirectToDetails({
-        session: {
-          token: 'abcd',
-        },
-        params: {
-          id: '12345abc-1234-abcd-12ab-123456abcdef',
-        },
-      }, {
-        redirect: (url) => {
-          expect(url).to.equal('12345abc-1234-abcd-12ab-123456abcdef/details')
-          done()
-        },
-      }, this.next)
-    })
-  })
 })
