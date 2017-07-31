@@ -56,15 +56,12 @@
 }
 
 @mixin site-width-container {
-  margin: 0 ($gutter / 2);
-  max-width: $site-width;
+  margin-left: ($gutter / 2);
+  margin-right: ($gutter / 2);
 
   @include media(desktop) {
-    margin: 0 $gutter;
-  }
-
-  @include media($min-width: ($site-width + $gutter * 2)) {
-    margin: 0 auto;
+    margin-left: $gutter;
+    margin-right: $gutter;
   }
 }
 
