@@ -1,0 +1,11 @@
+{##
+ # Render anchor markup
+ # @param {string} props.href - Anchor href
+ # @param {string} props.text - Anchor text
+ # @param {string} [props.target=_self] - Anchor target
+ #}
+{% macro Link(props) %}
+  {% set target = props.target or '_self' %}
+
+  <a href="{{ props.href }}" target="{{ target }}">{{ props.text }}</a>
+{% endmacro %}
