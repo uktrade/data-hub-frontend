@@ -9,7 +9,13 @@ const {
   renderLocalHeader,
   renderBreadcrumbs,
   renderPagination,
+  renderResults,
 } = require('./controllers')
+
+const {
+  getInvestmentFilters,
+  getInvestmentProjectsCollection,
+} = require('../investment-projects/middleware/collection')
 
 router
   .get('/', renderIndex)
@@ -18,6 +24,7 @@ router
   .get('/entity-list', renderEntityList)
   .get('/local-header', renderLocalHeader)
   .get('/pagination', renderPagination)
+  .get('/results', getInvestmentFilters, getInvestmentProjectsCollection, renderResults)
   .get('/form', handleEntitySearch, renderFormElements)
   .post('/form', handleFormPost, renderFormElements)
 
