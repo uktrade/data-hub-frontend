@@ -372,7 +372,6 @@
     class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
-    {% if props.maxlength %}maxlength="{{ props.maxlength }}"{% endif %}
   >
 {% endmacro %}
 
@@ -518,7 +517,6 @@
       value: props.inputValue.day,
       label: 'Day',
       hint: 'dd',
-      maxlength: 2,
       modifier: 'inline'
     }) }}
 
@@ -528,7 +526,6 @@
       value: props.inputValue.month,
       label: 'Month',
       hint: 'mm',
-      maxlength: 2,
       modifier: 'inline'
     }) }}
 
@@ -538,7 +535,6 @@
       value: props.inputValue.year,
       label: 'Year',
       hint: 'yyyy',
-      maxlength: 4,
       modifier: 'inline'
     }) }}
   {% endcall %}
