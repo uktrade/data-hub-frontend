@@ -1,7 +1,6 @@
 const router = require('express').Router()
 
-const localNavMiddleware = require('../../middleware/local-nav')
-
+const { setLocalNav } = require('../middleware')
 const { shared } = require('./middleware')
 const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
@@ -33,7 +32,7 @@ const LOCAL_NAV = [
   { path: '../audit', label: 'Audit history' },
 ]
 
-router.use(localNavMiddleware(LOCAL_NAV))
+router.use(setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)

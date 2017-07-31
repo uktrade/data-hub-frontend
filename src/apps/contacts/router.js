@@ -1,7 +1,6 @@
 const router = require('express').Router()
 
-const localNavMiddleware = require('../../middleware/local-nav')
-
+const { setLocalNav } = require('../middleware')
 const { getCommon, getDetails, redirectToDetails } = require('./controllers/details')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
@@ -12,7 +11,7 @@ const LOCAL_NAV = [
   { path: '../interactions', label: 'Interactions' },
 ]
 
-router.use(localNavMiddleware(LOCAL_NAV))
+router.use(setLocalNav(LOCAL_NAV))
 
 router
   .route('/create')
