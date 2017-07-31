@@ -9,6 +9,10 @@ const Order = {
       body: data,
     })
   },
+
+  getById (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
+  },
 }
 
 module.exports = {
