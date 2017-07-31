@@ -102,7 +102,7 @@
   <article class="c-results">
     {{ ResultsSummary(props | assign({ el: props.summaryEl })) }}
 
-    {% if props.items|length %}
+    {% if props.items|length and (props.pagination or props.sortingOptions) %}
       <div class="c-results__sort">
         {% if props.pagination %}
           <span class="c-results__page-summary">
