@@ -180,6 +180,19 @@
           value: form.state.lastName
         }) }}
       {% endcall %}
+
+      {{ DateFieldset({
+        name: 'date',
+        label: 'What is your favourite day?',
+        hint: 'A day you really like',
+        error: form.errors.messages.date,
+        inputName: 'date',
+        inputValue: {
+          year: form.state.dateYear,
+          month: form.state.dateMonth,
+          day: form.state.dateDay
+        }
+      }) }}
     {% endcall %}
   {% endcall %}
 
