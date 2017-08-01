@@ -22,7 +22,10 @@
  #}
 {% macro Pagination(pagination, showPages=true) %}
   {% if pagination %}
-    <nav class="c-pagination {{ 'c-pagination--pageless' if not showPages }}">
+    <nav
+      class="c-pagination {{ 'c-pagination--pageless' if not showPages }}"
+      aria-label="pagination: total {{ pagination.totalPages }} pages"
+    >
       {% if pagination.prev %}
         <a href="{{ pagination.prev }}" class="c-pagination__label c-pagination__label--prev">Previous</a>
       {% endif %}
