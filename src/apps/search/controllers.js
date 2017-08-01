@@ -22,7 +22,7 @@ function searchAction (req, res, next) {
     page: req.query.page,
   })
     .then((results) => {
-      results.pagination = buildPagination(req, results)
+      results.pagination = buildPagination(req.query, results)
       const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
 
       res

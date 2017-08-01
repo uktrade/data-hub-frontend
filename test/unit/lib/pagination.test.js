@@ -2,28 +2,28 @@ const { getPageLink, buildPagination } = require('~/src/lib/pagination')
 
 describe('Pagination', () => {
   describe('#getPageLink', () => {
-    const reqMock = { query: { term: 'samsung' } }
+    const query = { term: 'samsung' }
 
     it('should return a query string for query object', () => {
-      expect(getPageLink(1, reqMock)).to.equal('?term=samsung&page=1')
+      expect(getPageLink(1, query)).to.equal('?term=samsung&page=1')
     })
   })
 
   describe('#buildPagination', () => {
-    const reqMock = { query: { term: 'samsung' } }
+    const query = { term: 'samsung' }
 
     it('should return null if current page is not given', () => {
-      const actual = buildPagination(reqMock, { limit: 10, count: 20 })
+      const actual = buildPagination(query, { limit: 10, count: 20 })
       expect(actual).to.be.null
     })
 
     it('should return null if count is not given', () => {
-      const actual = buildPagination(reqMock, { limit: 10 })
+      const actual = buildPagination(query, { limit: 10 })
       expect(actual).to.be.null
     })
 
     it('should return pagination object when all required props a given', () => {
-      const actual = buildPagination(reqMock, { count: 10, limit: 5, page: 1 })
+      const actual = buildPagination(query, { count: 10, limit: 5, page: 1 })
       const expected = {
         totalPages: 2,
         currentPage: 1,
@@ -38,7 +38,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with correct current page', () => {
-      const actual = buildPagination(reqMock, { count: 10, limit: 5, page: 2 })
+      const actual = buildPagination(query, { count: 10, limit: 5, page: 2 })
       const expected = {
         totalPages: 2,
         currentPage: 2,
@@ -53,7 +53,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with truncation', () => {
-      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 1 }, 2)
+      const actual = buildPagination(query, { count: 10, limit: 2, page: 1 }, 2)
       const expected = {
         totalPages: 5,
         currentPage: 1,
@@ -70,7 +70,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object without truncation when it’s not needed', () => {
-      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 1 }, 4)
+      const actual = buildPagination(query, { count: 10, limit: 2, page: 1 }, 4)
       const expected = {
         totalPages: 5,
         currentPage: 1,
@@ -88,7 +88,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with truncation in right place when current page is changed', () => {
-      const actual = buildPagination(reqMock, { count: 10, limit: 2, page: 4 }, 2)
+      const actual = buildPagination(query, { count: 10, limit: 2, page: 4 }, 2)
       const expected = {
         totalPages: 5,
         currentPage: 4,
@@ -105,7 +105,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with no truncation when block start page is close to first or last pages', () => {
-      const actual = buildPagination(reqMock, { count: 21, limit: 3, page: 4 }, 4)
+      const actual = buildPagination(query, { count: 21, limit: 3, page: 4 }, 4)
       const expected = {
         totalPages: 7,
         currentPage: 4,

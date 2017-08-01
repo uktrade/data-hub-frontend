@@ -96,7 +96,7 @@ async function getAddStepTwo (req, res, next) {
       searchTerm,
     })
     const companies = companiesHouseAndLtdCompanies.results
-    companies.pagination = buildPagination(req, companiesHouseAndLtdCompanies.results)
+    companies.pagination = buildPagination(req.query, companiesHouseAndLtdCompanies.results)
     const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
       return company.id === currentlySelected ||
         (company.company_number && company.company_number === currentlySelected)

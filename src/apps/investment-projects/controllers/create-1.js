@@ -31,7 +31,7 @@ function getHandler (req, res, next) {
       let showSearch = req.query['show-search'] || false
 
       if (searchResult) {
-        searchResult.pagination = buildPagination(req, searchResult)
+        searchResult.pagination = buildPagination(req.query, searchResult)
       }
 
       if (clientCompanyId && clientCompany.uk_based) {
