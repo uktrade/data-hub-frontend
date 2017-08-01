@@ -511,30 +511,27 @@
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
     {{ TextField({
-      inputClass: 'c-form-control--shortest',
+      modifier: ['inline', 'shortest'],
       name: props.inputName + '_day',
       value: props.inputValue.day,
       label: 'Day',
-      hint: 'dd',
-      modifier: 'inline'
+      hint: 'dd'
     }) }}
 
     {{ TextField({
-      inputClass: 'c-form-control--shortest',
+      modifier: ['inline', 'shortest'],
       name: props.inputName + '_month',
       value: props.inputValue.month,
       label: 'Month',
-      hint: 'mm',
-      modifier: 'inline'
+      hint: 'mm'
     }) }}
 
     {{ TextField({
-      inputClass: 'c-form-control--shorter',
+      modifier: ['inline', 'shorter'],
       name: props.inputName + '_year',
       value: props.inputValue.year,
       label: 'Year',
-      hint: 'yyyy',
-      modifier: 'inline'
+      hint: 'yyyy'
     }) }}
   {% endcall %}
 {% endmacro %}
