@@ -25,10 +25,14 @@
   }
 
   .c-form-fieldset--subfield,
-  .c-form-group--subfield,
-  .c-pagination {
+  .c-form-group--subfield {
     margin-top: $default-spacing-unit;
     margin-bottom: $default-spacing-unit;
+  }
+
+  .c-pagination {
+    margin-top: $default-spacing-unit * 2;
+    margin-bottom: $default-spacing-unit * 2;
   }
 }
 
