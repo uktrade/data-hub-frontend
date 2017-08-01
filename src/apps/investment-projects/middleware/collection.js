@@ -119,7 +119,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
         result.items = result.items
           .map(transformInvestmentProjectToListItem)
           .map(augmentProjectListItem.bind(res))
-        result.pagination = buildPagination(req, result)
+        result.pagination = buildPagination(req.query, result)
         return result
       })
 

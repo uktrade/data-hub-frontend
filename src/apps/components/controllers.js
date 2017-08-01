@@ -80,7 +80,7 @@ async function renderEntityList (req, res) {
       return Object.assign(result, {
         page: 1,
         limit: 10,
-        pagination: buildPagination(req, result),
+        pagination: buildPagination(req.query, result),
         items: result.results.map(transformInvestmentProjectToListItem),
       })
     })
