@@ -67,6 +67,7 @@ async function submitForm (req, res, next) {
   const ticket = {
     requester: {
       name: 'Data Hub user',
+      email: req.body.email || undefined,
     },
     subject: req.body.title,
     comment: {
