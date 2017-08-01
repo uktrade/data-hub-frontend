@@ -81,7 +81,7 @@ async function submitForm (req, res, next) {
 
   try {
     const response = await postToZenDesk(ticket)
-    req.flash('success', `Created new report, reference number ${response.ticket.id}`)
+    req.flash('success', `Created new report, reference number ${response.data.ticket.id}`)
     res.redirect('/support/thank-you')
   } catch (error) {
     logger.error(error)
