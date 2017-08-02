@@ -17,7 +17,7 @@ class FormController extends Controller {
       const lastStep = last(req.journeyModel.get('history'))
 
       if (!lastStep) {
-        return res.redirect('/omis/create')
+        return res.redirect(req.baseUrl)
       }
       return res.redirect(lastStep.path)
     }

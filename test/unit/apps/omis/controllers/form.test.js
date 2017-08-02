@@ -116,6 +116,7 @@ describe('OMIS FormController', () => {
           journeyModel: {
             get: this.getStub,
           },
+          baseUrl: '/journey-base-url',
         })
       })
 
@@ -124,7 +125,7 @@ describe('OMIS FormController', () => {
           this.getStub.returns([])
           this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
 
-          expect(this.redirectSpy).to.be.calledWith('/omis/create')
+          expect(this.redirectSpy).to.be.calledWith('/journey-base-url')
           expect(this.errorHandlerSpy).not.to.be.called
         })
       })
