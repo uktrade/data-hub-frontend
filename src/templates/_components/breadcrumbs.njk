@@ -18,10 +18,10 @@
  #}
 
 {% if items|length > 1 %}
-  <nav aria-label="Breadcrumbs">
-    <ul class="c-breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+  <nav class="c-breadcrumb" aria-label="Breadcrumbs">
+    <ul class="c-breadcrumb__list" itemscope itemtype="http://schema.org/BreadcrumbList">
       {% for breadcrumb in items %}
-        <li class="c-breadcrumb__item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <li class="c-breadcrumb__list-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
           {% if loop.last %}
             <a href="#main-content" class="c-breadcrumb__link is-active" itemprop="url">
               <span itemprop="name">{{ breadcrumb.name }}</span>

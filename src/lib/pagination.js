@@ -1,11 +1,9 @@
-const { range, take, get } = require('lodash')
+const { range, take, get, omitBy } = require('lodash')
 const { buildQueryString } = require('./url-helpers')
 
-function getPageLink (page, req) {
-  const query = Object.assign({}, req.query, {
-    page,
-  })
-  return buildQueryString(query)
+function getPageLink (page, query = {}) {
+  query.page = page
+  return buildQueryString(omitBy(query, val => val === ''))
 }
 
 function truncatePages (pagination, blockSize) {
@@ -52,7 +50,7 @@ function truncatePages (pagination, blockSize) {
   return pagination
 }
 
-function buildPagination (req, results, truncate = 4) {
+function buildPagination (query = {}, results, truncate = 4) {
   const limit = results.limit || Math.max(get(results, 'results.length', 10), 10)
   const totalPages = results.count ? Math.ceil(results.count / limit) : 0
   results.page = parseInt(results.page, 10)
@@ -62,12 +60,12 @@ function buildPagination (req, results, truncate = 4) {
   const pagination = {
     totalPages,
     currentPage: results.page,
-    prev: results.page > 1 ? getPageLink(results.page - 1, req) : null,
-    next: results.page === totalPages ? null : getPageLink(results.page + 1, req),
+    prev: results.page > 1 ? getPageLink(results.page - 1, query) : null,
+    next: results.page === totalPages ? null : getPageLink(results.page + 1, query),
     pages: range(0, totalPages).map((page, idx) => {
       return {
         label: idx + 1,
-        url: getPageLink(idx + 1, req),
+        url: getPageLink(idx + 1, query),
       }
     }),
   }

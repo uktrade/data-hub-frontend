@@ -22,9 +22,6 @@ $search-button-width: 50px;
 }
 
 .c-entity-search--global {
-  background-color: $grey-3;
-  padding: $default-spacing-unit;
-
   .c-form-group {
     font-size: 1.1em;
     max-width: none;
@@ -33,7 +30,6 @@ $search-button-width: 50px;
 
 .c-entity-search__aggregations {
   margin-top: $default-spacing-unit;
-  margin-bottom: -$default-spacing-unit;
 }
 
 .c-entity-search__aggregations-item {

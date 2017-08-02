@@ -1,9 +1,5 @@
 {% extends "_layouts/datahub-base.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="heading-xlarge">Report a problem or leave feedback</h1>
-{% endblock %}
-
 {% block body_main_content %}
   {% call Form(form | assign({buttonText: 'Send'})) %}
     {{ TextField({

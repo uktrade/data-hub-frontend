@@ -1,28 +1,12 @@
 const { get } = require('lodash')
 
 const { isValidGuid } = require('../../../lib/controller-utils')
-const { getInteraction } = require('../../interactions/repos')
 const { getDitCompany } = require('../../companies/repos')
+const { getInteraction } = require('../../interactions/repos')
+const { getAdviser } = require('../../adviser/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
+const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
-
-function handleEmptyMiddleware (req, res, next) {
-  if (req.path === '/') {
-    return res.redirect(`/investment-projects/create`)
-  }
-  next()
-}
-
-function getLocalNavMiddleware (req, res, next) {
-  res.locals.localNavItems = [
-    { label: 'Project details', slug: 'details' },
-    { label: 'Project team', slug: 'team' },
-    { label: 'Interactions', slug: 'interactions' },
-    { label: 'Evaluation', slug: 'evaluation' },
-    { label: 'Audit history', slug: 'audit' },
-  ]
-  next()
-}
 
 async function getInvestmentDetails (req, res, next, id = req.params.id) {
   if (!isValidGuid(id)) {
@@ -40,6 +24,9 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       investmentData.uk_company = Object.assign({}, investmentData.uk_company, companyDetails)
     }
 
+    const clientRelationshipManager = await getAdviser(req.session.token, investmentData.client_relationship_manager.id)
+    investmentData.client_relationship_manager = clientRelationshipManager
+
     res.locals.investmentData = investmentData
     res.locals.equityCompany = investmentData.investor_company
 
@@ -48,6 +35,10 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       projectCode: investmentData.project_code,
       stageName: investmentData.stage.name,
       valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+      company: {
+        name: investmentData.investor_company.name,
+        url: buildCompanyUrl(investmentData.investor_company),
+      },
     }
 
     res.breadcrumb({
@@ -77,8 +68,6 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 }
 
 module.exports = {
-  handleEmptyMiddleware,
-  getLocalNavMiddleware,
   getInvestmentDetails,
   getInteractionDetails,
 }

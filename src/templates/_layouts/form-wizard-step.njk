@@ -1,7 +1,9 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="page-heading">{{ pageHeading }}</h1>
+{% block local_header %}
+  {% set pageTitle = getPageTitle() %}
+  {% set heading = heading or pageTitle[0] %}
+  {{ LocalHeader({ heading: heading }) }}
 {% endblock %}
 
 {% block main_grid_right_column %}
@@ -17,7 +19,10 @@
           {% if props.fieldType %}
             {{ callAsMacro(props.fieldType)(props | assign({
               name: key,
-              value: values[key]
+              label: trans(props.label),
+              hint: trans(props.hint),
+              value: values[key],
+              error: errors[key].message
             })) }}
           {% endif %}
         {% endfor %}

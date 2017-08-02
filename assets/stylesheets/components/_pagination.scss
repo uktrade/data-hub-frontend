@@ -32,12 +32,23 @@
 }
 
 .c-pagination__label {
+  @include bold-font(16);
   display: inline-block;
   padding: ($default-spacing-unit / 2) $default-spacing-unit;
   background-color: $grey-4;
 
+  &:link,
+  &:visited {
+    color: $link-colour;
+    text-decoration: none;
+
+    &:hover:not(.is-current) {
+      background-color: $grey-3;
+    }
+  }
+
   &.is-current {
-    background-color: $white;
+    background-color: transparent;
     color: $text-colour;
     text-decoration: none;
   }
@@ -47,6 +58,7 @@
   background-color: transparent;
   padding-right: $default-spacing-unit / 2;
   padding-left: $default-spacing-unit / 2;
+  color: $grey-1;
 }
 
 @include media(mobile) {

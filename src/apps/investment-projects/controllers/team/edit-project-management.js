@@ -10,8 +10,6 @@ function getHandler (req, res, next) {
     .breadcrumb('Project team', 'team')
     .breadcrumb('Project management')
     .render('investment-projects/views/team/edit-project-management', {
-      currentNavItem: 'team',
-      variant: 'edit',
       briefInvestmentSummary,
     })
 }

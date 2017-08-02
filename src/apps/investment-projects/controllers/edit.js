@@ -1,27 +1,22 @@
-const templateData = {
-  currentNavItem: 'details',
-  variant: 'edit',
-}
-
 function editDetailsGet (req, res) {
   res
     .breadcrumb('Edit details')
-    .render('investment-projects/views/details-edit', templateData)
+    .render('investment-projects/views/details-edit')
 }
 
 function editValueGet (req, res) {
   res
     .breadcrumb('Edit value')
-    .render('investment-projects/views/value-edit', templateData)
+    .render('investment-projects/views/value-edit')
 }
 
 function editRequirementsGet (req, res) {
-  res.render('investment-projects/views/requirements-edit', templateData)
+  res.render('investment-projects/views/requirements-edit')
 }
 
 function editDetailsPost (req, res) {
   if (res.locals.form.errors) {
-    return res.render('investment-projects/views/details-edit', templateData)
+    return res.render('investment-projects/views/details-edit')
   }
   req.flash('success', 'Updated investment details')
   return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
@@ -29,7 +24,7 @@ function editDetailsPost (req, res) {
 
 function editValuePost (req, res) {
   if (res.locals.form.errors) {
-    return res.render('investment-projects/views/value-edit', templateData)
+    return res.render('investment-projects/views/value-edit')
   }
   req.flash('success', 'Updated investment value')
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
@@ -38,7 +33,7 @@ function editValuePost (req, res) {
 function editRequirementsPost (req, res) {
   if (res.locals.form.errors) {
     req.flash('success', 'Updated investment requirements')
-    return res.render('investment-projects/views/requirements-edit', templateData)
+    return res.render('investment-projects/views/requirements-edit')
   }
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }

@@ -22,17 +22,11 @@ function detailsGetHandler (req, res, next) {
       details: getDataLabels(transformedDetails, detailsLabels.view),
       values: getDataLabels(transformedValue, valueLabels.view),
       requirements: getDataLabels(transformedRequirements, requirementsLabels.view),
-      currentNavItem: 'details',
     })
   }
   return next()
 }
 
-function redirectToDetails (req, res) {
-  res.redirect(`${req.params.id}/details`)
-}
-
 module.exports = {
-  redirectToDetails,
   detailsGetHandler,
 }

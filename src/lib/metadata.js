@@ -83,6 +83,7 @@ const metadataItems = [
   ['non-fdi-type', 'nonFdiOptions'],
   ['salary-range', 'salaryRangeOptions'],
   ['investment-strategic-driver', 'strategicDriverOptions'],
+  ['investment-project-stage', 'investmentStageOptions'],
 ]
 
 const restrictedServiceKeys = [

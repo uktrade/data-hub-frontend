@@ -22,3 +22,16 @@
 .metadata-list__value--block {
   display: block;
 }
+
+.metadata-list__link:link,
+.metadata-list__link:visited {
+  color: inherit;
+
+  &.is-active {
+    font-weight: 600;
+  }
+}
+
+.metadata-list__link:hover {
+  text-decoration: none;
+}

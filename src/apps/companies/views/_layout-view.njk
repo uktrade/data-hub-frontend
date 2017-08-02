@@ -1,30 +1,34 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="u-visually-hidden">Company Details</h1>
-  <h2 class="page-heading">{{ headingName }}</h2>
-  <p>{{ headingAddress }}</p>
-
-  {% if company.archived %}
-    <p class="infostrip">
-      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
-      <strong>Reason:</strong> {{company.archived_reason}}<br>
-      <br>
-      <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
-    </p>
-  {% endif %}
+{% block local_header %}
+  {% call LocalHeader({
+      heading: headingName,
+      modifier: 'light-banner'
+    })
+  %}
+    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+    {% if company.archived %}
+      <p class="infostrip">
+        This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+        <strong>Reason:</strong> {{company.archived_reason}}<br>
+        <br>
+        <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 {% endblock %}
 
+
 {% block main_grid_left_column %}
-  <nav class="local-nav">
-    <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
+  <nav class="c-local-nav">
+    <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
     {% if company.id %}
-      {# <a class="local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
-      <a class="local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
-      <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
-      {# <a class="local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
-      <a class="local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Exports</a>
-      <a class="local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investments</a>
+      {# <a class="c-local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
+      <a class="c-local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
+      <a class="c-local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
+      {# <a class="c-local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
+      <a class="c-local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Exports</a>
+      <a class="c-local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investments</a>
     {% endif %}
   </nav>
 {% endblock %}

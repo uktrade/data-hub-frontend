@@ -1,35 +1,17 @@
 {% extends "./_layout.njk" %}
 
-{% from "_macros/address.njk" import addressFormatter %}
+{% from "_macros/entities.njk" import Entity with context %}
 
 {% block body_main_content %}
   {% call Example('Investment projects') %}
-    <div class="grid-row">
-      <div class="column-two-thirds">
-        <ul class="c-entity-list">
-          {% for project in investmentProjects.results %}
-            <li class="c-entity-list__item">
-              <h3 class="c-entity-list__item-header">
-                <a href="/investment-projects/{{ project.id }}">{{ project.name}}</a>
-              </h3>
-              <dl class="metadata-list">
-                <dt class="metadata-list__term">Land date</dt>
-                <dd class="metadata-list__value">{{ project.estimated_land_date | formatDate('MMM YYYY') }}</dd>
-
-                <dt class="metadata-list__term u-visually-hidden">Type of investment</dt>
-                <dd class="metadata-list__value">{{ project.investment_type.name }}</dd>
-
-                <dt class="metadata-list__term u-visually-hidden">Stage</dt>
-                <dd class="metadata-list__value">{{ project.stage.name }}</dd>
-
-                <dt class="metadata-list__term u-visually-hidden">Sector</dt>
-                <dd class="metadata-list__value">{{ project.sector.name }}</dd>
-              </dl>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    <ul class="c-entity-list">
+      {% for project in investmentProjects.items %}
+        <li class="c-entity-list__item">
+          {{ Entity(project) }}
+        </li>
+      {% endfor %}
+    </ul>
+    {{ Pagination(investmentProjects.pagination) }}
   {% endcall %}
 
   {% call Example('Companies') %}
@@ -50,13 +32,13 @@
 
                 <dt class="metadata-list__term u-visually-hidden">Address</dt>
                 <dd class="metadata-list__value">
-                  {{ addressFormatter( [
+                  {{ [
                     company.registered_address_1,
                     company.registered_address_2,
                     company.registered_address_county,
                     company.registered_address_town,
                     company.registered_address_postcode
-                  ]) }}
+                  ] | removeNilAndEmpty | join(", ") }}
                 </dd>
               </dl>
             </li>
@@ -90,13 +72,13 @@
 
                 <dt class="metadata-list__term u-visually-hidden">Address</dt>
                 <dd class="metadata-list__value">
-                  {{ addressFormatter([
-                    contact.registered_address_1,
-                    contact.registered_address_2,
-                    contact.registered_address_county,
-                    contact.registered_address_town,
-                    contact.registered_address_postcode
-                  ]) }}
+                  {{ [
+                    contact.address_1,
+                    contact.address_2,
+                    contact.address_county,
+                    contact.address_town,
+                    contact.address_postcode
+                  ] | removeNilAndEmpty | join(", ") }}
               </dl>
             </li>
           {% endfor %}

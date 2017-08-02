@@ -1,4 +1,4 @@
-const { getMacros } = require('~/test/unit/component-helper')
+const { getMacros } = require('~/test/unit/macro-helper')
 
 describe('Nunjucks form macros', () => {
   const macros = getMacros('form')
@@ -33,6 +33,7 @@ describe('Nunjucks form macros', () => {
           action: '/form-url',
           role: 'search',
           class: 'c-form-component',
+          actionsClass: 'u-js-hidden',
         }
         const component = macros.renderWithCallerToDom('Form', formProps)(
           macros.renderToDom('TextField')
@@ -41,6 +42,7 @@ describe('Nunjucks form macros', () => {
         expect(component.action).to.equal('/form-url')
         expect(component.className).to.equal('c-form-component')
         expect(component.getAttribute('role')).to.equal('search')
+        expect(component.querySelector('.c-form-group--actions').classList.contains('u-js-hidden')).to.be.true
       })
 
       it('should render form with custom submit button text', () => {

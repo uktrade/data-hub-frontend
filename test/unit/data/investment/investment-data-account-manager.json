@@ -1,0 +1,196 @@
+{
+  "id": "f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7",
+  "name": "ACHME Hotels - New hotel in Manchester 1",
+  "project_code": "DHP-00000003",
+  "description": "ACHME hotels wishes to open in a new part of Manchester under-served by its existing hotels",
+  "nda_signed": true,
+  "estimated_land_date": "2018-05-01",
+  "actual_land_date": null,
+  "project_shareable": false,
+  "not_shareable_reason": null,
+  "likelihood_of_landing": null,
+  "priority": null,
+  "approved_commitment_to_invest": null,
+  "approved_fdi": null,
+  "approved_good_value": null,
+  "approved_high_value": null,
+  "approved_landed": null,
+  "approved_non_fdi": null,
+  "investment_type": {
+    "name": "FDI",
+    "id": "3e143372-496c-4d1e-8278-6fdd3da9b48b"
+  },
+  "stage": {
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+  },
+  "phase": {
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+  },
+  "investor_company": {
+    "name": "Omnicorp SDS",
+    "id": "6c388e5b-a098-e211-a939-e4115bead28a",
+    "trading_name": "",
+    "companies_house_data": null,
+    "interactions": [],
+    "contacts": [],
+    "export_to_countries": [],
+    "future_interest_countries": [],
+    "uk_based": false,
+    "account_manager": {
+      "id": "0563a10b-0e34-e411-985c-e4115bead28a",
+      "name": "Yang Xiao",
+      "last_login": null,
+      "first_name": "Yang",
+      "last_name": "Xiao",
+      "email": "yang.xiao@mobile.ukti.gov.uk",
+      "dit_team": {
+        "id": "a84d24c2-9698-e211-a939-e4115bead28a",
+        "name": "British Embassy Beijing China"
+      }
+    },
+    "registered_address_1": "707-19 Yoksam2 dong",
+    "registered_address_2": "Gangnam-gu",
+    "registered_address_town": "Seoul",
+    "registered_address_country": {
+      "id": "7c6a9ab2-5d95-e211-a939-e4115bead28a",
+      "name": "Korea (South)"
+    },
+    "registered_address_county": "",
+    "registered_address_postcode": "135-918",
+    "created_on": "2008-04-02T06:00:34",
+    "modified_on": "2015-11-12T15:50:58",
+    "archived": false,
+    "archived_on": null,
+    "archived_reason": "",
+    "company_number": null,
+    "alias": "",
+    "description": "IT",
+    "website": null,
+    "trading_address_1": "",
+    "trading_address_2": "",
+    "trading_address_town": "",
+    "trading_address_county": "",
+    "trading_address_postcode": "",
+    "archived_by": null,
+    "business_type": {
+      "id": "98d14e94-5d95-e211-a939-e4115bead28a",
+      "name": "Company"
+    },
+    "sector": {
+      "id": "b3959812-6095-e211-a939-e4115bead28a",
+      "name": "ICT"
+    },
+    "employee_range": null,
+    "turnover_range": null,
+    "uk_region": {
+      "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
+      "name": "Undefined"
+    },
+    "trading_address_country": null,
+    "headquarter_type": null,
+    "classification": null,
+    "parent": null,
+    "one_list_account_owner": null
+  },
+  "intermediate_company": null,
+  "client_contacts": [],
+  "client_relationship_manager": {
+    "first_name": "Jeff",
+    "last_name": "Moorthy",
+    "id": "05346184-9b98-e211-a939-e4115bead28a"
+  },
+  "referral_source_adviser": {
+    "first_name": "Rambo",
+    "last_name": "McCamley",
+    "id": "08536d0b-d000-e311-a78e-e4115bead28a"
+  },
+  "referral_source_activity": null,
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": "",
+  "fdi_type": {
+    "name": "Capital only",
+    "id": "840f62c1-bbcb-44e4-b6d4-a258d2ffa07d"
+  },
+  "non_fdi_type": null,
+  "sector": {
+    "name": "Aerospace : Manufacturing and Assembly : Space Technology",
+    "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
+  },
+  "business_activities": [
+    {
+      "name": "Call centre",
+      "id": "410da69e-0247-48cf-9f72-fbc10ed7a4fc"
+    }
+  ],
+  "archived": false,
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": null,
+  "modified_on": "2017-06-14T14:52:46.618779",
+  "total_investment": "100000",
+  "foreign_equity_investment": "50000",
+  "government_assistance": true,
+  "number_new_jobs": 10,
+  "average_salary": null,
+  "number_safeguarded_jobs": 5,
+  "r_and_d_budget": true,
+  "non_fdi_r_and_d_budget": false,
+  "new_tech_to_uk": true,
+  "export_revenue": false,
+  "value_complete": false,
+  "client_cannot_provide_total_investment": null,
+  "client_cannot_provide_foreign_investment": null,
+  "client_requirements": "Some interesting requirements here",
+  "site_decided": false,
+  "address_line_1": null,
+  "address_line_2": null,
+  "address_line_3": null,
+  "address_line_postcode": null,
+  "competitor_countries": [
+    {
+      "name": "Albania",
+      "id": "945f66a0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Algeria",
+      "id": "955f66a0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "uk_region_locations": [
+    {
+      "name": "Alderney",
+      "id": "934cd12a-6095-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Channel Islands",
+      "id": "8b4cd12a-6095-e211-a939-e4115bead28a"
+    }
+  ],
+  "strategic_drivers": [],
+  "client_considering_other_countries": true,
+  "uk_company": null,
+  "requirements_complete": false,
+  "project_manager": {
+    "id": "1234",
+    "first_name": "Fred",
+    "last_name": "Smith"
+  },
+  "project_assurance_adviser": {
+    "id": "2234",
+    "first_name": "John",
+    "last_name": "Brown"
+  },
+  "project_manager_team": {
+    "id": "1111",
+    "name": "Team A"
+  },
+  "project_assurance_team":  {
+    "id": "1111",
+    "name": "Team B"
+  },
+  "team_complete": true
+}

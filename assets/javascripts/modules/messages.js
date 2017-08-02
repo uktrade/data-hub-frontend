@@ -26,7 +26,7 @@ const Messages = {
     if (element.className.indexOf('error') === -1) {
       let link = document.createElement('a')
 
-      link.innerHTML = 'Close'
+      link.innerHTML = 'Dismiss'
       link.className = 'c-messages__close'
       link.href = '#'
       link.onclick = (e) => {

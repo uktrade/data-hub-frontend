@@ -7,6 +7,7 @@ const serviceDeliveryRepository = require('./repos')
 const serviceDeliveryService = require('./services/data')
 const { getDisplayServiceDelivery } = require('./services/formatting')
 const { buildCompanyUrl } = require('../companies/services/data')
+const { transformContactToOption } = require('../transformers')
 
 const serviceDeliveryDisplayOrder = ['company', 'dit_team', 'service', 'status', 'subject', 'notes', 'date', 'dit_adviser', 'uk_region', 'sector', 'contact', 'country_of_interest']
 
@@ -33,13 +34,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     } else {
       res.locals.backUrl = `/service-deliveries/${req.params.serviceDeliveryId}`
     }
-    res.locals.contacts = res.locals.serviceDelivery.company.contacts.map((contact) => {
-      return {
-        id: contact.id,
-        name: `${contact.first_name} ${contact.last_name}`,
-      }
-    })
-
+    res.locals.contacts = res.locals.serviceDelivery.company.contacts.map(transformContactToOption)
     res.locals.labels = serviceDeliverylabels
     res.locals.serviceProviderOptions = metadataRepository.teams
     res.locals.serviceOptions = metadataRepository.serviceDeliveryServiceOptions
@@ -51,7 +46,7 @@ async function getServiceDeliveryEdit (req, res, next) {
     res.locals.companyUrl = buildCompanyUrl(res.locals.serviceDelivery.company)
 
     res
-      .breadcrumb('Add service delivery')
+      .breadcrumb('Edit service delivery')
       .render('service-deliveries/views/edit')
   } catch (error) {
     next(error)
@@ -90,10 +85,15 @@ async function postServiceDeliveryEdit (req, res, next) {
 }
 
 function getServiceDeliveryDetails (req, res, next) {
-  res.locals.serviceDeliveryDetails = getDisplayServiceDelivery(res.locals.serviceDelivery)
-  res.locals.serviceDeliveryLabels = serviceDeliverylabels
-  res.locals.serviceDeliveryDisplayOrder = serviceDeliveryDisplayOrder
-  res.render('service-deliveries/views/details')
+  res.locals = Object.assign({}, res.locals, {
+    serviceDeliveryDetails: getDisplayServiceDelivery(res.locals.serviceDelivery),
+    serviceDeliveryLabels: serviceDeliverylabels,
+    serviceDeliveryDisplayOrder: serviceDeliveryDisplayOrder,
+  })
+
+  res
+    .breadcrumb('Service delivery details')
+    .render('service-deliveries/views/details')
 }
 
 module.exports = {

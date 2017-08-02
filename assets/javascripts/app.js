@@ -1,4 +1,7 @@
 require('core-js/fn/array/from')
+require('element-closest')
+require('classlist.js')
+
 const ConditionalSubfields = require('./modules/conditional-subfields')
 const SortableTable = require('./modules/sortable-table')
 const DetailsList = require('./modules/details-list')
@@ -6,6 +9,8 @@ const LabelSelect = require('./modules/label-select')
 const ArchiveForm = require('./modules/archive-form')
 const Messages = require('./modules/messages')
 const FormErrors = require('./modules/form-errors')
+const AutoSubmit = require('./modules/auto-submit')
+const XhrLink = require('./modules/xhr-link')
 
 const AddAnotherField = require('./_deprecated/add-another-field')
 const CompanyAdd = require('./_deprecated/company-add')
@@ -21,6 +26,8 @@ DetailsList.init()
 ArchiveForm.init()
 Messages.init()
 FormErrors.init()
+AutoSubmit.init()
+XhrLink.init()
 
 // Deprecated
 AddAnotherField.init()

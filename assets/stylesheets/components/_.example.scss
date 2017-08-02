@@ -1,4 +1,5 @@
 @import "../settings";
+@import "../tools";
 
 * + .example {
   margin-top: $default-spacing-unit * 2;
@@ -34,4 +35,11 @@
   background-color: $white;
   border: 2px solid $grey-2;
   padding: $default-spacing-unit;
+}
+
+.example--wide .example__preview {
+  @include media($min-width: $site-width + $default-spacing-unit * 4) {
+    margin-left: -$default-spacing-unit * 2;
+    margin-right: -$default-spacing-unit * 2;
+  }
 }

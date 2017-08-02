@@ -16,6 +16,7 @@ body {
 a {
   color: $link-colour;
   text-decoration-skip: ink;
+  outline-color: transparent;
 
   &:hover {
     color: $link-hover-colour;
@@ -28,18 +29,24 @@ a {
   &:active {
     color: $link-active-colour;
   }
-
-  &:focus {
-    background-color: $focus-colour;
-    outline: 3px solid $focus-colour;
-    text-decoration: none;
-  }
 }
 
+a,
 input,
 textarea {
-  &:focus {
-    outline: 3px solid $focus-colour;
+  outline: 3px solid transparent;
+
+  &:focus,
+  &:focus + label::before {
+    transition: box-shadow .1s, outline-color .1s .1s;
+    box-shadow: 0 0 0 3px $focus-colour;
+    outline-color: $focus-colour;
+    text-decoration: none;
     outline-offset: 0;
   }
 }
+
+input:focus + label::before {
+  outline: none;
+}
+

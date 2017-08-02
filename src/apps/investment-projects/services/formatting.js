@@ -261,7 +261,7 @@ function getAdviserName (investmentData, key) {
 function transformProjectManagementForView (investmentData) {
   if (investmentData.project_manager || investmentData.project_assurance_adviser) {
     return [{
-      role: 'Project assuranace adviser',
+      role: 'Project assurance adviser',
       adviser: getAdviserName(investmentData, 'project_assurance_adviser'),
       team: get(investmentData, 'project_assurance_team.name', null),
     }, {
@@ -274,6 +274,25 @@ function transformProjectManagementForView (investmentData) {
   return null
 }
 
+function transformClientRelationshipManagementForView (investmentData) {
+  const result = [{
+    role: 'Client relationship manager',
+    adviser: getAdviserName(investmentData, 'client_relationship_manager'),
+    team: get(investmentData, 'client_relationship_manager.dit_team.name', null),
+  }]
+
+  const accountManager = get(investmentData, 'investor_company.account_manager.id', null)
+  if (accountManager) {
+    result.push({
+      adviser: get(investmentData, 'investor_company.account_manager.name', null),
+      role: 'Account manager',
+      team: get(investmentData, 'investor_company.account_manager.dit_team.name', null),
+    })
+  }
+
+  return result
+}
+
 module.exports = {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
@@ -284,4 +303,5 @@ module.exports = {
   transformFromApi,
   transformBriefInvestmentSummary,
   transformProjectManagementForView,
+  transformClientRelationshipManagementForView,
 }

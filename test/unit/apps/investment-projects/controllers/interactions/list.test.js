@@ -20,7 +20,7 @@ describe('Investment Interactions Index controller', () => {
   })
 
   describe('#indexGetHandler', () => {
-    it('should return interactions with currentNavItem set to interactions', (done) => {
+    it('should return interactions', (done) => {
       this.controller.indexGetHandler({
         session: {
           token: 'abcd',
@@ -36,7 +36,6 @@ describe('Investment Interactions Index controller', () => {
         render: (template, data) => {
           try {
             expect(template).to.equal('investment-projects/views/interactions/index')
-            expect(data.currentNavItem).to.equal('interactions')
             expect(data.interactions).to.deep.equal(interactionCompanyDisplayFormated)
             done()
           } catch (error) {

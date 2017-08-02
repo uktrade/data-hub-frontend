@@ -1,8 +1,5 @@
-@import "../settings/colours";
-@import "../settings/layout";
-@import "../tools/mixins/addons";
-@import "../tools/mixins/conditionals";
-@import "../tools/mixins/layout";
+@import "../settings";
+@import "../tools";
 
 .proposition-menu {
   @include bold-font(14);
@@ -34,8 +31,12 @@
 .proposition-menu__link {
   color: inherit;
   display: block;
-  padding: $baseline-grid-unit;
+  padding: ($default-spacing-unit / 2) 0;
   text-decoration: none;
+
+  @include media(tablet) {
+    padding: 0;
+  }
 
   &:active,
   &:visited,
@@ -43,16 +44,8 @@
     color: inherit;
   }
 
-  &:focus {
-    color: $black;
-  }
-
   &:hover {
     text-decoration: underline;
-  }
-
-  @include media(tablet) {
-    padding: 0;
   }
 
   &.is-active {

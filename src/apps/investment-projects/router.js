@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
 const { getBriefInvestmentSummary } = require('./middleware/team')
 const {
@@ -16,15 +17,27 @@ const {
 
 const detailsFormMiddleware = require('./middleware/forms/details')
 const valueFormMiddleware = require('./middleware/forms/value')
-const requirementsMiddleware = require('./middleware/forms/requirements')
-const interactionsMiddleware = require('./middleware/forms/interactions')
-const projectManagementForm = require('./middleware/forms/project-management')
+const requirementsFormMiddleware = require('./middleware/forms/requirements')
+const interactionsFormMiddleware = require('./middleware/forms/interactions')
+const projectManagementFormMiddleware = require('./middleware/forms/project-management')
+const clientRelationshipManagementFormMiddleware = require('./middleware/forms/client-relationship-management')
+const { renderInvestmentList } = require('./controllers/list')
+const { setDefaults, getInvestmentFilters, getInvestmentProjectsCollection } = require('./middleware/collection')
 
-router.use(shared.handleEmptyMiddleware)
-router.use(shared.getLocalNavMiddleware)
+const LOCAL_NAV = [
+  { path: 'details', label: 'Project details' },
+  { path: 'team', label: 'Project team' },
+  { path: 'interactions', label: 'Interactions' },
+  { path: 'evaluation', label: 'Evaluations' },
+  { path: 'audit', label: 'Audit history' },
+]
+
+router.use('/:id/', setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
+
+router.get('/', setDefaults, getInvestmentFilters, getInvestmentProjectsCollection, renderInvestmentList)
 
 router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
 router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)
@@ -43,7 +56,7 @@ router
   .get(detailsFormMiddleware.populateForm, createStep2.createGetHandler)
   .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, createStep2.createPostHandler)
 
-router.get('/:id', details.redirectToDetails)
+router.get('/:id', redirectToFirstNavItem)
 router.get('/:id/details', details.detailsGetHandler)
 
 router
@@ -58,29 +71,42 @@ router
 
 router
   .route('/:id/edit-requirements')
-  .get(requirementsMiddleware.populateForm, edit.editRequirementsGet)
-  .post(requirementsMiddleware.populateForm, requirementsMiddleware.handleFormPost, edit.editRequirementsPost)
+  .get(requirementsFormMiddleware.populateForm, edit.editRequirementsGet)
+  .post(requirementsFormMiddleware.populateForm, requirementsFormMiddleware.handleFormPost, edit.editRequirementsPost)
 
 router.get('/:id/team', team.details.getDetailsHandler)
 router
   .route('/:id/edit-project-management')
-  .get(getBriefInvestmentSummary, projectManagementForm.populateForm, team.editProjectManagement.getHandler)
+  .get(getBriefInvestmentSummary, projectManagementFormMiddleware.populateForm, team.editProjectManagement.getHandler)
   .post(
     getBriefInvestmentSummary,
-    projectManagementForm.populateForm,
-    projectManagementForm.handleFormPost,
+    projectManagementFormMiddleware.populateForm,
+    projectManagementFormMiddleware.handleFormPost,
     team.editProjectManagement.postHandler,
     team.editProjectManagement.getHandler
+  )
+
+router
+  .route('/:id/edit-client-relationship-management')
+  .get(
+    clientRelationshipManagementFormMiddleware.populateForm,
+    team.editClientRelationshipManagement.getHandler
+  )
+  .post(
+    clientRelationshipManagementFormMiddleware.populateForm,
+    clientRelationshipManagementFormMiddleware.handleFormPost,
+    team.editClientRelationshipManagement.postHandler,
+    team.editClientRelationshipManagement.getHandler
   )
 
 router.get('/:id/interactions', interactions.list.indexGetHandler)
 
 router
   .route('/:id/interactions/create')
-  .get(interactionsMiddleware.populateForm, interactions.create.createGetInteractionHandler)
+  .get(interactionsFormMiddleware.populateForm, interactions.create.createGetInteractionHandler)
   .post(
-    interactionsMiddleware.populateForm,
-    interactionsMiddleware.handleFormPost,
+    interactionsFormMiddleware.populateForm,
+    interactionsFormMiddleware.handleFormPost,
     interactions.create.createPostInteractionHandler,
     interactions.create.createGetInteractionHandler
   )
@@ -89,10 +115,10 @@ router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 
 router
   .route('/:id/interactions/:interactionId/edit')
-  .get(interactionsMiddleware.populateForm, interactions.edit.editGetInteractionHandler)
+  .get(interactionsFormMiddleware.populateForm, interactions.edit.editGetInteractionHandler)
   .post(
-    interactionsMiddleware.populateForm,
-    interactionsMiddleware.handleFormPost,
+    interactionsFormMiddleware.populateForm,
+    interactionsFormMiddleware.handleFormPost,
     interactions.edit.editPostInteractionHandler,
     interactions.edit.editGetInteractionHandler
   )

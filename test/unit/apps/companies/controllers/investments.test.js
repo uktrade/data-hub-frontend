@@ -16,6 +16,7 @@ describe('Company investments controller', function () {
     this.getCompanyInvestmentProjectsStub = this.sandbox.stub().resolves(investmentProjects)
     this.getCommonTitlesAndlinksStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
+    this.breadcrumbStub = function () { return this }
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
       '../services/data': {
@@ -44,6 +45,7 @@ describe('Company investments controller', function () {
           },
         }
         const resStub = {
+          breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
               expect(this.getInflatedDitCompanyStub).to.be.calledWith(token, company.id)

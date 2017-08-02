@@ -29,7 +29,7 @@ describe('Investment evaluation controller', () => {
   })
 
   describe('#renderEvaluationPage', () => {
-    it('should return evaluation details with currentNavItem set to evaluation', (done) => {
+    it('should return evaluation details', (done) => {
       this.controller.renderEvaluationPage({
         session: {
           token: 'abcd',
@@ -42,7 +42,6 @@ describe('Investment evaluation controller', () => {
         render: (template, data) => {
           try {
             expect(template).to.equal('investment-projects/views/evaluation')
-            expect(data.currentNavItem).to.equal('evaluation')
             done()
           } catch (error) {
             done(error)
@@ -97,7 +96,6 @@ describe('Investment evaluation controller', () => {
       render: (template, data) => {
         try {
           expect(template).to.equal('investment-projects/views/evaluation')
-          expect(data.currentNavItem).to.equal('evaluation')
           expect(data.value).to.deep.equal(expectedValue)
           expect(data.fdi).to.deep.equal(expectFDI)
           expect(data.landing).to.deep.equal(expectedLanding)
@@ -167,7 +165,6 @@ describe('Investment evaluation controller', () => {
       render: (template, data) => {
         try {
           expect(template).to.equal('investment-projects/views/evaluation')
-          expect(data.currentNavItem).to.equal('evaluation')
           expect(data.value).to.deep.equal(expectedValue)
           expect(data.fdi).to.deep.equal(expectFDI)
           expect(data.landing).to.deep.equal(expectedLanding)

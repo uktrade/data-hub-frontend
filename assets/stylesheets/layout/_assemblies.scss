@@ -1,13 +1,13 @@
 @import "../settings";
+@import "../tools/mixins/layout";
 
-// Form assemblies
+// View assemblies
 // Define how components stack in views
 
 * + {
   .c-form-group,
   .c-form-fieldset,
   .c-error-summary,
-  .c-entity-search,
   .results-summary {
     margin-top: $default-spacing-unit * 2;
   }
@@ -16,10 +16,30 @@
     margin-top: $default-spacing-unit / 2;
   }
 
+  .c-multiple-choice--smaller {
+    margin-top: $baseline-grid-unit;
+  }
+
+  .metadata-list {
+    margin-top: $default-spacing-unit / 4;
+  }
+
   .c-form-fieldset--subfield,
-  .c-form-group--subfield,
-  .c-pagination {
+  .c-form-group--subfield {
     margin-top: $default-spacing-unit;
     margin-bottom: $default-spacing-unit;
   }
+
+  .c-pagination {
+    margin-top: $default-spacing-unit * 2;
+    margin-bottom: $default-spacing-unit * 2;
+  }
+}
+
+[type="hidden"] + .c-form-group {
+  margin-top: 0;
+}
+
+.c-results__sort + .c-entity-list {
+  border-top: 1px solid $grey-2;
 }

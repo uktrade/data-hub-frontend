@@ -32,6 +32,8 @@
 }
 
 .c-multiple-choice__input {
+  @include _scale-input(19px);
+
   position: absolute;
   top: 0;
   left: 0;
@@ -95,30 +97,26 @@
   color: $grey-1;
 }
 
-.c-multiple-choice__input {
-  @include _scale-input(19px);
-}
+// Modifiers
 
 .c-multiple-choice--small {
-  font-size: 16px;
-
   .c-multiple-choice__input {
     @include _scale-input(16px);
   }
 
   .c-multiple-choice__label {
     padding-left: round($default-spacing-unit * 3 * (16 / 19));
+    line-height: 16px;
   }
 }
 
 .c-multiple-choice--smaller {
-  font-size: 14px;
-
   .c-multiple-choice__input {
     @include _scale-input(14px);
   }
 
   .c-multiple-choice__label {
     padding-left: round($default-spacing-unit * 3 * (14 / 19));
+    line-height: 16px;
   }
 }

@@ -1,4 +1,4 @@
-@import "../../settings";
+@import "../../tools";
 
 .c-form-group {
   max-width: 40em;
@@ -101,10 +101,7 @@
   }
 }
 
-.c-form-group--small {
-  font-size: 16px;
-}
-
+.c-form-group--small,
 .c-form-group--smaller {
-  font-size: 14px;
+  font-size: 16px;
 }

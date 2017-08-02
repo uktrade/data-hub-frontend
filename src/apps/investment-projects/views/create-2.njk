@@ -1,15 +1,10 @@
-{% extends "./_layout.njk" %}
+{% extends "_layouts/two-column.njk" %}
 
-
-{% block main_heading %}
-  <h1 class="page-heading">Add investment project</h1>
-
-  {{ errorPanel(form.errors) }}
-{% endblock %}
 
 {% block main_grid_left_column %}{% endblock %}
 
 {% block main_grid_right_column %}
+  {{ errorPanel(form.errors) }}
 
   {% if equityCompany %}
     <h2 class="heading-medium">Source of foreign equity investment</h2>

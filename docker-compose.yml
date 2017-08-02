@@ -31,7 +31,7 @@ services:
       - 3001:3001
       - 3002:3002
     environment:
-      - WEBPACK_ENV="docker"
+      - WEBPACK_ENV=docker
     volumes:
       - ./assets:/usr/src/app/assets
       - ./common:/usr/src/app/common

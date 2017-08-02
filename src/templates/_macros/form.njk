@@ -34,6 +34,7 @@
  # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
  # @param {string} [props.class] - Form class name
  # @param {string} [props.role] - Form role attribute value
+ # @param {string} [props.actionsClass] - Custom class name for actions container
  # @param {string} [props.buttonText=Submit] - Text for submit button
  # @param {string} [props.returnText=Back] - Text for return link
  # @param {string} [props.returnLink] - Location for return link
@@ -66,7 +67,7 @@
     {{ caller() }}
 
     {% if not props.disableFormActions %}
-      <div class="c-form-group c-form-group--actions">
+      <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
         <button class="button">{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
@@ -146,7 +147,7 @@
     {% endcall %}
 
     {% if props.aggregations|length %}
-      <nav class="c-entity-search__aggregations">
+      <nav class="c-entity-search__aggregations" aria-label="search results aggregation options">
         <ul>
           {% for item in props.aggregations %}
             {% set isCurrentPage = item.entity === props.entityType %}
@@ -213,11 +214,11 @@
         <span class="c-form-group__label-text">
           {{ props.label }} {{ '(optional)' if props.optional }}
         </span>
-        {% if props.hint %}
-          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
-        {% endif %}
         {% if props.error %}
           <span class="c-form-group__error-message">{{ props.error }}</span>
+        {% endif %}
+        {% if props.hint %}
+          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
         {% endif %}
       </{{ labelElement }}>
 
@@ -416,7 +417,7 @@
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in props.options %}
-      <option value="{{ option.value }}" {% if props.value == option.value %}selected{% endif %}>
+      <option value="{{ option.value }}" {% if option.value and props.value === option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
     {% endfor %}

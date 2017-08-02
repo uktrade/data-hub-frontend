@@ -1,0 +1,21 @@
+{
+  "fields": {
+    "contact": {
+      "label": "Company contact",
+      "hint": "Select a contact for the company"
+    },
+    "primary_market": {
+      "label": "Primary market",
+      "hint": "The market which should be providing the service"
+    },
+    "ita": {
+      "label": "International Trade Adviser",
+      "hint": "The ITA responsible for overseeing the work from a UK region"
+    }
+  },
+  "validation": {
+    "required": "cannot not be blank",
+    "numeric": "can only contain numbers",
+    "default": "question is required"
+  }
+}

@@ -18,6 +18,8 @@ module.exports = function locals (req, res, next) {
     CURRENT_PATH: req.path,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     BREADCRUMBS: breadcrumbItems,
+    IS_XHR: req.xhr,
+    QUERY: req.query,
 
     getPageTitle: () => {
       const items = breadcrumbItems.map(item => item.name)
@@ -25,7 +27,7 @@ module.exports = function locals (req, res, next) {
 
       if (title) {
         if (items.length === 1) {
-          return title
+          return [title]
         }
 
         items.pop()
@@ -48,6 +50,10 @@ module.exports = function locals (req, res, next) {
 
     getLocal (key) {
       return res.locals[key]
+    },
+
+    trans (key) {
+      return req.translate(key)
     },
   })
   next()

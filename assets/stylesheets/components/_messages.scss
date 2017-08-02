@@ -1,3 +1,5 @@
+@import "../settings";
+
 .c-messages {
   // TODO: remove in favour of assemblies that handle consistent spacing
   // between elements
@@ -11,8 +13,13 @@
 .c-messages__item {
   @include bold-font(20);
   border: 5px solid;
-  padding: $default-spacing-unit 90px $default-spacing-unit $default-spacing-unit;
+  padding: $default-spacing-unit;
   position: relative;
+  background-color: $white;
+
+  @include media(tablet) {
+    padding-right: 90px;
+  }
 
   + * {
     margin-top: $default-spacing-unit;
@@ -21,10 +28,16 @@
 
 .c-messages__close {
   @include bold-font(16);
-  position: absolute;
-  top: $default-spacing-unit;
-  right: $default-spacing-unit;
+  display: table;
+  line-height: 32px;
   text-decoration: none;
+
+  @include media(tablet) {
+    position: absolute;
+    line-height: 32px;
+    top: $default-spacing-unit;
+    right: $default-spacing-unit;
+  }
 
   &:hover {
     text-decoration: underline;

@@ -6,7 +6,9 @@ const {
   isArray,
   isPlainObject,
   isEmpty,
+  isString,
   pickBy,
+  filter,
   isNil,
   keys,
   values,
@@ -22,6 +24,7 @@ const filters = {
   stringify: JSON.stringify,
   assign,
   concat,
+  filter,
   values,
   keys,
   flatten,
@@ -29,8 +32,9 @@ const filters = {
   isArray,
 
   highlight: (string, searchTerm) => {
-    const regEx = new RegExp(`(${searchTerm})`, 'gi')
+    if (!isString(string)) { return }
 
+    const regEx = new RegExp(`(${searchTerm})`, 'gi')
     return new nunjucks.runtime.SafeString(
       string.replace(regEx, '<span class="u-highlight">$1</span>')
     )
@@ -69,7 +73,7 @@ const filters = {
   },
 
   pluralise: (string, count, pluralisedWord) => {
-    if (count !== 1) {
+    if (parseInt(count, 10) !== 1) {
       if (pluralisedWord) {
         string = pluralisedWord
       } else {

@@ -37,12 +37,12 @@ describe('Breadcrumb component', () => {
     })
 
     it('should render 2 items', () => {
-      const items = this.component.querySelectorAll('.c-breadcrumb__item')
+      const items = this.component.querySelectorAll('.c-breadcrumb__list-item')
       expect(items.length).to.equal(3)
     })
 
     it('should contain the correct text', () => {
-      const items = this.component.querySelectorAll('.c-breadcrumb__item')
+      const items = this.component.querySelectorAll('.c-breadcrumb__list-item')
       expect(items[0].textContent).to.contain('Home')
       expect(items[1].textContent).to.contain('Second level')
       expect(items[2].textContent).to.contain('Third level')

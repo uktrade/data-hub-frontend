@@ -1,28 +1,27 @@
 {% extends "_layouts/two-column.njk" %}
 
-{% block body_main_header_content %}
-  <h1 class="u-visually-hidden">Contact Details</h1>
-  <h2 class="page-heading">
-    {{contact.first_name}} {{contact.last_name}}
-    {% if contact.primary == true %}{{ statusbadge('Primary', variation="fuschia") }}{% endif %}
-  </h2>
-  <p>
+{% block local_header %}
+  {% set headingBefore %}
     <a href="{{companyUrl}}">{{contact.company.name}}</a>
-  </p>
+  {% endset %}
 
-  {% if contact.archived %}
-    <p class="infostrip">
-      This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
-      <strong>Reason:</strong> {{contact.archived_reason}}<br>
-      <br>
-      <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
-    </p>
-  {% endif %}
+  {% call LocalHeader({
+    headingBefore: headingBefore,
+    heading: contact.first_name + ' ' + contact.last_name,
+    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary,
+    modifier: 'light-banner'
+  }) %}
+    {% if contact.archived %}
+      <p class="infostrip">
+        This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
+        <strong>Reason:</strong> {{contact.archived_reason}}<br>
+        <br>
+        <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 {% endblock %}
 
 {% block main_grid_left_column %}
-  <nav class="local-nav">
-    <a class="local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/contacts/{{id}}">Details</a>
-    <a class="local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/contacts/{{id}}/interactions">Interactions</a>
-  </nav>
+  {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}

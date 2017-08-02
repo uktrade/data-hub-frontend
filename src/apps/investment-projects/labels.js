@@ -117,6 +117,27 @@ const labels = {
       total_investment: 'Total investment',
     },
   },
+  collectionFilterLabels: {
+    edit: {
+      stage: 'Stage',
+      sector: 'Sector',
+      investment_type: 'Type of investment',
+      total_investment: 'Investment value',
+      estimated_land_date_before: 'Estimated land date before',
+      estimated_land_date_after: 'Estimated land date after',
+    },
+  },
+  clientRelationshipManagementLabels: {
+    view: {
+      role: 'Role',
+      adviser: 'Adviser',
+      team: 'Team',
+    },
+    edit: {
+      client_relationship_manager: 'Client relationship manager',
+      account_manager: 'Account manager',
+    },
+  },
 }
 
 labels.valueLabels.edit = Object.assign({}, labels.valueLabels.view, labels.valueLabels.edit)

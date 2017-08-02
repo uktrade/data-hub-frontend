@@ -70,7 +70,7 @@
       {% endblock %}
 
       {% block body_site_header %}
-        <header role="banner" class="global-header">
+        <header class="global-header" aria-label="global header">
           <div class="global-header__inner">
             {% block header_site_title %}
               <div class="global-header__site-title">
@@ -94,29 +94,28 @@
       {% endblock %}
 
       {% block body_main %}
-        <div class="main-content">
-          <main id="main-content" role="main" class="main-content__inner">
+        <main class="main-content" id="main-content">
+          {% block body_main_header %}
             {% block body_main_phase_banner %}
               {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta'] or feedbackLink) %}
                 <div class="phase-banner">
-                  <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
-                  <span class="phase-banner__message">
-                    This is a new service
-                    {% if feedbackLink %}
-                    – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
-                    {% endif %}
-                  </span>
+                  <div class="l-container">
+                    <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
+                    <span class="phase-banner__message">
+                      This is a new service
+                      {% if feedbackLink %}
+                      – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
+                      {% endif %}
+                    </span>
+                  </div>
                 </div>
               {% endif %}
             {% endblock %}
-            {% block body_main_header %}
-              <header class="main-content__header">
-                {% block body_main_header_content %}{% endblock %}
-              </header>
-            {% endblock %}
+          {% endblock %}
+          <div class="main-content__inner l-container" id="xhr-outlet">
             {% block body_main_content %}{% endblock %}
-          </main>
-        </div>
+          </div>
+        </main>
       {% endblock %}
 
       {% block body_footer %}

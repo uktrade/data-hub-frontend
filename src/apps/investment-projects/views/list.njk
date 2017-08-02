@@ -1,0 +1,73 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% from "_macros/entities.njk" import Entity with context %}
+
+{% block main_grid_left_column %}
+  {{
+    ResultsFilters({
+      selectedSorting: form.data.sorting,
+      filters: [
+        MultipleChoiceField({
+          type: 'radio',
+          name: 'stage',
+          label: form.labels.stage,
+          value: form.data.filters.stage,
+          initialOption: 'All stages',
+          options: form.options.stage,
+          modifier: ['smaller', 'light']
+        }),
+
+        MultipleChoiceField({
+          type: 'radio',
+          name: 'investment_type',
+          label: form.labels.investment_type,
+          value: form.data.filters.investment_type,
+          options: form.options.investment_type,
+          initialOption: 'All types',
+          modifier: ['smaller', 'light']
+        }),
+
+        MultipleChoiceField({
+          name: 'sector',
+          label: form.labels.sector,
+          value: form.data.filters.sector,
+          options: form.options.sector,
+          initialOption: 'All sectors',
+          modifier: ['smaller', 'light']
+        }),
+
+        TextField({
+          label: form.labels.estimated_land_date_before,
+          name: 'estimated_land_date_before',
+          placeholder: 'e.g. 2018-07-18',
+          hint: 'YYYY-MM-DD',
+          value: form.data.filters.estimated_land_date_before,
+          modifier: ['small', 'light']
+        }),
+
+        TextField({
+          label: form.labels.estimated_land_date_after,
+          name: 'estimated_land_date_after',
+          placeholder: 'e.g. 2017-09-01',
+          hint: 'YYYY-MM-DD',
+          value: form.data.filters.estimated_land_date_after,
+          modifier: ['small', 'light']
+        })
+      ]
+    })
+  }}
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {{
+    Results(results | assign({
+      el: 'header',
+      sortingOptions: form.options.sortby,
+      selectedFilters: form.data.filters,
+      selectedSorting: form.data.sorting.sortby,
+      selectedFiltersHumanised: selectedFiltersHumanised,
+      countLabel: 'project',
+      query: QUERY
+    }))
+  }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block form %}
+  {% call MultiStepForm({
+    buttonText: 'Start'
+  }) %}
+    <p>Things you will need in order to create a new order:</p>
+
+    <ul class="list-disc">
+      <li>a client company</li>
+      <li>a contact at the client company</li>
+      <li>which market the client is interested in</li>
+    </ul>
+  {% endcall %}
+{% endblock %}
