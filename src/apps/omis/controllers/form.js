@@ -1,7 +1,7 @@
 const { get, last, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
 
-class CreateBaseController extends Controller {
+class FormController extends Controller {
   getErrors (req, res) {
     const errors = super.getErrors(req, res)
 
@@ -17,7 +17,7 @@ class CreateBaseController extends Controller {
       const lastStep = last(req.journeyModel.get('history'))
 
       if (!lastStep) {
-        return res.redirect('/omis/create')
+        return res.redirect(req.baseUrl)
       }
       return res.redirect(lastStep.path)
     }
@@ -26,4 +26,4 @@ class CreateBaseController extends Controller {
   }
 }
 
-module.exports = CreateBaseController
+module.exports = FormController

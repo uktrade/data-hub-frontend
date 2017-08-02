@@ -101,6 +101,7 @@ describe('OMIS create confirm controller', () => {
   describe('successHandler()', () => {
     beforeEach(() => {
       this.resetSpy = this.sandbox.spy()
+      this.destroySpy = this.sandbox.spy()
       this.reqMock = Object.assign({}, globalReq, {
         session: {
           token: 'token-12345',
@@ -112,9 +113,12 @@ describe('OMIS create confirm controller', () => {
             foo: 'bar',
             fizz: 'buzz',
           }),
+          reset: this.resetSpy,
+          destroy: this.destroySpy,
         },
         journeyModel: {
           reset: this.resetSpy,
+          destroy: this.destroySpy,
         },
       })
     })
@@ -132,7 +136,8 @@ describe('OMIS create confirm controller', () => {
                 foo: 'bar',
                 fizz: 'buzz',
               })
-              expect(this.resetSpy).to.have.been.calledOnce
+              expect(this.resetSpy).to.have.been.calledTwice
+              expect(this.destroySpy).to.have.been.calledTwice
               expect(this.nextSpy).not.to.have.been.called
               expect(url).to.equal(`/omis/${saveMockData.id}`)
               done()

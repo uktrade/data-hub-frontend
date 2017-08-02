@@ -1,10 +1,10 @@
 const { sortBy } = require('lodash')
 
-const Controller = require('./base')
+const { FormController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
 const { transformObjectToOption } = require('../../../../transformers')
 
-class AssignItaController extends Controller {
+class AssignItaController extends FormController {
   async configure (req, res, next) {
     const advisers = await getAdvisers(req.session.token)
     const options = advisers.results.map(transformObjectToOption)

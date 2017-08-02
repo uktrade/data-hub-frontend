@@ -1,6 +1,6 @@
 const FormController = require('hmpo-form-wizard').Controller
 
-const Controller = require('~/src/apps/omis/apps/create/controllers/company-details')
+const Controller = require('~/src/apps/omis/apps/create/controllers/client-details')
 
 const contactsMockData = [{
   id: '1',
@@ -12,7 +12,7 @@ const contactsMockData = [{
   last_name: 'George',
 }]
 
-describe('OMIS create company details controller', () => {
+describe('OMIS create client details controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.nextSpy = this.sandbox.spy()
