@@ -103,18 +103,4 @@ describe('Investment projects collection middleware', () => {
       expect(this.next).to.have.been.calledOnce
     })
   })
-
-  describe('#setDefaults', async () => {
-    beforeEach(async () => {
-      await this.controller.setDefaults(this.req, this.res, this.next)
-    })
-
-    it('should set default query on req object', () => {
-      const actual = this.req.query
-      expect(actual).to.have.ownProperty('estimated_land_date_before')
-      expect(actual).to.have.ownProperty('estimated_land_date_after')
-      expect(actual).to.have.ownProperty('sortby')
-      expect(this.next).to.have.been.calledOnce
-    })
-  })
 })
