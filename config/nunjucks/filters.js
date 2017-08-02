@@ -14,6 +14,7 @@ const {
   values,
   flatten,
   map,
+  mapValues,
 } = require('lodash')
 
 function isNotEmpty (value) {
@@ -29,6 +30,7 @@ const filters = {
   keys,
   flatten,
   map,
+  mapValues,
   isArray,
 
   highlight: (string, searchTerm) => {
