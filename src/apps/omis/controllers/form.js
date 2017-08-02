@@ -1,7 +1,7 @@
 const { get, last, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
 
-class CreateBaseController extends Controller {
+class FormController extends Controller {
   getErrors (req, res) {
     const errors = super.getErrors(req, res)
 
@@ -26,4 +26,4 @@ class CreateBaseController extends Controller {
   }
 }
 
-module.exports = CreateBaseController
+module.exports = FormController

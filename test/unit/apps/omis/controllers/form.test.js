@@ -1,8 +1,8 @@
 const FormController = require('hmpo-form-wizard').Controller
 
-const Controller = require('~/src/apps/omis/apps/create/controllers/base')
+const Controller = require('~/src/apps/omis/controllers/form')
 
-describe('OMIS create base controller', () => {
+describe('OMIS FormController', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.controller = new Controller({ route: '/' })

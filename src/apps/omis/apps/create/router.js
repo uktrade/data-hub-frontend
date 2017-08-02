@@ -8,11 +8,11 @@ const i18n = i18nFuture({
 })
 const steps = require('./steps')
 const fields = require('./fields')
+const { FormController } = require('../../controllers')
 const { params } = require('../../middleware')
-const { BaseController } = require('./controllers')
 
 const config = {
-  controller: BaseController,
+  controller: FormController,
   name: 'omis-create-order',
   journeyName: 'omis-create-order',
   template: '_layouts/form-wizard-step',
