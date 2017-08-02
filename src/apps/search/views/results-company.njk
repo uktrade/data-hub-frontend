@@ -42,13 +42,13 @@
 
           <dt class="metadata-list__term u-visually-hidden">Address</dt>
           <dd class="metadata-list__value">
-            {{ addressFormatter( [
+            {{ [
               company.registered_address_1,
               company.registered_address_2,
               company.registered_address_county,
               company.registered_address_town,
               company.registered_address_postcode
-            ]) | highlight(searchTerm) }}
+            ] | removeNilAndEmpty | join(", ") | highlight(searchTerm) }}
           </dd>
         </dl>
       </li>

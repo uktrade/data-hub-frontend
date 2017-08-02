@@ -22,13 +22,13 @@
 
           <dt class="metadata-list__term u-visually-hidden">Address</dt>
           <dd class="metadata-list__value">
-            {{ addressFormatter([
+            {{ [
               contact.address_1,
               contact.address_2,
               contact.address_county,
               contact.address_town,
               contact.address_postcode
-            ]) | highlight(searchTerm) }}
+            ] | removeNilAndEmpty | join(", ") | highlight(searchTerm) }}
           </dd>
         </dl>
       </li>

@@ -1,7 +1,5 @@
 {% extends "./_layout.njk" %}
 
-{% from "_macros/address.njk" import addressFormatter %}
-
 {% from "_macros/entities.njk" import Entity with context %}
 
 {% block body_main_content %}
@@ -34,13 +32,13 @@
 
                 <dt class="metadata-list__term u-visually-hidden">Address</dt>
                 <dd class="metadata-list__value">
-                  {{ addressFormatter( [
+                  {{ [
                     company.registered_address_1,
                     company.registered_address_2,
                     company.registered_address_county,
                     company.registered_address_town,
                     company.registered_address_postcode
-                  ]) }}
+                  ] | removeNilAndEmpty | join(", ") }}
                 </dd>
               </dl>
             </li>
@@ -74,13 +72,13 @@
 
                 <dt class="metadata-list__term u-visually-hidden">Address</dt>
                 <dd class="metadata-list__value">
-                  {{ addressFormatter([
-                    contact.registered_address_1,
-                    contact.registered_address_2,
-                    contact.registered_address_county,
-                    contact.registered_address_town,
-                    contact.registered_address_postcode
-                  ]) }}
+                  {{ [
+                    contact.address_1,
+                    contact.address_2,
+                    contact.address_county,
+                    contact.address_town,
+                    contact.address_postcode
+                  ] | removeNilAndEmpty | join(", ") }}
               </dl>
             </li>
           {% endfor %}
