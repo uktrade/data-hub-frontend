@@ -25,9 +25,9 @@
 
     <fieldset id="registered-address-wrapper" class="fieldset--address">
       <div class="form-group"><legend class="form-label-bold">Primary address</legend></div>
-      {{ textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
+      {{ textbox("registered_address_1", label="Business and street", value=formData.registered_address_1, error=errors.registered_address_1) }}
       {{ textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
-      {{ textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
+      {{ textbox("registered_address_town", label="Town or city", value=formData.registered_address_town, error=errors.registered_address_town) }}
       {{ textbox("registered_address_county", label="County (optional)", value=formData.registered_address_county, error=errors.registered_address_county) }}
       {{ textbox("registered_address_postcode", label="Postcode (optional)", value=formData.registered_address_postcode, error=errors.registered_address_postcode) }}
       {{ dropdown("registered_address_country", label="Country", emptyLabel="Select a country", options=countryOptions, value=formData.registered_address_country, error=errors.registered_address_country) }}
