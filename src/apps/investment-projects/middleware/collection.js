@@ -41,18 +41,15 @@ function augmentProjectListItem (listItem) {
   return listItem
 }
 
-function setDefaults (req, res, next) {
-  req.query = Object.assign({}, {
-    sortby: SORTBY_OPTIONS[0].value,
-  }, req.query)
-
-  if (!req.query.custom) {
-    req.query = Object.assign({}, {
-      estimated_land_date_after: RANGE_FROM_DATE,
-      estimated_land_date_before: RANGE_TO_DATE,
-    }, req.query)
+function buildDefaultQuery (originalQuery) {
+  const defaultQuery = originalQuery.custom ? null : {
+    estimated_land_date_after: RANGE_FROM_DATE,
+    estimated_land_date_before: RANGE_TO_DATE,
   }
-  next()
+
+  return Object.assign({}, defaultQuery, {
+    sortby: SORTBY_OPTIONS[0].value,
+  }, originalQuery)
 }
 
 function getInvestmentFilters (req, res, next) {
@@ -63,7 +60,7 @@ function getInvestmentFilters (req, res, next) {
     sortby: SORTBY_OPTIONS,
   }
 
-  const query = pickBy(req.query)
+  const query = pickBy(buildDefaultQuery(req.query))
   const selectedSortingQuery = pick(query, ['sortby'])
   const selectedFiltersQuery = pick(query, [
     'stage',
@@ -132,5 +129,4 @@ async function getInvestmentProjectsCollection (req, res, next) {
 module.exports = {
   getInvestmentFilters,
   getInvestmentProjectsCollection,
-  setDefaults,
 }
