@@ -1,7 +1,9 @@
+const { get, isArray } = require('lodash')
+const queryString = require('query-string')
+
 function transformInvestmentProjectToListItem ({
   id,
   name,
-  type,
   project_code,
   stage,
   investment_type,
@@ -49,6 +51,30 @@ function transformInvestmentProjectToListItem ({
   }
 }
 
+function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
+  if (!isArray(item.meta)) { return item }
+
+  item.meta.forEach(metaItem => {
+    const name = metaItem.name
+    const itemQuery = Object.assign(
+      {},
+      query,
+      {
+        custom: true,
+        [name]: get(metaItem, 'value.id', metaItem.value),
+      },
+    )
+
+    if (!metaItem.isInert) {
+      metaItem.url = `?${queryString.stringify(itemQuery)}`
+      metaItem.isSelected = !!query[name]
+    }
+  })
+
+  return item
+}
+
 module.exports = {
   transformInvestmentProjectToListItem,
+  transformInvestmentListItemToHaveMetaLinks,
 }

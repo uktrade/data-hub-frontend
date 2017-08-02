@@ -11,11 +11,11 @@
             type: 'checkbox',
             name: 'stage',
             label: 'Stage',
-            value: form.data.filters.stage,
+            value: 'assign-pm',
             initialOption: 'All stages',
             options: [
               { label: 'Prospect' },
-              { label: 'Assign PM' },
+              { label: 'Assign PM', value: 'assign-pm' },
               { label: 'Active' }
             ],
             modifier: ['smaller', 'light']
@@ -27,7 +27,7 @@
             label: 'Investment type',
             value: form.data.filters.investment_type,
             options: [
-              { label: 'Assign PM' },
+              { label: 'Commitment to invest' },
               { label: 'FDI' },
               { label: 'Non-FDI' }
             ],
@@ -66,14 +66,16 @@
       ResultsSummary({
         el: 'header',
         count: 10,
-        selectedFiltersHumanised: {
+        filters: {
           stage: {
             label: 'Stage',
-            value: 'Prospect'
+            value: 's1',
+            valueLabel: 'Prospect'
           },
           investment_type: {
             label: 'Investment type',
-            value: 'Assign PM'
+            value: 'i1',
+            valueLabel: 'Assign PM'
           }
         }
       })
@@ -83,9 +85,8 @@
   {% call Example('Results') %}
     {{
       Results(results | assign({
-        sortingOptions: form.options.sortby,
-        selectedFilters: form.data.filters,
-        selectedSorting: form.data.sorting.sortby
+        filters: form.data.filters,
+        sort: form.data.sort
       }))
     }}
   {% endcall %}
