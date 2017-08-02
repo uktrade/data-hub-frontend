@@ -31,7 +31,12 @@ class ConfirmController extends Controller {
 
     try {
       const order = await Order.save(req.session.token, data)
+
       req.journeyModel.reset()
+      req.journeyModel.destroy()
+      req.sessionModel.reset()
+      req.sessionModel.destroy()
+
       res.redirect(`/omis/${order.id}`)
     } catch (error) {
       next(error)

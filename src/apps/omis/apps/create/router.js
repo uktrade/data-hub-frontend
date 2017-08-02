@@ -14,6 +14,7 @@ const { BaseController } = require('./controllers')
 const config = {
   controller: BaseController,
   name: 'omis-create-order',
+  journeyName: 'omis-create-order',
   template: '_layouts/form-wizard-step',
   translate: i18n.translate.bind(i18n),
 }
