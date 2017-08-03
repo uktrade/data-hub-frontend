@@ -5,9 +5,18 @@ describe('Investment list controller', () => {
     this.req = {}
     this.res = {
       render: this.sandbox.spy(),
+      query: {},
     }
 
-    this.controller = require('~/src/apps/investment-projects/controllers/list')
+    this.buildInvestmentSortingStub = this.sandbox.spy()
+    this.buildInvestmentFiltersStub = this.sandbox.spy()
+
+    this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
+      '../builders': {
+        buildInvestmentSorting: this.buildInvestmentSortingStub,
+        buildInvestmentFilters: this.buildInvestmentFiltersStub,
+      },
+    })
   })
 
   afterEach(() => {
@@ -15,9 +24,13 @@ describe('Investment list controller', () => {
   })
 
   describe('#renderInvestmentList', () => {
-    it('should render collection page', () => {
+    it('should render collection page with locals', () => {
       this.controller.renderInvestmentList(this.req, this.res, this.next)
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('title'))
+      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sort'))
+      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filters'))
+      expect(this.buildInvestmentSortingStub).to.have.been.calledOnce
+      expect(this.buildInvestmentFiltersStub).to.have.been.calledOnce
     })
   })
 })

@@ -1,5 +1,6 @@
 const {
   transformInvestmentProjectToListItem,
+  transformInvestmentListItemToHaveMetaLinks,
 } = require('~/src/apps/investment-projects/transformers')
 
 const investmentProjectsData = require('~/test/unit/data/investment/collection')
@@ -30,6 +31,78 @@ describe('Investment project data transformers', () => {
       expect(firstItem.meta[3].name).to.equal('estimated_land_date')
       expect(firstItem.meta[3].isInert).to.be.true
       expect(firstItem.meta[3].isBadge).to.be.false
+    })
+  })
+
+  describe('#transformInvestmentListItemToHaveMetaLinks', () => {
+    beforeEach(() => {
+      this.mockInvestmentListItemData = [
+        {
+          id: '12345',
+          type: 'investment-project',
+          code: 'AB-0001',
+          meta: [
+            {
+              name: 'stage',
+              label: 'Stage',
+              value: 's1',
+              isBadge: true,
+            },
+            {
+              name: 'investment_type',
+              label: 'Investment type',
+              value: 'i1',
+              badgeModifier: 'secondary',
+              isBadge: true,
+            },
+          ],
+        },
+      ]
+    })
+
+    it('should add URL property to meta items', () => {
+      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item))
+
+      const result = actual[0]
+      expect(result.meta[0].name).to.equal('stage')
+      expect(result.meta[0].value).to.equal('s1')
+      expect(result.meta[0].url).to.equal('?custom=true&stage=s1')
+      expect(result.meta[0].isSelected).to.be.false
+
+      expect(result.meta[1].name).to.equal('investment_type')
+      expect(result.meta[1].value).to.equal('i1')
+      expect(result.meta[1].url).to.equal('?custom=true&investment_type=i1')
+      expect(result.meta[1].isSelected).to.be.false
+    })
+
+    it('should set isSelected to true when query contains a key/value pair matching a meta item', () => {
+      const mockQuery = {
+        stage: 's1',
+      }
+      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item, mockQuery))
+
+      const result = actual[0]
+      expect(result.meta[0].name).to.equal('stage')
+      expect(result.meta[0].value).to.equal('s1')
+      expect(result.meta[0].url).to.equal('?custom=true&stage=s1')
+      expect(result.meta[0].isSelected).to.be.true
+
+      expect(result.meta[1].isSelected).to.be.false
+    })
+
+    it('should not add URL or set isSelected to true when meta item is set to inert', () => {
+      const mockQuery = {
+        stage: 's1',
+      }
+      this.mockInvestmentListItemData[0].meta[0].isInert = true
+      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item, mockQuery))
+
+      const result = actual[0]
+
+      expect(result.meta[0].name).to.equal('stage')
+      expect(result.meta[0].isInert).to.be.true
+      expect(result.meta[0].url).to.not.exist
+      expect(result.meta[0].isSelected).to.not.exist
     })
   })
 })
