@@ -21,6 +21,10 @@ module.exports = function locals (req, res, next) {
     IS_XHR: req.xhr,
     QUERY: req.query,
 
+    getMessages () {
+      return req.flash()
+    },
+
     getPageTitle: () => {
       const items = breadcrumbItems.map(item => item.name)
       const title = res.locals.title
