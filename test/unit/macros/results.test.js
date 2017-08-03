@@ -12,31 +12,33 @@ describe('Results macros', () => {
     })
 
     describe('valid props', () => {
-      const filter1 = formMacros.render('MultipleChoiceField', {
-        name: 'who-are-you',
-        label: 'Who are you?',
-        type: 'radio',
-        options: [
-          { label: 'Human', value: 'h' },
-          { label: 'Alien', value: 'a' },
-        ],
-      })
+      beforeEach(() => {
+        this.filter1 = formMacros.render('MultipleChoiceField', {
+          name: 'who-are-you',
+          label: 'Who are you?',
+          type: 'radio',
+          options: [
+            { label: 'Human', value: 'h' },
+            { label: 'Alien', value: 'a' },
+          ],
+        })
 
-      const filter2 = formMacros.render('MultipleChoiceField', {
-        name: 'fav-colour',
-        label: 'Favourite colour',
-        options: [
-          { label: 'Red', value: 'r' },
-          { label: 'Green', value: 'g' },
-          { label: 'Blue', value: 'b' },
-        ],
+        this.filter2 = formMacros.render('MultipleChoiceField', {
+          name: 'fav-colour',
+          label: 'Favourite colour',
+          options: [
+            { label: 'Red', value: 'r' },
+            { label: 'Green', value: 'g' },
+            { label: 'Blue', value: 'b' },
+          ],
+        })
       })
 
       it('should render results filters component', () => {
         const component = entitiesMacros.renderToDom('ResultsFilters', {
           filters: [
-            filter1,
-            filter2,
+            this.filter1,
+            this.filter2,
           ],
         })
         const renderedFilter1 = component.querySelector('#group-field-who-are-you')
@@ -60,7 +62,7 @@ describe('Results macros', () => {
         const component = entitiesMacros.renderToDom('ResultsFilters', {
           heading: 'Pick one',
           filters: [
-            filter1,
+            this.filter1,
           ],
         })
         expect(component.querySelector('.c-filters__heading').textContent.trim()).to.equal('Pick one')
@@ -72,7 +74,7 @@ describe('Results macros', () => {
             sortby: 'alphabetical',
           },
           filters: [
-            filter1,
+            this.filter1,
           ],
         })
 
