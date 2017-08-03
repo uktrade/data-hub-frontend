@@ -70,8 +70,8 @@ describe('Results macros', () => {
 
       it('should render results filters form with custom fields', () => {
         const component = entitiesMacros.renderToDom('ResultsFilters', {
-          selectedSorting: {
-            sortby: 'alphabetical',
+          sort: {
+            selected: 'alphabetical',
           },
           filters: [
             this.filter1,
@@ -80,10 +80,10 @@ describe('Results macros', () => {
 
         const hiddenFields = component.querySelectorAll('input[type=hidden]')
         expect(hiddenFields).to.have.length(2)
-        expect(hiddenFields[0].name).to.equal('sortby')
-        expect(hiddenFields[0].value).to.equal('alphabetical')
-        expect(hiddenFields[1].name).to.equal('custom')
-        expect(hiddenFields[1].value).to.equal('true')
+        expect(hiddenFields[0].name).to.equal('custom')
+        expect(hiddenFields[0].value).to.equal('true')
+        expect(hiddenFields[1].name).to.equal('sortby')
+        expect(hiddenFields[1].value).to.equal('alphabetical')
       })
     })
   })
@@ -122,9 +122,9 @@ describe('Results macros', () => {
           stage: 's1',
           type: 't1',
         },
-        selectedFiltersHumanised: {
-          stage: { label: 'Stage', value: 'Initial' },
-          type: { label: 'Type', value: 'Manual' },
+        filters: {
+          stage: { label: 'Stage', value: '1', valueLabel: 'Initial' },
+          type: { label: 'Type', value: '2', valueLabel: 'Manual' },
         },
       })
 

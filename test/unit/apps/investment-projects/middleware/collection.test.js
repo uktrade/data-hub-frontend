@@ -15,71 +15,34 @@ describe('Investment projects collection middleware', () => {
     })
     this.res = Object.assign({}, globalRes)
 
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/collection', {
-      '../../../lib/metadata': {
-        investmentStageOptions: [
-          { id: 'i1', name: 'Investment stage #1' },
-          { id: 'i2', name: 'Investment stage #2' },
-        ],
-        investmentTypeOptions: [
-          { id: 't1', name: 'Investment type #1' },
-          { id: 't2', name: 'Investment type #2' },
-        ],
-        sectorOptions: [
-          { id: 's1', name: 'Sector #1' },
-          { id: 's2', name: 'Sector #2' },
-        ],
-      },
-    })
+    this.controller = require('~/src/apps/investment-projects/middleware/collection')
   })
 
   afterEach(() => {
     this.sandbox.restore()
   })
 
-  describe('#getInvestmentFilters', () => {
-    beforeEach(async () => {
+  describe('#handleDefaultFilters', () => {
+    it('should redirect to url with default query string when initial query is empty', () => {
+      const resMock = {
+        redirect: this.sandbox.spy(),
+      }
+      const currentYear = (new Date()).getFullYear()
+
+      this.controller.handleDefaultFilters(this.req, resMock, this.next)
+
+      expect(resMock.redirect).to.be.calledWith(`/?estimated_land_date_after=${currentYear}-04-05&estimated_land_date_before=${currentYear + 1}-04-06`)
+      expect(this.next).to.not.be.called
+    })
+
+    it('should redirect to url with default query string when initial query is empty', () => {
       this.req.query = {
         stage: 'i1',
         sector: 's1',
-        sortby: 'name:asc',
       }
-      await this.controller.getInvestmentFilters(this.req, this.res, this.next)
-    })
+      this.controller.handleDefaultFilters(this.req, this.res, this.next)
 
-    it('should set selectedFiltersHumanised property on locals', () => {
-      expect(this.res.locals.selectedFiltersHumanised.stage).to.deep.equal(
-        { value: 'Investment stage #1', label: 'Stage' },
-        { value: 'Sector #1', label: 'Sector' }
-      )
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should set form.options property on locals with available filter options', () => {
-      const actual = this.res.locals.form.options
-      expect(actual).to.have.property('stage')
-      expect(actual).to.have.property('investment_type')
-      expect(actual).to.have.property('sector')
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should set form.options.sortby property on locals with available sorting modes', () => {
-      const actual = this.res.locals.form.options.sortby
-      expect(actual).to.have.length(6)
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should set form.data.filters property on locals', () => {
-      const actual = this.res.locals.form.data.filters
-      expect(actual).to.have.property('stage')
-      expect(actual).to.have.property('sector')
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should set form.data.sorting property on locals with available sorting modes', () => {
-      const actual = this.res.locals.form.data.sorting
-      expect(actual).to.deep.equal({ sortby: 'name:asc' })
-      expect(this.next).to.have.been.calledOnce
+      expect(this.next).to.be.called
     })
   })
 
