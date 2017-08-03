@@ -25,7 +25,7 @@ module.exports = function locals (req, res, next) {
       return req.flash()
     },
 
-    getPageTitle: () => {
+    getPageTitle () {
       const items = breadcrumbItems.map(item => item.name)
       const title = res.locals.title
 
