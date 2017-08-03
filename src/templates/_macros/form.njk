@@ -271,6 +271,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.label - Field label
  # @param {string} [props.type] - Field type
+ # @param {string} [props.idSuffix] - field id suffix (e.g. when used in loops)
  # @param {string} [props.groupClass] - Group class name
  # @param {string} [props.inputClass] - Input class name
  # @param {string} [props.hint] - Field hint
@@ -281,7 +282,7 @@
  # @param {function} [props.caller] - Optional inner contents
  #}
 {% macro TextField(props) %}
-  {% set fieldId = 'field-' + props.name if props.name %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set innerContent = caller() if caller else null %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, innerContent: innerContent, class: props.groupClass })) %}
@@ -300,6 +301,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.label - Field label
  # @param {sops.t} [props.type] - Field type
+ # @param {string} [props.idSuffix] - field id suffix (e.g. when used in loops)
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string} [props.hint] - Field hint
  # @param {string} [props.error] - Field error
@@ -310,7 +312,7 @@
  # @param {function} [props.caller] - Optional inner contents
  #}
 {% macro MultipleChoiceField(props) %}
-  {% set fieldId = 'field-' + props.name if props.name %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
   {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, element: element, class: groupClass })) %}
     {% if props.type in ['checkbox', 'radio'] %}
