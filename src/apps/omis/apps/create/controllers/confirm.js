@@ -1,11 +1,11 @@
 const { find, unset } = require('lodash')
 
-const Controller = require('./base')
 const metadataRepo = require('../../../../../lib/metadata')
+const { FormController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
 const { Order } = require('../../../models')
 
-class ConfirmController extends Controller {
+class ConfirmController extends FormController {
   async getValues (req, res, next) {
     const advisers = await getAdvisers(req.session.token)
 
@@ -31,7 +31,12 @@ class ConfirmController extends Controller {
 
     try {
       const order = await Order.save(req.session.token, data)
+
       req.journeyModel.reset()
+      req.journeyModel.destroy()
+      req.sessionModel.reset()
+      req.sessionModel.destroy()
+
       res.redirect(`/omis/${order.id}`)
     } catch (error) {
       next(error)

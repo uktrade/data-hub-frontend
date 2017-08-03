@@ -1,6 +1,6 @@
 const {
   AssignItaController,
-  CompanyDetailsController,
+  ClientDetailsController,
   MarketController,
   ConfirmController,
 } = require('./controllers')
@@ -18,7 +18,7 @@ module.exports = {
     editable: true,
     next: 'market',
     fields: ['company', 'contact'],
-    controller: CompanyDetailsController,
+    controller: ClientDetailsController,
   },
   '/market': {
     editable: true,

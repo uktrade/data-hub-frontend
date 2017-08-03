@@ -1,9 +1,9 @@
 const { sortBy } = require('lodash')
 
-const Controller = require('./base')
+const { FormController } = require('../../../controllers')
 const { transformContactToOption } = require('../../../../transformers')
 
-class CompanyDetailsController extends Controller {
+class ClientDetailsController extends FormController {
   configure (req, res, next) {
     const company = res.locals.company
     let contacts = []
@@ -28,4 +28,4 @@ class CompanyDetailsController extends Controller {
   }
 }
 
-module.exports = CompanyDetailsController
+module.exports = ClientDetailsController

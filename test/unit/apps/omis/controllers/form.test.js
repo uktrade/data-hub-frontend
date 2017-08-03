@@ -1,8 +1,8 @@
 const FormController = require('hmpo-form-wizard').Controller
 
-const Controller = require('~/src/apps/omis/apps/create/controllers/base')
+const Controller = require('~/src/apps/omis/controllers/form')
 
-describe('OMIS create base controller', () => {
+describe('OMIS FormController', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.controller = new Controller({ route: '/' })
@@ -116,6 +116,7 @@ describe('OMIS create base controller', () => {
           journeyModel: {
             get: this.getStub,
           },
+          baseUrl: '/journey-base-url',
         })
       })
 
@@ -124,7 +125,7 @@ describe('OMIS create base controller', () => {
           this.getStub.returns([])
           this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
 
-          expect(this.redirectSpy).to.be.calledWith('/omis/create')
+          expect(this.redirectSpy).to.be.calledWith('/journey-base-url')
           expect(this.errorHandlerSpy).not.to.be.called
         })
       })

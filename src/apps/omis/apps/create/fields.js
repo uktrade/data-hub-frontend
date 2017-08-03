@@ -1,9 +1,9 @@
 module.exports = {
-  'company': {
+  company: {
     fieldType: 'HiddenField',
     validate: 'required',
   },
-  'contact': {
+  contact: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.contact.label',
     hint: 'fields.contact.hint',
@@ -11,7 +11,7 @@ module.exports = {
     initialOption: '-- Select contact --',
     options: [],
   },
-  'primary_market': {
+  primary_market: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.primary_market.label',
     hint: 'fields.primary_market.hint',
@@ -19,7 +19,7 @@ module.exports = {
     initialOption: '-- Select market --',
     options: [],
   },
-  'ita': {
+  ita: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.ita.label',
     hint: 'fields.ita.hint',
