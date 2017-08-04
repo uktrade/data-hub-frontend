@@ -1,3 +1,4 @@
+const { isEmpty } = require('lodash')
 const path = require('path')
 const { JSDOM } = require('jsdom')
 
@@ -17,14 +18,20 @@ function propsToJson (...props) {
   .join(', ')}`
 }
 
-function getMacros (fileName) {
+function getMacros (fileName, context = {}) {
   const filePath = `${MACROS_PATH}${fileName}.${EXT}`
 
-  function renderMacro (name, { caller = null, context = {}, params = [] } = {}) {
-    const importString = `{% from "${filePath}" import ${name} %}`
+  function renderMacro (name, { caller = null, params = [] } = {}) {
+    let importString
     let macroOutput
 
     const macroSignature = `${name}(${propsToJson(...params)})`
+
+    if (isEmpty(context)) {
+      importString = `{% from "${filePath}" import ${name} %}`
+    } else {
+      importString = `{% from "${filePath}" import ${name} with context %}`
+    }
 
     if (caller) {
       macroOutput = nunjucks.renderString(`

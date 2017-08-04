@@ -1,17 +1,28 @@
 const { getMacros } = require('~/test/unit/macro-helper')
-const commonMacros = getMacros('common')
 
 describe('LocalHeader macro', () => {
+  beforeEach(() => {
+    this.sandbox = sinon.sandbox.create()
+
+    this.commonMacros = getMacros('common', {
+      getMessages: this.sandbox.stub(),
+    })
+  })
+
+  afterEach(() => {
+    this.sandbox.restore()
+  })
+
   describe('invalid props', () => {
     it('should not render if props is not given', () => {
-      const component = commonMacros.renderToDom('LocalHeader')
+      const component = this.commonMacros.renderToDom('LocalHeader')
       expect(component).to.be.null
     })
   })
 
   describe('valid props', () => {
     it('should render page heading', () => {
-      const component = commonMacros.renderToDom('LocalHeader', {
+      const component = this.commonMacros.renderToDom('LocalHeader', {
         heading: 'I am hot',
       })
       expect(component.className.trim()).to.equal('c-local-header')
@@ -19,21 +30,21 @@ describe('LocalHeader macro', () => {
     })
 
     it('should render local header with custom modifier', () => {
-      const component = commonMacros.renderToDom('LocalHeader', {
+      const component = this.commonMacros.renderToDom('LocalHeader', {
         modifier: ['azure'],
       })
       expect(component.className).to.contain('c-local-header--azure')
     })
 
     it('should render local header with multiple custom modifiers', () => {
-      const component = commonMacros.renderToDom('LocalHeader', {
+      const component = this.commonMacros.renderToDom('LocalHeader', {
         modifier: ['beautiful', 'azure'],
       })
       expect(component.className).to.contain.all('c-local-header--beautiful', 'c-local-header--azure')
     })
 
     it('should render local header with breadcrumbs', () => {
-      const component = commonMacros.renderToDom('LocalHeader', {
+      const component = this.commonMacros.renderToDom('LocalHeader', {
         breadcrumbs: [
           {
             name: 'Home',
@@ -56,7 +67,7 @@ describe('LocalHeader macro', () => {
   })
 
   it('should render local header with flash message', () => {
-    const component = commonMacros.renderToDom('LocalHeader', {
+    const component = this.commonMacros.renderToDom('LocalHeader', {
       messages: {
         error: ['Error message'],
         success: ['Success message'],
@@ -72,7 +83,7 @@ describe('LocalHeader macro', () => {
   })
 
   it('should render local header with string heading heading', () => {
-    const component = commonMacros.renderToDom('LocalHeader', {
+    const component = this.commonMacros.renderToDom('LocalHeader', {
       headingBefore: '<strong>Superb</strong>',
     })
 
@@ -82,7 +93,7 @@ describe('LocalHeader macro', () => {
   })
 
   it('should render local header with string heading suffix', () => {
-    const component = commonMacros.renderToDom('LocalHeader', {
+    const component = this.commonMacros.renderToDom('LocalHeader', {
       heading: 'Tyom',
       headingSuffix: '<strong>S</strong>',
     })
