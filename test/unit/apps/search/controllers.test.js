@@ -377,6 +377,7 @@ describe('Search Controller', () => {
             },
           },
           {
+            breadcrumb: this.breadcrumbStub,
             render: (template, data) => {
               try {
                 expect(template).to.equal('search/views/index')
@@ -387,6 +388,53 @@ describe('Search Controller', () => {
             },
           }, this.next
         )
+      })
+    })
+
+    describe('#renderInvestmentProjects', () => {
+      const investmentResponse = require('~/test/unit/data/search/investment')
+      const searchTerm = 'london'
+
+      beforeEach(async () => {
+        nock(config.apiRoot).get(`/v3/search`)
+          .query({
+            term: searchTerm,
+            entity: 'investment_project',
+            limit: 10,
+            offset: 0,
+          })
+          .reply(200, investmentResponse)
+
+        this.next = this.sandbox.spy()
+        this.renderFunction = this.sandbox.spy()
+        this.req = {
+          session: { token: 'abcd' },
+          query: {
+            term: searchTerm,
+          },
+          params: {
+            searchPath: 'dummy-path',
+          },
+        }
+        this.res = {
+          breadcrumb: this.breadcrumbStub,
+          render: this.renderFunction,
+        }
+
+        await this.controller.renderInvestmentProjects(this.req, this.res, this.next)
+      })
+
+      it('should render investment search results view', () => {
+        expect(this.renderFunction)
+          .to.be.calledWith(
+            sinon.match.any, sinon.match({
+              searchEntity: 'investment_project',
+              searchPath: 'investment-projects',
+              searchTerm: 'london',
+              results: sinon.match.object,
+              searchEntityResultsData: sinon.match.array,
+            })
+          )
       })
     })
   })
