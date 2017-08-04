@@ -101,6 +101,7 @@
  # @param {object}  [props.sort] - object containing selected sorting and sorting options
  # @param {string}  [props.sort.selected] - selected sorting mode
  # @param {array}   [props.sort.options] - sorting options
+ # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
 #}
 {% macro Results(props) %}
   {% set selectedFilters = props.filters | mapValues('value') %}
@@ -140,7 +141,7 @@
       <ol class="c-entity-list">
         {% for project in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(project) }}
+            {{ Entity(project | assign({ highlightTerm: props.highlightTerm })) }}
           </li>
         {% endfor %}
       </ol>
