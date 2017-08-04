@@ -33,13 +33,13 @@ const filters = {
   mapValues,
   isArray,
 
-  highlight: (string, searchTerm) => {
-    if (!isString(string)) { return }
+  highlight (string, searchTerm, shouldMatchFullWord = false) {
+    if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) { return string }
 
-    const regEx = new RegExp(`(${searchTerm})`, 'gi')
-    return new nunjucks.runtime.SafeString(
-      string.replace(regEx, '<span class="u-highlight">$1</span>')
-    )
+    const regEx = new RegExp(`(${searchTerm})${shouldMatchFullWord ? '\\b' : ''}`, 'gi')
+    const result = string.replace(regEx, '<span class="u-highlight">$1</span>')
+
+    return new nunjucks.runtime.SafeString(result)
   },
 
   collectionDefault: (collection, defaultValue = 'Not found') => {
