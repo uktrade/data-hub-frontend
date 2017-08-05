@@ -34,9 +34,11 @@
 .c-results-summary__filter {
   color: $text-colour;
   display: inline-block;
+  position: relative;
   margin-top: $default-spacing-unit / 2;
-  padding: 0 ($default-spacing-unit / 2);
+  padding: 0 ($baseline-grid-unit * 6) 0 ($default-spacing-unit / 2);
   background: $grey-4;
+  cursor: default;
 }
 
 .c-results-summary__filter-type {
@@ -52,12 +54,13 @@
 }
 
 .c-results-summary__filter-remove {
+  position: absolute;
+  top: $baseline-grid-unit;
+  right: $baseline-grid-unit;
   text-decoration: none;
-  display: inline-block;
   float: right;
   font-size: 24px;
-  line-height: 1;
-  margin: 0 0 0 $default-spacing-unit / 2;
+  line-height: .7;
 
   &:link,
   &:visited {
