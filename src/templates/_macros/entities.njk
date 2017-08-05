@@ -64,7 +64,8 @@
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set itemValueClass = 'c-badge ' + badgeModifier if props.isBadge else 'c-meta-item__value'%}
   {% if props.name and 'date' in props.name %}
-    {% set metaItemValue = props.value | formatDate('MMMM D, YYYY')  %}
+    {% set date = props.value | formatDate('D MMMM YYYY') %}
+    {% set metaItemValue = date if date else props.value  %}
   {% else %}
     {% set metaItemValue = props.value.name | default(props.value) %}
   {% endif %}

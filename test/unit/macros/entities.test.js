@@ -44,7 +44,7 @@ describe('Entities macros', () => {
         expect(component.querySelector('.c-entity__header .c-meta-item').textContent.replace(/\s+/g, ' ').trim())
           .to.equal('Colour: brown')
         expect(component.querySelector('.c-entity__content .c-meta-item').textContent.replace(/\s+/g, ' ').trim())
-          .to.equal('DOB: November 10, 2015')
+          .to.equal('DOB: 10 November 2015')
       })
     })
   })
@@ -96,7 +96,7 @@ describe('Entities macros', () => {
           value: '2017-07-26',
         })
 
-        expect(component.querySelector('.c-meta-item__value').textContent).to.equal('July 26, 2017')
+        expect(component.querySelector('.c-meta-item__value').textContent).to.equal('26 July 2017')
       })
 
       it('should render metadata item component with link', () => {
