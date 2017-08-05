@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, isString, isArray } = require('lodash')
 const { transformObjectToOption } = require('../transformers')
 const metadataRepo = require('../../lib/metadata')
 const { collectionFilterLabels } = require('./labels')
@@ -11,18 +11,28 @@ function buildInvestmentFilters (originalQuery = {}) {
   }
 
   return Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
-    const options = formOptions[filterName] || []
+    const filterOptions = formOptions[filterName] || []
+
     let valueLabel = originalQuery[filterName]
+    let valuesArray = []
+
+    if (isArray(valueLabel)) {
+      valuesArray = valueLabel
+    }
+    if (isString(valueLabel)) {
+      valuesArray = valueLabel.split(',')
+    }
 
     filtersObj[filterName] = {
       value: originalQuery[filterName],
     }
 
-    if (options.length) {
-      filtersObj[filterName].options = options
-      const option = options.find(x => x.value === valueLabel)
-      if (option) {
-        valueLabel = option.label
+    if (filterOptions.length) {
+      filtersObj[filterName].options = filterOptions
+      const selectedOptions = filterOptions.filter(x => valuesArray.includes(x.value))
+
+      if (selectedOptions.length) {
+        valueLabel = selectedOptions.map(option => option.label).join(', ')
       }
     }
 
