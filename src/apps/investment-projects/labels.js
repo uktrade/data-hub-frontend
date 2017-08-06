@@ -121,9 +121,11 @@ const labels = {
   },
   collectionFilterLabels: {
     edit: {
+      client_relationship_manager: 'Client manager',
       stage: 'Stage',
-      sector: 'Sector',
       investment_type: 'Type of investment',
+      sector: 'Sector',
+      total_investment: 'Investment value',
       estimated_land_date_before: 'Estimated land date before',
       estimated_land_date_after: 'Estimated land date after',
     },

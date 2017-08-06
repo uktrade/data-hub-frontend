@@ -8,6 +8,7 @@ const {
   isEmpty,
   isNull,
   isString,
+  isFunction,
   pickBy,
   filter,
   isNil,
@@ -101,6 +102,23 @@ const filters = {
       })
     }
     return result
+  },
+
+  applyMacro (config) {
+    function renderMacro (macroConfig) {
+      return map(macroConfig, (props, name) => {
+        const macro = this.ctx[name]
+        if (isFunction(macro)) {
+          return macro(props)
+        }
+      })[0]
+    }
+
+    if (isArray(config)) {
+      return config.map(renderMacro.bind(this))
+    }
+
+    return renderMacro.call(this, config)
   },
 }
 
