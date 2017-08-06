@@ -60,7 +60,11 @@
 
     {% if hiddenFields|length %}
       {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}
-        <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+        {% for value in fieldValue if fieldValue | isArray %}
+          <input type="hidden" name="{{ fieldName }}" value="{{ value }}">
+        {% else %}
+          <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+        {% endfor %}
       {% endfor %}
     {% endif %}
 
