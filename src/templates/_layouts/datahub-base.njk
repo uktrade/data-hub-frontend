@@ -14,6 +14,7 @@
 {% from "_macros/common.njk" import LocalHeader with context %}
 {% from "_macros/common.njk" import Pagination, LocalNav %}
 {% from "_macros/results.njk" import Results, ResultsFilters %}
+{% from "_macros/entities.njk" import MetaItem %}
 
 {% if IS_XHR %}
   {% extends "./xhr.njk" %}
