@@ -303,25 +303,15 @@
     }) }}
   </div>
 
-  <div id="land-date-wrapper" class="form-group form-date ">
-    <fieldset>
-      <legend class="form-label-bold">Estimated land date</legend>
-      <span class="form-hint">When activities planned under the investment project will have fully commenced</span>
-
-      <div class="form-group form-group-month">
-        <label for="land-date_month">
-          <span class="form-hint">MM</span>
-        </label>
-        <input type="text" id="land-date_month" class="form-control" name="land-date_month" value="{{ form.state['land-date_month'] }}" maxlength="2" autocomplete="mm">
-      </div>
-
-      <div class="form-group form-group-year">
-        <label for="land-date_year">
-          <span class="form-hint">YYYY</span>
-        </label>
-        <input type="text" id="land-date_year" class="form-control" name="land-date_year" value="{{ form.state['land-date_year'] }}" maxlength="4" autocomplete="yyyy">
-      </div>
-    </fieldset>
-  </div>
+  {{ DateFieldset({
+    name: 'estimated_land_date',
+    label: 'Estimated land date',
+    hint: 'When activities planned under the investment project will have fully commenced',
+    error: form.errors.messages.estimated_land_date,
+    value: {
+      year: form.state.estimated_land_date_year,
+      month: form.state.estimated_land_date_month
+    }
+  }) }}
 
 {% endcall %}
