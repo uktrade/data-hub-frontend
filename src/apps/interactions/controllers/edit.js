@@ -57,7 +57,7 @@ async function editDetails (req, res, next) {
       res.locals.dit_adviser = default_dit_adviser
     }
 
-    res.locals.serviceOfferOptions = await metadataRepository.getServiceOffers(token)
+    res.locals.serviceOptions = await metadataRepository.getServices(token)
     res.locals.serviceProviderOptions = metadataRepository.teams
     res.locals.labels = interactionLabels
     res

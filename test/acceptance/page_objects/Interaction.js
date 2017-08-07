@@ -36,8 +36,8 @@ module.exports = {
     interactionPageMonthOfInteraction: '#date_month',
     interactionPageYearOfInteraction: '#date_year',
     interactionPageDITadviser: '#dit_adviser',
-    interactionPageServiceOffer: '#service-wrapper input',
-    interactionPageServiceOfferList: '#service-wrapper ul li:nth-child(1)',
+    interactionPageService: '#service-wrapper input',
+    interactionPageServiceList: '#service-wrapper ul li:nth-child(1)',
     interactionPageServiceProvider: '#dit_team-wrapper input',
     interactionPageServiceProviderList: '#dit_team-wrapper ul li:nth-child(1)',
     subjectFromInteractionTab: '#interaction-list li:last-child div:nth-child(1) span:nth-child(2)',
@@ -153,10 +153,10 @@ module.exports = {
         return this
           .setValue('@interactionPageDITadviser', ditAdviser)
       },
-      enterServiceOffer (serviceAdviser) {
+      enterService (serviceAdviser) {
         return this
-          .setValue('@interactionPageServiceOffer', serviceAdviser)
-          .click('@interactionPageServiceOfferList')
+          .setValue('@interactionPageService', serviceAdviser)
+          .click('@interactionPageServiceList')
       },
       enterServiceProvider (serviceProvider) {
         return this
@@ -173,7 +173,7 @@ module.exports = {
           .enterSubject(subject)
           .enterNotes(faker.lorem.sentence())
           .enterCompanyContact('a')
-          .enterServiceOffer('a')
+          .enterService('a')
           .enterServiceProvider('a')
           .submitForm('form')
       },
@@ -202,7 +202,7 @@ module.exports = {
         return this
           .submitForm('form')
           .enterServiceProvider('CBBC London')
-          .enterServiceOffer('Events - UK Based')
+          .enterService('Events - UK Based')
           .enterSubject(subject)
           .enterNotes(faker.lorem.sentence())
           .enterCompanyContact('a')

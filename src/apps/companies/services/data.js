@@ -36,7 +36,7 @@ function getInflatedDitCompany (token, id) {
         adviserHash[adviser.id] = adviser
       }
 
-      const serviceOffers = await metadataRepository.getServiceOffers(token)
+      const services = await metadataRepository.getServices(token)
 
       // Parse the service delivery results to expand some of the properties
       const parsedServiceDeliveries = serviceDeliveries.map((serviceDelivery) => {
@@ -44,7 +44,7 @@ function getInflatedDitCompany (token, id) {
           contact: getContactInCompanyObject(company, serviceDelivery.relationships.contact.data.id),
           interaction_type: { id: null, name: 'Service delivery' },
           dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
-          service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
+          service: services.find((option) => option.id === serviceDelivery.relationships.service.data.id),
           dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
         })
       })
@@ -55,7 +55,7 @@ function getInflatedDitCompany (token, id) {
           contact: getContactInCompanyObject(company, interaction.contact),
           interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
           dit_adviser: adviserHash[interaction.dit_adviser],
-          service: serviceOffers.find((option) => option.id === interaction.service),
+          service: services.find((option) => option.id === interaction.service),
           dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
         })
       })

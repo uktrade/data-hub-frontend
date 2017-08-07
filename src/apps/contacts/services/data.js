@@ -34,7 +34,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
 
       const interactions = await interactionRepository.getInteractionsForContact(token, contactId)
       const serviceDeliveries = await serviceDeliveryRepository.getServiceDeliveriesForContact(token, contactId)
-      const serviceOffers = await metadataRepository.getServiceOffers(token)
+      const services = await metadataRepository.getServices(token)
 
       // Build a list of advisers we use in interactions, to help populate service deliveries
       for (const interaction of interactions) {
@@ -57,7 +57,7 @@ function getContactInteractionsAndServiceDeliveries (token, contactId) {
             id: serviceDelivery.id,
             interaction_type: { id: null, name: 'Service delivery' },
             dit_adviser: adviserHash[serviceDelivery.relationships.dit_adviser.data.id],
-            service: serviceOffers.find((option) => option.id === serviceDelivery.relationships.service.data.id),
+            service: services.find((option) => option.id === serviceDelivery.relationships.service.data.id),
             dit_team: metadataRepository.teams.find((option) => option.id === serviceDelivery.relationships.dit_team.data.id),
           })
       })
