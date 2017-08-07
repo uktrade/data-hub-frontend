@@ -10,6 +10,14 @@ const Order = {
     })
   },
 
+  update (token, id, data) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}`,
+      method: 'PATCH',
+      body: data,
+    })
+  },
+
   getById (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
   },
