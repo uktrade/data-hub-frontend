@@ -1,0 +1,31 @@
+{% extends "../_layout.njk" %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Assign project team members</h2>
+
+  {% call Form(form) %}
+    {% if form.errors.team_members %}
+      <div class="error">{{ form.errors.team_members }}</div>
+    {% endif %}
+
+    {% for teamMember in form.state.teamMembers %}
+      {% call Fieldset({ legend: 'Team member' }) %}
+        {{ MultipleChoiceField({
+          name: 'adviser',
+          label: form.labels.adviser,
+          options: form.options.advisers,
+          value: teamMember.adviser,
+          idSuffix: loop.index,
+          initialOption: '-- Select an adviser --'
+        }) }}
+
+        {{ TextField({
+          name: 'role',
+          label: form.labels.role,
+          value: teamMember.role,
+          idSuffix: loop.index
+        }) }}
+      {% endcall %}
+      {% endfor %}
+  {% endcall %}
+{% endblock %}
