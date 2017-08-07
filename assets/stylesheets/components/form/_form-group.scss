@@ -4,7 +4,8 @@
   max-width: 40em;
 
   [type="hidden"] + &,
-  .c-form-fieldset__legend + & {
+  .c-form-fieldset__legend + &,
+  .c-form-fieldset__hint + & {
     margin-top: 0;
   }
 }
@@ -88,6 +89,12 @@
   .c-multiple-choice__input:checked + .c-multiple-choice__label::before,
   .c-multiple-choice__input:focus + .c-multiple-choice__label::before {
     border-color: $black;
+  }
+}
+
+.c-form-group--soft {
+  .c-form-group__label-text {
+    font-weight: normal;
   }
 }
 
