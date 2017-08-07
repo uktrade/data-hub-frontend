@@ -9,15 +9,11 @@ const { transformFromApi } = require('../../interactions/services/formatting')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
 
-function projectPosition (currentStage, projectStages) {
+function getNextStage (currentStage, projectStages) {
   const projectStageIndex = projectStages.findIndex((projectStage) => {
     return projectStage.name.toLowerCase() === currentStage.toLowerCase()
   })
-
-  return {
-    currentStageIndex: projectStageIndex,
-    nextStage: projectStages[projectStageIndex + 1],
-  }
+  return projectStages[projectStageIndex + 1]
 }
 
 function getCompanyDetails (req, res, next) {
@@ -38,7 +34,6 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
     const investmentData = await getInvestment(req.session.token, req.params.id)
     const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
     const ukCompanyId = get(investmentData, 'uk_company.id')
-    const { currentStageIndex, nextStage } = projectPosition(investmentData.stage.name, investmentProjectStages)
 
     investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
 
@@ -52,7 +47,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
 
     res.locals.investmentData = investmentData
     res.locals.equityCompany = investmentData.investor_company
-    res.locals.investmentProjectStages = investmentProjectStages
+    res.locals.investmentProjectStages = investmentProjectStages.map((stage) => stage.name)
 
     res.locals.investmentStatus = {
       id: investmentData.id,
@@ -72,10 +67,9 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       },
       currentStage: {
         name: investmentData.stage.name,
-        index: currentStageIndex,
         isComplete: investmentData.team_complete && investmentData.requirements_complete && investmentData.value_complete,
       },
-      nextStage,
+      nextStage: getNextStage(investmentData.stage.name, investmentProjectStages),
     }
 
     res.breadcrumb({

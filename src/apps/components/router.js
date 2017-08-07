@@ -9,6 +9,7 @@ const {
   renderLocalHeader,
   renderBreadcrumbs,
   renderPagination,
+  renderProgress,
   renderResults,
 } = require('./controllers')
 
@@ -24,6 +25,7 @@ router
   .get('/local-header', renderLocalHeader)
   .get('/pagination', renderPagination)
   .get('/results', getInvestmentProjectsCollection, renderResults)
+  .get('/progress', renderProgress)
   .get('/form', handleEntitySearch, renderFormElements)
   .post('/form', handleFormPost, renderFormElements)
 
