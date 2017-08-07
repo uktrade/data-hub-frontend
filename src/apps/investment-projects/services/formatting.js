@@ -29,15 +29,17 @@ function transformToApi (body) {
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
+    'project_shareable': Boolean,
+    'nda_signed': Boolean,
   }
 
-  const relationshipMgr = body['is-relationship-manager']
-  if (relationshipMgr !== 'No') {
+  const relationshipMgr = body.is_relationship_manager
+  if (relationshipMgr !== 'false') {
     body.client_relationship_manager = relationshipMgr
   }
 
-  const referralSource = body['is-referral-source']
-  if (referralSource !== 'No') {
+  const referralSource = body.is_referral_source
+  if (referralSource !== 'false') {
     body.referral_source_adviser = referralSource
   }
 
@@ -50,6 +52,8 @@ function transformToApi (body) {
 
     if (type === Array) {
       return [{ id: value }]
+    } else if (type === Boolean) {
+      return value === 'true' | false
     }
 
     return { id: value }

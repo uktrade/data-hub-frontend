@@ -1,170 +1,307 @@
-<form method="post">
-  <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-  <input type="hidden" name="investor_company" value="{{ equityCompany.id }}">
+{# TODO spilt these forms into create and edit forms rather than using conditionals to show hide things #}
 
-  {{ autocomplete('client_contacts',
-    label="Client contact for this project",
-    value=form.state['client_contacts'],
-    options=form.options.contacts)
-  }}
+{% if investmentData %}
+  {% set returnLink = '/investment-projects/' + investmentData.id %}
+{% else %}
+  {% set returnLink = '/investment-projects/create/investment-type/' + clientCompanyId %}
+{% endif %}
 
-  {% if not investmentData.id %}
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
+{% call Form(form | assign({
+  buttonText: 'Save',
+  returnLink: returnLink,
+  hiddenFields: {
+    investor_company: equityCompany.id
+  }
+})) %}
+
+{% if not investmentData %}
+  {# If on the create journey this information has already been asked so here we just send it along with the create form #}
+  {% for key, data in form.options.investmentDetails %}
+    {% if data %}
+      {{ HiddenField({
+        name: key,
+        value: data.value
+      }) }}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+  <div class="c-form-group">
+    {{ TextField({
+      name: 'name',
+      label: 'Project name',
+      placeholder: 'e.g project zeus',
+      error: form.errors.messages.name,
+      value: form.state['name']
+    }) }}
+
+    {{ TextField({
+      name: 'description',
+      label: 'Project description',
+      type: 'textarea',
+      error: form.errors.messages.description,
+      value: form.state['description']
+    }) }}
+  </div>
+
+{% if investmentData.id %}
+  <div class="c-form-group">
+    {% call MultipleChoiceField({
+      type: 'radio',
+      name: 'investment_type',
+      label: 'Type of investment',
+      value: form.state['investment_type'],
+      error: form.errors.messages['investment_type'],
+      options: form.options.investmentTypes
+    }) %}
+
+      {{ MultipleChoiceField({
+        name: 'fdi_type',
+        label: 'Type of foreign direct investment (FDI)',
+        error: form.errors.messages['fdi_type'],
+        value: form.state['fdi_type'],
+        options: form.options.fdi,
+        initialOption: '-- Select an FDI type --',
+        condition: {
+          name: 'investment_type',
+          value: form.options.investmentTypesObj.fdi.value
+        },
+        modifier: 'subfield'
+      }) }}
+
+      {{ MultipleChoiceField({
+        name: 'non_fdi_type',
+        label: 'Type of non-foreign direct investment (Non-FDI)',
+        error: form.errors.messages['non_fdi_type'],
+        value: form.state['non_fdi_type'],
+        options: form.options.nonFdi,
+        initialOption: '-- Select a Non-FDI type --',
+        condition: {
+          name: 'investment_type',
+          value: form.options.investmentTypesObj.non_fdi.value
+        },
+        modifier: 'subfield'
+      }) }}
+
+    {% endcall %}
+  </div>
+{% endif %}
+
+  <div class="c-form-group">
+    {{ MultipleChoiceField({
+      name: 'sector',
+      label: 'Primary sector',
+      initialOption: '-- Choose a sector --',
+      options: form.options.primarySectors,
+      error: form.errors.messages['sector'],
+      value: form.state['sector']
+    }) }}
+  </div>
+
+  <div class="c-form-group">
+    {% call MultipleChoiceField({
+      name: 'business_activities',
+      label: 'Business activity',
+      initialOption: '-- Choose a business activity --',
+      options: form.options.businessActivities,
+      error: form.errors.messages['business_activities'],
+      value: form.state['business_activities']
+    }) %}
+
+     {{ TextField({
+        name: 'other_business_activity',
+        label: 'Other business activity (please specify)',
+        placeholder: 'e.g meet and greet dinner',
+        error: form.errors.messages['other_business_activity'],
+        value: form.state['other_business_activity'],
+        condition: {
+          name: 'business_activities',
+          value: form.options.businessActivities[8].value
+        },
+        modifier: 'subfield'
+      }) }}
+
+    {% endcall %}
+  </div>
+
+  <div class="c-form-group">
+    {{ MultipleChoiceField({
+      name: 'client_contacts',
+      label: 'Client contact',
+      initialOption: '-- Pick a contact --',
+      options: form.options.contacts,
+      error: form.errors.messages['client_contacts'],
+      value: form.state['client_contacts']
+    }) }}
+  </div>
+
+{% if not investmentData.id %}
+  <div class="c-form-group">
+    {% call MultipleChoiceField({
+      type: 'radio',
+      name: 'is_relationship_manager',
       label: 'Are you the client relationship manager for this project?',
-      name: 'is-relationship-manager',
-      inline: true,
-      value: form.state['is-relationship-manager'],
-      children: [{
-        label: 'Yes',
-        value: user.id
-      }, {
-        label: 'No'
-      }]
-    } %}
+      value: form.state['is_relationship_manager'],
+      modifier: 'inline',
+      error: form.errors.messages['is_relationship_manager'],
+      options: [
+        {
+          value: user.id,
+          label: 'Yes'
+        }, {
+          value: 'false',
+          label: 'No'
+        }
+      ]
+    }) %}
 
-    <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-relationship-manager" data-control-value="No">
-      {{ autocomplete('client_relationship_manager',
-        label="Client relationship manager",
-        value=form.state['client_relationship_manager'],
-        options=form.options.advisers)
-      }}
-    </div>
-  {% endif %}
+      {{ MultipleChoiceField({
+        name: 'client_relationship_manager',
+        label: 'Client relationship manager',
+        error: form.errors.messages['client_relationship_manager'],
+        value: form.state['client_relationship_manager'],
+        options: form.options.advisers,
+        initialOption: '-- Select client relationship manager --',
+        condition: {
+          name: 'is_relationship_manager',
+          value: 'false'
+        },
+        modifier: 'subfield'
+      }) }}
 
-  {% component 'form-multiple-choice', {
-    variant: 'radio',
-    label: 'Are you the referral source for this project?',
-    name: 'is-referral-source',
-    inline: true,
-    value: form.state['is-referral-source'],
-    children: [{
-      label: 'Yes',
-      value: user.id
-    }, {
-      label: 'No'
-    }]
-  } %}
+    {% endcall %}
+  </div>
+{% endif %}
 
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="is-referral-source" data-control-value="No">
-    {{ autocomplete('referral_source_adviser',
-      label="Referral source adviser",
-      value=form.state['referral_source_adviser'],
-      options=form.options.advisers)
-    }}
+  <div class="c-form-group">
+    {% call MultipleChoiceField({
+      type: 'radio',
+      name: 'is_referral_source',
+      label: 'Are you the referral source for this project?',
+      value: form.state['is_referral_source'],
+      modifier: 'inline',
+      error: form.errors.messages['is_referral_source'],
+      options: [
+        {
+          value: user.id,
+          label: 'Yes'
+        }, {
+          value: 'false',
+          label: 'No'
+        }
+      ]
+    }) %}
+
+      {{ MultipleChoiceField({
+        name: 'referral_source_adviser',
+        label: 'Referral source adviser',
+        error: form.errors.messages['referral_source_adviser'],
+        value: form.state['referral_source_adviser'],
+        options: form.options.advisers,
+        initialOption: '-- Select referral source adviser --',
+        condition: {
+          name: 'is_referral_source',
+          value: 'false'
+        },
+        modifier: 'subfield'
+      }) }}
+
+    {% endcall %}
   </div>
 
-  {{ dropdown('referral_source_activity',
-    label='Referral source activity',
-    value=form.state['referral_source_activity'],
-    emptyLabel='Choose referral source activity',
-    options=form.options.referralSourceActivities)
-  }}
+  <div class="c-form-group">
+    {% call MultipleChoiceField({
+      name: 'referral_source_activity',
+      label: 'Referral source activity',
+      initialOption: '-- Choose referral source activity --',
+      options: form.options.referralSourceActivities,
+      error: form.errors.messages['referral_source_activity'],
+      value: form.state['referral_source_activity']
+    }) %}
 
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[2].id }}">
-    {{ textbox('referral_source_activity_event',
-      value=form.state['referral_source_activity_event'],
-      label='Event')
-    }}
+      {{ MultipleChoiceField({
+        name: 'referral_source_activity_marketing',
+        label: 'Marketing',
+        error: form.errors.messages['referral_source_activity_marketing'],
+        value: form.state['referral_source_activity_marketing'],
+        options: form.options.referralSourceMarketing,
+        initialOption: '-- Choose a marketing type --',
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[3].value
+        },
+        modifier: 'subfield'
+      }) }}
+
+      {{ MultipleChoiceField({
+        name: 'referral_source_activity_website',
+        label: 'Website',
+        error: form.errors.messages['referral_source_activity_website'],
+        value: form.state['referral_source_activity_website'],
+        options: form.options.referralSourceWebsite,
+        initialOption: '-- Choose a website --',
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[9].value
+        },
+        modifier: 'subfield'
+      }) }}
+
+      {{ TextField({
+        name: 'referral_source_activity_event',
+        label: 'Event',
+        placeholder: 'e.g conversation at conference',
+        error: form.errors.messages['referral_source_activity_event'],
+        value: form.state['referral_source_activity_event'],
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[2].value
+        },
+        modifier: 'subfield'
+      }) }}
+
+    {% endcall %}
   </div>
 
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[3].id }}">
-    {{ dropdown('referral_source_activity_marketing',
-      label='Marketing',
-      value=form.state['referral_source_activity_marketing'],
-      emptyLabel='Choose a marketing',
-      options=form.options.referralSourceMarketing)
-    }}
+  <div class="c-form-group">
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'project_shareable',
+      label: 'Can this project be shared with our local partner network, outside of DIT?',
+      value: form.state['project_shareable'],
+      modifier: 'inline',
+      error: form.errors.messages['project_shareable'],
+      options: [
+        {
+          value: 'true',
+          label: 'Yes'
+        }, {
+          value: 'false',
+          label: 'No'
+        }
+      ]
+    }) }}
   </div>
 
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="referral_source_activity" data-control-value="{{ form.options.referralSourceActivities[9].id }}">
-    {{ dropdown('referral_source_activity_website',
-      label='Website',
-      value=form.state['referral_source_activity_website'],
-      emptyLabel='Choose a website',
-      options=form.options.referralSourceWebsite)
-    }}
+  <div class="c-form-group">
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'nda_signed',
+      label: 'Have we signed a non-disclosure agreement (NDA) with the client?',
+      value: form.state['nda_signed'],
+      modifier: 'inline',
+      error: form.errors.messages['nda_signed'],
+      options: [
+        {
+          value: 'true',
+          label: 'Yes'
+        }, {
+          value: 'false',
+          label: 'No'
+        }
+      ]
+    }) }}
   </div>
-
-  {% component 'form-multiple-choice', {
-    variant: 'radio',
-    label: 'Type of investment',
-    name: 'investment_type',
-    value: form.state['investment_type'],
-    children: form.options.investmentTypes
-  } %}
-
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[1].value }}">
-    {{ dropdown('fdi_type',
-      label='Type of foreign direct investment (FDI)',
-      value=form.state['fdi_type'],
-      emptyLabel='Choose a type',
-      options=form.options.fdi)
-    }}
-  </div>
-
-  <div class="panel panel-border-narrow js-ConditionalSubfield" data-controlled-by="investment_type" data-control-value="{{ form.options.investmentTypes[2].value }}">
-    {{ dropdown('non_fdi_type',
-      label='Type of non-foreign direct investment (Non-FDI)',
-      value=form.state['non_fdi_type'],
-      emptyLabel='Choose a type',
-      options=form.options.nonFdi)
-    }}
-  </div>
-
-  {{ dropdown('sector',
-    label='Primary sector',
-    value=form.state['sector'],
-    emptyLabel='Choose a sector',
-    options=form.options.primarySectors)
-  }}
-
-  {{ dropdown('business_activities',
-    label='Business activity of this investment project',
-    value=form.state['business_activities'],
-    emptyLabel='Choose a business activity',
-    options=form.options.businessActivities)
-  }}
-
-  {{ textbox('name',
-    value=form.state['name'],
-    label='Project name')
-  }}
-
-  {{ textarea('description',
-    value=form.state['description'],
-    label='Description')
-  }}
-
-  {% component 'form-multiple-choice', {
-    variant: 'radio',
-    label: 'Can this project be shared with our local partner network, outside of DIT?',
-    name: 'project_shareable',
-    inline: true,
-    value: form.state['project_shareable'],
-    children: [{
-      label: 'Yes',
-      value: 'true'
-    }, {
-      label: 'No',
-      value: 'false'
-    }]
-  } %}
-
-  {% component 'form-multiple-choice', {
-    variant: 'radio',
-    label: 'Have we signed a non-disclosure agreement (NDA) with the client?',
-    name: 'nda_signed',
-    inline: true,
-    value: form.state['nda_signed'],
-    children: [{
-      label: 'Yes',
-      value: 'true'
-    }, {
-      label: 'No',
-      value: 'false'
-    }]
-  } %}
 
   <div id="land-date-wrapper" class="form-group form-date ">
     <fieldset>
@@ -187,10 +324,4 @@
     </fieldset>
   </div>
 
-  {% if investmentData %}
-    {% set backUrl = '/investment-projects/' + investmentData.id %}
-  {% else %}
-    {% set backUrl = '/investment-projects/create/1?client-company=' + equityCompany.id %}
-  {% endif %}
-  {{ save(backUrl=backUrl) }}
-</form>
+{% endcall %}

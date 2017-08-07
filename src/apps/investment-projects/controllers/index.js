@@ -1,5 +1,4 @@
-const createStep1 = require('./create-1')
-const createStep2 = require('./create-2')
+const create = require('./create')
 const archive = require('./archive')
 const audit = require('./audit')
 const details = require('./details')
@@ -9,8 +8,7 @@ const interactions = require('./interactions')
 const team = require('./team')
 
 module.exports = {
-  createStep1,
-  createStep2,
+  create,
   archive,
   audit,
   details,

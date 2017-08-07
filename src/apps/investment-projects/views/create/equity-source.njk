@@ -4,46 +4,42 @@
 {% block main_grid_left_column %}{% endblock %}
 
 {% block main_grid_right_column %}
-  {% if clientCompany %}
-    <h2 class="heading-medium">Client company</h2>
 
-    <table class="table--key-value">
-      <tbody>
+  <h2 class="heading-medium">Client company</h2>
+
+  <table class="table--key-value">
+    <tbody>
+      <tr>
+        <td>{{ company.name }}</td>
+      </tr>
+      <tr>
+        <td>{{ company.registered_address_country.name }}</td>
+      </tr>
+      <tr>
+        <td>{{ companyInvestments.count|default('No', true) }} investment {{ 'project' | pluralise(companyInvestments.count) }} in the UK</td>
+      </tr>
+      {% if company.classification %}
         <tr>
-          <td>{{ clientCompany.name }}</td>
+          <td>{{ company.classification.name }}</td>
         </tr>
+      {% endif %}
+      {% if company.one_list_account_owner %}
         <tr>
-          <td>{{ clientCompany.registered_address_country.name }}</td>
+          <td>
+            Relationship manager: {{ company.one_list_account_owner.first_name }} {{ company.one_list_account_owner.last_name }}
+          </td>
         </tr>
-        <tr>
-          <td>{{ clientCompanyInvestments.count|default('No', true) }} investment project{{ 's' if clientCompanyInvestments.count != 1 }} in the UK</td>
-        </tr>
-        {% if clientCompany.classification %}
-          <tr>
-            <td>{{ clientCompany.classification.name }}</td>
-          </tr>
-        {% endif %}
-        {% if clientCompany.one_list_account_owner %}
-          <tr>
-            <td>
-              Relationship manager: {{ clientCompany.one_list_account_owner.first_name }} {{ clientCompany.one_list_account_owner.last_name }}
-            </td>
-          </tr>
-        {% endif %}
-      </tbody>
-    </table>
-  {% endif %}
+      {% endif %}
+    </tbody>
+  </table>
 
   {% if showSearch or searchTerm %}
     <h2 class="heading-medium">Find the source of foreign equity investment</h2>
 
     {{ EntitySearchForm({
-      inputName: 'q',
+      inputName: 'term',
       inputLabel: 'Search for company name',
-      searchTerm: searchTerm,
-      hiddenFields: {
-        'client-company': clientCompany.id
-      }
+      searchTerm: searchTerm
     }) }}
 
     {% if searchResult %}
@@ -59,7 +55,7 @@
         <ol class="c-entity-list">
           {% for result in searchResult.results %}
             <li class="c-entity-list__item">
-              <a href="2?equity-company={{ result.id }}" class="c-entity-list__link">
+              <a href="/investment-projects/create/project/{{ result.id }}/{{ investmentType }}?client-company={{ company.id }}" class="c-entity-list__link">
                 <h3 class="c-entity-list__item-header">{{ result.name | highlight(searchTerm) }}</h3>
 
                 <dl class="metadata-list">
@@ -87,11 +83,11 @@
                   {% endif %}
                   {% if result.classification %}
                     <dt class="metadata-list__term u-visually-hidden">Classification</dt>
-                    <dd class="metadata-list__value">tier one{{ result.classification }}</dd>
+                    <dd class="metadata-list__value">{{ result.classification }}</dd>
                   {% endif %}
                   {% if result.one_list_account_owner %}
                     <dt class="metadata-list__term">Relationship manager</dt>
-                    <dd class="metadata-list__value">bob something{{ result.one_list_account_owner.first_name }} {{ result.one_list_account_owner.last_name }}</dd>
+                    <dd class="metadata-list__value">{{ result.one_list_account_owner.first_name }} {{ result.one_list_account_owner.last_name }}</dd>
                   {% endif %}
                 </dl>
               </a>
@@ -102,41 +98,35 @@
 
       {{ Pagination(searchResult.pagination) }}
 
-      <p class="infostrip">If you can’t find the company you’re looking for, <a href="/companies/add-step-1">add a new compay</a>. Unfortunately you will lose your progress.</p>
+      <p class="infostrip">If you can’t find the company you’re looking for, <a href="/companies/add-step-1">add a new company</a>. Unfortunately you will lose your progress.</p>
     {% endif %}
 
-  {% elseif clientCompany %}
+  {% elseif company %}
 
-    <form class="section archive-panel__form" method="post">
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <input type="hidden" name="client-company" value="{{ clientCompany.id }}">
-
-      <fieldset id="client-equity-source-options" class="form-group inline {% if errors.isEquitySource %}error{% endif %}">
-        <legend class="form-label-bold">
-          Will this company be the source of foreign equity investment?
-          {% if errors.isEquitySource %}
-            <span class="error-message">{{ errors.isEquitySource }}</span>
-          {% endif %}
-        </legend>
-
-        <label class="block-label selection-button-radio" for="equity-source-yes">
-          <input id="equity-source-yes" type="radio" name="is-equity-source" value="true">
-          Yes
-        </label>
-        <label class="block-label selection-button-radio" for="equity-source-no">
-          <input id="equity-source-no" type="radio" name="is-equity-source" value="false">
-          No
-        </label>
-      </fieldset>
-
-      {{ save(buttonText="Continue") }}
-    </form>
-
-  {% else %}
-
-    <p class="flash flash--info">
-      Client company is required
-    </p>
+    {% call Form(form | assign({
+      buttonText: 'Continue',
+      hiddenFields: {
+        company_id: company.id
+      }
+    })) %}
+    {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'is_equity_source',
+        label: 'Will this company be the source of foreign equity investment?',
+        modifier: 'inline',
+        error: form.errors.messages.is_equity_source,
+        options: [
+          {
+            value: 'true',
+            label: 'Yes'
+          }, {
+            value: 'false',
+            label: 'No'
+          }
+        ]
+      })
+    }}
+    {% endcall %}
 
   {% endif %}
 
