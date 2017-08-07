@@ -41,9 +41,17 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
 
     res.locals.investmentStatus = {
       id: investmentData.id,
-      projectCode: investmentData.project_code,
+      meta: [
+        {
+          label: 'Project code',
+          value: investmentData.project_code,
+        },
+        {
+          label: 'Valuation',
+          value: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+        },
+      ],
       stageName: investmentData.stage.name,
-      valuation: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
       company: {
         name: investmentData.investor_company.name,
         url: buildCompanyUrl(investmentData.investor_company),
