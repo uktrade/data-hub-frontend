@@ -79,6 +79,7 @@ const metadataItems = [
   ['referral-source-website', 'referralSourceWebsiteOptions'],
   ['investment-business-activity', 'businessActivityOptions'],
   ['investment-type', 'investmentTypeOptions'],
+  ['investment-project-stage', 'investmentProjectStage'],
   ['fdi-type', 'fdiOptions'],
   ['non-fdi-type', 'nonFdiOptions'],
   ['salary-range', 'salaryRangeOptions'],
