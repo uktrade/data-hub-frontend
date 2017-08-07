@@ -25,7 +25,6 @@ describe('Investment projects builders', () => {
       expect(actual).to.have.property('stage').an('object')
       expect(actual).to.have.property('sector').an('object')
       expect(actual).to.have.property('investment_type').an('object')
-      expect(actual).to.have.property('total_investment').an('object')
       expect(actual).to.have.property('estimated_land_date_before').an('object')
       expect(actual).to.have.property('estimated_land_date_after').an('object')
     })
