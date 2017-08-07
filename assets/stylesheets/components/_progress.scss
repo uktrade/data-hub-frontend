@@ -1,0 +1,86 @@
+@import "../settings";
+@import "../tools";
+
+$_section-width: 25%;
+
+.c-progress {
+  margin: $default-spacing-unit * 2 $default-spacing-unit / 2;
+
+  @include media(tablet) {
+    margin: $default-spacing-unit * 2;
+    padding-bottom: $default-spacing-unit / 2;
+  }
+}
+
+.c-progress-bar {
+  @include media(tablet) {
+    display: table;
+    width: 100%;
+    position: relative;
+  }
+}
+
+.c-progress__stage {
+  @include core-font(14);
+  position: relative;
+  border-color: $grey-3;
+  border-width: 0 0 0 2px;
+  border-style: solid;
+
+  @include media(tablet) {
+    display: table-cell;
+    width: $_section-width;
+    border-width: 2px 0 0;
+  }
+
+  &::before {
+    position: absolute;
+    left: -8px;
+    width: 14px;
+    height: 14px;
+    content: "";
+    border-radius: 20px;
+    background-color: $white;
+    border: 2px solid $grey-3;
+    outline: 2px solid $white;
+    display: block;
+    z-index: 30;
+
+    @include media(tablet) {
+      top: -8px;
+    }
+  }
+
+  &.is-complete {
+    border-color: $govuk-blue;
+
+    &::before {
+      background-color: $govuk-blue;
+      border: 2px solid $govuk-blue;
+    }
+  }
+
+  &.is-active {
+    &::before {
+      background-color: $white;
+      border: 2px solid $govuk-blue;
+    }
+  }
+
+  &:last-child {
+    border-color: transparent;
+  }
+}
+
+.c-progress__stage-title {
+  display: block;
+  padding: 0 0 $default-spacing-unit $default-spacing-unit;
+
+  @include media(tablet) {
+    position: absolute;
+    left: -50px;
+    width: 100px;
+    text-align: center;
+    padding: $default-spacing-unit 0 0;
+  }
+}

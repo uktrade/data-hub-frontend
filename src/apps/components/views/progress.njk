@@ -1,0 +1,10 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  {% call Example('Progress') %}
+    {{ Progress({
+      stageNames: stageNames,
+      currentStageName: currentStageName
+    }) }}
+  {% endcall %}
+{% endblock %}

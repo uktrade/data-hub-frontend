@@ -15,6 +15,11 @@
     {{ investmentStatus.meta | map(callAsMacro('MetaItem')) | join | safe }}
   </div>
 
+  {{ Progress({
+    stageNames: investmentProjectStages,
+    currentStageName: investmentStatus.currentStage.name
+  }) }}
+
   {% if investmentData.archived %}
       <p class="infostrip">
         This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>

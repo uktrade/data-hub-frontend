@@ -21,6 +21,12 @@
   .c-entity-search__aggregations {
     margin-bottom: -$default-spacing-unit * 2;
   }
+
+  .c-progress__stage {
+    &::before {
+      outline-color: $grey-4;
+    }
+  }
 }
 
 .c-local-header__heading-before {
