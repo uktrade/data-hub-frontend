@@ -240,6 +240,8 @@
  # Render form fieldset with inner content
  # @param {object} props - An object containing field properties
  # @param {string} props.legend - Fieldset legend
+ # @param {string} props.hint - Fieldset hint
+ # @param {string} props.fieldId - Field id
  # @param {string, array} [props.modifier] - Fieldset modifier
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
  # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
@@ -260,11 +262,16 @@
       data-controlled-by="{{ props.condition.name }}"
       data-control-value="{{ props.condition.value }}"
     {% endif %}
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.legend %}
       <legend class="c-form-fieldset__legend">
         <span class="c-form-fieldset__legend-text">{{ props.legend }}</span>
       </legend>
+    {% endif %}
+
+    {% if props.hint %}
+      <div id="hint-{{ props.fieldId }}" class="c-form-fieldset__hint">{{ props.hint }}</div>
     {% endif %}
 
     {{ caller() }}
@@ -501,4 +508,33 @@
       {{ child }}
     {% endfor %}
   {% endif %}
+{% endmacro %}
+
+{##
+ # Render form group date pattern with Year, Month and corresponding label and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.value] - Input values
+ #}
+{% macro DateFieldset(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
+    {{ TextField({
+      modifier: ['inline', 'shortest', 'soft'],
+      name: props.name + '_month',
+      value: props.value.month,
+      label: 'Month'
+    }) }}
+
+    {{ TextField({
+      modifier: ['inline', 'shorter', 'soft'],
+      name: props.name + '_year',
+      value: props.value.year,
+      label: 'Year'
+    }) }}
+  {% endcall %}
 {% endmacro %}
