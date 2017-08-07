@@ -1,6 +1,6 @@
 const axios = require('axios')
 const createHistory = require('history').createBrowserHistory
-const { buildQueryString } = require('../../../src/lib/url-helpers')
+const queryString = require('query-string')
 
 const history = createHistory()
 
@@ -30,7 +30,7 @@ const XHR = {
     this.injectResponseInHtml(res.data)
 
     if (params) {
-      history.push(buildQueryString(params), { data: res.data })
+      history.push(`?${queryString.stringify(params)}`, { data: res.data })
     }
 
     return res
@@ -45,8 +45,7 @@ const XHR = {
     }
 
     return axios
-      .get(url, {
-        params,
+      .get(`${url}?${queryString.stringify(params)}`, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
       })
       .then(res => this.updateOutlet(res, params))

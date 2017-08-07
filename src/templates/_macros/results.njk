@@ -74,7 +74,8 @@
             <span class="c-results-summary__filter-type">{{ filter.label }}</span>
             <span class="c-results-summary__filter-name">
               {%- if 'date' in name -%}
-                {{ filter.value | formatDate('MMMM D, YYYY') }}
+                {% set date = filter.value | formatDate('D MMMM YYYY') %}
+                {{ date if date else filter.value }}
               {%- else -%}
                 {{ filter.valueLabel }}
               {%- endif -%}

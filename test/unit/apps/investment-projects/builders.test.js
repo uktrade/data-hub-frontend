@@ -25,7 +25,6 @@ describe('Investment projects builders', () => {
       expect(actual).to.have.property('stage').an('object')
       expect(actual).to.have.property('sector').an('object')
       expect(actual).to.have.property('investment_type').an('object')
-      expect(actual).to.have.property('total_investment').an('object')
       expect(actual).to.have.property('estimated_land_date_before').an('object')
       expect(actual).to.have.property('estimated_land_date_after').an('object')
     })
@@ -77,6 +76,26 @@ describe('Investment projects builders', () => {
 
       expect(actual.estimated_land_date_after).to.have.property('label').a('string')
       expect(actual.estimated_land_date_after.valueLabel).to.equal('2017-08-03')
+    })
+
+    it('should return filters object with valueLabel for multiple values (string)', () => {
+      const query = {
+        stage: 'i1,i2',
+      }
+
+      const actual = this.controller.buildInvestmentFilters(query)
+
+      expect(actual.stage.valueLabel).to.equals('Investment stage #1, Investment stage #2')
+    })
+
+    it('should return filters object with valueLabel for multiple values (array)', () => {
+      const query = {
+        stage: ['i1', 'i2'],
+      }
+
+      const actual = this.controller.buildInvestmentFilters(query)
+
+      expect(actual.stage.valueLabel).to.equals('Investment stage #1, Investment stage #2')
     })
   })
 

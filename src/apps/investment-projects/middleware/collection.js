@@ -1,4 +1,4 @@
-const { pick, isEmpty } = require('lodash')
+const { pick, isEmpty, pickBy } = require('lodash')
 const queryString = require('query-string')
 
 const { buildPagination } = require('../../../lib/pagination')
@@ -35,7 +35,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
 
   const requestBody = Object.assign({}, {
     sortby: req.query.sortby,
-  }, selectedFiltersQuery)
+  }, pickBy(selectedFiltersQuery))
 
   try {
     res.locals.results = await searchInvestmentProjects({ token: req.session.token, requestBody, limit: 10, page })
