@@ -1,8 +1,83 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% macro AnswersSummary(props) %}
+  <table class="c-answers-summary">
+    <caption class="c-answers-summary__heading">
+      {{ props.heading }}
+      {% if props.editUrl %}
+        <a class="c-answers-summary__heading-action" href="{{ props.editUrl }}">
+          {{ props.editText or 'Edit' }}
+        </a>
+      {% endif %}
+    </caption>
+    {% for item in props.items %}
+      <tr>
+        <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+        <td class="c-answers-summary__content">{{ item.value }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endmacro %}
+
 {% block main_grid_left_column %}
   {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}
 
 {% block main_grid_right_column %}
+
+  {{ AnswersSummary({
+    heading: 'Client details',
+    editUrl: 'edit/client-details',
+    items: [{
+      label: 'Company',
+      value: values.company.name
+    }, {
+      label: 'Contact',
+      value: values.contact.name
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'Market of interest',
+    items: [{
+      label: 'Primary market',
+      value: values.primary_market.name
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'International Trade Advisers (ITAs)',
+    editUrl: 'edit/assign-ita',
+    editText: 'Add or remove',
+    items: [{
+      label: 'Advisers',
+      value: values.ita.name if values.ita else 'None selected'
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'Post advisers',
+    editUrl: 'edit/post-adviser',
+    editText: 'Add or remove',
+    items: [{
+      label: 'Advisers',
+      value: values.post_adviser.name if values.post_adviser else 'None selected'
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'Work description',
+    editUrl: 'edit/work-description',
+    items: [{
+      label: 'Service type',
+      value: 'Not added'
+    }, {
+      label: 'Work description',
+      value: 'Not added'
+    }, {
+      label: 'Delivery date',
+      value: 'Not added'
+    }]
+  }) }}
+
 {% endblock %}
