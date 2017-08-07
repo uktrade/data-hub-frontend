@@ -6,7 +6,7 @@
 
   <div class="split-header">
     <h2 class="heading-medium">{{ projects.count }} investment {{ 'project' | pluralise(projects.count) }}</h2>
-    <a class="button button-secondary" href="/investment-projects/create/1?client-company={{ company.id }}">Add investment project</a>
+    <a class="button button-secondary" href="/investment-projects/create/{{ company.id }}">Add investment project</a>
   </div>
 
   {% if projects.results %}

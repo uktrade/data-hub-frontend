@@ -1,0 +1,14 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_left_column %}{% endblock %}
+
+{% block main_grid_right_column %}
+  {% if not company %}
+
+    <p class="flash flash--info">
+      Client company is required
+    </p>
+
+  {% endif %}
+
+{% endblock %}
