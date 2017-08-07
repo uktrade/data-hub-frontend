@@ -8,6 +8,15 @@ const { transformFromApi } = require('../../interactions/services/formatting')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
 
+function getCompanyDetails (req, res, next) {
+  getDitCompany(req.session.token, req.params.companyId)
+    .then((company) => {
+      res.locals.company = company
+      return next()
+    })
+    .catch(next)
+}
+
 async function getInvestmentDetails (req, res, next, id = req.params.id) {
   if (!isValidGuid(id)) {
     return next()
@@ -68,6 +77,7 @@ async function getInteractionDetails (req, res, next, interactionId = req.params
 }
 
 module.exports = {
+  getCompanyDetails,
   getInvestmentDetails,
   getInteractionDetails,
 }

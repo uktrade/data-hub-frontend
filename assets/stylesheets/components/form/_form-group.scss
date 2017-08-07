@@ -58,15 +58,10 @@
 .c-form-group--inline:not(fieldset) {
   @include media(tablet) {
     vertical-align: top;
-
-    &,
-    .c-form-group__inner {
-      display: inline-block;
-    }
+    display: inline-block;
 
     .c-form-group__label:not(legend) {
       display: inline-block;
-      margin-bottom: 0;
       margin-right: $default-spacing-unit / 2;
     }
 
