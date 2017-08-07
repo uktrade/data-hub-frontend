@@ -41,6 +41,7 @@
  # @param {string}   [props.countLabel=result] - text to show next to count (singular)
  # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
  # @param {object}   [props.filters] - an object containing selected filters
+ # @param {string}   [props.highlightTerm] - text to highlight
 #}
 {% macro ResultsSummary(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
@@ -54,6 +55,12 @@
       <div class="u-float-left">
         <span class="c-results-summary__count">{{ count }}</span> {{ countLabel | pluralise(count) }}
         {{ 'matching' if selectedFilters | length }}
+        {% if props.highlightTerm or selectedFilters | length %}
+          matching
+          {% if props.highlightTerm %}
+            <span class="u-highlight">{{ props.highlightTerm }}</span>
+          {% endif %}
+        {% endif %}
       </div>
       {% if selectedFilters | length > 1 %}
         <a

@@ -1,4 +1,6 @@
-const { find } = require('lodash')
+const { get, find } = require('lodash')
+
+const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 
 const companyRepository = require('../companies/repos')
 const { buildCompanyUrl } = require('../companies/services/data')
@@ -10,7 +12,9 @@ function searchAction (req, res, next) {
   const entity = find(entities, { path: req.params.searchPath })
 
   if (!entity) {
-    return res.render('search/views/index')
+    return res
+      .breadcrumb('Search')
+      .render('search/views/index')
   }
 
   const searchEntity = entity.entity
@@ -47,7 +51,42 @@ async function viewCompanyResult (req, res, next) {
   }
 }
 
+async function renderInvestmentProjects (req, res) {
+  const searchTerm = get(req, 'query.term', '').trim()
+  const entity = find(entities, { path: 'investment-projects' })
+  const searchEntity = entity.entity
+
+  const results = await search({
+    searchTerm,
+    searchEntity,
+    requestBody: req.body,
+    token: req.session.token,
+    page: req.query.page,
+  })
+    .then(results => {
+      return {
+        count: results.count,
+        page: results.page,
+        aggregations: buildSearchEntityResultsData(results.aggregations),
+        pagination: buildPagination(req.query, results),
+        items: results.investment_projects.map(transformInvestmentProjectToListItem),
+      }
+    })
+
+  res
+    .breadcrumb('Search', 'companies')
+    .breadcrumb('Investments')
+    .render('search/views/investment-projects', {
+      searchEntity,
+      searchPath: entity.path,
+      searchTerm,
+      results,
+      searchEntityResultsData: results.aggregations,
+    })
+}
+
 module.exports = {
   searchAction,
   viewCompanyResult,
+  renderInvestmentProjects,
 }

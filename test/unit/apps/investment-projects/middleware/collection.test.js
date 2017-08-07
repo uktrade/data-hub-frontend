@@ -66,4 +66,43 @@ describe('Investment projects collection middleware', () => {
       expect(this.next).to.have.been.calledOnce
     })
   })
+
+  describe('#getRequestBody', () => {
+    it('should not set req.body for empty query', async () => {
+      await this.controller.getRequestBody(this.req, this.res, this.next)
+
+      expect(this.req.body).to.be.an('object').and.empty
+      expect(this.next).to.have.been.calledOnce
+    })
+
+    it('should set req.body for valid query items', async () => {
+      this.req.query = {
+        stage: 'i1',
+        sector: 's1',
+        sortby: 'name:asc',
+        random: 'query',
+      }
+
+      await this.controller.getRequestBody(this.req, this.res, this.next)
+
+      expect(this.req.body).to.deep.equal({
+        stage: 'i1',
+        sector: 's1',
+        sortby: 'name:asc',
+      })
+      expect(this.next).to.have.been.calledOnce
+    })
+
+    it('should not set req.body invalid items', async () => {
+      this.req.query = {
+        random: 'query',
+        some: 'more',
+      }
+
+      await this.controller.getRequestBody(this.req, this.res, this.next)
+
+      expect(this.req.body).to.be.an('object').and.empty
+      expect(this.next).to.have.been.calledOnce
+    })
+  })
 })

@@ -24,25 +24,18 @@ function handleDefaultFilters (req, res, next) {
 
 async function getInvestmentProjectsCollection (req, res, next) {
   const page = parseInt(req.query.page, 10) || 1
-  const selectedFiltersQuery = pick(req.query, [
-    'stage',
-    'sector',
-    'investment_type',
-    'investor_company',
-    'estimated_land_date_before',
-    'estimated_land_date_after',
-  ])
-
-  const requestBody = Object.assign({}, {
-    sortby: req.query.sortby,
-  }, pickBy(selectedFiltersQuery))
 
   try {
-    res.locals.results = await searchInvestmentProjects({ token: req.session.token, requestBody, limit: 10, page })
+    res.locals.results = await searchInvestmentProjects({
+      token: req.session.token,
+      requestBody: req.body,
+      limit: 10,
+      page,
+    })
       .then(result => {
         result.items = result.items
           .map(transformInvestmentProjectToListItem)
-          .map(item => transformInvestmentListItemToHaveMetaLinks(item, selectedFiltersQuery))
+          .map(item => transformInvestmentListItemToHaveMetaLinks(item, req.body))
         result.pagination = buildPagination(req.query, result)
         return result
       })
@@ -53,7 +46,27 @@ async function getInvestmentProjectsCollection (req, res, next) {
   }
 }
 
+function getRequestBody (req, res, next) {
+  const selectedFiltersQuery = pick(req.query, [
+    'stage',
+    'sector',
+    'investment_type',
+    'investor_company',
+    'estimated_land_date_before',
+    'estimated_land_date_after',
+  ])
+
+  const selectedSortBy = req.query.sortby ? {
+    sortby: req.query.sortby,
+  } : null
+
+  req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+
+  next()
+}
+
 module.exports = {
   handleDefaultFilters,
+  getRequestBody,
   getInvestmentProjectsCollection,
 }
