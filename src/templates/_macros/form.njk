@@ -409,10 +409,12 @@
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.value] - Selected field value
+ # @param {string} [props.children] - Main field subfields
  # @param {string} [props.initialOption] - Initial option label to use for empty value
  #}
 {% macro SelectBox(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+  {% set fieldChildren = props.children or [] %}
 
   <select
     id="{{ props.fieldId }}"
@@ -429,6 +431,10 @@
       </option>
     {% endfor %}
   </select>
+
+  {% for child in fieldChildren %}
+    {{ child }}
+  {% endfor %}
 {% endmacro %}
 
 {##

@@ -1,10 +1,11 @@
-const { get } = require('lodash')
+const { get, isEmpty } = require('lodash')
 
 const { transformToApi, transformFromApi } = require('../../services/formatting')
 const { isValidGuid } = require('../../../../lib/controller-utils')
-const metadataRepo = require('../../../../lib/metadata')
+const metadata = require('../../../../lib/metadata')
 const { getAdvisers } = require('../../../adviser/repos')
 const {
+  buildMetaDataObj,
   transformObjectToOption,
   transformContactToOption,
 } = require('../../../transformers')
@@ -15,7 +16,8 @@ const {
 } = require('../../repos')
 
 async function populateForm (req, res, next) {
-  const equityCompanyId = get(res, 'locals.equityCompany.id', req.query['equity-company'])
+  const clientCompanyId = req.query['client-company']
+  const equityCompanyId = get(res, 'locals.equityCompany.id', req.params.equityCompanyId)
 
   if (!isValidGuid(equityCompanyId)) {
     return res.redirect('/investment-projects/create')
@@ -30,9 +32,12 @@ async function populateForm (req, res, next) {
 
     const contacts = equityCompany.contacts.map(transformContactToOption)
     const advisers = advisersResponse.results.map(transformObjectToOption)
-    const investmentTypes = metadataRepo.investmentTypeOptions.map(transformObjectToOption)
     const investmentData = transformFromApi(res.locals.investmentData)
+    const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption).filter((investmentType) => {
+      return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
+    })
 
+    res.locals.clientCompanyId = clientCompanyId || equityCompanyId
     res.locals.equityCompany = equityCompany
     res.locals.equityCompanyInvestment = equityCompanyInvestment
     res.locals.form = res.locals.form || {}
@@ -42,13 +47,14 @@ async function populateForm (req, res, next) {
       advisers,
       contacts,
       investmentTypes,
-      fdi: metadataRepo.fdiOptions,
-      nonFdi: metadataRepo.nonFdiOptions,
-      referralSourceActivities: metadataRepo.referralSourceActivityOptions,
-      referralSourceMarketing: metadataRepo.referralSourceMarketingOptions,
-      referralSourceWebsite: metadataRepo.referralSourceWebsiteOptions,
-      primarySectors: metadataRepo.sectorOptions,
-      businessActivities: metadataRepo.businessActivityOptions,
+      investmentTypesObj: buildMetaDataObj(investmentTypes),
+      fdi: metadata.fdiOptions.map(transformObjectToOption),
+      nonFdi: metadata.nonFdiOptions.map(transformObjectToOption),
+      referralSourceActivities: metadata.referralSourceActivityOptions.map(transformObjectToOption),
+      referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
+      referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
+      primarySectors: metadata.sectorOptions.map(transformObjectToOption),
+      businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
     }
 
     if (res.locals.form.state) {
@@ -56,15 +62,15 @@ async function populateForm (req, res, next) {
       // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
       if (investmentData.client_relationship_manager === req.session.user.id) {
-        res.locals.form.state['is-relationship-manager'] = investmentData.client_relationship_manager
+        res.locals.form.state.is_relationship_manager = investmentData.client_relationship_manager
       } else {
-        res.locals.form.state['is-relationship-manager'] = 'No'
+        res.locals.form.state.is_relationship_manager = 'false'
       }
 
       if (investmentData.referral_source_adviser === req.session.user.id) {
-        res.locals.form.state['is-referral-source'] = investmentData.referral_source_adviser
+        res.locals.form.state.is_referral_source = investmentData.referral_source_adviser
       } else {
-        res.locals.form.state['is-referral-source'] = 'No'
+        res.locals.form.state.is_referral_source = 'false'
       }
     }
 
@@ -75,7 +81,7 @@ async function populateForm (req, res, next) {
 }
 
 function handleFormPost (req, res, next) {
-  const formattedBody = transformToApi(req.body)
+  const formattedBody = transformToApi(Object.assign({}, req.body))
   const projectId = res.locals.projectId || req.params.id
   let saveMethod
 
@@ -92,10 +98,12 @@ function handleFormPost (req, res, next) {
     })
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.form = get(res, 'locals.form', {})
-        res.locals.form.errors = err.error
-        res.locals.form.state = req.body
-
+        res.locals.form = Object.assign({}, res.locals.form, {
+          state: req.body,
+          errors: {
+            messages: err.error,
+          },
+        })
         next()
       } else {
         next(err)
@@ -103,7 +111,28 @@ function handleFormPost (req, res, next) {
     })
 }
 
+function validateForm (req, res, next) {
+  const errorMessages = get(res.locals, 'form.errors.messages')
+
+  if (isEmpty(errorMessages)) {
+    return next()
+  }
+
+  if (!req.body.is_relationship_manager) {
+    errorMessages.is_relationship_manager = ['This field is required.']
+    delete errorMessages.client_relationship_manager
+  }
+
+  if (!req.body.is_referral_source) {
+    errorMessages.is_referral_source = ['This field is required.']
+    delete errorMessages.referral_source_adviser
+  }
+
+  next()
+}
+
 module.exports = {
   populateForm,
   handleFormPost,
+  validateForm,
 }
