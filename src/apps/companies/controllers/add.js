@@ -1,6 +1,7 @@
+const queryString = require('query-string')
+
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
-const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
 const { getDisplayCH, getDisplayCompany } = require('../services/formatting')
@@ -63,13 +64,13 @@ function postAddStepOne (req, res, next) {
       break
   }
 
-  const queryString = buildQueryString(params)
+  const qs = `?${queryString.stringify(params)}`
 
   if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
-    return res.redirect(`/companies/add/${req.body.business_type + queryString}`)
+    return res.redirect(`/companies/add/${req.body.business_type + qs}`)
   }
 
-  return res.redirect(`/companies/add-step-2/${queryString}`)
+  return res.redirect(`/companies/add-step-2/${qs}`)
 }
 
 async function getAddStepTwo (req, res, next) {
