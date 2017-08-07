@@ -28,6 +28,23 @@
 {% endblock %}
 
 {% block main_grid_right_column %}
+  {% call Form({
+    buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
+    action: 'change-project-stage',
+    class: 'flash flash--info',
+    disableFormActions: true if not investmentStatus.currentStage.isComplete,
+    hiddenFields: {
+      next_project_stage: investmentStatus.nextStage.id
+    }
+  }) %}
+    <p>
+      {% if investmentStatus.currentStage.isComplete %}
+        You have added all required information to complete this stage.
+        {% else %}
+        Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+      {% endif %}
+    </p>
+  {% endcall %}
 {% endblock %}
 
 {% block main_grid_left_column %}

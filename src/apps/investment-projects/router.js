@@ -23,6 +23,7 @@ const {
   interactionsFormMiddleware,
   investmentTypeFormMiddleware,
   projectManagementFormMiddleware,
+  projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
   teamMembersFormMiddleware,
@@ -176,5 +177,7 @@ router
     interactions.edit.editPostInteractionHandler,
     interactions.edit.editGetInteractionHandler
   )
+
+router.post('/:id/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
 module.exports = router
