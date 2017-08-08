@@ -121,7 +121,6 @@ const labels = {
   },
   collectionFilterLabels: {
     edit: {
-      client_relationship_manager: 'Client manager',
       stage: 'Stage',
       investment_type: 'Type of investment',
       sector: 'Sector',

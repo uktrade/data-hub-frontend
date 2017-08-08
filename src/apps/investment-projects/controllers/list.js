@@ -1,13 +1,13 @@
 const {
   buildInvestmentSorting,
   buildInvestmentFilters,
-  buildInvestmentFiltersMacroConfig,
+  buildMacroConfigFromFormFields,
 } = require('../builders')
 
 function renderInvestmentList (req, res) {
   const sort = buildInvestmentSorting(req.query)
-  const filters = buildInvestmentFilters(req.query, req.session.user)
-  const filterMacroConfig = buildInvestmentFiltersMacroConfig(filters)
+  const filters = buildInvestmentFilters(req.query)
+  const filterMacroConfig = buildMacroConfigFromFormFields(req.query)
 
   res.render('investment-projects/views/list', {
     title: 'Investment Projects',

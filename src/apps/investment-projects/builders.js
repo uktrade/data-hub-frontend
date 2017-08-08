@@ -1,22 +1,20 @@
-const { get, isString, isArray, map, pick, assign } = require('lodash')
+const { get, isString, isArray, pick } = require('lodash')
 const { transformObjectToOption } = require('../transformers')
 const metadataRepo = require('../../lib/metadata')
 const { collectionFilterLabels } = require('./labels')
+const { filterFields } = require('./form-fields')
 
-function buildInvestmentFilters (originalQuery = {}, user = {}) {
+function buildInvestmentFilters (filtersQuery = {}) {
   const formOptions = {
     stage: metadataRepo.investmentStageOptions.map(transformObjectToOption),
     investment_type: metadataRepo.investmentTypeOptions.map(transformObjectToOption),
     sector: metadataRepo.sectorOptions.map(transformObjectToOption),
-    client_relationship_manager: [
-      transformObjectToOption(user),
-    ],
   }
 
   return Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
     const filterOptions = formOptions[filterName] || []
 
-    let valueLabel = originalQuery[filterName]
+    let valueLabel = filtersQuery[filterName]
     let valuesArray = []
 
     if (isArray(valueLabel)) {
@@ -27,7 +25,7 @@ function buildInvestmentFilters (originalQuery = {}, user = {}) {
     }
 
     filtersObj[filterName] = {
-      value: originalQuery[filterName],
+      value: filtersQuery[filterName],
     }
 
     if (filterOptions.length) {
@@ -46,7 +44,7 @@ function buildInvestmentFilters (originalQuery = {}, user = {}) {
   }, {})
 }
 
-function buildInvestmentSorting (originalQuery = {}) {
+function buildInvestmentSorting (filtersQuery = {}) {
   const options = [
     { value: 'estimated_land_date:asc', label: 'Estimated land date: nearest first' },
     { value: 'estimated_land_date:desc', label: 'Estimated land date: latest first' },
@@ -60,7 +58,7 @@ function buildInvestmentSorting (originalQuery = {}) {
   const query = Object.assign(
     {},
     { sortby: options[0].value },
-    originalQuery
+    filtersQuery
   )
 
   return {
@@ -69,59 +67,23 @@ function buildInvestmentSorting (originalQuery = {}) {
   }
 }
 
-function buildInvestmentFiltersMacroConfig (filters) {
-  return map(filters, (filterObj, filterName) => {
-    const filterProps = pick(filterObj, ['value', 'label', 'options'])
-    const sharedProps = assign({}, filterProps, {
-      name: filterName,
-      modifier: ['light', 'smaller'],
-    })
+function buildMacroConfigFromFormFields (filtersQuery = {}) {
+  if (!filterFields) { return null }
 
-    switch (filterName) {
-      case 'client_relationship_manager':
-        return {
-          MultipleChoiceField: assign(sharedProps, {
-            type: 'checkbox',
-          }),
-        }
-      case 'stage':
-        return {
-          MultipleChoiceField: assign(sharedProps, {
-            type: 'checkbox',
-          }),
-        }
-      case 'investment_type':
-        return {
-          MultipleChoiceField: assign(sharedProps, {
-            type: 'checkbox',
-          }),
-        }
-      case 'sector':
-        return {
-          MultipleChoiceField: assign(sharedProps, {
-            initialOption: 'All sectors',
-          }),
-        }
-      case 'estimated_land_date_before':
-        return {
-          TextField: assign(sharedProps, {
-            placeholder: 'e.g. 2018-07-18',
-            hint: 'YYYY-MM-DD',
-          }),
-        }
-      case 'estimated_land_date_after':
-        return {
-          TextField: assign(sharedProps, {
-            placeholder: 'e.g. 2018-07-18',
-            hint: 'YYYY-MM-DD',
-          }),
-        }
+  const filters = buildInvestmentFilters(filtersQuery)
+
+  return filterFields.map(field => {
+    const macroName = Object.keys(field)[0]
+    const fieldData = filters[field[macroName].name]
+
+    return {
+      [macroName]: Object.assign({}, pick(fieldData, 'value', 'label', 'options'), field[macroName]),
     }
-  }).filter(x => x)
+  })
 }
 
 module.exports = {
   buildInvestmentFilters,
   buildInvestmentSorting,
-  buildInvestmentFiltersMacroConfig,
+  buildMacroConfigFromFormFields,
 }
