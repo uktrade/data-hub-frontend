@@ -7,7 +7,7 @@ const i18n = i18nFuture({
   path: path.resolve(__dirname, '../../locales/__lng__/__ns__.json'),
 })
 const steps = require('./steps')
-const fields = require('./fields')
+const fields = require('../../fields')
 const { FormController } = require('../../controllers')
 const { params } = require('../../middleware')
 

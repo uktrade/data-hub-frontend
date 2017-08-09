@@ -8,11 +8,11 @@
 
 {% block main_grid_right_column %}
   {% block form %}
-    {% call MultiStepForm({
-      buttonText: 'Continue',
+    {% call MultiStepForm(options | assign({
+      buttonText: options.buttonText or 'Continue',
       returnLink: backLink,
       errors: errors
-    }) %}
+    })) %}
 
       {% block fields %}
         {% for key, props in options.fields %}
