@@ -120,3 +120,10 @@
     line-height: 16px;
   }
 }
+
+.c-multiple-choice--inline {
+  width: auto;
+  display: inline-block;
+  margin-top: 0;
+  margin-right: $default-spacing-unit;
+}

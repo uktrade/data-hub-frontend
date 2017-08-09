@@ -70,15 +70,10 @@
       margin-right: $default-spacing-unit / 2;
     }
 
-    .c-form-control,
-    .c-multiple-choice {
+    .c-form-control {
       width: auto;
       display: inline-block;
       margin-top: 0;
-    }
-
-    .c-multiple-choice {
-      margin-right: $default-spacing-unit;
     }
 
     & + &:not(fieldset) {
