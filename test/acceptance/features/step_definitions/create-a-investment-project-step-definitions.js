@@ -39,16 +39,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewInvestmentProject(projectName)
   })
 
-  Then(/^I see the Investment project creation confirmation message$/, async () => {
-    await Investment
-      .getText('@projectNameFromSummaryPage', (result) => {
-        Investment.assert.equal(result.value, projectName)
-      })
-      .getText('@projectSummaryTitle', (result) => {
-        Investment.assert.equal(result.value, 'Investment project summary')
-      })
-  })
-
   Then(/^I verify my newly created Investment project in company profile$/, async () => {
     await Company
       .navigate()
@@ -80,7 +70,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentClientRelationManager(projectName)
-      .setValue('@clientRelationshipManager', 'a')
+      .click('@clientRelationshipManager')
       .getText('@clientRelationshipManagerList', (result) => {
         actualName = result.value
       })
@@ -93,7 +83,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName)
+        Investment.assert.equal(result.value, actualName.trim())
       })
   })
 
@@ -107,7 +97,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentReferralSourceAdviser(projectName)
-      .setValue('@referralSourceAdviser', 'a')
+      .click('@referralSourceAdviser')
       .getText('@referralSourceAdviserList', (result) => {
         actualName = result.value
       })
@@ -120,7 +110,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@referralSourceAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName)
+        Investment.assert.equal(result.value, actualName.trim())
       })
   })
 
@@ -134,12 +124,12 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentClientAndReferralDetails(projectName)
-      .setValue('@clientRelationshipManager', 'a')
+      .click('@clientRelationshipManager')
       .getText('@clientRelationshipManagerList', (result) => {
         actualName = result.value
       })
       .click('@clientRelationshipManagerList')
-      .setValue('@referralSourceAdviser', 'a')
+      .click('@referralSourceAdviser')
       .getText('@referralSourceAdviserList', (result) => {
         actualAdviserName = result.value
       })
@@ -152,10 +142,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName)
+        Investment.assert.equal(result.value, actualName.trim())
       })
       .getText('@referralSourceAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualAdviserName)
+        Investment.assert.equal(result.value, actualAdviserName.trim())
       })
   })
 
