@@ -193,7 +193,7 @@
  #}
 {% macro FormGroup(props) %}
   {% set groupElement = props.element or 'div' %}
-  {% set labelElement = 'label' if groupElement == 'div' else 'legend' %}
+  {% set labelElement = 'legend' if groupElement == 'fieldset' else 'label' %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
