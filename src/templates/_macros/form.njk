@@ -466,8 +466,8 @@
     {% endif %}
 
     {% for option in props.options %}
-      {% set selected = props.value or [] %}
-      {% set optionChildren = option.children or [] %}
+      {% set selected = props.value|default([]) %}
+      {% set optionChildren = option.children|default([]) %}
       <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
@@ -475,7 +475,7 @@
           name="{{ props.name }}"
           value="{{ option.value }}"
           id="{{ props.fieldId }}-{{ loop.index }}"
-          {% if option.value in selected %}checked{% endif %}
+          {% if not selected | isNull and option.value in selected | string %}checked{% endif %}
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
