@@ -1,5 +1,6 @@
 const moment = require('moment')
-const { compact, padStart, mapValues, get, isPlainObject, isNull } = require('lodash')
+const format = require('date-fns/format')
+const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const metadataRepository = require('../../../lib/metadata')
 
@@ -101,7 +102,7 @@ function transformFromApi (body) {
   const date = new Date(body['estimated_land_date'])
   if (date) {
     formatted['estimated_land_date_year'] = date.getFullYear()
-    formatted['estimated_land_date_month'] = padStart(date.getMonth() + 1, 2, 0) // month is zero based index
+    formatted['estimated_land_date_month'] = format(date, 'MM')
   }
 
   return Object.assign({}, body, formatted)
