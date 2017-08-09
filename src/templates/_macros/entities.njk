@@ -11,10 +11,10 @@
 {% macro Entity (props) %}
   {% if props.name and props.id and props.type %}
     {% set metaBadges = props.meta | filter(['MetaItem.type', 'badge']) %}
-    {% set metaTimes = props.meta | filter(['MetaItem.type', 'time']) %}
+    {% set metaTimes = props.meta | filter(['MetaItem.type', 'datetime']) %}
     {% set metaItems = props.meta
       | reject(['MetaItem.type', 'badge'])
-      | reject(['MetaItem.type', 'time'])
+      | reject(['MetaItem.type', 'datetime'])
     %}
 
     <div class="c-entity c-entity--{{ props.type }}">
@@ -39,13 +39,20 @@
         {% endif %}
       </div>
 
-      {% if metaItems | length %}
+      {% if metaItems | length or metaTimes | length %}
         <div class="c-entity__content">
           {{
             Meta({
               items: metaItems,
               highlightTerm: props.highlightTerm,
               modifier: ['inline', 'alternate']
+            })
+          }}
+          {{
+            Meta({
+              items: metaTimes,
+              highlightTerm: props.highlightTerm,
+              modifier: 'inline'
             })
           }}
         </div>

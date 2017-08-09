@@ -1,0 +1,12 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_right_column %}
+  {{
+    Results(results | assign({
+      el: 'header',
+      countLabel: 'contact',
+      sort: sort,
+      query: QUERY
+    }))
+  }}
+{% endblock %}
