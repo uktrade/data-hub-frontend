@@ -54,12 +54,12 @@
     }}
 
     {{ autocomplete("service",
-      label="Service offer",
+      label="Service",
       emptyLabel="Pick a service",
       hint="Please start typing to search for a service",
       value=formData.service,
       error=errors.service,
-      options=serviceOfferOptions)
+      options=serviceOptions)
     }}
 
     {{ autocomplete("dit_team",

@@ -152,7 +152,7 @@ module.exports.REASONS_FOR_ARCHIVE = [
   'Other',
 ]
 
-module.exports.getServiceOffers = function (token) {
+module.exports.getServices = function (token) {
   return authorisedRequest(token, `${config.apiRoot}/metadata/service/`)
 }
 

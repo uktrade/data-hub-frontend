@@ -4,8 +4,9 @@
  # @param {string} props.id - entity id
  # @param {string} props.name - entity name
  # @param {string} props.type - entity type (e.g. 'date' to format dates)
- # @param {array} [props.metaBadges{}] - an array of metadata item objects
- # @param {array} [props.metaItems{}] - an array of metadata item objects
+ # @param {array}  [props.metaBadges{}] - an array of metadata item objects
+ # @param {array}  [props.metaItems{}] - an array of metadata item objects
+ # @param {string} [props.highlightTerm] - text to use to apply highlight filter
  #}
 {% macro Entity (props) %}
   {% if props.name and props.id and props.type %}
@@ -14,18 +15,18 @@
 
     <div class="c-entity c-entity--{{ props.type }}">
       {% if props.code %}
-        <div class="c-entity__code">{{ props.code }}</div>
+        <div class="c-entity__code">{{ props.code | highlight(props.highlightTerm, true) }}</div>
       {% endif %}
 
       <div class="c-entity__header">
         <h3 class="c-entity__title">
-          <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ props.name }}</a>
+          <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ props.name | highlight(props.highlightTerm) }}</a>
         </h3>
 
         {% if metaBadges | length %}
           <div class="c-entity__badges">
             {% for metaBadge in metaBadges %}
-              {{ MetaItem(metaBadge) }}
+              {{ MetaItem(metaBadge | assign({ highlightTerm: props.highlightTerm })) }}
             {% endfor %}
           </div>
         {% endif %}
@@ -34,7 +35,7 @@
       {% if metaItems | length %}
         <div class="c-entity__content">
           {% for metaItem in metaItems %}
-            {{ MetaItem(metaItem) }}
+            {{ MetaItem(metaItem| assign({ highlightTerm: props.highlightTerm })) }}
           {% endfor %}
         </div>
       {% endif %}
@@ -56,13 +57,15 @@
  # @param {string} [props.isBadge] - whether the the CSS c-badge component should be applied to anchor
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
  # @param {string} [props.badgeModifier] - modifier for badge link if isBadge=true
+ # @param {string} [props.highlightTerm] - text to use to apply highlight filter
  #}
 {% macro MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set itemValueClass = 'c-badge ' + badgeModifier if props.isBadge else 'c-meta-item__value'%}
   {% if props.name and 'date' in props.name %}
-    {% set metaItemValue = props.value | formatDate('MMMM D, YYYY')  %}
+    {% set date = props.value | formatDate('D MMMM YYYY') %}
+    {% set metaItemValue = date if date else props.value  %}
   {% else %}
     {% set metaItemValue = props.value.name | default(props.value) %}
   {% endif %}
@@ -79,10 +82,10 @@
           class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
-          {{- metaItemValue -}}
+          {{- metaItemValue  | highlight(props.highlightTerm, true) -}}
         </a>
       {% else %}
-        <span class="{{ itemValueClass }}">{{ metaItemValue }}</span>
+        <span class="{{ itemValueClass }}">{{ metaItemValue | highlight(props.highlightTerm, true) }}</span>
       {% endif %}
     </div>
   {% endif %}

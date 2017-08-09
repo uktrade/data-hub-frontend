@@ -154,36 +154,38 @@ describe('Nunjucks form macros', () => {
     })
 
     describe('valid props', () => {
-      const component = macros.renderToDom('TextField', {
-        name: 'firstName',
-        label: 'First name',
-        value: 'Joe',
+      beforeEach(() => {
+        this.component = macros.renderToDom('TextField', {
+          name: 'firstName',
+          label: 'First name',
+          value: 'Joe',
+        })
       })
 
       it('should render a component with group id', () => {
-        expect(component.id).to.equal('group-field-firstName')
+        expect(this.component.id).to.equal('group-field-firstName')
       })
 
       it('should render a component with correct group class name', () => {
-        expect(component.className.trim()).to.equal('c-form-group')
+        expect(this.component.className.trim()).to.equal('c-form-group')
       })
 
       it('should render a component with label and input field', () => {
-        expect(component.querySelector('label').textContent.trim()).to.equal('First name')
-        expect(component.querySelector('input')).to.not.be.null
+        expect(this.component.querySelector('label').textContent.trim()).to.equal('First name')
+        expect(this.component.querySelector('input')).to.not.be.null
       })
 
       it('should render a component which has input with name and id based on its name', () => {
-        expect(component.querySelector('input').name).to.equal('firstName')
-        expect(component.querySelector('input').id).to.equal('field-firstName')
+        expect(this.component.querySelector('input').name).to.equal('firstName')
+        expect(this.component.querySelector('input').id).to.equal('field-firstName')
       })
 
       it('should render a component with text input by default', () => {
-        expect(component.querySelector('input').type).to.equal('text')
+        expect(this.component.querySelector('input').type).to.equal('text')
       })
 
       it('should render a field with value given', () => {
-        expect(component.querySelector('input').value).to.equal('Joe')
+        expect(this.component.querySelector('input').value).to.equal('Joe')
       })
     })
 

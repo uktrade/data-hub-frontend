@@ -1,9 +1,11 @@
 const { range, take, get, omitBy } = require('lodash')
-const { buildQueryString } = require('./url-helpers')
+const queryString = require('query-string')
 
 function getPageLink (page, query = {}) {
-  query.page = page
-  return buildQueryString(omitBy(query, val => val === ''))
+  const newQuery = Object.assign({}, query, {
+    page,
+  })
+  return `?${queryString.stringify(omitBy(newQuery, val => val === ''))}`
 }
 
 function truncatePages (pagination, blockSize) {

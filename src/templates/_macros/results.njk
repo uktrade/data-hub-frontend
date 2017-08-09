@@ -7,19 +7,21 @@
  # @param {object} props - component props
  # @param {array}  props.filters - a list of form field components
  # @param {text}   [props.heading=Filter results] - filters heading text
- # @param {object} [props.selectedSorting] - object containing selected sorting (query)
+ # @param {object} [props.sort] - object containing sorting
 #}
 {% macro ResultsFilters(props) %}
   {% set heading = props.heading | default('Filter results') %}
-  {% set selectedSorting = props.selectedSorting | assign({ custom: true }) %}
 
-  {% if props.filters|length %}
+  {% if props.filters | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
       class: 'c-filters js-AutoSubmit',
       buttonText: 'Refresh results',
       actionsClass: 'u-js-hidden',
-      hiddenFields: selectedSorting
+      hiddenFields: {
+        custom: true,
+        sortby: props.sort.selected
+      }
     }) %}
       <header class="u-clearfix">
         <h2 class="c-filters__heading">{{ heading }}</h2>
@@ -38,21 +40,29 @@
  # @param {string}   [props.el=div] - HTML element used for rendering component
  # @param {string}   [props.countLabel=result] - text to show next to count (singular)
  # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
- # @param {object}   [props.selectedFiltersHumanised] - an object containing selected filters (containing labels for option values)
+ # @param {object}   [props.filters] - an object containing selected filters
+ # @param {string}   [props.highlightTerm] - text to highlight
 #}
 {% macro ResultsSummary(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
   {% set el = props.el | default('div') %}
   {% set count = props.count | default('0') %}
   {% set countLabel = props.countLabel | default('result') %}
+  {% set selectedFilters = props.filters | mapValues('value') | removeNilAndEmpty %}
 
   <{{ el }} class="c-results-summary">
     <div class="u-clearfix">
       <div class="u-float-left">
         <span class="c-results-summary__count">{{ count }}</span> {{ countLabel | pluralise(count) }}
-        {{ 'matching' if props.selectedFiltersHumanised | length }}
+        {{ 'matching' if selectedFilters | length }}
+        {% if props.highlightTerm or selectedFilters | length %}
+          matching
+          {% if props.highlightTerm %}
+            <span class="u-highlight">{{ props.highlightTerm }}</span>
+          {% endif %}
+        {% endif %}
       </div>
-      {% if props.selectedFiltersHumanised | length > 1 %}
+      {% if selectedFilters | length > 1 %}
         <a
           href="?custom=true"
           class="c-results-summary__filter-remove-all u-float-right js-xhr"
@@ -63,16 +73,18 @@
       {% endif %}
     </div>
 
-    {% if props.selectedFiltersHumanised | length %}
+    {% if selectedFilters | length %}
       <div class="c-results-summary__filters">
-        {% for name, filterObj in props.selectedFiltersHumanised %}
+        {% for name, value in selectedFilters %}
+          {% set filter = props.filters[name] %}
           <span class="c-results-summary__filter">
-            <span class="c-results-summary__filter-type">{{ filterObj.label }}</span>
+            <span class="c-results-summary__filter-type">{{ filter.label }}</span>
             <span class="c-results-summary__filter-name">
               {%- if 'date' in name -%}
-                {{ filterObj.value | formatDate('MMMM D, YYYY') }}
+                {% set date = filter.value | formatDate('D MMMM YYYY') %}
+                {{ date if date else filter.value }}
               {%- else -%}
-                {{ filterObj.value }}
+                {{ filter.valueLabel }}
               {%- endif -%}
             </span>
             <a
@@ -93,16 +105,19 @@
  # @param {object}  [props.summaryEl] - results summary HTML element
  # @param {array{}} [props.items] - results items
  # @param {object}  [props.pagination] - results pagination
- # @param {object}  [props.selectedFilters={}] - object containing selected filters (query)
- # @param {array}   [props.sortingOptions] - object containing options for sort field
+ # @param {object}  [props.filters] - object containing filters configuration
+ # @param {object}  [props.sort] - object containing selected sorting and sorting options
+ # @param {string}  [props.sort.selected] - selected sorting mode
+ # @param {array}   [props.sort.options] - sorting options
+ # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
 #}
 {% macro Results(props) %}
-  {% set selectedFilters = props.selectedFilters %}
+  {% set selectedFilters = props.filters | mapValues('value') %}
 
   <article class="c-results">
     {{ ResultsSummary(props | assign({ el: props.summaryEl })) }}
 
-    {% if props.items|length and (props.pagination or props.sortingOptions) %}
+    {% if props.items|length and (props.pagination or props.sort.options) %}
       <div class="c-results__sort">
         {% if props.pagination %}
           <span class="c-results__page-summary">
@@ -110,7 +125,7 @@
           </span>
         {% endif %}
 
-        {% if props.sortingOptions | length %}
+        {% if props.sort | length %}
           {% call Form({
             method: 'get',
             class: 'c-results__sort-form js-AutoSubmit',
@@ -120,8 +135,8 @@
             {{ MultipleChoiceField({
               name: 'sortby',
               label: 'Sort by',
-              value: props.selectedSorting,
-              options: props.sortingOptions,
+              value: props.sort.selected,
+              options: props.sort.options,
               modifier: ['small', 'inline', 'light']
             }) }}
             <button class="button button-secondary u-js-hidden">Sort</button>
@@ -134,7 +149,7 @@
       <ol class="c-entity-list">
         {% for project in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(project) }}
+            {{ Entity(project | assign({ highlightTerm: props.highlightTerm })) }}
           </li>
         {% endfor %}
       </ol>

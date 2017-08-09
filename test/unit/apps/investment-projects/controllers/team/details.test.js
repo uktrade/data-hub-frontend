@@ -12,17 +12,17 @@ describe('Investment team details controller', () => {
     this.reqStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
     this.clientRelationshipManagementData = { name: 'fred' }
+    this.teamMembersData = { adviser: 'Fred' }
     this.projectManagementData = [{ name: 'fred' }]
     this.transformProjectManagementForViewStub = this.sandbox.stub().returns(this.projectManagementData)
     this.transformClientRelationshipManagementForViewStub = this.sandbox.stub().returns(this.clientRelationshipManagementData)
+    this.transformTeamMembersForViewStub = this.sandbox.stub().returns(this.teamMembersData)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/details', {
-      '../../../../lib/controller-utils': {
-        getDataLabels: this.getDataLabelsStub,
-      },
       '../../services/formatting': {
         transformProjectManagementForView: this.transformProjectManagementForViewStub,
         transformClientRelationshipManagementForView: this.transformClientRelationshipManagementForViewStub,
+        transformTeamMembersForView: this.transformTeamMembersForViewStub,
       },
     })
   })
@@ -58,6 +58,26 @@ describe('Investment team details controller', () => {
       render: (template, options) => {
         expect(this.transformClientRelationshipManagementForViewStub).to.be.calledWith(data)
         expect(options.clientRelationshipManagementData).to.deep.equal(this.clientRelationshipManagementData)
+        done()
+      },
+    }, (error) => {
+      done(error)
+    })
+  })
+
+  it('should get formatted team member data', (done) => {
+    const data = Object.assign({}, investmentData)
+    data.team_members = [{
+      name: 'Fred Smith',
+    }]
+
+    this.controller.getDetailsHandler(this.reqStub, {
+      locals: {
+        investmentData: data,
+      },
+      breadcrumb: this.breadcrumbStub,
+      render: (template, options) => {
+        expect(options.teamMembersData).to.deep.equal([this.teamMembersData])
         done()
       },
     }, (error) => {

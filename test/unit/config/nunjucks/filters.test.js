@@ -2,13 +2,40 @@ const filters = require('~/config/nunjucks/filters')
 
 describe('nunjucks filters', () => {
   describe('#highlight', () => {
-    it('should render string with highlight', () => {
-      const searchTerm = 'example term'
-      const mockString = `we should see ${searchTerm} highlighted here`
+    it('should not render highlight for empty string', () => {
+      const searchTerm = ''
+      const mockString = 'we should see nothing highlighted here'
 
       const highlightedString = filters.highlight(mockString, searchTerm)
 
-      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">${searchTerm}</span> highlighted here`)
+      expect(highlightedString).to.equal('we should see nothing highlighted here')
+    })
+
+    it('should not render highlight for string with white space', () => {
+      const searchTerm = ' '
+      const mockString = 'we should see nothing highlighted here'
+
+      const highlightedString = filters.highlight(mockString, searchTerm)
+
+      expect(highlightedString).to.equal('we should see nothing highlighted here')
+    })
+
+    it('should render string with partial highlight (default)', () => {
+      const searchTerm = 'examp'
+      const mockString = 'we should see example term highlighted here'
+
+      const highlightedString = filters.highlight(mockString, searchTerm)
+
+      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">examp</span>le term highlighted here`)
+    })
+
+    it('should render string only with full word highlight', () => {
+      const searchTerm = 'example term'
+      const mockString = 'we should see example term highlighted here'
+
+      const highlightedString = filters.highlight(mockString, searchTerm, true)
+
+      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">example term</span> highlighted here`)
     })
 
     it('should render string without highlight', () => {

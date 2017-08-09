@@ -293,6 +293,14 @@ function transformClientRelationshipManagementForView (investmentData) {
   return result
 }
 
+function transformTeamMembersForView ({ adviser, role }) {
+  return {
+    adviser: adviser.name,
+    team: adviser.dit_team.name,
+    role: role,
+  }
+}
+
 module.exports = {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
@@ -304,4 +312,5 @@ module.exports = {
   transformBriefInvestmentSummary,
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
+  transformTeamMembersForView,
 }

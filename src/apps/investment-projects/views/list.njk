@@ -5,52 +5,52 @@
 {% block main_grid_left_column %}
   {{
     ResultsFilters({
-      selectedSorting: form.data.sorting,
+      sort: sort,
       filters: [
         MultipleChoiceField({
-          type: 'radio',
+          type: 'checkbox',
           name: 'stage',
-          label: form.labels.stage,
-          value: form.data.filters.stage,
+          label: filters.stage.label,
+          value: filters.stage.value,
+          options: filters.stage.options,
           initialOption: 'All stages',
-          options: form.options.stage,
           modifier: ['smaller', 'light']
         }),
 
         MultipleChoiceField({
-          type: 'radio',
+          type: 'checkbox',
           name: 'investment_type',
-          label: form.labels.investment_type,
-          value: form.data.filters.investment_type,
-          options: form.options.investment_type,
+          label: filters.investment_type.label,
+          value: filters.investment_type.value,
+          options: filters.investment_type.options,
           initialOption: 'All types',
           modifier: ['smaller', 'light']
         }),
 
         MultipleChoiceField({
           name: 'sector',
-          label: form.labels.sector,
-          value: form.data.filters.sector,
-          options: form.options.sector,
+          label: filters.sector.label,
+          value: filters.sector.value,
+          options: filters.sector.options,
           initialOption: 'All sectors',
           modifier: ['smaller', 'light']
         }),
 
         TextField({
-          label: form.labels.estimated_land_date_before,
           name: 'estimated_land_date_before',
           placeholder: 'e.g. 2018-07-18',
           hint: 'YYYY-MM-DD',
-          value: form.data.filters.estimated_land_date_before,
+          label: filters.estimated_land_date_before.label,
+          value: filters.estimated_land_date_before.value,
           modifier: ['small', 'light']
         }),
 
         TextField({
-          label: form.labels.estimated_land_date_after,
           name: 'estimated_land_date_after',
           placeholder: 'e.g. 2017-09-01',
           hint: 'YYYY-MM-DD',
-          value: form.data.filters.estimated_land_date_after,
+          label: filters.estimated_land_date_after.label,
+          value: filters.estimated_land_date_after.value,
           modifier: ['small', 'light']
         })
       ]
@@ -62,10 +62,8 @@
   {{
     Results(results | assign({
       el: 'header',
-      sortingOptions: form.options.sortby,
-      selectedFilters: form.data.filters,
-      selectedSorting: form.data.sorting.sortby,
-      selectedFiltersHumanised: selectedFiltersHumanised,
+      sort: sort,
+      filters: filters,
       countLabel: 'project',
       query: QUERY
     }))

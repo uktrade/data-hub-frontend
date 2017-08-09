@@ -56,18 +56,17 @@
 {##
  # Render page local header
  # @param {object} props - An object containing local header properties
- # @param {string} [heading] - page heading
- # @param {string} [heading] - page heading
- # @param {string} [headingBefore] - a string before heading (safe to render HTML)
- # @param {string} [headingSuffix] - a string suffix for heading (safe to render HTML)
- # @param {object} [breadcrumbs] - an object containing page breadcrumbs
- # @param {object} [messages] - an object containing flash messages
- #
+ # @param {string} [props.heading] - page heading
+ # @param {string} [props.heading] - page heading
+ # @param {string} [props.headingBefore] - a string before heading (safe to render HTML)
+ # @param {string} [props.headingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {object} [props.breadcrumbs] - an object containing page breadcrumbs
+ # @param {object} [props.messages] - an object containing flash messages
  # @param {function} [props.caller] - Optional inner contents
  #}
 {% macro LocalHeader(props) %}
   {% set breadcrumbs = props.breadcrumbs | default(BREADCRUMBS) %}
-  {% set messages = props.messages | default(messages) %}
+  {% set messages = props.messages | default(getMessages()) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}

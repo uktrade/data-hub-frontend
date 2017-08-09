@@ -42,10 +42,6 @@ select.c-form-control {
   background-size: .8em;
   padding-right: $default-spacing-unit * 2;
 
-  &:-moz-focusring {
-    color: transparent;
-  }
-
   &::-ms-expand {
     display: none;
   }
