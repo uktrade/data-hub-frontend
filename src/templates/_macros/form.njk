@@ -324,10 +324,9 @@
     {% if props.type in ['checkbox', 'radio'] %}
       {{ MultipleChoice(props) }}
     {% else %}
-      {% call SelectBox(props | assign({ class: inputClass })) %}
-        {{ props.caller() if props.caller }}
-      {% endcall %}
+      {{ SelectBox(props | assign({ class: inputClass })) }}
     {% endif %}
+    {{ props.caller() if props.caller }}
   {% endcall %}
 {% endmacro %}
 
