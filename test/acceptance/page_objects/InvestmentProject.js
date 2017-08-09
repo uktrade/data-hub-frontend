@@ -47,7 +47,10 @@ module.exports = {
       locateStrategy: 'xpath',
     },
     typeOfFDI: '#fdi_type-wrapper',
-    typeOfFDIList: '#fdi_type-wrapper option:nth-child(2)',
+    typeOfFDIListAcquisition: '#fdi_type-wrapper option:nth-child(2)',
+    typeOfFDIListCapitalOnly: '#fdi_type-wrapper option:nth-child(3)',
+    typeOfFDIListMerger: '#fdi_type-wrapper option:nth-child(7)',
+    typeOfFDIListRetention: '#fdi_type-wrapper option:nth-child(8)',
     typeOfNonFDI: '#non_fdi_type-wrapper',
     typeOfNonFDIList: '#non_fdi_type-wrapper option:nth-child(2)',
     primarySector: '#sector-wrapper',
@@ -166,7 +169,7 @@ module.exports = {
       selectTypeOfFDI () {
         return this
           .click('@typeOfFDI')
-          .click('@typeOfFDIList')
+          .click('@typeOfFDIListAcquisition')
       },
       selectTypeOfNonFDI () {
         return this
@@ -233,11 +236,11 @@ module.exports = {
       },
       submitTheForm () {
         return this
-        .submitForm('form')
+          .submitForm('form')
       },
       clickOnInvestmentProjectsTabUnderSearch () {
         return this
-        .click('@investmentprojecttab')
+          .click('@investmentprojecttab')
       },
 
       createNewInvestmentProject (projectName) {

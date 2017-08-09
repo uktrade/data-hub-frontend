@@ -10,7 +10,7 @@ module.exports = {
       selector: '//a[contains(@href, "sign-out")]',
       locateStrategy: 'xpath',
     },
-    flashMessage: '.flash-message',
+    flashMessage: '.c-messages__item--success',
     usernameField: '#field-username',
     passwordField: '#field-password',
     searchBar: '#field-term',
