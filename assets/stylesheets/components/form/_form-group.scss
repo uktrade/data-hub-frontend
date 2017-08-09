@@ -55,7 +55,7 @@
   }
 }
 
-.c-form-group--inline {
+.c-form-group--inline:not(fieldset) {
   @include media(tablet) {
     vertical-align: top;
 
