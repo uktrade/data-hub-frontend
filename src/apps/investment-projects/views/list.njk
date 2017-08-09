@@ -6,7 +6,7 @@
   {{
     ResultsFilters({
       sort: sort,
-      filters: filterMacroConfig | applyMacro
+      filters: applyMacro(filterMacroConfig)
     })
   }}
 {% endblock %}
