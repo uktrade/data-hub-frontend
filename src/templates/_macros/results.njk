@@ -53,7 +53,8 @@
   <{{ el }} class="c-results-summary">
     <div class="u-clearfix">
       <div class="u-float-left">
-        <span class="c-results-summary__count">{{ count }}</span> {{ countLabel | pluralise(count) }}
+        <span class="c-results-summary__count">{{ count | formatNumber }}</span>
+        {{ countLabel | pluralise(count) }}
         {{ 'matching' if selectedFilters | length }}
         {% if props.highlightTerm or selectedFilters | length %}
           matching
