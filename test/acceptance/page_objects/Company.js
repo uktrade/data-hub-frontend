@@ -28,7 +28,7 @@ module.exports = {
     businessTypeForeignDropdownOptionCharity: '#business_type_for_other option[value="Charity"]',
     businessTypeUKOtherDropdownOptionCharity: '#business_type_uk_other option[value="Charity"]',
     newCompanyNameField: '#name',
-    newCompanyTradingNameField: '#alias',
+    newCompanyTradingNameField: '#trading_name',
     newCompanyRegisteredAddress1Field: '#registered_address_1',
     newCompanyRegisteredAddress2Field: '#registered_address_2',
     newCompanyTownField: '#registered_address_town',

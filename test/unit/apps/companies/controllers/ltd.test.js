@@ -170,7 +170,7 @@ describe('Company controller, ltd', function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
           expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
+          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['trading_name', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
           done()
         },
       }
@@ -333,7 +333,7 @@ describe('Company controller, ltd', function () {
         registered_address_county: 'county',
         registered_address_postcode: 'postcode',
         registered_address_country: '222',
-        alias: 'trading_name',
+        trading_name: 'trading_name',
         trading_address_1: 'trading address 1',
         trading_address_2: 'trading address 2',
         trading_address_town: 'trading town',
@@ -382,7 +382,7 @@ describe('Company controller, ltd', function () {
       expectHiddenField(document, 'registered_address_country', formData.registered_address_country)
     })
     it('should include all the company fields that can be edited', function () {
-      expectTextFieldWithLabel(document, 'alias', 'Trading name', formData.trading_name)
+      expectTextFieldWithLabel(document, 'trading_name', 'Trading name', formData.trading_name)
       expectTextFieldWithLabel(document, 'trading_address_1', 'Business and street (optional)', formData.trading_address_1)
       expectTextFieldWithLabel(document, 'trading_address_2', '', formData.trading_address_2)
       expectTextFieldWithLabel(document, 'trading_address_town', 'Town or city (optional)', formData.trading_address_town)

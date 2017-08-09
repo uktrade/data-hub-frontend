@@ -16,7 +16,7 @@
   "companies": [
     {
       "account_manager": null,
-      "alias": null,
+      "trading_name": null,
       "archived": false,
       "archived_by": null,
       "archived_on": null,
@@ -76,7 +76,7 @@
     },
     {
       "account_manager": null,
-      "alias": null,
+      "trading_name": null,
       "archived": false,
       "archived_by": null,
       "archived_on": null,
@@ -132,7 +132,7 @@
     },
     {
       "account_manager": null,
-      "alias": null,
+      "trading_name": null,
       "archived": false,
       "archived_by": null,
       "archived_on": null,

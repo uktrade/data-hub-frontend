@@ -20,7 +20,7 @@ describe('Company controller, foreign', function () {
   const company = {
     id: '9999',
     company_number: '10620176',
-    copanies_house_data: null,
+    companies_house_data: null,
     name: 'Freds ltd',
     business_type: {
       id: '43134234',
@@ -146,7 +146,7 @@ describe('Company controller, foreign', function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
           expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
+          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['business_type', 'registered_address', 'trading_name', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
           done()
         },
       }
@@ -279,7 +279,7 @@ describe('Company controller, foreign', function () {
         registered_address_county: 'county',
         registered_address_postcode: 'postcode',
         registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        alias: 'trading_name',
+        trading_name: 'trading_name',
         trading_address_1: 'trading address 1',
         trading_address_2: 'trading address 2',
         trading_address_town: 'trading town',
@@ -324,7 +324,7 @@ describe('Company controller, foreign', function () {
       expectTextFieldWithLabel(document, 'registered_address_county', 'County (optional)', formData.registered_address_county)
       expectTextFieldWithLabel(document, 'registered_address_postcode', 'Postcode (optional)', formData.registered_address_postcode)
       expectDropdownWithLabel(document, 'registered_address_country', 'Country', formData.registered_address_country)
-      expectTextFieldWithLabel(document, 'alias', 'Trading name', formData.trading_name)
+      expectTextFieldWithLabel(document, 'trading_name', 'Trading name', formData.trading_name)
       expectTextFieldWithLabel(document, 'trading_address_1', 'Business and street (optional)', formData.trading_address_1)
       expectTextFieldWithLabel(document, 'trading_address_2', '', formData.trading_address_2)
       expectTextFieldWithLabel(document, 'trading_address_town', 'Town or city (optional)', formData.trading_address_town)

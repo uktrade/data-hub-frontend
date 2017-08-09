@@ -5,7 +5,7 @@ const companyFormattingService = require('../services/formatting')
 const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
-const companyWithoutCHKeys = ['business_type', 'registered_address', 'alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const companyWithoutCHKeys = ['business_type', 'registered_address', 'trading_name', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 
 async function getDetails (req, res, next) {
   try {
