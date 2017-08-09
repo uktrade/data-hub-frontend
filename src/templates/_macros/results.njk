@@ -147,9 +147,9 @@
 
     {% if props.items | length %}
       <ol class="c-entity-list">
-        {% for project in props.items %}
+        {% for result in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(project | assign({ highlightTerm: props.highlightTerm })) }}
+            {{ Entity(result | assign({ highlightTerm: props.highlightTerm })) }}
           </li>
         {% endfor %}
       </ol>
