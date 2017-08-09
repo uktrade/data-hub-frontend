@@ -34,20 +34,20 @@ function transformInvestmentProjectToListItem ({
         name: 'investor_company',
         label: 'Investor',
         value: investor_company,
-        isBadge: false,
       }, {
         name: 'estimated_land_date',
         label: 'Estimated to land',
         value: estimated_land_date,
         isInert: true,
-        isBadge: false,
       }, {
         name: 'sector',
         label: 'Sector',
         value: sector,
-        isBadge: false,
       },
-    ],
+    ].map(item => {
+      item.isBadge = !!item.isBadge
+      return item
+    }),
   }
 }
 
