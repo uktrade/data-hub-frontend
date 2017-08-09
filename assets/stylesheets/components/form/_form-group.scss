@@ -81,7 +81,7 @@
       margin-right: $default-spacing-unit;
     }
 
-    & + & {
+    & + &:not(fieldset) {
       margin-left: $default-spacing-unit;
       margin-top: 0;
     }
