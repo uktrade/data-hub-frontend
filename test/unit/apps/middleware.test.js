@@ -77,4 +77,43 @@ describe('Apps middleware', () => {
       expect(redirectMock).to.have.been.calledWith('/base-url/first')
     })
   })
+
+  describe('setDefaultQuery()', () => {
+    beforeEach(() => {
+      this.resMock = {
+        redirect: this.sandbox.spy(),
+      }
+    })
+
+    it('should redirect to default query if initial query is empty', () => {
+      const reqMock = {
+        query: {},
+        baseUrl: '/sub-app',
+      }
+      this.middleware.setDefaultQuery({
+        filter: 'apple',
+        sortby: 'sweetness',
+      })(reqMock, this.resMock, this.nextSpy)
+
+      expect(this.nextSpy).to.not.have.been.called
+      expect(this.resMock.redirect).to.be.calledWith('/sub-app?filter=apple&sortby=sweetness')
+    })
+
+    it('should not redirect if query contains properties', () => {
+      const reqMock = {
+        query: {
+          filter: 'pear',
+        },
+        baseUrl: '/sub-app',
+      }
+
+      this.middleware.setDefaultQuery({
+        filter: 'apple',
+        sortby: 'sweetness',
+      })(reqMock, this.resMock, this.nextSpy)
+
+      expect(this.nextSpy).to.have.been.called
+      expect(this.resMock.redirect).to.not.have.been.called
+    })
+  })
 })

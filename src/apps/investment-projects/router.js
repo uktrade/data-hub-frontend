@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
+const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
 const {
   getBriefInvestmentSummary,
@@ -27,7 +27,7 @@ const projectManagementFormMiddleware = require('./middleware/forms/project-mana
 const clientRelationshipManagementFormMiddleware = require('./middleware/forms/client-relationship-management')
 const teamMembersFormMiddleware = require('./middleware/forms/team-members')
 const { renderInvestmentList } = require('./controllers/list')
-const { handleDefaultFilters, getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
+const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 
 const LOCAL_NAV = [
   { path: 'details', label: 'Project details' },
@@ -37,12 +37,18 @@ const LOCAL_NAV = [
   { path: 'audit', label: 'Audit history' },
 ]
 
+const currentYear = (new Date()).getFullYear()
+const DEFAULT_COLLECTION_QUERY = {
+  estimated_land_date_after: `${currentYear}-04-05`,
+  estimated_land_date_before: `${currentYear + 1}-04-06`,
+}
+
 router.use('/:id/', setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
 
-router.get('/', handleDefaultFilters, getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
 
 router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
 router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)
