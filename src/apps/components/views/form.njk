@@ -313,4 +313,48 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Fields with actions') %}
+    {% set removeButton %}
+      <button class="button button--link c-form-group__action">Remove</button>
+    {% endset %}
+
+    {% call Form(form) %}
+      {{ MultipleChoiceField({
+        name: 'averageSalary-light',
+        label: 'Average salary range',
+        options: form.options.averageSalaryRange,
+        error: form.errors.messages.averageSalaryLight,
+        selected: form.state.averageSalaryLight,
+        innerContent: removeButton
+      }) }}
+
+      {{ MultipleChoiceField({
+        name: 'averageSalary-light',
+        label: 'Average salary range',
+        options: form.options.averageSalaryRange,
+        error: form.errors.messages.averageSalaryLight,
+        selected: form.state.averageSalaryLight,
+        innerContent: removeButton
+      }) }}
+
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        innerContent: removeButton
+      }) }}
+
+      {{ TextField({
+        name: 'name-small',
+        label: 'Company name',
+        placeholder: 'e.g. Hooli',
+        error: form.errors.messages.name,
+        value: form.state.name,
+        innerContent: removeButton
+      }) }}
+    {% endcall %}
+  {% endcall %}
+
 {% endblock %}
