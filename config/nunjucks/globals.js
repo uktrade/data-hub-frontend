@@ -1,4 +1,4 @@
-const { assign, omit, isFunction } = require('lodash')
+const { assign, omit, isFunction, isArray, map } = require('lodash')
 const queryString = require('query-string')
 
 module.exports = {
@@ -13,6 +13,23 @@ module.exports = {
     if (!isFunction(macro)) { return }
 
     return macro
+  },
+
+  // Constructs macro from a specially formatted object or array of objects:
+  // { MacroName: { prop1: 'A', prop2: 'B' } }
+  applyMacro (config) {
+    function renderMacro (macroConfig) {
+      return map(macroConfig, (props, name) => {
+        const macro = this.env.globals.callAsMacro.call(this, name)
+        return macro(props)
+      })[0]
+    }
+
+    if (isArray(config)) {
+      return config.map(renderMacro.bind(this))
+    }
+
+    return renderMacro.call(this, config)
   },
 
   buildQuery (query = {}, include = {}, excludeKeys = []) {

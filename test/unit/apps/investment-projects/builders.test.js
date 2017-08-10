@@ -15,6 +15,22 @@ describe('Investment projects builders', () => {
           { id: 's2', name: 'Sector #2' },
         ],
       },
+      './form-fields': {
+        filterFields: [
+          {
+            MultipleChoiceField: {
+              type: 'checkbox',
+              name: 'stage',
+              modifier: 'smaller',
+            },
+          }, {
+            MultipleChoiceField: {
+              type: 'radio',
+              name: 'investment_type',
+            },
+          },
+        ],
+      },
     })
   })
 
@@ -111,6 +127,25 @@ describe('Investment projects builders', () => {
       const actual = this.controller.buildInvestmentSorting({ sortby: 'stage.name' })
 
       expect(actual.selected).to.equal('stage.name')
+    })
+  })
+
+  describe('#buildMacroConfigFromFormFields', () => {
+    it('should return an object with configuration for applyMacro Nunjucks filter', () => {
+      const actual = this.controller.buildMacroConfigFromFormFields()
+
+      expect(actual).to.have.length(2)
+      expect(actual[0]).to.have.property('MultipleChoiceField').and.to.include({
+        type: 'checkbox',
+        label: 'Stage',
+        name: 'stage',
+        modifier: 'smaller',
+      })
+      expect(actual[1]).to.have.property('MultipleChoiceField').and.to.include({
+        label: 'Type of investment',
+        name: 'investment_type',
+        type: 'radio',
+      })
     })
   })
 })

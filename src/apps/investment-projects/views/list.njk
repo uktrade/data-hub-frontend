@@ -6,54 +6,7 @@
   {{
     ResultsFilters({
       sort: sort,
-      filters: [
-        MultipleChoiceField({
-          type: 'checkbox',
-          name: 'stage',
-          label: filters.stage.label,
-          value: filters.stage.value,
-          options: filters.stage.options,
-          initialOption: 'All stages',
-          modifier: ['smaller', 'light']
-        }),
-
-        MultipleChoiceField({
-          type: 'checkbox',
-          name: 'investment_type',
-          label: filters.investment_type.label,
-          value: filters.investment_type.value,
-          options: filters.investment_type.options,
-          initialOption: 'All types',
-          modifier: ['smaller', 'light']
-        }),
-
-        MultipleChoiceField({
-          name: 'sector',
-          label: filters.sector.label,
-          value: filters.sector.value,
-          options: filters.sector.options,
-          initialOption: 'All sectors',
-          modifier: ['smaller', 'light']
-        }),
-
-        TextField({
-          name: 'estimated_land_date_before',
-          placeholder: 'e.g. 2018-07-18',
-          hint: 'YYYY-MM-DD',
-          label: filters.estimated_land_date_before.label,
-          value: filters.estimated_land_date_before.value,
-          modifier: ['small', 'light']
-        }),
-
-        TextField({
-          name: 'estimated_land_date_after',
-          placeholder: 'e.g. 2017-09-01',
-          hint: 'YYYY-MM-DD',
-          label: filters.estimated_land_date_after.label,
-          value: filters.estimated_land_date_after.value,
-          modifier: ['small', 'light']
-        })
-      ]
+      filters: applyMacro(filterMacroConfig)
     })
   }}
 {% endblock %}
