@@ -6,6 +6,7 @@ const {
   isArray,
   isPlainObject,
   isEmpty,
+  isNull,
   isString,
   pickBy,
   filter,
@@ -32,6 +33,7 @@ const filters = {
   map,
   mapValues,
   isArray,
+  isNull,
 
   highlight (string, searchTerm, shouldMatchFullWord = false) {
     if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) { return string }

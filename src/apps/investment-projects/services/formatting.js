@@ -128,8 +128,12 @@ function transformInvestmentValueForView (data) {
   }
 
   return Object.assign({}, data, {
-    total_investment: formatCurrency(data.total_investment),
-    foreign_equity_investment: formatCurrency(data.foreign_equity_investment),
+    total_investment: data.client_cannot_provide_total_investment
+      ? 'Client cannot provide this information'
+      : formatCurrency(data.total_investment),
+    foreign_equity_investment: data.client_cannot_provide_foreign_investment
+      ? 'Client cannot provide this information'
+      : formatCurrency(data.foreign_equity_investment),
     number_new_jobs: data.number_new_jobs && `${data.number_new_jobs} new jobs`,
     number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),

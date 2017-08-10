@@ -4,140 +4,155 @@
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Edit value</h2>
 
-  {{ errorPanel(form.errors) }}
+  {% call Form({
+    buttonText: 'Save',
+    errors: form.errors
+  }) %}
 
-  <form method="post">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    {% call MultipleChoiceField({
+        name: 'client_cannot_provide_total_investment',
+        type: 'radio',
+        modifier: 'inline',
+        label: form.labels.client_cannot_provide_total_investment,
+        value: form.state.client_cannot_provide_total_investment,
+        error: form.errors.messages.client_cannot_provide_total_investment,
+        options: [
+          { label: 'Yes', value: 'false' },
+          { label: 'No', value: 'true' }
+        ]
+      })
+    %}
+      {{ TextField({
+        name: 'total_investment',
+        label: form.labels.total_investment,
+        value: form.state.total_investment,
+        error: form.errors.messages.total_investment,
+        modifier: 'subfield',
+        condition: {
+          name: 'client_cannot_provide_total_investment',
+          value: 'false'
+        }
+      }) }}
+    {% endcall %}
 
-    {{ textbox(
-        'total_investment',
-        value=form.state['total_investment'],
-        label=form.labels['total_investment']
-    ) }}
+    {% call MultipleChoiceField({
+        name: 'client_cannot_provide_foreign_investment',
+        type: 'radio',
+        modifier: 'inline',
+        label: form.labels.client_cannot_provide_foreign_investment,
+        value: form.state.client_cannot_provide_foreign_investment,
+        error: form.errors.messages.client_cannot_provide_foreign_investment,
+        options: [
+          { label: 'Yes', value: 'false' },
+          { label: 'No', value: 'true' }
+        ]
+      })
+    %}
+      {{ TextField({
+        name: 'foreign_equity_investment',
+        label: form.labels.foreign_equity_investment,
+        value: form.state.foreign_equity_investment,
+        error: form.errors.messages.foreign_equity_investment,
+        modifier: 'subfield',
+        condition: {
+          name: 'client_cannot_provide_foreign_investment',
+          value: 'false'
+        }
+      }) }}
+    {% endcall %}
 
-    <div class="form-group">
-      <label class="block-label selection-button-checkbox{% if form.state['client_cannot_provide_total_investment'] %} selected{% endif %}">
-        <input
-          type="checkbox"
-          name="client_cannot_provide_total_investment"
-          {% if form.state['client_cannot_provide_total_investment'] %}checked{% endif %}
-        >
-        {{ form.labels['client_cannot_provide_total_investment'] }}
-      </label>
-    </div>
+    {{ TextField({
+      name: 'number_new_jobs',
+      label: form.labels.number_new_jobs,
+      value: form.state.number_new_jobs,
+      error: form.errors.messages.number_new_jobs
+    }) }}
 
-    {{ textbox(
-        'foreign_equity_investment',
-        value=form.state['foreign_equity_investment'],
-        label=form.labels['foreign_equity_investment']
-    ) }}
+    {{ MultipleChoiceField({
+      name: 'average_salary',
+      type: 'radio',
+      label: form.labels.average_salary,
+      value: form.state.average_salary,
+      error: form.errors.messages.average_salary,
+      options: form.options.averageSalaryRange
+    }) }}
 
-    <div class="form-group">
-      <label class="block-label selection-button-checkbox{% if form.state['client_cannot_provide_foreign_investment'] %} selected{% endif %}">
-        <input
-          type="checkbox"
-          name="client_cannot_provide_foreign_investment"
-          {% if form.state['client_cannot_provide_foreign_investment'] %}checked{% endif %}
-        >
-        {{ form.labels['client_cannot_provide_foreign_investment'] }}
-      </label>
-    </div>
+    {{ TextField({
+      name: 'number_safeguarded_jobs',
+      label: form.labels.number_safeguarded_jobs,
+      value: form.state.number_safeguarded_jobs,
+      error: form.errors.messages.number_safeguarded_jobs
+    }) }}
 
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
-      label: form.labels['government_assistance'],
+    {{ MultipleChoiceField({
       name: 'government_assistance',
-      inline: true,
-      value: form.state['government_assistance'],
-      children: [{
-        label: 'Yes',
-        value: 'true'
-      }, {
-        label: 'No',
-        value: 'false'
-      }]
-    } %}
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      label: form.labels.government_assistance,
+      value: form.state.government_assistance,
+      error: form.errors.messages.government_assistance,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' }
+      ]
+    }) }}
 
-    {{ textbox(
-        'number_new_jobs',
-        value=form.state['number_new_jobs'],
-        label=form.labels['number_new_jobs']
-    ) }}
-
-    {{ dropdown('average_salary',
-      label=form.labels['average_salary'],
-      value=form.state['average_salary'],
-      emptyLabel='Choose an average salary',
-      options=form.options.averageSalaryRange
-    ) }}
-
-    {{ textbox(
-        'number_safeguarded_jobs',
-        value=form.state['number_safeguarded_jobs'],
-        label=form.labels['number_safeguarded_jobs']
-    ) }}
-
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
-      label: 'R&D budget',
+    {{ MultipleChoiceField({
       name: 'r_and_d_budget',
-      inline: true,
-      value: form.state['r_and_d_budget'],
-      label: form.labels['r_and_d_budget'],
-      children: [{
-        label: 'Yes',
-        value: 'true'
-      }, {
-        label: 'No',
-        value: 'false'
-      }]
-    } %}
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      label: form.labels.r_and_d_budget,
+      value: form.state.r_and_d_budget,
+      error: form.errors.messages.r_and_d_budget,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' }
+      ]
+    }) }}
 
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
-      label: form.labels['non_fdi_r_and_d_budget'],
+    {{ MultipleChoiceField({
       name: 'non_fdi_r_and_d_budget',
-      inline: true,
-      value: form.state['non_fdi_r_and_d_budget'],
-      children: [{
-        label: 'Yes',
-        value: 'true'
-      }, {
-        label: 'No',
-        value: 'false'
-      }]
-    } %}
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      label: form.labels.non_fdi_r_and_d_budget,
+      value: form.state.non_fdi_r_and_d_budget,
+      error: form.errors.messages.non_fdi_r_and_d_budget,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' }
+      ]
+    }) }}
 
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
-      label: form.labels['new_tech_to_uk'],
+    {{ MultipleChoiceField({
       name: 'new_tech_to_uk',
-      inline: true,
-      value: form.state['new_tech_to_uk'],
-      children: [{
-        label: 'Yes',
-        value: 'true'
-      }, {
-        label: 'No',
-        value: 'false'
-      }]
-    } %}
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      label: form.labels.new_tech_to_uk,
+      value: form.state.new_tech_to_uk,
+      error: form.errors.messages.new_tech_to_uk,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' }
+      ]
+    }) }}
 
-    {% component 'form-multiple-choice', {
-      variant: 'radio',
-      label: form.labels['export_revenue'],
+    {{ MultipleChoiceField({
       name: 'export_revenue',
-      inline: true,
-      value: form.state['export_revenue'],
-      children: [{
-        label: 'Yes',
-        value: 'true'
-      }, {
-        label: 'No',
-        value: 'false'
-      }]
-    } %}
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      label: form.labels.export_revenue,
+      value: form.state.export_revenue,
+      error: form.errors.messages.export_revenue,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' }
+      ]
+    }) }}
 
-    {{ save(backUrl='/investment-projects/' + investmentData.id) }}
-  </form>
+  {% endcall %}
 {% endblock %}

@@ -66,7 +66,7 @@ describe('Investment form middleware - investment value', () => {
   it('should set form options (dropdown)', () => {
     this.controller.populateForm({}, this.resMock, this.nextSpy)
 
-    expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.include({ id: '1', name: 'Below 10k' })
+    expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.include({ value: '1', label: 'Below 10k' })
     expect(this.nextSpy.calledOnce).to.be.true
   })
 })
