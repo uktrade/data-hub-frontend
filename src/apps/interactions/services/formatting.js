@@ -36,12 +36,13 @@ function getDisplayInteraction (interaction) {
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayCompanyInteraction (interaction) {
-  const type = (interaction.interaction_type.name === 'Service delivery') ? 'service-deliveries' : 'interactions'
+  const interactionType = get(interaction, 'interaction_type.name')
+  const entityType = (interactionType === 'Service delivery') ? 'service-deliveries' : 'interactions'
 
   const result = {
     id: interaction.id,
-    url: `/${type}/${interaction.id}`,
-    interaction_type: interaction.interaction_type.name,
+    url: `/${entityType}/${interaction.id}`,
+    interaction_type: interactionType,
     subject: interaction.subject,
     date: formatMediumDate(interaction.date),
     adviser: getPropertyName(interaction, 'dit_adviser'),
