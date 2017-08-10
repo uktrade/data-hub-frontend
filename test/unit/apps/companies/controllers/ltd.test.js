@@ -148,7 +148,15 @@ describe('Company controller, ltd', function () {
           expect(getDisplayCHStub).to.be.calledWith(chCompany)
           expect(res.locals).to.have.property('chDetails')
           expect(res.locals).to.have.property('chDetailsLabels')
-          expect(res.locals.chDetailsDisplayOrder).to.deep.equal(['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code'])
+          expect(res.locals.chDetailsDisplayOrder).to.deep.equal([
+            'name',
+            'company_number',
+            'registered_address',
+            'business_type',
+            'company_status',
+            'incorporation_date',
+            'sic_code',
+          ])
           done()
         },
       }
@@ -170,7 +178,17 @@ describe('Company controller, ltd', function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
           expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['trading_name', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
+          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal([
+            'trading_name',
+            'trading_address',
+            'uk_region',
+            'headquarter_type',
+            'sector',
+            'website',
+            'description',
+            'employee_range',
+            'turnover_range',
+          ])
           done()
         },
       }

@@ -146,7 +146,18 @@ describe('Company controller, foreign', function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
           expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['business_type', 'registered_address', 'trading_name', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
+          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal([
+            'business_type',
+            'registered_address',
+            'trading_name',
+            'trading_address',
+            'headquarter_type',
+            'sector',
+            'website',
+            'description',
+            'employee_range',
+            'turnover_range',
+          ])
           done()
         },
       }
