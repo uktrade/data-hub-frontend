@@ -93,15 +93,6 @@
   }
 }
 
-.button--link {
-  background-color: $white;
-  border: 0;
-  color: $link-colour;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-left: 0;
-}
-
 .js-enabled .block-label.selection-button-radio,
 .js-enabled .block-label.selection-button-checkbox {
   &::before,
