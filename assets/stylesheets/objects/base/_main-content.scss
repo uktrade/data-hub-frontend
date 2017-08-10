@@ -30,6 +30,10 @@
     position: relative;
     z-index: -1;
   }
+
+  :focus .u-highlight {
+    position: static;
+  }
 }
 
 .main-content__inner {
