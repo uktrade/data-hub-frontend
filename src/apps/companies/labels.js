@@ -2,7 +2,7 @@ const companyDetailsLabels = {
   business_type: 'Business type',
   name: 'Name',
   registered_address: 'Primary address',
-  alias: 'Trading name',
+  trading_name: 'Trading name',
   trading_address: 'Trading address',
   uk_region: 'UK region',
   headquarters: 'Headquarters',

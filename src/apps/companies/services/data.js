@@ -5,7 +5,7 @@ const adviserRepository = require('../../adviser/repos')
 const companyRepository = require('../repos')
 const metadataRepository = require('../../../lib/metadata')
 const serviceDeliveryRepository = require('../../service-deliveries/repos')
-const interactionDataService = require('../../interactions/services/data')
+const interactionsRepository = require('../../interactions/repos')
 const { getFormattedAddress } = require('../../../lib/address')
 
 function getContactInCompanyObject (company, contactId) {
@@ -21,11 +21,8 @@ function getInflatedDitCompany (token, id) {
       const adviserHash = {}
       const company = await companyRepository.getDitCompany(token, id)
       const serviceDeliveries = await serviceDeliveryRepository.getServiceDeliveriesForCompany(token, company.id)
+      const interactions = await interactionsRepository.getInteractionsForCompany(token, company.id)
 
-      // Build a list of advisers to lookup
-      for (const interaction of company.interactions) {
-        adviserHash[interaction.dit_adviser] = true
-      }
       for (const serviceDelivery of serviceDeliveries) {
         adviserHash[serviceDelivery.relationships.dit_adviser.data.id] = true
       }
@@ -49,20 +46,9 @@ function getInflatedDitCompany (token, id) {
         })
       })
 
-      // Parse the interaction results to expand some of the properties
-      const parsedInteractions = company.interactions.map((interaction) => {
-        return Object.assign({}, interaction, {
-          contact: getContactInCompanyObject(company, interaction.contact),
-          interaction_type: interactionDataService.getInteractionType(interaction.interaction_type),
-          dit_adviser: adviserHash[interaction.dit_adviser],
-          service: services.find((option) => option.id === interaction.service),
-          dit_team: metadataRepository.teams.find((option) => option.id === interaction.dit_team),
-        })
-      })
+      const combinedInteractions = [...interactions, ...parsedServiceDeliveries]
 
-      const combinedIteractions = [...parsedInteractions, ...parsedServiceDeliveries]
-
-      company.interactions = combinedIteractions
+      company.interactions = combinedInteractions
       resolve(company)
     } catch (error) {
       logger.error(error)
@@ -110,8 +96,8 @@ function getHeadingAddress (company) {
 
 function getHeadingName (company) {
   if (company.id) {
-    if (company.alias && company.alias.length > 0) {
-      return company.alias
+    if (company.trading_name && company.trading_name.length > 0) {
+      return company.trading_name
     }
     return company.name
   } else {

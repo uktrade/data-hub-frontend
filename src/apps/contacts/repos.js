@@ -42,8 +42,13 @@ function unarchiveContact (token, contactId) {
 function getContactsForCompany (token, companyId) {
   return new Promise(async (resolve, reject) => {
     try {
-      const company = await authorisedRequest(token, `${config.apiRoot}/company/${companyId}/`)
-      resolve(company.contacts)
+      const response = await authorisedRequest(token, {
+        url: `${config.apiRoot}/v3/contact`,
+        qs: {
+          company_id: companyId,
+        },
+      })
+      resolve(response.results)
     } catch (error) {
       logger.error(error)
       reject(error)

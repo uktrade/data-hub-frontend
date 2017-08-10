@@ -4,11 +4,11 @@ const authorisedRequest = require('../../lib/authorised-request')
 
 // Get a company and then pad out the interactions with related data
 function getDitCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/company/${id}/`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/company/${id}`)
 }
 
 function getCHCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/ch-company/${id}/`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/ch-company/${id}`)
 }
 
 function saveCompany (token, company) {
@@ -23,12 +23,12 @@ function saveCompany (token, company) {
       let url
 
       if (parsedCompany.id && parsedCompany.id.length > 0) {
-        method = 'PUT'
-        url = `${config.apiRoot}/company/${parsedCompany.id}/`
+        method = 'PATCH'
+        url = `${config.apiRoot}/v3/company/${parsedCompany.id}`
       } else {
         delete parsedCompany.id
         method = 'POST'
-        url = `${config.apiRoot}/company/`
+        url = `${config.apiRoot}/v3/company`
       }
 
       const data = await authorisedRequest(token, { url, method, body: parsedCompany })
@@ -52,7 +52,7 @@ function saveCompany (token, company) {
 function archiveCompany (token, companyId, reason) {
   const options = {
     body: { reason },
-    url: `${config.apiRoot}/company/${companyId}/archive/`,
+    url: `${config.apiRoot}/v3/company/${companyId}/archive`,
     method: 'POST',
   }
   return authorisedRequest(token, options)
@@ -61,7 +61,7 @@ function archiveCompany (token, companyId, reason) {
 function unarchiveCompany (token, companyId) {
   return authorisedRequest(token, {
     method: 'POST',
-    url: `${config.apiRoot}/company/${companyId}/unarchive/`,
+    url: `${config.apiRoot}/v3/company/${companyId}/unarchive`,
   })
 }
 

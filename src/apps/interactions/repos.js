@@ -44,6 +44,26 @@ function getInteractionsForContact (token, contactId) {
   })
 }
 
+/**
+ * Get interactions for a company
+ *
+ * @param {string} token
+ * @param {string} companyId
+ * @param {number} limit
+ * @return {Promise<Object[]>} Returns a promise that resolves to an array of API interaction objects
+ */
+async function getInteractionsForCompany (token, companyId, limit = 100) {
+  // TODO deal with pagination and move to the interaction API v3 endpoints when they are ready
+  const response = await authorisedRequest(token, {
+    url: `${config.apiRoot}/interaction/`,
+    qs: {
+      company_id: companyId,
+      limit,
+    },
+  })
+  return response.results
+}
+
 // TODO we have multiple ways of doing things in this file - this needs tidying up
 function getInteractionsForInvestment (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/interaction/?investment_project_id=${investmentId}`)
@@ -68,6 +88,7 @@ function updateInvestmentInteraction (token, interactionId, body) {
 module.exports = {
   saveInteraction,
   getInteraction,
+  getInteractionsForCompany,
   getInteractionsForContact,
   getInteractionsForInvestment,
   createInvestmentInteraction,
