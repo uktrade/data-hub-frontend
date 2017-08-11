@@ -2,15 +2,10 @@
 
 .c-meta-item {
   display: inline-block;
-
-  + &:nth-child(even) {
-    margin-left: $baseline-grid-unit;
-  }
 }
 
 .c-meta-item__label {
   color: $grey-1;
-  min-width: 4em;
   display: inline-block;
 }
 
