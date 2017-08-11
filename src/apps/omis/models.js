@@ -18,6 +18,14 @@ const Order = {
     })
   },
 
+  saveSubscribers (token, id, body) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`,
+      method: 'PUT',
+      body,
+    })
+  },
+
   getById (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
   },
