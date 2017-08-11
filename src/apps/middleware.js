@@ -1,4 +1,6 @@
 const path = require('path')
+const { isEmpty } = require('lodash')
+const queryString = require('query-string')
 
 function setHomeBreadcrumb (name) {
   return function (req, res, next) {
@@ -25,6 +27,15 @@ function setLocalNav (items = []) {
   }
 }
 
+function setDefaultQuery (query = {}) {
+  return function handleDefaultRedirect (req, res, next) {
+    if (isEmpty(req.query)) {
+      return res.redirect(`${req.baseUrl}?${queryString.stringify(query)}`)
+    }
+    next()
+  }
+}
+
 function redirectToFirstNavItem (req, res) {
   return res.redirect(res.locals.localNavItems[0].url)
 }
@@ -33,4 +44,5 @@ module.exports = {
   setHomeBreadcrumb,
   setLocalNav,
   redirectToFirstNavItem,
+  setDefaultQuery,
 }
