@@ -74,12 +74,16 @@
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-item__value'%}
-  {% if props.type and props.type === 'date' %}
-    {% set date = props.value | formatDate %}
-    {% set metaItemValue = date if date else props.value  %}
-  {% else %}
-    {% set metaItemValue = props.value.name | default(props.value) %}
+
+  {% if props.type %}
+    {% if props.type === 'date' %}
+      {% set date = props.value | formatDate %}
+    {% elif props.type === 'datetime' %}
+      {% set date = props.value | formatDate('DD/MM/YYYY, HH:MMa') %}
+    {% endif %}
   {% endif %}
+
+  {% set metaItemValue = date or props.value.name | default(props.value)  %}
 
   {% if metaItemValue %}
     <div class="c-meta-item {{ 'c-meta-item--' + props.modifier if props.modifier }}">
