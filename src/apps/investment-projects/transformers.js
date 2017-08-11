@@ -21,20 +21,21 @@ function transformInvestmentProjectToListItem ({
         name: 'stage',
         label: 'Stage',
         value: stage,
-        isBadge: true,
+        type: 'badge',
       },
       {
         name: 'investment_type',
         label: 'Investment type',
         value: investment_type,
+        type: 'badge',
         badgeModifier: 'secondary',
-        isBadge: true,
       },
       {
         name: 'investor_company',
         label: 'Investor',
         value: investor_company,
       }, {
+        type: 'date',
         name: 'estimated_land_date',
         label: 'Estimated to land',
         value: estimated_land_date,
@@ -44,10 +45,7 @@ function transformInvestmentProjectToListItem ({
         label: 'Sector',
         value: sector,
       },
-    ].map(item => {
-      item.isBadge = !!item.isBadge
-      return item
-    }),
+    ],
   }
 }
 
