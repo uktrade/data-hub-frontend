@@ -23,6 +23,15 @@ const FILTERS_MACRO_CONFIG = {
   },
 }
 
+const SORT_OPTIONS = [
+  { value: 'estimated_land_date:asc', label: 'Earliest land date' },
+  { value: 'estimated_land_date:desc', label: 'Latest land date' },
+  { value: 'project_code', label: 'Project code' },
+  { value: 'name:asc', label: 'Project name' },
+  { value: 'stage.name', label: 'Stage' },
+]
+
 module.exports = {
   FILTERS_MACRO_CONFIG,
+  SORT_OPTIONS,
 }
