@@ -31,7 +31,8 @@
  # @param {string} [props.action] - Form action url
  # @param {object} [props.errors] - Object containing form errors
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
- # @param {boolean} [props.disableFormActions] - Avoid rendering form actions
+ # @param {boolean} [props.hideFormActions] - Hide form actions
+ # @param {boolean} [props.disableFormAction] - Disable form submit button
  # @param {string} [props.class] - Form class name
  # @param {string} [props.role] - Form role attribute value
  # @param {string} [props.actionsClass] - Custom class name for actions container
@@ -45,6 +46,7 @@
   {% set method = props.method or 'POST' -%}
   {% set buttonText = props.buttonText or 'Submit' %}
   {% set returnText = props.returnText or 'Back' %}
+  {% set hideFormActions = props.hideFormActions or false %}
 
   <form
     method="{{ method }}"
@@ -72,9 +74,9 @@
 
     {{ caller() }}
 
-    {% if not props.disableFormActions %}
+    {% if not hideFormActions %}
       <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
-        <button class="button">{{ buttonText }}</button>
+        <button class="button" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
         {% endif %}
@@ -130,7 +132,7 @@
     class: 'c-entity-search ' + modifier,
     role: 'search',
     method: method,
-    disableFormActions: true,
+    hideFormActions: true,
     inputName: inputName,
     inputPlaceholder: inputPlaceholder,
     isLabelHidden: isLabelHidden,

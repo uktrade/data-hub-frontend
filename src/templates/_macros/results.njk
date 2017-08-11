@@ -130,7 +130,7 @@
           {% call Form({
             method: 'get',
             class: 'c-results__sort-form js-AutoSubmit',
-            disableFormActions: true,
+            hideFormActions: true,
             hiddenFields: selectedFilters | assign({ custom: true })
           }) %}
             {{ MultipleChoiceField({
