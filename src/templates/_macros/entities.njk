@@ -35,7 +35,10 @@
       {% if metaItems | length %}
         <div class="c-entity__content">
           {% for metaItem in metaItems %}
-            {{ MetaItem(metaItem| assign({ highlightTerm: props.highlightTerm })) }}
+            {{ MetaItem(metaItem | assign({
+              highlightTerm: props.highlightTerm,
+              isLabelHidden: metaItem.isLabelHidden
+            })) }}
           {% endfor %}
         </div>
       {% endif %}

@@ -53,7 +53,8 @@
   <{{ el }} class="c-results-summary">
     <div class="u-clearfix">
       <div class="u-float-left">
-        <span class="c-results-summary__count">{{ count }}</span> {{ countLabel | pluralise(count) }}
+        <span class="c-results-summary__count">{{ count | formatNumber }}</span>
+        {{ countLabel | pluralise(count) }}
         {{ 'matching' if selectedFilters | length }}
         {% if props.highlightTerm or selectedFilters | length %}
           matching
@@ -147,9 +148,9 @@
 
     {% if props.items | length %}
       <ol class="c-entity-list">
-        {% for project in props.items %}
+        {% for result in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(project | assign({ highlightTerm: props.highlightTerm })) }}
+            {{ Entity(result | assign({ highlightTerm: props.highlightTerm })) }}
           </li>
         {% endfor %}
       </ol>
