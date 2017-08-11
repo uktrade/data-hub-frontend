@@ -12,7 +12,7 @@
 {% macro ResultsFilters(props) %}
   {% set heading = props.heading | default('Filter results') %}
 
-  {% if props.filters | length %}
+  {% if props.filters | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
       class: 'c-filters js-AutoSubmit',

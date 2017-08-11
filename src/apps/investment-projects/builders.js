@@ -1,8 +1,8 @@
-const { get, isString, isArray, pick } = require('lodash')
+const { get, isString, isArray, merge } = require('lodash')
 const { transformObjectToOption } = require('../transformers')
 const metadataRepo = require('../../lib/metadata')
 const { collectionFilterLabels } = require('./labels')
-const { filterFields } = require('./form-fields')
+const { FILTERS_MACRO_CONFIG } = require('./constants')
 
 function buildInvestmentFilters (filtersQuery = {}) {
   const formOptions = {
@@ -11,7 +11,7 @@ function buildInvestmentFilters (filtersQuery = {}) {
     sector: metadataRepo.sectorOptions.map(transformObjectToOption),
   }
 
-  return Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
+  const filters = Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
     const filterOptions = formOptions[filterName] || []
 
     let valueLabel = filtersQuery[filterName]
@@ -42,6 +42,8 @@ function buildInvestmentFilters (filtersQuery = {}) {
 
     return filtersObj
   }, {})
+
+  return merge(filters, FILTERS_MACRO_CONFIG)
 }
 
 function buildInvestmentSorting (filtersQuery = {}) {
@@ -67,23 +69,7 @@ function buildInvestmentSorting (filtersQuery = {}) {
   }
 }
 
-function buildMacroConfigFromFormFields (filtersQuery = {}) {
-  if (!filterFields) { return null }
-
-  const filters = buildInvestmentFilters(filtersQuery)
-
-  return filterFields.map(field => {
-    const macroName = Object.keys(field)[0]
-    const fieldData = filters[field[macroName].name]
-
-    return {
-      [macroName]: Object.assign({}, pick(fieldData, 'value', 'label', 'options'), field[macroName]),
-    }
-  })
-}
-
 module.exports = {
   buildInvestmentFilters,
   buildInvestmentSorting,
-  buildMacroConfigFromFormFields,
 }

@@ -1,5 +1,6 @@
 const { get, find } = require('lodash')
 
+const { transformFieldsObjectToMacrosObject } = require('../transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 
 const companyRepository = require('../companies/repos')
@@ -64,12 +65,21 @@ async function renderInvestmentProjects (req, res) {
     page: req.query.page,
   })
     .then(results => {
+      const items = results.investment_projects
+        .map(transformInvestmentProjectToListItem)
+        .map(item => {
+          item.meta = transformFieldsObjectToMacrosObject(item.meta, {
+            macroName: 'MetaItem',
+          })
+          return item
+        })
+
       return {
         count: results.count,
         page: results.page,
         aggregations: buildSearchEntityResultsData(results.aggregations),
         pagination: buildPagination(req.query, results),
-        items: results.investment_projects.map(transformInvestmentProjectToListItem),
+        items,
       }
     })
 
