@@ -14,7 +14,7 @@ Feature: Create New Contact
   Scenario: Add a new Primary Contact
     Given I am an authenticated user on Data Hub website
     When I add a new Primary Contact
-    Then I see the contact creation confirmation message
+    Then I see the Added new contact confirmation message
     And I verify my newly added contact in company profile
     And I logout of Data Hub website
 
@@ -22,7 +22,7 @@ Feature: Create New Contact
   Scenario: Add a new Primary Contact with new Company address
     Given I am an authenticated user on Data Hub website
     When I add a new Primary Contact with a new company address
-    Then I see the contact creation confirmation message
+    Then I see the Added new contact confirmation message
     And I verify my newly added contact in company profile
     And I logout of Data Hub website
 
@@ -30,7 +30,7 @@ Feature: Create New Contact
   Scenario: Add a new non-Primary Contact
     Given I am an authenticated user on Data Hub website
     When I add a new non Primary Contact
-    Then I see the contact creation confirmation message
+    Then I see the Added new contact confirmation message
     And I verify my newly added contact in company profile
     And I logout of Data Hub website
 
@@ -38,6 +38,6 @@ Feature: Create New Contact
   Scenario: Verify newly added contact under search landing page
     Given I am an authenticated user on Data Hub website
     When I add a new Primary Contact
-    Then I see the contact creation confirmation message
+    Then I see the Added new contact confirmation message
     And I verify my newly added contact under search landing page
     And I logout of Data Hub website

@@ -170,10 +170,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
       .click('@typeOfFDI')
-      .getText('@typeOfFDIList', (result) => {
+      .getText('@typeOfFDIListAcquisition', (result) => {
         actualName = result.value
       })
-      .click('@typeOfFDIList')
+      .click('@typeOfFDIListAcquisition')
       .submitTheForm()
   })
 

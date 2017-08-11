@@ -63,7 +63,7 @@ module.exports = {
     newCompanySearch: '#search-term',
     parentCompanyResultItem: '.results-list__result:first-child a',
     parentCompanyResultItemChooseButton: '.results-list__result:first-child .panel .button',
-    flashInfo: '.flash--info',
+    flashInfo: '.c-messages__item--success',
   },
   commands: [
     {
