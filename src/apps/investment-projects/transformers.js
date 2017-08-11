@@ -45,7 +45,7 @@ function transformInvestmentProjectToListItem ({
     meta.push({
       type: 'date',
       name: 'estimated_land_date',
-      label: 'Estimated to land',
+      label: 'Land date',
       value: estimated_land_date,
       isInert: true,
     })
