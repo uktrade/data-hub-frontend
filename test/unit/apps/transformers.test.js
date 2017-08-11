@@ -41,4 +41,14 @@ describe('Global transformers', () => {
       })
     })
   })
+
+  describe('transformIdToObject()', () => {
+    it('should return an object with id', () => {
+      const option = transformers.transformIdToObject('123456')
+
+      expect(option).to.deep.equal({
+        id: '123456',
+      })
+    })
+  })
 })

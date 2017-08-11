@@ -30,10 +30,10 @@
     </table>
 
     <table class="c-answers-summary">
-      <caption class="c-answers-summary__heading">Team</caption>
+      <caption class="c-answers-summary__heading">International Trade Advisers (ITAs)</caption>
       <tr>
-        <th class="c-answers-summary__title" scope="row">ITA</th>
-        <td class="c-answers-summary__content">{{ values.ita.name if values.ita else 'Not selected' }}</td>
+        <th class="c-answers-summary__title" scope="row">Advisers</th>
+        <td class="c-answers-summary__content">{{ values.ita | join(", ") if values.ita.length else 'Not added at this stage' }}</td>
         <td class="c-answers-summary__control"><a class="button button-secondary" href="assign-ita/edit">Change</a></td>
       </tr>
     </table>
