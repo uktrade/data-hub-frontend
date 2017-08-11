@@ -5,7 +5,8 @@
   max-width: 40em;
 
   [type="hidden"] + &,
-  .c-form-fieldset__legend + & {
+  .c-form-fieldset__legend + &,
+  .c-form-fieldset__hint + & {
     margin-top: 0;
   }
 }
@@ -68,15 +69,10 @@
 .c-form-group--inline:not(fieldset) {
   @include media(tablet) {
     vertical-align: top;
-
-    &,
-    .c-form-group__inner {
-      display: inline-block;
-    }
+    display: inline-block;
 
     .c-form-group__label:not(legend) {
       display: inline-block;
-      margin-bottom: 0;
       margin-right: $default-spacing-unit / 2;
     }
 
@@ -103,6 +99,12 @@
   .c-multiple-choice__input:checked + .c-multiple-choice__label::before,
   .c-multiple-choice__input:focus + .c-multiple-choice__label::before {
     border-color: $black;
+  }
+}
+
+.c-form-group--soft {
+  .c-form-group__label-text {
+    font-weight: normal;
   }
 }
 

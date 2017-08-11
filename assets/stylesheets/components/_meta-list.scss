@@ -1,0 +1,11 @@
+@import "../settings";
+
+.c-meta-list {
+  .c-meta-item + .c-meta-item {
+    margin-left: $default-spacing-unit;
+  }
+
+  .c-meta-item__label {
+    display: block;
+  }
+}

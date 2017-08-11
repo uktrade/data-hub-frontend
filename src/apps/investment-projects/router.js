@@ -8,8 +8,7 @@ const {
 } = require('./middleware/team')
 
 const {
-  createStep1,
-  createStep2,
+  create,
   archive,
   audit,
   details,
@@ -18,14 +17,17 @@ const {
   team,
   interactions,
 } = require('./controllers')
-
-const detailsFormMiddleware = require('./middleware/forms/details')
-const valueFormMiddleware = require('./middleware/forms/value')
-const requirementsFormMiddleware = require('./middleware/forms/requirements')
-const interactionsFormMiddleware = require('./middleware/forms/interactions')
-const projectManagementFormMiddleware = require('./middleware/forms/project-management')
-const clientRelationshipManagementFormMiddleware = require('./middleware/forms/client-relationship-management')
-const teamMembersFormMiddleware = require('./middleware/forms/team-members')
+const {
+  clientRelationshipManagementFormMiddleware,
+  detailsFormMiddleware,
+  interactionsFormMiddleware,
+  investmentTypeFormMiddleware,
+  projectManagementFormMiddleware,
+  projectStageFormMiddleware,
+  requirementsFormMiddleware,
+  valueFormMiddleware,
+  teamMembersFormMiddleware,
+} = require('./middleware/forms')
 const { renderInvestmentList } = require('./controllers/list')
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 
@@ -47,6 +49,7 @@ router.use('/:id/', setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
 router.param('interactionId', shared.getInteractionDetails)
+router.param('companyId', shared.getCompanyDetails)
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
 
@@ -55,17 +58,44 @@ router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)
 
 router.get('/:id/audit', audit.getInvestmentAudit)
 
-router.get('/create', (req, res) => { res.redirect('create/1') })
+router.get('/create/:companyId?', create.start.redirectHandler, create.start.renderCreatePage)
+
+router.get('/create/investment-type/info', create.investmentType.renderInvestmentInfoPage)
 
 router
-  .route('/create/1')
-  .get(createStep1.getHandler)
-  .post(createStep1.postHandler)
+  .route('/create/investment-type/:companyId')
+  .get(investmentTypeFormMiddleware.populateForm, create.investmentType.renderInvestmentTypePage)
+  .post(
+    investmentTypeFormMiddleware.validateForm,
+    create.investmentType.postHandler,
+    investmentTypeFormMiddleware.populateForm,
+    create.investmentType.renderInvestmentTypePage
+  )
 
 router
-  .route('/create/2')
-  .get(detailsFormMiddleware.populateForm, createStep2.createGetHandler)
-  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, createStep2.createPostHandler)
+  .route('/create/equity-source/:companyId')
+  .get(create.equitySource.getHandler, create.equitySource.renderEquitySourcePage)
+  .post(
+    create.equitySource.postHandler,
+    create.equitySource.getHandler,
+    create.equitySource.renderEquitySourcePage
+  )
+
+router
+  .route('/create/project/:equityCompanyId')
+  .get(
+    detailsFormMiddleware.populateForm,
+    create.project.getHandler,
+    create.project.renderCreateProjectPage
+  )
+  .post(
+    detailsFormMiddleware.populateForm,
+    detailsFormMiddleware.handleFormPost,
+    detailsFormMiddleware.validateForm,
+    create.project.postHandler,
+    create.project.getHandler,
+    create.project.renderCreateProjectPage
+  )
 
 router.get('/:id', redirectToFirstNavItem)
 router.get('/:id/details', details.detailsGetHandler)
@@ -147,5 +177,7 @@ router
     interactions.edit.editPostInteractionHandler,
     interactions.edit.editGetInteractionHandler
   )
+
+router.post('/:id/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
 module.exports = router

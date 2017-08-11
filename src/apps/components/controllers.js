@@ -94,6 +94,21 @@ async function renderEntityList (req, res) {
     })
 }
 
+function renderProgress (req, res) {
+  return res
+    .breadcrumb('Progress')
+    .render('components/views/progress', {
+      stageNames: [
+        'one',
+        'two',
+        'three',
+        'four',
+        'five',
+      ],
+      currentStageName: 'three',
+    })
+}
+
 module.exports = {
   renderEntityList,
   renderFormElements,
@@ -102,5 +117,6 @@ module.exports = {
   renderLocalHeader,
   renderBreadcrumbs,
   renderPagination,
+  renderProgress,
   renderResults,
 }

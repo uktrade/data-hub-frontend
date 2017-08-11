@@ -10,9 +10,17 @@
     heading: investmentData.name,
     modifier: 'light-banner'
   }) %}
-    {% component 'investment-status', investmentStatus %}
 
-    {% if investmentData.archived %}
+  <div class="c-meta-list">
+    {{ investmentStatus.meta | map(callAsMacro('MetaItem')) | join | safe }}
+  </div>
+
+  {{ Progress({
+    stageNames: investmentProjectStages,
+    currentStageName: investmentStatus.currentStage.name
+  }) }}
+
+  {% if investmentData.archived %}
       <p class="infostrip">
         This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>
         <strong>Archive reason:</strong> {{ investmentData.archived_reason }}<br>
@@ -20,6 +28,27 @@
         <a href="unarchive">Unarchive</a>
       </p>
     {% endif %}
+  {% endcall %}
+
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {% call Form({
+    buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
+    action: 'change-project-stage',
+    class: 'flash flash--info',
+    disableFormActions: true if not investmentStatus.currentStage.isComplete,
+    hiddenFields: {
+      next_project_stage: investmentStatus.nextStage.id
+    }
+  }) %}
+    <p>
+      {% if investmentStatus.currentStage.isComplete %}
+        You have added all required information to complete this stage.
+        {% else %}
+        Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+      {% endif %}
+    </p>
   {% endcall %}
 {% endblock %}
 

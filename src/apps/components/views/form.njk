@@ -180,6 +180,17 @@
           value: form.state.lastName
         }) }}
       {% endcall %}
+
+      {{ DateFieldset({
+        name: 'estimated_date',
+        label: 'What is your favourite day?',
+        hint: 'A day you really like',
+        error: form.errors.messages.estimated_date,
+        value: {
+          year: form.state.estimated_date_year,
+          month: form.state.estimated_date_month
+        }
+      }) }}
     {% endcall %}
   {% endcall %}
 

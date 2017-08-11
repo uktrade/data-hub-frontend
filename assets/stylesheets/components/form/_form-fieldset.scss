@@ -1,4 +1,5 @@
 @import "../../settings";
+@import "../../tools";
 
 .c-form-fieldset {
   border: 1px solid $grey-2;
@@ -14,6 +15,12 @@
 
 .c-form-fieldset__legend-text {
   margin: 0 $default-spacing-unit / 2;
+}
+
+.c-form-fieldset__hint {
+  display: block;
+  margin-bottom: $default-spacing-unit;
+  color: $grey-1;
 }
 
 // Modifiers
