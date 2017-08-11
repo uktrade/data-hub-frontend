@@ -41,6 +41,7 @@ const config = {
   zenBrowser: process.env.ZEN_BROWSER,
   zenImpact: process.env.ZEN_IMPACT,
   zenService: process.env.ZEN_SERVICE,
+  sentryDsn: process.env.SENTRY_DSN,
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
 }
