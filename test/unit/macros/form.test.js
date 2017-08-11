@@ -57,7 +57,7 @@ describe('Nunjucks form macros', () => {
 
       it('should render form without submit button', () => {
         const formProps = {
-          disableFormActions: true,
+          hideFormActions: true,
         }
         const component = macros.renderWithCallerToDom('Form', formProps)(
           macros.renderToDom('TextField')
