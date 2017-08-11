@@ -1,0 +1,48 @@
+@import "../settings";
+@import "../tools";
+
+.c-meta-container {
+  .c-meta-item {
+    margin-top: $baseline-grid-unit;
+  }
+
+  .c-meta-item__label {
+    display: block;
+  }
+}
+
+// Modifiers
+
+.c-meta-container--inline,
+.c-meta-container--spaced {
+  .c-meta-item {
+    margin-right: $default-spacing-unit;
+  }
+}
+
+.c-meta-container--inline {
+  .c-meta-item__label {
+    display: inline-block;
+    min-width: 4.2em;
+  }
+}
+
+.c-meta-container--stacked {
+  .c-meta-item {
+    display: block;
+  }
+}
+
+.c-meta-container--alternate {
+  @include clearfix;
+
+  .c-meta-item:nth-child(odd) {
+    float: left;
+    clear: both;
+  }
+
+  .c-meta-item:nth-child(even) {
+    float: right;
+    margin-right: 0;
+  }
+}

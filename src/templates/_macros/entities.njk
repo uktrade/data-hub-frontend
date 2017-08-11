@@ -29,28 +29,27 @@
 
         {% if metaBadges | length %}
           <div class="c-entity__badges">
-            {% for metaBadge in metaBadges %}
-              {{ applyMacro(metaBadge, { highlightTerm: props.highlightTerm }) }}
-            {% endfor %}
+            {{
+              Meta({
+                items: metaBadges,
+                highlightTerm: props.highlightTerm
+              })
+            }}
           </div>
         {% endif %}
       </div>
 
       {% if metaItems | length %}
         <div class="c-entity__content">
-          {% for metaItem in metaItems %}
-            {{
-              applyMacro(metaItem, {
-                highlightTerm: props.highlightTerm,
-                isLabelHidden: metaItem.isLabelHidden
-              })
-            }}
-          {% endfor %}
+          {{
+            Meta({
+              items: metaItems,
+              highlightTerm: props.highlightTerm,
+              modifier: ['inline', 'alternate']
+            })
+          }}
         </div>
       {% endif %}
-      <div class="c-entity__footer">
-        {{ metaTimes | map(callAsMacro('MetaItem')) | join | safe }}
-      </div>
     </div>
   {% endif %}
 {% endmacro %}
@@ -102,6 +101,23 @@
       {% else %}
         <span class="{{ itemValueClass }}">{{ metaItemValue | highlight(props.highlightTerm, true) }}</span>
       {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{##
+ # Render meta container with meta items
+ # @param {object} props
+ # @param {array}  props.items - meta items
+ # @param {string, array} [props.modifier] - meta container modifier (e.g. inline)
+ #}
+{% macro Meta (props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-meta-container--') if props.modifier %}
+  {% if props.items | length %}
+    <div class="c-meta-container {{ modifier }}">
+      {% for metaItem in props.items %}
+        {{ applyMacro(metaItem, { highlightTerm: props.highlightTerm }) }}
+      {% endfor %}
     </div>
   {% endif %}
 {% endmacro %}
