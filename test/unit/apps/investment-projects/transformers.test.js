@@ -12,11 +12,11 @@ describe('Investment project data transformers', () => {
       const firstItem = actual[0]
 
       expect(actual).to.have.length(3)
-      expect(firstItem.id).to.a('string')
-      expect(firstItem.name).to.a('string')
-      expect(firstItem.type).to.a('string')
-      expect(firstItem.code).to.a('string')
-      expect(firstItem.meta).to.an('array').that.have.length(5)
+      expect(firstItem.id).to.be.a('string')
+      expect(firstItem.name).to.be.a('string')
+      expect(firstItem.type).to.be.a('string')
+      expect(firstItem.code).to.be.a('string')
+      expect(firstItem.meta).to.be.an('array').that.have.length(5)
 
       expect(firstItem.meta[0].name).to.equal('stage')
       expect(firstItem.meta[0].label).to.be.a('string')
