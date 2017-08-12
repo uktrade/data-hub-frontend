@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { SORT_OPTIONS } = require('./constants')
+const { CONTACTS_SORT_OPTIONS } = require('./constants')
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
@@ -15,7 +15,7 @@ const LOCAL_NAV = [
 ]
 
 const DEFAULT_COLLECTION_QUERY = {
-  sortby: SORT_OPTIONS[0].value,
+  sortby: CONTACTS_SORT_OPTIONS[0].value,
 }
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getContactsCollection, renderContactList)

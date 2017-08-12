@@ -13,7 +13,7 @@ describe('Investment list controller', () => {
       query: {},
     }
 
-    this.buildInvestmentSortingStub = this.sandbox.spy()
+    this.buildSortObjectStub = this.sandbox.spy()
     this.buildInvestmentFiltersStub = this.sandbox.stub().returns({
       MacroName: {
         name: 'field_name',
@@ -27,8 +27,10 @@ describe('Investment list controller', () => {
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
       '../builders': {
-        buildInvestmentSorting: this.buildInvestmentSortingStub,
         buildInvestmentFilters: this.buildInvestmentFiltersStub,
+      },
+      '../../builders': {
+        buildSortObject: this.buildSortObjectStub,
       },
     })
   })
@@ -43,7 +45,7 @@ describe('Investment list controller', () => {
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('title'))
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sort'))
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filters'))
-      expect(this.buildInvestmentSortingStub).to.have.been.calledOnce
+      expect(this.buildSortObjectStub).to.have.been.calledOnce
       expect(this.buildInvestmentFiltersStub).to.have.been.calledWith(this.req.query)
     })
   })

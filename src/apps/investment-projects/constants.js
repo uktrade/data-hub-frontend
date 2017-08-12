@@ -1,4 +1,4 @@
-const FILTERS_MACRO_CONFIG = {
+const INVESTMENT_PROJECTS_FILTERS_MACRO_CONFIG = {
   stage: {
     macroName: 'MultipleChoiceField',
     type: 'checkbox',
@@ -23,7 +23,7 @@ const FILTERS_MACRO_CONFIG = {
   },
 }
 
-const SORT_OPTIONS = [
+const INVESTMENT_PROJECTS_SORT_OPTIONS = [
   { value: 'estimated_land_date:asc', label: 'Earliest land date' },
   { value: 'estimated_land_date:desc', label: 'Latest land date' },
   { value: 'project_code', label: 'Project code' },
@@ -32,6 +32,6 @@ const SORT_OPTIONS = [
 ]
 
 module.exports = {
-  FILTERS_MACRO_CONFIG,
-  SORT_OPTIONS,
+  INVESTMENT_PROJECTS_FILTERS_MACRO_CONFIG,
+  INVESTMENT_PROJECTS_SORT_OPTIONS,
 }

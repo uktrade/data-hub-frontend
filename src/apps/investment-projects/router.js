@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const { INVESTMENT_PROJECTS_SORT_OPTIONS } = require('./constants')
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
 const {
@@ -43,6 +44,7 @@ const currentYear = (new Date()).getFullYear()
 const DEFAULT_COLLECTION_QUERY = {
   estimated_land_date_after: `${currentYear}-04-05`,
   estimated_land_date_before: `${currentYear + 1}-04-06`,
+  sortby: INVESTMENT_PROJECTS_SORT_OPTIONS[0].value,
 }
 
 router.use('/:id/', setLocalNav(LOCAL_NAV))

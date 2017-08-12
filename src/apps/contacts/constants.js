@@ -1,4 +1,4 @@
-const SORT_OPTIONS = [
+const CONTACTS_SORT_OPTIONS = [
   { value: 'created_on:desc', label: 'Newest' },
   { value: 'created_on:asc', label: 'Oldest' },
   { value: 'modified_on:desc', label: 'Recently updated' },
@@ -12,5 +12,5 @@ const SORT_OPTIONS = [
 ]
 
 module.exports = {
-  SORT_OPTIONS,
+  CONTACTS_SORT_OPTIONS,
 }

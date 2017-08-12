@@ -1,9 +1,10 @@
-const { buildContactSorting } = require('../builders')
+const { CONTACTS_SORT_OPTIONS } = require('../constants')
+const { buildSortObject } = require('../../builders')
 
 function renderContactList (req, res) {
   res.render('contacts/views/list', {
     title: 'Contacts',
-    sort: buildContactSorting(req.query),
+    sort: buildSortObject(CONTACTS_SORT_OPTIONS, req.query),
   })
 }
 

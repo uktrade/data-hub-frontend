@@ -1,12 +1,11 @@
-const {
-  buildInvestmentSorting,
-  buildInvestmentFilters,
-} = require('../builders')
+const { buildInvestmentFilters } = require('../builders')
+const { buildSortObject } = require('../../builders')
+const { INVESTMENT_PROJECTS_SORT_OPTIONS } = require('../constants')
 
 const { transformFieldsObjectToMacrosObject } = require('../../transformers')
 
 function renderInvestmentList (req, res) {
-  const sort = buildInvestmentSorting(req.query)
+  const sort = buildSortObject(INVESTMENT_PROJECTS_SORT_OPTIONS, req.query)
   const filters = buildInvestmentFilters(req.query)
   const filterMacroConfig = transformFieldsObjectToMacrosObject(filters, {
     modifier: ['light', 'smaller'],

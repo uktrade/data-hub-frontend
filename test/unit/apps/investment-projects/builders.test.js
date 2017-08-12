@@ -114,19 +114,4 @@ describe('Investment projects builders', () => {
       expect(actual.stage.valueLabel).to.equals('Investment stage #1, Investment stage #2')
     })
   })
-
-  describe('#buildInvestmentSorting', () => {
-    it('should return an object containing selected sort mode and sort options', () => {
-      const actual = this.controller.buildInvestmentSorting()
-
-      expect(actual).to.have.property('selected', actual.options[0].value)
-      expect(actual).to.have.property('options').an('array').with.length.above(1)
-    })
-
-    it('should return an object containing selected sort mode and sort options', () => {
-      const actual = this.controller.buildInvestmentSorting({ sortby: 'stage.name' })
-
-      expect(actual.selected).to.equal('stage.name')
-    })
-  })
 })
