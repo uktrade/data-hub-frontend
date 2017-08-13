@@ -1,3 +1,4 @@
+const nunjucks = require('nunjucks')
 const { assign, omit, isFunction, isArray, map } = require('lodash')
 const queryString = require('query-string')
 
@@ -26,7 +27,8 @@ module.exports = {
     }
 
     if (isArray(config)) {
-      return config.map(renderMacro.bind(this))
+      const macroOutpus = config.map(renderMacro.bind(this))
+      return new nunjucks.runtime.SafeString(macroOutpus.join('\r'))
     }
 
     return renderMacro.call(this, config)
