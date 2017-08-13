@@ -19,8 +19,8 @@
           {% if props.fieldType %}
             {{ callAsMacro(props.fieldType)(props | assign({
               name: key,
-              label: trans(props.label),
-              hint: trans(props.hint),
+              label: translate(props.label),
+              hint: translate(props.hint),
               value: values[key],
               error: errors[key].message
             })) }}
