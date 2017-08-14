@@ -191,6 +191,18 @@
           month: form.state.estimated_date_month
         }
       }) }}
+
+      {{ DateFieldset({
+        name: 'land_date',
+        label: 'What is the date?',
+        hint: 'Enter todays date',
+        error: form.errors.messages.land_date,
+        value: {
+          year: form.state.land_date_year,
+          month: form.state.land_date_month,
+          day: form.state.land_date_day
+        }
+      }) }}
     {% endcall %}
   {% endcall %}
 

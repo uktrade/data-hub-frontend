@@ -11,6 +11,7 @@ function handleFormPost (req, res, next) {
         averageSalary: ['Select an option'],
         foreignOtherCompany: ['Select a company type'],
         estimated_date: ['Date is required'],
+        land_date: ['Date is required'],
       },
     },
   })
