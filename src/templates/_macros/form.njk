@@ -48,7 +48,7 @@
   {% set buttonText = props.buttonText or 'Submit' %}
   {% set returnText = props.returnText or 'Back' %}
   {% set hideFormActions = props.hideFormActions or false %}
-  {% set children = caller() if caller else applyMacro(props.children) %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   <form
     method="{{ method }}"
@@ -201,7 +201,7 @@
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
-  {% set children = caller() if caller else applyMacro(props.children) %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% if props.label and props.name -%}
     <{{ groupElement }}
@@ -258,7 +258,7 @@
 #}
 {% macro Fieldset(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
-  {% set children = caller() if caller else applyMacro(props.children) %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   <fieldset
     class="
@@ -336,7 +336,7 @@
 {% macro MultipleChoiceField(props) %}
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
-  {% set children = caller() if caller else applyMacro(props.children) %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, children: children, element: element, class: groupClass })) %}
     {% if props.type in ['checkbox', 'radio'] %}
@@ -462,7 +462,6 @@
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
-    {% set fieldChildren = props.children or [] %}
     {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
 
     {% if props.type == 'radio' and props.initialOption %}
@@ -483,7 +482,7 @@
 
     {% for option in props.options %}
       {% set selected = props.value|default([]) %}
-      {% set optionChildren = option.children|default([]) %}
+      {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
       <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
@@ -501,14 +500,8 @@
           {% endif %}
         </label>
 
-        {% for child in optionChildren %}
-          {{ child }}
-        {% endfor %}
+        {{ children }}
       </div>
-    {% endfor %}
-
-    {% for child in fieldChildren %}
-      {{ child }}
     {% endfor %}
   {% endif %}
 {% endmacro %}
