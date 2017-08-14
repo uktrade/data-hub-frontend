@@ -9,13 +9,15 @@
       "hint": "The market which should be providing the service"
     },
     "ita": {
-      "label": "International Trade Adviser",
-      "hint": "The ITA responsible for overseeing the work from a UK region"
+      "legend": "International Trade Advisers (ITAs)",
+      "hint": "The adviser(s) responsible for overseeing the work from a UK region",
+      "addButtonText": "Add another adviser",
+      "label": "Adviser"
     }
   },
   "validation": {
     "required": "cannot not be blank",
     "numeric": "can only contain numbers",
-    "default": "question is required"
+    "default": "is required"
   }
 }

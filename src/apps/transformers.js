@@ -22,6 +22,12 @@ function transformContactToOption ({ id, first_name, last_name }) {
   }
 }
 
+function transformIdToObject (id) {
+  return {
+    id,
+  }
+}
+
 /**
  * Utility to build an object from a transformed metadata array of objects so you can reference properties
  * by key rather than array index. Helpful when the array length changes.
@@ -38,4 +44,5 @@ module.exports = {
   transformObjectToOption,
   transformStringToOption,
   transformContactToOption,
+  transformIdToObject,
 }

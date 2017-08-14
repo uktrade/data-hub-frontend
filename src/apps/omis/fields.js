@@ -21,9 +21,11 @@ module.exports = {
   },
   ita: {
     fieldType: 'MultipleChoiceField',
+    legend: 'fields.ita.legend',
     label: 'fields.ita.label',
-    hint: 'fields.ita.hint',
+    addButtonText: 'fields.ita.addButtonText',
     optional: true,
+    repeatable: true,
     initialOption: '-- Select adviser --',
     options: [],
   },
