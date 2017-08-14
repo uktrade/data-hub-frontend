@@ -4,6 +4,7 @@ const {
   assign,
   concat,
   isArray,
+  isFunction,
   isPlainObject,
   isEmpty,
   isNull,
@@ -34,6 +35,7 @@ const filters = {
   flatten,
   map,
   mapValues,
+  isFunction,
   isArray,
   isNull,
 

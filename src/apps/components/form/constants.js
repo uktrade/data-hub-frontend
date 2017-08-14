@@ -1,3 +1,16 @@
+const metadata = require('../../../lib/metadata')
+const { transformObjectToOption, transformStringToOption } = require('../../transformers')
+
+const foreignOtherCompanyOptions = [
+  'Charity',
+  'Company',
+  'Government dept',
+  'Intermediary',
+  'Limited partnership',
+  'Partnership',
+  'Sole trader',
+]
+
 module.exports.macros = {
   standardForm: {
     children: [
@@ -21,24 +34,36 @@ module.exports.macros = {
         name: 'country',
         label: 'Country',
         initialOption: '-- Select country --',
+        options () {
+          return metadata.countryOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'MultipleChoiceField',
         name: 'sector',
         label: 'Sectors',
         initialOption: '-- Select sector --',
+        options () {
+          return metadata.sectorOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'MultipleChoiceField',
         type: 'checkbox',
         name: 'strategicDrivers',
         label: 'Strategic drivers',
+        options () {
+          return metadata.strategicDriverOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'MultipleChoiceField',
         type: 'radio',
         name: 'averageSalary',
         label: 'Average salary range',
+        options () {
+          return metadata.salaryRangeOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'MultipleChoiceField',
@@ -89,10 +114,9 @@ module.exports.macros = {
                 name: 'foreignOtherCompany',
                 label: 'Type of organisation',
                 initialOption: '-- Select organisation type --',
-                options: [
-                  { label: 'Charity' },
-                  { label: 'Limited company' },
-                ],
+                options () {
+                  return foreignOtherCompanyOptions.map(transformStringToOption)
+                },
                 condition: {
                   name: 'businessType',
                   value: 'ukother',

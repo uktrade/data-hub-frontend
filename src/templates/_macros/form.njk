@@ -422,7 +422,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} [props.class] - Field class name
- # @param {string} [props.options] - Field options
+ # @param {array, function} [props.options] - Field options (either an array of objects or function returning and array of objects)
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.value] - Selected field value
@@ -430,6 +430,7 @@
  #}
 {% macro SelectBox(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+  {% set options = props.options() if props.options | isFunction else props.options %}
 
   <select
     id="{{ props.fieldId }}"
@@ -440,7 +441,7 @@
     {% if props.initialOption %}
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
-    {% for option in props.options %}
+    {% for option in options %}
       <option value="{{ option.value }}" {% if option.value and props.value === option.value %}selected{% endif %}>
         {{ option.label }}
       </option>
@@ -456,13 +457,15 @@
  # @param {string} props.options - Field options
  # @param {string, array} [props.modifier] - multiple-choice field modifier
  # @param {string} [props.value] - Checked field value
- # @param {string} [props.children] - Main field subfields
- # @param {string} [props.options[].subfield] - Field options subfields
+ # @param {array} [props.options[].children] - Main field subfields
+ # @param {array, function} [props.options] - Field options (either an array of objects or function returning and array of objects)
  # @param {string} [props.initialOption] - Initial option label to use for empty value in select box
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
     {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
+    {% set options = props.options() if props.options | isFunction else props.options %}
+    {% set fieldChildren = props.children | map(callAsMacro) if props.children %}
 
     {% if props.type == 'radio' and props.initialOption %}
       <div class="c-multiple-choice {{ modifier }}">
@@ -480,7 +483,7 @@
       </div>
     {% endif %}
 
-    {% for option in props.options %}
+    {% for option in options %}
       {% set selected = props.value|default([]) %}
       {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
       <div class="c-multiple-choice {{ modifier }}">
@@ -502,6 +505,8 @@
 
         {{ children }}
       </div>
+
+      {{ fieldChildren }}
     {% endfor %}
   {% endif %}
 {% endmacro %}
