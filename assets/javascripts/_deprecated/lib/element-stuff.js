@@ -58,13 +58,18 @@ function toggleVisible (element) {
   }
 }
 
-function generateID () {
-  let d = new Date().getTime()
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = (d + Math.random() * 16) % 16 | 0
-    d = Math.floor(d / 16)
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
-  })
+/**
+ * generateId
+ *
+ * Create an ID string unique enough to use as an element ID in a page.
+ * The prefix is required as ID's cannot start with a number or a hyphen
+ *
+ * @param {string} prefix
+ * @returns {string} a unique string to use to indentify an element
+ */
+function generateID (prefix) {
+  const _prefix = (prefix && prefix.length > 0) ? prefix : 'dh'
+  return `${_prefix}-${Math.floor(Math.random() * 1000000) + 1}`
 }
 
 function isNodeList (nodes) {
@@ -119,6 +124,65 @@ function removeElement (element) {
   element.parentNode.removeChild(element)
 }
 
+/**
+ * resetFieldValues
+ *
+ * Scans the content of a dom fragment for fields
+ * and resets their values back to nothing.
+ *
+ * Useful when copying fields to use as new fields
+ *
+ * @param {nodeElement} fragment
+ */
+function resetFieldValues (fragment) {
+  Array
+    .from(fragment.querySelectorAll('option:checked'))
+    .forEach(selectedElement => {
+      selectedElement.selected = false
+    })
+
+  Array
+    .from(fragment.querySelectorAll('input:checked'))
+    .forEach(checkedElement => {
+      checkedElement.checked = false
+    })
+
+  Array
+    .from(fragment.querySelectorAll('input[type="text"], textarea'))
+    .forEach(textField => {
+      textField.value = ''
+    })
+}
+
+/**
+ * regenIds
+ * *
+ * Get all the all the elements in a fragment that have an ID
+ * attribute, generate a new one to replace it and look for related
+ * label tags to update their 'for' attribute
+ *
+ * @param {nodeElement} wrapper
+ *
+ */
+function regenIds (wrapper) {
+  Array
+    .from(wrapper.querySelectorAll('*[id]'))
+    .forEach((element) => {
+      const oldId = element.id
+
+      // If the element has a name, use that as part of the new ID
+      const name = element.name || ''
+      const newId = generateID(name)
+
+      element.id = newId
+
+      const relatedLabel = wrapper.querySelector(`[for="${oldId}"]`)
+      if (relatedLabel) {
+        relatedLabel.setAttribute('for', newId)
+      }
+    })
+}
+
 module.exports = {
   addClass,
   removeClass,
@@ -133,4 +197,6 @@ module.exports = {
   createElementFromMarkup,
   removeElement,
   toggleVisible,
+  regenIds,
+  resetFieldValues,
 }
