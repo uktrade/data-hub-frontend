@@ -8,6 +8,8 @@ module.exports = {
   description: 'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
   feedbackLink: '/support',
 
+  assign,
+
   callAsMacro (name) {
     const macro = this.ctx[name]
 
