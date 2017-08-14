@@ -15,6 +15,7 @@ $search-button-width: 50px;
   border: 0;
   padding: 0;
   background: $govuk-blue url("../../../images/_deprecated/search-button.png") no-repeat 8px 50%; // TODO convert to SVG
+  border-radius: 0;
 
   &:focus {
     outline: 3px solid $focus-colour;
