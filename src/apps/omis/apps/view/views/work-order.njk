@@ -11,10 +11,12 @@
       {% endif %}
     </caption>
     {% for item in props.items %}
-      <tr>
-        <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-        <td class="c-answers-summary__content">{{ item.value }}</td>
-      </tr>
+      {% if item.value %}
+        <tr>
+          <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+          <td class="c-answers-summary__content">{{ item.value }}</td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
 {% endmacro %}
@@ -69,14 +71,29 @@
     heading: 'Work description',
     editUrl: 'edit/work-description',
     items: [{
-      label: 'Service type',
-      value: 'Not added'
-    }, {
-      label: 'Work description',
-      value: 'Not added'
-    }, {
       label: 'Delivery date',
-      value: 'Not added'
+      value: values.delivery_date or 'Not set'
+    }, {
+      label: 'Service type',
+      value: values.service_types.join(', ') if values.service_types.length else 'None added'
+    }, {
+      label: 'Sector',
+      value: values.sector.name or 'Not selected'
+    }, {
+      label: 'Description of the activity',
+      value: values.description or 'Not added'
+    }, {
+      label: 'Existing representatives',
+      value: values.existing_agents
+    }, {
+      label: 'Contacts not to approach',
+      value: values.contacts_not_to_approach
+    }, {
+      label: 'Production information',
+      value: values.product_info
+    }, {
+      label: 'Further information',
+      value: values.further_info
     }]
   }) }}
 
