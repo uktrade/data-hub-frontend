@@ -11,7 +11,6 @@ const {
   renderResults,
 } = require('./controllers')
 
-const { handleFormPost, handleEntitySearch } = require('./form/middleware')
 const { renderFormElements } = require('./form/controllers')
 
 const {
@@ -27,7 +26,6 @@ router
   .get('/pagination', renderPagination)
   .get('/results', getInvestmentProjectsCollection, renderResults)
   .get('/progress', renderProgress)
-  .get('/form', handleEntitySearch, renderFormElements)
-  .post('/form', handleFormPost, renderFormElements)
+  .all('/form', renderFormElements)
 
 module.exports = router

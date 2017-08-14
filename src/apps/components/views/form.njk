@@ -4,21 +4,11 @@
   <h2 class="page-heading">Entity search</h2>
 
   {% call Example('Simple') %}
-    {{ EntitySearchForm({
-      inputName: 'term',
-      inputLabel: 'Search for a company name or contact',
-      searchTerm: entitySearch.searchTerm
-    }) }}
+    {{ EntitySearchForm(macros.entitySearchForm) }}
   {% endcall %}
 
   {% call Example('Global') %}
-    {{ EntitySearchForm({
-      inputName: 'term',
-      modifier: 'global',
-      inputLabel: 'Search for a company name or contact',
-      searchTerm: entitySearch.searchTerm,
-      aggregations: entitySearch.searchEntityResultsData
-    }) }}
+    {{ EntitySearchForm(macros.entitySearchFormGlobal) }}
   {% endcall %}
 
   <h2 class="page-heading">Standard</h2>
