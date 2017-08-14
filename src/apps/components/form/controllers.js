@@ -1,4 +1,4 @@
-const { standardFormConfig, entitySearchConfig } = require('./macros')
+const { globalFields, standardFormConfig, entitySearchConfig } = require('./macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { search, buildSearchEntityResultsData } = require('../../search/services')
 
@@ -36,13 +36,14 @@ async function renderFormElements (req, res) {
     .breadcrumb('Form elements')
     .render('components/views/form', {
       macros: {
+        globalFields,
         standardForm,
         entitySearchForm,
         entitySearchFormGlobal,
       },
-      entitySearch: Object.assign({}, res.locals.entitySearch, {
-        searchTerm: req.query.term,
-      }),
+      form: {
+        state: req.body,
+      },
     })
 }
 

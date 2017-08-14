@@ -17,62 +17,52 @@
   {% endcall %}
 
   {% call Example('Small size') %}
-    {% call Form(form) %}
-      {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
-        error: form.errors.messages.name,
-        value: form.state.name,
-        modifier: 'small'
-      }) }}
-
-      {{ MultipleChoiceField({
-          type: 'checkbox',
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-small',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          modifier: 'small'
+        },
+        assign({}, macros.globalFields.strategicDrivers, {
           name: 'strategicDrivers-small',
-          label: 'Strategic drivers',
-          options: form.options.strategicDrivers,
-          selected: form.state.strategicDrivers,
+          type: 'dropdown',
           modifier: 'small'
-        })
-      }}
-
-      {{ MultipleChoiceField({
-          type: 'radio',
+        }),
+        macros.globalFields.averageSalary | assignCopy({
+          type: 'dropdown',
           name: 'averageSalary-small',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalary,
-          selected: form.state.averageSalary,
+          initialOption: '-- Select range --',
           modifier: 'small'
         })
-      }}
-    {% endcall %}
+      ]
+    }) }}
   {% endcall %}
 
   {% call Example('Light version') %}
-    <p>
-      {{ EntitySearchForm({
-        inputName: 'term-light',
-        inputLabel: 'Search for a company name or contact',
-        inputPlaceholder: '',
-        searchTerm: entitySearch.searchTermLight,
-        isLabelHidden: false,
-        fieldModifier: 'light'
-      }) }}
-    </p>
+    {{ EntitySearchForm({
+      inputName: 'term-light',
+      inputLabel: 'Search for a company name or contact',
+      inputPlaceholder: '',
+      searchTerm: entitySearch.searchTermLight,
+      isLabelHidden: false,
+      fieldModifier: 'light'
+    }) }}
 
-    {% call Form(form) %}
-      {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
-        error: form.errors.messages.name,
-        value: form.state.name,
-        modifier: 'light'
-      }) }}
-
-      {{ MultipleChoiceField({
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-small',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          error: form.errors.messages.name,
+          value: form.state.name,
+          modifier: 'light'
+        }, {
+          macroName: 'MultipleChoiceField',
           type: 'radio',
           name: 'gender',
           label: 'Gender',
@@ -83,10 +73,8 @@
           ],
           selected: form.state.gender,
           modifier: 'light'
-        })
-      }}
-
-      {{ MultipleChoiceField({
+        }, {
+          macroName: 'MultipleChoiceField',
           type: 'checkbox',
           name: 'filterBy',
           label: 'Filter by',
@@ -96,19 +84,15 @@
           ],
           selected: form.state.filterBy,
           modifier: 'light'
-        })
-      }}
-
-      {{ MultipleChoiceField({
+        },
+        assign({}, macros.globalFields.averageSalary, {
+          type: 'dropdown',
           name: 'averageSalary-light',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalaryLight,
-          selected: form.state.averageSalaryLight,
+          initialOption: '-- Select range --',
           modifier: 'light'
         })
-      }}
-    {% endcall %}
+      ]
+    }) }}
   {% endcall %}
 
   {% call Example('Compact version') %}
@@ -135,15 +119,8 @@
           modifier: 'compact'
       }) }}
 
-      {{ MultipleChoiceField({
-          name: 'averageSalary-light',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalaryLight,
-          selected: form.state.averageSalaryLight,
-          modifier: 'compact'
-      }) }}
-    {% endcall %}
+      {{ renderAsMacro(macros.globalFields.averageSalary, { type: 'dropdown', modifier: 'compact' }) }}
+   {% endcall %}
   {% endcall %}
 
   {% call Example('Fields with actions') %}
@@ -152,40 +129,27 @@
     {% endset %}
 
     {% call Form(form) %}
-      {{ MultipleChoiceField({
-        name: 'averageSalary-light',
-        label: 'Average salary range',
-        options: form.options.averageSalaryRange,
-        error: form.errors.messages.averageSalaryLight,
-        selected: form.state.averageSalaryLight,
-        innerContent: removeButton
-      }) }}
+      {{ renderAsMacro(macros.globalFields.averageSalary, { innerHTML: removeButton }) }}
 
-      {{ MultipleChoiceField({
-        name: 'averageSalary-light',
-        label: 'Average salary range',
-        options: form.options.averageSalaryRange,
-        error: form.errors.messages.averageSalaryLight,
-        selected: form.state.averageSalaryLight,
-        innerContent: removeButton
-      }) }}
+      {{ renderAsMacro(macros.globalFields.strategicDrivers, { innerHTML: removeButton }) }}
 
       {{ TextField({
-        name: 'name-small',
+        name: 'name-small-actions',
         label: 'Company name',
         placeholder: 'e.g. Hooli',
         error: form.errors.messages.name,
-        value: form.state.name,
-        innerContent: removeButton
+        value: form.state['name-small-actions'],
+        innerHTML: removeButton
       }) }}
 
       {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
+        type: 'textarea',
+        name: 'about-small-actions',
+        label: 'About yourself',
+        placeholder: 'e.g. Tell us about your holiday',
         error: form.errors.messages.name,
-        value: form.state.name,
-        innerContent: removeButton
+        value: form.state['about-small-actions'],
+        innerHTML: removeButton
       }) }}
     {% endcall %}
   {% endcall %}
