@@ -37,6 +37,10 @@ const filters = {
   isArray,
   isNull,
 
+  assignCopy (...args) {
+    return assign({}, ...args)
+  },
+
   highlight (string, searchTerm, shouldMatchFullWord = false) {
     if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) { return string }
 
