@@ -1,10 +1,5 @@
-const metadata = require('../../lib/metadata')
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
-const {
-  transformObjectToOption,
-  transformStringToOption,
-} = require('../transformers')
 
 const { buildPagination } = require('../../lib/pagination')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
@@ -13,35 +8,6 @@ function renderIndex (req, res) {
   return res.render('components/views/index', {
     title: 'Data Hub Components',
   })
-}
-
-const foreignOtherCompanyOptions = [
-  'Charity',
-  'Company',
-  'Government dept',
-  'Intermediary',
-  'Limited partnership',
-  'Partnership',
-  'Sole trader',
-]
-
-function renderFormElements (req, res) {
-  return res
-    .breadcrumb('Form elements')
-    .render('components/views/form', {
-      entitySearch: Object.assign({}, res.locals.entitySearch, {
-        searchTerm: req.query.term,
-      }),
-      form: Object.assign({}, res.locals.form, {
-        options: {
-          countries: metadata.countryOptions.map(transformObjectToOption),
-          averageSalaryRange: metadata.salaryRangeOptions.map(transformObjectToOption),
-          strategicDrivers: metadata.strategicDriverOptions.map(transformObjectToOption),
-          sectors: metadata.sectorOptions.map(transformObjectToOption),
-          foreignOtherCompany: foreignOtherCompanyOptions.map(transformStringToOption),
-        },
-      }),
-    })
 }
 
 function renderMessages (req, res) {
@@ -111,7 +77,6 @@ function renderProgress (req, res) {
 
 module.exports = {
   renderEntityList,
-  renderFormElements,
   renderIndex,
   renderMessages,
   renderLocalHeader,

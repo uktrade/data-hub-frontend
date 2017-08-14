@@ -1,9 +1,7 @@
 const router = require('express').Router()
 
-const { handleFormPost, handleEntitySearch } = require('./middleware')
 const {
   renderEntityList,
-  renderFormElements,
   renderIndex,
   renderMessages,
   renderLocalHeader,
@@ -12,6 +10,9 @@ const {
   renderProgress,
   renderResults,
 } = require('./controllers')
+
+const { handleFormPost, handleEntitySearch } = require('./form/middleware')
+const { renderFormElements } = require('./form/controllers')
 
 const {
   getInvestmentProjectsCollection,
