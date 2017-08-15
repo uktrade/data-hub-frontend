@@ -72,10 +72,10 @@
     editUrl: 'edit/work-description',
     items: [{
       label: 'Delivery date',
-      value: values.delivery_date or 'Not set'
+      value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
     }, {
-      label: 'Service type',
-      value: values.service_types.join(', ') if values.service_types.length else 'None added'
+      label: 'Service type' | pluralise(values.service_types.length),
+      value: values.service_types | map('name') | join(', ') if values.service_types.length else 'None added'
     }, {
       label: 'Sector',
       value: values.sector.name or 'Not selected'
@@ -83,11 +83,14 @@
       label: 'Description of the activity',
       value: values.description or 'Not added'
     }, {
+      label: 'Contacts not to approach',
+      value: values.contacts_not_to_approach
+    }, {
       label: 'Existing representatives',
       value: values.existing_agents
     }, {
-      label: 'Contacts not to approach',
-      value: values.contacts_not_to_approach
+      label: 'Permission to approach contacts',
+      value: values.permission_to_approach_contacts
     }, {
       label: 'Production information',
       value: values.product_info
