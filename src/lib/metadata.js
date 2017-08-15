@@ -85,6 +85,7 @@ const metadataItems = [
   ['salary-range', 'salaryRangeOptions'],
   ['investment-strategic-driver', 'strategicDriverOptions'],
   ['investment-project-stage', 'investmentStageOptions'],
+  ['order-service-type', 'orderServiceTypesOptions'],
 ]
 
 const restrictedServiceKeys = [
