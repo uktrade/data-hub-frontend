@@ -1,5 +1,15 @@
-const { forEach, get, pick, pickBy } = require('lodash')
+const {
+  find,
+  flatten,
+  get,
+  isPlainObject,
+  map,
+  mapValues,
+  pick,
+} = require('lodash')
+const dateFns = require('date-fns')
 
+const { longDateFormat } = require('../../../../config')
 const FormController = require('./form')
 const { Order } = require('../models')
 
@@ -23,21 +33,44 @@ class EditController extends FormController {
   }
 
   getValues (req, res, next) {
-    const values = req.sessionModel.toJSON()
-    const errors = req.sessionModel.get('errors')
-    let errorValues = req.sessionModel.get('errorValues')
+    const sessionValues = req.sessionModel.toJSON()
+    const errorValues = pick(sessionValues.errorValues, Object.keys(req.form.options.fields))
 
-    delete values.errorValues
-    delete values.errors
+    delete sessionValues.errorValues
+    delete sessionValues.errors
 
-    forEach(req.form.options.fields, (value, key) => {
-      values[key] = get(res.locals, `order.${key}.id`)
+    const orderValues = mapValues(req.form.options.fields, (fieldOptions, key) => {
+      const newValue = get(res.locals, `order.${key}`)
+
+      if (isPlainObject(newValue)) {
+        return get(newValue, 'id')
+      }
+
+      if (find(newValue, 'id')) {
+        return map(newValue, 'id')
+      }
+
+      if (fieldOptions.repeatable) {
+        return flatten([newValue])
+      }
+
+      return newValue
     })
 
-    errorValues = pick(errorValues, Object.keys(req.form.options.fields))
-    errorValues = pickBy(errorValues, (e, k) => !errors || !errors[k] || !errors[k].url || errors[k].url === req.path)
+    // combine order values and error values
+    let combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
+    // convert dates to default format
+    combinedValues = mapValues(combinedValues, (value) => {
+      const parsedDate = dateFns.parse(value)
 
-    next(null, Object.assign(values, errorValues))
+      if (value && dateFns.isValid(parsedDate)) {
+        return dateFns.format(parsedDate, longDateFormat)
+      }
+
+      return value
+    })
+
+    next(null, combinedValues)
   }
 }
 
