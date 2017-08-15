@@ -138,6 +138,34 @@ describe('nunjucks filters', () => {
     })
   })
 
+  describe('#formatDate', () => {
+    context('when given an invalid date', () => {
+      it('should return input value', () => {
+        const formattedDate = filters.formatDate('not-a-date')
+
+        expect(formattedDate).to.equal('not-a-date')
+      })
+    })
+
+    context('when given a valid date', () => {
+      context('when no format is specified', () => {
+        it('should return date in default format', () => {
+          const formattedDate = filters.formatDate('1/5/2010')
+
+          expect(formattedDate).to.equal('5 January 2010')
+        })
+      })
+
+      context('when a format is specified', () => {
+        it('should return date in that format', () => {
+          const formattedDate = filters.formatDate('1/5/2010', 'DD/MM/YY')
+
+          expect(formattedDate).to.equal('05/01/10')
+        })
+      })
+    })
+  })
+
   describe('#collectionDefault', () => {
     const mockObjectWithEmpties = {
       a: true,

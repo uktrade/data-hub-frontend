@@ -1,5 +1,5 @@
 const nunjucks = require('nunjucks')
-
+const dateFns = require('date-fns')
 const {
   assign,
   concat,
@@ -17,6 +17,8 @@ const {
   map,
   mapValues,
 } = require('lodash')
+
+const { longDateFormat } = require('../../config')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
@@ -90,6 +92,14 @@ const filters = {
 
   formatNumber: (number, locales = 'en-GB') => {
     return number.toLocaleString(locales)
+  },
+
+  formatDate: (value, format = longDateFormat) => {
+    const parsedDate = dateFns.parse(value)
+
+    if (!dateFns.isValid(parsedDate)) { return value }
+
+    return dateFns.format(parsedDate, format)
   },
 
   arrayToLabelValues: (items) => {
