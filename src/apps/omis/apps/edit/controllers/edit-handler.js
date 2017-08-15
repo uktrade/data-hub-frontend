@@ -3,7 +3,7 @@ const i18nFuture = require('i18n-future')
 const { reduce } = require('lodash')
 
 const steps = require('../steps')
-const fields = require('../../../fields')
+const fields = require('../fields')
 const i18n = i18nFuture({
   path: path.resolve(__dirname, '../../../locales/__lng__/__ns__.json'),
 })
