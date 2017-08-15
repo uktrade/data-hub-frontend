@@ -12,10 +12,13 @@ const {
 
 async function populateForm (req, res, next) {
   try {
-    const interactionTypes = metadataRepo.interactionTypeOptions
+    const interactionTypes = metadataRepo.interactionTypeOptions.map(transformObjectToOption)
     const advisersResponse = await getAdvisers(req.session.token)
-    const contacts = res.locals.investmentData.client_contacts
     const advisers = advisersResponse.results.map(transformObjectToOption)
+    const contacts = res.locals.investmentData.client_contacts.map(transformObjectToOption)
+    const serviceTypesResponse = await metadataRepo.getServices(req.session.token)
+    const serviceTypes = serviceTypesResponse.map(transformObjectToOption)
+    const teams = metadataRepo.teams.map(transformObjectToOption)
 
     res.locals.form = get(res, 'locals.form', {})
     res.locals.form.labels = interactionsLabels.edit
@@ -24,6 +27,8 @@ async function populateForm (req, res, next) {
       advisers,
       contacts,
       interactionTypes,
+      serviceTypes,
+      teams,
     }
 
     next()
@@ -51,7 +56,10 @@ function handleFormPost (req, res, next) {
     .catch((err) => {
       if (err.statusCode === 400) {
         res.locals.form = get(res, 'locals.form', {})
-        res.locals.form.errors = err.error
+        res.locals.form.errors = {
+          summary: 'Please correct the following errors:',
+          messages: err.error,
+        }
         res.locals.form.state = req.body
 
         next()
