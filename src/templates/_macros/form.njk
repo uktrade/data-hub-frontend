@@ -516,18 +516,14 @@
   {% set fieldId = 'field-' + props.name if props.name %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
-    {{ TextField({
-      modifier: ['inline', 'shortest', 'soft'],
-      name: props.name + '_month',
-      value: props.value.month,
-      label: 'Month'
-    }) }}
-
-    {{ TextField({
-      modifier: ['inline', 'shorter', 'soft'],
-      name: props.name + '_year',
-      value: props.value.year,
-      label: 'Year'
-    }) }}
+    {% for key, value in props.value %}
+      {% set name =  props.name + '_' + key %}
+      {{ TextField({
+        modifier: ['inline', 'soft', 'shorter' if key == 'year' else 'shortest'],
+        name: name,
+        value: value,
+        label: key | capitalize
+      }) }}
+    {% endfor %}
   {% endcall %}
 {% endmacro %}
