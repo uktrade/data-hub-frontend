@@ -129,23 +129,4 @@ describe('Investment projects builders', () => {
       expect(actual.selected).to.equal('stage.name')
     })
   })
-
-  describe('#buildMacroConfigFromFormFields', () => {
-    it('should return an object with configuration for applyMacro Nunjucks filter', () => {
-      const actual = this.controller.buildMacroConfigFromFormFields()
-
-      expect(actual).to.have.length(2)
-      expect(actual[0]).to.have.property('MultipleChoiceField').and.to.include({
-        type: 'checkbox',
-        label: 'Stage',
-        name: 'stage',
-        modifier: 'smaller',
-      })
-      expect(actual[1]).to.have.property('MultipleChoiceField').and.to.include({
-        label: 'Type of investment',
-        name: 'investment_type',
-        type: 'radio',
-      })
-    })
-  })
 })

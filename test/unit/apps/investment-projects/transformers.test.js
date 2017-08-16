@@ -20,8 +20,8 @@ describe('Investment project data transformers', () => {
 
       expect(firstItem.meta[0].name).to.equal('stage')
       expect(firstItem.meta[0].label).to.be.a('string')
+      expect(firstItem.meta[0].type).to.be.a('string')
       expect(firstItem.meta[0].value).to.be.an('object')
-      expect(firstItem.meta[0].isBadge).to.be.true
 
       expect(firstItem.meta[1].name).to.equal('investment_type')
       expect(firstItem.meta[1].label).to.be.a('string')
@@ -30,7 +30,7 @@ describe('Investment project data transformers', () => {
 
       expect(firstItem.meta[3].name).to.equal('estimated_land_date')
       expect(firstItem.meta[3].isInert).to.be.true
-      expect(firstItem.meta[3].isBadge).to.be.false
+      expect(firstItem.meta[3].type).to.equal('date')
     })
   })
 

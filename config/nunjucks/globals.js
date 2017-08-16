@@ -20,11 +20,14 @@ module.exports = {
 
   // Constructs macro from a specially formatted object or array of objects:
   // { MacroName: { prop1: 'A', prop2: 'B' } }
-  applyMacro (config) {
+  applyMacro (config, sharedProps) {
     function renderMacro (macroConfig) {
       return map(macroConfig, (props, name) => {
         const macro = this.env.globals.callAsMacro.call(this, name)
-        return macro(props)
+
+        if (!macro) { return }
+
+        return macro(assign({}, sharedProps, props))
       })[0]
     }
 

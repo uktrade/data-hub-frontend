@@ -1,8 +1,8 @@
-const { get, isString, isArray, pick } = require('lodash')
+const { get, isString, isArray, merge } = require('lodash')
 const { transformObjectToOption } = require('../transformers')
 const metadataRepo = require('../../lib/metadata')
 const { collectionFilterLabels } = require('./labels')
-const { filterFields } = require('./form-fields')
+const { FILTERS_MACRO_CONFIG, SORT_OPTIONS } = require('./constants')
 
 function buildInvestmentFilters (filtersQuery = {}) {
   const formOptions = {
@@ -11,7 +11,7 @@ function buildInvestmentFilters (filtersQuery = {}) {
     sector: metadataRepo.sectorOptions.map(transformObjectToOption),
   }
 
-  return Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
+  const filters = Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
     const filterOptions = formOptions[filterName] || []
 
     let valueLabel = filtersQuery[filterName]
@@ -42,48 +42,24 @@ function buildInvestmentFilters (filtersQuery = {}) {
 
     return filtersObj
   }, {})
+
+  return merge(filters, FILTERS_MACRO_CONFIG)
 }
 
 function buildInvestmentSorting (filtersQuery = {}) {
-  const options = [
-    { value: 'estimated_land_date:asc', label: 'Estimated land date: nearest first' },
-    { value: 'estimated_land_date:desc', label: 'Estimated land date: latest first' },
-    { value: 'project_code', label: 'Project code' },
-    { value: 'name:asc', label: 'Project name' },
-    { value: 'stage.name', label: 'Stage' },
-    { value: 'total_investment:desc', label: 'Investment value: high to low' },
-    { value: 'total_investment:asc', label: 'Investment value: low to high' },
-  ]
-
   const query = Object.assign(
     {},
-    { sortby: options[0].value },
+    { sortby: SORT_OPTIONS[0].value },
     filtersQuery
   )
 
   return {
-    options,
+    options: SORT_OPTIONS,
     selected: query.sortby,
   }
-}
-
-function buildMacroConfigFromFormFields (filtersQuery = {}) {
-  if (!filterFields) { return null }
-
-  const filters = buildInvestmentFilters(filtersQuery)
-
-  return filterFields.map(field => {
-    const macroName = Object.keys(field)[0]
-    const fieldData = filters[field[macroName].name]
-
-    return {
-      [macroName]: Object.assign({}, pick(fieldData, 'value', 'label', 'options'), field[macroName]),
-    }
-  })
 }
 
 module.exports = {
   buildInvestmentFilters,
   buildInvestmentSorting,
-  buildMacroConfigFromFormFields,
 }

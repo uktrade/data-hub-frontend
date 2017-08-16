@@ -10,8 +10,12 @@
  #}
 {% macro Entity (props) %}
   {% if props.name and props.id and props.type %}
-    {% set metaBadges = props.meta | filter(['isBadge', true]) %}
-    {% set metaItems = props.meta | filter(['isBadge', false]) %}
+    {% set metaBadges = props.meta | filter(['MetaItem.type', 'badge']) %}
+    {% set metaTimes = props.meta | filter(['MetaItem.type', 'time']) %}
+    {% set metaItems = props.meta
+      | reject(['MetaItem.type', 'badge'])
+      | reject(['MetaItem.type', 'time'])
+    %}
 
     <div class="c-entity c-entity--{{ props.type }}">
       {% if props.code %}
@@ -26,7 +30,7 @@
         {% if metaBadges | length %}
           <div class="c-entity__badges">
             {% for metaBadge in metaBadges %}
-              {{ MetaItem(metaBadge | assign({ highlightTerm: props.highlightTerm })) }}
+              {{ applyMacro(metaBadge, { highlightTerm: props.highlightTerm }) }}
             {% endfor %}
           </div>
         {% endif %}
@@ -35,13 +39,18 @@
       {% if metaItems | length %}
         <div class="c-entity__content">
           {% for metaItem in metaItems %}
-            {{ MetaItem(metaItem | assign({
-              highlightTerm: props.highlightTerm,
-              isLabelHidden: metaItem.isLabelHidden
-            })) }}
+            {{
+              applyMacro(metaItem, {
+                highlightTerm: props.highlightTerm,
+                isLabelHidden: metaItem.isLabelHidden
+              })
+            }}
           {% endfor %}
         </div>
       {% endif %}
+      <div class="c-entity__footer">
+        {{ metaTimes | map(callAsMacro('MetaItem')) | join | safe }}
+      </div>
     </div>
   {% endif %}
 {% endmacro %}
@@ -57,26 +66,25 @@
  # @param {string} [props.url] - link URL
  # @param {string} [props.isSelected] - whether the anchor should be have 'is-selected' state
  # @param {string} [props.isInert] - whether the value should be inert even if it has URL
- # @param {string} [props.isBadge] - whether the the CSS c-badge component should be applied to anchor
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
- # @param {string} [props.badgeModifier] - modifier for badge link if isBadge=true
+ # @param {string} [props.badgeModifier] - modifier for badge
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
  #}
 {% macro MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
-  {% set itemValueClass = 'c-badge ' + badgeModifier if props.isBadge else 'c-meta-item__value'%}
-  {% if props.name and 'date' in props.name %}
+  {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-item__value'%}
+  {% if props.type and props.type === 'date' %}
     {% set date = props.value | formatDate %}
     {% set metaItemValue = date if date else props.value  %}
   {% else %}
     {% set metaItemValue = props.value.name | default(props.value) %}
   {% endif %}
 
-  {% if props.label and metaItemValue %}
-    <div class="c-meta-item">
+  {% if metaItemValue %}
+    <div class="c-meta-item {{ 'c-meta-item--' + props.modifier if props.modifier }}">
       {% if props.label %}
-        <span class="c-meta-item__label {{ 'u-visually-hidden' if isLabelHidden or props.isBadge}}">
+        <span class="c-meta-item__label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
           {{ props.label }}:
         </span>
       {% endif %}

@@ -1,4 +1,5 @@
 const { getMacros } = require('~/test/unit/macro-helper')
+const { transformFieldsObjectToMacrosObject } = require('~/src/apps/transformers')
 const entitiesMacros = getMacros('entities')
 
 describe('Entities macros', () => {
@@ -29,15 +30,17 @@ describe('Entities macros', () => {
         expect(component.querySelector('.c-entity__title a')).to.have.property('href', '/animals/12345')
       })
 
-      it('should render entity component with modifier', () => {
+      it('should render entity component with meta items', () => {
         const component = entitiesMacros.renderToDom('Entity', {
           id: '12345',
           name: 'Horse',
           type: 'animal',
-          meta: [
-            { label: 'Colour', value: 'brown', isBadge: true },
-            { label: 'DOB', value: '2015-11-10', name: 'date_of_birth', isBadge: false },
-          ],
+          meta: transformFieldsObjectToMacrosObject([
+            { label: 'Colour', value: 'brown', type: 'badge' },
+            { label: 'DOB', value: '2015-11-10', type: 'date', name: 'date_of_birth' },
+          ], {
+            macroName: 'MetaItem',
+          }),
         })
 
         expect(component.querySelector('.c-entity__header .c-entity__badges')).to.exist
@@ -76,7 +79,7 @@ describe('Entities macros', () => {
           value,
         })
 
-        expect(component.className).to.equal('c-meta-item')
+        expect(component.className.trim()).to.equal('c-meta-item')
       })
 
       it('should render metadata without label', () => {
@@ -93,6 +96,7 @@ describe('Entities macros', () => {
         const component = entitiesMacros.renderToDom('MetaItem', {
           name: 'land_date',
           label: 'Land date',
+          type: 'date',
           value: '2017-07-26',
         })
 
@@ -104,6 +108,7 @@ describe('Entities macros', () => {
           name: 'land_date',
           label: 'Land date',
           value: '2017-07-26',
+          type: 'date',
           url: '/dessert',
         })
 
@@ -125,8 +130,8 @@ describe('Entities macros', () => {
       it('should render metadata as badge', () => {
         const component = entitiesMacros.renderToDom('MetaItem', {
           label: 'Dessert',
+          type: 'badge',
           value,
-          isBadge: true,
         })
 
         expect(component.querySelector('.c-meta-item__label').className).to.contain('u-visually-hidden')

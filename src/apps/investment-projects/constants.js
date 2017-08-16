@@ -1,16 +1,4 @@
-const { map, omit } = require('lodash')
-
-function buildMacroConfig (fields, globalProps) {
-  return map(fields, (field, fieldName) => {
-    return {
-      [field.macroName]: Object.assign({}, omit(field, 'macroName'), {
-        name: fieldName,
-      }, globalProps),
-    }
-  })
-}
-
-const filterFields = buildMacroConfig({
+const FILTERS_MACRO_CONFIG = {
   stage: {
     macroName: 'MultipleChoiceField',
     type: 'checkbox',
@@ -33,10 +21,17 @@ const filterFields = buildMacroConfig({
     hint: 'YYYY-MM-DD',
     placeholder: 'e.g. 2019-05-09',
   },
-}, {
-  modifier: ['light', 'smaller'],
-})
+}
+
+const SORT_OPTIONS = [
+  { value: 'estimated_land_date:asc', label: 'Earliest land date' },
+  { value: 'estimated_land_date:desc', label: 'Latest land date' },
+  { value: 'project_code', label: 'Project code' },
+  { value: 'name:asc', label: 'Project name' },
+  { value: 'stage.name', label: 'Stage' },
+]
 
 module.exports = {
-  filterFields,
+  FILTERS_MACRO_CONFIG,
+  SORT_OPTIONS,
 }
