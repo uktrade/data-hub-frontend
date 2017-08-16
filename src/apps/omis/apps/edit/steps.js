@@ -2,15 +2,15 @@ const { merge } = require('lodash')
 
 const createSteps = require('../create/steps')
 const EditClientDetailsController = require('./controllers/client-details')
-const EditAssignItaController = require('./controllers/assign-ita')
+const EditSubscribersController = require('./controllers/subscribers')
 const EditWorkDescriptionController = require('./controllers/work-description')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
     controller: EditClientDetailsController,
   },
-  '/assign-ita': {
-    controller: EditAssignItaController,
+  '/subscribers': {
+    controller: EditSubscribersController,
   },
   '/work-description': {
     fields: [

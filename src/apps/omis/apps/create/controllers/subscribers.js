@@ -4,12 +4,12 @@ const { FormController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
 const { transformObjectToOption } = require('../../../../transformers')
 
-class AssignItaController extends FormController {
+class SubscribersController extends FormController {
   async configure (req, res, next) {
     const advisers = await getAdvisers(req.session.token)
     const options = advisers.results.map(transformObjectToOption)
 
-    req.form.options.fields.ita.options = sortBy(options, 'label')
+    req.form.options.fields.subscribers.options = sortBy(options, 'label')
     super.configure(req, res, next)
   }
 
@@ -52,4 +52,4 @@ class AssignItaController extends FormController {
   }
 }
 
-module.exports = AssignItaController
+module.exports = SubscribersController

@@ -1,10 +1,10 @@
-const AssignItaController = require('./assign-ita')
+const SubscribersController = require('./subscribers')
 const ClientDetailsController = require('./client-details')
 const MarketController = require('./market')
 const ConfirmController = require('./confirm')
 
 module.exports = {
-  AssignItaController,
+  SubscribersController,
   ClientDetailsController,
   MarketController,
   ConfirmController,

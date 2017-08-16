@@ -1,5 +1,5 @@
 const {
-  AssignItaController,
+  SubscribersController,
   ClientDetailsController,
   MarketController,
   ConfirmController,
@@ -22,15 +22,15 @@ module.exports = {
   },
   '/market': {
     editable: true,
-    next: 'assign-ita',
+    next: 'subscribers',
     fields: ['primary_market'],
     controller: MarketController,
   },
-  '/assign-ita': {
+  '/subscribers': {
     editable: true,
     next: 'confirm',
-    fields: ['ita'],
-    controller: AssignItaController,
+    fields: ['subscribers'],
+    controller: SubscribersController,
   },
   '/confirm': {
     backLink: null,

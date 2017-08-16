@@ -8,7 +8,7 @@
       "label": "Primary market",
       "hint": "The market which should be providing the service"
     },
-    "ita": {
+    "subscribers": {
       "legend": "International Trade Advisers (ITAs)",
       "hint": "The adviser(s) responsible for overseeing the work from a UK region",
       "addButtonText": "Add another adviser",

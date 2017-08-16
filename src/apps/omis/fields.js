@@ -19,11 +19,11 @@ module.exports = {
     initialOption: '-- Select market --',
     options: [],
   },
-  ita: {
+  subscribers: {
     fieldType: 'MultipleChoiceField',
-    legend: 'fields.ita.legend',
-    label: 'fields.ita.label',
-    addButtonText: 'fields.ita.addButtonText',
+    legend: 'fields.subscribers.legend',
+    label: 'fields.subscribers.label',
+    addButtonText: 'fields.subscribers.addButtonText',
     optional: true,
     repeatable: true,
     initialOption: '-- Select adviser --',
