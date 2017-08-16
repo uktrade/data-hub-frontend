@@ -2,11 +2,15 @@ const token = 'abcd'
 const company = {
   id: '12345',
 }
-const investmentProjects = [{
-  id: 'project-1',
-}, {
-  id: 'project-2',
-}]
+const investmentProjects = {
+  count: 2,
+  page: 1,
+  results: [{
+    id: 'project-1',
+  }, {
+    id: 'project-2',
+  }],
+}
 
 describe('Company investments controller', function () {
   beforeEach(() => {
@@ -40,6 +44,7 @@ describe('Company investments controller', function () {
           session: {
             token,
           },
+          query: {},
           params: {
             id: company.id,
           },
@@ -58,8 +63,8 @@ describe('Company investments controller', function () {
               expect(data).to.haveOwnProperty('company')
               expect(data.company).to.deep.equal(company)
 
-              expect(data).to.haveOwnProperty('projects')
-              expect(data.projects).to.deep.equal(investmentProjects)
+              expect(data).to.haveOwnProperty('results')
+              expect(data.results).to.deep.equal(investmentProjects)
 
               expect(this.nextStub).not.to.be.called
 
@@ -86,6 +91,7 @@ describe('Company investments controller', function () {
           session: {
             token,
           },
+          query: {},
           params: {
             id: company.id,
           },
