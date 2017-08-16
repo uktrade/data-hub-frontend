@@ -9,7 +9,9 @@
       <div id="business-type" class="key-value__key form-label-bold">Business type
         <a href="/companies/add-step-1" class="button-link">Change</a>
       </div>
-      <div class="key-value__value" aria-labelledby="business-type">{{businessTypeName}}</div>
+      <div class="key-value__value" aria-labelledby="business-type">
+        UK {{businessTypeName or '(type of organisation not known)'}}
+      </div>
     </div>
   </div>
 

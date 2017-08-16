@@ -17,21 +17,7 @@ describe('Company controller, foreign', function () {
   let saveCompanyFormStub
   let flashStub
   let breadcrumbStub
-  const company = {
-    id: '9999',
-    company_number: '10620176',
-    companies_house_data: null,
-    name: 'Freds ltd',
-    business_type: {
-      id: '43134234',
-      name: 'Charity',
-    },
-    registered_address_1: '13 HOWICK PARK AVENUE',
-    registered_address_2: 'PENWORTHAM',
-    registered_address_town: 'PRESTON',
-    registered_address_county: '',
-    registered_address_postcode: 'PR1 0LS',
-  }
+  let company
   const metadataRepositoryStub = {
     regionOptions: [{ id: '1', name: 'option 1' }],
     sectorOptions: [{ id: '1', name: 'option 1' }],
@@ -47,6 +33,21 @@ describe('Company controller, foreign', function () {
   }
 
   beforeEach(function () {
+    company = {
+      id: '9999',
+      company_number: '10620176',
+      companies_house_data: null,
+      name: 'Freds ltd',
+      business_type: {
+        id: '43134234',
+        name: 'Charity',
+      },
+      registered_address_1: '13 HOWICK PARK AVENUE',
+      registered_address_2: 'PENWORTHAM',
+      registered_address_town: 'PRESTON',
+      registered_address_county: '',
+      registered_address_postcode: 'PR1 0LS',
+    }
     fakeCompanyForm = { id: '999', sector: 10 }
     getInflatedDitCompanyStub = sinon.stub().resolves(company)
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
@@ -368,6 +369,24 @@ describe('Company controller, foreign', function () {
       }
 
       companyControllerForeign.editDetails(req, res, next)
+    })
+    it('handles null business types', () => {
+      company.business_type = null
+      const req = {
+        session: { token: '1234' },
+        params: { id: '9999' },
+      }
+      const res = {
+        locals: {},
+        breadcrumb: breadcrumbStub,
+        render: () => {},
+      }
+
+      return companyControllerForeign.editDetails(req, res, next).then(() => {
+        expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
+        expect(getForeignCompanyAsFormDataStub).to.be.calledWith(company)
+        expect(res.locals.businessTypeName).to.be.undefined
+      })
     })
     it('should pass through form data if called with errors', function (done) {
       const body = {

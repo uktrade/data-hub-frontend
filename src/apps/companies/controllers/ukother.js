@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 const companyRepository = require('../repos')
 const companyFormService = require('../services/form')
 const companyService = require('../services/data')
@@ -67,7 +69,7 @@ async function editDetails (req, res, next) {
     } else {
       res.locals.formData = companyFormService.getUkOtherCompanyAsFormData(company)
     }
-    res.locals.businessTypeName = company.business_type.name
+    res.locals.businessTypeName = get(company, 'business_type.name')
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
 
     res
