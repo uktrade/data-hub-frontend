@@ -64,7 +64,7 @@ describe('OMIS create confirm controller', () => {
       this.valuesMock = {
         contact: '1',
         company: 'company-12345',
-        ita: ['0513453c-86bc-e211-a646-e4115bead28a'],
+        subscribers: ['0513453c-86bc-e211-a646-e4115bead28a'],
         primary_market: '2',
       }
     })
@@ -87,7 +87,7 @@ describe('OMIS create confirm controller', () => {
               },
               contact: 'Fred Stevens',
               primary_market: metadataCountryMockData[1],
-              ita: [getAdvisersMockData.results[0].name],
+              subscribers: [getAdvisersMockData.results[0].name],
             })
             done()
           } catch (err) {
@@ -114,7 +114,7 @@ describe('OMIS create confirm controller', () => {
             errors: {},
             foo: 'bar',
             fizz: 'buzz',
-            ita: ['12345', '67890'],
+            subscribers: ['12345', '67890'],
           }),
           reset: this.resetSpy,
           destroy: this.destroySpy,
@@ -139,7 +139,7 @@ describe('OMIS create confirm controller', () => {
               expect(this.orderSaveStub).to.have.been.calledWith('token-12345', {
                 foo: 'bar',
                 fizz: 'buzz',
-                ita: ['12345', '67890'],
+                subscribers: ['12345', '67890'],
               })
               expect(this.saveSubscribersStub).to.have.been.calledWith('token-12345', '1234567890', [
                 { id: '12345' },

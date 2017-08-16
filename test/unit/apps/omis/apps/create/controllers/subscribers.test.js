@@ -2,12 +2,12 @@ const FormController = require('hmpo-form-wizard').Controller
 
 const getAdvisersMock = require('~/test/unit/data/investment/interaction/advisers')
 
-describe('OMIS create assign controller', () => {
+describe('OMIS create subscribers controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.getAdvisersStub = this.sandbox.stub().resolves(getAdvisersMock)
 
-    this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/assign-ita', {
+    this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/subscribers', {
       '../../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },
@@ -26,7 +26,7 @@ describe('OMIS create assign controller', () => {
         form: {
           options: {
             fields: {
-              ita: {},
+              subscribers: {},
             },
           },
         },
@@ -48,7 +48,7 @@ describe('OMIS create assign controller', () => {
 
       const nextSpy = () => {
         try {
-          expect(this.reqMock.form.options.fields.ita.options).to.deep.equal([
+          expect(this.reqMock.form.options.fields.subscribers.options).to.deep.equal([
             {
               value: '0513453c-86bc-e211-a646-e4115bead28a',
               label: 'Tom Thumb',
