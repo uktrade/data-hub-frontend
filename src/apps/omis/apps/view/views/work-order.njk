@@ -11,11 +11,17 @@
       {% endif %}
     </caption>
     {% for item in props.items %}
-      {% if item.value %}
+      {% if not item.value and not item.label %}
         <tr>
-          <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-          <td class="c-answers-summary__content">{{ item.value }}</td>
+          <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
         </tr>
+      {% else %}
+        {% if item.value %}
+          <tr>
+            <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+            <td class="c-answers-summary__content">{{ item.value }}</td>
+          </tr>
+        {% endif %}
       {% endif %}
     {% endfor %}
   </table>
@@ -51,10 +57,7 @@
     heading: 'International Trade Advisers (ITAs)',
     editUrl: 'edit/subscribers',
     editText: 'Add or remove',
-    items: [{
-      label: 'Advisers',
-      value: values.subscribers.name if values.subscribers else 'None selected'
-    }]
+    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
   }) }}
 
   {{ AnswersSummary({
