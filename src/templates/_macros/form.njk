@@ -465,7 +465,7 @@
   {% if props.type in ['checkbox', 'radio'] %}
     {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
     {% set options = props.options() if props.options | isFunction else props.options %}
-    {% set fieldChildren = props.children | map(callAsMacro) if props.children %}
+    {% set fieldChildren = props.children | map(callAsMacro) if props.children | isArray else props.children %}
 
     {% if props.type == 'radio' and props.initialOption %}
       <div class="c-multiple-choice {{ modifier }}">
