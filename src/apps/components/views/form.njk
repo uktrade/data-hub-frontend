@@ -4,265 +4,65 @@
   <h2 class="page-heading">Entity search</h2>
 
   {% call Example('Simple') %}
-    {{ EntitySearchForm({
-      inputName: 'term',
-      inputLabel: 'Search for a company name or contact',
-      searchTerm: entitySearch.searchTerm
-    }) }}
+    {{ EntitySearchForm(macros.entitySearchForm) }}
   {% endcall %}
 
   {% call Example('Global') %}
-    {{ EntitySearchForm({
-      inputName: 'term',
-      modifier: 'global',
-      inputLabel: 'Search for a company name or contact',
-      searchTerm: entitySearch.searchTerm,
-      aggregations: entitySearch.searchEntityResultsData
-    }) }}
+    {{ EntitySearchForm(macros.entitySearchFormGlobal) }}
   {% endcall %}
 
   <h2 class="page-heading">Standard</h2>
   {% call Example('Normal size') %}
-    {% call Form(form) %}
-      {{ TextField({
-        name: 'name',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
-        error: form.errors.messages.name,
-        value: form.state.name
-      }) }}
-
-      {{ TextField({
-        name: 'description',
-        label: 'Describe yourself',
-        placeholder: 'Lorem ipsum',
-        type: 'textarea',
-        hint: 'A few words about yourself',
-        optional: true,
-        error: form.errors.messages.description,
-        value: form.state.description
-      }) }}
-
-      {{ MultipleChoiceField({
-        name: 'country',
-        label: 'Country',
-        error: form.errors.messages.country,
-        options: form.options.countries,
-        value: form.state.country
-      }) }}
-
-    {{ MultipleChoiceField({
-        name: 'sectors',
-        label: 'Sectors',
-        options: form.options.sectors,
-        value: form.state.sectors,
-        initialOption: '-- Select sector --'
-      })
-    }}
-
-      {{ MultipleChoiceField({
-          type: 'checkbox',
-          name: 'strategicDrivers',
-          label: 'Strategic drivers',
-          options: form.options.strategicDrivers,
-          value: form.state.strategicDrivers
-        })
-      }}
-
-      {{ MultipleChoiceField({
-          type: 'radio',
-          name: 'averageSalary',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalary,
-          value: form.state.averageSalary
-        })
-      }}
-
-      {{ MultipleChoiceField({
-          type: 'radio',
-          name: 'feedbackType',
-          modifier: 'inline',
-          label: 'Inline inputs',
-          error: form.errors.messages.feedbackType,
-          options: [
-            { value: 'yes', label: 'Yes' },
-            { value: 'no', label: 'No' }
-          ],
-          value: form.data.feedbackType
-      }) }}
-
-      {% call Fieldset({ legend: 'Inline text fields' }) %}
-        {{ TextField({
-          name: 'firstName',
-          label: 'First name',
-          value: form.state.firstNameInline,
-          modifier: 'inline'
-        }) }}
-
-        {{ TextField({
-          name: 'lastName',
-          label: 'Last name',
-          value: form.state.lastNameInline,
-          modifier: 'inline'
-        }) }}
-      {% endcall %}
-
-      {% call Fieldset({
-        legend: 'A conditional set of fields',
-        modifier: 'subfield',
-        condition: {
-          name: 'averageSalary',
-          value: '2943bf3d-32dd-43be-8ad4-969b006dee7b'
-        }
-      }) %}
-        {{ TextField({
-          name: 'firstName',
-          label: 'First name',
-          value: form.state.firstName
-        }) }}
-
-        {{ TextField({
-          name: 'lastName',
-          label: 'Last name',
-          value: form.state.lastName
-        }) }}
-      {% endcall %}
-
-      {{ MultipleChoiceField({
-          type: 'radio',
-          name: 'businessType',
-          label: 'Company type',
-          value: form.state.businessType,
-          error: form.errors.messages.businessType,
-          options: [
-            {
-              value: 'ltd',
-              label: 'UK private or public limited company',
-              hint: 'Must be a company registered with Companies House'
-            }, {
-              value: 'ukother',
-              label: 'Other type of UK organisation',
-              hint: 'UK organisation not registered with Companies House',
-              children:  [
-                MultipleChoiceField({
-                  name: 'foreignOtherCompany',
-                  label: 'Type of organisation',
-                  error: form.errors.messages.foreignOtherCompany,
-                  value: form.state.foreignOtherCompany,
-                  options: form.options.foreignOtherCompany,
-                  initialOption: '-- Select company --',
-                  condition: {
-                    name: 'businessType',
-                    value: 'ukother'
-                  },
-                  modifier: 'subfield'
-                })
-              ]
-            }, {
-              value: 'foreign',
-              label: 'Foreign organisation'
-            }
-          ]
-        })
-      }}
-
-      {% call Fieldset({ legend: 'A set of fields' }) %}
-        {{ TextField({
-          name: 'firstName',
-          label: 'First name',
-          value: form.state.firstName
-        }) }}
-
-        {{ TextField({
-          name: 'lastName',
-          label: 'Last name',
-          value: form.state.lastName
-        }) }}
-      {% endcall %}
-
-      {{ DateFieldset({
-        name: 'estimated_date',
-        label: 'What is your favourite day?',
-        hint: 'A day you really like',
-        error: form.errors.messages.estimated_date,
-        value: {
-          year: form.state.estimated_date_year,
-          month: form.state.estimated_date_month
-        }
-      }) }}
-
-      {{ DateFieldset({
-        name: 'land_date',
-        label: 'What is the date?',
-        hint: 'Enter todays date',
-        error: form.errors.messages.land_date,
-        value: {
-          year: form.state.land_date_year,
-          month: form.state.land_date_month,
-          day: form.state.land_date_day
-        }
-      }) }}
-    {% endcall %}
+    {{ Form(macros.standardForm) }}
   {% endcall %}
 
   {% call Example('Small size') %}
-    {% call Form(form) %}
-      {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
-        error: form.errors.messages.name,
-        value: form.state.name,
-        modifier: 'small'
-      }) }}
-
-      {{ MultipleChoiceField({
-          type: 'checkbox',
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-small',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          modifier: 'small'
+        },
+        assign({}, macros.globalFields.strategicDrivers, {
           name: 'strategicDrivers-small',
-          label: 'Strategic drivers',
-          options: form.options.strategicDrivers,
-          selected: form.state.strategicDrivers,
+          type: 'dropdown',
           modifier: 'small'
-        })
-      }}
-
-      {{ MultipleChoiceField({
-          type: 'radio',
+        }),
+        macros.globalFields.averageSalary | assignCopy({
+          type: 'dropdown',
           name: 'averageSalary-small',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalary,
-          selected: form.state.averageSalary,
+          initialOption: '-- Select range --',
           modifier: 'small'
         })
-      }}
-    {% endcall %}
+      ]
+    }) }}
   {% endcall %}
 
   {% call Example('Light version') %}
-    <p>
-      {{ EntitySearchForm({
-        inputName: 'term-light',
-        inputLabel: 'Search for a company name or contact',
-        inputPlaceholder: '',
-        searchTerm: entitySearch.searchTermLight,
-        isLabelHidden: false,
-        fieldModifier: 'light'
-      }) }}
-    </p>
+    {{ EntitySearchForm({
+      inputName: 'term-light',
+      inputLabel: 'Search for a company name or contact',
+      inputPlaceholder: '',
+      searchTerm: entitySearch.searchTermLight,
+      isLabelHidden: false,
+      fieldModifier: 'light'
+    }) }}
 
-    {% call Form(form) %}
-      {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
-        error: form.errors.messages.name,
-        value: form.state.name,
-        modifier: 'light'
-      }) }}
-
-      {{ MultipleChoiceField({
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-small',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          error: form.errors.messages.name,
+          value: form.state.name,
+          modifier: 'light'
+        }, {
+          macroName: 'MultipleChoiceField',
           type: 'radio',
           name: 'gender',
           label: 'Gender',
@@ -273,10 +73,8 @@
           ],
           selected: form.state.gender,
           modifier: 'light'
-        })
-      }}
-
-      {{ MultipleChoiceField({
+        }, {
+          macroName: 'MultipleChoiceField',
           type: 'checkbox',
           name: 'filterBy',
           label: 'Filter by',
@@ -286,19 +84,15 @@
           ],
           selected: form.state.filterBy,
           modifier: 'light'
-        })
-      }}
-
-      {{ MultipleChoiceField({
+        },
+        assign({}, macros.globalFields.averageSalary, {
+          type: 'dropdown',
           name: 'averageSalary-light',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalaryLight,
-          selected: form.state.averageSalaryLight,
+          initialOption: '-- Select range --',
           modifier: 'light'
         })
-      }}
-    {% endcall %}
+      ]
+    }) }}
   {% endcall %}
 
   {% call Example('Compact version') %}
@@ -325,15 +119,8 @@
           modifier: 'compact'
       }) }}
 
-      {{ MultipleChoiceField({
-          name: 'averageSalary-light',
-          label: 'Average salary range',
-          options: form.options.averageSalaryRange,
-          error: form.errors.messages.averageSalaryLight,
-          selected: form.state.averageSalaryLight,
-          modifier: 'compact'
-      }) }}
-    {% endcall %}
+      {{ renderAsMacro(macros.globalFields.averageSalary, { type: 'dropdown', modifier: 'compact' }) }}
+   {% endcall %}
   {% endcall %}
 
   {% call Example('Fields with actions') %}
@@ -342,40 +129,27 @@
     {% endset %}
 
     {% call Form(form) %}
-      {{ MultipleChoiceField({
-        name: 'averageSalary-light',
-        label: 'Average salary range',
-        options: form.options.averageSalaryRange,
-        error: form.errors.messages.averageSalaryLight,
-        selected: form.state.averageSalaryLight,
-        innerContent: removeButton
-      }) }}
+      {{ renderAsMacro(macros.globalFields.averageSalary, { innerHTML: removeButton }) }}
 
-      {{ MultipleChoiceField({
-        name: 'averageSalary-light',
-        label: 'Average salary range',
-        options: form.options.averageSalaryRange,
-        error: form.errors.messages.averageSalaryLight,
-        selected: form.state.averageSalaryLight,
-        innerContent: removeButton
-      }) }}
+      {{ renderAsMacro(macros.globalFields.strategicDrivers, { innerHTML: removeButton }) }}
 
       {{ TextField({
-        name: 'name-small',
+        name: 'name-small-actions',
         label: 'Company name',
         placeholder: 'e.g. Hooli',
         error: form.errors.messages.name,
-        value: form.state.name,
-        innerContent: removeButton
+        value: form.state['name-small-actions'],
+        innerHTML: removeButton
       }) }}
 
       {{ TextField({
-        name: 'name-small',
-        label: 'Company name',
-        placeholder: 'e.g. Hooli',
+        type: 'textarea',
+        name: 'about-small-actions',
+        label: 'About yourself',
+        placeholder: 'e.g. Tell us about your holiday',
         error: form.errors.messages.name,
-        value: form.state.name,
-        innerContent: removeButton
+        value: form.state['about-small-actions'],
+        innerHTML: removeButton
       }) }}
     {% endcall %}
   {% endcall %}

@@ -1,6 +1,5 @@
 const { getMacros } = require('~/test/unit/macro-helper')
 const entitiesMacros = getMacros('results')
-const formMacros = getMacros('form')
 
 describe('Results macros', () => {
   describe('ResultsFilters macro', () => {
@@ -13,25 +12,29 @@ describe('Results macros', () => {
 
     describe('valid props', () => {
       beforeEach(() => {
-        this.filter1 = formMacros.render('MultipleChoiceField', {
-          name: 'who-are-you',
-          label: 'Who are you?',
-          type: 'radio',
-          options: [
-            { label: 'Human', value: 'h' },
-            { label: 'Alien', value: 'a' },
-          ],
-        })
+        this.filter1 = {
+          MultipleChoiceField: {
+            name: 'who-are-you',
+            label: 'Who are you?',
+            type: 'radio',
+            options: [
+              { label: 'Human', value: 'h' },
+              { label: 'Alien', value: 'a' },
+            ],
+          },
+        }
 
-        this.filter2 = formMacros.render('MultipleChoiceField', {
-          name: 'fav-colour',
-          label: 'Favourite colour',
-          options: [
-            { label: 'Red', value: 'r' },
-            { label: 'Green', value: 'g' },
-            { label: 'Blue', value: 'b' },
-          ],
-        })
+        this.filter2 = {
+          MultipleChoiceField: {
+            name: 'fav-colour',
+            label: 'Favourite colour',
+            options: [
+              { label: 'Red', value: 'r' },
+              { label: 'Green', value: 'g' },
+              { label: 'Blue', value: 'b' },
+            ],
+          },
+        }
       })
 
       it('should render results filters component', () => {

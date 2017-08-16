@@ -1,9 +1,7 @@
 const router = require('express').Router()
 
-const { handleFormPost, handleEntitySearch } = require('./middleware')
 const {
   renderEntityList,
-  renderFormElements,
   renderIndex,
   renderMessages,
   renderLocalHeader,
@@ -12,6 +10,8 @@ const {
   renderProgress,
   renderResults,
 } = require('./controllers')
+
+const { renderFormElements } = require('./form/controllers')
 
 const {
   getInvestmentProjectsCollection,
@@ -26,7 +26,6 @@ router
   .get('/pagination', renderPagination)
   .get('/results', getInvestmentProjectsCollection, renderResults)
   .get('/progress', renderProgress)
-  .get('/form', handleEntitySearch, renderFormElements)
-  .post('/form', handleFormPost, renderFormElements)
+  .all('/form', renderFormElements)
 
 module.exports = router

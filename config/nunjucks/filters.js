@@ -4,6 +4,7 @@ const {
   assign,
   concat,
   isArray,
+  isFunction,
   isPlainObject,
   isEmpty,
   isNull,
@@ -34,8 +35,13 @@ const filters = {
   flatten,
   map,
   mapValues,
+  isFunction,
   isArray,
   isNull,
+
+  assignCopy (...args) {
+    return assign({}, ...args)
+  },
 
   highlight (string, searchTerm, shouldMatchFullWord = false) {
     if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) { return string }

@@ -1,6 +1,6 @@
 {% from './common.njk' import Pagination %}
 {% from './entities.njk' import Entity %}
-{% from './form.njk' import Form, MultipleChoiceField %}
+{% from './form.njk' import Form, MultipleChoiceField, TextField %}
 
 {##
  # Render results filters form
@@ -12,7 +12,7 @@
 {% macro ResultsFilters(props) %}
   {% set heading = props.heading | default('Filter results') %}
 
-  {% if props.filters | removeNilAndEmpty | length %}
+  {% if props.filters | length %}
     {% call Form({
       method: 'get',
       class: 'c-filters js-AutoSubmit',
@@ -26,9 +26,8 @@
       <header class="u-clearfix">
         <h2 class="c-filters__heading">{{ heading }}</h2>
       </header>
-      {% for filter in props.filters %}
-        {{ filter | safe }}
-      {% endfor %}
+
+      {{ applyMacro(props.filters) }}
     {% endcall %}
   {% endif %}
 {% endmacro %}
