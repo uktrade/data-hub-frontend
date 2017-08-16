@@ -51,17 +51,6 @@ filter.toHyphenated = function toHyphenated (string) {
   return string.trim().toLowerCase().replace(/\s+/g, '-')
 }
 
-/**
- * Highlights a phrase in a source piece of text
- * @param  {String} text    The original text to be updated
- * @param  {String} phrase  The phrase to highlight in the original text
- * @return {String}     The resulting text with highlights using <strong>
- */
-filter.highlight = function highlight (text, phrase) {
-  const regex = new RegExp('(' + phrase + ')', 'gi')
-  return text.replace(regex, '<strong>$1</strong>')
-}
-
 filter.attributeArray = function attributeArray (list) {
   if (!Array.isArray(list)) {
     return filter.attributeObject(list)
