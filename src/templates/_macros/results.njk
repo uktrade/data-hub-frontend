@@ -55,7 +55,6 @@
       <div class="c-results-summary__intro">
         <span class="c-results-summary__count">{{ count | formatNumber }}</span>
         {{ countLabel | pluralise(count) }}
-        {{ 'matching' if selectedFilters | length }}
         {% if props.highlightTerm or selectedFilters | length %}
           matching
           {% if props.highlightTerm %}
