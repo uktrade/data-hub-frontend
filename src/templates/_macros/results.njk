@@ -41,6 +41,7 @@
  # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
  # @param {object}   [props.filters] - an object containing selected filters
  # @param {string}   [props.highlightTerm] - text to highlight
+ # @param {string}   [props.actionsHTML] - HTML content for actions block
 #}
 {% macro ResultsSummary(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
@@ -50,8 +51,8 @@
   {% set selectedFilters = props.filters | mapValues('value') | removeNilAndEmpty %}
 
   <{{ el }} class="c-results-summary">
-    <div class="u-clearfix">
-      <div class="u-float-left">
+    <div class="c-results-summary__row">
+      <div class="c-results-summary__intro">
         <span class="c-results-summary__count">{{ count | formatNumber }}</span>
         {{ countLabel | pluralise(count) }}
         {{ 'matching' if selectedFilters | length }}
@@ -62,41 +63,80 @@
           {% endif %}
         {% endif %}
       </div>
-      {% if selectedFilters | length > 1 %}
-        <a
-          href="?custom=true"
-          class="c-results-summary__filter-remove-all u-float-right js-xhr"
-          aria-label="Reset filter results"
-        >
-          Remove all filters
-        </a>
+      {% if selectedFilters | length > 1 or props.actionsHTML %}
+        <div class="c-results-summary__actions">
+          {% if selectedFilters | length > 1 %}
+            <a
+              href="?custom=true"
+              class="c-results-summary__filter-remove-all u-float-right js-xhr"
+              aria-label="Reset filter results"
+            >
+              Remove all filters
+            </a>
+          {% endif %}
+
+          {{ props.actionsHTML | safe }}
+        </div>
+      {% endif %}
+
+      {% if selectedFilters | length %}
+        <div class="c-results-summary__filters">
+          {% for name, value in selectedFilters %}
+            {% set filter = props.filters[name] %}
+            <span class="c-results-summary__filter">
+              <span class="c-results-summary__filter-type">{{ filter.label }}</span>
+              <span class="c-results-summary__filter-name">
+                {%- if 'date' in name -%}
+                  {% set date = filter.value | formatDate %}
+                  {{ date if date else filter.value }}
+                {%- else -%}
+                  {{ filter.valueLabel }}
+                {%- endif -%}
+              </span>
+              <a
+                class="c-results-summary__filter-remove js-xhr"
+                href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
+                aria-label="Remove filter"
+              >×</a>
+            </span>
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
 
-    {% if selectedFilters | length %}
-      <div class="c-results-summary__filters">
-        {% for name, value in selectedFilters %}
-          {% set filter = props.filters[name] %}
-          <span class="c-results-summary__filter">
-            <span class="c-results-summary__filter-type">{{ filter.label }}</span>
-            <span class="c-results-summary__filter-name">
-              {%- if 'date' in name -%}
-                {% set date = filter.value | formatDate %}
-                {{ date if date else filter.value }}
-              {%- else -%}
-                {{ filter.valueLabel }}
-              {%- endif -%}
-            </span>
-            <a
-              class="c-results-summary__filter-remove js-xhr"
-              href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
-              aria-label="Remove filter"
-            >×</a>
-          </span>
-        {% endfor %}
-      </div>
-    {% endif %}
+    {{ ResultsSort(props | assign({ selectedFilters: selectedFilters })) }}
+
   </{{ el }}>
+{% endmacro %}
+
+{% macro ResultsSort(props) %}
+  {% if props.items|length and (props.pagination or props.sort.options) %}
+    <div class="c-results-summary__row">
+      {% if props.pagination %}
+        <span class="c-results-summary__page-count">
+          Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
+        </span>
+      {% endif %}
+
+      {% if props.sort | length %}
+        {% call Form({
+          method: 'get',
+          class: 'c-results__sort-form js-AutoSubmit',
+          hideFormActions: true,
+          hiddenFields: props.selectedFilters | assign({ custom: true })
+        }) %}
+          {{ MultipleChoiceField({
+            name: 'sortby',
+            label: 'Sort by',
+            value: props.sort.selected,
+            options: props.sort.options,
+            modifier: ['small', 'inline', 'light']
+          }) }}
+          <button class="button button-secondary u-js-hidden">Sort</button>
+        {% endcall %}
+      {% endif %}
+    </div>
+  {% endif %}
 {% endmacro %}
 
 {##
@@ -110,40 +150,11 @@
  # @param {string}  [props.sort.selected] - selected sorting mode
  # @param {array}   [props.sort.options] - sorting options
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
+ # @param {string}   [props.summaryActionsHTML] - HTML content for actions block
 #}
 {% macro Results(props) %}
-  {% set selectedFilters = props.filters | mapValues('value') %}
-
   <article class="c-results">
-    {{ ResultsSummary(props | assign({ el: props.summaryEl })) }}
-
-    {% if props.items|length and (props.pagination or props.sort.options) %}
-      <div class="c-results__sort">
-        {% if props.pagination %}
-          <span class="c-results__page-summary">
-            Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
-          </span>
-        {% endif %}
-
-        {% if props.sort | length %}
-          {% call Form({
-            method: 'get',
-            class: 'c-results__sort-form js-AutoSubmit',
-            hideFormActions: true,
-            hiddenFields: selectedFilters | assign({ custom: true })
-          }) %}
-            {{ MultipleChoiceField({
-              name: 'sortby',
-              label: 'Sort by',
-              value: props.sort.selected,
-              options: props.sort.options,
-              modifier: ['small', 'inline', 'light']
-            }) }}
-            <button class="button button-secondary u-js-hidden">Sort</button>
-          {% endcall %}
-        {% endif %}
-      </div>
-    {% endif %}
+    {{ ResultsSummary(props | assign({ el: props.summaryEl, actionsHTML: props.summaryActionsHTML })) }}
 
     {% if props.items | length %}
       <ol class="c-entity-list">
