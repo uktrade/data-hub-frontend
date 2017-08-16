@@ -46,7 +46,8 @@
         label: form.options.investmentTypesObj.fdi.label,
         hint: fdiHintLink | safe,
         children:  [
-          MultipleChoiceField({
+          {
+            macroName: 'MultipleChoiceField',
             name: 'fdi_type',
             label: 'Type of foreign direct investment (FDI)',
             error: form.errors.messages['fdi_type'],
@@ -58,14 +59,15 @@
               value: form.options.investmentTypesObj.fdi.value
             },
             modifier: 'subfield'
-          })
+          }
         ]
       }, {
         value: form.options.investmentTypesObj.non_fdi.value,
         label: form.options.investmentTypesObj.non_fdi.label,
         hint: nonFdiHintLink | safe,
         children:  [
-          MultipleChoiceField({
+          {
+            macroName: 'MultipleChoiceField',
             name: 'non_fdi_type',
             label: 'Type of non-foreign direct investment (Non-FDI)',
             error: form.errors.messages['non_fdi_type'],
@@ -77,7 +79,7 @@
               value: form.options.investmentTypesObj.non_fdi.value
             },
             modifier: 'subfield'
-          })
+          }
         ]
       }
     ]
