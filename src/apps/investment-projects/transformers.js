@@ -1,3 +1,4 @@
+/* eslint camelcase: 0 */
 const { get, isArray, isPlainObject } = require('lodash')
 const queryString = require('query-string')
 
@@ -14,41 +15,55 @@ function transformInvestmentProjectToListItem ({
   estimated_land_date,
   sector,
  }) {
+  const meta = []
+
+  if (stage) {
+    meta.push({
+      name: 'stage',
+      label: 'Stage',
+      value: stage,
+      type: 'badge',
+    })
+  }
+  if (investment_type) {
+    meta.push({
+      name: 'investment_type',
+      label: 'Investment type',
+      value: investment_type,
+      type: 'badge',
+      badgeModifier: 'secondary',
+    })
+  }
+  if (investor_company) {
+    meta.push({
+      name: 'investor_company',
+      label: 'Investor',
+      value: investor_company,
+    })
+  }
+  if (estimated_land_date) {
+    meta.push({
+      type: 'date',
+      name: 'estimated_land_date',
+      label: 'Estimated to land',
+      value: estimated_land_date,
+      isInert: true,
+    })
+  }
+  if (sector) {
+    meta.push({
+      name: 'sector',
+      label: 'Sector',
+      value: sector,
+    })
+  }
+
   return {
     id,
     name,
     type: 'investment-project',
     code: project_code,
-    meta: [
-      {
-        name: 'stage',
-        label: 'Stage',
-        value: stage,
-        type: 'badge',
-      },
-      {
-        name: 'investment_type',
-        label: 'Investment type',
-        value: investment_type,
-        type: 'badge',
-        badgeModifier: 'secondary',
-      },
-      {
-        name: 'investor_company',
-        label: 'Investor',
-        value: investor_company,
-      }, {
-        type: 'date',
-        name: 'estimated_land_date',
-        label: 'Estimated to land',
-        value: estimated_land_date,
-        isInert: true,
-      }, {
-        name: 'sector',
-        label: 'Sector',
-        value: sector,
-      },
-    ],
+    meta,
   }
 }
 
