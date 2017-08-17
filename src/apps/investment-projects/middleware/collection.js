@@ -1,36 +1,17 @@
 const { pick, pickBy } = require('lodash')
 
-const { buildPagination } = require('../../../lib/pagination')
 const { searchInvestmentProjects } = require('../../search/services')
-const { transformFieldsObjectToMacrosObject } = require('../../transformers')
-const {
-  transformInvestmentProjectToListItem,
-  transformInvestmentListItemToHaveMetaLinks,
-} = require('../transformers')
+const { transformInvestmentProjectsResultsToCollection } = require('../transformers')
 
 async function getInvestmentProjectsCollection (req, res, next) {
-  const page = parseInt(req.query.page, 10) || 1
-
   try {
     res.locals.results = await searchInvestmentProjects({
       token: req.session.token,
       requestBody: req.body,
       limit: 10,
-      page,
+      page: parseInt(req.query.page, 10) || 1,
     })
-      .then(result => {
-        result.items = result.items
-          .map(transformInvestmentProjectToListItem)
-          .map(item => transformInvestmentListItemToHaveMetaLinks(item, req.body))
-          .map(item => {
-            item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-              macroName: 'MetaItem',
-            })
-            return item
-          })
-        result.pagination = buildPagination(req.query, result)
-        return result
-      })
+      .then(result => transformInvestmentProjectsResultsToCollection(result, req.query, true))
 
     next()
   } catch (error) {

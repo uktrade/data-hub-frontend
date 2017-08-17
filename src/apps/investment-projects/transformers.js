@@ -1,5 +1,8 @@
-const { get, isArray } = require('lodash')
+const { get, isArray, isPlainObject } = require('lodash')
 const queryString = require('query-string')
+
+const { buildPagination } = require('../../lib/pagination')
+const { transformFieldsObjectToMacrosObject } = require('../transformers')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -72,7 +75,30 @@ function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
   return item
 }
 
+function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
+  if (!isPlainObject(projectsData)) { return }
+  const resultItems = projectsData.items || projectsData.results
+  if (!isArray(resultItems)) { return }
+
+  const items = resultItems
+    .map(transformInvestmentProjectToListItem)
+    .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
+    .map(item => {
+      item.meta = transformFieldsObjectToMacrosObject(item.meta, {
+        macroName: 'MetaItem',
+      })
+      return item
+    })
+
+  return {
+    items,
+    count: projectsData.count,
+    pagination: buildPagination(query, projectsData),
+  }
+}
+
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
+  transformInvestmentProjectsResultsToCollection,
 }

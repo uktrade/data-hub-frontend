@@ -1,8 +1,6 @@
 const { getCompanyInvestmentProjects } = require('../../investment-projects/repos')
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
-const { transformInvestmentProjectToListItem } = require('../../investment-projects/transformers')
-const { transformFieldsObjectToMacrosObject } = require('../../transformers')
-const { buildPagination } = require('../../../lib/pagination')
+const { transformInvestmentProjectsResultsToCollection } = require('../../investment-projects/transformers')
 
 async function getAction (req, res, next) {
   const token = req.session.token
@@ -12,20 +10,7 @@ async function getAction (req, res, next) {
   try {
     const company = await getInflatedDitCompany(token, companyId)
     const results = await getCompanyInvestmentProjects(token, companyId, page)
-      .then(result => {
-        result.page = page
-        result.items = result.results
-          .map(transformInvestmentProjectToListItem)
-          .map(item => {
-            item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-              macroName: 'MetaItem',
-            })
-            return item
-          })
-
-        result.pagination = buildPagination(req.query, result)
-        return result
-      })
+      .then(result => transformInvestmentProjectsResultsToCollection(result, req.query))
 
     getCommonTitlesAndlinks(req, res, company)
 
