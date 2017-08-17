@@ -12,11 +12,6 @@ describe('Pagination', () => {
   describe('#buildPagination', () => {
     const query = { term: 'samsung' }
 
-    it('should return null if current page is not given', () => {
-      const actual = buildPagination(query, { limit: 10, count: 20 })
-      expect(actual).to.be.null
-    })
-
     it('should return null if count is not given', () => {
       const actual = buildPagination(query, { limit: 10 })
       expect(actual).to.be.null
@@ -38,7 +33,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with correct current page', () => {
-      const actual = buildPagination(query, { count: 10, limit: 5, page: 2 })
+      const actual = buildPagination(Object.assign({}, query, { page: 2 }), { count: 10, limit: 5 })
       const expected = {
         totalPages: 2,
         currentPage: 2,
@@ -53,7 +48,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with truncation', () => {
-      const actual = buildPagination(query, { count: 10, limit: 2, page: 1 }, 2)
+      const actual = buildPagination(query, { count: 10, limit: 2 }, 2)
       const expected = {
         totalPages: 5,
         currentPage: 1,
@@ -88,7 +83,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with truncation in right place when current page is changed', () => {
-      const actual = buildPagination(query, { count: 10, limit: 2, page: 4 }, 2)
+      const actual = buildPagination(Object.assign({}, query, { page: 4 }), { count: 10, limit: 2 }, 2)
       const expected = {
         totalPages: 5,
         currentPage: 4,
@@ -105,7 +100,7 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with no truncation when block start page is close to first or last pages', () => {
-      const actual = buildPagination(query, { count: 21, limit: 3, page: 4 }, 4)
+      const actual = buildPagination(Object.assign({}, query, { page: 4 }), { count: 21, limit: 3 }, 4)
       const expected = {
         totalPages: 7,
         currentPage: 4,

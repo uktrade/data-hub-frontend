@@ -6,8 +6,10 @@ const investmentProjects = {
   count: 2,
   page: 1,
   results: [{
+    project_code: 'I-001',
     id: 'project-1',
   }, {
+    project_code: 'I-002',
     id: 'project-2',
   }],
 }
@@ -64,7 +66,11 @@ describe('Company investments controller', function () {
               expect(data.company).to.deep.equal(company)
 
               expect(data).to.haveOwnProperty('results')
-              expect(data.results).to.deep.equal(investmentProjects)
+              expect(data.results).to.haveOwnProperty('items')
+              expect(data.results).to.haveOwnProperty('pagination', null)
+
+              expect(data.results.items).to.have.length(2)
+              expect(data.results.items[0]).to.have.property('meta')
 
               expect(this.nextStub).not.to.be.called
 
