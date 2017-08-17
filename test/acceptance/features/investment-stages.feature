@@ -114,10 +114,8 @@ Feature: Investment project stages
 
 #Assign PM stage journeys:
 
-  @WIP
   Scenario: Update Project Manager section under Assign PM stage
     Given I am an authenticated Investment services team user on Data Hub website
-#    When I navigate to my Investment project within Assign PM stage
     When I navigate to my Investment project
     And I enter all required fields for Project Manager section under Project team tab
     And I click on Save button
@@ -126,7 +124,6 @@ Feature: Investment project stages
 
   Scenario: Update Project Assurance section under Assign PM stage
     Given I am an authenticated Investment services team user on Data Hub website
-#    When I navigate to my Investment project within Assign PM stage
     When I navigate to my Investment project
     And I enter all required fields for Project Assurance section under Project team tab
     And I click on Save button
@@ -134,7 +131,6 @@ Feature: Investment project stages
 
   Scenario: Move project from Assign PM stage to Active stage
     Given I am an authenticated Investment services team user on Data Hub website
-    When I navigate to my Investment project within Assign PM stage
     And I enter all required fields for Project Manager section under Project team tab
     And I enter all required fields for Project Assurance section under Project team tab
     And I click on Save button
@@ -144,7 +140,6 @@ Feature: Investment project stages
 
   Scenario: Email verification when project moves from Assign PM stage to Active stage
     Given I am an authenticated Investment services team user on Data Hub website
-    When I navigate to my Investment project within Assign PM stage
     And I enter all required fields for Project Manager section under Project team tab
     And I enter all required fields for Project Assurance section under Project team tab
     And I click on Save button

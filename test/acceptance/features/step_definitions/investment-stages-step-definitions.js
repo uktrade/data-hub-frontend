@@ -18,7 +18,6 @@ defineSupportCode(({ Given, Then, When }) => {
   let safeguardedJobsValue
   let projectAssurance
   let projectManager
-  let projectManager1
 
   Given(/^I am an authenticated Client relationship manager user on Data Hub website$/, async () => {
     await client.page.Login().navigate().authenticate()
@@ -249,9 +248,6 @@ defineSupportCode(({ Given, Then, When }) => {
     await client.page.Login().navigate().authenticate()
   })
 
-  When(/^I navigate to my Investment project within Assign PM stage$/, async () => {
-  })
-
   When(/^I enter all required fields for Project Manager section under Project team tab$/, async () => {
     await Stages
       .click('@projectTeamTab')
@@ -266,12 +262,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify that all fields are populated correctly for Project Manager section$/, async () => {
     await Stages
       .verify.visible('@editPMButton')
-      .getText('@projectManagerFromProjectTeamTab', (result) => {
-        // Stages.assert.equal(result.value, projectManager)
-        // Stages.assert.contains(projectManager, result.value)
-        projectManager1 = result.value
-      })
-    // .assert(projectManager1.includes('venu'))
+      .assert.containsText('@projectManagerFromProjectTeamTab', projectManager.trim())
   })
 
   When(/^I enter all required fields for Project Assurance section under Project team tab$/, async () => {
