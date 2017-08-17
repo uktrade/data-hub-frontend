@@ -15,9 +15,11 @@ async function getOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
     const subscribers = await Order.getSubscribers(req.session.token, orderId)
+    const assignees = await Order.getAssignees(req.session.token, orderId)
 
     res.locals.order = Object.assign({}, order, {
       subscribers,
+      assignees,
     })
   } catch (e) {
     logger.error(e)

@@ -50,6 +50,10 @@ class EditController extends FormController {
         return map(newValue, 'id')
       }
 
+      if (find(newValue, 'adviser')) {
+        return map(newValue, 'adviser.id')
+      }
+
       if (fieldOptions.repeatable) {
         return flatten([newValue])
       }

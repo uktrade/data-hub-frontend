@@ -26,6 +26,18 @@ const Order = {
     })
   },
 
+  getAssignees (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/assignee`)
+  },
+
+  saveAssignees (token, id, body) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/assignee`,
+      method: 'PATCH',
+      body,
+    })
+  },
+
   getSubscribers (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`)
   },

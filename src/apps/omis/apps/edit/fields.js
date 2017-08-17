@@ -32,6 +32,16 @@ const editFields = Object.assign({}, globalFields, {
     label: 'fields.contacts_not_to_approach.label',
     optional: true,
   },
+  assignees: {
+    fieldType: 'MultipleChoiceField',
+    legend: 'fields.assignees.legend',
+    label: 'fields.assignees.label',
+    addButtonText: 'fields.assignees.addButtonText',
+    optional: true,
+    repeatable: true,
+    initialOption: '-- Select adviser --',
+    options: [],
+  },
 })
 
 module.exports = editFields
