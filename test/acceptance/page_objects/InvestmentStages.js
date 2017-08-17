@@ -4,34 +4,14 @@ module.exports = {
   url: process.env.QA_HOST,
   elements: {
     // Project details:
-    addRequirmentsButton: {
-      selector: "//a[@href='edit-requirements']",
-      locateStrategy: 'xpath',
-    },
-    editRequirmentsButton: {
-      selector: "//a[@class='button-secondary'][@href='edit-requirements']",
-      locateStrategy: 'xpath',
-    },
-    addValueButton: {
-      selector: "//a[@href='edit-value']",
-      locateStrategy: 'xpath',
-    },
-    editValueButton: {
-      selector: "//a[@class='button-secondary'][@href='edit-value']",
-      locateStrategy: 'xpath',
-    },
-    editPMButton: {
-      selector: "//a[@class='button button-secondary'][@href='edit-project-management']",
-      locateStrategy: 'xpath',
-    },
-    editSummaryButton: {
-      selector: "//a[@href='edit-details']",
-      locateStrategy: 'xpath',
-    },
-    archiveButton: {
-      selector: "//a[@aria-hidden='false']",
-      locatorStrategy: 'xpath',
-    },
+    addRequirmentsButton: 'a[href="edit-requirements"]',
+    editRequirmentsButton: 'a[class="button-secondary"][href="edit-requirements"]',
+    addValueButton: 'a[href="edit-value"]',
+    editValueButton: 'a[class="button-secondary"][href="edit-value"]',
+    editPMButton: 'a[class="button button-secondary"][href="edit-project-management"]',
+    editSummaryButton: 'a[href="edit-details"]',
+    archiveButton: 'a[aria-hidden="false"]',
+
     // Fill Requirements page:
     strategicDriver: '#strategic_drivers',
     strategicDriverList: '#strategic_drivers option:nth-child(2)',
@@ -44,6 +24,7 @@ module.exports = {
     ukLocationDeciededNo: 'label[for=input--site_decided--2]',
     saveButton: '.button button--save',
     cancelButton: '.button-link button--cancel js-button-cancel',
+
     // Fill Value page:
     totalInvestment: '#total_investment',
     totalInvestmentNo: 'a',
