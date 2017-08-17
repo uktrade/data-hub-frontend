@@ -29,6 +29,11 @@
     },
     "contacts_not_to_approach": {
       "label": "Contacts not to approach"
+    },
+    "assignees": {
+      "legend": "Post advisers",
+      "addButtonText": "Add another adviser",
+      "label": "Adviser"
     }
   },
   "validation": {
