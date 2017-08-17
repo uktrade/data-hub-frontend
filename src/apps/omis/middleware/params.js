@@ -13,7 +13,12 @@ async function getCompany (req, res, next, companyId) {
 
 async function getOrder (req, res, next, orderId) {
   try {
-    res.locals.order = await Order.getById(req.session.token, orderId)
+    const order = await Order.getById(req.session.token, orderId)
+    const subscribers = await Order.getSubscribers(req.session.token, orderId)
+
+    res.locals.order = Object.assign({}, order, {
+      subscribers,
+    })
   } catch (e) {
     logger.error(e)
   }

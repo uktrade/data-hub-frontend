@@ -26,6 +26,10 @@ const Order = {
     })
   },
 
+  getSubscribers (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/subscriber-list`)
+  },
+
   getById (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
   },
