@@ -5,7 +5,7 @@
 {% block body_main_content %}
   {% call Example('ResultsFilters') %}
     {{
-      ResultsFilters({
+      CollectionFilters({
         filters: [
           MultipleChoiceField({
             type: 'checkbox',
@@ -64,7 +64,6 @@
   {% call Example('ResultsSummary') %}
     {{
       ResultsSummary({
-        el: 'header',
         count: 10,
         filters: {
           stage: {
@@ -82,9 +81,9 @@
     }}
   {% endcall %}
 
-  {% call Example('Results') %}
+  {% call Example('Collection') %}
     {{
-      Results(results | assign({
+      Collection(results | assign({
         filters: form.data.filters,
         sort: form.data.sort
       }))

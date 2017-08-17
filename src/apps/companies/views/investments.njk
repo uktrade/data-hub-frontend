@@ -8,8 +8,7 @@
   <h2 class="heading-medium">Investment projects</h2>
 
   {{
-    Results(results | assignCopy({
-      el: 'header',
+    Collection(results | assignCopy({
       sort: sort,
       countLabel: 'project',
       query: QUERY,
