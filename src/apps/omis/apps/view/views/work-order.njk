@@ -62,12 +62,9 @@
 
   {{ AnswersSummary({
     heading: 'Post advisers',
-    editUrl: 'edit/post-adviser',
+    editUrl: 'edit/assignees',
     editText: 'Add or remove',
-    items: [{
-      label: 'Advisers',
-      value: values.post_adviser.name if values.post_adviser else 'None selected'
-    }]
+    items: values.assignees | map('adviser.name') if values.assignees.length else ['None selected']
   }) }}
 
   {{ AnswersSummary({
