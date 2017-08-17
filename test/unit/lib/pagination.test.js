@@ -123,5 +123,13 @@ describe('Pagination', () => {
       }
       expect(actual).to.deep.equal(expected)
     })
+
+    it('should return pagination object with a maximum of 10000 results paginated', () => {
+      const limited1 = buildPagination(query, { count: 20000, limit: 10, page: 1 })
+      const limited2 = buildPagination(query, { count: 20000, limit: 3, page: 1 })
+
+      expect(limited1).to.have.property('totalPages', 1000)
+      expect(limited2).to.have.property('totalPages', 3333)
+    })
   })
 })
