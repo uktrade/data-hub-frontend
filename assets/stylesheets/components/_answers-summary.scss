@@ -71,7 +71,7 @@
     text-align: right;
   }
 
-  .button {
+  .button--secondary {
     @include core-font(16);
     margin-bottom: $default-spacing-unit / 2;
 
