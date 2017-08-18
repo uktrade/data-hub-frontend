@@ -25,7 +25,7 @@ class EditAssigneesController extends EditController {
     })
 
     try {
-      await Order.saveAssignees(req.session.token, res.locals.order.id, assignees)
+      await Order.forceSaveAssignees(req.session.token, res.locals.order.id, assignees)
 
       req.journeyModel.reset()
       req.journeyModel.destroy()
