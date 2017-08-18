@@ -25,7 +25,7 @@
           {% if item.value %}
             <tr>
               <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-              <td class="c-answers-summary__content">{{ item.value }}</td>
+              <td class="c-answers-summary__content">{{ item.value | safe }}</td>
             </tr>
           {% endif %}
         {% endif %}
@@ -39,6 +39,12 @@
 {% endblock %}
 
 {% block main_grid_right_column %}
+  {% set companyLink %}
+    <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
+  {% endset %}
+  {% set contactLink %}
+    <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+  {% endset %}
 
   {{ AnswersSummary({
     heading: 'Client details',
@@ -47,10 +53,10 @@
     }],
     items: [{
       label: 'Company',
-      value: values.company.name
+      value: companyLink
     }, {
       label: 'Contact',
-      value: values.contact.name
+      value: contactLink
     }]
   }) }}
 
