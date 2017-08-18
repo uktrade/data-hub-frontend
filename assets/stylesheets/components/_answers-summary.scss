@@ -24,6 +24,10 @@
   @include media(tablet) {
     font-size: 20px;
     float: right;
+
+    & + * {
+      margin-right: $default-spacing-unit;
+    }
   }
 }
 

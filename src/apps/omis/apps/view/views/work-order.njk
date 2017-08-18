@@ -4,11 +4,11 @@
   <table class="c-answers-summary">
     <caption class="c-answers-summary__heading">
       {{ props.heading }}
-      {% if props.editUrl %}
-        <a class="c-answers-summary__heading-action" href="{{ props.editUrl }}">
-          {{ props.editText or 'Edit' }}
+      {% for action in props.actions %}
+        <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+          {{ action.text or 'Edit' }}
         </a>
-      {% endif %}
+      {% endfor %}
     </caption>
     {% for item in props.items %}
       {% if not item.value and not item.label %}
@@ -35,7 +35,9 @@
 
   {{ AnswersSummary({
     heading: 'Client details',
-    editUrl: 'edit/client-details',
+    actions: [{
+      url: 'edit/client-details'
+    }],
     items: [{
       label: 'Company',
       value: values.company.name
@@ -55,21 +57,30 @@
 
   {{ AnswersSummary({
     heading: 'International Trade Advisers (ITAs)',
-    editUrl: 'edit/subscribers',
-    editText: 'Add or remove',
+    actions: [{
+      url: 'edit/subscribers',
+      text: 'Add or remove'
+    }],
     items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
   }) }}
 
   {{ AnswersSummary({
     heading: 'Post advisers',
-    editUrl: 'edit/assignees',
-    editText: 'Add or remove',
     items: values.assignees | map('adviser.name') if values.assignees.length else ['None selected']
   }) }}
+    actions: [{
+      url: 'edit/assignee-time',
+      text: 'Edit time'
+    }, {
+      url: 'edit/assignees',
+      text: 'Add or remove'
+    }]
 
   {{ AnswersSummary({
     heading: 'Work description',
-    editUrl: 'edit/work-description',
+    actions: [{
+      url: 'edit/work-description'
+    }],
     items: [{
       label: 'Delivery date',
       value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
