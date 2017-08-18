@@ -201,6 +201,8 @@
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
+
+
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% if props.label and props.name -%}
@@ -211,8 +213,7 @@
         {{ 'has-error' if props.error and not isLabelHidden }}
         {{ 'js-ConditionalSubfield' if isConditional }}
         {{ modifier }}
-        {{ props.class if props.class }}
-      "
+        {{ props.class if props.class }}"
       {% if isConditional %}
         data-controlled-by="{{ props.condition.name }}"
         data-control-value="{{ props.condition.value }}"
@@ -338,11 +339,11 @@
   {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
-  {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, children: children, element: element, class: props.groupClass })) %}
+  {% call FormGroup(props | assignCopy({ fieldId: fieldId, caller: caller, children: children, element: element, class: props.groupClass })) %}
     {% if props.type in ['checkbox', 'radio'] %}
-      {{ MultipleChoice(props) }}
+      {{ MultipleChoice(props | assignCopy({ class: inputClass })) }}
     {% else %}
-      {{ SelectBox(props | assign({ class: inputClass })) }}
+      {{ SelectBox(props | assignCopy({ class: inputClass })) }}
     {% endif %}
 
     {{ children }}

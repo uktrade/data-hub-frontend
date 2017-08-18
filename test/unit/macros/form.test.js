@@ -384,4 +384,21 @@ describe('Nunjucks form macros', () => {
       })
     })
   })
+
+  describe('Formgroup component', () => {
+    it('should allow a class to be specified for use in the form-grouo wrapper', () => {
+      const component = macros.renderToDom('MultipleChoiceField', {
+        label: 'Test label',
+        name: 'adviser',
+        value: 'wilma',
+        groupClass: 'js-adviser',
+        options: [
+          { label: 'Fred', value: 'fred' },
+          { label: 'Wilma', value: 'wilma' },
+        ],
+      })
+
+      expect(component.className).to.include('js-adviser')
+    })
+  })
 })
