@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { editRedirect, editHandler } = require('./controllers')
+const { editRedirect, editHandler, editLeadAssignee } = require('./controllers')
 const { getCompany } = require('../../middleware/params')
 
 router.use((req, res, next) => {
@@ -9,5 +9,7 @@ router.use((req, res, next) => {
 
 router.get('/', editRedirect)
 router.all('/:step', editHandler)
+
+router.post('/lead-assignee', editLeadAssignee)
 
 module.exports = router
