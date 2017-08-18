@@ -386,7 +386,7 @@ describe('Nunjucks form macros', () => {
   })
 
   describe('Formgroup component', () => {
-    it('should allow a class to be specified for use in the form-grouo wrapper', () => {
+    it('should allow a class to be specified for use in the form-group wrapper', () => {
       const component = macros.renderToDom('MultipleChoiceField', {
         label: 'Test label',
         name: 'adviser',
