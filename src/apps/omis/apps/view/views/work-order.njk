@@ -4,26 +4,31 @@
   <table class="c-answers-summary">
     <caption class="c-answers-summary__heading">
       {{ props.heading }}
-      {% if props.editUrl %}
-        <a class="c-answers-summary__heading-action" href="{{ props.editUrl }}">
-          {{ props.editText or 'Edit' }}
+      {% for action in props.actions %}
+        <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+          {{ action.text or 'Edit' }}
         </a>
-      {% endif %}
+      {% endfor %}
     </caption>
-    {% for item in props.items %}
-      {% if not item.value and not item.label %}
-        <tr>
-          <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
-        </tr>
-      {% else %}
-        {% if item.value %}
+
+    {% if caller %}
+      {{ caller() }}
+    {% else %}
+      {% for item in props.items %}
+        {% if not item.value and not item.label %}
           <tr>
-            <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-            <td class="c-answers-summary__content">{{ item.value }}</td>
+            <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
           </tr>
+        {% else %}
+          {% if item.value %}
+            <tr>
+              <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+              <td class="c-answers-summary__content">{{ item.value }}</td>
+            </tr>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
   </table>
 {% endmacro %}
 
@@ -35,7 +40,9 @@
 
   {{ AnswersSummary({
     heading: 'Client details',
-    editUrl: 'edit/client-details',
+    actions: [{
+      url: 'edit/client-details'
+    }],
     items: [{
       label: 'Company',
       value: values.company.name
@@ -55,21 +62,52 @@
 
   {{ AnswersSummary({
     heading: 'International Trade Advisers (ITAs)',
-    editUrl: 'edit/subscribers',
-    editText: 'Add or remove',
+    actions: [{
+      url: 'edit/subscribers',
+      text: 'Add or remove'
+    }],
     items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
   }) }}
 
-  {{ AnswersSummary({
+  {% call AnswersSummary({
     heading: 'Post advisers',
-    editUrl: 'edit/assignees',
-    editText: 'Add or remove',
-    items: values.assignees | map('adviser.name') if values.assignees.length else ['None selected']
-  }) }}
+    actions: [{
+      url: 'edit/assignee-time',
+      text: 'Edit time'
+    }, {
+      url: 'edit/assignees',
+      text: 'Add or remove'
+    }]
+  }) %}
+    {% for assignee in values.assignees %}
+      <tbody>
+        <tr>
+          <th class="c-answers-summary__title" scope="row">
+            {{ assignee.adviser.name }}
+          </th>
+          <td class="c-answers-summary__content c-answers-summary__content--number">
+            {{ assignee.estimated_time  | formatDuration if assignee.estimated_time else 'No time estimated' }}
+          </td>
+        </tr>
+      </tbody>
+    {% endfor %}
+
+    {% if values.estimatedTimeSum and values.assignees.length %}
+    <tfoot>
+      <tr>
+        <td class="c-answers-summary__footer" colspan="2">
+          <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | formatDuration }}</span> total estimated time
+        </td>
+      </tr>
+    </tfoot>
+    {% endif %}
+  {% endcall %}
 
   {{ AnswersSummary({
     heading: 'Work description',
-    editUrl: 'edit/work-description',
+    actions: [{
+      url: 'edit/work-description'
+    }],
     items: [{
       label: 'Delivery date',
       value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
