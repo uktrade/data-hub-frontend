@@ -208,7 +208,7 @@
       id="group-{{ props.fieldId }}"
       class="
         c-form-group
-        {{ 'has-error' if props.error }}
+        {{ 'has-error' if props.error and not isLabelHidden }}
         {{ 'js-ConditionalSubfield' if isConditional }}
         {{ modifier }}
         {{ props.class if props.class }}
