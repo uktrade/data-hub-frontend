@@ -1,4 +1,6 @@
 const nunjucks = require('nunjucks')
+const moment = require('moment')
+require('moment-duration-format')
 const dateFns = require('date-fns')
 const {
   assign,
@@ -26,6 +28,18 @@ function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
 }
 
+function pluralise (string, count, pluralisedWord) {
+  if (parseInt(count, 10) !== 1) {
+    if (pluralisedWord) {
+      string = pluralisedWord
+    } else {
+      string += 's'
+    }
+  }
+
+  return string
+}
+
 const filters = {
   stringify: JSON.stringify,
   assign,
@@ -40,6 +54,7 @@ const filters = {
   isFunction,
   isArray,
   isNull,
+  pluralise,
 
   assignCopy (...args) {
     return assign({}, ...args)
@@ -86,18 +101,6 @@ const filters = {
     return collection
   },
 
-  pluralise: (string, count, pluralisedWord) => {
-    if (parseInt(count, 10) !== 1) {
-      if (pluralisedWord) {
-        string = pluralisedWord
-      } else {
-        string += 's'
-      }
-    }
-
-    return string
-  },
-
   formatNumber: (number, locales = 'en-GB') => {
     return number.toLocaleString(locales)
   },
@@ -108,6 +111,14 @@ const filters = {
     if (!dateFns.isValid(parsedDate)) { return value }
 
     return dateFns.format(parsedDate, format)
+  },
+
+  formatDuration: (value, format = longDateFormat, measurement = 'minutes') => {
+    const duration = moment.duration(value, measurement)
+    const hoursSuffix = pluralise('hour', duration.hours())
+    const minutesSuffix = pluralise('minute', duration.minutes())
+
+    return duration.format(`h [${hoursSuffix}], m [${minutesSuffix}]`)
   },
 
   arrayToLabelValues: (items) => {
