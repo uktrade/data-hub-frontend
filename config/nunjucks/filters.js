@@ -113,12 +113,16 @@ const filters = {
     return dateFns.format(parsedDate, format)
   },
 
-  formatDuration: (value, format = longDateFormat, measurement = 'minutes') => {
+  humanizeDuration: (value, measurement = 'minutes') => {
     const duration = moment.duration(value, measurement)
-    const hoursSuffix = pluralise('hour', duration.hours())
-    const minutesSuffix = pluralise('minute', duration.minutes())
+    const hrsSuffix = pluralise('hour', duration.hours())
+    const minsSuffix = pluralise('minute', duration.minutes())
 
-    return duration.format(`h [${hoursSuffix}], m [${minutesSuffix}]`)
+    return duration.format(`h [${hrsSuffix}], m [${minsSuffix}]`)
+  },
+
+  formatDuration: (value, format = 'hh:mm', measurement = 'minutes') => {
+    return moment.duration(value, measurement).format(format, { trim: false })
   },
 
   arrayToLabelValues: (items) => {

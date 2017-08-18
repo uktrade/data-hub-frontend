@@ -1,4 +1,27 @@
+const { isArray } = require('lodash')
+
 const globalFields = require('../../fields')
+
+function isDuration (value) {
+  const regex = /^\d+:\d{2}$/
+
+  if (!isArray(value)) {
+    if (!value) { return true }
+
+    return !!value.match(regex)
+  }
+
+  let valid = true
+  value.forEach(itemValue => {
+    if (!itemValue) { return }
+
+    if (!itemValue.match(regex)) {
+      valid = false
+    }
+  })
+
+  return valid
+}
 
 const editFields = Object.assign({}, globalFields, {
   service_types: {
@@ -41,6 +64,12 @@ const editFields = Object.assign({}, globalFields, {
     repeatable: true,
     initialOption: '-- Select adviser --',
     options: [],
+  },
+  assignee_time: {
+    fieldType: 'TextField',
+    label: 'fields.assignee_time.label',
+    modifier: ['shorter', 'soft'],
+    validate: [isDuration],
   },
 })
 

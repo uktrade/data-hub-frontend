@@ -34,6 +34,9 @@
       "legend": "Post advisers",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
+    },
+    "assignee_time": {
+      "label": "Estimated time"
     }
   },
   "validation": {
@@ -41,6 +44,7 @@
     "numeric": "can only contain numbers",
     "date": "must be a valid date",
     "after": "must be in the future",
+    "isDuration": "must be a valid duration format, for example 01:30",
     "default": "is required"
   }
 }
