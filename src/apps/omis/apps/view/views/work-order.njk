@@ -10,20 +10,25 @@
         </a>
       {% endfor %}
     </caption>
-    {% for item in props.items %}
-      {% if not item.value and not item.label %}
-        <tr>
-          <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
-        </tr>
-      {% else %}
-        {% if item.value %}
+
+    {% if caller %}
+      {{ caller() }}
+    {% else %}
+      {% for item in props.items %}
+        {% if not item.value and not item.label %}
           <tr>
-            <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-            <td class="c-answers-summary__content">{{ item.value }}</td>
+            <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
           </tr>
+        {% else %}
+          {% if item.value %}
+            <tr>
+              <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+              <td class="c-answers-summary__content">{{ item.value }}</td>
+            </tr>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
   </table>
 {% endmacro %}
 
