@@ -69,10 +69,8 @@
     items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
   }) }}
 
-  {{ AnswersSummary({
+  {% call AnswersSummary({
     heading: 'Post advisers',
-    items: values.assignees | map('adviser.name') if values.assignees.length else ['None selected']
-  }) }}
     actions: [{
       url: 'edit/assignee-time',
       text: 'Edit time'
@@ -80,6 +78,30 @@
       url: 'edit/assignees',
       text: 'Add or remove'
     }]
+  }) %}
+    {% for assignee in values.assignees %}
+      <tbody>
+        <tr>
+          <th class="c-answers-summary__title" scope="row">
+            {{ assignee.adviser.name }}
+          </th>
+          <td class="c-answers-summary__content c-answers-summary__content--number">
+            {{ assignee.estimated_time  | formatDuration if assignee.estimated_time else 'No time estimated' }}
+          </td>
+        </tr>
+      </tbody>
+    {% endfor %}
+
+    {% if values.estimatedTimeSum and values.assignees.length %}
+    <tfoot>
+      <tr>
+        <td class="c-answers-summary__footer" colspan="2">
+          <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | formatDuration }}</span> total estimated time
+        </td>
+      </tr>
+    </tfoot>
+    {% endif %}
+  {% endcall %}
 
   {{ AnswersSummary({
     heading: 'Work description',
