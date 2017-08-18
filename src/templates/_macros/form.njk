@@ -201,8 +201,6 @@
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
-
-
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% if props.label and props.name -%}
@@ -213,7 +211,8 @@
         {{ 'has-error' if props.error and not isLabelHidden }}
         {{ 'js-ConditionalSubfield' if isConditional }}
         {{ modifier }}
-        {{ props.class if props.class }}"
+        {{ props.class if props.class }}
+      "
       {% if isConditional %}
         data-controlled-by="{{ props.condition.name }}"
         data-control-value="{{ props.condition.value }}"
