@@ -1,7 +1,7 @@
 const router = require('./router')
 
 module.exports = {
-  displayName: 'Create order',
+  displayName: 'Create an order',
   mountpath: '/create',
   router,
 }

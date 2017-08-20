@@ -1,16 +1,16 @@
 {
   "fields": {
     "contact": {
-      "label": "Company contact",
-      "hint": "Select a contact for the company"
+      "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Primary market",
-      "hint": "The market which should be providing the service"
+      "label": "Choose the market (country) where the service is required",
+      "hint": "This will notify the post manager for this region when you submit the order",
+      "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
-      "legend": "International Trade Advisers (ITAs)",
-      "hint": "The adviser(s) responsible for overseeing the work from a UK region",
+      "legend": "Add International Trade Advisers (ITAs)",
+      "hint": "They will be informed of the order once you submit it",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },

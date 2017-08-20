@@ -6,7 +6,6 @@ module.exports = {
   contact: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.contact.label',
-    hint: 'fields.contact.hint',
     validate: 'required',
     initialOption: '-- Select contact --',
     options: [],
@@ -18,11 +17,13 @@ module.exports = {
     validate: 'required',
     initialOption: '-- Select market --',
     options: [],
+    supportingContent: 'fields.primary_market.supportingContent',
   },
   subscribers: {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.subscribers.legend',
     label: 'fields.subscribers.label',
+    hint: 'fields.subscribers.hint',
     addButtonText: 'fields.subscribers.addButtonText',
     optional: true,
     repeatable: true,
