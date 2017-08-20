@@ -32,7 +32,8 @@
 
               {% call FormGroup({} | assign(props, {
                 element: 'fieldset',
-                label: translate(props.legend)
+                label: translate(props.legend),
+                hint: translate(props.hint)
               })) %}
                 {% for value in fieldValues %}
                   {% set removeButton %}
@@ -60,6 +61,12 @@
               </p>
             {% else %}
               {{ callAsMacro(props.fieldType)(props) }}
+            {% endif %}
+
+            {% if props.supportingContent %}
+              <p class="infostrip">
+                {{ translate(props.supportingContent) }}
+              </p>
             {% endif %}
           {% endif %}
         {% endfor %}
