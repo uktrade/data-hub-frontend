@@ -1,6 +1,5 @@
 module.exports = {
   company: {
-    fieldType: 'HiddenField',
     validate: 'required',
   },
   contact: {
