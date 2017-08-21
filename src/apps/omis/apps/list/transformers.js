@@ -12,7 +12,7 @@ function transformOrderToListItem ({
     id,
     type: 'order',
     url: 'omis/',
-    name: reference,
+    name: `${get(company, 'name')} / ${get(contact, 'name')} - ${reference}`,
     meta: [
       {
         label: 'Company',
