@@ -14,7 +14,7 @@ module.exports = {
   props: {},
   elements: {
     contactsTab: 'a[href*="/contacts"]',
-    firstCompanyFromList: ' .c-entity-list li:first-child h3 a',
+    firstCompanyFromList: '.c-entity-list li:first-child h3 a',
     addContactButton: '#add-contact-link',
     noContactWarning: '#no-contact-warning',
     contactFirstname: '#field-first_name',
