@@ -93,20 +93,6 @@
   line-height: $default-spacing-unit * 2;
 }
 
-// Sorting
-
-.c-results__sort {
-  @include clearfix;
-  margin-top: $default-spacing-unit / 2;
-  margin-bottom: $default-spacing-unit / 2;
-
-  .button {
-    padding: 0 ($default-spacing-unit / 2);
-    line-height: 30px;
-    width: auto;
-  }
-}
-
 .c-collection__sort-form {
   margin-top: $default-spacing-unit / 2;
   display: flex;
