@@ -79,11 +79,13 @@ const metadataItems = [
   ['referral-source-website', 'referralSourceWebsiteOptions'],
   ['investment-business-activity', 'businessActivityOptions'],
   ['investment-type', 'investmentTypeOptions'],
+  ['investment-project-stage', 'investmentProjectStage'],
   ['fdi-type', 'fdiOptions'],
   ['non-fdi-type', 'nonFdiOptions'],
   ['salary-range', 'salaryRangeOptions'],
   ['investment-strategic-driver', 'strategicDriverOptions'],
   ['investment-project-stage', 'investmentStageOptions'],
+  ['order-service-type', 'orderServiceTypesOptions'],
 ]
 
 const restrictedServiceKeys = [

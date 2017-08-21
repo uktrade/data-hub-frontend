@@ -2,14 +2,28 @@ describe('Investment list controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
-    this.req = {}
+    this.req = {
+      session: {
+        token: 'abcd',
+      },
+      query: {},
+    }
     this.res = {
       render: this.sandbox.spy(),
       query: {},
     }
 
     this.buildInvestmentSortingStub = this.sandbox.spy()
-    this.buildInvestmentFiltersStub = this.sandbox.spy()
+    this.buildInvestmentFiltersStub = this.sandbox.stub().returns({
+      MacroName: {
+        name: 'field_name',
+        value: 'Field value',
+        type: 'macro_type_param',
+        options: [
+          { name: 'option_name', label: 'option_label' },
+        ],
+      },
+    })
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
       '../builders': {
@@ -30,7 +44,7 @@ describe('Investment list controller', () => {
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sort'))
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filters'))
       expect(this.buildInvestmentSortingStub).to.have.been.calledOnce
-      expect(this.buildInvestmentFiltersStub).to.have.been.calledOnce
+      expect(this.buildInvestmentFiltersStub).to.have.been.calledWith(this.req.query)
     })
   })
 })

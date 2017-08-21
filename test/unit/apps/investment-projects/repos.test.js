@@ -17,7 +17,7 @@ const investmentProjectAuditData = require('~/test/unit/data/investment/audit-lo
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
     nock(config.apiRoot)
-      .get(`/v3/investment?investor_company_id=${companyData.id}`)
+      .get(`/v3/investment?investor_company_id=${companyData.id}&limit=10&offset=0`)
       .reply(200, companyData)
 
     it('should return a company object', () => {

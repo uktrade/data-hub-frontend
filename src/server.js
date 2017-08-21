@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const config = require('../config')
 const express = require('express')
+const raven = require('raven')
 const flash = require('connect-flash')
 const csrf = require('csurf')
 const slashify = require('slashify')
@@ -21,6 +22,7 @@ const locals = require('./middleware/locals')
 const metadata = require('./lib/metadata')
 const user = require('./middleware/user')
 const auth = require('./middleware/auth')
+const store = require('./middleware/store')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
 const sessionStore = require('./middleware/session-store')
@@ -31,6 +33,19 @@ const routers = require('./apps/routers')
 const app = express()
 
 app.disable('x-powered-by')
+
+if (config.sentryDsn) {
+  logger.info('Sentry DSN detected. Raven will be enabled.')
+  // See https://docs.sentry.io/clients/node/config/
+  // and https://docs.sentry.io/clients/node/usage/
+  // for info on Raven config options
+  raven.config(config.sentryDsn, {
+    autoBreadcrumbs: true,
+    captureUnhandledRejections: true,
+  }).install()
+  // Raven request handler must be the first middleware
+  app.use(raven.requestHandler())
+}
 
 if (!config.ci) {
   app.use(churchill(logger))
@@ -73,10 +88,16 @@ app.use(locals)
 app.use(auth)
 app.use(user)
 app.use(headers)
+app.use(store())
 
 // routing
 app.use(slashify())
 app.use(routers)
+
+// Raven error handler must come before other error middleware
+if (config.sentryDsn) {
+  app.use(raven.errorHandler())
+}
 
 app.use(errors.notFound)
 app.use(errors.catchAll)

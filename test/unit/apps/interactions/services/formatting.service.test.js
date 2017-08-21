@@ -41,6 +41,24 @@ describe('Interaction formatting service', function () {
       const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
       expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
     })
+    it('handles missing interaction types', () => {
+      interaction.interaction_type = null
+      const expectedDisplayInteraction = {
+        id: '22651151-2149-465e-871b-ac45bc568a62',
+        url: '/interactions/22651151-2149-465e-871b-ac45bc568a62',
+        interaction_type: undefined,
+        subject: 'Subject 1234',
+        date: '14 Feb 2017',
+        adviser: 'John Brown',
+        contact: '<a href="/contacts/444">Fred Smith</a>',
+        service: 'service name',
+        notes: 'Here are some notes<br/>line 2.',
+        dit_team: 'team name',
+      }
+      const actualDisplayInteraction = interactionFormattingService.getDisplayCompanyInteraction(interaction)
+
+      expect(actualDisplayInteraction).to.deep.equal(expectedDisplayInteraction)
+    })
     it('should handle a missing adviser', function () {
       interaction.dit_adviser = null
       const expectedDisplayInteraction = {

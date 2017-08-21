@@ -22,30 +22,6 @@ describe('Investment projects collection middleware', () => {
     this.sandbox.restore()
   })
 
-  describe('#handleDefaultFilters', () => {
-    it('should redirect to url with default query string when initial query is empty', () => {
-      const resMock = {
-        redirect: this.sandbox.spy(),
-      }
-      const currentYear = (new Date()).getFullYear()
-
-      this.controller.handleDefaultFilters(this.req, resMock, this.next)
-
-      expect(resMock.redirect).to.be.calledWith(`/?estimated_land_date_after=${currentYear}-04-05&estimated_land_date_before=${currentYear + 1}-04-06`)
-      expect(this.next).to.not.be.called
-    })
-
-    it('should redirect to url with default query string when initial query is empty', () => {
-      this.req.query = {
-        stage: 'i1',
-        sector: 's1',
-      }
-      this.controller.handleDefaultFilters(this.req, this.res, this.next)
-
-      expect(this.next).to.be.called
-    })
-  })
-
   describe('#getInvestmentProjectsCollection', () => {
     beforeEach(async () => {
       this.req.query = {
@@ -58,8 +34,7 @@ describe('Investment projects collection middleware', () => {
 
     it('should set results property on locals with pagination', () => {
       const actual = this.res.locals.results
-      expect(actual).to.have.property('limit')
-      expect(actual).to.have.property('page')
+      expect(actual).to.have.property('count')
       expect(actual).to.have.property('items')
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)

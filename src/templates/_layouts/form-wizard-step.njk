@@ -8,22 +8,59 @@
 
 {% block main_grid_right_column %}
   {% block form %}
-    {% call MultiStepForm({
-      buttonText: 'Continue',
+    {% call MultiStepForm(options | assign({
+      buttonText: options.buttonText or 'Continue',
       returnLink: backLink,
       errors: errors
-    }) %}
+    })) %}
 
       {% block fields %}
-        {% for key, props in options.fields %}
+        {% for key, fieldOptions in options.fields %}
+          {% set props = {} | assign(fieldOptions, {
+            name: key,
+            label: translate(fieldOptions.label),
+            hint: translate(fieldOptions.hint),
+            value: values[key],
+            error: errors[key].message
+          }) %}
+
           {% if props.fieldType %}
-            {{ callAsMacro(props.fieldType)(props | assign({
-              name: key,
-              label: trans(props.label),
-              hint: trans(props.hint),
-              value: values[key],
-              error: errors[key].message
-            })) }}
+            {% if props.repeatable %}
+              {% set fieldValues = values[key] if values[key].length else [''] %}
+              {% set addButtonText = props.addButtonText or 'Add another' %}
+              {% set removeButtonText = props.removeButtonText or 'Remove' %}
+
+              {% call FormGroup({} | assign(props, {
+                element: 'fieldset',
+                label: translate(props.legend)
+              })) %}
+                {% for value in fieldValues %}
+                  {% set removeButton %}
+                    <button class="button button--link c-form-group__action" name="remove-item" value="{{ key }}::{{ loop.index0 }}">
+                      {{ translate(removeButtonText) }}
+                    </button>
+                  {% endset %}
+
+                  {{ callAsMacro(props.fieldType)({} | assign(props, {
+                    idSuffix: loop.index,
+                    value: value,
+                    optional: false,
+                    label: props.label + " " + loop.index,
+                    modifier: 'compact',
+                    isLabelHidden: true,
+                    innerHTML: removeButton if loop.length > 1
+                  })) }}
+                {% endfor %}
+              {% endcall %}
+
+              <p class="c-form-group c-form-group--compact">
+                <button class="button button-secondary" name="add-item" value="{{ key }}">
+                  {{ translate(addButtonText) }}
+                </button>
+              </p>
+            {% else %}
+              {{ callAsMacro(props.fieldType)(props) }}
+            {% endif %}
           {% endif %}
         {% endfor %}
       {% endblock %}

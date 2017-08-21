@@ -24,7 +24,9 @@ function editDetailsPost (req, res) {
 
 function editValuePost (req, res) {
   if (res.locals.form.errors) {
-    return res.render('investment-projects/views/value-edit')
+    return res
+      .breadcrumb('Edit value')
+      .render('investment-projects/views/value-edit')
   }
   req.flash('success', 'Updated investment value')
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)

@@ -50,7 +50,6 @@ describe('Company interactions controller', function () {
       archived_on: null,
       archived_reason: null,
       company_number: null,
-      alias: '',
       lead: false,
       description: '',
       website: null,

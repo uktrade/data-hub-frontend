@@ -8,7 +8,7 @@ history.listen((location, action) => {
   if (action === 'POP') {
     if (location.state) {
       XHR.injectResponseInHtml(location.state.data)
-    } else {
+    } else if (window.location.pathname !== location.pathname && window.location.search !== location.search) {
       window.location.href = location.pathname + location.search
     }
   }

@@ -8,14 +8,43 @@
       "label": "Primary market",
       "hint": "The market which should be providing the service"
     },
-    "ita": {
-      "label": "International Trade Adviser",
-      "hint": "The ITA responsible for overseeing the work from a UK region"
+    "subscribers": {
+      "legend": "International Trade Advisers (ITAs)",
+      "hint": "The adviser(s) responsible for overseeing the work from a UK region",
+      "addButtonText": "Add another adviser",
+      "label": "Adviser"
+    },
+    "service_types": {
+      "label": "Service types the order covers"
+    },
+    "description": {
+      "label": "Description of the work or activity"
+    },
+    "sector": {
+      "label": "Sector"
+    },
+    "delivery_date": {
+      "label": "Delivery date",
+      "hint": "Try tomorrow, next month or 28/10/2017"
+    },
+    "contacts_not_to_approach": {
+      "label": "Contacts not to approach"
+    },
+    "assignees": {
+      "legend": "Post advisers",
+      "addButtonText": "Add another adviser",
+      "label": "Adviser"
+    },
+    "assignee_time": {
+      "label": "Estimated time"
     }
   },
   "validation": {
     "required": "cannot not be blank",
     "numeric": "can only contain numbers",
-    "default": "question is required"
+    "date": "must be a valid date",
+    "after": "must be in the future",
+    "isDuration": "must be a valid duration format, for example 01:30",
+    "default": "is required"
   }
 }

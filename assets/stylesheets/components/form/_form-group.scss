@@ -1,10 +1,12 @@
 @import "../../tools";
+@import "../../settings";
 
 .c-form-group {
   max-width: 40em;
 
   [type="hidden"] + &,
-  .c-form-fieldset__legend + & {
+  .c-form-fieldset__legend + &,
+  .c-form-fieldset__hint + & {
     margin-top: 0;
   }
 }
@@ -38,6 +40,15 @@
   display: block;
 }
 
+.c-form-group__action {
+  @include media(desktop) {
+    position: absolute;
+    left: 100%;
+    margin-left: $default-spacing-unit;
+    top: 0;
+  }
+}
+
 // States
 .c-form-group.has-error {
   border-left: 5px solid $error-colour;
@@ -55,33 +66,23 @@
   }
 }
 
-.c-form-group--inline {
+.c-form-group--inline:not(fieldset) {
   @include media(tablet) {
     vertical-align: top;
-
-    &,
-    .c-form-group__inner {
-      display: inline-block;
-    }
+    display: inline-block;
 
     .c-form-group__label:not(legend) {
       display: inline-block;
-      margin-bottom: 0;
       margin-right: $default-spacing-unit / 2;
     }
 
-    .c-form-control,
-    .c-multiple-choice {
+    .c-form-control {
       width: auto;
       display: inline-block;
       margin-top: 0;
     }
 
-    .c-multiple-choice {
-      margin-right: $default-spacing-unit;
-    }
-
-    & + & {
+    & + &:not(fieldset) {
       margin-left: $default-spacing-unit;
       margin-top: 0;
     }
@@ -98,6 +99,12 @@
   .c-multiple-choice__input:checked + .c-multiple-choice__label::before,
   .c-multiple-choice__input:focus + .c-multiple-choice__label::before {
     border-color: $black;
+  }
+}
+
+.c-form-group--soft {
+  .c-form-group__label-text {
+    font-weight: normal;
   }
 }
 

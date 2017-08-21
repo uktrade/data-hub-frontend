@@ -1,5 +1,6 @@
 const { range, take, get, omitBy } = require('lodash')
 const queryString = require('query-string')
+const config = require('../../config')
 
 function getPageLink (page, query = {}) {
   const newQuery = Object.assign({}, query, {
@@ -55,16 +56,18 @@ function truncatePages (pagination, blockSize) {
 function buildPagination (query = {}, results, truncate = 4) {
   const limit = results.limit || Math.max(get(results, 'results.length', 10), 10)
   const totalPages = results.count ? Math.ceil(results.count / limit) : 0
-  results.page = parseInt(results.page, 10)
+  const totalPagesLimited = Math.round(Math.min(totalPages, config.paginationMaxResults / limit))
 
-  if (!results.page || totalPages < 2) { return null }
+  results.page = parseInt(query.page, 10) || 1
+
+  if (totalPages < 2) { return null }
 
   const pagination = {
-    totalPages,
+    totalPages: totalPagesLimited,
     currentPage: results.page,
     prev: results.page > 1 ? getPageLink(results.page - 1, query) : null,
     next: results.page === totalPages ? null : getPageLink(results.page + 1, query),
-    pages: range(0, totalPages).map((page, idx) => {
+    pages: range(0, totalPagesLimited).map((page, idx) => {
       return {
         label: idx + 1,
         url: getPageLink(idx + 1, query),

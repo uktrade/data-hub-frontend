@@ -1,6 +1,6 @@
 @import "../settings";
 
-.c-filters {
+.c-collection-filters {
   background: $grey-4;
   margin: 0 (-$default-spacing-unit / 2) $default-spacing-unit;
   padding: $default-spacing-unit / 2;
@@ -14,7 +14,7 @@
   }
 }
 
-.c-filters__heading {
+.c-collection-filters__heading {
   font-weight: 600;
   font-size: 20px;
   margin: 0;

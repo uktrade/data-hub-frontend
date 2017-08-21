@@ -1,5 +1,9 @@
-const { get, isArray } = require('lodash')
+/* eslint camelcase: 0 */
+const { get, isArray, isPlainObject } = require('lodash')
 const queryString = require('query-string')
+
+const { buildPagination } = require('../../lib/pagination')
+const { transformFieldsObjectToMacrosObject } = require('../transformers')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -11,43 +15,55 @@ function transformInvestmentProjectToListItem ({
   estimated_land_date,
   sector,
  }) {
+  const meta = []
+
+  if (stage) {
+    meta.push({
+      name: 'stage',
+      label: 'Stage',
+      value: stage,
+      type: 'badge',
+    })
+  }
+  if (investment_type) {
+    meta.push({
+      name: 'investment_type',
+      label: 'Investment type',
+      value: investment_type,
+      type: 'badge',
+      badgeModifier: 'secondary',
+    })
+  }
+  if (investor_company) {
+    meta.push({
+      name: 'investor_company',
+      label: 'Investor',
+      value: investor_company,
+    })
+  }
+  if (estimated_land_date) {
+    meta.push({
+      type: 'date',
+      name: 'estimated_land_date',
+      label: 'Estimated to land',
+      value: estimated_land_date,
+      isInert: true,
+    })
+  }
+  if (sector) {
+    meta.push({
+      name: 'sector',
+      label: 'Sector',
+      value: sector,
+    })
+  }
+
   return {
     id,
     name,
     type: 'investment-project',
     code: project_code,
-    meta: [
-      {
-        name: 'stage',
-        label: 'Stage',
-        value: stage,
-        isBadge: true,
-      },
-      {
-        name: 'investment_type',
-        label: 'Investment type',
-        value: investment_type,
-        badgeModifier: 'secondary',
-        isBadge: true,
-      },
-      {
-        name: 'investor_company',
-        label: 'Investor',
-        value: investor_company,
-        isBadge: false,
-      }, {
-        name: 'estimated_land_date',
-        label: 'Estimated to land',
-        value: estimated_land_date,
-        isInert: true,
-        isBadge: false,
-      }, {
-        name: 'sector',
-        label: 'Sector',
-        value: sector,
-        isBadge: false,
-      },
-    ],
+    meta,
   }
 }
 
@@ -74,7 +90,30 @@ function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
   return item
 }
 
+function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
+  if (!isPlainObject(projectsData)) { return }
+  const resultItems = projectsData.items || projectsData.results
+  if (!isArray(resultItems)) { return }
+
+  const items = resultItems
+    .map(transformInvestmentProjectToListItem)
+    .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
+    .map(item => {
+      item.meta = transformFieldsObjectToMacrosObject(item.meta, {
+        macroName: 'MetaItem',
+      })
+      return item
+    })
+
+  return {
+    items,
+    count: projectsData.count,
+    pagination: buildPagination(query, projectsData),
+  }
+}
+
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
+  transformInvestmentProjectsResultsToCollection,
 }

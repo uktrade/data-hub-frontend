@@ -1,4 +1,5 @@
 const moment = require('moment')
+const format = require('date-fns/format')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const metadataRepository = require('../../../lib/metadata')
@@ -29,15 +30,17 @@ function transformToApi (body) {
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
+    'project_shareable': Boolean,
+    'nda_signed': Boolean,
   }
 
-  const relationshipMgr = body['is-relationship-manager']
-  if (relationshipMgr !== 'No') {
+  const relationshipMgr = body.is_relationship_manager
+  if (relationshipMgr !== 'false') {
     body.client_relationship_manager = relationshipMgr
   }
 
-  const referralSource = body['is-referral-source']
-  if (referralSource !== 'No') {
+  const referralSource = body.is_referral_source
+  if (referralSource !== 'false') {
     body.referral_source_adviser = referralSource
   }
 
@@ -50,12 +53,18 @@ function transformToApi (body) {
 
     if (type === Array) {
       return [{ id: value }]
+    } else if (type === Boolean) {
+      return value === 'true' | false
     }
 
     return { id: value }
   })
 
-  formatted['estimated_land_date'] = `${body['land-date_year']}-${body['land-date_month']}-01`
+  formatted['estimated_land_date'] = [
+    body['estimated_land_date_year'],
+    body['estimated_land_date_month'],
+    '01',
+  ].join('-')
 
   return Object.assign({}, body, formatted)
 }
@@ -76,19 +85,24 @@ function transformFromApi (body) {
     'sector': String,
     'client_contacts': Array,
     'business_activities': Array,
+    'project_shareable': Boolean,
+    'nda_signed': Boolean,
   }
 
   const formatted = mapValues(schema, (type, key) => {
     if (type === Array) {
       return get(body, `${key}[0].id`, '')
+    } else if (type === Boolean) {
+      const value = get(body, key, '')
+      return value.toString()
     }
     return get(body, `${key}.id`)
   })
 
   const date = new Date(body['estimated_land_date'])
   if (date) {
-    formatted['land-date_year'] = date.getFullYear()
-    formatted['land-date_month'] = date.getMonth() + 1 // month is zero based index
+    formatted['estimated_land_date_year'] = date.getFullYear()
+    formatted['estimated_land_date_month'] = format(date, 'MM')
   }
 
   return Object.assign({}, body, formatted)
@@ -128,8 +142,12 @@ function transformInvestmentValueForView (data) {
   }
 
   return Object.assign({}, data, {
-    total_investment: formatCurrency(data.total_investment),
-    foreign_equity_investment: formatCurrency(data.foreign_equity_investment),
+    total_investment: data.client_cannot_provide_total_investment
+      ? 'Client cannot provide this information'
+      : formatCurrency(data.total_investment),
+    foreign_equity_investment: data.client_cannot_provide_foreign_investment
+      ? 'Client cannot provide this information'
+      : formatCurrency(data.foreign_equity_investment),
     number_new_jobs: data.number_new_jobs && `${data.number_new_jobs} new jobs`,
     number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),

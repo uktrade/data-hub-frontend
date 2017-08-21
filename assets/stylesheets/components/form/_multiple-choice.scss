@@ -1,4 +1,5 @@
 @import "../../settings";
+@import "../../tools";
 
 .c-multiple-choice {
   position: relative;
@@ -92,9 +93,20 @@
 }
 
 .c-multiple-choice__hint {
+  @include core-font(16);
   display: block;
   margin-top: 5px;
   color: $grey-1;
+
+  a {
+    &,
+    &:active,
+    &:link,
+    &:hover,
+    &:visited {
+      color: $grey-1;
+    }
+  }
 }
 
 // Modifiers
@@ -119,4 +131,11 @@
     padding-left: round($default-spacing-unit * 3 * (14 / 19));
     line-height: 16px;
   }
+}
+
+.c-multiple-choice--inline {
+  width: auto;
+  display: inline-block;
+  margin-top: 0;
+  margin-right: $default-spacing-unit;
 }

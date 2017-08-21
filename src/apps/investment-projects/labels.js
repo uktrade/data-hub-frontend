@@ -37,8 +37,8 @@ const labels = {
       non_fdi_r_and_d_budget: 'Is this project associated with a non-FDI R&D project?',
       new_tech_to_uk: 'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
       export_revenue: 'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
-      client_cannot_provide_total_investment: 'Client cannot provide this information',
-      client_cannot_provide_foreign_investment: 'Client cannot provide this information',
+      client_cannot_provide_total_investment: 'Can client provide total investment value?',
+      client_cannot_provide_foreign_investment: 'Can client provide foreign equity investment value?',
     },
   },
   requirementsLabels: {
@@ -122,8 +122,9 @@ const labels = {
   collectionFilterLabels: {
     edit: {
       stage: 'Stage',
-      sector: 'Sector',
       investment_type: 'Type of investment',
+      sector: 'Sector',
+      total_investment: 'Investment value',
       estimated_land_date_before: 'Estimated land date before',
       estimated_land_date_after: 'Estimated land date after',
     },

@@ -2,50 +2,117 @@
 @import "../tools/mixins";
 
 .c-answers-summary {
-  border-top: 1px solid $grey-2;
+  margin: 0 0 $default-spacing-unit * 2;
+
+  * + & {
+    margin-top: $default-spacing-unit * 3;
+  }
+}
+
+.c-answers-summary__heading {
+  @include bold-font(24);
+  border-bottom: 1px solid $grey-2;
+  margin: 0;
+  padding: 0 0 $default-spacing-unit / 4;
+  position: relative;
+}
+
+.c-answers-summary__heading-action {
+  @include bold-font(16);
+  display: block;
+
+  @include media(tablet) {
+    font-size: 20px;
+    float: right;
+
+    & + * {
+      margin-right: $default-spacing-unit;
+    }
+  }
 }
 
 .c-answers-summary__title,
 .c-answers-summary__content,
-.c-answers-summary__control {
+.c-answers-summary__control,
+.c-answers-summary__footer {
+  @include core-font(16);
   border-bottom: 0;
   display: block;
   margin: 0;
-  padding: ($default-spacing-unit / 2) ($default-spacing-unit / 4) 0;
+  padding: ($default-spacing-unit / 2) 0;
 
   @include media(tablet) {
-    border-top: 1px solid $grey-2;
     border-bottom: 1px solid $grey-2;
     display: table-cell;
-    padding: $default-spacing-unit $baseline-grid-unit * 2;
+    padding-top: $default-spacing-unit;
+    padding-bottom: $default-spacing-unit;
   }
 }
 
 .c-answers-summary__title {
   @include bold-font(16);
-  padding-top: $default-spacing-unit;
+  padding-bottom: 0;
 
   @include media(tablet) {
-    width: 25%;
+    font-weight: 400;
+    width: 35%;
   }
 }
 
+.c-answers-summary__content {
+  padding-top: 0;
+}
+
 .c-answers-summary__control {
-  border-bottom: 1px solid $grey-2;
-  padding-bottom: $default-spacing-unit / 2;
+  padding-top: 0;
   text-align: left;
 
   @include media(tablet) {
-    padding-bottom: $default-spacing-unit;
     text-align: right;
   }
 
   .button {
     @include core-font(16);
-    margin-bottom: $default-spacing-unit;
+    margin-bottom: $default-spacing-unit / 2;
 
     @include media(tablet) {
       margin-bottom: 0;
     }
+  }
+}
+
+.c-answers-summary__footer {
+  @include core-font(16);
+  border-top: 1px solid $grey-2;
+  text-align: left;
+
+  @include media(tablet) {
+    border-bottom: 0;
+    text-align: right;
+  }
+}
+
+.c-answers-summary__footer-value {
+  font-weight: 700;
+
+  @include media(tablet) {
+    display: block;
+  }
+}
+
+.c-answers-summary__title,
+.c-answers-summary__content,
+.c-answers-summary__control {
+  @include media(tablet) {
+    padding-top: $default-spacing-unit;
+    padding-bottom: $default-spacing-unit;
+  }
+}
+
+.c-answers-summary__content--number {
+  text-align: left;
+
+  @include media(tablet) {
+    text-align: right;
   }
 }

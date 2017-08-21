@@ -1,11 +1,13 @@
 @import "../settings";
 @import "../tools";
 
-// Deprecated
-
 .results-summary {
   @include core-font(20);
   margin: 0 0 $gutter;
+}
+
+.c-results-summary {
+  @include core-font(16);
 }
 
 .results-summary__count {
@@ -14,74 +16,4 @@
 
 .results-summary__query {
   @include bold-font(20);
-}
-
-
-.c-results-summary {
-  @include core-font(24);
-  border-bottom: 5px solid $text-colour;
-  padding-bottom: $default-spacing-unit / 2;
-}
-
-.c-results-summary__count {
-  @include bold-font(36);
-}
-
-.c-results-summary__filters {
-  @include core-font(16);
-}
-
-.c-results-summary__filter {
-  color: $text-colour;
-  display: inline-block;
-  position: relative;
-  margin-top: $default-spacing-unit / 2;
-  padding: 0 ($baseline-grid-unit * 6) 0 ($default-spacing-unit / 2);
-  background: $grey-4;
-  cursor: default;
-}
-
-.c-results-summary__filter-type {
-  color: $grey-1;
-
-  &::after {
-    content: ":";
-  }
-}
-
-.c-results-summary__filter-name {
-  font-weight: 600;
-}
-
-.c-results-summary__filter-remove {
-  position: absolute;
-  top: $baseline-grid-unit;
-  right: $baseline-grid-unit;
-  text-decoration: none;
-  float: right;
-  font-size: 24px;
-  line-height: .7;
-
-  &:link,
-  &:visited {
-    color: $text-colour;
-  }
-
-  &:hover {
-    color: $red;
-  }
-}
-
-.c-results-summary__filter-remove-all {
-  @include core-font(16);
-  margin-top: $default-spacing-unit / (3 / 2);
-
-  @include media(tablet) {
-    margin-top: $default-spacing-unit;
-  }
-
-  &:link,
-  &:visited {
-    color: $link-colour;
-  }
 }

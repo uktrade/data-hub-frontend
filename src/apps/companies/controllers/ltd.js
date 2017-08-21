@@ -5,7 +5,7 @@ const companyRepository = require('../repos')
 const metadataRepository = require('../../../lib/metadata')
 const { companyDetailsLabels, chDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
-const companyWithCHKeys = ['alias', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
+const companyWithCHKeys = ['trading_name', 'trading_address', 'uk_region', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
 const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 
 async function getDetails (req, res, next) {

@@ -168,9 +168,9 @@ describe('Company repository', () => {
       })
     })
     describe('Make correct call to API', () => {
-      it('should call the API with a PUT if an ID is provided.', (done) => {
+      it('should call the API with a PATCH if an ID is provided.', (done) => {
         const authorisedRequestStub = function (token, opts) {
-          expect(opts.method).to.eq('PUT')
+          expect(opts.method).to.eq('PATCH')
           return new Promise((resolve) => {
             resolve({ id: '1234', name: 'fred' })
           })
@@ -185,9 +185,9 @@ describe('Company repository', () => {
             throw Error(error)
           })
       })
-      it('should call the API at /company/id/ if an ID is provided', (done) => {
+      it('should call the API at /v3/company/id if an ID is provided', (done) => {
         const authorisedRequestStub = function (token, opts) {
-          expect(opts.url).to.include('/company/1234/')
+          expect(opts.url).to.include('/v3/company/1234')
           return new Promise((resolve) => {
             resolve({ id: '1234', name: 'fred' })
           })
@@ -219,9 +219,9 @@ describe('Company repository', () => {
             throw Error(error)
           })
       })
-      it('should call the API at /company/ if no ID is provided', (done) => {
+      it('should call the API at /v3/company if no ID is provided', (done) => {
         const authorisedRequestStub = function (token, opts) {
-          expect(opts.url).to.include('/company/')
+          expect(opts.url).to.include('/v3/company')
           return new Promise((resolve) => {
             resolve({ id: '1234', name: 'fred' })
           })

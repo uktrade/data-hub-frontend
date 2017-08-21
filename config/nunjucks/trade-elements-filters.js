@@ -51,17 +51,6 @@ filter.toHyphenated = function toHyphenated (string) {
   return string.trim().toLowerCase().replace(/\s+/g, '-')
 }
 
-/**
- * Highlights a phrase in a source piece of text
- * @param  {String} text    The original text to be updated
- * @param  {String} phrase  The phrase to highlight in the original text
- * @return {String}     The resulting text with highlights using <strong>
- */
-filter.highlight = function highlight (text, phrase) {
-  const regex = new RegExp('(' + phrase + ')', 'gi')
-  return text.replace(regex, '<strong>$1</strong>')
-}
-
 filter.attributeArray = function attributeArray (list) {
   if (!Array.isArray(list)) {
     return filter.attributeObject(list)
@@ -196,32 +185,6 @@ filter.highlightTerm = function highlightTerm (phrase, term = '') {
 filter.newDate = function (d) {
   const dateArr = d.split('-')
   return dateArr.length === 3 ? new Date(dateArr[0], parseInt(dateArr[1]) - 1, dateArr[2]) : NaN
-}
-
-/**
- * returns a standard gov.uk date from a string using momentjs
- * moment documentation: http://momentjs.com/docs/
- * @method function
- * @param  {string} d date e.g 09/12/1981 or 9-12-1981
- * @param  {string} f moment.js format string (to override the default if needed)
- * @return {string} date string as per the current gov.uk standard 09/12/1981 -> 09 December 1981
- */
-filter.formatDate = function (d, f) {
-  let formatted
-
-  if (f) {
-    formatted = moment(d, moment.ISO_8601).format(f)
-  } else if (d && d.length > 0 && d.length < 11) {
-    formatted = moment(filter.newDate(d)).locale('en-gb').format(f || 'LL')
-  } else {
-    formatted = moment(d, moment.ISO_8601).format('DD MMMM YYYY, h:mm:ss a')
-  }
-
-  if (formatted === 'Invalid date') {
-    return ''
-  }
-
-  return formatted
 }
 
 /**

@@ -5,11 +5,16 @@
 // Define how components stack in views
 
 * + {
+  form,
   .c-form-group,
   .c-form-fieldset,
   .c-error-summary,
   .results-summary {
     margin-top: $default-spacing-unit * 2;
+  }
+
+  .c-form-group--compact {
+    margin-top: $default-spacing-unit;
   }
 
   .c-multiple-choice {
@@ -33,6 +38,10 @@
   .c-pagination {
     margin-top: $default-spacing-unit * 2;
     margin-bottom: $default-spacing-unit * 2;
+  }
+
+  .c-meta-list {
+    margin-top: $default-spacing-unit;
   }
 }
 

@@ -32,6 +32,6 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I have been logged out$/, async () => {
     await Login
-      .verify.containsText('@flashMessage', 'Signed out')
+      .verify.containsText('@flashMessage', 'You have been successfully signed out.')
   })
 })

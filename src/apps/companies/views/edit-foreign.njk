@@ -9,7 +9,9 @@
       <div id="business-type" class="key-value__key form-label-bold">Business type
         <a href="/companies/add-step-1" class="button-link">Change</a>
       </div>
-      <div class="key-value__value" aria-labelledby="business-type">Foreign {{businessTypeName}}</div>
+      <div class="key-value__value" aria-labelledby="business-type">
+        Foreign {{businessTypeName or '(type of organisation not known)'}}
+      </div>
     </div>
   </div>
 
@@ -21,7 +23,7 @@
 
     {{ textbox("name", label="Name", value=formData.name, error=errors.name) }}
 
-    {{ textbox("alias", label="Trading name (optional)", value=formData.alias, error=errors.alias) }}
+    {{ textbox("trading_name", label="Trading name (optional)", value=formData.trading_name, error=errors.trading_name) }}
 
     <fieldset id="registered-address-wrapper" class="fieldset--address">
       <div class="form-group"><legend class="form-label-bold">Primary address</legend></div>

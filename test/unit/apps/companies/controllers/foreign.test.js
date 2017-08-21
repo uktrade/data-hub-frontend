@@ -17,21 +17,7 @@ describe('Company controller, foreign', function () {
   let saveCompanyFormStub
   let flashStub
   let breadcrumbStub
-  const company = {
-    id: '9999',
-    company_number: '10620176',
-    copanies_house_data: null,
-    name: 'Freds ltd',
-    business_type: {
-      id: '43134234',
-      name: 'Charity',
-    },
-    registered_address_1: '13 HOWICK PARK AVENUE',
-    registered_address_2: 'PENWORTHAM',
-    registered_address_town: 'PRESTON',
-    registered_address_county: '',
-    registered_address_postcode: 'PR1 0LS',
-  }
+  let company
   const metadataRepositoryStub = {
     regionOptions: [{ id: '1', name: 'option 1' }],
     sectorOptions: [{ id: '1', name: 'option 1' }],
@@ -47,6 +33,21 @@ describe('Company controller, foreign', function () {
   }
 
   beforeEach(function () {
+    company = {
+      id: '9999',
+      company_number: '10620176',
+      companies_house_data: null,
+      name: 'Freds ltd',
+      business_type: {
+        id: '43134234',
+        name: 'Charity',
+      },
+      registered_address_1: '13 HOWICK PARK AVENUE',
+      registered_address_2: 'PENWORTHAM',
+      registered_address_town: 'PRESTON',
+      registered_address_county: '',
+      registered_address_postcode: 'PR1 0LS',
+    }
     fakeCompanyForm = { id: '999', sector: 10 }
     getInflatedDitCompanyStub = sinon.stub().resolves(company)
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
@@ -146,7 +147,18 @@ describe('Company controller, foreign', function () {
           expect(getDisplayCompanyStub).to.be.calledWith(company)
           expect(res.locals).to.have.property('companyDetails')
           expect(res.locals).to.have.property('companyDetailsLabels')
-          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal(['business_type', 'registered_address', 'alias', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range'])
+          expect(res.locals.companyDetailsDisplayOrder).to.deep.equal([
+            'business_type',
+            'registered_address',
+            'trading_name',
+            'trading_address',
+            'headquarter_type',
+            'sector',
+            'website',
+            'description',
+            'employee_range',
+            'turnover_range',
+          ])
           done()
         },
       }
@@ -279,7 +291,7 @@ describe('Company controller, foreign', function () {
         registered_address_county: 'county',
         registered_address_postcode: 'postcode',
         registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        alias: 'trading_name',
+        trading_name: 'trading_name',
         trading_address_1: 'trading address 1',
         trading_address_2: 'trading address 2',
         trading_address_town: 'trading town',
@@ -324,7 +336,7 @@ describe('Company controller, foreign', function () {
       expectTextFieldWithLabel(document, 'registered_address_county', 'County (optional)', formData.registered_address_county)
       expectTextFieldWithLabel(document, 'registered_address_postcode', 'Postcode (optional)', formData.registered_address_postcode)
       expectDropdownWithLabel(document, 'registered_address_country', 'Country', formData.registered_address_country)
-      expectTextFieldWithLabel(document, 'alias', 'Trading name', formData.trading_name)
+      expectTextFieldWithLabel(document, 'trading_name', 'Trading name', formData.trading_name)
       expectTextFieldWithLabel(document, 'trading_address_1', 'Business and street (optional)', formData.trading_address_1)
       expectTextFieldWithLabel(document, 'trading_address_2', '', formData.trading_address_2)
       expectTextFieldWithLabel(document, 'trading_address_town', 'Town or city (optional)', formData.trading_address_town)
@@ -357,6 +369,24 @@ describe('Company controller, foreign', function () {
       }
 
       companyControllerForeign.editDetails(req, res, next)
+    })
+    it('handles null business types', () => {
+      company.business_type = null
+      const req = {
+        session: { token: '1234' },
+        params: { id: '9999' },
+      }
+      const res = {
+        locals: {},
+        breadcrumb: breadcrumbStub,
+        render: () => {},
+      }
+
+      return companyControllerForeign.editDetails(req, res, next).then(() => {
+        expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
+        expect(getForeignCompanyAsFormDataStub).to.be.calledWith(company)
+        expect(res.locals.businessTypeName).to.be.undefined
+      })
     })
     it('should pass through form data if called with errors', function (done) {
       const body = {

@@ -2,8 +2,10 @@ const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
 const { getInflatedDitCompany } = require('../companies/services/data')
 
-function getCompanyInvestmentProjects (token, companyId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment?investor_company_id=${companyId}`)
+function getCompanyInvestmentProjects (token, companyId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment?investor_company_id=${companyId}&limit=${limit}&offset=${offset}`)
 }
 
 function getInvestment (token, investmentId) {

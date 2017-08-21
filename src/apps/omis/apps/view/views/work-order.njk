@@ -1,8 +1,145 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% macro AnswersSummary(props) %}
+  <table class="c-answers-summary">
+    <caption class="c-answers-summary__heading">
+      {{ props.heading }}
+      {% for action in props.actions %}
+        <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+          {{ action.text or 'Edit' }}
+        </a>
+      {% endfor %}
+    </caption>
+
+    {% if caller %}
+      {{ caller() }}
+    {% else %}
+      {% for item in props.items %}
+        {% if not item.value and not item.label %}
+          <tr>
+            <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
+          </tr>
+        {% else %}
+          {% if item.value %}
+            <tr>
+              <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+              <td class="c-answers-summary__content">{{ item.value }}</td>
+            </tr>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </table>
+{% endmacro %}
+
 {% block main_grid_left_column %}
   {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}
 
 {% block main_grid_right_column %}
+
+  {{ AnswersSummary({
+    heading: 'Client details',
+    actions: [{
+      url: 'edit/client-details'
+    }],
+    items: [{
+      label: 'Company',
+      value: values.company.name
+    }, {
+      label: 'Contact',
+      value: values.contact.name
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'Market of interest',
+    items: [{
+      label: 'Primary market',
+      value: values.primary_market.name
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'International Trade Advisers (ITAs)',
+    actions: [{
+      url: 'edit/subscribers',
+      text: 'Add or remove'
+    }],
+    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
+  }) }}
+
+  {% call AnswersSummary({
+    heading: 'Post advisers',
+    actions: [{
+      url: 'edit/assignee-time',
+      text: 'Edit time'
+    }, {
+      url: 'edit/assignees',
+      text: 'Add or remove'
+    }]
+  }) %}
+    <tbody>
+      {% for assignee in values.assignees %}
+        <tr>
+          <th class="c-answers-summary__title" scope="row">
+            {{ assignee.adviser.name }}
+          </th>
+          <td class="c-answers-summary__content c-answers-summary__content--number">
+            {{ assignee.estimated_time  | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td class="c-answers-summary__content" colspan="3">None selected</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+
+    {% if values.estimatedTimeSum and values.assignees.length %}
+      <tfoot>
+        <tr>
+          <td class="c-answers-summary__footer" colspan="2">
+            <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
+          </td>
+        </tr>
+      </tfoot>
+    {% endif %}
+  {% endcall %}
+
+  {{ AnswersSummary({
+    heading: 'Work description',
+    actions: [{
+      url: 'edit/work-description'
+    }],
+    items: [{
+      label: 'Delivery date',
+      value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
+    }, {
+      label: 'Service type' | pluralise(values.service_types.length),
+      value: values.service_types | map('name') | join(', ') if values.service_types.length else 'None added'
+    }, {
+      label: 'Sector',
+      value: values.sector.name or 'Not selected'
+    }, {
+      label: 'Description of the activity',
+      value: values.description or 'Not added'
+    }, {
+      label: 'Contacts not to approach',
+      value: values.contacts_not_to_approach
+    }, {
+      label: 'Existing representatives',
+      value: values.existing_agents
+    }, {
+      label: 'Permission to approach contacts',
+      value: values.permission_to_approach_contacts
+    }, {
+      label: 'Production information',
+      value: values.product_info
+    }, {
+      label: 'Further information',
+      value: values.further_info
+    }]
+  }) }}
+
 {% endblock %}

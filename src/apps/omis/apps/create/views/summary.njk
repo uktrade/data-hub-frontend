@@ -11,8 +11,7 @@
       <caption class="c-answers-summary__heading">Client</caption>
       <tr>
         <th class="c-answers-summary__title" scope="row">Company</th>
-        <td class="c-answers-summary__content">{{ values.company.name }}</td>
-        <td class="c-answers-summary__control"></td>
+        <td class="c-answers-summary__content" colspan="2">{{ values.company.name }}</td>
       </tr>
       <tr>
         <th class="c-answers-summary__title" scope="row">Contact</th>
@@ -31,11 +30,11 @@
     </table>
 
     <table class="c-answers-summary">
-      <caption class="c-answers-summary__heading">Team</caption>
+      <caption class="c-answers-summary__heading">International Trade Advisers (ITAs)</caption>
       <tr>
-        <th class="c-answers-summary__title" scope="row">ITA</th>
-        <td class="c-answers-summary__content">{{ values.ita.name if values.ita else 'Not selected' }}</td>
-        <td class="c-answers-summary__control"><a class="button button-secondary" href="assign-ita/edit">Change</a></td>
+        <th class="c-answers-summary__title" scope="row">Advisers</th>
+        <td class="c-answers-summary__content">{{ values.subscribers | join(", ") if values.subscribers.length else 'Not added at this stage' }}</td>
+        <td class="c-answers-summary__control"><a class="button button-secondary" href="subscribers/edit">Change</a></td>
       </tr>
     </table>
 

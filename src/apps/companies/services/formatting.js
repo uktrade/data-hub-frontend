@@ -42,10 +42,10 @@ function getDisplayCompany (company) {
     turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : null,
     account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : null,
     headquarter_type: (company.headquarter_type && company.headquarter_type.name && company.headquarter_type.name.length > 0) ? hqLabels[company.headquarter_type.name] : 'Not a headquarters',
-    alias: company.alias || null,
+    trading_name: company.trading_name || null,
   }
 
-  if (company.alias && company.alias.length > 0) displayCompany.alias = company.alias
+  if (company.trading_name && company.trading_name.length > 0) displayCompany.trading_name = company.trading_name
 
   const registeredAddress = getFormattedAddress(company, 'registered')
   displayCompany.registered_address = registeredAddress
@@ -73,7 +73,7 @@ function parseRelatedData (companies) {
     let address = getFormattedAddress(company, key)
     const url = buildCompanyUrl(company)
     return {
-      name: `<a href="${url}">${company.alias || company.name}</a>`,
+      name: `<a href="${url}">${company.trading_name || company.name}</a>`,
       address,
     }
   })

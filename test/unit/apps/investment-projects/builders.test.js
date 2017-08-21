@@ -15,6 +15,22 @@ describe('Investment projects builders', () => {
           { id: 's2', name: 'Sector #2' },
         ],
       },
+      './form-fields': {
+        filterFields: [
+          {
+            MultipleChoiceField: {
+              type: 'checkbox',
+              name: 'stage',
+              modifier: 'smaller',
+            },
+          }, {
+            MultipleChoiceField: {
+              type: 'radio',
+              name: 'investment_type',
+            },
+          },
+        ],
+      },
     })
   })
 
