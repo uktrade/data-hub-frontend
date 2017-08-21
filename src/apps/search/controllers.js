@@ -1,6 +1,5 @@
 const { get, find } = require('lodash')
 
-const { transformFieldsObjectToMacrosObject } = require('../transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 
 const companyRepository = require('../companies/repos')
@@ -67,12 +66,6 @@ async function renderInvestmentProjects (req, res) {
     .then(results => {
       const items = results.investment_projects
         .map(transformInvestmentProjectToListItem)
-        .map(item => {
-          item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-            macroName: 'MetaItem',
-          })
-          return item
-        })
 
       return {
         count: results.count,

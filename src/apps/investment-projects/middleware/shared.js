@@ -8,7 +8,6 @@ const { getAdviser } = require('../../adviser/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
 const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
-const { transformFieldsObjectToMacrosObject } = require('../../transformers')
 
 function getNextStage (currentStage, projectStages) {
   const projectStageIndex = projectStages.findIndex((projectStage) => {
@@ -52,7 +51,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
 
     res.locals.investmentStatus = {
       id: investmentData.id,
-      meta: transformFieldsObjectToMacrosObject([
+      meta: [
         {
           label: 'Project code',
           value: investmentData.project_code,
@@ -61,9 +60,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
           label: 'Valuation',
           value: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
         },
-      ], {
-        macroName: 'MetaItem',
-      }),
+      ],
       company: {
         name: investmentData.investor_company.name,
         url: buildCompanyUrl(investmentData.investor_company),

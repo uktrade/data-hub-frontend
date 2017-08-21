@@ -3,7 +3,6 @@ const { get, isArray, isPlainObject } = require('lodash')
 const queryString = require('query-string')
 
 const { buildPagination } = require('../../lib/pagination')
-const { transformFieldsObjectToMacrosObject } = require('../transformers')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -98,12 +97,6 @@ function transformInvestmentProjectsResultsToCollection (projectsData, query = {
   const items = resultItems
     .map(transformInvestmentProjectToListItem)
     .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
-    .map(item => {
-      item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-        macroName: 'MetaItem',
-      })
-      return item
-    })
 
   return {
     items,

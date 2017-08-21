@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { keyBy, snakeCase, omit, map } = require('lodash')
+const { keyBy, snakeCase } = require('lodash')
 
 function transformObjectToOption ({ id, name }) {
   return {
@@ -39,26 +39,10 @@ function buildMetaDataObj (collection) {
   })
 }
 
-function transformFieldsObjectToMacrosObject (fields, sharedProps = {}) {
-  return map(fields, (fieldProps, fieldName) => {
-    const macroName = sharedProps.macroName || fieldProps.macroName
-    if (!macroName) { return }
-
-    return {
-      [macroName]: Object.assign(
-        { name: fieldName },
-        omit(fieldProps, 'macroName'),
-        sharedProps
-      ),
-    }
-  }).filter(x => x)
-}
-
 module.exports = {
   buildMetaDataObj,
   transformObjectToOption,
   transformStringToOption,
   transformContactToOption,
   transformIdToObject,
-  transformFieldsObjectToMacrosObject,
 }
