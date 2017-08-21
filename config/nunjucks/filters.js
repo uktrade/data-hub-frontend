@@ -139,6 +139,14 @@ const filters = {
     }
     return result
   },
+
+  applyClassModifiers (className, modifier) {
+    if (!isString(className) || !(isString(modifier) || isArray(modifier))) { return className }
+
+    const classModifier = flatten([modifier]).map(mod => `${className}--${mod}`).join(' ')
+
+    return `${className} ${classModifier}`.trim()
+  },
 }
 
 module.exports = filters

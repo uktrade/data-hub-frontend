@@ -1,11 +1,75 @@
 @import "../settings";
+@import "../tools";
 
 .c-meta-list {
-  .c-meta-item + .c-meta-item {
+  display: table;
+}
+
+.c-meta-list__item {
+  display: inline-block;
+
+  & + & {
+    margin-left: $baseline-grid-unit;
+  }
+}
+
+.c-meta-list__item-label {
+  color: $grey-1;
+}
+
+.c-meta-list__item-value {
+  color: $text-colour;
+
+  &:link,
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.is-selected {
+    font-weight: 600;
+  }
+}
+
+// Modifiers
+
+.c-meta-list--inline {
+  .c-meta-list__item-label {
+    display: inline-block;
+    min-width: 4.2em;
+  }
+
+  .c-meta-list__item {
+    margin-top: $baseline-grid-unit;
+  }
+}
+
+.c-meta-list__item--stacked {
+  display: inline-block;
+
+  & + & {
     margin-left: $default-spacing-unit;
   }
 
-  .c-meta-item__label {
+  .c-meta-list__item-label {
     display: block;
+  }
+}
+
+.c-meta-list--split {
+  @include clearfix;
+  width: 100%;
+
+  .c-meta-list__item:nth-child(odd) {
+    float: left;
+    clear: both;
+    margin-left: 0;
+  }
+
+  .c-meta-list__item:nth-child(even) {
+    float: right;
   }
 }

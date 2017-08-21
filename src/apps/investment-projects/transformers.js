@@ -3,7 +3,6 @@ const { get, isArray, isPlainObject } = require('lodash')
 const queryString = require('query-string')
 
 const { buildPagination } = require('../../lib/pagination')
-const { transformFieldsObjectToMacrosObject } = require('../transformers')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -45,7 +44,7 @@ function transformInvestmentProjectToListItem ({
     meta.push({
       type: 'date',
       name: 'estimated_land_date',
-      label: 'Estimated to land',
+      label: 'Land date',
       value: estimated_land_date,
       isInert: true,
     })
@@ -92,24 +91,20 @@ function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
 
 function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
   if (!isPlainObject(projectsData)) { return }
-  const resultItems = projectsData.items || projectsData.results
+  const resultItems = projectsData.items || projectsData.results || projectsData.investment_projects
   if (!isArray(resultItems)) { return }
 
   const items = resultItems
     .map(transformInvestmentProjectToListItem)
     .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
-    .map(item => {
-      item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-        macroName: 'MetaItem',
-      })
-      return item
-    })
 
-  return {
+  return Object.assign({}, {
     items,
     count: projectsData.count,
     pagination: buildPagination(query, projectsData),
-  }
+  }, {
+    aggregations: projectsData.aggregations,
+  })
 }
 
 module.exports = {

@@ -220,4 +220,22 @@ describe('nunjucks filters', () => {
       expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault, true))
     })
   })
+
+  describe('#applyClassModifiers', () => {
+    it('should return original class name when no valid modifier is given', () => {
+      expect(filters.applyClassModifiers('c-custom-component', undefined)).to.equal('c-custom-component')
+      expect(filters.applyClassModifiers('c-custom-component', {})).to.equal('c-custom-component')
+      expect(filters.applyClassModifiers('c-custom-component', { a: 'A' })).to.equal('c-custom-component')
+    })
+
+    it('should return original class name and BEM modifier for modifier string', () => {
+      expect(filters.applyClassModifiers('c-custom-component', 'modifier'))
+        .to.equal('c-custom-component c-custom-component--modifier')
+    })
+
+    it('should return original class name and BEM modifier for modifiers array', () => {
+      expect(filters.applyClassModifiers('c-custom-component', ['modifier', 'another-modifier']))
+        .to.equal('c-custom-component c-custom-component--modifier c-custom-component--another-modifier')
+    })
+  })
 })
