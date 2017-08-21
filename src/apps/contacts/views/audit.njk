@@ -2,12 +2,5 @@
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Audit history</h2>
-
-  <ul class="list-lined">
-    {% for logEntry in auditLog %}
-      <li>
-        User {{ logEntry.name }} changed {{ logEntry.changes }} {{ 'item' | pluralise(logEntry.changes) }} on {{ logEntry.timestamp }}
-      </li>
-    {% endfor %}
-  </ul>
+  {{ Collection(auditLog) }}
 {% endblock %}

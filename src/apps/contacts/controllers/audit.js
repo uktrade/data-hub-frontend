@@ -1,18 +1,11 @@
-const { formatLongDate } = require('../../../../common/date')
 const { getContactAuditLog } = require('../repos')
-
-function formatAuditLog (logEntry) {
-  return {
-    name: logEntry.user.name,
-    timestamp: formatLongDate(logEntry.timestamp),
-    changes: (logEntry.changes && Object.keys(logEntry.changes).length) || 0,
-  }
-}
+const { transformAuditLogToCollection } = require('../../audit/transformers')
+const { contactDetailsLabels } = require('../labels')
 
 async function getAudit (req, res, next) {
   try {
-    const rawAuditLog = await getContactAuditLog(req.session.token, req.params.contactId)
-    const auditLog = rawAuditLog.map(formatAuditLog)
+    const auditLog = await getContactAuditLog(req.session.token, req.params.contactId)
+      .then(result => transformAuditLogToCollection(result, contactDetailsLabels))
 
     return res
       .breadcrumb('Audit history')
@@ -26,5 +19,4 @@ async function getAudit (req, res, next) {
 
 module.exports = {
   getAudit,
-  formatAuditLog,
 }

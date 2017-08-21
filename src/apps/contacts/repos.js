@@ -58,9 +58,6 @@ function getContactsForCompany (token, companyId) {
 
 function getContactAuditLog (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/audit`)
-    .then((data) => {
-      return data.results
-    })
 }
 
 module.exports = {
