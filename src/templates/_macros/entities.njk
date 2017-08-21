@@ -10,11 +10,11 @@
  #}
 {% macro Entity (props) %}
   {% if props.name and props.id and props.type %}
-    {% set metaBadges = props.meta | filter(['MetaItem.type', 'badge']) %}
-    {% set metaTimes = props.meta | filter(['MetaItem.type', 'time']) %}
+    {% set metaBadges = props.meta | filter(['type', 'badge']) %}
+    {% set metaTimes = props.meta | filter(['type', 'time']) %}
     {% set metaItems = props.meta
-      | reject(['MetaItem.type', 'badge'])
-      | reject(['MetaItem.type', 'time'])
+      | reject(['type', 'badge'])
+      | reject(['type', 'time'])
     %}
 
     <div class="c-entity c-entity--{{ props.type }}">
@@ -30,9 +30,10 @@
         {% if metaBadges | length %}
           <div class="c-entity__badges">
             {{
-              Meta({
+              MetaList({
                 items: metaBadges,
-                highlightTerm: props.highlightTerm
+                highlightTerm: props.highlightTerm,
+                modifier: 'inline'
               })
             }}
           </div>
@@ -42,10 +43,10 @@
       {% if metaItems | length %}
         <div class="c-entity__content">
           {{
-            Meta({
+            MetaList({
               items: metaItems,
               highlightTerm: props.highlightTerm,
-              modifier: ['inline', 'alternate']
+              modifier: ['inline', 'split']
             })
           }}
         </div>
@@ -69,10 +70,10 @@
  # @param {string} [props.badgeModifier] - modifier for badge
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
  #}
-{% macro MetaItem (props) %}
+{% macro _MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
-  {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-item__value'%}
+  {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-list__item-value'%}
 
   {% if props.type %}
     {% if props.type === 'date' %}
@@ -85,9 +86,9 @@
   {% set metaItemValue = date or props.value.name | default(props.value)  %}
 
   {% if metaItemValue %}
-    <div class="c-meta-item {{ 'c-meta-item--' + props.modifier if props.modifier }}">
+    <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
-        <span class="c-meta-item__label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
+        <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
           {{ props.label }}:
         </span>
       {% endif %}
@@ -106,17 +107,18 @@
 {% endmacro %}
 
 {##
- # Render meta container with meta items
+ # Render meta list
  # @param {object} props
  # @param {array}  props.items - meta items
  # @param {string, array} [props.modifier] - meta container modifier (e.g. inline)
  #}
-{% macro Meta (props) %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-meta-container--') if props.modifier %}
+{% macro MetaList (props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-meta-list--') if props.modifier %}
+
   {% if props.items | length %}
-    <div class="c-meta-container {{ modifier }}">
+    <div class="c-meta-list {{ modifier }}">
       {% for metaItem in props.items %}
-        {{ applyMacro(metaItem, { highlightTerm: props.highlightTerm }) }}
+        {{ _MetaItem(metaItem | assign({ highlightTerm: props.highlightTerm, modifier: props.itemModifier })) }}
       {% endfor %}
     </div>
   {% endif %}
