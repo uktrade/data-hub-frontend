@@ -79,8 +79,8 @@
       text: 'Add or remove'
     }]
   }) %}
-    {% for assignee in values.assignees %}
-      <tbody>
+    <tbody>
+      {% for assignee in values.assignees %}
         <tr>
           <th class="c-answers-summary__title" scope="row">
             {{ assignee.adviser.name }}
@@ -89,17 +89,21 @@
             {{ assignee.estimated_time  | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
           </td>
         </tr>
-      </tbody>
-    {% endfor %}
+      {% else %}
+        <tr>
+          <td class="c-answers-summary__content" colspan="3">None selected</td>
+        </tr>
+      {% endfor %}
+    </tbody>
 
     {% if values.estimatedTimeSum and values.assignees.length %}
-    <tfoot>
-      <tr>
-        <td class="c-answers-summary__footer" colspan="2">
-          <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
-        </td>
-      </tr>
-    </tfoot>
+      <tfoot>
+        <tr>
+          <td class="c-answers-summary__footer" colspan="2">
+            <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
+          </td>
+        </tr>
+      </tfoot>
     {% endif %}
   {% endcall %}
 
