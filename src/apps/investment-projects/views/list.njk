@@ -4,8 +4,8 @@
 
 {% block main_grid_left_column %}
   {{
-    ResultsFilters({
-      sort: sort,
+    CollectionFilters({
+      query: QUERY,
       filters: filterMacroConfig
     })
   }}
@@ -13,8 +13,7 @@
 
 {% block main_grid_right_column %}
   {{
-    Results(results | assign({
-      el: 'header',
+    Collection(results | assign({
       sort: sort,
       filters: filters,
       countLabel: 'project',

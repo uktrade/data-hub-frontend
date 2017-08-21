@@ -20,6 +20,8 @@ const {
   flatten,
   map,
   mapValues,
+  omit,
+  pick,
 } = require('lodash')
 
 const { longDateFormat } = require('../../config')
@@ -50,6 +52,8 @@ const filters = {
   keys,
   flatten,
   map,
+  omit,
+  pick,
   mapValues,
   isFunction,
   isArray,

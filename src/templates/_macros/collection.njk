@@ -3,28 +3,25 @@
 {% from './form.njk' import Form, MultipleChoiceField, TextField %}
 
 {##
- # Render results filters form
+ # Render collection filters form
  # @param {object} props - component props
  # @param {array}  props.filters - a list of form field components
  # @param {text}   [props.heading=Filter results] - filters heading text
- # @param {object} [props.sort] - object containing sorting
+ # @param {object} [props.query] - query object used to include existing state
 #}
-{% macro ResultsFilters(props) %}
+{% macro CollectionFilters(props) %}
   {% set heading = props.heading | default('Filter results') %}
 
   {% if props.filters | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
-      class: 'c-filters js-AutoSubmit',
+      class: 'c-collection-filters js-AutoSubmit',
       buttonText: 'Refresh results',
       actionsClass: 'u-js-hidden',
-      hiddenFields: {
-        custom: true,
-        sortby: props.sort.selected
-      }
+      hiddenFields: props.query | pick(['sortby']) | assign({ custom: true })
     }) %}
       <header class="u-clearfix">
-        <h2 class="c-filters__heading">{{ heading }}</h2>
+        <h2 class="c-collection-filters__heading">{{ heading }}</h2>
       </header>
 
       {{ applyMacro(props.filters) }}
@@ -33,29 +30,27 @@
 {% endmacro %}
 
 {##
- # Render results summary
- # @param {object}   [props] - component props
+ # Render collection header
+ # @param {object}   props - component props
  # @param {string}   [props.count] - result count
- # @param {string}   [props.el=div] - HTML element used for rendering component
  # @param {string}   [props.countLabel=result] - text to show next to count (singular)
  # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
  # @param {object}   [props.filters] - an object containing selected filters
  # @param {string}   [props.highlightTerm] - text to highlight
  # @param {string}   [props.actionsHTML] - HTML content for actions block
 #}
-{% macro ResultsSummary(props) %}
+{% macro _CollectionHeader(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
   {% set el = props.el | default('div') %}
   {% set count = props.count | default('0') %}
   {% set countLabel = props.countLabel | default('result') %}
   {% set selectedFilters = props.filters | mapValues('value') | removeNilAndEmpty %}
 
-  <{{ el }} class="c-results-summary">
-    <div class="c-results-summary__row">
-      <div class="c-results-summary__intro">
-        <span class="c-results-summary__count">{{ count | formatNumber }}</span>
+  <header class="c-collection__header">
+    <div class="c-collection__header-row">
+      <div class="c-collection__header-intro">
+        <span class="c-collection__result-count">{{ count | formatNumber }}</span>
         {{ countLabel | pluralise(count) }}
-        {{ 'matching' if selectedFilters | length }}
         {% if props.highlightTerm or selectedFilters | length %}
           matching
           {% if props.highlightTerm %}
@@ -64,11 +59,11 @@
         {% endif %}
       </div>
       {% if selectedFilters | length > 1 or props.actionsHTML %}
-        <div class="c-results-summary__actions">
+        <div class="c-collection__header-actions">
           {% if selectedFilters | length > 1 %}
             <a
               href="?custom=true"
-              class="c-results-summary__filter-remove-all u-float-right js-xhr"
+              class="c-collection__filter-remove-all u-float-right js-xhr"
               aria-label="Reset filter results"
             >
               Remove all filters
@@ -80,12 +75,12 @@
       {% endif %}
 
       {% if selectedFilters | length %}
-        <div class="c-results-summary__filters">
+        <div class="c-collection__filter-summary">
           {% for name, value in selectedFilters %}
             {% set filter = props.filters[name] %}
-            <span class="c-results-summary__filter">
-              <span class="c-results-summary__filter-type">{{ filter.label }}</span>
-              <span class="c-results-summary__filter-name">
+            <span class="c-collection__filter-tag">
+              <span class="c-collection__filter-label">{{ filter.label }}</span>
+              <span class="c-collection__filter-value">
                 {%- if 'date' in name -%}
                   {% set date = filter.value | formatDate %}
                   {{ date if date else filter.value }}
@@ -94,7 +89,7 @@
                 {%- endif -%}
               </span>
               <a
-                class="c-results-summary__filter-remove js-xhr"
+                class="c-collection__filter-remove js-xhr"
                 href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
                 aria-label="Remove filter"
               >×</a>
@@ -104,47 +99,42 @@
       {% endif %}
     </div>
 
-    {{ ResultsSort(props | assign({ selectedFilters: selectedFilters })) }}
+    {% if props.items|length and (props.pagination or props.sort.options) %}
+      <div class="c-collection__header-row">
+        {% if props.pagination %}
+          <span class="c-collection__pagination-summary">
+            Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
+          </span>
+        {% endif %}
 
-  </{{ el }}>
-{% endmacro %}
+        {% if props.sort | length %}
+          {% call Form({
+            method: 'get',
+            class: 'c-collection__sort-form js-AutoSubmit',
+            hideFormActions: true,
+            hiddenFields: props.query | omit(['sortby']) | assign({ custom: true })
+          }) %}
+            {{ MultipleChoiceField({
+              name: 'sortby',
+              label: 'Sort by',
+              value: props.sort.selected,
+              options: props.sort.options,
+              modifier: ['small', 'inline', 'light']
+            }) }}
+            <button class="button button-secondary u-js-hidden">Sort</button>
+          {% endcall %}
+        {% endif %}
+      </div>
+    {% endif %}
 
-{% macro ResultsSort(props) %}
-  {% if props.items|length and (props.pagination or props.sort.options) %}
-    <div class="c-results-summary__row">
-      {% if props.pagination %}
-        <span class="c-results-summary__page-count">
-          Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
-        </span>
-      {% endif %}
-
-      {% if props.sort | length %}
-        {% call Form({
-          method: 'get',
-          class: 'c-results__sort-form js-AutoSubmit',
-          hideFormActions: true,
-          hiddenFields: props.selectedFilters | assign({ custom: true })
-        }) %}
-          {{ MultipleChoiceField({
-            name: 'sortby',
-            label: 'Sort by',
-            value: props.sort.selected,
-            options: props.sort.options,
-            modifier: ['small', 'inline', 'light']
-          }) }}
-          <button class="button button-secondary u-js-hidden">Sort</button>
-        {% endcall %}
-      {% endif %}
-    </div>
-  {% endif %}
+  </header>
 {% endmacro %}
 
 {##
- # Render results component
+ # Render collection component
  # @param {object}  [props] - component props
- # @param {object}  [props.summaryEl] - results summary HTML element
- # @param {array{}} [props.items] - results items
- # @param {object}  [props.pagination] - results pagination
+ # @param {array{}} [props.items] - collection items
+ # @param {object}  [props.pagination] - collection pagination
  # @param {object}  [props.filters] - object containing filters configuration
  # @param {object}  [props.sort] - object containing selected sorting and sorting options
  # @param {string}  [props.sort.selected] - selected sorting mode
@@ -152,15 +142,15 @@
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
  # @param {string}   [props.summaryActionsHTML] - HTML content for actions block
 #}
-{% macro Results(props) %}
-  <article class="c-results">
-    {{ ResultsSummary(props | assign({ el: props.summaryEl, actionsHTML: props.summaryActionsHTML })) }}
+{% macro Collection(props) %}
+  <article class="c-collection">
+    {{ _CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
 
     {% if props.items | length %}
       <ol class="c-entity-list">
-        {% for result in props.items %}
+        {% for item in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(result | assign({ highlightTerm: props.highlightTerm })) }}
+            {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
           </li>
         {% endfor %}
       </ol>

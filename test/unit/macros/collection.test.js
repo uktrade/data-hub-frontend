@@ -1,11 +1,11 @@
 const { getMacros } = require('~/test/unit/macro-helper')
-const entitiesMacros = getMacros('results')
+const entitiesMacros = getMacros('collection')
 
-describe('Results macros', () => {
-  describe('ResultsFilters macro', () => {
+describe('Collection macros', () => {
+  describe('CollectionFilters macro', () => {
     describe('invalid props', () => {
       it('should not render if props are not given', () => {
-        const component = entitiesMacros.renderToDom('ResultsFilters')
+        const component = entitiesMacros.renderToDom('CollectionFilters')
         expect(component).to.be.null
       })
     })
@@ -37,8 +37,8 @@ describe('Results macros', () => {
         }
       })
 
-      it('should render results filters component', () => {
-        const component = entitiesMacros.renderToDom('ResultsFilters', {
+      it('should render collection filters component', () => {
+        const component = entitiesMacros.renderToDom('CollectionFilters', {
           filters: [
             this.filter1,
             this.filter2,
@@ -49,7 +49,7 @@ describe('Results macros', () => {
         const rendererFilter1Inputs = renderedFilter1.querySelectorAll('[type=radio]')
         const rendererFilter2Options = renderedFilter2.querySelectorAll('option')
 
-        expect(component.className).to.contain('c-filters js-AutoSubmit')
+        expect(component.className).to.contain('c-collection-filters js-AutoSubmit')
         expect(renderedFilter1).to.exist
         expect(renderedFilter2).to.exist
         expect(rendererFilter1Inputs).to.have.length(2)
@@ -62,19 +62,19 @@ describe('Results macros', () => {
       })
 
       it('should render results filters component with custom heading', () => {
-        const component = entitiesMacros.renderToDom('ResultsFilters', {
+        const component = entitiesMacros.renderToDom('CollectionFilters', {
           heading: 'Pick one',
           filters: [
             this.filter1,
           ],
         })
-        expect(component.querySelector('.c-filters__heading').textContent.trim()).to.equal('Pick one')
+        expect(component.querySelector('.c-collection-filters__heading').textContent.trim()).to.equal('Pick one')
       })
 
-      it('should render results filters form with custom fields', () => {
-        const component = entitiesMacros.renderToDom('ResultsFilters', {
-          sort: {
-            selected: 'alphabetical',
+      it('should render collection filters form with custom fields', () => {
+        const component = entitiesMacros.renderToDom('CollectionFilters', {
+          query: {
+            sortby: 'alphabetical',
           },
           filters: [
             this.filter1,
@@ -83,43 +83,35 @@ describe('Results macros', () => {
 
         const hiddenFields = component.querySelectorAll('input[type=hidden]')
         expect(hiddenFields).to.have.length(2)
-        expect(hiddenFields[0].name).to.equal('custom')
-        expect(hiddenFields[0].value).to.equal('true')
-        expect(hiddenFields[1].name).to.equal('sortby')
-        expect(hiddenFields[1].value).to.equal('alphabetical')
+        expect(hiddenFields[0].name).to.equal('sortby')
+        expect(hiddenFields[0].value).to.equal('alphabetical')
+        expect(hiddenFields[1].name).to.equal('custom')
+        expect(hiddenFields[1].value).to.equal('true')
       })
     })
   })
 
-  describe('ResultsSummary macro', () => {
+  describe('Collection macro', () => {
     it('should render results summary component', () => {
-      const component = entitiesMacros.renderToDom('ResultsSummary')
+      const component = entitiesMacros.renderToDom('Collection')
 
-      expect(component.tagName).to.equal('DIV')
-      expect(component.className).to.equal('c-results-summary')
-      expect(component.querySelector('.c-results-summary__count').parentNode.textContent.trim()).equal('0 results')
-    })
-
-    it('should render results summary component with custom HTML element', () => {
-      const component = entitiesMacros.renderToDom('ResultsSummary', {
-        el: 'header',
-      })
-
-      expect(component.tagName).to.equal('HEADER')
-      expect(component.className).to.equal('c-results-summary')
+      expect(component.tagName).to.equal('ARTICLE')
+      expect(component.className).to.equal('c-collection')
+      expect(component.querySelector('.c-collection__header')).to.exist
+      expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).equal('0 results')
     })
 
     it('should render results summary component with correct count', () => {
-      const component = entitiesMacros.renderToDom('ResultsSummary', {
+      const component = entitiesMacros.renderToDom('Collection', {
         count: 10,
         countLabel: 'cat',
       })
 
-      expect(component.querySelector('.c-results-summary__count').parentNode.textContent.trim()).equal('10 cats')
+      expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).equal('10 cats')
     })
 
     it('should render results summary component with correct count', () => {
-      const component = entitiesMacros.renderToDom('ResultsSummary', {
+      const component = entitiesMacros.renderToDom('Collection', {
         count: 2,
         query: {
           stage: 's1',
@@ -131,10 +123,11 @@ describe('Results macros', () => {
         },
       })
 
-      const removeLinks = component.querySelectorAll('.c-results-summary__filter-remove')
+      const removeLinks = component.querySelectorAll('.c-collection__filter-remove')
       expect(removeLinks).to.have.length(2)
       expect(removeLinks[0].href).to.not.contain('stage=s1')
       expect(removeLinks[1].href).to.not.contain('type=t1')
+      expect(component.querySelector('.c-collection__filter-remove-all')).to.exist
     })
   })
 })

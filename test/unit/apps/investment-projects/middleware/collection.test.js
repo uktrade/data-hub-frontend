@@ -34,8 +34,7 @@ describe('Investment projects collection middleware', () => {
 
     it('should set results property on locals with pagination', () => {
       const actual = this.res.locals.results
-      expect(actual).to.have.property('limit')
-      expect(actual).to.have.property('page')
+      expect(actual).to.have.property('count')
       expect(actual).to.have.property('items')
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
