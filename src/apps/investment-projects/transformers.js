@@ -91,18 +91,20 @@ function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
 
 function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
   if (!isPlainObject(projectsData)) { return }
-  const resultItems = projectsData.items || projectsData.results
+  const resultItems = projectsData.items || projectsData.results || projectsData.investment_projects
   if (!isArray(resultItems)) { return }
 
   const items = resultItems
     .map(transformInvestmentProjectToListItem)
     .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
 
-  return {
+  return Object.assign({}, {
     items,
     count: projectsData.count,
     pagination: buildPagination(query, projectsData),
-  }
+  }, {
+    aggregations: projectsData.aggregations,
+  })
 }
 
 module.exports = {
