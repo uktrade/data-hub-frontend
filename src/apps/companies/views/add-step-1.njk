@@ -18,7 +18,8 @@
           label: 'Other type of UK organisation',
           hint: 'UK organisation not registered with Companies House',
           children: [
-            MultipleChoiceField({
+            {
+              macroName: 'MultipleChoiceField',
               name: 'business_type_uk_other',
               label: 'Type of organisation',
               error: errors.messages.business_type_uk_other,
@@ -30,13 +31,14 @@
                 name: 'business_type',
                 value: 'ukother'
               }
-            })
+            }
           ]
         }, {
           value: 'foreign',
           label: 'Foreign organisation',
           children: [
-            MultipleChoiceField({
+            {
+              macroName: 'MultipleChoiceField',
               name: 'business_type_for_other',
               label: 'Type of organisation',
               error: errors.messages.business_type_for_other,
@@ -48,7 +50,7 @@
                 name: 'business_type',
                 value: 'foreign'
               }
-            })
+            }
           ]
         }
       ]

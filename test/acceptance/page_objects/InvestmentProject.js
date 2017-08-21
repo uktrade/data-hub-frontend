@@ -3,111 +3,53 @@ const faker = require('faker')
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    investmentsTab: {
-      selector: "//nav/a[contains(@href, 'investments')]",
-      locateStrategy: 'xpath',
-    },
+    investmentsTab: 'a[href*="/investments"]',
     addInvestmentProjectButton: '#main-content div article div a',
-    equitySourceYes: '#client-equity-source-options label:nth-child(2)',
-    equitySourceNo: '#client-equity-source-options label:nth-child(3)',
-    clientContact: '#client_contacts-wrapper input',
-    clientContactList: '#client_contacts-wrapper ul li:nth-child(1)',
-    clientRelationshipManagerYes: {
-      selector: "//label[@for='input--is-relationship-manager--1']",
-      locateStrategy: 'xpath',
-    },
-    clientRelationshipManagerNo: {
-      selector: "//label[@for='input--is-relationship-manager--2']",
-      locateStrategy: 'xpath',
-    },
-    clientRelationshipManager: '#client_relationship_manager-wrapper input',
-    clientRelationshipManagerList: '#client_relationship_manager-wrapper ul li:nth-child(4)',
-    referralSourceAdviser: '#referral_source_adviser-wrapper input',
-    referralSourceAdviserList: '#referral_source_adviser-wrapper ul li:nth-child(4)',
-    referralSourceYes: {
-      selector: "//label[@for='input--is-referral-source--1']",
-      locateStrategy: 'xpath',
-    },
-    referralSourceNo: {
-      selector: "//label[@for='input--is-referral-source--2']",
-      locateStrategy: 'xpath',
-    },
-    referralSourceActivity: '#referral_source_activity',
-    referralSourceActivityList: '#referral_source_activity option:nth-child(2)',
-    typeOfInvestmentCommitmentToInvest: {
-      selector: "//label[@for='input--investment_type--1']",
-      locateStrategy: 'xpath',
-    },
-    typeOfInvestmentFDI: {
-      selector: "//label[@for='input--investment_type--2']",
-      locateStrategy: 'xpath',
-    },
-    typeOfInvestmentNonFDI: {
-      selector: "//label[@for='input--investment_type--3']",
-      locateStrategy: 'xpath',
-    },
-    typeOfFDI: '#fdi_type-wrapper',
-    typeOfFDIListAcquisition: '#fdi_type-wrapper option:nth-child(2)',
-    typeOfFDIListCapitalOnly: '#fdi_type-wrapper option:nth-child(3)',
-    typeOfFDIListMerger: '#fdi_type-wrapper option:nth-child(7)',
-    typeOfFDIListRetention: '#fdi_type-wrapper option:nth-child(8)',
-    typeOfNonFDI: '#non_fdi_type-wrapper',
-    typeOfNonFDIList: '#non_fdi_type-wrapper option:nth-child(2)',
-    primarySector: '#sector-wrapper',
-    primarySectorList: '#sector-wrapper option:nth-child(2)',
-    businessActivity: '#business_activities-wrapper',
-    businessActivityList: '#business_activities-wrapper option:nth-child(2)',
-    projectName: '#name',
-    description: '#description',
-    projectBeSharedYes: {
-      selector: "//label[@for='input--project_shareable--1']",
-      locateStrategy: 'xpath',
-    },
-    projectBeSharedNo: {
-      selector: "//label[@for='input--project_shareable--2']",
-      locateStrategy: 'xpath',
-    },
-    signedaNDAYes: {
-      selector: "//label[@for='input--nda_signed--1']",
-      locateStrategy: 'xpath',
-    },
-    signedaNDANo: {
-      selector: "//label[@for='input--nda_signed--2']",
-      locateStrategy: 'xpath',
-    },
-    landMonth: '#land-date_month',
-    landYear: '#land-date_year',
+    equitySourceYes: 'label[for="field-is_equity_source-1"]',
+    equitySourceNo: 'label[for="field-is_equity_source-2"]',
+    clientContact: '#field-client_contacts',
+    clientContactList: '#field-client_contacts option:nth-child(2)',
+    clientRelationshipManagerYes: 'label[for="field-is_relationship_manager-1"]',
+    clientRelationshipManagerNo: 'label[for="field-is_relationship_manager-2"]',
+    clientRelationshipManager: '#field-client_relationship_manager',
+    clientRelationshipManagerList: '#field-client_relationship_manager option:nth-child(2)',
+    referralSourceAdviser: '#field-referral_source_adviser',
+    referralSourceAdviserList: '#field-referral_source_adviser option:nth-child(2)',
+    referralSourceYes: 'label[for="field-is_referral_source-1"]',
+    referralSourceNo: 'label[for="field-is_referral_source-2"]',
+    referralSourceActivity: '#field-referral_source_activity',
+    referralSourceActivityList: '#field-referral_source_activity option:nth-child(2)',
+    typeOfInvestmentCommitmentToInvest: 'label[for="field-investment_type-3"] span:first-child',
+    typeOfInvestmentFDI: 'label[for="field-investment_type-1"] span:first-child',
+    typeOfInvestmentNonFDI: 'label[for="field-investment_type-2"] span:first-child',
+    typeOfFDI: '#field-fdi_type',
+    typeOfFDIListAcquisition: '#field-fdi_type option:nth-child(2)',
+    typeOfFDIListCapitalOnly: '#field-fdi_type option:nth-child(3)',
+    typeOfFDIListMerger: '#field-fdi_type option:nth-child(7)',
+    typeOfFDIListRetention: '#field-fdi_type option:nth-child(8)',
+    typeOfNonFDI: '#field-non_fdi_type',
+    typeOfNonFDIList: '#field-non_fdi_type option:nth-child(2)',
+    primarySector: '#field-sector',
+    primarySectorList: '#field-sector option:nth-child(2)',
+    businessActivity: '#field-business_activities',
+    businessActivityList: '#field-business_activities option:nth-child(2)',
+    projectName: '#field-name',
+    description: '#field-description',
+    projectBeSharedYes: 'label[for="field-project_shareable-1"]',
+    projectBeSharedNo: 'label[for="field-project_shareable-2"]',
+    signedaNDAYes: 'label[for="field-nda_signed-1"]',
+    signedaNDANo: 'label[for="field-nda_signed-2"]',
+    landMonth: '#field-estimated_land_date_month',
+    landYear: '#field-estimated_land_date_year',
     projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
-    projectNameFromSummaryPage: '.page-heading',
-    projectSummaryTitle: {
-      selector: ".//*[@id='main-content']/div/article/h2[1]",
-      locateStrategy: 'xpath',
-    },
-    projectTeamTab: {
-      selector: "//a[contains(@href, 'team')]",
-      locateStrategy: 'xpath',
-    },
-    clientRelationsshipManagementAdviserName: {
-      selector: '//article/table[1]/tbody/tr/td[1]',
-      locateStrategy: 'xpath',
-    },
-    referralSourceAdviserName: {
-      selector: '//article/table[2]/tbody/tr/td[1]',
-      locateStrategy: 'xpath',
-    },
-    typeOfInvestmentFromProjectDetails: {
-      selector: '//article/table[1]/tbody/tr[2]/td',
-      locateStrategy: 'xpath',
-    },
+    projectNameFromSummaryPage: '.c-local-header__heading',
+    projectTeamTab: 'a[href*="/team"]',
+    clientRelationsshipManagementAdviserName: 'article table:nth-child(2) tbody tr:nth-child(1) td:nth-child(2)',
+    referralSourceAdviserName: 'article table:nth-child(2) tbody tr:nth-child(2) td:nth-child(2)',
+    typeOfInvestmentFromProjectDetails: 'article table:nth-child(3) tbody tr:nth-child(2) td:nth-child(2)',
     sourceCompanySearch: '#field-q',
-    firstCompanyFromList: {
-      selector: ".//*[@id='main-content']/div/article/ol/li[1]//h3",
-      locateStrategy: 'xpath',
-    },
-    investmentprojecttab: {
-      selector: "//a[contains(@href, 'investment-projects')]",
-      locateStrategy: 'xpath',
-    },
+    firstCompanyFromList: '.c-entity-list li:first-child h3 a',
+    investmentprojecttab: 'a[href*="/search/investment-projects"]',
   },
 
   commands: [
@@ -130,7 +72,8 @@ module.exports = {
       },
       selectClientContact () {
         return this
-          .setValue('@clientContact', 'c')
+          // .setValue('@clientContact', 'c')
+          .click('@clientContact')
           .click('@clientContactList')
       },
       clickClientRelationshipManagerYes () {
@@ -246,13 +189,15 @@ module.exports = {
       createNewInvestmentProject (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentCommitmentToInvest()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
@@ -267,13 +212,15 @@ module.exports = {
       createNewInvestmentProjectWithDifferentClientRelationManager (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerNo()
           .clickReferralSourceYes()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentCommitmentToInvest()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
@@ -287,13 +234,15 @@ module.exports = {
       createNewInvestmentProjectWithDifferentReferralSourceAdviser (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceNo()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentCommitmentToInvest()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
@@ -307,13 +256,15 @@ module.exports = {
       createNewInvestmentProjectWithDifferentClientAndReferralDetails (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerNo()
           .clickReferralSourceNo()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentCommitmentToInvest()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
@@ -327,14 +278,15 @@ module.exports = {
       createNewInvestmentProjectWithFDIasInvestmentType (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
@@ -348,14 +300,15 @@ module.exports = {
       createNewInvestmentProjectWithNonFDIasInvestmentType (projectName) {
         return this
           .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentNonFDI()
+          .selectTypeOfNonFDI()
+          .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
           .selectClientContact()
           .clickClientRelationshipManagerYes()
           .clickReferralSourceYes()
           .selectReferralSourceActivity()
-          .clickTypeOfInvestmentNonFDI()
-          .selectTypeOfNonFDI()
           .selectPrimarySector()
           .selectBusinessActivity()
           .enterProjectName(projectName)
