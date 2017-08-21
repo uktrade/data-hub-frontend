@@ -56,4 +56,18 @@ function getContactsForCompany (token, companyId) {
   })
 }
 
-module.exports = { getContact, saveContact, archiveContact, unarchiveContact, getContactsForCompany }
+function getContactAuditLog (token, contactId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/audit`)
+    .then((data) => {
+      return data.results
+    })
+}
+
+module.exports = {
+  getContact,
+  saveContact,
+  archiveContact,
+  unarchiveContact,
+  getContactsForCompany,
+  getContactAuditLog,
+}
