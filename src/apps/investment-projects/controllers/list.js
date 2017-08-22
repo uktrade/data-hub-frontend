@@ -1,6 +1,6 @@
 const { omit, merge } = require('lodash')
-const { buildInvestmentFilters } = require('../builders')
-const { investmentFiltersFields, investmentSortForm } = require('../macros')
+const { buildSelectedInvestmentFiltersSummary } = require('../builders')
+const { investmentFiltersFields: filtersFields, investmentSortForm } = require('../macros')
 
 function renderInvestmentList (req, res) {
   const sortForm = merge({}, investmentSortForm, {
@@ -10,18 +10,13 @@ function renderInvestmentList (req, res) {
     ],
   })
 
-  const filtersFields = investmentFiltersFields.map(field => {
-    field.modifier = ['smaller', 'light']
-    field.value = req.query[field.name]
-    return field
-  })
-  const filters = buildInvestmentFilters(req.query)
+  const selectedFilters = buildSelectedInvestmentFiltersSummary(req.query)
 
   res.render('investment-projects/views/list', {
     title: 'Investment Projects',
     sortForm,
     filtersFields,
-    filters,
+    selectedFilters,
   })
 }
 

@@ -1,48 +1,33 @@
-const { get, isString, isArray } = require('lodash')
-const { transformObjectToOption } = require('../transformers')
-const metadataRepo = require('../../lib/metadata')
-const { collectionFilterLabels } = require('./labels')
+const { keyBy, at, isArray, isString, isFunction } = require('lodash')
+const { investmentFiltersFields } = require('./macros')
 
-function buildInvestmentFilters (filtersQuery = {}) {
-  const formOptions = {
-    stage: metadataRepo.investmentStageOptions.map(transformObjectToOption),
-    investment_type: metadataRepo.investmentTypeOptions.map(transformObjectToOption),
-    sector: metadataRepo.sectorOptions.map(transformObjectToOption),
-  }
+function buildSelectedInvestmentFiltersSummary (query = {}) {
+  if (!isArray(investmentFiltersFields)) { return }
 
-  return Object.keys(collectionFilterLabels.edit).reduce((filtersObj, filterName) => {
-    const filterOptions = formOptions[filterName] || []
-
-    let valueLabel = filtersQuery[filterName]
-    let valuesArray = []
-
-    if (isArray(valueLabel)) {
-      valuesArray = valueLabel
-    }
-    if (isString(valueLabel)) {
-      valuesArray = valueLabel.split(',')
-    }
-
-    filtersObj[filterName] = {
-      value: filtersQuery[filterName],
-    }
-
-    if (filterOptions.length) {
-      filtersObj[filterName].options = filterOptions
-      const selectedOptions = filterOptions.filter(x => valuesArray.includes(x.value))
-
-      if (selectedOptions.length) {
-        valueLabel = selectedOptions.map(option => option.label).join(', ')
+  return investmentFiltersFields
+    .map(field => {
+      field.value = query[field.name]
+      return field
+    })
+    .filter(field => field.value)
+    .reduce((fieldsObj, field) => {
+      fieldsObj[field.name] = {
+        label: field.label,
+        valueLabel: field.value,
       }
-    }
 
-    filtersObj[filterName].label = get(collectionFilterLabels.edit, filterName, filterName)
-    filtersObj[filterName].valueLabel = valueLabel
+      const fieldValues = isString(field.value) ? field.value.split(',') : field.value
+      const fieldOptions = isFunction(field.options) ? field.options() : field.options
 
-    return filtersObj
-  }, {})
+      if (fieldOptions) {
+        const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(x => x)
+        fieldsObj[field.name].valueLabel = selectedValues.map(x => x.label).join(', ')
+      }
+
+      return fieldsObj
+    }, {})
 }
 
 module.exports = {
-  buildInvestmentFilters,
+  buildSelectedInvestmentFiltersSummary,
 }

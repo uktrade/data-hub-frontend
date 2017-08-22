@@ -40,8 +40,10 @@ const investmentFiltersFields = [
     placeholder: 'e.g. 2019-05-09',
   },
 ].map(filter => {
-  filter.label = collectionFilterLabels.edit[filter.name]
-  return filter
+  return Object.assign(filter, {
+    label: collectionFilterLabels.edit[filter.name],
+    modifier: ['smaller', 'light'],
+  })
 })
 
 const investmentSortForm = {
