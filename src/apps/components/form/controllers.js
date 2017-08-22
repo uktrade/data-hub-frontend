@@ -1,4 +1,5 @@
-const { globalFields, standardFormConfig, entitySearchConfig } = require('./macros')
+const { standardFormConfig, entitySearchConfig } = require('./macros')
+const { globalFields } = require('../../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { search, buildSearchEntityResultsData } = require('../../search/services')
 

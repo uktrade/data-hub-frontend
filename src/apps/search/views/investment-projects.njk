@@ -3,7 +3,6 @@
 {% block main_grid_right_column %}
   {{
     Collection(results | assign({
-      sort: sort,
       highlightTerm: searchTerm,
       countLabel: 'investment project',
       query: QUERY

@@ -37,7 +37,7 @@ describe('Collection macros', () => {
 
       it('should render collection filters component', () => {
         const component = entitiesMacros.renderToDom('CollectionFilters', {
-          filters: [
+          filtersFields: [
             this.filter1,
             this.filter2,
           ],
@@ -62,7 +62,7 @@ describe('Collection macros', () => {
       it('should render results filters component with custom heading', () => {
         const component = entitiesMacros.renderToDom('CollectionFilters', {
           heading: 'Pick one',
-          filters: [
+          filtersFields: [
             this.filter1,
           ],
         })
@@ -74,7 +74,7 @@ describe('Collection macros', () => {
           query: {
             sortby: 'alphabetical',
           },
-          filters: [
+          filtersFields: [
             this.filter1,
           ],
         })
@@ -115,9 +115,9 @@ describe('Collection macros', () => {
           stage: 's1',
           type: 't1',
         },
-        filters: {
-          stage: { label: 'Stage', value: '1', valueLabel: 'Initial' },
-          type: { label: 'Type', value: '2', valueLabel: 'Manual' },
+        selectedFilters: {
+          stage: { label: 'Stage', valueLabel: 'Initial' },
+          type: { label: 'Type', valueLabel: 'Manual' },
         },
       })
 
