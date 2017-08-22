@@ -19,6 +19,8 @@ module.exports = {
     next: 'market',
     fields: ['company', 'contact'],
     controller: ClientDetailsController,
+    templatePath: 'omis/apps/create/views',
+    template: 'client-details',
   },
   '/market': {
     editable: true,

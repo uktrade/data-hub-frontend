@@ -1,0 +1,22 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  <h2 class="heading-small">Company</h2>
+  <div>
+    {{ company.name }}
+    <br>
+    {{ [
+      company.registered_address_1,
+      company.registered_address_2,
+      company.registered_address_county,
+      company.registered_address_town,
+      company.registered_address_postcode
+    ] | removeNilAndEmpty | join(", ") }}
+  </div>
+
+  {{ super( )}}
+
+  <p class="infostrip">
+    If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">create a new one</a>.
+  </p>
+{% endblock %}

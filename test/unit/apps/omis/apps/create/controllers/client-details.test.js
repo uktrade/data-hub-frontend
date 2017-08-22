@@ -75,7 +75,7 @@ describe('OMIS create client details controller', () => {
     })
   })
 
-  describe('getValues()', () => {
+  describe('process()', () => {
     beforeEach(() => {
       this.resMock = Object.assign({}, globalRes, {
         locals: {
@@ -86,52 +86,21 @@ describe('OMIS create client details controller', () => {
       })
     })
 
-    describe('when the parent has set some values', () => {
-      beforeEach(() => {
-        FormController.prototype.getValues = (req, res, next) => {
-          next(null, {
-            foo: 'bar',
-          })
-        }
+    it('should set the locals company ID to form values', (done) => {
+      const reqMock = Object.assign({}, globalReq, {
+        form: { values: {} },
       })
-
-      it('should set the correct values', (done) => {
-        const nextMock = (e, values) => {
-          try {
-            expect(Object.keys(values).length).to.equal(2)
-            expect(values).to.have.property('company')
-            expect(values.company).to.equal('1234567890')
-            done()
-          } catch (err) {
-            done(err)
-          }
+      const nextMock = () => {
+        try {
+          expect(reqMock.form.values).to.have.property('company')
+          expect(reqMock.form.values.company).to.equal('1234567890')
+          done()
+        } catch (err) {
+          done(err)
         }
+      }
 
-        this.controller.getValues(globalReq, this.resMock, nextMock)
-      })
-    })
-
-    describe('when the parent hasn\'t set some values', () => {
-      beforeEach(() => {
-        FormController.prototype.getValues = (req, res, next) => {
-          next(null, {})
-        }
-      })
-
-      it('should set the correct values', (done) => {
-        const nextMock = (e, values) => {
-          try {
-            expect(Object.keys(values).length).to.equal(1)
-            expect(values).to.have.property('company')
-            expect(values.company).to.equal('1234567890')
-            done()
-          } catch (err) {
-            done(err)
-          }
-        }
-
-        this.controller.getValues(globalReq, this.resMock, nextMock)
-      })
+      this.controller.process(reqMock, this.resMock, nextMock)
     })
   })
 })

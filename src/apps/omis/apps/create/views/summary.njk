@@ -38,5 +38,14 @@
       </tr>
     </table>
 
+    <p>Creating the order will notify the following people by email:</p>
+
+    <ul class="list-disc">
+      <li>the post manager for {{ values.primary_market.name }}</li>
+      {% if values.subscribers.length %}
+        <li>{{ values.subscribers | join(", ") }}</li>
+      {% endif %}
+    </ul>
+
   {% endcall %}
 {% endblock %}
