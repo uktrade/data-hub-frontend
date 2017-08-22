@@ -5,9 +5,11 @@
     <caption class="c-answers-summary__heading">
       {{ props.heading }}
       {% for action in props.actions %}
-        <a class="c-answers-summary__heading-action" href="{{ action.url }}">
-          {{ action.text or 'Edit' }}
-        </a>
+        {% if action.url %}
+          <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+            {{ action.text or 'Edit' }}
+          </a>
+        {% endif %}
       {% endfor %}
     </caption>
 
@@ -72,7 +74,7 @@
   {% call AnswersSummary({
     heading: 'Post advisers',
     actions: [{
-      url: 'edit/assignee-time',
+      url: 'edit/assignee-time' if values.assignees.length,
       text: 'Edit time'
     }, {
       url: 'edit/assignees',
