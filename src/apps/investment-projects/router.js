@@ -43,6 +43,7 @@ const currentYear = (new Date()).getFullYear()
 const DEFAULT_COLLECTION_QUERY = {
   estimated_land_date_after: `${currentYear}-04-05`,
   estimated_land_date_before: `${currentYear + 1}-04-06`,
+  sortby: 'estimated_land_date:asc',
 }
 
 router.use('/:id/', setLocalNav(LOCAL_NAV))
