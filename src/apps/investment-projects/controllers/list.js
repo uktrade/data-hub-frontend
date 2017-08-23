@@ -1,24 +1,22 @@
-const { map } = require('lodash')
-const {
-  buildInvestmentSorting,
-  buildInvestmentFilters,
-} = require('../builders')
+const { omit, merge } = require('lodash')
+const { buildSelectedInvestmentFiltersSummary } = require('../builders')
+const { investmentFiltersFields: filtersFields, investmentSortForm } = require('../macros')
 
 function renderInvestmentList (req, res) {
-  const sort = buildInvestmentSorting(req.query)
-  const filters = buildInvestmentFilters(req.query)
-  const filterMacroConfig = map(filters, (filterProps, fieldName) => {
-    return Object.assign({}, filterProps, {
-      name: fieldName,
-      modifier: ['light', 'smaller'],
-    })
+  const sortForm = merge({}, investmentSortForm, {
+    hiddenFields: Object.assign({}, omit(req.query, 'sortby')),
+    children: [
+      { value: req.query.sortby },
+    ],
   })
+
+  const selectedFilters = buildSelectedInvestmentFiltersSummary(req.query)
 
   res.render('investment-projects/views/list', {
     title: 'Investment Projects',
-    sort,
-    filters,
-    filterMacroConfig,
+    sortForm,
+    filtersFields,
+    selectedFilters,
   })
 }
 
