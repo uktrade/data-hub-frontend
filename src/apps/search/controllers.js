@@ -1,16 +1,16 @@
 const { get, find } = require('lodash')
 
-const { transformInvestmentProjectsResultsToCollection } = require('../investment-projects/transformers')
-
 const companyRepository = require('../companies/repos')
 const { buildCompanyUrl } = require('../companies/services/data')
 const { entities, search } = require('./services')
 const { buildSearchAggregation } = require('./builders')
 const { buildPagination } = require('../../lib/pagination')
+const { transformResultsToCollection } = require('./transformers')
 
+// Deprecated: companies only
 function searchAction (req, res, next) {
   const searchTerm = req.query.term
-  const entity = find(entities, { path: req.params.searchPath })
+  const entity = find(entities, { path: 'companies' })
 
   if (!entity) {
     return res
@@ -51,9 +51,14 @@ async function viewCompanyResult (req, res, next) {
   }
 }
 
-async function renderInvestmentProjects (req, res) {
+async function renderSearchResults (req, res) {
+  const entity = find(entities, ['path', req.params.searchPath])
+
+  if (!entity) {
+    return res.render('search/views/index')
+  }
+
   const searchTerm = get(req, 'query.term', '').trim()
-  const entity = find(entities, { path: 'investment-projects' })
   const searchEntity = entity.entity
 
   const results = await search({
@@ -63,26 +68,22 @@ async function renderInvestmentProjects (req, res) {
     token: req.session.token,
     page: req.query.page,
   })
-    .then(result => {
-      result.aggregations = buildSearchEntityResultsData(result.aggregations)
-      return result
-    })
-    .then(result => transformInvestmentProjectsResultsToCollection(result, req.query, false))
+    .then(data => transformResultsToCollection(data, searchEntity, {
+      searchTerm,
+      query: req.query,
+    }))
 
   res
-    .breadcrumb('Search', 'companies')
-    .breadcrumb('Investments')
-    .render('search/views/investment-projects', {
+    .breadcrumb(entity.text)
+    .render('search/views/results', {
       searchEntity,
-      searchPath: entity.path,
       searchTerm,
       results,
-      searchEntityResultsData: results.aggregations,
     })
 }
 
 module.exports = {
   searchAction,
   viewCompanyResult,
-  renderInvestmentProjects,
+  renderSearchResults,
 }

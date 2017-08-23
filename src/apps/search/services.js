@@ -7,18 +7,21 @@ const entities = [
     entity: 'company',
     path: 'companies',
     text: 'Companies',
+    noun: 'company',
     count: 0,
   },
   {
     entity: 'contact',
     path: 'contacts',
     text: 'Contacts',
+    noun: 'contact',
     count: 0,
   },
   {
     entity: 'investment_project',
     path: 'investment-projects',
     text: 'Investment projects',
+    noun: 'investment project',
     count: 0,
   },
 ]
