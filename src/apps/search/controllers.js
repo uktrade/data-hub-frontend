@@ -4,7 +4,8 @@ const { transformInvestmentProjectsResultsToCollection } = require('../investmen
 
 const companyRepository = require('../companies/repos')
 const { buildCompanyUrl } = require('../companies/services/data')
-const { entities, search, buildSearchEntityResultsData } = require('./services')
+const { entities, search } = require('./services')
+const { buildSearchAggregation } = require('./builders')
 const { buildPagination } = require('../../lib/pagination')
 
 function searchAction (req, res, next) {
@@ -27,7 +28,7 @@ function searchAction (req, res, next) {
   })
     .then((results) => {
       results.pagination = buildPagination(req.query, results)
-      const searchEntityResultsData = buildSearchEntityResultsData(results.aggregations)
+      results.aggregations = buildSearchAggregation(results.aggregations)
 
       res
         .breadcrumb('Search')
@@ -35,7 +36,6 @@ function searchAction (req, res, next) {
           searchTerm,
           searchEntity,
           searchPath: entity.path,
-          searchEntityResultsData,
           results,
         })
     })

@@ -138,18 +138,6 @@ function searchLimitedCompanies (options) {
     })
 }
 
-function buildSearchEntityResultsData (apiResponseEntities) {
-  return entities.map((defaultEntity) => {
-    return Object.assign(
-      {},
-      defaultEntity,
-      apiResponseEntities.find((apiResponseEntity) => {
-        return apiResponseEntity.entity === defaultEntity.entity
-      })
-    )
-  })
-}
-
 module.exports = {
   entities,
   search,
@@ -158,5 +146,4 @@ module.exports = {
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,
-  buildSearchEntityResultsData,
 }
