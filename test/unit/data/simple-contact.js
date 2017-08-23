@@ -17,6 +17,10 @@ module.exports = {
   address_2: 'Warble',
   address_town: 'Big Town',
   address_county: 'Large County',
+  address_country: {
+    name: 'United Kingdom',
+    id: 'abcdefg-12345',
+  },
   address_postcode: 'LL1 1LL',
   telephone_alternative: '07814 000 333',
   email_alternative: 'fred@gmail.com',
@@ -27,7 +31,10 @@ module.exports = {
     name: 'Mr',
   },
   adviser: null,
-  address_country: null,
+  company_sector: {
+    id: '111',
+    name: 'Aerospace',
+  },
   company: {
     id: '555',
     name: 'Fred ltd',
