@@ -1,17 +1,27 @@
 const { pick, pickBy } = require('lodash')
 
-const { searchInvestmentProjects } = require('../../search/services')
-const { transformInvestmentProjectsResultsToCollection } = require('../transformers')
+const { search } = require('../../search/services')
+const { transformResultsToCollection } = require('../../search/transformers')
+const { transformInvestmentListItemToHaveMetaLinks } = require('../transformers')
 
 async function getInvestmentProjectsCollection (req, res, next) {
+  const searchEntity = 'investment_project'
+
   try {
-    res.locals.results = await searchInvestmentProjects({
-      token: req.session.token,
+    res.locals.results = await search({
+      searchTerm: '',
+      searchEntity,
       requestBody: req.body,
-      limit: 10,
-      page: parseInt(req.query.page, 10) || 1,
+      token: req.session.token,
+      page: req.query.page,
+      isAggregation: false,
     })
-      .then(result => transformInvestmentProjectsResultsToCollection(result, req.query, true))
+      .then(data => transformResultsToCollection(data, searchEntity, {
+        query: req.query,
+      }))
+      .then(data => Object.assign({}, data, {
+        items: data.items.map(item => transformInvestmentListItemToHaveMetaLinks(item, req.query)),
+      }))
 
     next()
   } catch (error) {

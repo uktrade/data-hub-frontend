@@ -1,8 +1,6 @@
 /* eslint camelcase: 0 */
-const { get, isArray, isPlainObject } = require('lodash')
+const { get, isArray } = require('lodash')
 const queryString = require('query-string')
-
-const { buildPagination } = require('../../lib/pagination')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -89,26 +87,7 @@ function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
   return item
 }
 
-function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
-  if (!isPlainObject(projectsData)) { return }
-  const resultItems = projectsData.items || projectsData.results || projectsData.investment_projects
-  if (!isArray(resultItems)) { return }
-
-  const items = resultItems
-    .map(transformInvestmentProjectToListItem)
-    .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
-
-  return Object.assign({}, {
-    items,
-    count: projectsData.count,
-    pagination: buildPagination(query, projectsData),
-  }, {
-    aggregations: projectsData.aggregations,
-  })
-}
-
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
-  transformInvestmentProjectsResultsToCollection,
 }
