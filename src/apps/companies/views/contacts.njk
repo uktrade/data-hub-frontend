@@ -8,6 +8,7 @@
   <h2 class="heading-medium">Company contacts</h2>
 
   {{ Collection({
+    id: 'contact-list',
     items: activeContacts,
     count: activeContacts.length,
     countLabel: 'active contact',
@@ -20,6 +21,7 @@
 
   {% if archivedContacts | length %}
     {{ Collection({
+      id: 'archived-contact-list',
       items: archivedContacts,
       count: archivedContacts.length,
       countLabel: 'archived contact'
