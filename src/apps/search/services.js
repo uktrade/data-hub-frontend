@@ -43,6 +43,26 @@ function searchInvestmentProjects ({ token, searchTerm, requestBody, limit = 10,
     })
 }
 
+function searchContacts ({ token, searchTerm, requestBody, limit = 10, page = 1 }) {
+  return search({
+    token,
+    searchTerm,
+    requestBody,
+    limit,
+    page,
+    searchEntity: 'contact',
+    isAggregation: false,
+  })
+    .then(result => {
+      return {
+        limit,
+        count: result.count,
+        page: result.page,
+        items: result.results,
+      }
+    })
+}
+
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
   const searchUrl = `${config.apiRoot}/v3/search`
   let options = {
@@ -134,6 +154,7 @@ module.exports = {
   entities,
   search,
   searchInvestmentProjects,
+  searchContacts,
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,
