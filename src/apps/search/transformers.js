@@ -7,12 +7,12 @@ const { buildSearchAggregation } = require('./builders')
 const { entities } = require('./services')
 
 function transformResultsToCollection (results, searchEntity, options = {}) {
-  const resultsData = results[`${searchEntity}s`]
-  if (!resultsData) { return null }
+  const resultsItems = results[`${searchEntity}s`] || results.items || results.results
+  if (!resultsItems) { return null }
 
   const entity = find(entities, ['entity', searchEntity])
 
-  let items = resultsData.map(item => Object.assign({}, item, { type: searchEntity }))
+  let items = resultsItems.map(item => Object.assign({}, item, { type: searchEntity }))
 
   if (searchEntity === 'investment_project') {
     items = items.map(transformInvestmentProjectToListItem)
