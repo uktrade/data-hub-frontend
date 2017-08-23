@@ -97,7 +97,7 @@
       {% endif %}
     </div>
 
-    {% if props.items | length or props.pagination %}
+    {% if props.sortForm or props.pagination %}
       <div class="c-collection__header-row">
         {% if props.pagination %}
           <span class="c-collection__pagination-summary">
