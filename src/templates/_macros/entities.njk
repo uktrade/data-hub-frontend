@@ -1,17 +1,19 @@
 {##
  # Render entity component
  # @param {object} props
- # @param {string} props.id - entity id
  # @param {string} props.name - entity name
  # @param {string} props.type - entity type (e.g. 'date' to format dates)
+ # @param {string} [props.id] - entity id, used to create a link to the entity if provided
  # @param {array}  [props.metaBadges{}] - an array of metadata item objects
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ # @param {sting|array} [props.contentMetaModifier] - A modified to apply to metadata to control it's display
  #}
 {% macro Entity (props) %}
-  {% if props.name and props.id and props.type %}
+  {% if props.name and props.type %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set metaTimes = props.meta | filter(['type', 'time']) %}
+    {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
     {% set metaItems = props.meta
       | reject(['type', 'badge'])
       | reject(['type', 'time'])
@@ -24,7 +26,11 @@
 
       <div class="c-entity__header">
         <h3 class="c-entity__title">
-          <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ props.name | highlight(props.highlightTerm) }}</a>
+          {% if props.id %}
+            <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ props.name | highlight(props.highlightTerm) }}</a>
+          {% else %}
+            {{ props.name | highlight(props.highlightTerm) }}
+          {% endif %}
         </h3>
 
         {% if metaBadges | length %}
@@ -45,7 +51,7 @@
             MetaList({
               items: metaItems,
               highlightTerm: props.highlightTerm,
-              modifier: ['inline', 'split']
+              modifier: contentMetaModifier
             })
           }}
         </div>

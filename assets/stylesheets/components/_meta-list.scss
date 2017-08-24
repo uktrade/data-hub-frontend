@@ -72,3 +72,15 @@
     margin-right: 0;
   }
 }
+
+.c-meta-list--stacked {
+  display: block;
+
+  .c-meta-list__item {
+    display: block;
+  }
+
+  .c-meta-list__item  + .c-meta-list__item {
+    margin-left: 0;
+  }
+}
