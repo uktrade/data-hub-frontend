@@ -644,7 +644,7 @@ describe('Company controller, ltd', function () {
         locals: {},
         breadcrumb: this.breadcrumbStub,
         redirect: function () {
-          expect(flashStub).to.be.calledWith('success', 'Updated company record')
+          expect(flashStub).to.be.calledWith('success', 'Company record updated')
           done()
         },
         render: function () {

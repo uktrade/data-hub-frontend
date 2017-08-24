@@ -9,7 +9,7 @@ function getHandler (req, res, next) {
 
 function postHandler (req, res, next) {
   if (isEmpty(res.locals.form.errors)) {
-    req.flash('success', 'Updated investment details')
+    req.flash('success', 'Investment details updated')
     return res.redirect(`/investment-projects/${res.locals.investmentData.id}/team`)
   }
 

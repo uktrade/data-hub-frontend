@@ -12,17 +12,21 @@
  #  } %}
  #
 #}
+{% from "_macros/form.njk" import MultipleChoiceField %}
+
 {% set radioOptions = options | concat('Other') | arrayToLabelValues %}
+{% set radioOptionsPrefix = optionsPrefix %}
 
 <form class="archive-form js-archiveForm" method="POST" {% if url %}action="{{ url }}{% endif %}">
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-  {% component 'form-multiple-choice', {
-    variant:  'radio',
+  {{ MultipleChoiceField({
+    options: radioOptions,
     label: label,
-    name:  'archived_reason',
-    children: radioOptions
-  } %}
+    type: 'radio',
+    name: 'archived_reason',
+    hint: radioOptionsPrefix
+  }) }}
 
   <div class="js-ConditionalSubfield" data-controlled-by="archived_reason" data-control-value="Other">
     <div class="form-group">

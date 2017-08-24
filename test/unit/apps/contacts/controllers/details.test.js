@@ -137,6 +137,47 @@ describe('Contact controller', function () {
       }
       contactController.getCommon(req, res, next)
     })
+    it('should store reason for archive options in locals', (done) => {
+      const req = {
+        session: { token },
+        params: {
+          contactId: '1234',
+        },
+      }
+      const res = {
+        locals: {},
+        breadcrumb: this.breadcrumbStub,
+        render: function () {},
+      }
+      const next = () => {
+        const expected = [
+          'Left the company',
+          'Does not want to be contacted',
+          'Changed role/responsibility',
+        ]
+        expect(res.locals.reasonForArchiveOptions).to.deep.equal(expected)
+        done()
+      }
+      contactController.getCommon(req, res, next)
+    })
+    it('should store reason for archive options prefix in locals', (done) => {
+      const req = {
+        session: { token },
+        params: {
+          contactId: '1234',
+        },
+      }
+      const res = {
+        locals: {},
+        breadcrumb: this.breadcrumbStub,
+        render: function () {},
+      }
+      const next = () => {
+        expect(res.locals.reasonForArchiveOptionsPrefix).to.equal('This contact has:')
+        done()
+      }
+      contactController.getCommon(req, res, next)
+    })
     it('should store the id in locals', function (done) {
       const req = {
         session: { token },

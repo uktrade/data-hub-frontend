@@ -110,7 +110,7 @@ describe('Company controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('success', 'Updated company record')
+        expect(flashStub).to.be.calledWith('success', 'Company record updated')
         done()
       },
     }
