@@ -4,7 +4,7 @@ Feature: View Collection of contacts
   I would like to view all the Contacts in one place
   And be able to read the contact details as expected
 
-  @verify-contact-name
+  @collections-contact-name
   Scenario: View first and last name of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -14,7 +14,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see first and last name of the contact
 
-  @verify-contact-company
+  @collections-contact-company
   Scenario: View company name of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -24,7 +24,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Company name of the contact
 
-  @verify-contact-sector
+  @collections-contact-sector
   Scenario: View sector of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -34,7 +34,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Sector of the contact
 
-  @verify-contact-country
+  @collections-contact-country
   Scenario: View country of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -44,7 +44,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact
 
-  @verify-contact-timestamp
+  @collections-contact-timestamp
   Scenario: View time stamp of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -54,7 +54,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see a time stamp of the contact
 
-  @verify-contact-primary
+  @collections-contact-primary
   Scenario: View primary status of contact under collections
 
     Given I am an authenticated user on Data Hub website
@@ -64,7 +64,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Primary or not status of the contact
 
-  @verify-contact-link
+  @collections-contact-link
   Scenario: Verify link to contact details page
 
     Given I am an authenticated user on Data Hub website
@@ -74,7 +74,7 @@ Feature: View Collection of contacts
     When I click on the first contact collection link
     Then I navigate to his contact details page
 
-  @verify-contact-address-same-as-company
+  @collections-contact-address-same-as-company
   Scenario: Verify contact with same address as company
 
     Given I am an authenticated user on Data Hub website
@@ -84,7 +84,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact same as the company
 
-  @verify-contact-address-different-as-company
+  @collections-contact-address-different-as-company
   Scenario: Verify contact with same address as company
 
     Given I am an authenticated user on Data Hub website
@@ -94,7 +94,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact different as the company
 
-  @verify-contact-collections
+  @collections-contact-all
   Scenario: View Collection of contacts
 
     Given I am an authenticated user on Data Hub website
