@@ -51,6 +51,7 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I verify the display is changed based on the given project type (.*)$/, async (type) => {
     await InvestmentPipeline
+      .click('@projectID')
       .click('@projectLandingDateFromList')
       .verify.containsText('@projectTypeFromFirstList', type)
   })
@@ -73,6 +74,7 @@ defineSupportCode(({ Then, When }) => {
   When(/^I filter the display by date range$/, async () => {
     await InvestmentPipeline
       .click('@removeAllFilters')
+      .click('@projectID')
       .setValue('@datesFromFilter', 'November 1, 2020')
       .setValue('@datesToFilter', 'November 1, 2020')
       .click('@projectLandingDateFromList')
@@ -80,8 +82,9 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I verify the display is changed based on the given date range$/, async () => {
     await InvestmentPipeline
+      .click('@projectID')
       .click('@projectLandingDateFromList')
-      .assert.containsText('@projectLandingDateFromList', '1 November 2020')
+      .assert.containsText('@projectEstimatedLandDate', '1 November 2020')
   })
 
   When(/^I sort the display by Stage$/, async () => {

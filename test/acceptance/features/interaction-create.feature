@@ -50,14 +50,6 @@ Feature: Create New Interaction
     Then I verify my newly added Interaction in company profile
     And I logout of Data Hub website
 
-  @interaction-create-add-service-delivery
-  Scenario: Add a Service delivery Interaction
-    Given I am an authenticated user on Data Hub website
-    When I add a new Service delivery interaction
-    Then I see the edit service delivery button to confirm successful adding
-    And I logout of Data Hub website
-
-
   @interaction-create-add-sms
   Scenario: Add a SMS Interaction
     Given I am an authenticated user on Data Hub website
