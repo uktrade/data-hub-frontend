@@ -122,3 +122,37 @@
     </div>
   {% endif %}
 {% endmacro %}
+
+
+{##
+ # Render entity component
+ # @param {object} props
+ # @param {string} props.name - entity name
+ # @param {array}  [props.metaItems{}] - an array of metadata item objects
+ # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ #}
+{% macro PlainEntity (props) %}
+  {% set metaItems = props.meta %}
+
+  <div class="c-entity c-entity--anonymous}">
+    {% if props.code %}
+      <div class="c-entity__code">{{ props.code | highlight(props.highlightTerm, true) }}</div>
+    {% endif %}
+
+    <div class="c-entity__header">
+      <h3 class="c-entity__title">{{ props.name | highlight(props.highlightTerm) }}</h3>
+    </div>
+
+    {% if metaItems | length %}
+      <div class="c-entity__content">
+        {{
+          MetaList({
+            items: metaItems,
+            highlightTerm: props.highlightTerm,
+            modifier: ['inline', 'split']
+          })
+        }}
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
