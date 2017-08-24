@@ -1,5 +1,5 @@
 {% from './common.njk' import Pagination %}
-{% from './entities.njk' import Entity %}
+{% from './entities.njk' import Entity, PlainEntity %}
 {% from './form.njk' import Form, MultipleChoiceField, TextField %}
 
 {##
@@ -121,16 +121,20 @@
  # @param {object}  [props.sortForm] - object containing sorting form
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
  # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
+ # @param {bool}    [props.plainList] - Use a simplified list without support for badges or links
 #}
 {% macro Collection(props) %}
   <article class="c-collection">
     {{ _CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
-
     {% if props.items | length %}
       <ol class="c-entity-list">
         {% for item in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
+            {% if props.plainList %}
+              {{ PlainEntity(item | assign({ highlightTerm: props.highlightTerm })) }}
+            {% else %}
+              {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
+            {% endif %}
           </li>
         {% endfor %}
       </ol>
