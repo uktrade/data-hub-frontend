@@ -97,7 +97,7 @@
       {% endif %}
     </div>
 
-    {% if props.items | length or props.pagination %}
+    {% if props.sortForm or props.pagination %}
       <div class="c-collection__header-row">
         {% if props.pagination %}
           <span class="c-collection__pagination-summary">
@@ -115,6 +115,7 @@
 {##
  # Render collection component
  # @param {object}  [props] - component props
+ # @param {array{}} [props.id] - collection element id
  # @param {array{}} [props.items] - collection items
  # @param {object}  [props.pagination] - collection pagination
  # @param {object}  [props.selectedFilters] - object containing filters configuration
@@ -123,7 +124,7 @@
  # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
 #}
 {% macro Collection(props) %}
-  <article class="c-collection">
+  <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ _CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
 
     {% if props.items | length %}

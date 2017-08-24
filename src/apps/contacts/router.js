@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const { setLocalNav, redirectToFirstNavItem } = require('../middleware')
+const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
+const { getContactsCollection, getRequestBody } = require('./middleware')
 const { getCommon, getDetails } = require('./controllers/details')
+const { renderContactList } = require('./controllers/list')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { getInteractions } = require('./controllers/interactions')
@@ -10,6 +12,12 @@ const LOCAL_NAV = [
   { path: 'details', label: 'Details' },
   { path: 'interactions', label: 'Interactions' },
 ]
+
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'modified_on:desc',
+}
+
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getContactsCollection, renderContactList)
 
 router
   .route('/create')
