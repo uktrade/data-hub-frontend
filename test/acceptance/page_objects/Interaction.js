@@ -40,7 +40,7 @@ module.exports = {
     interactionPageServiceList: '#service-wrapper ul li:nth-child(1)',
     interactionPageServiceProvider: '#dit_team-wrapper input',
     interactionPageServiceProviderList: '#dit_team-wrapper ul li:nth-child(1)',
-    subjectFromInteractionTab: '#interaction-list li:last-child div:nth-child(1) span:nth-child(2)',
+    subjectFromInteractionTab: '#interaction-list li:first-child div:nth-child(1) span:nth-child(2)',
     interactionUnderSearchPage: '#interactions-list li:nth-child(1)',
     pickaEvent: '#event option:nth-child(2)',
     pickaStatus: '#status option:nth-child(2)',
@@ -48,7 +48,7 @@ module.exports = {
     pickaSector: '#sector option:nth-child(2)',
     countryOfInterest: '#country_of_interest-wrapper input',
     countryOfInterestList: '#country_of_interest-wrapper ul li:nth-child(6)',
-    editInteractionButton: '#main-content a:nth-child(4)',
+    editInteractionButton: '.button.button-secondary',
   },
   commands: [
     {
