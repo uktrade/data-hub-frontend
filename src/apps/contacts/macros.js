@@ -1,21 +1,24 @@
-const metadataRepo = require('../../lib/metadata')
-const { transformObjectToOption } = require('../transformers')
+const { globalFields } = require('../macros')
 
 const contactFiltersFields = [
   {
-    macroName: 'MultipleChoiceField',
-    label: 'Sector',
-    name: 'sector',
-    initialOption: 'All sectors',
-    options () {
-      return metadataRepo.sectorOptions.map(transformObjectToOption)
-    },
-  },
-  {
     macroName: 'TextField',
     label: 'Company name',
-    name: 'company',
+    name: 'company_name',
+    hint: 'At least three characters',
   },
+  Object.assign({}, globalFields.sectors, {
+    name: 'company_sector',
+    initialOption: 'All sectors',
+  }),
+  Object.assign({}, globalFields.countries, {
+    name: 'address_country',
+    initialOption: 'All countries',
+  }),
+  Object.assign({}, globalFields.ukRegions, {
+    name: 'company_uk_region',
+    initialOption: 'All UK regions',
+  }),
 ].map(filter => {
   return Object.assign(filter, {
     modifier: ['smaller', 'light'],

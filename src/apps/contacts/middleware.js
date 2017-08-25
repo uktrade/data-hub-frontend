@@ -27,8 +27,10 @@ async function getContactsCollection (req, res, next) {
 
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
-    'sector',
-    'company',
+    'company_name',
+    'company_sector',
+    'address_country',
+    'company_uk_region',
   ])
 
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
