@@ -22,6 +22,16 @@ const globalFields = {
     },
   },
 
+  ukRegions: {
+    macroName: 'MultipleChoiceField',
+    name: 'uk_region',
+    label: 'UK Region',
+    initialOption: '-- Select region --',
+    options () {
+      return metadata.regionOptions.map(transformObjectToOption)
+    },
+  },
+
   sectors: {
     macroName: 'MultipleChoiceField',
     name: 'sector',
