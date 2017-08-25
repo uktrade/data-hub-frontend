@@ -85,7 +85,7 @@
     {% if props.type === 'date' %}
       {% set date = props.value | formatDate %}
     {% elif props.type === 'datetime' %}
-      {% set date = props.value | formatDate('DD/MM/YYYY, HH:MMa') %}
+      {% set date = props.value | formatDate('DD/MM/YYYY, HH:mma') %}
     {% endif %}
   {% endif %}
 
