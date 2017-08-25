@@ -18,6 +18,7 @@
       | reject(['type', 'badge'])
       | reject(['type', 'time'])
     %}
+    {% set highlightedName = props.name | highlight(props.highlightTerm) %}
 
     <div class="c-entity c-entity--{{ props.type }}">
       {% if props.code %}
@@ -27,9 +28,9 @@
       <div class="c-entity__header">
         <h3 class="c-entity__title">
           {% if props.id %}
-            <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ props.name | highlight(props.highlightTerm) }}</a>
+            <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ highlightedName }}</a>
           {% else %}
-            {{ props.name | highlight(props.highlightTerm) }}
+            {{ highlightedName }}
           {% endif %}
         </h3>
 
