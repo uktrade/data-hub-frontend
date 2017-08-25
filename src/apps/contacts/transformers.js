@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-const { get, isArray, isPlainObject } = require('lodash')
-const { buildPagination } = require('../../lib/pagination')
+const { get } = require('lodash')
 
 function transformContactToListItem ({
   id,
@@ -61,24 +60,6 @@ function transformContactToListItem ({
   return item
 }
 
-function transformContactsResultsToCollection (projectsData, query = {}) {
-  if (!isPlainObject(projectsData)) { return }
-  const resultItems = projectsData.items || projectsData.results || projectsData.contacts
-  if (!isArray(resultItems)) { return }
-
-  const items = resultItems
-    .map(transformContactToListItem)
-
-  return Object.assign({}, {
-    items,
-    count: projectsData.count,
-    pagination: buildPagination(query, projectsData),
-  }, {
-    aggregations: projectsData.aggregations,
-  })
-}
-
 module.exports = {
   transformContactToListItem,
-  transformContactsResultsToCollection,
 }
