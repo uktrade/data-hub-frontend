@@ -13,11 +13,17 @@ describe('Investment list controller', () => {
       query: {},
     }
 
-    this.buildSelectedInvestmentFiltersSummaryStub = this.sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = this.sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
-      '../builders': {
-        buildSelectedInvestmentFiltersSummary: this.buildSelectedInvestmentFiltersSummaryStub,
+      '../../builders': {
+        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
+      },
+      '../macros': {
+        investmentFiltersFields: [
+          { macroName: 'useful' },
+          { macroName: 'exciting' },
+        ],
       },
     })
   })
@@ -33,7 +39,10 @@ describe('Investment list controller', () => {
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sortForm'))
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filtersFields'))
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('selectedFilters'))
-      expect(this.buildSelectedInvestmentFiltersSummaryStub).to.have.been.calledWith(this.req.query)
+      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
+        { macroName: 'useful' },
+        { macroName: 'exciting' },
+      ], this.req.query)
     })
   })
 })

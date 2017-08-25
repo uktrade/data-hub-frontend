@@ -1,5 +1,5 @@
 const { omit, merge } = require('lodash')
-const { buildSelectedInvestmentFiltersSummary } = require('../builders')
+const { buildSelectedFiltersSummary } = require('../../builders')
 const { investmentFiltersFields: filtersFields, investmentSortForm } = require('../macros')
 
 function renderInvestmentList (req, res) {
@@ -10,7 +10,7 @@ function renderInvestmentList (req, res) {
     ],
   })
 
-  const selectedFilters = buildSelectedInvestmentFiltersSummary(req.query)
+  const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
   res.render('investment-projects/views/list', {
     title: 'Investment Projects',
