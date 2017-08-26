@@ -1,13 +1,9 @@
 const router = require('express').Router()
 
-const signinController = require('./controllers/sign-in')
-const signoutController = require('./controllers/sign-out')
+const { handleSignIn } = require('./middleware')
+const { renderSignInPage, signOut } = require('./controllers')
 
-router
-  .route('/sign-in')
-  .get(signinController.getHandler)
-  .post(signinController.postHandler)
-
-router.get('/sign-out', signoutController.getHandler)
+router.all('/sign-in', handleSignIn, renderSignInPage)
+router.get('/sign-out', signOut)
 
 module.exports = router
