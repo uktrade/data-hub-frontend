@@ -196,7 +196,22 @@ describe('Global builders', () => {
       expect(actual).to.deep.equal(this.formObject)
     })
 
-    it('should return a new object populated with errors summary and individual field errors', () => {
+    it('should return a new form with custom error summary', () => {
+      const actual = builders.buildFormWithErrors(this.formObject, {
+        summary: 'An atypical error occurred',
+      })
+
+      expect(actual).to.deep.equal(
+        Object.assign({}, this.formObject, {
+          errors: {
+            summary: 'An atypical error occurred',
+            messages: {},
+          },
+        })
+      )
+    })
+
+    it('should return a new object populated with defaulterrors summary and individual field errors', () => {
       const actual = builders.buildFormWithErrors(this.formObject, this.errorsObject)
 
       expect(actual.errors).to.deep.equal({

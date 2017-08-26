@@ -46,8 +46,8 @@ function buildFormWithErrors (form = {}, errorMessages = {}) {
   const formFieldNames = getDeepObjectValuesForKey(form, 'name')
   const messages = pick(pickBy(errorMessages), formFieldNames)
 
-  const errors = !isEmpty(messages) && {
-    summary: 'Please correct the following errors:',
+  const errors = (!isEmpty(messages) || errorMessages.summary) && {
+    summary: errorMessages.summary || 'Please correct the following errors:',
     messages,
   }
 
