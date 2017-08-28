@@ -4,7 +4,11 @@ const { contactDetailsLabels } = require('../labels')
 
 async function getAudit (req, res, next) {
   try {
-    const auditLog = await getContactAuditLog(req.session.token, req.params.contactId)
+    const token = req.session.token
+    const contactId = req.params.contactId
+    const page = req.query.page || 1
+
+    const auditLog = await getContactAuditLog(token, contactId, page)
       .then(result => transformAuditLogToCollection(result, contactDetailsLabels))
 
     return res

@@ -1,7 +1,8 @@
 /* eslint camelcase: 0 */
 const { isArray, isPlainObject } = require('lodash')
 const dateFns = require('date-fns')
-const { mediumDateFormat } = require('../../../config')
+const { mediumDateTimeFormat } = require('../../../config')
+const { buildPagination } = require('../../lib/pagination')
 
 function transformChanges (changes, labels) {
   return Object.keys(changes)
@@ -14,10 +15,10 @@ function transformAuditLogToListItem (logEntry, labels = {}) {
 
   return {
     type: 'audit',
-    name: dateFns.format(logEntry.timestamp, `${mediumDateFormat}, HH:MMa`),
+    name: dateFns.format(logEntry.timestamp, mediumDateTimeFormat),
     contentMetaModifier: 'stacked',
     meta: [{
-      label: 'Advisor',
+      label: 'Adviser',
       value: logEntry.user.name,
     }, {
       label: 'Change count',
@@ -30,7 +31,7 @@ function transformAuditLogToListItem (logEntry, labels = {}) {
   }
 }
 
-function transformAuditLogToCollection (auditData, labels = {}) {
+function transformAuditLogToCollection (auditData, labels = {}, options = {}) {
   if (!isPlainObject(auditData)) { return }
   const resultItems = auditData.results
   if (!isArray(resultItems)) { return }
@@ -40,10 +41,10 @@ function transformAuditLogToCollection (auditData, labels = {}) {
   })
 
   return {
-    count: resultItems.length,
     items,
-    pagination: null,
+    count: items.length,
     countLabel: 'log entry',
+    pagination: buildPagination(options.query, auditData),
   }
 }
 
