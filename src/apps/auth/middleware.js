@@ -1,7 +1,9 @@
-const rp = require('request-promise')
 const { get } = require('lodash')
+const request = require('request-promise')
 
-const config = require('../../../../config')
+const config = require('../../../config')
+const { signInForm } = require('./macros')
+const { buildFormWithStateAndErrors } = require('../builders')
 
 function authenticate (username, password) {
   const options = {
@@ -20,35 +22,23 @@ function authenticate (username, password) {
     json: true,
   }
 
-  return rp(options)
+  return request(options)
 }
 
-function getHandler (req, res) {
-  if (req.session.user) {
-    return res.redirect('/')
-  }
-
-  res
-    .title('Sign in')
-    .render('auth/views/sign-in')
-}
-
-function postHandler (req, res, next) {
+function handleSignIn (req, res, next) {
   if (!req.body.username || !req.body.password) {
-    res.locals.form = Object.assign({}, res.locals.form, {
-      errors: {
-        summary: 'Please provide email and password',
-      },
+    res.locals.signInForm = buildFormWithStateAndErrors(signInForm, req.body, {
+      summary: 'Please provide email and password',
     })
-    return getHandler(req, res)
+    return next()
   }
 
-  authenticate(req.body.username, req.body.password)
-    .then((data) => {
+  return authenticate(req.body.username, req.body.password)
+    .then(data => {
       req.session.token = data.access_token
       res.redirect(req.session.returnTo || '/')
     })
-    .catch((error) => {
+    .catch(error => {
       const statusCode = get(error, 'response.statusCode')
 
       if (statusCode === 401) {
@@ -61,6 +51,5 @@ function postHandler (req, res, next) {
 }
 
 module.exports = {
-  getHandler,
-  postHandler,
+  handleSignIn,
 }
