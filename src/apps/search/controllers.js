@@ -1,7 +1,5 @@
 const { get, find } = require('lodash')
 
-const companyRepository = require('../companies/repos')
-const { buildCompanyUrl } = require('../companies/services/data')
 const { entities, search } = require('./services')
 const { buildSearchAggregation } = require('./builders')
 const { buildPagination } = require('../../lib/pagination')
@@ -42,15 +40,6 @@ function searchAction (req, res, next) {
     .catch(next)
 }
 
-async function viewCompanyResult (req, res, next) {
-  try {
-    const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
-    res.redirect(buildCompanyUrl(company))
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function renderSearchResults (req, res) {
   const entity = find(entities, ['path', req.params.searchPath])
 
@@ -84,6 +73,5 @@ async function renderSearchResults (req, res) {
 
 module.exports = {
   searchAction,
-  viewCompanyResult,
   renderSearchResults,
 }

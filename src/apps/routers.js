@@ -2,6 +2,7 @@ const router = require('express').Router()
 const fs = require('fs')
 
 const { setHomeBreadcrumb } = require('./middleware')
+const { viewCompanyResult } = require('./controllers')
 
 const subApps = fs.readdirSync(__dirname)
 
@@ -15,5 +16,7 @@ const appsRouters = subApps.map(subAppDir => {
   }
   return (req, res, next) => next()
 })
+
+router.get('/viewcompanyresult/:id', viewCompanyResult) // TODO is this in the right controller
 
 module.exports = appsRouters
