@@ -51,10 +51,31 @@ async function renderEntityList (req, res) {
       })
     })
 
+  const auditLog = {
+    items: [{
+      type: 'audit',
+      name: '20 December 2016 9:00am',
+      contentMetaModifier: 'stacked',
+      meta: [{
+        label: 'Advisor',
+        value: 'Fred Smith',
+      }, {
+        label: 'Change count',
+        type: 'badge',
+        value: '2 changes',
+      }, {
+        label: 'Fields',
+        value: 'Name',
+      }],
+    }],
+    count: 1,
+  }
+
   return res
     .breadcrumb('Entity list')
     .render('components/views/entity-list', {
       investmentProjects,
+      auditLog,
       companiesSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`),
       contactsSearch: await authorisedRequest(req.session.token, `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`),
     })
