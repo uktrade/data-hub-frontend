@@ -10,6 +10,18 @@ function transformChanges (changes, labels) {
     .join(', ')
 }
 
+function getChangeCountDisplay (changeCount) {
+  if (changeCount === 0) {
+    return 'No changes saved'
+  }
+
+  if (changeCount === 1) {
+    return `${changeCount} change`
+  }
+
+  return `${changeCount} changes`
+}
+
 function transformAuditLogToListItem (logEntry, labels = {}) {
   const changeCount = (logEntry.changes && Object.keys(logEntry.changes).length) || 0
 
@@ -23,7 +35,7 @@ function transformAuditLogToListItem (logEntry, labels = {}) {
     }, {
       label: 'Change count',
       type: 'badge',
-      value: changeCount > 0 ? `${changeCount} changes` : 'No changes saved',
+      value: getChangeCountDisplay(changeCount),
     }, {
       label: 'Fields',
       value: transformChanges(logEntry.changes, labels),

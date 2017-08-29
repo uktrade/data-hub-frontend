@@ -59,34 +59,22 @@
           }
       },
       {
-          "id": 117112,
-          "user": {
-              "id": "583ab00a-8cbf-43e2-be49-ab4dface8115",
-              "first_name": "Reupen",
-              "last_name": "Shah",
-              "name": "Reupen Shah",
-              "email": "reupen.shah@digital.trade.gov.uk"
-          },
-          "timestamp": "2017-06-09T12:36:53.678547",
-          "comment": "",
-          "changes": {
-              "archived": [
-                  true,
-                  false
-              ],
-              "archived_on": [
-                  "2017-06-09T12:36:51.145000",
-                  null
-              ],
-              "archived_reason": [
-                  "Contact has left the company",
-                  ""
-              ],
-              "archived_by_id": [
-                  "583ab00a-8cbf-43e2-be49-ab4dface8115",
-                  null
-              ]
-          }
+        "id": 117112,
+        "user": {
+            "id": "583ab00a-8cbf-43e2-be49-ab4dface8115",
+            "first_name": "Reupen",
+            "last_name": "Shah",
+            "name": "Reupen Shah",
+            "email": "reupen.shah@digital.trade.gov.uk"
+        },
+        "timestamp": "2017-06-09T12:36:53.678547",
+        "comment": "",
+        "changes": {
+          "archived": [
+              true,
+              false
+          ]
+        }
       },
       {
           "id": 117111,

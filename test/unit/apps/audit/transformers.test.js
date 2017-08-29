@@ -45,19 +45,29 @@ describe('Audit transformers', () => {
     })
   })
 
-  it('should include a badge to describe number of changes', () => {
-    expect(this.transformedLog.items[1].meta[1]).to.deep.equal({
-      label: 'Change count',
-      type: 'badge',
-      value: '7 changes',
+  describe('change count', () => {
+    it('should describe multiple of changes', () => {
+      expect(this.transformedLog.items[1].meta[1]).to.deep.equal({
+        label: 'Change count',
+        type: 'badge',
+        value: '7 changes',
+      })
     })
-  })
 
-  it('should include a badge to describe a badge with zero changes', () => {
-    expect(this.transformedLog.items[0].meta[1]).to.deep.equal({
-      label: 'Change count',
-      type: 'badge',
-      value: 'No changes saved',
+    it('should describe a single change', () => {
+      expect(this.transformedLog.items[2].meta[1]).to.deep.equal({
+        label: 'Change count',
+        type: 'badge',
+        value: '1 change',
+      })
+    })
+
+    it('should describe a zero changes', () => {
+      expect(this.transformedLog.items[0].meta[1]).to.deep.equal({
+        label: 'Change count',
+        type: 'badge',
+        value: 'No changes saved',
+      })
     })
   })
 
