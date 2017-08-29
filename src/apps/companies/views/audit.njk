@@ -1,0 +1,6 @@
+{% extends "./_layout-view.njk" %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Audit history</h2>
+  {{ Collection(auditLog) }}
+{% endblock %}

@@ -1,5 +1,6 @@
 const addController = require('./add')
 const archiveController = require('./archive')
+const auditController = require('./audit')
 const chController = require('./ch')
 const contactsController = require('./contacts')
 const expController = require('./exp')
@@ -12,6 +13,7 @@ const ukotherController = require('./ukother')
 module.exports = {
   addController,
   archiveController,
+  auditController,
   chController,
   contactsController,
   expController,
