@@ -1,5 +1,6 @@
 const nock = require('nock')
 const config = require('~/config')
+const { searchAction, renderSearchResults } = require('~/src/apps/search/controllers')
 
 describe('Search Controller #searchAction', () => {
   const companyResponse = require('~/test/unit/data/search/company')
@@ -43,7 +44,6 @@ describe('Search Controller #searchAction', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
-    this.controller = require('~/src/apps/search/controllers')
     this.breadcrumbStub = function () { return this }
   })
 
@@ -60,7 +60,7 @@ describe('Search Controller #searchAction', () => {
       pagination: null,
     })
 
-    this.controller.searchAction(
+    searchAction(
       {
         session: {
           token,
@@ -79,7 +79,7 @@ describe('Search Controller #searchAction', () => {
             expect(template).to.equal(`search/views/results-${entityType}`)
             expect(data.searchTerm).to.equal(searchQuery.term)
             expect(data.searchEntity).to.equal(entityType)
-            expect(data.results).to.have.property('companies').to.deep.equal(expectedResults.companies)
+            expect(data.results).to.have.property('items').to.deep.equal(expectedResults.companies)
             expect(data.results).to.have.property('aggregations').to.deep.equal(expectedSearchEntityResultsData(0))
             done()
           } catch (e) {
@@ -110,7 +110,6 @@ describe('Search Controller #renderSearchResults', () => {
     .reply(200, contactResponse)
 
   beforeEach(async () => {
-    this.controller = require('~/src/apps/search/controllers')
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
     this.renderFunction = this.sandbox.spy()
@@ -133,14 +132,14 @@ describe('Search Controller #renderSearchResults', () => {
   it('should redirect to index for invalid paths', async () => {
     this.req.params.searchPath = 'dummy-path'
 
-    await this.controller.renderSearchResults(this.req, this.res, this.next)
+    await renderSearchResults(this.req, this.res, this.next)
 
     expect(this.renderFunction).to.be.calledWith('search/views/index')
   })
 
   it('should call render with investment projects data', async () => {
     this.req.params.searchPath = 'investment-projects'
-    await this.controller.renderSearchResults(this.req, this.res, this.next)
+    await renderSearchResults(this.req, this.res, this.next)
 
     expect(this.renderFunction).to.be.calledWith(
       sinon.match.any,
@@ -154,7 +153,7 @@ describe('Search Controller #renderSearchResults', () => {
 
   it('should call render with contacts data', async () => {
     this.req.params.searchPath = 'contacts'
-    await this.controller.renderSearchResults(this.req, this.res, this.next)
+    await renderSearchResults(this.req, this.res, this.next)
 
     expect(this.renderFunction).to.be.calledWith(
       sinon.match.any,
