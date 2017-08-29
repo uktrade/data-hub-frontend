@@ -1,37 +1,33 @@
-const { find } = require('lodash')
+const { get } = require('lodash')
 
-const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
-const { transformContactToListItem } = require('../contacts/transformers')
-const { buildPagination } = require('../../lib/pagination')
+const { transformApiResponseToCollection } = require('../transformers')
 const { buildSearchAggregation } = require('./builders')
-const { entities } = require('./services')
 
-function transformResultsToCollection (results, searchEntity, options = {}) {
-  const resultsItems = results[`${searchEntity}s`] || results.items || results.results
-  if (!resultsItems) { return null }
+/**
+ * @param {object} [options] {object}
+ * @param {string} [options.entityType] - API entity type
+ * @param {string} [options.searchTerm] - search term used for highlighting words in collection macro
+ * @param {object} [options.query] - URL query object used in pagination
+ * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
+ * @returns {object, undefined}
+ */
+function transformApiResponseToSearchCollection (options = {}, ...itemTransformers) {
+  /**
+   * @param {object} response - API response object
+   * @returns {function}
+   */
+  return function transformResponseToCollection (response) {
+    if (!response) { return }
 
-  const entity = find(entities, ['entity', searchEntity])
+    const collection = transformApiResponseToCollection(options, ...itemTransformers)(response)
 
-  let items = resultsItems.map(item => Object.assign({}, item, { type: searchEntity }))
-
-  if (searchEntity === 'investment_project') {
-    items = items.map(transformInvestmentProjectToListItem)
+    return Object.assign({}, collection, {
+      highlightTerm: get(options, 'searchTerm'),
+      aggregations: buildSearchAggregation(response.aggregations),
+    })
   }
-
-  if (searchEntity === 'contact') {
-    items = items.map(transformContactToListItem)
-  }
-
-  return Object.assign({}, {
-    items,
-    count: results.count,
-    countLabel: entity.noun,
-    highlightTerm: options.searchTerm,
-    pagination: buildPagination(options.query, results),
-    aggregations: buildSearchAggregation(results.aggregations),
-  })
 }
 
 module.exports = {
-  transformResultsToCollection,
+  transformApiResponseToSearchCollection,
 }
