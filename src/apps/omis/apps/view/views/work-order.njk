@@ -91,8 +91,25 @@
       {% for assignee in values.assignees %}
         <tr>
           <th class="c-answers-summary__title" scope="row">
-            {{ assignee.adviser.name }}
+            {{ assignee.adviser.name }} {{ '(you)' if assignee.adviser.id === user.id }}
+            {% if assignee.is_lead %}
+              <span class="c-badge">Lead adviser</span>
+            {% endif %}
           </th>
+          <td class="c-answers-summary__content c-answers-summary__control">
+            {% if not assignee.is_lead %}
+              {% call Form ({
+                action: 'edit/lead-assignee',
+                hideFormActions: true,
+                hiddenFields: {
+                  adviserId: assignee.adviser.id,
+                  orderId: order.id
+                }
+              }) %}
+                <button type="submit" class="button button--link button--compact">Set as lead adviser</button>
+              {% endcall %}
+            {% endif %}
+          </td>
           <td class="c-answers-summary__content c-answers-summary__content--number">
             {{ assignee.estimated_time  | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
           </td>
@@ -107,7 +124,7 @@
     {% if values.estimatedTimeSum and values.assignees.length %}
       <tfoot>
         <tr>
-          <td class="c-answers-summary__footer" colspan="2">
+          <td class="c-answers-summary__footer" colspan="3">
             <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
           </td>
         </tr>
