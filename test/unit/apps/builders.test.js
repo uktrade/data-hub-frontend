@@ -165,127 +165,215 @@ describe('Global builders', () => {
         },
       ])
     })
+  })
 
-    describe('#buildFormWithErrors', () => {
-      beforeEach(() => {
-        this.formObject = {
-          children: [
-            {
-              name: 'a',
-              label: 'Field A',
-              children: [
-                { name: 'a.a', label: 'Field A.A' },
-              ],
-            },
-            { name: 'b', label: 'Field B' },
-            { name: 'c', label: 'Field C' },
-          ],
-        }
+  describe('#buildFormWithErrors', () => {
+    beforeEach(() => {
+      this.formObject = {
+        children: [
+          {
+            name: 'a',
+            label: 'Field A',
+            children: [
+              { name: 'a.a', label: 'Field A.A' },
+            ],
+          },
+          { name: 'b', label: 'Field B' },
+          { name: 'c', label: 'Field C' },
+        ],
+      }
 
-        this.errorsObject = {
-          a: ['Error for field A'],
-          'a.a': ['Error for field A.A'],
-          b: ['Error for field B'],
-        }
-      })
-
-      it('should return a new form identical to initial form if no errors object is given', () => {
-        const actual = builders.buildFormWithErrors(this.formObject)
-
-        expect(actual).to.deep.equal(this.formObject)
-      })
-
-      it('should return a new object populated with errors summary and individual field errors', () => {
-        const actual = builders.buildFormWithErrors(this.formObject, this.errorsObject)
-
-        expect(actual.errors).to.deep.equal({
-          summary: 'Please correct the following errors:',
-          messages: this.errorsObject,
-        })
-        expect(actual.children[0]).to.have.property('error', this.errorsObject.a)
-        expect(actual.children[0].children[0]).to.have.property('error', this.errorsObject['a.a'])
-        expect(actual.children[1]).to.have.property('error', this.errorsObject.b)
-        expect(actual.children[2]).to.have.property('error', undefined)
-      })
+      this.errorsObject = {
+        a: ['Error for field A'],
+        'a.a': ['Error for field A.A'],
+        b: ['Error for field B'],
+      }
     })
 
-    describe('#buildFormWithState', () => {
-      beforeEach(() => {
-        this.formObject = {
-          children: [
-            {
-              name: 'a',
-              label: 'Field A',
-              children: [
-                { name: 'a.a', label: 'Field A.A' },
-              ],
-            },
-            { name: 'b', label: 'Field B' },
-            { name: 'c', label: 'Field C' },
-          ],
-        }
+    it('should return a new form identical to initial form if no errors object is given', () => {
+      const actual = builders.buildFormWithErrors(this.formObject)
 
-        this.requestBody = {
-          a: 'value-A',
-          'a.a': 'value-A.A',
-          b: 'value-B',
-        }
-      })
-
-      it('should return a new form identical to initial form if no errors object is given', () => {
-        const actual = builders.buildFormWithState(this.formObject)
-
-        expect(actual).to.deep.equal(this.formObject)
-      })
-
-      it('should return a new object populated with errors summary and individual field errors', () => {
-        const actual = builders.buildFormWithState(this.formObject, this.requestBody)
-
-        const elements = actual.children
-        expect(elements[0]).to.have.property('value', 'value-A')
-        expect(elements[0]).to.have.property('error', null)
-        expect(elements[0].children[0]).to.have.property('value', 'value-A.A')
-        expect(elements[0].children[0]).to.have.property('error', null)
-        expect(elements[1]).to.have.property('value', 'value-B')
-        expect(elements[1]).to.have.property('error', null)
-        expect(elements[2]).to.have.property('value', undefined)
-        expect(elements[2]).to.have.property('error', null)
-      })
+      expect(actual).to.deep.equal(this.formObject)
     })
 
-    describe('#buildFormWithStateAndErrors', () => {
-      beforeEach(() => {
-        this.builders = rewire('~/src/apps/builders')
-        this.sandbox = sinon.sandbox.create()
-        this.buildFormWithStateSpy = this.sandbox.stub()
-        this.buildFormWithErrorsSpy = this.sandbox.stub()
-        this.builders.__set__('buildFormWithState', this.buildFormWithStateSpy)
-        this.builders.__set__('buildFormWithErrors', this.buildFormWithErrorsSpy)
-      })
+    it('should return a new object populated with errors summary and individual field errors', () => {
+      const actual = builders.buildFormWithErrors(this.formObject, this.errorsObject)
 
-      afterEach(() => {
-        this.sandbox.restore()
+      expect(actual.errors).to.deep.equal({
+        summary: 'Please correct the following errors:',
+        messages: this.errorsObject,
       })
+      expect(actual.children[0]).to.have.property('error', this.errorsObject.a)
+      expect(actual.children[0].children[0]).to.have.property('error', this.errorsObject['a.a'])
+      expect(actual.children[1]).to.have.property('error', this.errorsObject.b)
+      expect(actual.children[2]).to.have.property('error', undefined)
+    })
+  })
 
-      it('should return form without calling any functions', () => {
-        const formObject = {
-          children: [
-            { name: 'a', label: 'A' },
-            { name: 'b', label: 'B' },
+  describe('#buildFormWithState', () => {
+    beforeEach(() => {
+      this.formObject = {
+        children: [
+          {
+            name: 'a',
+            label: 'Field A',
+            children: [
+              { name: 'a.a', label: 'Field A.A' },
+            ],
+          },
+          { name: 'b', label: 'Field B' },
+          { name: 'c', label: 'Field C' },
+        ],
+      }
+
+      this.requestBody = {
+        a: 'value-A',
+        'a.a': 'value-A.A',
+        b: 'value-B',
+      }
+    })
+
+    it('should return a new form identical to initial form if no errors object is given', () => {
+      const actual = builders.buildFormWithState(this.formObject)
+
+      expect(actual).to.deep.equal(this.formObject)
+    })
+
+    it('should return a new object populated with errors summary and individual field errors', () => {
+      const actual = builders.buildFormWithState(this.formObject, this.requestBody)
+
+      const elements = actual.children
+      expect(elements[0]).to.have.property('value', 'value-A')
+      expect(elements[0]).to.have.property('error', null)
+      expect(elements[0].children[0]).to.have.property('value', 'value-A.A')
+      expect(elements[0].children[0]).to.have.property('error', null)
+      expect(elements[1]).to.have.property('value', 'value-B')
+      expect(elements[1]).to.have.property('error', null)
+      expect(elements[2]).to.have.property('value', undefined)
+      expect(elements[2]).to.have.property('error', null)
+    })
+  })
+
+  describe('#buildFormWithStateAndErrors', () => {
+    beforeEach(() => {
+      this.builders = rewire('~/src/apps/builders')
+      this.sandbox = sinon.sandbox.create()
+      this.buildFormWithStateSpy = this.sandbox.stub()
+      this.buildFormWithErrorsSpy = this.sandbox.stub()
+      this.builders.__set__('buildFormWithState', this.buildFormWithStateSpy)
+      this.builders.__set__('buildFormWithErrors', this.buildFormWithErrorsSpy)
+    })
+
+    afterEach(() => {
+      this.sandbox.restore()
+    })
+
+    it('should return form without calling any functions', () => {
+      const formObject = {
+        children: [
+          { name: 'a', label: 'A' },
+          { name: 'b', label: 'B' },
+        ],
+      }
+      const requestBody = {
+        a: 'a',
+      }
+      const errorsObject = {
+        b: ['Field B is missing'],
+      }
+
+      this.builders.buildFormWithStateAndErrors(formObject, requestBody, errorsObject)
+
+      expect(this.buildFormWithStateSpy).to.be.calledWith(formObject, requestBody)
+      expect(this.buildFormWithErrorsSpy).to.be.calledWith(this.sandbox.match.any, errorsObject)
+    })
+  })
+
+  describe('#buildSelectedFiltersSummary', () => {
+    beforeEach(() => {
+      this.sandbox = sinon.sandbox.create()
+
+      this.fields = [
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'stage',
+          label: 'State',
+          type: 'checkbox',
+          options: this.sandbox.stub().returns([
+            { value: 'a', label: 'A' },
+            { value: 'b', label: 'B' },
+            { value: 'c', label: 'C' },
+          ]),
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'sector',
+          label: 'Sector',
+          options: [
+            { value: 'x', label: 'X' },
+            { value: 'y', label: 'Y' },
+            { value: 'z', label: 'Z' },
           ],
-        }
-        const requestBody = {
-          a: 'a',
-        }
-        const errorsObject = {
-          b: ['Field B is missing'],
-        }
+        },
+        {
+          macroName: 'TextField',
+          label: 'Estimated land date after',
+          name: 'estimated_land_date_after',
+          hint: 'YYYY-MM-DD',
+          placeholder: 'e.g. 2018-07-18',
+        },
+      ]
+    })
 
-        this.builders.buildFormWithStateAndErrors(formObject, requestBody, errorsObject)
+    it('should return empty object when called without query', () => {
+      const actual = builders.buildSelectedFiltersSummary()
 
-        expect(this.buildFormWithStateSpy).to.be.calledWith(formObject, requestBody)
-        expect(this.buildFormWithErrorsSpy).to.be.calledWith(this.sandbox.match.any, errorsObject)
-      })
+      expect(actual).to.be.undefined
+    })
+
+    it('should return object with filters containing valueLabels for values defined in query', () => {
+      const query = {
+        stage: 'a',
+        sector: 'x',
+      }
+
+      const actual = builders.buildSelectedFiltersSummary(this.fields, query)
+
+      expect(actual.stage.label).to.equal('State')
+      expect(actual.stage.valueLabel).to.equal('A')
+      expect(actual.sector.label).to.equal('Sector')
+      expect(actual.sector.valueLabel).to.equal('X')
+    })
+
+    it('should return filters object with value as valueLabel for text field', () => {
+      const query = {
+        estimated_land_date_after: '2017-08-03',
+      }
+
+      const actual = builders.buildSelectedFiltersSummary(this.fields, query)
+
+      expect(actual.estimated_land_date_after).to.have.property('label').a('string')
+      expect(actual.estimated_land_date_after.valueLabel).to.equal('2017-08-03')
+    })
+
+    it('should return filters object with valueLabel for multiple values (string)', () => {
+      const query = {
+        stage: 'a,c',
+      }
+
+      const actual = builders.buildSelectedFiltersSummary(this.fields, query)
+
+      expect(actual.stage.valueLabel).to.equals('A, C')
+    })
+
+    it('should return filters object with valueLabel for multiple values (array)', () => {
+      const query = {
+        stage: ['b', 'c'],
+      }
+
+      const actual = builders.buildSelectedFiltersSummary(this.fields, query)
+
+      expect(actual.stage.valueLabel).to.equals('B, C')
     })
   })
 })

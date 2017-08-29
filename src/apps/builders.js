@@ -1,4 +1,4 @@
-const { assign, pick, pickBy, isArray, isEmpty, map } = require('lodash')
+const { assign, at, keyBy, pick, pickBy, isArray, isFunction, isEmpty, isString, map } = require('lodash')
 
 function getDeepObjectValuesForKey (object, keyName, values = []) {
   if (isArray(object)) {
@@ -76,10 +76,38 @@ function buildFormWithStateAndErrors (form, requestBody, errorsObject) {
   return buildFormWithErrors(formWithState, errorsObject)
 }
 
+function buildSelectedFiltersSummary (fields, query = {}) {
+  if (!isArray(fields)) { return }
+
+  return fields
+    .map(field => {
+      field.value = query[field.name]
+      return field
+    })
+    .filter(field => field.value)
+    .reduce((fieldsObj, field) => {
+      fieldsObj[field.name] = {
+        label: field.label,
+        valueLabel: field.value,
+      }
+
+      const fieldValues = isString(field.value) ? field.value.split(',') : field.value
+      const fieldOptions = isFunction(field.options) ? field.options() : field.options
+
+      if (fieldOptions) {
+        const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(x => x)
+        fieldsObj[field.name].valueLabel = selectedValues.map(x => x.label).join(', ')
+      }
+
+      return fieldsObj
+    }, {})
+}
+
 module.exports = {
   getDeepObjectValuesForKey,
   assignPropsIfFoundInObject,
   buildFormWithErrors,
   buildFormWithState,
   buildFormWithStateAndErrors,
+  buildSelectedFiltersSummary,
 }
