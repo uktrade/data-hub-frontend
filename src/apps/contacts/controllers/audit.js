@@ -1,5 +1,6 @@
 const { getContactAuditLog } = require('../repos')
-const { transformAuditLogToCollection } = require('../../audit/transformers')
+const { transformApiResponseToCollection } = require('../../transformers')
+const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { contactDetailsLabels } = require('../labels')
 
 async function getAudit (req, res, next) {
@@ -9,7 +10,10 @@ async function getAudit (req, res, next) {
     const page = req.query.page || 1
 
     const auditLog = await getContactAuditLog(token, contactId, page)
-      .then(result => transformAuditLogToCollection(result, contactDetailsLabels))
+      .then(transformApiResponseToCollection(
+        { entityType: 'audit' },
+        transformAuditLogToListItem(contactDetailsLabels)
+      ))
 
     return res
       .breadcrumb('Audit history')
