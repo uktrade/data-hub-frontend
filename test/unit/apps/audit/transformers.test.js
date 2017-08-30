@@ -32,7 +32,7 @@ describe('Audit transformers', () => {
     const item = this.transformedLog.items[0]
 
     expect(item.type).to.equal('audit')
-    expect(item.name).to.equal('9 Jun 2017, 4:06pm')
+    expect(item.name).to.equal('9 Jun 2017, 4:11pm')
     expect(item.contentMetaModifier).to.equal('stacked')
     expect(item.meta[0].label).to.equal('Adviser')
     expect(item.meta[0].value).to.equal('Reupen Shah')
