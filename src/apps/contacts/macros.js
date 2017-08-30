@@ -49,6 +49,8 @@ const contactSortForm = {
         { value: 'address_country.name:desc', label: 'Country: Z-A' },
         { value: 'company.name:asc', label: 'Company: A-Z' },
         { value: 'company.name:desc', label: 'Company: Z-A' },
+        { value: 'company_sector.name:asc', label: 'Sector: A-Z' },
+        { value: 'company_sector.name:desc', label: 'Sector: Z-A' },
       ],
     },
   ],
