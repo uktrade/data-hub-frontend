@@ -1,7 +1,8 @@
 const { pick, pickBy } = require('lodash')
 
 const { search } = require('../search/services')
-const { transformResultsToCollection } = require('../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../search/transformers')
+const { transformContactToListItem } = require('./transformers')
 
 async function getContactsCollection (req, res, next) {
   const searchEntity = 'contact'
@@ -15,9 +16,13 @@ async function getContactsCollection (req, res, next) {
       page: req.query.page,
       isAggregation: false,
     })
-      .then(data => transformResultsToCollection(data, searchEntity, {
-        query: req.query,
-      }))
+      .then(transformApiResponseToSearchCollection(
+        {
+          entityType: searchEntity,
+          query: req.query,
+        },
+        transformContactToListItem,
+      ))
 
     next()
   } catch (error) {

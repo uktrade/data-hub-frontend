@@ -1,8 +1,11 @@
 const { pick, pickBy } = require('lodash')
 
 const { search } = require('../../search/services')
-const { transformResultsToCollection } = require('../../search/transformers')
-const { transformInvestmentListItemToHaveMetaLinks } = require('../transformers')
+const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const {
+  transformInvestmentProjectToListItem,
+  transformInvestmentListItemToHaveMetaLinks,
+} = require('../transformers')
 
 async function getInvestmentProjectsCollection (req, res, next) {
   const searchEntity = 'investment_project'
@@ -16,12 +19,14 @@ async function getInvestmentProjectsCollection (req, res, next) {
       page: req.query.page,
       isAggregation: false,
     })
-      .then(data => transformResultsToCollection(data, searchEntity, {
-        query: req.query,
-      }))
-      .then(data => Object.assign({}, data, {
-        items: data.items.map(item => transformInvestmentListItemToHaveMetaLinks(item, req.query)),
-      }))
+      .then(transformApiResponseToSearchCollection(
+        {
+          entityType: searchEntity,
+          query: req.query,
+        },
+        transformInvestmentProjectToListItem,
+        transformInvestmentListItemToHaveMetaLinks(req.query),
+      ))
 
     next()
   } catch (error) {

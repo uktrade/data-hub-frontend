@@ -1,9 +1,9 @@
 const { get, find } = require('lodash')
 
 const { entities, search } = require('./services')
-const { buildSearchAggregation } = require('./builders')
-const { buildPagination } = require('../../lib/pagination')
-const { transformResultsToCollection } = require('./transformers')
+const { transformApiResponseToSearchCollection } = require('./transformers')
+const { transformContactToListItem } = require('../contacts/transformers')
+const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 
 // Deprecated: companies only
 function searchAction (req, res, next) {
@@ -24,10 +24,12 @@ function searchAction (req, res, next) {
     token: req.session.token,
     page: req.query.page,
   })
+    .then(transformApiResponseToSearchCollection({
+      entityType: searchEntity,
+      searchTerm,
+      query: req.query,
+    }))
     .then((results) => {
-      results.pagination = buildPagination(req.query, results)
-      results.aggregations = buildSearchAggregation(results.aggregations)
-
       res
         .breadcrumb('Search')
         .render(`search/views/results-${searchEntity}`, {
@@ -49,6 +51,14 @@ async function renderSearchResults (req, res) {
 
   const searchTerm = get(req, 'query.term', '').trim()
   const searchEntity = entity.entity
+  const itemTransformers = []
+
+  if (searchEntity === 'investment_project') {
+    itemTransformers.push(transformInvestmentProjectToListItem)
+  }
+  if (searchEntity === 'contact') {
+    itemTransformers.push(transformContactToListItem)
+  }
 
   const results = await search({
     searchTerm,
@@ -57,10 +67,14 @@ async function renderSearchResults (req, res) {
     token: req.session.token,
     page: req.query.page,
   })
-    .then(data => transformResultsToCollection(data, searchEntity, {
-      searchTerm,
-      query: req.query,
-    }))
+    .then(transformApiResponseToSearchCollection(
+      {
+        entityType: searchEntity,
+        searchTerm,
+        query: req.query,
+      },
+      ...itemTransformers,
+    ))
 
   res
     .breadcrumb(entity.text)

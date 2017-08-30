@@ -19,7 +19,7 @@
 
 {% block search_results %}
   <ol class="c-entity-list">
-    {% for company in results.companies %}
+    {% for company in results.items %}
       <li class="c-entity-list__item">
 
         {% if company.companies_house_data %}

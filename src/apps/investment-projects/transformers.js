@@ -64,27 +64,29 @@ function transformInvestmentProjectToListItem ({
   }
 }
 
-function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
-  if (!isArray(item.meta)) { return item }
+function transformInvestmentListItemToHaveMetaLinks (query = {}) {
+  return function transformListItem (item) {
+    if (!isArray(item.meta)) { return item }
 
-  item.meta.forEach(metaItem => {
-    const name = metaItem.name
-    const itemQuery = Object.assign(
-      {},
-      query,
-      {
-        custom: true,
-        [name]: get(metaItem, 'value.id', metaItem.value),
-      },
-    )
+    item.meta.forEach(metaItem => {
+      const name = metaItem.name
+      const itemQuery = Object.assign(
+        {},
+        query,
+        {
+          custom: true,
+          [name]: get(metaItem, 'value.id', metaItem.value),
+        },
+      )
 
-    if (!metaItem.isInert) {
-      metaItem.url = `?${queryString.stringify(itemQuery)}`
-      metaItem.isSelected = !!query[name]
-    }
-  })
+      if (!metaItem.isInert) {
+        metaItem.url = `?${queryString.stringify(itemQuery)}`
+        metaItem.isSelected = !!query[name]
+      }
+    })
 
-  return item
+    return item
+  }
 }
 
 module.exports = {
