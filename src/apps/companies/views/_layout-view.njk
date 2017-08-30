@@ -29,6 +29,7 @@
       {# <a class="c-local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
       <a class="c-local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Export</a>
       <a class="c-local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investment</a>
+      <a class="c-local-nav__link {% if tab == 'audit' %}is-active{% endif %}" href="/companies/{{ company.id }}/audit">Audit history</a>
     {% endif %}
   </nav>
 {% endblock %}

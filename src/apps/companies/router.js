@@ -11,6 +11,7 @@ const {
   investmentsController,
   ltdController,
   ukotherController,
+  auditController,
 } = require('./controllers')
 
 router
@@ -77,5 +78,6 @@ router
 
 router.get('/:id/interactions', interactionsController.getInteractions)
 router.get('/:id/investments', investmentsController.getAction)
+router.get('/:id/audit', auditController.getAudit)
 
 module.exports = router

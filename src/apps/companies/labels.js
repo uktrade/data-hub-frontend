@@ -26,6 +26,12 @@ const companyDetailsLabels = {
   business_type_for_other: 'Type of organisation',
   business_type_uk_other: 'Type of organisation',
   headquarter_type: 'Headquarters',
+  archived: 'Archived status',
+  archived_on: 'Archive date',
+  archived_reason: 'Archived reason',
+  archived_by_id: 'Archived by',
+  company_number: 'Companies House number',
+  account_manager_id: 'Account manager',
 }
 const chDetailsLabels = {
   name: 'Registered name',
