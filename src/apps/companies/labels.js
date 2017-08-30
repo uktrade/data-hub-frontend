@@ -30,7 +30,7 @@ const companyDetailsLabels = {
   archived_on: 'Archive date',
   archived_reason: 'Archived reason',
   archived_by_id: 'Archived by',
-  company_number: 'Companies House No',
+  company_number: 'Companies House number',
   account_manager_id: 'Account manager',
 }
 const chDetailsLabels = {
