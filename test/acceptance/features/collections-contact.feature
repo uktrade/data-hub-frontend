@@ -68,9 +68,10 @@ Feature: View Collection of contacts
   Scenario: Verify link to contact details page
 
     Given I am an authenticated user on Data Hub website
-    When I search for a given Contact name
-    And I navigate to contacts tab
-    Then I see first and last name of the contact
+    And I create a new contact
+    When I search for this Contact name
+    Then I view a contacts tab
+    When I click on contacts tab
     When I click on the first contact collection link
     Then I navigate to his contact details page
 
@@ -84,21 +85,10 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact same as the company
 
-  @collections-contact-address-different-as-company
-  Scenario: Verify contact with same address as company
-
-    Given I am an authenticated user on Data Hub website
-    And I create a new contact with different address as company
-    When I search for this Contact name
-    Then I view a contacts tab
-    When I click on contacts tab
-    Then I see Country of the contact different as the company
-
   @collections-contact-all
   Scenario: View Collection of contacts
 
     Given I am an authenticated user on Data Hub website
-    And I create a new company
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab

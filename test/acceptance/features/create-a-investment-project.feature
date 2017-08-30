@@ -80,7 +80,7 @@ Feature: Create a new Investment project
     And I verify my newly created foreign equity Investment project in company profile
     And I logout of Data Hub website
 
-  @search-FDItype-investment
+  @investment-search-FDItype
   Scenario: Search for newly created FDI Investment project
 
     Given I am an authenticated user on Data Hub website
@@ -89,7 +89,7 @@ Feature: Create a new Investment project
     When I search for my newly created Investment project
     Then I verify it is displayed in the search results
 
-  @search-nonFDItype-investment
+  @investment-search-nonFDItype
   Scenario: Search for newly created Non-FDI Investment project
 
     Given I am an authenticated user on Data Hub website
@@ -98,7 +98,7 @@ Feature: Create a new Investment project
     When I search for my newly created Investment project
     Then I verify it is displayed in the search results
 
-  @search-commitment-to-invest-type-investment
+  @investment-search-CTItype
   Scenario: Search for newly created commitment to invest type Investment project
 
     Given I am an authenticated user on Data Hub website

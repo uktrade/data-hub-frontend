@@ -1,4 +1,4 @@
-@investment-project-stages
+@investment-stages
 Feature: Investment project stages
   As an existing user
   I would like to view different stages of Investment Project
@@ -6,7 +6,7 @@ Feature: Investment project stages
 
 # Prospect stage journeys:
 
-  @verify-requirements-details
+  @investment-stages-requirements-details
   Scenario: Update requirements section under Prospect stage for FDI type
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -15,7 +15,7 @@ Feature: Investment project stages
 #    Then I see the Updated investment requirements confirmation message
     Then I verify that all fields are populated correctly for Requirements section
 
-  @verify-location-details
+  @investment-stages-location-details
   Scenario: Update location section under Prospect stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -23,7 +23,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all fields are populated correctly for location section
 
-  @verify-value-details
+  @investment-stages-value-details
   Scenario: Update Value section under Prospect stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -32,7 +32,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that all fields are populated correctly for Value section
 
-  @verify-value-no-financial-assistance
+  @investment-stages-value-no-financial-assistance
   Scenario: Update Value section with Not receiving government financial assistance
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -42,7 +42,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project is not receiving financial assistance under Value section
 
-  @verify-value-no-budget
+  @investment-stages-value-no-budget
   Scenario: Update Value section with No budget for a research and development
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -52,7 +52,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project has no budget for a research and development under Value section
 
-  @verify-value-no-rnd-project
+  @investment-stages-value-no-rnd-project
   Scenario: Update Value section with Not associated with a non-FDI R&D project
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -62,7 +62,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project has no association with a non-FDI R&D project under Value section
 
-  @verify-value-no-world-tech
+  @investment-stages-value-no-world-tech
   Scenario: Update Value section with No new to world technology
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -72,7 +72,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project has no new to world technology under Value section
 
-  @verify-value-no-export
+  @investment-stages-value-no-export
   Scenario: Update Value section with No export of their products and services
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -82,7 +82,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project has no export of their products and services under Value section
 
-  @verify-assign-pm-stage
+  @investment-stages-assign-pm-stage
   Scenario: Move project from Prospect stage to Assign PM stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
