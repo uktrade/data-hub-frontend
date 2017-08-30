@@ -86,6 +86,7 @@ const metadataItems = [
   ['investment-strategic-driver', 'strategicDriverOptions'],
   ['investment-project-stage', 'investmentStageOptions'],
   ['order-service-type', 'orderServiceTypesOptions'],
+  ['omis-market', 'omisMarketOptions'],
 ]
 
 const restrictedServiceKeys = [
