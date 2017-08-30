@@ -58,6 +58,17 @@ describe('Entities macros', () => {
         expect(component.querySelector('.c-entity__title a')).not.to.exist
       })
 
+      it('should render a custom url if passed', () => {
+        const component = entitiesMacros.renderToDom('Entity', {
+          id: '12345',
+          name: 'Horse',
+          type: 'animal',
+          urlPrefix: 'horses/',
+        })
+
+        expect(component.querySelector('.c-entity__title a')).to.have.property('href', '/horses/12345')
+      })
+
       it('should use a default modifier of inline split it no modifier specified', () => {
         const component = entitiesMacros.renderToDom('Entity', {
           id: '12345',
