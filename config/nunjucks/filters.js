@@ -24,7 +24,7 @@ const {
   pick,
 } = require('lodash')
 
-const { longDateFormat } = require('../../config')
+const { longDateFormat, mediumDateTimeFormat } = require('../../config')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
@@ -110,6 +110,14 @@ const filters = {
   },
 
   formatDate: (value, format = longDateFormat) => {
+    const parsedDate = dateFns.parse(value)
+
+    if (!dateFns.isValid(parsedDate)) { return value }
+
+    return dateFns.format(parsedDate, format)
+  },
+
+  formatDateTime: (value, format = mediumDateTimeFormat) => {
     const parsedDate = dateFns.parse(value)
 
     if (!dateFns.isValid(parsedDate)) { return value }
