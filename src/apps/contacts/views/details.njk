@@ -2,7 +2,7 @@
 
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Contact Details</h2>
+  <h2 class="heading-medium">Contact details</h2>
   {{ keyvaluetable(
       contactDetails,
       stripey=true,
@@ -23,6 +23,7 @@
     {% component 'archive-form', {
       label: 'Archive reason',
       options: reasonForArchiveOptions,
+      optionsPrefix: reasonForArchiveOptionsPrefix,
       csrfToken: csrfToken,
       error: form.errors.reason,
       url: '/contacts/' + contact.id + '/archive'

@@ -2,7 +2,7 @@ module.exports = {
   company: 'Company',
   subject: 'Subject',
   notes: 'Interaction notes',
-  contact: 'Company contact',
+  contact: 'Contact',
   date: 'Date of interaction',
   dit_adviser: 'DIT adviser',
   service: 'Service',

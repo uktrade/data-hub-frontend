@@ -67,7 +67,7 @@ describe('Contact controller, archive', function () {
     const res = {
       locals: {},
       redirect: function (url) {
-        expect(flashStub).to.be.calledWith('success', 'Updated contact record')
+        expect(flashStub).to.be.calledWith('success', 'Contact record updated')
         done()
       },
     }

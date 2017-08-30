@@ -9,7 +9,7 @@ async function postArchiveCompany (req, res, next) {
 
     if (reason.length > 0) {
       await archiveCompany(req.session.token, company.id, reason)
-      req.flash('success', 'Updated company record')
+      req.flash('success', 'Company record updated')
     } else {
       req.flash('error', 'Unable to archive company, no reason given')
     }
@@ -25,7 +25,7 @@ async function getUnarchiveCompany (req, res, next) {
     const company = await getDitCompany(req.session.token, req.params.id)
     const url = buildCompanyUrl(company)
     await unarchiveCompany(req.session.token, company.id)
-    req.flash('success', 'Updated company record')
+    req.flash('success', 'Company record updated')
     res.redirect(url)
   } catch (error) {
     next(error)

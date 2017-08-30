@@ -26,11 +26,11 @@ function postAddStepOne (req, res, next) {
   }
 
   if (req.body.business_type === 'ukother' && isBlank(req.body.business_type_uk_other)) {
-    errorMessages.business_type_uk_other = ['You must select the type of business']
+    errorMessages.business_type_uk_other = ['You must select a type of organisation']
   }
 
   if (req.body.business_type === 'foreign' && isBlank(req.body.business_type_for_other)) {
-    errorMessages.business_type_for_other = ['You must select the type of business']
+    errorMessages.business_type_for_other = ['You must select a type of organisation']
   }
 
   if (Object.keys(errorMessages).length > 0) {
