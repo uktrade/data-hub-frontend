@@ -4,6 +4,7 @@
  # @param {string} props.name - entity name
  # @param {string} props.type - entity type (e.g. 'date' to format dates)
  # @param {string} [props.id] - entity id, used to create a link to the entity if provided
+ # @param {string} [props.urlPrefix] - base URL for linking to an entity, by default it will pluralise props.type
  # @param {array}  [props.metaBadges{}] - an array of metadata item objects
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
@@ -11,6 +12,7 @@
  #}
 {% macro Entity (props) %}
   {% if props.name and props.type %}
+    {% set urlPrefix = props.urlPrefix or props.type | pluralise + '/' %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set metaTimes = props.meta | filter(['type', 'time']) %}
     {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
@@ -28,7 +30,7 @@
       <div class="c-entity__header">
         <h3 class="c-entity__title">
           {% if props.id %}
-            <a href="/{{ props.type | pluralise }}/{{ props.id }}">{{ highlightedName }}</a>
+            <a href="/{{ urlPrefix }}{{ props.id }}">{{ highlightedName }}</a>
           {% else %}
             {{ highlightedName }}
           {% endif %}
