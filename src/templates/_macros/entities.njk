@@ -12,11 +12,9 @@
 {% macro Entity (props) %}
   {% if props.name and props.type %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
-    {% set metaTimes = props.meta | filter(['type', 'time']) %}
     {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
     {% set metaItems = props.meta
       | reject(['type', 'badge'])
-      | reject(['type', 'time'])
     %}
     {% set highlightedName = props.name | highlight(props.highlightTerm) %}
 
