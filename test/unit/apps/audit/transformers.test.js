@@ -28,7 +28,7 @@ describe('Audit transformers', () => {
     expect(this.transformedLog.countLabel).to.equal('log entry')
   })
 
-  it('should return a formatted audit log item when there are changes', () => {
+  it('should return a formatted audit history item when there are changes', () => {
     const item = this.transformedLog.items[0]
 
     expect(item.type).to.equal('audit')

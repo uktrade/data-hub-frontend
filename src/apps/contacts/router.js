@@ -12,7 +12,7 @@ const { getAudit } = require('./controllers/audit')
 const LOCAL_NAV = [
   { path: 'details', label: 'Details' },
   { path: 'interactions', label: 'Interactions' },
-  { path: 'audit', label: 'Audit log' },
+  { path: 'audit', label: 'Audit history' },
 ]
 
 const DEFAULT_COLLECTION_QUERY = {
