@@ -56,4 +56,17 @@ function getContactsForCompany (token, companyId) {
   })
 }
 
-module.exports = { getContact, saveContact, archiveContact, unarchiveContact, getContactsForCompany }
+function getContactAuditLog (token, contactId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/audit?limit=${limit}&offset=${offset}`)
+}
+
+module.exports = {
+  getContact,
+  saveContact,
+  archiveContact,
+  unarchiveContact,
+  getContactsForCompany,
+  getContactAuditLog,
+}

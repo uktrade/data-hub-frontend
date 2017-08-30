@@ -11,6 +11,19 @@ const contactDetailsLabels = {
   address_same_as_company: 'Address same as company',
   first_name: 'First name',
   last_name: 'Last name',
+  archived: 'Archived status',
+  archived_by: 'Archived by',
+  address_1: 'Address line 1',
+  address_2: 'Address line 2',
+  address_3: 'Address line 3',
+  address_4: 'Address line 4',
+  address_town: 'Town',
+  address_county: 'County',
+  address_country_id: 'Country',
+  address_postcode: 'Postcode',
+  archived_on: 'Archive date',
+  archived_reason: 'Archived reason',
+  archived_by_id: 'Archived by',
 }
 
 module.exports = { contactDetailsLabels }
