@@ -4,6 +4,7 @@ const { entities, search } = require('./services')
 const { transformApiResponseToSearchCollection } = require('./transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
+const { transformOrderToListItem } = require('../omis/transformers')
 
 // Deprecated: companies only
 function searchAction (req, res, next) {
@@ -58,6 +59,9 @@ async function renderSearchResults (req, res) {
   }
   if (searchEntity === 'contact') {
     itemTransformers.push(transformContactToListItem)
+  }
+  if (searchEntity === 'order') {
+    itemTransformers.push(transformOrderToListItem)
   }
 
   const results = await search({

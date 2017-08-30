@@ -24,6 +24,13 @@ const entities = [
     noun: 'investment project',
     count: 0,
   },
+  {
+    entity: 'order',
+    path: 'omis',
+    text: 'Orders',
+    noun: 'order',
+    count: 0,
+  },
 ]
 
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
