@@ -1,3 +1,3 @@
 module.exports = {
-  displayName: 'Audit log',
+  displayName: 'Audit history',
 }
