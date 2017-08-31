@@ -7,7 +7,6 @@ const { transformContactToListItem } = require('./transformers')
 async function getContactsCollection (req, res, next) {
   try {
     res.locals.results = await search({
-      searchTerm: '',
       searchEntity: 'contact',
       requestBody: req.body,
       token: req.session.token,

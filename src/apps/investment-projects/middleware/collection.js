@@ -10,7 +10,6 @@ const {
 async function getInvestmentProjectsCollection (req, res, next) {
   try {
     res.locals.results = await search({
-      searchTerm: '',
       searchEntity: 'investment_project',
       requestBody: req.body,
       token: req.session.token,
