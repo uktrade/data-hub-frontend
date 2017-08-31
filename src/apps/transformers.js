@@ -43,7 +43,6 @@ function buildMetaDataObj (collection) {
 
 /**
  * @param {object} [options] {object}
- * @param {string} [options.entityType] - API entity type
  * @param {string} [options.searchTerm] - search term used for highlighting words in collection macro
  * @param {object} [options.query] - URL query object used in pagination
  * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
@@ -55,10 +54,9 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
    * @returns {function}
    */
   return function transformResponseToCollection (response) {
-    if (!isPlainObject(response) || !options.entityType) { return }
+    if (!isPlainObject(response)) { return }
 
-    const pluralisedEntity = options.entityType === 'company' ? 'companies' : `${options.entityType}s`
-    let items = response[pluralisedEntity] || response.items || response.results
+    let items = response.results || response.items
 
     if (!items) { return }
 

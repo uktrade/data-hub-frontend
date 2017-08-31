@@ -8,22 +8,17 @@ const {
 } = require('../transformers')
 
 async function getInvestmentProjectsCollection (req, res, next) {
-  const searchEntity = 'investment_project'
-
   try {
     res.locals.results = await search({
       searchTerm: '',
-      searchEntity,
+      searchEntity: 'investment_project',
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
       isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
-        {
-          entityType: searchEntity,
-          query: req.query,
-        },
+        { query: req.query },
         transformInvestmentProjectToListItem,
         transformInvestmentListItemToHaveMetaLinks(req.query),
       ))

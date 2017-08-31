@@ -86,7 +86,7 @@ describe('Search Controller #searchAction', () => {
             expect(template).to.equal(`search/views/results-${entityType}`)
             expect(data.searchTerm).to.equal(searchQuery.term)
             expect(data.searchEntity).to.equal(entityType)
-            expect(data.results).to.have.property('items').to.deep.equal(expectedResults.companies)
+            expect(data.results).to.have.property('items').to.deep.equal(expectedResults.results)
             expect(data.results).to.have.property('aggregations').to.deep.equal(expectedSearchEntityResultsData(0))
             done()
           } catch (e) {

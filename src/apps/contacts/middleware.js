@@ -5,22 +5,17 @@ const { transformApiResponseToSearchCollection } = require('../search/transforme
 const { transformContactToListItem } = require('./transformers')
 
 async function getContactsCollection (req, res, next) {
-  const searchEntity = 'contact'
-
   try {
     res.locals.results = await search({
       searchTerm: '',
-      searchEntity,
+      searchEntity: 'contact',
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
       isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
-        {
-          entityType: searchEntity,
-          query: req.query,
-        },
+        { query: req.query },
         transformContactToListItem,
       ))
 

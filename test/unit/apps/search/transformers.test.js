@@ -51,7 +51,6 @@ describe('Search transformers', () => {
 
     it('should call transformApiResponseToCollection transformer with entity type and options', () => {
       const options = {
-        entityType: 'contact',
         query: { a: 'A' },
       }
       this.transformers.transformApiResponseToSearchCollection(options)(this.responseMock)
@@ -64,16 +63,14 @@ describe('Search transformers', () => {
       const firstItemTransformerSpy = this.sandbox.spy()
       const secondItemTransformerSpy = this.sandbox.spy()
 
-      const options = { entityType: 'contact' }
-
       this.transformers.transformApiResponseToSearchCollection(
-        options,
+        undefined,
         firstItemTransformerSpy,
         secondItemTransformerSpy
       )(this.responseMock)
 
       expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
-      expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options, firstItemTransformerSpy, secondItemTransformerSpy)
+      expect(this.transformApiResponseToCollectionStub).to.be.calledWith({}, firstItemTransformerSpy, secondItemTransformerSpy)
     })
 
     it('should return a collection object with aggregation', () => {
@@ -89,10 +86,7 @@ describe('Search transformers', () => {
     })
 
     it('should return a collection object with highlight term', () => {
-      const options = {
-        entityType: 'contact',
-        searchTerm: 'loop',
-      }
+      const options = { searchTerm: 'loop' }
       const itemsMock = [{ a: 'A', b: 'B' }]
       this.transformApiResponseToCollectionInnerStub.returns({ count: 2, items: itemsMock })
       const actual = this.transformers.transformApiResponseToSearchCollection(options)(this.responseMock)

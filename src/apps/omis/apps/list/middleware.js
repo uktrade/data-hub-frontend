@@ -3,21 +3,16 @@ const { transformApiResponseToSearchCollection } = require('../../../search/tran
 const { transformOrderToListItem } = require('../../transformers')
 
 async function getCollection (req, res, next) {
-  const searchEntity = 'order'
-
   try {
     res.locals.results = await search({
-      searchEntity,
+      searchEntity: 'order',
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
       isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
-        {
-          entityType: searchEntity,
-          query: req.query,
-        },
+        { query: req.query },
         transformOrderToListItem,
       ))
 
