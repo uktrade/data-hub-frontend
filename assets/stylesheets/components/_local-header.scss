@@ -1,6 +1,7 @@
 @import "../tools/mixins";
 
 .c-local-header {
+  @include clearfix;
   padding-top: $default-spacing-unit * 4;
   position: relative;
 
@@ -47,6 +48,38 @@
 * + .c-local-header__heading-after {
   margin-top: $default-spacing-unit / 2;
   margin-bottom: 0;
+}
+
+.c-local-header__content {
+  @include media(tablet) {
+    float: left;
+    width: 70%;
+  }
+}
+
+.c-local-header__actions {
+  * + & {
+    margin-top: $default-spacing-unit;
+  }
+
+  @include media(tablet) {
+    float: right;
+    width: 30%;
+
+    * + & {
+      margin-top: 0;
+    }
+  }
+}
+
+.c-local-header__action {
+  @include core-font(16);
+  display: block;
+  margin: 0;
+
+  & + & {
+    margin-top: $default-spacing-unit / 2;
+  }
 }
 
 .c-local-header--light-banner {

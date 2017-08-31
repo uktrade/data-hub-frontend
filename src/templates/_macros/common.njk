@@ -60,6 +60,7 @@
  # @param {string} [props.heading] - page heading
  # @param {string} [props.headingBefore] - a string before heading (safe to render HTML)
  # @param {string} [props.headingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {object} [props.actions] - an area to display actions for an entity
  # @param {object} [props.breadcrumbs] - an object containing page breadcrumbs
  # @param {object} [props.messages] - an object containing flash messages
  # @param {function} [props.caller] - Optional inner contents
@@ -79,19 +80,31 @@
           {% component 'messages', { messages: messages } %}
         {% endif %}
 
-        {% if props.headingBefore %}
-          <div class="c-local-header__heading-before">
-            {{ props.headingBefore | safe }}
+        {% if props.actions %}
+          <div class="c-local-header__content">
+        {% endif %}
+
+          {% if props.headingBefore %}
+            <div class="c-local-header__heading-before">
+              {{ props.headingBefore | safe }}
+            </div>
+          {% endif %}
+
+          {% if props.heading %}
+            <h1 class="c-local-header__heading">
+              {{ props.heading }} {{ props.headingSuffix | safe }}
+            </h1>
+          {% endif %}
+
+          {{ caller() if caller }}
+
+        {% if props.actions %}
+          </div>
+
+          <div class="c-local-header__actions">
+            {{ props.actions | safe }}
           </div>
         {% endif %}
-
-        {% if props.heading %}
-          <h1 class="c-local-header__heading">
-            {{ props.heading }} {{ props.headingSuffix | safe }}
-          </h1>
-        {% endif %}
-
-        {{ caller() if caller }}
       </div>
     </header>
   {% endif %}
@@ -141,5 +154,3 @@
     </div>
   {% endif %}
 {% endmacro %}
-
-
