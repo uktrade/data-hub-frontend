@@ -1,4 +1,4 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "./_layouts/view.njk" %}
 
 {% macro AnswersSummary(props) %}
   <table class="c-answers-summary">
@@ -33,10 +33,6 @@
     {% endif %}
   </table>
 {% endmacro %}
-
-{% block main_grid_left_column %}
-  {{ LocalNav({ items: localNavItems }) }}
-{% endblock %}
 
 {% block main_grid_right_column %}
   {% set companyLink %}
