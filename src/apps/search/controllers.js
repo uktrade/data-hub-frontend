@@ -7,42 +7,6 @@ const { transformContactToListItem } = require('../contacts/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
 
-// Deprecated: companies only
-function searchAction (req, res, next) {
-  const searchTerm = req.query.term
-  const entity = find(entities, { path: 'companies' })
-
-  if (!entity) {
-    return res
-      .breadcrumb('Search')
-      .render('search/views/index')
-  }
-
-  const searchEntity = entity.entity
-
-  search({
-    searchEntity,
-    searchTerm,
-    token: req.session.token,
-    page: req.query.page,
-  })
-    .then(transformApiResponseToSearchCollection({
-      searchTerm,
-      query: req.query,
-    }))
-    .then((results) => {
-      res
-        .breadcrumb('Search')
-        .render(`search/views/results-${searchEntity}`, {
-          searchTerm,
-          searchEntity,
-          searchPath: entity.path,
-          results,
-        })
-    })
-    .catch(next)
-}
-
 async function renderSearchResults (req, res) {
   const entity = find(entities, ['path', req.params.searchPath])
 
@@ -93,6 +57,5 @@ async function renderSearchResults (req, res) {
 }
 
 module.exports = {
-  searchAction,
   renderSearchResults,
 }
