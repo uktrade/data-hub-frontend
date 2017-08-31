@@ -9,6 +9,7 @@ const interactionsController = require('./interactions')
 const investmentsController = require('./investments')
 const ltdController = require('./ltd')
 const ukotherController = require('./ukother')
+const renderCompanyList = require('./list')
 
 module.exports = {
   addController,
@@ -22,4 +23,5 @@ module.exports = {
   investmentsController,
   ltdController,
   ukotherController,
+  renderCompanyList,
 }
