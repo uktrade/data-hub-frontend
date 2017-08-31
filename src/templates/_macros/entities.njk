@@ -95,7 +95,7 @@
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
-          {{ props.label }}:
+          {{ props.label }}
         </span>
       {% endif %}
       {% if props.url and not props.isInert %}
