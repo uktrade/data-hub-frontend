@@ -42,9 +42,9 @@ describe('Entities macros', () => {
 
         expect(component.querySelector('.c-entity__header .c-entity__badges')).to.exist
         expect(component.querySelector('.c-entity__header .c-meta-list__item').textContent.replace(/\s+/g, ' ').trim())
-          .to.equal('Colour: brown')
+          .to.equal('Colour brown')
         expect(component.querySelector('.c-entity__content .c-meta-list__item').textContent.replace(/\s+/g, ' ').trim())
-          .to.equal('DOB: 10 November 2015')
+          .to.equal('DOB 10 November 2015')
       })
 
       it('should render a title without a link if no id passed', () => {
