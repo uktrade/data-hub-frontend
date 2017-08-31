@@ -1,0 +1,11 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_right_column %}
+  {{
+    Collection(results | assign({
+      countLabel: 'order',
+      sortForm: sortForm,
+      query: QUERY
+    }))
+  }}
+{% endblock %}

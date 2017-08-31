@@ -15,7 +15,7 @@ describe('Search Controller #searchAction', () => {
     .query(Object.assign({}, searchQuery, { entity: 'company' }))
     .reply(200, companyResponse)
 
-  function expectedSearchEntityResultsData (companyCount = 3, contactCount = 1, investmentCount = 5) {
+  function expectedSearchEntityResultsData (companyCount = 3, contactCount = 1, investmentCount = 5, orderCount = 4) {
     return [
       {
         count: companyCount,
@@ -37,6 +37,13 @@ describe('Search Controller #searchAction', () => {
         path: 'investment-projects',
         text: 'Investment projects',
         noun: 'investment project',
+      },
+      {
+        count: orderCount,
+        entity: 'order',
+        path: 'omis',
+        text: 'Orders',
+        noun: 'order',
       },
     ]
   }

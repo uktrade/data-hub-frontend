@@ -11,6 +11,10 @@
     {
       "count": 1,
       "entity": "contact"
+    },
+    {
+      "count": 4,
+      "entity": "order"
     }
   ],
   "companies": [
