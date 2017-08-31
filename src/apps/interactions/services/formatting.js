@@ -102,11 +102,11 @@ function transformFromApi (body) {
     }
   })
 
-  const date = new Date(body['date'])
+  const date = new Date(body.date)
   if (date) {
-    formatted['date_year'] = date.getFullYear().toString()
-    formatted['date_month'] = format(date, 'MM')
-    formatted['date_day'] = format(date, 'DD')
+    formatted.date_year = date.getFullYear().toString()
+    formatted.date_month = format(date, 'MM')
+    formatted.date_day = format(date, 'DD')
   }
 
   return Object.assign({}, body, formatted)
@@ -137,7 +137,7 @@ function transformToApi (body) {
   // TODO please see JIRA-469 this needs to be converted to a Date not DateTime in the BE. When done the DateTime creation can be removed
   formatted['date'] = new Date(
     body.date_year,
-    body.date_month - 1,
+    body.date_month - 1, // month is zero based
     body.date_day,
   ).toISOString()
 
