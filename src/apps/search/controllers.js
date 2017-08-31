@@ -49,7 +49,7 @@ async function renderSearchResults (req, res) {
 
   res
     .breadcrumb(entity.text)
-    .render('search/views/results', {
+    .render('search/view', {
       searchEntity,
       searchTerm,
       results,
