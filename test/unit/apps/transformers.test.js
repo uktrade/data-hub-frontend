@@ -94,7 +94,7 @@ describe('Global transformers', () => {
     })
 
     it('should return a collection object with pagination result, count and items array', () => {
-      const actual = this.transformers.transformApiResponseToCollection({ entityType: 'company' })(this.mockResponse)
+      const actual = this.transformers.transformApiResponseToCollection()(this.mockResponse)
 
       expect(actual).to.have.property('count', 2)
       expect(actual).to.have.property('items').to.be.an('array').and.have.length(2)
@@ -108,7 +108,7 @@ describe('Global transformers', () => {
       const itemTransformerOptions = { query: { term: 'bobby' } }
 
       const actual = this.transformers.transformApiResponseToCollection(
-        { entityType: 'company' },
+        undefined,
         itemTransformerSpy(itemTransformerOptions)
       )(this.mockResponse)
 
@@ -122,9 +122,7 @@ describe('Global transformers', () => {
       const secondItemTransformerSpy = this.sandbox.spy()
 
       const actual = this.transformers.transformApiResponseToCollection(
-        {
-          entityType: 'company',
-        },
+        undefined,
         firstItemTransformerSpy,
         secondItemTransformerSpy
       )(this.mockResponse)

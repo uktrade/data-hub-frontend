@@ -12,10 +12,7 @@ async function getAction (req, res, next) {
     const company = await getInflatedDitCompany(token, companyId)
     const results = await getCompanyInvestmentProjects(token, companyId, page)
       .then(transformApiResponseToCollection(
-        {
-          entityType: 'investment_project',
-          query: req.query,
-        },
+        { query: req.query },
         transformInvestmentProjectToListItem,
       ))
 

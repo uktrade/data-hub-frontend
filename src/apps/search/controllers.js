@@ -26,7 +26,6 @@ function searchAction (req, res, next) {
     page: req.query.page,
   })
     .then(transformApiResponseToSearchCollection({
-      entityType: searchEntity,
       searchTerm,
       query: req.query,
     }))
@@ -73,7 +72,6 @@ async function renderSearchResults (req, res) {
   })
     .then(transformApiResponseToSearchCollection(
       {
-        entityType: searchEntity,
         searchTerm,
         query: req.query,
       },
