@@ -11,7 +11,7 @@ async function renderSearchResults (req, res) {
   const entity = find(entities, ['path', req.params.searchPath])
 
   if (!entity) {
-    return res.render('search/views/index')
+    return res.render('search/view')
   }
 
   const searchTerm = get(req, 'query.term', '').trim()
