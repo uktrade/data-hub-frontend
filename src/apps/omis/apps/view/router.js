@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
+const { setOrderBreadcrumb } = require('./middleware')
 const { renderWorkOrder } = require('./controllers')
 
 const LOCAL_NAV = [
@@ -11,6 +12,7 @@ const LOCAL_NAV = [
 ]
 
 router.use(setLocalNav(LOCAL_NAV))
+router.use(setOrderBreadcrumb)
 
 router.get('/', redirectToFirstNavItem)
 router.get('/work-order', renderWorkOrder)
