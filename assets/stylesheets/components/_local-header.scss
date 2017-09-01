@@ -2,25 +2,42 @@
 
 .c-local-header {
   @include clearfix;
-  padding-top: $default-spacing-unit * 4;
-  position: relative;
+
+  .l-container {
+    border-top: 1px solid transparent;
+  }
 
   &[class*="c-local-header--"] {
     padding-bottom: $default-spacing-unit * 2;
   }
 
+  .c-entity-search {
+    margin-top: $baseline-grid-unit * 20.5;
+    padding-bottom: $baseline-grid-unit * 6.25;
+  }
+
   .c-breadcrumb {
-    position: absolute;
-    top: $default-spacing-unit;
+    margin-top: $default-spacing-unit / 2;
+
+    & + * {
+      margin-top: $default-spacing-unit * 3;
+    }
+
+    & + .c-entity-search {
+      padding-bottom: 0;
+    }
   }
 
   .c-messages {
-    margin-top: -$default-spacing-unit / 2;
     margin-bottom: $default-spacing-unit;
   }
 
   .c-entity-search__aggregations {
     margin-bottom: -$default-spacing-unit * 2;
+  }
+
+  .c-progress {
+    margin-top: $default-spacing-unit;
   }
 
   .c-progress__stage {
@@ -41,7 +58,6 @@
 
 .c-local-header__heading {
   @include bold-font(36);
-  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -62,18 +78,26 @@
     margin-top: $default-spacing-unit;
   }
 
+  a {
+    text-decoration: none;
+
+    &:not(.button):hover {
+      text-decoration: underline;
+    }
+  }
+
   @include media(tablet) {
     float: right;
     width: 30%;
 
     * + & {
-      margin-top: 0;
+      margin-top: $default-spacing-unit * 3;
     }
   }
 }
 
 .c-local-header__action {
-  @include core-font(16);
+  @include bold-font(16);
   display: block;
   margin: 0;
 
@@ -88,6 +112,10 @@
 
 .c-local-header--dark-banner {
   background-color: $grey-3;
+
+  .l-container {
+    border-top-color: $grey-2;
+  }
 
   &.c-local-header--keyline {
     border-bottom: 1px solid $grey-2;
