@@ -13,21 +13,6 @@
   {% endcall %}
 {% endblock %}
 
-
 {% block main_grid_right_column %}
-  {% if results %}
-    {% block actions %}{% endblock %}
-
-    {% block search_results_summary %}
-      {% component 'results-summary', {
-        resultType: searchEntity | replace('_', ' '),
-        total: results.count,
-        searchTerm: searchTerm
-      } %}
-    {% endblock %}
-
-    {% block search_results %}{% endblock %}
-
-    {{ Pagination(results.pagination) }}
-  {% endif %}
+  {{ Collection(results) }}
 {% endblock %}

@@ -2,51 +2,16 @@ const { get, find } = require('lodash')
 
 const { entities, search } = require('./services')
 const { transformApiResponseToSearchCollection } = require('./transformers')
+const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
-
-// Deprecated: companies only
-function searchAction (req, res, next) {
-  const searchTerm = req.query.term
-  const entity = find(entities, { path: 'companies' })
-
-  if (!entity) {
-    return res
-      .breadcrumb('Search')
-      .render('search/views/index')
-  }
-
-  const searchEntity = entity.entity
-
-  search({
-    searchEntity,
-    searchTerm,
-    token: req.session.token,
-    page: req.query.page,
-  })
-    .then(transformApiResponseToSearchCollection({
-      searchTerm,
-      query: req.query,
-    }))
-    .then((results) => {
-      res
-        .breadcrumb('Search')
-        .render(`search/views/results-${searchEntity}`, {
-          searchTerm,
-          searchEntity,
-          searchPath: entity.path,
-          results,
-        })
-    })
-    .catch(next)
-}
 
 async function renderSearchResults (req, res) {
   const entity = find(entities, ['path', req.params.searchPath])
 
   if (!entity) {
-    return res.render('search/views/index')
+    return res.render('search/view')
   }
 
   const searchTerm = get(req, 'query.term', '').trim()
@@ -61,6 +26,10 @@ async function renderSearchResults (req, res) {
   }
   if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
+  }
+
+  if (searchEntity === 'company') {
+    itemTransformers.push(transformCompanyToListItem)
   }
 
   const results = await search({
@@ -80,7 +49,7 @@ async function renderSearchResults (req, res) {
 
   res
     .breadcrumb(entity.text)
-    .render('search/views/results', {
+    .render('search/view', {
       searchEntity,
       searchTerm,
       results,
@@ -88,6 +57,5 @@ async function renderSearchResults (req, res) {
 }
 
 module.exports = {
-  searchAction,
   renderSearchResults,
 }

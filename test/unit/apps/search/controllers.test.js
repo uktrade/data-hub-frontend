@@ -1,106 +1,11 @@
 const nock = require('nock')
 const config = require('~/config')
-const { searchAction, renderSearchResults } = require('~/src/apps/search/controllers')
-
-describe('Search Controller #searchAction', () => {
-  const companyResponse = require('~/test/unit/data/search/company')
-  const searchQuery = {
-    term: 'mock',
-    entity: 'company',
-    limit: 10,
-    offset: 0,
-  }
-
-  nock(config.apiRoot).get(`/v3/search`)
-    .query(Object.assign({}, searchQuery, { entity: 'company' }))
-    .reply(200, companyResponse)
-
-  function expectedSearchEntityResultsData (companyCount = 3, contactCount = 1, investmentCount = 5, orderCount = 4) {
-    return [
-      {
-        count: companyCount,
-        entity: 'company',
-        path: 'companies',
-        text: 'Companies',
-        noun: 'company',
-      },
-      {
-        count: contactCount,
-        entity: 'contact',
-        path: 'contacts',
-        text: 'Contacts',
-        noun: 'contact',
-      },
-      {
-        count: investmentCount,
-        entity: 'investment_project',
-        path: 'investment-projects',
-        text: 'Investment projects',
-        noun: 'investment project',
-      },
-      {
-        count: orderCount,
-        entity: 'order',
-        path: 'omis',
-        text: 'Orders',
-        noun: 'order',
-      },
-    ]
-  }
-
-  beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.spy()
-    this.breadcrumbStub = function () { return this }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
-  it('should render results page for company', (done) => {
-    const token = '1234'
-    const entityType = 'company'
-    const searchPath = 'companies'
-    const expectedResults = Object.assign({}, companyResponse, {
-      page: 1,
-      pagination: null,
-    })
-
-    searchAction(
-      {
-        session: {
-          token,
-        },
-        query: {
-          term: searchQuery.term,
-        },
-        params: {
-          searchPath,
-        },
-      },
-      {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          try {
-            expect(template).to.equal(`search/views/results-${entityType}`)
-            expect(data.searchTerm).to.equal(searchQuery.term)
-            expect(data.searchEntity).to.equal(entityType)
-            expect(data.results).to.have.property('items').to.deep.equal(expectedResults.results)
-            expect(data.results).to.have.property('aggregations').to.deep.equal(expectedSearchEntityResultsData(0))
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.next
-    )
-  })
-})
+const { renderSearchResults } = require('~/src/apps/search/controllers')
 
 describe('Search Controller #renderSearchResults', () => {
   const investmentResponse = require('~/test/unit/data/search/investment')
   const contactResponse = require('~/test/unit/data/search/contact')
+  const companyResponse = require('~/test/unit/data/search/company')
 
   const searchQuery = {
     term: 'london',
@@ -115,6 +20,10 @@ describe('Search Controller #renderSearchResults', () => {
   nock(config.apiRoot).get(`/v3/search`)
     .query(Object.assign({}, searchQuery, { entity: 'contact' }))
     .reply(200, contactResponse)
+
+  nock(config.apiRoot).get(`/v3/search`)
+    .query(Object.assign({}, searchQuery, { entity: 'company' }))
+    .reply(200, companyResponse)
 
   beforeEach(async () => {
     this.sandbox = sinon.sandbox.create()
@@ -141,7 +50,7 @@ describe('Search Controller #renderSearchResults', () => {
 
     await renderSearchResults(this.req, this.res, this.next)
 
-    expect(this.renderFunction).to.be.calledWith('search/views/index')
+    expect(this.renderFunction).to.be.calledWith('search/view')
   })
 
   it('should call render with investment projects data', async () => {
@@ -163,9 +72,23 @@ describe('Search Controller #renderSearchResults', () => {
     await renderSearchResults(this.req, this.res, this.next)
 
     expect(this.renderFunction).to.be.calledWith(
-      sinon.match.any,
+      'search/view',
       sinon.match({
         searchEntity: 'contact',
+        searchTerm: 'london',
+        results: sinon.match.object,
+      })
+    )
+  })
+
+  it('should call render with companies data', async () => {
+    this.req.params.searchPath = 'companies'
+    await renderSearchResults(this.req, this.res, this.next)
+
+    expect(this.renderFunction).to.be.calledWith(
+      'search/view',
+      sinon.match({
+        searchEntity: 'company',
         searchTerm: 'london',
         results: sinon.match.object,
       })

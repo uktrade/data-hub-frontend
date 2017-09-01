@@ -1,8 +1,13 @@
 const router = require('express').Router()
+const queryString = require('query-string')
 
-const { searchAction, renderSearchResults } = require('./controllers')
+const { renderSearchResults } = require('./controllers')
 
-router.get('/companies', searchAction)
+function redirectToCompaniesSearch (req, res) {
+  res.redirect(`/search/companies?${queryString.stringify(req.query)}`)
+}
+
+router.get('/', redirectToCompaniesSearch)
 router.get('/:searchPath?', renderSearchResults)
 
 module.exports = router
