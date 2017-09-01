@@ -1,4 +1,5 @@
 const faker = require('faker')
+const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -74,12 +75,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see a time stamp of the contact$/, async () => {
-    var currentdate = new Date()
-    var datetime = currentdate.getDate() + '/' +
-                (('0' + (currentdate.getMonth() + 1)).slice(-2)) + '/' +
-                currentdate.getFullYear() + ', ' +
-                (currentdate.getHours() - 1) + ':' +
-                ('0' + (currentdate.getMinutes())).slice(-2)
+    const datetime = format(new Date(), 'D MMM YYYY')
     await contactCollections
       .verify.containsText('@createdDateFromFirstList', datetime)
   })
