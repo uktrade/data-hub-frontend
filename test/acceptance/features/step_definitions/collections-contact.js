@@ -1,4 +1,5 @@
 const faker = require('faker')
+const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -21,15 +22,15 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewPrimaryContactWithNewCompanyAddress(firstName, lastName)
   })
 
-  Given(/^I create a new company$/, async () => {
+  Given(/^I create a new contact with same address as company$/, async () => {
     firstName = faker.name.firstName()
     lastName = faker.name.lastName()
     await Company
       .navigate()
+      .findCompany(foreignCompanyName)
     await Contact
       .navigateToContactsPage()
-      .createNewPrimaryContactWithNewCompanyAddress(firstName, lastName)
-    await contactCollections
+      .createNewPrimaryContact(firstName, lastName)
   })
 
   When(/^I search for this Contact name$/, async () => {
@@ -45,12 +46,12 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I click on contacts tab$/, async () => {
     await contactCollections
-      .clickOnContactsTab()
+      .click('@contactsTab')
   })
 
   Then(/^I see first and last name of the contact$/, async () => {
     await Contact
-    .verify.containsText('@firstCompanyFromList', `${firstName} ${lastName}`)
+      .verify.containsText('@firstCompanyFromList', `${firstName} ${lastName}`)
   })
 
   Then(/^I see Company name of the contact$/, async () => {
@@ -59,26 +60,38 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see Sector of the contact$/, async () => {
+    await contactCollections
+      .verify.containsText('@sectorFromFirstList', 'Oil and Gas')
   })
 
   Then(/^I see Country of the contact$/, async () => {
+    await contactCollections
+      .verify.containsText('@countryFromFirstList', 'United Kingdom')
+  })
+
+  Then(/^I see Country of the contact same as the company$/, async () => {
+    await contactCollections
+      .verify.containsText('@countryFromFirstList', 'France')
   })
 
   Then(/^I see a time stamp of the contact$/, async () => {
+    const datetime = format(new Date(), 'D MMM YYYY')
+    await contactCollections
+      .verify.containsText('@createdDateFromFirstList', datetime)
   })
 
   Then(/^I see Primary or not status of the contact$/, async () => {
-  })
-
-  When(/^I search for a given Contact name$/, async () => {
-  })
-
-  When(/^I navigate to contacts tab$/, async () => {
+    await contactCollections
+      .verify.containsText('@primaryFromFirstList', `Primary`)
   })
 
   When(/^I click on the first contact collection link$/, async () => {
+    await Contact
+      .click('@firstCompanyFromList')
   })
 
   Then(/^I navigate to his contact details page$/, async () => {
+    await contactCollections
+      .verify.containsText('@contactFullNameFromDetailsPage', `${firstName} ${lastName}`)
   })
 })
