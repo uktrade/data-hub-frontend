@@ -1,7 +1,14 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
+  {% set actions %}
+    <p class="c-local-header__action">
+      <a href="" class="button button--small">Generate order</a>
+    </p>
+  {% endset %}
+
   {% call LocalHeader({
+    actions: actions,
     heading: order.reference,
     modifier: "light-banner"
   }) %}
