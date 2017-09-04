@@ -13,6 +13,7 @@ describe('Search builders', () => {
         { count: 20, entity: 'contact' },
         { count: 11, entity: 'investment_project' },
         { count: 3, entity: 'company' },
+        { count: 5, entity: 'order' },
       ])
 
       const expected = [
@@ -36,7 +37,15 @@ describe('Search builders', () => {
           text: 'Investment projects',
           noun: 'investment project',
           count: 11,
-        }]
+        },
+        {
+          entity: 'order',
+          path: 'omis',
+          text: 'Orders',
+          noun: 'order',
+          count: 5,
+        },
+      ]
 
       expect(actual).to.deep.equal(expected)
     })

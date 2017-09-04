@@ -1,16 +1,13 @@
 const { pick, pickBy } = require('lodash')
 
-const { search } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
-const {
-  transformInvestmentProjectToListItem,
-  transformInvestmentListItemToHaveMetaLinks,
-} = require('../transformers')
+const { search } = require('../search/services')
+const { transformApiResponseToSearchCollection } = require('../search/transformers')
+const { transformCompanyToListItem } = require('./transformers')
 
-async function getInvestmentProjectsCollection (req, res, next) {
+async function getCompanyCollection (req, res, next) {
   try {
     res.locals.results = await search({
-      searchEntity: 'investment_project',
+      searchEntity: 'company',
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
@@ -18,8 +15,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
-        transformInvestmentProjectToListItem,
-        transformInvestmentListItemToHaveMetaLinks(req.query),
+        transformCompanyToListItem,
       ))
 
     next()
@@ -30,13 +26,10 @@ async function getInvestmentProjectsCollection (req, res, next) {
 
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
-    'stage',
+    'name',
     'sector',
-    'investment_type',
-    'investor_company',
-    'estimated_land_date_before',
-    'estimated_land_date_after',
-    'client_relationship_manager',
+    'trading_address_country',
+    'uk_region',
   ])
 
   const selectedSortBy = req.query.sortby ? {
@@ -50,5 +43,5 @@ function getRequestBody (req, res, next) {
 
 module.exports = {
   getRequestBody,
-  getInvestmentProjectsCollection,
+  getCompanyCollection,
 }

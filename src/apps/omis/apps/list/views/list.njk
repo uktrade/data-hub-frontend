@@ -1,10 +1,10 @@
-{% extends '_layouts/search.njk' %}
+{% extends "_layouts/two-column.njk" %}
 
 {% block main_grid_right_column %}
   {{
     Collection(results | assign({
-      highlightTerm: searchTerm,
-      countLabel: 'investment project',
+      countLabel: 'order',
+      sortForm: sortForm,
       query: QUERY
     }))
   }}

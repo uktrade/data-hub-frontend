@@ -48,8 +48,20 @@
 }
 
 .c-meta-list__item--stacked {
+  display: block;
+
   & + & {
-    margin-left: $default-spacing-unit;
+    margin-left: 0;
+    margin-top: $default-spacing-unit / 2;
+  }
+
+  @include media(tablet) {
+    display: inline-block;
+
+    & + & {
+      margin-left: $default-spacing-unit * 2;
+      margin-top: 0;
+    }
   }
 
   .c-meta-list__item-label {

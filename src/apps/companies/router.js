@@ -14,6 +14,15 @@ const {
   auditController,
 } = require('./controllers')
 
+const { renderCompanyList } = require('./controllers/list')
+const { getRequestBody, getCompanyCollection } = require('./middleware')
+const { setDefaultQuery } = require('../middleware')
+
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'modified_on:asc',
+}
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
+
 router
   .route('/add-step-1/')
   .get(addController.getAddStepOne)

@@ -4,6 +4,7 @@
  # @param {string} props.name - entity name
  # @param {string} props.type - entity type (e.g. 'date' to format dates)
  # @param {string} [props.id] - entity id, used to create a link to the entity if provided
+ # @param {string} [props.url] - entity URL, defaults to props.urlPrefix + props.id
  # @param {string} [props.urlPrefix] - base URL for linking to an entity, by default it will pluralise props.type
  # @param {array}  [props.metaBadges{}] - an array of metadata item objects
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
@@ -13,6 +14,7 @@
 {% macro Entity (props) %}
   {% if props.name and props.type %}
     {% set urlPrefix = props.urlPrefix or props.type | pluralise + '/' %}
+    {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
     {% set metaItems = props.meta
@@ -28,7 +30,7 @@
       <div class="c-entity__header">
         <h3 class="c-entity__title">
           {% if props.id %}
-            <a href="/{{ urlPrefix }}{{ props.id }}">{{ highlightedName }}</a>
+            <a href="{{ url }}">{{ highlightedName }}</a>
           {% else %}
             {{ highlightedName }}
           {% endif %}
@@ -95,7 +97,7 @@
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
-          {{ props.label }}:
+          {{ props.label }}
         </span>
       {% endif %}
       {% if props.url and not props.isInert %}

@@ -5,7 +5,6 @@ const { buildSearchAggregation } = require('./builders')
 
 /**
  * @param {object} [options] {object}
- * @param {string} [options.entityType] - API entity type
  * @param {string} [options.searchTerm] - search term used for highlighting words in collection macro
  * @param {object} [options.query] - URL query object used in pagination
  * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list

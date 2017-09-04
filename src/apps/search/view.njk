@@ -1,0 +1,18 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block local_header %}
+  {% call LocalHeader({ modifier: 'dark-banner' }) %}
+    {{ EntitySearchForm({
+      inputName: 'term',
+      modifier: 'global',
+      searchTerm: searchTerm,
+      entityType: searchEntity,
+      inputLabel: 'Search for company, contact, investment project or OMIS order',
+      aggregations: results.aggregations
+    }) }}
+  {% endcall %}
+{% endblock %}
+
+{% block main_grid_right_column %}
+  {{ Collection(results) }}
+{% endblock %}

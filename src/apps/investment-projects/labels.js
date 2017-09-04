@@ -64,6 +64,8 @@ const labels = {
       contact: 'Interaction contact',
       date: 'Date of interaction',
       dit_adviser: 'DIT adviser',
+      service: 'Service type',
+      dit_team: 'Service provider',
     },
   },
   evaluationValueLabels: {
