@@ -1,7 +1,8 @@
 const { getCompanyAuditLog, getDitCompany } = require('../repos')
 const { getCommonTitlesAndlinks } = require('../services/data')
-const { transformAuditLogToCollection } = require('../../audit/transformers')
+const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { companyDetailsLabels } = require('../labels')
+const { transformApiResponseToCollection } = require('../../transformers')
 
 async function getAudit (req, res, next) {
   try {
@@ -13,7 +14,10 @@ async function getAudit (req, res, next) {
     getCommonTitlesAndlinks(req, res, company)
 
     const auditLog = await getCompanyAuditLog(token, companyId, page)
-      .then(result => transformAuditLogToCollection(result, companyDetailsLabels))
+      .then(transformApiResponseToCollection(
+        { entityType: 'audit' },
+        transformAuditLogToListItem(companyDetailsLabels)
+      ))
 
     return res
       .breadcrumb('Audit history')
