@@ -73,7 +73,7 @@ function postDetails (req, res, next) {
     try {
       await contactFormService.saveContactForm(req.session.token, req.body)
       if (req.body.id) {
-        req.flash('success', 'Updated contact record')
+        req.flash('success', 'Contact record updated')
         res.redirect(`/contacts/${req.body.id}`)
       } else {
         req.flash('success', 'Added new contact')

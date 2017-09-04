@@ -13,22 +13,17 @@ describe('Investment list controller', () => {
       query: {},
     }
 
-    this.buildInvestmentSortingStub = this.sandbox.spy()
-    this.buildInvestmentFiltersStub = this.sandbox.stub().returns({
-      MacroName: {
-        name: 'field_name',
-        value: 'Field value',
-        type: 'macro_type_param',
-        options: [
-          { name: 'option_name', label: 'option_label' },
-        ],
-      },
-    })
+    this.buildSelectedFiltersSummaryStub = this.sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
-      '../builders': {
-        buildInvestmentSorting: this.buildInvestmentSortingStub,
-        buildInvestmentFilters: this.buildInvestmentFiltersStub,
+      '../../builders': {
+        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
+      },
+      '../macros': {
+        investmentFiltersFields: [
+          { macroName: 'useful' },
+          { macroName: 'exciting' },
+        ],
       },
     })
   })
@@ -41,10 +36,13 @@ describe('Investment list controller', () => {
     it('should render collection page with locals', () => {
       this.controller.renderInvestmentList(this.req, this.res, this.next)
       expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('title'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sort'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filters'))
-      expect(this.buildInvestmentSortingStub).to.have.been.calledOnce
-      expect(this.buildInvestmentFiltersStub).to.have.been.calledWith(this.req.query)
+      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sortForm'))
+      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filtersFields'))
+      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('selectedFilters'))
+      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
+        { macroName: 'useful' },
+        { macroName: 'exciting' },
+      ], this.req.query)
     })
   })
 })

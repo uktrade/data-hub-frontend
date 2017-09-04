@@ -1,9 +1,6 @@
 /* eslint camelcase: 0 */
-const { get, isArray, isPlainObject } = require('lodash')
+const { get, isArray } = require('lodash')
 const queryString = require('query-string')
-
-const { buildPagination } = require('../../lib/pagination')
-const { transformFieldsObjectToMacrosObject } = require('../transformers')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -45,7 +42,7 @@ function transformInvestmentProjectToListItem ({
     meta.push({
       type: 'date',
       name: 'estimated_land_date',
-      label: 'Estimated to land',
+      label: 'Land date',
       value: estimated_land_date,
       isInert: true,
     })
@@ -67,53 +64,32 @@ function transformInvestmentProjectToListItem ({
   }
 }
 
-function transformInvestmentListItemToHaveMetaLinks (item, query = {}) {
-  if (!isArray(item.meta)) { return item }
+function transformInvestmentListItemToHaveMetaLinks (query = {}) {
+  return function transformListItem (item) {
+    if (!isArray(item.meta)) { return item }
 
-  item.meta.forEach(metaItem => {
-    const name = metaItem.name
-    const itemQuery = Object.assign(
-      {},
-      query,
-      {
-        custom: true,
-        [name]: get(metaItem, 'value.id', metaItem.value),
-      },
-    )
+    item.meta.forEach(metaItem => {
+      const name = metaItem.name
+      const itemQuery = Object.assign(
+        {},
+        query,
+        {
+          custom: true,
+          [name]: get(metaItem, 'value.id', metaItem.value),
+        },
+      )
 
-    if (!metaItem.isInert) {
-      metaItem.url = `?${queryString.stringify(itemQuery)}`
-      metaItem.isSelected = !!query[name]
-    }
-  })
-
-  return item
-}
-
-function transformInvestmentProjectsResultsToCollection (projectsData, query = {}, hasItemFilterLinks = false) {
-  if (!isPlainObject(projectsData)) { return }
-  const resultItems = projectsData.items || projectsData.results
-  if (!isArray(resultItems)) { return }
-
-  const items = resultItems
-    .map(transformInvestmentProjectToListItem)
-    .map(item => hasItemFilterLinks ? transformInvestmentListItemToHaveMetaLinks(item, query) : item)
-    .map(item => {
-      item.meta = transformFieldsObjectToMacrosObject(item.meta, {
-        macroName: 'MetaItem',
-      })
-      return item
+      if (!metaItem.isInert) {
+        metaItem.url = `?${queryString.stringify(itemQuery)}`
+        metaItem.isSelected = !!query[name]
+      }
     })
 
-  return {
-    items,
-    count: projectsData.count,
-    pagination: buildPagination(query, projectsData),
+    return item
   }
 }
 
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
-  transformInvestmentProjectsResultsToCollection,
 }

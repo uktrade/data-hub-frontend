@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "1.4.15",
+  "version": "1.4.16",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -43,7 +43,6 @@
     "faker": "^4.1.0",
     "fast-sass-loader": "^1.2.5",
     "file-loader": "^0.11.2",
-    "font-awesome": "^4.6.3",
     "get-form-data": "^1.2.5",
     "govuk-elements-sass": "^2.2.1",
     "govuk_frontend_toolkit": "^5.0.2",

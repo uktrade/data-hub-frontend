@@ -5,14 +5,14 @@
 {##
  # Render collection filters form
  # @param {object} props - component props
- # @param {array}  props.filters - a list of form field components
+ # @param {array}  props.filtersFields - an array of filters macro configurations
  # @param {text}   [props.heading=Filter results] - filters heading text
  # @param {object} [props.query] - query object used to include existing state
 #}
 {% macro CollectionFilters(props) %}
   {% set heading = props.heading | default('Filter results') %}
 
-  {% if props.filters | removeNilAndEmpty | length %}
+  {% if props.filtersFields | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
       class: 'c-collection-filters js-AutoSubmit',
@@ -24,7 +24,7 @@
         <h2 class="c-collection-filters__heading">{{ heading }}</h2>
       </header>
 
-      {{ applyMacro(props.filters) }}
+      {{ renderAsMacro(props.filtersFields) }}
     {% endcall %}
   {% endif %}
 {% endmacro %}
@@ -35,7 +35,8 @@
  # @param {string}   [props.count] - result count
  # @param {string}   [props.countLabel=result] - text to show next to count (singular)
  # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
- # @param {object}   [props.filters] - an object containing selected filters
+ # @param {object}   [props.selectedFilters] - an object containing selected filters
+ # @param {object}   [props.sortForm] - object containing sorting form
  # @param {string}   [props.highlightTerm] - text to highlight
  # @param {string}   [props.actionsHTML] - HTML content for actions block
 #}
@@ -44,7 +45,6 @@
   {% set el = props.el | default('div') %}
   {% set count = props.count | default('0') %}
   {% set countLabel = props.countLabel | default('result') %}
-  {% set selectedFilters = props.filters | mapValues('value') | removeNilAndEmpty %}
 
   <header class="c-collection__header">
     <div class="c-collection__header-row">
@@ -58,11 +58,11 @@
           {% endif %}
         {% endif %}
       </div>
-      {% if selectedFilters | length > 1 or props.actionsHTML %}
+      {% if props.selectedFilters | length > 1 or props.actionsHTML %}
         <div class="c-collection__header-actions">
-          {% if selectedFilters | length > 1 %}
+          {% if props.selectedFilters | length > 1 %}
             <a
-              href="?custom=true"
+              href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
               class="c-collection__filter-remove-all u-float-right js-xhr"
               aria-label="Reset filter results"
             >
@@ -74,16 +74,14 @@
         </div>
       {% endif %}
 
-      {% if selectedFilters | length %}
+      {% if props.selectedFilters | length %}
         <div class="c-collection__filter-summary">
-          {% for name, value in selectedFilters %}
-            {% set filter = props.filters[name] %}
+          {% for name, filter in props.selectedFilters %}
             <span class="c-collection__filter-tag">
               <span class="c-collection__filter-label">{{ filter.label }}</span>
               <span class="c-collection__filter-value">
                 {%- if 'date' in name -%}
-                  {% set date = filter.value | formatDate %}
-                  {{ date if date else filter.value }}
+                  {{ filter.valueLabel | formatDate }}
                 {%- else -%}
                   {{ filter.valueLabel }}
                 {%- endif -%}
@@ -99,7 +97,7 @@
       {% endif %}
     </div>
 
-    {% if props.items|length and (props.pagination or props.sort.options) %}
+    {% if props.sortForm or props.pagination %}
       <div class="c-collection__header-row">
         {% if props.pagination %}
           <span class="c-collection__pagination-summary">
@@ -107,23 +105,7 @@
           </span>
         {% endif %}
 
-        {% if props.sort | length %}
-          {% call Form({
-            method: 'get',
-            class: 'c-collection__sort-form js-AutoSubmit',
-            hideFormActions: true,
-            hiddenFields: props.query | omit(['sortby']) | assign({ custom: true })
-          }) %}
-            {{ MultipleChoiceField({
-              name: 'sortby',
-              label: 'Sort by',
-              value: props.sort.selected,
-              options: props.sort.options,
-              modifier: ['small', 'inline', 'light']
-            }) }}
-            <button class="button button-secondary u-js-hidden">Sort</button>
-          {% endcall %}
-        {% endif %}
+        {{ Form(props.sortForm) if props.sortForm }}
       </div>
     {% endif %}
 
@@ -133,17 +115,16 @@
 {##
  # Render collection component
  # @param {object}  [props] - component props
+ # @param {array{}} [props.id] - collection element id
  # @param {array{}} [props.items] - collection items
  # @param {object}  [props.pagination] - collection pagination
- # @param {object}  [props.filters] - object containing filters configuration
- # @param {object}  [props.sort] - object containing selected sorting and sorting options
- # @param {string}  [props.sort.selected] - selected sorting mode
- # @param {array}   [props.sort.options] - sorting options
+ # @param {object}  [props.selectedFilters] - object containing filters configuration
+ # @param {object}  [props.sortForm] - object containing sorting form
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
- # @param {string}   [props.summaryActionsHTML] - HTML content for actions block
+ # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
 #}
 {% macro Collection(props) %}
-  <article class="c-collection">
+  <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ _CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
 
     {% if props.items | length %}

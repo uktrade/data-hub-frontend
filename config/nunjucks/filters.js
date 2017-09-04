@@ -24,7 +24,7 @@ const {
   pick,
 } = require('lodash')
 
-const { longDateFormat } = require('../../config')
+const { longDateFormat, mediumDateTimeFormat } = require('../../config')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
@@ -117,6 +117,14 @@ const filters = {
     return dateFns.format(parsedDate, format)
   },
 
+  formatDateTime: (value, format = mediumDateTimeFormat) => {
+    const parsedDate = dateFns.parse(value)
+
+    if (!dateFns.isValid(parsedDate)) { return value }
+
+    return dateFns.format(parsedDate, format)
+  },
+
   humanizeDuration: (value, measurement = 'minutes') => {
     const duration = moment.duration(value, measurement)
     const hrsSuffix = pluralise('hour', duration.hours())
@@ -138,6 +146,14 @@ const filters = {
       })
     }
     return result
+  },
+
+  applyClassModifiers (className, modifier) {
+    if (!isString(className) || !(isString(modifier) || isArray(modifier))) { return className }
+
+    const classModifier = flatten([modifier]).map(mod => `${className}--${mod}`).join(' ')
+
+    return `${className} ${classModifier}`.trim()
   },
 }
 

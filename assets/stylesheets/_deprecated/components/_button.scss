@@ -23,6 +23,7 @@
   margin: 30px 0;
 }
 
+// modifiers
 .button--link {
   background: transparent;
   border: 0;
@@ -44,4 +45,13 @@
   &:hover {
     color: $link-hover-colour;
   }
+}
+
+.button--compact {
+  padding: 0;
+}
+
+.button--small {
+  @include bold-font(16);
+  padding: .3em .6em .15em;
 }

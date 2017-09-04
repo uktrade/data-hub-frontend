@@ -10,6 +10,7 @@ defineSupportCode(({ Given, Then, When }) => {
   const foreignCompanyName = 'Lambda plc'
   let projectName
   let strategicdriver
+  let competitorCountry
   let possibleLocation
   let totalInvestmentValue
   let foreignEquityInvestmentValue
@@ -43,7 +44,13 @@ defineSupportCode(({ Given, Then, When }) => {
         strategicdriver = result.value
       })
       .click('@strategicDriverList')
-      .click('@consideringOtherCountriesNo')
+      .setValue('@clientRequirements', 'Testing')
+      .click('@consideringOtherCountriesYes')
+      .click('@competitorCountries')
+      .getText('@competitorCountriesList', (result) => {
+        competitorCountry = result.value
+      })
+      .click('@competitorCountriesList')
       .click('@possibleUkLocation')
       .getText('@possibleUkLocationList', (result) => {
         possibleLocation = result.value
@@ -62,18 +69,13 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@flashInfo', successMsg)
   })
 
-  Then(/^I see the Updated investment requirements confirmation message$/, async () => {
-    await Company
-      .assert.containsText('@flashInfo', 'Updated investment requirements')
-  })
-
   Then(/^I verify that all fields are populated correctly for Requirements section$/, async () => {
     await Stages
       .verify.visible('@editRequirmentsButton')
-      .verify.containsText('@strategicDriverFromProjectDetails', strategicdriver)
-      .verify.containsText('@clientRequirementsFromProjectDetails', '')
-      .verify.containsText('@competitorCountryFromProjectDetails', '')
-      .verify.containsText('@possibleUkLocationFromProjectDetails', possibleLocation)
+      .verify.containsText('@strategicDriverFromProjectDetails', strategicdriver.trim())
+      .verify.containsText('@clientRequirementsFromProjectDetails', 'Testing')
+      .verify.containsText('@competitorCountryFromProjectDetails', competitorCountry.trim())
+      .verify.containsText('@possibleUkLocationFromProjectDetails', possibleLocation.trim())
   })
 
   When(/^I enter all required fields for location section under Details tab$/, async () => {

@@ -619,7 +619,7 @@ describe('Company controller, uk other', function () {
         locals: {},
         breadcrumb: breadcrumbStub,
         redirect: function () {
-          expect(flashStub).to.be.calledWith('success', 'Updated company record')
+          expect(flashStub).to.be.calledWith('success', 'Company record updated')
           done()
         },
         render: function () {

@@ -17,14 +17,9 @@ class ClientDetailsController extends FormController {
     super.configure(req, res, next)
   }
 
-  getValues (req, res, next) {
-    const company = res.locals.company
-
-    super.getValues(req, res, (err, values) => {
-      values.company = company.id
-
-      next(err, values)
-    })
+  process (req, res, next) {
+    req.form.values.company = res.locals.company.id
+    next()
   }
 }
 

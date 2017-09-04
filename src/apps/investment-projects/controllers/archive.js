@@ -30,7 +30,7 @@ async function archiveInvestmentProjectHandler (req, res, next) {
 async function unarchiveInvestmentProjectHandler (req, res, next) {
   try {
     await investmentRepository.unarchiveInvestmentProject(req.session.token, req.params.id)
-    req.flash('success', 'Updated investment project')
+    req.flash('success', 'Investment project updated')
     res.redirect('details')
   } catch (error) {
     next(error)

@@ -32,8 +32,8 @@ module.exports = {
     }
 
     if (isArray(config)) {
-      const macroOutpus = config.map(renderMacro.bind(this))
-      return new nunjucks.runtime.SafeString(macroOutpus.join('\r'))
+      const macroOutputs = config.map(renderMacro.bind(this))
+      return new nunjucks.runtime.SafeString(macroOutputs.join('\r'))
     }
 
     return renderMacro.call(this, config)
@@ -53,8 +53,8 @@ module.exports = {
     }
 
     if (isArray(config)) {
-      const macroOutpus = config.map(renderMacro.bind(this))
-      return new nunjucks.runtime.SafeString(macroOutpus.join('\r'))
+      const macroOutputs = config.map(renderMacro.bind(this))
+      return new nunjucks.runtime.SafeString(macroOutputs.join('\r'))
     }
 
     return renderMacro.call(this, config)

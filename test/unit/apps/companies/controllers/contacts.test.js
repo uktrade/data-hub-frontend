@@ -1,4 +1,4 @@
-const { render } = require('../../../nunjucks')
+const { render } = require('~/test//unit/nunjucks')
 const contactTemplate = `../../src/apps/companies/views/contacts.njk`
 
 describe('Company contacts controller', function () {
@@ -209,142 +209,168 @@ describe('Company contacts controller', function () {
     })
 
     it('should return a list of contacts not archived', function () {
-      expect(locals).to.have.property('contacts')
-      expect(locals.contacts).to.have.length(2)
+      expect(locals).to.have.property('activeContacts').to.have.length(2)
     })
+
     it('should return a list of archived contacts', function () {
-      expect(locals).to.have.property('contactsArchived')
-      expect(locals.contactsArchived).to.have.length(1)
+      expect(locals).to.have.property('archivedContacts').to.have.length(1)
     })
+
     it('should return the required fields to list un-archived contacts', function () {
-      const contact = locals.contacts[0]
-      expect(contact.url).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
-      expect(contact.name).to.equal('Fred Smith')
-      expect(contact.job_title).to.equal('Director')
-      expect(contact.telephone_number).to.equal('+44 7814 333 777')
-      expect(contact.added).to.equal('14 Feb 2017')
-      expect(contact.email).to.equal('fred@test.com')
+      const contact = locals.activeContacts[0]
+      expect(contact).to.have.property('id')
+      expect(contact).to.have.property('type', 'contact')
+      expect(contact).to.have.property('name', 'Fred Smith')
+      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(3)
     })
+
     it('should return the required fields to list archived contacts', function () {
-      const contact = locals.contactsArchived[0]
-      expect(contact.url).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a64')
-      expect(contact.name).to.equal('Jane Smith')
-      expect(contact.job_title).to.equal('Director')
-      expect(contact.reason).to.equal('Contact has left the company')
+      const contact = locals.archivedContacts[0]
+      expect(contact).to.have.property('id')
+      expect(contact).to.have.property('type', 'contact')
+      expect(contact).to.have.property('name', 'Jane Smith')
+      expect(contact).to.have.property('isArchived').to.be.true
+      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(5)
     })
+
     it('should return a link to add a new contact', function () {
       expect(locals.addContactUrl).to.equal('/contacts/create?company=3f2b2a0f-0eb6-4299-8489-7390ccaa17f5')
     })
   })
 
   describe('markup', function () {
-    let contacts
-    let contactsArchived
+    let activeContacts
+    let archivedContacts
     let addContactUrl
 
     beforeEach(function () {
-      contacts = [{
-        url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
+      activeContacts = [{
+        id: '12651151-2149-465e-871b-ac45bc568a62',
+        type: 'contact',
         name: 'Fred Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'fred@test.com',
-        added: '14 Feb 2017',
-        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
-        email_alternative: 'fred@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333',
+        meta: [
+          {
+            label: 'Modified',
+            type: 'datetime',
+            value: '2017-07-07T10:35:41.640665',
+          },
+          {
+            label: 'Country',
+            value: 'United Kingdom',
+            type: 'badge',
+          },
+        ],
       }, {
-        url: '/contacts/12651151-2149-465e-871b-ac45bc568a63',
+        id: '12651151-2149-465e-871b-ac45bc568a63',
+        type: 'contact',
         name: 'Jane Smith',
-        job_title: 'Director',
-        telephone_number: '+44 7814 333 777',
-        email: 'jane@test.com',
-        added: '14 Feb 2017',
-        address: '10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
-        email_alternative: 'jane@gmail.com',
-        notes: 'some notes',
-        telephone_alternative: '07814 000 333',
+        meta: [
+          {
+            label: 'Modified',
+            type: 'datetime',
+            value: '2017-08-07T10:35:41.640665',
+          },
+          {
+            label: 'Country',
+            value: 'United Kingdom',
+            type: 'badge',
+          },
+        ],
       }]
 
-      contactsArchived = [{
-        url: '/contacts/12651151-2149-465e-871b-ac45bc568a62',
-        name: 'Fred Smith',
-        job_title: 'Director',
-        reason: 'Left company',
-        archived_by: 'Fred Flintstone',
-        archived_on: '14 Feb 2017',
-      }]
+      archivedContacts = [
+        {
+          id: '12651151-2149-465e-871b-ac45bc568a64',
+          type: 'contact',
+          name: 'Bob Smith',
+          meta: [
+            {
+              label: 'Archived',
+              type: 'datetime',
+              value: '2017-07-09T10:35:41.640665',
+            },
+            {
+              label: 'Country',
+              value: 'United Kingdom',
+              type: 'badge',
+            },
+            {
+              label: 'Archived by',
+              value: 'Rocky Flintstone',
+            },
+            {
+              label: 'Archived reason',
+              value: 'Left company',
+            },
+          ],
+        },
+      ]
 
       addContactUrl = '/contacts/create?company=1234'
     })
 
     it('should render a list of un-archived contacts', function () {
-      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
-      .then((document) => {
-        expect(document.getElementById('contact-list')).to.not.be.null
-      })
+      return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
+        .then((document) => {
+          expect(document.querySelector('#contact-list .c-entity-list__item')).to.not.be.null
+        })
     })
+
     it('should render a list of archived contacts', function () {
-      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
+      return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
       .then((document) => {
-        expect(document.getElementById('archived-contact-list')).to.not.be.null
+        expect(document.querySelector('#archived-contact-list .c-entity-list__item')).to.not.be.null
       })
     })
+
     it('each un-archived line should include the required data', function () {
-      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
+      return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
       .then((document) => {
-        const contactElement = document.querySelector('#contact-list .card')
-        expect(contactElement.innerHTML).to.include('Fred Smith')
-        expect(contactElement.innerHTML).to.include('/contacts/12651151-2149-465e-871b-ac45bc568a62')
-        expect(contactElement.innerHTML).to.include('Job title:')
-        expect(contactElement.innerHTML).to.include('Director')
-        expect(contactElement.innerHTML).to.include('Telephone:')
-        expect(contactElement.innerHTML).to.include('+44 7814 333 777')
-        expect(contactElement.innerHTML).to.include('Email:')
-        expect(contactElement.innerHTML).to.include('fred@test.com')
-        expect(contactElement.innerHTML).to.include('Added on:')
-        expect(contactElement.innerHTML).to.include('14 Feb 2017')
-        expect(contactElement.innerHTML).to.include('Address')
-        expect(contactElement.innerHTML).to.include('10 The Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
-        expect(contactElement.innerHTML).to.include('Alternate phone')
-        expect(contactElement.innerHTML).to.include('07814 000 333')
-        expect(contactElement.innerHTML).to.include('Alternate email address')
-        expect(contactElement.innerHTML).to.include('fred@gmail.com')
-        expect(contactElement.innerHTML).to.include('Notes')
-        expect(contactElement.innerHTML).to.include('some notes')
+        const contactElement = document.querySelector('#contact-list .c-entity-list__item')
+
+        expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
+        expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Fred Smith')
+        expect(contactElement.textContent).to.include('Modified')
+        expect(contactElement.textContent).to.include('7 Jul 2017, 10:35am')
+        expect(contactElement.textContent).to.include('Country')
+        expect(contactElement.textContent).to.include('United Kingdom')
       })
     })
+
     it('each archived line should include the required data', function () {
-      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
+      return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
       .then((document) => {
-        const contactElement = document.querySelector('#archived-contact-list .contact')
-        expect(contactElement.innerHTML).to.include('Fred Smith')
-        expect(contactElement.innerHTML).to.include('Job title:')
-        expect(contactElement.innerHTML).to.include('Director')
-        expect(contactElement.innerHTML).to.include('Reason:')
-        expect(contactElement.innerHTML).to.include('Left company')
-        expect(contactElement.innerHTML).to.include('Archived on:')
-        expect(contactElement.innerHTML).to.include('14 Feb 2017')
-        expect(contactElement.innerHTML).to.include('Archived by:')
-        expect(contactElement.innerHTML).to.include('Fred Flintstone')
-        expect(contactElement.innerHTML).to.include('/contacts/12651151-2149-465e-871b-ac45bc568a62')
+        const contactElement = document.querySelector('#archived-contact-list .c-entity-list__item')
+
+        expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a64')
+        expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Bob Smith')
+        expect(contactElement.textContent).to.include('Archived')
+        expect(contactElement.textContent).to.include('9 Jul 2017, 10:35am')
+        expect(contactElement.textContent).to.include('Country')
+        expect(contactElement.textContent).to.include('United Kingdom')
+        expect(contactElement.textContent).to.include('Archived by')
+        expect(contactElement.textContent).to.include('Rocky Flintstone')
+        expect(contactElement.textContent).to.include('Archived reason')
+        expect(contactElement.textContent).to.include('Left company')
       })
     })
+
     it('include a link to add a new contact', function () {
-      return render(contactTemplate, { contacts, contactsArchived, addContactUrl, company })
+      return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
       .then((document) => {
         const link = document.querySelector('a#add-contact-link')
         expect(link.href).to.eq('/contacts/create?company=1234')
       })
     })
+
     it('should not render contacts section if there are none and warn user', function () {
       return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {
-        expect(document.getElementById('contact-list')).to.be.null
+        expect(document.querySelector('#contact-list .c-collection__result-count').textContent).to.equal('0')
         expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
       })
     })
+
     it('should not render archived contacts section if there are none', function () {
       return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
       .then((document) => {

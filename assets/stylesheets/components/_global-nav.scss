@@ -1,0 +1,44 @@
+.c-global-nav {
+  @include bold-font(16);
+  background: $grey-3;
+  padding: $default-spacing-unit / 4 0;
+
+  @include media(tablet) {
+    padding: 0;
+  }
+}
+
+.c-global-nav__link {
+  display: block;
+  padding: $default-spacing-unit / 4 0;
+  text-decoration: none;
+
+  &:hover,
+  &:link,
+  &:visited,
+  &:active {
+    color: $black;
+  }
+
+  &.is-active {
+    color: $govuk-blue;
+  }
+
+  @include media(tablet) {
+    border-bottom: 5px solid transparent;
+    display: inline-block;
+    padding: ($default-spacing-unit / 2) 0 3px;
+
+    & + & {
+      margin-left: $default-spacing-unit;
+    }
+
+    &:hover {
+      border-bottom-color: $light-blue;
+    }
+
+    &.is-active {
+      border-bottom-color: $govuk-blue;
+    }
+  }
+}

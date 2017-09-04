@@ -2,12 +2,18 @@ const FormController = require('hmpo-form-wizard').Controller
 
 const Controller = proxyquire('~/src/apps/omis/apps/create/controllers/market', {
   '../../../../../lib/metadata': {
-    countryOptions: [{
+    omisMarketOptions: [{
       id: '1',
       name: 'One',
+      disabled_on: null,
     }, {
       id: '2',
       name: 'Two',
+      disabled_on: '2010-01-01T00:00:00',
+    }, {
+      id: '3',
+      name: 'Three',
+      disabled_on: null,
     }],
   },
 })
@@ -47,8 +53,8 @@ describe('OMIS create market controller', () => {
           label: 'One',
         },
         {
-          value: '2',
-          label: 'Two',
+          value: '3',
+          label: 'Three',
         },
       ])
       expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)

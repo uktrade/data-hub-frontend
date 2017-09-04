@@ -44,6 +44,7 @@ const config = {
   sentryDsn: process.env.SENTRY_DSN,
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
+  mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
 }
 

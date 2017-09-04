@@ -61,7 +61,7 @@ describe('Investment project data transformers', () => {
     })
 
     it('should add URL property to meta items', () => {
-      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item))
+      const actual = this.mockInvestmentListItemData.map(transformInvestmentListItemToHaveMetaLinks())
 
       const result = actual[0]
       expect(result.meta[0].name).to.equal('stage')
@@ -79,7 +79,7 @@ describe('Investment project data transformers', () => {
       const mockQuery = {
         stage: 's1',
       }
-      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item, mockQuery))
+      const actual = this.mockInvestmentListItemData.map(transformInvestmentListItemToHaveMetaLinks(mockQuery))
 
       const result = actual[0]
       expect(result.meta[0].name).to.equal('stage')
@@ -95,7 +95,7 @@ describe('Investment project data transformers', () => {
         stage: 's1',
       }
       this.mockInvestmentListItemData[0].meta[0].isInert = true
-      const actual = this.mockInvestmentListItemData.map(item => transformInvestmentListItemToHaveMetaLinks(item, mockQuery))
+      const actual = this.mockInvestmentListItemData.map(transformInvestmentListItemToHaveMetaLinks(mockQuery))
 
       const result = actual[0]
 

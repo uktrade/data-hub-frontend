@@ -7,41 +7,31 @@ const entities = [
     entity: 'company',
     path: 'companies',
     text: 'Companies',
+    noun: 'company',
     count: 0,
   },
   {
     entity: 'contact',
     path: 'contacts',
     text: 'Contacts',
+    noun: 'contact',
     count: 0,
   },
   {
     entity: 'investment_project',
     path: 'investment-projects',
     text: 'Investment projects',
+    noun: 'investment project',
+    count: 0,
+  },
+  {
+    entity: 'order',
+    path: 'omis',
+    text: 'Orders',
+    noun: 'order',
     count: 0,
   },
 ]
-
-function searchInvestmentProjects ({ token, searchTerm, requestBody, limit = 10, page = 1 }) {
-  return search({
-    token,
-    searchTerm,
-    requestBody,
-    limit,
-    page,
-    searchEntity: 'investment_project',
-    isAggregation: false,
-  })
-    .then(result => {
-      return {
-        limit,
-        count: result.count,
-        page: result.page,
-        items: result.results,
-      }
-    })
-}
 
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
   const searchUrl = `${config.apiRoot}/v3/search`
@@ -118,24 +108,10 @@ function searchLimitedCompanies (options) {
     })
 }
 
-function buildSearchEntityResultsData (apiResponseEntities) {
-  return entities.map((defaultEntity) => {
-    return Object.assign(
-      {},
-      defaultEntity,
-      apiResponseEntities.find((apiResponseEntity) => {
-        return apiResponseEntity.entity === defaultEntity.entity
-      })
-    )
-  })
-}
-
 module.exports = {
   entities,
   search,
-  searchInvestmentProjects,
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,
-  buildSearchEntityResultsData,
 }

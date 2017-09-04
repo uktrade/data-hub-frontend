@@ -37,11 +37,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .createPrivateLimitedCompany(newCompanyName)
   })
 
-  Then(/^I see the creation confirmation message$/, async () => {
-    await Company
-      .verify.containsText('@flashInfo', 'Updated company record')
-  })
-
   Then(/^I verify that my newly created company is present in search results$/, async () => {
     await Company
       .navigate()

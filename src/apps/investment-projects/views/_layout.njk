@@ -11,9 +11,10 @@
     modifier: 'light-banner'
   }) %}
 
-  <div class="c-meta-list">
-    {{ investmentStatus.meta | map(callAsMacro('MetaItem')) | join | safe }}
-  </div>
+  {{ MetaList({
+    items: investmentStatus.meta,
+    itemModifier: 'stacked'
+  }) }}
 
   {{ Progress({
     stageNames: investmentProjectStages,

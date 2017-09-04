@@ -2,9 +2,6 @@ $images-dir: "/images/";
 
 @import "_deprecated/trade-elements";
 
-$fa-font-path: "~font-awesome/fonts";
-@import "~font-awesome/scss/font-awesome";
-
 @import "settings";
 @import "tools";
 @import "generic";

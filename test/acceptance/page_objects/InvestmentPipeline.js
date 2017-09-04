@@ -23,22 +23,16 @@ module.exports = {
     sortByInvestmentValueLowToHigh: '#field-sortby option:nth-child(7)',
     projectName: '.c-entity-list__item:first-child h3',
     projectID: '.c-entity-list__item:first-child .c-entity__code',
-    projectEstimatedLandDate: '.c-entity-list__item:first-child .c-entity__content .c-meta-item:nth-child(2) span:nth-child(2)',
-    projectStage: '.c-entity-list__item:first-child .c-entity__header .c-meta-item:first-child',
+    projectEstimatedLandDate: '.c-entity-list__item:first-child .c-entity__content .c-meta-list__item:nth-child(2) span:nth-child(2)',
+    projectStage: '.c-entity-list__item:first-child .c-entity__header .c-meta-list__item:first-child',
     projectNameFromList: '.c-entity-list__item:first-child h3 a',
-    projectLandingDateFromList: '.c-entity-list__item:first-child .c-entity__content .c-meta-item:nth-child(2) .c-meta-item__value',
+    projectLandingDateFromList: '.c-entity-list__item:first-child .c-entity__content .c-meta-list__item:nth-child(2) .c-meta-list__item-value',
     projectTypeFromFirstList: '.c-entity-list__item:first-child .c-badge.is-selected',
     projectStageFromFirstList: '.c-entity-list__item:first-child .c-badge.is-selected',
-    sectorFromList: '.c-entity-list__item:first-child .c-entity__content .c-meta-item:nth-child(3) a',
+    sectorFromList: '.c-entity-list__item:first-child .c-entity__content .c-meta-list__item:nth-child(3) a',
     projectNameFromDetails: '.c-local-header__heading',
-    removeAllFilters: {
-      selector: "//a[contains(@class, 'filter-remove-all')]",
-      locateStrategy: 'xpath',
-    },
-    removeSingleFilters: {
-      selector: "//div[@class='c-results-summary__filters']/span[1]/a",
-      locateStrategy: 'xpath',
-    },
+    removeAllFilters: '.c-collection__filter-remove-all',
+    removeSingleFilters: '.c-collection__filter-summary span:nth-child(1) a',
   },
 
   commands: [

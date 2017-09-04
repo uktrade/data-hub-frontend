@@ -11,9 +11,13 @@
     {
       "count": 1,
       "entity": "contact"
+    },
+    {
+      "count": 4,
+      "entity": "order"
     }
   ],
-  "companies": [
+  "results": [
     {
       "account_manager": null,
       "trading_name": null,

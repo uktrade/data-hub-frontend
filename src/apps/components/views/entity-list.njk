@@ -87,4 +87,8 @@
     </div>
   {% endcall %}
 
+  {% call Example('Audit history') %}
+    {{ Collection(auditLog) }}
+  {% endcall %}
+
 {% endblock %}

@@ -3,6 +3,7 @@ Feature: Login to Data Hub
   As an existing user
   I want to login to Data Hub
 
+  @login-logout
   Scenario: Logging in and signing out
 
     Given I am on the Data Hub login page

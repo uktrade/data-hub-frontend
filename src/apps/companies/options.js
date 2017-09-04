@@ -1,6 +1,6 @@
 const ukOtherCompanyOptions = [
   'Charity',
-  'Government dept',
+  'Government department',
   'Intermediary',
   'Limited partnership',
   'Partnership',

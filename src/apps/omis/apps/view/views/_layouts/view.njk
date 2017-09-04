@@ -1,0 +1,33 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block local_header %}
+  {% set actions %}
+    <p class="c-local-header__action">
+      <a href="" class="button button--small">Generate order</a>
+    </p>
+    <p class="c-local-header__action">
+      <a href="" class="">View quote</a>
+    </p>
+  {% endset %}
+
+  {% call LocalHeader({
+    actions: actions,
+    heading: order.reference,
+    modifier: "light-banner"
+  }) %}
+
+    {{ MetaList({
+      items: [
+        { "label": "Status", "value": "Draft" },
+        { "label": "Created on", "value": order.created_on | formatDate },
+        { "label": "Created by", "value": order.created_by }
+      ],
+      itemModifier: "stacked"
+    }) }}
+
+  {% endcall %}
+{% endblock %}
+
+{% block main_grid_left_column %}
+  {{ LocalNav({ items: localNavItems }) }}
+{% endblock %}

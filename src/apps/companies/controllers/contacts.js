@@ -1,5 +1,7 @@
+const { reject } = require('lodash')
+
 const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
-const { getDisplayCompanyContact, getDisplayArchivedCompanyContact } = require('../../contacts/services/formatting')
+const { transformContactToListItem } = require('../../contacts/transformers')
 
 /**
  *
@@ -13,22 +15,23 @@ async function getContacts (req, res, next) {
     const company = res.locals.company = await getInflatedDitCompany(req.session.token, req.params.id)
     getCommonTitlesAndlinks(req, res, company)
 
-    // build the data for the contact table.
-    res.locals.contacts = company.contacts
-      .filter(contact => !contact.archived)
-      .map(contact => getDisplayCompanyContact(contact, company))
-
-    // build the data for the archived contact table.
-    res.locals.contactsArchived = company.contacts
-      .filter(contact => contact.archived === true)
-      .map(contact => getDisplayArchivedCompanyContact(contact))
-
-    res.locals.addContactUrl = `/contacts/create?company=${res.locals.company.id}`
+    const transformedContacts = company.contacts
+      .map(transformContactToListItem)
+      .map(contact => {
+        const meta = reject(contact.meta, ['label', 'Company'])
+        return Object.assign({}, contact, { meta })
+      })
+    const activeContacts = transformedContacts.filter(contact => !contact.isArchived)
+    const archivedContacts = transformedContacts.filter(contact => contact.isArchived)
 
     res
       .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
       .breadcrumb('Contacts')
-      .render('companies/views/contacts')
+      .render('companies/views/contacts', {
+        activeContacts,
+        archivedContacts,
+        addContactUrl: `/contacts/create?company=${res.locals.company.id}`,
+      })
   } catch (error) {
     next(error)
   }

@@ -8,7 +8,7 @@ Feature: Create a new company
 
     Given I am an authenticated user on Data Hub website
     When I create a new “UK private or public limited company”
-    Then I see the creation confirmation message
+    Then I see the Updated company record confirmation message
     And I verify that my newly created company is present in search results
     And I logout of Data Hub website
 
@@ -17,7 +17,7 @@ Feature: Create a new company
 
     Given I am an authenticated user on Data Hub website
     When I create a new “Other type of UK Organisation”
-    Then I see the creation confirmation message
+    Then I see the Updated company record confirmation message
     And I verify that my newly created company is present in search results
     And I logout of Data Hub website
 
@@ -26,6 +26,6 @@ Feature: Create a new company
 
     Given I am an authenticated user on Data Hub website
     When I create a new “Foreign organisation”
-    Then I see the creation confirmation message
+    Then I see the Updated company record confirmation message
     And I verify that my newly created company is present in search results
     And I logout of Data Hub website

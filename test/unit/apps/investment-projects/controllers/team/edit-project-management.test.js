@@ -88,7 +88,7 @@ describe('Investment project, project management team, edit controller', () => {
           redirect: (url) => {
             try {
               expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
-              expect(this.flashStub).to.calledWith('success', 'Updated investment details')
+              expect(this.flashStub).to.calledWith('success', 'Investment details updated')
               done()
             } catch (e) {
               done(e)

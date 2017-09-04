@@ -5,10 +5,11 @@ const companyService = require('../../companies/services/data')
 const { contactDetailsLabels } = require('../labels')
 
 const reasonForArchiveOptions = [
-  'Contact has left the company',
-  'Contact does not want to be contacted',
-  'Contact changed role/responsibility',
+  'Left the company',
+  'Does not want to be contacted',
+  'Changed role/responsibility',
 ]
+const reasonForArchiveOptionsPrefix = 'This contact has:'
 
 async function getCommon (req, res, next) {
   try {
@@ -19,6 +20,7 @@ async function getCommon (req, res, next) {
     res.locals.id = req.params.contactId
     res.locals.companyUrl = companyService.buildCompanyUrl(company)
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
+    res.locals.reasonForArchiveOptionsPrefix = reasonForArchiveOptionsPrefix
 
     res.breadcrumb(`${contact.first_name} ${contact.last_name}`, `/contacts/${contact.id}`)
 

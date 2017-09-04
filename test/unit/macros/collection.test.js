@@ -13,33 +13,31 @@ describe('Collection macros', () => {
     describe('valid props', () => {
       beforeEach(() => {
         this.filter1 = {
-          MultipleChoiceField: {
-            name: 'who-are-you',
-            label: 'Who are you?',
-            type: 'radio',
-            options: [
-              { label: 'Human', value: 'h' },
-              { label: 'Alien', value: 'a' },
-            ],
-          },
+          macroName: 'MultipleChoiceField',
+          name: 'who-are-you',
+          label: 'Who are you?',
+          type: 'radio',
+          options: [
+            { label: 'Human', value: 'h' },
+            { label: 'Alien', value: 'a' },
+          ],
         }
 
         this.filter2 = {
-          MultipleChoiceField: {
-            name: 'fav-colour',
-            label: 'Favourite colour',
-            options: [
-              { label: 'Red', value: 'r' },
-              { label: 'Green', value: 'g' },
-              { label: 'Blue', value: 'b' },
-            ],
-          },
+          macroName: 'MultipleChoiceField',
+          name: 'fav-colour',
+          label: 'Favourite colour',
+          options: [
+            { label: 'Red', value: 'r' },
+            { label: 'Green', value: 'g' },
+            { label: 'Blue', value: 'b' },
+          ],
         }
       })
 
       it('should render collection filters component', () => {
         const component = entitiesMacros.renderToDom('CollectionFilters', {
-          filters: [
+          filtersFields: [
             this.filter1,
             this.filter2,
           ],
@@ -64,7 +62,7 @@ describe('Collection macros', () => {
       it('should render results filters component with custom heading', () => {
         const component = entitiesMacros.renderToDom('CollectionFilters', {
           heading: 'Pick one',
-          filters: [
+          filtersFields: [
             this.filter1,
           ],
         })
@@ -76,7 +74,7 @@ describe('Collection macros', () => {
           query: {
             sortby: 'alphabetical',
           },
-          filters: [
+          filtersFields: [
             this.filter1,
           ],
         })
@@ -117,9 +115,9 @@ describe('Collection macros', () => {
           stage: 's1',
           type: 't1',
         },
-        filters: {
-          stage: { label: 'Stage', value: '1', valueLabel: 'Initial' },
-          type: { label: 'Type', value: '2', valueLabel: 'Manual' },
+        selectedFilters: {
+          stage: { label: 'Stage', valueLabel: 'Initial' },
+          type: { label: 'Type', valueLabel: 'Manual' },
         },
       })
 

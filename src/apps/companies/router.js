@@ -11,7 +11,17 @@ const {
   investmentsController,
   ltdController,
   ukotherController,
+  auditController,
 } = require('./controllers')
+
+const { renderCompanyList } = require('./controllers/list')
+const { getRequestBody, getCompanyCollection } = require('./middleware')
+const { setDefaultQuery } = require('../middleware')
+
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'modified_on:asc',
+}
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
 
 router
   .route('/add-step-1/')
@@ -77,5 +87,6 @@ router
 
 router.get('/:id/interactions', interactionsController.getInteractions)
 router.get('/:id/investments', investmentsController.getAction)
+router.get('/:id/audit', auditController.getAudit)
 
 module.exports = router

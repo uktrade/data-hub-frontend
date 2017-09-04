@@ -95,7 +95,7 @@ function postDetails (req, res, next) {
   return new Promise(async (resolve, reject) => {
     try {
       const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
-      req.flash('success', 'Updated company record')
+      req.flash('success', 'Company record updated')
       res.redirect(`/companies/view/ltd/${savedCompany.id}`)
     } catch (response) {
       if (response.errors) {

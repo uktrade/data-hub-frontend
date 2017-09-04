@@ -159,12 +159,6 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
-      .click('@typeOfFDI')
-      .getText('@typeOfFDIListAcquisition', (result) => {
-        actualName = result.value
-      })
-      .click('@typeOfFDIListAcquisition')
-      .submitTheForm()
   })
 
   When(/^I create a new Investment project with Non-FDI as Investment type$/, async () => {

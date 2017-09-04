@@ -1,13 +1,15 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "./_layouts/view.njk" %}
 
 {% macro AnswersSummary(props) %}
   <table class="c-answers-summary">
     <caption class="c-answers-summary__heading">
       {{ props.heading }}
       {% for action in props.actions %}
-        <a class="c-answers-summary__heading-action" href="{{ action.url }}">
-          {{ action.text or 'Edit' }}
-        </a>
+        {% if action.url %}
+          <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+            {{ action.text or 'Edit' }}
+          </a>
+        {% endif %}
       {% endfor %}
     </caption>
 
@@ -23,7 +25,7 @@
           {% if item.value %}
             <tr>
               <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-              <td class="c-answers-summary__content">{{ item.value }}</td>
+              <td class="c-answers-summary__content">{{ item.value | safe }}</td>
             </tr>
           {% endif %}
         {% endif %}
@@ -32,11 +34,13 @@
   </table>
 {% endmacro %}
 
-{% block main_grid_left_column %}
-  {{ LocalNav({ items: localNavItems }) }}
-{% endblock %}
-
 {% block main_grid_right_column %}
+  {% set companyLink %}
+    <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
+  {% endset %}
+  {% set contactLink %}
+    <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+  {% endset %}
 
   {{ AnswersSummary({
     heading: 'Client details',
@@ -45,10 +49,10 @@
     }],
     items: [{
       label: 'Company',
-      value: values.company.name
+      value: companyLink
     }, {
       label: 'Contact',
-      value: values.contact.name
+      value: contactLink
     }]
   }) }}
 
@@ -72,7 +76,7 @@
   {% call AnswersSummary({
     heading: 'Post advisers',
     actions: [{
-      url: 'edit/assignee-time',
+      url: 'edit/assignee-time' if values.assignees.length,
       text: 'Edit time'
     }, {
       url: 'edit/assignees',
@@ -83,8 +87,25 @@
       {% for assignee in values.assignees %}
         <tr>
           <th class="c-answers-summary__title" scope="row">
-            {{ assignee.adviser.name }}
+            {{ assignee.adviser.name }} {{ '(you)' if assignee.adviser.id === user.id }}
+            {% if assignee.is_lead %}
+              <span class="c-badge">Lead adviser</span>
+            {% endif %}
           </th>
+          <td class="c-answers-summary__content c-answers-summary__control">
+            {% if not assignee.is_lead %}
+              {% call Form ({
+                action: 'edit/lead-assignee',
+                hideFormActions: true,
+                hiddenFields: {
+                  adviserId: assignee.adviser.id,
+                  orderId: order.id
+                }
+              }) %}
+                <button type="submit" class="button button--link button--compact">Set as lead adviser</button>
+              {% endcall %}
+            {% endif %}
+          </td>
           <td class="c-answers-summary__content c-answers-summary__content--number">
             {{ assignee.estimated_time  | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
           </td>
@@ -99,7 +120,7 @@
     {% if values.estimatedTimeSum and values.assignees.length %}
       <tfoot>
         <tr>
-          <td class="c-answers-summary__footer" colspan="2">
+          <td class="c-answers-summary__footer" colspan="3">
             <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
           </td>
         </tr>

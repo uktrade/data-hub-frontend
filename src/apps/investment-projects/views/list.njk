@@ -6,7 +6,7 @@
   {{
     CollectionFilters({
       query: QUERY,
-      filters: filterMacroConfig
+      filtersFields: filtersFields
     })
   }}
 {% endblock %}
@@ -14,8 +14,8 @@
 {% block main_grid_right_column %}
   {{
     Collection(results | assign({
-      sort: sort,
-      filters: filters,
+      sortForm: sortForm,
+      selectedFilters: selectedFilters,
       countLabel: 'project',
       query: QUERY
     }))

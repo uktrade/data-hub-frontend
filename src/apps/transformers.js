@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
-const { keyBy, snakeCase, omit, map } = require('lodash')
+const { keyBy, snakeCase, isPlainObject, isFunction } = require('lodash')
+
+const { buildPagination } = require('../lib/pagination')
 
 function transformObjectToOption ({ id, name }) {
   return {
@@ -39,19 +41,36 @@ function buildMetaDataObj (collection) {
   })
 }
 
-function transformFieldsObjectToMacrosObject (fields, sharedProps = {}) {
-  return map(fields, (fieldProps, fieldName) => {
-    const macroName = sharedProps.macroName || fieldProps.macroName
-    if (!macroName) { return }
+/**
+ * @param {object} [options] {object}
+ * @param {string} [options.searchTerm] - search term used for highlighting words in collection macro
+ * @param {object} [options.query] - URL query object used in pagination
+ * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
+ * @returns {object, undefined}
+ */
+function transformApiResponseToCollection (options = {}, ...itemTransformers) {
+  /**
+   * @param {object} response - API response object
+   * @returns {function}
+   */
+  return function transformResponseToCollection (response) {
+    if (!isPlainObject(response)) { return }
 
-    return {
-      [macroName]: Object.assign(
-        { name: fieldName },
-        omit(fieldProps, 'macroName'),
-        sharedProps
-      ),
-    }
-  }).filter(x => x)
+    let items = response.results || response.items
+
+    if (!items) { return }
+
+    itemTransformers.forEach(transformer => {
+      if (!isFunction(transformer)) { return }
+      items = items.map(transformer)
+    })
+
+    return Object.assign({}, {
+      items,
+      count: response.count,
+      pagination: buildPagination(options.query, response),
+    })
+  }
 }
 
 module.exports = {
@@ -60,5 +79,5 @@ module.exports = {
   transformStringToOption,
   transformContactToOption,
   transformIdToObject,
-  transformFieldsObjectToMacrosObject,
+  transformApiResponseToCollection,
 }

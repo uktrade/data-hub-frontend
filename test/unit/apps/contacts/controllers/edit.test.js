@@ -283,7 +283,7 @@ describe('Contact controller, edit', function () {
         expectField(document, 'address_town', 'Town or city (optional)', locals.formData.address_town)
         expectField(document, 'address_county', 'County (optional)', locals.formData.address_county)
         expectField(document, 'address_postcode', 'Postcode (optional)', locals.formData.address_postcode)
-        expectField(document, 'telephone_alternative', 'Alternative phone (optional)', locals.formData.telephone_alternarive)
+        expectField(document, 'telephone_alternative', 'Alternative telephone number (optional)', locals.formData.telephone_alternarive)
         expectField(document, 'email_alternative', 'Alternative email (optional)', locals.formData.email_alternative)
         expectField(document, 'notes', 'Notes (optional)', locals.formData.notes)
       })
@@ -396,7 +396,7 @@ describe('Contact controller, edit', function () {
     })
     it('should send a flash message to let the user know they just updated a contact', function (done) {
       res.redirect = function (url) {
-        expect(flashStub).to.be.calledWith('success', 'Updated contact record')
+        expect(flashStub).to.be.calledWith('success', 'Contact record updated')
         done()
       }
       contactEditController.postDetails(req, res, next)

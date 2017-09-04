@@ -166,6 +166,34 @@ describe('nunjucks filters', () => {
     })
   })
 
+  describe('#formatDateTime', () => {
+    context('when given an invalid datetime', () => {
+      it('should return input value', () => {
+        const formattedDate = filters.formatDateTime('not-a-date')
+
+        expect(formattedDate).to.equal('not-a-date')
+      })
+    })
+
+    context('when given a valid datetime', () => {
+      context('when no format is specified', () => {
+        it('should return datetime in default format', () => {
+          const formattedDate = filters.formatDateTime('2017-08-01T14:18:28')
+
+          expect(formattedDate).to.equal('1 Aug 2017, 2:18pm')
+        })
+      })
+
+      context('when a format is specified', () => {
+        it('should return datetime in that format', () => {
+          const formattedDate = filters.formatDateTime('2017-08-16T14:18:28', 'DD/MM/YY HH:mm')
+
+          expect(formattedDate).to.equal('16/08/17 14:18')
+        })
+      })
+    })
+  })
+
   describe('#collectionDefault', () => {
     const mockObjectWithEmpties = {
       a: true,
@@ -218,6 +246,24 @@ describe('nunjucks filters', () => {
       const collectionDefault = filters.collectionDefault(mockArrayWithEmpties, argumentDefault)
 
       expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault, true))
+    })
+  })
+
+  describe('#applyClassModifiers', () => {
+    it('should return original class name when no valid modifier is given', () => {
+      expect(filters.applyClassModifiers('c-custom-component', undefined)).to.equal('c-custom-component')
+      expect(filters.applyClassModifiers('c-custom-component', {})).to.equal('c-custom-component')
+      expect(filters.applyClassModifiers('c-custom-component', { a: 'A' })).to.equal('c-custom-component')
+    })
+
+    it('should return original class name and BEM modifier for modifier string', () => {
+      expect(filters.applyClassModifiers('c-custom-component', 'modifier'))
+        .to.equal('c-custom-component c-custom-component--modifier')
+    })
+
+    it('should return original class name and BEM modifier for modifiers array', () => {
+      expect(filters.applyClassModifiers('c-custom-component', ['modifier', 'another-modifier']))
+        .to.equal('c-custom-component c-custom-component--modifier c-custom-component--another-modifier')
     })
   })
 })

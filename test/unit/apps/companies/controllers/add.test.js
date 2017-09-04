@@ -35,7 +35,7 @@ describe('Company add controller', function () {
       const req = { session: {} }
       const expected = [
         { label: 'Charity', value: 'Charity' },
-        { label: 'Government dept', value: 'Government dept' },
+        { label: 'Government department', value: 'Government department' },
         { label: 'Intermediary', value: 'Intermediary' },
         { label: 'Limited partnership', value: 'Limited partnership' },
         { label: 'Partnership', value: 'Partnership' },

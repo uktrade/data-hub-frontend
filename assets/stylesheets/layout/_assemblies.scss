@@ -17,10 +17,12 @@
     margin-top: $default-spacing-unit;
   }
 
-  .c-multiple-choice {
+  .c-multiple-choice,
+  .c-meta-list {
     margin-top: $default-spacing-unit / 2;
   }
 
+  .c-meta-container,
   .c-multiple-choice--smaller {
     margin-top: $baseline-grid-unit;
   }
@@ -38,10 +40,6 @@
   .c-pagination {
     margin-top: $default-spacing-unit * 2;
     margin-bottom: $default-spacing-unit * 2;
-  }
-
-  .c-meta-list {
-    margin-top: $default-spacing-unit;
   }
 }
 
