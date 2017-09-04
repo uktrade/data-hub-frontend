@@ -137,7 +137,7 @@
 
 {% if not investmentData.id %}
   <div class="c-form-group">
-    {% call MultipleChoiceField({
+    {{ MultipleChoiceField({
       type: 'radio',
       name: 'is_relationship_manager',
       label: 'Are you the client relationship manager for this project?',
@@ -152,29 +152,29 @@
           value: 'false',
           label: 'No'
         }
+      ],
+      children:  [
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'client_relationship_manager',
+          label: 'Client relationship manager',
+          error: form.errors.messages['client_relationship_manager'],
+          value: form.state['client_relationship_manager'],
+          options: form.options.advisers,
+          initialOption: '-- Select client relationship manager --',
+          condition: {
+            name: 'is_relationship_manager',
+            value: 'false'
+          },
+          modifier: 'subfield'
+        }
       ]
-    }) %}
-
-      {{ MultipleChoiceField({
-        name: 'client_relationship_manager',
-        label: 'Client relationship manager',
-        error: form.errors.messages['client_relationship_manager'],
-        value: form.state['client_relationship_manager'],
-        options: form.options.advisers,
-        initialOption: '-- Select client relationship manager --',
-        condition: {
-          name: 'is_relationship_manager',
-          value: 'false'
-        },
-        modifier: 'subfield'
-      }) }}
-
-    {% endcall %}
+    }) }}
   </div>
 {% endif %}
 
   <div class="c-form-group">
-    {% call MultipleChoiceField({
+    {{ MultipleChoiceField({
       type: 'radio',
       name: 'is_referral_source',
       label: 'Are you the referral source for this project?',
@@ -189,24 +189,24 @@
           value: 'false',
           label: 'No'
         }
+      ],
+      children:  [
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'referral_source_adviser',
+          label: 'Referral source adviser',
+          error: form.errors.messages['referral_source_adviser'],
+          value: form.state['referral_source_adviser'],
+          options: form.options.advisers,
+          initialOption: '-- Select referral source adviser --',
+          condition: {
+            name: 'is_referral_source',
+            value: 'false'
+          },
+          modifier: 'subfield'
+        }
       ]
-    }) %}
-
-      {{ MultipleChoiceField({
-        name: 'referral_source_adviser',
-        label: 'Referral source adviser',
-        error: form.errors.messages['referral_source_adviser'],
-        value: form.state['referral_source_adviser'],
-        options: form.options.advisers,
-        initialOption: '-- Select referral source adviser --',
-        condition: {
-          name: 'is_referral_source',
-          value: 'false'
-        },
-        modifier: 'subfield'
-      }) }}
-
-    {% endcall %}
+    }) }}
   </div>
 
   <div class="c-form-group">
