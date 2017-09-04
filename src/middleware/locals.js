@@ -31,17 +31,10 @@ module.exports = function locals (req, res, next) {
     QUERY: req.query,
     GLOBAL_NAV_ITEMS: globalNavItems.map(item => {
       const url = path.resolve(req.baseUrl, item.path)
-      let isActive
-
-      if (url === '/') {
-        isActive = req.path === '/'
-      } else {
-        isActive = req.path.startsWith(url)
-      }
 
       return Object.assign(item, {
         url,
-        isActive,
+        isActive: req.path.startsWith(url),
       })
     }),
 
