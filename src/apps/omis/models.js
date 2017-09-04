@@ -53,6 +53,28 @@ const Order = {
   getById (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
   },
+
+  getQuotePreview (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/quote/preview`)
+  },
+
+  getQuote (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/quote`)
+  },
+
+  createQuote (token, id) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/quote`,
+      method: 'POST',
+    })
+  },
+
+  cancelQuote (token, id) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/quote/cancel`,
+      method: 'POST',
+    })
+  },
 }
 
 module.exports = {
