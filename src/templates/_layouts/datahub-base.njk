@@ -12,7 +12,7 @@
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
 {% from "_macros/form.njk" import FormGroup, Fieldset, TextField, MultipleChoiceField, HiddenField, DateFieldset %}
 {% from "_macros/common.njk" import LocalHeader with context %}
-{% from "_macros/common.njk" import Pagination, LocalNav, Progress %}
+{% from "_macros/common.njk" import Pagination, GlobalNav, LocalNav, Progress %}
 {% from "_macros/collection.njk" import Collection, CollectionFilters %}
 {% from "_macros/entities.njk" import MetaList %}
 
@@ -40,16 +40,6 @@
 {% block header_menu %}
   <nav aria-label="global nav">
     <ul class="proposition-menu">
-      {% if user %}
-        <li class="proposition-menu__item">
-          <a href="/" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/' }}">Dashboard</a>
-        </li>
-        <li class="proposition-menu__item">
-          <a href="/investment-projects" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/investment-projects' }}">
-            Investment projects
-          </a>
-        </li>
-      {% endif %}
       {% if feedbackLink %}
         <li class="proposition-menu__item">
           <a href="{{ feedbackLink }}" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH and '/support' in CURRENT_PATH }}">Support</a>
@@ -73,6 +63,13 @@
 
 {% block body_main_header %}
   {{ super() }}
+
+  {% if user %}
+    {{ GlobalNav({
+      items: GLOBAL_NAV_ITEMS
+    }) }}
+  {% endif %}
+
   {% block local_header %}
     {% set pageTitle = getPageTitle() %}
     {% set heading = heading or pageTitle[0] %}

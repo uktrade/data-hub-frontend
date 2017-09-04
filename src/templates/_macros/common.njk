@@ -129,6 +129,28 @@
   {% endif %}
 {% endmacro %}
 
+{##
+ # Render global nav
+ # @param {object} props
+ # @param {string} [props.modifier] - nav modifier
+ # @param {string} [props.items] - nav items
+ #
+ #}
+{% macro GlobalNav(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-global-nav--') if props.modifier %}
+  {% set items = [] %}
+
+  {% if props|length %}
+    <nav class="c-global-nav{{ modifier }}" aria-label="global navigation">
+      <div class="c-global-nav__container l-container">
+        {% for item in props.items %}
+          <a class="c-global-nav__link {{ 'is-active' if item.isActive }}" href="{{ item.url }}">{{ item.label }}</a>
+        {% endfor %}
+      </div>
+    </nav>
+  {% endif %}
+{% endmacro %}
+
 
 {##
  # Render progress bar

@@ -4,11 +4,14 @@
 $_section-width: 25%;
 
 .c-progress {
-  margin: $default-spacing-unit * 2 $default-spacing-unit / 2;
+  margin-left: $default-spacing-unit / 2;
+  margin-right: $default-spacing-unit / 2;
 
   @include media(tablet) {
-    margin: $default-spacing-unit * 2;
+    margin-left: $default-spacing-unit * 2;
+    margin-right: $default-spacing-unit * 2;
     padding-bottom: $default-spacing-unit / 2;
+    padding-top: $default-spacing-unit / 3;
   }
 }
 
@@ -26,6 +29,7 @@ $_section-width: 25%;
   border-color: $grey-3;
   border-width: 0 0 0 2px;
   border-style: solid;
+  padding-bottom: $default-spacing-unit;
 
   @include media(tablet) {
     display: table-cell;
@@ -35,6 +39,7 @@ $_section-width: 25%;
 
   &::before {
     position: absolute;
+    top: 3px;
     left: -8px;
     width: 14px;
     height: 14px;
@@ -69,12 +74,13 @@ $_section-width: 25%;
 
   &:last-child {
     border-color: transparent;
+    padding-bottom: 0;
   }
 }
 
 .c-progress__stage-title {
   display: block;
-  padding: 0 0 $default-spacing-unit $default-spacing-unit;
+  padding: 0 0 0 $default-spacing-unit;
 
   @include media(tablet) {
     position: absolute;

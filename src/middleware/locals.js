@@ -1,3 +1,5 @@
+const path = require('path')
+
 const logger = require('../../config/logger')
 const config = require('../../config')
 
@@ -7,6 +9,13 @@ try {
 } catch (err) {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }
+
+const globalNavItems = [
+  { path: '/companies', label: 'Companies' },
+  { path: '/contacts', label: 'Contacts' },
+  { path: '/investment-projects', label: 'Investment projects' },
+  { path: '/omis', label: 'OMIS Orders' },
+]
 
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
@@ -20,6 +29,21 @@ module.exports = function locals (req, res, next) {
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
     QUERY: req.query,
+    GLOBAL_NAV_ITEMS: globalNavItems.map(item => {
+      const url = path.resolve(req.baseUrl, item.path)
+      let isActive
+
+      if (url === '/') {
+        isActive = req.path === '/'
+      } else {
+        isActive = req.path.startsWith(url)
+      }
+
+      return Object.assign(item, {
+        url,
+        isActive,
+      })
+    }),
 
     getMessages () {
       return req.flash()
