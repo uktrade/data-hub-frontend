@@ -221,7 +221,7 @@ describe('Company contacts controller', function () {
       expect(contact).to.have.property('id')
       expect(contact).to.have.property('type', 'contact')
       expect(contact).to.have.property('name', 'Fred Smith')
-      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(3)
+      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(4)
     })
 
     it('should return the required fields to list archived contacts', function () {
@@ -230,7 +230,7 @@ describe('Company contacts controller', function () {
       expect(contact).to.have.property('type', 'contact')
       expect(contact).to.have.property('name', 'Jane Smith')
       expect(contact).to.have.property('isArchived').to.be.true
-      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(5)
+      expect(contact).to.have.property('meta').to.be.an('array').to.have.length(6)
     })
 
     it('should return a link to add a new contact', function () {
