@@ -22,13 +22,13 @@
 }
 
 .c-breadcrumb__link {
-  color: $black;
+  color: $light-black;
 
   &:link,
   &:active,
   &:hover,
   &:visited {
-    color: $black;
+    color: $light-black;
     text-decoration: underline;
   }
 

@@ -8,8 +8,7 @@
   {% call LocalHeader({
     headingBefore: headingBefore,
     heading: contact.first_name + ' ' + contact.last_name,
-    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary,
-    modifier: 'light-banner'
+    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary
   }) %}
     {% if contact.archived %}
       <p class="infostrip">

@@ -9,43 +9,4 @@
       })
     }}
   {% endcall %}
-
-  {% call Example('Light banner', true) %}
-    {{
-      LocalHeader({
-        heading: 'Light banner',
-        modifier: 'light-banner'
-      })
-    }}
-  {% endcall %}
-
-  {% call Example('Light banner + keyline', true) %}
-    {{
-      LocalHeader({
-        headingBefore: '<em>Emphasied text before</em>',
-        heading: 'Light banner with keyline',
-        modifier: ['light-banner', 'keyline']
-      })
-    }}
-  {% endcall %}
-
-  {% call Example('Dark banner', true) %}
-    {{
-      LocalHeader({
-        headingBefore: 'Raw text before',
-        heading: 'Dark banner',
-        modifier: 'dark-banner'
-      })
-    }}
-  {% endcall %}
-
-  {% call Example('Dark banner + keyline', true) %}
-    {{
-      LocalHeader({
-        headingBefore: '<strong>Strong text before</strong>',
-        heading: 'Dark banner with keyline',
-        modifier: ['dark-banner', 'keyline']
-      })
-    }}
-  {% endcall %}
 {% endblock %}
