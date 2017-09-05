@@ -1,14 +1,16 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends '_layouts/two-column.njk' %}
 
 {% block main_grid_right_column %}
   {% if quote %}
     {{ MetaList({
       items: [
-        { label: "Sent on", value: quote.created_on | formatDateTime },
-        { label: "Sent by", value: quote.created_by },
-        { label: "Expires on", value: quote.expires_on | formatDateTime }
+        { label: 'Sent on', value: quote.created_on | formatDateTime },
+        { label: 'Sent by', value: quote.created_by },
+        { label: 'Expires on', value: quote.expires_on | formatDateTime }
       ],
-      itemModifier: "stacked"
+      itemModifier: 'stacked'
     }) }}
   {% endif %}
+
+  {{ Form(quoteForm) }}
 {% endblock %}
