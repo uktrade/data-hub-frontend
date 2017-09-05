@@ -1,5 +1,7 @@
 @import "../tools/mixins";
 
+$_first-element-spacing: $default-spacing-unit * 3;
+
 .c-local-header {
   @include clearfix;
 
@@ -20,7 +22,7 @@
     margin-top: $default-spacing-unit / 2;
 
     & + * {
-      margin-top: $default-spacing-unit * 3;
+      margin-top: $_first-element-spacing;
     }
 
     & + .c-entity-search {
@@ -59,6 +61,10 @@
 .c-local-header__heading {
   @include bold-font(36);
   margin-bottom: 0;
+
+  &:first-child {
+    margin-top: $_first-element-spacing;
+  }
 }
 
 * + .c-local-header__heading-after {
@@ -91,7 +97,7 @@
     width: 30%;
 
     * + & {
-      margin-top: $default-spacing-unit * 3;
+      margin-top: $_first-element-spacing;
     }
   }
 }
