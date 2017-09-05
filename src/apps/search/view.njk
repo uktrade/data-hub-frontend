@@ -1,7 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ modifier: 'dark-banner' }) %}
+  {% call LocalHeader() %}
     {{ EntitySearchForm({
       inputName: 'term',
       modifier: 'global',

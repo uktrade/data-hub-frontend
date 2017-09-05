@@ -1,7 +1,7 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: statusMessage, modifier: 'light-banner' }) %}
+  {% call LocalHeader({ heading: statusMessage }) %}
     <p>{{ statusCode }}</p>
   {% endcall %}
 {% endblock %}

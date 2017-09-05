@@ -1,7 +1,8 @@
 {% extends "_layouts/datahub-base.njk" %}
+{% set mainContentModifier = 'main-content__header--dark' %}
 
 {% block local_header %}
-  {% call LocalHeader({ modifier: 'dark-banner' }) %}
+  {% call LocalHeader() %}
     {{ EntitySearchForm({
       inputName: 'term',
       modifier: 'global',

@@ -8,6 +8,14 @@
   flex-grow: 1;
 }
 
+.main-content__header {
+  background-color: $grey-4;
+}
+
+.main-content__header--dark {
+  background-color: $grey-3;
+}
+
 .main-content__inner {
   padding-top: $default-spacing-unit * 2;
   padding-bottom: $default-spacing-unit * 4;

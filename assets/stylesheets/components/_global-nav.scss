@@ -1,6 +1,8 @@
+@import "../settings";
+@import "../tools";
+
 .c-global-nav {
-  @include bold-font(16);
-  background: $grey-3;
+  @include bold-font(18);
   padding: $default-spacing-unit / 4 0;
 
   @include media(tablet) {

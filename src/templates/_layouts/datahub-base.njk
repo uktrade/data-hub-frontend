@@ -73,7 +73,7 @@
   {% block local_header %}
     {% set pageTitle = getPageTitle() %}
     {% set heading = heading or pageTitle[0] %}
-    {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
+    {{ LocalHeader({ heading: heading }) }}
   {% endblock %}
 {% endblock %}
 

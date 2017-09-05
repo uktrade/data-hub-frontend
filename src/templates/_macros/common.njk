@@ -70,7 +70,7 @@
   {% set messages = props.messages | default(getMessages()) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
-  {% if props %}
+  {% if props or caller %}
     <header class="c-local-header {{ modifier }}" aria-label="local header">
       <div class="l-container">
         {% if breadcrumbs|length %}
@@ -113,15 +113,12 @@
 {##
  # Render local nav
  # @param {object} props
- # @param {string} [props.modifier] - nav modifier
  # @param {string} [props.items] - nav items
  #
  #}
 {% macro LocalNav(props) %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-nav--') if props.modifier %}
-
   {% if props|length %}
-    <nav class="c-local-nav {{ modifier }}" aria-label="local navigation">
+    <nav class="c-local-nav" aria-label="local navigation">
       {% for item in props.items %}
         <a class="c-local-nav__link {{ 'is-active' if item.isActive }}" href="{{item.url}}">{{ item.label }}</a>
       {% endfor %}

@@ -2,18 +2,11 @@
 
 .c-local-header {
   @include clearfix;
-
-  .l-container {
-    border-top: 1px solid transparent;
-  }
-
-  &[class*="c-local-header--"] {
-    padding-bottom: $default-spacing-unit * 2;
-  }
+  padding-bottom: $default-spacing-unit * 2;
 
   .c-entity-search {
-    margin-top: $baseline-grid-unit * 20.5;
-    padding-bottom: $baseline-grid-unit * 6.25;
+    margin-top: $baseline-grid-unit * 10;
+    padding-bottom: $baseline-grid-unit * 8;
   }
 
   .c-breadcrumb {
@@ -104,24 +97,4 @@
   & + & {
     margin-top: $default-spacing-unit / 2;
   }
-}
-
-.c-local-header--light-banner {
-  background-color: $grey-4;
-}
-
-.c-local-header--dark-banner {
-  background-color: $grey-3;
-
-  .l-container {
-    border-top-color: $grey-2;
-  }
-
-  &.c-local-header--keyline {
-    border-bottom: 1px solid $grey-2;
-  }
-}
-
-.c-local-header--keyline {
-  border-bottom: 1px solid $grey-3;
 }
