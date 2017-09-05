@@ -9,6 +9,7 @@ describe('Event edit controller', () => {
         },
       })
     }
+    const currentUserTeam = 'team1'
 
     beforeEach(() => {
       const advisersResponse = {
@@ -27,6 +28,11 @@ describe('Event edit controller', () => {
       this.req = {
         session: {
           token: 'abcd',
+          user: {
+            dit_team: {
+              id: currentUserTeam,
+            },
+          },
         },
       }
       this.res = {
@@ -82,6 +88,16 @@ describe('Event edit controller', () => {
       ]
 
       expect(actual).to.deep.equal(expected)
+    })
+
+    it('should prepopulate the team hosting the event with the current user team', async () => {
+      await this.controller.renderEventPage(this.req, this.res, this.next)
+
+      const eventForm = this.res.render.getCall(0).args[1].eventForm
+      const actual = find(eventForm.children, { name: 'event-team-hosting' }).value
+      const expected = currentUserTeam
+
+      expect(actual).to.equal(expected)
     })
 
     it('should return an error when there is an error', async () => {

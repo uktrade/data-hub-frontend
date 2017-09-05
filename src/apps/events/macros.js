@@ -2,7 +2,7 @@ const metadataRepo = require('../../lib/metadata')
 const { transformObjectToOption } = require('../transformers')
 const { globalFields } = require('../macros')
 
-const eventForm = (organisers) => {
+const eventFormConfig = (organisers) => {
   return {
     method: 'post',
     buttonText: 'Save and Continue',
@@ -92,7 +92,7 @@ const eventForm = (organisers) => {
       {
         macroName: 'MultipleChoiceField',
         name: 'event-team-hosting',
-        label: 'Team hosting the event', // todo: pre select current user team
+        label: 'Team hosting the event',
         optional: true,
         initialOption: '-- Select team --',
         options () {
@@ -154,5 +154,5 @@ const eventForm = (organisers) => {
 }
 
 module.exports = {
-  eventForm,
+  eventFormConfig,
 }
