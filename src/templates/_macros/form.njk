@@ -37,6 +37,7 @@
  # @param {string} [props.role] - Form role attribute value
  # @param {string} [props.actionsClass] - Custom class name for actions container
  # @param {string} [props.buttonText=Submit] - Text for submit button
+ # @param {string, array} [props.buttonModifiers] - Modifiers for the primary button
  # @param {string} [props.returnText=Back] - Text for return link
  # @param {string} [props.returnLink] - Location for return link
  # @param {array}  [props.children] - an array of inner macro configurations
@@ -46,6 +47,7 @@
 {% macro Form(props) %}
   {% set method = props.method or 'POST' -%}
   {% set buttonText = props.buttonText or 'Submit' %}
+  {% set buttonModifiers = props.buttonModifiers | concat('') | join(' ') %}
   {% set returnText = props.returnText or 'Back' %}
   {% set hideFormActions = props.hideFormActions or false %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
@@ -78,7 +80,7 @@
 
     {% if not hideFormActions %}
       <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
-        <button class="button" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+        <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
         {% if props.returnLink %}
           <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
         {% endif %}
