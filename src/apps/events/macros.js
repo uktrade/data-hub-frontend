@@ -17,13 +17,9 @@ const eventForm = (organisers) => {
         name: 'event-type',
         label: 'Event type',
         initialOption: '-- Select event type --',
-        options: [ // todo: meta data endpoint
-          { label: 'event type 1' },
-          { label: 'event type 2' },
-          { label: 'event type 3' },
-          { label: 'event type 4' },
-          { label: 'event type 5' },
-        ],
+        options () {
+          metadataRepo.eventTypeOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'DateFieldset',
@@ -53,12 +49,9 @@ const eventForm = (organisers) => {
         label: 'Event location type',
         optional: true,
         initialOption: '-- Select location type --',
-        options: [ // todo: meta data endpoint
-          { label: 'location type 1' },
-          { label: 'location type 2' },
-          { label: 'location type 3' },
-          { label: 'location type 4' },
-        ],
+        options () {
+          metadataRepo.locationTypeOptions.map(transformObjectToOption)
+        },
       },
       {
         macroName: 'TextField',
@@ -152,11 +145,9 @@ const eventForm = (organisers) => {
         label: 'Related programmes',
         optional: true,
         initialOption: '-- Select programme --',
-        options: [ // todo: meta data endpoint
-          { label: 'programme 1' },
-          { label: 'programme 2' },
-          { label: 'programme 3' },
-        ],
+        options () {
+          return metadataRepo.programmeOptions.map(transformObjectToOption)
+        },
       },
     ],
   }

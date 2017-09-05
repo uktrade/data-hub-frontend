@@ -41,21 +41,21 @@ describe('Event edit controller', () => {
     })
 
     it('should add a breadcrumb', async () => {
-      await this.controller.renderEventPage(this.req, this.res)
+      await this.controller.renderEventPage(this.req, this.res, this.next)
 
       expect(this.res.breadcrumb).to.be.calledWith('Add event')
       expect(this.res.breadcrumb).to.have.been.calledOnce
     })
 
     it('should render the event page', async () => {
-      await this.controller.renderEventPage(this.req, this.res)
+      await this.controller.renderEventPage(this.req, this.res, this.next)
 
       expect(this.res.render).to.be.calledWith('events/views/edit')
       expect(this.res.render).to.have.been.calledOnce
     })
 
     it('should render the event page with a title', async () => {
-      await this.controller.renderEventPage(this.req, this.res)
+      await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const actual = this.res.render.getCall(0).args[1].title
 
@@ -63,7 +63,7 @@ describe('Event edit controller', () => {
     })
 
     it('should render the event page with an event form', async () => {
-      await this.controller.renderEventPage(this.req, this.res)
+      await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const actual = this.res.render.getCall(0).args[1].eventForm
 
@@ -71,7 +71,7 @@ describe('Event edit controller', () => {
     })
 
     it('should populate the event form with organisers', async () => {
-      await this.controller.renderEventPage(this.req, this.res)
+      await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
       const actual = find(eventForm.children, { name: 'event-organiser' }).options
