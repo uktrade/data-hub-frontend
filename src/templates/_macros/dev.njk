@@ -1,6 +1,6 @@
-{% macro Example(title, isWide = false) %}
+{% macro Example(title, isWide = false, tabTitle = 'Example') %}
   <article class="example {{ 'example--wide' if isWide }}" {% if title %}id="{{ title | urlencode }}"{% endif %}>
-    <header class="example__header">
+    <header class="example__header" data-tab-title="{{ tabTitle }}">
       {% if title %}
         <h3 class="example__title">{{ title }}</h3>
       {% endif %}
