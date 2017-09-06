@@ -13,7 +13,7 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    contactsTab: 'a[href*="/contacts"]',
+    contactsTab: 'a[href*="/contacts"][href*="/companies"]',
     firstCompanyFromList: '.c-entity-list li:first-child h3 a',
     addContactButton: '#add-contact-link',
     noContactWarning: '#no-contact-warning',
@@ -87,6 +87,8 @@ module.exports = {
       },
 
       createNewPrimaryContactWithNewCompanyAddress (firstName, lastName) {
+        this.firstname = firstName
+        this.lastname = lastName
         return this
           .click('@addContactButton')
           .setValue('@contactFirstname', firstName)
