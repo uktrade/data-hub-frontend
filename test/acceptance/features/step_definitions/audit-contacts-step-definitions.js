@@ -14,23 +14,7 @@ defineSupportCode(({ Given, Then, When }) => {
   let telephone
   let countryCode
 
-  Given(/^I Amend a existing contact record$/, async () => {
-    telephone = faker.phone.phoneNumber()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await contactCollections
-      .click('@contactsTab')
-    await Contact
-      .getText('@firstCompanyFromList', (result) => {
-        contactName = result.value
-      })
-      .click('@firstCompanyFromList')
-    await auditContact
-      .editContactWithTelephone(telephone)
-  })
-
-  Given(/^I Amend two records of an existing contact record$/, async () => {
+  Given(/^I Amend (.*) records of an existing contact record$/, async (number) => {
     telephone = faker.phone.phoneNumber()
     countryCode = faker.random.number()
     await Company
@@ -44,7 +28,7 @@ defineSupportCode(({ Given, Then, When }) => {
       })
       .click('@firstCompanyFromList')
     await auditContact
-      .editContactWithTelephoneAndCountryCode(telephone, countryCode)
+      .editContactDetails(telephone, countryCode, number)
   })
 
   When(/^I search for this Contact record$/, async () => {
