@@ -24,3 +24,36 @@
     }
   }
 }
+
+// TODO: Find a better way to format basic html elements...
+.l-markdown {
+  h1 {
+    @include bold-font(36);
+  }
+
+  h2 {
+    @include bold-font(24);
+  }
+
+  h3 {
+    @include bold-font(20);
+  }
+
+  h4, h5 {
+    @include bold-font(16);
+  }
+
+  * {
+    margin: 0;
+
+    & + {
+      h1, h2, h3, h4, h5 {
+        margin-top: $default-spacing-unit * 2;
+      }
+    }
+  }
+
+  * + * {
+    margin-top: $default-spacing-unit;
+  }
+}
