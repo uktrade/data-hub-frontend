@@ -9,9 +9,13 @@ describe('Company audit controller', () => {
     this.transformed = {}
     this.getDitCompanyStub = this.sandbox.stub().resolves(companyData)
     this.getCompanyAuditLogStub = this.sandbox.stub().resolves(auditLog)
-    this.transformAuditLogToCollectionStub = this.sandbox.stub().returns(this.transformed)
     this.getCommonTitlesAndlinksStub = this.sandbox.stub()
     this.next = this.sandbox.stub()
+
+    this.transformApiResponseToCollectionInnerStub = this.sandbox.stub().returns()
+    this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.generatedTransformer = this.sandbox.stub()
+    this.transformAuditLogToListItemStub = this.sandbox.stub().returns(this.generatedTransformer)
     this.breadcrumbStub = function () { return this }
 
     this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
@@ -22,8 +26,11 @@ describe('Company audit controller', () => {
       '../services/data': {
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
+      '../../transformers': {
+        transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
+      },
       '../../audit/transformers': {
-        transformAuditLogToCollection: this.transformAuditLogToCollectionStub,
+        transformAuditLogToListItem: this.transformAuditLogToListItemStub,
       },
     })
 
@@ -43,14 +50,18 @@ describe('Company audit controller', () => {
   })
 
   it('should get the company details and generate heading data', (done) => {
-    this.controller.getAudit(this.req, {
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        expect(this.getDitCompanyStub).to.be.calledWith(this.req.session.token, this.req.params.id)
-        expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(sinon.match.any, sinon.match.any, companyData)
-        done()
-      },
-    }, this.next)
+    try {
+      this.controller.getAudit(this.req, {
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          expect(this.getDitCompanyStub).to.be.calledWith(this.req.session.token, this.req.params.id)
+          expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(sinon.match.any, sinon.match.any, companyData)
+          done()
+        },
+      }, done)
+    } catch (error) {
+      done(error)
+    }
   })
 
   it('should call the company audit repository', (done) => {
@@ -60,28 +71,39 @@ describe('Company audit controller', () => {
         expect(this.getCompanyAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.id, 1)
         done()
       },
-    }, this.next)
+    }, done)
   })
 
   it('should pass on any page number specified, for pagination', (done) => {
-    this.req.query.page = '3'
+    try {
+      this.req.query.page = '3'
 
-    this.controller.getAudit(this.req, {
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        expect(this.getCompanyAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.id, '3')
-        done()
-      },
-    }, this.next)
+      this.controller.getAudit(this.req, {
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          expect(this.getCompanyAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.id, '3')
+          done()
+        },
+      }, this.next)
+    } catch (error) {
+      done(error)
+    }
   })
 
-  it('should transform the results returns', (done) => {
-    this.controller.getAudit(this.req, {
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        expect(this.transformAuditLogToCollectionStub).to.be.calledWith(auditLog, companyDetailsLabels)
-        done()
-      },
-    }, this.next)
+  it('should transform the results returned', (done) => {
+    try {
+      const options = { entityType: 'audit' }
+
+      this.controller.getAudit(this.req, {
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options, this.generatedTransformer)
+          expect(this.transformAuditLogToListItemStub).to.be.calledWith(companyDetailsLabels)
+          done()
+        },
+      }, done)
+    } catch (error) {
+      done(error)
+    }
   })
 })

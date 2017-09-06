@@ -65,6 +65,29 @@ describe('Nunjucks form macros', () => {
         expect(component.querySelector('.c-form-group--actions')).to.not.exist
       })
 
+      it('should render form with button modifier as string', () => {
+        const formProps = {
+          buttonModifiers: 'modifier',
+        }
+        const component = macros.renderWithCallerToDom('Form', formProps)(
+          macros.renderToDom('TextField')
+        )
+        expect(component.querySelector('button.button').classList.contains('modifier')).to.be.true
+      })
+
+      it('should render form with button modifier as array', () => {
+        const formProps = {
+          buttonModifiers: ['modifier-1', 'modifier-2'],
+        }
+        const component = macros.renderWithCallerToDom('Form', formProps)(
+          macros.renderToDom('TextField')
+        )
+        const classList = component.querySelector('button.button').classList
+
+        expect(classList.contains('modifier-1')).to.be.true
+        expect(classList.contains('modifier-2')).to.be.true
+      })
+
       it('should render form with return link', () => {
         const formProps = {
           returnLink: '/previous-page',

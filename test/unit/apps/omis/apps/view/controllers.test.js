@@ -1,4 +1,4 @@
-const { renderWorkOrder } = require('~/src/apps/omis/apps/view/controllers')
+const { renderWorkOrder, renderQuote } = require('~/src/apps/omis/apps/view/controllers')
 
 describe('OMIS View controllers', () => {
   beforeEach(() => {
@@ -29,10 +29,10 @@ describe('OMIS View controllers', () => {
       }
     })
 
-    it('should set a breadcrumb option', () => {
+    it('should not set a breadcrumb option', () => {
       renderWorkOrder({}, this.resMock)
 
-      expect(this.breadcrumbSpy).to.have.been.called
+      expect(this.breadcrumbSpy).not.to.have.been.called
     })
 
     it('should render a template', () => {
@@ -54,6 +54,30 @@ describe('OMIS View controllers', () => {
           estimatedTimeSum: 90,
         },
       })
+    })
+  })
+
+  describe('renderQuote()', () => {
+    beforeEach(() => {
+      this.breadcrumbSpy = this.sandbox.stub().returnsThis()
+      this.renderSpy = this.sandbox.spy()
+
+      this.resMock = {
+        breadcrumb: this.breadcrumbSpy,
+        render: this.renderSpy,
+      }
+    })
+
+    it('should set a breadcrumb option', () => {
+      renderQuote({}, this.resMock)
+
+      expect(this.breadcrumbSpy).to.have.been.called
+    })
+
+    it('should render a template', () => {
+      renderQuote({}, this.resMock)
+
+      expect(this.renderSpy).to.have.been.called
     })
   })
 })

@@ -3,10 +3,7 @@
 {% block local_header %}
   {% set actions %}
     <p class="c-local-header__action">
-      <a href="" class="button button--small">Generate order</a>
-    </p>
-    <p class="c-local-header__action">
-      <a href="" class="">View quote</a>
+      <a href="quote" class="button button--small">Generate quote</a>
     </p>
   {% endset %}
 
@@ -18,9 +15,8 @@
 
     {{ MetaList({
       items: [
-        { "label": "Status", "value": "Draft" },
-        { "label": "Created on", "value": order.created_on | formatDate },
-        { "label": "Created by", "value": order.created_by }
+        { "label": "Created on", "value": order.created_on | formatDateTime },
+        { "label": "Status", "value": "Draft" }
       ],
       itemModifier: "stacked"
     }) }}

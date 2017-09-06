@@ -8,12 +8,18 @@ function renderWorkOrder (req, res) {
   })
 
   res
-    .breadcrumb('Work order')
     .render('omis/apps/view/views/work-order', {
       values,
     })
 }
 
+function renderQuote (req, res) {
+  res
+    .breadcrumb('Quote')
+    .render('omis/apps/view/views/quote')
+}
+
 module.exports = {
   renderWorkOrder,
+  renderQuote,
 }
