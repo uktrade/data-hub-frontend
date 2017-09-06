@@ -13,21 +13,7 @@ defineSupportCode(({ Given, Then, When }) => {
   let description
   let website
 
-  Given(/^I Amend a existing company record$/, async () => {
-    description = faker.name.jobDescriptor()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await auditContact
-      .getText('@lastContactFromList', (result) => {
-        companyName = result.value
-      })
-      .click('@lastContactFromList')
-    await auditCompany
-      .editCompany(description)
-  })
-
-  Given(/^I Amend two records of an existing company record$/, async () => {
+  Given(/^I Amend (.*) records of an existing company record$/, async (number) => {
     description = faker.name.jobDescriptor()
     website = faker.internet.url()
     await Company
@@ -39,7 +25,7 @@ defineSupportCode(({ Given, Then, When }) => {
       })
       .click('@lastContactFromList')
     await auditCompany
-      .editCompanyTwoRecords(description, website)
+      .editCompanyRecords(description, website, number)
   })
 
   When(/^I search for this company record$/, async () => {

@@ -10,24 +10,17 @@ module.exports = {
 
   commands: [
     {
-      editCompany (description) {
+      editCompanyRecords (description, website, number) {
+        this.click('@editCompanyDetailsButton')
+        this.clearValue('@description')
+        this.setValue('@description', description)
+        if (number > 1) {
+          this.clearValue('@website')
+          this.setValue('@website', website)
+        }
+        this.submitForm('form')
+        this.assert.containsText('@flashInfo', 'Company record updated')
         return this
-          .click('@editCompanyDetailsButton')
-          .clearValue('@description')
-          .setValue('@description', description)
-          .submitForm('form')
-          .assert.containsText('@flashInfo', 'Company record updated')
-      },
-
-      editCompanyTwoRecords (description, website) {
-        return this
-          .click('@editCompanyDetailsButton')
-          .clearValue('@description')
-          .setValue('@description', description)
-          .clearValue('@website')
-          .setValue('@website', website)
-          .submitForm('form')
-          .assert.containsText('@flashInfo', 'Company record updated')
       },
     },
   ],
