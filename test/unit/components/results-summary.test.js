@@ -62,7 +62,6 @@ describe('Results Summary component', () => {
     const mockData = {
       total: 11,
       resultType: 'company',
-      pluralisedResultType: 'companies',
       searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
@@ -74,7 +73,7 @@ describe('Results Summary component', () => {
     const resultsSummaryQuery = component.querySelector('.result-summary__query')
 
     expect(component.className).to.equal('results-summary')
-    expect(component.textContent).to.contain(`${mockData.pluralisedResultType} found containing ${mockData.searchTerm}`)
+    expect(component.textContent).to.contain(`companies found containing ${mockData.searchTerm}`)
     expect(resultsSummaryCount.textContent).to.contain(mockData.total)
     expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
   })
@@ -83,7 +82,6 @@ describe('Results Summary component', () => {
     const mockData = {
       total: 22,
       resultType: 'company',
-      pluralisedResultType: 'companies',
       searchTerm: 'example search term',
     }
     const component = renderComponentToDom(
@@ -95,7 +93,7 @@ describe('Results Summary component', () => {
     const resultsSummaryQuery = component.querySelector('.result-summary__query')
 
     expect(component.className).to.equal('results-summary')
-    expect(component.textContent).to.contain(`${mockData.pluralisedResultType} found containing ${mockData.searchTerm}`)
+    expect(component.textContent).to.contain(`companies found containing ${mockData.searchTerm}`)
     expect(resultsSummaryCount.textContent).to.contain(mockData.total)
     expect(resultsSummaryQuery.textContent).to.equal(mockData.searchTerm)
   })
