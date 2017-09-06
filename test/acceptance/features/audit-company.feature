@@ -23,7 +23,7 @@ Feature: View Audit history of a Company
   @company-audit-count
   Scenario: View the number of changes occurred on a company record
      Given I am an authenticated user on Data Hub website
-     And I Amend a existing company record
+     And I Amend two records of an existing company record
      When I search for this company record
      And I navigate to Audit History tab
      Then I see the total number of changes occurred recently on this company record
@@ -34,17 +34,4 @@ Feature: View Audit history of a Company
      And I Amend a existing company record
      When I search for this company record
      And I navigate to Audit History tab
-     Then I see the total number of changes occurred recently on this company record
-     When I click on the number of changes occurred link/popdown
-     Then I see the field names that were recently changed
-
-  @company-audit-search
-  Scenario: Changed company name not searchable
-     Given I am an authenticated user on Data Hub website
-     And I Amend a existing company name to a new one
-     When I search for this company record using its old name
-     Then I verify the search results should not return the company details
-     When I search for the company record using its newly changed name
-     Then I verify the search results show the company details
-     When I navigate to company Audit history tab
-     Then I verify the changed name of the company
+     Then I see the field names that were recently changed on this company record
