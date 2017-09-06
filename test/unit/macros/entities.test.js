@@ -159,6 +159,25 @@ describe('Entities macros', () => {
         expect(component.querySelector('.c-meta-list__item-value').textContent).to.equal('26 July 2017')
       })
 
+      it('should not render item formatted as date if it has no value', () => {
+        const component = entitiesMacros.renderToDom('MetaList', {
+          items: [{
+            label: 'Land date',
+            type: 'date',
+            name: 'land_date',
+            value: '2017-07-26',
+          }, {
+            label: 'Expiry date',
+            type: 'date',
+            name: 'expiry_date',
+          }],
+        })
+
+        expect(component.querySelector('.c-meta-list__item-value').textContent).to.equal('26 July 2017')
+        expect(component.querySelectorAll('.c-meta-list__item')).to.have.length(1)
+        expect(component.textContent).not.to.contain('Expiry date')
+      })
+
       it('should render item with link', () => {
         const component = entitiesMacros.renderToDom('MetaList', {
           items: [{
