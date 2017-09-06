@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -55,6 +55,7 @@
     "joi": "^10.5.2",
     "jsdom": "^10.1.0",
     "lodash": "^4.16.4",
+    "markdown-it": "^8.4.0",
     "mocha": "^3.0.2",
     "mocha-multi": "^0.9.1",
     "moment": "^2.17.1",
@@ -64,6 +65,7 @@
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
     "nunjucks": "^3.0.0",
+    "nunjucks-markdown": "^2.0.1",
     "nyc": "^10.2.0",
     "postcss-cli": "^4.0.0",
     "postcss-loader": "^2.0.6",
@@ -122,7 +124,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "8.1.4"
+    "node": "8.2.1"
   },
   "devDependencies": {
     "chai-as-promised": "^6.0.0",

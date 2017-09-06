@@ -7,6 +7,10 @@ $_first-element-spacing: $default-spacing-unit * 3;
 
   .l-container {
     border-top: 1px solid transparent;
+
+    > .c-local-header__heading:first-child {
+      margin-top: $_first-element-spacing;
+    }
   }
 
   &[class*="c-local-header--"] {
@@ -61,10 +65,6 @@ $_first-element-spacing: $default-spacing-unit * 3;
 .c-local-header__heading {
   @include bold-font(36);
   margin-bottom: 0;
-
-  &:first-child {
-    margin-top: $_first-element-spacing;
-  }
 }
 
 * + .c-local-header__heading-after {

@@ -36,7 +36,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I search for this Contact name$/, async () => {
     await Company
       .navigate()
-      .findCompany(`${firstName} ${lastName}`)
+      .findCompany(`${Contact.firstname} ${Contact.lastname}`)
   })
 
   Then(/^I view a contacts tab$/, async () => {

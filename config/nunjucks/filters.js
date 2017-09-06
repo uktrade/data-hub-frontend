@@ -34,6 +34,8 @@ function pluralise (string, count, pluralisedWord) {
   if (parseInt(count, 10) !== 1) {
     if (pluralisedWord) {
       string = pluralisedWord
+    } else if (string.match(/[^aeiou]y$/)) {
+      string = string.replace(/y$/, 'ies')
     } else {
       string += 's'
     }

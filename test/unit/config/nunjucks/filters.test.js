@@ -120,6 +120,22 @@ describe('nunjucks filters', () => {
       expect(pluralisedString).to.equal(customPluralisedString)
     })
 
+    it('should return a correctly pluralised string  using the (general) English rule CONSONANT + Y = CONSONANT + IES', () => {
+      const singularString = 'company'
+      const pluralString = 'companies'
+      const pluralisedString = filters.pluralise(singularString, 0)
+
+      expect(pluralisedString).to.equal(pluralString)
+    })
+
+    it('should NOT convert a word ending VOWEL + Y to VOWEL + IES', () => {
+      const singularString = 'sunday'
+      const pluralString = 'sundays'
+      const pluralisedString = filters.pluralise(singularString, 0)
+
+      expect(pluralisedString).to.equal(pluralString)
+    })
+
     it('should return singular custom string when count is 1', () => {
       const singularString = 'company'
       const customPluralisedString = 'companies'
