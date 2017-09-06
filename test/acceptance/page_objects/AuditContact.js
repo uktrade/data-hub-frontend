@@ -17,24 +17,20 @@ module.exports = {
 
   commands: [
     {
-      editContactWithTelephone (telephone) {
-        return this
-          .click('@editContactDetailsButton')
-          .clearValue('@telephone')
-          .setValue('@telephone', telephone)
-          .submitForm('form')
-          .assert.containsText('@flashInfo', 'Contact record updated')
-      },
+      editContactDetails (telephone, countryCode, number) {
+        this.click('@editContactDetailsButton')
 
-      editContactWithTelephoneAndCountryCode (telephone, countryCode) {
+        if (number > 1) {
+          this.clearValue('@telephoneCountryCode')
+          this.setValue('@telephoneCountryCode', countryCode)
+        }
+
+        this.clearValue('@telephone')
+        this.setValue('@telephone', telephone)
+        this.submitForm('form')
+        this.assert.containsText('@flashInfo', 'Contact record updated')
+
         return this
-          .click('@editContactDetailsButton')
-          .clearValue('@telephoneCountryCode')
-          .setValue('@telephoneCountryCode', countryCode)
-          .clearValue('@telephone')
-          .setValue('@telephone', telephone)
-          .submitForm('form')
-          .assert.containsText('@flashInfo', 'Contact record updated')
       },
     },
   ],

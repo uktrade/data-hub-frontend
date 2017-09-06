@@ -8,7 +8,7 @@ Feature: View Audit history of a contact
   Scenario: View name of the person who made contact record changes
 
      Given I am an authenticated user on Data Hub website
-     And I Amend a existing contact record
+     And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
      Then I see the name of the person who made the recent contact record changes
@@ -17,7 +17,7 @@ Feature: View Audit history of a contact
   Scenario: View time stamp when the contact record changes
 
      Given I am an authenticated user on Data Hub website
-     And I Amend a existing contact record
+     And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
      Then I see the date time stamp when the recent contact record changed
@@ -26,7 +26,7 @@ Feature: View Audit history of a contact
   Scenario: View the number of changes occurred on a contact record
 
      Given I am an authenticated user on Data Hub website
-     And I Amend two records of an existing contact record
+     And I Amend 2 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
      Then I see the total number of changes occurred recently on this contact record
@@ -35,7 +35,7 @@ Feature: View Audit history of a contact
   Scenario: View changed field names of a contact record
 
      Given I am an authenticated user on Data Hub website
-     And I Amend a existing contact record
+     And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
      Then I see the field names that were recently changed
