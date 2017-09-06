@@ -10,7 +10,7 @@
   padding-bottom: $default-spacing-unit / 4;
 
   &::before {
-    content: "Example";
+    content: attr(data-tab-title);
     background-color: $grey-1;
     color: $white;
     text-transform: uppercase;

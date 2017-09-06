@@ -83,17 +83,15 @@
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-list__item-value'%}
 
-  {% if props.type %}
+  {% if props.value %}
     {% if props.type === 'date' %}
-      {% set date = props.value | formatDate %}
+      {% set metaItemValue = props.value | formatDate %}
     {% elif props.type === 'datetime' %}
-      {% set date = props.value | formatDateTime %}
+      {% set metaItemValue = props.value | formatDateTime %}
+    {% else %}
+      {% set metaItemValue = props.value.name | default(props.value) %}
     {% endif %}
-  {% endif %}
 
-  {% set metaItemValue = date or props.value.name | default(props.value)  %}
-
-  {% if metaItemValue %}
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">

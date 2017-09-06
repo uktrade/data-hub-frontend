@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
-const { setOrderBreadcrumb, getQuote } = require('./middleware')
+const { setOrderBreadcrumb, getQuote, setQuoteForm, generateQuote, cancelQuote } = require('./middleware')
 const { renderWorkOrder, renderQuote } = require('./controllers')
 
 const LOCAL_NAV = [
@@ -18,6 +18,9 @@ router.get('/', redirectToFirstNavItem)
 router.get('/work-order', renderWorkOrder)
 router
   .route('/quote')
-  .get(getQuote, renderQuote)
+  .get(getQuote, setQuoteForm, renderQuote)
+  .post(generateQuote)
+
+router.post('/quote/cancel', cancelQuote)
 
 module.exports = router
