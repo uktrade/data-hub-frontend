@@ -54,12 +54,19 @@ const Order = {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}`)
   },
 
-  getQuotePreview (token, id) {
-    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/quote/preview`)
+  previewQuote (token, id) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/quote/preview`,
+      method: 'POST',
+    })
   },
 
   getQuote (token, id) {
     return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/quote`)
+  },
+
+  getFullQuote (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/quote?expand=1`)
   },
 
   createQuote (token, id) {
