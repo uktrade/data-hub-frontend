@@ -1,4 +1,9 @@
 const nunjucks = require('nunjucks')
+const njkMarkdown = require('nunjucks-markdown')
+const md = require('markdown-it')({
+  html: true,
+  typographer: true,
+})
 
 const logger = require('../logger')
 const templateGlobals = require('./globals')
@@ -63,6 +68,11 @@ module.exports = (app, config) => {
   // Global variables
   Object.keys(templateGlobals).forEach((global) => {
     env.addGlobal(global, templateGlobals[global])
+  })
+
+  // Add markdown support
+  njkMarkdown.register(env, (body) => {
+    return md.render(body)
   })
 
   return env
