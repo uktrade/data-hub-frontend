@@ -23,17 +23,30 @@ function setTranslation (req, res, next) {
 }
 
 async function getQuote (req, res, next) {
+  const orderId = get(res.locals, 'order.id')
+
   try {
-    const orderId = get(res.locals, 'order.id')
-    res.locals.quote = await Order.getQuote(req.session.token, orderId)
-    next()
+    res.locals.quote = await Order.previewQuote(req.session.token, orderId)
+    return next()
   } catch (error) {
-    if (error.statusCode === 404) {
-      res.locals.quote = {}
+    // When quote already exists, get it
+    if (error.statusCode === 409) {
+      try {
+        res.locals.quote = await Order.getFullQuote(req.session.token, orderId)
+        return next()
+      } catch (error) {
+        return next(error)
+      }
+    }
+
+    // when preview cannot be generated capture missing data
+    // to render in the view
+    if (error.statusCode === 400) {
+      res.locals.incompleteFields = keys(error.error)
       return next()
     }
 
-    next(error)
+    return next(error)
   }
 }
 
@@ -94,7 +107,11 @@ function setQuoteForm (req, res, next) {
     returnLink: `/omis/${orderId}`,
   }
 
-  if (quote.expires_on) {
+  if (res.locals.incompleteFields) {
+    form.disableFormAction = true
+  }
+
+  if (get(quote, 'created_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
     form.buttonModifiers = 'button-secondary'
