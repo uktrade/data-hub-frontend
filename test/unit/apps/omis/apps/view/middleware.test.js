@@ -55,6 +55,18 @@ describe('OMIS View middleware', () => {
     })
   })
 
+  describe('setTranslation()', () => {
+    it('should set a translate method on locals', () => {
+      this.middleware.setTranslation({}, this.resMock, this.nextSpy)
+
+      expect(this.resMock.locals).to.have.property('translate')
+      expect(this.resMock.locals.translate).to.be.a('function')
+      expect(this.nextSpy).to.have.been.calledOnce
+
+      expect(this.resMock.locals.translate('translation.key')).to.equal('translation.key')
+    })
+  })
+
   describe('getQuote()', () => {
     context('when Order.getQuote resolves', () => {
       beforeEach(() => {
