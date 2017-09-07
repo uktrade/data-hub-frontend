@@ -7,7 +7,7 @@ const {
   show,
 } = require('../_deprecated/lib/element-stuff')
 
-const wrapperClass = 'js-addanother'
+const wrapperClass = 'js-addanother-fragment'
 const defaultAddButtonClass = 'js-addanother__add'
 const defaultRemoveButtonClass = 'js-addanother__remove'
 
@@ -19,7 +19,7 @@ const defaultRemoveButtonClass = 'js-addanother__remove'
  * when the user preses add another. The contents of the cloned fragment will have it's fields reset.
  * The component also inserts a 'remove' button that will allow values to also be removed.
  *
- * The selector used to activate the component is 'js-add-another-fragment'
+ * The selector used to activate the component is 'js-addanother-fragment'
  *
  * The element that includes the activation class must also provide data attributes to define
  * it's behaviour
@@ -37,7 +37,7 @@ const defaultRemoveButtonClass = 'js-addanother__remove'
  * data-fragment-remove-button-text: (Optional) Allow the text for the 'add another' button to be specified
  *
  * e.g.
- * <div class="js-add-another-fragment" data-fragment-selector=".js-adviser">
+ * <div class="js-addanother-fragment" data-fragment-selector=".js-adviser">
  *   <div class="c-form-group js-adviser">
  *     <label for="adviser">Adviser</label>
  *     <select name="adviser">
