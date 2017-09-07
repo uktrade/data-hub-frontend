@@ -154,4 +154,46 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Add another (default)') %}
+    {% call Form(form) %}
+      <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+        {{ TextField({
+          name: 'name-repeatable',
+          label: 'Country',
+          modifier: 'AddItems',
+          error: form.errors.messages.name,
+          value: form.state['name-repeatable'],
+          innerHTML: removeButton
+        }) }}
+      </div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Add another (custom actions)') %}
+    {% set removeButton %}
+      <button class="button button--link c-form-group__action js-AddItems__remove">Remove</button>
+    {% endset %}
+
+    {% call Form(form) %}
+      <div class="js-AddItems" data-item-selector=".c-form-group--AddItems" data-item-name="country" data-can-remove-all>
+        <div>
+          {{ TextField({
+            name: 'name-repeatable-custom',
+            label: 'Country',
+            modifier: 'AddItems',
+            error: form.errors.messages.name,
+            value: form.state['name-repeatable-custom'],
+            innerHTML: removeButton
+          }) }}
+        </div>
+
+        <p class="c-form-group c-form-group--compact">
+          <button class="button button-secondary js-AddItems__add" name="add-item">
+            Add item
+          </button>
+        </p>
+      </div>
+    {% endcall %}
+  {% endcall %}
+
 {% endblock %}
