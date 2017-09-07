@@ -31,6 +31,13 @@ const entities = [
     noun: 'order',
     count: 0,
   },
+  {
+    entity: 'interaction',
+    path: 'interactions',
+    text: 'Interactions',
+    noun: 'interaction',
+    count: 0,
+  },
 ]
 
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
