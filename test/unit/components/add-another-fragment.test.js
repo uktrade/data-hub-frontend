@@ -35,13 +35,13 @@ function makeSingleFieldset (allowDeleteAll = false) {
   ).outerHTML
 
   const HTML = `
-    <div class="js-addanother"
+    <div class="js-addanother-fragment"
       data-selector=".c-form-fieldset"
       ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother')
+  const wrapper = document.querySelector('.js-addanother-fragment')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -66,13 +66,13 @@ function makeMultipleFieldset (allowDeleteAll = false) {
   ).outerHTML
 
   const HTML = `
-    <div class="js-addanother"
+    <div class="js-addanother-fragment"
       data-selector=".c-form-fieldset"
       ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${fieldset}${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother')
+  const wrapper = document.querySelector('.js-addanother-fragment')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -80,13 +80,14 @@ function makeMultipleFieldset (allowDeleteAll = false) {
 
 function makeSingleSelect (allowDeleteAll = false) {
   const HTML = `
-    <div class="js-addanother"
+    <div class="js-addanother-fragment"
       data-selector=".js-adviser"
       ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${selectMarkup}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother')
+  const wrapper = document.querySelector('.js-addanother-fragment')
+
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -94,13 +95,13 @@ function makeSingleSelect (allowDeleteAll = false) {
 
 function makeMultipleSelect (allowDeleteAll = false) {
   const HTML = `
-    <div class="js-addanother"
+    <div class="js-addanother-fragment"
       data-selector=".js-adviser"
       ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${selectMarkup}${selectMarkup}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother')
+  const wrapper = document.querySelector('.js-addanother-fragment')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -368,7 +369,7 @@ describe('Add another', () => {
       ).outerHTML
 
       const HTML = `
-        <div class="js-addanother"
+        <div class="js-addanother-fragment"
           data-selector=".c-form-fieldset"
           data-add-button-selector="#add"
           >
@@ -409,7 +410,7 @@ describe('Add another', () => {
       })
 
       const HTML = `
-        <div class="js-addanother"
+        <div class="js-addanother-fragment"
           data-selector=".my-fragment"
           data-remove-button-selector=".js-remove-thing">
           <div class="my-fragment">
@@ -428,7 +429,7 @@ describe('Add another', () => {
 
       const { window } = new JSDOM(HTML)
       this.document = window.document
-      this.wrapper = this.document.querySelector('.js-addanother')
+      this.wrapper = this.document.querySelector('.js-addanother-fragment')
       AddAnotherFragment.init(this.document)
     })
 
@@ -461,7 +462,7 @@ describe('Add another', () => {
     ).outerHTML
 
     const HTML = `
-      <div class="js-addanother"
+      <div class="js-addanother-fragment"
         data-selector=".c-form-fieldset"
         data-add-button-text="Add new adviser"
         >
@@ -494,7 +495,7 @@ describe('Add another', () => {
     ).outerHTML
 
     const HTML = `
-      <div class="js-addanother"
+      <div class="js-addanother-fragment"
         data-selector=".c-form-fieldset"
         data-remove-button-text="Delete thing"
         >
