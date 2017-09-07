@@ -24,6 +24,15 @@
   + * {
     margin-top: $default-spacing-unit;
   }
+
+  * {
+    font-weight: 700;
+  }
+
+  > * + * {
+    margin-top: $default-spacing-unit;
+    margin-bottom: 0;
+  }
 }
 
 .c-messages__close {
