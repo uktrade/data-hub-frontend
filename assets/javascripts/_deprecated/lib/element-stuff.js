@@ -133,25 +133,31 @@ function removeElement (element) {
  * Useful when copying fields to use as new fields
  *
  * @param {nodeElement} fragment
+ *
+ * @returns {nodeElement}
  */
-function resetFieldValues (fragment) {
-  Array
-    .from(fragment.querySelectorAll('option:checked'))
+function resetFieldValues (element) {
+  Array.from(element.querySelectorAll('option:checked'))
     .forEach(selectedElement => {
       selectedElement.selected = false
     })
 
-  Array
-    .from(fragment.querySelectorAll('input:checked'))
+  Array.from(element.querySelectorAll('input:checked'))
     .forEach(checkedElement => {
       checkedElement.checked = false
     })
 
-  Array
-    .from(fragment.querySelectorAll('input[type="text"], textarea'))
+  Array.from(element.querySelectorAll('input[type="text"], textarea'))
     .forEach(textField => {
       textField.value = ''
     })
+
+  Array.from(element.querySelectorAll('select'))
+    .forEach(field => {
+      field.selectedIndex = 0
+    })
+
+  return element
 }
 
 /**
@@ -163,6 +169,7 @@ function resetFieldValues (fragment) {
  *
  * @param {nodeElement} wrapper
  *
+ * @returns {nodeElement}
  */
 function regenIds (wrapper) {
   Array
@@ -181,6 +188,8 @@ function regenIds (wrapper) {
         relatedLabel.setAttribute('for', newId)
       }
     })
+
+  return wrapper
 }
 
 function closest (element, selector) {
