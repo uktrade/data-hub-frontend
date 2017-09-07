@@ -1,4 +1,4 @@
-const AddAnotherFragment = require('~/assets/javascripts/modules/add-another-fragment')
+const AddAnotherFragment = require('~/assets/javascripts/modules/add-items')
 const { getMacros } = require('~/test/unit/macro-helper')
 const formMacros = getMacros('form')
 const jsdom = require('jsdom')
@@ -35,13 +35,13 @@ function makeSingleFieldset (allowDeleteAll = false) {
   ).outerHTML
 
   const HTML = `
-    <div class="js-addanother-fragment"
-      data-selector=".c-form-fieldset"
-      ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${fieldset}</div>`
+    <div class="js-AddItems"
+      data-item-selector=".c-form-fieldset"
+      ${allowDeleteAll ? 'data-can-remove-all' : ''}>${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother-fragment')
+  const wrapper = document.querySelector('.js-AddItems')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -66,13 +66,13 @@ function makeMultipleFieldset (allowDeleteAll = false) {
   ).outerHTML
 
   const HTML = `
-    <div class="js-addanother-fragment"
-      data-selector=".c-form-fieldset"
-      ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${fieldset}${fieldset}</div>`
+    <div class="js-AddItems"
+      data-item-selector=".c-form-fieldset"
+      ${allowDeleteAll ? 'data-can-remove-all' : ''}>${fieldset}${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother-fragment')
+  const wrapper = document.querySelector('.js-AddItems')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
@@ -80,13 +80,13 @@ function makeMultipleFieldset (allowDeleteAll = false) {
 
 function makeSingleSelect (allowDeleteAll = false) {
   const HTML = `
-    <div class="js-addanother-fragment"
-      data-selector=".js-adviser"
-      ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${selectMarkup}</div>`
+    <div class="js-AddItems"
+      data-item-selector=".js-adviser"
+      ${allowDeleteAll ? 'data-can-remove-all' : ''}>${selectMarkup}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother-fragment')
+  const wrapper = document.querySelector('.js-AddItems')
 
   AddAnotherFragment.init(document)
 
@@ -95,19 +95,19 @@ function makeSingleSelect (allowDeleteAll = false) {
 
 function makeMultipleSelect (allowDeleteAll = false) {
   const HTML = `
-    <div class="js-addanother-fragment"
-      data-selector=".js-adviser"
-      ${allowDeleteAll ? 'data-allow-remove-all' : ''}>${selectMarkup}${selectMarkup}</div>`
+    <div class="js-AddItems"
+      data-item-selector=".js-adviser"
+      ${allowDeleteAll ? 'data-can-remove-all' : ''}>${selectMarkup}${selectMarkup}</div>`
 
   const { window } = new JSDOM(HTML)
   const document = window.document
-  const wrapper = document.querySelector('.js-addanother-fragment')
+  const wrapper = document.querySelector('.js-AddItems')
   AddAnotherFragment.init(document)
 
   return { document, wrapper }
 }
 
-function getVisibleRemoveButtons (wrapper, selector = '.js-addanother__remove a') {
+function getVisibleRemoveButtons (wrapper, selector = '.js-AddItems__remove') {
   return Array
   .from(wrapper.querySelectorAll(selector))
   .filter((removeLink) => !Array.from(removeLink.classList).includes('u-hidden'))
@@ -123,19 +123,19 @@ describe('Add another', () => {
       })
 
       it('should add a button to add more fragments', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
-        expect(addButtonElement.innerHTML).to.contain('Add another')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
+        expect(addButtonElement.innerText).to.equal('Add another item')
       })
 
       it('should create a 2nd fieldset after the first if the add button is pressed', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
         const fieldsets = this.wrapper.querySelectorAll('fieldset')
         expect(fieldsets).to.have.length(2)
       })
 
       it('should create a new ID for elements with an existing ID', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
         const fieldsets = Array.from(this.wrapper.querySelectorAll('fieldset'))
 
@@ -147,7 +147,7 @@ describe('Add another', () => {
       })
 
       it('should re-assign "for" attributes to their associated new field', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
 
         const fieldset = Array.from(this.wrapper.querySelectorAll('fieldset'))[1]
@@ -180,7 +180,7 @@ describe('Add another', () => {
           this.document = document
           this.wrapper = wrapper
 
-          this.wrapper.querySelector('.c-form-fieldset .js-addanother__remove a:not(.u-hidden)').click()
+          this.wrapper.querySelector('.c-form-fieldset .js-AddItems__remove:not(.u-hidden)').click()
 
           expect(this.wrapper.querySelectorAll('.c-form-fieldset')).to.have.length(1)
         })
@@ -189,7 +189,7 @@ describe('Add another', () => {
           const { document, wrapper } = makeMultipleFieldset()
           this.document = document
           this.wrapper = wrapper
-          this.wrapper.querySelector('.c-form-fieldset .js-addanother__remove a:not(.u-hidden)').click()
+          this.wrapper.querySelector('.c-form-fieldset .js-AddItems__remove:not(.u-hidden)').click()
 
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
         })
@@ -199,7 +199,7 @@ describe('Add another', () => {
           this.document = document
           this.wrapper = wrapper
 
-          this.wrapper.querySelector('.js-addanother__add a').click()
+          this.wrapper.querySelector('.js-AddItems__add').click()
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
       })
@@ -224,17 +224,17 @@ describe('Add another', () => {
         })
 
         it('should remove an element if the remove button is pressed', () => {
-          this.wrapper.querySelector('.js-addanother__remove a').click()
+          this.wrapper.querySelector('.js-AddItems__remove').click()
           expect(this.wrapper.querySelectorAll('.c-form-fieldset')).to.have.length(1)
         })
 
         it('should not delete the remove button if you remove a fragment and there is only 1 left', () => {
-          this.wrapper.querySelector('.c-form-fieldset .js-addanother__remove a').click()
+          this.wrapper.querySelector('.c-form-fieldset .js-AddItems__remove').click()
           expect(getVisibleRemoveButtons(this.wrapper)).have.length(1)
         })
 
         it('should add a remove button to any new fragments', () => {
-          const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
+          const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
           addButtonElement.click()
 
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
@@ -252,12 +252,12 @@ describe('Add another', () => {
       })
 
       it('should add a button to add more fragments', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
-        expect(addButtonElement.innerHTML).to.contain('Add another')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
+        expect(addButtonElement.innerText).to.equal('Add another item')
       })
 
       it('should create a 2nd textfield after the first if the add button is pressed', () => {
-        const addButtonElement = this.wrapper.querySelector('.js-addanother__add a')
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
 
         const inputs = this.wrapper.querySelectorAll('.js-adviser')
@@ -288,7 +288,7 @@ describe('Add another', () => {
           this.document = document
           this.wrapper = wrapper
 
-          this.wrapper.querySelector('.js-adviser .js-addanother__remove a').click()
+          this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
 
           expect(this.wrapper.querySelectorAll('.js-adviser')).to.have.length(1)
         })
@@ -298,7 +298,7 @@ describe('Add another', () => {
           this.document = document
           this.wrapper = wrapper
 
-          this.wrapper.querySelector('.js-adviser .js-addanother__remove a').click()
+          this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
           expect(getVisibleRemoveButtons(this.wrapper)).to.be.length(0)
         })
 
@@ -307,7 +307,7 @@ describe('Add another', () => {
           this.document = document
           this.wrapper = wrapper
 
-          this.wrapper.querySelector('.js-addanother__add a').click()
+          this.wrapper.querySelector('.js-AddItems__add').click()
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
       })
@@ -332,17 +332,17 @@ describe('Add another', () => {
         })
 
         it('should remove an element if the remove button is pressed', () => {
-          this.wrapper.querySelector('.js-adviser .js-addanother__remove a').click()
+          this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
           expect(this.wrapper.querySelectorAll('.js-adviser')).to.have.length(1)
         })
 
         it('should not delete the remove button if you remove a fragment and there is only 1 left', () => {
-          this.wrapper.querySelector('.js-adviser .js-addanother__remove a').click()
+          this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
           expect(getVisibleRemoveButtons(this.wrapper)).have.length(1)
         })
 
         it('should add a remove button to any new fragments', () => {
-          this.wrapper.querySelector('.js-addanother__add a').click()
+          this.wrapper.querySelector('.js-AddItems__add').click()
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
         })
       })
@@ -369,8 +369,8 @@ describe('Add another', () => {
       ).outerHTML
 
       const HTML = `
-        <div class="js-addanother-fragment"
-          data-selector=".c-form-fieldset"
+        <div class="js-AddItems"
+          data-item-selector=".c-form-fieldset"
           data-add-button-selector="#add"
           >
 
@@ -387,7 +387,8 @@ describe('Add another', () => {
     })
 
     it('should not add a new add button if one is specified', () => {
-      expect(this.document.querySelector('.js-addanother__add')).to.equal(null)
+      expect(this.document.querySelector('.js-AddItems__add')).to.equal(null)
+      expect(this.document.querySelectorAll('[data-method="add"]')).to.have.length(1)
     })
 
     it('should add a fragment when the add button is pressed', () => {
@@ -410,8 +411,8 @@ describe('Add another', () => {
       })
 
       const HTML = `
-        <div class="js-addanother-fragment"
-          data-selector=".my-fragment"
+        <div class="js-AddItems"
+          data-item-selector=".my-fragment"
           data-remove-button-selector=".js-remove-thing">
           <div class="my-fragment">
             ${selectMarkup}
@@ -429,7 +430,7 @@ describe('Add another', () => {
 
       const { window } = new JSDOM(HTML)
       this.document = window.document
-      this.wrapper = this.document.querySelector('.js-addanother-fragment')
+      this.wrapper = this.document.querySelector('.js-AddItems')
       AddAnotherFragment.init(this.document)
     })
 
@@ -462,8 +463,8 @@ describe('Add another', () => {
     ).outerHTML
 
     const HTML = `
-      <div class="js-addanother-fragment"
-        data-selector=".c-form-fieldset"
+      <div class="js-AddItems"
+        data-item-selector=".c-form-fieldset"
         data-add-button-text="Add new adviser"
         >
         ${fieldset}
@@ -473,7 +474,7 @@ describe('Add another', () => {
     const document = window.document
     AddAnotherFragment.init(document)
 
-    expect(document.querySelector('.js-addanother__add a').innerHTML).to.contain('Add new adviser')
+    expect(document.querySelector('.js-AddItems__add').innerText).to.contain('Add new adviser')
   })
 
   it('should allow remove button text to be overridden', () => {
@@ -495,10 +496,11 @@ describe('Add another', () => {
     ).outerHTML
 
     const HTML = `
-      <div class="js-addanother-fragment"
-        data-selector=".c-form-fieldset"
-        data-remove-button-text="Delete thing"
+      <div class="js-AddItems"
+        data-item-selector=".c-form-fieldset"
+        data-remove-button-text="Delete this item"
         >
+        ${fieldset}
         ${fieldset}
       </div>`
 
@@ -506,6 +508,6 @@ describe('Add another', () => {
     const document = window.document
     AddAnotherFragment.init(document)
 
-    expect(document.querySelector('.js-addanother__remove a').innerHTML).to.contain('Delete thing')
+    expect(document.querySelector('[data-method="remove"]').innerHTML).to.contain('Delete this item')
   })
 })

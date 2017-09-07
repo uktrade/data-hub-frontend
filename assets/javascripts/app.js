@@ -11,7 +11,7 @@ const Messages = require('./modules/messages')
 const FormErrors = require('./modules/form-errors')
 const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
-const AddAnotherFragment = require('./modules/add-another-fragment')
+const AddItems = require('./modules/add-items')
 
 const AddAnotherField = require('./_deprecated/add-another-field')
 const CompanyAdd = require('./_deprecated/company-add')
@@ -29,7 +29,7 @@ Messages.init()
 FormErrors.init()
 AutoSubmit.init()
 XhrLink.init()
-AddAnotherFragment.init()
+AddItems.init()
 
 // Deprecated
 AddAnotherField.init()
