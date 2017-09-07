@@ -6,6 +6,7 @@ const {
   map,
   mapValues,
   pick,
+  pickBy,
 } = require('lodash')
 const dateFns = require('date-fns')
 
@@ -74,7 +75,7 @@ class EditController extends FormController {
       return value
     })
 
-    next(null, combinedValues)
+    next(null, pickBy(combinedValues))
   }
 }
 
