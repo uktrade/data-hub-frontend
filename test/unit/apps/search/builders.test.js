@@ -45,6 +45,13 @@ describe('Search builders', () => {
           noun: 'order',
           count: 5,
         },
+        {
+          entity: 'interaction',
+          path: 'interactions',
+          text: 'Interactions',
+          noun: 'interaction',
+          count: 0,
+        },
       ]
 
       expect(actual).to.deep.equal(expected)
