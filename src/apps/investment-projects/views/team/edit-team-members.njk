@@ -7,7 +7,7 @@
     {% if form.errors.team_members %}
       <div class="error">{{ form.errors.team_members }}</div>
     {% endif %}
-    <div class="js-add-another-fragment"
+    <div class="js-addanother-fragment"
       data-selector=".c-form-fieldset"
       data-allow-remove>
       {% for teamMember in form.state.teamMembers %}
