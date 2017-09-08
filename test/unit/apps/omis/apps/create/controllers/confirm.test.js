@@ -31,7 +31,7 @@ describe('OMIS create confirm controller', () => {
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
       '../../../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub,
+        getAllAdvisers: this.getAdvisersStub,
       },
       '../../../../../lib/metadata': {
         countryOptions: metadataCountryMockData,

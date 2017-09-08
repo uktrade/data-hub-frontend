@@ -9,7 +9,7 @@ describe('OMIS create subscribers controller', () => {
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/subscribers', {
       '../../../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub,
+        getAllAdvisers: this.getAdvisersStub,
       },
     })
 
