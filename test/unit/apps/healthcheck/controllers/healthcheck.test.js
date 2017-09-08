@@ -13,6 +13,7 @@ describe('Health check controller', () => {
       this.logger = this.sandbox.stub().returns({ error: this.sandbox.spy() })
       this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
         './serviceDependencies': this.serviceDependencies,
+        '../../../config/logger': this.logger,
       })
       this.req = {}
       this.res = {
@@ -37,6 +38,7 @@ describe('Health check controller', () => {
       expect(this.res.status).to.have.been.calledOnce
       expect(this.res.status().send).to.be.calledWith('OK')
       expect(this.res.status().send).to.have.been.calledOnce
+      expect(this.logger.error).to.notCalled
     })
   })
 
