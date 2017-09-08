@@ -1,13 +1,7 @@
-const { get, keys } = require('lodash')
-const path = require('path')
-const i18nFuture = require('i18n-future')
+const { get } = require('lodash')
 
 const { setHomeBreadcrumb } = require('../../../middleware')
 const { Order } = require('../../models')
-
-const i18n = i18nFuture({
-  path: path.resolve(__dirname, '../../locales/__lng__/__ns__.json'),
-})
 
 function setOrderBreadcrumb (req, res, next) {
   const reference = get(res.locals, 'order.reference')
@@ -15,38 +9,18 @@ function setOrderBreadcrumb (req, res, next) {
   return setHomeBreadcrumb(reference)(req, res, next)
 }
 
-function setTranslation (req, res, next) {
-  res.locals.translate = (key) => {
-    return i18n.translate(key)
-  }
-  next()
-}
-
 async function getQuote (req, res, next) {
-  const orderId = get(res.locals, 'order.id')
-
   try {
-    res.locals.quote = await Order.previewQuote(req.session.token, orderId)
-    return next()
+    const orderId = get(res.locals, 'order.id')
+    res.locals.quote = await Order.getQuote(req.session.token, orderId)
+    next()
   } catch (error) {
-    // When quote already exists, get it
-    if (error.statusCode === 409) {
-      try {
-        res.locals.quote = await Order.getFullQuote(req.session.token, orderId)
-        return next()
-      } catch (error) {
-        return next(error)
-      }
-    }
-
-    // when preview cannot be generated capture missing data
-    // to render in the view
-    if (error.statusCode === 400) {
-      res.locals.incompleteFields = keys(error.error)
+    if (error.statusCode === 404) {
+      res.locals.quote = {}
       return next()
     }
 
-    return next(error)
+    next(error)
   }
 }
 
@@ -107,11 +81,7 @@ function setQuoteForm (req, res, next) {
     returnLink: `/omis/${orderId}`,
   }
 
-  if (res.locals.incompleteFields) {
-    form.disableFormAction = true
-  }
-
-  if (get(quote, 'created_on')) {
+  if (quote.expires_on) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
     form.buttonModifiers = 'button-secondary'
@@ -133,7 +103,6 @@ function setQuoteForm (req, res, next) {
 
 module.exports = {
   setOrderBreadcrumb,
-  setTranslation,
   getQuote,
   generateQuote,
   cancelQuote,

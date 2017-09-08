@@ -7,32 +7,25 @@
     {% if form.errors.team_members %}
       <div class="error">{{ form.errors.team_members }}</div>
     {% endif %}
-    <div class="js-AddItems"
-      data-item-selector=".c-form-fieldset"
-      data-item-name="team member"
-      data-can-remove-all
-    >
-      <div>
-        {% for teamMember in form.state.teamMembers %}
-          {% call Fieldset({ legend: 'Team member' }) %}
-            {{ MultipleChoiceField({
-              name: 'adviser',
-              label: form.labels.adviser,
-              options: form.options.advisers,
-              value: teamMember.adviser,
-              idSuffix: loop.index,
-              initialOption: '-- Select an adviser --'
-            }) }}
 
-            {{ TextField({
-              name: 'role',
-              label: form.labels.role,
-              value: teamMember.role,
-              idSuffix: loop.index
-            }) }}
-          {% endcall %}
-        {% endfor %}
-      </div>
-    </div>
+    {% for teamMember in form.state.teamMembers %}
+      {% call Fieldset({ legend: 'Team member' }) %}
+        {{ MultipleChoiceField({
+          name: 'adviser',
+          label: form.labels.adviser,
+          options: form.options.advisers,
+          value: teamMember.adviser,
+          idSuffix: loop.index,
+          initialOption: '-- Select an adviser --'
+        }) }}
+
+        {{ TextField({
+          name: 'role',
+          label: form.labels.role,
+          value: teamMember.role,
+          idSuffix: loop.index
+        }) }}
+      {% endcall %}
+      {% endfor %}
   {% endcall %}
 {% endblock %}

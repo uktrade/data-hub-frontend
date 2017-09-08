@@ -13,7 +13,6 @@ function transformContactToListItem ({
   archived_on,
   archived_reason,
   company_sector,
-  primary,
 } = {}) {
   if (!id || !first_name || !last_name) { return }
 
@@ -36,25 +35,13 @@ function transformContactToListItem ({
         label: 'Sector',
         value: get(company_sector, 'name'),
       },
+      {
+        label: 'Country',
+        type: 'badge',
+        value: get(address_country, 'name'),
+      },
     ],
   }
-
-  // Add Contact type as first badge to be displayed
-  if (primary) {
-    item.meta.push({
-      label: 'Contact type',
-      value: 'Primary',
-      type: 'badge',
-      badgeModifier: 'secondary',
-    })
-  }
-
-  item.meta.push(
-    {
-      label: 'Country',
-      type: 'badge',
-      value: get(address_country, 'name'),
-    })
 
   if (archived_reason) {
     item.meta.push({
