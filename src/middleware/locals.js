@@ -13,6 +13,7 @@ try {
 const globalNavItems = [
   { path: '/companies', label: 'Companies' },
   { path: '/contacts', label: 'Contacts' },
+  { path: '/interactions', label: 'Interactions' },
   { path: '/investment-projects', label: 'Investment projects' },
   { path: '/omis', label: 'OMIS Orders' },
 ]
