@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-const dateFns = require('date-fns')
-const { mediumDateTimeFormat } = require('../../../config')
 
 function transformInteractionToListItem (interaction) {
   return {
@@ -9,12 +7,12 @@ function transformInteractionToListItem (interaction) {
     name: interaction.subject,
     meta: [
       {
-        label: 'Type:',
+        label: 'Type',
         type: 'badge',
         value: interaction.interaction_type,
       },
       {
-        label: 'Contact:',
+        label: 'Contact',
         value: interaction.contact,
       },
       {
@@ -23,10 +21,11 @@ function transformInteractionToListItem (interaction) {
       },
       {
         label: 'Date',
-        value: dateFns.format(interaction.date, mediumDateTimeFormat),
+        value: interaction.date,
+        type: 'date',
       },
       {
-        label: 'Adviser:',
+        label: 'Adviser',
         value: interaction.dit_adviser,
       },
     ],

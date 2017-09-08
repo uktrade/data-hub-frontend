@@ -9,7 +9,7 @@ describe('Interaction transformers', () => {
       name: 'Test interactionss',
       meta: [
         {
-          label: 'Type:',
+          label: 'Type',
           type: 'badge',
           value: {
             id: '72c226d7-5d95-e211-a939-e4115bead28a',
@@ -17,7 +17,7 @@ describe('Interaction transformers', () => {
           },
         },
         {
-          label: 'Contact:',
+          label: 'Contact',
           value: {
             id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
             first_name: 'Jackson',
@@ -34,10 +34,11 @@ describe('Interaction transformers', () => {
         },
         {
           label: 'Date',
-          value: '31 May 2017, 12:00am',
+          type: 'date',
+          value: '2017-05-31T00:00:00',
         },
         {
-          label: 'Adviser:',
+          label: 'Adviser',
           value: {
             id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
             first_name: 'Test',
