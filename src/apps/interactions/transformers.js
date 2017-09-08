@@ -1,32 +1,40 @@
 /* eslint-disable camelcase */
 
-function transformInteractionToListItem (interaction) {
+function transformInteractionToListItem ({
+  id,
+  subject,
+  interaction_type,
+  contact,
+  company,
+  date,
+  dit_adviser,
+} = {}) {
   return {
-    id: interaction.id,
+    id,
     type: 'interaction',
-    name: interaction.subject,
+    name: subject,
     meta: [
       {
         label: 'Type',
         type: 'badge',
-        value: interaction.interaction_type,
+        value: interaction_type,
       },
       {
         label: 'Contact',
-        value: interaction.contact,
+        value: contact,
       },
       {
         label: 'Company',
-        value: interaction.company,
+        value: company,
       },
       {
         label: 'Date',
-        value: interaction.date,
+        value: date,
         type: 'date',
       },
       {
         label: 'Adviser',
-        value: interaction.dit_adviser,
+        value: dit_adviser,
       },
     ],
   }
