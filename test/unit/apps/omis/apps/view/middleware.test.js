@@ -4,8 +4,7 @@ describe('OMIS View middleware', () => {
 
     this.setHomeBreadcrumbReturnSpy = this.sandbox.spy()
     this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
-    this.previewQuoteStub = this.sandbox.stub()
-    this.getFullQuoteStub = this.sandbox.stub()
+    this.getQuoteStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
     this.flashSpy = this.sandbox.spy()
@@ -32,8 +31,7 @@ describe('OMIS View middleware', () => {
       },
       '../../models': {
         Order: {
-          previewQuote: this.previewQuoteStub,
-          getFullQuote: this.getFullQuoteStub,
+          getQuote: this.getQuoteStub,
           createQuote: this.createQuoteStub,
           cancelQuote: this.cancelQuoteStub,
         },
@@ -57,124 +55,74 @@ describe('OMIS View middleware', () => {
     })
   })
 
-  describe('setTranslation()', () => {
-    it('should set a translate method on locals', () => {
-      this.middleware.setTranslation({}, this.resMock, this.nextSpy)
-
-      expect(this.resMock.locals).to.have.property('translate')
-      expect(this.resMock.locals.translate).to.be.a('function')
-      expect(this.nextSpy).to.have.been.calledOnce
-
-      expect(this.resMock.locals.translate('translation.key')).to.equal('translation.key')
-    })
-  })
-
   describe('getQuote()', () => {
-    context('when no quote exists', () => {
+    context('when Order.getQuote resolves', () => {
       beforeEach(() => {
-        this.previewQuoteStub.resolves({
+        this.getQuoteStub.resolves({
           id: '12345',
-          content: 'Quote content',
         })
       })
 
-      it('should set response as quote property on locals', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+      it('should set quote on locals object', (done) => {
+        const nextSpy = () => {
+          try {
+            expect(this.resMock.locals).to.have.property('quote')
+            expect(this.resMock.locals.quote).to.deep.equal({
+              id: '12345',
+            })
+            done()
+          } catch (error) {
+            done(error)
+          }
+        }
 
-        expect(this.resMock.locals).to.have.property('quote')
-        expect(this.resMock.locals.quote).to.deep.equal({
-          id: '12345',
-          content: 'Quote content',
-        })
-        expect(this.nextSpy).to.have.been.calledWith()
+        this.middleware.getQuote(this.reqMock, this.resMock, nextSpy)
       })
     })
 
-    context('when quote already exists', () => {
+    context('when Order.getQuote returns a 404', () => {
       beforeEach(() => {
         const error = {
-          statusCode: 409,
+          statusCode: 404,
         }
-        this.previewQuoteStub.rejects(error)
+        this.getQuoteStub.rejects(error)
       })
 
-      context('when quote is returned', () => {
-        beforeEach(() => {
-          this.getFullQuoteStub.resolves({
-            id: '12345',
-            content: 'Quote content',
-          })
-        })
-
-        it('should set response as quote property on locals', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals).to.have.property('quote')
-          expect(this.resMock.locals.quote).to.deep.equal({
-            id: '12345',
-            content: 'Quote content',
-          })
-          expect(this.nextSpy).to.have.been.calledWith()
-        })
-      })
-
-      context('when quote cannot be returned', () => {
-        beforeEach(() => {
-          this.error = {
-            statusCode: 404,
+      it('should set an empty quote object on locals object', (done) => {
+        const nextSpy = (error) => {
+          try {
+            expect(this.resMock.locals).to.have.property('quote')
+            expect(this.resMock.locals.quote).to.deep.equal({})
+            expect(error).to.be.undefined
+            done()
+          } catch (error) {
+            done(error)
           }
-          this.getFullQuoteStub.rejects(this.error)
-        })
+        }
 
-        it('should call next with the error', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.nextSpy).to.have.been.calledWith(this.error)
-        })
-      })
-
-      context('when quote preview generates an unexpected error', () => {
-        beforeEach(() => {
-          this.error = {
-            statusCode: 500,
-          }
-          this.previewQuoteStub.rejects(this.error)
-        })
-
-        it('should call next with the error', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.nextSpy).to.have.been.calledWith(this.error)
-        })
+        this.middleware.getQuote(this.reqMock, this.resMock, nextSpy)
       })
     })
 
-    context('when quote cannot be generated because of errors', () => {
+    context('when Order.getQuote returns any other error', () => {
       beforeEach(() => {
         const error = {
-          statusCode: 400,
-          error: {
-            'service_types': ['Required'],
-            'description': ['Required'],
-          },
+          statusCode: 500,
         }
-        this.previewQuoteStub.rejects(error)
+        this.getQuoteStub.rejects(error)
       })
 
-      it('should set errors on locals', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+      it('should set an empty quote object on locals object', (done) => {
+        const nextSpy = (error) => {
+          try {
+            expect(error.statusCode).to.equal(500)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        }
 
-        expect(this.resMock.locals).to.have.property('incompleteFields')
-        expect(this.resMock.locals.incompleteFields).to.deep.equal([
-          'service_types',
-          'description',
-        ])
-      })
-
-      it('should return next without error', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-        expect(this.nextSpy).to.have.been.calledWith()
+        this.middleware.getQuote(this.reqMock, this.resMock, nextSpy)
       })
     })
   })
@@ -399,7 +347,7 @@ describe('OMIS View middleware', () => {
       this.resMock.locals.quote = {}
     })
 
-    context('when quote does not exist', () => {
+    context('when quote does not have an expiry date', () => {
       it('should set default quoteForm object', (done) => {
         const nextSpy = () => {
           try {
@@ -419,35 +367,9 @@ describe('OMIS View middleware', () => {
       })
     })
 
-    context('when quote preview errors exist exist', () => {
+    context('when quote has an expiry date', () => {
       beforeEach(() => {
-        this.resMock.locals.incompleteFields = ['service_types']
-      })
-
-      it('should set disable the form actions', (done) => {
-        const nextSpy = () => {
-          try {
-            expect(this.resMock.locals).to.have.property('quoteForm')
-
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonText')
-            expect(this.resMock.locals.quoteForm).to.have.property('returnText')
-            expect(this.resMock.locals.quoteForm).to.have.property('returnLink')
-            expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
-
-            done()
-          } catch (error) {
-            done(error)
-          }
-        }
-
-        this.middleware.setQuoteForm({}, this.resMock, nextSpy)
-      })
-    })
-
-    context('when quote exists', () => {
-      beforeEach(() => {
-        this.resMock.locals.quote.created_on = '2017-08-01'
-        this.resMock.locals.quote.expires_on = '2017-09-01'
+        this.resMock.locals.quote.expires_on = '2017-08-01'
       })
 
       it('should set change quoteForm object', (done) => {
@@ -465,71 +387,71 @@ describe('OMIS View middleware', () => {
 
         this.middleware.setQuoteForm({}, this.resMock, nextSpy)
       })
+    })
 
-      context('when quote has not expired', () => {
-        beforeEach(() => {
-          const mockDate = new Date('2017-08-01')
+    context('when quote has not expired', () => {
+      beforeEach(() => {
+        const mockDate = new Date('2017-08-01')
 
-          this.clock = sinon.useFakeTimers(mockDate.getTime())
-          this.resMock.locals.quote.expires_on = '2017-08-10'
-        })
+        this.clock = sinon.useFakeTimers(mockDate.getTime())
+        this.resMock.locals.quote.expires_on = '2017-08-10'
+      })
 
-        afterEach(() => {
-          this.clock.restore()
-        })
+      afterEach(() => {
+        this.clock.restore()
+      })
 
-        context('when quote has not been accpeted or cancelled', () => {
-          it('should allow destructive cancel', (done) => {
-            const nextSpy = () => {
-              try {
-                expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
+      context('when quote has not been accpeted or cancelled', () => {
+        it('should allow destructive cancel', (done) => {
+          const nextSpy = () => {
+            try {
+              expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
+              expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
+              expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
-                done()
-              } catch (error) {
-                done(error)
-              }
+              done()
+            } catch (error) {
+              done(error)
             }
+          }
 
-            this.middleware.setQuoteForm({}, this.resMock, nextSpy)
-          })
+          this.middleware.setQuoteForm({}, this.resMock, nextSpy)
         })
+      })
 
-        context('when quote has been accepted', () => {
-          it('should disable form actions', (done) => {
-            const nextSpy = () => {
-              try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+      context('when quote has been accepted', () => {
+        it('should disable form actions', (done) => {
+          const nextSpy = () => {
+            try {
+              expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
 
-                done()
-              } catch (error) {
-                done(error)
-              }
+              done()
+            } catch (error) {
+              done(error)
             }
+          }
 
-            this.resMock.locals.quote.accepted_on = '2017-08-02'
+          this.resMock.locals.quote.accepted_on = '2017-08-02'
 
-            this.middleware.setQuoteForm({}, this.resMock, nextSpy)
-          })
+          this.middleware.setQuoteForm({}, this.resMock, nextSpy)
         })
+      })
 
-        context('when quote has been cancelled', () => {
-          it('should disable form actions', (done) => {
-            const nextSpy = () => {
-              try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+      context('when quote has been cancelled', () => {
+        it('should disable form actions', (done) => {
+          const nextSpy = () => {
+            try {
+              expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
 
-                done()
-              } catch (error) {
-                done(error)
-              }
+              done()
+            } catch (error) {
+              done(error)
             }
+          }
 
-            this.resMock.locals.quote.cancelled_on = '2017-08-02'
+          this.resMock.locals.quote.cancelled_on = '2017-08-02'
 
-            this.middleware.setQuoteForm({}, this.resMock, nextSpy)
-          })
+          this.middleware.setQuoteForm({}, this.resMock, nextSpy)
         })
       })
     })

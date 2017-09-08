@@ -24,7 +24,6 @@ describe('Contact transformers', function () {
         { label: 'Company', value: 'Fred ltd' },
         { label: 'Updated', type: 'datetime', value: '2017-02-14T14:49:17' },
         { label: 'Sector', value: 'Aerospace' },
-        { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
         { label: 'Country', type: 'badge', value: 'United Kingdom' },
       ])
     })
@@ -46,7 +45,6 @@ describe('Contact transformers', function () {
         { label: 'Company', value: 'Fred ltd' },
         { label: 'Archived', type: 'datetime', value: '2017-03-14T14:49:17' },
         { label: 'Sector', value: 'Aerospace' },
-        { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
         { label: 'Country', type: 'badge', value: 'United Kingdom' },
         { label: 'Reason to archive', value: 'Left job' },
         { label: 'Archived by', value: 'Sam Smith' },

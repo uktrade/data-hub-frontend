@@ -3,12 +3,12 @@ const { filter, find, get, unset } = require('lodash')
 const metadataRepo = require('../../../../../lib/metadata')
 const { transformIdToObject } = require('../../../../transformers')
 const { FormController } = require('../../../controllers')
-const { getAllAdvisers } = require('../../../../adviser/repos')
+const { getAdvisers } = require('../../../../adviser/repos')
 const { Order } = require('../../../models')
 
 class ConfirmController extends FormController {
   async getValues (req, res, next) {
-    const advisers = await getAllAdvisers(req.session.token)
+    const advisers = await getAdvisers(req.session.token)
 
     super.getValues(req, res, (err, values) => {
       const company = res.locals.company

@@ -1,61 +1,22 @@
 {% extends '_layouts/two-column.njk' %}
 
-{% from "_macros/dev.njk" import Example %}
-
 {% block main_grid_right_column %}
-  {% if incompleteFields %}
-    <ul class="c-messages">
-      <li class="c-messages__item c-messages__item--error">
-        <p>To generate a quote you must enter the following work description information:</p>
-
-        <ul class="list-disc">
-          {% for field in incompleteFields %}
-            <li>{{ translate('fields.' + field + '.label') }}</li>
-          {% endfor %}
-        </ul>
-
-        <p><a href="/omis/{{ order.id }}/edit/work-description">Complete work description</a></p>
-      </li>
-    </ul>
-  {% endif %}
-
   {% if quote %}
-    {# TODO: Remove `if quote.created_on` when API stops returning `created_on` for preview  #}
     {{ MetaList({
       items: [
-        { label: 'Expires on', value: quote.expires_on, type: 'date' },
-        { label: 'Sent on', value: quote.created_on, type: 'datetime' },
-        { label: 'Sent by', value: quote.created_by if quote.created_on }
+        { label: 'Sent on', value: quote.created_on | formatDateTime },
+        { label: 'Sent by', value: quote.created_by },
+        { label: 'Expires on', value: quote.expires_on | formatDateTime }
       ],
       itemModifier: 'stacked'
     }) }}
-
-    {{ MetaList({
-      items: [
-        { label: 'Cancelled on', value: quote.cancelled_on, type: 'datetime' },
-        { label: 'Cancelled by', value: quote.cancelled_by },
-        { label: 'Accepted on', value: quote.accepted_on, type: 'datetime' },
-        { label: 'Accepted by', value: quote.accepted_by }
-      ],
-      itemModifier: 'stacked'
-    }) }}
-
-    {% call Example(tabTitle = 'Preview') %}
-      <div class="l-markdown">
-        {% markdown %}
-          {{ quote.content }}
-        {% endmarkdown %}
-      </div>
-    {% endcall %}
   {% endif %}
 
   {% if destructive %}
-    <ul class="c-messages">
-      <li class="c-messages__item c-messages__item--warning">
-        Editing the order whilst it is out for acceptance will invalidate the
-        current quote and the client will no longer be able to accept it.
-      </li>
-    </ul>
+    <div class="infostrip">
+      Editing the order whilst it is out for acceptance will invalidate the
+      current quote and the client will no longer be able to accept it.
+    </div>
   {% endif %}
 
   {{ Form(quoteForm) }}
