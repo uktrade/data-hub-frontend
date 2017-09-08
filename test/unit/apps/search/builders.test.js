@@ -32,6 +32,13 @@ describe('Search builders', () => {
           count: 20,
         },
         {
+          entity: 'interaction',
+          path: 'interactions',
+          text: 'Interactions',
+          noun: 'interaction',
+          count: 0,
+        },
+        {
           entity: 'investment_project',
           path: 'investment-projects',
           text: 'Investment projects',
@@ -44,13 +51,6 @@ describe('Search builders', () => {
           text: 'Orders',
           noun: 'order',
           count: 5,
-        },
-        {
-          entity: 'interaction',
-          path: 'interactions',
-          text: 'Interactions',
-          noun: 'interaction',
-          count: 0,
         },
       ]
 
