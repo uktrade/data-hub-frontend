@@ -6,6 +6,12 @@ function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/`)
 }
 
+// TODO: Make sure this is removed and replaced with a better way to
+// filter/select advisers
+function getAllAdvisers (token) {
+  return authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
+}
+
 function getAdviser (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/${id}/`)
 }
@@ -51,6 +57,7 @@ function adviserSearch (token, term) {
 
 module.exports = {
   getAdvisers,
+  getAllAdvisers,
   getAdviser,
   adviserSearch,
 }
