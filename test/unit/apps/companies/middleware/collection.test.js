@@ -1,8 +1,8 @@
 const nock = require('nock')
 const config = require('~/config')
-const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware')
+const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware/collection')
 
-describe('Investment projects collection middleware', () => {
+describe('Company collection middleware', () => {
   beforeEach(() => {
     nock(config.apiRoot)
       .post(`/v3/search/company`)
