@@ -196,4 +196,33 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Add another (macro)') %}
+    {% call Form(form) %}
+
+      {{ AddAnother({
+
+        buttonName: 'add_country',
+        name: 'country',
+        label: 'Country',
+        children: [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'country',
+            label: 'Country',
+            isLabelHidden: true,
+            optional: true,
+            initialOption: '-- Select country --',
+            options: [
+              { value: 1, label: 'country 1' },
+              { value: 2, label: 'country 2' },
+              { value: 3, label: 'country 3' }
+            ]
+          }
+        ]
+
+      }) }}
+
+    {% endcall %}
+  {% endcall %}
+
 {% endblock %}

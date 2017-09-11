@@ -352,6 +352,32 @@
 {% endmacro %}
 
 {##
+ # Render a collection for multiple fields for add another functionality
+ # @param {object} props - An object containing field properties
+ # @param {array} [props.value] - Input values
+ #}
+{% macro AddAnother(props) %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId })) %}
+    {% for individualValue in props.value %}
+      {{ renderAsMacro(props.children, { value: individualValue }) }}
+    {% endfor %}
+
+    {{ renderAsMacro(props.children, { value: null } ) }}
+
+    <p class="c-form-group c-form-group--compact">
+      <input
+        class="button button-secondary"
+        type="submit"
+        name="{{ props.buttonName }}"
+        value="Add another"
+        data-persist-values="true" />
+    </p>
+  {% endcall %}
+{% endmacro %}
+
+{##
  # Render hidden input field
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name

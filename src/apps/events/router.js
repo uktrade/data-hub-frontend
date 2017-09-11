@@ -1,7 +1,9 @@
 const router = require('express').Router()
 
-const { renderEventPage } = require('./controllers/edit')
+const { renderEventPage, postHandler } = require('./controllers/edit')
 
-router.get('/create', renderEventPage)
+router.route('/create')
+  .get(renderEventPage)
+  .post(postHandler, renderEventPage)
 
 module.exports = router

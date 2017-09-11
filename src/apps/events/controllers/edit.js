@@ -2,6 +2,7 @@ const { eventFormConfig } = require('../macros')
 const { getAdvisers } = require('../../adviser/repos')
 const { transformObjectToOption } = require('../../transformers')
 const { buildFormWithState } = require('../../builders')
+const { get, castArray, compact } = require('lodash')
 
 async function renderEventPage (req, res, next) {
   try {
@@ -9,12 +10,12 @@ async function renderEventPage (req, res, next) {
     const advisers = advisersResponse.results.map(transformObjectToOption)
     const eventForm = eventFormConfig(advisers)
     const emptyDate = { year: '', month: '', day: '' }
-    const requestBody = {
-      'event-start-date': emptyDate,
-      'event-end-date': emptyDate,
-      'event-team-hosting': req.session.user.dit_team.id,
-    }
-    const eventFormWithState = buildFormWithState(eventForm, requestBody)
+    const body = Object.assign(req.body, {
+      event_start_date: emptyDate,
+      event_end_date: emptyDate,
+      event_team_hosting: get(req, 'session.user.dit_team.id', null),
+    })
+    const eventFormWithState = buildFormWithState(eventForm, body)
 
     res
       .breadcrumb('Add event')
@@ -27,6 +28,17 @@ async function renderEventPage (req, res, next) {
   }
 }
 
+function postHandler (req, res, next) {
+  const setAddAnotherField = (value) => compact(castArray(value))
+  req.body.event_shared_teams = setAddAnotherField(req.body.event_shared_teams)
+  req.body.event_programmes = setAddAnotherField(req.body.event_programmes)
+
+  if (req.body.add_event_shared_team || req.body.add_event_programme) {
+    return next()
+  }
+}
+
 module.exports = {
   renderEventPage,
+  postHandler,
 }

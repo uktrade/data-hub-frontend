@@ -136,8 +136,10 @@ const ConditionalSubfields = {
       const children = subField.querySelectorAll('input, select, checkbox, textarea')
 
       Array.from(children).forEach((field) => {
-        field.value = ''
-        field.checked = false
+        if (!field.getAttribute('data-persist-values')) {
+          field.value = ''
+          field.checked = false
+        }
 
         const event = this.wrapper.createEvent('HTMLEvents')
         event.initEvent('change', true, false)
