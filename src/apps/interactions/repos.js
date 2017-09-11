@@ -1,5 +1,4 @@
 const config = require('../../../config')
-const logger = require('../../../config/logger')
 const authorisedRequest = require('../../lib/authorised-request')
 
 function getInteraction (token, interactionId) {
@@ -26,22 +25,15 @@ function saveInteraction (token, interaction) {
 /**
  * Get all the interactions for a contact
  *
- * @param {any} token
- * @param {any} contactId
+ * @param {string} token
+ * @param {string} contactId
+ * @param {number} page
  * @return {Array[Object]} Returns a promise that resolves to an array of API interaction objects
  */
-function getInteractionsForContact (token, contactId) {
-  // TODO deal with pagination and move to the interaction API v3 endpoints when they are ready
-  return new Promise((resolve) => {
-    authorisedRequest(token, `${config.apiRoot}/interaction/?contact_id=${contactId}&limit=100`)
-    .then((response) => {
-      resolve(response.results)
-    })
-    .catch((error) => {
-      logger.error(error)
-      resolve([])
-    })
-  })
+function getInteractionsForContact (token, contactId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?contact_id=${contactId}&limit=${limit}&offset=${offset}`)
 }
 
 /**
