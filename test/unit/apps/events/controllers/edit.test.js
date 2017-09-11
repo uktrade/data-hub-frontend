@@ -81,7 +81,7 @@ describe('Event edit controller', () => {
       await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'event-organiser' }).options
+      const actual = find(eventForm.children, { name: 'event_organiser' }).options
       const expected = [
         { value: 'advisor1', label: 'advisor 1' },
         { value: 'advisor2', label: 'advisor 2' },
@@ -95,7 +95,7 @@ describe('Event edit controller', () => {
       await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'event-team-hosting' }).value
+      const actual = find(eventForm.children, { name: 'event_team_hosting' }).value
       const expected = currentUserTeam
 
       expect(actual).to.equal(expected)

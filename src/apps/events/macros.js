@@ -9,12 +9,12 @@ const eventFormConfig = (organisers) => {
     children: [
       {
         macroName: 'TextField',
-        name: 'event-name',
+        name: 'event_name',
         label: 'Event name',
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event-type',
+        name: 'event_type',
         label: 'Event type',
         initialOption: '-- Select event type --',
         options () {
@@ -23,7 +23,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'DateFieldset',
-        name: 'event-start-date',
+        name: 'event_start_date',
         label: 'Event start date',
         optional: true,
         value: {
@@ -34,7 +34,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'DateFieldset',
-        name: 'event-end-date',
+        name: 'event_end_date',
         label: 'Event end date',
         optional: true,
         value: {
@@ -45,7 +45,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event-location-type',
+        name: 'event_location_type',
         label: 'Event location type',
         optional: true,
         initialOption: '-- Select location type --',
@@ -85,13 +85,13 @@ const eventFormConfig = (organisers) => {
       {
         macroName: 'TextField',
         type: 'textarea',
-        name: 'event-notes',
+        name: 'event_notes',
         label: 'Event notes',
         optional: true,
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event-team-hosting',
+        name: 'event_team_hosting',
         label: 'Team hosting the event',
         optional: true,
         initialOption: '-- Select team --',
@@ -101,7 +101,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event-organiser',
+        name: 'event_organiser',
         label: 'Organiser',
         optional: true,
         initialOption: '-- Select organiser --',

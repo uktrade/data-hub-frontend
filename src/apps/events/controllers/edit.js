@@ -2,7 +2,7 @@ const { eventFormConfig } = require('../macros')
 const { getAdvisers } = require('../../adviser/repos')
 const { transformObjectToOption } = require('../../transformers')
 const { buildFormWithState } = require('../../builders')
-const { castArray, compact } = require('lodash')
+const { get, castArray, compact } = require('lodash')
 
 async function renderEventPage (req, res, next) {
   try {
@@ -10,12 +10,12 @@ async function renderEventPage (req, res, next) {
     const advisers = advisersResponse.results.map(transformObjectToOption)
     const eventForm = eventFormConfig(advisers)
     const emptyDate = { year: '', month: '', day: '' }
-    const requestBody = {
-      'event-start-date': emptyDate,
-      'event-end-date': emptyDate,
-      'event-team-hosting': req.session.user.dit_team.id,
-    }
-    const eventFormWithState = buildFormWithState(eventForm, requestBody)
+    const body = Object.assign(req.body, {
+      event_start_date: emptyDate,
+      event_end_date: emptyDate,
+      event_team_hosting: get(req, 'session.user.dit_team.id', null),
+    })
+    const eventFormWithState = buildFormWithState(eventForm, body)
 
     res
       .breadcrumb('Add event')
