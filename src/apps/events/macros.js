@@ -150,14 +150,23 @@ const eventFormConfig = (organisers) => {
         },
       },
       {
-        macroName: 'MultipleChoiceField',
-        name: 'event-related-programmes',
+        macroName: 'AddAnother',
+        buttonName: 'add_event_programme',
+        name: 'event_programmes',
         label: 'Related programmes',
-        optional: true,
-        initialOption: '-- Select programme --',
-        options () {
-          return metadataRepo.programmeOptions.map(transformObjectToOption)
-        },
+        children: [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'event_programmes',
+            label: 'Related programmes',
+            isLabelHidden: true,
+            optional: true,
+            initialOption: '-- Select programme --',
+            options () {
+              return metadataRepo.programmeOptions.map(transformObjectToOption)
+            },
+          },
+        ],
       },
     ],
   }

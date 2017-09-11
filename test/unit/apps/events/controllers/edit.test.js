@@ -115,6 +115,20 @@ describe('Event edit controller', () => {
       })
     })
 
+    context('when there are event programmes', () => {
+      it('should prepopulate the event programmes', async () => {
+        const eventProgrammes = [ 'programme1', 'programme2' ]
+        this.req.body['event_programmes'] = eventProgrammes
+
+        await this.controller.renderEventPage(this.req, this.res, this.next)
+
+        const eventForm = this.res.render.getCall(0).args[1].eventForm
+        const actual = find(eventForm.children, { name: 'event_programmes' }).value
+
+        expect(actual).to.deep.equal(eventProgrammes)
+      })
+    })
+
     context('when there is an error', () => {
       it('should return an error', async () => {
         const error = Error('error')
@@ -154,6 +168,58 @@ describe('Event edit controller', () => {
         const actual = this.req.body['event_shared_teams']
 
         expect(actual).to.deep.equal(teams)
+      })
+
+      it('should not add empty values to the event programmes', () => {
+        this.req.body.addEventSharedTeam = true
+        this.req.body['event_shared_teams'] = [ 'team1', 'team2' ]
+        this.req.body['event_programmes'] = [ 'programme1', '' ]
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_programmes']
+
+        expect(actual).to.deep.equal([ 'programme1' ])
+      })
+    })
+
+    context('when adding an event programme for the first time', () => {
+      it('should set the event programmes', () => {
+        const programme = 'programme1'
+        this.req.body.addEventProgramme = true
+        this.req.body['event_programmes'] = programme
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_programmes']
+
+        expect(actual).to.deep.equal([ programme ])
+      })
+    })
+
+    context('when adding subsequent event programmes', () => {
+      it('should add to the event programmes', () => {
+        const programmes = [ 'programme1', 'programme2' ]
+        this.req.body.addEventSharedTeam = true
+        this.req.body['event_programmes'] = programmes
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_programmes']
+
+        expect(actual).to.deep.equal(programmes)
+      })
+
+      it('should not add empty values to the event shared teams', () => {
+        this.req.body.addEventSharedTeam = true
+        this.req.body['event_shared_teams'] = [ 'team1', '' ]
+        this.req.body['event_programmes'] = [ 'programme1', 'programme2' ]
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_shared_teams']
+
+        expect(actual).to.deep.equal([ 'team1' ])
       })
     })
   })
