@@ -168,6 +168,7 @@ module.exports = {
           .click('@interactionsTab')
       },
       enterNewInteractionDetails (subject) {
+        this.contactName = subject
         return this
           .submitForm('form')
           .enterSubject(subject)
