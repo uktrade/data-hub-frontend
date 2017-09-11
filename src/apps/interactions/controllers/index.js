@@ -1,7 +1,9 @@
-const details = require('./details')
-const edit = require('./edit')
+const detailsController = require('./details')
+const editController = require('./edit')
+const listController = require('./list')
 
 module.exports = {
-  details,
-  edit,
+  detailsController,
+  editController,
+  listController,
 }
