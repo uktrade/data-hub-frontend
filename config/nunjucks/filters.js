@@ -2,6 +2,7 @@ const nunjucks = require('nunjucks')
 const moment = require('moment')
 require('moment-duration-format')
 const dateFns = require('date-fns')
+const Case = require('case')
 const {
   assign,
   concat,
@@ -46,6 +47,7 @@ function pluralise (string, count, pluralisedWord) {
 
 const filters = {
   stringify: JSON.stringify,
+  sentenceCase: Case.sentence,
   assign,
   concat,
   filter,
@@ -137,6 +139,10 @@ const filters = {
 
   formatDuration: (value, format = 'hh:mm', measurement = 'minutes') => {
     return moment.duration(value, measurement).format(format, { trim: false })
+  },
+
+  fromNow: (value) => {
+    return moment(value).fromNow()
   },
 
   arrayToLabelValues: (items) => {
