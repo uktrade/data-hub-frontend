@@ -1,12 +1,13 @@
 const router = require('express').Router()
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
-const { getContactsCollection, getRequestBody } = require('./middleware')
+const { getContactsCollection, getRequestBody } = require('./middleware/collection')
+const { getInteractionCollection } = require('./middleware/interactions')
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
-const { getInteractions } = require('./controllers/interactions')
+const { renderInteractions } = require('./controllers/interactions')
 const { getAudit } = require('./controllers/audit')
 
 const LOCAL_NAV = [
@@ -38,7 +39,7 @@ router
 router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)
 
-router.get('/:contactId/interactions', getCommon, getInteractions)
+router.get('/:contactId/interactions', getCommon, getInteractionCollection, renderInteractions)
 router.get('/:contactId/audit', getCommon, getAudit)
 
 module.exports = router
