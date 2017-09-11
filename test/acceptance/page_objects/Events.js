@@ -1,4 +1,3 @@
-// const faker = require('faker')
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
