@@ -168,11 +168,17 @@ module.exports = {
           .click('@interactionsTab')
       },
       enterNewInteractionDetails (subject) {
+        this.contactName = subject
         return this
           .submitForm('form')
           .enterSubject(subject)
           .enterNotes(faker.lorem.sentence())
-          .enterCompanyContact('a')
+          // .enterCompanyContact('a')
+          .setValue('@interactionPageCompanyContact', 'a')
+          .getText('@interactionPageCompanyContactList', (result) => {
+            subject = result.value()
+          })
+          .click('@interactionPageCompanyContactList')
           .enterService('a')
           .enterServiceProvider('a')
           .submitForm('form')
