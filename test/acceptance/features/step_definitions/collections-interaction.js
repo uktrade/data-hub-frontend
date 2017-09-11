@@ -7,7 +7,7 @@ defineSupportCode(({ Given, Then, When }) => {
   const Interaction = client.page.Interaction()
   const Company = client.page.Company()
   const Contact = client.page.Contact()
-  const CollectionsInteractions = client.page.CollectionsInteractions()
+  const CollectionsInteraction = client.page.CollectionsInteraction()
   const foreignCompanyName = 'Lambda plc'
   let subject
 
@@ -32,33 +32,33 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I view an interaction tab$/, async () => {
-    await CollectionsInteractions
+    await CollectionsInteraction
       .verify.visible('@interactionsTab')
   })
 
   When(/^I click on interaction tab$/, async () => {
-    await CollectionsInteractions
+    await CollectionsInteraction
       .click('@interactionsTab')
   })
 
   Then(/^I view the first and last name of the contact involved in the interaction$/, async () => {
-    await CollectionsInteractions
+    await CollectionsInteraction
       .assert.containsText('@nameFromList', Interaction.contactName)
   })
 
   Then(/^I view the subject line of the interaction$/, async () => {
-    await CollectionsInteractions
+    await CollectionsInteraction
       .assert.containsText('@subjectFromList', subject)
   })
 
   Then(/^I view the date of the interaction$/, async () => {
     const datetime = format(new Date(), 'D MMM YYYY')
-    await CollectionsInteractions
+    await CollectionsInteraction
       .assert.containsText('@dateFromList', datetime)
   })
 
   Then(/^I view the company name of the interaction$/, async () => {
-    await CollectionsInteractions
+    await CollectionsInteraction
       .assert.containsText('@companyFromList', foreignCompanyName)
   })
 

@@ -173,12 +173,7 @@ module.exports = {
           .submitForm('form')
           .enterSubject(subject)
           .enterNotes(faker.lorem.sentence())
-          // .enterCompanyContact('a')
-          .setValue('@interactionPageCompanyContact', 'a')
-          .getText('@interactionPageCompanyContactList', (result) => {
-            subject = result.value()
-          })
-          .click('@interactionPageCompanyContactList')
+          .enterCompanyContact('a')
           .enterService('a')
           .enterServiceProvider('a')
           .submitForm('form')
