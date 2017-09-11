@@ -1,51 +1,52 @@
 const { find } = require('lodash')
 
 describe('Event edit controller', () => {
-  describe('#renderEventPage', () => {
-    const createEventsEditController = (getAdvisers) => {
-      return proxyquire('~/src/apps/events/controllers/edit', {
-        '../../adviser/repos': {
-          getAdvisers: getAdvisers,
-        },
-      })
+  const createEventsEditController = (getAdvisers) => {
+    return proxyquire('~/src/apps/events/controllers/edit', {
+      '../../adviser/repos': {
+        getAdvisers: getAdvisers,
+      },
+    })
+  }
+  const currentUserTeam = 'team1'
+
+  beforeEach(() => {
+    const advisersResponse = {
+      results: [
+        { name: 'advisor 1', id: 'advisor1' },
+        { name: 'advisor 2', id: 'advisor2' },
+        { name: 'advisor 3', id: 'advisor3' },
+      ],
     }
-    const currentUserTeam = 'team1'
+    const getAdvisersStub = sinon.stub().resolves(advisersResponse)
 
-    beforeEach(() => {
-      const advisersResponse = {
-        results: [
-          { name: 'advisor 1', id: 'advisor1' },
-          { name: 'advisor 2', id: 'advisor2' },
-          { name: 'advisor 3', id: 'advisor3' },
-        ],
-      }
-      const getAdvisersStub = sinon.stub().resolves(advisersResponse)
+    this.controller = createEventsEditController(getAdvisersStub)
 
-      this.controller = createEventsEditController(getAdvisersStub)
+    this.sandbox = sinon.sandbox.create()
 
-      this.sandbox = sinon.sandbox.create()
-
-      this.req = {
-        session: {
-          token: 'abcd',
-          user: {
-            dit_team: {
-              id: currentUserTeam,
-            },
+    this.req = {
+      session: {
+        token: 'abcd',
+        user: {
+          dit_team: {
+            id: currentUserTeam,
           },
         },
-      }
-      this.res = {
-        breadcrumb: this.sandbox.stub().returnsThis(),
-        render: this.sandbox.spy(),
-      }
-      this.next = this.sandbox.spy()
-    })
+      },
+      body: {},
+    }
+    this.res = {
+      breadcrumb: this.sandbox.stub().returnsThis(),
+      render: this.sandbox.spy(),
+    }
+    this.next = this.sandbox.spy()
+  })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
+  afterEach(() => {
+    this.sandbox.restore()
+  })
 
+  describe('#renderEventPage', () => {
     it('should add a breadcrumb', async () => {
       await this.controller.renderEventPage(this.req, this.res, this.next)
 
@@ -100,14 +101,60 @@ describe('Event edit controller', () => {
       expect(actual).to.equal(expected)
     })
 
-    it('should return an error when there is an error', async () => {
-      const error = Error('error')
-      const controller = createEventsEditController(sinon.stub().rejects(error))
+    context('when there are event shared teams', () => {
+      it('should prepopulate the event shared teams', async () => {
+        const eventSharedTeams = [ 'team1', 'team2' ]
+        this.req.body['event_shared_teams'] = eventSharedTeams
 
-      await controller.renderEventPage(this.req, this.res, this.next)
+        await this.controller.renderEventPage(this.req, this.res, this.next)
 
-      expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
-      expect(this.next).to.have.been.calledOnce
+        const eventForm = this.res.render.getCall(0).args[1].eventForm
+        const actual = find(eventForm.children, { name: 'event_shared_teams' }).value
+
+        expect(actual).to.deep.equal(eventSharedTeams)
+      })
+    })
+
+    context('when there is an error', () => {
+      it('should return an error', async () => {
+        const error = Error('error')
+        const controller = createEventsEditController(sinon.stub().rejects(error))
+
+        await controller.renderEventPage(this.req, this.res, this.next)
+
+        expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
+        expect(this.next).to.have.been.calledOnce
+      })
+    })
+  })
+
+  describe('#postHandler', () => {
+    context('when adding an event shared team for the first time', () => {
+      it('should set the event shared teams', () => {
+        const team = 'team1'
+        this.req.body.addEventSharedTeam = true
+        this.req.body['event_shared_teams'] = team
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_shared_teams']
+
+        expect(actual).to.deep.equal([ team ])
+      })
+    })
+
+    context('when adding subsequent event shared teams', () => {
+      it('should add to the event shared teams', () => {
+        const teams = [ 'team1', 'team2' ]
+        this.req.body.addEventSharedTeam = true
+        this.req.body['event_shared_teams'] = teams
+
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        const actual = this.req.body['event_shared_teams']
+
+        expect(actual).to.deep.equal(teams)
+      })
     })
   })
 })

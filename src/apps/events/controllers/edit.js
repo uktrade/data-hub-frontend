@@ -2,6 +2,7 @@ const { eventFormConfig } = require('../macros')
 const { getAdvisers } = require('../../adviser/repos')
 const { transformObjectToOption } = require('../../transformers')
 const { buildFormWithState } = require('../../builders')
+const { castArray, compact } = require('lodash')
 
 async function renderEventPage (req, res, next) {
   try {
@@ -27,6 +28,16 @@ async function renderEventPage (req, res, next) {
   }
 }
 
+function postHandler (req, res, next) {
+  const setAddAnotherField = (value) => compact(castArray(value))
+  req.body.event_shared_teams = setAddAnotherField(req.body.event_shared_teams)
+
+  if (req.body.add_event_shared_team) {
+    return next()
+  }
+}
+
 module.exports = {
   renderEventPage,
+  postHandler,
 }

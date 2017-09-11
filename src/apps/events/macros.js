@@ -110,7 +110,7 @@ const eventFormConfig = (organisers) => {
       {
         macroName: 'MultipleChoiceField',
         type: 'radio',
-        name: 'event-shared',
+        name: 'event_shared',
         label: 'Is this a shared event',
         optional: true,
         modifier: 'inline',
@@ -126,16 +126,26 @@ const eventFormConfig = (organisers) => {
         ],
       },
       {
-        macroName: 'MultipleChoiceField',
-        name: 'event-teams',
+        macroName: 'AddAnother',
+        buttonName: 'add_event_shared_team',
+        name: 'event_shared_teams',
         label: 'Teams',
-        initialOption: '-- Select team --',
         isLabelHidden: true,
-        options () {
-          return metadataRepo.teams.map(transformObjectToOption)
-        },
+        children: [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'event_shared_teams',
+            label: 'Teams',
+            isLabelHidden: true,
+            optional: true,
+            initialOption: '-- Select team --',
+            options () {
+              return metadataRepo.teams.map(transformObjectToOption)
+            },
+          },
+        ],
         condition: {
-          name: 'event-shared',
+          name: 'event_shared',
           value: 'Yes',
         },
       },
