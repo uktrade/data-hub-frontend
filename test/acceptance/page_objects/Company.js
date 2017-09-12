@@ -51,18 +51,18 @@ module.exports = {
     newCompanySearch: '#field-term',
     parentCompanyResultItem: '.results-list__result:first-child a',
     parentCompanyResultItemChooseButton: '.results-list__result:first-child .panel .button',
-    flashInfo: '.c-messages__item--success',
+    flashMessage: '.c-messages li:first-child',
   },
   commands: [
     {
-      findCompany (name) {
+      findCompany (companyName) {
         return this
-          .setValue('@searchField', name)
+          .setValue('@searchField', companyName)
           .submitForm('@searchForm')
       },
 
-      createForeignOrg (name) {
-        this.newlyCreatedCompanyName = name
+      createForeignCompany (companyName) {
+        this.companyName = companyName
         return this
           .click('@addNewCompanyButton')
           // step 1
@@ -70,7 +70,7 @@ module.exports = {
           .click('@businessTypeForeignDropdownOptionCharity')
           .submitForm('@companyAddForm')
           // step 2
-          .setValue('@newCompanyNameField', name)
+          .setValue('@newCompanyNameField', companyName)
           .setValue('@newCompanyRegisteredAddress1Field', '‎‎253 Sok')
           .setValue('@newCompanyPostcodeField', '48300')
           .setValue('@newCompanyTownField', 'Istanbul')
@@ -81,8 +81,8 @@ module.exports = {
           .submitForm('form')
       },
 
-      createOtherTypeUKOrg (name) {
-        this.newlyCreatedCompanyName = name
+      createUkNonPrivateOrNonPublicLimitedCompany (companyName) {
+        this.companyName = companyName
         return this
           .click('@addNewCompanyButton')
           // step 1
@@ -90,7 +90,7 @@ module.exports = {
           .click('@businessTypeUKOtherDropdownOptionCharity')
           .submitForm('@companyAddForm')
           // step 2
-          .setValue('@newCompanyNameField', name)
+          .setValue('@newCompanyNameField', companyName)
           .setValue('@newCompanyRegisteredAddress1Field', '1 Regents Street')
           .setValue('@newCompanyPostcodeField', 'W1C 2GB')
           .setValue('@newCompanyTownField', 'London')
@@ -102,8 +102,8 @@ module.exports = {
           .submitForm('form')
       },
 
-      createPrivateLimitedCompany (name) {
-        this.newlyCreatedCompanyName = name
+      createUkPrivateOrPublicLimitedCompany (companyName) {
+        this.companyName = companyName
         return this
           .click('@addNewCompanyButton')
           // step 1
@@ -116,7 +116,7 @@ module.exports = {
           .click('@parentCompanyResultItem')
           .click('@parentCompanyResultItemChooseButton')
           // step 4
-          .setValue('@newCompanyTradingNameField', name)
+          .setValue('@newCompanyTradingNameField', companyName)
           .click('@newCompanyCountryFieldOptionUKRegionEngland')
           .click('@newCompanyHeadquartersRadioLabel')
           .click('@newCompanySectorOption')

@@ -4,19 +4,19 @@ Feature: View collection of company
   I would like to view all the companies in one place
   And be able to read the company details as expected
 
+  Background:
+    Given I am an authenticated user on Data Hub website
+
   @collections-company-name
   Scenario: View company name under collections
 
-     Given I am an authenticated user on Data Hub website
      When I create a new company
      When I search for this company name
      Then I see company name in the list
 
-
   @collections-company-sector
   Scenario: View sector of company under collections
 
-     Given I am an authenticated user on Data Hub website
      And I create a new company
      When I search for this company name
      Then I see sector of the company in the list
