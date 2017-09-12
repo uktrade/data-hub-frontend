@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { editRedirect, editHandler, editLeadAssignee } = require('./controllers')
-const { getCompany } = require('../../middleware/params')
+const { getCompany } = require('../../middleware')
 
 router.use((req, res, next) => {
   getCompany(req, res, next, res.locals.order.company.id)

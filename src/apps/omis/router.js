@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { setHomeBreadcrumb } = require('../middleware')
-const { getOrder } = require('./middleware/params')
+const { getOrder } = require('./middleware')
 const viewApp = require('./apps/view')
 const editApp = require('./apps/edit')
 const createApp = require('./apps/create')

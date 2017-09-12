@@ -1,6 +1,6 @@
-const logger = require('../../../../config/logger')
-const { getInflatedDitCompany } = require('../../companies/services/data')
-const { Order } = require('../models')
+const logger = require('../../../config/logger')
+const { getInflatedDitCompany } = require('../companies/services/data')
+const { Order } = require('./models')
 
 async function getCompany (req, res, next, companyId) {
   try {
