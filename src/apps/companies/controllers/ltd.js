@@ -18,6 +18,7 @@ async function getDetails (req, res, next) {
     res.locals.companyDetailsLabels = companyDetailsLabels
 
     if (company.companies_house_data) {
+      res.locals.regionOptions = metadataRepository.regionOptions
       res.locals.chDetails = companyFormattingService.getDisplayCH(company.companies_house_data)
       res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
       res.locals.chDetailsLabels = chDetailsLabels
