@@ -19,7 +19,7 @@ module.exports = {
   commands: [
     {
       enterCredentials () {
-        return this.waitForElementVisible('@form', 1000)
+        return this.waitForElementVisible('@form')
           .setValue('@usernameField', this.props.email)
           .setValue('@passwordField', this.props.password)
       },
@@ -27,7 +27,7 @@ module.exports = {
       logIn () {
         return this.enterCredentials()
           .submitForm('@form')
-          .waitForElementVisible('@searchBar', 1000)
+          .waitForElementVisible('@searchBar')
       },
 
       authenticate () {
@@ -35,7 +35,7 @@ module.exports = {
           if (result.value.ELEMENT) {
             return this.logIn()
           }
-          return this.waitForElementVisible('@searchBar', 1000)
+          return this.waitForElementVisible('@searchBar')
         })
       },
     },

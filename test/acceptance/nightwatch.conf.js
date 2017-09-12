@@ -16,6 +16,7 @@ require('nightwatch-cucumber')({
 module.exports = {
   output_folder: 'reports',
   page_objects_path: 'test/acceptance/page_objects',
+  globals_path: 'test/acceptance/global',
   selenium: {
     start_process: true,
     server_path: seleniumServer.path,
