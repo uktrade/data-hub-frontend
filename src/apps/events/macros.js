@@ -18,7 +18,7 @@ const eventFormConfig = (organisers) => {
         label: 'Event type',
         initialOption: '-- Select event type --',
         options () {
-          metadataRepo.eventTypeOptions.map(transformObjectToOption)
+          return metadataRepo.eventTypeOptions.map(transformObjectToOption)
         },
       },
       {
@@ -50,7 +50,7 @@ const eventFormConfig = (organisers) => {
         optional: true,
         initialOption: '-- Select location type --',
         options () {
-          metadataRepo.locationTypeOptions.map(transformObjectToOption)
+          return metadataRepo.locationTypeOptions.map(transformObjectToOption)
         },
       },
       {
