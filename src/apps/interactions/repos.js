@@ -50,9 +50,10 @@ function getInteractionsForCompany (token, companyId, page = 1) {
   return authorisedRequest(token, `${config.apiRoot}/v3/interaction?company_id=${companyId}&limit=${limit}&offset=${offset}`)
 }
 
-// TODO we have multiple ways of doing things in this file - this needs tidying up
-function getInteractionsForInvestment (token, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/interaction/?investment_project_id=${investmentId}`)
+function getInteractionsForInvestment (token, investmentId, page) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?investment_project_id=${investmentId}&limit=${limit}&offset=${offset}`)
 }
 
 function createInvestmentInteraction (token, body) {
