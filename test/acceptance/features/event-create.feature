@@ -1,16 +1,16 @@
-@create-event @ignore
+@create-event
 Feature: Create an Event in Data hub
-As an Event organiser
-I would like to add an event record to data hub
-So that I can enable the collection of key events data
+  As an Event organiser
+  I would like to add an event record to data hub
+  So that I can enable the collection of key events data
 
-@create-event-name @ignore
+@create-event-name
 Scenario: Verify event name field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event name field is displayed
 
-@create-event-type @ignore
+@create-event-type
 Scenario: Verify event type field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
@@ -22,20 +22,20 @@ Scenario: Verify event additional reference code field
    When I navigate to create an event page
    Then I verify the event additional reference code field is displayed
 
-@create-event-dates @ignore
+@create-event-dates
 Scenario: Verify event date fields
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
-   Then I verify the event start date field is displayed
-   And I verify the event end date field is displayed
+   Then I verify the event start date fields are displayed
+   And I verify the event end date fields are displayed
 
-@create-event-location-type @ignore
+@create-event-location-type
 Scenario: Verify event location type field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event location type field is displayed
 
-@create-event-address @ignore
+@create-event-address
 Scenario: Verify event address fields
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
@@ -45,55 +45,70 @@ Scenario: Verify event address fields
    And I verify the event address postcode field is displayed
    And I verify the event address country field is displayed
 
-@create-event-notes @ignore
+@create-event-notes
 Scenario: Verify event notes field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event notes field is displayed
 
-@create-event-team-hosting @ignore
+@create-event-team-hosting
 Scenario: Verify event Team hosting field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event Team hosting field is displayed
 
-@create-event-organiser @ignore
+@create-event-organiser
 Scenario: Verify event organiser field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event organiser field is displayed
 
-@create-event-shared @ignore
+@create-event-shared
 Scenario: Verify event shared field
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event is shared or not field is displayed
 
-@create-event-shared-teams @ignore
+@create-event-shared-toggle
+Scenario: Verify event shared field toggling
+  Given I am an authenticated user on Data Hub website
+  When I navigate to create an event page
+  Then I verify the event is shared or not field is displayed
+  When I choose the Yes option
+  Then I verify the shared teams field is displayed
+  When I choose the No option
+  Then I verify the shared teams field is not displayed
+
+@create-event-shared-teams
 Scenario: Verify event shared teams field
-   Given I am an authenticated user on Data Hub website
-   When I navigate to create an event page
-   Then I verify the event is shared or not field is displayed
-   When I choose Yes option
-   Then I verify the shared teams field is displayed
-   When I select a shared team name
-   And I add it to the list
-   Then I verify there is option to add another team
+  Given I am an authenticated user on Data Hub website
+  When I navigate to create an event page
+  Then I verify the event is shared or not field is displayed
+  When I choose the Yes option
+  Then I verify the shared teams field is displayed
+  When I select shared team 2
+  And I add it to the shared teams list
+  Then I verify there should be 2 shared teams lists
+  And I verify there is the option to add another shared team
 
-@create-event-related-programmes @ignore
+@create-event-related-programmes
 Scenario: Verify event related programmes field
-   Given I am an authenticated user on Data Hub website
-   When I navigate to create an event page
-   Then I verify the event related programmes field is displayed
-   When I select a related programme name
-   And I add it to the list
-   Then I verify there is option to add another programme name
+  Given I am an authenticated user on Data Hub website
+  When I navigate to create an event page
+  Then I verify the event related programmes field is displayed
+  When I select programme 2
+  And I add it to the programmes list
+  Then I verify there should be 2 programmes lists
+  And I verify there is the option to add another programme
 
-@create-event-save @ignore
+@create-event-save
 Scenario: Verify event save button
    Given I am an authenticated user on Data Hub website
    When I navigate to create an event page
    Then I verify the event save button is displayed
+
+
+
 
 @create-event-submit @ignore
 Scenario: Verify event is submitted
