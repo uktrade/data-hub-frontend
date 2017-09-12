@@ -32,6 +32,8 @@ function editHandler (req, res, next) {
   const options = Object.assign(defaults, step, overrides)
   const ControllerClass = options.controller
 
+  res.breadcrumb(options.heading)
+
   new ControllerClass(options).requestHandler()(req, res, next)
 }
 
