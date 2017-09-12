@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
+const Case = require('case')
 
 function transformOrderToListItem ({
   id,
   reference,
+  status,
   company,
   contact,
   primary_market,
@@ -18,6 +20,11 @@ function transformOrderToListItem ({
     urlPrefix: 'omis/',
     name: reference,
     meta: [
+      {
+        label: 'Status',
+        type: 'badge',
+        value: Case.sentence(status),
+      },
       {
         label: 'Market',
         type: 'badge',

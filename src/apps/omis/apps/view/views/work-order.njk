@@ -76,11 +76,11 @@
   {% call AnswersSummary({
     heading: 'Post advisers',
     actions: [{
-      url: 'edit/assignee-time' if values.assignees.length,
-      text: 'Edit time'
-    }, {
       url: 'edit/assignees',
       text: 'Add or remove'
+    }, {
+      url: 'edit/assignee-time' if values.assignees.length,
+      text: 'Edit time'
     }]
   }) %}
     <tbody>

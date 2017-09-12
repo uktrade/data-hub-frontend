@@ -1,14 +1,13 @@
-const interactionFormattingService = require('../../interactions/services/formatting')
-const contactDataService = require('../services/data')
-
-async function getInteractions (req, res, next) {
+/**
+ *
+ *  HTTP Get call to get a list of interactions for a contact
+ */
+function renderInteractions (req, res, next) {
   try {
-    res.locals.tab = 'interactions'
-    const interactions = await contactDataService.getContactInteractionsAndServiceDeliveries(req.session.token, req.params.contactId)
-    res.locals.interactions = interactions.map(interaction => interactionFormattingService.getDisplayContactInteraction(interaction))
-    res.locals.addInteractionUrl = `/interactions/create/1?contact=${res.locals.contact.id}`
+    const { name, id } = res.locals.contact
 
     res
+      .breadcrumb(name, `/contact/${id}`)
       .breadcrumb('Interactions')
       .render('contacts/views/interactions')
   } catch (error) {
@@ -17,5 +16,5 @@ async function getInteractions (req, res, next) {
 }
 
 module.exports = {
-  getInteractions,
+  renderInteractions,
 }

@@ -23,7 +23,7 @@ router.use(setTranslation)
 router.use(setOrderBreadcrumb)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/work-order', renderWorkOrder)
+router.get('/work-order', getQuote, renderWorkOrder)
 router
   .route('/quote')
   .get(getQuote, setQuoteForm, renderQuote)
