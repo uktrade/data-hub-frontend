@@ -64,11 +64,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .submitForm('form')
   })
 
-  Then(/^I see the (.*) confirmation message$/, async (successMsg) => {
-    await Company
-      .assert.containsText('@flashInfo', successMsg)
-  })
-
   Then(/^I verify that all fields are populated correctly for Requirements section$/, async () => {
     await Stages
       .verify.visible('@editRequirmentsButton')

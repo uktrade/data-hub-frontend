@@ -4,7 +4,13 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Login = client.page.Login()
 
-  Given(/^I am on the Data Hub login page$/, async () => {
+  Given(/^I am an authenticated user on the Datahub website$/, async () => {
+    await Login
+      .navigate()
+      .authenticate()
+  })
+
+  When(/^I am on the Data Hub login page$/, async () => {
     await Login
       .navigate()
       .waitForElementVisible('body', 1000)
@@ -33,5 +39,10 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I have been logged out$/, async () => {
     await Login
       .verify.containsText('@flashMessage', 'You have been successfully signed out.')
+  })
+
+  Then(/^I logout of Datahub website$/, async () => {
+    await Login
+      .click('@signOutButton')
   })
 })

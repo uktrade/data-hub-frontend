@@ -6,14 +6,6 @@ defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const companyCollections = client.page.CollectionsCompany()
 
-  When(/^I create a new company$/, async () => {
-    const newCompanyName = `Foreign Company Collections ${faker.company.companyName()}`
-    await Company
-      .navigate()
-      .findCompany(newCompanyName)
-      .createForeignOrg(newCompanyName)
-  })
-
   When(/^I search for this company name$/, async () => {
     await Company
       .navigate()
