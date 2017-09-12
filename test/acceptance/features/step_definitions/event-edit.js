@@ -1,10 +1,8 @@
-const faker = require('faker')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
-  const events = client.page.Events()
 
   When(/^I navigate to event details page$/, async () => {
     await Company
