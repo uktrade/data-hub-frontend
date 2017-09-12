@@ -52,6 +52,13 @@ module.exports = {
     parentCompanyResultItem: '.results-list__result:first-child a',
     parentCompanyResultItemChooseButton: '.results-list__result:first-child .panel .button',
     flashMessage: '.c-messages li:first-child',
+    collectionsCompanyNameInput: '#field-name',
+    collectionResultsCompanyName: '.c-entity-list li:first-child .c-entity__title > a',
+    collectionResultsSectorLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:first-child .c-meta-list__item-label',
+    collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
+    collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
+    xhrTargetElement: '#xhr-outlet',
+    companyPageHeading: 'h1.c-local-header__heading',
   },
   commands: [
     {
@@ -122,6 +129,15 @@ module.exports = {
           .click('@newCompanySectorOption')
           .setValue('@newCompanyWebsiteField', 'http://example.com')
           .submitForm('form')
+      },
+
+      searchForCompanyInCollection (companyName) {
+        this.api.url(`${process.env.QA_HOST}/companies`)
+        return this
+          .waitForElementPresent('@collectionsCompanyNameInput')
+          .setValue('@collectionsCompanyNameInput', [ companyName, this.api.Keys.ENTER ]) // press enter
+          .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
+          .waitForElementVisible('@xhrTargetElement')
       },
     },
   ],

@@ -4,7 +4,7 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Login = client.page.Login()
 
-  Given(/^I am an authenticated user on the Datahub website$/, async () => {
+  Given(/^I am an authenticated user on the data hub website$/, async () => {
     await Login
       .navigate()
       .authenticate()

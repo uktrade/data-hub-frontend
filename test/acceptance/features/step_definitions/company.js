@@ -38,4 +38,34 @@ defineSupportCode(({ Then, When }) => {
       .findCompany(Company.companyName)
       .verify.visible('@searchResultsItem')
   })
+
+  Then(/^The company name is present in the collections results/, async () => {
+    await Company
+      .searchForCompanyInCollection(Company.companyName)
+      .assert.containsText('@collectionResultsCompanyName', Company.companyName)
+  })
+
+  Then(/^The company sector is present in the collections results$/, async () => {
+    await Company
+      .searchForCompanyInCollection(Company.companyName)
+      .assert.containsText('@collectionResultsSectorLabel', 'Sector')
+  })
+
+  Then(/^The company region is present in the collections results$/, async () => {
+    await Company
+      .searchForCompanyInCollection(Company.companyName)
+      .assert.containsText('@collectionResultsRegionLabel', 'UK region')
+  })
+
+  Then(/^The company registered address is present in the collections results$/, async () => {
+    await Company
+      .searchForCompanyInCollection(Company.companyName)
+      .assert.containsText('@collectionResultsRegisteredAddressLabel', 'Registered address')
+  })
+
+  Then(/^Clicking the company name takes me to the companies page$/, async () => {
+    await Company
+      .click('@collectionResultsCompanyName')
+      .assert.containsText('@companyPageHeading', Company.companyName)
+  })
 })
