@@ -49,19 +49,13 @@ function getInteractionsForContact (token, contactId) {
  *
  * @param {string} token
  * @param {string} companyId
- * @param {number} limit
+ * @param {number} page
  * @return {Promise<Object[]>} Returns a promise that resolves to an array of API interaction objects
  */
-async function getInteractionsForCompany (token, companyId, limit = 100) {
-  // TODO deal with pagination and move to the interaction API v3 endpoints when they are ready
-  const response = await authorisedRequest(token, {
-    url: `${config.apiRoot}/interaction/`,
-    qs: {
-      company_id: companyId,
-      limit,
-    },
-  })
-  return response.results
+function getInteractionsForCompany (token, companyId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?company_id=${companyId}&limit=${limit}&offset=${offset}`)
 }
 
 // TODO we have multiple ways of doing things in this file - this needs tidying up

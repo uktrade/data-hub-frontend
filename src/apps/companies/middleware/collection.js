@@ -1,8 +1,8 @@
 const { pick, pickBy } = require('lodash')
 
-const { search } = require('../search/services')
-const { transformApiResponseToSearchCollection } = require('../search/transformers')
-const { transformCompanyToListItem } = require('./transformers')
+const { search } = require('../../search/services')
+const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformCompanyToListItem } = require('../transformers')
 
 async function getCompanyCollection (req, res, next) {
   try {
