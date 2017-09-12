@@ -3,22 +3,28 @@
 {% block local_header %}
   {% set actions %}
     <p class="c-local-header__action">
-      <a href="quote" class="button button--small">Generate quote</a>
+      {% if order.status == 'draft' %}
+        <a href="quote" class="button button--small">Prepare quote</a>
+      {% else %}
+        <a href="quote">View quote</a>
+      {% endif %}
     </p>
   {% endset %}
 
   {% call LocalHeader({
     actions: actions,
     heading: order.reference,
-    modifier: "light-banner"
+    modifier: 'light-banner'
   }) %}
+    {% set status = order.status | sentenceCase %}
+    {% set expires_in = ' (expire' + ('d' if quote.expired else 's') + ' ' + FromNow({ datetime: quote.expires_on }) + ')' %}
 
     {{ MetaList({
       items: [
-        { "label": "Created on", "value": order.created_on | formatDateTime },
-        { "label": "Status", "value": "Draft" }
+        { 'label': 'Created on', 'value': order.created_on | formatDateTime },
+        { 'label': 'Status', 'value': status + (expires_in if order.status === 'quote_awaiting_acceptance'), 'safe': true }
       ],
-      itemModifier: "stacked"
+      itemModifier: 'stacked'
     }) }}
 
   {% endcall %}

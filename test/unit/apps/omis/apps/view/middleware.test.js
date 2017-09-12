@@ -100,10 +100,17 @@ describe('OMIS View middleware', () => {
 
       context('when quote is returned', () => {
         beforeEach(() => {
+          const mockDate = new Date('2017-08-01')
+          this.clock = sinon.useFakeTimers(mockDate.getTime())
+
           this.getFullQuoteStub.resolves({
             id: '12345',
             content: 'Quote content',
           })
+        })
+
+        afterEach(() => {
+          this.clock.restore()
         })
 
         it('should set response as quote property on locals', async () => {
@@ -112,9 +119,52 @@ describe('OMIS View middleware', () => {
           expect(this.resMock.locals).to.have.property('quote')
           expect(this.resMock.locals.quote).to.deep.equal({
             id: '12345',
+            expired: false,
             content: 'Quote content',
           })
           expect(this.nextSpy).to.have.been.calledWith()
+        })
+
+        context('when quote has not expired', () => {
+          beforeEach(() => {
+            this.getFullQuoteStub.resolves({
+              id: '12345',
+              expires_on: '2017-08-10',
+            })
+          })
+
+          it('should set expired property to false', async () => {
+            await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+
+            expect(this.resMock.locals).to.have.property('quote')
+            expect(this.resMock.locals.quote).to.deep.equal({
+              id: '12345',
+              expired: false,
+              expires_on: '2017-08-10',
+            })
+            expect(this.nextSpy).to.have.been.calledWith()
+          })
+        })
+
+        context('when quote has expired', () => {
+          beforeEach(() => {
+            this.getFullQuoteStub.resolves({
+              id: '12345',
+              expires_on: '2017-07-10',
+            })
+          })
+
+          it('should set expired property to true', async () => {
+            await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+
+            expect(this.resMock.locals).to.have.property('quote')
+            expect(this.resMock.locals.quote).to.deep.equal({
+              id: '12345',
+              expired: true,
+              expires_on: '2017-07-10',
+            })
+            expect(this.nextSpy).to.have.been.calledWith()
+          })
         })
       })
 

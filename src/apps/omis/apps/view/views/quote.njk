@@ -20,10 +20,15 @@
   {% endif %}
 
   {% if quote %}
-    {# TODO: Remove `if quote.created_on` when API stops returning `created_on` for preview  #}
+    {% if order.status === 'quote_awaiting_acceptance' %}
+      {% set expiryLabel = 'Expire' + ('d' if quote.expired else 's') %}
+    {% else %}
+      {% set expiryLabel = 'Will expire' %}
+    {% endif %}
+
     {{ MetaList({
       items: [
-        { label: 'Expires on', value: quote.expires_on, type: 'date' },
+        { label: expiryLabel, value: quote.expires_on, type: 'fromNow' },
         { label: 'Sent on', value: quote.created_on, type: 'datetime' },
         { label: 'Sent by', value: quote.created_by if quote.created_on }
       ],
@@ -51,7 +56,7 @@
 
   {% if destructive %}
     <ul class="c-messages">
-      <li class="c-messages__item c-messages__item--warning">
+      <li class="c-messages__item c-messages__item--error">
         Editing the order whilst it is out for acceptance will invalidate the
         current quote and the client will no longer be able to accept it.
       </li>

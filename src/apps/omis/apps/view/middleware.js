@@ -32,7 +32,11 @@ async function getQuote (req, res, next) {
     // When quote already exists, get it
     if (error.statusCode === 409) {
       try {
-        res.locals.quote = await Order.getFullQuote(req.session.token, orderId)
+        const quote = await Order.getFullQuote(req.session.token, orderId)
+
+        res.locals.quote = Object.assign({}, quote, {
+          expired: new Date(quote.expires_on) < new Date(),
+        })
         return next()
       } catch (error) {
         return next(error)
@@ -102,7 +106,7 @@ function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
   const form = {
-    buttonText: 'Generate and send quote',
+    buttonText: 'Send quote',
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }

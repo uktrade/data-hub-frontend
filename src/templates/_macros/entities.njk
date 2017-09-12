@@ -1,3 +1,5 @@
+{% from './common.njk' import FromNow %}
+
 {##
  # Render entity component
  # @param {object} props
@@ -77,6 +79,7 @@
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
  # @param {string} [props.badgeModifier] - modifier for badge
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ # @param {string} [props.safe] - is a safe string
  #}
 {% macro _MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
@@ -88,8 +91,16 @@
       {% set metaItemValue = props.value | formatDate %}
     {% elif props.type === 'datetime' %}
       {% set metaItemValue = props.value | formatDateTime %}
+    {% elif props.type === 'fromNow' %}
+      {% set metaItemValue = FromNow({ datetime: props.value }) %}
     {% else %}
       {% set metaItemValue = props.value.name | default(props.value) %}
+    {% endif %}
+
+    {% if props.safe %}
+      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) | safe %}
+    {% else %}
+      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) %}
     {% endif %}
 
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
@@ -103,10 +114,10 @@
           class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
-          {{- metaItemValue  | highlight(props.highlightTerm, true) -}}
+          {{- safeValue -}}
         </a>
       {% else %}
-        <span class="{{ itemValueClass }}">{{ metaItemValue | highlight(props.highlightTerm, true) }}</span>
+        <span class="{{ itemValueClass }}">{{ safeValue }}</span>
       {% endif %}
     </div>
   {% endif %}
