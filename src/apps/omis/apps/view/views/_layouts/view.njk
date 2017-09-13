@@ -17,12 +17,14 @@
     modifier: 'light-banner'
   }) %}
     {% set status = order.status | sentenceCase %}
-    {% set expires_in = ' (expire' + ('d' if quote.expired else 's') + ' ' + FromNow({ datetime: quote.expires_on }) + ')' %}
+    {% set quoteStatusSuffix %}
+      (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
+    {% endset %}
 
     {{ MetaList({
       items: [
         { 'label': 'Created on', 'value': order.created_on | formatDateTime },
-        { 'label': 'Status', 'value': status + (expires_in if order.status === 'quote_awaiting_acceptance'), 'safe': true }
+        { 'label': 'Status', 'value': status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), 'safe': true }
       ],
       itemModifier: 'stacked'
     }) }}
