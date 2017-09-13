@@ -1,4 +1,4 @@
-const { filter, pick } = require('lodash')
+const { filter, flatten, pick } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
@@ -6,7 +6,8 @@ const { Order } = require('../../../models')
 class EditAssigneeHoursController extends EditController {
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
-    const assignees = data.assignee_time.map((value, index) => {
+    const timeValues = flatten([data.assignee_time])
+    const assignees = timeValues.map((value, index) => {
       if (!value) { return }
 
       const [ hours, minutes ] = value.split(':')
