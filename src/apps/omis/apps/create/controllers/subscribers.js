@@ -9,6 +9,7 @@ class SubscribersController extends FormController {
     const advisers = await getAllAdvisers(req.session.token)
     const options = advisers.results.map(transformObjectToOption)
 
+    res.breadcrumb(req.form.options.heading)
     req.form.options.fields.subscribers.options = sortBy(options, 'label')
     super.configure(req, res, next)
   }

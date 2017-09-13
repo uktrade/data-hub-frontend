@@ -7,6 +7,11 @@ const { getAllAdvisers } = require('../../../../adviser/repos')
 const { Order } = require('../../../models')
 
 class ConfirmController extends FormController {
+  configure (req, res, next) {
+    res.breadcrumb(req.form.options.heading)
+    super.configure(req, res, next)
+  }
+
   async getValues (req, res, next) {
     const advisers = await getAllAdvisers(req.session.token)
 

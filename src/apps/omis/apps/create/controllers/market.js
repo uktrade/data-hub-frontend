@@ -8,6 +8,7 @@ class MarketController extends FormController {
   configure (req, res, next) {
     const filterMarkets = filter(metadataRepo.omisMarketOptions, market => !market.disabled_on)
 
+    res.breadcrumb(req.form.options.heading)
     req.form.options.fields.primary_market.options = filterMarkets.map(transformObjectToOption)
     super.configure(req, res, next)
   }

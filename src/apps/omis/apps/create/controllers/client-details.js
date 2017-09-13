@@ -13,6 +13,7 @@ class ClientDetailsController extends FormController {
       contacts = sortBy(contacts, 'label')
     }
 
+    res.breadcrumb(req.form.options.heading)
     req.form.options.fields.contact.options = contacts
     super.configure(req, res, next)
   }
