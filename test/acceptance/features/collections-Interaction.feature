@@ -1,4 +1,4 @@
-@collections-interaction @ignore
+@collections-interaction
 Feature: View collection of interactions
   As an existing user
   I would like to view all the Interactions in one place
@@ -7,48 +7,41 @@ Feature: View collection of interactions
   Background:
     Given I am an authenticated user on the data hub website
 
-  @collections-interaction-name @ignore
+  @collections-interaction-name
   Scenario: View first and last name of interacted contact
 
-    And I create a new interaction for a contact
-    When I search for this interaction name
-    Then I view an interaction tab
-    When I click on interaction tab
+    When I add a new Business card interaction
+    And I navigate to interactions collections
     Then I view the first and last name of the contact involved in the interaction
 
-  @collections-interaction-subject @ignore
+
+  @collections-interaction-subject
   Scenario: View subject line of interaction
 
-    And I create a new interaction for a contact
-    When I search for this interaction name
-    Then I view an interaction tab
-    When I click on interaction tab
+    When I add a new Business card interaction
+    And I navigate to interactions collections
     Then I view the subject line of the interaction
 
-  @collections-interaction-datestamp @ignore
+
+  @collections-interaction-datestamp
   Scenario: View date of interaction
 
-    And I create a new interaction for a contact
-    When I search for this interaction name
-    Then I view an interaction tab
-    When I click on interaction tab
-    Then I view the date of the interaction
+    When I add a new Business card interaction
+    And I navigate to interactions collections
+    Then the date of the interaction is as expected
 
-  @collections-interaction-company @ignore
+  @collections-interaction-company
   Scenario: View company name of interaction
 
-    And I create a new interaction for a contact
-    When I search for this interaction name
-    Then I view an interaction tab
-    When I click on interaction tab
+    When I add a new Business card interaction
+    And I navigate to interactions collections
     Then I view the company name of the interaction
 
-  @collections-interaction-link @ignore
+
+  @collections-interaction-link
   Scenario: Verify link to interaction details page
 
-    And I create a new interaction for a contact
-    When I search for this interaction name
-    Then I view an interaction tab
-    When I click on interaction tab
-    And I click on the first interaction collection link
-    Then I navigate to interaction details page
+    When I add a new Business card interaction
+    And I navigate to interactions collections
+    Then I view the subject line of the interaction
+    Then clicking the interaction name takes me to the interaction details page
