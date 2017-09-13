@@ -1,10 +1,6 @@
 const { transformToApi } = require('../services/formatting')
 const { createEvent } = require('../repos')
 
-async function populateForm (req, res, next) {
-  // todo
-}
-
 async function handleFormPost (req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
 
@@ -27,10 +23,6 @@ async function handleFormPost (req, res, next) {
       next(err)
     }
   }
-}
-
-function validateForm (req, res, next) {
-  // todo
 }
 
 module.exports = {
