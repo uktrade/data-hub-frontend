@@ -18,7 +18,9 @@
   background-color: $white;
 
   @include media(tablet) {
-    padding-right: 90px;
+    .js-Messages & {
+      padding-right: 90px;
+    }
   }
 
   + * {
@@ -26,7 +28,12 @@
   }
 
   * {
-    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    &:not(button) {
+      font-weight: 700;
+    }
   }
 
   > * + * {

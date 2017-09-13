@@ -10,12 +10,14 @@ const i18n = i18nFuture({
 
 function editHandler (req, res, next) {
   const step = steps[`/${req.params.step}`]
+  const order = res.locals.order
 
-  if (!step) { return next() }
+  if (!step || !order) { return next() }
 
   const defaults = {
     buttonText: 'Save and return',
     returnText: 'Return without saving',
+    disableFormAction: !order.editable,
     journeyName: 'edit',
     name: 'edit',
     route: '/edit',

@@ -1,5 +1,12 @@
 {% extends "./_layouts/view.njk" %}
 
+{% set companyLink %}
+  <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
+{% endset %}
+{% set contactLink %}
+  <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+{% endset %}
+
 {% macro AnswersSummary(props) %}
   <table class="c-answers-summary">
     <caption class="c-answers-summary__heading">
@@ -35,17 +42,17 @@
 {% endmacro %}
 
 {% block main_grid_right_column %}
-  {% set companyLink %}
-    <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
-  {% endset %}
-  {% set contactLink %}
-    <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
-  {% endset %}
+  {% if not order.editable %}
+    <div class="c-messages__item c-messages__item--info">
+      <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
+      <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
+    </div>
+  {% endif %}
 
   {{ AnswersSummary({
     heading: 'Client details',
     actions: [{
-      url: 'edit/client-details'
+      url: 'edit/client-details' if order.editable
     }],
     items: [{
       label: 'Company',
@@ -67,7 +74,7 @@
   {{ AnswersSummary({
     heading: 'International Trade Advisers (ITAs)',
     actions: [{
-      url: 'edit/subscribers',
+      url: 'edit/subscribers' if order.editable,
       text: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
@@ -76,10 +83,10 @@
   {% call AnswersSummary({
     heading: 'Post advisers',
     actions: [{
-      url: 'edit/assignees',
+      url: 'edit/assignees' if order.editable,
       text: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length,
+      url: 'edit/assignee-time' if values.assignees.length and order.editable,
       text: 'Edit time'
     }]
   }) %}
@@ -131,7 +138,7 @@
   {{ AnswersSummary({
     heading: 'Work description',
     actions: [{
-      url: 'edit/work-description'
+      url: 'edit/work-description' if order.editable
     }],
     items: [{
       label: 'Delivery date',
