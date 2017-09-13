@@ -1,0 +1,22 @@
+{
+  "name": "name",
+  "event_type": "event_type",
+  "start_date_year": "2018",
+  "start_date_month": "01",
+  "start_date_day": "01",
+  "end_date_year": "2018",
+  "end_date_month": "02",
+  "end_date_day": "02",
+  "location_type": "location_type",
+  "address_1": "address 1",
+  "address_2": "address 2",
+  "address_town": "town",
+  "address_county": "county",
+  "postcode": "postcode",
+  "address_country": "country",
+  "notes": "notes",
+  "lead_team": "lead_team",
+  "organiser": "organiser",
+  "teams": [ "team1", "team2" ],
+  "related_programmes": [ "programme1", "programme2" ]
+}
