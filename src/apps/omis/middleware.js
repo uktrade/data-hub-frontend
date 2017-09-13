@@ -1,6 +1,9 @@
-const logger = require('../../../../config/logger')
-const { getInflatedDitCompany } = require('../../companies/services/data')
-const { Order } = require('../models')
+const { get } = require('lodash')
+
+const logger = require('../../../config/logger')
+const { getInflatedDitCompany } = require('../companies/services/data')
+const { setHomeBreadcrumb } = require('../middleware')
+const { Order } = require('./models')
 
 async function getCompany (req, res, next, companyId) {
   try {
@@ -27,7 +30,14 @@ async function getOrder (req, res, next, orderId) {
   next()
 }
 
+function setOrderBreadcrumb (req, res, next) {
+  const reference = get(res.locals, 'order.reference')
+
+  return setHomeBreadcrumb(reference)(req, res, next)
+}
+
 module.exports = {
   getCompany,
   getOrder,
+  setOrderBreadcrumb,
 }

@@ -2,18 +2,11 @@ const { get, keys } = require('lodash')
 const path = require('path')
 const i18nFuture = require('i18n-future')
 
-const { setHomeBreadcrumb } = require('../../../middleware')
 const { Order } = require('../../models')
 
 const i18n = i18nFuture({
   path: path.resolve(__dirname, '../../locales/__lng__/__ns__.json'),
 })
-
-function setOrderBreadcrumb (req, res, next) {
-  const reference = get(res.locals, 'order.reference')
-
-  return setHomeBreadcrumb(reference)(req, res, next)
-}
 
 function setTranslation (req, res, next) {
   res.locals.translate = (key) => {
@@ -136,7 +129,6 @@ function setQuoteForm (req, res, next) {
 }
 
 module.exports = {
-  setOrderBreadcrumb,
   setTranslation,
   getQuote,
   generateQuote,

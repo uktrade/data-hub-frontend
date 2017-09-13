@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
+const { setOrderBreadcrumb } = require('../../middleware')
 const { renderWorkOrder, renderQuote } = require('./controllers')
 const {
-  setOrderBreadcrumb,
   setTranslation,
   getQuote,
   setQuoteForm,

@@ -2,8 +2,6 @@ describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.setHomeBreadcrumbReturnSpy = this.sandbox.spy()
-    this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
     this.previewQuoteStub = this.sandbox.stub()
     this.getFullQuoteStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
@@ -15,7 +13,6 @@ describe('OMIS View middleware', () => {
       locals: {
         order: {
           id: '123456789',
-          reference: '12345/AS',
         },
       },
     }
@@ -27,9 +24,6 @@ describe('OMIS View middleware', () => {
     }
 
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
-      '../../../middleware': {
-        setHomeBreadcrumb: this.setHomeBreadcrumbStub,
-      },
       '../../models': {
         Order: {
           previewQuote: this.previewQuoteStub,
@@ -43,18 +37,6 @@ describe('OMIS View middleware', () => {
 
   afterEach(() => {
     this.sandbox.restore()
-  })
-
-  describe('setOrderBreadcrumb()', () => {
-    it('should call setHomeBreadcrumb with order reference', () => {
-      this.middleware.setOrderBreadcrumb({}, this.resMock, this.nextSpy)
-
-      expect(this.setHomeBreadcrumbStub).to.have.been.calledOnce
-      expect(this.setHomeBreadcrumbStub).to.have.been.calledWith('12345/AS')
-
-      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
-      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith({}, this.resMock, this.nextSpy)
-    })
   })
 
   describe('setTranslation()', () => {
