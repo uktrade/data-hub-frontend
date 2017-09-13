@@ -5,9 +5,9 @@ async function handleFormPost (req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
 
   try {
-    await createEvent(req.session.token, formattedBody)
+    const result = await createEvent(req.session.token, formattedBody)
 
-    res.locals.resultId = '1'
+    res.locals.resultId = result.id
 
     next()
   } catch (err) {
@@ -26,7 +26,5 @@ async function handleFormPost (req, res, next) {
 }
 
 module.exports = {
-  populateForm,
   handleFormPost,
-  validateForm,
 }
