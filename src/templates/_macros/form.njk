@@ -79,10 +79,10 @@
     {{ children }}
 
     {% if not hideFormActions %}
-      <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
+      <div class="c-form-actions {{ props.actionsClass }}">
         <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
         {% if props.returnLink %}
-          <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
+          <a href="{{ props.returnLink }}">{{ returnText }}</a>
         {% endif %}
       </div>
     {% endif %}
