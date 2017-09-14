@@ -2,6 +2,7 @@ const path = require('path')
 const i18nFuture = require('i18n-future')
 const { reduce } = require('lodash')
 
+const EditController = require('../../../controllers/edit')
 const steps = require('../steps')
 const fields = require('../fields')
 const i18n = i18nFuture({
@@ -22,6 +23,7 @@ function editHandler (req, res, next) {
     name: 'edit',
     route: '/edit',
     template: '_layouts/form-wizard-step',
+    controller: EditController,
     translate: i18n.translate.bind(i18n),
   }
   const overrides = {
