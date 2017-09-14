@@ -2,6 +2,16 @@ const { get, filter, flatten, forEach, last, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
 
 class FormController extends Controller {
+  configure (req, res, next) {
+    const heading = req.form.options.heading
+
+    if (heading) {
+      res.breadcrumb(heading)
+    }
+
+    next()
+  }
+
   getErrors (req, res) {
     const errors = super.getErrors(req, res)
 

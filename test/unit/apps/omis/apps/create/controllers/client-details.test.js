@@ -1,4 +1,4 @@
-const FormController = require('hmpo-form-wizard').Controller
+const FormController = require('~/src/apps/omis/controllers/form')
 
 const Controller = require('~/src/apps/omis/apps/create/controllers/client-details')
 
@@ -40,7 +40,7 @@ describe('OMIS create client details controller', () => {
         },
       })
 
-      FormController.prototype.configure = this.sandbox.spy()
+      this.sandbox.spy(FormController.prototype, 'configure')
     })
 
     describe('when a company exists', () => {

@@ -1,4 +1,4 @@
-const FormController = require('hmpo-form-wizard').Controller
+const FormController = require('~/src/apps/omis/controllers/form')
 
 const getAdvisersMockData = require('~/test/unit/data/investment/interaction/advisers')
 const saveMockData = {
