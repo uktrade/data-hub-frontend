@@ -512,8 +512,13 @@
     {% endif %}
 
     {% for option in options %}
-      {% set selected = props.value|default([]) %}
       {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
+      {% if props.type == 'checkbox' %}
+        {% set isSelected = (option.value in props.value | default([])) %}
+      {% else %}
+        {% set isSelected = (option.value | string == props.value | default(false) | string) %}
+      {% endif %}
+
       <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
@@ -521,7 +526,7 @@
           name="{{ props.name }}"
           value="{{ option.value }}"
           id="{{ props.fieldId }}-{{ loop.index }}"
-          {% if not selected | isNull and option.value in selected | string %}checked{% endif %}
+          {% if isSelected %}checked="checked"{% endif %}
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
