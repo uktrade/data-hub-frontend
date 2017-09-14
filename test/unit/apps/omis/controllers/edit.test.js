@@ -340,6 +340,44 @@ describe('OMIS EditController', () => {
       })
     })
 
+    context('when a value contains a boolean', () => {
+      it('should return true', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              foo: true,
+            },
+          },
+        }
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({
+            foo: true,
+          })
+          done()
+        }
+
+        this.controller.getValues(this.reqMock, resMock, nextMock)
+      })
+
+      it('should return false', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              foo: false,
+            },
+          },
+        }
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({
+            foo: false,
+          })
+          done()
+        }
+
+        this.controller.getValues(this.reqMock, resMock, nextMock)
+      })
+    })
+
     context('when returning order keys', () => {
       context('when the value is a plain object', () => {
         it('should return the id property', (done) => {
@@ -436,6 +474,42 @@ describe('OMIS EditController', () => {
 
           this.controller.getValues(this.reqMock, resMock, nextMock)
         })
+      })
+    })
+
+    describe('filtering', () => {
+      it('should only filter null and undefined', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              false: false,
+              undefined: undefined,
+              null: null,
+              empty: '',
+            },
+          },
+        }
+        const reqMock = Object.assign({}, this.reqMock, {
+          form: {
+            options: {
+              fields: {
+                false: {},
+                undefined: {},
+                null: {},
+                empty: {},
+              },
+            },
+          },
+        })
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({
+            false: false,
+            empty: '',
+          })
+          done()
+        }
+
+        this.controller.getValues(reqMock, resMock, nextMock)
       })
     })
   })
