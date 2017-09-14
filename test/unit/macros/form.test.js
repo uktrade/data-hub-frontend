@@ -23,7 +23,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form')(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.exist
+        expect(component.querySelector('.c-form-actions')).to.exist
         expect(component.querySelector('button.button').textContent).to.equal('Submit')
       })
 
@@ -42,7 +42,7 @@ describe('Nunjucks form macros', () => {
         expect(component.action).to.equal('/form-url')
         expect(component.className).to.equal('c-form-component')
         expect(component.getAttribute('role')).to.equal('search')
-        expect(component.querySelector('.c-form-group--actions').classList.contains('u-js-hidden')).to.be.true
+        expect(component.querySelector('.c-form-actions').classList.contains('u-js-hidden')).to.be.true
       })
 
       it('should render form with custom submit button text', () => {
@@ -62,7 +62,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form', formProps)(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.not.exist
+        expect(component.querySelector('.c-form-actions')).to.not.exist
       })
 
       it('should render form with button modifier as string', () => {
