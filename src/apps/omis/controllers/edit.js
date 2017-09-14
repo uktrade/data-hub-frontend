@@ -64,11 +64,12 @@ class EditController extends FormController {
       return newValue
     })
 
+    const exemptFields = ['vat_number']
     // combine order values and error values
     let combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
     // convert dates to default format
     combinedValues = mapValues(combinedValues, (value, key) => {
-      if (typeof value === 'string') {
+      if (typeof value === 'string' && !exemptFields.includes(key)) {
         const parsedDate = dateFns.parse(value.toString())
         if (dateFns.isValid(parsedDate)) {
           return dateFns.format(parsedDate, longDateFormat)
