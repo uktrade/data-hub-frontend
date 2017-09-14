@@ -1,6 +1,7 @@
 const { reject } = require('lodash')
 
-const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
+const { getCommonTitlesAndlinks } = require('../services/data')
+const { getDitCompany } = require('../repos')
 const { transformContactToListItem } = require('../../contacts/transformers')
 
 /**
@@ -12,7 +13,7 @@ const { transformContactToListItem } = require('../../contacts/transformers')
 async function getContacts (req, res, next) {
   try {
     res.locals.tab = 'contacts'
-    const company = res.locals.company = await getInflatedDitCompany(req.session.token, req.params.id)
+    const company = res.locals.company = await getDitCompany(req.session.token, req.params.id)
     getCommonTitlesAndlinks(req, res, company)
 
     const transformedContacts = company.contacts

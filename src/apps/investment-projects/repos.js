@@ -1,6 +1,6 @@
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
-const { getInflatedDitCompany } = require('../companies/services/data')
+const { getDitCompany } = require('../companies/repos')
 
 function getCompanyInvestmentProjects (token, companyId, page = 1) {
   const limit = 10
@@ -22,7 +22,7 @@ function updateInvestment (token, investmentId, body) {
 
 function getEquityCompanyDetails (token, equityCompanyId) {
   const promises = [
-    getInflatedDitCompany(token, equityCompanyId),
+    getDitCompany(token, equityCompanyId),
     getCompanyInvestmentProjects(token, equityCompanyId),
   ]
 

@@ -18,7 +18,7 @@ describe('Company investments controller', function () {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.getInflatedDitCompanyStub = this.sandbox.stub().resolves(company)
+    this.getDitCompanyStub = this.sandbox.stub().resolves(company)
     this.getCompanyInvestmentProjectsStub = this.sandbox.stub().resolves(investmentProjects)
     this.getCommonTitlesAndlinksStub = this.sandbox.stub()
     this.nextStub = this.sandbox.stub()
@@ -26,11 +26,13 @@ describe('Company investments controller', function () {
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
       '../services/data': {
-        getInflatedDitCompany: this.getInflatedDitCompanyStub,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
       '../../investment-projects/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
+      },
+      '../repos': {
+        getDitCompany: this.getDitCompanyStub,
       },
     })
   })
@@ -55,7 +57,7 @@ describe('Company investments controller', function () {
           breadcrumb: this.breadcrumbStub,
           render: (template, data) => {
             try {
-              expect(this.getInflatedDitCompanyStub).to.be.calledWith(token, company.id)
+              expect(this.getDitCompanyStub).to.be.calledWith(token, company.id)
               expect(this.getCompanyInvestmentProjectsStub).to.be.calledWith(token, company.id)
               expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(reqStub, resStub, company)
 
@@ -87,7 +89,7 @@ describe('Company investments controller', function () {
 
     describe('when a company is not found', () => {
       beforeEach(() => {
-        this.getInflatedDitCompanyStub.rejects(new Error('Company not found'))
+        this.getDitCompanyStub.rejects(new Error('Company not found'))
       })
 
       it('should call the next function', (done) => {

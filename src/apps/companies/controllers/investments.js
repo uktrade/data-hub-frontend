@@ -1,5 +1,6 @@
 const { getCompanyInvestmentProjects } = require('../../investment-projects/repos')
-const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
+const { getDitCompany } = require('../repos')
+const { getCommonTitlesAndlinks } = require('../services/data')
 const { transformInvestmentProjectToListItem } = require('../../investment-projects/transformers')
 const { transformApiResponseToCollection } = require('../../transformers')
 
@@ -9,7 +10,7 @@ async function getAction (req, res, next) {
   const page = req.query.page || 1
 
   try {
-    const company = await getInflatedDitCompany(token, companyId)
+    const company = await getDitCompany(token, companyId)
     const results = await getCompanyInvestmentProjects(token, companyId, page)
       .then(transformApiResponseToCollection(
         { query: req.query },

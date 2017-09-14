@@ -1,13 +1,13 @@
 const { get } = require('lodash')
 
 const logger = require('../../../config/logger')
-const { getInflatedDitCompany } = require('../companies/services/data')
+const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
 
 async function getCompany (req, res, next, companyId) {
   try {
-    res.locals.company = await getInflatedDitCompany(req.session.token, companyId)
+    res.locals.company = await getDitCompany(req.session.token, companyId)
     next()
   } catch (error) {
     next(error)

@@ -200,8 +200,10 @@ describe('Company contacts controller', function () {
 
       companyContactController = proxyquire('~/src/apps/companies/controllers/contacts', {
         '../services/data': {
-          getInflatedDitCompany: sinon.stub().resolves(company),
           getCommonTitlesAndLinks: sinon.stub(),
+        },
+        '../repos': {
+          getDitCompany: sinon.stub().resolves(company),
         },
       })
 
