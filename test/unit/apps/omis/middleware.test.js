@@ -9,7 +9,7 @@ describe('OMIS middleware', () => {
 
     this.setHomeBreadcrumbReturnSpy = this.sandbox.spy()
     this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
-    this.getInflatedDitCompanyStub = this.sandbox.stub()
+    this.getDitCompanyStub = this.sandbox.stub()
     this.getByIdStub = this.sandbox.stub()
     this.getSubscribersStub = this.sandbox.stub()
     this.getAssigneesStub = this.sandbox.stub()
@@ -26,8 +26,8 @@ describe('OMIS middleware', () => {
     }
 
     this.middleware = proxyquire('~/src/apps/omis/middleware', {
-      '../companies/services/data': {
-        getInflatedDitCompany: this.getInflatedDitCompanyStub,
+      '../companies/repos': {
+        getDitCompany: this.getDitCompanyStub,
       },
       '../../../config/logger': {
         error: this.loggerSpy,
@@ -56,13 +56,13 @@ describe('OMIS middleware', () => {
 
     context('when get company resolves', () => {
       beforeEach(() => {
-        this.getInflatedDitCompanyStub.resolves(companyData)
+        this.getDitCompanyStub.resolves(companyData)
       })
 
-      it('should call getInflatedDitCompany() with correct arguments', async () => {
+      it('should call getDitCompany() with correct arguments', async () => {
         await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
-        expect(this.getInflatedDitCompanyStub).to.have.been.calledWith(this.reqMock.session.token, this.companyId)
+        expect(this.getDitCompanyStub).to.have.been.calledWith(this.reqMock.session.token, this.companyId)
       })
 
       it('should set a company property on locals', async () => {
@@ -84,7 +84,7 @@ describe('OMIS middleware', () => {
         this.error = {
           statusCode: 404,
         }
-        this.getInflatedDitCompanyStub.rejects(this.error)
+        this.getDitCompanyStub.rejects(this.error)
       })
 
       it('should call next with an error', async () => {

@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const companyRepository = require('../repos')
+const { getDitCompany } = require('../repos')
 const companyFormService = require('../services/form')
 const companyService = require('../services/data')
 const companyFormattingService = require('../services/formatting')
@@ -12,7 +12,7 @@ const companyWithoutCHKeys = ['business_type', 'registered_address', 'trading_na
 async function getDetails (req, res, next) {
   try {
     res.locals.tab = 'details'
-    const company = res.locals.company = await companyService.getInflatedDitCompany(req.session.token, req.params.id)
+    const company = res.locals.company = await getDitCompany(req.session.token, req.params.id)
     companyService.getCommonTitlesAndlinks(req, res, company)
     res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
     res.locals.companyDetailsDisplayOrder = companyWithoutCHKeys
@@ -63,7 +63,7 @@ function addDetails (req, res, next) {
 
 async function editDetails (req, res, next) {
   try {
-    const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
+    const company = await getDitCompany(req.session.token, req.params.id)
     if (containsFormData(req)) {
       res.locals.formData = req.body
     } else {
