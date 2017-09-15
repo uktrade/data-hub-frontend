@@ -360,20 +360,22 @@
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId })) %}
-    {% for individualValue in props.value %}
-      {{ renderAsMacro(props.children, { value: individualValue }) }}
-    {% endfor %}
+    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+      {% for individualValue in props.value %}
+        {{ renderAsMacro(props.children, { value: individualValue, modifier: 'AddItems' }) }}
+      {% endfor %}
 
-    {{ renderAsMacro(props.children, { value: null } ) }}
+      {{ renderAsMacro(props.children, { modifier: 'AddItems' } ) }}
 
-    <p class="c-form-group c-form-group--compact">
-      <input
-        class="button button-secondary"
-        type="submit"
-        name="{{ props.buttonName }}"
-        value="Add another"
-        data-persist-values="true" />
-    </p>
+      <p class="c-form-group c-form-group--compact">
+        <input
+          class="button button-secondary js-AddItems__add"
+          type="submit"
+          name="{{ props.buttonName }}"
+          value="Add another"
+          data-persist-values="true" />
+      </p>
+    </div>
   {% endcall %}
 {% endmacro %}
 
