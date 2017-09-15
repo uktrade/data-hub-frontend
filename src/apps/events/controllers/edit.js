@@ -11,9 +11,9 @@ async function renderEventPage (req, res, next) {
     const eventForm = eventFormConfig(advisers)
     const emptyDate = { year: '', month: '', day: '' }
     const body = Object.assign(req.body, {
-      event_start_date: emptyDate,
-      event_end_date: emptyDate,
-      event_team_hosting: get(req, 'session.user.dit_team.id', null),
+      start_date: emptyDate,
+      end_date: emptyDate,
+      lead_team: get(req, 'session.user.dit_team.id', null),
     })
     const eventFormWithState = buildFormWithState(eventForm, body)
 
@@ -30,12 +30,19 @@ async function renderEventPage (req, res, next) {
 
 function postHandler (req, res, next) {
   const setAddAnotherField = (value) => compact(castArray(value))
-  req.body.event_shared_teams = setAddAnotherField(req.body.event_shared_teams)
-  req.body.event_programmes = setAddAnotherField(req.body.event_programmes)
+  req.body.teams = setAddAnotherField(req.body.teams)
+  req.body.related_programmes = setAddAnotherField(req.body.related_programmes)
 
-  if (req.body.add_event_shared_team || req.body.add_event_programme) {
+  if (req.body.add_team || req.body.add_related_programme) {
     return next()
   }
+
+  if (get(res.locals, 'form.errors')) {
+    return next()
+  }
+
+  req.flash('success', 'Event created')
+  return res.redirect(`/events/${res.locals.resultId}/details`)
 }
 
 module.exports = {

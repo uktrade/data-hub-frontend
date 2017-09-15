@@ -24,10 +24,10 @@ module.exports = {
     sharedNoContainer: '#group-field-event_shared div div:nth-child(2)',
     sharedYes: 'label[for=field-event_shared-1]',
     sharedNo: 'label[for=field-event_shared-2]',
-    sharedTeams: '#field-event_shared_teams',
-    addAnotherSharedTeam: 'input[name="add_event_shared_team"]',
-    relatedProgrammes: '#field-event_programmes',
-    addAnotherProgramme: 'input[name="add_event_programme"]',
+    sharedTeams: '#field-teams',
+    addAnotherSharedTeam: 'input[name="add_team"]',
+    relatedProgrammes: '#field-related_programmes',
+    addAnotherProgramme: 'input[name="add_related_programme"]',
     saveButton: {
       selector: '//button[text() = \'Save and Continue\']',
       locateStrategy: 'xpath',
@@ -56,19 +56,19 @@ module.exports = {
     {
       selectSharedTeam (optionNumber) {
         return this
-          .click('select[name="event_shared_teams"] option:nth-child(' + optionNumber + ')')
+          .click('select[name="teams"] option:nth-child(' + optionNumber + ')')
       },
       verifyVisibleSharedTeamList (listNumber) {
         return this
-          .verify.visible('#group-field-event_shared_teams #group-field-event_shared_teams:nth-child(' + listNumber + ') select')
+          .verify.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
       },
       selectProgramme (optionNumber) {
         return this
-          .click('select[name="event_programmes"] option:nth-child(' + optionNumber + ')')
+          .click('select[name="related_programmes"] option:nth-child(' + optionNumber + ')')
       },
       verifyVisibleProgrammesList (listNumber) {
         return this
-          .verify.visible('#group-field-event_programmes #group-field-event_programmes:nth-child(' + listNumber + ') select')
+          .verify.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
     },
   ],
