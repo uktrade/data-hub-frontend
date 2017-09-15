@@ -1,8 +1,21 @@
 const { transformToApi } = require('../services/formatting')
 const { createEvent } = require('../repos')
+const { includes, assign, castArray, compact } = require('lodash')
 
 async function handleFormPost (req, res, next) {
-  const formattedBody = transformToApi(Object.assign({}, req.body))
+  const castToArrayAndRemoveEmpty = (value) => compact(castArray(value))
+  req.body.teams = castToArrayAndRemoveEmpty(req.body.teams)
+  req.body.related_programmes = castToArrayAndRemoveEmpty(req.body.related_programmes)
+
+  if (!includes(req.body.teams, req.body.lead_team)) {
+    req.body.teams.push(req.body.lead_team)
+  }
+
+  if (req.body.add_team || req.body.add_related_programme) {
+    return next()
+  }
+
+  const formattedBody = transformToApi(assign({}, req.body))
 
   try {
     const result = await createEvent(req.session.token, formattedBody)
@@ -12,7 +25,7 @@ async function handleFormPost (req, res, next) {
     next()
   } catch (err) {
     if (err.statusCode === 400) {
-      res.locals.form = Object.assign({}, res.locals.form, {
+      res.locals.form = assign({}, res.locals.form, {
         state: req.body,
         errors: {
           messages: err.error,
