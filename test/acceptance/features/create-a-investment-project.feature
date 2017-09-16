@@ -3,10 +3,12 @@ Feature: Create a new Investment project
   As an existing user
   I would like to create a new Investment project
 
+  Background:
+    Given I am an authenticated user on the data hub website
+
   @investment-verify-add
   Scenario: Verify Add Investment project option
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to Investments page of any company
     Then I verify an option to add a new Investment project
     And I logout of Data Hub website
@@ -14,7 +16,6 @@ Feature: Create a new Investment project
   @investment-create-foreign-equity
   Scenario: Create a new Investment project as a source of foreign equity investment
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project as a source of foreign equity investment
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -24,7 +25,6 @@ Feature: Create a new Investment project
   @investment-create-different-client-relation-manager
   Scenario: Create a new Investment project with a different client relation manager
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with a different client relation manager
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -34,7 +34,6 @@ Feature: Create a new Investment project
   @investment-create-different-referral-source-adviser
   Scenario: Create a new Investment project with a different referral source adviser
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with a different referral source adviser
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -44,7 +43,6 @@ Feature: Create a new Investment project
   @investment-create-different-client-referral-contacts
   Scenario: Create a new Investment project with different client relation manager and referral source adviser
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with different client relation manager and referral source adviser
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -54,7 +52,6 @@ Feature: Create a new Investment project
   @investment-create-FDItype
   Scenario: Create a new Investment project with FDI as Investment type
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with FDI as Investment type
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -64,7 +61,6 @@ Feature: Create a new Investment project
   @investment-create-non-FDItype
   Scenario: Create a new Investment project with Non-FDI as Investment type
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with Non-FDI as Investment type
     Then I see the Investment project created confirmation message
     And I verify my newly created Investment project in company profile
@@ -74,7 +70,6 @@ Feature: Create a new Investment project
   @investment-create-non-foreign-equity
   Scenario: Create a new Investment project as not a source of foreign equity investment
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project as not a source of foreign equity investment
     Then I see the Investment project created confirmation message
     And I verify my newly created foreign equity Investment project in company profile
@@ -83,7 +78,6 @@ Feature: Create a new Investment project
   @investment-search-FDItype
   Scenario: Search for newly created FDI Investment project
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with FDI as Investment type
     Then I see the Investment project created confirmation message
     When I search for my newly created Investment project
@@ -92,7 +86,6 @@ Feature: Create a new Investment project
   @investment-search-nonFDItype
   Scenario: Search for newly created Non-FDI Investment project
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project with Non-FDI as Investment type
     Then I see the Investment project created confirmation message
     When I search for my newly created Investment project
@@ -101,7 +94,6 @@ Feature: Create a new Investment project
   @investment-search-CTItype
   Scenario: Search for newly created commitment to invest type Investment project
 
-    Given I am an authenticated user on Data Hub website
     When I create a new Investment project as a source of foreign equity investment
     And I search for my newly created Investment project
     Then I verify it is displayed in the search results

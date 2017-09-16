@@ -4,10 +4,12 @@ Feature: View Audit history of a contact
   I would like to track changes to a contact record over time
   So that I can cross-check the validity and accuracy of a given contact record
 
+  Background:
+    Given I am an authenticated user on the data hub website
+
   @contacts-audit-name
   Scenario: View name of the person who made contact record changes
 
-     Given I am an authenticated user on Data Hub website
      And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
@@ -16,7 +18,6 @@ Feature: View Audit history of a contact
   @contacts-audit-timestamp
   Scenario: View time stamp when the contact record changes
 
-     Given I am an authenticated user on Data Hub website
      And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
@@ -25,7 +26,6 @@ Feature: View Audit history of a contact
   @contacts-audit-count
   Scenario: View the number of changes occurred on a contact record
 
-     Given I am an authenticated user on Data Hub website
      And I Amend 2 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
@@ -34,7 +34,6 @@ Feature: View Audit history of a contact
   @contacts-audit-field-names
   Scenario: View changed field names of a contact record
 
-     Given I am an authenticated user on Data Hub website
      And I Amend 1 records of an existing contact record
      When I search for this Contact record
      And I navigate to Audit History tab
@@ -43,7 +42,6 @@ Feature: View Audit history of a contact
   @contacts-audit-archived
   Scenario: View audit log for Archived contact
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     When I click on contacts tab
@@ -58,7 +56,6 @@ Feature: View Audit history of a contact
   @contacts-audit-unarchived
   Scenario: View audit log for UnArchived contact
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     When I click on contacts tab
