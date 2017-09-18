@@ -369,7 +369,6 @@ describe('Company export controller', () => {
     })
 
     it('should handle when saving throws error', (done) => {
-      const error = new Error('error')
       this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
         '../repos': {
           getDitCompany: this.getDitCompany,
@@ -397,8 +396,10 @@ describe('Company export controller', () => {
       }, {
         locals: {},
         breadcrumb: this.breadcrumbsStub,
-      }, (_error) => {
-        expect(_error).to.deep.equal(error)
+      }, (err) => {
+        expect(err).to.be.an('error')
+        expect(err).to.be.an.instanceof(TypeError)
+        expect(err.message).to.equal('res.redirect is not a function')
         done()
       })
     })
