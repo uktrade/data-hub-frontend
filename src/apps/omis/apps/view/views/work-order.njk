@@ -30,24 +30,17 @@
   }) }}
 
   {{ AnswersSummary({
-    heading: 'Market of interest',
-    items: [{
-      label: 'Primary market',
-      value: values.primary_market.name
-    }]
+    heading: 'Market (country)',
+    items: [values.primary_market.name]
   }) }}
 
-  {{ AnswersSummary({
-    heading: 'International Trade Advisers (ITAs)',
-    actions: [{
-      url: 'edit/subscribers' if order.editable,
-      label: 'Add or remove'
-    }],
-    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
-  }) }}
+  <p class="infostrip">
+    The market cannot be changed. If you have chosen the wrong market you’ll
+    have to cancel the order and create a new one.
+  </p>
 
   {% call AnswersSummary({
-    heading: 'Post advisers',
+    heading: 'Advisers in the market',
     actions: [{
       url: 'edit/assignees' if order.editable,
       label: 'Add or remove'
@@ -100,6 +93,15 @@
       </tfoot>
     {% endif %}
   {% endcall %}
+
+  {{ AnswersSummary({
+    heading: 'Advisers in the UK',
+    actions: [{
+      url: 'edit/subscribers' if order.editable,
+      label: 'Add or remove'
+    }],
+    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
+  }) }}
 
   {{ AnswersSummary({
     heading: 'Work description',

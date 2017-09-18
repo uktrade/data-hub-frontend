@@ -1,4 +1,4 @@
-const FormController = require('hmpo-form-wizard').Controller
+const FormController = require('~/src/apps/omis/controllers/form')
 
 const getAdvisersMock = require('~/test/unit/data/investment/interaction/advisers')
 
@@ -32,7 +32,7 @@ describe('OMIS create subscribers controller', () => {
         },
       })
 
-      FormController.prototype.configure = this.sandbox.spy()
+      this.sandbox.spy(FormController.prototype, 'configure')
     })
 
     it('should set options for advisers', (done) => {

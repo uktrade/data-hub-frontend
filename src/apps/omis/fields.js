@@ -22,7 +22,7 @@ module.exports = {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.subscribers.legend',
     label: 'fields.subscribers.label',
-    hint: 'fields.subscribers.hint',
+    hint: 'fields.subscribers.hint.create',
     addButtonText: 'fields.subscribers.addButtonText',
     optional: true,
     repeatable: true,
