@@ -43,6 +43,15 @@ const steps = merge({}, createSteps, {
     ],
     controller: EditWorkDescriptionController,
   },
+  '/payment': {
+    heading: 'Edit quote and payment details',
+    fields: [
+      'vat_status',
+      'vat_number',
+      'vat_verified',
+      'po_number',
+    ],
+  },
 })
 
 // Market cannot be edited after creation

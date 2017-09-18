@@ -136,4 +136,29 @@
     }]
   }) }}
 
+  {% if values.vat_verified === true %}
+    {% set verifiedState = translate('fields.vat_verified.options.valid') %}
+  {% elif values.vat_verified === false %}
+    {% set verifiedState = translate('fields.vat_verified.options.invalid') %}
+  {% else %}
+    {% set verifiedState = translate('fields.vat_verified.options.unverified') %}
+  {% endif %}
+
+  {{ AnswersSummary({
+    heading: 'Quote and payment details',
+    actions: [{
+      url: 'edit/payment' if order.editable
+    }],
+    items: [{
+      label: 'VAT category',
+      value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status else 'Not set'
+    }, {
+      label: 'VAT number',
+      value: values.vat_number + ' (' + verifiedState + ')' if values.vat_number
+    }, {
+      label: 'Purchase Order (PO) number',
+      value: values.po_number or 'Not set'
+    }]
+  }) }}
+
 {% endblock %}

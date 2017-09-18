@@ -37,6 +37,28 @@
     },
     "assignee_time": {
       "label": "Estimated time"
+    },
+    "vat_status": {
+      "label": "VAT category",
+      "options": {
+        "uk": "Inside UK",
+        "eu": "Inside EU",
+        "outside_eu": "Outside EU"
+      }
+    },
+    "vat_number": {
+      "label": "VAT number"
+    },
+    "vat_verified": {
+      "label": "Is the VAT number valid?",
+      "options": {
+        "unverified": "Not verified",
+        "valid": "Valid",
+        "invalid": "Invalid"
+      }
+    },
+    "po_number": {
+      "label": "Purchase Order (PO) number"
     }
   },
   "validation": {

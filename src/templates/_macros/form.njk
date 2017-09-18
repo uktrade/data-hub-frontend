@@ -231,7 +231,7 @@
           <span class="c-form-group__error-message">{{ props.error }}</span>
         {% endif %}
         {% if props.hint %}
-          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint }}</span>
+          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint | safe }}</span>
         {% endif %}
       </{{ labelElement }}>
 
