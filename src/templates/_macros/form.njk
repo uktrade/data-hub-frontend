@@ -79,10 +79,10 @@
     {{ children }}
 
     {% if not hideFormActions %}
-      <div class="c-form-group c-form-group--actions {{ props.actionsClass }}">
+      <div class="c-form-actions {{ props.actionsClass }}">
         <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
         {% if props.returnLink %}
-          <p><a href="{{ props.returnLink }}">{{ returnText }}</a></p>
+          <a href="{{ props.returnLink }}">{{ returnText }}</a>
         {% endif %}
       </div>
     {% endif %}
@@ -352,6 +352,34 @@
 {% endmacro %}
 
 {##
+ # Render a collection for multiple fields for add another functionality
+ # @param {object} props - An object containing field properties
+ # @param {array} [props.value] - Input values
+ #}
+{% macro AddAnother(props) %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId })) %}
+    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+      {% for individualValue in props.value %}
+        {{ renderAsMacro(props.children, { value: individualValue, modifier: 'AddItems' }) }}
+      {% endfor %}
+
+      {{ renderAsMacro(props.children, { modifier: 'AddItems' } ) }}
+
+      <p class="c-form-group c-form-group--compact">
+        <input
+          class="button button-secondary js-AddItems__add"
+          type="submit"
+          name="{{ props.buttonName }}"
+          value="Add another"
+          data-persist-values="true" />
+      </p>
+    </div>
+  {% endcall %}
+{% endmacro %}
+
+{##
  # Render hidden input field
  # @param {object} props - An object containing field properties
  # @param {string} props.name - Field name
@@ -486,8 +514,13 @@
     {% endif %}
 
     {% for option in options %}
-      {% set selected = props.value|default([]) %}
       {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
+      {% if props.type == 'checkbox' %}
+        {% set isSelected = (option.value in props.value | default([])) %}
+      {% else %}
+        {% set isSelected = (option.value | string == props.value | default(false) | string) %}
+      {% endif %}
+
       <div class="c-multiple-choice {{ modifier }}">
         <input
           class="c-multiple-choice__input"
@@ -495,7 +528,7 @@
           name="{{ props.name }}"
           value="{{ option.value }}"
           id="{{ props.fieldId }}-{{ loop.index }}"
-          {% if not selected | isNull and option.value in selected | string %}checked{% endif %}
+          {% if isSelected %}checked="checked"{% endif %}
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">

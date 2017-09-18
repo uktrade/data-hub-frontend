@@ -1,7 +1,7 @@
 const companyService = require('../services/data')
 const companyFormService = require('../services/form')
 const companyFormattingService = require('../services/formatting')
-const companyRepository = require('../repos')
+const { getDitCompany, getCHCompany } = require('../repos')
 const metadataRepository = require('../../../lib/metadata')
 const { companyDetailsLabels, chDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
@@ -11,13 +11,14 @@ const chDetailsDisplayOrderLong = ['name', 'company_number', 'registered_address
 async function getDetails (req, res, next) {
   try {
     res.locals.tab = 'details'
-    const company = res.locals.company = await companyService.getInflatedDitCompany(req.session.token, req.params.id)
+    const company = res.locals.company = await getDitCompany(req.session.token, req.params.id)
     companyService.getCommonTitlesAndlinks(req, res, company)
     res.locals.companyDetails = companyFormattingService.getDisplayCompany(company)
     res.locals.companyDetailsDisplayOrder = companyWithCHKeys
     res.locals.companyDetailsLabels = companyDetailsLabels
 
     if (company.companies_house_data) {
+      res.locals.regionOptions = metadataRepository.regionOptions
       res.locals.chDetails = companyFormattingService.getDisplayCH(company.companies_house_data)
       res.locals.chDetailsDisplayOrder = chDetailsDisplayOrderLong
       res.locals.chDetailsLabels = chDetailsLabels
@@ -55,7 +56,7 @@ function editCommon (req, res, next) {
 
 async function addDetails (req, res, next) {
   try {
-    res.locals.chCompany = await companyRepository.getCHCompany(req.session.token, req.params.company_number)
+    res.locals.chCompany = await getCHCompany(req.session.token, req.params.company_number)
     res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.chCompany)
 
     if (containsFormData(req)) {
@@ -79,7 +80,7 @@ async function editDetails (req, res, next) {
       res.locals.formData = req.body
       res.breadcrumb('Edit company')
     } else {
-      const company = await companyRepository.getDitCompany(req.session.token, req.params.id)
+      const company = await getDitCompany(req.session.token, req.params.id)
       res.locals.formData = companyFormService.getLtdCompanyAsFormData(company)
       res.breadcrumb(company.name, `/viewcompanyresult/${company.id}`)
       res.breadcrumb('Edit')

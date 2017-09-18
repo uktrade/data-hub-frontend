@@ -64,11 +64,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .submitForm('form')
   })
 
-  Then(/^I see the (.*) confirmation message$/, async (successMsg) => {
-    await Company
-      .assert.containsText('@flashInfo', successMsg)
-  })
-
   Then(/^I verify that all fields are populated correctly for Requirements section$/, async () => {
     await Stages
       .verify.visible('@editRequirmentsButton')
@@ -221,7 +216,7 @@ defineSupportCode(({ Given, Then, When }) => {
       })
   })
 
-  Then(/^I verify an Email is sent to Investment services team \(IST\)$/, async () => {
+  Then(/^I verify an Email is sent to Investment services team$/, async () => {
   })
 
   Then(/^I verify the project is in Ongoing state$/, async () => {
@@ -282,7 +277,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Stages
       .verify.visible('@editPMButton')
       .getText('@projectAssuranceAdviserFromProjectTeamTab', (result) => {
-        Stages.assert.contains(projectAssurance, result.value)
+        Stages.assert.containsText(projectAssurance, result.value)
       })
   })
 

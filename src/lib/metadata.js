@@ -62,6 +62,9 @@ module.exports.getMetadataItem = function (table, id) {
 }
 
 const metadataItems = [
+  ['programme', 'programmeOptions'],
+  ['event-type', 'eventTypeOptions'],
+  ['location-type', 'locationTypeOptions'],
   ['sector', 'sectorOptions'],
   ['turnover', 'turnoverOptions'],
   ['uk-region', 'regionOptions'],

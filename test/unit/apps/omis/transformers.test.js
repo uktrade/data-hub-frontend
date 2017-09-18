@@ -33,6 +33,7 @@ describe('OMIS list transformers', function () {
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
           expect(actual).to.have.property('meta').an('array').to.deep.equal([
+            { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
@@ -51,6 +52,7 @@ describe('OMIS list transformers', function () {
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
           expect(actual).to.have.property('meta').an('array').to.deep.equal([
+            { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },

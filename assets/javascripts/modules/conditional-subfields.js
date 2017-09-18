@@ -7,6 +7,8 @@
  * The element to be shown requires 2 attributes:
  * [data-controlled-by] - this is the name of the field which controls it
  * [data-control-value] - the value by which this element should be displayed
+ *                        Can include multiple control values using `||` to
+ *                        separate each value
  *
  * It also requires a basic bit of style to work:
  *
@@ -113,10 +115,10 @@ const ConditionalSubfields = {
     }
 
     Array.from(subFields).forEach((subField) => {
-      const value = subField.getAttribute('data-control-value') + ''
+      const values = (subField.getAttribute('data-control-value') + '').split('||')
       let isVisible
 
-      isVisible = controlInputValue === value
+      isVisible = includes(values, controlInputValue)
 
       this._toggleSubField(subField, isVisible)
     })
@@ -136,8 +138,10 @@ const ConditionalSubfields = {
       const children = subField.querySelectorAll('input, select, checkbox, textarea')
 
       Array.from(children).forEach((field) => {
-        field.value = ''
-        field.checked = false
+        if (!field.getAttribute('data-persist-values')) {
+          field.value = ''
+          field.checked = false
+        }
 
         const event = this.wrapper.createEvent('HTMLEvents')
         event.initEvent('change', true, false)

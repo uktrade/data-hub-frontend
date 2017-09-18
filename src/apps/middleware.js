@@ -1,4 +1,3 @@
-const path = require('path')
 const { isEmpty } = require('lodash')
 const queryString = require('query-string')
 
@@ -17,7 +16,7 @@ function setHomeBreadcrumb (name) {
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
     res.locals.localNavItems = items.map(item => {
-      const url = path.resolve(req.baseUrl, item.path)
+      const url = `${req.baseUrl}/${item.path}`
       return Object.assign(item, {
         url,
         isActive: res.locals.CURRENT_PATH === url,

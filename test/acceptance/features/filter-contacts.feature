@@ -4,10 +4,12 @@ Feature: Filters collections for contact
   I would like to filter contacts using possible options
   So that I can quickly drill down to find the correct information that I am looking for
 
+  Background:
+    Given I am an authenticated user on the data hub website
+
   @filter-contacts-sector
   Scenario: Filter contacts by sector
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to contacts collection page
     And I filter the display by contacts sector
     Then I verify the display is changed based on the given sector for contact
@@ -15,7 +17,6 @@ Feature: Filters collections for contact
   @filter-contacts-country
   Scenario: Filter contacts by country
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to contacts collection page
     And I filter the display by country
     Then I verify the display is changed based on the given country
@@ -23,7 +24,6 @@ Feature: Filters collections for contact
   @filter-contacts-region
   Scenario: Filter contacts by region
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to contacts collection page
     And I filter the display by region
     Then I verify the display is changed based on the given region
@@ -31,7 +31,6 @@ Feature: Filters collections for contact
   @filter-contacts-company
   Scenario: Filter contacts by company name
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to contacts collection page
     And I filter the display by company name
     Then I verify the display is changed based on the given company name

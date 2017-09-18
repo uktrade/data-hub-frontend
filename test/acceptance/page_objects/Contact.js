@@ -102,7 +102,7 @@ module.exports = {
           .setValue('@ukPostcode', 'EC2Y 9AE')
           .click('@findUkAddressButton')
           .click('@selectUkAddressDropdown')
-          .waitForElementPresent('@selectAnUkAddressFromList', 5000)
+          .waitForElementPresent('@selectAnUkAddressFromList')
           .click('@selectAnUkAddressFromList')
           .setValue('@contactAlternatePhonenumber', '666555444')
           .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))

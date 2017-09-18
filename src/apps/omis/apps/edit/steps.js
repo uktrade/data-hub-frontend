@@ -9,18 +9,22 @@ const EditWorkDescriptionController = require('./controllers/work-description')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
+    heading: 'Edit client details',
     controller: EditClientDetailsController,
   },
   '/subscribers': {
+    heading: 'Add or remove ITAs',
     controller: EditSubscribersController,
   },
   '/assignees': {
+    heading: 'Add or remove post advisers',
     fields: [
       'assignees',
     ],
     controller: EditAssigneesController,
   },
   '/assignee-time': {
+    heading: 'Edit post adviser time',
     fields: [
       'assignee_time',
     ],
@@ -29,6 +33,7 @@ const steps = merge({}, createSteps, {
     template: 'assignee-time.njk',
   },
   '/work-description': {
+    heading: 'Edit work description',
     fields: [
       'service_types',
       'description',

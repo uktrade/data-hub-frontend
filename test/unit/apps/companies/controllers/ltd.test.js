@@ -7,7 +7,6 @@ const next = function (error) {
 }
 
 describe('Company controller, ltd', function () {
-  let getInflatedDitCompanyStub
   let getCHCompanyStub
   let getDitCompanyStub
   let getDisplayCHStub
@@ -69,7 +68,6 @@ describe('Company controller, ltd', function () {
 
   beforeEach(function () {
     fakeCompanyForm = { id: '999', sector: 10 }
-    getInflatedDitCompanyStub = sinon.stub().resolves(company)
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
@@ -82,9 +80,6 @@ describe('Company controller, ltd', function () {
     this.breadcrumbStub = function () { return this }
 
     companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
-      '../services/data': {
-        getInflatedDitCompany: getInflatedDitCompanyStub,
-      },
       '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
@@ -115,7 +110,7 @@ describe('Company controller, ltd', function () {
         locals: {},
         breadcrumb: this.breadcrumbStub,
         render: function () {
-          expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
+          expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
           done()
         },
       }, next)
@@ -579,9 +574,6 @@ describe('Company controller, ltd', function () {
       })
 
       companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
-        '../services/data': {
-          getInflatedDitCompany: getInflatedDitCompanyStub,
-        },
         '../services/formatting': {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub,

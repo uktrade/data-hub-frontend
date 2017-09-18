@@ -23,7 +23,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form')(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.exist
+        expect(component.querySelector('.c-form-actions')).to.exist
         expect(component.querySelector('button.button').textContent).to.equal('Submit')
       })
 
@@ -42,7 +42,7 @@ describe('Nunjucks form macros', () => {
         expect(component.action).to.equal('/form-url')
         expect(component.className).to.equal('c-form-component')
         expect(component.getAttribute('role')).to.equal('search')
-        expect(component.querySelector('.c-form-group--actions').classList.contains('u-js-hidden')).to.be.true
+        expect(component.querySelector('.c-form-actions').classList.contains('u-js-hidden')).to.be.true
       })
 
       it('should render form with custom submit button text', () => {
@@ -62,7 +62,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form', formProps)(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.not.exist
+        expect(component.querySelector('.c-form-actions')).to.not.exist
       })
 
       it('should render form with button modifier as string', () => {
@@ -405,6 +405,51 @@ describe('Nunjucks form macros', () => {
         })
         expect(component.querySelector('.c-form-group__error-message').textContent.trim()).to.equal('Please enter a valid date')
       })
+    })
+  })
+
+  describe('AddAnother component', () => {
+    beforeEach(() => {
+      this.component = macros.renderToDom('AddAnother', {
+        buttonName: 'add_another',
+        name: 'add_another',
+        label: 'Add another',
+        children: [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'add_another',
+            label: 'Add another',
+            isLabelHidden: true,
+            optional: true,
+            initialOption: '-- Select another --',
+            options: [
+              { value: 1, label: 'another 1' },
+              { value: 2, label: 'another 2' },
+              { value: 3, label: 'another 3' },
+            ],
+          },
+        ],
+        value: [ 1, 2 ],
+      })
+    })
+
+    it('should render a component with 2 preselected drop downs', () => {
+      const selectedElements = this.component.getElementsByTagName('select')
+
+      expect(selectedElements[0].value).to.equal('1')
+      expect(selectedElements[1].value).to.equal('2')
+    })
+
+    it('should render a component with 1 unselected drop down', () => {
+      const selectElements = this.component.getElementsByTagName('select')
+
+      expect(selectElements[2].value).to.equal('')
+    })
+
+    it('should render a component with an "Add another" button', () => {
+      const addAnotherButton = this.component.querySelectorAll('input[type=submit]')
+
+      expect(addAnotherButton[0].value).to.equal('Add another')
     })
   })
 })

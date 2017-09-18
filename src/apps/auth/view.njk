@@ -5,5 +5,5 @@
 {% endblock %}
 
 {% block body_main_content %}
-  {{ Form(signInForm) }}
+  {{ Form(signInForm | assign({ class: 'qa-sign-in-form' })) }}
 {% endblock %}

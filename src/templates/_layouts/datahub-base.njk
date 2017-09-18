@@ -10,9 +10,9 @@
 {% from "_macros/_deprecated/trade-elements/textbox.njk" import textbox %}
 
 {% from "_macros/form.njk" import EntitySearchForm, Form, MultiStepForm with context %}
-{% from "_macros/form.njk" import FormGroup, Fieldset, TextField, MultipleChoiceField, HiddenField, DateFieldset %}
+{% from "_macros/form.njk" import FormGroup, Fieldset, TextField, AddAnother, MultipleChoiceField, HiddenField, DateFieldset %}
 {% from "_macros/common.njk" import LocalHeader with context %}
-{% from "_macros/common.njk" import Pagination, GlobalNav, LocalNav, Progress %}
+{% from "_macros/common.njk" import Pagination, GlobalNav, LocalNav, Progress, FromNow, AnswersSummary %}
 {% from "_macros/collection.njk" import Collection, CollectionFilters %}
 {% from "_macros/entities.njk" import MetaList %}
 
@@ -42,7 +42,8 @@
     <ul class="proposition-menu">
       {% if feedbackLink %}
         <li class="proposition-menu__item">
-          <a href="{{ feedbackLink }}" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH and '/support' in CURRENT_PATH }}">Support</a>
+          <a href="{{ feedbackLink }}"
+             class="proposition-menu__link {{ 'is-active' if CURRENT_PATH and '/support' in CURRENT_PATH }} qa-support">Support</a>
         </li>
       {% endif %}
       {% if user %}
@@ -52,9 +53,9 @@
       {% endif %}
       <li class="proposition-menu__item">
         {% if user %}
-          <a href="/sign-out" class="proposition-menu__link">Sign out</a>
+          <a href="/sign-out" class="proposition-menu__link qa-sign-out">Sign out</a>
         {% else %}
-          <a href="/sign-in" class="proposition-menu__link">Sign in</a>
+          <a href="/sign-in" class="proposition-menu__link qa-sign-in">Sign in</a>
         {% endif %}
       </li>
     </ul>

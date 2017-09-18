@@ -176,3 +176,70 @@
     </div>
   {% endif %}
 {% endmacro %}
+
+{##
+ # Render time element using from now wording
+ # @param {object} props
+ # @param {array} props.datetime - datetime used to generate the time from now
+ #
+ #}
+{% macro FromNow(props) %}
+  {%- if props.datetime -%}
+    <time
+      datetime="{{ props.datetime | formatDateTime('YYYY-MM-DDTHH:mm:ssZ') }}"
+      title="{{ props.datetime | formatDateTime }}"
+    >{{ props.datetime | fromNow }}</time>
+  {%- endif -%}
+{% endmacro %}
+
+{##
+ # Render answers summary table
+ #
+ # @param {object} props
+ # @param {object|string[]} props.items - array of ojects or strings to display in table body
+ # @param {string} props.items.value - item value
+ # @param {string} props.items.label - item label
+ # @param {string} [props.heading] - heading to use as caption for the table
+ # @param {object[]} [props.actions] - array of actions to display
+ # @param {string} [props.actions.url] - URL for the action
+ # @param {string} [props.actions.label=Edit] - Text for the action
+ # @param {caller} [caller()] - Alternative body to use
+ #
+ #}
+{% macro AnswersSummary(props) %}
+  {% if props.items %}
+    <table class="c-answers-summary">
+      {% if props.heading or props.actions.length %}
+        <caption class="c-answers-summary__heading">
+          {{ props.heading }}
+          {% for action in props.actions %}
+            {% if action.url %}
+              <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+                {{ action.label or 'Edit' }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </caption>
+      {% endif %}
+
+      {% if caller %}
+        {{ caller() }}
+      {% else %}
+        {% for item in props.items %}
+          {% if not item.value and not item.label %}
+            <tr>
+              <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
+            </tr>
+          {% else %}
+            {% if item.value %}
+              <tr>
+                <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+                <td class="c-answers-summary__content">{{ item.value | safe }}</td>
+              </tr>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </table>
+  {% endif %}
+{% endmacro %}

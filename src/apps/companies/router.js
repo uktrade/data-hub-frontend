@@ -1,5 +1,9 @@
 const router = require('express').Router()
 
+const { getCompanyDetails } = require('./middleware/details')
+const { getInteractionCollection } = require('./middleware/interactions')
+const { renderInteractions } = require('./controllers/interactions')
+
 const {
   addController,
   archiveController,
@@ -7,7 +11,6 @@ const {
   contactsController,
   expController,
   foreignController,
-  interactionsController,
   investmentsController,
   ltdController,
   ukotherController,
@@ -15,11 +18,11 @@ const {
 } = require('./controllers')
 
 const { renderCompanyList } = require('./controllers/list')
-const { getRequestBody, getCompanyCollection } = require('./middleware')
+const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:asc',
+  sortby: 'modified_on:desc',
 }
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
 
@@ -85,8 +88,10 @@ router
   .get(foreignController.editCommon, foreignController.addDetails)
   .post(foreignController.postDetails)
 
-router.get('/:id/interactions', interactionsController.getInteractions)
 router.get('/:id/investments', investmentsController.getAction)
 router.get('/:id/audit', auditController.getAudit)
+
+router.param('companyId', getCompanyDetails)
+router.get('/:companyId/interactions', getInteractionCollection, renderInteractions)
 
 module.exports = router

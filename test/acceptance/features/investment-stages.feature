@@ -12,10 +12,9 @@ Feature: Investment project stages
     When I navigate to my Investment project
     And I enter all required fields for Requirements section under Details tab
     And I click on Save button
-#    Then I see the Updated investment requirements confirmation message
     Then I verify that all fields are populated correctly for Requirements section
 
-  @investment-stages-location-details
+  @investment-stages-location-details @ignore
   Scenario: Update location section under Prospect stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -82,7 +81,7 @@ Feature: Investment project stages
     Then I see the Updated investment value confirmation message
     And I verify that project has no export of their products and services under Value section
 
-  @investment-stages-assign-pm-stage
+  @investment-stages-assign-pm-stage @ignore
   Scenario: Move project from Prospect stage to Assign PM stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -94,7 +93,7 @@ Feature: Investment project stages
     When I click on Assign PM stage button
     Then I verify the stage of the project is updated from Prospect stage to Assign PM stage
 
-  @Ignore
+  @ignore
   Scenario: Email verification when project moves from Prospect stage to Assign PM stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -104,9 +103,9 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that Assign PM stage button is enabled
     When I click on Assign PM stage button
-    Then I verify an Email is sent to Investment services team (IST)
+    Then I verify an Email is sent to Investment services team
 
-  @Ignore
+  @ignore
   Scenario Outline: Changing the Project states in Prospect stage
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
@@ -115,17 +114,17 @@ Feature: Investment project stages
     Then I verify the project state is changed to <state>
 
     Examples:
-    |state|
-    |Delayed|
-    |Dormant|
-    |Abandoned|
-    |Lost|
-    |Ongoing|
+      | state     |
+      | Delayed   |
+      | Dormant   |
+      | Abandoned |
+      | Lost      |
+      | Ongoing   |
 
 
 #Assign PM stage journeys:
 
-  @Ignore
+  @ignore
   Scenario: Update Project Manager section under Assign PM stage
     Given I am an authenticated Investment services team user on Data Hub website
     When I navigate to my Investment project
@@ -134,7 +133,7 @@ Feature: Investment project stages
     Then I see the Updated investment details confirmation message
     Then I verify that all fields are populated correctly for Project Manager section
 
-  @Ignore
+  @ignore
   Scenario: Update Project Assurance section under Assign PM stage
     Given I am an authenticated Investment services team user on Data Hub website
     When I navigate to my Investment project
@@ -142,7 +141,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all fields are populated correctly for Project Assurance section
 
-  @Ignore
+  @ignore
   Scenario: Move project from Assign PM stage to Active stage
     Given I am an authenticated Investment services team user on Data Hub website
     And I enter all required fields for Project Manager section under Project team tab
@@ -152,7 +151,7 @@ Feature: Investment project stages
     When I click on Active stage button
     Then I verify the stage of the project is updated from Assign PM stage to Active stage
 
-  @Ignore
+  @ignore
   Scenario: Email verification when project moves from Assign PM stage to Active stage
     Given I am an authenticated Investment services team user on Data Hub website
     And I enter all required fields for Project Manager section under Project team tab
@@ -166,7 +165,7 @@ Feature: Investment project stages
 
 #Active stage journeys:
 
-  @Ignore
+  @ignore
   Scenario: Update Investment project summary section under Active stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -175,7 +174,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all fields are populated correctly for Investment project summary section
 
-  @Ignore
+  @ignore
   Scenario: Update Requirements and Location section under Active stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -185,7 +184,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all fields are populated correctly for Requirements and Location section
 
-  @Ignore
+  @ignore
   Scenario: Update Value section under Active stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -193,7 +192,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all evidences are populated correctly for Value section
 
-  @Ignore
+  @ignore
   Scenario: Move project from Active stage to Verify Win stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -208,7 +207,7 @@ Feature: Investment project stages
     When I click on Verify Win stage button
     Then I verify the stage of the project is updated from Active stage to Verify Win stage
 
-  @Ignore
+  @ignore
   Scenario: Email verification when project moves from Active stage to Verify Win stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -223,7 +222,7 @@ Feature: Investment project stages
     When I click on Verify Win stage button
     Then I verify an Email is sent to Allocation Team
 
-  @Ignore
+  @ignore
   Scenario Outline: Changing the Project states in Active stage
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
@@ -232,17 +231,17 @@ Feature: Investment project stages
     Then I verify the project state is changed to <state>
 
     Examples:
-    |state|
-    |Delayed|
-    |Dormant|
-    |Abandoned|
-    |Lost|
-    |Ongoing|
+      | state     |
+      | Delayed   |
+      | Dormant   |
+      | Abandoned |
+      | Lost      |
+      | Ongoing   |
 
 
 #Verify Win stage journeys:
 
-  @Ignore
+  @ignore
   Scenario: Access and Update all sections under Verify Win stage
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
@@ -251,7 +250,7 @@ Feature: Investment project stages
     And I click on Save button
     Then I verify that all fields are populated correctly under Evaluation tab
 
-  @Ignore
+  @ignore
   Scenario: Move project from Verify Win stage to Won stage
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
@@ -262,7 +261,7 @@ Feature: Investment project stages
     When I click on Won stage button
     Then I verify the stage of the project is updated from Verify Win stage to Won stage
 
-  @Ignore
+  @ignore
   Scenario: Email verification when project moves from Active stage to Verify Win stage
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
@@ -274,13 +273,13 @@ Feature: Investment project stages
     Then I verify an Email is sent to Allocated project manager
     And I verify an Email is sent to Allocated project assurance manager
 
-  @Ignore
+  @ignore
   Scenario: Verify the Project state in Verify win stage
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
     Then I verify the project is in Ongoing state
 
-  @Ignore
+  @ignore
   Scenario: Verify the Project state in Won stage
     Given I am an authenticated Allocated project manager user on Data Hub website
     When I navigate to my Investment project within Won stage

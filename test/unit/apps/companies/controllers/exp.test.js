@@ -13,7 +13,6 @@ describe('Company export controller', () => {
     this.next = function (error) {
       console.log(error)
     }
-    this.getInflatedDitCompany = this.sandbox.stub().resolves(this.company)
     this.getDitCompany = this.sandbox.stub().resolves(this.company)
     this.saveCompany = this.sandbox.stub().resolves(this.company)
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
@@ -22,7 +21,6 @@ describe('Company export controller', () => {
 
     this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
       '../services/data': {
-        getInflatedDitCompany: this.getInflatedDitCompany,
         getCommonTitlesAndlinks: this.getCommonTitlesAndlinks,
       },
       '../repos': {
@@ -85,7 +83,7 @@ describe('Company export controller', () => {
 
       return this.companyExportController.common(req, res)
         .then(() => {
-          expect(this.getInflatedDitCompany).to.be.calledWith('1234', this.company.id)
+          expect(this.getDitCompany).to.be.calledWith('1234', this.company.id)
           expect(res.locals.company).to.deep.equal(this.company)
         })
     })
@@ -139,11 +137,8 @@ describe('Company export controller', () => {
     it('should return empty strings when no value', (done) => {
       this.company.export_to_countries = []
       this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
-        '../services/data': {
-          getInflatedDitCompany: this.getInflatedDitCompany,
-        },
-        '../../../lib/metadata': {
-          getDitcompany: this.getDitCompany,
+        '../repos': {
+          getDitCompany: this.getDitCompany,
           saveCompany: this.saveCompany,
         },
         '../../../../lib/controller-utils': {
@@ -169,6 +164,8 @@ describe('Company export controller', () => {
           done()
         },
       }
+
+      this.next = function (error) { console.log(error) }
 
       this.companyExportController.view(req, res, this.next)
     })
@@ -374,9 +371,6 @@ describe('Company export controller', () => {
     it('should handle when saving throws error', (done) => {
       const error = new Error('error')
       this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
-        '../services/data': {
-          getInflatedDitCompany: this.getInflatedDitCompany,
-        },
         '../repos': {
           getDitCompany: this.getDitCompany,
           saveCompany: this.saveCompany,

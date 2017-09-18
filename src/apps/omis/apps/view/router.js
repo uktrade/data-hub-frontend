@@ -1,8 +1,15 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
-const { setOrderBreadcrumb, getQuote, setQuoteForm, generateQuote, cancelQuote } = require('./middleware')
+const { setOrderBreadcrumb } = require('../../middleware')
 const { renderWorkOrder, renderQuote } = require('./controllers')
+const {
+  setTranslation,
+  getQuote,
+  setQuoteForm,
+  generateQuote,
+  cancelQuote,
+} = require('./middleware')
 
 const LOCAL_NAV = [
   { path: 'work-order', label: 'Work order' },
@@ -12,10 +19,11 @@ const LOCAL_NAV = [
 ]
 
 router.use(setLocalNav(LOCAL_NAV))
+router.use(setTranslation)
 router.use(setOrderBreadcrumb)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/work-order', renderWorkOrder)
+router.get('/work-order', getQuote, renderWorkOrder)
 router
   .route('/quote')
   .get(getQuote, setQuoteForm, renderQuote)

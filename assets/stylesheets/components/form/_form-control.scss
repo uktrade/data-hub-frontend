@@ -59,6 +59,10 @@ select.c-form-control {
   border-color: $error-colour;
 }
 
+.c-form-control--medium {
+  max-width: 15em;
+}
+
 .c-form-control--short {
   max-width: 10em;
 }

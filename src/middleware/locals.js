@@ -1,5 +1,3 @@
-const path = require('path')
-
 const logger = require('../../config/logger')
 const config = require('../../config')
 
@@ -13,6 +11,7 @@ try {
 const globalNavItems = [
   { path: '/companies', label: 'Companies' },
   { path: '/contacts', label: 'Contacts' },
+  { path: '/interactions', label: 'Interactions' },
   { path: '/investment-projects', label: 'Investment projects' },
   { path: '/omis', label: 'OMIS Orders' },
 ]
@@ -29,10 +28,10 @@ module.exports = function locals (req, res, next) {
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
     QUERY: req.query,
-    GLOBAL_NAV_ITEMS: globalNavItems.map(item => {
-      const url = path.resolve(req.baseUrl, item.path)
+    GLOBAL_NAV_ITEMS: globalNavItems.map(globalNavItem => {
+      const url = globalNavItem.path
 
-      return Object.assign(item, {
+      return Object.assign(globalNavItem, {
         url,
         isActive: req.path.startsWith(url),
       })

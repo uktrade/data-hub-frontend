@@ -1,6 +1,6 @@
 const metadataRepo = require('../../../lib/metadata')
 const { saveCompany, getDitCompany } = require('../repos')
-const { getInflatedDitCompany, getCommonTitlesAndlinks } = require('../services/data')
+const { getCommonTitlesAndlinks } = require('../services/data')
 const { containsFormData, flattenIdFields } = require('../../../lib/controller-utils')
 
 const exportDetailsLabels = {
@@ -33,7 +33,7 @@ function common (req, res) {
   return new Promise(async (resolve, reject) => {
     try {
       res.locals.tab = 'exports'
-      res.locals.company = await getInflatedDitCompany(req.session.token, req.params.id)
+      res.locals.company = await getDitCompany(req.session.token, req.params.id)
 
       res.breadcrumb(res.locals.company.name, `/viewcompanyresult/${res.locals.company.id}`)
       res.breadcrumb('Exports', `/companies/${res.locals.company.id}/exports`)

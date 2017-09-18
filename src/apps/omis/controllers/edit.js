@@ -2,10 +2,13 @@ const {
   find,
   flatten,
   get,
+  isNull,
   isPlainObject,
+  isUndefined,
   map,
   mapValues,
   pick,
+  pickBy,
 } = require('lodash')
 const dateFns = require('date-fns')
 
@@ -64,17 +67,22 @@ class EditController extends FormController {
     // combine order values and error values
     let combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
     // convert dates to default format
-    combinedValues = mapValues(combinedValues, (value) => {
-      const parsedDate = dateFns.parse(value)
-
-      if (value && dateFns.isValid(parsedDate)) {
-        return dateFns.format(parsedDate, longDateFormat)
+    combinedValues = mapValues(combinedValues, (value, key) => {
+      if (typeof value === 'string') {
+        const parsedDate = dateFns.parse(value.toString())
+        if (dateFns.isValid(parsedDate)) {
+          return dateFns.format(parsedDate, longDateFormat)
+        }
       }
 
       return value
     })
 
-    next(null, combinedValues)
+    const filtered = pickBy(combinedValues, (value) => {
+      return !isUndefined(value) && !isNull(value)
+    })
+
+    next(null, filtered)
   }
 }
 

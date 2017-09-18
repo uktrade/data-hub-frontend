@@ -4,10 +4,16 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Login = client.page.Login()
 
-  Given(/^I am on the Data Hub login page$/, async () => {
+  Given(/^I am an authenticated user on the data hub website$/, async () => {
     await Login
       .navigate()
-      .waitForElementVisible('body', 1000)
+      .authenticate()
+  })
+
+  When(/^I am on the Datahub login page$/, async () => {
+    await Login
+      .navigate()
+      .waitForElementVisible('@signInForm', 5000)
   })
 
   When(/^I enter my credentials$/, async () => {
@@ -17,21 +23,28 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I submit the form$/, async () => {
     await Login
-      .submitForm('@form')
+      .submitForm('@signInForm')
   })
 
-  Then(/^I verify that I’m successfully logged in$/, async () => {
+  Then(/^I verify that I'm successfully logged in$/, async () => {
     await Login
-      .waitForElementVisible('@searchBar', 1000)
+      .waitForElementVisible('@searchBar', 5000)
   })
 
-  When(/^I click on “Sign out” button$/, async () => {
+  Then(/^I logout of Datahub website$/, async () => {
     await Login
-      .click('@signOutButton')
+      .click('@signOutLink')
   })
 
-  Then(/^I have been logged out$/, async () => {
+  Then(/^I navigate to the support page$/, async () => {
     await Login
-      .verify.containsText('@flashMessage', 'You have been successfully signed out.')
+      .click('@supportLink')
+      .assert.containsText('@pageHeading', 'Report a problem or leave feedback')
+  })
+
+  Then(/^I can navigate to the Datahub login page$/, async () => {
+    await Login
+      .click('@signInLink')
+      .assert.containsText('@pageHeading', 'Sign in')
   })
 })

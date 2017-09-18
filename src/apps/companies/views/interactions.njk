@@ -1,84 +1,25 @@
 {% extends "./_layout-view.njk" %}
 
+{% set addButton %}
+  <a class="button button-secondary" href="/interactions/create/1?company={{company.id}}">Add interaction</a>
+{% endset %}
 
 {% block main_grid_right_column %}
-  {{ super() }}
+  <h2 class="heading-medium">Company interactions</h2>
+  <p>
+    An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
+  </p>
 
-  {% if interactions.length > 0 %}
-    <div class="split-header">
-      <h2 class="heading-medium">Company interactions</h2>
-      <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add interaction</a>
-    </div>
-    <p>
-      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
-    </p>
-    <ul id="interaction-list" class="lined-list">
-      {% for interaction in interactions %}
-      <li class="lined-list__item">
-        <div class="card card--expandable" id="{{interaction.id}}">
-          <a class="card__title" href="{{interaction.url}}">{{interaction.subject}}</a>
-          <div class="split-data">
-            <div>
-              <div class="card__metadata">
-                <strong>Type:</strong>
-                {{interaction.interaction_type}}
-              </div>
-              <div class="card__metadata">
-                <strong>Adviser:</strong>
-                {{interaction.adviser | safe}}
-              </div>
-              <div class="card__metadata">
-                <strong>Adviser team:</strong>
-                {{interaction.dit_team}}
-              </div>
-              <div class="card__metadata">
-                <strong>Contact:</strong>
-                {{interaction.contact | safe}}
-              </div>
-            </div>
-            <div>
-              <div class="card__metadata">
-                <strong>Date:</strong>
-                {{interaction.date}}
-              </div>
-            </div>
-          </div>
-          <div class="card__subsection">
-            <table class="table--key-value table--plain">
-              <tbody>
-                <tr>
-                  <th>Service</th>
-                  <td>{{interaction.service}}</td>
-                </tr>
-                <tr>
-                  <th>Interaction notes</th>
-                  <td>{{interaction.notes | safe}}</td>
-                </tr>
-              </tbody>
-            </table>
-            <p><a class="button button-secondary" href="{{interaction.url}}">View interaction details</a></p>
-          </div>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-  {% elseif (not company.contacts or company.contacts.length == 0) %}
-    <h2 class="heading-medium">Company interactions</h2>
-    <p>
-      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
-    </p>
-    <p id="no-contact-warning" class="infostrip">
-      You currently have no contacts for this company. To add an interaction you must first <a href="{{addContact}}">add a contact</a>.
-    </p>
+  {% if company.contacts.length %}
+    {{
+      Collection(interactions | assignCopy({
+        countLabel: 'interaction',
+        summaryActionsHTML: addButton
+      }))
+    }}
   {% else %}
-    <div class="split-header">
-      <h2 class="heading-medium">Company interactions</h2>
-      <a id="add-interaction-link" class="button" href="{{addInteractionUrl}}">Add interaction</a>
-    </div>
-    <p>
-      An interaction could be a meeting, call, email or another activity
-      where you have been in touch with a company.
+    <p class="infostrip">
+      You currently have no contacts for this company. To add an interaction you must first <a href="/contacts/create?company={{company.id}}">add a contact</a>.
     </p>
-    <p id="no-interaction-warning" class="infostrip">You currently have no interactions for this company.</p>
   {% endif %}
 {% endblock %}

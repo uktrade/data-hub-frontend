@@ -31,6 +31,8 @@ const {
 const { renderInvestmentList } = require('./controllers/list')
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 
+const { getInteractionCollection } = require('./middleware/interactions')
+
 const LOCAL_NAV = [
   { path: 'details', label: 'Project details' },
   { path: 'team', label: 'Project team' },
@@ -155,7 +157,7 @@ router
     team.editTeamMembers.getHandler
   )
 
-router.get('/:id/interactions', interactions.list.indexGetHandler)
+router.get('/:id/interactions', getInteractionCollection, interactions.list.indexGetHandler)
 
 router
   .route('/:id/interactions/create')

@@ -1,13 +1,13 @@
 const { pick, pickBy } = require('lodash')
 
-const { search } = require('../search/services')
-const { transformApiResponseToSearchCollection } = require('../search/transformers')
-const { transformCompanyToListItem } = require('./transformers')
+const { search } = require('../../search/services')
+const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformContactToListItem } = require('../transformers')
 
-async function getCompanyCollection (req, res, next) {
+async function getContactsCollection (req, res, next) {
   try {
     res.locals.results = await search({
-      searchEntity: 'company',
+      searchEntity: 'contact',
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
@@ -15,7 +15,7 @@ async function getCompanyCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
-        transformCompanyToListItem,
+        transformContactToListItem,
       ))
 
     next()
@@ -26,15 +26,13 @@ async function getCompanyCollection (req, res, next) {
 
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
-    'name',
-    'sector',
-    'trading_address_country',
-    'uk_region',
+    'company_name',
+    'company_sector',
+    'address_country',
+    'company_uk_region',
   ])
 
-  const selectedSortBy = req.query.sortby ? {
-    sortby: req.query.sortby,
-  } : null
+  const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
 
   req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
 
@@ -42,6 +40,6 @@ function getRequestBody (req, res, next) {
 }
 
 module.exports = {
+  getContactsCollection,
   getRequestBody,
-  getCompanyCollection,
 }

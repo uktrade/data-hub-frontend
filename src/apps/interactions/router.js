@@ -1,9 +1,16 @@
 const router = require('express').Router()
 
-const detailsController = require('./controllers/details')
-const editController = require('./controllers/edit')
+const { setDefaultQuery } = require('../middleware')
+const { getInteractionsCollection, getRequestBody } = require('./middleware')
+const { detailsController, listController, editController } = require('./controllers')
+
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'date:desc',
+}
 
 router.param('interactionId', detailsController.getCommon)
+
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInteractionsCollection, listController.renderInteractionList)
 
 router.get('/create', (req, res) => { res.redirect('create/1') })
 router
