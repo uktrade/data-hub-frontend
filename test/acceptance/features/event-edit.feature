@@ -4,11 +4,12 @@ Feature: Edit an Event in Data hub
   I would like to edit an event in data hub
   So that I can enable the changes of key events data
 
+  Background:
+    Given I am an authenticated user on the data hub website
 
   @edit-event-name @ignore
   Scenario: Edit event name
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event name field to a new value
@@ -19,7 +20,6 @@ Feature: Edit an Event in Data hub
   @edit-event-type @ignore
   Scenario: Edit event type
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event type field to a new value
@@ -30,7 +30,6 @@ Feature: Edit an Event in Data hub
   @edit-event-refcode @ignore
   Scenario: Edit event additional reference code
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event additional reference code field to a new value
@@ -41,7 +40,6 @@ Feature: Edit an Event in Data hub
   @edit-event-dates @ignore
   Scenario: Edit event dates
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event dates field to a new value
@@ -52,7 +50,6 @@ Feature: Edit an Event in Data hub
   @edit-event-location-type @ignore
   Scenario: Edit event location type
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event location type field to a new value
@@ -63,7 +60,6 @@ Feature: Edit an Event in Data hub
   @edit-event-address @ignore
   Scenario: Edit event address
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event address field to a new value
@@ -74,7 +70,6 @@ Feature: Edit an Event in Data hub
   @edit-event-notes @ignore
   Scenario: Edit event notes
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event notes field to a new value
@@ -85,7 +80,6 @@ Feature: Edit an Event in Data hub
   @edit-event-team-hosting @ignore
   Scenario: Edit event team hosting
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event team hosting field to a new value
@@ -96,7 +90,6 @@ Feature: Edit an Event in Data hub
   @edit-event-organiser @ignore
   Scenario: Edit event organiser
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event organiser field to a new value
@@ -107,7 +100,6 @@ Feature: Edit an Event in Data hub
   @edit-event-shared-teams @ignore
   Scenario: Edit event shared teams
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event shared teams field to a new value
@@ -118,7 +110,6 @@ Feature: Edit an Event in Data hub
   @edit-event-related-programmes @ignore
   Scenario: Edit event related programmes
 
-    Given I am an authenticated user on Data Hub website
     When I navigate to event details page
     And I click on edit event button
     And I change event related programmes field to a new value
