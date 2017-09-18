@@ -1,0 +1,132 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:8.2.1
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn install
+      - save_cache:
+          key: dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+  lint_code:
+    docker:
+      - image: node:8.2.1
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Lint code
+          command: |
+            mkdir -p reports
+            yarn lint:all:js -- --format junit --output-file reports/eslint.xml
+            yarn lint:all:styles
+          when: always
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: reports
+  unit_tests:
+    docker:
+      - image: node:8.2.1
+        environment:
+          TZ: "/usr/share/zoneinfo/Europe/London"
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run unit tests
+          command: |
+            mkdir junit
+            yarn build
+            yarn circle:unit
+          environment:
+            MOCHA_FILE: junit/test-results.xml
+          when: always
+      - store_test_results:
+          path: junit
+      - store_artifacts:
+          path: junit
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
+  acceptance_tests:
+    docker:
+      - image: ukti/docker-nightwatch-base
+        environment:
+          TZ: "/usr/share/zoneinfo/Europe/London"
+          REDIS_HOST: localhost
+          QA_HOST: http://localhost:3000
+          QA_SELENIUM_HOST: 127.0.0.1
+          QA_SELENIUM_PORT: 4444
+      - image: redis:3.2.10
+    parallelism: 4
+    resource_class: large
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "yarn.lock" }}
+      - run: yarn build
+      - run:
+          command: yarn start
+          background: true
+      - run:
+          name: Wait for frontend /healthcheck 200 OK
+          command: .circleci/scripts/health-check.sh
+          no_output_timeout: 120s
+      - run:
+          name: Split tests for parallelisation and run acceptance tests
+          command: |
+            # split .features for parallelisation
+            FEATURES="$(circleci tests glob "test/acceptance/features/*.feature" | circleci tests split --split-by=filesize)"
+
+            # move groups of .features to folder
+            mkdir -p test/acceptance/features_${CIRCLE_NODE_INDEX}
+            for feature in ${FEATURES}; do
+              mv "$feature" test/acceptance/features_${CIRCLE_NODE_INDEX}
+              printf "including: $(basename "$feature")\n"
+            done
+
+            # assign .features folder name to env to pass to cucumber.js
+            export FEATURES_FOLDER=test/acceptance/features_${CIRCLE_NODE_INDEX}
+            printf "Features folder created - ${FEATURES_FOLDER}\n"
+
+            # run acceptance tests
+            mkdir -p cucumber/{reports,screenshots} seleniumLogs
+            yarn circle:acceptance
+          when: always
+      - run:
+          name: Acceptance test reports
+          command: |
+            node .circleci/scripts/cucumber-report.js
+            .circleci/scripts/rename-reports.sh
+            .circleci/scripts/copy-screenshots.sh
+          when: always
+      - store_test_results:
+          path: cucumber
+      - store_artifacts:
+          path: cucumber
+workflows:
+  version: 2
+  datahub:
+    jobs:
+      - build
+      - lint_code:
+          requires:
+            - build
+      - unit_tests:
+          requires:
+            - build
+      - acceptance_tests:
+          requires:
+            - build
