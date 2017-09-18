@@ -207,7 +207,7 @@
  #
  #}
 {% macro AnswersSummary(props) %}
-  {% if props.items %}
+  {% if props.items or caller %}
     <table class="c-answers-summary">
       {% if props.heading or props.actions.length %}
         <caption class="c-answers-summary__heading">

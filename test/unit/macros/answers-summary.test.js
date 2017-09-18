@@ -8,31 +8,55 @@ const items = [
 
 describe('Answers Summary macro', () => {
   context('invalid props', () => {
-    it('should not render if items object is not given', () => {
+    it('should not render if no items or caller is not provided', () => {
       const component = commonMacros.renderToDom('AnswersSummary')
       expect(component).to.be.null
     })
   })
 
   context('minimum props', () => {
-    beforeEach(() => {
-      this.component = commonMacros.renderToDom('AnswersSummary', {
-        items,
+    context('items prop', () => {
+      beforeEach(() => {
+        this.component = commonMacros.renderToDom('AnswersSummary', {
+          items,
+        })
+      })
+
+      it('should render list of items', () => {
+        const rows = this.component.querySelectorAll('tr')
+
+        expect(rows).to.have.lengthOf(2)
+        expect(rows[0].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Foo')
+        expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Bar')
+        expect(rows[1].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Fizz')
+        expect(rows[1].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Buzz')
+      })
+
+      it('should not display a caption', () => {
+        expect(this.component.querySelector('caption')).to.be.null
       })
     })
 
-    it('should render list of items', () => {
-      const rows = this.component.querySelectorAll('tr')
+    context('caller', () => {
+      beforeEach(() => {
+        this.component = commonMacros.renderWithCallerToDom('AnswersSummary')(
+          `
+          <tbody>
+            <tr>
+              <th>Custom body</th>
+            </tr>
+          </tbody>
+          `
+        )
+      })
 
-      expect(rows).to.have.lengthOf(2)
-      expect(rows[0].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Foo')
-      expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Bar')
-      expect(rows[1].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Fizz')
-      expect(rows[1].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Buzz')
-    })
+      it('should render list of items', () => {
+        expect(this.component.querySelector('tbody').textContent.trim()).to.equal('Custom body')
+      })
 
-    it('should not display a caption', () => {
-      expect(this.component.querySelector('caption')).to.be.null
+      it('should not display a caption', () => {
+        expect(this.component.querySelector('caption')).to.be.null
+      })
     })
   })
 
