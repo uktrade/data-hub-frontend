@@ -4,10 +4,12 @@ Feature: View Collection of contacts
   I would like to view all the Contacts in one place
   And be able to read the contact details as expected
 
+  Background:
+    Given I am an authenticated user on the data hub website
+
   @collections-contact-name
   Scenario: View first and last name of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -17,7 +19,6 @@ Feature: View Collection of contacts
   @collections-contact-company
   Scenario: View company name of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -27,7 +28,6 @@ Feature: View Collection of contacts
   @collections-contact-sector
   Scenario: View sector of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -37,7 +37,6 @@ Feature: View Collection of contacts
   @collections-contact-country
   Scenario: View country of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -47,7 +46,6 @@ Feature: View Collection of contacts
   @collections-contact-timestamp
   Scenario: View time stamp of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -57,7 +55,6 @@ Feature: View Collection of contacts
   @collections-contact-primary
   Scenario: View primary status of contact under collections
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -67,7 +64,6 @@ Feature: View Collection of contacts
   @collections-contact-link
   Scenario: Verify link to contact details page
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab
@@ -78,7 +74,6 @@ Feature: View Collection of contacts
   @collections-contact-address-same-as-company
   Scenario: Verify contact with same address as company
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact with same address as company
     When I search for this Contact name
     Then I view a contacts tab
@@ -88,7 +83,6 @@ Feature: View Collection of contacts
   @collections-contact-all
   Scenario: View Collection of contacts
 
-    Given I am an authenticated user on Data Hub website
     And I create a new contact
     When I search for this Contact name
     Then I view a contacts tab

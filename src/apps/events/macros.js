@@ -9,7 +9,7 @@ const eventFormConfig = (organisers) => {
     children: [
       {
         macroName: 'TextField',
-        name: 'event_name',
+        name: 'name',
         label: 'Event name',
       },
       {
@@ -23,7 +23,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'DateFieldset',
-        name: 'event_start_date',
+        name: 'start_date',
         label: 'Event start date',
         optional: true,
         value: {
@@ -34,7 +34,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'DateFieldset',
-        name: 'event_end_date',
+        name: 'end_date',
         label: 'Event end date',
         optional: true,
         value: {
@@ -45,7 +45,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event_location_type',
+        name: 'location_type',
         label: 'Event location type',
         optional: true,
         initialOption: '-- Select location type --',
@@ -77,21 +77,23 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'TextField',
-        name: 'address_postcode',
+        name: 'postcode',
         label: 'Postcode',
         class: 'u-js-hidden',
       },
-      globalFields.countries,
+      Object.assign({}, globalFields.countries, {
+        name: 'address_country',
+      }),
       {
         macroName: 'TextField',
         type: 'textarea',
-        name: 'event_notes',
+        name: 'notes',
         label: 'Event notes',
         optional: true,
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event_team_hosting',
+        name: 'lead_team',
         label: 'Team hosting the event',
         optional: true,
         initialOption: '-- Select team --',
@@ -101,7 +103,7 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'event_organiser',
+        name: 'organiser',
         label: 'Organiser',
         optional: true,
         initialOption: '-- Select organiser --',
@@ -127,14 +129,14 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'AddAnother',
-        buttonName: 'add_event_shared_team',
-        name: 'event_shared_teams',
+        buttonName: 'add_team',
+        name: 'teams',
         label: 'Teams',
         isLabelHidden: true,
         children: [
           {
             macroName: 'MultipleChoiceField',
-            name: 'event_shared_teams',
+            name: 'teams',
             label: 'Teams',
             isLabelHidden: true,
             optional: true,
@@ -151,13 +153,13 @@ const eventFormConfig = (organisers) => {
       },
       {
         macroName: 'AddAnother',
-        buttonName: 'add_event_programme',
-        name: 'event_programmes',
+        buttonName: 'add_related_programme',
+        name: 'related_programmes',
         label: 'Related programmes',
         children: [
           {
             macroName: 'MultipleChoiceField',
-            name: 'event_programmes',
+            name: 'related_programmes',
             label: 'Related programmes',
             isLabelHidden: true,
             optional: true,

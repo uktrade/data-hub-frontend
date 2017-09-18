@@ -1,55 +1,41 @@
 @collections-company
-Feature: View collection of company
+Feature: View company collection
   As an existing user
   I would like to view all the companies in one place
   And be able to read the company details as expected
+  And be able to navigate to a chosen company page
 
   Background:
-    Given I am an authenticated user on Data Hub website
+    Given I am an authenticated user on the data hub website
+    When I create a "UK private or public limited company"
 
   @collections-company-name
-  Scenario: View company name under collections
+  Scenario: View company name in collection results
 
-     When I create a new company
-     When I search for this company name
-     Then I see company name in the list
+    Then I see the "Company record updated" success message
+    And The company name is present in the collections results
 
   @collections-company-sector
-  Scenario: View sector of company under collections
+  Scenario: View company sector in collection results
 
-     And I create a new company
-     When I search for this company name
-     Then I see sector of the company in the list
+    Then I see the "Company record updated" success message
+    And The company sector is present in the collections results
 
   @collections-company-region
-  Scenario: View region of UK based company under collections
+  Scenario: View company region in collection results
 
-     Given I am an authenticated user on Data Hub website
-     And I create a new company based in UK
-     When I search for this company name
-     Then I see region of the company in the list
+    Then I see the "Company record updated" success message
+    And The company region is present in the collections results
 
   @collections-company-trading-address
-  Scenario: View trading address under collections
+  Scenario: View company registered address in collection results
 
-     Given I am an authenticated user on Data Hub website
-     And I create a new company
-     When I search for this company name
-     Then I see trading address of the company in the list
-
-  @collections-company-primary-address
-  Scenario: View primary address under collections
-
-     Given I am an authenticated user on Data Hub website
-     And I create a new company
-     When I search for this company name
-     Then I see primary address of the company in the list
+    Then I see the "Company record updated" success message
+    And The company registered address is present in the collections results
 
   @collections-company-link
-  Scenario: Verify link to company details page
+  Scenario: Verify company link to company details page in collection results
 
-     Given I am an authenticated user on Data Hub website
-     And I create a new company
-     When I search for this company name
-     And I click on the first company name link
-     Then I navigate to this company details page
+    Then I see the "Company record updated" success message
+    And The company name is present in the collections results
+    Then Clicking the company name takes me to the companies page

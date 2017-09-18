@@ -7,11 +7,8 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    interactionsTab: {
-      selector: "//nav/a[contains(@href, 'interactions')]",
-      locateStrategy: 'xpath',
-    },
-    addInteractionButton: '#add-interaction-link',
+    interactionsTab: '.c-local-nav a[href*="interactions"]',
+    addInteractionButton: 'a[href*="/interactions/create/"]',
     businessCardRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(1)',
     emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(2)',
     faceToFaceRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(3)',
@@ -40,7 +37,7 @@ module.exports = {
     interactionPageServiceList: '#service-wrapper ul li:nth-child(1)',
     interactionPageServiceProvider: '#dit_team-wrapper input',
     interactionPageServiceProviderList: '#dit_team-wrapper ul li:nth-child(1)',
-    subjectFromInteractionTab: '#interaction-list li:first-child div:nth-child(1) span:nth-child(2)',
+    subjectFromInteractionTab: '.c-entity-list__item:nth-child(1) a',
     interactionUnderSearchPage: '#interactions-list li:nth-child(1)',
     pickaEvent: '#event option:nth-child(2)',
     pickaStatus: '#status option:nth-child(2)',
@@ -49,6 +46,17 @@ module.exports = {
     countryOfInterest: '#country_of_interest-wrapper input',
     countryOfInterestList: '#country_of_interest-wrapper ul li:nth-child(6)',
     editInteractionButton: '.button.button-secondary',
+
+    // Interactions - Collections/List:
+
+    interactionsCollectionsTab: 'a[href*="/search/interactions"]',
+    contactNameFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(1) span:nth-child(2)',
+    AdvisorNameFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(4) span:nth-child(2)',
+    subjectFromList: '.c-entity-list li:first-child .c-entity__title a',
+    dateFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(3) span:nth-child(2)',
+    companyFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(2) span:nth-child(2)',
+    businessType: '.c-entity-list li:first-child .c-entity__badges span:nth-child(2)',
+    subjectFromInteractionDetailsPage: 'tbody tr:nth-child(3) td',
   },
   commands: [
     {
@@ -168,15 +176,13 @@ module.exports = {
           .click('@interactionsTab')
       },
       enterNewInteractionDetails (subject) {
-        this.contactName = subject
+        this.subject = subject
         return this
           .submitForm('form')
           .enterSubject(subject)
           .enterNotes(faker.lorem.sentence())
-          .enterCompanyContact('a')
           .enterService('a')
           .enterServiceProvider('a')
-          .submitForm('form')
       },
       selectEvent () {
         return this

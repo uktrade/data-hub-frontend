@@ -6,7 +6,6 @@ const next = function (error) {
 }
 
 describe('Company controller, uk other', function () {
-  let getInflatedDitCompanyStub
   let getCHCompanyStub
   let getDitCompanyStub
   let getDisplayCHStub
@@ -53,7 +52,6 @@ describe('Company controller, uk other', function () {
       registered_address_postcode: 'PR1 0LS',
     }
     fakeCompanyForm = { id: '999', sector: 10 }
-    getInflatedDitCompanyStub = sinon.stub().resolves(company)
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(null)
@@ -63,9 +61,6 @@ describe('Company controller, uk other', function () {
     flashStub = sinon.stub()
 
     companyControllerUkOther = proxyquire('~/src/apps/companies/controllers/ukother', {
-      '../services/data': {
-        getInflatedDitCompany: getInflatedDitCompanyStub,
-      },
       '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
@@ -95,7 +90,7 @@ describe('Company controller, uk other', function () {
         locals: {},
         breadcrumb: breadcrumbStub,
         render: function () {
-          expect(getInflatedDitCompanyStub).to.be.calledWith('1234', '9999')
+          expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
           done()
         },
       }, next)
@@ -551,9 +546,6 @@ describe('Company controller, uk other', function () {
       })
 
       companyControllerUkOther = proxyquire('~/src/apps/companies/controllers/ukother', {
-        '../services/data': {
-          getInflatedDitCompany: getInflatedDitCompanyStub,
-        },
         '../services/formatting': {
           getDisplayCompany: getDisplayCompanyStub,
           getDisplayCH: getDisplayCHStub,

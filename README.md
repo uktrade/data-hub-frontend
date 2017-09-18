@@ -27,6 +27,13 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Nunjucks base template blocks](#nunjucks-base-template-blocks)
   - [Base template variables](#base-template-variables)
   - [Template inheritance diagram](#template-inheritance-diagram)
+- [Testing](#testing)
+  - [Acceptance Testing](#acceptance-testing)
+    - [Running acceptance tests](#running-acceptance-tests)
+    - [Ignoring features](#ignoring-features)
+- [Continuous Integration](#continuous-integration)
+  - [Docker image](#docker-image)
+  - [Job failure](#job-failure)
 - [Deployment](#deployment)
 
 
@@ -266,6 +273,42 @@ layouts/
 |
 +-----+ login.njk
 ```
+
+## Testing
+
+### Acceptance Testing
+Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
+
+#### Running acceptance tests
+You run acceptance tests via:
+```
+yarn test:acceptance
+```
+
+You can run a specific feature via:
+```
+yarn test:acceptance -- --tag <feature-tag>
+```
+
+#### Ignoring features
+You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
+
+
+## Continuous Integration
+Data hub uses [CircleCI](https://circleci.com/) for continuous integration. 
+
+### Docker image
+The acceptance tests use the docker image `ukti/docker-nightwatch-base`. 
+Details can be found in the [GitHub](https://github.com/uktrade/docker-nightwatch-base) repo.
+
+### Job failure
+CircleCI has been configured to show you a summary report of what has failed on the following workflows:
+- `unit_tests`
+- `lint_code`
+- `acceptance_tests`
+
+When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder. 
+This can be accessed by logging in to [CircleCI](https://circleci.com/)
 
 ## Deployment
 

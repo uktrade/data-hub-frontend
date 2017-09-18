@@ -5,11 +5,11 @@ module.exports = {
     password: process.env.QA_USER_PASSWORD,
   },
   elements: {
-    form: 'form',
-    signOutButton: {
-      selector: '//a[contains(@href, "sign-out")]',
-      locateStrategy: 'xpath',
-    },
+    pageHeading: 'h1.c-local-header__heading',
+    signInForm: '.qa-sign-in-form',
+    signOutLink: '.qa-sign-out',
+    signInLink: '.qa-sign-in',
+    supportLink: '.qa-support',
     flashMessage: '.c-messages__item--success',
     usernameField: '#field-username',
     passwordField: '#field-password',
@@ -19,15 +19,15 @@ module.exports = {
   commands: [
     {
       enterCredentials () {
-        return this.waitForElementVisible('@form', 1000)
+        return this.waitForElementVisible('@signInForm')
           .setValue('@usernameField', this.props.email)
           .setValue('@passwordField', this.props.password)
       },
 
       logIn () {
         return this.enterCredentials()
-          .submitForm('@form')
-          .waitForElementVisible('@searchBar', 1000)
+          .submitForm('@signInForm')
+          .waitForElementVisible('@searchBar')
       },
 
       authenticate () {
@@ -35,7 +35,7 @@ module.exports = {
           if (result.value.ELEMENT) {
             return this.logIn()
           }
-          return this.waitForElementVisible('@searchBar', 1000)
+          return this.waitForElementVisible('@searchBar')
         })
       },
     },

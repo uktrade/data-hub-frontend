@@ -1,13 +1,6 @@
 /* eslint camelcase: 0 */
 const { get } = require('lodash')
-const companyRepository = require('../repos')
 const { getFormattedAddress } = require('../../../lib/address')
-
-// Todo - No longer needed, follow up PR to switch all uses to getDitCompany
-async function getInflatedDitCompany (token, id) {
-  const company = await companyRepository.getDitCompany(token, id)
-  return company
-}
 
 /**
  * Pass an API formatted company record in and return a path to view that company depending on company type
@@ -64,7 +57,6 @@ function getCommonTitlesAndlinks (req, res, company) {
 }
 
 module.exports = {
-  getInflatedDitCompany,
   buildCompanyUrl,
   getCommonTitlesAndlinks,
   getHeadingAddress,

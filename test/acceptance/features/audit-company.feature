@@ -4,9 +4,12 @@ Feature: View Audit history of a Company
   I would like to track changes to a Company record over time
   So that I can cross-check the validity and accuracy of a given company record
 
+  Background:
+    Given I am an authenticated user on the data hub website
+
   @company-audit-name
   Scenario: View name of the person who made company record changes
-     Given I am an authenticated user on Data Hub website
+
      And I Amend 1 records of an existing company record
      When I search for this company record
      And I navigate to Audit History tab
@@ -14,7 +17,7 @@ Feature: View Audit history of a Company
 
   @company-audit-timestamp
   Scenario: View time stamp when the company record changes
-     Given I am an authenticated user on Data Hub website
+
      And I Amend 1 records of an existing company record
      When I search for this company record
      And I navigate to Audit History tab
@@ -22,7 +25,7 @@ Feature: View Audit history of a Company
 
   @company-audit-count
   Scenario: View the number of changes occurred on a company record
-     Given I am an authenticated user on Data Hub website
+
      And I Amend 2 records of an existing company record
      When I search for this company record
      And I navigate to Audit History tab
@@ -30,7 +33,7 @@ Feature: View Audit history of a Company
 
   @company-audit-field-names
   Scenario: View changed field names of a company record
-     Given I am an authenticated user on Data Hub website
+
      And I Amend 1 records of an existing company record
      When I search for this company record
      And I navigate to Audit History tab

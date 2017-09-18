@@ -1,51 +1,24 @@
 {% extends "./_layouts/view.njk" %}
 
-{% macro AnswersSummary(props) %}
-  <table class="c-answers-summary">
-    <caption class="c-answers-summary__heading">
-      {{ props.heading }}
-      {% for action in props.actions %}
-        {% if action.url %}
-          <a class="c-answers-summary__heading-action" href="{{ action.url }}">
-            {{ action.text or 'Edit' }}
-          </a>
-        {% endif %}
-      {% endfor %}
-    </caption>
-
-    {% if caller %}
-      {{ caller() }}
-    {% else %}
-      {% for item in props.items %}
-        {% if not item.value and not item.label %}
-          <tr>
-            <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
-          </tr>
-        {% else %}
-          {% if item.value %}
-            <tr>
-              <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-              <td class="c-answers-summary__content">{{ item.value | safe }}</td>
-            </tr>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  </table>
-{% endmacro %}
+{% set companyLink %}
+  <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
+{% endset %}
+{% set contactLink %}
+  <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+{% endset %}
 
 {% block main_grid_right_column %}
-  {% set companyLink %}
-    <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
-  {% endset %}
-  {% set contactLink %}
-    <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
-  {% endset %}
+  {% if not order.editable %}
+    <div class="c-messages__item c-messages__item--info">
+      <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
+      <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
+    </div>
+  {% endif %}
 
   {{ AnswersSummary({
     heading: 'Client details',
     actions: [{
-      url: 'edit/client-details'
+      url: 'edit/client-details' if order.editable
     }],
     items: [{
       label: 'Company',
@@ -67,8 +40,8 @@
   {{ AnswersSummary({
     heading: 'International Trade Advisers (ITAs)',
     actions: [{
-      url: 'edit/subscribers',
-      text: 'Add or remove'
+      url: 'edit/subscribers' if order.editable,
+      label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
   }) }}
@@ -76,11 +49,11 @@
   {% call AnswersSummary({
     heading: 'Post advisers',
     actions: [{
-      url: 'edit/assignees',
-      text: 'Add or remove'
+      url: 'edit/assignees' if order.editable,
+      label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length,
-      text: 'Edit time'
+      url: 'edit/assignee-time' if values.assignees.length and order.editable,
+      label: 'Edit time'
     }]
   }) %}
     <tbody>
@@ -131,7 +104,7 @@
   {{ AnswersSummary({
     heading: 'Work description',
     actions: [{
-      url: 'edit/work-description'
+      url: 'edit/work-description' if order.editable
     }],
     items: [{
       label: 'Delivery date',
@@ -160,6 +133,31 @@
     }, {
       label: 'Further information',
       value: values.further_info
+    }]
+  }) }}
+
+  {% if values.vat_verified === true %}
+    {% set verifiedState = translate('fields.vat_verified.options.valid') %}
+  {% elif values.vat_verified === false %}
+    {% set verifiedState = translate('fields.vat_verified.options.invalid') %}
+  {% else %}
+    {% set verifiedState = translate('fields.vat_verified.options.unverified') %}
+  {% endif %}
+
+  {{ AnswersSummary({
+    heading: 'Quote and payment details',
+    actions: [{
+      url: 'edit/payment' if order.editable
+    }],
+    items: [{
+      label: 'VAT category',
+      value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status else 'Not set'
+    }, {
+      label: 'VAT number',
+      value: values.vat_number + ' (' + verifiedState + ')' if values.vat_number
+    }, {
+      label: 'Purchase Order (PO) number',
+      value: values.po_number or 'Not set'
     }]
   }) }}
 

@@ -1,4 +1,4 @@
-const { find } = require('lodash')
+const { assign, find, set } = require('lodash')
 
 describe('Event edit controller', () => {
   const createEventsEditController = (getAdvisers) => {
@@ -34,10 +34,12 @@ describe('Event edit controller', () => {
         },
       },
       body: {},
+      flash: this.sandbox.spy(),
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
+      redirect: this.sandbox.spy(),
     }
     this.next = this.sandbox.spy()
   })
@@ -81,7 +83,7 @@ describe('Event edit controller', () => {
       await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'event_organiser' }).options
+      const actual = find(eventForm.children, { name: 'organiser' }).options
       const expected = [
         { value: 'advisor1', label: 'advisor 1' },
         { value: 'advisor2', label: 'advisor 2' },
@@ -95,7 +97,7 @@ describe('Event edit controller', () => {
       await this.controller.renderEventPage(this.req, this.res, this.next)
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'event_team_hosting' }).value
+      const actual = find(eventForm.children, { name: 'lead_team' }).value
       const expected = currentUserTeam
 
       expect(actual).to.equal(expected)
@@ -103,29 +105,37 @@ describe('Event edit controller', () => {
 
     context('when there are event shared teams', () => {
       it('should prepopulate the event shared teams', async () => {
-        const eventSharedTeams = [ 'team1', 'team2' ]
-        this.req.body['event_shared_teams'] = eventSharedTeams
+        const teams = [ 'team1', 'team2' ]
+        const req = assign({}, this.req, {
+          body: {
+            teams: teams,
+          },
+        })
 
-        await this.controller.renderEventPage(this.req, this.res, this.next)
+        await this.controller.renderEventPage(req, this.res, this.next)
 
         const eventForm = this.res.render.getCall(0).args[1].eventForm
-        const actual = find(eventForm.children, { name: 'event_shared_teams' }).value
+        const actual = find(eventForm.children, { name: 'teams' }).value
 
-        expect(actual).to.deep.equal(eventSharedTeams)
+        expect(actual).to.deep.equal(teams)
       })
     })
 
     context('when there are event programmes', () => {
       it('should prepopulate the event programmes', async () => {
-        const eventProgrammes = [ 'programme1', 'programme2' ]
-        this.req.body['event_programmes'] = eventProgrammes
+        const relatedProgrammes = [ 'programme1', 'programme2' ]
+        const req = assign({}, this.req, {
+          body: {
+            related_programmes: relatedProgrammes,
+          },
+        })
 
-        await this.controller.renderEventPage(this.req, this.res, this.next)
+        await this.controller.renderEventPage(req, this.res, this.next)
 
         const eventForm = this.res.render.getCall(0).args[1].eventForm
-        const actual = find(eventForm.children, { name: 'event_programmes' }).value
+        const actual = find(eventForm.children, { name: 'related_programmes' }).value
 
-        expect(actual).to.deep.equal(eventProgrammes)
+        expect(actual).to.deep.equal(relatedProgrammes)
       })
     })
 
@@ -143,83 +153,54 @@ describe('Event edit controller', () => {
   })
 
   describe('#postHandler', () => {
-    context('when adding an event shared team for the first time', () => {
-      it('should set the event shared teams', () => {
-        const team = 'team1'
-        this.req.body.addEventSharedTeam = true
-        this.req.body['event_shared_teams'] = team
+    context('when there are errors', () => {
+      beforeEach(() => {
+        set(this.res, 'locals.form.errors', [ 'error' ])
+      })
 
+      it('should not flash a success message', () => {
         this.controller.postHandler(this.req, this.res, this.next)
 
-        const actual = this.req.body['event_shared_teams']
+        expect(this.req.flash).have.not.been.called
+      })
 
-        expect(actual).to.deep.equal([ team ])
+      it('should not redirect to the event', () => {
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        expect(this.res.redirect).have.not.been.calledOnce
+      })
+
+      it('should call next', () => {
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        expect(this.next).have.been.calledWith()
+        expect(this.next).have.been.calledOnce
       })
     })
 
-    context('when adding subsequent event shared teams', () => {
-      it('should add to the event shared teams', () => {
-        const teams = [ 'team1', 'team2' ]
-        this.req.body.addEventSharedTeam = true
-        this.req.body['event_shared_teams'] = teams
-
-        this.controller.postHandler(this.req, this.res, this.next)
-
-        const actual = this.req.body['event_shared_teams']
-
-        expect(actual).to.deep.equal(teams)
+    context('when creating was successful', () => {
+      beforeEach(() => {
+        set(this.res, 'locals.resultId', 1)
       })
 
-      it('should not add empty values to the event programmes', () => {
-        this.req.body.addEventSharedTeam = true
-        this.req.body['event_shared_teams'] = [ 'team1', 'team2' ]
-        this.req.body['event_programmes'] = [ 'programme1', '' ]
-
+      it('should flash a success message', () => {
         this.controller.postHandler(this.req, this.res, this.next)
 
-        const actual = this.req.body['event_programmes']
-
-        expect(actual).to.deep.equal([ 'programme1' ])
-      })
-    })
-
-    context('when adding an event programme for the first time', () => {
-      it('should set the event programmes', () => {
-        const programme = 'programme1'
-        this.req.body.addEventProgramme = true
-        this.req.body['event_programmes'] = programme
-
-        this.controller.postHandler(this.req, this.res, this.next)
-
-        const actual = this.req.body['event_programmes']
-
-        expect(actual).to.deep.equal([ programme ])
-      })
-    })
-
-    context('when adding subsequent event programmes', () => {
-      it('should add to the event programmes', () => {
-        const programmes = [ 'programme1', 'programme2' ]
-        this.req.body.addEventSharedTeam = true
-        this.req.body['event_programmes'] = programmes
-
-        this.controller.postHandler(this.req, this.res, this.next)
-
-        const actual = this.req.body['event_programmes']
-
-        expect(actual).to.deep.equal(programmes)
+        expect(this.req.flash).have.been.calledWith('success', 'Event created')
+        expect(this.req.flash).have.been.calledOnce
       })
 
-      it('should not add empty values to the event shared teams', () => {
-        this.req.body.addEventSharedTeam = true
-        this.req.body['event_shared_teams'] = [ 'team1', '' ]
-        this.req.body['event_programmes'] = [ 'programme1', 'programme2' ]
-
+      it('should redirect to the event', () => {
         this.controller.postHandler(this.req, this.res, this.next)
 
-        const actual = this.req.body['event_shared_teams']
+        expect(this.res.redirect).have.been.calledWith('/events/1/details')
+        expect(this.res.redirect).have.been.calledOnce
+      })
 
-        expect(actual).to.deep.equal([ 'team1' ])
+      it('should not call next', () => {
+        this.controller.postHandler(this.req, this.res, this.next)
+
+        expect(this.next).have.not.been.called
       })
     })
   })

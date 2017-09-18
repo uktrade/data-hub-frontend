@@ -3,7 +3,7 @@ const next = function (error) {
 }
 
 describe('Company controller, Companies House', function () {
-  let getInflatedDitCompanyStub
+  let getDitCompanyStub
   let getCHCompanyStub
   let getDisplayCHStub
   let getDisplayCompanyStub
@@ -36,7 +36,7 @@ describe('Company controller, Companies House', function () {
   }
 
   beforeEach(function () {
-    getInflatedDitCompanyStub = sinon.stub().resolves({ company_number: '1234' })
+    getDitCompanyStub = sinon.stub().resolves({ company_number: '1234' })
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
@@ -44,9 +44,6 @@ describe('Company controller, Companies House', function () {
     this.breadcrumbStub = function () { return this }
 
     companyControllerCh = proxyquire('~/src/apps/companies/controllers/ch', {
-      '../services/data': {
-        getInflatedDitCompany: getInflatedDitCompanyStub,
-      },
       '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
@@ -55,6 +52,7 @@ describe('Company controller, Companies House', function () {
       },
       '../repos': {
         getCHCompany: getCHCompanyStub,
+        getDitCompany: getDitCompanyStub,
       },
     })
   })

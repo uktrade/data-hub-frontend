@@ -23,7 +23,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form')(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.exist
+        expect(component.querySelector('.c-form-actions')).to.exist
         expect(component.querySelector('button.button').textContent).to.equal('Submit')
       })
 
@@ -42,7 +42,7 @@ describe('Nunjucks form macros', () => {
         expect(component.action).to.equal('/form-url')
         expect(component.className).to.equal('c-form-component')
         expect(component.getAttribute('role')).to.equal('search')
-        expect(component.querySelector('.c-form-group--actions').classList.contains('u-js-hidden')).to.be.true
+        expect(component.querySelector('.c-form-actions').classList.contains('u-js-hidden')).to.be.true
       })
 
       it('should render form with custom submit button text', () => {
@@ -62,7 +62,7 @@ describe('Nunjucks form macros', () => {
         const component = macros.renderWithCallerToDom('Form', formProps)(
           macros.renderToDom('TextField')
         )
-        expect(component.querySelector('.c-form-group--actions')).to.not.exist
+        expect(component.querySelector('.c-form-actions')).to.not.exist
       })
 
       it('should render form with button modifier as string', () => {
@@ -150,6 +150,122 @@ describe('Nunjucks form macros', () => {
         expect(formErrorsMessagesEls).to.have.length(2)
         expect(formErrorsMessagesEls[0].textContent.trim()).to.equal('Error message')
         expect(formErrorsMessagesEls[1].textContent.trim()).to.equal('Another error message')
+      })
+    })
+  })
+
+  describe('MultipleChoice component', () => {
+    const minimumProps = {
+      label: 'Multiple choice field',
+      name: 'multiple-choice',
+      fieldId: 'multiple-choice',
+      type: 'radio',
+      options: [
+        {
+          label: 'Foo',
+          value: 'bar',
+        },
+        {
+          label: 'Fizz',
+          value: 'buzz',
+        },
+      ],
+    }
+
+    describe('invalid props', () => {
+      context('no props', () => {
+        it('should not render', () => {
+          const component = macros.renderToDom('MultipleChoice')
+          expect(component).to.be.null
+        })
+      })
+
+      context('type not a checkbox or radio', () => {
+        it('should not render', () => {
+          const component = macros.renderToDom('MultipleChoice', {
+            type: 'bar',
+          })
+          expect(component).to.be.null
+        })
+      })
+    })
+
+    describe('valid props', () => {
+      beforeEach(() => {
+        this.component = macros.renderToDom('MultipleChoice', minimumProps).parentElement
+        this.options = this.component.querySelectorAll('.c-multiple-choice')
+      })
+
+      it('should render 2 items', () => {
+        expect(this.options).to.have.lengthOf(2)
+      })
+
+      it('should render correct output for first option', () => {
+        expect(this.options[0].querySelector('.c-multiple-choice__label-text').textContent).to.equal('Foo')
+        expect(this.options[0].querySelector('.c-multiple-choice__input').getAttribute('value')).to.equal('bar')
+      })
+
+      it('should render correct output for second option', () => {
+        expect(this.options[1].querySelector('.c-multiple-choice__label-text').textContent).to.equal('Fizz')
+        expect(this.options[1].querySelector('.c-multiple-choice__input').getAttribute('value')).to.equal('buzz')
+      })
+    })
+
+    describe('customise component', () => {
+      context('value is passed', () => {
+        beforeEach(() => {
+          this.valueProps = Object.assign({}, minimumProps, {
+            options: [
+              {
+                label: 'Boolean (True)',
+                value: 'true',
+              },
+              {
+                label: 'Boolean (False)',
+                value: 'false',
+              },
+              {
+                label: 'String',
+                value: 'string',
+              },
+            ],
+          })
+        })
+
+        context('value is a boolean', () => {
+          it('should set option to selected if matches true', () => {
+            const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
+              value: true,
+            })).parentElement
+            const options = component.querySelectorAll('.c-multiple-choice__input')
+
+            expect(options[0].getAttribute('checked')).to.equal('checked')
+            expect(options[1].getAttribute('checked')).to.be.mull
+            expect(options[2].getAttribute('checked')).to.be.mull
+          })
+
+          it('should set option to selected if matches false', () => {
+            const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
+              value: false,
+            })).parentElement
+            const options = component.querySelectorAll('.c-multiple-choice__input')
+
+            expect(options[0].getAttribute('checked')).to.be.mull
+            expect(options[1].getAttribute('checked')).to.equal('checked')
+            expect(options[2].getAttribute('checked')).to.be.mull
+          })
+
+          it('should set option to selected if matches a string', () => {
+            const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
+              value: 'string',
+            })).parentElement
+            const options = component.querySelectorAll('.c-multiple-choice__input')
+
+            expect(options[0].getAttribute('checked')).to.be.mull
+            expect(options[1].getAttribute('checked')).to.be.mull
+            expect(options[2].getAttribute('checked')).to.equal('checked')
+          })
+        })
       })
     })
   })
