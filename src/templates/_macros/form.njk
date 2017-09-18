@@ -515,10 +515,13 @@
 
     {% for option in options %}
       {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
-      {% if props.type == 'checkbox' %}
-        {% set isSelected = (option.value in props.value | default([])) %}
-      {% else %}
-        {% set isSelected = (option.value | string == props.value | default(false) | string) %}
+      {# Explicity allow false for some yes/no values #}
+      {% if props.value or props.value === false %}
+        {% if props.type == 'checkbox' %}
+          {% set isSelected = option.value in props.value %}
+        {% else %}
+          {% set isSelected = option.value | string == props.value | string %}
+        {% endif %}
       {% endif %}
 
       <div class="c-multiple-choice {{ modifier }}">
