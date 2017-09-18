@@ -127,6 +127,7 @@ workflows:
       - unit_tests:
           requires:
             - build
-      - acceptance_tests:
-          requires:
-            - build
+# TODO - this work can be turned back on once we have addressed the backend test instance issue
+#      - acceptance_tests:
+#          requires:
+#            - build
