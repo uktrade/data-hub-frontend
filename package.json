@@ -101,7 +101,7 @@
     "watch:js:client": "webpack --watch --progress",
     "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
     "lint": "npm-run-all lint:all:*",
-    "lint:all:js": "eslint ./test ./src ./assets ./config *.js",
+    "lint:all:js": "eslint ./test ./src ./assets ./config ./circleci",
     "lint:all:styles": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
     "lint:modified:js": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ \"$CHANGED_FILES\" ]; then eslint $(echo $CHANGED_FILES); fi",
     "lint:modified:styles": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only -- '*.scss') -v -q",
