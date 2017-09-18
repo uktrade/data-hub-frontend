@@ -9,8 +9,11 @@
       "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
-      "legend": "Add International Trade Advisers (ITAs)",
-      "hint": "They will be informed of the order once you submit it",
+      "legend": "Advisers",
+      "hint": {
+        "create": "For example International trade advisers or language advisers. They will be informed of the order once you submit it.",
+        "edit": "For example International trade advisers or language advisers"
+      },
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
@@ -24,14 +27,15 @@
       "label": "Sector"
     },
     "delivery_date": {
-      "label": "Delivery date",
+      "label": "Delivery date of first activity",
       "hint": "Try tomorrow, next month or 28/10/2017"
     },
     "contacts_not_to_approach": {
       "label": "Contacts not to approach"
     },
     "assignees": {
-      "legend": "Post advisers",
+      "legend": "Advisers",
+      "hint": "For example post advisers or other in-country staff",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },

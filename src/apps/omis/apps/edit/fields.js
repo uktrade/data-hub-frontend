@@ -1,4 +1,4 @@
-const { isArray } = require('lodash')
+const { isArray, merge } = require('lodash')
 
 const globalFields = require('../../fields')
 
@@ -23,7 +23,11 @@ function isDuration (value) {
   return valid
 }
 
-const editFields = Object.assign({}, globalFields, {
+const editFields = merge({}, globalFields, {
+  subscribers: {
+    hint: 'fields.subscribers.hint.edit',
+    optional: false,
+  },
   service_types: {
     fieldType: 'MultipleChoiceField',
     type: 'checkbox',
@@ -59,8 +63,8 @@ const editFields = Object.assign({}, globalFields, {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.assignees.legend',
     label: 'fields.assignees.label',
+    hint: 'fields.assignees.hint',
     addButtonText: 'fields.assignees.addButtonText',
-    optional: true,
     repeatable: true,
     initialOption: '-- Select adviser --',
     options: [],
