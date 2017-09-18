@@ -22,7 +22,7 @@ const { getRequestBody, getCompanyCollection } = require('./middleware/collectio
 const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:asc',
+  sortby: 'modified_on:desc',
 }
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
 
