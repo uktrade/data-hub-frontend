@@ -141,7 +141,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I set receiving government financial assistance option to NO$/, async () => {
     await Stages
-    .click('@financialAssistanceNo')
+      .click('@financialAssistanceNo')
   })
 
   Then(/^I verify that project is not receiving financial assistance under Value section$/, async () => {
@@ -153,7 +153,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I set budget for a research and development option to NO$/, async () => {
     await Stages
-    .click('@budgetForRnDNo')
+      .click('@budgetForRnDNo')
   })
 
   Then(/^I verify that project has no budget for a research and development under Value section$/, async () => {
@@ -165,7 +165,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I set project associated with a non-FDI R&D project option to NO$/, async () => {
     await Stages
-    .click('@nonFDIRnDNo')
+      .click('@nonFDIRnDNo')
   })
 
   Then(/^I verify that project has no association with a non-FDI R&D project under Value section$/, async () => {
@@ -177,7 +177,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I set new to world technology option to NO$/, async () => {
     await Stages
-    .click('@newTechToUKNo')
+      .click('@newTechToUKNo')
   })
 
   Then(/^I verify that project has no new to world technology under Value section$/, async () => {
@@ -189,7 +189,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I set export of their products and services option to NO$/, async () => {
     await Stages
-    .click('@exportRevenueNo')
+      .click('@exportRevenueNo')
   })
 
   Then(/^I verify that project has no export of their products and services under Value section$/, async () => {

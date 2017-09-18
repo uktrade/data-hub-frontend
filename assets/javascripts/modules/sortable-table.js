@@ -140,7 +140,7 @@ class SortableTable {
     const elements = document.querySelectorAll('.js-SortableTable')
     for (let pos = 0; pos < elements.length; pos += 1) {
       const element = elements.item(pos)
-      new SortableTable(element)   // eslint-disable-line no-new
+      new SortableTable(element) // eslint-disable-line no-new
     }
   }
 }

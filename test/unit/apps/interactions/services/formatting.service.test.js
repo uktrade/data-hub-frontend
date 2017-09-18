@@ -1,4 +1,3 @@
-
 describe('Interaction formatting service', function () {
   let interaction
   let interactionFormattingService

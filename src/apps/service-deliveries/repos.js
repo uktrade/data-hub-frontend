@@ -15,39 +15,39 @@ function saveServiceDelivery (token, serviceDelivery) {
 function getServiceDelivery (token, serviceDeliveryId) {
   return new Promise((resolve, reject) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/${serviceDeliveryId}/`)
-    .then((response) => {
-      resolve(response.data)
-    })
-    .catch((error) => {
-      logger.error(error)
-      reject(error)
-    })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        logger.error(error)
+        reject(error)
+      })
   })
 }
 
 function getServiceDeliveriesForCompany (token, companyId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?company_id=${companyId}`)
-    .then((response) => {
-      resolve(response.data)
-    })
-    .catch((error) => {
-      logger.error(error)
-      resolve([])
-    })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        logger.error(error)
+        resolve([])
+      })
   })
 }
 
 function getServiceDeliveriesForContact (token, contactId) {
   return new Promise((resolve) => {
     authorisedRequest(token, `${config.apiRoot}/v2/service-delivery/?contact_id=${contactId}`)
-    .then((response) => {
-      resolve(response.data)
-    })
-    .catch((error) => {
-      logger.error(error)
-      resolve([])
-    })
+      .then((response) => {
+        resolve(response.data)
+      })
+      .catch((error) => {
+        logger.error(error)
+        resolve([])
+      })
   })
 }
 

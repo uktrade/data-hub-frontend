@@ -55,7 +55,9 @@ describe('Company controller, foreign', function () {
     getForeignCompanyAsFormDataStub = sinon.stub().returns(fakeCompanyForm)
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
-    breadcrumbStub = function () { return this }
+    breadcrumbStub = function () {
+      return this
+    }
 
     companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign', {
       '../services/formatting': {
@@ -312,13 +314,13 @@ describe('Company controller, foreign', function () {
         hqLabels,
         formData,
       })
-      .then((_document) => {
-        document = _document
-      })
-      .catch((error) => {
-        console.log(error)
-        throw Error(error)
-      })
+        .then((_document) => {
+          document = _document
+        })
+        .catch((error) => {
+          console.log(error)
+          throw Error(error)
+        })
     })
     it('should include all the company fields that can be edited', function () {
       expectHiddenField(document, 'id', formData.id)
@@ -374,7 +376,8 @@ describe('Company controller, foreign', function () {
       const res = {
         locals: {},
         breadcrumb: breadcrumbStub,
-        render: () => {},
+        render: () => {
+        },
       }
 
       return companyControllerForeign.editDetails(req, res, next).then(() => {

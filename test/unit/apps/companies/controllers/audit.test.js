@@ -16,7 +16,9 @@ describe('Company audit controller', () => {
     this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
     this.generatedTransformer = this.sandbox.stub()
     this.transformAuditLogToListItemStub = this.sandbox.stub().returns(this.generatedTransformer)
-    this.breadcrumbStub = function () { return this }
+    this.breadcrumbStub = function () {
+      return this
+    }
 
     this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
       '../repos': {

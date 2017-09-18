@@ -17,7 +17,9 @@ describe('Company export controller', () => {
     this.saveCompany = this.sandbox.stub().resolves(this.company)
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
-    this.breadcrumbsStub = function () { return this }
+    this.breadcrumbsStub = function () {
+      return this
+    }
 
     this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
       '../services/data': {
@@ -165,7 +167,9 @@ describe('Company export controller', () => {
         },
       }
 
-      this.next = function (error) { console.log(error) }
+      this.next = function (error) {
+        console.log(error)
+      }
 
       this.companyExportController.view(req, res, this.next)
     })

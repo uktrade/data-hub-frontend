@@ -6,7 +6,7 @@ describe('Company interactions middleware', async () => {
 
     this.result = {
       count: 1,
-      results: [ interaction ],
+      results: [interaction],
     }
 
     this.getInteractionsForCompanyStub = this.sandbox.stub().resolves(this.result)
