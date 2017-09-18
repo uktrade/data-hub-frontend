@@ -101,15 +101,16 @@
     "watch:js:client": "webpack --watch --progress",
     "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
     "lint": "npm-run-all lint:all:*",
-    "lint:all:js": "eslint ./test ./src ./assets ./config *.js",
+    "lint:all:js": "eslint ./test ./src ./assets ./config ./circleci",
     "lint:all:styles": "sass-lint -c .sass-lint.yml 'src/**/*.scss' -v -q",
     "lint:modified:js": "CHANGED_FILES=$(git diff --staged --name-only -- '*.js'); if [ \"$CHANGED_FILES\" ]; then eslint $(echo $CHANGED_FILES); fi",
     "lint:modified:styles": "sass-lint -c .sass-lint.yml $(git diff --staged --name-only -- '*.scss') -v -q",
     "test": "npm-run-all test:*",
     "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./test/unit --opts ./test/unit/mocha.opts",
-    "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js",
+    "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
-    "circle": "npm run lint && nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && npm run build && codeclimate-test-reporter < coverage/lcov.info",
+    "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
+    "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci --skiptags ignore",
     "heroku-postbuild": "npm rebuild && npm run build"
   },
   "pre-commit": [
@@ -128,18 +129,18 @@
   },
   "devDependencies": {
     "chai-as-promised": "^6.0.0",
-    "chromedriver": "^2.31.0",
+    "chromedriver": "^2.32.2",
     "codeclimate-test-reporter": "^0.4.1",
-    "cucumber": "^2.3.1",
+    "cucumber": "^3.0.1",
+    "cucumber-html-reporter": "^3.0.1",
     "eslint-plugin-mocha": "^4.9.0",
-    "geckodriver": "^1.7.1",
     "html": "^1.0.0",
     "js-beautify": "^1.6.14",
     "mocha-circleci-reporter": "0.0.2",
     "nightwatch": "^0.9.16",
-    "nightwatch-cucumber": "^7.1.9",
+    "nightwatch-cucumber": "^8.0.5",
     "pre-commit": "^1.2.2",
-    "selenium-server": "^3.4.0",
+    "selenium-server": "^3.5.3",
     "shortid": "^2.2.8"
   }
 }
