@@ -196,9 +196,11 @@
  # Render answers summary table
  #
  # @param {object} props
- # @param {object|string[]} props.items - array of ojects or strings to display in table body
+ # @param {object[]|string[]} props.items - array of ojects or strings to display in table body
  # @param {string} props.items.value - item value
  # @param {string} props.items.label - item label
+ # @param {string} [props.items.fallbackText] - fallback text if value is empty
+ # @param {string} [props.fallbackText] - component level fallback when items is a list of strings
  # @param {string} [props.heading] - heading to use as caption for the table
  # @param {object[]} [props.actions] - array of actions to display
  # @param {string} [props.actions.url] - URL for the action
@@ -207,7 +209,7 @@
  #
  #}
 {% macro AnswersSummary(props) %}
-  {% if props.items or caller %}
+  {% if props.items or props.fallbackText or caller %}
     <table class="c-answers-summary">
       {% if props.heading or props.actions.length %}
         <caption class="c-answers-summary__heading">
@@ -225,20 +227,30 @@
       {% if caller %}
         {{ caller() }}
       {% else %}
-        {% for item in props.items %}
-          {% if not item.value and not item.label %}
-            <tr>
-              <td class="c-answers-summary__title" colspan="2">{{ item }}</td>
-            </tr>
-          {% else %}
-            {% if item.value %}
+        <tbody>
+          {% for item in props.items %}
+            {% if item | isString %}
               <tr>
-                <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
-                <td class="c-answers-summary__content">{{ item.value | safe }}</td>
+                <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
               </tr>
+            {% else %}
+              {% if item.value or item.fallbackText %}
+                <tr>
+                  <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+                  <td class="c-answers-summary__content {{ 'c-answers-summary__content--muted' if not item.value }}">
+                    {{ item.value | safe if item.value else item.fallbackText }}
+                  </td>
+                </tr>
+              {% endif %}
             {% endif %}
-          {% endif %}
-        {% endfor %}
+          {% else %}
+            <tr>
+              <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="2">
+                {{ props.fallbackText }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
       {% endif %}
     </table>
   {% endif %}
