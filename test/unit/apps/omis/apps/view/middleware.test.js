@@ -32,6 +32,28 @@ describe('OMIS View middleware', () => {
           cancelQuote: this.cancelQuoteStub,
         },
       },
+      '../edit/steps': {
+        '/one': {
+          heading: 'Step one',
+          fields: [
+            'service_types',
+          ],
+        },
+        '/two': {
+          heading: 'Step two',
+          fields: [
+            'foo',
+            'bar',
+          ],
+        },
+        '/three': {
+          heading: 'Step three',
+          fields: [
+            'description',
+          ],
+        },
+        '@noCallThru': true,
+      },
     })
   })
 
@@ -197,10 +219,20 @@ describe('OMIS View middleware', () => {
         await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
 
         expect(this.resMock.locals).to.have.property('incompleteFields')
-        expect(this.resMock.locals.incompleteFields).to.deep.equal([
-          'service_types',
-          'description',
-        ])
+        expect(this.resMock.locals.incompleteFields).to.deep.equal({
+          '/one': {
+            heading: 'Step one',
+            errors: [
+              'service_types',
+            ],
+          },
+          '/three': {
+            heading: 'Step three',
+            errors: [
+              'description',
+            ],
+          },
+        })
       })
 
       it('should return next without error', async () => {
