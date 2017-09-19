@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:8.2.1
+      - image: node:8.5.0
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
@@ -15,7 +15,7 @@ jobs:
             - node_modules
   lint_code:
     docker:
-      - image: node:8.2.1
+      - image: node:8.5.0
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
@@ -34,7 +34,7 @@ jobs:
           path: reports
   unit_tests:
     docker:
-      - image: node:8.2.1
+      - image: node:8.5.0
         environment:
           TZ: "/usr/share/zoneinfo/Europe/London"
     working_directory: ~/data-hub-frontend
