@@ -2,6 +2,7 @@ const metadataRepo = require('../../../lib/metadata')
 const { saveCompany, getDitCompany } = require('../repos')
 const { getCommonTitlesAndlinks } = require('../services/data')
 const { containsFormData, flattenIdFields } = require('../../../lib/controller-utils')
+const { transformObjectToOption } = require('../../transformers')
 
 const exportDetailsLabels = {
   exportToCountries: 'Currently exporting to',
@@ -81,7 +82,7 @@ async function edit (req, res, next) {
     const countryOptions = metadataRepo.countryOptions
     const data = {
       exportDetailsLabels,
-      countryOptions,
+      countryOptions: countryOptions.map(transformObjectToOption),
     }
 
     if (containsFormData(req)) {
