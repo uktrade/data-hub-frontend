@@ -22,6 +22,7 @@ class EditController extends FormController {
 
     try {
       const order = await Order.update(req.session.token, res.locals.order.id, data)
+      const nextUrl = req.form.options.next || `/omis/${order.id}`
 
       req.journeyModel.reset()
       req.journeyModel.destroy()
@@ -29,7 +30,7 @@ class EditController extends FormController {
       req.sessionModel.destroy()
 
       req.flash('success', 'Order updated')
-      res.redirect(`/omis/${order.id}`)
+      res.redirect(nextUrl)
     } catch (error) {
       next(error)
     }

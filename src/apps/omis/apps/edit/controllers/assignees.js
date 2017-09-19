@@ -26,6 +26,7 @@ class EditAssigneesController extends EditController {
 
     try {
       await Order.forceSaveAssignees(req.session.token, res.locals.order.id, assignees)
+      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
 
       req.journeyModel.reset()
       req.journeyModel.destroy()
@@ -33,7 +34,7 @@ class EditAssigneesController extends EditController {
       req.sessionModel.destroy()
 
       req.flash('success', 'Order updated')
-      res.redirect(`/omis/${res.locals.order.id}`)
+      res.redirect(nextUrl)
     } catch (error) {
       next(error)
     }

@@ -27,7 +27,7 @@ class EditWorkDescriptionController extends EditController {
 
     req.form.options.fields.sector.options = metadataRepo.sectorOptions.map(transformObjectToOption)
     req.form.options.fields.service_types.options = filteredServiceTypes.map(transformObjectToOption)
-    next()
+    super.configure(req, res, next)
   }
 
   process (req, res, next) {
