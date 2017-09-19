@@ -11,50 +11,36 @@
     <input type="hidden" name="id" value="{{company.id}}">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-    <div class="section country-list js-add-another-field">
-      {% if export_to_countries and export_to_countries.length > 0 %}
-        {% for country in export_to_countries %}
-          {{ dropdown("export_to_countries",
-            label="Select a market this company currently exports to (optional)",
-            emptyLabel="Select country",
-            value=country,
-            id="export_to_countries_" + loop.index,
-            options=countryOptions)
-          }}
-        {% endfor %}
-      {% else %}
+    {# TODO: Make these work without JavaScript #}
+    <div class="js-AddItems">
+      {% set exportCountries = export_to_countries if export_to_countries.length else ['']%}
+
+      {% for country in exportCountries %}
         {{ dropdown("export_to_countries",
           label="Select a market this company currently exports to (optional)",
+          class="js-AddItems__item",
           emptyLabel="Select country",
-          id="export_to_countries_new",
-          value="",
+          value=country,
+          id="export_to_countries_" + loop.index,
           options=countryOptions)
         }}
-      {% endif %}
-      <input class="button--link js-add_button" type="submit" name="addExportToCountry" value="Add another market">
+      {% endfor %}
     </div>
 
-    <div class="section country-list js-add-another-field">
-      {% if future_interest_countries and future_interest_countries.length > 0 %}
-        {% for country in future_interest_countries %}
-          {{ dropdown("future_interest_countries",
-            label="Future markets of interest (optional)",
-            emptyLabel="Select country",
-            value=country,
-            id="future_interest_countries_" + loop.index,
-            options=countryOptions)
-          }}
-        {% endfor %}
-      {% else %}
+    {# TODO: Make these work without JavaScript #}
+    <div class="js-AddItems">
+      {% set futureCountries = future_interest_countries if future_interest_countries.length else ['']%}
+
+      {% for country in futureCountries %}
         {{ dropdown("future_interest_countries",
           label="Future markets of interest (optional)",
+          class="js-AddItems__item",
           emptyLabel="Select country",
-          id="future_interest_countries_new",
-          value="",
+          value=country,
+          id="future_interest_countries_" + loop.index,
           options=countryOptions)
         }}
-      {% endif %}
-      <input class="button--link js-add_button" type="submit" name="addFutureInterestCountry" value="Add another market">
+      {% endfor %}
     </div>
 
     {{ save(backUrl = "/companies/" + company.id + "/exports") }}
