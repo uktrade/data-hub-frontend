@@ -65,6 +65,16 @@
       "label": "Purchase Order (PO) number"
     }
   },
+  "errors": {
+    "quote": {
+      "service_types": "Service types the order covers",
+      "description": "Description of the work or activity",
+      "delivery_date": "Delivery date at least 21 days from now",
+      "assignees": "At least one adviser in the market",
+      "assignee_time": "Some time allocated to an adviser in market",
+      "vat_status": "VAT category"
+    }
+  },
   "validation": {
     "required": "cannot not be blank",
     "numeric": "can only contain numbers",

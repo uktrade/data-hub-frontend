@@ -6,15 +6,19 @@
   {% if incompleteFields %}
     <ul class="c-messages">
       <li class="c-messages__item c-messages__item--error">
-        <p>To generate a quote you must enter the following work description information:</p>
+        <p>To generate a quote you must complete the following information:</p>
 
         <ul class="list-disc">
-          {% for field in incompleteFields %}
-            <li>{{ translate('fields.' + field + '.label') }}</li>
+          {% for stepUrl, stepData in incompleteFields %}
+            {% for field in stepData.errors %}
+              <li>
+                <a href="/omis/{{ order.id }}/edit{{ stepUrl }}?returnUrl=/omis/{{ order.id }}/quote#field-{{ field }}">
+                  {{ translate('errors.quote.' + field) }}
+                </a>
+              </li>
+            {% endfor %}
           {% endfor %}
         </ul>
-
-        <p><a href="/omis/{{ order.id }}/edit/work-description">Complete work description</a></p>
       </li>
     </ul>
   {% endif %}
