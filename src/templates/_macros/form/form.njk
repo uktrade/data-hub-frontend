@@ -1,0 +1,67 @@
+{% from "./error-summary.njk" import ErrorSummary %}
+{% from "./multiple-choice-field.njk" import MultipleChoiceField %}
+
+{##
+ # Render form with form errors and CSRF token
+ # @param {object} props - A form object
+ # @param {string} [props.method=POST] - Form method
+ # @param {string} [props.action] - Form action url
+ # @param {object} [props.errors] - Object containing form errors
+ # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
+ # @param {boolean} [props.hideFormActions] - Hide form actions
+ # @param {boolean} [props.disableFormAction] - Disable form submit button
+ # @param {string} [props.class] - Form class name
+ # @param {string} [props.role] - Form role attribute value
+ # @param {string} [props.actionsClass] - Custom class name for actions container
+ # @param {string} [props.buttonText=Submit] - Text for submit button
+ # @param {string, array} [props.buttonModifiers] - Modifiers for the primary button
+ # @param {string} [props.returnText=Back] - Text for return link
+ # @param {string} [props.returnLink] - Location for return link
+ # @param {array}  [props.children] - an array of inner macro configurations
+ #
+ # @callback {function} caller - Required inner contents
+ #}
+{% macro Form(props) %}
+  {% set method = props.method or 'POST' -%}
+  {% set buttonText = props.buttonText or 'Submit' %}
+  {% set buttonModifiers = props.buttonModifiers | concat('') | join(' ') %}
+  {% set returnText = props.returnText or 'Back' %}
+  {% set hideFormActions = props.hideFormActions or false %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
+
+  <form
+    method="{{ method }}"
+    {% if props.action %}action="{{ props.action }}"{% endif -%}
+    {% if props.class %}class="{{ props.class }}"{% endif %}
+    {% if props.role %}role="{{ props.role }}"{% endif %}
+  >
+    {{ ErrorSummary(props.errors) }}
+
+    {% set hiddenFields = props.hiddenFields | default({}) | assign({
+      '_csrf': csrfToken if method|lower === 'post'
+    }) %}
+
+    {% if hiddenFields|length %}
+      {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}
+        {% if fieldValue | isArray %}
+          {% for value in fieldValue %}
+            <input type="hidden" name="{{ fieldName }}" value="{{ value }}">
+          {% endfor %}
+        {% else %}
+          <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {{ children }}
+
+    {% if not hideFormActions %}
+      <div class="c-form-actions {{ props.actionsClass }}">
+        <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+        {% if props.returnLink %}
+          <a href="{{ props.returnLink }}">{{ returnText }}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </form>
+{% endmacro %}

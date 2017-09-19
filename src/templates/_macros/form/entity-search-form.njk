@@ -1,0 +1,71 @@
+{% from "./form.njk" import Form %}
+{% from "./text-field.njk" import TextField %}
+
+{##
+ # Render entity search form
+ # @param {object} props - A form object
+ # @param {string} props.action - Form action url
+ # @param {string} props.inputLabel - Search input label
+ # @param {string} [props.inputPlaceholder={props.inputLabel}] - Search input placeholder
+ # @param {string} [props.inputName=term] - Search input name
+ # @param {string} [props.inputHint] - Hint for input
+ # @param {string} [props.method=GET] - Form method
+ # @param {string, array} [props.modifier] - Search form modifier (e.g. global)
+ # @param {string, array} [props.fieldModifier] - Form field modifier
+ # @param {string} [props.entityType=company] - Search entity type
+ # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
+ # @param {boolean} [props.isLabelHidden=true] - Whether input label should be hidden
+ # @param {array} [props.aggregations] - Search aggregations summary
+ #}
+{% macro EntitySearchForm(props) %}
+  {% set method = props.method | default('GET') -%}
+  {% set inputName = props.inputName | default('term') -%}
+  {% set inputPlaceholder = props.inputPlaceholder | default(props.inputLabel) -%}
+  {% set isLabelHidden = props.isLabelHidden | default(true) %}
+  {% set entityType = props.entityType | default('company') %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-entity-search--') if props.modifier %}
+
+  {% call Form(props | assign({
+    class: 'c-entity-search ' + modifier,
+    role: 'search',
+    method: method,
+    hideFormActions: true,
+    inputName: inputName,
+    inputPlaceholder: inputPlaceholder,
+    isLabelHidden: isLabelHidden,
+    entityType: entityType,
+    fieldModifier: props.fieldModifier
+  })) %}
+
+    {{ TextField({
+      type: 'search',
+      inputClass: 'c-entity-search__input',
+      name: props.inputName,
+      value: props.searchTerm,
+      hint: props.inputHint,
+      label: props.inputLabel,
+      placeholder: props.inputPlaceholder,
+      isLabelHidden: props.isLabelHidden,
+      modifier: props.fieldModifier,
+      innerHTML: '<button class="c-entity-search__button">Search</button>'
+    }) }}
+
+    {% if props.aggregations|length %}
+      <nav class="c-entity-search__aggregations" aria-label="search results aggregation options">
+        <ul>
+          {% for item in props.aggregations %}
+            {% set isCurrentPage = item.entity === props.entityType %}
+            <li class="c-entity-search__aggregations-item {{ 'is-active' if isCurrentPage }}">
+              {% if isCurrentPage %}
+                {{ item.text }}
+              {% else %}
+                <a class="c-entity-search__aggregations-link" href="/search/{{ item.path }}?term={{ props.searchTerm }}">{{ item.text }}</a>
+              {% endif %}
+              <span class="c-entity-search__aggregations-count">({{ item.count | formatNumber }})</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+  {% endcall %}
+{% endmacro %}

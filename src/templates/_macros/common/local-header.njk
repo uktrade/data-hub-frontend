@@ -1,0 +1,56 @@
+{##
+ # Render page local header
+ # @param {object} props - An object containing local header properties
+ # @param {string} [props.heading] - page heading
+ # @param {string} [props.heading] - page heading
+ # @param {string} [props.headingBefore] - a string before heading (safe to render HTML)
+ # @param {string} [props.headingSuffix] - a string suffix for heading (safe to render HTML)
+ # @param {object} [props.actions] - an area to display actions for an entity
+ # @param {object} [props.breadcrumbs] - an object containing page breadcrumbs
+ # @param {object} [props.messages] - an object containing flash messages
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro LocalHeader(props) %}
+  {% set breadcrumbs = props.breadcrumbs | default(BREADCRUMBS) %}
+  {% set messages = props.messages | default(getMessages()) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
+
+  {% if props %}
+    <header class="c-local-header {{ modifier }}" aria-label="local header">
+      <div class="l-container">
+        {% if breadcrumbs|length %}
+          {% component 'breadcrumbs', { items: breadcrumbs } %}
+        {% endif %}
+        {% if messages|length %}
+          {% component 'messages', { messages: messages } %}
+        {% endif %}
+
+        {% if props.actions %}
+          <div class="c-local-header__content">
+        {% endif %}
+
+          {% if props.headingBefore %}
+            <div class="c-local-header__heading-before">
+              {{ props.headingBefore | safe }}
+            </div>
+          {% endif %}
+
+          {% if props.heading %}
+            <h1 class="c-local-header__heading">
+              {{ props.heading }} {{ props.headingSuffix | safe }}
+            </h1>
+          {% endif %}
+
+          {{ caller() if caller }}
+
+        {% if props.actions %}
+          </div>
+
+          <div class="c-local-header__actions">
+            {{ props.actions | safe }}
+          </div>
+        {% endif %}
+      </div>
+    </header>
+  {% endif %}
+{% endmacro %}
