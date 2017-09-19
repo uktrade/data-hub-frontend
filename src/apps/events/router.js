@@ -1,9 +1,21 @@
 const router = require('express').Router()
 
-const { renderEventPage, postHandler } = require('./controllers/edit')
+const {
+  details,
+  edit,
+} = require('./controllers')
+const { detailsFormMiddleware } = require('./middleware')
 
 router.route('/create')
-  .get(renderEventPage)
-  .post(postHandler, renderEventPage)
+  .get(
+    edit.renderEventPage,
+  )
+  .post(
+    detailsFormMiddleware.handleFormPost,
+    edit.postHandler,
+    edit.renderEventPage,
+  )
+
+router.get('/:id/details', details.renderPage)
 
 module.exports = router
