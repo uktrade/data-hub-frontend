@@ -64,6 +64,11 @@ defineSupportCode(({ Given, Then, When }) => {
       .verify.visible('@addressTown')
   })
 
+  Then(/^I verify the event address county field is displayed$/, async () => {
+    await Events
+      .verify.visible('@addressCounty')
+  })
+
   Then(/^I verify the event address postcode field is displayed$/, async () => {
     await Events
       .verify.visible('@addressPostcode')

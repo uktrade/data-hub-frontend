@@ -45,6 +45,7 @@ Feature: Create an Event in Data hub
     Then I verify the event address line1 field is displayed
     And I verify the event address line2 field is displayed
     And I verify the event address town field is displayed
+    And I verify the event address county field is displayed
     And I verify the event address postcode field is displayed
     And I verify the event address country field is displayed
 
