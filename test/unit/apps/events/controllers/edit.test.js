@@ -139,7 +139,35 @@ describe('Event edit controller', () => {
       })
     })
 
-    context('when there is an error', () => {
+    context('when there are validation errors', () => {
+      it('should prepopulate the errors', async () => {
+        const messages = {
+          name: 'error 1',
+          start_date: 'error 2',
+        }
+        const res = assign({}, this.res, {
+          locals: {
+            form: {
+              errors: {
+                messages,
+              },
+            },
+          },
+        })
+
+        await this.controller.renderEventPage(this.req, res, this.next)
+
+        const actualErrors = this.res.render.getCall(0).args[1].eventForm.errors
+        const expectedErrors = {
+          summary: 'Please correct the following errors:',
+          messages,
+        }
+
+        expect(actualErrors).to.deep.equal(expectedErrors)
+      })
+    })
+
+    context('when there is an exception', () => {
       it('should return an error', async () => {
         const error = Error('error')
         const controller = createEventsEditController(sinon.stub().rejects(error))
