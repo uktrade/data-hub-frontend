@@ -99,17 +99,20 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
         },
       },
     ]
-    const actual = transformV2Errors(source)
-    expect((Object.keys(actual)).length).to.equal(9)
-    expect(actual.subject).to.be.defined
-    expect(actual.notes).to.be.defined
-    expect(actual.status).to.be.defined
-    expect(actual.contact).to.be.defined
-    expect(actual.service).to.be.defined
-    expect(actual.dit_team).to.be.defined
-    expect(actual.sector).to.be.defined
-    expect(actual.uk_region).to.be.defined
-    expect(actual.country_of_interest).to.be.defined
+    const transformedErrors = transformV2Errors(source)
+    const expectedErrors = {
+      subject: 'Subject is required',
+      notes: 'Notes are required',
+      status: 'Status  is required',
+      contact: 'Contact is required',
+      service: 'Service is required',
+      dit_team: 'Service provider  is required',
+      sector: 'Sector is required',
+      uk_region: 'UK Region  is required',
+      country_of_interest: 'Country is required',
+    }
+
+    expect(transformedErrors).to.deep.equal(expectedErrors)
   })
   it('Should match keys not specially defined', function () {
     const source = [
@@ -120,8 +123,10 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
         },
       },
     ]
-    const actual = transformV2Errors(source)
-    expect(actual.foo).to.be.defined
+    const transformedErrors = transformV2Errors(source)
+    const expectedErrors = { foo: 'Foo is required' }
+
+    expect(transformedErrors).to.deep.equal(expectedErrors)
   })
 })
 

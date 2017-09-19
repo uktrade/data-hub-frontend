@@ -27,18 +27,18 @@ function handleFormPost (req, res, next) {
   })
 
   updateInvestment(req.session.token, res.locals.projectId, formattedBody)
-  .then(() => next())
-  .catch((err) => {
-    if (err.statusCode === 400) {
-      res.locals.form = get(res, 'locals.form', {})
-      res.locals.form.errors = err.error
-      res.locals.form.state = req.body
+    .then(() => next())
+    .catch((err) => {
+      if (err.statusCode === 400) {
+        res.locals.form = get(res, 'locals.form', {})
+        res.locals.form.errors = err.error
+        res.locals.form.state = req.body
 
-      next()
-    } else {
-      next(err)
-    }
-  })
+        next()
+      } else {
+        next(err)
+      }
+    })
 }
 
 module.exports = {

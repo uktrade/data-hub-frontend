@@ -240,8 +240,8 @@ describe('Nunjucks form macros', () => {
             const options = component.querySelectorAll('.c-multiple-choice__input')
 
             expect(options[0].getAttribute('checked')).to.equal('checked')
-            expect(options[1].getAttribute('checked')).to.be.mull
-            expect(options[2].getAttribute('checked')).to.be.mull
+            expect(options[1].getAttribute('checked')).to.be.null
+            expect(options[2].getAttribute('checked')).to.be.null
           })
 
           it('should set option to selected if matches false', () => {
@@ -250,9 +250,9 @@ describe('Nunjucks form macros', () => {
             })).parentElement
             const options = component.querySelectorAll('.c-multiple-choice__input')
 
-            expect(options[0].getAttribute('checked')).to.be.mull
+            expect(options[0].getAttribute('checked')).to.be.null
             expect(options[1].getAttribute('checked')).to.equal('checked')
-            expect(options[2].getAttribute('checked')).to.be.mull
+            expect(options[2].getAttribute('checked')).to.be.null
           })
 
           it('should set option to selected if matches a string', () => {
@@ -261,8 +261,8 @@ describe('Nunjucks form macros', () => {
             })).parentElement
             const options = component.querySelectorAll('.c-multiple-choice__input')
 
-            expect(options[0].getAttribute('checked')).to.be.mull
-            expect(options[1].getAttribute('checked')).to.be.mull
+            expect(options[0].getAttribute('checked')).to.be.null
+            expect(options[1].getAttribute('checked')).to.be.null
             expect(options[2].getAttribute('checked')).to.equal('checked')
           })
         })

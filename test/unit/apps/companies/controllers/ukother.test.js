@@ -321,13 +321,13 @@ describe('Company controller, uk other', function () {
         hqLabels,
         formData,
       })
-      .then((_document) => {
-        document = _document
-      })
-      .catch((error) => {
-        console.log(error)
-        throw Error(error)
-      })
+        .then((_document) => {
+          document = _document
+        })
+        .catch((error) => {
+          console.log(error)
+          throw Error(error)
+        })
     })
     it('should include all the company fields that can be edited', function () {
       expectHiddenField(document, 'id', formData.id)

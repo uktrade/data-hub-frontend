@@ -77,7 +77,9 @@ describe('Company controller, ltd', function () {
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
     flashStub = sinon.stub()
 
-    this.breadcrumbStub = function () { return this }
+    this.breadcrumbStub = function () {
+      return this
+    }
 
     companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
       '../services/formatting': {
@@ -374,13 +376,13 @@ describe('Company controller, ltd', function () {
         chCompany,
         chDetails,
       })
-      .then((_document) => {
-        document = _document
-      })
-      .catch((error) => {
-        console.log(error)
-        throw Error(error)
-      })
+        .then((_document) => {
+          document = _document
+        })
+        .catch((error) => {
+          console.log(error)
+          throw Error(error)
+        })
     })
     it('should store the default CH data in hidden fields', function () {
       expectHiddenField(document, 'company_number', formData.company_number)

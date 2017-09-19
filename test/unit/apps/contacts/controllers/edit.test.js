@@ -24,7 +24,9 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    this.breadcrumbStub = function () { return this }
+    this.breadcrumbStub = function () {
+      return this
+    }
 
     contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
       '../services/form': {
@@ -266,27 +268,27 @@ describe('Contact controller, edit', function () {
     })
     it('should render all the required fields on the page', function () {
       return render('../../src/apps/contacts/views/edit.njk', locals)
-      .then((document) => {
-        expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
-        expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
-        expectHiddenField(document, 'id', locals.formData.id)
-        expectHiddenField(document, 'company', locals.formData.company)
-        expectField(document, 'first_name', 'First name', locals.formData.first_name)
-        expectField(document, 'last_name', 'Last name', locals.formData.last_name)
-        expectField(document, 'job_title', 'Job title', locals.formData.job_title)
-        expectRadioField(document, 'primary', 'Is this person a primary contact?', locals.formData.primary)
-        expectField(document, 'telephone_countrycode', 'Telephone country code', locals.formData.telephone_countrycode)
-        expectField(document, 'telephone_number', 'Telephone', locals.formData.telephone_number)
-        expectField(document, 'email', 'Email', locals.formData.email)
-        expectRadioField(document, 'address_same_as_company', 'Is the contact’s address the same as the company address?', locals.formData.address_same_as_company)
-        expectField(document, 'address_1', 'Business and street (optional)', locals.formData.address_1)
-        expectField(document, 'address_town', 'Town or city (optional)', locals.formData.address_town)
-        expectField(document, 'address_county', 'County (optional)', locals.formData.address_county)
-        expectField(document, 'address_postcode', 'Postcode (optional)', locals.formData.address_postcode)
-        expectField(document, 'telephone_alternative', 'Alternative telephone number (optional)', locals.formData.telephone_alternarive)
-        expectField(document, 'email_alternative', 'Alternative email (optional)', locals.formData.email_alternative)
-        expectField(document, 'notes', 'Notes (optional)', locals.formData.notes)
-      })
+        .then((document) => {
+          expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
+          expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
+          expectHiddenField(document, 'id', locals.formData.id)
+          expectHiddenField(document, 'company', locals.formData.company)
+          expectField(document, 'first_name', 'First name', locals.formData.first_name)
+          expectField(document, 'last_name', 'Last name', locals.formData.last_name)
+          expectField(document, 'job_title', 'Job title', locals.formData.job_title)
+          expectRadioField(document, 'primary', 'Is this person a primary contact?', locals.formData.primary)
+          expectField(document, 'telephone_countrycode', 'Telephone country code', locals.formData.telephone_countrycode)
+          expectField(document, 'telephone_number', 'Telephone', locals.formData.telephone_number)
+          expectField(document, 'email', 'Email', locals.formData.email)
+          expectRadioField(document, 'address_same_as_company', 'Is the contact’s address the same as the company address?', locals.formData.address_same_as_company)
+          expectField(document, 'address_1', 'Business and street (optional)', locals.formData.address_1)
+          expectField(document, 'address_town', 'Town or city (optional)', locals.formData.address_town)
+          expectField(document, 'address_county', 'County (optional)', locals.formData.address_county)
+          expectField(document, 'address_postcode', 'Postcode (optional)', locals.formData.address_postcode)
+          expectField(document, 'telephone_alternative', 'Alternative telephone number (optional)', locals.formData.telephone_alternarive)
+          expectField(document, 'email_alternative', 'Alternative email (optional)', locals.formData.email_alternative)
+          expectField(document, 'notes', 'Notes (optional)', locals.formData.notes)
+        })
     })
   })
   describe('save', function () {

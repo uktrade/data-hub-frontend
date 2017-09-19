@@ -17,7 +17,9 @@ describe('Company export controller', () => {
     this.saveCompany = this.sandbox.stub().resolves(this.company)
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
-    this.breadcrumbsStub = function () { return this }
+    this.breadcrumbsStub = function () {
+      return this
+    }
 
     this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
       '../services/data': {
@@ -165,7 +167,9 @@ describe('Company export controller', () => {
         },
       }
 
-      this.next = function (error) { console.log(error) }
+      this.next = function (error) {
+        console.log(error)
+      }
 
       this.companyExportController.view(req, res, this.next)
     })
@@ -369,7 +373,6 @@ describe('Company export controller', () => {
     })
 
     it('should handle when saving throws error', (done) => {
-      const error = new Error('error')
       this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
         '../repos': {
           getDitCompany: this.getDitCompany,
@@ -397,8 +400,10 @@ describe('Company export controller', () => {
       }, {
         locals: {},
         breadcrumb: this.breadcrumbsStub,
-      }, (_error) => {
-        expect(_error).to.deep.equal(error)
+      }, (err) => {
+        expect(err).to.be.an('error')
+        expect(err).to.be.an.instanceof(TypeError)
+        expect(err.message).to.equal('res.redirect is not a function')
         done()
       })
     })

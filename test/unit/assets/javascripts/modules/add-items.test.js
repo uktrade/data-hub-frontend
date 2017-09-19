@@ -109,8 +109,8 @@ function makeMultipleSelect (allowDeleteAll = false) {
 
 function getVisibleRemoveButtons (wrapper, selector = '.js-AddItems__remove') {
   return Array
-  .from(wrapper.querySelectorAll(selector))
-  .filter((removeLink) => !Array.from(removeLink.classList).includes('u-hidden'))
+    .from(wrapper.querySelectorAll(selector))
+    .filter((removeLink) => !Array.from(removeLink.classList).includes('u-hidden'))
 }
 
 describe('Add another', () => {

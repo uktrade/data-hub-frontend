@@ -38,7 +38,7 @@ describe('Health check controller', () => {
       expect(this.res.status).to.have.been.calledOnce
       expect(this.res.status().send).to.be.calledWith('OK')
       expect(this.res.status().send).to.have.been.calledOnce
-      expect(this.logger.error).to.notCalled
+      expect(this.logger().error.notCalled).to.be.true
     })
   })
 
