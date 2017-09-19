@@ -36,6 +36,29 @@ describe('OMIS FormController', () => {
       })
     })
 
+    context('when a returnUrl query exists', () => {
+      beforeEach(() => {
+        this.returnUrl = '/custom-return-url'
+
+        this.reqMock = Object.assign({}, this.reqMock, {
+          query: {
+            returnUrl: this.returnUrl,
+          },
+        })
+        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set backLink to the returnUrl value', () => {
+        expect(this.reqMock.form.options.backLink).to.equal(this.returnUrl)
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+
+      it('should set next to the returnUrl value', () => {
+        expect(this.reqMock.form.options.next).to.equal(this.returnUrl)
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
     context('when a step heading exists', () => {
       it('should set append a breadcrumb item', () => {
         this.reqMock.form.options.heading = 'Step heading'
