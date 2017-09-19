@@ -6,12 +6,15 @@ function getHandler (req, res) {
   dashboardService
     .getHomepageData(req.session.token, days)
     .then((data) => {
+      // TODO: Remove manual limit on interactions and contacts once API supports it
       res
         .title('Dashboard')
         .render('dashboard/views/dashboard', {
           totalDays: days,
-          interactions: data.interactions,
-          contacts: data.contacts,
+          interactionsCount: data.interactions.length,
+          interactions: data.interactions && data.interactions.length ? data.interactions.slice(0, 5) : [],
+          contactsCount: data.contacts.length,
+          contacts: data.interactions && data.contacts.length ? data.contacts.slice(0, 5) : [],
         })
     })
 }

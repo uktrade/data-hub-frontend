@@ -18,24 +18,27 @@
         <h2 class="dashboard-section-title">Interactions</h2>
         {% if interactions.length %}
           <p class="dashboard-section-intro">
-            You have added {{ interactions.length }} {{ 'interaction' | pluralise(interactions.length) }} in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
+            You have added {{ interactionsCount }} {{ 'interaction' | pluralise(interactions.length) }} in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
           </p>
-          <ol id="interactions-list" class="dashboard-list">
-          {% for interaction in interactions %}
-            <li>
-              {% if interaction.company.name %}
-                <a href="{{ interaction.company.url }}">{{ interaction.company.name }}</a>
-                &ndash;
-              {% endif %}
-              <a href="{{ interaction.url }}">{{ interaction.subject }}</a>
-            </li>
-          {% endfor %}
+
+          <ol class="dashboard-list">
+            {% for interaction in interactions %}
+              <li>
+                {% if interaction.company.name %}
+                  <a href="{{ interaction.company.url }}">{{ interaction.company.name }}</a>
+                  &ndash;
+                {% endif %}
+                <a href="{{ interaction.url }}">{{ interaction.subject }}</a>
+              </li>
+            {% endfor %}
           </ol>
         {% else %}
           <p class="dashboard-section-intro">
-            No interactions have been added in the last {{ totalDays }}{{ 'day' | pluralise(totalDays) }}
+            No interactions have been added in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
           </p>
         {% endif %}
+
+        <p><a href="/interactions">See all interactions</a></p>
       </div>
     </div>
 
@@ -45,20 +48,23 @@
 
         {% if contacts.length %}
           <p class="dashboard-section-intro">
-            {{ contacts.length }} {{ 'new contact' | pluralise(contacts.length) }} {{ 'has' if contacts.length == 1 else 'have' }} been added in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
+            You have added {{ contactsCount }} {{ 'contact' | pluralise(contacts.length) }} in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
           </p>
-          <ol id="contacts-list" class="dashboard-list">
-          {% for contact in contacts %}
-            <li>
-              <a href="{{ contact.url }}">{{ contact.name }}</a> from <a href="{{ contact.company.url }}">{{ contact.company.name }}</a>
-            </li>
-          {% endfor %}
+
+          <ol class="dashboard-list">
+            {% for contact in contacts %}
+              <li>
+                <a href="{{ contact.url }}">{{ contact.name }}</a> from <a href="{{ contact.company.url }}">{{ contact.company.name }}</a>
+              </li>
+            {% endfor %}
           </ol>
         {% else %}
           <p class="dashboard-section-intro">
             No contacts have been added in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
           </p>
         {% endif %}
+
+        <p><a href="/contacts">See all contacts</a></p>
       </div>
     </div>
   </div>

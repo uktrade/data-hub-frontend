@@ -1,29 +1,25 @@
 @import "../tools/mixins/typography";
+@import "../settings";
 
 .dashboard-section {
-  border-top: 5px solid $black;
   @include core-font(16);
+  border-top: 5px solid $black;
+  padding-top: $default-spacing-unit;
 
   .dashboard-section-title {
     @include bold-font(24);
-    margin: 20px 0;
+    margin: 0;
   }
 
   .dashboard-section-intro {
-    margin-top: -15px;
+    margin-top: $default-spacing-unit / 2;
   }
 
   .dashboard-list {
+    margin-bottom: $default-spacing-unit;
 
-    margin-bottom: 1.5em;
-
-    li {
-
-      padding-bottom: 1em;
+    li + li {
+      padding-top: $default-spacing-unit / 2;
     }
   }
-}
-
-.clipped-hide {
-  display: none;
 }
