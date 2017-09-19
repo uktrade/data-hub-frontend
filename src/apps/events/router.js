@@ -4,11 +4,18 @@ const {
   details,
   edit,
 } = require('./controllers')
+const { detailsFormMiddleware } = require('./middleware')
 
 router.route('/create')
-  .get(renderEventPage)
-  .post(postHandler, renderEventPage)
-router.route('/:id/details')
-  .get(details.renderPage)
+  .get(
+    edit.renderEventPage,
+  )
+  .post(
+    detailsFormMiddleware.handleFormPost,
+    edit.postHandler,
+    edit.renderEventPage,
+  )
+
+router.get('/:id/details', details.renderPage)
 
 module.exports = router
