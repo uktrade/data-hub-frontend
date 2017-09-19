@@ -13,92 +13,92 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the event name field is displayed$/, async () => {
     await Events
-      .verify.visible('@eventName')
+      .assert.visible('@eventName')
   })
 
   Then(/^I verify the event type field is displayed$/, async () => {
     await Events
-      .verify.visible('@eventType')
+      .assert.visible('@eventType')
   })
 
   Then(/^I verify the event additional reference code field is displayed$/, async () => {
     await Events
-      .verify.visible('@additionalRefCode')
+      .assert.visible('@additionalRefCode')
   })
 
   Then(/^I verify the event start date fields are displayed$/, async () => {
     await Events
-      .verify.visible('@startDateYear')
+      .assert.visible('@startDateYear')
     await Events
-      .verify.visible('@startDateMonth')
+      .assert.visible('@startDateMonth')
     await Events
-      .verify.visible('@startDateDay')
+      .assert.visible('@startDateDay')
   })
 
   Then(/^I verify the event end date fields are displayed$/, async () => {
     await Events
-      .verify.visible('@endDateYear')
+      .assert.visible('@endDateYear')
     await Events
-      .verify.visible('@endDateMonth')
+      .assert.visible('@endDateMonth')
     await Events
-      .verify.visible('@endDateDay')
+      .assert.visible('@endDateDay')
   })
 
   Then(/^I verify the event location type field is displayed$/, async () => {
     await Events
-      .verify.visible('@locationType')
+      .assert.visible('@locationType')
   })
 
   Then(/^I verify the event address line1 field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressLine1')
+      .assert.visible('@addressLine1')
   })
 
   Then(/^I verify the event address line2 field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressLine2')
+      .assert.visible('@addressLine2')
   })
 
   Then(/^I verify the event address town field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressTown')
+      .assert.visible('@addressTown')
   })
 
   Then(/^I verify the event address county field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressCounty')
+      .assert.visible('@addressCounty')
   })
 
   Then(/^I verify the event address postcode field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressPostcode')
+      .assert.visible('@addressPostcode')
   })
 
   Then(/^I verify the event address country field is displayed$/, async () => {
     await Events
-      .verify.visible('@addressCountry')
+      .assert.visible('@addressCountry')
   })
 
   Then(/^I verify the event notes field is displayed$/, async () => {
     await Events
-      .verify.visible('@notes')
+      .assert.visible('@notes')
   })
 
   Then(/^I verify the event Team hosting field is displayed$/, async () => {
     await Events
-      .verify.visible('@teamHosting')
+      .assert.visible('@teamHosting')
   })
 
   Then(/^I verify the event organiser field is displayed$/, async () => {
     await Events
-      .verify.visible('@organiser')
+      .assert.visible('@organiser')
   })
 
   Then(/^I verify the event is shared or not field is displayed$/, async () => {
     await Events
       // .waitForElementVisible('@sharedYes', 1000)
-      .verify.visible('@sharedYes')
-      .verify.visible('@sharedNo')
+      .assert.visible('@sharedYes')
+      .assert.visible('@sharedNo')
   })
 
   When(/^I choose the Yes option$/, async () => {
@@ -115,18 +115,18 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the shared teams field is displayed$/, async () => {
     await Events
-      .verify.visible('@sharedTeams')
+      .assert.visible('@sharedTeams')
   })
 
   Then(/^I verify the shared teams field is not displayed$/, async () => {
     await Events
-      .verify.hidden('@sharedTeams')
+      .assert.hidden('@sharedTeams')
   })
 
   When(/^I select shared team ([0-9])$/, async (optionNumber) => {
     await Events
       .setValue('@sharedTeams', '')
-      .selectSharedTeam(optionNumber)
+      .selectTeam(optionNumber)
   })
 
   When(/^I add it to the shared teams list$/, async () => {
@@ -136,23 +136,23 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify there should be ([0-9]) shared teams lists$/, async (expected) => {
     await Events
-      .verifyVisibleSharedTeamList(expected)
+      .assertVisibleSharedTeamList(expected)
   })
 
   Then(/^I verify there is the option to add another shared team$/, async () => {
     await Events
-      .verify.visible('@addAnotherSharedTeam')
+      .assert.visible('@addAnotherSharedTeam')
   })
 
   Then(/^I verify the event related programmes field is displayed$/, async () => {
     await Events
-      .verify.visible('@relatedProgrammes')
+      .assert.visible('@relatedProgrammes')
   })
 
   When(/^I select programme ([0-9])$/, async (optionNumber) => {
     await Events
       .setValue('@sharedTeams', '')
-      .selectProgramme(optionNumber)
+      .selectRelatedProgramme(optionNumber)
   })
 
   When(/^I add it to the programmes list$/, async () => {
@@ -162,17 +162,17 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify there should be ([0-9]) programmes lists$/, async (expected) => {
     await Events
-      .verifyVisibleProgrammesList(expected)
+      .assertVisibleProgrammesList(expected)
   })
 
   Then(/^I verify there is the option to add another programme/, async () => {
     await Events
-      .verify.visible('@addAnotherProgramme')
+      .assert.visible('@addAnotherProgramme')
   })
 
   Then(/^I verify the event save button is displayed$/, async () => {
     await Events
-      .verify.visible('@saveButton')
+      .assert.visible('@saveButton')
   })
 
   When(/^I enter all mandatory fields related to the event$/, async () => {
@@ -187,20 +187,20 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify error message displayed for event name field$/, async () => {
     await Events
-      .verify.visible('@errorEventName')
+      .assert.visible('@errorEventName')
   })
 
   Then(/^I verify error message displayed for event type field$/, async () => {
     await Events
-      .verify.visible('@errorEventType')
+      .assert.visible('@errorEventType')
   })
 
   Then(/^I verify error message displayed for Address fields$/, async () => {
     await Events
-      .verify.visible('@errorAddressLine1')
-      .verify.visible('@errorAddressTown')
-      .verify.visible('@errorAddressPostcode')
-      .verify.visible('@errorAddressCountry')
+      .assert.visible('@errorAddressLine1')
+      .assert.visible('@errorAddressTown')
+      .assert.visible('@errorAddressPostcode')
+      .assert.visible('@errorAddressCountry')
   })
 
   Then(/^I see the Added new event confirmation message is not displayed$/, async () => {

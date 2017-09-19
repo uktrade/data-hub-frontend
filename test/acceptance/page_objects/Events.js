@@ -54,21 +54,21 @@ module.exports = {
 
   commands: [
     {
-      selectSharedTeam (optionNumber) {
+      selectTeam (optionNumber) {
         return this
           .click('select[name="teams"] option:nth-child(' + optionNumber + ')')
       },
-      verifyVisibleSharedTeamList (listNumber) {
+      assertVisibleSharedTeamList (listNumber) {
         return this
-          .verify.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
+          .assert.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
       },
-      selectProgramme (optionNumber) {
+      selectRelatedProgramme (optionNumber) {
         return this
           .click('select[name="related_programmes"] option:nth-child(' + optionNumber + ')')
       },
-      verifyVisibleProgrammesList (listNumber) {
+      assertVisibleProgrammesList (listNumber) {
         return this
-          .verify.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
+          .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
     },
   ],
