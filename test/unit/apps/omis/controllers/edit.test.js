@@ -137,6 +137,26 @@ describe('OMIS EditController', () => {
         this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
       })
 
+      context('when next is set', () => {
+        it('should redirect back to returnUrl', (done) => {
+          const reqMock = Object.assign({}, this.reqMock)
+          const resMock = Object.assign({}, this.resMock, {
+            redirect: (url) => {
+              try {
+                expect(url).to.equal('/custom-return-url')
+                done()
+              } catch (error) {
+                done(error)
+              }
+            },
+          })
+
+          reqMock.form.options.next = '/custom-return-url'
+
+          this.controller.successHandler(reqMock, resMock, this.nextSpy)
+        })
+      })
+
       it('should not call the next method', (done) => {
         const resMock = Object.assign({}, this.resMock, {
           redirect: () => {
