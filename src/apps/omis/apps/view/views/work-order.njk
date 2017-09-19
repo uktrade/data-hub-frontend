@@ -78,7 +78,7 @@
         </tr>
       {% else %}
         <tr>
-          <td class="c-answers-summary__content" colspan="3">None selected</td>
+          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">None added</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -100,7 +100,8 @@
       url: 'edit/subscribers' if order.editable,
       label: 'Add or remove'
     }],
-    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
+    items: values.subscribers | map('name') if values.subscribers.length,
+    fallbackText: 'None added'
   }) }}
 
   {{ AnswersSummary({
@@ -110,19 +111,24 @@
     }],
     items: [{
       label: 'Delivery date',
-      value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
+      value: values.delivery_date | formatDate if values.delivery_date,
+      fallbackText: 'Not set'
     }, {
       label: 'Service type' | pluralise(values.service_types.length),
-      value: values.service_types | map('name') | join(', ') if values.service_types.length else 'None added'
+      value: values.service_types | map('name') | join(', ') if values.service_types.length,
+      fallbackText: 'None selected'
     }, {
       label: 'Sector',
-      value: values.sector.name or 'Not selected'
+      value: values.sector.name,
+      fallbackText: 'Not selected'
     }, {
       label: 'Description of the activity',
-      value: values.description or 'Not added'
+      value: values.description,
+      fallbackText: 'Not added'
     }, {
       label: 'Contacts not to approach',
-      value: values.contacts_not_to_approach
+      value: values.contacts_not_to_approach,
+      fallbackText: 'None added'
     }, {
       label: 'Existing representatives',
       value: values.existing_agents
@@ -153,13 +159,15 @@
     }],
     items: [{
       label: 'VAT category',
-      value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status else 'Not set'
+      value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status,
+      fallbackText: 'Not set'
     }, {
       label: 'VAT number',
       value: values.vat_number + ' (' + verifiedState + ')' if values.vat_number
     }, {
       label: 'Purchase Order (PO) number',
-      value: values.po_number or 'Not set'
+      value: values.po_number,
+      fallbackText: 'Not added'
     }]
   }) }}
 

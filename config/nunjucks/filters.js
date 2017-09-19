@@ -59,9 +59,10 @@ const filters = {
   omit,
   pick,
   mapValues,
-  isFunction,
   isArray,
+  isFunction,
   isNull,
+  isString,
   pluralise,
 
   assignCopy (...args) {
