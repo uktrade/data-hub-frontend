@@ -1,3 +1,5 @@
+const { assign } = require('lodash')
+
 const metadataRepo = require('../../lib/metadata')
 const { transformObjectToOption } = require('../transformers')
 const { globalFields } = require('../macros')
@@ -84,7 +86,7 @@ const eventFormConfig = (organisers) => {
         label: 'Postcode',
         class: 'u-js-hidden',
       },
-      Object.assign({}, globalFields.countries, {
+      assign({}, globalFields.countries, {
         name: 'address_country',
       }),
       {
@@ -183,15 +185,15 @@ const eventFiltersFields = [
     name: 'name',
     hint: 'At least three characters',
   },
-  Object.assign({}, globalFields.eventTypes, {
+  assign({}, globalFields.eventTypes, {
     name: 'event_type',
     initialOption: 'All types',
   }),
-  Object.assign({}, globalFields.countries, {
+  assign({}, globalFields.countries, {
     name: 'address_country',
     initialOption: 'All countries',
   }),
-  Object.assign({}, globalFields.ukRegions, {
+  assign({}, globalFields.ukRegions, {
     name: 'uk_region',
     initialOption: 'All UK regions',
   }),
@@ -208,7 +210,7 @@ const eventFiltersFields = [
     placeholder: `e.g. ${currentYear}-07-21`,
   },
 ].map(filter => {
-  return Object.assign(filter, {
+  return assign(filter, {
     label: collectionFilterLabels.edit[filter.name],
     modifier: ['smaller', 'light'],
   })

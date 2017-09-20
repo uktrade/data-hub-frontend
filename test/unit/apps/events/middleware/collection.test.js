@@ -1,3 +1,4 @@
+const { assign } = require('lodash')
 const nock = require('nock')
 const config = require('~/config')
 const eventCollectionData = require('~/test/unit/data/events/collection.json')
@@ -10,10 +11,10 @@ describe('Event collection middleware', () => {
 
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
-    this.req = Object.assign({}, globalReq, {
+    this.req = assign({}, globalReq, {
       session: { token: 'abcd' },
     })
-    this.res = Object.assign({}, globalRes)
+    this.res = assign({}, globalRes)
 
     this.controller = require('~/src/apps/events/middleware/collection')
   })

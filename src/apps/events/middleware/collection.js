@@ -1,4 +1,4 @@
-const { pick, pickBy } = require('lodash')
+const { pick, pickBy, assign } = require('lodash')
 
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
@@ -36,7 +36,7 @@ function getRequestBody (req, res, next) {
 
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
 
-  req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
 
   next()
 }
