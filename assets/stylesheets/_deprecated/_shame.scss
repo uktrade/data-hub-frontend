@@ -67,18 +67,6 @@
   }
 }
 
-#contact-list .card .split-data,
-#archived-contact-list .card .split-data,
-#interaction-list .card .split-data {
-  > div {
-    width: 35%;
-  }
-
-  > div:first-child {
-    width: 65%;
-  }
-}
-
 #contact-list {
   .table--key-value {
     th {
