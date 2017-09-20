@@ -8,12 +8,12 @@
   %}
     <p class="c-local-header__heading-after">{{ headingAddress }}</p>
     {% if company.archived %}
-      <p class="infostrip">
+      {% call Message({ type: 'info' }) %}
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
         <strong>Reason:</strong> {{company.archived_reason}}<br>
         <br>
         <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
-      </p>
+      {% endcall %}
     {% endif %}
   {% endcall %}
 {% endblock %}

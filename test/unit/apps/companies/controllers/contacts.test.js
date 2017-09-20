@@ -371,7 +371,6 @@ describe('Company contacts controller', function () {
       return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
         .then((document) => {
           expect(document.querySelector('#contact-list .c-collection__result-count').textContent).to.equal('0')
-          expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
         })
     })
 

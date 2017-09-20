@@ -12,12 +12,12 @@
     modifier: 'light-banner'
   }) %}
     {% if contact.archived %}
-      <p class="infostrip">
+      {% call Message({ type: 'info' }) %}
         This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
         <strong>Reason:</strong> {{contact.archived_reason}}<br>
         <br>
         <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
-      </p>
+      {% endcall %}
     {% endif %}
   {% endcall %}
 {% endblock %}

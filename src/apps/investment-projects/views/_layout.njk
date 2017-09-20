@@ -22,12 +22,12 @@
   }) }}
 
   {% if investmentData.archived %}
-      <p class="infostrip">
+      {% call Message({ type: 'info' }) %}
         This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>
         <strong>Archive reason:</strong> {{ investmentData.archived_reason }}<br>
         <br>
         <a href="unarchive">Unarchive</a>
-      </p>
+      {% endcall %}
     {% endif %}
   {% endcall %}
 
