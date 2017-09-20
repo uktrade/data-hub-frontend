@@ -8,7 +8,7 @@
   {% call LocalHeader({
     headingBefore: headingBefore,
     heading: contact.first_name + ' ' + contact.last_name,
-    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary,
+    headingSuffix: '<span class="c-badge c-badge--secondary">Primary</span>',
     modifier: 'light-banner'
   }) %}
     {% if contact.archived %}

@@ -55,6 +55,14 @@ $_first-element-spacing: $default-spacing-unit * 3;
   .c-meta-list {
     @include core-font(16);
   }
+
+  .c-badge {
+    @include core-font(24);
+    padding: $baseline-grid-unit ($baseline-grid-unit * 2);
+    background-color: $white;
+    color: $fuschia;
+    border-color: $fuschia;
+  }
 }
 
 .c-local-header__heading-before {
