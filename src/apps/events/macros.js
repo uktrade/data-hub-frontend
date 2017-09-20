@@ -1,6 +1,9 @@
 const metadataRepo = require('../../lib/metadata')
 const { transformObjectToOption } = require('../transformers')
 const { globalFields } = require('../macros')
+const { collectionFilterLabels } = require('./labels')
+
+const currentYear = (new Date()).getFullYear()
 
 const eventFormConfig = (organisers) => {
   return {
@@ -174,6 +177,70 @@ const eventFormConfig = (organisers) => {
   }
 }
 
+const eventFiltersFields = [
+  {
+    macroName: 'TextField',
+    name: 'name',
+    hint: 'At least three characters',
+  },
+  Object.assign({}, globalFields.eventTypes, {
+    name: 'event_type',
+    initialOption: 'All types',
+  }),
+  Object.assign({}, globalFields.countries, {
+    name: 'address_country',
+    initialOption: 'All countries',
+  }),
+  Object.assign({}, globalFields.ukRegions, {
+    name: 'uk_region',
+    initialOption: 'All UK regions',
+  }),
+  {
+    macroName: 'TextField',
+    name: 'start_date',
+    hint: 'YYYY-MM-DD',
+    placeholder: `e.g. ${currentYear}-07-18`,
+  },
+  {
+    macroName: 'TextField',
+    name: 'end_date',
+    hint: 'YYYY-MM-DD',
+    placeholder: `e.g. ${currentYear}-07-21`,
+  },
+].map(filter => {
+  return Object.assign(filter, {
+    label: collectionFilterLabels.edit[filter.name],
+    modifier: ['smaller', 'light'],
+  })
+})
+
+const eventSortForm = {
+  method: 'get',
+  class: 'c-collection__sort-form js-AutoSubmit',
+  hideFormActions: true,
+  hiddenFields: { custom: true },
+  children: [
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'Sort by',
+      name: 'sortby',
+      modifier: ['small', 'inline', 'light'],
+      options: [
+        { value: 'name:asc', label: 'Event name: A-Z' },
+        { value: 'name:desc', label: 'Event name: Z-A' },
+        { value: 'modified_on:desc', label: 'Recently updated' },
+        { value: 'modified_on:asc', label: 'Least recently updated' },
+        { value: 'start_date:asc', label: 'Earliest start date' },
+        { value: 'start_date:desc', label: 'Latest start date' },
+        { value: 'end_date:asc', label: 'Earliest end date' },
+        { value: 'end_date:desc', label: 'Latest end date' },
+      ],
+    },
+  ],
+}
+
 module.exports = {
   eventFormConfig,
+  eventFiltersFields,
+  eventSortForm,
 }
