@@ -22,6 +22,6 @@ router.route('/create')
   .get(renderEditPage)
   .post(postDetails, redirectToDetails, renderEditPage)
 
-router.get('/:id/details', renderDetailsPage)
+router.get('/:id', renderDetailsPage)
 
 module.exports = router

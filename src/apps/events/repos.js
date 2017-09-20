@@ -9,6 +9,11 @@ function createEvent (token, body) {
   })
 }
 
+function fetchEvent (token, id) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/event/${id}`)
+}
+
 module.exports = {
   createEvent,
+  fetchEvent,
 }

@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
 
+const { getFormattedAddress } = require('../../lib/address')
+
 function transformEventToListItem ({
   id,
   name,
@@ -85,6 +87,72 @@ function transformEventToListItem ({
   return item
 }
 
+function transformEventResponseToViewRecord ({
+  event_type,
+  start_date,
+  end_date,
+  location_type,
+  address_1,
+  address_2,
+  address_town,
+  address_county,
+  address_postcode,
+  address_country,
+  uk_region,
+  notes,
+  lead_team,
+  organiser,
+  teams,
+  related_programmes,
+  service,
+}) {
+  teams = teams || []
+  related_programmes = related_programmes || []
+
+  const transformedEvent = {
+    'Type of event': event_type,
+  }
+
+  if (start_date === end_date) {
+    transformedEvent['Event date'] = {
+      type: 'date',
+      name: start_date,
+    }
+  } else {
+    transformedEvent['Event start date'] = {
+      type: 'date',
+      name: start_date,
+    }
+    transformedEvent['Event end date'] = {
+      type: 'date',
+      name: end_date,
+    }
+  }
+
+  return Object.assign(transformedEvent, {
+    'Event location type': location_type,
+    'Address': getFormattedAddress({
+      address_1,
+      address_2,
+      address_town,
+      address_county,
+      address_postcode,
+      address_country,
+    }),
+    'Region': uk_region,
+    'Notes': notes,
+    'Lead team': lead_team,
+    'Organiser': organiser,
+    'Other teams': teams
+      .filter(team => team.id !== lead_team.id)
+      .map(item => item.name),
+    'Related programmes': related_programmes
+      .map(item => item.name),
+    'Service': service,
+  })
+}
+
 module.exports = {
   transformEventToListItem,
+  transformEventResponseToViewRecord,
 }
