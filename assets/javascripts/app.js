@@ -15,7 +15,6 @@ const AddItems = require('./modules/add-items')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
-const ContactEdit = require('./_deprecated/contact-edit')
 
 LabelSelect.init()
 ConditionalSubfields.init()
@@ -31,4 +30,3 @@ AddItems.init()
 // Deprecated
 CompanyAdd.init()
 CompanyEdit.init()
-ContactEdit.init()
