@@ -1,4 +1,4 @@
-async function renderPage (req, res) {
+async function renderDetailsPage (req, res) {
   res
     .breadcrumb('Event details')
     .render('events/views/details', {
@@ -7,5 +7,5 @@ async function renderPage (req, res) {
 }
 
 module.exports = {
-  renderPage,
+  renderDetailsPage,
 }

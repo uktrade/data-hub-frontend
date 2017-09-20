@@ -4,7 +4,7 @@ const { transformObjectToOption } = require('../../transformers')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { assign, get } = require('lodash')
 
-async function renderEventPage (req, res, next) {
+async function renderEditPage (req, res, next) {
   try {
     const advisersResponse = await getAdvisers(req.session.token)
     const advisers = advisersResponse.results.map(transformObjectToOption)
@@ -32,7 +32,7 @@ async function renderEventPage (req, res, next) {
   }
 }
 
-function postHandler (req, res, next) {
+function redirectToDetails (req, res, next) {
   if (get(res.locals, 'form.errors')) {
     return next()
   }
@@ -42,6 +42,6 @@ function postHandler (req, res, next) {
 }
 
 module.exports = {
-  renderEventPage,
-  postHandler,
+  renderEditPage,
+  redirectToDetails,
 }

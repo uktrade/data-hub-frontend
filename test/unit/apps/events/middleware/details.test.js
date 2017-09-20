@@ -51,14 +51,14 @@ describe('Event details middleware', () => {
 
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, this.expectedBody)
         expect(this.createEventStub).to.have.been.calledOnce
       })
 
       it('should set the result ID', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         const actualResultId = this.res.locals.resultId
         const expectedResultId = '1'
@@ -80,7 +80,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { start_date: undefined, end_date: undefined })
 
@@ -102,7 +102,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { start_date: '--01', end_date: '--02' })
 
@@ -119,7 +119,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { teams: [ 'team 1', 'lead_team' ] })
 
@@ -134,7 +134,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { teams: [ 'team 1', 'lead_team' ] })
 
@@ -151,7 +151,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         expect(this.createEventStub).to.not.have.been.called
       })
@@ -163,7 +163,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         expect(this.next).to.have.been.calledOnce
       })
@@ -177,7 +177,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { related_programmes: [ 'programme 1' ] })
 
@@ -192,7 +192,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         const expectedBody = assign({}, this.expectedBody, { related_programmes: [ 'programme 1' ] })
 
@@ -209,7 +209,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         expect(this.createEventStub).to.not.have.been.called
       })
@@ -221,7 +221,7 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.next)
 
         expect(this.next).to.have.been.calledOnce
       })
@@ -233,19 +233,19 @@ describe('Event details middleware', () => {
       })
 
       it('should set the state', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.res.locals.form.state).to.deep.equal(this.req.body)
       })
 
       it('should set the errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.res.locals.form.errors.messages).to.equal('error')
       })
 
       it('should not call next with errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.next).have.been.calledWith()
         expect(this.next).have.been.calledOnce
@@ -258,13 +258,13 @@ describe('Event details middleware', () => {
       })
 
       it('should not set form', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.res.locals.form).to.be.undefined
       })
 
       it('should call next with errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.next)
 
         expect(this.next).have.been.calledWith({ statusCode: 500, error: 'error' })
         expect(this.next).have.been.calledOnce

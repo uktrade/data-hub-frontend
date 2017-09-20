@@ -15,23 +15,23 @@ describe('Event details controller', () => {
     this.sandbox.restore()
   })
 
-  describe('#renderPage', () => {
+  describe('#renderDetailsPage', () => {
     it('should add a breadcrumb', async () => {
-      this.controller.renderPage(this.req, this.res)
+      this.controller.renderDetailsPage(this.req, this.res)
 
       expect(this.res.breadcrumb).to.be.calledWith('Event details')
       expect(this.res.breadcrumb).to.have.been.calledOnce
     })
 
     it('should render the event details page', async () => {
-      await this.controller.renderPage(this.req, this.res)
+      await this.controller.renderDetailsPage(this.req, this.res)
 
       expect(this.res.render).to.be.calledWith('events/views/details')
       expect(this.res.render).to.have.been.calledOnce
     })
 
     it('should render the event details page with a title', async () => {
-      await this.controller.renderPage(this.req, this.res, this.next)
+      await this.controller.renderDetailsPage(this.req, this.res, this.next)
 
       const actual = this.res.render.getCall(0).args[1].title
 

@@ -1,21 +1,13 @@
 const router = require('express').Router()
 
-const {
-  details,
-  edit,
-} = require('./controllers')
-const { detailsFormMiddleware } = require('./middleware')
+const { renderDetailsPage } = require('./controllers/details')
+const { redirectToDetails, renderEditPage } = require('./controllers/edit')
+const { postDetails } = require('./middleware/details')
 
 router.route('/create')
-  .get(
-    edit.renderEventPage,
-  )
-  .post(
-    detailsFormMiddleware.handleFormPost,
-    edit.postHandler,
-    edit.renderEventPage,
-  )
+  .get(renderEditPage)
+  .post(postDetails, redirectToDetails, renderEditPage)
 
-router.get('/:id/details', details.renderPage)
+router.get('/:id/details', renderDetailsPage)
 
 module.exports = router
