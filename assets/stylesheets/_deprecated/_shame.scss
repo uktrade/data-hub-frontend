@@ -54,20 +54,6 @@
   display: none;
 }
 
-#contact-list {
-  .table--key-value {
-    th {
-      white-space: nowrap;
-    }
-  }
-}
-
-#company-exports {
-  th {
-    white-space: nowrap;
-  }
-}
-
 .js-enabled .block-label.selection-button-radio,
 .js-enabled .block-label.selection-button-checkbox {
   &::before,

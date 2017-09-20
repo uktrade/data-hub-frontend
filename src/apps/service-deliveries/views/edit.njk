@@ -1,23 +1,10 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block local_header %}
-  {% set pageHeadingBefore %}
-    {% if query.contact %}
-      {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
-      <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
-    {% elseif query.company %}
-      {% set backUrl="/companies/" + query.company + "/interactions" %}
-      <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
-    {% endif %}
-  {% endset %}
-
-  {{
-    LocalHeader({
-      headingBefore: headingBefore,
-      heading: 'Edit service delivery' if serviceDelivery.id else 'Add service delivery',
-      modifier: 'light-banner'
-    })
-  }}
+  {{ LocalHeader({
+    heading: 'Edit service delivery' if serviceDelivery.id else 'Add service delivery',
+    modifier: 'light-banner'
+  }) }}
 {% endblock %}
 
 {% block body_main_content %}
@@ -29,18 +16,19 @@
       <input type="hidden" name="id" value="{{serviceDelivery.id}}">
     {% endif %}
 
-    {% if serviceDelivery.contact %}
-    <div class='form-group'>
-      <div class='form-label-bold'>Contact</div>
-      <a href="/contacts/{{ serviceDelivery.contact.id }}">{{ serviceDelivery.contact.name }}</a>
-    </div>
-    {% else  %}
-    <div class='form-group'>
-      <div class='form-label-bold'>Company</div>
-      <a href="{{companyUrl}}">{{ serviceDelivery.company.name }}</a>
-    </div>
+    {% if serviceDelivery.contact.name %}
+      <div class='form-group'>
+        <div class='form-label-bold'>Contact</div>
+        <a href="/contacts/{{ serviceDelivery.contact.id }}">{{ serviceDelivery.contact.name }}</a>
+      </div>
     {% endif %}
 
+    {% if serviceDelivery.company.name %}
+      <div class='form-group'>
+        <div class='form-label-bold'>Company</div>
+        <a href="{{companyUrl}}">{{ serviceDelivery.company.name }}</a>
+      </div>
+    {% endif %}
 
     <div class='form-group'>
       <div class='form-label-bold'>Interaction type</div>
@@ -137,6 +125,14 @@
       class="select-autocomplete-js")
     }}
 
-    {{ save(backUrl) }}
+    {% if QUERY.contact %}
+      {% set returnUrl = '/contacts/' + QUERY.contact + '/interactions'  %}
+    {% elseif QUERY.company %}
+      {% set returnUrl = '/companies/' + QUERY.company + '/interactions' %}
+    {% else %}
+      {% set returnUrl = backUrl %}
+    {% endif %}
+
+    {{ save(returnUrl) }}
   </form>
 {% endblock %}
