@@ -7,7 +7,7 @@ describe('Event transformers', function () {
     const mockEvent = require('~/test/unit/data/events/event-data')
 
     it('should return undefined when no arguments', () => {
-      expect(transformEventToListItem()).to.be.undefined
+      expect(transformEventToListItem({})).to.be.undefined
     })
 
     it('should return undefined for properties not in transform', () => {

@@ -20,7 +20,7 @@ function transformEventToListItem ({
   organiser,
   lead_team,
   uk_region,
-} = {}) {
+}) {
   if (!id || !name) { return }
 
   const item = {

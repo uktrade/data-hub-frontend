@@ -1,10 +1,10 @@
-const { get, omit, merge } = require('lodash')
+const { get, omit, merge, assign } = require('lodash')
 const { eventFiltersFields: filtersFields, eventSortForm } = require('../macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderEventList (req, res) {
   const sortForm = merge({}, eventSortForm, {
-    hiddenFields: Object.assign({}, omit(req.query, 'sortby')),
+    hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
       { value: req.query.sortby },
     ],
