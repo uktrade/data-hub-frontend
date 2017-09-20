@@ -2,7 +2,7 @@ const { transformToApi } = require('../services/formatting')
 const { createEvent } = require('../repos')
 const { assign, castArray, compact } = require('lodash')
 
-async function handleFormPost (req, res, next) {
+async function postDetails (req, res, next) {
   const castToArrayAndRemoveEmpty = (value) => compact(castArray(value))
   req.body.teams = castToArrayAndRemoveEmpty(req.body.teams)
   req.body.related_programmes = castToArrayAndRemoveEmpty(req.body.related_programmes)
@@ -35,5 +35,5 @@ async function handleFormPost (req, res, next) {
 }
 
 module.exports = {
-  handleFormPost,
+  postDetails,
 }
