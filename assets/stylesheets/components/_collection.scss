@@ -23,6 +23,10 @@
 .c-collection__header-actions {
   @include media(tablet) {
     float: right;
+
+    * + * {
+      margin-left: $default-spacing-unit;
+    }
   }
 }
 
@@ -80,7 +84,10 @@
 }
 
 .c-collection__filter-remove-all {
-  margin-top: $default-spacing-unit / (3 / 2);
+  display: inline-block;
+  line-height: 1.2;
+  margin-top: $default-spacing-unit / 2;
+  margin-bottom: $default-spacing-unit / 2;
 
   &:link,
   &:visited {

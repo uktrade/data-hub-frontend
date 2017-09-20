@@ -34,7 +34,7 @@
           {% if props.selectedFilters | length > 1 %}
             <a
               href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
-              class="c-collection__filter-remove-all u-float-right js-xhr"
+              class="c-collection__filter-remove-all js-xhr"
               aria-label="Reset filter results"
             >
               Remove all filters
