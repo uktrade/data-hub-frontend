@@ -165,7 +165,7 @@ describe('Company controller, Companies House', function () {
         breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/details-ch')
+            expect(template).to.equal('companies/views/details')
             done()
           } catch (e) {
             done(e)

@@ -30,9 +30,11 @@ async function getDetails (req, res, next) {
     }
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
 
+    res.locals.companyType = 'ltd'
+
     res
       .breadcrumb(company.name)
-      .render('companies/views/details-ltd')
+      .render('companies/views/details')
   } catch (error) {
     next(error)
   }

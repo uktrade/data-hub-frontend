@@ -1,8 +1,6 @@
 {% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
-  {{ super() }}
-
   <h2 class="heading-medium">Company summary</h2>
 
   {% if chDetails %}
@@ -16,7 +14,11 @@
     {{ keyvaluetable(companyDetails, stripey=true, labels=companyDetailsLabels, keyorder=companyDetailsDisplayOrder, id="cdms-details") }}
   {% endif %}
 
-  <p><a href="/companies/edit/ltd/{{company.id}}" class="button">Edit</a></p>
+  {% if company.id %}
+    <p><a href="/companies/edit/{{ companyType }}/{{company.id}}" class="button">Edit</a></p>
+  {% else %}
+    <p><a href="/companies/add/ltd/{{company.company_number}}" class="button">Add</a></p>
+  {% endif %}
 
   {% if accountManagementDisplay %}
     <div class="section">
@@ -26,7 +28,7 @@
     </div>
   {% endif %}
 
-  {% if not company.archived %}
+  {% if company.id and not company.archived %}
     <h2 class="heading-medium">Archive company</h2>
     <p>Archive this company if it is no longer required or active.</p>
 

@@ -24,9 +24,10 @@ async function getDetails (req, res, next) {
     }
     res.locals.accountManagementDisplayLabels = accountManagementDisplayLabels
 
+    res.locals.companyType = 'foreign'
     res
       .breadcrumb(company.name)
-      .render('companies/views/details-foreign')
+      .render('companies/views/details')
   } catch (error) {
     next(error)
   }
