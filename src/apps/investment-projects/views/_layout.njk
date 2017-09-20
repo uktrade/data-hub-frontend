@@ -37,7 +37,7 @@
   {% call Form({
     buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
     action: 'change-project-stage',
-    class: 'flash flash--info',
+    class: 'c-messages__item c-messages__item--info',
     disableFormAction: true if not investmentStatus.currentStage.isComplete,
     hiddenFields: {
       next_project_stage: investmentStatus.nextStage.id
