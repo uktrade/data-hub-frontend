@@ -44,7 +44,7 @@ const globalFields = {
 
   strategicDrivers: {
     macroName: 'MultipleChoiceField',
-    name: 'strategicDrivers',
+    name: 'strategic_drivers',
     label: 'Strategic drivers',
     options () {
       return metadata.strategicDriverOptions.map(transformObjectToOption)
@@ -54,7 +54,7 @@ const globalFields = {
   averageSalary: {
     macroName: 'MultipleChoiceField',
     type: 'radio',
-    name: 'averageSalary',
+    name: 'average_salary',
     label: 'Average salary range',
     options () {
       return metadata.salaryRangeOptions.map(transformObjectToOption)
@@ -63,7 +63,7 @@ const globalFields = {
 
   foreignOtherCompany: {
     macroName: 'MultipleChoiceField',
-    name: 'foreignOtherCompany',
+    name: 'foreign_other_company',
     label: 'Type of organisation',
     initialOption: '-- Select organisation type --',
     options () {
