@@ -70,6 +70,16 @@ const globalFields = {
       return foreignOtherCompanyOptions.map(transformStringToOption)
     },
   },
+
+  eventTypes: {
+    macroName: 'MultipleChoiceField',
+    name: 'eventTypes',
+    label: 'Type of event',
+    initialOption: '-- Select event type --',
+    options () {
+      return metadata.eventTypeOptions.map(transformObjectToOption)
+    },
+  },
 }
 
 module.exports = {
