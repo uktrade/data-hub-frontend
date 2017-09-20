@@ -36,7 +36,7 @@
     }
   }
 
-  > * + * {
+  > *:not([type="hidden"]) + * {
     margin-top: $default-spacing-unit;
     margin-bottom: 0;
   }
