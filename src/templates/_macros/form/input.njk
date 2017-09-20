@@ -1,0 +1,26 @@
+{##
+ # Render input field (form-control)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} [props.type] - Field type
+ # @param {string} [props.class] - Field class name
+ # @param {string} [props.value] - Initial value to set
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string, array} [props.modifier] - form-control modifier
+ # @param {string} [props.error] - Mark form-control with error
+ #}
+{% macro Input(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+
+  <input
+    name="{{ props.name }}"
+    type="{{ props.type if props.type else 'text' }}"
+    id="{{ props.fieldId }}"
+    {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
+    value="{{ props.value }}"
+    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    {% if props.autofocus %}autofocus{% endif %}
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+  >
+{% endmacro %}

@@ -2,24 +2,24 @@ module.exports = {
   url: process.env.QA_HOST + '/events/create',
   props: {},
   elements: {
-    eventName: 'input[name="event_name"]',
+    eventName: 'input[name="name"]',
     eventType: 'select[name="event_type"]',
-    additionalRefCode: 'a',
-    startDateYear: 'input[name="event_start_date_year"]',
-    startDateMonth: 'input[name="event_start_date_month"]',
-    startDateDay: 'input[name="event_start_date_day"]',
-    endDateYear: 'input[name="event_end_date_year"]',
-    endDateMonth: 'input[name="event_end_date_year"]',
-    endDateDay: 'input[name="event_end_date_year"]',
-    locationType: 'select[name="event_location_type"]',
+    startDateYear: 'input[name="start_date_year"]',
+    startDateMonth: 'input[name="start_date_month"]',
+    startDateDay: 'input[name="start_date_day"]',
+    endDateYear: 'input[name="end_date_year"]',
+    endDateMonth: 'input[name="end_date_month"]',
+    endDateDay: 'input[name="end_date_day"]',
+    locationType: 'select[name="location_type"]',
     addressLine1: 'input[name="address_1"]',
     addressLine2: 'input[name="address_2"]',
     addressTown: 'input[name="address_town"]',
-    addressPostcode: 'input[name="address_county"]',
-    addressCountry: 'select[name="country"]',
-    notes: 'input[name="event_end_date_year"]',
-    teamHosting: 'select[name="event_team_hosting"]',
-    organiser: 'select[name="event_organiser"]',
+    addressCounty: 'input[name="address_county"]',
+    addressPostcode: 'input[name="postcode"]',
+    addressCountry: 'select[name="address_country"]',
+    notes: 'textarea[name="notes"]',
+    teamHosting: 'select[name="lead_team"]',
+    organiser: 'select[name="organiser"]',
     sharedYesContainer: '#group-field-event_shared div div',
     sharedNoContainer: '#group-field-event_shared div div:nth-child(2)',
     sharedYes: 'label[for=field-event_shared-1]',
@@ -54,21 +54,21 @@ module.exports = {
 
   commands: [
     {
-      selectSharedTeam (optionNumber) {
+      selectTeam (optionNumber) {
         return this
           .click('select[name="teams"] option:nth-child(' + optionNumber + ')')
       },
-      verifyVisibleSharedTeamList (listNumber) {
+      assertVisibleSharedTeamList (listNumber) {
         return this
-          .verify.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
+          .assert.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
       },
-      selectProgramme (optionNumber) {
+      selectRelatedProgramme (optionNumber) {
         return this
           .click('select[name="related_programmes"] option:nth-child(' + optionNumber + ')')
       },
-      verifyVisibleProgrammesList (listNumber) {
+      assertVisibleProgrammesList (listNumber) {
         return this
-          .verify.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
+          .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
     },
   ],

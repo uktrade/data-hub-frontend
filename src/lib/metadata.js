@@ -17,16 +17,16 @@ function getMetadata (path, key) {
           resolve(data)
         } else {
           authorisedRequest(null, url)
-          .then((responseData) => {
-            module.exports[key] = responseData
-            redisClient.setex(url, ttl, JSON.stringify(responseData))
-            resolve(responseData)
-          })
-          .catch((reponseError) => {
-            logger.error('Error fetching metadataRepository for url: %s', url)
-            reject(reponseError)
-            throw reponseError
-          })
+            .then((responseData) => {
+              module.exports[key] = responseData
+              redisClient.setex(url, ttl, JSON.stringify(responseData))
+              resolve(responseData)
+            })
+            .catch((reponseError) => {
+              logger.error('Error fetching metadataRepository for url: %s', url)
+              reject(reponseError)
+              throw reponseError
+            })
         }
       })
     })
@@ -48,16 +48,16 @@ module.exports.getMetadataItem = function (table, id) {
 
   return new Promise((resolve, reject) => {
     authorisedRequest(null, url)
-    .then((data) => {
-      data.forEach((item) => {
-        if (item.id === id) {
-          resolve(item)
-        }
+      .then((data) => {
+        data.forEach((item) => {
+          if (item.id === id) {
+            resolve(item)
+          }
+        })
       })
-    })
-    .catch((error) => {
-      reject(error)
-    })
+      .catch((error) => {
+        reject(error)
+      })
   })
 }
 
@@ -164,9 +164,9 @@ module.exports.getServices = function (token) {
 
 module.exports.initialiseRestrictedServiceOptions = function () {
   authorisedRequest(null, `${config.apiRoot}/metadata/service/`)
-  .then((data) => {
-    module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
-  })
+    .then((data) => {
+      module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
+    })
 }
 
 module.exports.getIdForName = function (options, name) {

@@ -134,7 +134,7 @@ describe('Sortable Table', () => {
 
     beforeEach(() => {
       const tableElement = document.querySelector(HOOK)
-      tableSort = new SortableTable(tableElement, document)  // eslint-disable-line no-new
+      tableSort = new SortableTable(tableElement, document) // eslint-disable-line no-new
       nameHeaderElement = document.getElementById('name-header')
       event = {
         target: nameHeaderElement,
@@ -169,7 +169,7 @@ describe('Sortable Table', () => {
 
     beforeEach(() => {
       const tableElement = document.querySelector(HOOK)
-      tableSort = new SortableTable(tableElement, document)  // eslint-disable-line no-new
+      tableSort = new SortableTable(tableElement, document) // eslint-disable-line no-new
       nameHeaderElement = document.getElementById('name-header')
       roleHeaderElement = document.getElementById('role-header')
     })

@@ -14,8 +14,8 @@ const EXT = 'njk'
 
 function propsToJson (...props) {
   return `${[...props]
-  .map(prop => JSON.stringify(prop, undefined, 1))
-  .join(', ')}`
+    .map(prop => JSON.stringify(prop, undefined, 1))
+    .join(', ')}`
 }
 
 function getMacros (fileName, context = {}) {
@@ -63,7 +63,9 @@ function getMacros (fileName, context = {}) {
 
     renderWithCallerToDom (macroName, ...params) {
       return function (...caller) {
-        if (!caller.length) { return null }
+        if (!caller.length) {
+          return null
+        }
         const macroOutput = this.renderWithCaller(macroName, caller, ...params)
         return (new JSDOM(macroOutput)).window.document.body.firstElementChild
       }.bind(this)

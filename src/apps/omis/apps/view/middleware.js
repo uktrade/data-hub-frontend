@@ -1,8 +1,9 @@
-const { get, keys } = require('lodash')
+const { get, filter, mapValues, pickBy } = require('lodash')
 const path = require('path')
 const i18nFuture = require('i18n-future')
 
 const { Order } = require('../../models')
+const editSteps = require('../edit/steps')
 
 const i18n = i18nFuture({
   path: path.resolve(__dirname, '../../locales/__lng__/__ns__.json'),
@@ -39,7 +40,22 @@ async function getQuote (req, res, next) {
     // when preview cannot be generated capture missing data
     // to render in the view
     if (error.statusCode === 400) {
-      res.locals.incompleteFields = keys(error.error)
+      const quoteErrors = mapValues(editSteps, (step) => {
+        if (!step.fields) { return false }
+
+        const stepErrors = filter(step.fields, (field) => {
+          return error.error.hasOwnProperty(field)
+        })
+
+        if (!stepErrors.length) { return false }
+
+        return {
+          heading: step.heading,
+          errors: stepErrors,
+        }
+      })
+
+      res.locals.incompleteFields = pickBy(quoteErrors)
       return next()
     }
 

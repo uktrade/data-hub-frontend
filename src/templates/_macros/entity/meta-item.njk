@@ -1,0 +1,59 @@
+{% from '../common.njk' import FromNow %}
+
+{##
+ # Render meta data item
+ # @param {object} props
+ # @param {string} props.label - metadata item label
+ # @param {string} props.data - metadata item data
+ # @param {string} props.data.id - API data id
+ # @param {string} props.data.name - API data label
+ # @param {string} [props.type] - value type (e.g. 'date' to format dates)
+ # @param {string} [props.url] - link URL
+ # @param {string} [props.isSelected] - whether the anchor should be have 'is-selected' state
+ # @param {string} [props.isInert] - whether the value should be inert even if it has URL
+ # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
+ # @param {string} [props.badgeModifier] - modifier for badge
+ # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ # @param {string} [props.safe] - is a safe string
+ #}
+{% macro MetaItem (props) %}
+  {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
+  {% set isLabelHidden = props.isLabelHidden | default(false) %}
+  {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-list__item-value'%}
+
+  {% if props.value %}
+    {% if props.type === 'date' %}
+      {% set metaItemValue = props.value | formatDate %}
+    {% elif props.type === 'datetime' %}
+      {% set metaItemValue = props.value | formatDateTime %}
+    {% elif props.type === 'fromNow' %}
+      {% set metaItemValue = FromNow({ datetime: props.value }) %}
+    {% else %}
+      {% set metaItemValue = props.value.name | default(props.value) %}
+    {% endif %}
+
+    {% if props.safe %}
+      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) | safe %}
+    {% else %}
+      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) %}
+    {% endif %}
+
+    <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
+      {% if props.label %}
+        <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
+          {{ props.label }}
+        </span>
+      {% endif %}
+      {% if props.url and not props.isInert %}
+        <a
+          class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
+          href="{{ props.url }}"
+        >
+          {{- safeValue -}}
+        </a>
+      {% else %}
+        <span class="{{ itemValueClass }}">{{ safeValue }}</span>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}

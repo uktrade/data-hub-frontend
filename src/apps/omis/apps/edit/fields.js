@@ -1,4 +1,4 @@
-const { isArray } = require('lodash')
+const { isArray, merge } = require('lodash')
 
 const globalFields = require('../../fields')
 
@@ -23,7 +23,11 @@ function isDuration (value) {
   return valid
 }
 
-const editFields = Object.assign({}, globalFields, {
+const editFields = merge({}, globalFields, {
+  subscribers: {
+    hint: 'fields.subscribers.hint.edit',
+    optional: false,
+  },
   service_types: {
     fieldType: 'MultipleChoiceField',
     type: 'checkbox',
@@ -59,8 +63,8 @@ const editFields = Object.assign({}, globalFields, {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.assignees.legend',
     label: 'fields.assignees.label',
+    hint: 'fields.assignees.hint',
     addButtonText: 'fields.assignees.addButtonText',
-    optional: true,
     repeatable: true,
     initialOption: '-- Select adviser --',
     options: [],
@@ -70,6 +74,62 @@ const editFields = Object.assign({}, globalFields, {
     label: 'fields.assignee_time.label',
     modifier: ['shorter', 'soft'],
     validate: [isDuration],
+  },
+  vat_status: {
+    fieldType: 'MultipleChoiceField',
+    type: 'radio',
+    label: 'fields.vat_status.label',
+    options: [
+      {
+        value: 'outside_eu',
+        label: 'non-EU company',
+        hint: 'No VAT charged',
+      },
+      {
+        value: 'uk',
+        label: 'UK company',
+        hint: '20% VAT charged',
+      },
+      {
+        value: 'eu',
+        label: 'EU company',
+        hint: 'No VAT charged if validated. 20% VAT charged if not validated.',
+      },
+    ],
+  },
+  vat_number: {
+    fieldType: 'TextField',
+    label: 'fields.vat_number.label',
+    modifier: ['subfield', 'medium'],
+    condition: {
+      name: 'vat_status',
+      value: 'eu',
+    },
+    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/">Validate the EU VAT number</a></p>',
+  },
+  vat_verified: {
+    fieldType: 'MultipleChoiceField',
+    type: 'radio',
+    modifier: ['inline', 'subfield'],
+    label: 'fields.vat_verified.label',
+    options: [{
+      value: 'true',
+      label: 'Yes',
+    },
+    {
+      value: 'false',
+      label: 'No',
+    }],
+    condition: {
+      name: 'vat_status',
+      value: 'eu',
+    },
+  },
+  po_number: {
+    fieldType: 'TextField',
+    label: 'fields.po_number.label',
+    modifier: 'medium',
+    optional: true,
   },
 })
 

@@ -42,12 +42,12 @@ describe('interaction data service', function () {
   describe('get hydrated interaction', function () {
     it('should get an interaction and hydrating it by adding the company', function () {
       interactionDataService.getHydratedInteraction(token, '1234')
-      .then((resultInteraction) => {
-        expect(resultInteraction).to.not.be.null
-        expect(getInteractionStub).to.be.calledWith(token, '1234')
-        expect(getDitCompanyStub).to.be.calledWith(token, interaction.company.id)
-        expect(resultInteraction.company.name).to.equal(company.name)
-      })
+        .then((resultInteraction) => {
+          expect(resultInteraction).to.not.be.null
+          expect(getInteractionStub).to.be.calledWith(token, '1234')
+          expect(getDitCompanyStub).to.be.calledWith(token, interaction.company.id)
+          expect(resultInteraction.company.name).to.equal(company.name)
+        })
     })
 
     it('should throw an error if fetching something fails', function (done) {
@@ -68,9 +68,9 @@ describe('interaction data service', function () {
         },
       })
       interactionDataService.getHydratedInteraction(token, '1234')
-      .catch(() => {
-        done()
-      })
+        .catch(() => {
+          done()
+        })
     })
   })
   describe('get interaction type', function () {
@@ -87,23 +87,23 @@ describe('interaction data service', function () {
   describe('Create blank interaction for contact', function () {
     it('should return a valid blank interaction with contact and company populated', function () {
       return interactionDataService.createBlankInteractionForContact(token, dit_adviser, interaction_type.id, contact.id)
-      .then((interaction) => {
-        expect(interaction).to.not.be.null
-        expect(interaction).to.not.have.property('id')
-        expect(interaction.contact).to.deep.equal(contact)
-        expect(interaction.company).to.deep.equal(company)
-        expect(interaction.interaction_type).to.deep.equal(interaction_type)
-        expect(interaction.dit_adviser).to.deep.equal(dit_adviser)
-        expect(interaction).to.have.property('date')
-        expect(interaction.service).to.deep.equal({ id: null, name: null })
-        expect(interaction.dit_team).to.deep.equal({ id: null, name: null })
-      })
+        .then((interaction) => {
+          expect(interaction).to.not.be.null
+          expect(interaction).to.not.have.property('id')
+          expect(interaction.contact).to.deep.equal(contact)
+          expect(interaction.company).to.deep.equal(company)
+          expect(interaction.interaction_type).to.deep.equal(interaction_type)
+          expect(interaction.dit_adviser).to.deep.equal(dit_adviser)
+          expect(interaction).to.have.property('date')
+          expect(interaction.service).to.deep.equal({ id: null, name: null })
+          expect(interaction.dit_team).to.deep.equal({ id: null, name: null })
+        })
     })
     it('should throw an error for a null contact', function (done) {
       interactionDataService.createBlankInteractionForContact(token, dit_adviser, interaction_type.id, null)
-      .catch((error) => {
-        done()
-      })
+        .catch((error) => {
+          done()
+        })
     })
     it('should throw an error if something goes wrong', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
@@ -124,9 +124,9 @@ describe('interaction data service', function () {
       })
 
       interactionDataService.createBlankInteractionForContact(token, dit_adviser, interaction_type.id, 'YYY')
-      .catch((error) => {
-        done()
-      })
+        .catch((error) => {
+          done()
+        })
     })
     it('should throw null for a contact with an invalid company', function (done) {
       getContactStub = sinon.stub().rejects(new Error('error'))
@@ -146,31 +146,31 @@ describe('interaction data service', function () {
         },
       })
       interactionDataService.createBlankInteractionForContact(token, dit_adviser, interaction_type.id, 'YYY')
-      .catch((error) => {
-        done()
-      })
+        .catch((error) => {
+          done()
+        })
     })
   })
   describe('create blank interaction for company', function () {
     it('should return a valid blank interaction with company populated', function () {
       return interactionDataService.createBlankInteractionForCompany(token, dit_adviser, interaction_type.id, company.id)
-      .then((interaction) => {
-        expect(interaction).to.not.be.null
-        expect(interaction).to.not.have.property('id')
-        expect(interaction.contact).to.be.null
-        expect(interaction.company).to.deep.equal(company)
-        expect(interaction.interaction_type).to.deep.equal(interaction_type)
-        expect(interaction.dit_adviser).to.deep.equal(dit_adviser)
-        expect(interaction).to.have.property('date')
-        expect(interaction.service).to.deep.equal({ id: null, name: null })
-        expect(interaction.dit_team).to.deep.equal({ id: null, name: null })
-      })
+        .then((interaction) => {
+          expect(interaction).to.not.be.null
+          expect(interaction).to.not.have.property('id')
+          expect(interaction.contact).to.be.null
+          expect(interaction.company).to.deep.equal(company)
+          expect(interaction.interaction_type).to.deep.equal(interaction_type)
+          expect(interaction.dit_adviser).to.deep.equal(dit_adviser)
+          expect(interaction).to.have.property('date')
+          expect(interaction.service).to.deep.equal({ id: null, name: null })
+          expect(interaction.dit_team).to.deep.equal({ id: null, name: null })
+        })
     })
     it('should throw an error for a null company', function (done) {
       interactionDataService.createBlankInteractionForCompany(token, dit_adviser, interaction_type.id, null)
-      .catch((error) => {
-        done()
-      })
+        .catch((error) => {
+          done()
+        })
     })
     it('should throw an error if something goes wrong', function (done) {
       getDitCompanyStub = sinon.stub().rejects(new Error('error'))
@@ -190,9 +190,9 @@ describe('interaction data service', function () {
         },
       })
       interactionDataService.createBlankInteractionForCompany(token, dit_adviser, interaction_type.id, 'YYY')
-      .catch((error) => {
-        done()
-      })
+        .catch((error) => {
+          done()
+        })
     })
   })
 })

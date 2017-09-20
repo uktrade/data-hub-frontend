@@ -30,24 +30,17 @@
   }) }}
 
   {{ AnswersSummary({
-    heading: 'Market of interest',
-    items: [{
-      label: 'Primary market',
-      value: values.primary_market.name
-    }]
+    heading: 'Market (country)',
+    items: [values.primary_market.name]
   }) }}
 
-  {{ AnswersSummary({
-    heading: 'International Trade Advisers (ITAs)',
-    actions: [{
-      url: 'edit/subscribers' if order.editable,
-      label: 'Add or remove'
-    }],
-    items: values.subscribers | map('name') if values.subscribers.length else ['None selected']
-  }) }}
+  <p class="infostrip">
+    The market cannot be changed. If you have chosen the wrong market you’ll
+    have to cancel the order and create a new one.
+  </p>
 
   {% call AnswersSummary({
-    heading: 'Post advisers',
+    heading: 'Advisers in the market',
     actions: [{
       url: 'edit/assignees' if order.editable,
       label: 'Add or remove'
@@ -85,7 +78,7 @@
         </tr>
       {% else %}
         <tr>
-          <td class="c-answers-summary__content" colspan="3">None selected</td>
+          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">None added</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -102,25 +95,40 @@
   {% endcall %}
 
   {{ AnswersSummary({
+    heading: 'Advisers in the UK',
+    actions: [{
+      url: 'edit/subscribers' if order.editable,
+      label: 'Add or remove'
+    }],
+    items: values.subscribers | map('name') if values.subscribers.length,
+    fallbackText: 'None added'
+  }) }}
+
+  {{ AnswersSummary({
     heading: 'Work description',
     actions: [{
       url: 'edit/work-description' if order.editable
     }],
     items: [{
       label: 'Delivery date',
-      value: values.delivery_date | formatDate if values.delivery_date else 'Not set'
+      value: values.delivery_date | formatDate if values.delivery_date,
+      fallbackText: 'Not set'
     }, {
       label: 'Service type' | pluralise(values.service_types.length),
-      value: values.service_types | map('name') | join(', ') if values.service_types.length else 'None added'
+      value: values.service_types | map('name') | join(', ') if values.service_types.length,
+      fallbackText: 'None selected'
     }, {
       label: 'Sector',
-      value: values.sector.name or 'Not selected'
+      value: values.sector.name,
+      fallbackText: 'Not selected'
     }, {
       label: 'Description of the activity',
-      value: values.description or 'Not added'
+      value: values.description,
+      fallbackText: 'Not added'
     }, {
       label: 'Contacts not to approach',
-      value: values.contacts_not_to_approach
+      value: values.contacts_not_to_approach,
+      fallbackText: 'None added'
     }, {
       label: 'Existing representatives',
       value: values.existing_agents
@@ -133,6 +141,33 @@
     }, {
       label: 'Further information',
       value: values.further_info
+    }]
+  }) }}
+
+  {% if values.vat_verified === true %}
+    {% set verifiedState = translate('fields.vat_verified.options.valid') %}
+  {% elif values.vat_verified === false %}
+    {% set verifiedState = translate('fields.vat_verified.options.invalid') %}
+  {% else %}
+    {% set verifiedState = translate('fields.vat_verified.options.unverified') %}
+  {% endif %}
+
+  {{ AnswersSummary({
+    heading: 'Quote and payment details',
+    actions: [{
+      url: 'edit/payment' if order.editable
+    }],
+    items: [{
+      label: 'VAT category',
+      value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status,
+      fallbackText: 'Not set'
+    }, {
+      label: 'VAT number',
+      value: values.vat_number + ' (' + verifiedState + ')' if values.vat_number
+    }, {
+      label: 'Purchase Order (PO) number',
+      value: values.po_number,
+      fallbackText: 'Not added'
     }]
   }) }}
 

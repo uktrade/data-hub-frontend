@@ -1,0 +1,20 @@
+{% from "./form.njk" import Form %}
+
+{##
+ # Render multi-step form
+ # @param {object} props - A form object
+ #}
+{% macro MultiStepForm(props) %}
+  {% set formContent = caller() if caller else null %}
+  {% set method = props.method or 'POST' -%}
+  {% set hiddenFields = props.hiddenFields | default({}) | assign({
+    'x-csrf-token': getLocal('csrf-token') if method|lower === 'post'
+  }) %}
+
+  {% call Form(props | assign({
+    formContent: formContent,
+    hiddenFields: hiddenFields
+  })) %}
+    {{ props.formContent }}
+  {% endcall %}
+{% endmacro %}

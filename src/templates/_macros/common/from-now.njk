@@ -1,0 +1,14 @@
+{##
+ # Render time element using from now wording
+ # @param {object} props
+ # @param {array} props.datetime - datetime used to generate the time from now
+ #
+ #}
+{% macro FromNow(props) %}
+  {%- if props.datetime -%}
+    <time
+      datetime="{{ props.datetime | formatDateTime('YYYY-MM-DDTHH:mm:ssZ') }}"
+      title="{{ props.datetime | formatDateTime }}"
+    >{{ props.datetime | fromNow }}</time>
+  {%- endif -%}
+{% endmacro %}

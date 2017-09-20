@@ -41,7 +41,9 @@ describe('Company controller, Companies House', function () {
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(chCompany)
 
-    this.breadcrumbStub = function () { return this }
+    this.breadcrumbStub = function () {
+      return this
+    }
 
     companyControllerCh = proxyquire('~/src/apps/companies/controllers/ch', {
       '../services/formatting': {

@@ -13,18 +13,18 @@ const steps = merge({}, createSteps, {
     controller: EditClientDetailsController,
   },
   '/subscribers': {
-    heading: 'Add or remove ITAs',
+    heading: 'Add or remove advisers in the UK',
     controller: EditSubscribersController,
   },
   '/assignees': {
-    heading: 'Add or remove post advisers',
+    heading: 'Add or remove advisers in the market',
     fields: [
       'assignees',
     ],
     controller: EditAssigneesController,
   },
   '/assignee-time': {
-    heading: 'Edit post adviser time',
+    heading: 'Edit estimated hours of work',
     fields: [
       'assignee_time',
     ],
@@ -42,6 +42,15 @@ const steps = merge({}, createSteps, {
       'delivery_date',
     ],
     controller: EditWorkDescriptionController,
+  },
+  '/payment': {
+    heading: 'Edit quote and payment details',
+    fields: [
+      'vat_status',
+      'vat_number',
+      'vat_verified',
+      'po_number',
+    ],
   },
 })
 

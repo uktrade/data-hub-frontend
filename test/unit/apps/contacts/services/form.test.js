@@ -204,25 +204,25 @@ describe('contact form service', function () {
       }
 
       return contactFormService.saveContactForm('1234', formData)
-      .then((savedContact) => {
-        expect(postedData).to.deep.equal(expected)
-      })
+        .then((savedContact) => {
+          expect(postedData).to.deep.equal(expected)
+        })
     })
     it('should return a copy of the saved contact', function () {
       delete formData.id
 
       return contactFormService.saveContactForm('1234', formData)
-      .then((savedContact) => {
-        expect(savedContact.id).to.not.be.null
-      })
+        .then((savedContact) => {
+          expect(savedContact.id).to.not.be.null
+        })
     })
     it('should throw errors received from the repository if the save fails', function () {
       throwError = true
 
       return contactFormService.saveContactForm('1234', formData)
-      .catch((error) => {
-        expect(error.error).to.equal('test error')
-      })
+        .catch((error) => {
+          expect(error.error).to.equal('test error')
+        })
     })
   })
 })

@@ -32,7 +32,12 @@ describe('interaction form service', function () {
       dit_team,
     }
 
-    saveInteractionStub = sinon.stub().resolves({ id: '1234', subject: 'subject', company: company.id, contact: contact.id })
+    saveInteractionStub = sinon.stub().resolves({
+      id: '1234',
+      subject: 'subject',
+      company: company.id,
+      contact: contact.id,
+    })
 
     interactionFormService = proxyquire('~/src/apps/interactions/services/form', {
       '../repos': {
@@ -109,22 +114,22 @@ describe('interaction form service', function () {
 
     it('should handle saving a simple form with no problems', function () {
       return interactionFormService.saveInteractionForm(token, interactionForm)
-      .then((savedInteraction) => {
-        expect(saveInteractionStub).to.have.been.called
-      })
+        .then((savedInteraction) => {
+          expect(saveInteractionStub).to.have.been.called
+        })
     })
     it('should clear fields that are empty strings', function () {
       interactionForm.subject = ''
       return interactionFormService.saveInteractionForm(token, interactionForm)
-      .then((savedInteraction) => {
-        expect(saveInteractionStub.firstCall.args[1].subject).to.be.null
-      })
+        .then((savedInteraction) => {
+          expect(saveInteractionStub.firstCall.args[1].subject).to.be.null
+        })
     })
     it('convert the date from seperate fields into a single date field', function () {
       return interactionFormService.saveInteractionForm(token, interactionForm)
-      .then((savedInteraction) => {
-        expect(saveInteractionStub.firstCall.args[1].date).to.equal('2017-2-12T00:00:00.00Z')
-      })
+        .then((savedInteraction) => {
+          expect(saveInteractionStub.firstCall.args[1].date).to.equal('2017-2-12T00:00:00.00Z')
+        })
     })
     it('should pass back any failures', function (done) {
       saveInteractionStub = sinon.stub().rejects(new Error('error'))
@@ -136,9 +141,9 @@ describe('interaction form service', function () {
       })
 
       interactionFormService.saveInteractionForm(token, interactionForm)
-      .catch(() => {
-        done()
-      })
+        .catch(() => {
+          done()
+        })
     })
   })
 })

@@ -20,6 +20,7 @@ class EditSubscribersController extends EditController {
 
     try {
       await Order.saveSubscribers(req.session.token, res.locals.order.id, subscribers)
+      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
 
       req.journeyModel.reset()
       req.journeyModel.destroy()
@@ -27,7 +28,7 @@ class EditSubscribersController extends EditController {
       req.sessionModel.destroy()
 
       req.flash('success', 'Order updated')
-      res.redirect(`/omis/${res.locals.order.id}`)
+      res.redirect(nextUrl)
     } catch (error) {
       next(error)
     }

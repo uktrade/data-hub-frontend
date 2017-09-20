@@ -1,0 +1,63 @@
+{##
+ # Render answers summary table
+ #
+ # @param {object} props
+ # @param {object[]|string[]} props.items - array of ojects or strings to display in table body
+ # @param {string} props.items.value - item value
+ # @param {string} props.items.label - item label
+ # @param {string} [props.items.fallbackText] - fallback text if value is empty
+ # @param {string} [props.fallbackText] - component level fallback when items is a list of strings
+ # @param {string} [props.heading] - heading to use as caption for the table
+ # @param {object[]} [props.actions] - array of actions to display
+ # @param {string} [props.actions.url] - URL for the action
+ # @param {string} [props.actions.label=Edit] - Text for the action
+ # @param {caller} [caller()] - Alternative body to use
+ #
+ #}
+{% macro AnswersSummary(props) %}
+  {% if props.items or props.fallbackText or caller %}
+    <table class="c-answers-summary">
+      {% if props.heading or props.actions.length %}
+        <caption class="c-answers-summary__heading">
+          {{ props.heading }}
+          {% for action in props.actions %}
+            {% if action.url %}
+              <a class="c-answers-summary__heading-action" href="{{ action.url }}">
+                {{ action.label or 'Edit' }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </caption>
+      {% endif %}
+
+      {% if caller %}
+        {{ caller() }}
+      {% else %}
+        <tbody>
+          {% for item in props.items %}
+            {% if item | isString %}
+              <tr>
+                <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
+              </tr>
+            {% else %}
+              {% if item.value or item.fallbackText %}
+                <tr>
+                  <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
+                  <td class="c-answers-summary__content {{ 'c-answers-summary__content--muted' if not item.value }}">
+                    {{ item.value | safe if item.value else item.fallbackText }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endif %}
+          {% else %}
+            <tr>
+              <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="2">
+                {{ props.fallbackText }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      {% endif %}
+    </table>
+  {% endif %}
+{% endmacro %}

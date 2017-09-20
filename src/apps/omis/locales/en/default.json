@@ -9,8 +9,11 @@
       "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
-      "legend": "Add International Trade Advisers (ITAs)",
-      "hint": "They will be informed of the order once you submit it",
+      "legend": "Advisers",
+      "hint": {
+        "create": "For example International trade advisers or language advisers. They will be informed of the order once you submit it.",
+        "edit": "For example International trade advisers or language advisers"
+      },
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
@@ -24,19 +27,52 @@
       "label": "Sector"
     },
     "delivery_date": {
-      "label": "Delivery date",
-      "hint": "Try tomorrow, next month or 28/10/2017"
+      "label": "Delivery date of first activity",
+      "hint": "Try next week, next month or 28/10/2017"
     },
     "contacts_not_to_approach": {
       "label": "Contacts not to approach"
     },
     "assignees": {
-      "legend": "Post advisers",
+      "legend": "Advisers",
+      "hint": "For example post advisers or other in-country staff",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
     "assignee_time": {
       "label": "Estimated time"
+    },
+    "vat_status": {
+      "label": "VAT category",
+      "options": {
+        "uk": "Inside UK",
+        "eu": "Inside EU",
+        "outside_eu": "Outside EU"
+      }
+    },
+    "vat_number": {
+      "label": "VAT number"
+    },
+    "vat_verified": {
+      "label": "Is the VAT number valid?",
+      "options": {
+        "unverified": "Not verified",
+        "valid": "Valid",
+        "invalid": "Invalid"
+      }
+    },
+    "po_number": {
+      "label": "Purchase Order (PO) number"
+    }
+  },
+  "errors": {
+    "quote": {
+      "service_types": "Service types the order covers",
+      "description": "Description of the work or activity",
+      "delivery_date": "Delivery date at least 21 days from now",
+      "assignees": "At least one adviser in the market",
+      "assignee_time": "Some time allocated to an adviser in market",
+      "vat_status": "VAT category"
     }
   },
   "validation": {

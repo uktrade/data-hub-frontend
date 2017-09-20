@@ -1,4 +1,4 @@
-const redis = require('redis')
+const Redis = require('ioredis')
 const redisCrypto = require('connect-redis-crypto')
 const session = require('express-session')
 const url = require('url')
@@ -8,15 +8,31 @@ const config = require('./')
 
 const RedisStore = redisCrypto(session)
 
-let client
+let redisConfig = {
+  port: config.redis.port,
+  host: config.redis.host,
+}
 
 if (config.redis.url) {
   const redisURL = url.parse(config.redis.url)
-  client = redis.createClient(redisURL.port, redisURL.hostname, { no_ready_check: true })
-  client.auth(redisURL.auth.split(':')[1])
-} else {
-  client = redis.createClient(config.redis.port, config.redis.host)
+  if (config.redis.sentinel) {
+    redisConfig = {
+      sentinels: [{ host: redisURL.hostname, port: redisURL.port }],
+      name: 'master',
+      password: redisURL.auth.split(':')[1],
+    }
+  } else {
+    redisConfig = {
+      port: redisURL.port,
+      host: redisURL.hostname,
+    }
+    if (redisURL.auth) {
+      redisConfig.password = redisURL.auth.split(':')[1]
+    }
+  }
 }
+
+const client = new Redis(redisConfig)
 
 client.on('error', (e) => {
   logger.log('error', 'Error connecting to redis')

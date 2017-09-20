@@ -124,7 +124,9 @@ describe('Contact controller, archive', function () {
       flash: flashStub,
     }
     const res = {
-      render: function () { throw Error('Should have called next') },
+      render: function () {
+        throw Error('Should have called next')
+      },
     }
     const next = function (_error) {
       expect(_error).to.deep.equal(error)
@@ -150,7 +152,9 @@ describe('Contact controller, archive', function () {
       flash: flashStub,
     }
     const res = {
-      render: function () { throw Error('Should have called next') },
+      render: function () {
+        throw Error('Should have called next')
+      },
     }
     const next = function (_error) {
       expect(_error).to.deep.equal(error)

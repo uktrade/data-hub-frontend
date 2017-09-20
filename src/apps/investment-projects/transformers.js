@@ -11,7 +11,7 @@ function transformInvestmentProjectToListItem ({
   investor_company,
   estimated_land_date,
   sector,
- }) {
+}) {
   const meta = []
 
   if (stage) {

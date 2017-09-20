@@ -11,50 +11,52 @@
     <input type="hidden" name="id" value="{{company.id}}">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-    <div class="section country-list js-add-another-field">
-      {% if export_to_countries and export_to_countries.length > 0 %}
-        {% for country in export_to_countries %}
-          {{ dropdown("export_to_countries",
-            label="Select a market this company currently exports to (optional)",
-            emptyLabel="Select country",
-            value=country,
-            id="export_to_countries_" + loop.index,
-            options=countryOptions)
-          }}
-        {% endfor %}
-      {% else %}
-        {{ dropdown("export_to_countries",
-          label="Select a market this company currently exports to (optional)",
-          emptyLabel="Select country",
-          id="export_to_countries_new",
-          value="",
-          options=countryOptions)
-        }}
-      {% endif %}
-      <input class="button--link js-add_button" type="submit" name="addExportToCountry" value="Add another market">
+    {# TODO: Make these work without JavaScript #}
+    {% set exportCountries = export_to_countries if export_to_countries.length else ['']%}
+    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+      <label class="c-form-group__label">
+        <span class="c-form-group__label-text">
+          Select a market this company currently exports to (optional)
+        </span>
+      </label>
+
+      {% for country in exportCountries %}
+        {{ MultipleChoiceField({
+          name: 'export_to_countries',
+          label: 'Select a market this company currently exports to',
+          value: country,
+          options: countryOptions,
+          initialOption: '-- Select country --',
+          idSuffix: loop.index,
+          optional: true,
+          isLabelHidden: true,
+          modifier: ['compact', 'AddItems']
+        }) }}
+      {% endfor %}
     </div>
 
-    <div class="section country-list js-add-another-field">
-      {% if future_interest_countries and future_interest_countries.length > 0 %}
-        {% for country in future_interest_countries %}
-          {{ dropdown("future_interest_countries",
-            label="Future markets of interest (optional)",
-            emptyLabel="Select country",
-            value=country,
-            id="future_interest_countries_" + loop.index,
-            options=countryOptions)
-          }}
-        {% endfor %}
-      {% else %}
-        {{ dropdown("future_interest_countries",
-          label="Future markets of interest (optional)",
-          emptyLabel="Select country",
-          id="future_interest_countries_new",
-          value="",
-          options=countryOptions)
-        }}
-      {% endif %}
-      <input class="button--link js-add_button" type="submit" name="addFutureInterestCountry" value="Add another market">
+    {# TODO: Make these work without JavaScript #}
+    {% set futureCountries = future_interest_countries if future_interest_countries.length else ['']%}
+    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+      <label class="c-form-group__label">
+        <span class="c-form-group__label-text">
+          Future markets of interest (optional)
+        </span>
+      </label>
+
+      {% for country in futureCountries %}
+        {{ MultipleChoiceField({
+          name: 'future_interest_countries',
+          label: 'Future markets of interest',
+          value: country,
+          options: countryOptions,
+          initialOption: '-- Select country --',
+          idSuffix: loop.index,
+          optional: true,
+          isLabelHidden: true,
+          modifier: ['compact', 'AddItems']
+        }) }}
+      {% endfor %}
     </div>
 
     {{ save(backUrl = "/companies/" + company.id + "/exports") }}

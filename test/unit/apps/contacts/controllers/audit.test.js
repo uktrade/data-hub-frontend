@@ -12,7 +12,9 @@ describe('Contact audit controller', () => {
     this.generatedTransformer = this.sandbox.stub()
     this.transformAuditLogToListItemStub = this.sandbox.stub().returns(this.generatedTransformer)
 
-    this.breadcrumbStub = function () { return this }
+    this.breadcrumbStub = function () {
+      return this
+    }
 
     this.controller = proxyquire('~/src/apps/contacts/controllers/audit', {
       '../repos': {

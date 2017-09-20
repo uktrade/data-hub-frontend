@@ -1,4 +1,4 @@
-const { mapValues, isPlainObject } = require('lodash')
+const { mapValues, isPlainObject, some, assign } = require('lodash')
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }
@@ -33,17 +33,23 @@ function transformToApi (body) {
   })
 
   const setDate = (key) => {
-    formatted[key] = [
+    const dateParts = [
       body[`${key}_year`],
       body[`${key}_month`],
       body[`${key}_day`],
-    ].join('-')
+    ]
+
+    if (some(dateParts)) {
+      formatted[key] = dateParts.join('-')
+    }
   }
 
   setDate('start_date')
   setDate('end_date')
 
-  return Object.assign({}, formatted)
+  formatted.teams.push(formatted.lead_team)
+  formatted.service = '1783ae93-b78f-e611-8c55-e4115bed50dc'
+  return assign({}, formatted)
 }
 
 module.exports = {

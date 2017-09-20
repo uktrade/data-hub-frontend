@@ -14,6 +14,62 @@ describe('OMIS FormController', () => {
     this.sandbox.restore()
   })
 
+  describe('configure()', () => {
+    beforeEach(() => {
+      this.breadcrumbSpy = this.sandbox.spy()
+      this.reqMock = Object.assign({}, globalReq, {
+        form: {
+          options: {},
+        },
+      })
+      this.resMock = Object.assign({}, globalRes, {
+        breadcrumb: this.breadcrumbSpy,
+      })
+    })
+
+    context('when a step heading doesn\'t exists', () => {
+      it('should not set a breadcrumb item', () => {
+        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.breadcrumbSpy).not.to.have.been.called
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when a returnUrl query exists', () => {
+      beforeEach(() => {
+        this.returnUrl = '/custom-return-url'
+
+        this.reqMock = Object.assign({}, this.reqMock, {
+          query: {
+            returnUrl: this.returnUrl,
+          },
+        })
+        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set backLink to the returnUrl value', () => {
+        expect(this.reqMock.form.options.backLink).to.equal(this.returnUrl)
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+
+      it('should set next to the returnUrl value', () => {
+        expect(this.reqMock.form.options.next).to.equal(this.returnUrl)
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when a step heading exists', () => {
+      it('should set append a breadcrumb item', () => {
+        this.reqMock.form.options.heading = 'Step heading'
+        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.breadcrumbSpy).to.have.been.calledWith('Step heading')
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
   describe('process()', () => {
     beforeEach(() => {
       this.reqMock = Object.assign({}, globalReq, {

@@ -14,6 +14,7 @@ module.exports = {
     template: 'start',
   },
   '/client-details': {
+    heading: 'Client details',
     backLink: null,
     editable: true,
     next: 'market',
@@ -23,18 +24,21 @@ module.exports = {
     template: 'client-details',
   },
   '/market': {
+    heading: 'Market (country) of interest',
     editable: true,
     next: 'subscribers',
     fields: ['primary_market'],
     controller: MarketController,
   },
   '/subscribers': {
+    heading: 'Advisers in the UK',
     editable: true,
     next: 'confirm',
     fields: ['subscribers'],
     controller: SubscribersController,
   },
   '/confirm': {
+    heading: 'Check order details',
     backLink: null,
     templatePath: 'omis/apps/create/views',
     template: 'summary',

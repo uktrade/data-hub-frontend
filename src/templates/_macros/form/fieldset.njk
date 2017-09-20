@@ -1,0 +1,43 @@
+{##
+ # Render form fieldset with inner content
+ # @param {object} props - An object containing field properties
+ # @param {string} props.legend - Fieldset legend
+ # @param {string} props.hint - Fieldset hint
+ # @param {string} props.fieldId - Field id
+ # @param {string, array} [props.modifier] - Fieldset modifier
+ # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
+ # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
+ # @param {array}  [props.children] - an array of inner macro configurations
+ #
+ # @callback {function} caller - Inner contents
+#}
+{% macro Fieldset(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
+
+  <fieldset
+    class="
+      c-form-fieldset
+      {{ props.class if props.class }}
+      {{ modifier }}
+      {{ 'js-ConditionalSubfield' if props.condition }}
+    "
+    {% if props.condition %}
+      data-controlled-by="{{ props.condition.name }}"
+      data-control-value="{{ props.condition.value }}"
+    {% endif %}
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+  >
+    {% if props.legend %}
+      <legend class="c-form-fieldset__legend">
+        <span class="c-form-fieldset__legend-text">{{ props.legend }}</span>
+      </legend>
+    {% endif %}
+
+    {% if props.hint %}
+      <div id="hint-{{ props.fieldId }}" class="c-form-fieldset__hint">{{ props.hint }}</div>
+    {% endif %}
+
+    {{ children }}
+  </fieldset>
+{% endmacro %}

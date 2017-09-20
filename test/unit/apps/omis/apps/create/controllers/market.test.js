@@ -1,4 +1,4 @@
-const FormController = require('hmpo-form-wizard').Controller
+const FormController = require('~/src/apps/omis/controllers/form')
 
 const Controller = proxyquire('~/src/apps/omis/apps/create/controllers/market', {
   '../../../../../lib/metadata': {
@@ -41,7 +41,7 @@ describe('OMIS create market controller', () => {
         },
       })
 
-      FormController.prototype.configure = this.sandbox.spy()
+      this.sandbox.spy(FormController.prototype, 'configure')
     })
 
     it('should set the list of markets', () => {

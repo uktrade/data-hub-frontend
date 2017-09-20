@@ -1,0 +1,107 @@
+{% from "./form-group.njk" import FormGroup %}
+{% from "./select-box.njk" import SelectBox %}
+
+{##
+ # Render form group with a multi choice field (dropdown, radio, checkboxes)
+ # and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {sops.t} [props.type] - Field type
+ # @param {string} [props.idSuffix] - field id suffix (e.g. when used in loops)
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.inputClass] - Input class name
+ # @param {boolean} [props.optional] - Marks field as optional
+ # @param {array}  [props.children] - an array of inner macro configurations
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro MultipleChoiceField(props) %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
+  {% set element = 'fieldset' if props.type in ['checkbox', 'radio'] %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, children: children, element: element, class: props.groupClass })) %}
+    {% if props.type in ['checkbox', 'radio'] %}
+      {{ MultipleChoice(props) }}
+    {% else %}
+      {{ SelectBox(props | assign({ class: inputClass })) }}
+    {% endif %}
+
+    {{ children }}
+  {% endcall %}
+{% endmacro %}
+
+
+{##
+ # Render checkbox or radio button (multiple-choice)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} props.options - Field options
+ # @param {string, array} [props.modifier] - multiple-choice field modifier
+ # @param {string} [props.value] - Checked field value
+ # @param {array} [props.options[].children] - Main field subfields
+ # @param {array, function} [props.options] - Field options (either an array of objects or function returning and array of objects)
+ # @param {string} [props.initialOption] - Initial option label to use for empty value in select box
+ #}
+{% macro MultipleChoice(props) %}
+  {% if props.type in ['checkbox', 'radio'] %}
+    {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
+    {% set options = props.options() if props.options | isFunction else props.options %}
+    {% set fieldChildren = props.children | map(callAsMacro) if props.children | isArray else props.children %}
+
+    {% if props.type == 'radio' and props.initialOption %}
+      <div class="c-multiple-choice {{ modifier }}">
+        <input
+          class="c-multiple-choice__input"
+          type="{{ props.type }}"
+          name="{{ props.name }}"
+          id="{{ props.fieldId }}-0"
+          value=""
+          {% if not props.value %}checked{% endif %}
+        >
+        <label class="c-multiple-choice__label" for="{{ props.fieldId }}-0">
+          <span class="c-multiple-choice__label-text">{{ props.initialOption }}</span>
+        </label>
+      </div>
+    {% endif %}
+
+    {% for option in options %}
+      {% set children = option.children | map(callAsMacro) if options.children else renderAsMacro(option.children) %}
+      {# Explicity allow false for some yes/no values #}
+      {% if props.value or props.value === false %}
+        {% if props.type == 'checkbox' %}
+          {% set isSelected = option.value in props.value %}
+        {% else %}
+          {% set isSelected = option.value | string == props.value | string %}
+        {% endif %}
+      {% endif %}
+
+      <div class="c-multiple-choice {{ modifier }}">
+        <input
+          class="c-multiple-choice__input"
+          type="{{ props.type }}"
+          name="{{ props.name }}"
+          value="{{ option.value }}"
+          id="{{ props.fieldId }}-{{ loop.index }}"
+          {% if isSelected %}checked="checked"{% endif %}
+          {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+        >
+        <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
+          <span class="c-multiple-choice__label-text">{{ option.label }}</span>
+          {% if option.hint %}
+            <span class="c-multiple-choice__hint">{{ option.hint }}</span>
+          {% endif %}
+        </label>
+
+        {{ children }}
+      </div>
+    {% endfor %}
+
+    {{ fieldChildren }}
+  {% endif %}
+{% endmacro %}

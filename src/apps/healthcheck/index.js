@@ -1,9 +1,6 @@
-const router = require('express').Router()
-const { getHandler } = require('./controllers')
+const router = require('./router')
 
 module.exports = {
-  router: router.get('/healthcheck', getHandler),
-  controllers: {
-    getHandler,
-  },
+  mountpath: '/healthcheck',
+  router: router,
 }

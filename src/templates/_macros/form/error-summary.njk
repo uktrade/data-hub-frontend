@@ -1,0 +1,25 @@
+{##
+ # Render form errors summary
+ # @param {object} errors - A form error object
+ # @param {string} errors.summary - A helpful summary
+ # @param {object} errors.messages - A dictionary of errors with field name as key and message as value
+ #}
+{% macro ErrorSummary(errors) %}
+  {% if errors.messages | length or errors.summary %}
+    <div class="c-form-errors js-FormErrors" role="alert">
+      <h1 class="c-form-errors__heading heading-medium">There was a problem submitting this form</h1>
+      {% if errors.summary %}
+        <p class="c-form-errors__summary">{{ errors.summary }}</p>
+      {% endif %}
+      {% if errors.messages | length %}
+        <ul class="c-form-errors__list">
+          {% for name, message in errors.messages %}
+            <li class="c-form-errors__list-item">
+              <a href="#group-field-{{ name }}">{{ message }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}

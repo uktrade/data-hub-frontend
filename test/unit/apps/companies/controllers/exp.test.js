@@ -6,7 +6,7 @@ describe('Company export controller', () => {
   beforeEach(() => {
     this.company = Object.assign({}, _company, {
       export_to_countries: [{ id: '1234', name: 'France' }, { id: '2234', name: 'Italy' }],
-      future_interest_countries: [{ id: '4321', name: 'Germany' }],
+      future_interest_countries: [{ id: '4321', name: 'Germany' }, { id: '5321', name: 'Argentina' }],
     })
 
     this.sandbox = sinon.sandbox.create()
@@ -17,7 +17,9 @@ describe('Company export controller', () => {
     this.saveCompany = this.sandbox.stub().resolves(this.company)
     this.flattenIdFields = this.sandbox.spy(controllerUtils, 'flattenIdFields')
     this.getCommonTitlesAndlinks = this.sandbox.stub()
-    this.breadcrumbsStub = function () { return this }
+    this.breadcrumbsStub = function () {
+      return this
+    }
 
     this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
       '../services/data': {
@@ -125,11 +127,15 @@ describe('Company export controller', () => {
         },
         breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
-          expect(data.exportDetails).to.deep.equal({
-            exportToCountries: 'France, Italy',
-            futureInterestCountries: 'Germany',
-          })
-          done()
+          try {
+            expect(data.exportDetails).to.deep.equal({
+              exportToCountries: 'France<br>Italy',
+              futureInterestCountries: 'Germany<br>Argentina',
+            })
+            done()
+          } catch (error) {
+            done(error)
+          }
         },
       }, this.next)
     })
@@ -165,7 +171,9 @@ describe('Company export controller', () => {
         },
       }
 
-      this.next = function (error) { console.log(error) }
+      this.next = function (error) {
+        console.log(error)
+      }
 
       this.companyExportController.view(req, res, this.next)
     })
@@ -235,7 +243,7 @@ describe('Company export controller', () => {
         breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.export_to_countries).to.deep.equal(['1234', '2234'])
-          expect(data.future_interest_countries).to.deep.equal(['4321'])
+          expect(data.future_interest_countries).to.deep.equal(['4321', '5321'])
           done()
         },
       }, this.next)
@@ -369,7 +377,6 @@ describe('Company export controller', () => {
     })
 
     it('should handle when saving throws error', (done) => {
-      const error = new Error('error')
       this.companyExportController = proxyquire('~/src/apps/companies/controllers/exp', {
         '../repos': {
           getDitCompany: this.getDitCompany,
@@ -397,8 +404,10 @@ describe('Company export controller', () => {
       }, {
         locals: {},
         breadcrumb: this.breadcrumbsStub,
-      }, (_error) => {
-        expect(_error).to.deep.equal(error)
+      }, (err) => {
+        expect(err).to.be.an('error')
+        expect(err).to.be.an.instanceof(TypeError)
+        expect(err.message).to.equal('res.redirect is not a function')
         done()
       })
     })

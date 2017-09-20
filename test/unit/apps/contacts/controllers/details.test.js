@@ -50,7 +50,9 @@ describe('Contact controller', () => {
     }
     this.res = {
       locals: {},
-      breadcrumb () { return this },
+      breadcrumb () {
+        return this
+      },
       render: this.sandbox.spy(),
     }
 
@@ -134,7 +136,7 @@ describe('Contact controller', () => {
     it('should get the contact details display order', () => {
       this.contactController.getDetails(this.req, this.res, this.next)
 
-      expect(this.res.locals.contactDetailsDisplayOrder).to.deep.equal([ 'id', 'name' ])
+      expect(this.res.locals.contactDetailsDisplayOrder).to.deep.equal(['id', 'name'])
     })
 
     it('should render the contact details view', () => {

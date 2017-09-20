@@ -191,7 +191,9 @@ describe('Company contacts controller', function () {
           headingAddress: '1234 Road, London, EC1 1AA',
           id: '44332211',
         },
-        breadcrumb: function () { return this },
+        breadcrumb: function () {
+          return this
+        },
         render: function (template, options) {
           locals = Object.assign({}, res.locals, options)
           done()
@@ -320,65 +322,65 @@ describe('Company contacts controller', function () {
 
     it('should render a list of archived contacts', function () {
       return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
-      .then((document) => {
-        expect(document.querySelector('#archived-contact-list .c-entity-list__item')).to.not.be.null
-      })
+        .then((document) => {
+          expect(document.querySelector('#archived-contact-list .c-entity-list__item')).to.not.be.null
+        })
     })
 
     it('each un-archived line should include the required data', function () {
       return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
-      .then((document) => {
-        const contactElement = document.querySelector('#contact-list .c-entity-list__item')
+        .then((document) => {
+          const contactElement = document.querySelector('#contact-list .c-entity-list__item')
 
-        expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
-        expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Fred Smith')
-        expect(contactElement.textContent).to.include('Modified')
-        expect(contactElement.textContent).to.include('7 Jul 2017, 10:35am')
-        expect(contactElement.textContent).to.include('Country')
-        expect(contactElement.textContent).to.include('United Kingdom')
-      })
+          expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
+          expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Fred Smith')
+          expect(contactElement.textContent).to.include('Modified')
+          expect(contactElement.textContent).to.include('7 Jul 2017, 10:35am')
+          expect(contactElement.textContent).to.include('Country')
+          expect(contactElement.textContent).to.include('United Kingdom')
+        })
     })
 
     it('each archived line should include the required data', function () {
       return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
-      .then((document) => {
-        const contactElement = document.querySelector('#archived-contact-list .c-entity-list__item')
+        .then((document) => {
+          const contactElement = document.querySelector('#archived-contact-list .c-entity-list__item')
 
-        expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a64')
-        expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Bob Smith')
-        expect(contactElement.textContent).to.include('Archived')
-        expect(contactElement.textContent).to.include('9 Jul 2017, 10:35am')
-        expect(contactElement.textContent).to.include('Country')
-        expect(contactElement.textContent).to.include('United Kingdom')
-        expect(contactElement.textContent).to.include('Archived by')
-        expect(contactElement.textContent).to.include('Rocky Flintstone')
-        expect(contactElement.textContent).to.include('Archived reason')
-        expect(contactElement.textContent).to.include('Left company')
-      })
+          expect(contactElement.querySelector('.c-entity__title a').href).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a64')
+          expect(contactElement.querySelector('.c-entity__title a').textContent).to.equal('Bob Smith')
+          expect(contactElement.textContent).to.include('Archived')
+          expect(contactElement.textContent).to.include('9 Jul 2017, 10:35am')
+          expect(contactElement.textContent).to.include('Country')
+          expect(contactElement.textContent).to.include('United Kingdom')
+          expect(contactElement.textContent).to.include('Archived by')
+          expect(contactElement.textContent).to.include('Rocky Flintstone')
+          expect(contactElement.textContent).to.include('Archived reason')
+          expect(contactElement.textContent).to.include('Left company')
+        })
     })
 
     it('include a link to add a new contact', function () {
       return render(contactTemplate, { activeContacts, archivedContacts, addContactUrl, company })
-      .then((document) => {
-        const link = document.querySelector('a#add-contact-link')
-        expect(link.href).to.eq('/contacts/create?company=1234')
-      })
+        .then((document) => {
+          const link = document.querySelector('a#add-contact-link')
+          expect(link.href).to.eq('/contacts/create?company=1234')
+        })
     })
 
     it('should not render contacts section if there are none and warn user', function () {
       return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
-      .then((document) => {
-        expect(document.querySelector('#contact-list .c-collection__result-count').textContent).to.equal('0')
-        expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
-      })
+        .then((document) => {
+          expect(document.querySelector('#contact-list .c-collection__result-count').textContent).to.equal('0')
+          expect(document.querySelector('#no-contact-warning.infostrip').textContent).to.include('There are no contacts at this time.')
+        })
     })
 
     it('should not render archived contacts section if there are none', function () {
       return render(contactTemplate, { contacts: [], contactsArchived: [], addContactUrl, company })
-      .then((document) => {
-        expect(document.getElementById('archived-contact-list')).to.be.null
-        expect(document.getElementById('archived-title')).to.be.null
-      })
+        .then((document) => {
+          expect(document.getElementById('archived-contact-list')).to.be.null
+          expect(document.getElementById('archived-title')).to.be.null
+        })
     })
   })
 })
