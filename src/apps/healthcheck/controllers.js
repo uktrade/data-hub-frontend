@@ -1,11 +1,12 @@
 const logger = require('../../../config/logger')
 const serviceDependencies = require('./serviceDependencies')
 
-function pingdomTemplate (statusMessage) {
+function pingdomTemplate (statusMessage, responseTime) {
   return `
     <?xml version="1.0" encoding="UTF-8"?>
     <pingdom_http_custom_check>
       <status>${statusMessage}</status>
+      <response_time>${responseTime}</response_time>
     </pingdom_http_custom_check>
   `.trim()
 }
@@ -22,9 +23,20 @@ function healthCheck (dependencies) {
   return Promise.all(promiseArray)
 }
 
+function timer () {
+  const start = Date.now()
+  return () => Date.now() - start
+}
+
 function renderPingdomXml (req, res, next) {
+  const tickingTimer = timer()
+  let responseTime
+
   return healthCheck(serviceDependencies)
-    .then((results) => results.filter((result) => result.statusText !== 'OK'))
+    .then((results) => {
+      responseTime = tickingTimer()
+      return results.filter((result) => result.statusText !== 'OK')
+    })
     .then((errors) => {
       res.set({
         'Content-Type': 'text/xml',
@@ -38,12 +50,12 @@ function renderPingdomXml (req, res, next) {
 
         return res
           .status(503)
-          .send(pingdomTemplate('Service Unavailable'))
+          .send(pingdomTemplate('Service Unavailable', responseTime))
       }
 
       return res
         .status(200)
-        .send(pingdomTemplate('OK'))
+        .send(pingdomTemplate('OK', responseTime))
     })
     .catch(next)
 }
