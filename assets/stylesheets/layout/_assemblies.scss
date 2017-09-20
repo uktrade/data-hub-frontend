@@ -14,7 +14,9 @@
     margin-top: $default-spacing-unit * 2;
   }
 
-  .c-form-group--compact {
+  .c-form-group--compact,
+  .c-message-list,
+  .c-message {
     margin-top: $default-spacing-unit;
   }
 

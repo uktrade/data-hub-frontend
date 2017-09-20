@@ -11,6 +11,10 @@ $_first-element-spacing: $default-spacing-unit * 3;
     > .c-local-header__heading:first-child {
       margin-top: $_first-element-spacing;
     }
+
+    > .c-message-list:first-child {
+      margin-top: $default-spacing-unit;
+    }
   }
 
   &[class*="c-local-header--"] {
