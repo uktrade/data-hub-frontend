@@ -1,0 +1,67 @@
+{##
+ # Render form group container with label hint and field error message
+ # @param {object} props - An object containing group properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} props.label - Field label
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string} [props.element=div] - Group element
+ # @param {string, array} [props.modifier] - Group modifier
+ # @param {boolean} [props.optional] - Marks field as optional
+ # @param {boolean} [props.isLabelHidden=false] - Whether input label should be hidden
+ # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
+ # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
+ # @param {string} [props.innerHTML] - Optional inner HTML content
+ # @param {array}  [props.children] - an array of inner macro configurations
+ #
+ # @param {function} props.caller - Inner contents
+
+ #}
+{% macro FormGroup(props) %}
+  {% set groupElement = props.element or 'div' %}
+  {% set labelElement = 'legend' if groupElement == 'fieldset' else 'label' %}
+  {% set isLabelHidden = props.isLabelHidden | default(false) %}
+  {% set isConditional = props.condition %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
+  {% set children = caller() if caller else renderAsMacro(props.children) %}
+
+  {% if props.label and props.name -%}
+    <{{ groupElement }}
+      id="group-{{ props.fieldId }}"
+      class="
+        c-form-group
+        {{ 'has-error' if props.error and not isLabelHidden }}
+        {{ 'js-ConditionalSubfield' if isConditional }}
+        {{ modifier }}
+        {{ props.class if props.class }}
+      "
+      {% if isConditional %}
+        data-controlled-by="{{ props.condition.name }}"
+        data-control-value="{{ props.condition.value }}"
+      {% endif %}
+    >
+      <{{ labelElement }}
+        class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}"
+        {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
+      >
+        <span class="c-form-group__label-text">
+          {{ props.label }} {{ '(optional)' if props.optional }}
+        </span>
+        {% if props.error %}
+          <span class="c-form-group__error-message">{{ props.error }}</span>
+        {% endif %}
+        {% if props.hint %}
+          <span class="c-form-group__hint" id="hint-{{ props.fieldId }}">{{ props.hint | safe }}</span>
+        {% endif %}
+      </{{ labelElement }}>
+
+      {% if children or props.innerHTML %}
+        <div class="c-form-group__inner">
+          {{ children }}
+          {{ props.innerHTML | safe }}
+        </div>
+      {% endif %}
+    </{{ groupElement }}>
+  {%- endif %}
+{% endmacro %}

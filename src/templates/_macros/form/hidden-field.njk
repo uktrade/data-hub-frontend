@@ -1,0 +1,16 @@
+{% from "./input.njk" import Input %}
+
+{##
+ # Render hidden input field
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string, array} [props.modifier] - Field modifier
+ #}
+{% macro HiddenField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+  {{ Input(props | assign({
+    type: 'hidden',
+    fieldId: fieldId
+  })) }}
+{% endmacro %}

@@ -1,0 +1,31 @@
+{% from "./form-group.njk" import FormGroup %}
+{% from "./text-area.njk" import TextArea %}
+{% from "./input.njk" import Input %}
+
+{##
+ # Render form group with a text field and corresponding label, hint and error message
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.label - Field label
+ # @param {string} [props.type] - Field type
+ # @param {string} [props.idSuffix] - field id suffix (e.g. when used in loops)
+ # @param {string} [props.groupClass] - Group class name
+ # @param {string} [props.inputClass] - Input class name
+ # @param {string} [props.hint] - Field hint
+ # @param {string} [props.error] - Field error
+ # @param {string, array} [props.modifier] - Field modifier
+ # @param {boolean} [props.optional] - Marks field as optional
+ #
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro TextField(props) %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, class: props.groupClass })) %}
+    {% if props.type === 'textarea' %}
+      {{ TextArea(props | assign({ class: props.inputClass })) }}
+    {% else %}
+      {{ Input(props | assign({ class: props.inputClass })) }}
+    {% endif %}
+  {% endcall %}
+{% endmacro %}

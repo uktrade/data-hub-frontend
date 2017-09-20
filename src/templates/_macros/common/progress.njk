@@ -1,0 +1,24 @@
+{##
+ # Render progress bar
+ # @param {object} props
+ # @param {array} props.stageNames - stage names
+ # @param {string} props.currentStageName - the current stages name
+ #
+ #}
+{% macro Progress(props) %}
+  {% if props.stageNames | length %}
+    {% set currentStageIndex = props.stageNames.indexOf(props.currentStageName) %}
+    <div class="c-progress">
+      <ol class="c-progress-bar">
+        {% for stageName in props.stageNames %}
+          <li class="c-progress__stage
+          {{- ' is-active' if props.currentStageName == stageName -}}
+          {{- ' is-complete' if loop.index0 < currentStageIndex -}}"
+          >
+            <span class="c-progress__stage-title">{{ stageName }}</span>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endif %}
+{% endmacro %}

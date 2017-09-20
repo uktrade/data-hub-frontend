@@ -1,0 +1,32 @@
+{% from '../common.njk' import Pagination %}
+{% from '../entity.njk' import Entity %}
+{% from './collection-header.njk' import CollectionHeader %}
+
+{##
+ # Render collection component
+ # @param {object}  [props] - component props
+ # @param {array{}} [props.id] - collection element id
+ # @param {array{}} [props.items] - collection items
+ # @param {object}  [props.pagination] - collection pagination
+ # @param {object}  [props.selectedFilters] - object containing filters configuration
+ # @param {object}  [props.sortForm] - object containing sorting form
+ # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
+ # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
+#}
+{% macro Collection(props) %}
+  <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
+    {{ CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
+
+    {% if props.items | length %}
+      <ol class="c-entity-list">
+        {% for item in props.items %}
+          <li class="c-entity-list__item">
+            {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
+          </li>
+        {% endfor %}
+      </ol>
+    {% endif %}
+
+    {{ Pagination(props.pagination) }}
+  </article>
+{% endmacro %}

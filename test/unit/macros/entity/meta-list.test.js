@@ -1,5 +1,5 @@
 const { getMacros } = require('~/test/unit/macro-helper')
-const entitiesMacros = getMacros('entities')
+const entitiesMacros = getMacros('entity')
 
 describe('MetaList macro', () => {
   describe('invalid props', () => {

@@ -1,0 +1,84 @@
+{% from '../form.njk' import Form %}
+
+{##
+ # Render collection header
+ # @param {object}   props - component props
+ # @param {string}   [props.count] - result count
+ # @param {string}   [props.countLabel=result] - text to show next to count (singular)
+ # @param {function} [props.buildQuery] - buidlQuery function defined on global locals
+ # @param {object}   [props.selectedFilters] - an object containing selected filters
+ # @param {object}   [props.sortForm] - object containing sorting form
+ # @param {string}   [props.highlightTerm] - text to highlight
+ # @param {string}   [props.actionsHTML] - HTML content for actions block
+#}
+{% macro CollectionHeader(props) %}
+  {% set buildQuery = buildQuery or props.buildQuery %}
+  {% set el = props.el | default('div') %}
+  {% set count = props.count | default('0') %}
+  {% set countLabel = props.countLabel | default('result') %}
+
+  <header class="c-collection__header">
+    <div class="c-collection__header-row">
+      <div class="c-collection__header-intro">
+        <span class="c-collection__result-count">{{ count | formatNumber }}</span>
+        {{ countLabel | pluralise(count) }}
+        {% if props.highlightTerm or selectedFilters | length %}
+          matching
+          {% if props.highlightTerm %}
+            <span class="u-highlight">{{ props.highlightTerm }}</span>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% if props.selectedFilters | length > 1 or props.actionsHTML %}
+        <div class="c-collection__header-actions">
+          {% if props.selectedFilters | length > 1 %}
+            <a
+              href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
+              class="c-collection__filter-remove-all u-float-right js-xhr"
+              aria-label="Reset filter results"
+            >
+              Remove all filters
+            </a>
+          {% endif %}
+
+          {{ props.actionsHTML | safe }}
+        </div>
+      {% endif %}
+
+      {% if props.selectedFilters | length %}
+        <div class="c-collection__filter-summary">
+          {% for name, filter in props.selectedFilters %}
+            <span class="c-collection__filter-tag">
+              <span class="c-collection__filter-label">{{ filter.label }}</span>
+              <span class="c-collection__filter-value">
+                {%- if 'date' in name -%}
+                  {{ filter.valueLabel | formatDate }}
+                {%- else -%}
+                  {{ filter.valueLabel }}
+                {%- endif -%}
+              </span>
+              <a
+                class="c-collection__filter-remove js-xhr"
+                href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
+                aria-label="Remove filter"
+              >×</a>
+            </span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if props.sortForm or props.pagination %}
+      <div class="c-collection__header-row">
+        {% if props.pagination %}
+          <span class="c-collection__pagination-summary">
+            Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
+          </span>
+        {% endif %}
+
+        {{ Form(props.sortForm) if props.sortForm }}
+      </div>
+    {% endif %}
+
+  </header>
+{% endmacro %}

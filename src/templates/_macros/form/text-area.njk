@@ -1,0 +1,24 @@
+{##
+ # Render textarea field (form-control)
+ # @param {object} props - An object containing field properties
+ # @param {string} props.name - Field name
+ # @param {string} props.fieldId - Field id
+ # @param {string} [props.value] - Field type
+ # @param {string} [props.class] - Field class name
+ # @param {string} [props.placeholder] - Field placeholder
+ # @param {string, array} [props.modifier] - form-control modifier
+ # @param {string} [props.error] - Mark form-control with error
+ #}
+{% macro TextArea(props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
+
+  <textarea
+    name="{{ props.name }}"
+    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    id="{{ props.fieldId }}"
+    placeholder="{{ props.placeholder }}"
+    {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% if props.autofocus %}autofocus{% endif %}
+    rows="8"
+  >{{ props.value }}</textarea>
+{% endmacro %}

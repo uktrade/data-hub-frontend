@@ -1,0 +1,19 @@
+{% from './meta-item.njk' import MetaItem %}
+
+{##
+ # Render meta list
+ # @param {object} props
+ # @param {array}  props.items - meta items
+ # @param {string, array} [props.modifier] - meta container modifier (e.g. inline)
+ #}
+{% macro MetaList (props) %}
+  {% set modifier = props.modifier | concat('') | reverse | join(' c-meta-list--') if props.modifier %}
+
+  {% if props.items | length %}
+    <div class="c-meta-list {{ modifier }}">
+      {% for metaItem in props.items %}
+        {{ MetaItem(metaItem | assign({ highlightTerm: props.highlightTerm, modifier: props.itemModifier })) }}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endmacro %}
