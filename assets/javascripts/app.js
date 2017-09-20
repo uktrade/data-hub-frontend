@@ -13,7 +13,6 @@ const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
 const AddItems = require('./modules/add-items')
 
-const AddAnotherField = require('./_deprecated/add-another-field')
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
 const ContactEdit = require('./_deprecated/contact-edit')
@@ -31,7 +30,6 @@ XhrLink.init()
 AddItems.init()
 
 // Deprecated
-AddAnotherField.init()
 CompanyAdd.init()
 CompanyEdit.init()
 ContactEdit.init()

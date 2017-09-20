@@ -1,7 +1,10 @@
+const { map } = require('lodash')
+
 const metadataRepo = require('../../../lib/metadata')
 const { saveCompany, getDitCompany } = require('../repos')
 const { getCommonTitlesAndlinks } = require('../services/data')
 const { containsFormData, flattenIdFields } = require('../../../lib/controller-utils')
+const { transformObjectToOption } = require('../../transformers')
 
 const exportDetailsLabels = {
   exportToCountries: 'Currently exporting to',
@@ -57,8 +60,8 @@ async function view (req, res, next) {
 
     const data = {
       exportDetails: {
-        exportToCountries: company.export_to_countries.map(country => country.name).join(', '),
-        futureInterestCountries: company.future_interest_countries.map(country => country.name).join(),
+        exportToCountries: map(company.export_to_countries, 'name').join('<br>'),
+        futureInterestCountries: map(company.future_interest_countries, 'name').join('<br>'),
       },
       exportDetailsLabels,
       exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
@@ -81,7 +84,7 @@ async function edit (req, res, next) {
     const countryOptions = metadataRepo.countryOptions
     const data = {
       exportDetailsLabels,
-      countryOptions,
+      countryOptions: countryOptions.map(transformObjectToOption),
     }
 
     if (containsFormData(req)) {
