@@ -106,3 +106,15 @@ select.form-control {
 fieldset.error {
   margin-bottom: 20px;
 }
+
+strong {
+  font-weight: 700;
+}
+
+.column-three-quarters {
+  @include grid-column(3 / 4);
+}
+
+.table--readonly {
+  border-left-width: 5px;
+}

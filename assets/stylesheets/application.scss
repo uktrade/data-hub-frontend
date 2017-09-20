@@ -17,10 +17,6 @@ $images-dir: "/images/";
 @import "_deprecated/flash";
 @import "_deprecated/errors";
 @import "_deprecated/search";
-@import "_deprecated/shame";
 @import "_deprecated/splitheader";
 @import "_deprecated/tables";
-
-.table--readonly {
-  border-left-width: 5px;
-}
+@import "_deprecated/shame";

@@ -24,14 +24,6 @@ $asset-path: "../" !default;
 @import "../settings/layout";
 @import "../settings/colours";
 
-strong {
-  @include bold-font(20);
-}
-
-.column-three-quarters {
-  @include grid-column(3 / 4);
-}
-
 // Component styles
 @import "components/autocomplete";
 @import "components/backlink";
