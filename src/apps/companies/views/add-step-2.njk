@@ -16,56 +16,68 @@
     searchTerm: searchTerm,
     isLabelHidden: false,
     hiddenFields: {
-      business_type: businessType,
-      country: country
+      business_type: businessType
     },
     action: '/companies/add-step-2'
   }) }}
 
-  {% if companies %}
-    <ol class="results-list result-list--expandable">
-      {% for company in companies %}
-        <li class="results-list__result">
-          {% set isSelected = currentlySelected and (company.id == currentlySelected or company.company_number == currentlySelected) %}
+  {% if companies.results | length %}
+    <ol class="c-entity-list">
+      {% for company in companies.results %}
+        {% if company.company_number %}
+          {% set createLink = '/companies/add/ltd/' + company.company_number %}
+        {% else %}
+          {% set createLink = '/companies/edit/ltd/' + company.id %}
+        {% endif %}
 
-          {% if isSelected %}
-            <a class="open" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}">
-              <h3 class="result-title">{{company.name}}</h3>
-            </a>
-          {% else %}
-            <a class="closed" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}&selected={{ company.company_number if company.company_number else company.id }}">
-              <h3 class="result-title">{{ company.name }}</h3>
-            </a>
-          {% endif %}
+        <li class="c-entity-list__item">
+          <a href="{{ createLink }}" class="c-entity-list__link">
+            <h3 class="c-entity-list__item-header">{{ company.name | highlight(searchTerm) }}</h3>
 
-          {% if isSelected %}
-            <div class="panel panel-border-wide">
-                {{ keyvaluetable(
-                  displayDetails,
-                  labels=labels,
-                  keyorder=[
-                    'business_type',
-                    'company_status',
-                    'incorporation_date',
-                    'sic_code'
-                  ],
-                  class="table--small"
-                ) }}
+            {% if company.company_number %}
+              <dl class="metadata-list">
+                <dt class="metadata-list__term u-visually-hidden">Registered address</dt>
+                <dd class="metadata-list__value metadata-list__value--block">
+                  {% set comma = joiner() %}
+                  {% for part in [company.registered_address_1, company.registered_address_2, company.registered_address_town, company.registered_address_postcode] -%}
+                    {% if part -%}
+                      {%- set address = part -%}
 
-                {% if company.company_number %}
-                  {% set href = '/companies/add/ltd/' + company.company_number %}
-                  {% set label = 'Choose company' %}
-                {% else %}
-                  {% set href = '/companies/edit/ltd/' + company.id %}
-                  {% set label = 'Go to company record' %}
-                {% endif %}
+                      {{ comma() }}
+                      {% if loop.last -%}
+                        {{ address | upper }}
+                      {% else -%}
+                        {{ address | capitalize }}
+                      {%- endif %}
+                    {%- endif %}
+                  {%- endfor %}
+                </dd>
 
-                {% if company.company_number %}
-                  <div class="table_footnote">Data from <strong>Companies House</strong></div>
-                {% endif %}
-                <a class="button" href="{{ href }}">{{ label }}</a>
-            </div>
-          {% endif %}
+                <dt class="metadata-list__term">Company number</dt>
+                <dd class="metadata-list__value">{{ company.company_number }}</dd>
+
+                <dt class="metadata-list__term">Type</dt>
+                <dd class="metadata-list__value">{{ company.companies_house_data.company_category }}</dd>
+
+                <dt class="metadata-list__term">Status</dt>
+                <dd class="metadata-list__value">{{ company.companies_house_data.company_status }}</dd>
+
+                <dt class="metadata-list__term">Incorporated on</dt>
+                <dd class="metadata-list__value">{{ company.companies_house_data.incorporation_date | formatDate }}</dd>
+
+                <dt class="metadata-list__term">Nature of bussines (SIC)</dt>
+                <dd class="metadata-list__value">
+                  {% set codes = [company.companies_house_data.sic_code_1, company.companies_house_data.sic_code_2, company.companies_house_data.sic_code_3, company.companies_house_data.sic_code_4] | removeNilAndEmpty %}
+
+                  {{ codes | join(', ')}}
+                </dd>
+              </dl>
+
+              <p class="table_footnote">
+                Data from <strong>Companies House</strong>
+              </p>
+            {% endif %}
+          </a>
         </li>
       {% endfor %}
     </ol>

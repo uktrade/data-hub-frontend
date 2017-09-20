@@ -1,11 +1,13 @@
+const { map } = require('asyncro')
+
+const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
 const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
-const { getDisplayCH, getDisplayCompany } = require('../services/formatting')
 const { buildPagination } = require('../../../lib/pagination')
-const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels')
+const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
 function getAddStepOne (req, res, next) {
   res.render('companies/views/add-step-1.njk', {
@@ -74,66 +76,48 @@ function postAddStepOne (req, res, next) {
 
 async function getAddStepTwo (req, res, next) {
   const searchTerm = req.query.term
-  const currentlySelected = req.query.selected
   const businessType = req.query.business_type
-  const country = req.query.country
   const token = req.session.token
+  let companies = {}
 
   if (!searchTerm) {
     return res.render('companies/views/add-step-2.njk', {
       companyTypeOptions,
       businessType,
-      country,
     })
   }
 
   try {
-    let displayDetails
-    let labels
-
-    const companiesHouseAndLtdCompanies = await searchLimitedCompanies({
+    const searchResponse = await searchLimitedCompanies({
       token,
       searchTerm,
     })
-    const companies = companiesHouseAndLtdCompanies.results
-    companies.pagination = buildPagination(req.query, companiesHouseAndLtdCompanies.results)
-    const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
-      return company.id === currentlySelected ||
-        (company.company_number && company.company_number === currentlySelected)
-    })
-
-    if (highlightedCompany) {
-      if (highlightedCompany.company_number) {
-        const companiesHouseDetails = await getCHCompany(token, highlightedCompany.company_number)
-          .then((companiesHouseData) => {
-            return {
-              company_number: highlightedCompany.company_number,
-              companies_house_data: companiesHouseData,
-              contacts: [],
-              interactions: [],
-            }
-          })
-        displayDetails = await getDisplayCH(companiesHouseDetails.companies_house_data)
-        labels = chDetailsLabels
-      } else {
-        displayDetails = await getDisplayCompany(highlightedCompany)
-        labels = companyDetailsLabels
+    // TODO: Remove the need to make another call to the API to get the companies house details. The search API should return companies house companies and their relevant information
+    const results = await map(searchResponse.results, async (result) => {
+      if (result.company_number) {
+        try {
+          result.companies_house_data = await getCHCompany(token, result.company_number)
+        } catch (error) {
+          logger.error(error)
+        }
       }
-    }
-
-    res.render('companies/views/add-step-2.njk', {
-      companyTypeOptions,
-      companies,
-      searchTerm,
-      currentlySelected,
-      displayDetails,
-      labels,
-      businessType,
-      country,
+      return result
     })
+
+    companies = {
+      results,
+      pagination: buildPagination(req.query, results),
+    }
   } catch (error) {
-    next(error)
+    logger.error(error)
   }
+
+  res.render('companies/views/add-step-2.njk', {
+    companyTypeOptions,
+    companies,
+    searchTerm,
+    businessType,
+  })
 }
 
 module.exports = {
