@@ -54,19 +54,6 @@
   display: none;
 }
 
-.split-header {
-  overflow: hidden;
-
-  > * {
-    float: right;
-    margin-top: 0;
-  }
-
-  > *:first-child {
-    float: left;
-  }
-}
-
 #contact-list {
   .table--key-value {
     th {
