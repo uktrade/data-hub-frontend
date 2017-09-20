@@ -50,14 +50,6 @@ function toggleClass (element, className) {
   }
 }
 
-function toggleVisible (element) {
-  if (hasClass(element, 'u-hidden')) {
-    show(element)
-  } else {
-    hide(element)
-  }
-}
-
 /**
  * generateId
  *
@@ -228,7 +220,6 @@ module.exports = {
   show,
   createElementFromMarkup,
   removeElement,
-  toggleVisible,
   regenIds,
   resetFieldValues,
   closest,
