@@ -23,8 +23,8 @@ if (config.redis.url) {
     }
   } else {
     redisConfig = {
-      port: redisURL.port,
-      host: redisURL.hostname,
+      port: redisURL.port || 6379,
+      host: redisURL.hostname || 'redis',
     }
     if (redisURL.auth) {
       redisConfig.password = redisURL.auth.split(':')[1]
