@@ -62,14 +62,14 @@
   </nav>
 {% endblock %}
 
-{% block body_main_header %}
+{% block body_site_header %}
   {{ super() }}
 
-  {% if user %}
-    {{ GlobalNav({
-      items: GLOBAL_NAV_ITEMS
-    }) }}
-  {% endif %}
+  {{ GlobalNav({ items: GLOBAL_NAV_ITEMS }) if user }}
+{% endblock %}
+
+{% block body_main_header %}
+  {{ super() }}
 
   {% block local_header %}
     {% set pageTitle = getPageTitle() %}
