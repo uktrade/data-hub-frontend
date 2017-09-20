@@ -9,6 +9,7 @@
   &:first-child {
     border-bottom: 5px solid $text-colour;
   }
+
   &:not(first-child) {
     padding-top: ($default-spacing-unit / 2);
     border-bottom: 1px solid $grey-2;
