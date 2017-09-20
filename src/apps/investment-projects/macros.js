@@ -1,6 +1,7 @@
 const metadataRepo = require('../../lib/metadata')
+const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
-const { collectionFilterLabels } = require('./labels')
+const { collectionFilterLabels, requirementsLabels } = require('./labels')
 
 const investmentFiltersFields = [
   {
@@ -19,14 +20,9 @@ const investmentFiltersFields = [
       return metadataRepo.investmentTypeOptions.map(transformObjectToOption)
     },
   },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'sector',
+  Object.assign({}, globalFields.sectors, {
     initialOption: 'All sectors',
-    options () {
-      return metadataRepo.sectorOptions.map(transformObjectToOption)
-    },
-  },
+  }),
   {
     macroName: 'TextField',
     name: 'estimated_land_date_before',
@@ -68,7 +64,64 @@ const investmentSortForm = {
   ],
 }
 
+const requirementsFormConfig = {
+  buttonText: 'Save',
+  children: [
+    Object.assign({}, globalFields.strategicDrivers, {
+      initialOption: 'Choose a strategic driver',
+      label: requirementsLabels.edit.strategic_drivers,
+    }),
+    {
+      macroName: 'TextField',
+      type: 'textarea',
+      name: 'client_requirements',
+      optional: true,
+      label: requirementsLabels.edit.client_requirements,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'radio',
+      modifier: 'inline',
+      optional: true,
+      name: 'client_considering_other_countries',
+      label: requirementsLabels.edit.client_considering_other_countries,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' },
+      ],
+    },
+    Object.assign({}, globalFields.countries, {
+      name: 'competitor_countries',
+      initialOption: 'Select country',
+      label: requirementsLabels.edit.competitor_countries,
+      modifier: 'subfield',
+      condition: {
+        name: 'client_considering_other_countries',
+        value: 'true',
+      },
+    }),
+    Object.assign({}, globalFields.ukRegions, {
+      name: 'uk_region_locations',
+      label: requirementsLabels.edit.uk_region_locations,
+      initialOption: 'Select UK region',
+    }),
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'radio',
+      modifier: 'inline',
+      name: 'site_decided',
+      optional: true,
+      label: requirementsLabels.edit.site_decided,
+      options: [
+        { label: 'Yes', value: 'true' },
+        { label: 'No', value: 'false' },
+      ],
+    },
+  ],
+}
+
 module.exports = {
   investmentFiltersFields,
   investmentSortForm,
+  requirementsFormConfig,
 }
