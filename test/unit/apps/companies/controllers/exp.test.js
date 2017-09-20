@@ -6,7 +6,7 @@ describe('Company export controller', () => {
   beforeEach(() => {
     this.company = Object.assign({}, _company, {
       export_to_countries: [{ id: '1234', name: 'France' }, { id: '2234', name: 'Italy' }],
-      future_interest_countries: [{ id: '4321', name: 'Germany' }],
+      future_interest_countries: [{ id: '4321', name: 'Germany' }, { id: '5321', name: 'Argentina' }],
     })
 
     this.sandbox = sinon.sandbox.create()
@@ -127,11 +127,15 @@ describe('Company export controller', () => {
         },
         breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
-          expect(data.exportDetails).to.deep.equal({
-            exportToCountries: 'France, Italy',
-            futureInterestCountries: 'Germany',
-          })
-          done()
+          try {
+            expect(data.exportDetails).to.deep.equal({
+              exportToCountries: 'France<br>Italy',
+              futureInterestCountries: 'Germany<br>Argentina',
+            })
+            done()
+          } catch (error) {
+            done(error)
+          }
         },
       }, this.next)
     })
@@ -239,7 +243,7 @@ describe('Company export controller', () => {
         breadcrumb: this.breadcrumbsStub,
         render: (template, data) => {
           expect(data.export_to_countries).to.deep.equal(['1234', '2234'])
-          expect(data.future_interest_countries).to.deep.equal(['4321'])
+          expect(data.future_interest_countries).to.deep.equal(['4321', '5321'])
           done()
         },
       }, this.next)
