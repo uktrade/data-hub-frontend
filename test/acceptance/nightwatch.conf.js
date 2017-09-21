@@ -1,18 +1,20 @@
 require('dotenv').config()
 const seleniumServer = require('selenium-server')
 const chromeDriver = require('chromedriver')
+const glob = require('glob')
+const { join } = require('path')
 
 require('nightwatch-cucumber')({
   cucumberArgs: [
     '--require', 'test/acceptance/global.cucumber.js',
-    '--require', 'test/acceptance/features/step_definitions',
+    '--require', 'test/acceptance/features',
     '--format', 'json:cucumber/reports/tests.json',
     process.env.FEATURES_FOLDER || 'test/acceptance/features',
   ],
 })
 
 module.exports = {
-  page_objects_path: 'test/acceptance/page_objects',
+  page_objects_path: glob.sync(join(__dirname, 'features/**/page-objects')),
   globals_path: 'test/acceptance/global.nightwatch.js',
   selenium: {
     start_process: true,
