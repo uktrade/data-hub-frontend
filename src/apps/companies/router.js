@@ -19,6 +19,7 @@ const {
 
 const { renderCompanyList } = require('./controllers/list')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
+const { populateForm } = require('./middleware/form')
 const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
@@ -51,42 +52,42 @@ router.get('/view/ltd/:id', ltdController.getDetails)
 
 router
   .route('/edit/ltd/:id')
-  .get(foreignController.editCommon, ltdController.editDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, ltdController.editDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router
   .route('/add/ltd/:company_number')
-  .get(foreignController.editCommon, ltdController.addDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, ltdController.addDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router
   .route('/add/ltd')
-  .get(foreignController.editCommon, ltdController.addDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, ltdController.addDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router.get('/view/ukother/:id', ukotherController.getDetails)
 
 router
   .route('/edit/ukother/:id')
-  .get(foreignController.editCommon, ukotherController.editDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, ukotherController.editDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router
   .route('/add/ukother')
-  .get(foreignController.editCommon, ukotherController.addDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, ukotherController.addDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router.get('/view/foreign/:id', foreignController.getDetails)
 
 router
   .route('/edit/foreign/:id')
-  .get(foreignController.editCommon, foreignController.editDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, foreignController.editDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router
   .route('/add/foreign')
-  .get(foreignController.editCommon, foreignController.addDetails)
-  .post(foreignController.editCommon, foreignController.postDetails)
+  .get(populateForm, foreignController.addDetails)
+  .post(populateForm, foreignController.postDetails)
 
 router.get('/:id/investments', investmentsController.getAction)
 router.get('/:id/audit', auditController.getAudit)

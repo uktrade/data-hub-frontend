@@ -4,7 +4,7 @@ const { getDitCompany } = require('../repos')
 const companyFormService = require('../services/form')
 const companyService = require('../services/data')
 const companyFormattingService = require('../services/formatting')
-const { companyDetailsLabels, accountManagementDisplayLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels, accountManagementDisplayLabels } = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
 const { containsFormData, isBlank } = require('../../../lib/controller-utils')
 const companyWithoutCHKeys = ['business_type', 'registered_address', 'trading_name', 'trading_address', 'headquarter_type', 'sector', 'website', 'description', 'employee_range', 'turnover_range']
@@ -31,18 +31,6 @@ async function getDetails (req, res, next) {
   } catch (error) {
     next(error)
   }
-}
-
-function editCommon (req, res, next) {
-  res.locals.regionOptions = metadataRepository.regionOptions
-  res.locals.sectorOptions = metadataRepository.sectorOptions
-  res.locals.employeeOptions = metadataRepository.employeeOptions
-  res.locals.turnoverOptions = metadataRepository.turnoverOptions
-  res.locals.headquarterOptions = metadataRepository.headquarterOptions
-  res.locals.companyDetailsLabels = companyDetailsLabels
-  res.locals.countryOptions = metadataRepository.countryOptions
-  res.locals.hqLabels = hqLabels
-  if (next) next()
 }
 
 function addDetails (req, res, next) {
@@ -116,5 +104,4 @@ module.exports = {
   editDetails,
   addDetails,
   postDetails,
-  editCommon,
 }

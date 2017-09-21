@@ -602,36 +602,4 @@ describe('Company controller, foreign', function () {
       companyControllerForeign.postDetails(req, res, next)
     })
   })
-  describe('edit common', function () {
-    let req
-    let res
-
-    beforeEach(function () {
-      req = {
-        session: {
-          token: '1234',
-        },
-      }
-      res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-      }
-    })
-    it('should include the require properties in the response', function () {
-      companyControllerForeign.editCommon(req, res)
-      expect(res.locals).to.have.property('regionOptions')
-      expect(res.locals).to.have.property('sectorOptions')
-      expect(res.locals).to.have.property('employeeOptions')
-      expect(res.locals).to.have.property('turnoverOptions')
-      expect(res.locals).to.have.property('headquarterOptions')
-      expect(res.locals).to.have.property('hqLabels')
-      expect(res.locals).to.have.property('companyDetailsLabels')
-    })
-
-    it('should goto the next function if there is one', function () {
-      const next = sinon.stub()
-      companyControllerForeign.editCommon(req, res, next)
-      expect(next).to.be.called
-    })
-  })
 })
