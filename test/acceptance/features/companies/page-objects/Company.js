@@ -51,7 +51,7 @@ module.exports = {
     newCompanySearch: '#field-term',
     parentCompanyResultItem: '.results-list__result:first-child a',
     parentCompanyResultItemChooseButton: '.results-list__result:first-child .panel .button',
-    flashMessage: '.c-messages li:first-child',
+    flashMessage: '.c-message-list li:first-child',
     collectionsCompanyNameInput: '#field-name',
     collectionResultsCompanyName: '.c-entity-list li:first-child .c-entity__title > a',
     collectionResultsSectorLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:first-child .c-meta-list__item-label',

@@ -9,10 +9,10 @@
 
 {% block main_grid_right_column %}
   {% if not order.editable %}
-    <div class="c-messages__item c-messages__item--info">
+    {% call Message({ type: 'info', element: 'div' }) %}
       <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
       <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
-    </div>
+    {% endcall %}
   {% endif %}
 
   {{ AnswersSummary({

@@ -10,7 +10,7 @@ module.exports = {
     signOutLink: '.qa-sign-out',
     signInLink: '.qa-sign-in',
     supportLink: '.qa-support',
-    flashMessage: '.c-messages__item--success',
+    flashMessage: '.c-message--success',
     usernameField: '#field-username',
     passwordField: '#field-password',
     searchBar: '#field-term',

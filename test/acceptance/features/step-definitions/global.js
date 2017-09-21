@@ -8,6 +8,6 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I see the "(.*)" success message$/, async (successMsg) => {
     await Company
       .assert.containsText('@flashMessage', successMsg)
-      .assert.cssClassPresent('@flashMessage', 'c-messages__item--success')
+      .assert.cssClassPresent('@flashMessage', 'c-message--success')
   })
 })
