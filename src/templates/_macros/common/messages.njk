@@ -1,0 +1,42 @@
+{##
+ # @param {string} text - A string to render as the contents
+ # @param {string} [type] - Message type to render
+ # @param {string} [element] - Element to use for the component
+ # @param {function} [props.caller] - Optional inner contents
+ #}
+{% macro Message(props) %}
+  {% if props.text or caller %}
+    {% set element = props.element | default('p') %}
+
+    <{{ element }} class="c-messages__item{{ ' c-messages__item--' + props.type if props.type }}">
+      {% if caller %}
+        {{ caller() }}
+      {% else %}
+        {{ props.text }}
+      {% endif %}
+    </{{ element }}>
+  {% endif %}
+{% endmacro %}
+
+{##
+ # @param {object} items - An object containing types as a key and a list
+ #                          of messages as an array
+ # @param {boolean} [isDismissable=true] - Whether messages should be closeable with javascript
+ #}
+{% macro MessageList(props) %}
+  {% if props.items|length %}
+    {% set isDismissable = props.isDismissable | default(true) %}
+
+    <ul class="c-messages {{ 'js-Messages' if isDismissable }}" tabindex="-1" role="alert">
+      {% for type, messages in props.items %}
+        {% for text in messages %}
+          {{ Message({
+            text: text,
+            type: type,
+            element: 'li'
+          }) }}
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
