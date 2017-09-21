@@ -19,6 +19,7 @@
 
 .c-meta-list__item-value {
   color: $text-colour;
+  display: inline-block;
 
   &:link,
   &:visited {
