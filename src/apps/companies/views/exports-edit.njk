@@ -5,12 +5,13 @@
 
   <h2 class="heading-medium">Add export market(s)</h2>
 
-  {{ errorPanel( errors, labels=exportDetailsLabels ) }}
-
-  <form method="POST">
-    <input type="hidden" name="id" value="{{company.id}}">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-
+  {% call Form({
+    buttonText: 'Update',
+    returnLink: '/companies/' + company.id + '/exports',
+    hiddenFields: {
+      id: company.id
+    }
+  }) %}
     {# TODO: Make these work without JavaScript #}
     {% set exportCountries = export_to_countries if export_to_countries.length else ['']%}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
@@ -58,7 +59,5 @@
         }) }}
       {% endfor %}
     </div>
-
-    {{ save(backUrl = "/companies/" + company.id + "/exports") }}
-  </form>
+  {% endcall %}
 {% endblock %}
