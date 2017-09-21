@@ -21,66 +21,15 @@
     action: '/companies/add-step-2'
   }) }}
 
-  {% if companies.results | length %}
-    <ol class="c-entity-list">
-      {% for company in companies.results %}
-        {% if company.company_number %}
-          {% set createLink = '/companies/add/ltd/' + company.company_number %}
-        {% else %}
-          {% set createLink = '/companies/edit/ltd/' + company.id %}
-        {% endif %}
-
-        <li class="c-entity-list__item">
-          <a href="{{ createLink }}" class="c-entity-list__link">
-            <h3 class="c-entity-list__item-header">{{ company.name | highlight(searchTerm) }}</h3>
-
-            {% if company.company_number %}
-              <dl class="metadata-list">
-                <dt class="metadata-list__term u-visually-hidden">Registered address</dt>
-                <dd class="metadata-list__value metadata-list__value--block">
-                  {% set comma = joiner() %}
-                  {% for part in [company.registered_address_1, company.registered_address_2, company.registered_address_town, company.registered_address_postcode] -%}
-                    {% if part -%}
-                      {%- set address = part -%}
-
-                      {{ comma() }}
-                      {% if loop.last -%}
-                        {{ address | upper }}
-                      {% else -%}
-                        {{ address | capitalize }}
-                      {%- endif %}
-                    {%- endif %}
-                  {%- endfor %}
-                </dd>
-
-                <dt class="metadata-list__term">Company number</dt>
-                <dd class="metadata-list__value">{{ company.company_number }}</dd>
-
-                <dt class="metadata-list__term">Type</dt>
-                <dd class="metadata-list__value">{{ company.companies_house_data.company_category }}</dd>
-
-                <dt class="metadata-list__term">Status</dt>
-                <dd class="metadata-list__value">{{ company.companies_house_data.company_status }}</dd>
-
-                <dt class="metadata-list__term">Incorporated on</dt>
-                <dd class="metadata-list__value">{{ company.companies_house_data.incorporation_date | formatDate }}</dd>
-
-                <dt class="metadata-list__term">Nature of bussines (SIC)</dt>
-                <dd class="metadata-list__value">
-                  {% set codes = [company.companies_house_data.sic_code_1, company.companies_house_data.sic_code_2, company.companies_house_data.sic_code_3, company.companies_house_data.sic_code_4] | removeNilAndEmpty %}
-
-                  {{ codes | join(', ')}}
-                </dd>
-              </dl>
-
-              <p class="table_footnote">
-                Data from <strong>Companies House</strong>
-              </p>
-            {% endif %}
-          </a>
-        </li>
-      {% endfor %}
-    </ol>
+  {% if results | length %}
+    {{
+      Collection(results | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'company',
+        listModifier: 'block-links',
+        query: QUERY
+      }))
+    }}
 
     {{ Message({
       type: 'muted',
