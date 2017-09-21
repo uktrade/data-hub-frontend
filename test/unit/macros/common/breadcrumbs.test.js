@@ -1,4 +1,5 @@
-const { renderComponentToDom } = require('../component-helper')
+const { getMacros } = require('~/test/unit/macro-helper')
+const commonMacros = getMacros('common')
 
 const data = [{
   url: '/',
@@ -14,14 +15,14 @@ const data = [{
 describe('Breadcrumb component', () => {
   describe('when no data is supplied', () => {
     it('should not render', () => {
-      const component = renderComponentToDom('breadcrumbs')
+      const component = commonMacros.renderToDom('Breadcrumbs')
       expect(component).to.be.null
     })
   })
 
   describe('when only 1 item is supplied', () => {
     it('should not render', () => {
-      const component = renderComponentToDom('breadcrumbs', {
+      const component = commonMacros.renderToDom('Breadcrumbs', {
         items: [{
           url: '/',
           name: 'Home',
@@ -33,7 +34,7 @@ describe('Breadcrumb component', () => {
 
   describe('when more than 2 items are supplied', () => {
     beforeEach(() => {
-      this.component = renderComponentToDom('breadcrumbs', { items: data })
+      this.component = commonMacros.renderToDom('Breadcrumbs', { items: data })
     })
 
     it('should render 2 items', () => {
