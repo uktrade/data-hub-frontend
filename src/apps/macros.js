@@ -91,6 +91,16 @@ const globalFields = {
     },
   },
 
+  locationTypes: {
+    macroName: 'MultipleChoiceField',
+    name: 'location_type',
+    label: 'Location type',
+    initialOption: '-- Select event --',
+    options () {
+      return metadata.locationTypeOptions.map(transformObjectToOption)
+    },
+  },
+
   serviceDeliveryStatuses: {
     macroName: 'MultipleChoiceField',
     name: 'status',
@@ -108,6 +118,26 @@ const globalFields = {
     initialOption: '-- Select service --',
     options () {
       return metadata.serviceDeliveryServiceOptions.map(transformObjectToOption)
+    },
+  },
+
+  teams: {
+    macroName: 'MultipleChoiceField',
+    name: 'team',
+    label: 'Team',
+    initialOption: '-- Select team --',
+    options () {
+      return metadata.teams.map(transformObjectToOption)
+    },
+  },
+
+  programmes: {
+    macroName: 'MultipleChoiceField',
+    name: 'programme',
+    label: 'Programme',
+    initialOption: '-- Select programme --',
+    options () {
+      return metadata.programmeOptions.map(transformObjectToOption)
     },
   },
 }
