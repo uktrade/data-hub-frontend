@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { assign, get } = require('lodash')
 
 function transformCompanyToListItem ({
   id,
@@ -74,6 +74,36 @@ function transformCompanyToListItem ({
   }
 }
 
+function transformCompaniesHouseCompanyToListItem (props) {
+  return assign({}, transformCompanyToListItem(props), {
+    meta: [
+      {
+        label: 'Status',
+        value: get(props, 'companies_house_data.company_status'),
+        type: 'badge',
+      },
+      {
+        label: 'Company number',
+        value: get(props, 'company_number'),
+      },
+      {
+        label: 'Type',
+        value: get(props, 'companies_house_data.company_category'),
+      },
+      {
+        label: 'Nature of business (SIC)',
+        value: get(props, 'companies_house_data.sic_code_1'),
+      },
+      {
+        label: 'Incorporated on',
+        value: get(props, 'companies_house_data.incorporation_date'),
+        type: 'date',
+      },
+    ],
+  })
+}
+
 module.exports = {
   transformCompanyToListItem,
+  transformCompaniesHouseCompanyToListItem,
 }

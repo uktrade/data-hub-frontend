@@ -292,7 +292,7 @@ describe('Company add controller', function () {
           render: function (template, options) {
             try {
               const allOptions = mergeLocals(res, options)
-              const company = allOptions.companies.results[0]
+              const company = allOptions.results.items[0]
               expect(company.name).to.equal('ACHME LIMITED')
               done()
             } catch (error) {
