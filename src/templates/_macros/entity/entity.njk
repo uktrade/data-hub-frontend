@@ -11,6 +11,7 @@
  # @param {array}  [props.metaBadges{}] - an array of metadata item objects
  # @param {array}  [props.metaItems{}] - an array of metadata item objects
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ # @param {boolean} [props.isBlockLink] - whether the entity container should be link
  # @param {sting|array} [props.contentMetaModifier] - A modified to apply to metadata to control it's display
  #}
 {% macro Entity (props) %}
@@ -19,19 +20,21 @@
     {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
-    {% set metaItems = props.meta
-      | reject(['type', 'badge'])
-    %}
+    {% set metaItems = props.meta | reject(['type', 'badge']) %}
     {% set highlightedName = props.name | highlight(props.highlightTerm) %}
+    {% set containerElement = 'a' if props.isBlockLink else 'div' %}
 
-    <div class="c-entity c-entity--{{ props.type }}">
+    <{{ containerElement }}
+      class="c-entity c-entity--{{ props.type }} {{ 'c-entity--block-link' if props.isBlockLink }}"
+      {% if props.isBlockLink %}href="{{ url }}"{% endif %}
+    >
       {% if props.code %}
         <div class="c-entity__code">{{ props.code | highlight(props.highlightTerm, true) }}</div>
       {% endif %}
 
       <div class="c-entity__header">
         <h3 class="c-entity__title">
-          {% if props.id %}
+          {% if props.id and not props.isBlockLink %}
             <a href="{{ url }}">{{ highlightedName }}</a>
           {% else %}
             {{ highlightedName }}
@@ -61,6 +64,6 @@
           }}
         </div>
       {% endif %}
-    </div>
+    </{{ containerElement }}>
   {% endif %}
 {% endmacro %}

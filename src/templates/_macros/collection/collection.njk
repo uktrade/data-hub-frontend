@@ -11,6 +11,7 @@
  # @param {object}  [props.selectedFilters] - object containing filters configuration
  # @param {object}  [props.sortForm] - object containing sorting form
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
+ # @param {boolean} [props.hasBlockLinks] - whether the list items should be block links
  # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
 #}
 {% macro Collection(props) %}
@@ -21,7 +22,7 @@
       <ol class="c-entity-list">
         {% for item in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
+            {{ Entity(item | assign({ highlightTerm: props.highlightTerm, isBlockLink: props.hasBlockLinks })) }}
           </li>
         {% endfor %}
       </ol>
