@@ -52,41 +52,41 @@ router.get('/view/ltd/:id', ltdController.getDetails)
 router
   .route('/edit/ltd/:id')
   .get(foreignController.editCommon, ltdController.editDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router
   .route('/add/ltd/:company_number')
   .get(foreignController.editCommon, ltdController.addDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router
   .route('/add/ltd')
   .get(foreignController.editCommon, ltdController.addDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router.get('/view/ukother/:id', ukotherController.getDetails)
 
 router
   .route('/edit/ukother/:id')
   .get(foreignController.editCommon, ukotherController.editDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router
   .route('/add/ukother')
   .get(foreignController.editCommon, ukotherController.addDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router.get('/view/foreign/:id', foreignController.getDetails)
 
 router
   .route('/edit/foreign/:id')
   .get(foreignController.editCommon, foreignController.editDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router
   .route('/add/foreign')
   .get(foreignController.editCommon, foreignController.addDetails)
-  .post(foreignController.postDetails)
+  .post(foreignController.editCommon, foreignController.postDetails)
 
 router.get('/:id/investments', investmentsController.getAction)
 router.get('/:id/audit', auditController.getAudit)

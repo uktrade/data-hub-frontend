@@ -99,8 +99,6 @@ function postDetails (req, res, next) {
           res.locals.errors = response.errors
         }
 
-        // re-edit the data
-        editCommon(req, res)
         if (req.params.id) {
           editDetails(req, res, next)
         } else {
