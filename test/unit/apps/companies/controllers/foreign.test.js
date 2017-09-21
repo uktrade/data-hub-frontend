@@ -14,7 +14,6 @@ describe('Company controller, foreign', function () {
   let companyControllerForeign
   let fakeCompanyForm
   let saveCompanyFormStub
-  let flashStub
   let breadcrumbStub
   let company
   const metadataRepositoryStub = {
@@ -54,7 +53,6 @@ describe('Company controller, foreign', function () {
     getDitCompanyStub = sinon.stub().resolves(company)
     getForeignCompanyAsFormDataStub = sinon.stub().returns(fakeCompanyForm)
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
-    flashStub = sinon.stub()
     breadcrumbStub = function () {
       return this
     }
@@ -471,135 +469,6 @@ describe('Company controller, foreign', function () {
       }
 
       companyControllerForeign.editDetails(req, res, next)
-    })
-  })
-  describe('post details', function () {
-    it('call the company repository to save the company', function (done) {
-      const body = {
-        id: '1234',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        redirect: function () {
-          expect(saveCompanyFormStub).to.be.calledWith('1234', body)
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerForeign.postDetails(req, res, next)
-    })
-    it('should forward to the detail screen if save is good', function (done) {
-      const body = {
-        id: '999',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        redirect: function (url) {
-          expect(url).to.equal('/companies/view/foreign/999')
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerForeign.postDetails(req, res, next)
-    })
-    it('should re-render the edit form with form data on error', function (done) {
-      saveCompanyFormStub = sinon.stub().rejects({
-        errors: { name: ['test'] },
-      })
-
-      companyControllerForeign = proxyquire('~/src/apps/companies/controllers/foreign', {
-        '../services/formatting': {
-          getDisplayCompany: getDisplayCompanyStub,
-          getDisplayCH: getDisplayCHStub,
-        },
-        '../services/form': {
-          getForeignCompanyAsFormData: getForeignCompanyAsFormDataStub,
-          saveCompanyForm: saveCompanyFormStub,
-        },
-        '../repos': {
-          getCHCompany: getCHCompanyStub,
-          getDitCompany: getDitCompanyStub,
-        },
-        '../../../lib/metadata': metadataRepositoryStub,
-      })
-
-      const body = {
-        id: '999',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        query: { business_type: 'charity' },
-        params: {},
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        redirect: function () {
-          throw Error('error')
-        },
-        render: function (template) {
-          try {
-            expect(template).to.equal('companies/views/edit')
-            expect(res.locals).to.have.property('errors')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }
-      companyControllerForeign.postDetails(req, res, next)
-    })
-    it('should flash a message to let people know they did something', function (done) {
-      const body = {
-        id: '1234',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        redirect: function () {
-          expect(flashStub).to.be.calledWith('success', 'Company record updated')
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerForeign.postDetails(req, res, next)
     })
   })
 })

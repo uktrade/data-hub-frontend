@@ -19,7 +19,7 @@ const {
 
 const { renderCompanyList } = require('./controllers/list')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
-const { populateForm } = require('./middleware/form')
+const { populateForm, handleFormPost } = require('./middleware/form')
 const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
@@ -53,41 +53,41 @@ router.get('/view/ltd/:id', ltdController.getDetails)
 router
   .route('/edit/ltd/:id')
   .get(populateForm, ltdController.editDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, ltdController.editDetails)
 
 router
   .route('/add/ltd/:company_number')
   .get(populateForm, ltdController.addDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, ltdController.addDetails)
 
 router
   .route('/add/ltd')
   .get(populateForm, ltdController.addDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, ltdController.addDetails)
 
 router.get('/view/ukother/:id', ukotherController.getDetails)
 
 router
   .route('/edit/ukother/:id')
   .get(populateForm, ukotherController.editDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, ukotherController.editDetails)
 
 router
   .route('/add/ukother')
   .get(populateForm, ukotherController.addDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, ukotherController.addDetails)
 
 router.get('/view/foreign/:id', foreignController.getDetails)
 
 router
   .route('/edit/foreign/:id')
   .get(populateForm, foreignController.editDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, foreignController.editDetails)
 
 router
   .route('/add/foreign')
   .get(populateForm, foreignController.addDetails)
-  .post(populateForm, foreignController.postDetails)
+  .post(populateForm, handleFormPost, foreignController.addDetails)
 
 router.get('/:id/investments', investmentsController.getAction)
 router.get('/:id/audit', auditController.getAudit)

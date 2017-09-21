@@ -34,4 +34,133 @@ describe('Companies form middleware', function () {
       expect(this.nextSpy).to.be.calledWith()
     })
   })
+
+  describe('handleFormPost()', () => {
+    const token = 'abcd1234'
+    const company = {
+      id: '12345abcde',
+      name: 'foo',
+    }
+    const body = {
+      id: '12345abcde',
+      name: 'bar',
+    }
+
+    beforeEach(() => {
+      this.flashSpy = this.sandbox.spy()
+      this.breadcrumbStub = this.sandbox.stub().returnsThis()
+      this.redirectSpy = this.sandbox.spy()
+      this.saveCompanyFormStub = this.sandbox.stub()
+
+      this.reqMock = {
+        body,
+        session: {
+          token,
+        },
+        flash: this.flashSpy,
+      }
+      this.resMock = {
+        locals: {},
+        breadcrumb: this.breadcrumbStub,
+        redirect: this.redirectSpy,
+      }
+
+      this.formMiddleware = proxyquire('~/src/apps/companies/middleware/form', {
+        '../services/form': {
+          saveCompanyForm: this.saveCompanyFormStub,
+        },
+      })
+    })
+
+    context('when save resolves', () => {
+      beforeEach(() => {
+        this.saveCompanyFormStub.resolves(company)
+      })
+
+      it('should call save company service', async () => {
+        await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        expect(this.saveCompanyFormStub).to.have.been.calledWith(token, body)
+      })
+
+      it('should call flash message', async () => {
+        await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        expect(this.flashSpy).to.have.been.calledOnce
+      })
+
+      it('should redirect to the entity', async () => {
+        await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        expect(this.redirectSpy).to.have.been.calledWith(`/viewcompanyresult/${company.id}`)
+      })
+
+      it('should not call next', async () => {
+        await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
+    context('when save rejects', () => {
+      context('when API returns errors', () => {
+        beforeEach(() => {
+          this.error = {
+            errors: {
+              foo: 'is required',
+            },
+          }
+          this.saveCompanyFormStub.rejects(this.error)
+        })
+
+        it('should set error on locals', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.resMock.locals).to.have.property('errors')
+        })
+
+        it('should call next with no argument', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when API returns errors', () => {
+        beforeEach(() => {
+          this.error = {
+            errors: {
+              errors: {
+                foo: 'is required',
+              },
+            },
+          }
+          this.saveCompanyFormStub.rejects(this.error)
+        })
+
+        it('should set error on locals', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.resMock.locals).to.have.property('errors')
+        })
+
+        it('should call next with no argument', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when catch returns other error', () => {
+        beforeEach(() => {
+          this.error = {
+            statusCode: 500,
+          }
+          this.saveCompanyFormStub.rejects(this.error)
+        })
+
+        it('should not set error on locals', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.resMock.locals).not.to.have.property('errors')
+        })
+
+        it('should call next with error as argument', async () => {
+          await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          expect(this.nextSpy).to.have.been.calledWith(this.error)
+        })
+      })
+    })
+  })
 })
