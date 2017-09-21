@@ -7,7 +7,7 @@ const { collectionFilterLabels } = require('./labels')
 
 const currentYear = (new Date()).getFullYear()
 
-const eventFormConfig = (organisers) => {
+const eventFormConfig = ({ advisers }) => {
   return {
     method: 'post',
     buttonText: 'Save and Continue',
@@ -112,7 +112,7 @@ const eventFormConfig = (organisers) => {
         label: 'Organiser',
         optional: true,
         initialOption: '-- Select organiser --',
-        options: organisers,
+        options: advisers,
       },
       {
         macroName: 'MultipleChoiceField',
