@@ -195,7 +195,7 @@ describe('Company controller, foreign', function () {
         breadcrumb: breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/details-foreign')
+            expect(template).to.equal('companies/views/details')
             done()
           } catch (e) {
             done(e)

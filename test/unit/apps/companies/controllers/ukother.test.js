@@ -197,7 +197,7 @@ describe('Company controller, uk other', function () {
         breadcrumb: breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/details-ukother')
+            expect(template).to.equal('companies/views/details')
             done()
           } catch (e) {
             done(e)
