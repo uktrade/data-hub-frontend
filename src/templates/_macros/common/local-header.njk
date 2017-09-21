@@ -1,3 +1,5 @@
+{% from './messages.njk' import MessageList %}
+
 {##
  # Render page local header
  # @param {object} props - An object containing local header properties
@@ -21,7 +23,7 @@
         {{ Breadcrumbs({ items: breadcrumbs }) }}
 
         {% if messages|length %}
-          {% component 'messages', { messages: messages } %}
+          {{ MessageList({ items: messages }) }}
         {% endif %}
 
         {% if props.actions %}
