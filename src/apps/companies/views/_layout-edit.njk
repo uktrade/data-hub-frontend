@@ -1,10 +1,8 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {{
-    LocalHeader({
-      heading: 'Edit company' if formData.id else 'Add company',
-      modifier: 'light-banner'
-    })
-  }}
+  {{ LocalHeader({
+    heading: 'Edit company' if formData.id else 'Add company',
+    modifier: 'light-banner'
+  }) }}
 {% endblock %}

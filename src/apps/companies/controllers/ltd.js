@@ -67,10 +67,12 @@ async function addDetails (req, res, next) {
       res.locals.formData = companyFormService.getDefaultLtdFormForCH(res.locals.chCompany)
     }
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
+    res.locals.businessTypeName = 'Limited company'
+    res.locals.isCompaniesHouse = true
 
     res
       .breadcrumb('Add company')
-      .render(`companies/views/edit-ltd`)
+      .render('companies/views/edit')
   } catch (error) {
     next(error)
   }
@@ -88,7 +90,9 @@ async function editDetails (req, res, next) {
       res.breadcrumb('Edit')
     }
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
-    res.render(`companies/views/edit-ltd`)
+    res.locals.businessTypeName = 'Limited company'
+    res.locals.isCompaniesHouse = true
+    res.render('companies/views/edit')
   } catch (error) {
     next(error)
   }

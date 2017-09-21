@@ -311,7 +311,7 @@ describe('Company controller, ltd', function () {
         breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ltd')
+            expect(template).to.equal('companies/views/edit')
             done()
           } catch (e) {
             done(e)
@@ -364,13 +364,14 @@ describe('Company controller, ltd', function () {
         turnover_range: '1',
       }
 
-      return render('../../src/apps/companies/views/edit-ltd.njk', {
+      return render('../../src/apps/companies/views/edit.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
         turnoverOptions: metadataRepositoryStub.turnoverOptions,
         headquarterOptions: metadataRepositoryStub.headquarterOptions,
         countryOptions: metadataRepositoryStub.countryOptions,
+        isCompaniesHouse: true,
         hqLabels,
         formData,
         chCompany,
@@ -470,7 +471,7 @@ describe('Company controller, ltd', function () {
         breadcrumb: this.breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ltd')
+            expect(template).to.equal('companies/views/edit')
             done()
           } catch (e) {
             done(e)
@@ -612,7 +613,7 @@ describe('Company controller, ltd', function () {
         },
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ltd')
+            expect(template).to.equal('companies/views/edit')
             expect(res.locals).to.have.property('errors')
             done()
           } catch (e) {
