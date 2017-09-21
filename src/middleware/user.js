@@ -1,12 +1,12 @@
 const config = require('../../config')
 const authorisedRequest = require('../lib/authorised-request')
 
-module.exports = (req, res, next) => {
+async function userMiddleware (req, res, next) {
   const token = req.session.token
-  const user = req.session.user
+  const userSession = req.session.user
 
-  if (user) {
-    res.locals.user = user
+  if (userSession) {
+    res.locals.user = userSession
     return next()
   }
 
@@ -14,10 +14,14 @@ module.exports = (req, res, next) => {
     return next()
   }
 
-  authorisedRequest(token, `${config.apiRoot}/whoami/`)
-    .then((user) => {
-      req.session.user = res.locals.user = user
-      next()
-    })
-    .catch(next)
+  try {
+    const userResponse = await authorisedRequest(token, `${config.apiRoot}/whoami/`)
+
+    req.session.user = res.locals.user = userResponse
+    next()
+  } catch (error) {
+    next(error)
+  }
 }
+
+module.exports = userMiddleware
