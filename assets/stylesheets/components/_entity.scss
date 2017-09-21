@@ -41,3 +41,20 @@
 .c-entity__code {
   color: $grey-1;
 }
+
+// modifiers
+
+.c-entity--block-link {
+  margin-top: -$default-spacing-unit;
+  margin-bottom: -$default-spacing-unit;
+  padding: $default-spacing-unit;
+  border: 2px solid $grey-2;
+  display: block;
+
+  &:focus,
+  &:hover {
+    background-color: $grey-4;
+    border-color: $link-hover-colour;
+    color: $link-hover-colour;
+  }
+}

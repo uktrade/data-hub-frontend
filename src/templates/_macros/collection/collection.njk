@@ -10,18 +10,22 @@
  # @param {object}  [props.pagination] - collection pagination
  # @param {object}  [props.selectedFilters] - object containing filters configuration
  # @param {object}  [props.sortForm] - object containing sorting form
+ # @param {string, array} [props.listModifier] - entity list modifier
  # @param {string}  [props.highlightTerm] - text to use to apply highlight filter
  # @param {string}  [props.summaryActionsHTML] - HTML content for actions block
 #}
 {% macro Collection(props) %}
+  {% set hasBlockLinks = 'block-links' in [props.listModifier] | flatten %}
+  {% set listModifier = props.listModifier | concat('') | reverse | join(' c-entity-list--') if props.listModifier %}
+
   <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
 
     {% if props.items | length %}
-      <ol class="c-entity-list">
+      <ol class="c-entity-list {{ listModifier }}">
         {% for item in props.items %}
           <li class="c-entity-list__item">
-            {{ Entity(item | assign({ highlightTerm: props.highlightTerm })) }}
+            {{ Entity(item | assign({ highlightTerm: props.highlightTerm, isBlockLink: hasBlockLinks })) }}
           </li>
         {% endfor %}
       </ol>
