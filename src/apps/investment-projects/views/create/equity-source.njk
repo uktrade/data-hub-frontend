@@ -48,7 +48,7 @@
         Collection(searchResult | assign({
           highlightTerm: searchTerm,
           countLabel: 'company',
-          hasBlockLinks: true,
+          listModifier: 'block-links',
           query: QUERY
         }))
       }}
