@@ -14,8 +14,8 @@ const investmentProjects = {
   results: [],
 }
 const searchResults = {
+  items: [],
   count: 0,
-  results: [],
 }
 
 describe('Investment start controller', () => {
@@ -126,7 +126,7 @@ describe('Investment start controller', () => {
             token,
           },
           query: {
-            'show-search': true,
+            'search': true,
           },
         }, this.resMock, () => {
           expect(this.resMock.locals.showSearch).to.equal(true)
@@ -136,7 +136,15 @@ describe('Investment start controller', () => {
     })
 
     describe('when query contains a search term', () => {
-      it('should render results', (done) => {
+      it('should render results', async () => {
+        this.reqMock = {
+          session: {
+            token,
+          },
+          query: {
+            'term': 'samsung',
+          },
+        }
         this.resMock = {
           locals: {
             company: '12345',
@@ -144,19 +152,19 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          session: {
-            token,
-          },
-          query: {
-            'term': 'samsung',
-          },
-        }, this.resMock, () => {
-          expect(this.resMock.locals.searchTerm).to.equal('samsung')
-          expect(this.resMock.locals.searchResult).to.deep.equal(searchResults)
-          expect(this.resMock.locals.searchResult.pagination).to.be.null
-          done()
-        })
+        const expected = {
+          aggregations: undefined,
+          count: 0,
+          highlightTerm: undefined,
+          items: [],
+          pagination: null,
+        }
+
+        await this.controller.getHandler(this.reqMock, this.resMock, this.next)
+
+        expect(this.resMock.locals.searchTerm).to.equal('samsung')
+        expect(this.resMock.locals.searchResult).to.deep.equal(expected)
+        expect(this.resMock.locals.searchResult.pagination).to.be.null
       })
     })
   })
@@ -187,7 +195,7 @@ describe('Investment start controller', () => {
           },
         }, {
           redirect: (path) => {
-            expect(path).to.equal('/investment-projects/create/equity-source/12345?show-search=true')
+            expect(path).to.equal('/investment-projects/create/equity-source/12345?search=true')
             done()
           },
         }, this.next)
