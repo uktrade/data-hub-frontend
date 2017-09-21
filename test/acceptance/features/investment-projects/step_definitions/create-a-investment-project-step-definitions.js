@@ -24,7 +24,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify an option to add a new Investment project$/, async () => {
     await Investment
-      .verify.visible('@addInvestmentProjectButton')
+      .assert.visible('@addInvestmentProjectButton')
   })
 
   When(/^I create a new Investment project as a source of foreign equity investment$/, async () => {
@@ -159,6 +159,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Investment
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
+      .submitTheForm()
   })
 
   When(/^I create a new Investment project with Non-FDI as Investment type$/, async () => {

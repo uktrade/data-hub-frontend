@@ -36,7 +36,7 @@ defineSupportCode(({ Then, When }) => {
     await Company
       .navigate()
       .findCompany(Company.companyName)
-      .verify.visible('@searchResultsItem')
+      .assert.containsText('@collectionResultsCompanyName', Company.companyName)
   })
 
   Then(/^The company name is present in the collections results/, async () => {

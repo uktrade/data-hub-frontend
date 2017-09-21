@@ -6,10 +6,8 @@ module.exports = {
   elements: {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
-    searchResults: '.c-entity-list',
-    searchResultsItem: '.c-entity-list li:first-child span',
     addNewCompanyButton: 'a[href*="/companies/add-step"]',
-    companyAddForm: '.c-form-group--actions button',
+    companyAddForm: '.c-form-actions button',
     radioLabelUKLtd: 'label[for=field-business_type-1]',
     radioLabelForeignOrg: 'label[for=field-business_type-3]',
     radioLabelUKOtherOrg: 'label[for=field-business_type-2]',
