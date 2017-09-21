@@ -8,7 +8,7 @@
   {% if props.text or caller %}
     {% set element = props.element | default('p') %}
 
-    <{{ element }} class="c-messages__item{{ ' c-messages__item--' + props.type if props.type }}">
+    <{{ element }} class="c-message {{ 'c-message--' + props.type if props.type }}">
       {% if caller %}
         {{ caller() }}
       {% else %}
@@ -27,7 +27,7 @@
   {% if props.items|length %}
     {% set isDismissable = props.isDismissable | default(true) %}
 
-    <ul class="c-messages {{ 'js-Messages' if isDismissable }}" tabindex="-1" role="alert">
+    <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" tabindex="-1" role="alert">
       {% for type, messages in props.items %}
         {% for text in messages %}
           {{ Message({

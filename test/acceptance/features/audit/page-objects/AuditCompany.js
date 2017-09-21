@@ -5,7 +5,7 @@ module.exports = {
     auditHistoryTab: 'a[href*="/audit"]',
     description: '#description',
     website: '#website',
-    flashInfo: '.c-messages__item--success',
+    flashInfo: '.c-message--success',
   },
 
   commands: [

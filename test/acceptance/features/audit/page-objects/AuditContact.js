@@ -5,7 +5,7 @@ module.exports = {
     auditHistoryTab: 'a[href*="/audit"]',
     telephone: '#field-telephone_number',
     telephoneCountryCode: '#field-telephone_countrycode',
-    flashInfo: '.c-messages__item--success',
+    flashInfo: '.c-message--success',
     advisorNameFromList: '.c-entity-list__item:nth-child(1) .c-entity__content span:nth-child(2)',
     createdDateFromFirstList: '.c-entity-list__item:nth-child(1) .c-entity__title',
     fieldNameFromList: '.c-entity-list__item:nth-child(1) .c-entity__content .c-meta-list__item:nth-child(2) span:nth-child(2)',
