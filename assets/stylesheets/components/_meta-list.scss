@@ -77,6 +77,10 @@
     float: left;
     clear: both;
     margin-left: 0;
+
+    @include media(tablet) {
+      max-width: 50%;
+    }
   }
 
   .c-meta-list__item:nth-child(even) {
