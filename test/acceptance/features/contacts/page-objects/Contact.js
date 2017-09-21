@@ -32,7 +32,7 @@ module.exports = {
     contactAlternativeEmail: '#field-email_alternative',
     contactNotes: '#field-notes',
     contactUnderSearchPage: '#contacts-list li:first-child',
-    contactFullname: '#contact-list li:first-child div a span:nth-child(2)',
+    contactFullname: '#contact-list .c-entity-list li:first-child .c-entity__title > a',
     ukPostcode: '#field-postcode-lookup',
     findUkAddressButton: '.postcode-lookup-button',
     selectUkAddressDropdown: '#field-postcode-address-suggestions',
