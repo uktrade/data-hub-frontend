@@ -15,10 +15,6 @@
     summaryActionsHTML: addProjectButton
   }) }}
 
-  {% if contacts.length == 0 and contactsArchived.length == 0 %}
-    <p id="no-contact-warning" class="infostrip">There are no contacts at this time. <a href="{{addContactUrl}}">Add a new contact</a></p>
-  {% endif %}
-
   {% if archivedContacts | length %}
     {{ Collection({
       id: 'archived-contact-list',

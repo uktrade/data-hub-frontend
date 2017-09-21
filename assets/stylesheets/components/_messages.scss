@@ -1,10 +1,6 @@
 @import "../settings";
 
 .c-message-list {
-  // TODO: remove in favour of assemblies that handle consistent spacing
-  // between elements
-  margin-top: $default-spacing-unit;
-
   &:focus {
     outline: none;
   }
@@ -21,10 +17,6 @@
     .js-Messages & {
       padding-right: 90px;
     }
-  }
-
-  + * {
-    margin-top: $default-spacing-unit;
   }
 
   * {
@@ -78,4 +70,16 @@
 .c-message--error {
   border-color: $error-colour;
   color: $error-colour;
+}
+
+.c-message--muted {
+  border-width: 0 0 0 5px;
+  border-color: $grey-2;
+  background: $grey-4;
+  font-size: inherit;
+  font-weight: inherit;
+
+  *:not(button) {
+    font-weight: inherit;
+  }
 }

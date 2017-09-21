@@ -67,9 +67,10 @@
             {% endif %}
 
             {% if props.supportingContent %}
-              <p class="infostrip">
+              {# TODO: Replace with a details/summary element using the question a user may be asking as the summary #}
+              {% call Message({ type: 'muted' }) %}
                 {{ translate(props.supportingContent) }}
-              </p>
+              {% endcall %}
             {% endif %}
           {% endif %}
         {% endfor %}

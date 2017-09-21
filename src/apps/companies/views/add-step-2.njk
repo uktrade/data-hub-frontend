@@ -82,10 +82,10 @@
       {% endfor %}
     </ol>
 
-    <p class="infostrip">
-      If you can't find the company you're looking for, try a different search term, check
-      the company's website or any email correspondence that contains company registration details
-    </p>
+    {{ Message({
+      type: 'muted',
+      text: 'If you can’t find the company you’re looking for, try a different search term, check the company’s website or any email correspondence that contains company registration details'
+    }) }}
 
     {{ Pagination(companies.pagination) }}
 

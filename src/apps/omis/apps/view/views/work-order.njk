@@ -34,10 +34,10 @@
     items: [values.primary_market.name]
   }) }}
 
-  <p class="infostrip">
-    The market cannot be changed. If you have chosen the wrong market you’ll
-    have to cancel the order and create a new one.
-  </p>
+  {{ Message({
+    type: 'muted',
+    text: 'The market cannot be changed. If you have chosen the wrong market you’ll have to cancel the order and create a new one.'
+  }) }}
 
   {% call AnswersSummary({
     heading: 'Advisers in the market',
