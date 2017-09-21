@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const { keyBy, snakeCase, isPlainObject, isFunction } = require('lodash')
+const { isValid, format, parse } = require('date-fns')
 
 const { buildPagination } = require('../lib/pagination')
 
@@ -27,6 +28,28 @@ function transformContactToOption ({ id, first_name, last_name }) {
 function transformIdToObject (id) {
   return {
     id,
+  }
+}
+
+function transformDateObjectToDateString (key) {
+  if (!key) {
+    throw Error('date object key is required to transform date')
+  }
+  return function transformDateObjectToStringWithKey (props = {}) {
+    return ['year', 'month', 'day']
+      .map(x => props[`${key}_${x}`])
+      .filter(x => x)
+      .join('-')
+  }
+}
+
+function transformDateStringToDateObject (dateString) {
+  const isValidDate = dateString && isValid(parse(dateString))
+
+  return {
+    year: isValidDate ? format(dateString, 'YYYY') : '',
+    month: isValidDate ? format(dateString, 'MM') : '',
+    day: isValidDate ? format(dateString, 'DD') : '',
   }
 }
 
@@ -80,4 +103,6 @@ module.exports = {
   transformContactToOption,
   transformIdToObject,
   transformApiResponseToCollection,
+  transformDateObjectToDateString,
+  transformDateStringToDateObject,
 }

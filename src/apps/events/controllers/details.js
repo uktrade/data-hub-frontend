@@ -1,20 +1,11 @@
-const { fetchEvent } = require('../repos')
-const { transformEventResponseToViewRecord } = require('../transformers')
+const { displayEventLabels } = require('../labels')
 
-async function renderDetailsPage (req, res, next) {
-  try {
-    const event = await fetchEvent(req.session.token, req.params.id)
-    const eventViewRecord = transformEventResponseToViewRecord(event)
-
-    res
-      .breadcrumb(event.name)
-      .render('events/views/details', {
-        eventViewRecord,
-        eventId: req.params.id,
-      })
-  } catch (error) {
-    next(error)
-  }
+function renderDetailsPage (req, res) {
+  res
+    .breadcrumb(res.locals.event.name)
+    .render('events/views/details', {
+      displayEventLabels,
+    })
 }
 
 module.exports = {

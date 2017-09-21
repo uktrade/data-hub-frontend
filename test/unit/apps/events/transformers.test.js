@@ -1,13 +1,15 @@
 /* eslint camelcase: 0 */
+const { assign } = require('lodash')
 
 const {
   transformEventToListItem,
   transformEventResponseToViewRecord,
+  transformEventFormBodyToApiRequest,
 } = require('~/src/apps/events/transformers')
 
-describe('Event transformers', function () {
-  const mockEvent = require('~/test/unit/data/events/event-data')
+const mockEvent = require('~/test/unit/data/events/event-data')
 
+describe('Event transformers', () => {
   describe('#transformEventToListItem', () => {
     it('should return undefined when no arguments', () => {
       expect(transformEventToListItem({})).to.be.undefined
@@ -49,14 +51,14 @@ describe('Event transformers', function () {
           { label: 'Ends', type: 'date', value: '2017-11-11' },
           { label: 'Organiser', value: 'Jeff Smith' },
           { label: 'Country', type: 'badge', value: 'United Kingdom' },
-          { label: 'Lead team', value: 'Association of Cats' },
+          { label: 'Lead team', value: 'Association of Dogs' },
           { label: 'Region', type: 'badge', value: 'FDI Hub' },
         ])
       })
     })
   })
 
-  describe('#transformEventToDisplayEvent', () => {
+  describe('#transformEventResponseToViewRecord', () => {
     context('when all event fields are populated', () => {
       beforeEach(() => {
         this.transformedEvent = transformEventResponseToViewRecord(mockEvent)
@@ -74,8 +76,8 @@ describe('Event transformers', function () {
             name: 'Outward mission',
           },
           'Lead team': {
-            id: '32f12898-9698-e211-a939-e4115bead28a',
-            name: 'Association of Cats',
+            id: '42f12898-9698-e211-a939-e4115bead28a',
+            name: 'Association of Dogs',
           },
           'Event location type': {
             id: 'cf45bf02-8ea7-4e53-af0e-b5676a30cb96',
@@ -93,7 +95,9 @@ describe('Event transformers', function () {
             type: 'date',
             name: '2017-11-10',
           },
-          'Other teams': [],
+          'Other teams': [
+            'Association of Cats',
+          ],
           'Region': {
             id: '804cd12a-6095-e211-a939-e4115bead28a',
             name: 'FDI Hub',
@@ -310,6 +314,51 @@ describe('Event transformers', function () {
         it('should include the related programme', () => {
           expect(this.transformedEvent['Related programmes']).to.deep.equal(['Programme 1', 'Programme 2'])
         })
+      })
+    })
+  })
+
+  describe('#transformEventFormBodyToApiRequest', () => {
+    it('should add combined date string from date object', () => {
+      this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
+        start_date_year: '2017',
+        start_date_month: '10',
+        start_date_day: '31',
+        end_date_year: '2017',
+        end_date_month: '11',
+        end_date_day: '01',
+      }))
+
+      expect(this.requestBody).to.have.property('start_date', '2017-10-31')
+      expect(this.requestBody).to.have.property('end_date', '2017-11-01')
+    })
+
+    context('when not selecting the lead team', () => {
+      it('should not add to the teams', () => {
+        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
+          lead_team: null,
+        }))
+
+        expect(this.requestBody).to.have.property('lead_team', null)
+        expect(this.requestBody).to.have.property('teams').and.deep.equal(mockEvent.teams)
+      })
+    })
+
+    context('when there are event programmes', () => {
+      it('should cast event programme into an array', async () => {
+        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
+          related_programmes: 'programme1',
+        }))
+
+        expect(this.requestBody).to.have.property('related_programmes').to.be.an('array')
+      })
+
+      it('should prepopulate event programmes', async () => {
+        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
+          related_programmes: ['programme1', 'programme2', ''],
+        }))
+
+        expect(this.requestBody).to.have.property('related_programmes').to.be.an('array').and.have.length(2)
       })
     })
   })
