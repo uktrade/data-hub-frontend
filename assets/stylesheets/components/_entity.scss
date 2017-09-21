@@ -11,6 +11,10 @@
       text-decoration: underline;
     }
   }
+
+  @include media(tablet) {
+    max-width: 80%;
+  }
 }
 
 @include media(tablet) {
