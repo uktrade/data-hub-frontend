@@ -20,11 +20,16 @@ const {
 const { renderCompanyList } = require('./controllers/list')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
+const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
 }
+
+router.param('id', getCompany)
+router.param('companyNumber', getCompaniesHouseRecord)
+
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
 
 router
@@ -56,7 +61,7 @@ router
   .post(populateForm, handleFormPost, ltdController.editDetails)
 
 router
-  .route('/add/ltd/:company_number')
+  .route('/add/ltd/:companyNumber')
   .get(populateForm, ltdController.addDetails)
   .post(populateForm, handleFormPost, ltdController.addDetails)
 

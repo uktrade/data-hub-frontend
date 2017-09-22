@@ -42,7 +42,7 @@ async function getDetails (req, res, next) {
 
 async function addDetails (req, res, next) {
   try {
-    res.locals.chCompany = await getCHCompany(req.session.token, req.params.company_number)
+    res.locals.chCompany = await getCHCompany(req.session.token, req.params.companyNumber)
     res.locals.chDetails = companyFormattingService.getDisplayCH(res.locals.chCompany)
 
     if (containsFormData(req)) {
