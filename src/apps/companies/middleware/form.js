@@ -1,9 +1,11 @@
 const { assign, find, get } = require('lodash')
 
 const metadataRepository = require('../../../lib/metadata')
-const { companyDetailsLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels, hqLabels, chDetailsLabels } = require('../labels')
 const companyFormService = require('../services/form')
 const { transformCompanyResponseToForm } = require('../transformers')
+
+const chDetailsDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 
 function populateForm (req, res, next) {
   res.locals.form = assign({}, res.locals.form, {
@@ -23,6 +25,8 @@ function populateForm (req, res, next) {
   res.locals = assign({}, res.locals, {
     hqLabels,
     companyDetailsLabels,
+    chDetailsLabels,
+    chDetailsDisplayOrder,
     regionOptions: metadataRepository.regionOptions,
     sectorOptions: metadataRepository.sectorOptions,
     employeeOptions: metadataRepository.employeeOptions,

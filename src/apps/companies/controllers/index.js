@@ -1,4 +1,5 @@
 const addController = require('./add')
+const editController = require('./edit')
 const archiveController = require('./archive')
 const auditController = require('./audit')
 const chController = require('./ch')
@@ -13,6 +14,7 @@ const renderCompanyList = require('./list')
 
 module.exports = {
   addController,
+  editController,
   archiveController,
   auditController,
   chController,
