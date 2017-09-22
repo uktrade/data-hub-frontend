@@ -1,6 +1,6 @@
 @import "../../settings";
 
-.c-form-errors {
+.c-error-summary {
   border: 5px solid $error-colour;
   padding: $default-spacing-unit;
   max-width: 40em;
@@ -11,15 +11,15 @@
   }
 }
 
-.c-form-errors__heading {
+.c-error-summary__heading {
   margin-top: 0;
 }
 
-.c-form-errors__summary:last-child {
+.c-error-summary__summary:last-child {
   margin-bottom: 0;
 }
 
-.c-form-errors__list {
+.c-error-summary__list {
   font-weight: 600;
   list-style: square;
   padding-left: 1em;
@@ -30,6 +30,6 @@
   }
 }
 
-.c-form-errors__list-item {
+.c-error-summary__list-item {
   margin-top: 5px;
 }

@@ -141,10 +141,10 @@ describe('Form component', () => {
         macros.renderToDom('TextField'),
       )
 
-      const formErrorsEl = component.querySelector('.c-form-errors')
-      const formErrorsMessagesEls = formErrorsEl.querySelectorAll('.c-form-errors__list-item')
+      const formErrorsEl = component.querySelector('.c-error-summary')
+      const formErrorsMessagesEls = formErrorsEl.querySelectorAll('.c-error-summary__list-item')
       expect(formErrorsEl).to.exist
-      expect(formErrorsEl.querySelector('.c-form-errors__summary').textContent.trim()).to.equal('Error summary')
+      expect(formErrorsEl.querySelector('.c-error-summary__summary').textContent.trim()).to.equal('Error summary')
       expect(formErrorsMessagesEls).to.have.length(2)
       expect(formErrorsMessagesEls[0].textContent.trim()).to.equal('Error message')
       expect(formErrorsMessagesEls[1].textContent.trim()).to.equal('Another error message')
