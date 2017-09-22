@@ -10,7 +10,7 @@ Feature: Create an Event in Data hub
   @create-event-form-fields
   Scenario: Verify event form fields
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     Then I verify the event name field is displayed
     And I verify the event type field is displayed
     And I verify the event start date fields are displayed
@@ -33,7 +33,7 @@ Feature: Create an Event in Data hub
   @create-event-form-shared-toggle
   Scenario: Verify event shared field toggling
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I choose the Yes option
     Then I verify the shared teams field is displayed
     When I choose the No option
@@ -42,7 +42,7 @@ Feature: Create an Event in Data hub
   @create-event-form-add-teams
   Scenario: Verify event shared teams field
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I choose the Yes option
     And I select shared team 2
     And I add it to the shared teams list
@@ -52,7 +52,7 @@ Feature: Create an Event in Data hub
   @create-event-form-add-related-programmes
   Scenario: Verify event related programmes field
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I select programme 2
     And I add it to the programmes list
     Then I verify there should be 2 programmes lists

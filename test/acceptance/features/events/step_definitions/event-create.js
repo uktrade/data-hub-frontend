@@ -3,10 +3,9 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Company = client.page.Company()
   const Events = client.page.Events()
 
-  When(/^I navigate to create an event page$/, async () => {
+  When(/^I navigate to the create an event page$/, async () => {
     await Events
       .navigate()
   })

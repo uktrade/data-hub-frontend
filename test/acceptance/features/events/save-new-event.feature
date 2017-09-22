@@ -10,7 +10,7 @@ Feature: Save a new Event in Data hub
   @save-new-event-submit @ignore
   Scenario: Verify event is submitted
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I enter all mandatory fields related to the event
     And I click on save button
     Then I see the Added new event confirmation message
@@ -18,11 +18,11 @@ Feature: Save a new Event in Data hub
   @save-new-event-mandatory-fields @ignore
   Scenario: Verify event mandatory fields
 
-    When I navigate to create an event page
     And I click on save button
     Then I verify error message displayed for event name field
     And I verify error message displayed for event type field
     And I verify error message displayed for Address fields
     And I see the Added new event confirmation message is not displayed
+    When I navigate to the create an event page
 
 
