@@ -1,10 +1,25 @@
-const { assign } = require('lodash')
+const { assign, find, get } = require('lodash')
 
 const metadataRepository = require('../../../lib/metadata')
 const { companyDetailsLabels, hqLabels } = require('../labels')
 const companyFormService = require('../services/form')
+const { transformCompanyResponseToForm } = require('../transformers')
 
 function populateForm (req, res, next) {
+  res.locals.form = assign({}, res.locals.form, {
+    state: transformCompanyResponseToForm(res.locals.companiesHouseRecord || res.locals.company) || {},
+  })
+
+  if (get(req.query, 'business_type')) {
+    const businessType = find(metadataRepository.businessTypeOptions, (type) => {
+      return type.name.toLowerCase() === req.query.business_type.toLowerCase()
+    })
+
+    res.locals.form.state.business_type = get(businessType, 'id')
+  }
+
+  res.locals.formData = assign({}, res.locals.form.state, req.body)
+
   res.locals = assign({}, res.locals, {
     hqLabels,
     companyDetailsLabels,
@@ -14,6 +29,8 @@ function populateForm (req, res, next) {
     turnoverOptions: metadataRepository.turnoverOptions,
     headquarterOptions: metadataRepository.headquarterOptions,
     countryOptions: metadataRepository.countryOptions,
+    businessType: req.query.business_type || get(res.locals, 'company.business_type.name'),
+    showTradingAddress: get(res.locals, 'form.state.trading_address_country'),
   })
 
   next()
