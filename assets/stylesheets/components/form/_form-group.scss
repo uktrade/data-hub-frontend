@@ -55,6 +55,10 @@
   padding-left: $default-spacing-unit;
 }
 
+.c-form-group:target {
+  animation: 1s targetHighlight ease;
+}
+
 // Modifiers
 .c-form-group--subfield {
   border-left: 5px solid $grey-2;
@@ -111,4 +115,18 @@
 .c-form-group--small,
 .c-form-group--smaller {
   font-size: 16px;
+}
+
+@keyframes targetHighlight {
+  0% {
+    border-color: $black;
+  }
+
+  50% {
+    background-color: $yellow-25;
+  }
+
+  100% {
+    border-color: $error-colour;
+  }
 }
