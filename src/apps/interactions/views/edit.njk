@@ -1,77 +1,12 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block body_main_content %}
-  {{ errorPanel( errors, labels=labels ) }}
-  <form method="POST">
-    <input type="hidden" name="interaction_type" value="{{formData.interaction_type}}">
-    <input type="hidden" name="company" value="{{formData.company}}">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    {% if formData.id %}
-      <input type="hidden" name="id" value="{{formData.id}}">
-    {% endif %}
+  {{ MetaList({
+    items: [
+      { label: 'Interaction type', value: interactionTypeLabel }
+    ],
+    itemModifier: 'stacked'
+  }) }}
 
-    <div class='form-group' id="company-wrapper">
-      <div class='form-label-bold'>Company</div>
-      <strong>{{ company.name }}</strong>
-    </div>
-
-    <div class='form-group'>
-      <div class='form-label-bold'>Interaction type</div>
-      <strong>{{ interaction_type.name }}</strong>
-    </div>
-
-    {{ textbox("subject",
-      label=labels.subject,
-      value=formData.subject,
-      error=errors.subject)
-    }}
-
-    {{ textarea("notes",
-      label=labels.notes,
-      value=formData.notes,
-      error=errors.notes
-    ) }}
-
-    {{ autocomplete("contact",
-      label=labels.contact,
-      emptyLabel="Pick a contact",
-      hint="Please start typing to search for a contact",
-      value=formData.contact,
-      error=errors.contact,
-      options=contacts)
-    }}
-
-    {{ date('date', label=labels.date, value=formData.date ) }}
-
-    {{ autocomplete('dit_adviser',
-      label=labels.dit_adviser,
-      value=formData.dit_adviser,
-      displayvalue=dit_adviser.name,
-      hint="Please start typing to search for an adviser",
-      error=errors.dit_adviser,
-      autofocus=false,
-      url='/api/adviserlookup/')
-    }}
-
-    {{ autocomplete("service",
-      label="Service",
-      emptyLabel="Pick a service",
-      hint="Please start typing to search for a service",
-      value=formData.service,
-      error=errors.service,
-      options=serviceOptions)
-    }}
-
-    {{ autocomplete("dit_team",
-      label="Service provider",
-      emptyLabel="Pick a provider",
-      hint="Please start typing to search for a provider",
-      value=formData.dit_team,
-      error=errors.dit_team,
-      options=serviceProviderOptions)
-    }}
-
-
-    {{ save(backUrl) }}
-  </form>
+  {{ Form(editInteractionForm) }}
 {% endblock %}

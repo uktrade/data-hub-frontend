@@ -24,7 +24,7 @@ router
     '/:interactionId/edit',
   ])
   .get(editController.editDetails)
-  .post(editController.postDetails)
+  .post(editController.postDetails, editController.editDetails)
 
 router.get('/:interactionId', detailsController.getInteractionDetails)
 
