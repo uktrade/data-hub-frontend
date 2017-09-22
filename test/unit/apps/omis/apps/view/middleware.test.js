@@ -3,7 +3,7 @@ describe('OMIS View middleware', () => {
     this.sandbox = sinon.sandbox.create()
 
     this.previewQuoteStub = this.sandbox.stub()
-    this.getFullQuoteStub = this.sandbox.stub()
+    this.getQuoteStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
     this.flashSpy = this.sandbox.spy()
@@ -27,7 +27,7 @@ describe('OMIS View middleware', () => {
       '../../models': {
         Order: {
           previewQuote: this.previewQuoteStub,
-          getFullQuote: this.getFullQuoteStub,
+          getQuote: this.getQuoteStub,
           createQuote: this.createQuoteStub,
           cancelQuote: this.cancelQuoteStub,
         },
@@ -107,7 +107,7 @@ describe('OMIS View middleware', () => {
           const mockDate = new Date('2017-08-01')
           this.clock = sinon.useFakeTimers(mockDate.getTime())
 
-          this.getFullQuoteStub.resolves({
+          this.getQuoteStub.resolves({
             id: '12345',
             content: 'Quote content',
           })
@@ -131,7 +131,7 @@ describe('OMIS View middleware', () => {
 
         context('when quote has not expired', () => {
           beforeEach(() => {
-            this.getFullQuoteStub.resolves({
+            this.getQuoteStub.resolves({
               id: '12345',
               expires_on: '2017-08-10',
             })
@@ -152,7 +152,7 @@ describe('OMIS View middleware', () => {
 
         context('when quote has expired', () => {
           beforeEach(() => {
-            this.getFullQuoteStub.resolves({
+            this.getQuoteStub.resolves({
               id: '12345',
               expires_on: '2017-07-10',
             })
@@ -177,7 +177,7 @@ describe('OMIS View middleware', () => {
           this.error = {
             statusCode: 404,
           }
-          this.getFullQuoteStub.rejects(this.error)
+          this.getQuoteStub.rejects(this.error)
         })
 
         it('should call next with the error', async () => {
