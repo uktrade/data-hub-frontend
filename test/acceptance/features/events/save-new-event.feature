@@ -25,11 +25,4 @@ Feature: Save a new Event in Data hub
     And I verify error message displayed for Address fields
     And I see the Added new event confirmation message is not displayed
 
-  @save-new-event-display @ignore
-  Scenario: Verify event is displayed
 
-    When I navigate to create an event page
-    And I enter all mandatory fields related to the event
-    And I click on save button
-    Then I see the Added new event confirmation message
-    And I see the event is displayed correctly with all field values
