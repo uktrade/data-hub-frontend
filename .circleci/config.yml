@@ -61,7 +61,7 @@ jobs:
           path: coverage
   acceptance_tests:
     docker:
-      - image: ukti/docker-nightwatch-base
+      - image: ukti/docker-selenium-base
         environment:
           TZ: "/usr/share/zoneinfo/Europe/London"
           REDIS_HOST: localhost
