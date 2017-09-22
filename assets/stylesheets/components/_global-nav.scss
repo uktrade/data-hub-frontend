@@ -1,3 +1,5 @@
+@import "../tools";
+
 .c-global-nav {
   @include bold-font(16);
   background: $grey-3;
