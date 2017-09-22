@@ -16,7 +16,6 @@ describe('Company controller, ltd', function () {
   let getDefaultLtdFormForCHStub
   let fakeCompanyForm
   let saveCompanyFormStub
-  let flashStub
 
   const chCompany = {
     id: '972173',
@@ -75,7 +74,6 @@ describe('Company controller, ltd', function () {
     getLtdCompanyAsFormDataStub = sinon.stub().returns(fakeCompanyForm)
     getDefaultLtdFormForCHStub = sinon.stub().returns(fakeCompanyForm)
     saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
-    flashStub = sinon.stub()
 
     this.breadcrumbStub = function () {
       return this
@@ -518,169 +516,6 @@ describe('Company controller, ltd', function () {
       }
 
       companyControllerLtd.editDetails(req, res, next)
-    })
-  })
-  describe('post details', function () {
-    it('call the company repository to save the company', function (done) {
-      const body = {
-        id: '1234',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: this.breadcrumbStub,
-        redirect: function () {
-          expect(saveCompanyFormStub).to.be.calledWith('1234', body)
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerLtd.postDetails(req, res, next)
-    })
-    it('should forward to the detail screen if save is good', function (done) {
-      const body = {
-        id: '999',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: this.breadcrumbStub,
-        redirect: function (url) {
-          expect(url).to.equal('/companies/view/ltd/999')
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerLtd.postDetails(req, res, next)
-    })
-    it('should re-render the edit form with form data on error', function (done) {
-      saveCompanyFormStub = sinon.stub().rejects({
-        errors: { name: ['test'] },
-      })
-
-      companyControllerLtd = proxyquire('~/src/apps/companies/controllers/ltd', {
-        '../services/formatting': {
-          getDisplayCompany: getDisplayCompanyStub,
-          getDisplayCH: getDisplayCHStub,
-        },
-        '../repos': {
-          getCHCompany: getCHCompanyStub,
-          getDitCompany: getDitCompanyStub,
-        },
-        '../services/form': {
-          getLtdCompanyAsFormData: getLtdCompanyAsFormDataStub,
-          getDefaultLtdFormForCH: getDefaultLtdFormForCHStub,
-          saveCompanyForm: saveCompanyFormStub,
-        },
-        '../../../lib/metadata': metadataRepositoryStub,
-      })
-
-      const body = {
-        id: '999',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        params: {},
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: this.breadcrumbStub,
-        redirect: function () {
-          throw Error('error')
-        },
-        render: function (template) {
-          try {
-            expect(template).to.equal('companies/views/edit')
-            expect(res.locals).to.have.property('errors')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }
-      companyControllerLtd.postDetails(req, res, next)
-    })
-    it('should flash a message to let people know they did something', function (done) {
-      const body = {
-        id: '1234',
-        name: 'freds',
-      }
-      const req = {
-        session: {
-          token: '1234',
-        },
-        flash: flashStub,
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: this.breadcrumbStub,
-        redirect: function () {
-          expect(flashStub).to.be.calledWith('success', 'Company record updated')
-          done()
-        },
-        render: function () {
-          throw Error('error')
-        },
-      }
-      companyControllerLtd.postDetails(req, res, next)
-    })
-  })
-  describe('edit common', function () {
-    let req
-    let res
-
-    beforeEach(function () {
-      req = {
-        session: {
-          token: '1234',
-        },
-      }
-      res = {
-        locals: {},
-        breadcrumb: this.breadcrumbStub,
-      }
-    })
-    it('should include the require properties in the response', function () {
-      companyControllerLtd.editCommon(req, res)
-      expect(res.locals).to.have.property('chDetailsLabels')
-      expect(res.locals).to.have.property('chDetailsDisplayOrder')
-      expect(res.locals).to.have.property('regionOptions')
-      expect(res.locals).to.have.property('sectorOptions')
-      expect(res.locals).to.have.property('employeeOptions')
-      expect(res.locals).to.have.property('turnoverOptions')
-      expect(res.locals).to.have.property('headquarterOptions')
-      expect(res.locals).to.have.property('hqLabels')
-      expect(res.locals).to.have.property('companyDetailsLabels')
-    })
-
-    it('should goto the next function if there is one', function () {
-      const next = sinon.stub()
-      companyControllerLtd.editCommon(req, res, next)
-      expect(next).to.be.called
     })
   })
 })
