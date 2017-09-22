@@ -1,5 +1,5 @@
 const ErrorSummary = {
-  selector: '.js-FormErrors',
+  selector: '.js-ErrorSummary',
 
   init () {
     const errorSummaryEl = document.querySelector(this.selector)

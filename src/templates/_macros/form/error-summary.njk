@@ -6,16 +6,20 @@
  #}
 {% macro ErrorSummary(errors) %}
   {% if errors.messages | length or errors.summary %}
-    <div class="c-form-errors js-FormErrors" role="alert">
-      <h1 class="c-form-errors__heading heading-medium">There was a problem submitting this form</h1>
+    <div class="c-error-summary js-ErrorSummary" role="alert">
+      <h1 class="c-error-summary__heading heading-medium">There was a problem submitting this form</h1>
       {% if errors.summary %}
-        <p class="c-form-errors__summary">{{ errors.summary }}</p>
+        <p class="c-error-summary__summary">{{ errors.summary }}</p>
       {% endif %}
       {% if errors.messages | length %}
-        <ul class="c-form-errors__list">
+        <ul class="c-error-summary__list">
           {% for name, message in errors.messages %}
-            <li class="c-form-errors__list-item">
-              <a href="#group-field-{{ name }}">{{ message }}</a>
+            {% set label = errors.fieldLabels[name] %}
+            <li class="c-error-summary__list-item">
+              {% if label %}
+                <span class="c-error-summary__field-name">{{ label }}</span>
+              {% endif %}
+              <a href="#group-field-{{ name }}" class="c-error-summary__error-text">{{ message }}</a>
             </li>
           {% endfor %}
         </ul>
