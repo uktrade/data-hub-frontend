@@ -3,7 +3,9 @@ module.exports = {
   props: {},
   elements: {
     eventName: 'input[name="name"]',
+    eventNameError: 'label[for=field-name] span:nth-child(2)',
     eventType: 'select[name="event_type"]',
+    eventTypeError: 'label[for=field-event_type] span:nth-child(2)',
     startDateYear: 'input[name="start_date_year"]',
     startDateMonth: 'input[name="start_date_month"]',
     startDateDay: 'input[name="start_date_day"]',
@@ -12,11 +14,14 @@ module.exports = {
     endDateDay: 'input[name="end_date_day"]',
     locationType: 'select[name="location_type"]',
     addressLine1: 'input[name="address_1"]',
+    addressLine1Error: 'label[for=field-address_1] span:nth-child(2)',
     addressLine2: 'input[name="address_2"]',
     addressTown: 'input[name="address_town"]',
+    addressTownError: 'label[for=field-address_town] span:nth-child(2)',
     addressCounty: 'input[name="address_county"]',
     addressPostcode: 'input[name="postcode"]',
     addressCountry: 'select[name="address_country"]',
+    addressCountryError: 'label[for=field-address_country] span:nth-child(2)',
     notes: 'textarea[name="notes"]',
     teamHosting: 'select[name="lead_team"]',
     organiser: 'select[name="organiser"]',
@@ -54,19 +59,15 @@ module.exports = {
 
   commands: [
     {
-      selectTeam (optionNumber) {
+      selectListOption (listName, optionNumber) {
         return this
-          .click('select[name="teams"] option:nth-child(' + optionNumber + ')')
+          .click(`select[name="${listName}"] option:nth-child(${optionNumber})`)
       },
-      assertVisibleSharedTeamList (listNumber) {
+      assertVisibleTeamsList (listNumber) {
         return this
           .assert.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
       },
-      selectRelatedProgramme (optionNumber) {
-        return this
-          .click('select[name="related_programmes"] option:nth-child(' + optionNumber + ')')
-      },
-      assertVisibleProgrammesList (listNumber) {
+      assertVisibleRelatedProgrammesList (listNumber) {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
