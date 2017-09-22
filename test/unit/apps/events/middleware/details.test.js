@@ -111,6 +111,26 @@ describe('Event details middleware', () => {
       })
     })
 
+    context('when not selecting the lead team', () => {
+      it('should not add to the teams', async () => {
+        const req = merge({}, this.req, {
+          body: {
+            lead_team: null,
+          },
+        })
+
+        await this.middleware.postDetails(req, this.res, this.next)
+
+        const expectedBody = assign({}, this.expectedBody, {
+          teams: [ 'team1', 'team2' ],
+          lead_team: undefined,
+        })
+
+        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
+        expect(this.createEventStub).to.have.been.calledOnce
+      })
+    })
+
     context('when selecting one event shared team', () => {
       it('should set teams as an array', async () => {
         const req = merge({}, this.req, {
