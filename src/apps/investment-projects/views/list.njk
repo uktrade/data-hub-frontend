@@ -13,9 +13,10 @@
 
 {% block main_grid_right_column %}
   {{
-    Collection(results | assign({
+    Collection(searchResults | assign({
       sortForm: sortForm,
       selectedFilters: selectedFilters,
+      highlightTerm: searchTerm,
       countLabel: 'project',
       query: QUERY
     }))

@@ -25,6 +25,7 @@ const auth = require('./middleware/auth')
 const store = require('./middleware/store')
 const csrfToken = require('./middleware/csrf-token')
 const errors = require('./middleware/errors')
+const globalSearch = require('./middleware/global-search')
 const sessionStore = require('./middleware/session-store')
 const logger = require('../config/logger')
 
@@ -89,6 +90,7 @@ app.use(auth)
 app.use(user)
 app.use(headers)
 app.use(store())
+app.use(globalSearch)
 
 // routing
 app.use(slashify())

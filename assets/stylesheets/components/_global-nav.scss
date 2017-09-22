@@ -31,7 +31,7 @@
   @include media(tablet) {
     border-bottom: 5px solid transparent;
     display: inline-block;
-    padding: ($default-spacing-unit / 2) 0 3px;
+    padding: $default-spacing-unit 0 ($default-spacing-unit - 5);
 
     & + & {
       margin-left: $default-spacing-unit;
@@ -45,4 +45,9 @@
       border-bottom-color: $govuk-blue;
     }
   }
+}
+
+.c-global-nav__count {
+  @include core-font(14);
+  color: $grey-1;
 }
