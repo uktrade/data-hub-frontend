@@ -14,7 +14,7 @@
  #}
 
 {% macro Breadcrumbs(props) %}
-  {% if props.items|length > 1 %}
+  {% if props.items|length > 2 %}
     <nav class="c-breadcrumb" aria-label="Breadcrumbs">
       <ul class="c-breadcrumb__list" itemscope itemtype="http://schema.org/BreadcrumbList">
         {% for breadcrumb in props.items %}

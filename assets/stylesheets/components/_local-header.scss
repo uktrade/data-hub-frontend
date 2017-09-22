@@ -1,6 +1,6 @@
 @import "../tools/mixins";
 
-$_first-element-spacing: $default-spacing-unit * 3;
+$_first-element-spacing: $default-spacing-unit * 4;
 
 .c-local-header {
   @include clearfix;
@@ -22,12 +22,14 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   .c-entity-search {
-    margin-top: $baseline-grid-unit * 20.5;
-    padding-bottom: $baseline-grid-unit * 6.25;
+    margin-top: $default-spacing-unit * 4;
   }
 
   .c-breadcrumb {
-    margin-top: $default-spacing-unit / 2;
+    padding-top: $default-spacing-unit / 2;
+    padding-bottom: $default-spacing-unit / 2;
+    margin-bottom: -$default-spacing-unit * 2.5;
+    line-height: 1;
 
     & + * {
       margin-top: $_first-element-spacing;
