@@ -14,8 +14,12 @@
       {% if errors.messages | length %}
         <ul class="c-error-summary__list">
           {% for name, message in errors.messages %}
+            {% set label = errors.fieldLabels[name] %}
             <li class="c-error-summary__list-item">
-              <a href="#group-field-{{ name }}">{{ message }}</a>
+              {% if label %}
+                <span class="c-error-summary__field-name">{{ label }}</span>
+              {% endif %}
+              <a href="#group-field-{{ name }}" class="c-error-summary__error-text">{{ message }}</a>
             </li>
           {% endfor %}
         </ul>

@@ -1,4 +1,10 @@
-@import "../../settings";
+@import "../../tools";
+
+.c-error-summary__heading,
+.c-error-summary__list,
+.c-error-summary__summary {
+  margin: 0;
+}
 
 .c-error-summary {
   border: 5px solid $error-colour;
@@ -9,10 +15,10 @@
   &:focus {
     outline: 3px solid $focus-colour;
   }
-}
 
-.c-error-summary__heading {
-  margin-top: 0;
+  * + * {
+    margin-top: $default-spacing-unit;
+  }
 }
 
 .c-error-summary__summary:last-child {
@@ -23,13 +29,22 @@
   font-weight: 600;
   list-style: square;
   padding-left: 1em;
-  color: $error-colour;
+}
 
-  a {
+.c-error-summary__field-name {
+  @include bold-font(16);
+  display: block;
+}
+
+.c-error-summary__error-text {
+  &:link,
+  &:visited {
     color: $error-colour;
   }
 }
 
 .c-error-summary__list-item {
-  margin-top: 5px;
+  & + & {
+    margin-top: $default-spacing-unit;
+  }
 }
