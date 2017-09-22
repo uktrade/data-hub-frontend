@@ -145,6 +145,12 @@ describe('Event edit controller', () => {
           name: 'error 1',
           start_date: 'error 2',
         }
+
+        const fieldLabels = {
+          name: 'Event name',
+          start_date: 'Event start date',
+        }
+
         const res = assign({}, this.res, {
           locals: {
             form: {
@@ -161,6 +167,7 @@ describe('Event edit controller', () => {
         const expectedErrors = {
           summary: 'Please correct the following errors:',
           messages,
+          fieldLabels,
         }
 
         expect(actualErrors).to.deep.equal(expectedErrors)

@@ -206,6 +206,7 @@ describe('Global builders', () => {
           errors: {
             summary: 'An atypical error occurred',
             messages: {},
+            fieldLabels: {},
           },
         })
       )
@@ -217,6 +218,10 @@ describe('Global builders', () => {
       expect(actual.errors).to.deep.equal({
         summary: 'Please correct the following errors:',
         messages: this.errorsObject,
+        fieldLabels: {
+          a: 'Field A',
+          b: 'Field B',
+        },
       })
       expect(actual.children[0]).to.have.property('error', this.errorsObject.a)
       expect(actual.children[0].children[0]).to.have.property('error', this.errorsObject['a.a'])
