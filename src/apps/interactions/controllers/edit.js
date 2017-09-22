@@ -65,7 +65,7 @@ async function postDetails (req, res, next) {
   } catch (errors) {
     if (errors.error) {
       res.locals.errors = errors.error.errors || errors.error
-      return editDetails(req, res, next)
+      return next()
     }
     next(errors)
   }
