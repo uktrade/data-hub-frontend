@@ -47,7 +47,9 @@ function transformToApi (body) {
   setDate('start_date')
   setDate('end_date')
 
-  formatted.teams.push(formatted.lead_team)
+  if (formatted.lead_team) {
+    formatted.teams.push(formatted.lead_team)
+  }
   formatted.service = '1783ae93-b78f-e611-8c55-e4115bed50dc'
   return assign({}, formatted)
 }
