@@ -55,10 +55,11 @@ function addDetails (req, res, next) {
   }
   res.locals.businessTypeName = req.query.business_type
   res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
+  res.locals.isForeign = true
 
   res
     .breadcrumb('Add company')
-    .render('companies/views/edit-foreign')
+    .render('companies/views/edit')
 }
 
 async function editDetails (req, res, next) {
@@ -71,11 +72,12 @@ async function editDetails (req, res, next) {
     }
     res.locals.businessTypeName = get(company, 'business_type.name')
     res.locals.showTradingAddress = !isBlank(res.locals.formData.trading_address_country)
+    res.locals.isForeign = true
 
     res
       .breadcrumb(company.name, `/companies/view/foreign/${company.id}`)
       .breadcrumb('Edit')
-      .render(`companies/views/edit-foreign`)
+      .render('companies/views/edit')
   } catch (error) {
     next(error)
   }

@@ -60,7 +60,7 @@ function addDetails (req, res, next) {
 
   res
     .breadcrumb('Add company')
-    .render(`companies/views/edit-ukother`)
+    .render('companies/views/edit')
 }
 
 async function editDetails (req, res, next) {
@@ -77,7 +77,7 @@ async function editDetails (req, res, next) {
     res
       .breadcrumb(company.name, `/viewcompanyresult/${company.id}`)
       .breadcrumb('Edit')
-      .render(`companies/views/edit-ukother`)
+      .render('companies/views/edit')
   } catch (error) {
     next(error)
   }

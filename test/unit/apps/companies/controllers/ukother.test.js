@@ -267,7 +267,7 @@ describe('Company controller, uk other', function () {
         breadcrumb: breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ukother')
+            expect(template).to.equal('companies/views/edit')
             done()
           } catch (e) {
             done(e)
@@ -311,7 +311,7 @@ describe('Company controller, uk other', function () {
         turnover_range: '1',
       }
 
-      return render('../../src/apps/companies/views/edit-ukother.njk', {
+      return render('../../src/apps/companies/views/edit.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
@@ -436,7 +436,7 @@ describe('Company controller, uk other', function () {
         breadcrumb: breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ukother')
+            expect(template).to.equal('companies/views/edit')
             done()
           } catch (e) {
             done(e)
@@ -584,7 +584,7 @@ describe('Company controller, uk other', function () {
         },
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-ukother')
+            expect(template).to.equal('companies/views/edit')
             expect(res.locals).to.have.property('errors')
             done()
           } catch (e) {

@@ -263,7 +263,7 @@ describe('Company controller, foreign', function () {
         locals: {},
         breadcrumb: breadcrumbStub,
         render: function (template) {
-          expect(template).to.equal('companies/views/edit-foreign')
+          expect(template).to.equal('companies/views/edit')
           done()
         },
       }
@@ -304,13 +304,14 @@ describe('Company controller, foreign', function () {
         turnover_range: '1',
       }
 
-      return render('../../src/apps/companies/views/edit-foreign.njk', {
+      return render('../../src/apps/companies/views/edit.njk', {
         regionOptions: metadataRepositoryStub.regionOptions,
         sectorOptions: metadataRepositoryStub.sectorOptions,
         employeeOptions: metadataRepositoryStub.employeeOptions,
         turnoverOptions: metadataRepositoryStub.turnoverOptions,
         headquarterOptions: metadataRepositoryStub.headquarterOptions,
         countryOptions: metadataRepositoryStub.countryOptions,
+        isForeign: true,
         hqLabels,
         formData,
       })
@@ -423,7 +424,7 @@ describe('Company controller, foreign', function () {
         breadcrumb: breadcrumbStub,
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-foreign')
+            expect(template).to.equal('companies/views/edit')
             done()
           } catch (e) {
             done(e)
@@ -565,7 +566,7 @@ describe('Company controller, foreign', function () {
         },
         render: function (template) {
           try {
-            expect(template).to.equal('companies/views/edit-foreign')
+            expect(template).to.equal('companies/views/edit')
             expect(res.locals).to.have.property('errors')
             done()
           } catch (e) {
