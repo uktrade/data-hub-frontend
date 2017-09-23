@@ -172,23 +172,22 @@
         value: 'false',
         label: 'No'
       }
-    ],
-    children:  [
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'referral_source_adviser',
-        label: 'Referral source adviser',
-        error: form.errors.messages['referral_source_adviser'],
-        value: form.state['referral_source_adviser'],
-        options: form.options.advisers,
-        initialOption: '-- Select referral source adviser --',
-        condition: {
-          name: 'is_referral_source',
-          value: 'false'
-        },
-        modifier: 'subfield'
-      }
     ]
+  }) }}
+
+  {{ MultipleChoiceField({
+    macroName: 'MultipleChoiceField',
+    name: 'referral_source_adviser',
+    label: 'Referral source adviser',
+    error: form.errors.messages['referral_source_adviser'],
+    value: form.state['referral_source_adviser'],
+    options: form.options.advisers,
+    initialOption: '-- Select referral source adviser --',
+    modifier: 'subfield',
+    condition: {
+      name: 'is_referral_source',
+      value: 'false'
+    }
   }) }}
 
   {{  MultipleChoiceField({
