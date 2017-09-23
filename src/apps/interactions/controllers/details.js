@@ -1,8 +1,12 @@
 /* eslint camelcase: 0 */
+const { sortBy, pick, omit } = require('lodash')
+const queryString = require('query-string')
+
 const interactionLabels = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
 const interactionDataService = require('../services/data')
 const { getDisplayInteraction } = require('../services/formatting')
+const { transformObjectToOption } = require('../../transformers')
 
 const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
 
@@ -20,57 +24,36 @@ async function getCommon (req, res, next) {
 
 function getAddStep1 (req, res) {
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
-
-  const selectableTypes = interactionTypes
-    .sort((a, b) => {
-      const nameA = a.name.toUpperCase()
-      const nameB = b.name.toUpperCase()
-      if (nameA < nameB) {
-        return -1
-      }
-      if (nameA > nameB) {
-        return 1
-      }
-      return 0
-    })
-
-  // Split the list into 2 to show as 2 columns
-  const halfWay = Math.ceil(selectableTypes.length / 2)
-  const interactionTypeColA = []
-  const interactionTypeColB = []
-
-  for (let pos = 0; pos < halfWay; pos += 1) {
-    interactionTypeColA.push(selectableTypes[pos])
-  }
-
-  for (let pos = halfWay; pos < selectableTypes.length; pos += 1) {
-    interactionTypeColB.push(selectableTypes[pos])
-  }
+  const interactionTypeOptions = interactionTypes.map(transformObjectToOption)
 
   res
     .breadcrumb('Add interaction')
     .render('interactions/views/add-step-1.njk', {
-      query: req.query,
-      interactionTypeColA,
-      interactionTypeColB,
+      contactId: req.query.contact,
+      companyId: req.query.company,
+      interactionTypeOptions: sortBy(interactionTypeOptions, 'label'),
     })
 }
 
 function postAddStep1 (req, res) {
-  // error if no selection
   if (!req.body.interaction_type) {
     res.locals.errors = {
-      interaction_type: ['You must select an interaction type'],
+      messages: {
+        interaction_type: ['You must select an interaction type'],
+      },
     }
     return getAddStep1(req, res)
   }
 
-  // redirect to edit, passing param
+  const interactionData = pick(req.body, 'contact', 'company', 'interaction_type')
+  const interactionQueryString = queryString.stringify(interactionData)
+  const serviceDeliveryQueryString = queryString.stringify(omit(interactionData, 'interaction_type'))
+
   if (req.body.interaction_type === '999') {
-    return res.redirect(`/service-deliveries/create/?company=${req.body.company}&contact=${req.body.contact}`)
+    return res.redirect(`/service-deliveries/create/?${serviceDeliveryQueryString}`)
   }
 
-  return res.redirect(`2?company=${req.body.company}&contact=${req.body.contact}&interaction_type=${req.body.interaction_type}`)
+  return res.redirect(`2?${interactionQueryString}`)
 }
 
 function getInteractionDetails (req, res, next) {
