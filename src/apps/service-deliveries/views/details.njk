@@ -1,6 +1,6 @@
-{% extends "_layouts/datahub-base.njk" %}
+{% extends "_layouts/two-column.njk" %}
 
-{% block body_main_content %}
+{% block main_grid_right_column %}
   {{ keyvaluetable(serviceDeliveryDetails, stripey=true, labels=serviceDeliveryLabels, keyorder=serviceDeliveryDisplayOrder) }}
-  <a class="button" href="/service-deliveries/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
+  <a class="button button-secondary" href="/service-deliveries/{{serviceDelivery.id}}/edit">Edit service delivery details</a>
 {% endblock %}

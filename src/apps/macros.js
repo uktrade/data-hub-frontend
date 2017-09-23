@@ -73,11 +73,31 @@ const globalFields = {
 
   eventTypes: {
     macroName: 'MultipleChoiceField',
-    name: 'eventTypes',
+    name: 'event_type',
     label: 'Type of event',
     initialOption: '-- Select event type --',
     options () {
       return metadata.eventTypeOptions.map(transformObjectToOption)
+    },
+  },
+
+  events: {
+    macroName: 'MultipleChoiceField',
+    name: 'event',
+    label: 'Event',
+    initialOption: '-- Select event --',
+    options () {
+      return metadata.eventOptions.map(transformObjectToOption)
+    },
+  },
+
+  serviceDeliveryStatuses: {
+    macroName: 'MultipleChoiceField',
+    name: 'status',
+    label: 'Status',
+    initialOption: '-- Select status --',
+    options () {
+      return metadata.serviceDeliveryStatusOptions.map(transformObjectToOption)
     },
   },
 }
