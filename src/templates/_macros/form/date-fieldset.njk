@@ -12,16 +12,18 @@
  #}
 {% macro DateFieldset(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
+  {% set value = props.value|default('') %}
+  {% set formattedDate = props.value | formatDate('DD-MM-YYYY') %}
 
-  {% if props.value | isString  %}
-    {% set splitDate = (props.value | formatDate('DD/MM/YYYY')).split('/') %}
-    {% set dateObj = {
-      day: splitDate[0],
-      month: splitDate[1],
-      year: splitDate[2]
-    } %}
-  {% else %}
+  {% if value | isPlainObject  %}
     {% set dateObj = props.value %}
+  {% else %}
+    {% set splitDate = formattedDate.split('-') if formattedDate %}
+    {% set dateObj = {
+      day: splitDate[0] |  default(''),
+      month: splitDate[1] | default(''),
+      year: splitDate[2] | default('')
+    } %}
   {% endif %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: 'fieldset', modifier: 'inline' })) %}
