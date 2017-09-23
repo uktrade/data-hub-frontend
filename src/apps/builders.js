@@ -47,7 +47,7 @@ function buildFormWithErrors (form = {}, errorMessages = {}) {
   const messages = pick(pickBy(errorMessages), formFieldNames)
 
   const fieldLabels = form.children
-    .filter(x => Object.keys(errorMessages).includes(x.name))
+    .filter(x => Object.keys(messages).includes(x.name))
     .reduce((obj, item) => {
       obj[item.name] = item.label || item.name
       return obj
