@@ -11,7 +11,7 @@ Feature: Login to Data Hub
     And I submit the form
     Then I verify that I'm successfully logged in
     When I logout of Datahub website
-    Then I see the "You have been successfully signed out." success message
+    Then I see the success message
 
   @login-navigate-to-login-page
   Scenario: Navigation link to sign in works on support page
