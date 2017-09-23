@@ -14,6 +14,7 @@
 {% macro SelectBox(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
   {% set options = props.options() if props.options | isFunction else props.options %}
+  {% set fieldValue = props.value.id or props.value %}
 
   <select
     id="{{ props.fieldId }}"
@@ -26,8 +27,10 @@
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in options %}
-      <option value="{{ option.value }}" {% if option.value and props.value === option.value %}selected{% endif %}>
-        {{ option.label }}
+      {% set label = option.name or option.label %}
+      {% set value = option.id or option.value %}
+      <option value="{{ value }}" {% if value and fieldValue === value %}selected{% endif %}>
+        {{ label }}
       </option>
     {% endfor %}
   </select>
