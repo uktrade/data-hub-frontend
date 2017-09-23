@@ -117,6 +117,12 @@
   font-size: 16px;
 }
 
+.c-form-group--columns {
+  .c-form-group__inner {
+    column-count: 2;
+  }
+}
+
 @keyframes targetHighlight {
   0% {
     border-color: $black;
