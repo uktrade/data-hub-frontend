@@ -2,11 +2,11 @@
 
 {% block local_header %}
   {% call LocalHeader({
-      heading: headingName,
+      heading: company.name,
       modifier: 'light-banner'
     })
   %}
-    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+    <p class="c-local-header__heading-after">{{ company.address }}</p>
     {% if company.archived %}
       {% call Message({ type: 'info' }) %}
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>

@@ -1,6 +1,5 @@
 const router = require('express').Router()
 
-const { getCompanyDetails } = require('./middleware/details')
 const { getInteractionCollection } = require('./middleware/interactions')
 const { renderInteractions } = require('./controllers/interactions')
 
@@ -28,7 +27,7 @@ const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
 }
 
-router.param('id', getCompany)
+router.param('companyId', getCompany)
 router.param('companyNumber', getCompaniesHouseRecord)
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
@@ -61,12 +60,12 @@ router.get('/view/foreign/:id', foreignController.getDetails)
 router
   .route([
     '/add/foreign',
-    '/edit/foreign/:id',
+    '/edit/foreign/:companyId',
     '/add/ukother',
-    '/edit/ukother/:id',
+    '/edit/ukother/:companyId',
     '/add/ltd',
     '/add/ltd/:companyNumber',
-    '/edit/ltd/:id',
+    '/edit/ltd/:companyId',
   ])
   .get(populateForm, renderForm)
   .post(populateForm, handleFormPost, renderForm)
@@ -74,7 +73,6 @@ router
 router.get('/:id/investments', investmentsController.getAction)
 router.get('/:id/audit', auditController.getAudit)
 
-router.param('companyId', getCompanyDetails)
 router.get('/:companyId/interactions', getInteractionCollection, renderInteractions)
 
 module.exports = router
