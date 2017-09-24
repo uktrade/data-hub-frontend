@@ -1,31 +1,32 @@
 const router = require('express').Router()
 
 const { setDefaultQuery } = require('../middleware')
-const { getInteractionsCollection, getRequestBody } = require('./middleware')
-const { detailsController, listController, editController } = require('./controllers')
+const { getInteractionsCollection, getRequestBody, getDetails } = require('./middleware')
+const { renderCreatePage, postAddStep1, renderDetailsPage } = require('./controllers/details')
+const { renderEditPage, postDetails } = require('./controllers/edit')
+const { renderInteractionList } = require('./controllers/list')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'date:desc',
 }
 
-router.param('interactionId', detailsController.getCommon)
+router.param('interactionId', getDetails)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInteractionsCollection, listController.renderInteractionList)
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInteractionsCollection, renderInteractionList)
 
-router.get('/create', (req, res) => { res.redirect('create/1') })
 router
-  .route('/create/1')
-  .get(detailsController.getAddStep1)
-  .post(detailsController.postAddStep1)
+  .route(/^\/create(\/1)?$/)
+  .post(postAddStep1)
+  .all(renderCreatePage)
 
 router
   .route([
     '/create/2',
     '/:interactionId/edit',
   ])
-  .get(editController.editDetails)
-  .post(editController.postDetails, editController.editDetails)
+  .post(postDetails)
+  .all(renderEditPage)
 
-router.get('/:interactionId', detailsController.getInteractionDetails)
+router.get('/:interactionId', renderDetailsPage)
 
 module.exports = router
