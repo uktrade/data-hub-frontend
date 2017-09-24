@@ -68,8 +68,7 @@ defineSupportCode(({ Then, When, Before }) => {
       .waitForElementPresent('@nameInput')
       .setValue('@nameInput', Events.state.eventDetails.name)
       .sendKeys('@nameInput', [ client.Keys.ENTER ])
-
-    client.pause(2000) // wait for xhr
+      .wait() // wait for xhr
 
     await EventsList.section.firstEventInList
       .waitForElementVisible('@header')
@@ -79,8 +78,7 @@ defineSupportCode(({ Then, When, Before }) => {
   Then(/^I sort the events list name A-Z$/, async () => {
     await EventsList
       .click('select[name="sortby"] option[value="name:asc"]')
-
-    client.pause(2000) // wait for xhr
+      .wait()// wait for xhr
 
     await EventsList
       .waitForElementVisible('@firstHeaderInList')
@@ -102,8 +100,7 @@ defineSupportCode(({ Then, When, Before }) => {
   Then(/^I sort the events list name Z-A$/, async () => {
     await EventsList
       .click('select[name="sortby"] option[value="name:desc"]')
-
-    client.pause(2000) // wait for xhr
+      .wait() // wait for xhr
 
     await EventsList
       .waitForElementVisible('@firstHeaderInList')

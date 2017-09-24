@@ -217,6 +217,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I click the save button$/, async () => {
     await Events
       .click('@saveButton')
+      .wait() // wait for backend to sync
   })
 
   Then(/^I verify the event type has an error message$/, async () => {
