@@ -100,6 +100,7 @@ module.exports = {
           end_date_day: format(futureDate, 'D'),
           notes: faker.lorem.paragraph(),
           location_type: null,
+          service: null,
           event_type: null,
           address_country: null,
           organiser: null,
@@ -117,9 +118,18 @@ module.exports = {
           })
           .getListOption('@addressCountry', (country) => {
             this.state.eventDetails.address_country = country
+
+            if (country === 'United Kingdom') {
+              this.getListOption('@ukRegion', (ukRegion) => {
+                this.state.eventDetails.uk_region = ukRegion
+              })
+            }
           })
           .getListOption('@leadTeam', (leadTeam) => {
             this.state.eventDetails.lead_team = leadTeam
+          })
+          .getListOption('@service', (service) => {
+            this.state.eventDetails.service = service
           })
           .getListOption('@organiser', (organiser) => {
             this.state.eventDetails.organiser = organiser
@@ -131,12 +141,13 @@ module.exports = {
             this.state.eventDetails.related_programmes = relatedProgrammes
           })
           .click('@sharedYes')
-          .api.perform((done) => {
+          .api.perform(() => {
             // loop through all form inputs and set stored values
             for (const key in this.state.eventDetails) {
-              this.setValue(`[name="${key}"]`, this.state.eventDetails[key])
+              if (this.state.eventDetails[key]) {
+                this.setValue(`[name="${key}"]`, this.state.eventDetails[key])
+              }
             }
-            done()
           })
       },
     },
