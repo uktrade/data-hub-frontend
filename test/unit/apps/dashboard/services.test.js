@@ -1,9 +1,6 @@
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
     return proxyquire('~/src/apps/dashboard/services', {
-      '../companies/services/data': {
-        buildCompanyUrl: sinon.stub().returns('/test'),
-      },
       '../../lib/authorised-request': () => new Promise((resolve) => {
         resolve(mockData)
       }),
@@ -40,7 +37,7 @@ describe('Dashboard service', () => {
             subject: 'int-subject',
             url: '/interactions/int-id',
             company: {
-              url: '/test',
+              url: '/companies/comp-id',
               name: 'comp-name',
             },
           }],
@@ -49,7 +46,7 @@ describe('Dashboard service', () => {
             name: 'first-name last-name',
             url: '/contacts/contact-id',
             company: {
-              url: '/test',
+              url: '/companies/comp-id',
               name: 'comp-name',
               id: 'comp-id',
             },
@@ -94,7 +91,7 @@ describe('Dashboard service', () => {
             name: 'first-name last-name',
             url: '/contacts/contact-id',
             company: {
-              url: '/test',
+              url: '/companies/comp-id',
               name: 'comp-name',
               id: 'comp-id',
             },

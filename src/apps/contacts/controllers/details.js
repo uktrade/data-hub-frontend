@@ -1,7 +1,6 @@
 const contactsRepository = require('../repos')
 const companyRepository = require('../../companies/repos')
 const contactFormattingService = require('../services/formatting')
-const companyService = require('../../companies/services/data')
 const { contactDetailsLabels } = require('../labels')
 
 const reasonForArchiveOptions = [
@@ -15,10 +14,9 @@ async function getCommon (req, res, next) {
   try {
     const token = req.session.token
     const contact = res.locals.contact = await contactsRepository.getContact(token, req.params.contactId)
-    const company = res.locals.company = await companyRepository.getDitCompany(token, contact.company.id)
 
+    res.locals.company = await companyRepository.getDitCompany(token, contact.company.id)
     res.locals.id = req.params.contactId
-    res.locals.companyUrl = companyService.buildCompanyUrl(company)
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
     res.locals.reasonForArchiveOptionsPrefix = reasonForArchiveOptionsPrefix
 
