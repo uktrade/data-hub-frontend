@@ -14,6 +14,7 @@ require('nightwatch-cucumber')({
 })
 
 module.exports = {
+  custom_commands_path: 'test/acceptance/commands',
   page_objects_path: glob.sync(join(__dirname, 'features/**/page-objects')),
   globals_path: 'test/acceptance/global.nightwatch.js',
   selenium: {
