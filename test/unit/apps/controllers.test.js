@@ -32,7 +32,7 @@ describe('Search controller #viewCompanyResult', function () {
       locals: {},
       breadcrumb: this.breadcrumbStub,
       redirect: function (url) {
-        expect(url).to.equal('/companies/view/ltd/9999')
+        expect(url).to.equal('/companies/9999')
         done()
       },
     }
@@ -64,7 +64,7 @@ describe('Search controller #viewCompanyResult', function () {
       locals: {},
       breadcrumb: this.breadcrumbStub,
       redirect: function (url) {
-        expect(url).to.equal('/companies/view/ltd/9999')
+        expect(url).to.equal('/companies/9999')
         done()
       },
     }
@@ -96,7 +96,7 @@ describe('Search controller #viewCompanyResult', function () {
       locals: {},
       breadcrumb: this.breadcrumbStub,
       redirect: function (url) {
-        expect(url).to.equal('/companies/view/ukother/9999')
+        expect(url).to.equal('/companies/9999')
         done()
       },
     }
@@ -128,7 +128,7 @@ describe('Search controller #viewCompanyResult', function () {
       locals: {},
       breadcrumb: this.breadcrumbStub,
       redirect: function (url) {
-        expect(url).to.equal('/companies/view/foreign/9999')
+        expect(url).to.equal('/companies/9999')
         done()
       },
     }

@@ -112,7 +112,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/companies/view/foreign/mockId')
+      expect(urlPath).to.equal('/companies/mockId')
     })
     it('should return expected url for private ltd company', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -123,7 +123,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/companies/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/mockId')
     })
     it('should return expected url for public ltd company', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -134,7 +134,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/companies/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/mockId')
     })
     it('should return expected url for public ltd company with caps case', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -145,7 +145,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/companies/view/ltd/mockId')
+      expect(urlPath).to.equal('/companies/mockId')
     })
     it('should return expected url uk non public, private ltd', () => {
       const urlPath = companyService.buildCompanyUrl({
@@ -156,7 +156,7 @@ describe('Company data service', () => {
         id: 'mockId',
       })
 
-      expect(urlPath).to.equal('/companies/view/ukother/mockId')
+      expect(urlPath).to.equal('/companies/mockId')
     })
   })
 })

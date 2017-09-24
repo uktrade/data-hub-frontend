@@ -1,5 +1,4 @@
 /* eslint camelcase: 0 */
-const { get } = require('lodash')
 const { getFormattedAddress } = require('../../../lib/address')
 
 /**
@@ -10,19 +9,7 @@ const { getFormattedAddress } = require('../../../lib/address')
  * @returns {string} urlPath
  */
 function buildCompanyUrl (company) {
-  const companyPath = '/companies/view'
-  const businessType = get(company, 'business_type.name', '').toLowerCase()
-  let urlPath
-
-  if (!company.uk_based) {
-    urlPath = `${companyPath}/foreign/${company.id}`
-  } else if (businessType.includes('limited company')) {
-    urlPath = `${companyPath}/ltd/${company.id}`
-  } else {
-    urlPath = `${companyPath}/ukother/${company.id}`
-  }
-
-  return urlPath
+  return `/companies/${company.id}`
 }
 
 function getHeadingAddress (company) {

@@ -50,11 +50,7 @@ router
   .post(expController.post)
 
 router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
-router.get([
-  '/view/ltd/:companyId',
-  '/view/ukother/:companyId',
-  '/view/foreign/:companyId',
-], renderDetails)
+router.get('/:companyId', renderDetails)
 
 router
   .route([
