@@ -1,28 +1,24 @@
-/* eslint camelcase: 0 */
 const { sortBy, pick, omit } = require('lodash')
 const queryString = require('query-string')
 
 const interactionLabels = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
-const interactionDataService = require('../services/data')
 const { getDisplayInteraction } = require('../services/formatting')
 const { transformObjectToOption } = require('../../transformers')
 
-const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
+const interactonDisplayOrder = [
+  'company',
+  'interaction_type',
+  'subject',
+  'notes',
+  'contact',
+  'date',
+  'dit_adviser',
+  'service',
+  'dit_team',
+]
 
-async function getCommon (req, res, next) {
-  try {
-    const token = req.session.token
-    if (req.params.interactionId && req.params.interactionId !== 'add') {
-      res.locals.interaction = await interactionDataService.getHydratedInteraction(token, req.params.interactionId)
-    }
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
-function getAddStep1 (req, res) {
+function renderCreatePage (req, res) {
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
   const interactionTypeOptions = interactionTypes.map(transformObjectToOption)
 
@@ -35,14 +31,14 @@ function getAddStep1 (req, res) {
     })
 }
 
-function postAddStep1 (req, res) {
+function postAddStep1 (req, res, next) {
   if (!req.body.interaction_type) {
     res.locals.errors = {
       messages: {
         interaction_type: ['You must select an interaction type'],
       },
     }
-    return getAddStep1(req, res)
+    return next()
   }
 
   const interactionData = pick(req.body, 'contact', 'company', 'interaction_type')
@@ -53,10 +49,10 @@ function postAddStep1 (req, res) {
     return res.redirect(`/service-deliveries/create/?${serviceDeliveryQueryString}`)
   }
 
-  return res.redirect(`2?${interactionQueryString}`)
+  return res.redirect(`/interactions/create/2?${interactionQueryString}`)
 }
 
-function getInteractionDetails (req, res, next) {
+function renderDetailsPage (req, res, next) {
   res
     .breadcrumb(`Interaction with ${res.locals.interaction.company.name}`)
     .render('interactions/views/details', {
@@ -67,8 +63,7 @@ function getInteractionDetails (req, res, next) {
 }
 
 module.exports = {
-  getAddStep1,
+  renderCreatePage,
   postAddStep1,
-  getCommon,
-  getInteractionDetails,
+  renderDetailsPage,
 }
