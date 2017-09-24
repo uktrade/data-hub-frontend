@@ -214,6 +214,11 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@eventNameError')
   })
 
+  Then(/^I click the save button$/, async () => {
+    await Events
+      .click('@saveButton')
+  })
+
   Then(/^I verify the event type has an error message$/, async () => {
     await Events
       .assert.visible('@eventTypeError')
