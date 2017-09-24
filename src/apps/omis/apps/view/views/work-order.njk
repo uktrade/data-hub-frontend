@@ -1,7 +1,7 @@
 {% extends "./_layouts/view.njk" %}
 
 {% set companyLink %}
-  <a href="/viewcompanyresult/{{ values.company.id }}">{{ values.company.name }}</a>
+  <a href="/companies/{{ values.company.id }}">{{ values.company.name }}</a>
 {% endset %}
 {% set contactLink %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>

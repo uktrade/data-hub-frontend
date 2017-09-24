@@ -1,7 +1,6 @@
 const moment = require('moment')
 const format = require('date-fns/format')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
-const { buildCompanyUrl } = require('../../companies/services/data')
 const metadataRepository = require('../../../lib/metadata')
 
 function formatCurrency (number) {
@@ -123,7 +122,7 @@ function transformInvestmentDataForView (data) {
   return Object.assign({}, data, {
     investor_company: {
       name: data.investor_company.name,
-      url: buildCompanyUrl(data.investor_company),
+      url: `/companies/${data.investor_company.id}`,
     },
     investment_type: getInvestmentTypeDetails(),
     sector: get(data, 'sector.name', null),
@@ -214,12 +213,12 @@ function transformInvestmentFDIForView (data) {
     ], 'Does not apply'),
     foreign_investor: {
       name: data.investor_company.name,
-      url: buildCompanyUrl(data.investor_company),
+      url: `/companies/${data.investor_company.id}`,
     },
     foreign_country: get(data, 'investor_company.registered_address_country.name'),
     uk_company: data.uk_company ? {
       name: data.uk_company.name,
-      url: buildCompanyUrl(data.uk_company),
+      url: `/companies/${data.uk_company.id}`,
     } : null,
     investor_retain_voting_power: data.uk_company ? 'Yes' : 'No',
   }
@@ -231,7 +230,7 @@ function transformInvestmentLandingForView (data) {
   }
 
   return Object.assign({}, {
-    uk_company: data.uk_company ? { name: data.uk_company.name, url: buildCompanyUrl(data.uk_company) } : null,
+    uk_company: data.uk_company ? { name: data.uk_company.name, url: `/companies/${data.uk_company.id}` } : null,
     company_number: get(data, 'uk_company.company_number'),
     registered_address: data.uk_company ? [
       data.uk_company.registered_address_1,
@@ -256,7 +255,7 @@ function transformBriefInvestmentSummary (data) {
     sector: get(data, 'sector.name', null),
     investor_company: {
       name: investorCompany.name,
-      url: buildCompanyUrl(investorCompany),
+      url: `/companies/${investorCompany.id}`,
     },
     website: (investorCompany.website) ? `<a href="${investorCompany.website}">${investorCompany.website}</a>` : '',
     account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',

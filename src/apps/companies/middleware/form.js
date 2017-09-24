@@ -66,7 +66,7 @@ async function handleFormPost (req, res, next) {
     const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
 
     req.flash('success', 'Company record updated')
-    res.redirect(`/viewcompanyresult/${savedCompany.id}`)
+    res.redirect(`/companies/${savedCompany.id}`)
   } catch (response) {
     if (response.errors) {
       // Leeloo has inconsistant structure to return errors.

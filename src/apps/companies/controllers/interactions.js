@@ -3,7 +3,7 @@ function renderInteractions (req, res, next) {
     const { name, id } = res.locals.company
 
     res
-      .breadcrumb(name, `/viewcompanyresult/${id}`)
+      .breadcrumb(name, `/companies/${id}`)
       .breadcrumb('Interactions')
       .render('companies/views/interactions')
   } catch (error) {
