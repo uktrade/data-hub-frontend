@@ -59,12 +59,10 @@ router.get([
 router
   .route([
     '/add/foreign',
-    '/edit/foreign/:companyId',
     '/add/ukother',
-    '/edit/ukother/:companyId',
     '/add/ltd',
     '/add/ltd/:companyNumber',
-    '/edit/ltd/:companyId',
+    '/:companyId/edit',
   ])
   .get(populateForm, renderForm)
   .post(populateForm, handleFormPost, renderForm)
