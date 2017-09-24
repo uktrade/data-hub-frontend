@@ -1,3 +1,6 @@
+const faker = require('faker')
+const { addWeeks, format } = require('date-fns')
+
 module.exports = {
   url: process.env.QA_HOST + '/events/create',
   props: {},
@@ -78,6 +81,64 @@ module.exports = {
       assertVisibleRelatedProgrammesList (listNumber) {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
+      },
+      populateCreateEventForm () {
+        const today = new Date()
+        const futureDate = addWeeks(today, 1)
+
+        // Store created event details
+        this.state.eventDetails = {
+          name: faker.company.companyName(),
+          address_1: faker.address.streetName(),
+          address_2: faker.address.secondaryAddress(),
+          address_town: faker.address.city(),
+          postcode: faker.address.zipCode(),
+          start_date_year: format(new Date(), 'YYYY'),
+          start_date_month: format(new Date(), 'MM'),
+          start_date_day: format(new Date(), 'D'),
+          end_date_year: format(futureDate, 'YYYY'),
+          end_date_month: format(futureDate, 'MM'),
+          end_date_day: format(futureDate, 'D'),
+          notes: faker.lorem.paragraph(),
+          location_type: null,
+          event_type: null,
+          address_country: null,
+          organiser: null,
+          lead_team: null,
+          related_programmes: null,
+          teams: null,
+        }
+
+        return this
+          .getListOption('@eventType', (eventType) => {
+            this.state.eventDetails.event_type = eventType
+          })
+          .getListOption('@locationType', (locationType) => {
+            this.state.eventDetails.location_type = locationType
+          })
+          .getListOption('@addressCountry', (country) => {
+            this.state.eventDetails.address_country = country
+          })
+          .getListOption('@leadTeam', (leadTeam) => {
+            this.state.eventDetails.lead_team = leadTeam
+          })
+          .getListOption('@organiser', (organiser) => {
+            this.state.eventDetails.organiser = organiser
+          })
+          .getListOption('@teams', (teams) => {
+            this.state.eventDetails.teams = teams
+          })
+          .getListOption('@relatedProgrammes', (relatedProgrammes) => {
+            this.state.eventDetails.related_programmes = relatedProgrammes
+          })
+          .click('@sharedYes')
+          .api.perform((done) => {
+            // loop through all form inputs and set stored values
+            for (const key in this.state.eventDetails) {
+              this.setValue(`[name="${key}"]`, this.state.eventDetails[key])
+            }
+            done()
+          })
       },
     },
   ],
