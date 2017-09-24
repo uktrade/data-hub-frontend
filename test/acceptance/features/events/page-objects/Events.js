@@ -63,7 +63,6 @@ module.exports = {
     sharedTeamsFromDetails: 'a',
     relatedProgrammesFromDetails: 'a',
   },
-
   commands: [
     {
       selectListOptionByText (listName, text) {
