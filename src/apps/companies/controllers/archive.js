@@ -1,38 +1,49 @@
-const { archiveCompany, unarchiveCompany, getDitCompany } = require('../repos')
-const { buildCompanyUrl } = require('../services/data')
+/* eslint-disable camelcase */
+const { archiveCompany: archive, unarchiveCompany: unarchive } = require('../repos')
+const logger = require('../../../../config/logger')
 
-async function postArchiveCompany (req, res, next) {
+async function archiveCompany (req, res) {
+  const { id } = res.locals.company
+  const { archived_reason, archived_reason_other } = req.body
+  const reason = archived_reason_other || archived_reason
+  const returnUrl = `/companies/${id}`
+
+  if (!reason) {
+    req.flash('error', 'A reason must be supplied to archive a company')
+    return res.redirect(returnUrl)
+  }
+
   try {
-    const company = await getDitCompany(req.session.token, req.params.id)
-    const url = buildCompanyUrl(company)
-    const reason = (req.body.archived_reason !== 'Other') ? req.body.archived_reason : req.body.archived_reason_other
+    await archive(req.session.token, id, reason)
 
-    if (reason.length > 0) {
-      await archiveCompany(req.session.token, company.id, reason)
-      req.flash('success', 'Company record updated')
-    } else {
-      req.flash('error', 'Unable to archive company, no reason given')
-    }
-
-    res.redirect(url)
+    req.flash('success', 'Company archived')
+    res.redirect(returnUrl)
   } catch (error) {
-    next(error)
+    logger.error(error)
+
+    req.flash('error', 'Company could not be archived')
+    res.redirect(returnUrl)
   }
 }
 
-async function getUnarchiveCompany (req, res, next) {
+async function unarchiveCompany (req, res) {
+  const { id } = res.locals.company
+  const returnUrl = `/companies/${id}`
+
   try {
-    const company = await getDitCompany(req.session.token, req.params.id)
-    const url = buildCompanyUrl(company)
-    await unarchiveCompany(req.session.token, company.id)
-    req.flash('success', 'Company record updated')
-    res.redirect(url)
+    await unarchive(req.session.token, id)
+
+    req.flash('success', 'Company unarchived')
+    res.redirect(returnUrl)
   } catch (error) {
-    next(error)
+    logger.error(error)
+
+    req.flash('error', 'Company could not be archived')
+    res.redirect(returnUrl)
   }
 }
 
 module.exports = {
-  postArchiveCompany,
-  getUnarchiveCompany,
+  archiveCompany,
+  unarchiveCompany,
 }

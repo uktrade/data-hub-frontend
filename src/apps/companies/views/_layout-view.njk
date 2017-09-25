@@ -12,7 +12,7 @@
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
         <strong>Reason:</strong> {{company.archived_reason}}<br>
         <br>
-        <a href="/companies/unarchive/{{company.id}}">Unarchive</a>
+        <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
       {% endcall %}
     {% endif %}
   {% endcall %}
