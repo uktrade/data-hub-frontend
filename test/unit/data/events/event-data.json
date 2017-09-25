@@ -28,8 +28,8 @@
   },
   "teams": [
     {
-      "id": "574049e6-9698-e211-a939-e4115bead28a",
-      "name": "The cat collective"
+      "id": "32f12898-9698-e211-a939-e4115bead28a",
+      "name": "Association of Cats"
     }
   ],
   "related_programmes": [
@@ -46,7 +46,7 @@
   "modified_on": "2017-09-19T15:20:26.834094",
   "name": "A United Kingdom Get together",
   "start_date": "2017-11-10",
-  "end_date": null,
+  "end_date": "2017-11-11",
   "address_1": "1 uk street",
   "address_2": "the lane",
   "address_town": "plymouth",
