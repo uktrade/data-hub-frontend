@@ -1,25 +1,27 @@
 const router = require('express').Router()
 
-const { getInteractionCollection } = require('./middleware/interactions')
-const { renderInteractions } = require('./controllers/interactions')
-
-const {
-  addController,
-  archiveController,
-  contactsController,
-  expController,
-  investmentsController,
-  auditController,
-} = require('./controllers')
-
+const { addController } = require('./controllers')
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/view')
+const { renderInvestments } = require('./controllers/investments')
+const { renderAuditLog } = require('./controllers/audit')
+const { renderInteractions } = require('./controllers/interactions')
 const { renderCompaniesHouseCompany } = require('./controllers/companies-house')
+const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
+const { renderContacts } = require('./controllers/contacts')
+const {
+  renderExports,
+  populateExportForm,
+  renderExportEdit,
+  handleEditFormPost,
+} = require('./controllers/exports')
+
+const { setDefaultQuery } = require('../middleware')
+const { getInteractionCollection } = require('./middleware/interactions')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
-const { setDefaultQuery } = require('../middleware')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
@@ -37,20 +39,10 @@ router
 
 router.get('/add-step-2/', addController.getAddStepTwo)
 
-router.post('/archive/:id', archiveController.postArchiveCompany)
-router.get('/unarchive/:id', archiveController.getUnarchiveCompany)
-
-router.get('/:id/contacts/', contactsController.getContacts)
-
-router.get('/:id/exports', expController.view)
-
 router
-  .route('/:id/exports/edit')
-  .get(expController.edit)
-  .post(expController.post)
-
-router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
-router.get('/:companyId', renderDetails)
+  .route('/:companyId/exports/edit')
+  .get(populateExportForm, renderExportEdit)
+  .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
 router
   .route([
@@ -63,9 +55,16 @@ router
   .get(populateForm, renderForm)
   .post(populateForm, handleFormPost, renderForm)
 
-router.get('/:id/investments', investmentsController.getAction)
-router.get('/:id/audit', auditController.getAudit)
+router.post('/:companyId/archive', archiveCompany)
+router.get('/:companyId/unarchive', unarchiveCompany)
 
+router.get('/:companyId/contacts', renderContacts)
 router.get('/:companyId/interactions', getInteractionCollection, renderInteractions)
+router.get('/:companyId/exports', renderExports)
+router.get('/:companyId/investments', renderInvestments)
+router.get('/:companyId/audit', renderAuditLog)
+
+router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
+router.get('/:companyId', renderDetails)
 
 module.exports = router

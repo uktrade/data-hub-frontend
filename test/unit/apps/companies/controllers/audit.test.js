@@ -1,48 +1,41 @@
-const auditLog = require('~/test/unit/data/audit/company-audit.json')
-const { companyData } = require('~/test/unit/data/company.json')
-const { companyDetailsLabels } = require('~/src/apps/companies/labels')
+const auditLogMock = require('~/test/unit/data/audit/company-audit.json')
+const companyMock = require('~/test/unit/data/companies/company.json')
+const tokenMock = '12345abcde'
 
 describe('Company audit controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.transformed = {}
-    this.getDitCompanyStub = this.sandbox.stub().resolves(companyData)
-    this.getCompanyAuditLogStub = this.sandbox.stub().resolves(auditLog)
-    this.getCommonTitlesAndlinksStub = this.sandbox.stub()
-    this.next = this.sandbox.stub()
-
-    this.transformApiResponseToCollectionInnerStub = this.sandbox.stub().returns()
-    this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
-    this.generatedTransformer = this.sandbox.stub()
-    this.transformAuditLogToListItemStub = this.sandbox.stub().returns(this.generatedTransformer)
-    this.breadcrumbStub = function () {
-      return this
-    }
+    this.getCompanyAuditLogStub = this.sandbox.stub()
+    this.transformApiResponseToCollectionSpy = this.sandbox.spy()
+    this.transformAuditLogToListItemSpy = this.sandbox.spy()
+    this.breadcrumbStub = this.sandbox.stub().returnsThis()
+    this.renderSpy = this.sandbox.spy()
+    this.nextSpy = this.sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
       '../repos': {
         getCompanyAuditLog: this.getCompanyAuditLogStub,
-        getDitCompany: this.getDitCompanyStub,
-      },
-      '../services/data': {
-        getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
       },
       '../../transformers': {
-        transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
+        transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
       '../../audit/transformers': {
-        transformAuditLogToListItem: this.transformAuditLogToListItemStub,
+        transformAuditLogToListItem: this.transformAuditLogToListItemSpy,
       },
     })
 
-    this.req = {
-      params: {
-        id: '1234',
-      },
+    this.reqMock = {
       query: {},
       session: {
-        token: '9999',
+        token: tokenMock,
+      },
+    }
+    this.resMock = {
+      breadcrumb: this.breadcrumbStub,
+      render: this.renderSpy,
+      locals: {
+        company: companyMock,
       },
     }
   })
@@ -51,61 +44,71 @@ describe('Company audit controller', () => {
     this.sandbox.restore()
   })
 
-  it('should get the company details and generate heading data', (done) => {
-    try {
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.getDitCompanyStub).to.be.calledWith(this.req.session.token, this.req.params.id)
-          expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(sinon.match.any, sinon.match.any, companyData)
-          done()
-        },
-      }, done)
-    } catch (error) {
-      done(error)
-    }
+  context('when audit returns successfully', () => {
+    beforeEach(() => {
+      this.getCompanyAuditLogStub.resolves(auditLogMock)
+    })
+
+    context('with default page number', () => {
+      beforeEach(async () => {
+        await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call audit log with correct arguments', () => {
+        expect(this.getCompanyAuditLogStub).to.have.been.calledWith(tokenMock, companyMock.id, 1)
+      })
+
+      it('should call api transformer', () => {
+        expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
+      })
+
+      it('should call list item transformer', () => {
+        expect(this.transformAuditLogToListItemSpy).to.have.been.calledOnce
+      })
+
+      it('should set the correct number of breadcrumbs', () => {
+        expect(this.breadcrumbStub).to.have.been.calledTwice
+      })
+
+      it('should render the correct template', () => {
+        expect(this.renderSpy.args[0][0]).to.equal('companies/views/audit')
+        expect(this.renderSpy).to.have.been.calledOnce
+      })
+
+      it('should send the correct template data', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          tab: 'audit',
+          auditLog: auditLogMock,
+        })
+      })
+    })
+
+    context('when a custom page number', () => {
+      beforeEach(async () => {
+        this.reqMock.query.page = 2
+
+        await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call audit log with custom page number', () => {
+        expect(this.getCompanyAuditLogStub).to.have.been.calledWith(tokenMock, companyMock.id, 2)
+      })
+    })
   })
 
-  it('should call the company audit repository', (done) => {
-    this.controller.getAudit(this.req, {
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        expect(this.getCompanyAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.id, 1)
-        done()
-      },
-    }, done)
-  })
+  context('when audit rejects', () => {
+    beforeEach(async () => {
+      this.errorMock = {
+        errorCode: 500,
+      }
+      this.getCompanyAuditLogStub.rejects(this.errorMock)
 
-  it('should pass on any page number specified, for pagination', (done) => {
-    try {
-      this.req.query.page = '3'
+      await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
+    })
 
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.getCompanyAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.id, '3')
-          done()
-        },
-      }, this.next)
-    } catch (error) {
-      done(error)
-    }
-  })
-
-  it('should transform the results returned', (done) => {
-    try {
-      const options = { entityType: 'audit' }
-
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options, this.generatedTransformer)
-          expect(this.transformAuditLogToListItemStub).to.be.calledWith(companyDetailsLabels)
-          done()
-        },
-      }, done)
-    } catch (error) {
-      done(error)
-    }
+    it('should call next with error', () => {
+      expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
+      expect(this.nextSpy).to.have.been.calledOnce
+    })
   })
 })

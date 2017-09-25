@@ -5,7 +5,7 @@ const archiveController = require('./archive')
 const auditController = require('./audit')
 const companiesHouseController = require('./companies-house')
 const contactsController = require('./contacts')
-const expController = require('./exp')
+const exportsController = require('./exports')
 const interactionsController = require('./interactions')
 const investmentsController = require('./investments')
 const renderCompanyList = require('./list')
@@ -18,7 +18,7 @@ module.exports = {
   auditController,
   companiesHouseController,
   contactsController,
-  expController,
+  exportsController,
   interactionsController,
   investmentsController,
   renderCompanyList,

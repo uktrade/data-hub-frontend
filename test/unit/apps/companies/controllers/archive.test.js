@@ -1,157 +1,201 @@
-const next = function (error) {
-  throw Error(error)
+const tokenMock = '12345abcde'
+const companyMock = {
+  id: '9999',
+  company_number: '10620176',
+  companies_house_data: null,
+  name: 'ADALEOP LTD',
+  registered_address_1: '13 HOWICK PARK AVENUE',
+  registered_address_2: 'PENWORTHAM',
+  registered_address_town: 'PRESTON',
+  registered_address_county: '',
+  registered_address_postcode: 'PR1 0LS',
 }
 
-describe('Company controller, archive', function () {
-  let companyRepositoryArchiveCompanyStub
-  let companyRepositoryUnArchiveCompanyStub
-  let buildCompanyUrlStub
-  let flashStub
-  const token = '1234'
-  const company = {
-    id: '9999',
-    company_number: '10620176',
-    companies_house_data: null,
-    name: 'ADALEOP LTD',
-    registered_address_1: '13 HOWICK PARK AVENUE',
-    registered_address_2: 'PENWORTHAM',
-    registered_address_town: 'PRESTON',
-    registered_address_county: '',
-    registered_address_postcode: 'PR1 0LS',
-  }
-  let getDitCompanyStub
-  let companyArchiveController
+describe('Company controller, archive', () => {
+  beforeEach(() => {
+    this.sandbox = sinon.sandbox.create()
 
-  beforeEach(function () {
-    getDitCompanyStub = sinon.stub().resolves(company)
-    buildCompanyUrlStub = sinon.stub().returns('/testurl')
-    companyRepositoryArchiveCompanyStub = sinon.stub().resolves(null)
-    companyRepositoryUnArchiveCompanyStub = sinon.stub().resolves(null)
-    companyArchiveController = proxyquire('~/src/apps/companies/controllers/archive', {
-      '../services/data': {
-        buildCompanyUrl: buildCompanyUrlStub,
-      },
+    this.archiveCompanyStub = this.sandbox.stub()
+    this.unarchiveCompanyStub = this.sandbox.stub()
+    this.errorLoggerSpy = this.sandbox.spy()
+    this.redirectSpy = this.sandbox.spy()
+    this.flashSpy = this.sandbox.spy()
+
+    this.controller = proxyquire('~/src/apps/companies/controllers/archive', {
       '../repos': {
-        getDitCompany: getDitCompanyStub,
-        archiveCompany: companyRepositoryArchiveCompanyStub,
-        unarchiveCompany: companyRepositoryUnArchiveCompanyStub,
+        archiveCompany: this.archiveCompanyStub,
+        unarchiveCompany: this.unarchiveCompanyStub,
+      },
+      '../../../../config/logger': {
+        error: this.errorLoggerSpy,
       },
     })
-    flashStub = sinon.stub()
-  })
-  it('should call the archive company method for the id and reason', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'test', archived_reason_other: '' },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function () {
-        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason)
-        done()
-      },
-    }
 
-    companyArchiveController.postArchiveCompany(req, res, next)
+    this.reqMock = {
+      flash: this.flashSpy,
+      session: {
+        token: tokenMock,
+      },
+      body: {},
+    }
+    this.resMock = {
+      redirect: this.redirectSpy,
+      locals: {
+        company: companyMock,
+      },
+    }
   })
-  it('should call the archive company method for the id and other reason', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function () {
-        expect(companyRepositoryArchiveCompanyStub).to.be.calledWith(token, company.id, req.body.archived_reason_other)
-        done()
-      },
-    }
 
-    companyArchiveController.postArchiveCompany(req, res, next)
+  afterEach(() => {
+    this.sandbox.restore()
   })
-  it('should get the company and generate a url to redirect to', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function (url) {
-        expect(getDitCompanyStub).to.be.calledWith(token, company.id)
-        expect(buildCompanyUrlStub).to.be.calledWith(company)
-        expect(url).to.equal('/testurl')
-        done()
-      },
-    }
 
-    companyArchiveController.postArchiveCompany(req, res, next)
+  describe('archiveCompany()', () => {
+    context('when no reason is supplied', () => {
+      beforeEach(() => {
+        this.controller.archiveCompany(this.reqMock, this.resMock)
+      })
+
+      it('should set an error on flash', () => {
+        expect(this.flashSpy.args[0][0]).to.equal('error')
+        expect(this.flashSpy).to.have.been.calledOnce
+      })
+
+      it('should redirect back to company', () => {
+        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
+        expect(this.redirectSpy).to.have.been.calledOnce
+      })
+
+      it('should not attempt to archive company', () => {
+        expect(this.archiveCompanyStub).not.to.have.been.called
+      })
+    })
+
+    context('when a reason is supplied', () => {
+      beforeEach(() => {
+        this.reasonMock = 'Archived reason'
+        this.reqMock.body.archived_reason = this.reasonMock
+      })
+
+      context('when save returns successfully', () => {
+        beforeEach(() => {
+          this.archiveCompanyStub.resolves(companyMock)
+        })
+
+        context('with a default reason', () => {
+          beforeEach(async () => {
+            await this.controller.archiveCompany(this.reqMock, this.resMock)
+          })
+
+          it('should call archive company with correct args', () => {
+            expect(this.archiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id, this.reasonMock)
+            expect(this.archiveCompanyStub).to.have.been.calledOnce
+          })
+
+          it('should set a success on flash', () => {
+            expect(this.flashSpy.args[0][0]).to.equal('success')
+            expect(this.flashSpy).to.have.been.calledOnce
+          })
+
+          it('should redirect back to company', () => {
+            expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
+            expect(this.redirectSpy).to.have.been.calledOnce
+          })
+        })
+
+        context('with a custom reason', () => {
+          beforeEach(async () => {
+            this.reasonMock = 'Other'
+            this.customReasonMock = 'My custom reason'
+            this.reqMock.body.archived_reason = this.reasonMock
+            this.reqMock.body.archived_reason_other = this.customReasonMock
+
+            await this.controller.archiveCompany(this.reqMock, this.resMock)
+          })
+
+          it('should call archive company with custom reason', () => {
+            expect(this.archiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id, this.customReasonMock)
+            expect(this.archiveCompanyStub).to.have.been.calledOnce
+          })
+        })
+      })
+
+      context('when save rejects with an error', () => {
+        beforeEach(async () => {
+          this.errorMock = {
+            errorCode: 500,
+          }
+          this.archiveCompanyStub.rejects(this.errorMock)
+
+          await this.controller.archiveCompany(this.reqMock, this.resMock)
+        })
+
+        it('should send error to logger', () => {
+          expect(this.errorLoggerSpy).to.have.been.calledWith(this.errorMock)
+          expect(this.errorLoggerSpy).to.have.been.calledOnce
+        })
+
+        it('should set an error on flash', () => {
+          expect(this.flashSpy.args[0][0]).to.equal('error')
+          expect(this.flashSpy).to.have.been.calledOnce
+        })
+
+        it('should redirect back to company', () => {
+          expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
+          expect(this.redirectSpy).to.have.been.calledOnce
+        })
+      })
+    })
   })
-  it('should send a flash message that all went well', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function (url) {
-        expect(flashStub).to.be.calledWith('success', 'Company record updated')
-        done()
-      },
-    }
 
-    companyArchiveController.postArchiveCompany(req, res, next)
-  })
-  it('should sent a flash message if there was a problem', function (done) {
-    const req = {
-      session: { token },
-      body: { archived_reason: 'Other', archived_reason_other: '' },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function (url) {
-        expect(flashStub).to.be.calledWith('error', 'Unable to archive company, no reason given')
-        done()
-      },
-    }
+  describe('unarchiveCompany()', () => {
+    context('when save returns successfully', () => {
+      beforeEach(async () => {
+        this.unarchiveCompanyStub.resolves(companyMock)
 
-    companyArchiveController.postArchiveCompany(req, res, next)
-  })
-  it('should call unarchive', function (done) {
-    const req = {
-      session: { token },
-      params: {
-        id: company.id,
-      },
-      flash: flashStub,
-    }
-    const res = {
-      locals: {},
-      redirect: function () {
-        expect(companyRepositoryUnArchiveCompanyStub).to.be.calledWith(token, company.id)
-        done()
-      },
-    }
+        await this.controller.unarchiveCompany(this.reqMock, this.resMock)
+      })
 
-    companyArchiveController.getUnarchiveCompany(req, res, next)
+      it('should call unarchive company with correct args', () => {
+        expect(this.unarchiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id)
+        expect(this.unarchiveCompanyStub).to.have.been.calledOnce
+      })
+
+      it('should set a success on flash', () => {
+        expect(this.flashSpy.args[0][0]).to.equal('success')
+        expect(this.flashSpy).to.have.been.calledOnce
+      })
+
+      it('should redirect back to company', () => {
+        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
+        expect(this.redirectSpy).to.have.been.calledOnce
+      })
+    })
+
+    context('when save rejects with an error', () => {
+      beforeEach(async () => {
+        this.errorMock = {
+          errorCode: 500,
+        }
+        this.unarchiveCompanyStub.rejects(this.errorMock)
+
+        await this.controller.unarchiveCompany(this.reqMock, this.resMock)
+      })
+
+      it('should send error to logger', () => {
+        expect(this.errorLoggerSpy).to.have.been.calledWith(this.errorMock)
+        expect(this.errorLoggerSpy).to.have.been.calledOnce
+      })
+
+      it('should set an error on flash', () => {
+        expect(this.flashSpy.args[0][0]).to.equal('error')
+        expect(this.flashSpy).to.have.been.calledOnce
+      })
+
+      it('should redirect back to company', () => {
+        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
+        expect(this.redirectSpy).to.have.been.calledOnce
+      })
+    })
   })
 })
