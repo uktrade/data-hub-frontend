@@ -10,6 +10,12 @@ defineSupportCode(({ Given, Then, When }) => {
       .navigate()
   })
 
+  When(/^I choose the (.+) country option$/, async (country) => {
+    await Events
+      .setValue('@addressCountry', '')
+      .selectListOptionByText('address_country', country)
+  })
+
   Then(/^I verify the event name field is displayed$/, async () => {
     await Events
       .assert.visible('@eventName')
@@ -76,6 +82,16 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify the event address country field is displayed$/, async () => {
     await Events
       .assert.visible('@addressCountry')
+  })
+
+  Then(/^I verify the event UK region field is displayed$/, async () => {
+    await Events
+      .assert.visible('@ukRegion')
+  })
+
+  Then(/^I verify the event UK region field is not displayed$/, async () => {
+    await Events
+      .assert.hidden('@ukRegion')
   })
 
   Then(/^I verify the event notes field is displayed$/, async () => {
@@ -210,6 +226,11 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify the event address country has an error message$/, async () => {
     await Events
       .assert.visible('@addressCountryError')
+  })
+
+  Then(/^I verify the event UK region has an error message$/, async () => {
+    await Events
+      .assert.visible('@ukRegionError')
   })
 
   Then(/^I see the event is displayed correctly with all field values$/, async () => {

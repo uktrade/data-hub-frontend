@@ -22,6 +22,7 @@ Feature: Create an Event in Data hub
     And I verify the event address county field is displayed
     And I verify the event address postcode field is displayed
     And I verify the event address country field is displayed
+    And I verify the event UK region field is not displayed
     And I verify the event notes field is displayed
     And I verify the event Team hosting field is displayed
     And I verify the event organiser field is displayed
@@ -29,6 +30,15 @@ Feature: Create an Event in Data hub
     And I verify the shared teams field is not displayed
     And I verify the event related programmes field is displayed
     And I verify the event save button is displayed
+
+  @events__create-event-form--toggle-uk-region
+  Scenario: Verify event UK region toggling
+
+    When I navigate to the create an event page
+    And I choose the United Kingdom country option
+    Then I verify the event UK region field is displayed
+    When I choose the Afghanistan country option
+    Then I verify the event UK region field is not displayed
 
   @events__create-event-form--toggle-shared
   Scenario: Verify event shared field toggling
