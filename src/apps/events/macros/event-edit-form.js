@@ -1,6 +1,7 @@
 const metadataRepo = require('../../../lib/metadata')
 const { globalFields } = require('../../macros')
 const { transformObjectToOption } = require('../../transformers')
+const { assign } = require('lodash')
 
 const eventFormConfig = ({ advisers }) => {
   return {
@@ -81,8 +82,14 @@ const eventFormConfig = ({ advisers }) => {
         label: 'Postcode',
         class: 'u-js-hidden',
       },
-      Object.assign({}, globalFields.countries, {
+      assign({}, globalFields.countries, {
         name: 'address_country',
+      }),
+      assign({}, globalFields.ukRegions, {
+        condition: {
+          name: 'address_country',
+          value: '80756b9a-5d95-e211-a939-e4115bead28a',
+        },
       }),
       {
         macroName: 'TextField',

@@ -15,6 +15,7 @@ function transformToApi (body) {
     address_county: Object,
     postcode: Object,
     address_country: Object,
+    uk_region: Object,
     notes: Object,
     lead_team: Object,
     organiser: Object,

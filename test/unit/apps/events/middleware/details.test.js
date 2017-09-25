@@ -36,6 +36,7 @@ describe('Event details middleware', () => {
         address_county: 'county',
         postcode: 'postcode',
         address_country: 'country',
+        uk_region: 'uk_region',
         notes: 'notes',
         lead_team: 'lead_team',
         organiser: 'organiser',

@@ -22,6 +22,8 @@ module.exports = {
     addressPostcode: 'input[name="postcode"]',
     addressCountry: 'select[name="address_country"]',
     addressCountryError: 'label[for=field-address_country] span:nth-child(2)',
+    ukRegion: 'select[name="uk_region"]',
+    ukRegionError: 'label[for=field-uk_region] span:nth-child(2)',
     notes: 'textarea[name="notes"]',
     teamHosting: 'select[name="lead_team"]',
     organiser: 'select[name="organiser"]',
@@ -59,6 +61,10 @@ module.exports = {
 
   commands: [
     {
+      selectListOptionByText (listName, text) {
+        return this
+          .click('xpath', `//select[@name="${listName}"]/option[normalize-space(.)="${text}"]`)
+      },
       selectListOption (listName, optionNumber) {
         return this
           .click(`select[name="${listName}"] option:nth-child(${optionNumber})`)
