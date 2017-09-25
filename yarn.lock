@@ -1752,6 +1752,13 @@ connect-redis-crypto@3.1.1:
     debug "^2.2.0"
     redis "^2.1.0"
 
+connect-redis@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/connect-redis/-/connect-redis-3.3.0.tgz#c9510c1a567ff710eb2510e6a7509fa92b2232df"
+  dependencies:
+    debug "^2.2.0"
+    redis "^2.1.0"
+
 connect@1.x:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/connect/-/connect-1.9.2.tgz#42880a22e9438ae59a8add74e437f58ae8e52807"
