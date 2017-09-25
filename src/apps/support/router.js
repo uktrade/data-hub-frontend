@@ -1,12 +1,12 @@
 const router = require('express').Router()
 
-const { populateFormData, validateForm, submitForm } = require('./middleware')
+const { postFeedback } = require('./middleware')
 const { renderFeedbackPage, renderThankYouPage } = require('./controllers')
 
 router
   .route('/')
-  .get(populateFormData, renderFeedbackPage)
-  .post(populateFormData, validateForm, submitForm, renderFeedbackPage)
+  .post(postFeedback)
+  .all(renderFeedbackPage)
 
 router.get('/thank-you', renderThankYouPage)
 
