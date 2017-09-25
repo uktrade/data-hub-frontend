@@ -10,10 +10,11 @@
       </div>
       <div class="key-value__value" aria-labelledby="business-type">
         {{ 'Foreign' if isForeign else 'UK' }}
-        {{ businessTypeName or '(type of organisation not known)' }}
+        {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
       </div>
     </div>
   </div>
+
 
   {% if chDetails %}
     <div class="section">
@@ -24,19 +25,19 @@
 
   <form method="POST">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="business_type" value="{{ formData.business_type }}">
     <input type="hidden" name="uk_based" value="{{ 'no' if isForeign else 'yes' }}">
-    <input type="hidden" name="id" value="{{ formData.id }}">
+    <input type="hidden" name="business_type" value="{{ formData.business_type }}">
+    <input type="hidden" name="id" value="{{ company.id }}">
 
-    {% if isCompaniesHouse %}
-      <input type="hidden" name="company_number" value="{{formData.company_number}}">
-      <input type="hidden" name="name" value="{{formData.name}}">
-      <input type="hidden" name="registered_address_1" value="{{formData.registered_address_1}}">
-      <input type="hidden" name="registered_address_2" value="{{formData.registered_address_2}}">
-      <input type="hidden" name="registered_address_town" value="{{formData.registered_address_town}}">
-      <input type="hidden" name="registered_address_county" value="{{formData.registered_address_county}}">
-      <input type="hidden" name="registered_address_postcode" value="{{formData.registered_address_postcode}}">
-      <input type="hidden" name="registered_address_country" value="{{formData.registered_address_country}}">
+    {% if companiesHouseRecord %}
+      <input type="hidden" name="name" value="{{ formData.name }}">
+      <input type="hidden" name="company_number" value="{{ formData.company_number }}">
+      <input type="hidden" name="registered_address_1" value="{{ formData.registered_address_1 }}">
+      <input type="hidden" name="registered_address_2" value="{{ formData.registered_address_2 }}">
+      <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}">
+      <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}">
+      <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
+      <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
 
       {{ textbox("trading_name", label="Trading name (optional)", value=formData.trading_name, error=errors.trading_name) }}
     {% else %}
@@ -72,8 +73,8 @@
 
     <div class="form-group">
       <div class="form-label-bold">Trading address (optional)</div>
-      <button id="add-trading-address" class="button-secondary{%if showTradingAddress == true %}u-hidden{% endif %}" type="button">Add trading address</button>
-      <button id="remove-trading-address" class="button-secondary{%if showTradingAddress == false %} u-hidden{% endif %}" type="button">Remove trading address</button>
+      <button id="add-trading-address" class="button-secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
+      <button id="remove-trading-address" class="button-secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
     </div>
 
     <fieldset id="trading-address-wrapper" class="fieldset--address {{ 'lookup-address-js' if not isForeign }} {{ 'u-hidden' if not showTradingAddress }}">

@@ -1,6 +1,3 @@
-const { render } = require('~/test/unit/nunjucks')
-const { hqLabels } = require('~/src/apps/companies/labels')
-const { expectTextFieldWithLabel, expectDropdownWithLabel, expectHiddenField, expectRadioWithLabel, expectTextAreaWithLabel } = require('~/test/unit/form-helpers')
 const next = function (error) {
   throw Error(error)
 }
@@ -10,25 +7,9 @@ describe('Company controller, uk other', function () {
   let getDitCompanyStub
   let getDisplayCHStub
   let getDisplayCompanyStub
-  let getUkOtherCompanyAsFormDataStub
   let companyControllerUkOther
-  let fakeCompanyForm
-  let saveCompanyFormStub
 
   let company
-  const metadataRepositoryStub = {
-    regionOptions: [{ id: '1', name: 'option 1' }],
-    sectorOptions: [{ id: '1', name: 'option 1' }],
-    employeeOptions: [{ id: '1', name: 'option 1' }],
-    turnoverOptions: [{ id: '1', name: 'option 1' }],
-    businessTypeOptions: [{ id: '1', name: 'Charity' }],
-    countryOptions: [{ id: '80756b9a-5d95-e211-a939-e4115bead28a', name: 'United Kingdom' }],
-    headquarterOptions: [
-      { id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', name: 'ehq' },
-      { id: '43281c5e-92a4-4794-867b-b4d5f801e6f3', name: 'ghq' },
-      { id: '3e6debb4-1596-40c5-aa25-f00da0e05af9', name: 'ukhq' },
-    ],
-  }
 
   function breadcrumbStub () {
     return this
@@ -50,28 +31,20 @@ describe('Company controller, uk other', function () {
       registered_address_county: '',
       registered_address_postcode: 'PR1 0LS',
     }
-    fakeCompanyForm = { id: '999', sector: 10 }
     getDisplayCHStub = sinon.stub().returns({ company_number: '1234' })
     getDisplayCompanyStub = sinon.stub().returns({ company_number: '1234' })
     getCHCompanyStub = sinon.stub().resolves(null)
     getDitCompanyStub = sinon.stub().resolves(company)
-    getUkOtherCompanyAsFormDataStub = sinon.stub().returns(fakeCompanyForm)
-    saveCompanyFormStub = sinon.stub().returns(fakeCompanyForm)
 
     companyControllerUkOther = proxyquire('~/src/apps/companies/controllers/ukother', {
       '../services/formatting': {
         getDisplayCompany: getDisplayCompanyStub,
         getDisplayCH: getDisplayCHStub,
       },
-      '../services/form': {
-        getUkOtherCompanyAsFormData: getUkOtherCompanyAsFormDataStub,
-        saveCompanyForm: saveCompanyFormStub,
-      },
       '../repos': {
         getCHCompany: getCHCompanyStub,
         getDitCompany: getDitCompanyStub,
       },
-      '../../../lib/metadata': metadataRepositoryStub,
     })
   })
 
@@ -212,277 +185,6 @@ describe('Company controller, uk other', function () {
           id: '9999',
         },
       }, res, next)
-    })
-  })
-  describe('add details', function () {
-    it('should create form defaults for an empty company', function (done) {
-      const req = {
-        session: { token: '1234' },
-        params: {},
-        query: { business_type: 'charity' },
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function () {
-          expect(res.locals.formData).to.deep.equal({ business_type: '1' })
-          done()
-        },
-      }
-
-      companyControllerUkOther.addDetails(req, res, next)
-    })
-    it('should pass an populated form if called with errors', function (done) {
-      const body = {
-        sector: '1234',
-      }
-
-      const req = {
-        session: { token: '1234' },
-        params: { id: '00112233' },
-        query: { business_type: 'charity' },
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function () {
-          expect(res.locals.formData).to.deep.equal(body)
-          done()
-        },
-      }
-
-      companyControllerUkOther.addDetails(req, res, next)
-    })
-    it('should render with the correct template', function (done) {
-      const req = {
-        session: { token: '1234' },
-        params: { id: '00112233' },
-        query: { business_type: 'charity' },
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function (template) {
-          try {
-            expect(template).to.equal('companies/views/edit')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }
-
-      companyControllerUkOther.addDetails(req, res, next)
-    })
-  })
-  describe('render add/edit', function () {
-    let document
-    let formData
-
-    beforeEach(function () {
-      formData = {
-        id: '1234',
-        company_number: null,
-        business_type: '111',
-        uk_based: 'yes',
-        name: 'Fred ltd',
-        registered_address_1: 'add1',
-        registered_address_2: 'add2',
-        registered_address_town: 'town',
-        registered_address_county: 'county',
-        registered_address_postcode: 'postcode',
-        registered_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        trading_name: 'trading_name',
-        trading_address_1: 'trading address 1',
-        trading_address_2: 'trading address 2',
-        trading_address_town: 'trading town',
-        trading_address_county: 'trading county',
-        trading_address_postcode: 'trading postcode',
-        trading_address_country: '80756b9a-5d95-e211-a939-e4115bead28a',
-        uk_region: '5555',
-        headquarter_type: metadataRepositoryStub.headquarterOptions[0].id,
-        sector: '1',
-        website: 'https://www.test.com',
-        description: 'This is a test',
-        employee_range: '1',
-        turnover_range: '1',
-      }
-
-      return render('../../src/apps/companies/views/edit.njk', {
-        regionOptions: metadataRepositoryStub.regionOptions,
-        sectorOptions: metadataRepositoryStub.sectorOptions,
-        employeeOptions: metadataRepositoryStub.employeeOptions,
-        turnoverOptions: metadataRepositoryStub.turnoverOptions,
-        headquarterOptions: metadataRepositoryStub.headquarterOptions,
-        countryOptions: metadataRepositoryStub.countryOptions,
-        hqLabels,
-        formData,
-      })
-        .then((_document) => {
-          document = _document
-        })
-        .catch((error) => {
-          console.log(error)
-          throw Error(error)
-        })
-    })
-    it('should include all the company fields that can be edited', function () {
-      expectHiddenField(document, 'id', formData.id)
-      expectHiddenField(document, 'business_type', formData.business_type)
-      expectHiddenField(document, 'uk_based', 'yes')
-      expectTextFieldWithLabel(document, 'name', 'Name', formData.name)
-      expectTextFieldWithLabel(document, 'registered_address_1', 'Business and street (optional)', formData.registered_address_1)
-      expectTextFieldWithLabel(document, 'registered_address_2', '', formData.registered_address_2)
-      expectTextFieldWithLabel(document, 'registered_address_town', 'Town or city (optional)', formData.registered_address_town)
-      expectTextFieldWithLabel(document, 'registered_address_county', 'County (optional)', formData.registered_address_county)
-      expectTextFieldWithLabel(document, 'registered_address_postcode', 'Postcode (optional)', formData.registered_address_postcode)
-      expectDropdownWithLabel(document, 'registered_address_country', 'Country', formData.registered_address_country)
-      expectTextFieldWithLabel(document, 'trading_name', 'Trading name', formData.trading_name)
-      expectTextFieldWithLabel(document, 'trading_address_1', 'Business and street (optional)', formData.trading_address_1)
-      expectTextFieldWithLabel(document, 'trading_address_2', '', formData.trading_address_2)
-      expectTextFieldWithLabel(document, 'trading_address_town', 'Town or city (optional)', formData.trading_address_town)
-      expectTextFieldWithLabel(document, 'trading_address_county', 'County (optional)', formData.trading_address_county)
-      expectTextFieldWithLabel(document, 'trading_address_postcode', 'Postcode (optional)', formData.trading_address_postcode)
-      expectDropdownWithLabel(document, 'trading_address_country', 'Country', formData.trading_address_country)
-      expectDropdownWithLabel(document, 'uk_region', 'UK region', formData.ukregion)
-      expectRadioWithLabel(document, 'headquarters', 'Is this a headquarters?', formData.headquarter_type)
-      expectDropdownWithLabel(document, 'sector', 'Sector', formData.sector)
-      expectTextFieldWithLabel(document, 'website', 'Website', formData.website)
-      expectTextAreaWithLabel(document, 'description', 'Business description (optional)', formData.description)
-      expectDropdownWithLabel(document, 'employee_range', 'Number of employees (optional)', formData.employee_range)
-      expectDropdownWithLabel(document, 'turnover_range', 'Annual turnover (optional)', formData.turnover_range)
-    })
-  })
-  describe('edit details', function () {
-    it('should translate a company record into form data if no body posted', function (done) {
-      const req = {
-        session: { token: '1234' },
-        params: { id: '9999' },
-        query: { business_type: 'charity' },
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function () {
-          expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
-          expect(getUkOtherCompanyAsFormDataStub).to.be.calledWith(company)
-          expect(res.locals.formData).to.deep.equal(fakeCompanyForm)
-          done()
-        },
-      }
-
-      companyControllerUkOther.editDetails(req, res, next)
-    })
-    it('handles null business types', () => {
-      company.business_type = null
-      const req = {
-        session: { token: '1234' },
-        params: { id: '9999' },
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: () => {
-        },
-      }
-
-      return companyControllerUkOther.editDetails(req, res, next).then(() => {
-        expect(getDitCompanyStub).to.be.calledWith('1234', '9999')
-        expect(getUkOtherCompanyAsFormDataStub).to.be.calledWith(company)
-        expect(res.locals.businessTypeName).to.be.undefined
-      })
-    })
-    it('should pass through form data if called with errors', function (done) {
-      const body = {
-        sector: '1234',
-      }
-
-      const req = {
-        session: { token: '1234' },
-        params: { company_number: '00112233' },
-        query: { business_type: 'charity' },
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function () {
-          expect(getUkOtherCompanyAsFormDataStub).to.not.be.called
-          expect(res.locals.formData).to.deep.equal(body)
-          done()
-        },
-      }
-
-      companyControllerUkOther.editDetails(req, res, next)
-    })
-    it('should render with the correct template', function (done) {
-      const body = {
-        sector: '1234',
-      }
-
-      const req = {
-        session: { token: '1234' },
-        params: { company_number: '00112233' },
-        query: {
-          business_type: 'Charity',
-        },
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function (template) {
-          try {
-            expect(template).to.equal('companies/views/edit')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }
-
-      companyControllerUkOther.editDetails(req, res, next)
-    })
-    it('should indicate if the view should show the trading address section', function (done) {
-      const body = { id: '1234', trading_address_country: '80756b9a-5d95-e211-a939-e4115bead28a' }
-
-      const req = {
-        session: { token: '1234' },
-        params: { company_number: '00112233' },
-        query: { business_type: 'charity' },
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function (template) {
-          expect(res.locals.showTradingAddress).to.equal(true)
-          done()
-        },
-      }
-
-      companyControllerUkOther.editDetails(req, res, next)
-    })
-    it('should indicate if the view should hide the trading address section', function (done) {
-      const body = { id: '1234', trading_address_country: '' }
-
-      const req = {
-        session: { token: '1234' },
-        params: { company_number: '00112233' },
-        query: { business_type: 'charity' },
-        body,
-      }
-      const res = {
-        locals: {},
-        breadcrumb: breadcrumbStub,
-        render: function (template) {
-          expect(res.locals.showTradingAddress).to.equal(false)
-          done()
-        },
-      }
-
-      companyControllerUkOther.editDetails(req, res, next)
     })
   })
 })
