@@ -26,6 +26,8 @@ const config = {
     port: process.env.REDIS_PORT || 6379,
     host: process.env.REDIS_HOST || 'redis',
     sentinel: process.env.REDIS_SENTINEL,
+    sentinelPort: process.env.REDIS_SENTINEL_PORT || 26379,
+    sentinelMaster: process.env.REDIS_SENTINEL_MASTER || 'master',
     metadataTtl: (process.env.METADATA_TTL || (15 * 60)),
   },
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
