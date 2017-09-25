@@ -3,10 +3,9 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Company = client.page.Company()
   const Events = client.page.Events()
 
-  When(/^I navigate to create an event page$/, async () => {
+  When(/^I navigate to the create an event page$/, async () => {
     await Events
       .navigate()
   })
@@ -96,7 +95,6 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the event is shared or not field is displayed$/, async () => {
     await Events
-      // .waitForElementVisible('@sharedYes', 1000)
       .assert.visible('@sharedYes')
       .assert.visible('@sharedNo')
   })
@@ -126,7 +124,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I select shared team ([0-9])$/, async (optionNumber) => {
     await Events
       .setValue('@sharedTeams', '')
-      .selectTeam(optionNumber)
+      .selectListOption('teams', optionNumber)
   })
 
   When(/^I add it to the shared teams list$/, async () => {
@@ -136,7 +134,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify there should be ([0-9]) shared teams lists$/, async (expected) => {
     await Events
-      .assertVisibleSharedTeamList(expected)
+      .assertVisibleTeamsList(expected)
   })
 
   Then(/^I verify there is the option to add another shared team$/, async () => {
@@ -152,7 +150,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I select programme ([0-9])$/, async (optionNumber) => {
     await Events
       .setValue('@sharedTeams', '')
-      .selectRelatedProgramme(optionNumber)
+      .selectListOption('related_programmes', optionNumber)
   })
 
   When(/^I add it to the programmes list$/, async () => {
@@ -160,9 +158,23 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@addAnotherProgramme')
   })
 
+  When(/^I enter all mandatory fields related to the event$/, async () => {
+    await Events
+      .setValue('@eventName', faker.company.companyName())
+      .selectListOption('event_type', 2)
+      .setValue('@addressLine1', faker.address.streetName())
+      .setValue('@addressTown', faker.address.city())
+      .setValue('@addressPostcode', faker.address.zipCode())
+      .setValue('@addressCountry', faker.address.country())
+  })
+
+  When(/^I click the save button$/, async () => {
+    await Events.submitForm('form')
+  })
+
   Then(/^I verify there should be ([0-9]) programmes lists$/, async (expected) => {
     await Events
-      .assertVisibleProgrammesList(expected)
+      .assertVisibleRelatedProgrammesList(expected)
   })
 
   Then(/^I verify there is the option to add another programme/, async () => {
@@ -175,37 +187,29 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@saveButton')
   })
 
-  When(/^I enter all mandatory fields related to the event$/, async () => {
+  Then(/^I verify the event name has an error message$/, async () => {
     await Events
-      .setValue('@eventName', faker.company.companyName())
-      .click('@eventTypeList')
-      .setValue('@addressLine1', faker.address.streetName())
-      .setValue('@addressTown', faker.address.city())
-      .setValue('@addressPostcode', faker.address.zipCode())
-      .setValue('@addressCountry', faker.address.country())
+      .assert.visible('@eventNameError')
   })
 
-  Then(/^I verify error message displayed for event name field$/, async () => {
+  Then(/^I verify the event type has an error message$/, async () => {
     await Events
-      .assert.visible('@errorEventName')
+      .assert.visible('@eventTypeError')
   })
 
-  Then(/^I verify error message displayed for event type field$/, async () => {
+  Then(/^I verify the event address line 1 has an error message$/, async () => {
     await Events
-      .assert.visible('@errorEventType')
+      .assert.visible('@addressLine1Error')
   })
 
-  Then(/^I verify error message displayed for Address fields$/, async () => {
+  Then(/^I verify the event address town has an error message$/, async () => {
     await Events
-      .assert.visible('@errorAddressLine1')
-      .assert.visible('@errorAddressTown')
-      .assert.visible('@errorAddressPostcode')
-      .assert.visible('@errorAddressCountry')
+      .assert.visible('@addressTownError')
   })
 
-  Then(/^I see the Added new event confirmation message is not displayed$/, async () => {
-    await Company
-      .assert.elementNotVisible('@flashInfo')
+  Then(/^I verify the event address country has an error message$/, async () => {
+    await Events
+      .assert.visible('@addressCountryError')
   })
 
   Then(/^I see the event is displayed correctly with all field values$/, async () => {

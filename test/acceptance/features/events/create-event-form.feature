@@ -1,4 +1,4 @@
-@create-event-form
+@events__create-event-form
 Feature: Create an Event in Data hub
   As an Event organiser
   I would like to add an event record to data hub
@@ -7,10 +7,10 @@ Feature: Create an Event in Data hub
   Background:
     Given I am an authenticated user on the data hub website
 
-  @create-event-form-fields
+  @events__create-event-form--fields
   Scenario: Verify event form fields
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     Then I verify the event name field is displayed
     And I verify the event type field is displayed
     And I verify the event start date fields are displayed
@@ -30,29 +30,29 @@ Feature: Create an Event in Data hub
     And I verify the event related programmes field is displayed
     And I verify the event save button is displayed
 
-  @create-event-form-shared-toggle
+  @events__create-event-form--toggle-shared
   Scenario: Verify event shared field toggling
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I choose the Yes option
     Then I verify the shared teams field is displayed
     When I choose the No option
     Then I verify the shared teams field is not displayed
 
-  @create-event-form-add-teams
+  @events__create-event-form--add-teams
   Scenario: Verify event shared teams field
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I choose the Yes option
     And I select shared team 2
     And I add it to the shared teams list
     Then I verify there should be 2 shared teams lists
     And I verify there is the option to add another shared team
 
-  @create-event-form-add-related-programmes
+  @events__create-event-form--add-related-programmes
   Scenario: Verify event related programmes field
 
-    When I navigate to create an event page
+    When I navigate to the create an event page
     And I select programme 2
     And I add it to the programmes list
     Then I verify there should be 2 programmes lists
