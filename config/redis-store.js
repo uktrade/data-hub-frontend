@@ -35,6 +35,12 @@ if (config.redis.url) {
     redisConfig.password = redisURL.auth.split(':')[1]
   }
 }
+if (config.redis.useTLS) {
+  redisConfig.tls = {
+    // allows self-signed certificates
+    rejectUnauthorized: false,
+  }
+}
 
 const client = new Redis(redisConfig)
 
