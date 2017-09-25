@@ -37,17 +37,6 @@ async function renderEditPage (req, res, next) {
   }
 }
 
-function redirectToDetails (req, res, next) {
-  console.log(get(res.locals, 'form.errors'))
-  if (get(res.locals, 'form.errors')) {
-    return next()
-  }
-
-  req.flash('success', 'Event created')
-  return res.redirect(`/events/${res.locals.resultId}/details`)
-}
-
 module.exports = {
   renderEditPage,
-  redirectToDetails,
 }
