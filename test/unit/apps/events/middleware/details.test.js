@@ -39,10 +39,10 @@ describe('Event details middleware', () => {
         uk_region: 'uk_region',
         notes: 'notes',
         lead_team: 'lead_team',
+        service: 'service',
         organiser: 'organiser',
         related_programmes: [ 'programme1', 'programme2' ],
         teams: [ 'team1', 'team2', 'lead_team' ],
-        service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
       }
     })
 

@@ -25,7 +25,8 @@ Feature: Save a new Event in Data hub
     And I verify the event address line 1 has an error message
     And I verify the event address town has an error message
     And I verify the event address country has an error message
-    Then I see the error message
+    And I verify the event services has an error message
+    Then I see the error summary
 
   @events__save-new-event--uk-region
   Scenario: Verify event UK region mandatory field
@@ -35,6 +36,6 @@ Feature: Save a new Event in Data hub
     And I choose the United Kingdom country option
     And I click the save button
     And I verify the event UK region has an error message
-    Then I see the error message
+    Then I see the error summary
 
 

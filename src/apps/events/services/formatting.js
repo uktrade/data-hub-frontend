@@ -18,6 +18,7 @@ function transformToApi (body) {
     uk_region: Object,
     notes: Object,
     lead_team: Object,
+    service: Object,
     organiser: Object,
     related_programmes: Array,
     teams: Array,
@@ -51,7 +52,7 @@ function transformToApi (body) {
   if (formatted.lead_team) {
     formatted.teams.push(formatted.lead_team)
   }
-  formatted.service = '1783ae93-b78f-e611-8c55-e4115bed50dc'
+
   return assign({}, formatted)
 }
 

@@ -26,6 +26,8 @@ module.exports = {
     ukRegionError: 'label[for=field-uk_region] span:nth-child(2)',
     notes: 'textarea[name="notes"]',
     teamHosting: 'select[name="lead_team"]',
+    services: 'select[name="service"]',
+    servicesError: 'label[for=field-service] span:nth-child(2)',
     organiser: 'select[name="organiser"]',
     sharedYesContainer: '#group-field-event_shared div div',
     sharedNoContainer: '#group-field-event_shared div div:nth-child(2)',
