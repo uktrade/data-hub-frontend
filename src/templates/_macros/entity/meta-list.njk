@@ -12,7 +12,7 @@
   {% if props.items | length %}
     <div class="c-meta-list {{ modifier }}">
       {% for metaItem in props.items %}
-        {{ MetaItem(metaItem | assign({ highlightTerm: props.highlightTerm, modifier: props.itemModifier })) }}
+        {{ MetaItem(metaItem | assign({ highlightTerm: props.highlightTerm, modifier: metaItem.modifier or props.itemModifier })) }}
       {% endfor %}
     </div>
   {% endif %}

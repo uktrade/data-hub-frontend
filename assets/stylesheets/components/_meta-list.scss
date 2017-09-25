@@ -19,6 +19,7 @@
 
 .c-meta-list__item-value {
   color: $text-colour;
+  display: inline-block;
 
   &:link,
   &:visited {
@@ -77,6 +78,10 @@
     float: left;
     clear: both;
     margin-left: 0;
+
+    @include media(tablet) {
+      max-width: 50%;
+    }
   }
 
   .c-meta-list__item:nth-child(even) {

@@ -1,4 +1,5 @@
 const { map } = require('asyncro')
+const { assign } = require('lodash')
 
 const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
@@ -6,7 +7,8 @@ const { getCHCompany } = require('../repos')
 const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
-const { buildPagination } = require('../../../lib/pagination')
+const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformCompaniesHouseCompanyToListItem } = require('../../companies/transformers')
 const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
 function getAddStepOne (req, res, next) {
@@ -78,7 +80,7 @@ async function getAddStepTwo (req, res, next) {
   const searchTerm = req.query.term
   const businessType = req.query.business_type
   const token = req.session.token
-  let companies = {}
+  let results
 
   if (!searchTerm) {
     return res.render('companies/views/add-step-2.njk', {
@@ -88,33 +90,49 @@ async function getAddStepTwo (req, res, next) {
   }
 
   try {
-    const searchResponse = await searchLimitedCompanies({
+    results = await searchLimitedCompanies({
       token,
       searchTerm,
     })
-    // TODO: Remove the need to make another call to the API to get the companies house details. The search API should return companies house companies and their relevant information
-    const results = await map(searchResponse.results, async (result) => {
-      if (result.company_number) {
-        try {
-          result.companies_house_data = await getCHCompany(token, result.company_number)
-        } catch (error) {
-          logger.error(error)
+      .then(response => response.results.filter(x => x.company_number))
+      .then(async (results) => {
+        // TODO: Remove the need to make another call to the API to get the companies house details.
+        // The search API should return companies house companies and their relevant information
+        return map(results, async (result) => {
+          try {
+            result.companies_house_data = await getCHCompany(token, result.company_number)
+            result.url = `/companies/add/ltd/${result.company_number}`
+          } catch (error) {
+            logger.error(error)
+          }
+          return result
+        })
+      })
+      .then((results) => {
+        return {
+          page: 1,
+          items: results,
+          count: results.length,
         }
-      }
-      return result
-    })
-
-    companies = {
-      results,
-      pagination: buildPagination(req.query, results),
-    }
+      })
+      .then(
+        transformApiResponseToSearchCollection(
+          { query: req.query },
+          transformCompaniesHouseCompanyToListItem,
+          (item) => {
+            return assign({}, item, {
+              meta: item.meta.filter(x => x.label !== 'Sector'),
+            })
+          }
+        )
+      )
   } catch (error) {
     logger.error(error)
   }
 
   res.render('companies/views/add-step-2.njk', {
     companyTypeOptions,
-    companies,
+    results,
     searchTerm,
     businessType,
   })
