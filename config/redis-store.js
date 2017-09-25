@@ -1,5 +1,5 @@
 const Redis = require('ioredis')
-const redisCrypto = require('connect-redis-crypto')
+const redisCrypto = require('connect-redis')
 const session = require('express-session')
 const url = require('url')
 
@@ -33,6 +33,12 @@ if (config.redis.url) {
   }
   if (redisURL.auth) {
     redisConfig.password = redisURL.auth.split(':')[1]
+  }
+}
+if (config.redis.useTLS) {
+  redisConfig.tls = {
+    // allows self-signed certificates
+    rejectUnauthorized: false,
   }
 }
 
