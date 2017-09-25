@@ -14,9 +14,10 @@ async function postDetails (req, res, next) {
   try {
     const result = await saveEvent(req.session.token, res.locals.requestBody)
 
-    res.locals.resultId = result.id
-
-    next()
+    if (!res.locals.event) {
+      req.flash('success', 'Event created')
+    }
+    return res.redirect(`/events/${result.id}`)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {

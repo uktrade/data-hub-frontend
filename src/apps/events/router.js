@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { setDefaultQuery } = require('../middleware')
 const { renderDetailsPage } = require('./controllers/details')
-const { redirectToDetails, renderEditPage } = require('./controllers/edit')
+const { renderEditPage } = require('./controllers/edit')
 const { postDetails, getEventDetails } = require('./middleware/details')
 const { getRequestBody, getEventsCollection } = require('./middleware/collection')
 const { renderEventList } = require('./controllers/list')
@@ -21,8 +21,8 @@ router.get('/',
 )
 
 router.route(['/create', '/:id/edit'])
-  .get(renderEditPage)
-  .post(postDetails, redirectToDetails, renderEditPage)
+  .post(postDetails)
+  .all(renderEditPage)
 
 router.get('/:id', renderDetailsPage)
 
