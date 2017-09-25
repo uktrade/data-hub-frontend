@@ -1,5 +1,5 @@
 const Redis = require('ioredis')
-const redisCrypto = require('connect-redis-crypto')
+const redisCrypto = require('connect-redis')
 const session = require('express-session')
 const url = require('url')
 
