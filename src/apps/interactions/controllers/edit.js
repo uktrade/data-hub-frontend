@@ -1,5 +1,5 @@
-/* eslint camelcase: 0 */
-const { get } = require('lodash')
+const { assign, get } = require('lodash')
+
 const { getContactsForCompany } = require('../../contacts/repos')
 const metadataRepository = require('../../../lib/metadata')
 const { getAllAdvisers } = require('../../adviser/repos')
@@ -9,7 +9,7 @@ const { transformInteractionResponseToForm } = require('../transformers')
 const { interactionEditFormConfig } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 
-async function editDetails (req, res, next) {
+async function renderEditPage (req, res, next) {
   const token = req.session.token
   const defaultDitAdviser = req.session.user
 
@@ -29,29 +29,31 @@ async function editDetails (req, res, next) {
     }
 
     const pageTitle = `${interaction.id ? 'Edit' : 'Add'} interaction for ${interaction.company.name}`
-    const formData = Object.assign({}, transformInteractionResponseToForm(interaction), req.body)
+    const formData = assign({}, transformInteractionResponseToForm(interaction), req.body)
 
-    res.locals.editInteractionForm = buildFormWithStateAndErrors(
-      interactionEditFormConfig({
-        returnLink,
-        contacts: await getContactsForCompany(token, formData.company),
-        advisers: await getAllAdvisers(token),
-        services: await metadataRepository.getServices(token),
-      }),
+    const editInteractionForm = buildFormWithStateAndErrors(
+      interactionEditFormConfig(
+        {
+          returnLink,
+          contacts: await getContactsForCompany(token, formData.company),
+          advisers: await getAllAdvisers(token),
+          services: await metadataRepository.getServices(token),
+          hiddenFields: {
+            interaction_type: formData.interaction_type,
+            company: formData.company,
+          },
+        }
+      ),
       formData,
       res.locals.errors,
     )
 
-    res.locals.editInteractionForm.hiddenFields = Object.assign({}, res.locals.editInteractionForm.hiddenFields, {
-      interaction_type: formData.interaction_type,
-      company: formData.company,
-    })
-
-    res.locals.interactionTypeLabel = interaction.interaction_type.name
-
     res
       .breadcrumb(pageTitle)
-      .render('interactions/views/edit')
+      .render('interactions/views/edit', {
+        editInteractionForm,
+        interactionTypeLabel: interaction.interaction_type.name,
+      })
   } catch (error) {
     console.log(error)
     next(error)
@@ -72,6 +74,6 @@ async function postDetails (req, res, next) {
 }
 
 module.exports = {
-  editDetails,
+  renderEditPage,
   postDetails,
 }
