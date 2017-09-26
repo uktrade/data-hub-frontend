@@ -101,12 +101,12 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the event Team hosting field is displayed$/, async () => {
     await Events
-      .assert.visible('@teamHosting')
+      .assert.visible('@leadTeam')
   })
 
   Then(/^I verify the event services field is displayed$/, async () => {
     await Events
-      .assert.visible('@services')
+      .assert.visible('@service')
   })
 
   Then(/^I verify the event organiser field is displayed$/, async () => {
@@ -134,17 +134,17 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the shared teams field is displayed$/, async () => {
     await Events
-      .assert.visible('@sharedTeams')
+      .assert.visible('@teams')
   })
 
   Then(/^I verify the shared teams field is not displayed$/, async () => {
     await Events
-      .assert.hidden('@sharedTeams')
+      .assert.hidden('@teams')
   })
 
   When(/^I select shared team ([0-9])$/, async (optionNumber) => {
     await Events
-      .setValue('@sharedTeams', '')
+      .setValue('@teams', '')
       .selectListOption('teams', optionNumber)
   })
 
@@ -170,7 +170,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I select programme ([0-9])$/, async (optionNumber) => {
     await Events
-      .setValue('@sharedTeams', '')
+      .setValue('@teams', '')
       .selectListOption('related_programmes', optionNumber)
   })
 
@@ -188,10 +188,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .setValue('@addressPostcode', faker.address.zipCode())
       .setValue('@addressCountry', faker.address.country())
       .selectListOption('service', 2)
-  })
-
-  When(/^I click the save button$/, async () => {
-    await Events.submitForm('form')
   })
 
   Then(/^I verify there should be ([0-9]) programmes lists$/, async (expected) => {
@@ -212,6 +208,12 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify the event name has an error message$/, async () => {
     await Events
       .assert.visible('@eventNameError')
+  })
+
+  Then(/^I click the save button$/, async () => {
+    await Events
+      .click('@saveButton')
+      .wait() // wait for backend to sync
   })
 
   Then(/^I verify the event type has an error message$/, async () => {
@@ -236,7 +238,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify the event services has an error message$/, async () => {
     await Events
-      .assert.visible('@servicesError')
+      .assert.visible('@serviceError')
   })
 
   Then(/^I verify the event UK region has an error message$/, async () => {
