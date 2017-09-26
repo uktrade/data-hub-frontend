@@ -1,6 +1,6 @@
 const Redis = require('ioredis')
+// TODO remove crypto and rename plain when migration to Gov PaaS is complete
 const redisConnectPlain = require('connect-redis')
-// TODO remove when migration to Gov PaaS is complete
 const redisConnectCrypto = require('connect-redis-crypto')
 const session = require('express-session')
 const url = require('url')
@@ -41,9 +41,9 @@ if (config.redis.useTLS) {
     // allows self-signed certificates
     rejectUnauthorized: false,
   }
-  RedisStore = redisConnectCrypto(session)
-} else {
   RedisStore = redisConnectPlain(session)
+} else {
+  RedisStore = redisConnectCrypto(session)
 }
 
 const client = new Redis(redisConfig)
