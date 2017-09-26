@@ -25,6 +25,7 @@ Feature: Create an Event in Data hub
     And I verify the event UK region field is not displayed
     And I verify the event notes field is displayed
     And I verify the event Team hosting field is displayed
+    And I verify the event services field is displayed
     And I verify the event organiser field is displayed
     And I verify the event is shared or not field is displayed
     And I verify the shared teams field is not displayed

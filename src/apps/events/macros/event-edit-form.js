@@ -108,6 +108,7 @@ const eventFormConfig = ({ advisers }) => {
           return metadataRepo.teams.map(transformObjectToOption)
         },
       },
+      globalFields.serviceDeliveryServices,
       {
         macroName: 'MultipleChoiceField',
         name: 'organiser',

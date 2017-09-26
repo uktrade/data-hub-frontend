@@ -104,6 +104,11 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@teamHosting')
   })
 
+  Then(/^I verify the event services field is displayed$/, async () => {
+    await Events
+      .assert.visible('@services')
+  })
+
   Then(/^I verify the event organiser field is displayed$/, async () => {
     await Events
       .assert.visible('@organiser')
@@ -182,6 +187,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .setValue('@addressTown', faker.address.city())
       .setValue('@addressPostcode', faker.address.zipCode())
       .setValue('@addressCountry', faker.address.country())
+      .selectListOption('service', 2)
   })
 
   When(/^I click the save button$/, async () => {
@@ -226,6 +232,11 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^I verify the event address country has an error message$/, async () => {
     await Events
       .assert.visible('@addressCountryError')
+  })
+
+  Then(/^I verify the event services has an error message$/, async () => {
+    await Events
+      .assert.visible('@servicesError')
   })
 
   Then(/^I verify the event UK region has an error message$/, async () => {

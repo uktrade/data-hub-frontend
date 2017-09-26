@@ -100,6 +100,16 @@ const globalFields = {
       return metadata.serviceDeliveryStatusOptions.map(transformObjectToOption)
     },
   },
+
+  serviceDeliveryServices: {
+    macroName: 'MultipleChoiceField',
+    name: 'service',
+    label: 'Service',
+    initialOption: '-- Select service --',
+    options () {
+      return metadata.serviceDeliveryServiceOptions.map(transformObjectToOption)
+    },
+  },
 }
 
 module.exports = {

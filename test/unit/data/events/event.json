@@ -17,6 +17,7 @@
   "uk_region": "uk_region",
   "notes": "notes",
   "lead_team": "lead_team",
+  "service": "service",
   "organiser": "organiser",
   "teams": [ "team1", "team2" ],
   "related_programmes": [ "programme1", "programme2" ]
