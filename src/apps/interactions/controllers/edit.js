@@ -55,7 +55,6 @@ async function renderEditPage (req, res, next) {
         interactionTypeLabel: interaction.interaction_type.name,
       })
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
