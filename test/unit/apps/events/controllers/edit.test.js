@@ -228,7 +228,7 @@ describe('Event edit controller', () => {
       it('should redirect to the event', () => {
         this.controller.redirectToDetails(this.req, this.res, this.next)
 
-        expect(this.res.redirect).have.been.calledWith('/events/1/details')
+        expect(this.res.redirect).have.been.calledWith('/events/1')
         expect(this.res.redirect).have.been.calledOnce
       })
 
