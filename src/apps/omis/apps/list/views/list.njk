@@ -2,9 +2,10 @@
 
 {% block main_grid_right_column %}
   {{
-    Collection(results | assign({
+    Collection(searchResults | assign({
       countLabel: 'order',
       sortForm: sortForm,
+      highlightTerm: searchTerm,
       query: QUERY
     }))
   }}

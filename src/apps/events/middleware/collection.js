@@ -8,6 +8,7 @@ async function getEventsCollection (req, res, next) {
   try {
     res.locals.results = await search({
       searchEntity: 'event',
+      searchTerm: req.query.term,
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,

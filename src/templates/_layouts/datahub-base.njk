@@ -36,6 +36,8 @@
 
 {% block header_menu %}
   <nav aria-label="global nav">
+    {{ EntitySearchForm(globalSearchFormConfig) if user and CURRENT_PATH != '/' }}
+
     <ul class="proposition-menu">
       {% if feedbackLink %}
         <li class="proposition-menu__item">
@@ -62,7 +64,7 @@
 {% block body_site_header %}
   {{ super() }}
 
-  {{ GlobalNav({ items: GLOBAL_NAV_ITEMS }) if user }}
+  {{ GlobalNav({ items: GLOBAL_NAV_ITEMS, searchAggregations: searchResults.aggregations, searchTerm: searchTerm }) if user }}
 {% endblock %}
 
 {% block body_main_header %}

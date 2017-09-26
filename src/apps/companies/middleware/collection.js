@@ -7,6 +7,7 @@ const { transformCompanyToListItem } = require('../transformers')
 async function getCompanyCollection (req, res, next) {
   try {
     res.locals.results = await search({
+      searchTerm: req.query.term,
       searchEntity: 'company',
       requestBody: req.body,
       token: req.session.token,

@@ -46,3 +46,24 @@ $search-button-width: 50px;
 .c-entity-search__aggregations-item.is-active {
   background-color: $white;
 }
+
+// Modifiers
+
+.c-entity-search--header {
+  display: block;
+  margin-top: $default-spacing-unit;
+  margin-bottom: $default-spacing-unit;
+
+  @include media(tablet) {
+    display: inline-block;
+    margin: 0 $default-spacing-unit * 2;
+  }
+
+  @include media(desktop) {
+    width: 280px;
+  }
+
+  .c-form-control {
+    height: 1.8em;
+  }
+}

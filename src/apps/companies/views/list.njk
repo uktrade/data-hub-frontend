@@ -15,11 +15,11 @@
   {% endset %}
 
   {{
-    Collection(results | assign({
+    Collection(searchResults | assign({
       countLabel: 'company',
       sortForm: sortForm,
       selectedFilters: selectedFilters,
-      highlightTerm: selectedFilters.company_name.valueLabel,
+      highlightTerm: searchTerm,
       query: QUERY,
       summaryActionsHTML: addCompanyButton
     }))

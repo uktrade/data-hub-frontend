@@ -6,6 +6,7 @@ async function getCollection (req, res, next) {
   try {
     res.locals.results = await search({
       searchEntity: 'order',
+      searchTerm: req.query.term,
       requestBody: req.body,
       token: req.session.token,
       page: req.query.page,

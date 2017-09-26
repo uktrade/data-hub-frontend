@@ -13,7 +13,15 @@
     <nav class="c-global-nav{{ modifier }}" aria-label="global navigation">
       <div class="c-global-nav__container l-container">
         {% for item in props.items %}
-          <a class="c-global-nav__link {{ 'is-active' if item.isActive }}" href="{{ item.url }}">{{ item.label }}</a>
+          {% set aggregationCount  = (props.searchAggregations | filter(['path', item.path.replace('/', '') ]))[0].count %}
+          {% set url = item.url + ('?term=' + props.searchTerm if props.searchTerm) %}
+
+          <a class="c-global-nav__link {{ 'is-active' if item.isActive }}" href="{{ url }}">
+            {{ item.label }}
+            <span class="c-global-nav__count">
+              ({{ aggregationCount | default(0) }})
+            </span>
+          </a>
         {% endfor %}
       </div>
     </nav>

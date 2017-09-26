@@ -22,8 +22,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   .c-entity-search {
-    margin-top: $baseline-grid-unit * 20.5;
-    padding-bottom: $baseline-grid-unit * 6.25;
+    margin-top: $default-spacing-unit * 2;
   }
 
   .c-breadcrumb {
