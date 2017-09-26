@@ -1,4 +1,11 @@
-const { populateForm } = require('~/src/apps/companies/middleware/form')
+const metadataMock = {
+  headquarterOptions: [],
+  regionOptions: [],
+  sectorOptions: [],
+  employeeOptions: [],
+  turnoverOptions: [],
+  countryOptions: [],
+}
 
 describe('Companies form middleware', function () {
   beforeEach(() => {
@@ -11,6 +18,10 @@ describe('Companies form middleware', function () {
     this.resMock = {
       locals: {},
     }
+
+    this.middleware = proxyquire('~/src/apps/companies/middleware/form', {
+      '../../../lib/metadata': metadataMock,
+    })
   })
 
   afterEach(() => {
@@ -19,10 +30,8 @@ describe('Companies form middleware', function () {
 
   describe('populateForm()', () => {
     it('should include the required properties in the response', () => {
-      populateForm(this.reqMock, this.resMock, this.nextSpy)
+      this.middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.resMock.locals).to.have.property('hqLabels')
-      expect(this.resMock.locals).to.have.property('companyDetailsLabels')
       expect(this.resMock.locals).to.have.property('chDetailsLabels')
       expect(this.resMock.locals).to.have.property('chDetailsDisplayOrder')
       expect(this.resMock.locals).to.have.property('regionOptions')
@@ -36,7 +45,7 @@ describe('Companies form middleware', function () {
     })
 
     it('should call next with no arguments', () => {
-      populateForm(this.reqMock, this.resMock, this.nextSpy)
+      this.middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
 
       expect(this.nextSpy).to.be.calledWith()
     })
@@ -50,12 +59,12 @@ describe('Companies form middleware', function () {
         }
 
         this.middlware = proxyquire('~/src/apps/companies/middleware/form', {
-          '../../../lib/metadata': {
+          '../../../lib/metadata': Object.assign({}, metadataMock, {
             businessTypeOptions: [{
               name: 'Charity',
               id: '7890qwerty',
             }],
-          },
+          }),
         })
       })
 

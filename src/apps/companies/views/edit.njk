@@ -1,5 +1,9 @@
 {% extends "./_layout-edit.njk" %}
 
+{% set lookupButton %}
+  <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
+{% endset %}
+
 {% block main_grid_right_column %}
   {{ errorPanel(errors, labels=companyDetailsLabels) }}
 
@@ -15,7 +19,6 @@
     </div>
   </div>
 
-
   {% if chDetails %}
     <div class="section">
       {{ keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, class="table--small", id="ch-details") }}
@@ -23,12 +26,19 @@
     </div>
   {% endif %}
 
-  <form method="POST">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <input type="hidden" name="uk_based" value="{{ 'no' if isForeign else 'yes' }}">
-    <input type="hidden" name="business_type" value="{{ formData.business_type }}">
-    <input type="hidden" name="id" value="{{ company.id }}">
-
+  {% call Form({
+    buttonText: 'Save' if company.id else 'Save and create',
+    returnLink: '/companies/' + company.id if company.id,
+    returnText: 'Return without saving' if company.id,
+    errors: {
+      messages: errors
+    },
+    hiddenFields: {
+      uk_based: 'no' if isForeign else 'yes',
+      business_type: formData.business_type,
+      id: company.id
+    }
+  }) %}
     {% if companiesHouseRecord %}
       <input type="hidden" name="name" value="{{ formData.name }}">
       <input type="hidden" name="company_number" value="{{ formData.company_number }}">
@@ -39,108 +49,249 @@
       <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
       <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
 
-      {{ textbox("trading_name", label="Trading name (optional)", value=formData.trading_name, error=errors.trading_name) }}
+      {{ TextField({
+        name: 'trading_name',
+        label: 'Trading name',
+        optional: true,
+        value: formData.trading_name,
+        error: errors.trading_name
+      }) }}
     {% else %}
-      {{ textbox("name", label="Name", value=formData.name, error=errors.name) }}
-      {{ textbox("trading_name", label="Trading name (optional)", value=formData.trading_name, error=errors.trading_name) }}
+      {{ TextField({
+        name: 'name',
+        label: 'Name',
+        value: formData.name,
+        error: errors.name
+      }) }}
 
-      <fieldset id="registered-address-wrapper" class="fieldset--address {{ 'lookup-address-js' if not isForeign }}">
-        <div class="form-group"><legend class="form-label-bold">Primary address</legend></div>
+      {{ TextField({
+        name: 'trading_name',
+        label: 'Trading name',
+        optional: true,
+        value: formData.trading_name,
+        error: errors.trading_name
+      }) }}
+
+      <fieldset id="registered-address-wrapper" class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
+        <legend class="c-form-fieldset__legend">
+          <span class="c-form-fieldset__legend-text">Primary address</span>
+        </legend>
 
         {% if not isForeign %}
-          <div class="form-group form-group--postcode">
-            <label class="form-label-bold">Postcode</label>
-            <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-            <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
-          </div>
+          {{ TextField({
+            name: 'registered_address_pcode_lookup',
+            label: 'Postcode',
+            modifier: ['short', 'PostcodeLookup'],
+            innerHTML: lookupButton
+          }) }}
 
-          <div class="form-group form-group--address-suggestions">
-            <label class="form-label-bold">Select an address from the drop down</label>
-            <select class="form-control">
-            <option value="">Please enter a postcode to lookup your address</option>
-            </select>
-          </div>
+          {{ MultipleChoiceField({
+            name: 'registered_address_pcode_result',
+            label: 'Select an address',
+            initialOption: 'Enter a postcode to lookup your address',
+            modifier: 'PostcodeLookupResult'
+          }) }}
         {% endif %}
 
-        {{ textbox("registered_address_1", label="Business and street (optional)", value=formData.registered_address_1, error=errors.registered_address_1) }}
-        {{ textbox("registered_address_2", value=formData.registered_address_2, error=errors.registered_address_2) }}
-        {{ textbox("registered_address_town", label="Town or city (optional)", value=formData.registered_address_town, error=errors.registered_address_town) }}
-        {{ textbox("registered_address_county", label="County (optional)", value=formData.registered_address_county, error=errors.registered_address_county) }}
-        {{ textbox("registered_address_postcode", label="Postcode (optional)", value=formData.registered_address_postcode, error=errors.registered_address_postcode) }}
-        {{ dropdown("registered_address_country", label="Country", emptyLabel="Select a country", options=countryOptions, value=formData.registered_address_country, error=errors.registered_address_country) }}
+        {{ TextField({
+          name: 'registered_address_1',
+          label: 'Business',
+          optional: true,
+          value: formData.registered_address_1,
+          error: errors.registered_address_1
+        }) }}
+
+        {{ TextField({
+          name: 'registered_address_2',
+          label: 'Street',
+          optional: true,
+          value: formData.registered_address_2,
+          error: errors.registered_address_2
+        }) }}
+
+        {{ TextField({
+          name: 'registered_address_town',
+          label: 'Town or city',
+          optional: true,
+          value: formData.registered_address_town,
+          error: errors.registered_address_town
+        }) }}
+
+        {{ TextField({
+          name: 'registered_address_county',
+          label: 'County',
+          optional: true,
+          value: formData.registered_address_county,
+          error: errors.registered_address_county
+        }) }}
+
+        {{ TextField({
+          name: 'registered_address_postcode',
+          label: 'Postcode',
+          optional: true,
+          value: formData.registered_address_postcode,
+          error: errors.registered_address_postcode,
+          modifier: 'short'
+        }) }}
+
+        {{ MultipleChoiceField({
+          name: 'registered_address_country',
+          label: 'Country',
+          initialOption: '-- Select country --',
+          options: countryOptions,
+          value: formData.registered_address_country,
+          error: errors.registered_address_country
+        }) }}
       </fieldset>
     {% endif %}
 
-    <div class="form-group">
-      <div class="form-label-bold">Trading address (optional)</div>
+    <fieldset class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
+      <legend class="c-form-fieldset__legend">
+        <span class="c-form-fieldset__legend-text">Trading address (optional)</span>
+      </legend>
+
       <button id="add-trading-address" class="button-secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
       <button id="remove-trading-address" class="button-secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
-    </div>
 
-    <fieldset id="trading-address-wrapper" class="fieldset--address {{ 'lookup-address-js' if not isForeign }} {{ 'u-hidden' if not showTradingAddress }}">
-      {% if isCompaniesHouse %}
-        <div class="key-value key-value--vertical form-group">
-          <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
-          <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>
-        </div>
-      {% endif %}
+      <div id="trading-address-wrapper" class="{{ 'u-hidden' if not showTradingAddress }}">
+        {% if isCompaniesHouse %}
+          <div class="key-value key-value--vertical form-group">
+            <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
+            <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>
+          </div>
+        {% endif %}
 
-      {% if not isForeign %}
-        <div class="form-group form-group--postcode">
-          <label class="form-label-bold">Postcode</label>
-          <input class="form-control postcode-lookup-value postcode-lookup-field" autoComplete="off" value="">
-          <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
-        </div>
+        {% if not isForeign %}
+          {{ TextField({
+            name: 'trading_address_pcode_lookup',
+            label: 'Postcode',
+            modifier: ['short', 'PostcodeLookup'],
+            innerHTML: lookupButton
+          }) }}
 
-        <div class="form-group form-group--address-suggestions">
-          <label class="form-label-bold">Select an address from the drop down</label>
-          <select class="form-control">
-          <option value="">Please enter a postcode to lookup your address</option>
-          </select>
-        </div>
-      {% endif %}
+          {{ MultipleChoiceField({
+            name: 'trading_address_pcode_result',
+            label: 'Select an address',
+            initialOption: 'Enter a postcode to lookup your address',
+            modifier: 'PostcodeLookupResult'
+          }) }}
+        {% endif %}
 
-      {{ textbox("trading_address_1", label="Business and street (optional)", value=formData.trading_address_1, error=errors.trading_address_1) }}
-      {{ textbox("trading_address_2", value=formData.trading_address_2, error=errors.trading_address_2) }}
-      {{ textbox("trading_address_town", label="Town or city (optional)", value=formData.trading_address_town, error=errors.trading_address_town) }}
-      {{ textbox("trading_address_county", label="County (optional)", value=formData.trading_address_county, error=errors.trading_address_county) }}
-      {{ textbox("trading_address_postcode", label="Postcode (optional)", value=formData.trading_address_postcode, error=errors.trading_address_postcode) }}
-      {{ dropdown("trading_address_country", label="Country", emptyLabel="Pick a value", value=formData.trading_address_country, options=countryOptions, errors=trading_address_country)}}
+        {{ TextField({
+          name: 'trading_address_1',
+          label: 'Business',
+          optional: true,
+          value: formData.trading_address_1,
+          error: errors.trading_address_1
+        }) }}
+
+        {{ TextField({
+          name: 'trading_address_2',
+          label: 'Street',
+          optional: true,
+          value: formData.trading_address_2,
+          error: errors.trading_address_2
+        }) }}
+
+        {{ TextField({
+          name: 'trading_address_town',
+          label: 'Town or city',
+          optional: true,
+          value: formData.trading_address_town,
+          error: errors.trading_address_town
+        }) }}
+
+        {{ TextField({
+          name: 'trading_address_county',
+          label: 'County',
+          optional: true,
+          value: formData.trading_address_county,
+          error: errors.trading_address_county
+        }) }}
+
+        {{ TextField({
+          name: 'trading_address_postcode',
+          label: 'Postcode',
+          optional: true,
+          value: formData.trading_address_postcode,
+          error: errors.trading_address_postcode,
+          modifier: 'short'
+        }) }}
+
+        {{ MultipleChoiceField({
+          name: 'trading_address_country',
+          label: 'Country',
+          initialOption: '-- Select country --',
+          options: countryOptions,
+          value: formData.trading_address_country,
+          error: errors.trading_address_country
+        }) }}
+      </div>
     </fieldset>
 
     {% if not isForeign %}
-      {{ dropdown("uk_region", label="UK region", emptyLabel="Pick a value", value=formData.uk_region, options=regionOptions, error=errors.uk_region) }}
+      {{ MultipleChoiceField({
+        name: 'uk_region',
+        label: 'UK region',
+        initialOption: '-- Select region --',
+        options: regionOptions,
+        value: formData.uk_region,
+        error: errors.uk_region
+      }) }}
     {% endif %}
 
-    <fieldset class="form-group form-group__checkbox-group" id="headquarters-wrapper">
-      <legend class="form-label-bold">Is this a headquarters?</legend>
-      <label
-        class="block-label selection-button-radio{% if not formData.headquarter_type or formData.headquarter_type == '' %} selected{% endif %}">
-        <input name="headquarters" type="radio" value="" {% if not formData.headquarter_type or formData.headquarter_type == '' %} checked{% endif %}>
-        Not a headquarters
-      </label>
-      {% for option in headquarterOptions %}
-        <label class="block-label selection-button-radio {% if option.id == formData.headquarter_type %}selected{% endif %}">
-          <input name="headquarters" type="radio" value="{{option.id}}" {% if option.id == formData.headquarter_type %}checked{% endif %}>
-          {{ hqLabels[option.name] }}
-        </label>
-      {% endfor %}
-    </fieldset>
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'headquarter_type',
+      label: 'Headquarter type',
+      options: headquarterOptions,
+      value: formData.headquarter_type,
+      error: errors.headquarter_type
+    }) }}
 
-    {{ dropdown("sector", label="Sector", emptyLabel="Pick a value", value=formData.sector, options=sectorOptions, error=errors.sector) }}
+    {{ MultipleChoiceField({
+      name: 'sector',
+      label: 'Sector',
+      initialOption: '-- Select sector --',
+      options: sectorOptions,
+      value: formData.sector,
+      error: errors.sector
+    }) }}
 
-    {{ textbox("website", label="Website (optional)", value=formData.website, error=errors.website) }}
+    {{ TextField({
+      name: 'website',
+      label: 'Website',
+      optional: true,
+      value: formData.website,
+      error: errors.website
+    }) }}
 
-    {{ textarea("description", label="Business description (optional)", value=formData.description, error=errors.description) }}
+    {{ TextField({
+      name: 'description',
+      label: 'Business description',
+      optional: true,
+      value: formData.description,
+      error: errors.description
+    }) }}
 
-    {{ dropdown("employee_range", label="Number of employees (optional)", emptyLabel="Pick a value", value=formData.employee_range, options=employeeOptions, error=errors.employee_range) }}
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'employee_range',
+      label: 'Number of employees',
+      optional: true,
+      options: employeeOptions,
+      value: formData.employee_range,
+      error: errors.employee_range
+    }) }}
 
-    {{ dropdown("turnover_range", label="Annual turnover (optional)", emptyLabel="Pick a value", value=formData.turnover_range, options=turnoverOptions, error=errors.turnover_range) }}
-
-    {% if formData.id %}
-      {{ save() }}
-    {% else %}
-      {{ save(buttonText="Save and create") }}
-    {% endif %}
-  </form>
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'turnover_range',
+      label: 'Annual turnover',
+      optional: true,
+      options: turnoverOptions,
+      value: formData.turnover_range,
+      error: errors.turnover_range
+    }) }}
+  {% endcall %}
 {% endblock %}
