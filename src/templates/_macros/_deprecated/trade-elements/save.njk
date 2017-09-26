@@ -1,6 +1,0 @@
-{% macro save(backUrl, buttonText = 'Save') %}
-  <div class="save-bar">
-    <button class="button button--save" type="submit">{{ buttonText }}</button>
-    {% if backUrl %}<a class="button-link button--cancel js-button-cancel" href="{{ backUrl }}">Cancel</a>{% endif %}
-  </div>
-{% endmacro %}
