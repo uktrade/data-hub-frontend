@@ -17,7 +17,7 @@
   {% if company.id %}
     <p><a href="/companies/{{company.id}}/edit" class="button button-secondary">Edit</a></p>
   {% else %}
-    <p><a href="/companies/add/ltd/{{company.company_number}}" class="button">Add</a></p>
+    <p><a href="/companies/add/{{company.company_number}}" class="button">Add</a></p>
   {% endif %}
 
   {% if accountManagementDisplay %}

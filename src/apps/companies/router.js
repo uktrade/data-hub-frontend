@@ -46,10 +46,8 @@ router
 
 router
   .route([
-    '/add/foreign',
-    '/add/ukother',
-    '/add/ltd',
-    '/add/ltd/:companyNumber',
+    '/add',
+    '/add/:companyNumber',
     '/:companyId/edit',
   ])
   .get(populateForm, renderForm)
