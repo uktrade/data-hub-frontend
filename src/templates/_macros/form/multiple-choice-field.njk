@@ -47,6 +47,7 @@
  # @param {array} [props.options[].children] - Main field subfields
  # @param {array, function} [props.options] - Field options (either an array of objects or function returning and array of objects)
  # @param {string} [props.initialOption] - Initial option label to use for empty value in select box
+ # @param {string} [props.persistsConditionalValue] - Whether the values should persist when collapsed
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
