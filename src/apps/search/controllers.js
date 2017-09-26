@@ -4,6 +4,7 @@ const { entities, search } = require('./services')
 const { transformApiResponseToSearchCollection } = require('./transformers')
 const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
+const { transformEventToListItem } = require('../events/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
 const { transformInteractionToListItem } = require('../interactions/transformers')
@@ -25,6 +26,9 @@ async function renderSearchResults (req, res) {
   }
   if (searchEntity === 'contact') {
     itemTransformers.push(transformContactToListItem)
+  }
+  if (searchEntity === 'event') {
+    itemTransformers.push(transformEventToListItem)
   }
   if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
