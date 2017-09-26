@@ -9,10 +9,4 @@ defineSupportCode(({ Then }) => {
       .waitForElementPresent('@flashMessage')
       .assert.cssClassPresent('@flashMessage', 'c-message--success')
   })
-
-  Then(/^I see the error message$/, () => {
-    Messages
-      .waitForElementPresent('@flashMessage')
-      .assert.cssClassPresent('@flashMessage', 'c-message--error')
-  })
 })
