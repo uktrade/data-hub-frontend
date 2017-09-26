@@ -38,7 +38,7 @@ function redirectToDetails (req, res, next) {
   }
 
   req.flash('success', 'Event created')
-  return res.redirect(`/events/${res.locals.resultId}/details`)
+  return res.redirect(`/events/${res.locals.resultId}`)
 }
 
 module.exports = {
