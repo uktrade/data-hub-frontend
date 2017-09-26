@@ -68,7 +68,7 @@ describe('Investment evaluation controller', () => {
       'Type of investment': 'Does not apply',
       'Foreign investor': {
         name: 'Omnicorp SDS',
-        url: '/companies/view/foreign/6c388e5b-a098-e211-a939-e4115bead28a',
+        url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
       },
       'Foreign country': 'Korea (South)',
       'UK company': null,
@@ -124,12 +124,12 @@ describe('Investment evaluation controller', () => {
       'Type of investment': 'Tom',
       'Foreign investor': {
         name: 'amazing tables Ltd.',
-        url: '/companies/view/foreign/6c997f91-a098-e211-a939-e4115bead28a',
+        url: '/companies/6c997f91-a098-e211-a939-e4115bead28a',
       },
       'Foreign country': 'Nigeria',
       'UK company': {
         name: 'AITCH (Bananas are us) LIMITED',
-        url: '/companies/view/ltd/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
+        url: '/companies/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
       },
       'Foreign equity investment': '£400,000',
       'Investor retains 10% voting power': 'Yes',
@@ -139,7 +139,7 @@ describe('Investment evaluation controller', () => {
     const expectedLanding = {
       'UK company': {
         name: 'AITCH (Bananas are us) LIMITED',
-        url: '/companies/view/ltd/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
+        url: '/companies/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
       },
       'Companies House Number': '08311441',
       'Registered Address': [

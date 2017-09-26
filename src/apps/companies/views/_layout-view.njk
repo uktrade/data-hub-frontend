@@ -2,11 +2,11 @@
 
 {% block local_header %}
   {% call LocalHeader({
-      heading: headingName,
+      heading: company.name,
       modifier: 'light-banner'
     })
   %}
-    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+    <p class="c-local-header__heading-after">{{ company.address }}</p>
     {% if company.archived %}
       {% call Message({ type: 'info' }) %}
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
@@ -21,8 +21,10 @@
 
 {% block main_grid_left_column %}
   <nav class="c-local-nav">
-    <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="{{companyUrl}}">Company details</a>
-    {% if company.id %}
+    {% if not company.id %}
+      <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/companies/view/ch/{{ company.company_number }}">Company details</a>
+    {% else %}
+      <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/companies/{{ company.id }}">Company details</a>
       {# <a class="c-local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
       <a class="c-local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
       <a class="c-local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
