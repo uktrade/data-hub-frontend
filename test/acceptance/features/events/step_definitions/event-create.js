@@ -190,10 +190,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .selectListOption('service', 2)
   })
 
-  When(/^I click the save button$/, async () => {
-    await Events.submitForm('form')
-  })
-
   Then(/^I verify there should be ([0-9]) programmes lists$/, async (expected) => {
     await Events
       .assertVisibleRelatedProgrammesList(expected)
