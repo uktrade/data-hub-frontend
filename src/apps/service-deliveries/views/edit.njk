@@ -3,7 +3,7 @@
 {% block body_main_content %}
   {% if serviceDelivery.company.name %}
     {% set companyLink %}
-      <a href="{{ companyUrl }}">{{ serviceDelivery.company.name }}</a>
+      <a href="/companies/serviceDelivery.company.id">{{ serviceDelivery.company.name }}</a>
     {% endset %}
     {% set contactLink %}
       <a href="/contacts/{{ serviceDelivery.contact.id }}">{{ serviceDelivery.contact.name }}</a>

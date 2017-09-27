@@ -1,7 +1,7 @@
 describe('Contact controller', () => {
   const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
 
-  const createContactController = (getContact, getDisplayContact, getDitCompany, buildCompanyUrl) => {
+  const createContactController = (getContact, getDisplayContact, getDitCompany) => {
     return proxyquire('~/src/apps/contacts/controllers/details', {
       '../repos': {
         getContact: getContact,
@@ -12,21 +12,16 @@ describe('Contact controller', () => {
       '../../companies/repos': {
         getDitCompany: getDitCompany,
       },
-      '../../companies/services/data': {
-        buildCompanyUrl: buildCompanyUrl,
-      },
     })
   }
 
   beforeEach(() => {
     const contact = require('../../../data/simple-contact')
-    const companyUrl = `/companies/${contact.company.id}`
     const contactDetails = { id: contact.id, name: contact.first_name.toLowerCase() }
 
     const getContactStub = sinon.stub().resolves(contact)
     const getDisplayContactStub = sinon.stub().returns(contactDetails)
     const getDitCompanyStub = sinon.stub().resolves(contact.company)
-    const buildCompanyUrlStub = sinon.stub().returns(companyUrl)
 
     this.sandbox = sinon.sandbox.create()
 
@@ -34,10 +29,8 @@ describe('Contact controller', () => {
       getContactStub,
       getDisplayContactStub,
       getDitCompanyStub,
-      buildCompanyUrlStub
     )
 
-    this.companyUrl = companyUrl
     this.contactDetails = contactDetails
 
     this.req = {
@@ -68,13 +61,6 @@ describe('Contact controller', () => {
       await this.contactController.getCommon(this.req, this.res, this.next)
 
       expect(this.res.locals.id).to.equal(this.req.params.contactId)
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should get the company URL', async () => {
-      await this.contactController.getCommon(this.req, this.res, this.next)
-
-      expect(this.res.locals.companyUrl).to.equal(this.companyUrl)
       expect(this.next).to.have.been.calledOnce
     })
 

@@ -2,7 +2,6 @@ const format = require('date-fns/format')
 const { formatLongDate, formatMediumDate } = require('../../../../common/date')
 const { newlineToBr, getContactLink } = require('../../../lib/text-formatting')
 const { getPropertyName } = require('../../../lib/property-helpers')
-const { buildCompanyUrl } = require('../../companies/services/data')
 const { mapValues, get, isPlainObject } = require('lodash')
 
 /**
@@ -13,9 +12,8 @@ const { mapValues, get, isPlainObject } = require('lodash')
  * @returns {Object} A formatted service delivery or interaction
  */
 function getDisplayInteraction (interaction) {
-  const companyUrl = buildCompanyUrl(interaction.company)
   const result = {
-    company: `<a href="${companyUrl}">${interaction.company.name}</a>`,
+    company: `<a href="/companies/${interaction.company.id}">${interaction.company.name}</a>`,
     interaction_type: interaction.interaction_type.name,
     subject: interaction.subject,
     notes: newlineToBr(interaction.notes),
