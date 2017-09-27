@@ -140,8 +140,24 @@
             "teams": []
         }
     ],
-    "export_to_countries": [],
-    "future_interest_countries": [],
+    "export_to_countries": [
+      { "id": "1234",
+        "name": "France"
+      },
+      {
+        "id": "2234",
+        "name": "Italy"
+      }
+    ],
+    "future_interest_countries": [
+      { "id": "4321",
+        "name": "Germany"
+      },
+      {
+        "id": "5678",
+        "name": "Argentina"
+      }
+    ],
     "uk_based": true,
     "account_manager": null,
     "registered_address_1": "Annexe -  Blackthorn Cottage",

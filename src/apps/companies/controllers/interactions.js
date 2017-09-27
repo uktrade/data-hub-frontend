@@ -1,9 +1,3 @@
-/**
- *
- *  HTTP Get call to get a list of interactions for a company
- *  Gets a list of interactions associated with a company
- *  Furthermore the controller extracts only the fields required and pre-formats them to make layout easier.
- */
 function renderInteractions (req, res, next) {
   try {
     const { name, id } = res.locals.company
@@ -12,7 +6,7 @@ function renderInteractions (req, res, next) {
       .breadcrumb(name, `/viewcompanyresult/${id}`)
       .breadcrumb('Interactions')
       .render('companies/views/interactions', {
-        tab: 'interactions',
+        tab: 'interactions', // TODO: Use newer local nav macro to remove need for this
       })
   } catch (error) {
     next(error)

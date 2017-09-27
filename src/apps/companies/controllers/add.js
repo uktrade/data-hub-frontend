@@ -4,6 +4,7 @@ const { assign } = require('lodash')
 const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
+// TODO: replace with query-string package
 const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
@@ -70,7 +71,7 @@ function postAddStepOne (req, res, next) {
   const queryString = buildQueryString(params)
 
   if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
-    return res.redirect(`/companies/add/${req.body.business_type + queryString}`)
+    return res.redirect(`/companies/add${queryString}`)
   }
 
   return res.redirect(`/companies/add-step-2/${queryString}`)
@@ -101,7 +102,7 @@ async function getAddStepTwo (req, res, next) {
         return map(results, async (result) => {
           try {
             result.companies_house_data = await getCHCompany(token, result.company_number)
-            result.url = `/companies/add/ltd/${result.company_number}`
+            result.url = `/companies/add/${result.company_number}`
           } catch (error) {
             logger.error(error)
           }

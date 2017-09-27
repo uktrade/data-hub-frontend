@@ -1,30 +1,26 @@
-const { getCompanyAuditLog, getDitCompany } = require('../repos')
-const { getCommonTitlesAndlinks } = require('../services/data')
+const { getCompanyAuditLog } = require('../repos')
 const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { companyDetailsLabels } = require('../labels')
 const { transformApiResponseToCollection } = require('../../transformers')
 
-async function getAudit (req, res, next) {
+async function renderAuditLog (req, res, next) {
+  const token = req.session.token
+  const page = req.query.page || 1
+  const { id, name } = res.locals.company
+
   try {
-    const token = req.session.token
-    const companyId = req.params.id
-    const page = req.query.page || 1
-
-    const company = await getDitCompany(token, companyId)
-    getCommonTitlesAndlinks(req, res, company)
-
-    const auditLog = await getCompanyAuditLog(token, companyId, page)
+    const auditLog = await getCompanyAuditLog(token, id, page)
       .then(transformApiResponseToCollection(
         { entityType: 'audit' },
         transformAuditLogToListItem(companyDetailsLabels)
       ))
 
-    return res
+    res
+      .breadcrumb(name, `/companies/${id}`)
       .breadcrumb('Audit history')
       .render('companies/views/audit', {
-        tab: 'audit',
-        company,
         auditLog,
+        tab: 'audit', // TODO: Use newer local nav macro to remove need for this
       })
   } catch (error) {
     next(error)
@@ -32,5 +28,5 @@ async function getAudit (req, res, next) {
 }
 
 module.exports = {
-  getAudit,
+  renderAuditLog,
 }

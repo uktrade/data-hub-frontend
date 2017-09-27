@@ -1,119 +1,110 @@
-const token = 'abcd'
-const company = {
-  id: '12345',
-}
-const investmentProjects = {
-  count: 2,
-  page: 1,
-  results: [{
-    project_code: 'I-001',
-    id: 'project-1',
-  }, {
-    project_code: 'I-002',
-    id: 'project-2',
-  }],
-}
+const investmentsMock = require('~/test/unit/data/investment/collection.json')
+const companyMock = require('~/test/unit/data/companies/company.json')
+const tokenMock = '12345abcde'
 
-describe('Company investments controller', function () {
+describe('Company investments controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.getDitCompanyStub = this.sandbox.stub().resolves(company)
-    this.getCompanyInvestmentProjectsStub = this.sandbox.stub().resolves(investmentProjects)
-    this.getCommonTitlesAndlinksStub = this.sandbox.stub()
-    this.nextStub = this.sandbox.stub()
-    this.breadcrumbStub = function () {
-      return this
-    }
+    this.getCompanyInvestmentProjectsStub = this.sandbox.stub()
+    this.transformInvestmentProjectToListItemSpy = this.sandbox.spy()
+    this.transformApiResponseToCollectionSpy = this.sandbox.spy()
+    this.breadcrumbStub = this.sandbox.stub().returnsThis()
+    this.renderSpy = this.sandbox.spy()
+    this.nextSpy = this.sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
-      '../services/data': {
-        getCommonTitlesAndlinks: this.getCommonTitlesAndlinksStub,
-      },
       '../../investment-projects/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
-      '../repos': {
-        getDitCompany: this.getDitCompanyStub,
+      '../../investment-projects/transformers': {
+        transformInvestmentProjectToListItem: this.transformInvestmentProjectToListItemSpy,
+      },
+      '../../transformers': {
+        transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })
+
+    this.reqMock = {
+      query: {},
+      session: {
+        token: tokenMock,
+      },
+    }
+    this.resMock = {
+      breadcrumb: this.breadcrumbStub,
+      render: this.renderSpy,
+      locals: {
+        company: companyMock,
+      },
+    }
   })
 
   afterEach(() => {
     this.sandbox.restore()
   })
 
-  describe('#getAction', () => {
-    describe('when a company id exists', () => {
-      it('should render company details', (done) => {
-        const reqStub = {
-          session: {
-            token,
-          },
-          query: {},
-          params: {
-            id: company.id,
-          },
-        }
-        const resStub = {
-          breadcrumb: this.breadcrumbStub,
-          render: (template, data) => {
-            try {
-              expect(this.getDitCompanyStub).to.be.calledWith(token, company.id)
-              expect(this.getCompanyInvestmentProjectsStub).to.be.calledWith(token, company.id)
-              expect(this.getCommonTitlesAndlinksStub).to.be.calledWith(reqStub, resStub, company)
+  context('when investments returns successfully', () => {
+    beforeEach(() => {
+      this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
+    })
 
-              expect(data).to.haveOwnProperty('tab')
-              expect(data.tab).to.deep.equal('investments')
+    context('with default page number', () => {
+      beforeEach(async () => {
+        await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
+      })
 
-              expect(data).to.haveOwnProperty('company')
-              expect(data.company).to.deep.equal(company)
+      it('should call audit log with correct arguments', () => {
+        expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith(tokenMock, companyMock.id, 1)
+      })
 
-              expect(data).to.haveOwnProperty('results')
-              expect(data.results).to.haveOwnProperty('items')
-              expect(data.results).to.haveOwnProperty('pagination', null)
+      it('should call list item transformer', () => {
+        expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
+      })
 
-              expect(data.results.items).to.have.length(2)
-              expect(data.results.items[0]).to.have.property('meta')
+      it('should set the correct number of breadcrumbs', () => {
+        expect(this.breadcrumbStub).to.have.been.calledTwice
+      })
 
-              expect(this.nextStub).not.to.be.called
+      it('should render the correct template', () => {
+        expect(this.renderSpy.args[0][0]).to.equal('companies/views/investments')
+        expect(this.renderSpy).to.have.been.calledOnce
+      })
 
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        }
-
-        this.controller.getAction(reqStub, resStub, this.nextStub)
+      it('should send the correct template data', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          tab: 'investments',
+          results: investmentsMock.results,
+        })
       })
     })
 
-    describe('when a company is not found', () => {
-      beforeEach(() => {
-        this.getDitCompanyStub.rejects(new Error('Company not found'))
+    context('when a custom page number', () => {
+      beforeEach(async () => {
+        this.reqMock.query.page = 2
+
+        await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should call the next function', (done) => {
-        const renderStub = this.sandbox.stub()
-
-        this.controller.getAction({
-          session: {
-            token,
-          },
-          query: {},
-          params: {
-            id: company.id,
-          },
-        }, {
-          render: renderStub,
-        }, (error) => {
-          expect(error).to.be.an('error')
-          expect(renderStub).not.to.be.called
-
-          done()
-        })
+      it('should call with custom page number', () => {
+        expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith(tokenMock, companyMock.id, 2)
       })
+    })
+  })
+
+  context('when investments rejects', () => {
+    beforeEach(async () => {
+      this.errorMock = {
+        errorCode: 500,
+      }
+      this.getCompanyInvestmentProjectsStub.rejects(this.errorMock)
+
+      await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should call next with error', () => {
+      expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
+      expect(this.nextSpy).to.have.been.calledOnce
     })
   })
 })
