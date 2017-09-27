@@ -18,7 +18,7 @@ async function renderEditPage (req, res, next) {
 
     const eventForm =
       buildFormWithStateAndErrors(
-        eventFormConfig({ advisers }),
+        eventFormConfig({ eventId, advisers }),
         mergedData,
         get(res.locals, 'form.errors.messages'),
       )
