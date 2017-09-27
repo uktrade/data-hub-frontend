@@ -1,4 +1,4 @@
-@events__save-new-event
+@events-save
 Feature: Save a new Event in Data hub
   As an Event organiser
   I would like to add an event record to data hub
@@ -7,7 +7,7 @@ Feature: Save a new Event in Data hub
   Background:
     Given I am an authenticated user on the data hub website
 
-  @events__save-new-event--submit
+  @events-save--submit
   Scenario: Verify event is submitted
 
     When I navigate to the create an event page
@@ -15,7 +15,7 @@ Feature: Save a new Event in Data hub
     And I click the save button
     Then I see the success message
 
-  @events__save-new-event--mandatory-fields
+  @events-save--mandatory-fields
   Scenario: Verify event mandatory fields
 
     When I navigate to the create an event page
@@ -28,7 +28,7 @@ Feature: Save a new Event in Data hub
     And I verify the event services has an error message
     Then I see the error summary
 
-  @events__save-new-event--uk-region
+  @events-save--uk-region
   Scenario: Verify event UK region mandatory field
 
     When I navigate to the create an event page

@@ -1,4 +1,4 @@
-@filter-contacts
+@contacts-filter
 Feature: Filters collections for contact
   As an existing user
   I would like to filter contacts using possible options
@@ -7,28 +7,28 @@ Feature: Filters collections for contact
   Background:
     Given I am an authenticated user on the data hub website
 
-  @filter-contacts-sector
+  @contacts-filter--sector
   Scenario: Filter contacts by sector
 
     When I navigate to contacts collection page
     And I filter the display by contacts sector
     Then I verify the display is changed based on the given sector for contact
 
-  @filter-contacts-country
+  @contacts-filter--country
   Scenario: Filter contacts by country
 
     When I navigate to contacts collection page
     And I filter the display by country
     Then I verify the display is changed based on the given country
 
-  @filter-contacts-region
+  @contacts-filter--region
   Scenario: Filter contacts by region
 
     When I navigate to contacts collection page
     And I filter the display by region
     Then I verify the display is changed based on the given region
 
-  @filter-contacts-company
+  @contacts-filter--company
   Scenario: Filter contacts by company name
 
     When I navigate to contacts collection page

@@ -1,4 +1,4 @@
-@collections-contact
+@contacts-list
 Feature: View Collection of contacts
   As an existing user
   I would like to view all the Contacts in one place
@@ -7,7 +7,7 @@ Feature: View Collection of contacts
   Background:
     Given I am an authenticated user on the data hub website
 
-  @collections-contact-name
+  @contacts-list--name
   Scenario: View first and last name of contact under collections
 
     And I create a new contact
@@ -16,7 +16,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see first and last name of the contact
 
-  @collections-contact-company
+  @contacts-list--company
   Scenario: View company name of contact under collections
 
     And I create a new contact
@@ -25,7 +25,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Company name of the contact
 
-  @collections-contact-sector
+  @contacts-list--sector
   Scenario: View sector of contact under collections
 
     And I create a new contact
@@ -34,7 +34,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Sector of the contact
 
-  @collections-contact-country
+  @contacts-list--country
   Scenario: View country of contact under collections
 
     And I create a new contact
@@ -43,7 +43,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact
 
-  @collections-contact-timestamp
+  @contacts-list--timestamp
   Scenario: View time stamp of contact under collections
 
     And I create a new contact
@@ -52,7 +52,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see a time stamp of the contact
 
-  @collections-contact-primary
+  @contacts-list--primary
   Scenario: View primary status of contact under collections
 
     And I create a new contact
@@ -61,7 +61,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Primary or not status of the contact
 
-  @collections-contact-link
+  @contacts-list--link
   Scenario: Verify link to contact details page
 
     And I create a new contact
@@ -71,7 +71,7 @@ Feature: View Collection of contacts
     When I click on the first contact collection link
     Then I navigate to his contact details page
 
-  @collections-contact-address-same-as-company
+  @contacts-list--address-same-as-company
   Scenario: Verify contact with same address as company
 
     And I create a new contact with same address as company
@@ -80,7 +80,7 @@ Feature: View Collection of contacts
     When I click on contacts tab
     Then I see Country of the contact same as the company
 
-  @collections-contact-all
+  @contacts-list--all
   Scenario: View Collection of contacts
 
     And I create a new contact

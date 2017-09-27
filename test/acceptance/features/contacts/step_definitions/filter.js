@@ -4,48 +4,48 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
-  const contactCollections = client.page.CollectionsContact()
+  const ContactList = client.page.ContactList()
 
   When(/^I navigate to contacts collection page$/, async () => {
     await Company
       .navigate()
       .findCompany('venu')
-    await contactCollections
+    await ContactList
       .verify.visible('@contactsTab')
       .click('@contactsTab')
     await Contact
       .click('@firstCompanyFromList')
-    await contactCollections
+    await ContactList
       .click('@contactsBreadcrumb')
       .verify.visible('@filterSector')
   })
 
   When(/^I filter the display by contacts sector$/, async () => {
-    await contactCollections
+    await ContactList
       .click('@filterSector')
       .click('@filterSectorList')
       .click('@sectorFromList')
   })
 
   Then(/^I verify the display is changed based on the given sector for contact$/, async () => {
-    await contactCollections
+    await ContactList
       .assert.containsText('@sectorFromList', 'Advanced Engineering')
   })
 
   When(/^I filter the display by country$/, async () => {
-    await contactCollections
+    await ContactList
       .click('@filterCountry')
       .click('@filterCountryList')
       .click('@sectorFromList')
   })
 
   Then(/^I verify the display is changed based on the given country$/, async () => {
-    await contactCollections
+    await ContactList
       .assert.containsText('@countryFromList', 'United Kingdom')
   })
 
   When(/^I filter the display by region$/, async () => {
-    await contactCollections
+    await ContactList
       .click('@filterCountry')
       .click('@filterCountryList')
       .click('@sectorFromList')
@@ -56,19 +56,19 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the display is changed based on the given region$/, async () => {
-    await contactCollections
+    await ContactList
       .assert.containsText('@countryFromList', 'United Kingdom')
   })
 
   When(/^I filter the display by company name$/, async () => {
-    await contactCollections
+    await ContactList
       .setValue('@filterCompany', 'Red')
       .click('@sectorFromList')
       .click('@countryFromList')
   })
 
   Then(/^I verify the display is changed based on the given company name$/, async () => {
-    await contactCollections
+    await ContactList
       .assert.containsText('@companyFromList', 'red')
       .assert.containsText('@companyFromSecondList', 'red')
       .assert.containsText('@companyFromThirdList', 'red')

@@ -1,4 +1,4 @@
-@pipeline-investment-projects
+@investment-projects-pipeline
 Feature: View pipeline of investment projects
   As an existing user
   I would like to view all the Investment projects Pipeline
@@ -7,7 +7,7 @@ Feature: View pipeline of investment projects
   Background:
     Given I am an authenticated user on the data hub website
 
-  @view-investment-pipeline-landingpage
+  @investment-projects-pipeline--landing-page
   Scenario: View pipeline of investment projects
 
     When I navigate to Investment projects pipeline
@@ -16,7 +16,7 @@ Feature: View pipeline of investment projects
     And I see Advisor team name, Type of Investment, start date, end date and stage filters displayed to the user
     And I logout of Data Hub website
 
-  @view-filter-by-project-stage
+  @investment-projects-pipeline--stage
   Scenario Outline: Filter pipeline of investment projects by Project Stage
 
     When I navigate to Investment projects pipeline
@@ -30,7 +30,7 @@ Feature: View pipeline of investment projects
       | Active     |
       | Won        |
 
-  @view-filter-by-project-type
+  @investment-projects-pipeline--filter-by-project-type
   Scenario Outline: Filter pipeline of investment projects by Project type
 
     When I navigate to Investment projects pipeline
@@ -42,28 +42,28 @@ Feature: View pipeline of investment projects
       | FDI                  |
       | Non-FDI              |
 
-  @view-filter-by-project-sector
+  @investment-projects-pipeline--filter-by-project-sector
   Scenario: Filter pipeline of investment projects by Sector
 
     When I navigate to Investment projects pipeline
     And I filter the display by sector
     Then I verify the display is changed based on the given sector
 
-  @view-filter-by-project-date-range
+  @investment-projects-pipeline--filter-by-project-date-range
   Scenario: Filter pipeline of investment projects by date range
 
     When I navigate to Investment projects pipeline
     And I filter the display by date range
     Then I verify the display is changed based on the given date range
 
-  @sort-by-project-stage
+  @investment-projects-pipeline--sort-by-project-stage
   Scenario: Sort pipeline of investment projects by Stage
 
     When I navigate to Investment projects pipeline
     And I sort the display by Stage
     Then I verify the display is sorted by stage
 
-  @navigate-project-details
+  @investment-projects-pipeline--project-details
   Scenario: Navigate to Project from pipeline
 
     When I navigate to Investment projects pipeline

@@ -1,4 +1,4 @@
-@events__create-event-form
+@events-create
 Feature: Create an Event in Data hub
   As an Event organiser
   I would like to add an event record to data hub
@@ -7,7 +7,7 @@ Feature: Create an Event in Data hub
   Background:
     Given I am an authenticated user on the data hub website
 
-  @events__create-event-form--fields
+  @events-create--fields
   Scenario: Verify event form fields
 
     When I navigate to the create an event page
@@ -32,7 +32,7 @@ Feature: Create an Event in Data hub
     And I verify the event related programmes field is displayed
     And I verify the event save button is displayed
 
-  @events__create-event-form--toggle-uk-region
+  @events-create--toggle-uk-region
   Scenario: Verify event UK region toggling
 
     When I navigate to the create an event page
@@ -41,7 +41,7 @@ Feature: Create an Event in Data hub
     When I choose the Afghanistan country option
     Then I verify the event UK region field is not displayed
 
-  @events__create-event-form--toggle-shared
+  @events-create--toggle-shared
   Scenario: Verify event shared field toggling
 
     When I navigate to the create an event page
@@ -50,7 +50,7 @@ Feature: Create an Event in Data hub
     When I choose the No option
     Then I verify the shared teams field is not displayed
 
-  @events__create-event-form--add-teams
+  @events-create--add-teams
   Scenario: Verify event shared teams field
 
     When I navigate to the create an event page
@@ -60,7 +60,7 @@ Feature: Create an Event in Data hub
     Then I verify there should be 2 shared teams lists
     And I verify there is the option to add another shared team
 
-  @events__create-event-form--add-related-programmes
+  @events-create--add-related-programmes
   Scenario: Verify event related programmes field
 
     When I navigate to the create an event page
