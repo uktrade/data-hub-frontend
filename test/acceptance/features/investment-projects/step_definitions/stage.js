@@ -3,10 +3,10 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Stages = client.page.InvestmentStages()
+  const InvestmentStage = client.page.InvestmentStage()
   const Contact = client.page.Contact()
   const Company = client.page.Company()
-  const Investment = client.page.InvestmentProject()
+  const InvestmentProject = client.page.InvestmentProject()
   const foreignCompanyName = 'Lambda plc'
   let projectName
   let strategicdriver
@@ -31,13 +31,13 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProject(projectName)
   })
 
   When(/^I enter all required fields for Requirements section under Details tab$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@addRequirmentsButton')
       .click('@strategicDriver')
       .getText('@strategicDriverList', (result) => {
@@ -60,12 +60,12 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I click on Save button$/, async () => {
-    await Stages
+    await InvestmentStage
       .submitForm('form')
   })
 
   Then(/^I verify that all fields are populated correctly for Requirements section$/, async () => {
-    await Stages
+    await InvestmentStage
       .verify.visible('@editRequirmentsButton')
       .verify.containsText('@strategicDriverFromProjectDetails', strategicdriver.trim())
       .verify.containsText('@clientRequirementsFromProjectDetails', 'Testing')
@@ -86,7 +86,7 @@ defineSupportCode(({ Given, Then, When }) => {
     foreignEquityInvestmentValue = faker.random.number({ min: 30000, max: 40000 })
     newJobsValue = faker.random.number(100, 200)
     safeguardedJobsValue = faker.random.number(75, 100)
-    await Stages
+    await InvestmentStage
       .click('@addValueButton')
       .setValue('@totalInvestment', totalInvestmentValue)
       .setValue('@foreignEquityInvestment', foreignEquityInvestmentValue)
@@ -105,112 +105,112 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify that all fields are populated correctly for Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .verify.visible('@editValueButton')
       .getText('@totalInvestmentFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value.replace('£', '').replace(',', ''), totalInvestmentValue)
+        InvestmentStage.assert.equal(result.value.replace('£', '').replace(',', ''), totalInvestmentValue)
       })
       .getText('@foreignEquityInvestmentFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value.replace('£', '').replace(',', ''), foreignEquityInvestmentValue)
+        InvestmentStage.assert.equal(result.value.replace('£', '').replace(',', ''), foreignEquityInvestmentValue)
       })
       .getText('@financialAssistanceFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'Has government assistance')
+        InvestmentStage.assert.equal(result.value, 'Has government assistance')
       })
       .getText('@newJobsFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, `${newJobsValue} new jobs`)
+        InvestmentStage.assert.equal(result.value, `${newJobsValue} new jobs`)
       })
       .getText('@averageSalaryFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, averageSalary)
+        InvestmentStage.assert.equal(result.value, averageSalary)
       })
       .getText('@safeguardedJobsFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, `${safeguardedJobsValue} safeguarded jobs`)
+        InvestmentStage.assert.equal(result.value, `${safeguardedJobsValue} safeguarded jobs`)
       })
       .getText('@budgetForRnDFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'Has R&D budget')
+        InvestmentStage.assert.equal(result.value, 'Has R&D budget')
       })
       .getText('@nonFDIRnDFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'Has linked non-FDI R&D projects')
+        InvestmentStage.assert.equal(result.value, 'Has linked non-FDI R&D projects')
       })
       .getText('@newTechToUKFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'Has new-to-world tech, business model or IP')
+        InvestmentStage.assert.equal(result.value, 'Has new-to-world tech, business model or IP')
       })
       .getText('@exportRevenueFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'Yes, will create significant export revenue')
+        InvestmentStage.assert.equal(result.value, 'Yes, will create significant export revenue')
       })
   })
 
   When(/^I set receiving government financial assistance option to NO$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@financialAssistanceNo')
   })
 
   Then(/^I verify that project is not receiving financial assistance under Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@financialAssistanceFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'No government assistance')
+        InvestmentStage.assert.equal(result.value, 'No government assistance')
       })
   })
 
   When(/^I set budget for a research and development option to NO$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@budgetForRnDNo')
   })
 
   Then(/^I verify that project has no budget for a research and development under Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@budgetForRnDFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'No R&D budget')
+        InvestmentStage.assert.equal(result.value, 'No R&D budget')
       })
   })
 
   When(/^I set project associated with a non-FDI R&D project option to NO$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@nonFDIRnDNo')
   })
 
   Then(/^I verify that project has no association with a non-FDI R&D project under Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@nonFDIRnDFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'No linked non-FDI R&D projects')
+        InvestmentStage.assert.equal(result.value, 'No linked non-FDI R&D projects')
       })
   })
 
   When(/^I set new to world technology option to NO$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@newTechToUKNo')
   })
 
   Then(/^I verify that project has no new to world technology under Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@newTechToUKFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'No new-to-world tech, business model or IP')
+        InvestmentStage.assert.equal(result.value, 'No new-to-world tech, business model or IP')
       })
   })
 
   When(/^I set export of their products and services option to NO$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@exportRevenueNo')
   })
 
   Then(/^I verify that project has no export of their products and services under Value section$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@exportRevenueFromProjectDetails', (result) => {
-        Stages.assert.equal(result.value, 'No, will not create significant export revenue')
+        InvestmentStage.assert.equal(result.value, 'No, will not create significant export revenue')
       })
   })
 
   Then(/^I verify that Assign PM stage button is enabled$/, async () => {
-    await Stages
+    await InvestmentStage
       .verify.visible('@assignPMButton')
   })
 
   When(/^I click on Assign PM stage button$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@assignPMButton')
   })
 
   Then(/^I verify the stage of the project is updated from Prospect stage to Assign PM stage$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@assignPMstage', (result) => {
         Contact.assert.equal(result.value, 'Assign PM stage')
       })
@@ -220,14 +220,14 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the project is in Ongoing state$/, async () => {
-    await Stages
+    await InvestmentStage
       .getText('@projectStateFromTop', (result) => {
         Contact.assert.equal(result.value, 'Ongoing')
       })
   })
 
   When(/^I change the state to (.*)$/, async (state) => {
-    await Stages
+    await InvestmentStage
       .click('@changeStateButton')
       .click('@changeState')
       .setValue('@changeStateList', state)
@@ -235,7 +235,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the project state is changed to (.*)$/, async (state) => {
-    await Stages
+    await InvestmentStage
       .getText('@projectStateFromTop', (result) => {
         Contact.assert.equal(result.value, state)
       })
@@ -246,7 +246,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I enter all required fields for Project Manager section under Project team tab$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@projectTeamTab')
       .click('@assignPMButton')
       .click('@projectManager')
@@ -257,13 +257,13 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify that all fields are populated correctly for Project Manager section$/, async () => {
-    await Stages
+    await InvestmentStage
       .verify.visible('@editPMButton')
       .assert.containsText('@projectManagerFromProjectTeamTab', projectManager.trim())
   })
 
   When(/^I enter all required fields for Project Assurance section under Project team tab$/, async () => {
-    await Stages
+    await InvestmentStage
       .click('@projectTeamTab')
       .click('@assignPMButton')
       .click('@projectAssuranceAdviser')
@@ -274,10 +274,10 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify that all fields are populated correctly for Project Assurance section$/, async () => {
-    await Stages
+    await InvestmentStage
       .verify.visible('@editPMButton')
       .getText('@projectAssuranceAdviserFromProjectTeamTab', (result) => {
-        Stages.assert.containsText(projectAssurance, result.value)
+        InvestmentStage.assert.containsText(projectAssurance, result.value)
       })
   })
 
