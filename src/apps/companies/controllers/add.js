@@ -1,11 +1,10 @@
 const { map } = require('asyncro')
 const { assign } = require('lodash')
+const queryString = require('query-string')
 
 const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
-// TODO: replace with query-string package
-const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
@@ -68,13 +67,11 @@ function postAddStepOne (req, res, next) {
       break
   }
 
-  const queryString = buildQueryString(params)
-
   if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
-    return res.redirect(`/companies/add${queryString}`)
+    return res.redirect(`/companies/add?${queryString.stringify(params)}`)
   }
 
-  return res.redirect(`/companies/add-step-2/${queryString}`)
+  return res.redirect(`/companies/add-step-2?${queryString.stringify(params)}`)
 }
 
 async function getAddStepTwo (req, res, next) {
