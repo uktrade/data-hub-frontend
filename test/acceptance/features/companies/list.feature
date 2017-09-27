@@ -1,4 +1,4 @@
-@collections-company
+@companies-list
 Feature: View company collection
   As an existing user
   I would like to view all the companies in one place
@@ -9,31 +9,31 @@ Feature: View company collection
     Given I am an authenticated user on the data hub website
     When I create a "UK private or public limited company"
 
-  @collections-company-name
+  @companies-list--name
   Scenario: View company name in collection results
 
     Then I see the success message
     And The company name is present in the collections results
 
-  @collections-company-sector
+  @companies-list--sector
   Scenario: View company sector in collection results
 
     Then I see the success message
     And The company sector is present in the collections results
 
-  @collections-company-region
+  @companies-list--region
   Scenario: View company region in collection results
 
     Then I see the success message
     And The company region is present in the collections results
 
-  @collections-company-trading-address
+  @companies-list--trading-address
   Scenario: View company registered address in collection results
 
     Then I see the success message
     And The company registered address is present in the collections results
 
-  @collections-company-link
+  @companies-list--link
   Scenario: Verify company link to company details page in collection results
 
     Then I see the success message

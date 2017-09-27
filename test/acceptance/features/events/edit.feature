@@ -1,4 +1,4 @@
-@edit-event @ignore
+@events-edit @ignore
 Feature: Edit an Event in Data hub
   As an Event organiser
   I would like to edit an event in data hub
@@ -7,7 +7,7 @@ Feature: Edit an Event in Data hub
   Background:
     Given I am an authenticated user on the data hub website
 
-  @edit-event-name @ignore
+  @events-edit--name @ignore
   Scenario: Edit event name
 
     When I navigate to event details page
@@ -17,7 +17,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event name is updated with new value
 
-  @edit-event-type @ignore
+  @events-edit--type @ignore
   Scenario: Edit event type
 
     When I navigate to event details page
@@ -27,7 +27,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event type is updated with new value
 
-  @edit-event-refcode @ignore
+  @events-edit--refcode @ignore
   Scenario: Edit event additional reference code
 
     When I navigate to event details page
@@ -37,7 +37,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event additional reference code is updated with new value
 
-  @edit-event-dates @ignore
+  @events-edit--dates @ignore
   Scenario: Edit event dates
 
     When I navigate to event details page
@@ -47,7 +47,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event dates is updated with new value
 
-  @edit-event-location-type @ignore
+  @events-edit--location-type @ignore
   Scenario: Edit event location type
 
     When I navigate to event details page
@@ -57,7 +57,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event location type is updated with new value
 
-  @edit-event-address @ignore
+  @events-edit--address @ignore
   Scenario: Edit event address
 
     When I navigate to event details page
@@ -67,7 +67,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event address is updated with new value
 
-  @edit-event-notes @ignore
+  @events-edit--notes @ignore
   Scenario: Edit event notes
 
     When I navigate to event details page
@@ -77,7 +77,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event notes is updated with new value
 
-  @edit-event-team-hosting @ignore
+  @events-edit--team-hosting @ignore
   Scenario: Edit event team hosting
 
     When I navigate to event details page
@@ -87,7 +87,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event team hosting is updated with new value
 
-  @edit-event-organiser @ignore
+  @events-edit--organiser @ignore
   Scenario: Edit event organiser
 
     When I navigate to event details page
@@ -97,7 +97,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event organiser is updated with new value
 
-  @edit-event-shared-teams @ignore
+  @events-edit--shared-teams @ignore
   Scenario: Edit event shared teams
 
     When I navigate to event details page
@@ -107,7 +107,7 @@ Feature: Edit an Event in Data hub
     Then I see the event record updated confirmation message
     And I verify the event shared teams is updated with new value
 
-  @edit-event-related-programmes @ignore
+  @events-edit--related-programmes @ignore
   Scenario: Edit event related programmes
 
     When I navigate to event details page

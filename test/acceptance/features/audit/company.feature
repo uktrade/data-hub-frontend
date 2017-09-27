@@ -1,4 +1,4 @@
-@company-audit
+@audit-company
 Feature: View Audit history of a Company
   As an existing user
   I would like to track changes to a Company record over time
@@ -7,7 +7,7 @@ Feature: View Audit history of a Company
   Background:
     Given I am an authenticated user on the data hub website
 
-  @company-audit-name
+  @audit-company--name
   Scenario: View name of the person who made company record changes
 
      And I Amend 1 records of an existing company record
@@ -15,7 +15,7 @@ Feature: View Audit history of a Company
      And I navigate to Audit History tab
      Then I see the name of the person who made the recent company record changes
 
-  @company-audit-timestamp
+  @audit-company--timestamp
   Scenario: View time stamp when the company record changes
 
      And I Amend 1 records of an existing company record
@@ -23,7 +23,7 @@ Feature: View Audit history of a Company
      And I navigate to Audit History tab
      Then I see the date time stamp when the recent company record changed
 
-  @company-audit-count
+  @audit-company--count
   Scenario: View the number of changes occurred on a company record
 
      And I Amend 2 records of an existing company record
@@ -31,7 +31,7 @@ Feature: View Audit history of a Company
      And I navigate to Audit History tab
      Then I see the total number of changes occurred recently on this company record
 
-  @company-audit-field-names
+  @audit-company--field-names
   Scenario: View changed field names of a company record
 
      And I Amend 1 records of an existing company record

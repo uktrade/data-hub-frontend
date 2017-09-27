@@ -5,7 +5,7 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
-  const Investment = client.page.InvestmentProject()
+  const InvestmentProject = client.page.InvestmentProject()
   const foreignCompanyName = 'Lambda plc'
   const ukLtdCompanyName = 'Venus ltd'
   let projectName
@@ -18,12 +18,12 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
   })
 
   Then(/^I verify an option to add a new Investment project$/, async () => {
-    await Investment
+    await InvestmentProject
       .assert.visible('@addInvestmentProjectButton')
   })
 
@@ -34,7 +34,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProject(projectName)
   })
@@ -45,18 +45,18 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
-      .clickInvestmentsTab()
+    await InvestmentProject
+      .clickInvestmentProjectsTab()
       .getText('@projectNameFromCompanyProfile', (result) => {
-        Investment.assert.equal(result.value, projectName)
+        InvestmentProject.assert.equal(result.value, projectName)
       })
   })
 
   Then(/^I verify Type of Investment is shown as "([^"]*)"$/, async (typeOfInvestment) => {
-    await Investment
+    await InvestmentProject
       .clickOnProjectNameFromCompanyProfile()
       .getText('@typeOfInvestmentFromProjectDetails', (result) => {
-        Investment.assert.equal(result.value, typeOfInvestment)
+        InvestmentProject.assert.equal(result.value, typeOfInvestment)
       })
   })
 
@@ -67,7 +67,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentClientRelationManager(projectName)
       .click('@clientRelationshipManager')
@@ -79,11 +79,11 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the client relation manager details shown under Project team$/, async () => {
-    await Investment
+    await InvestmentProject
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName.trim())
+        InvestmentProject.assert.equal(result.value, actualName.trim())
       })
   })
 
@@ -94,7 +94,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentReferralSourceAdviser(projectName)
       .click('@referralSourceAdviser')
@@ -106,11 +106,11 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the referral source adviser details shown under Project team$/, async () => {
-    await Investment
+    await InvestmentProject
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@referralSourceAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName.trim())
+        InvestmentProject.assert.equal(result.value, actualName.trim())
       })
   })
 
@@ -121,7 +121,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithDifferentClientAndReferralDetails(projectName)
       .click('@clientRelationshipManager')
@@ -138,14 +138,14 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify the client relation manager and referral source adviser details shown under Project team$/, async () => {
-    await Investment
+    await InvestmentProject
       .clickOnProjectNameFromCompanyProfile()
       .clickOnProjectTeamTab()
       .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualName.trim())
+        InvestmentProject.assert.equal(result.value, actualName.trim())
       })
       .getText('@referralSourceAdviserName', (result) => {
-        Investment.assert.equal(result.value, actualAdviserName.trim())
+        InvestmentProject.assert.equal(result.value, actualAdviserName.trim())
       })
   })
 
@@ -156,7 +156,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
       .submitTheForm()
@@ -169,7 +169,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .createNewInvestmentProjectWithNonFDIasInvestmentType(projectName)
       .submitTheForm()
@@ -182,13 +182,13 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(ukLtdCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .clickAddInvestmentProjectButton()
       .enterSourceCompanySearch(foreignCompanyName)
       .submitForm('form')
       .clickOnCompanyFromList()
-    await Investment
+    await InvestmentProject
       .createNewInvestmentProjectAsNonForeignEquityInvestment(projectName)
   })
 
@@ -198,10 +198,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .clickOnFirstCompanyFromList()
-    await Investment
+    await InvestmentProject
       .clickInvestmentsTab()
       .getText('@projectNameFromCompanyProfile', (result) => {
-        Investment.assert.equal(result.value, projectName)
+        InvestmentProject.assert.equal(result.value, projectName)
       })
   })
 
@@ -212,10 +212,10 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I verify it is displayed in the search results$/, async () => {
-    await Investment
+    await InvestmentProject
       .clickOnInvestmentProjectsTabUnderSearch()
       .getText('@projectNameFromCompanyProfile', (result) => {
-        Investment.assert.equal(result.value, projectName)
+        InvestmentProject.assert.equal(result.value, projectName)
       })
   })
 })

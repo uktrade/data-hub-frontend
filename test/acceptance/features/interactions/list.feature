@@ -1,4 +1,4 @@
-@collections-interaction
+@interactions-list
 Feature: View collection of interactions
   As an existing user
   I would like to view all the Interactions in one place
@@ -7,7 +7,7 @@ Feature: View collection of interactions
   Background:
     Given I am an authenticated user on the data hub website
 
-  @collections-interaction-name
+  @interactions-list--name
   Scenario: View first and last name of interacted contact
 
     When I add a new Business card interaction
@@ -15,7 +15,7 @@ Feature: View collection of interactions
     Then I view the first and last name of the contact involved in the interaction
 
 
-  @collections-interaction-subject
+  @interactions-list--subject
   Scenario: View subject line of interaction
 
     When I add a new Business card interaction
@@ -23,14 +23,14 @@ Feature: View collection of interactions
     Then I view the subject line of the interaction
 
 
-  @collections-interaction-datestamp
+  @interactions-list--datestamp
   Scenario: View date of interaction
 
     When I add a new Business card interaction
     And I navigate to interactions collections
     Then the date of the interaction is as expected
 
-  @collections-interaction-company
+  @interactions-list--company
   Scenario: View company name of interaction
 
     When I add a new Business card interaction
@@ -38,7 +38,7 @@ Feature: View collection of interactions
     Then I view the company name of the interaction
 
 
-  @collections-interaction-link
+  @interactions-list--link
   Scenario: Verify link to interaction details page
 
     When I add a new Business card interaction
