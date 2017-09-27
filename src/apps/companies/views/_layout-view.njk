@@ -20,18 +20,5 @@
 
 
 {% block main_grid_left_column %}
-  <nav class="c-local-nav">
-    {% if not company.id %}
-      <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/companies/view/ch/{{ company.company_number }}">Company details</a>
-    {% else %}
-      <a class="c-local-nav__link {% if tab == 'details' %}is-active{% endif %}" href="/companies/{{ company.id }}">Company details</a>
-      {# <a class="c-local-nav__link {% if tab == 'hierarchy' %}is-active{% endif %}" href="">Company hierarchy</a> #}
-      <a class="c-local-nav__link {% if tab == 'contacts' %}is-active{% endif %}" href="/companies/{{company.id}}/contacts">Contacts</a>
-      <a class="c-local-nav__link {% if tab == 'interactions' %}is-active{% endif %}" href="/companies/{{company.id}}/interactions">Interactions</a>
-      {# <a class="c-local-nav__link {% if tab == 'documents' %}is-active{% endif %}" href="">Documents</a> #}
-      <a class="c-local-nav__link {% if tab == 'exports' %}is-active{% endif %}" href="/companies/{{company.id}}/exports">Export</a>
-      <a class="c-local-nav__link {% if tab == 'investments' %}is-active{% endif %}" href="/companies/{{ company.id }}/investments">Investment</a>
-      <a class="c-local-nav__link {% if tab == 'audit' %}is-active{% endif %}" href="/companies/{{ company.id }}/audit">Audit history</a>
-    {% endif %}
-  </nav>
+  {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}

@@ -19,7 +19,6 @@ async function renderInvestments (req, res, next) {
       .breadcrumb('Investment')
       .render('companies/views/investments', {
         results,
-        tab: 'investments', // TODO: Use newer local nav macro to remove need for this
       })
   } catch (error) {
     next(error)

@@ -5,9 +5,7 @@ function renderInteractions (req, res, next) {
     res
       .breadcrumb(name, `/viewcompanyresult/${id}`)
       .breadcrumb('Interactions')
-      .render('companies/views/interactions', {
-        tab: 'interactions', // TODO: Use newer local nav macro to remove need for this
-      })
+      .render('companies/views/interactions')
   } catch (error) {
     next(error)
   }

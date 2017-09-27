@@ -20,7 +20,6 @@ async function renderAuditLog (req, res, next) {
       .breadcrumb('Audit history')
       .render('companies/views/audit', {
         auditLog,
-        tab: 'audit', // TODO: Use newer local nav macro to remove need for this
       })
   } catch (error) {
     next(error)
