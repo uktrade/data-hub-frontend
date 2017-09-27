@@ -4,6 +4,7 @@ const { assign } = require('lodash')
 const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
+// TODO: replace with query-string package
 const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')

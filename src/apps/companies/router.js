@@ -62,6 +62,7 @@ router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/audit', renderAuditLog)
 
+// TODO: Removes need for `/view/ch/` in path
 router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
 router.get('/:companyId', renderDetails)
 
