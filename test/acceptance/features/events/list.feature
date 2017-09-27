@@ -23,6 +23,17 @@ Feature: View a list of events
     When I navigate to the event list page
     Then I can view the event
 
+  @events-list--view-uk-region
+  Scenario: View event uk region
+    And I navigate to the event list page
+    When I click the add an event link
+    And I populate the create event form
+    And I select country as United Kingdom with a region
+    And I click the save button
+    Then I see the success message
+    When I navigate to the event list page
+    Then I can view the event country and region
+
   @events-list--filter
   Scenario: Filter event list
     And I navigate to the event list page
