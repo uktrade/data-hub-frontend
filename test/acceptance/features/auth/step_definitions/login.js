@@ -42,6 +42,15 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@pageHeading', 'Report a problem or leave feedback')
   })
 
+  Then(/^I am not logged in$/, async () => {
+    client
+      .deleteCookies()
+      .refresh()
+
+    await Login
+      .assert.elementPresent('@signInLink')
+  })
+
   Then(/^I can navigate to the Datahub login page$/, async () => {
     await Login
       .click('@signInLink')

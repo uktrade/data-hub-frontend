@@ -17,5 +17,6 @@ Feature: Login to Data Hub
   Scenario: Navigation link to sign in works on support page
 
     Given I am on the Datahub login page
+    And I am not logged in
     When I navigate to the support page
     Then I can navigate to the Datahub login page
