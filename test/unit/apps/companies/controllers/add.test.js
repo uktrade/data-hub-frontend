@@ -106,7 +106,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add-step-2/?business_type=ltd&country=uk')
+            expect(url).to.equal('/companies/add-step-2?business_type=ltd&country=uk')
             done()
           },
         }
