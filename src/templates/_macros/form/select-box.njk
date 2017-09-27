@@ -9,23 +9,28 @@
  # @param {string} [props.error] - Mark form-control with error
  # @param {string} [props.value] - Selected field value
  # @param {string} [props.initialOption] - Initial option label to use for empty value
+ # @param {string} [props.persistsConditionalValue] - Whether the values should persist when collapsed
  #}
 {% macro SelectBox(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
   {% set options = props.options() if props.options | isFunction else props.options %}
+  {% set fieldValue = props.value.id or props.value %}
 
   <select
     id="{{ props.fieldId }}"
     name="{{ props.name }}"
     class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    {% if props.persistsConditionalValue %}data-persist-values="true"{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.initialOption %}
       <option value="">{{ props.initialOption }}</option>
     {% endif %}
     {% for option in options %}
-      <option value="{{ option.value }}" {% if option.value and props.value === option.value %}selected{% endif %}>
-        {{ option.label }}
+      {% set label = option.name or option.label %}
+      {% set value = option.id or option.value %}
+      <option value="{{ value }}" {% if value and fieldValue === value %}selected{% endif %}>
+        {{ label }}
       </option>
     {% endfor %}
   </select>

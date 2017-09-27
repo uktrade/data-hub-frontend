@@ -1,4 +1,5 @@
 {
+  "id": "123",
   "name": "name",
   "event_type": "event_type",
   "start_date_year": "2018",
@@ -17,7 +18,8 @@
   "uk_region": "uk_region",
   "notes": "notes",
   "lead_team": "lead_team",
-  "service": "service",
+  "service": "1783ae93-b78f-e611-8c55-e4115bed50dc",
+  "services": "services",
   "organiser": "organiser",
   "teams": [ "team1", "team2" ],
   "related_programmes": [ "programme1", "programme2" ]

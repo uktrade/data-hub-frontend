@@ -1,4 +1,6 @@
-const { assign, find, set } = require('lodash')
+const { assign, find } = require('lodash')
+
+const eventData = require('../../../data/events/event.json')
 
 describe('Event edit controller', () => {
   const createEventsEditController = (getAdvisers) => {
@@ -40,6 +42,7 @@ describe('Event edit controller', () => {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
+      locals: {},
     }
     this.next = this.sandbox.spy()
   })
@@ -49,13 +52,6 @@ describe('Event edit controller', () => {
   })
 
   describe('#renderEditPage', () => {
-    it('should add a breadcrumb', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
-
-      expect(this.res.breadcrumb).to.be.calledWith('Add event')
-      expect(this.res.breadcrumb).to.have.been.calledOnce
-    })
-
     it('should render the event page', async () => {
       await this.controller.renderEditPage(this.req, this.res, this.next)
 
@@ -63,20 +59,12 @@ describe('Event edit controller', () => {
       expect(this.res.render).to.have.been.calledOnce
     })
 
-    it('should render the event page with a title', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
-
-      const actual = this.res.render.getCall(0).args[1].title
-
-      expect(actual).to.equal('Add event')
-    })
-
     it('should render the event page with an event form', async () => {
       await this.controller.renderEditPage(this.req, this.res, this.next)
 
       const actual = this.res.render.getCall(0).args[1].eventForm
 
-      expect(actual).to.not.be.undefined
+      expect(actual).to.be.an('object')
     })
 
     it('should populate the event form with organisers', async () => {
@@ -98,44 +86,29 @@ describe('Event edit controller', () => {
 
       const eventForm = this.res.render.getCall(0).args[1].eventForm
       const actual = find(eventForm.children, { name: 'lead_team' }).value
-      const expected = currentUserTeam
 
-      expect(actual).to.equal(expected)
+      expect(actual).to.equal(currentUserTeam)
     })
 
-    context('when there are event shared teams', () => {
-      it('should prepopulate the event shared teams', async () => {
-        const teams = [ 'team1', 'team2' ]
-        const req = assign({}, this.req, {
-          body: {
-            teams: teams,
-          },
-        })
+    context('when adding an event', () => {
+      it('should add a breadcrumb', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.next)
 
-        await this.controller.renderEditPage(req, this.res, this.next)
-
-        const eventForm = this.res.render.getCall(0).args[1].eventForm
-        const actual = find(eventForm.children, { name: 'teams' }).value
-
-        expect(actual).to.deep.equal(teams)
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith(undefined)
+        expect(this.res.breadcrumb.secondCall).to.be.calledWith('Add event')
       })
     })
 
-    context('when there are event programmes', () => {
-      it('should prepopulate the event programmes', async () => {
-        const relatedProgrammes = [ 'programme1', 'programme2' ]
-        const req = assign({}, this.req, {
-          body: {
-            related_programmes: relatedProgrammes,
-          },
-        })
+    context('when editing an event', () => {
+      beforeEach(() => {
+        this.res.locals.event = eventData
+      })
 
-        await this.controller.renderEditPage(req, this.res, this.next)
+      it('should add a breadcrumb', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.next)
 
-        const eventForm = this.res.render.getCall(0).args[1].eventForm
-        const actual = find(eventForm.children, { name: 'related_programmes' }).value
-
-        expect(actual).to.deep.equal(relatedProgrammes)
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('name', '/events/123')
+        expect(this.res.breadcrumb.secondCall).to.be.calledWith('Edit event')
       })
     })
 
@@ -183,59 +156,6 @@ describe('Event edit controller', () => {
 
         expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
         expect(this.next).to.have.been.calledOnce
-      })
-    })
-  })
-
-  describe('#redirectToDetails', () => {
-    context('when there are errors', () => {
-      beforeEach(() => {
-        set(this.res, 'locals.form.errors', [ 'error' ])
-      })
-
-      it('should not flash a success message', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.req.flash).have.not.been.called
-      })
-
-      it('should not redirect to the event', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.res.redirect).have.not.been.calledOnce
-      })
-
-      it('should call next', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.next).have.been.calledWith()
-        expect(this.next).have.been.calledOnce
-      })
-    })
-
-    context('when creating was successful', () => {
-      beforeEach(() => {
-        set(this.res, 'locals.resultId', 1)
-      })
-
-      it('should flash a success message', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.req.flash).have.been.calledWith('success', 'Event created')
-        expect(this.req.flash).have.been.calledOnce
-      })
-
-      it('should redirect to the event', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.res.redirect).have.been.calledWith('/events/1/details')
-        expect(this.res.redirect).have.been.calledOnce
-      })
-
-      it('should not call next', () => {
-        this.controller.redirectToDetails(this.req, this.res, this.next)
-
-        expect(this.next).have.not.been.called
       })
     })
   })

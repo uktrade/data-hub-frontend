@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { assign, get, reject, castArray, compact, uniq } = require('lodash')
 
 const { getFormattedAddress } = require('../../lib/address')
+const { transformDateObjectToDateString } = require('../transformers')
+
+const castToArrayAndRemoveEmpty = (value) => compact(castArray(value))
 
 function transformEventToListItem ({
   id,
@@ -143,16 +146,39 @@ function transformEventResponseToViewRecord ({
     'Notes': notes,
     'Lead team': lead_team,
     'Organiser': organiser,
-    'Other teams': teams
-      .filter(team => team.id !== lead_team.id)
-      .map(item => item.name),
+    'Other teams': reject(teams, lead_team).map(x => x.name),
     'Related programmes': related_programmes
       .map(item => item.name),
     'Service': service,
   })
 }
 
+function transformEventResponseToFormBody (props = {}) {
+  const teams = props.teams || []
+
+  return assign({}, props, {
+    teams: teams.map(team => get(team, 'id')),
+    service: get(props.service, 'id'),
+    event_shared: !!teams.length,
+  })
+}
+
+function transformEventFormBodyToApiRequest (props) {
+  const teamsArray = castToArrayAndRemoveEmpty(props.teams)
+  const related_programmes = castToArrayAndRemoveEmpty(props.related_programmes)
+  const teams = props.lead_team ? teamsArray.concat(props.lead_team) : teamsArray
+
+  return assign({}, props, {
+    start_date: transformDateObjectToDateString('start_date')(props),
+    end_date: transformDateObjectToDateString('end_date')(props),
+    teams: uniq(teams),
+    related_programmes,
+  })
+}
+
 module.exports = {
   transformEventToListItem,
   transformEventResponseToViewRecord,
+  transformEventResponseToFormBody,
+  transformEventFormBodyToApiRequest,
 }
