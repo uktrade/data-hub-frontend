@@ -4,7 +4,6 @@ const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels')
 const { getFormattedAddress } = require('../../../lib/address')
 const { formatLongDate } = require('../../../../common/date')
 const { getPrimarySectorName } = require('../../../../common/transform-sectors')
-const { buildCompanyUrl } = require('./data')
 
 const companyDetailsDisplayOrder = Object.keys(companyDetailsLabels)
 const chDetailsDisplayOrder = Object.keys(chDetailsLabels)
@@ -65,25 +64,10 @@ function getDisplayCompany (company) {
   return displayCompany
 }
 
-function parseRelatedData (companies) {
-  if (!companies) return null
-
-  return companies.map((company) => {
-    const key = (company.trading_address_1 && company.trading_address_1.length > 0) ? 'trading' : 'registered'
-    let address = getFormattedAddress(company, key)
-    const url = buildCompanyUrl(company)
-    return {
-      name: `<a href="${url}">${company.trading_name || company.name}</a>`,
-      address,
-    }
-  })
-}
-
 module.exports = {
   companyDetailsDisplayOrder,
   chDetailsDisplayOrder,
   getDisplayCH,
   getDisplayCompany,
-  parseRelatedData,
   companyTableKeys,
 }
