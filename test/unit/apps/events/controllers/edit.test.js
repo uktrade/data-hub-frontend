@@ -64,7 +64,7 @@ describe('Event edit controller', () => {
 
       const actual = this.res.render.getCall(0).args[1].eventForm
 
-      expect(actual).to.be.an('object')
+      expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
     })
 
     it('should populate the event form with organisers', async () => {

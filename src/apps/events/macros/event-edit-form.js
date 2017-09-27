@@ -3,10 +3,13 @@ const { assign } = require('lodash')
 const { globalFields } = require('../../macros')
 const { transformObjectToOption } = require('../../transformers')
 
-const eventFormConfig = ({ advisers }) => {
+const eventFormConfig = ({ eventId, advisers }) => {
   return {
     method: 'post',
     buttonText: 'Save',
+    hiddenFields: {
+      id: eventId,
+    },
     children: [
       {
         macroName: 'TextField',
