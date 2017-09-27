@@ -7,7 +7,7 @@ function renderForm (req, res) {
   let isForeign = false
 
   if (res.locals.company) {
-    res.breadcrumb(get(res.locals, 'company.name'), `/viewcompanyresult/${get(res.locals, 'company.id')}`)
+    res.breadcrumb(get(res.locals, 'company.name'), `/companies/${get(res.locals, 'company.id')}`)
     isForeign = !(get(res.locals, 'company.uk_based'))
   }
 

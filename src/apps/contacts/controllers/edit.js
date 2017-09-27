@@ -3,7 +3,6 @@ const contactFormService = require('../services/form')
 const { contactLabels } = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
 const companyRepository = require('../../companies/repos')
-const { buildCompanyUrl } = require('../../companies/services/data')
 const { transformObjectToOption } = require('../../transformers')
 
 /**
@@ -51,7 +50,6 @@ async function editDetails (req, res, next) {
     // Labels and options needed for the form and error display
     res.locals.contactLabels = contactLabels
     res.locals.countryOptions = metadataRepository.countryOptions.map(transformObjectToOption)
-    res.locals.companyUrl = buildCompanyUrl(res.locals.company)
 
     res.render('contacts/views/edit')
   } catch (error) {

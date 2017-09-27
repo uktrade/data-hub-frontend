@@ -6,7 +6,6 @@ const { getDitCompany } = require('../../companies/repos')
 const { getInteraction } = require('../../interactions/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { transformFromApi } = require('../../interactions/services/formatting')
-const { buildCompanyUrl } = require('../../companies/services/data')
 const { getInvestment } = require('../repos')
 
 function getNextStage (currentStage, projectStages) {
@@ -63,7 +62,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
       ],
       company: {
         name: investmentData.investor_company.name,
-        url: buildCompanyUrl(investmentData.investor_company),
+        url: `/companies/${investmentData.investor_company.id}`,
       },
       currentStage: {
         name: investmentData.stage.name,

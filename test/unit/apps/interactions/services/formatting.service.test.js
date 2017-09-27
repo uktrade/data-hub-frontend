@@ -3,11 +3,7 @@ describe('Interaction formatting service', function () {
   let interactionFormattingService
 
   beforeEach(function () {
-    interactionFormattingService = proxyquire('~/src/apps/interactions/services/formatting', {
-      '../../companies/services/data': {
-        buildCompanyUrl: sinon.stub().returns('/test'),
-      },
-    })
+    interactionFormattingService = require('~/src/apps/interactions/services/formatting')
 
     interaction = {
       id: '22651151-2149-465e-871b-ac45bc568a62',
@@ -118,7 +114,7 @@ describe('Interaction formatting service', function () {
   describe('Interaction details', function () {
     it('should return the required fields for the interaction detail display', function () {
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -134,7 +130,7 @@ describe('Interaction formatting service', function () {
     it('should handle a missing adviser', function () {
       interaction.dit_adviser = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -150,7 +146,7 @@ describe('Interaction formatting service', function () {
     it('should handle contact with no first name', function () {
       interaction.contact.first_name = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -166,7 +162,7 @@ describe('Interaction formatting service', function () {
     it('should handle contact with no last name', function () {
       interaction.contact.last_name = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -182,7 +178,7 @@ describe('Interaction formatting service', function () {
     it('should handle contact with no notes', function () {
       interaction.notes = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: null,
@@ -198,7 +194,7 @@ describe('Interaction formatting service', function () {
     it('should handle an interaction with no date', function () {
       interaction.date = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -214,7 +210,7 @@ describe('Interaction formatting service', function () {
     it('should handle an interaction with no service', function () {
       interaction.service = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',
@@ -230,7 +226,7 @@ describe('Interaction formatting service', function () {
     it('should handle an interaction with no dit team', function () {
       interaction.dit_team = null
       const expectedDisplayInteraction = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         interaction_type: 'Email',
         subject: 'Subject 1234',
         notes: 'Here are some notes<br/>line 2.',

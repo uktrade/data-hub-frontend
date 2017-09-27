@@ -130,7 +130,7 @@ describe('Companies form middleware', function () {
 
       it('should redirect to the entity', async () => {
         await this.formMiddleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-        expect(this.redirectSpy).to.have.been.calledWith(`/viewcompanyresult/${company.id}`)
+        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${company.id}`)
       })
 
       it('should not call next', async () => {
