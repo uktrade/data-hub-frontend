@@ -17,12 +17,20 @@ const {
   handleEditFormPost,
 } = require('./controllers/exports')
 
-const { setDefaultQuery } = require('../middleware')
+const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
 const { getInteractionCollection } = require('./middleware/interactions')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 
+const LOCAL_NAV = [
+  { path: 'details', label: 'Details' },
+  { path: 'contacts', label: 'Contacts' },
+  { path: 'interactions', label: 'Interactions' },
+  { path: 'exports', label: 'Export' },
+  { path: 'investments', label: 'Investment' },
+  { path: 'audit', label: 'Audit history' },
+]
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
 }
@@ -33,11 +41,11 @@ router.param('companyNumber', getCompaniesHouseRecord)
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
 
 router
-  .route('/add-step-1/')
+  .route('/add-step-1')
   .get(addController.getAddStepOne)
   .post(addController.postAddStepOne)
 
-router.get('/add-step-2/', addController.getAddStepTwo)
+router.get('/add-step-2', addController.getAddStepTwo)
 
 router
   .route('/:companyId/exports/edit')
@@ -56,14 +64,17 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
+// TODO: Removes need for `/view/ch/` in path
+router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
+
+router.use('/:companyId', setLocalNav(LOCAL_NAV))
+
+router.get('/:companyId', redirectToFirstNavItem)
+router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/contacts', renderContacts)
 router.get('/:companyId/interactions', getInteractionCollection, renderInteractions)
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/audit', renderAuditLog)
-
-// TODO: Removes need for `/view/ch/` in path
-router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
-router.get('/:companyId', renderDetails)
 
 module.exports = router
