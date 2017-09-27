@@ -1,59 +1,35 @@
-const metadataRepo = require('../../../lib/metadata')
+const { assign } = require('lodash')
+
 const { globalFields } = require('../../macros')
 const { transformObjectToOption } = require('../../transformers')
-const { assign } = require('lodash')
 
 const eventFormConfig = ({ advisers }) => {
   return {
     method: 'post',
-    buttonText: 'Save and Continue',
+    buttonText: 'Save',
     children: [
       {
         macroName: 'TextField',
         name: 'name',
         label: 'Event name',
       },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'event_type',
-        label: 'Event type',
-        initialOption: '-- Select event type --',
-        options () {
-          return metadataRepo.eventTypeOptions.map(transformObjectToOption)
-        },
-      },
+      globalFields.eventTypes,
       {
         macroName: 'DateFieldset',
         name: 'start_date',
         label: 'Event start date',
         optional: true,
-        value: {
-          year: '',
-          month: '',
-          day: '',
-        },
       },
       {
         macroName: 'DateFieldset',
         name: 'end_date',
         label: 'Event end date',
         optional: true,
-        value: {
-          year: '',
-          month: '',
-          day: '',
-        },
       },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'location_type',
+      assign({}, globalFields.locationTypes, {
         label: 'Event location type',
         optional: true,
-        initialOption: '-- Select location type --',
-        options () {
-          return metadataRepo.locationTypeOptions.map(transformObjectToOption)
-        },
-      },
+      }),
       {
         macroName: 'TextField',
         name: 'address_1',
@@ -98,16 +74,11 @@ const eventFormConfig = ({ advisers }) => {
         label: 'Event notes',
         optional: true,
       },
-      {
-        macroName: 'MultipleChoiceField',
+      assign({}, globalFields.teams, {
         name: 'lead_team',
         label: 'Team hosting the event',
         optional: true,
-        initialOption: '-- Select team --',
-        options () {
-          return metadataRepo.teams.map(transformObjectToOption)
-        },
-      },
+      }),
       globalFields.serviceDeliveryServices,
       {
         macroName: 'MultipleChoiceField',
@@ -115,7 +86,7 @@ const eventFormConfig = ({ advisers }) => {
         label: 'Organiser',
         optional: true,
         initialOption: '-- Select organiser --',
-        options: advisers,
+        options: advisers.map(transformObjectToOption),
       },
       {
         macroName: 'MultipleChoiceField',
@@ -127,11 +98,11 @@ const eventFormConfig = ({ advisers }) => {
         options: [
           {
             label: 'Yes',
-            value: 'Yes',
+            value: 'true',
           },
           {
             label: 'No',
-            value: 'No',
+            value: 'false',
           },
         ],
       },
@@ -140,23 +111,19 @@ const eventFormConfig = ({ advisers }) => {
         buttonName: 'add_team',
         name: 'teams',
         label: 'Teams',
-        isLabelHidden: true,
         children: [
-          {
-            macroName: 'MultipleChoiceField',
+          assign({}, globalFields.teams, {
             name: 'teams',
-            label: 'Teams',
+            label: 'Team',
             isLabelHidden: true,
+            persistsConditionalValue: true,
             optional: true,
-            initialOption: '-- Select team --',
-            options () {
-              return metadataRepo.teams.map(transformObjectToOption)
-            },
-          },
+          }),
         ],
+        modifier: 'subfield',
         condition: {
           name: 'event_shared',
-          value: 'Yes',
+          value: 'true',
         },
       },
       {
@@ -165,17 +132,12 @@ const eventFormConfig = ({ advisers }) => {
         name: 'related_programmes',
         label: 'Related programmes',
         children: [
-          {
-            macroName: 'MultipleChoiceField',
+          assign({}, globalFields.programmes, {
             name: 'related_programmes',
             label: 'Related programmes',
             isLabelHidden: true,
             optional: true,
-            initialOption: '-- Select programme --',
-            options () {
-              return metadataRepo.programmeOptions.map(transformObjectToOption)
-            },
-          },
+          }),
         ],
       },
     ],
