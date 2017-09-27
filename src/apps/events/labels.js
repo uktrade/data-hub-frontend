@@ -5,6 +5,7 @@ const labels = {
       event_type: 'Type of event',
       address_country: 'Country',
       uk_region: 'Region',
+      organiser: 'Organiser',
       start_date: 'Starts on or after',
       end_date: 'Ends on',
     },
