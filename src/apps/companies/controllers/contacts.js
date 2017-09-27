@@ -20,7 +20,6 @@ function renderContacts (req, res, next) {
     .render('companies/views/contacts', {
       activeContacts,
       archivedContacts,
-      tab: 'contacts', // TODO: Use newer local nav macro to remove need for this
       addContactUrl: `/contacts/create?company=${id}`,
     })
 }

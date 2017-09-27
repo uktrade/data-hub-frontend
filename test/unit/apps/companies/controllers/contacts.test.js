@@ -42,11 +42,6 @@ describe('Company contacts controller', () => {
         expect(this.renderSpy.args[0][0]).to.equal('companies/views/contacts')
       })
 
-      it('should set the correct tab', () => {
-        expect(this.renderSpy.args[0][1]).to.have.property('tab')
-        expect(this.renderSpy.args[0][1].tab).to.equal('contacts')
-      })
-
       it('should set the correct add url', () => {
         expect(this.renderSpy.args[0][1]).to.have.property('addContactUrl')
         expect(this.renderSpy.args[0][1].addContactUrl).to.equal(`/contacts/create?company=${companyMock.id}`)

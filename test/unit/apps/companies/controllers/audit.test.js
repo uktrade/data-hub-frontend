@@ -77,7 +77,6 @@ describe('Company audit controller', () => {
 
       it('should send the correct template data', () => {
         expect(this.renderSpy.args[0][1]).to.deep.equal({
-          tab: 'audit',
           auditLog: auditLogMock,
         })
       })
