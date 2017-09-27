@@ -22,7 +22,6 @@ function renderExports (req, res) {
     .breadcrumb('Exports')
     .render('companies/views/exports-view', {
       exportDetailsLabels,
-      tab: 'exports', // TODO: Use newer local nav macro to remove need for this
       exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
       exportDetails: {
         exportToCountries: map(export_to_countries, 'name').join('<br>'),
@@ -53,7 +52,6 @@ function renderExportEdit (req, res) {
     .breadcrumb('Edit')
     .render('companies/views/exports-edit', {
       exportDetailsLabels,
-      tab: 'exports', // TODO: Use newer local nav macro to remove need for this
       countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),
     })
 }

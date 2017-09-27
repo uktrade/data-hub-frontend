@@ -55,10 +55,6 @@ describe('Company export controller', () => {
       expect(this.renderSpy).to.have.been.calledOnce
     })
 
-    it('should set correct tab', () => {
-      expect(this.renderSpy.args[0][1]).to.have.property('tab', 'exports')
-    })
-
     it('send labels to view', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('exportDetailsLabels')
     })
@@ -132,10 +128,6 @@ describe('Company export controller', () => {
     it('should render the correct view', () => {
       expect(this.renderSpy.args[0][0]).to.equal('companies/views/exports-edit')
       expect(this.renderSpy).to.have.been.calledOnce
-    })
-
-    it('should set correct tab', () => {
-      expect(this.renderSpy.args[0][1]).to.have.property('tab', 'exports')
     })
 
     it('send labels to view', () => {

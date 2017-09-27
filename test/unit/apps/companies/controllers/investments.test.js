@@ -73,7 +73,6 @@ describe('Company investments controller', () => {
 
       it('should send the correct template data', () => {
         expect(this.renderSpy.args[0][1]).to.deep.equal({
-          tab: 'investments',
           results: investmentsMock.results,
         })
       })
