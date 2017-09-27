@@ -18,6 +18,13 @@ const entities = [
     count: 0,
   },
   {
+    entity: 'event',
+    path: 'events',
+    text: 'Events',
+    noun: 'event',
+    count: 0,
+  },
+  {
     entity: 'interaction',
     path: 'interactions',
     text: 'Interactions',

@@ -10,9 +10,10 @@ describe('Search builders', () => {
 
     it('should return an object with expanded aggregations for provided API response aggregations', () => {
       const actual = builders.buildSearchAggregation([
-        { count: 20, entity: 'contact' },
-        { count: 11, entity: 'investment_project' },
         { count: 3, entity: 'company' },
+        { count: 20, entity: 'contact' },
+        { count: 31, entity: 'event' },
+        { count: 11, entity: 'investment_project' },
         { count: 5, entity: 'order' },
       ])
 
@@ -30,6 +31,13 @@ describe('Search builders', () => {
           text: 'Contacts',
           noun: 'contact',
           count: 20,
+        },
+        {
+          entity: 'event',
+          path: 'events',
+          text: 'Events',
+          noun: 'event',
+          count: 31,
         },
         {
           entity: 'interaction',

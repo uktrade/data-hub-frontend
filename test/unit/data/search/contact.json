@@ -1,59 +1,69 @@
 {
+  "count": 1,
+  "results": [
+    {
+      "id": "7fd732b6-c6db-e511-a5e6-e4115bead28a",
+      "title": {
+        "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
+        "name": "Undefined"
+      },
+      "company": {
+        "id": "77c21171-c6db-e511-a5e6-e4115bead28a",
+        "name": "Best for less nappies Ltd"
+      },
+      "company_sector": {
+        "id": "355f977b-8ac3-e211-a646-e4115bead28a",
+        "name": "Retail"
+      },
+      "company_uk_region": {
+        "id": "824cd12a-6095-e211-a939-e4115bead28a",
+        "name": "North West"
+      },
+      "address_1": "BEST FOR LESS, ALBION HOUSE",
+      "address_2": "ALBION STREET",
+      "address_town": "BOLTON",
+      "address_county": "LANCASHIRE",
+      "address_postcode": "BL3 6ND",
+      "address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "created_on": "2016-02-25T13:50:31",
+      "modified_on": "2016-04-24T19:09:42",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": "",
+      "archived_by": null,
+      "first_name": "Zak",
+      "last_name": "Patel",
+      "job_title": null,
+      "adviser": null,
+      "primary": true,
+      "telephone_countrycode": "+44",
+      "telephone_number": "01204384200",
+      "email": "bflzak@yahoo.com",
+      "address_same_as_company": false,
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": null,
+      "contactable_by_dit": false,
+      "contactable_by_dit_partners": false,
+      "contactable_by_email": true,
+      "contactable_by_phone": true
+    }
+  ],
   "aggregations": [
     {
-      "count": 3,
+      "count": 102,
       "entity": "company"
+    },
+    {
+      "count": 7,
+      "entity": "investment_project"
     },
     {
       "count": 1,
       "entity": "contact"
-    },
-    {
-      "count": 5,
-      "entity": "investment_project"
     }
-  ],
-  "contacts": [
-    {
-      "address_1": null,
-      "address_2": null,
-      "address_country": null,
-      "address_county": null,
-      "address_postcode": null,
-      "address_same_as_company": true,
-      "address_town": null,
-      "adviser": null,
-      "archived": false,
-      "archived_by": null,
-      "archived_on": null,
-      "archived_reason": null,
-      "company": {
-        "id": "9b7b2252-0e4a-4c30-95e1-58f61a033048",
-        "name": "name0"
-      },
-      "contactable_by_dit": false,
-      "contactable_by_dit_partners": false,
-      "contactable_by_email": true,
-      "contactable_by_phone": true,
-      "created_on": "2017-05-26T16:23:48.452484",
-      "email": "foo@bar.com",
-      "email_alternative": null,
-      "first_name": "abc",
-      "id": "a0fe73f3-6289-43c6-a9bf-2ae6cd2a7c0a",
-      "interactions": [],
-      "job_title": null,
-      "last_name": "defg",
-      "modified_on": "2017-05-26T16:23:48.454991",
-      "notes": null,
-      "primary": true,
-      "telephone_alternative": null,
-      "telephone_countrycode": "+44",
-      "telephone_number": "123456789",
-      "title": {
-        "id": "764cd12a-6095-e211-a939-e4115bead28a",
-        "name": "Wing Commander"
-      }
-    }
-  ],
-  "count": 1
+  ]
 }
