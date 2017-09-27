@@ -65,10 +65,6 @@ module.exports = {
   },
   commands: [
     {
-      selectListOptionByText (listName, text) {
-        return this
-          .click('xpath', `//select[@name="${listName}"]/option[normalize-space(.)="${text}"]`)
-      },
       selectListOption (listName, optionNumber) {
         return this
           .click(`select[name="${listName}"] option:nth-child(${optionNumber})`)

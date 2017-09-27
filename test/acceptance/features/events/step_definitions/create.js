@@ -13,7 +13,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I choose the (.+) country option$/, async (country) => {
     await Event
       .setValue('@addressCountry', '')
-      .selectListOptionByText('address_country', country)
+      .clickListOption('address_country', country)
   })
 
   Then(/^I verify the event name field is displayed$/, async () => {
