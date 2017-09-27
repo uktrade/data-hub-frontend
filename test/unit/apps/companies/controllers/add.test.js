@@ -123,7 +123,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add/ukother?business_type=Charity&country=uk')
+            expect(url).to.equal('/companies/add?business_type=Charity&country=uk')
             done()
           },
         }
@@ -140,7 +140,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add/foreign?business_type=Charity&country=non-uk')
+            expect(url).to.equal('/companies/add?business_type=Charity&country=non-uk')
             done()
           },
         }

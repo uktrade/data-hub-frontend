@@ -15,9 +15,9 @@
   {% endif %}
 
   {% if company.id %}
-    <p><a href="/companies/{{company.id}}/edit" class="button">Edit</a></p>
+    <p><a href="/companies/{{company.id}}/edit" class="button button-secondary">Edit</a></p>
   {% else %}
-    <p><a href="/companies/add/ltd/{{company.company_number}}" class="button">Add</a></p>
+    <p><a href="/companies/add/{{company.company_number}}" class="button">Add</a></p>
   {% endif %}
 
   {% if accountManagementDisplay %}
@@ -37,7 +37,7 @@
       options: ['Company is dissolved'],
       csrfToken: csrfToken,
       error: form.errors.reason,
-      url: '/companies/archive/' + company.id
+      url: '/companies/' + company.id + '/archive'
     } %}
   {% endif %}
 {% endblock %}

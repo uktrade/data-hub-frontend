@@ -1,8 +1,6 @@
 {% extends "./_layout-edit.njk" %}
 
 {% block main_grid_right_column %}
-  {{ super() }}
-
   <h2 class="heading-medium">Add export market(s)</h2>
 
   {% call Form({
@@ -13,7 +11,7 @@
     }
   }) %}
     {# TODO: Make these work without JavaScript #}
-    {% set exportCountries = export_to_countries if export_to_countries.length else ['']%}
+    {% set exportCountries = formData.export_to_countries if formData.export_to_countries.length else ['']%}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
       <label class="c-form-group__label">
         <span class="c-form-group__label-text">
@@ -37,7 +35,7 @@
     </div>
 
     {# TODO: Make these work without JavaScript #}
-    {% set futureCountries = future_interest_countries if future_interest_countries.length else ['']%}
+    {% set futureCountries = formData.future_interest_countries if formData.future_interest_countries.length else ['']%}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
       <label class="c-form-group__label">
         <span class="c-form-group__label-text">
