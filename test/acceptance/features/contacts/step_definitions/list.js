@@ -4,7 +4,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const contactCollections = client.page.CollectionsContact()
+  const contactList = client.page.ContactList()
   const Company = client.page.Company()
   const Contact = client.page.Contact()
   const foreignCompanyName = 'Lambda plc'
@@ -40,12 +40,12 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I view a contacts tab$/, async () => {
-    await contactCollections
+    await contactList
       .verify.visible('@contactsTab')
   })
 
   When(/^I click on contacts tab$/, async () => {
-    await contactCollections
+    await contactList
       .click('@contactsTab')
   })
 
@@ -55,33 +55,33 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see Company name of the contact$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@companyFromFirstList', foreignCompanyName)
   })
 
   Then(/^I see Sector of the contact$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@sectorFromFirstList', 'Oil and Gas')
   })
 
   Then(/^I see Country of the contact$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@countryFromFirstList', 'United Kingdom')
   })
 
   Then(/^I see Country of the contact same as the company$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@countryFromFirstList', 'France')
   })
 
   Then(/^I see a time stamp of the contact$/, async () => {
     const datetime = format(new Date(), 'D MMM YYYY')
-    await contactCollections
+    await contactList
       .verify.containsText('@createdDateFromFirstList', datetime)
   })
 
   Then(/^I see Primary or not status of the contact$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@primaryFromFirstList', `Primary`)
   })
 
@@ -91,7 +91,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I navigate to his contact details page$/, async () => {
-    await contactCollections
+    await contactList
       .verify.containsText('@contactFullNameFromDetailsPage', `${firstName} ${lastName}`)
   })
 })

@@ -13,7 +13,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I am on the Datahub login page$/, async () => {
     await Login
       .navigate()
-      .waitForElementVisible('@signInForm', 5000)
+      .waitForElementVisible('@signInForm')
   })
 
   When(/^I enter my credentials$/, async () => {
@@ -28,7 +28,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^I verify that I'm successfully logged in$/, async () => {
     await Login
-      .waitForElementVisible('@searchBar', 5000)
+      .waitForElementVisible('@searchBar')
   })
 
   Then(/^I logout of Datahub website$/, async () => {
@@ -40,6 +40,15 @@ defineSupportCode(({ Given, Then, When }) => {
     await Login
       .click('@supportLink')
       .assert.containsText('@pageHeading', 'Report a problem or leave feedback')
+  })
+
+  Then(/^I am not logged in$/, async () => {
+    client
+      .deleteCookies()
+      .refresh()
+
+    await Login
+      .assert.elementPresent('@signInLink')
   })
 
   Then(/^I can navigate to the Datahub login page$/, async () => {
