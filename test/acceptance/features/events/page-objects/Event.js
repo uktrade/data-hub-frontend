@@ -150,6 +150,25 @@ module.exports = {
             }
           })
       },
+
+      populateCountryAndRegion () {
+        this.state.countryDetails = {
+          address_country: 'United Kingdom',
+          uk_region: null,
+        }
+
+        return this
+          .getListOption('@ukRegion', (ukRegion) => {
+            this.state.countryDetails.uk_region = ukRegion
+          })
+          .api.perform(() => {
+            for (const key in this.state.countryDetails) {
+              if (this.state.countryDetails[key]) {
+                this.setValue(`[name="${key}"]`, this.state.countryDetails[key])
+              }
+            }
+          })
+      },
     },
   ],
 }

@@ -32,6 +32,11 @@ defineSupportCode(({ Then, When, Before }) => {
       .populateCreateEventForm()
   })
 
+  When(/^I select country as United Kingdom with a region$/, async () => {
+    await Event
+      .populateCountryAndRegion()
+  })
+
   Then(/^I am taken to the create event page$/, async () => {
     await EventList
       .waitForElementPresent('@h1Element')
@@ -61,6 +66,13 @@ defineSupportCode(({ Then, When, Before }) => {
       ))
       .assert.containsText('@organiser', Event.state.eventDetails.organiser)
       .assert.containsText('@leadTeam', Event.state.eventDetails.lead_team)
+  })
+
+  Then(/^I can view the event country and region$/, async () => {
+    await EventList.section.firstEventInList
+      .waitForElementPresent('@header')
+      .assert.containsText('@country', Event.state.countryDetails.address_country)
+      .assert.containsText('@region', Event.state.countryDetails.uk_region)
   })
 
   Then(/^I filter the events list$/, async () => {
