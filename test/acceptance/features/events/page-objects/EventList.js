@@ -24,6 +24,10 @@ module.exports = {
           selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Country"]]/following-sibling::span',
           locateStrategy: 'xpath',
         },
+        region: {
+          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Region"]]/following-sibling::span',
+          locateStrategy: 'xpath',
+        },
         eventStart: {
           selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Begins"]]/following-sibling::span',
           locateStrategy: 'xpath',
