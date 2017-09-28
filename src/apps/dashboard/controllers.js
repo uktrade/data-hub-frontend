@@ -1,24 +1,23 @@
-const dashboardService = require('./services')
+const { fetchHomepageData } = require('./repos')
 
-function getHandler (req, res) {
-  const days = 15
+async function renderDashboard (req, res, next) {
+  try {
+    const {
+      contacts,
+      interactions,
+    } = await fetchHomepageData(req.session.token)
 
-  dashboardService
-    .getHomepageData(req.session.token, days)
-    .then((data) => {
-      // TODO: Remove manual limit on interactions and contacts once API supports it
-      res
-        .title('Dashboard')
-        .render('dashboard/views/dashboard', {
-          totalDays: days,
-          interactionsCount: data.interactions.length,
-          interactions: data.interactions && data.interactions.length ? data.interactions.slice(0, 5) : [],
-          contactsCount: data.contacts.length,
-          contacts: data.interactions && data.contacts.length ? data.contacts.slice(0, 5) : [],
-        })
-    })
+    res
+      .title('Dashboard')
+      .render('dashboard/views/dashboard', {
+        contacts,
+        interactions,
+      })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
-  getHandler,
+  renderDashboard,
 }
