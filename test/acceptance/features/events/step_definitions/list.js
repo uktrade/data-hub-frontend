@@ -75,7 +75,7 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.containsText('@region', Event.state.countryDetails.uk_region)
   })
 
-  Then(/^I filter the events list$/, async () => {
+  Then(/^I filter the events list by name$/, async () => {
     await EventList.section.filters
       .waitForElementPresent('@nameInput')
       .setValue('@nameInput', Event.state.eventDetails.name)
@@ -85,6 +85,39 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .assert.containsText('@header', Event.state.eventDetails.name)
+  })
+
+  Then(/^I filter the events list by organiser$/, async () => {
+    await EventList.section.filters
+      .waitForElementPresent('@organiser')
+      .clickListOption('organiser', Event.state.eventDetails.organiser)
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@organiser')
+      .assert.containsText('@organiser', Event.state.eventDetails.organiser)
+  })
+
+  Then(/^I filter the events list by country/, async () => {
+    await EventList.section.filters
+      .waitForElementPresent('@country')
+      .clickListOption('address_country', Event.state.eventDetails.address_country)
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@country')
+      .assert.containsText('@country', Event.state.eventDetails.address_country)
+  })
+
+  Then(/^I filter the events list by event type/, async () => {
+    await EventList.section.filters
+      .waitForElementPresent('@eventType')
+      .clickListOption('event_type', Event.state.eventDetails.event_type)
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@eventType')
+      .assert.containsText('@eventType', Event.state.eventDetails.event_type)
   })
 
   Then(/^I sort the events list name A-Z$/, async () => {

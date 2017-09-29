@@ -1,8 +1,8 @@
 const { assign } = require('lodash')
 
-const { fetchEvent } = require('../repos')
 const { transformEventResponseToViewRecord, transformEventFormBodyToApiRequest } = require('../transformers')
-const { saveEvent } = require('../repos')
+const { fetchEvent, saveEvent } = require('../repos')
+const { getAdvisers } = require('../../adviser/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformEventFormBodyToApiRequest(req.body)
@@ -37,12 +37,22 @@ async function getEventDetails (req, res, next, eventId) {
     res.locals.event = await fetchEvent(req.session.token, eventId)
     res.locals.eventViewRecord = transformEventResponseToViewRecord(res.locals.event)
     next()
-  } catch (error) {
-    next(error)
+  } catch (err) {
+    next(err)
+  }
+}
+
+async function getAdviserDetails (req, res, next) {
+  try {
+    res.locals.advisers = await getAdvisers(req.session.token)
+    next()
+  } catch (err) {
+    next(err)
   }
 }
 
 module.exports = {
-  postDetails,
   getEventDetails,
+  getAdviserDetails,
+  postDetails,
 }
