@@ -1,9 +1,5 @@
 @import "../tools/mixins/typography";
 
-.fieldset--address {
-  margin-bottom: 40px;
-}
-
 .dark-panel {
   background: $grey-4;
   border-top: 1px solid $border-colour;
@@ -54,33 +50,6 @@
   display: none;
 }
 
-.split-header {
-  overflow: hidden;
-
-  > * {
-    float: right;
-    margin-top: 0;
-  }
-
-  > *:first-child {
-    float: left;
-  }
-}
-
-#contact-list {
-  .table--key-value {
-    th {
-      white-space: nowrap;
-    }
-  }
-}
-
-#company-exports {
-  th {
-    white-space: nowrap;
-  }
-}
-
 .js-enabled .block-label.selection-button-radio,
 .js-enabled .block-label.selection-button-checkbox {
   &::before,
@@ -105,4 +74,16 @@ select.form-control {
 
 fieldset.error {
   margin-bottom: 20px;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.column-three-quarters {
+  @include grid-column(3 / 4, tablet);
+}
+
+.table--readonly {
+  border-left-width: 5px;
 }

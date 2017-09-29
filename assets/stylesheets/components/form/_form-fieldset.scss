@@ -1,3 +1,5 @@
+// sass-lint:disable no-qualifying-elements
+
 @import "../../settings";
 @import "../../tools";
 
@@ -23,8 +25,13 @@
   color: $grey-1;
 }
 
+.c-form-fieldset__add-another {
+  margin-top: $default-spacing-unit;
+  margin-bottom: 0;
+}
+
 // Modifiers
-.c-form-fieldset--subfield {
+fieldset.c-form-fieldset--subfield {
   position: relative;
   margin-left: $default-spacing-unit * 2;
 

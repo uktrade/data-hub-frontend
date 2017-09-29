@@ -19,6 +19,7 @@
 
 .c-meta-list__item-value {
   color: $text-colour;
+  display: inline-block;
 
   &:link,
   &:visited {
@@ -73,15 +74,22 @@
   @include clearfix;
   width: 100%;
 
-  .c-meta-list__item:nth-child(odd) {
-    float: left;
-    clear: both;
+  .c-meta-list__item {
+    display: block;
     margin-left: 0;
   }
 
-  .c-meta-list__item:nth-child(even) {
-    float: right;
-    margin-right: 0;
+  @include media(tablet) {
+    .c-meta-list__item:nth-child(odd) {
+      float: left;
+      clear: both;
+      max-width: 50%;
+    }
+
+    .c-meta-list__item:nth-child(even) {
+      float: right;
+      margin-right: 0;
+    }
   }
 }
 

@@ -1,113 +1,90 @@
 const eventData = require('../../../data/events/event.json')
 const { merge, assign } = require('lodash')
 
+const expectedBody = {
+  id: '123',
+  name: 'name',
+  event_type: 'event_type',
+  start_date: '2018-01-01',
+  start_date_year: '2018',
+  start_date_month: '01',
+  start_date_day: '01',
+  end_date: '2018-02-02',
+  end_date_year: '2018',
+  end_date_month: '02',
+  end_date_day: '02',
+  location_type: 'location_type',
+  address_1: 'address 1',
+  address_2: 'address 2',
+  address_town: 'town',
+  address_county: 'county',
+  postcode: 'postcode',
+  address_country: 'country',
+  uk_region: 'uk_region',
+  notes: 'notes',
+  lead_team: 'lead_team',
+  organiser: 'organiser',
+  related_programmes: [ 'programme1', 'programme2' ],
+  teams: [ 'team1', 'team2', 'lead_team' ],
+  services: 'services',
+  service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
+}
+
 describe('Event details middleware', () => {
-  describe('#handleFormPost', () => {
-    beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.createEventStub = this.sandbox.stub()
-      this.createEventStub.resolves({ id: '1' })
-      this.middleware = proxyquire('~/src/apps/events/middleware/details', {
-        '../repos': {
-          createEvent: this.createEventStub,
-        },
-      })
-      this.req = {
-        session: {
-          token: 'abcd',
-        },
-        body: assign({}, eventData),
-      }
-      this.res = {
-        breadcrumb: this.sandbox.stub().returnsThis(),
-        render: this.sandbox.spy(),
-        locals: {},
-      }
-      this.next = this.sandbox.spy()
-      this.expectedBody = {
-        name: 'name',
-        event_type: 'event_type',
-        start_date: '2018-01-01',
-        end_date: '2018-02-02',
-        location_type: 'location_type',
-        address_1: 'address 1',
-        address_2: 'address 2',
-        address_town: 'town',
-        address_county: 'county',
-        postcode: 'postcode',
-        address_country: 'country',
-        notes: 'notes',
-        lead_team: 'lead_team',
-        organiser: 'organiser',
-        related_programmes: [ 'programme1', 'programme2' ],
-        teams: [ 'team1', 'team2', 'lead_team' ],
-        service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
-      }
+  beforeEach(() => {
+    this.sandbox = sinon.sandbox.create()
+    this.saveEventStub = this.sandbox.stub()
+    this.fetchEventStub = this.sandbox.stub()
+    this.transformEventFormBodyToApiRequestStub = this.sandbox.stub()
+    this.transformEventResponseToViewRecordStub = this.sandbox.stub()
+    this.middleware = proxyquire('~/src/apps/events/middleware/details', {
+      '../repos': {
+        saveEvent: this.saveEventStub.resolves({ id: '1' }),
+        fetchEvent: this.fetchEventStub.resolves(eventData),
+      },
+      '../transformers': {
+        transformEventViewRecordToApiRequest: this.transformEventFormBodyToApiRequestStub.returns(expectedBody),
+        transformEventResponseToViewRecord: this.transformEventResponseToViewRecordStub.returns({
+          id: '2',
+          data: 'transformed',
+        }),
+      },
     })
+    this.req = {
+      session: {
+        token: 'abcd',
+      },
+      flash: this.sandbox.spy(),
+      body: assign({}, eventData),
+    }
+    this.res = {
+      breadcrumb: this.sandbox.stub().returnsThis(),
+      render: this.sandbox.spy(),
+      redirect: this.sandbox.spy(),
+      locals: {},
+    }
+    this.nextSpy = this.sandbox.spy()
+  })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
+  afterEach(() => {
+    this.sandbox.restore()
+  })
 
+  describe('#postDetails', () => {
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, this.expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token)
+        expect(this.saveEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)
       })
 
-      it('should set the result ID', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+      it('should redirect on success', async () => {
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
-        const actualResultId = this.res.locals.resultId
-        const expectedResultId = '1'
-
-        expect(actualResultId).to.equal(expectedResultId)
-      })
-    })
-
-    context('when start and end dates have not been entered', () => {
-      it('should not attempt to set start and end date', async () => {
-        const req = merge({}, this.req, {
-          body: {
-            start_date_day: '',
-            start_date_month: '',
-            start_date_year: '',
-            end_date_day: '',
-            end_date_month: '',
-            end_date_year: '',
-          },
-        })
-
-        await this.middleware.handleFormPost(req, this.res, this.next)
-
-        const expectedBody = assign({}, this.expectedBody, { start_date: undefined, end_date: undefined })
-
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
-      })
-    })
-
-    context('when start and end dates have not been partially entered', () => {
-      it('should attempt to set start and end date', async () => {
-        const req = merge({}, this.req, {
-          body: {
-            start_date_day: '01',
-            start_date_month: '',
-            start_date_year: '',
-            end_date_day: '02',
-            end_date_month: '',
-            end_date_year: '',
-          },
-        })
-
-        await this.middleware.handleFormPost(req, this.res, this.next)
-
-        const expectedBody = assign({}, this.expectedBody, { start_date: '--01', end_date: '--02' })
-
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.req.flash).to.be.calledWith('success')
+        expect(this.res.redirect).to.be.calledWith('/events/1')
       })
     })
 
@@ -119,12 +96,12 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expectedBody = assign({}, this.expectedBody, { teams: [ 'team 1', 'lead_team' ] })
+        const expected = assign({}, expectedBody, { teams: [ 'team 1', 'lead_team' ] })
 
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledOnce
       })
 
       it('should not add empty values to the event shared teams', async () => {
@@ -134,12 +111,12 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expectedBody = assign({}, this.expectedBody, { teams: [ 'team 1', 'lead_team' ] })
+        const expected = assign({}, expectedBody, { teams: [ 'team 1', 'lead_team' ] })
 
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
 
@@ -151,9 +128,9 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        expect(this.createEventStub).to.not.have.been.called
+        expect(this.saveEventStub).to.not.have.been.called
       })
 
       it('should call next', async () => {
@@ -163,9 +140,9 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        expect(this.next).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledOnce
       })
     })
 
@@ -177,12 +154,12 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expectedBody = assign({}, this.expectedBody, { related_programmes: [ 'programme 1' ] })
+        const expected = assign({}, expectedBody, { related_programmes: [ 'programme 1' ] })
 
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledOnce
       })
 
       it('should not add empty values to the event shared teams', async () => {
@@ -192,12 +169,12 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expectedBody = assign({}, this.expectedBody, { related_programmes: [ 'programme 1' ] })
+        const expected = assign({}, expectedBody, { related_programmes: [ 'programme 1' ] })
 
-        expect(this.createEventStub).to.have.been.calledWith(this.req.session.token, expectedBody)
-        expect(this.createEventStub).to.have.been.calledOnce
+        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
 
@@ -209,9 +186,9 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        expect(this.createEventStub).to.not.have.been.called
+        expect(this.saveEventStub).to.not.have.been.called
       })
 
       it('should call next', async () => {
@@ -221,53 +198,68 @@ describe('Event details middleware', () => {
           },
         })
 
-        await this.middleware.handleFormPost(req, this.res, this.next)
+        await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        expect(this.next).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledOnce
       })
     })
 
     context('when there is a 400', () => {
       beforeEach(() => {
-        this.createEventStub.rejects({ statusCode: 400, error: 'error' })
-      })
-
-      it('should set the state', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
-
-        expect(this.res.locals.form.state).to.deep.equal(this.req.body)
+        this.saveEventStub.rejects({ statusCode: 400, error: 'error' })
       })
 
       it('should set the errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
         expect(this.res.locals.form.errors.messages).to.equal('error')
       })
 
       it('should not call next with errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
-        expect(this.next).have.been.calledWith()
-        expect(this.next).have.been.calledOnce
+        expect(this.nextSpy).have.been.calledWith()
+        expect(this.nextSpy).have.been.calledOnce
       })
     })
 
     context('when there is an error other than 400', () => {
       beforeEach(() => {
-        this.createEventStub.rejects({ statusCode: 500, error: 'error' })
+        this.saveEventStub.rejects({ statusCode: 500, error: 'error' })
       })
 
       it('should not set form', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
         expect(this.res.locals.form).to.be.undefined
       })
 
       it('should call next with errors', async () => {
-        await this.middleware.handleFormPost(this.req, this.res, this.next)
+        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
-        expect(this.next).have.been.calledWith({ statusCode: 500, error: 'error' })
-        expect(this.next).have.been.calledOnce
+        expect(this.nextSpy).have.been.calledWith({ statusCode: 500, error: 'error' })
+        expect(this.nextSpy).have.been.calledOnce
+      })
+    })
+  })
+
+  describe('#getEventDetails', () => {
+    context('when success', () => {
+      it('should set event data on locals', async () => {
+        await this.middleware.getEventDetails(this.req, this.res, this.nextSpy, eventData.id)
+
+        expect(this.res.locals.event).to.deep.equal(eventData)
+        expect(this.res.locals.eventViewRecord).to.have.property('id', '2')
+        expect(this.res.locals.eventViewRecord).to.have.property('data', 'transformed')
+      })
+    })
+
+    context('when error', () => {
+      it('should call next middleware', async () => {
+        this.fetchEventStub.rejects({ status: 500 })
+        await this.middleware.getEventDetails(this.req, this.res, this.nextSpy, eventData.id)
+
+        expect(this.nextSpy).to.be.calledWith({ status: 500 })
       })
     })
   })

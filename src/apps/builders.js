@@ -46,9 +46,17 @@ function buildFormWithErrors (form = {}, errorMessages = {}) {
   const formFieldNames = getDeepObjectValuesForKey(form, 'name')
   const messages = pick(pickBy(errorMessages), formFieldNames)
 
+  const fieldLabels = form.children
+    .filter(x => Object.keys(messages).includes(x.name))
+    .reduce((obj, item) => {
+      obj[item.name] = item.label || item.name
+      return obj
+    }, {})
+
   const errors = (!isEmpty(messages) || errorMessages.summary) && {
     summary: errorMessages.summary || 'Please correct the following errors:',
     messages,
+    fieldLabels,
   }
 
   const children = assignPropsIfFoundInObject(form.children, messages, 'error')

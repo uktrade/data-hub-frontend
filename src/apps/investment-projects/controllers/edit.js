@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 function editDetailsGet (req, res) {
   res
     .breadcrumb('Edit details')
@@ -33,10 +35,10 @@ function editValuePost (req, res) {
 }
 
 function editRequirementsPost (req, res) {
-  if (res.locals.form.errors) {
-    req.flash('success', 'Investment requirements updated')
+  if (get(res.locals, 'requirementsForm.errors')) {
     return res.render('investment-projects/views/requirements-edit')
   }
+  req.flash('success', 'Investment requirements updated')
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }
 

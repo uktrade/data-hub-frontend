@@ -74,11 +74,11 @@ describe('LocalHeader macro', () => {
       },
     })
 
-    const messagesEls = component.querySelectorAll('.c-messages__item')
-    expect(component.querySelector('.c-messages')).to.exist
-    expect(messagesEls[0].className).to.contain('c-messages__item--error')
+    const messagesEls = component.querySelectorAll('.c-message')
+    expect(component.querySelector('.c-message-list')).to.exist
+    expect(messagesEls[0].className).to.contain('c-message--error')
     expect(messagesEls[0].textContent).to.equal('Error message')
-    expect(messagesEls[1].className).to.contain('c-messages__item--success')
+    expect(messagesEls[1].className).to.contain('c-message--success')
     expect(messagesEls[1].textContent).to.equal('Success message')
   })
 

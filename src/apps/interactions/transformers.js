@@ -1,4 +1,34 @@
 /* eslint-disable camelcase */
+const { get } = require('lodash')
+const dateFns = require('date-fns')
+
+function transformInteractionResponseToForm ({
+  interaction_type,
+  company,
+  subject,
+  notes,
+  contact,
+  date,
+  dit_adviser,
+  service,
+  dit_team,
+}) {
+  return {
+    interaction_type: get(interaction_type, 'id'),
+    company: get(company, 'id'),
+    subject,
+    notes,
+    contact: get(contact, 'id'),
+    date: {
+      day: dateFns.format(date, 'DD'),
+      month: dateFns.format(date, 'MM'),
+      year: dateFns.format(date, 'YYYY'),
+    },
+    dit_adviser: get(dit_adviser, 'id'),
+    service: get(service, 'id'),
+    dit_team: get(dit_team, 'id'),
+  }
+}
 
 function transformInteractionToListItem ({
   id,
@@ -8,7 +38,7 @@ function transformInteractionToListItem ({
   company,
   date,
   dit_adviser,
-} = {}) {
+}) {
   return {
     id,
     type: 'interaction',
@@ -41,5 +71,6 @@ function transformInteractionToListItem ({
 }
 
 module.exports = {
+  transformInteractionResponseToForm,
   transformInteractionToListItem,
 }

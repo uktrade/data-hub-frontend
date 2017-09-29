@@ -9,7 +9,7 @@
     errors: form.errors
   }) %}
 
-    {% call MultipleChoiceField({
+    {{ MultipleChoiceField({
         name: 'client_cannot_provide_total_investment',
         type: 'radio',
         modifier: 'inline',
@@ -21,21 +21,21 @@
           { label: 'No', value: 'true' }
         ]
       })
-    %}
-      {{ TextField({
-        name: 'total_investment',
-        label: form.labels.total_investment,
-        value: form.state.total_investment,
-        error: form.errors.messages.total_investment,
-        modifier: 'subfield',
-        condition: {
-          name: 'client_cannot_provide_total_investment',
-          value: 'false'
-        }
-      }) }}
-    {% endcall %}
+    }}
 
-    {% call MultipleChoiceField({
+    {{ TextField({
+      name: 'total_investment',
+      label: form.labels.total_investment,
+      value: form.state.total_investment,
+      error: form.errors.messages.total_investment,
+      modifier: 'subfield',
+      condition: {
+        name: 'client_cannot_provide_total_investment',
+        value: 'false'
+      }
+    }) }}
+
+    {{ MultipleChoiceField({
         name: 'client_cannot_provide_foreign_investment',
         type: 'radio',
         modifier: 'inline',
@@ -47,19 +47,19 @@
           { label: 'No', value: 'true' }
         ]
       })
-    %}
-      {{ TextField({
-        name: 'foreign_equity_investment',
-        label: form.labels.foreign_equity_investment,
-        value: form.state.foreign_equity_investment,
-        error: form.errors.messages.foreign_equity_investment,
-        modifier: 'subfield',
-        condition: {
-          name: 'client_cannot_provide_foreign_investment',
-          value: 'false'
-        }
-      }) }}
-    {% endcall %}
+    }}
+
+    {{ TextField({
+      name: 'foreign_equity_investment',
+      label: form.labels.foreign_equity_investment,
+      value: form.state.foreign_equity_investment,
+      error: form.errors.messages.foreign_equity_investment,
+      modifier: 'subfield',
+      condition: {
+        name: 'client_cannot_provide_foreign_investment',
+        value: 'false'
+      }
+    }) }}
 
     {{ TextField({
       name: 'number_new_jobs',

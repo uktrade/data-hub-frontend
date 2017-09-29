@@ -1,11 +1,13 @@
-async function renderPage (req, res) {
+const { displayEventLabels } = require('../labels')
+
+function renderDetailsPage (req, res) {
   res
-    .breadcrumb('Event details')
+    .breadcrumb(res.locals.event.name)
     .render('events/views/details', {
-      title: 'Event details',
+      displayEventLabels,
     })
 }
 
 module.exports = {
-  renderPage,
+  renderDetailsPage,
 }

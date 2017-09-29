@@ -26,7 +26,7 @@ async function getQuote (req, res, next) {
     // When quote already exists, get it
     if (error.statusCode === 409) {
       try {
-        const quote = await Order.getFullQuote(req.session.token, orderId)
+        const quote = await Order.getQuote(req.session.token, orderId)
 
         res.locals.quote = Object.assign({}, quote, {
           expired: new Date(quote.expires_on) < new Date(),

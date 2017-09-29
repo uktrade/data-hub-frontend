@@ -6,7 +6,7 @@
       inputName: 'term',
       modifier: 'global',
       action: '/search/companies',
-      inputLabel: 'Search for company, contact, investment project or OMIS order'
+      inputLabel: 'Search for company, contact, event, investment project or OMIS order'
     }) }}
   {% endcall %}
 {% endblock %}
@@ -17,27 +17,20 @@
       <div class="dashboard-section">
         <h2 class="dashboard-section-title">Interactions</h2>
         {% if interactions.length %}
-          <p class="dashboard-section-intro">
-            You have added {{ interactionsCount }} {{ 'interaction' | pluralise(interactions.length) }} in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
-          </p>
-
           <ol class="dashboard-list">
             {% for interaction in interactions %}
               <li>
                 {% if interaction.company.name %}
-                  <a href="{{ interaction.company.url }}">{{ interaction.company.name }}</a>
+                  <a href="/companies/{{ interaction.company.id }}">{{ interaction.company.name }}</a>
                   &ndash;
                 {% endif %}
-                <a href="{{ interaction.url }}">{{ interaction.subject }}</a>
+                <a href="/interactions/{{ interaction.id }}">{{ interaction.subject }}</a>
               </li>
             {% endfor %}
           </ol>
         {% else %}
-          <p class="dashboard-section-intro">
-            No interactions have been added in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
-          </p>
+          <p>No interactions have been added.</p>
         {% endif %}
-
         <p><a href="/interactions">See all interactions</a></p>
       </div>
     </div>
@@ -47,21 +40,15 @@
         <h2 class="dashboard-section-title">Contacts</h2>
 
         {% if contacts.length %}
-          <p class="dashboard-section-intro">
-            You have added {{ contactsCount }} {{ 'contact' | pluralise(contacts.length) }} in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
-          </p>
-
           <ol class="dashboard-list">
             {% for contact in contacts %}
               <li>
-                <a href="{{ contact.url }}">{{ contact.name }}</a> from <a href="{{ contact.company.url }}">{{ contact.company.name }}</a>
+                <a href="/contacts/{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</a> from <a href="/companies/{{ contact.company.id }}">{{ contact.company.name }}</a>
               </li>
             {% endfor %}
           </ol>
         {% else %}
-          <p class="dashboard-section-intro">
-            No contacts have been added in the last {{ totalDays }} {{ 'day' | pluralise(totalDays) }}
-          </p>
+          <p>No contacts have been added.</p>
         {% endif %}
 
         <p><a href="/contacts">See all contacts</a></p>

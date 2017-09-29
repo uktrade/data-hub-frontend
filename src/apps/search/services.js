@@ -1,6 +1,7 @@
+const queryString = require('query-string')
+
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
-const { buildQueryString } = require('../../lib/url-helpers')
 
 const entities = [
   {
@@ -15,6 +16,13 @@ const entities = [
     path: 'contacts',
     text: 'Contacts',
     noun: 'contact',
+    count: 0,
+  },
+  {
+    entity: 'event',
+    path: 'events',
+    text: 'Events',
+    noun: 'event',
     count: 0,
   },
   {
@@ -78,7 +86,7 @@ function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }
     uk_based: isUkBased,
   }
   const options = {
-    url: `${config.apiRoot}/v3/search/company${buildQueryString(queryParams)}`,
+    url: `${config.apiRoot}/v3/search/company?${queryString.stringify(queryParams)}`,
     method: 'POST',
     body,
   }

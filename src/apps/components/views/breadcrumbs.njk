@@ -2,17 +2,17 @@
 
 {% block body_main_content %}
   {% call Example() %}
-    {% component 'breadcrumbs', {
+    {{ Breadcrumbs({
       items: [{
-        url: '/',
-        name: 'Home'
-      }, {
-        url: '/second-level',
-        name: 'Second level'
-      }, {
-        url: '/second-level/third-level',
-        name: 'Third level'
-      }]
-    } %}
+          url: '/',
+          name: 'Home'
+        }, {
+          url: '/second-level',
+          name: 'Second level'
+        }, {
+          url: '/second-level/third-level',
+          name: 'Third level'
+        }]
+    }) }}
   {% endcall %}
 {% endblock %}

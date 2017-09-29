@@ -1,41 +1,59 @@
 describe('Event details controller', () => {
   beforeEach(() => {
-    this.controller = require('~/src/apps/events/controllers/details')
-
     this.sandbox = sinon.sandbox.create()
 
-    this.req = { }
+    this.controller = proxyquire('~/src/apps/events/controllers/details', {
+      '../labels': {
+        displayEventLabels: {
+          label: 'Mare',
+        },
+      },
+    })
+
+    this.req = {
+      params: {
+        id: '1234',
+      },
+      session: {
+        token: '4321',
+      },
+    }
+
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
+      locals: {
+        event: {
+          name: 'Dance',
+        },
+      },
     }
+
+    this.next = this.sandbox.spy()
   })
 
   afterEach(() => {
     this.sandbox.restore()
   })
 
-  describe('#renderPage', () => {
-    it('should add a breadcrumb', async () => {
-      this.controller.renderPage(this.req, this.res)
+  describe('#renderDetailsPage', async () => {
+    beforeEach(async () => {
+      await this.controller.renderDetailsPage(this.req, this.res, this.next)
+    })
 
-      expect(this.res.breadcrumb).to.be.calledWith('Event details')
+    it('should add a breadcrumb', () => {
+      expect(this.res.breadcrumb).to.be.calledWith('Dance')
       expect(this.res.breadcrumb).to.have.been.calledOnce
     })
 
-    it('should render the event details page', async () => {
-      await this.controller.renderPage(this.req, this.res)
-
+    it('should render the event details template', () => {
       expect(this.res.render).to.be.calledWith('events/views/details')
       expect(this.res.render).to.have.been.calledOnce
     })
 
-    it('should render the event details page with a title', async () => {
-      await this.controller.renderPage(this.req, this.res, this.next)
-
-      const actual = this.res.render.getCall(0).args[1].title
-
-      expect(actual).to.equal('Event details')
+    it('should return transformed events data', () => {
+      const options = this.res.render.firstCall.args[1]
+      expect(options).to.have.property('displayEventLabels').and.deep.equal({ label: 'Mare' })
     })
   })
 })

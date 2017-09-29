@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const { getHandler } = require('./controllers')
+const { renderDashboard } = require('./controllers')
 
 module.exports = {
-  router: router.get('/', getHandler),
+  router: router.get('/', renderDashboard),
 }

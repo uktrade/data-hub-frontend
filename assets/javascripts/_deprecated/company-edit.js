@@ -1,6 +1,5 @@
 /* eslint no-new: 0 */
 const { hide, show } = require('./lib/element-stuff')
-const Sectors = require('./sectors')
 require('./lookup-address')
 
 const CompanyEdit = {
@@ -34,8 +33,6 @@ const CompanyEdit = {
         tradingAddressFields.item(index).value = ''
       }
     }, true)
-
-    Sectors.init()
   },
 }
 

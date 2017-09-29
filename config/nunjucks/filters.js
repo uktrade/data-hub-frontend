@@ -62,6 +62,7 @@ const filters = {
   isArray,
   isFunction,
   isNull,
+  isPlainObject,
   isString,
   pluralise,
 
@@ -115,14 +116,20 @@ const filters = {
   },
 
   formatDate: (value, format = longDateFormat) => {
+    if (!value) {
+      return value
+    }
     const parsedDate = dateFns.parse(value)
 
     if (!dateFns.isValid(parsedDate)) { return value }
-
     return dateFns.format(parsedDate, format)
   },
 
   formatDateTime: (value, format = mediumDateTimeFormat) => {
+    if (!value) {
+      return value
+    }
+
     const parsedDate = dateFns.parse(value)
 
     if (!dateFns.isValid(parsedDate)) { return value }

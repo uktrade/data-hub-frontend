@@ -44,6 +44,7 @@ describe('Auth page middleware', () => {
       expect(this.res.locals.signInForm).to.have.property('errors').to.deep.equal({
         summary: 'Please provide email and password',
         messages: {},
+        fieldLabels: {},
       })
 
       expect(this.next).to.be.called

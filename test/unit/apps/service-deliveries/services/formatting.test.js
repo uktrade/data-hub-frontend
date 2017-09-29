@@ -3,11 +3,7 @@ describe('Service delivery formatting service', function () {
   let serviceDeliveryFormattingService
 
   beforeEach(function () {
-    serviceDeliveryFormattingService = proxyquire('~/src/apps/service-deliveries/services/formatting', {
-      '../../companies/services/data': {
-        buildCompanyUrl: sinon.stub().returns('/test'),
-      },
-    })
+    serviceDeliveryFormattingService = require('~/src/apps/service-deliveries/services/formatting')
 
     serviceDelivery = {
       id: '22651151-2149-465e-871b-ac45bc568a62',
@@ -29,7 +25,7 @@ describe('Service delivery formatting service', function () {
   describe('Service delivery details', function () {
     it('should return the required fields for the service delivery detail display', function () {
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',
@@ -48,7 +44,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing team', function () {
       serviceDelivery.dit_team = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: null,
         service: 'service name',
         status: 'Active',
@@ -67,7 +63,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing service', function () {
       serviceDelivery.service = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         status: 'Active',
         subject: 'Subject 1234',
@@ -86,7 +82,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing status', function () {
       serviceDelivery.status = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: null,
@@ -105,7 +101,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing adviser', function () {
       serviceDelivery.dit_adviser = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',
@@ -124,7 +120,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing region', function () {
       serviceDelivery.uk_region = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',
@@ -143,7 +139,7 @@ describe('Service delivery formatting service', function () {
     it('should hand a missing sector', function () {
       serviceDelivery.sector = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',
@@ -162,7 +158,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing contact', function () {
       serviceDelivery.contact = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',
@@ -181,7 +177,7 @@ describe('Service delivery formatting service', function () {
     it('should handle a missing country of interest', function () {
       serviceDelivery.country_of_interest = null
       const expected = {
-        company: '<a href="/test">Fred ltd</a>',
+        company: '<a href="/companies/555">Fred ltd</a>',
         dit_team: 'team name',
         service: 'service name',
         status: 'Active',

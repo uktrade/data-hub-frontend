@@ -8,16 +8,9 @@
 
   .dashboard-section-title {
     @include bold-font(24);
-    margin: 0;
-  }
-
-  .dashboard-section-intro {
-    margin-top: $default-spacing-unit / 2;
   }
 
   .dashboard-list {
-    margin-bottom: $default-spacing-unit;
-
     li + li {
       padding-top: $default-spacing-unit / 2;
     }

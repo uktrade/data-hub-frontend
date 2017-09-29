@@ -4,6 +4,7 @@
 .c-multiple-choice {
   position: relative;
   clear: left;
+  transform: translateZ(0); // Enforcing GPU acceleration fixes overflow cropping caused by CSS columns
 }
 
 @mixin _scale-input($font-size) {

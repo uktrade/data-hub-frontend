@@ -1,6 +1,5 @@
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
-const { buildCompanyUrl } = require('../companies/services/data')
 
 function mapContacts (contacts) {
   if (contacts && (typeof contacts.map) === 'function') {
@@ -10,7 +9,7 @@ function mapContacts (contacts) {
         name: `${contact.first_name} ${contact.last_name}`,
         id: contact.id,
         company: {
-          url: buildCompanyUrl(contact.company),
+          url: `/companies/${contact.company.id}`,
           name: contact.company.name,
           id: contact.company.id,
         },
@@ -31,7 +30,7 @@ function mapInteractions (interactions) {
         subject: interaction.subject,
         company: {
           name: company ? company.name : null,
-          url: company ? buildCompanyUrl(company) : null,
+          url: company ? `/companies/${company.id}` : null,
         },
       }
     })

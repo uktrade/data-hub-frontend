@@ -1,0 +1,50 @@
+@import "../../tools";
+
+.c-error-summary__heading,
+.c-error-summary__list,
+.c-error-summary__summary {
+  margin: 0;
+}
+
+.c-error-summary {
+  border: 5px solid $error-colour;
+  padding: $default-spacing-unit;
+  max-width: 40em;
+  margin-bottom: $default-spacing-unit * 2;
+
+  &:focus {
+    outline: 3px solid $focus-colour;
+  }
+
+  * + * {
+    margin-top: $default-spacing-unit;
+  }
+}
+
+.c-error-summary__summary:last-child {
+  margin-bottom: 0;
+}
+
+.c-error-summary__list {
+  font-weight: 600;
+  list-style: square;
+  padding-left: 1em;
+}
+
+.c-error-summary__field-name {
+  @include bold-font(16);
+  display: block;
+}
+
+.c-error-summary__error-text {
+  &:link,
+  &:visited {
+    color: $error-colour;
+  }
+}
+
+.c-error-summary__list-item {
+  & + & {
+    margin-top: $default-spacing-unit;
+  }
+}

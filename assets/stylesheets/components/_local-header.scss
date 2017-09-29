@@ -11,6 +11,10 @@ $_first-element-spacing: $default-spacing-unit * 3;
     > .c-local-header__heading:first-child {
       margin-top: $_first-element-spacing;
     }
+
+    > .c-message-list:first-child {
+      margin-top: $default-spacing-unit;
+    }
   }
 
   &[class*="c-local-header--"] {
@@ -34,7 +38,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
     }
   }
 
-  .c-messages {
+  .c-message-list {
     margin-bottom: $default-spacing-unit;
   }
 
@@ -54,6 +58,14 @@ $_first-element-spacing: $default-spacing-unit * 3;
 
   .c-meta-list {
     @include core-font(16);
+  }
+
+  .c-badge {
+    @include core-font(24);
+    padding: $baseline-grid-unit ($baseline-grid-unit * 2);
+    background-color: $white;
+    color: $fuschia;
+    border-color: $fuschia;
   }
 }
 
