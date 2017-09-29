@@ -67,7 +67,6 @@ const ArchiveForm = {
 
   createCancelButton () {
     const hideArchiveFormButton = this.document.createElement('a')
-    hideArchiveFormButton.classList.add('button-link')
     hideArchiveFormButton.href = '#'
     hideArchiveFormButton.textContent = 'Cancel'
 
