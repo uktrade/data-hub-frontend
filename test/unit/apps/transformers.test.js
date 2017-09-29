@@ -75,11 +75,11 @@ describe('Global transformers', () => {
 
     context('when valid key with inner call', () => {
       it('should return empty string for incorrect object', () => {
-        expect(this.transformers.transformDateObjectToDateString('start_date')()).to.equal('')
-        expect(this.transformers.transformDateObjectToDateString('start_date')({})).to.equal('')
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ a: 'v' })).to.equal('')
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '123124' })).to.equal('')
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '2017' })).to.equal('')
+        expect(this.transformers.transformDateObjectToDateString('start_date')()).to.be.null
+        expect(this.transformers.transformDateObjectToDateString('start_date')({})).to.be.null
+        expect(this.transformers.transformDateObjectToDateString('start_date')({ a: 'v' })).to.be.null
+        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '123124' })).to.be.null
+        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '2017' })).to.be.null
       })
 
       it('should return date string for correct object', () => {
