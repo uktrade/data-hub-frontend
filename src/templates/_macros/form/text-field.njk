@@ -23,9 +23,9 @@
 
   {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, class: props.groupClass })) %}
     {% if props.type === 'textarea' %}
-      {{ TextArea(props | assign({ class: props.inputClass })) }}
+      {{ TextArea(props | assignCopy({ class: props.inputClass })) }}
     {% else %}
-      {{ Input(props | assign({ class: props.inputClass })) }}
+      {{ Input(props | assignCopy({ class: props.inputClass })) }}
     {% endif %}
   {% endcall %}
 {% endmacro %}

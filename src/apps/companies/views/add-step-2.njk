@@ -16,64 +16,25 @@
     searchTerm: searchTerm,
     isLabelHidden: false,
     hiddenFields: {
-      business_type: businessType,
-      country: country
+      business_type: businessType
     },
     action: '/companies/add-step-2'
   }) }}
 
-  {% if companies %}
-    <ol class="results-list result-list--expandable">
-      {% for company in companies %}
-        <li class="results-list__result">
-          {% set isSelected = currentlySelected and (company.id == currentlySelected or company.company_number == currentlySelected) %}
+  {% if results | length %}
+    {{
+      Collection(results | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'company',
+        listModifier: 'block-links',
+        query: QUERY
+      }))
+    }}
 
-          {% if isSelected %}
-            <a class="open" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}">
-              <h3 class="result-title">{{company.name}}</h3>
-            </a>
-          {% else %}
-            <a class="closed" href="/companies/add-step-2/?term={{ searchTerm }}&business_type={{ businessType }}&country={{ country }}&selected={{ company.company_number if company.company_number else company.id }}">
-              <h3 class="result-title">{{ company.name }}</h3>
-            </a>
-          {% endif %}
-
-          {% if isSelected %}
-            <div class="panel panel-border-wide">
-                {{ keyvaluetable(
-                  displayDetails,
-                  labels=labels,
-                  keyorder=[
-                    'business_type',
-                    'company_status',
-                    'incorporation_date',
-                    'sic_code'
-                  ],
-                  class="table--small"
-                ) }}
-
-                {% if company.company_number %}
-                  {% set href = '/companies/add/ltd/' + company.company_number %}
-                  {% set label = 'Choose company' %}
-                {% else %}
-                  {% set href = '/companies/edit/ltd/' + company.id %}
-                  {% set label = 'Go to company record' %}
-                {% endif %}
-
-                {% if company.company_number %}
-                  <div class="table_footnote">Data from <strong>Companies House</strong></div>
-                {% endif %}
-                <a class="button" href="{{ href }}">{{ label }}</a>
-            </div>
-          {% endif %}
-        </li>
-      {% endfor %}
-    </ol>
-
-    <p class="infostrip">
-      If you can't find the company you're looking for, try a different search term, check
-      the company's website or any email correspondence that contains company registration details
-    </p>
+    {{ Message({
+      type: 'muted',
+      text: 'If you can’t find the company you’re looking for, try a different search term, check the company’s website or any email correspondence that contains company registration details'
+    }) }}
 
     {{ Pagination(companies.pagination) }}
 

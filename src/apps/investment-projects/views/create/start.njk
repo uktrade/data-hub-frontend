@@ -4,11 +4,8 @@
 
 {% block main_grid_right_column %}
   {% if not company %}
-
-    <p class="flash flash--info">
-      Client company is required
-    </p>
-
+    {% call Message({ type: 'error' }) %}
+      A client company is required. <a href="/companies">Find a company</a>
+    {% endcall %}
   {% endif %}
-
 {% endblock %}

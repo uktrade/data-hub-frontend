@@ -1,142 +1,23 @@
-{% extends "_layouts/datahub-base.njk" %}
-
-{% block local_header %}
-  {% set pageHeadingBefore %}
-    {% if query.contact %}
-      {% set backUrl="/contacts/" + query.contact + "/interactions"  %}
-      <a class="back-link" href="{{backUrl}}">Back to contact interactions</a>
-    {% elseif query.company %}
-      {% set backUrl="/companies/" + query.company + "/interactions" %}
-      <a class="back-link" href="{{backUrl}}">Back to company interactions</a>
-    {% endif %}
-  {% endset %}
-
-  {{
-    LocalHeader({
-      headingBefore: headingBefore,
-      heading: 'Edit service delivery' if serviceDelivery.id else 'Add service delivery',
-      modifier: 'light-banner'
-    })
-  }}
-{% endblock %}
+{% extends "_layouts/two-column.njk" %}
 
 {% block body_main_content %}
-  {{ errorPanel( errors, labels=labels ) }}
-  <form method="POST">
-    <input type="hidden" name="company" value="{{serviceDelivery.company.id}}">
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    {% if serviceDelivery.id %}
-      <input type="hidden" name="id" value="{{serviceDelivery.id}}">
-    {% endif %}
-
-    {% if serviceDelivery.contact %}
-    <div class='form-group'>
-      <div class='form-label-bold'>Contact</div>
+  {% if serviceDelivery.company.name %}
+    {% set companyLink %}
+      <a href="/companies/serviceDelivery.company.id">{{ serviceDelivery.company.name }}</a>
+    {% endset %}
+    {% set contactLink %}
       <a href="/contacts/{{ serviceDelivery.contact.id }}">{{ serviceDelivery.contact.name }}</a>
-    </div>
-    {% else  %}
-    <div class='form-group'>
-      <div class='form-label-bold'>Company</div>
-      <a href="{{companyUrl}}">{{ serviceDelivery.company.name }}</a>
-    </div>
-    {% endif %}
+    {% endset %}
 
+    {{ MetaList({
+      items: [
+        { label: 'Contact', value: contactLink | safe } if serviceDelivery.contact.name,
+        { label: 'Company', value: companyLink | safe } if serviceDelivery.company.name,
+        { label: 'Interaction type', value: 'Service delivery' }
+      ],
+      itemModifier: 'stacked'
+    }) }}
+  {% endif %}
 
-    <div class='form-group'>
-      <div class='form-label-bold'>Interaction type</div>
-      Service delivery
-    </div>
-
-    {{ autocomplete("dit_team",
-      label="Service provider",
-      emptyLabel="Pick a provider",
-      hint="Please start typing to search for a provider",
-      value=serviceDelivery.dit_team.id,
-      error=errors.dit_team,
-      options=serviceProviderOptions)
-    }}
-
-    {{ autocomplete('service',
-      label=labels.service,
-      value=serviceDelivery.service.id,
-      hint="Please start typing to search for a service",
-      error=errors.service,
-      options=serviceOptions
-      )
-    }}
-
-    {{ dropdown("event",
-      label=labels.event,
-      emptyLabel="Pick a value",
-      value=serviceDelivery.event.id,
-      options=eventOptions,
-      error=errors.event)
-    }}
-
-    {{ dropdown("status",
-      label=labels.status,
-      emptyLabel="Pick a value",
-      value=serviceDelivery.status.id,
-      options=statusOptions,
-      error=errors.status)
-    }}
-
-    {{ textbox("subject",
-      label=labels.subject,
-      value=serviceDelivery.subject,
-      error=errors.subject)
-    }}
-
-    {{ textarea("notes",
-      label=labels.notes,
-      value=serviceDelivery.notes) }}
-
-    {{ date('date', label='Service delivery start date', value=serviceDelivery.date ) }}
-
-    {{ autocomplete("contact",
-      label=labels.contact,
-      emptyLabel="Pick a contact",
-      hint="Please start typing to search for a contact",
-      value=serviceDelivery.contact.id,
-      error=errors.contact,
-      options=contacts)
-    }}
-
-    {{ autocomplete('dit_adviser',
-      label=labels.dit_adviser,
-      value=serviceDelivery.dit_adviser.id,
-      displayvalue=serviceDelivery.dit_adviser.name,
-      hint="Please start typing to search for an adviser",
-      error=errors.adviser,
-      autofocus=false,
-      url='/api/accountmanagerlookup?term=')
-    }}
-
-    {{ dropdown("uk_region",
-      label=labels.uk_region,
-      emptyLabel="Pick a value",
-      value=serviceDelivery.uk_region.id,
-      options=regionOptions,
-      error=errors.uk_region)
-    }}
-    {{ dropdown("sector",
-      label=labels.sector,
-      emptyLabel="Pick a value",
-      value=serviceDelivery.sector.id,
-      options=sectorOptions,
-      error=errors.sector)
-    }}
-
-    {{ dropdown("country_of_interest",
-      label=labels.country_of_interest,
-      emptyLabel="Pick a country",
-      hint="Please start typing to search for a country",
-      value=serviceDelivery.country_of_interest.id,
-      error=errors.country_of_interest,
-      options=countryOptions,
-      class="select-autocomplete-js")
-    }}
-
-    {{ save(backUrl) }}
-  </form>
+  {{ Form(serviceDeliveryForm) }}
 {% endblock %}

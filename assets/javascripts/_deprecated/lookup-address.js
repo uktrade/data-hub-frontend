@@ -1,13 +1,13 @@
 /* eslint no-new: 0 */
 const axios = require('axios')
-const { hide } = require('./lib/element-stuff')
+const { closest, hide } = require('./lib/element-stuff')
 
 class LookupAddress {
   constructor (elementSelector) {
     this.cacheElements(elementSelector)
     this.suggestions = []
     this.addEvents()
-    hide(this.addressPostcodeField.parentNode)
+    hide(closest(this.addressPostcodeField, '.c-form-group'))
 
     this.postcodeLookupField.value = this.addressPostcodeField.value
   }
@@ -19,7 +19,7 @@ class LookupAddress {
       this.element = elementSelector
     }
 
-    this.postcodeLookupField = this.element.querySelector('.postcode-lookup-field')
+    this.postcodeLookupField = this.element.querySelector('.c-form-control--PostcodeLookup')
     this.postcodeLookupButton = this.element.querySelector('.postcode-lookup-button')
     this.address1Field = this.element.querySelector('[name*="address_1"]')
     this.address2Field = this.element.querySelector('[name*="address_2"]')
@@ -27,7 +27,7 @@ class LookupAddress {
     this.addressCountyField = this.element.querySelector('[name*="address_county"]')
     this.addressPostcodeField = this.element.querySelector('[name*="address_postcode"]')
     this.addressCountryField = this.element.querySelector('[name*="address_country"]')
-    this.addressSuggestionsDropdown = this.element.querySelector('.form-group--address-suggestions select')
+    this.addressSuggestionsDropdown = this.element.querySelector('.c-form-control--PostcodeLookupResult')
   }
 
   addEvents () {
@@ -40,7 +40,7 @@ class LookupAddress {
     axios.get(`/api/postcodelookup/${postcode}`)
       .then((response) => {
         this.suggestions = response.data
-        var html = '<option value="">Please select an address</option>'
+        var html = '<option value="">Select an address</option>'
         for (const index in this.suggestions) {
           const suggestion = this.suggestions[index]
           html += `<option value="${index}">${suggestion.address1}</option>`

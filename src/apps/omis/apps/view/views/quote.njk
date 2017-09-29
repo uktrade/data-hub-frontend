@@ -4,23 +4,24 @@
 
 {% block main_grid_right_column %}
   {% if incompleteFields %}
-    <ul class="c-messages">
-      <li class="c-messages__item c-messages__item--error">
-        <p>To generate a quote you must complete the following information:</p>
+    {% call Message({
+      type: 'error',
+      element: 'div'
+    }) %}
+      <p>To generate a quote you must complete the following information:</p>
 
-        <ul class="list-disc">
-          {% for stepUrl, stepData in incompleteFields %}
-            {% for field in stepData.errors %}
-              <li>
-                <a href="/omis/{{ order.id }}/edit{{ stepUrl }}?returnUrl=/omis/{{ order.id }}/quote#field-{{ field }}">
-                  {{ translate('errors.quote.' + field) }}
-                </a>
-              </li>
-            {% endfor %}
+      <ul class="list-disc">
+        {% for stepUrl, stepData in incompleteFields %}
+          {% for field in stepData.errors %}
+            <li>
+              <a href="/omis/{{ order.id }}/edit{{ stepUrl }}?returnUrl=/omis/{{ order.id }}/quote#field-{{ field }}">
+                {{ translate('errors.quote.' + field) }}
+              </a>
+            </li>
           {% endfor %}
-        </ul>
-      </li>
-    </ul>
+        {% endfor %}
+      </ul>
+    {% endcall %}
   {% endif %}
 
   {% if quote %}
@@ -59,12 +60,11 @@
   {% endif %}
 
   {% if destructive %}
-    <ul class="c-messages">
-      <li class="c-messages__item c-messages__item--error">
-        Editing the order whilst it is out for acceptance will invalidate the
-        current quote and the client will no longer be able to accept it.
-      </li>
-    </ul>
+    {{ Message({
+      text: 'Editing the order whilst it is out for acceptance will invalidate the
+      current quote and the client will no longer be able to accept it.',
+      type: 'error'
+    }) }}
   {% endif %}
 
   {{ Form(quoteForm) }}

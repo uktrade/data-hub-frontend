@@ -106,7 +106,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add-step-2/?business_type=ltd&country=uk')
+            expect(url).to.equal('/companies/add-step-2?business_type=ltd&country=uk')
             done()
           },
         }
@@ -123,7 +123,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add/ukother?business_type=Charity&country=uk')
+            expect(url).to.equal('/companies/add?business_type=Charity&country=uk')
             done()
           },
         }
@@ -140,7 +140,7 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           redirect: function (url) {
-            expect(url).to.equal('/companies/add/foreign?business_type=Charity&country=non-uk')
+            expect(url).to.equal('/companies/add?business_type=Charity&country=non-uk')
             done()
           },
         }
@@ -205,7 +205,6 @@ describe('Company add controller', function () {
         const req = {
           query: {
             business_type: 'ltd',
-            country: 'uk',
           },
           session: {},
         }
@@ -222,7 +221,6 @@ describe('Company add controller', function () {
         const req = {
           query: {
             business_type: 'ltd',
-            country: 'uk',
           },
           session: {},
         }
@@ -245,7 +243,6 @@ describe('Company add controller', function () {
         const req = {
           query: {
             business_type: 'ltd',
-            country: 'uk',
           },
           session: {},
         }
@@ -254,7 +251,6 @@ describe('Company add controller', function () {
           render: function (template, options) {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.businessType).to.equal('ltd')
-            expect(allOptions.country).to.equal('uk')
             done()
           },
         }
@@ -269,7 +265,6 @@ describe('Company add controller', function () {
           },
           query: {
             business_type: 'ltd',
-            country: 'uk',
             term: 'test',
           },
         }
@@ -289,17 +284,20 @@ describe('Company add controller', function () {
           },
           query: {
             business_type: 'ltd',
-            country: 'uk',
             term: 'test',
           },
         }
         const res = {
           locals: {},
           render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            const company = allOptions.companies[0]
-            expect(company.name).to.equal('ACHME LIMITED')
-            done()
+            try {
+              const allOptions = mergeLocals(res, options)
+              const company = allOptions.results.items[0]
+              expect(company.name).to.equal('ACHME LIMITED')
+              done()
+            } catch (error) {
+              done(error)
+            }
           },
         }
         companyAddController.getAddStepTwo(req, res, next)
@@ -311,7 +309,6 @@ describe('Company add controller', function () {
           },
           query: {
             business_type: 'ltd',
-            country: 'uk',
             term: 'test',
             selected: '',
           },
@@ -319,11 +316,14 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.businessType).to.equal('ltd')
-            expect(allOptions.country).to.equal('uk')
-            expect(allOptions.searchTerm).to.equal('test')
-            done()
+            try {
+              const allOptions = mergeLocals(res, options)
+              expect(allOptions.businessType).to.equal('ltd')
+              expect(allOptions.searchTerm).to.equal('test')
+              done()
+            } catch (error) {
+              done(error)
+            }
           },
         }
         companyAddController.getAddStepTwo(req, res, next)
@@ -335,7 +335,6 @@ describe('Company add controller', function () {
           },
           query: {
             business_type: 'ltd',
-            country: 'uk',
             term: 'test',
             selected: '9999',
           },
@@ -343,11 +342,14 @@ describe('Company add controller', function () {
         const res = {
           locals: {},
           render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.businessType).to.equal('ltd')
-            expect(allOptions.country).to.equal('uk')
-            expect(allOptions.searchTerm).to.equal('test')
-            done()
+            try {
+              const allOptions = mergeLocals(res, options)
+              expect(allOptions.businessType).to.equal('ltd')
+              expect(allOptions.searchTerm).to.equal('test')
+              done()
+            } catch (error) {
+              done(error)
+            }
           },
         }
         companyAddController.getAddStepTwo(req, res, next)
@@ -361,7 +363,6 @@ describe('Company add controller', function () {
           },
           query: {
             business_type: 'ltd',
-            country: 'uk',
             term: 'test',
             selected: '08311441',
           },
@@ -370,49 +371,6 @@ describe('Company add controller', function () {
           locals: {},
           render: function (template, options) {
             expect(getCHCompanyStub).to.be.calledWith('1234', '08311441')
-            done()
-          },
-        }
-        companyAddController.getAddStepTwo(req, res, next)
-      })
-      it('should parse the CH details for display', function (done) {
-        const req = {
-          session: {
-            token: '1234',
-          },
-          query: {
-            business_type: 'ltd',
-            country: 'uk',
-            term: 'test',
-            selected: '08311441',
-          },
-        }
-        const res = {
-          locals: {},
-          render: function (template, options) {
-            expect(getDisplayCHStub).to.have.been.called
-            done()
-          },
-        }
-        companyAddController.getAddStepTwo(req, res, next)
-      })
-      it('should include labels and display order for the table', function (done) {
-        const req = {
-          session: {
-            token: '1234',
-          },
-          query: {
-            business_type: 'ltd',
-            country: 'uk',
-            term: 'test',
-            selected: '08311441',
-          },
-        }
-        const res = {
-          locals: {},
-          render: function (template, options) {
-            const allOptions = mergeLocals(res, options)
-            expect(allOptions.displayDetails).to.deep.equal(displayHouseCompany)
             done()
           },
         }

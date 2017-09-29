@@ -1,21 +1,29 @@
 const router = require('express').Router()
 
-const {
-  details,
-  edit,
-} = require('./controllers')
-const { detailsFormMiddleware } = require('./middleware')
+const { setDefaultQuery } = require('../middleware')
+const { renderDetailsPage } = require('./controllers/details')
+const { renderEditPage } = require('./controllers/edit')
+const { postDetails, getEventDetails } = require('./middleware/details')
+const { getRequestBody, getEventsCollection } = require('./middleware/collection')
+const { renderEventList } = require('./controllers/list')
 
-router.route('/create')
-  .get(
-    edit.renderEventPage,
-  )
-  .post(
-    detailsFormMiddleware.handleFormPost,
-    edit.postHandler,
-    edit.renderEventPage,
-  )
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'modified_on:desc',
+}
 
-router.get('/:id/details', details.renderPage)
+router.param('id', getEventDetails)
+
+router.get('/',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody,
+  getEventsCollection,
+  renderEventList,
+)
+
+router.route(['/create', '/:id/edit'])
+  .post(postDetails)
+  .all(renderEditPage)
+
+router.get('/:id', renderDetailsPage)
 
 module.exports = router

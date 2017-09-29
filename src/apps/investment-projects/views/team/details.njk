@@ -13,7 +13,10 @@
   <h2 class="heading-medium">Project management</h2>
 
   {% if stage == 'Prospect' %}
-    <p class="infostrip">Will be assigned during "Assign PM" stage.</p>
+    {{ Message({
+      type: 'muted',
+      text: 'Will be assigned during "Assign PM" stage.'
+    }) }}
   {% elif projectManagementData %}
     {% component 'data-table', {
       columns: projectManagementLabels.view,
@@ -21,7 +24,10 @@
     } %}
     <p><a href="edit-project-management" class="button button-secondary">Change</a></p>
   {% else %}
-    <p class="infostrip">Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.</p>
+    {{ Message({
+      type: 'muted',
+      text: 'Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.'
+    }) }}
     <p><a href="edit-project-management" class="button">Assign</a></p>
   {% endif %}
 
@@ -36,5 +42,8 @@
 
   <h2 class="heading-medium">Success verifier</h2>
 
-  <p class="infostrip">Will be assigned during "Verify win" stage.</p>
+  {{ Message({
+    type: 'muted',
+    text: 'Will be assigned during "Verify win" stage.'
+  }) }}
 {% endblock %}

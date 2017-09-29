@@ -1,24 +1,16 @@
 const router = require('express').Router()
 
-const {
-  getCommon,
-  getServiceDeliveryEdit,
-  postServiceDeliveryEdit,
-  getServiceDeliveryDetails,
-} = require('./controllers')
+const { fetchDetails, postDetails } = require('./middleware')
+const { renderDetailsPage } = require('./controllers/details')
+const { renderEditPage } = require('./controllers/edit')
+
+router.param('serviceDeliveryId', fetchDetails)
 
 router
-  .route('/create')
-  .get(getServiceDeliveryEdit)
-  .post(postServiceDeliveryEdit)
+  .route(['/:serviceDeliveryId/edit', '/create'])
+  .post(postDetails)
+  .all(renderEditPage)
 
-router.get('/:serviceDeliveryId/*', getCommon)
-
-router.get('/:serviceDeliveryId', getCommon, getServiceDeliveryDetails)
-
-router
-  .route('/:serviceDeliveryId/edit')
-  .get(getServiceDeliveryEdit)
-  .post(postServiceDeliveryEdit)
+router.get('/:serviceDeliveryId', renderDetailsPage)
 
 module.exports = router

@@ -11,7 +11,6 @@ $asset-path: "../" !default;
 @import "~govuk-elements-sass/public/sass/elements/reset";
 @import "~govuk-elements-sass/public/sass/elements/forms";
 @import "~govuk-elements-sass/public/sass/elements/forms/form-block-labels";
-@import "~govuk-elements-sass/public/sass/elements/forms/form-date";
 @import "~govuk-elements-sass/public/sass/elements/forms/form-validation";
 @import "~govuk-elements-sass/public/sass/elements/tables";
 @import "~govuk-elements-sass/public/sass/elements/buttons";
@@ -24,23 +23,7 @@ $asset-path: "../" !default;
 @import "../settings/layout";
 @import "../settings/colours";
 
-strong {
-  @include bold-font(20);
-}
-
-.column-three-quarters {
-  @include grid-column(3 / 4);
-}
-
 // Component styles
-@import "components/autocomplete";
-@import "components/backlink";
 @import "components/button";
-@import "components/flash-message";
-@import "components/headings";
-@import "components/infostrip";
-@import "components/list";
 @import "components/panel";
-@import "components/search_results";
-@import "components/status-badge";
 @import "components/table";

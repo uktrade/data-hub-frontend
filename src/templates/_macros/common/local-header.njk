@@ -1,3 +1,5 @@
+{% from './messages.njk' import MessageList %}
+
 {##
  # Render page local header
  # @param {object} props - An object containing local header properties
@@ -18,11 +20,10 @@
   {% if props %}
     <header class="c-local-header {{ modifier }}" aria-label="local header">
       <div class="l-container">
-        {% if breadcrumbs|length %}
-          {% component 'breadcrumbs', { items: breadcrumbs } %}
-        {% endif %}
+        {{ Breadcrumbs({ items: breadcrumbs }) }}
+
         {% if messages|length %}
-          {% component 'messages', { messages: messages } %}
+          {{ MessageList({ items: messages }) }}
         {% endif %}
 
         {% if props.actions %}

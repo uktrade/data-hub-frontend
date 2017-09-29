@@ -20,20 +20,26 @@
  #}
 {% macro FormGroup(props) %}
   {% set groupElement = props.element or 'div' %}
-  {% set labelElement = 'legend' if groupElement == 'fieldset' else 'label' %}
+  {% set isFieldset = groupElement == 'fieldset' %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
   {% set isConditional = props.condition %}
+  {% set className = props.groupClassName | default('c-form-group') %}
+  {% set labelElement = 'legend' if isFieldset else 'label' %}
+  {% set labelClassName = className + '__label' if className === 'c-form-group' else className + '__legend' %}
+  {% set isLegend = 'legend' if isFieldset %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
+  {% set fieldsetModifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% if props.label and props.name -%}
     <{{ groupElement }}
       id="group-{{ props.fieldId }}"
       class="
-        c-form-group
+        {{ className }}
         {{ 'has-error' if props.error and not isLabelHidden }}
         {{ 'js-ConditionalSubfield' if isConditional }}
         {{ modifier }}
+        {{ fieldsetModifier }}
         {{ props.class if props.class }}
       "
       {% if isConditional %}
@@ -42,10 +48,13 @@
       {% endif %}
     >
       <{{ labelElement }}
-        class="c-form-group__label {{ 'u-visually-hidden' if isLabelHidden }}"
+        class="
+          {{ labelClassName }}
+          {{ 'u-visually-hidden' if isLabelHidden }}
+        "
         {% if labelElement == 'label' %}for="{{ props.fieldId }}"{% endif %}
       >
-        <span class="c-form-group__label-text">
+        <span class="{{ labelClassName + '-text' }}">
           {{ props.label }} {{ '(optional)' if props.optional }}
         </span>
         {% if props.error %}

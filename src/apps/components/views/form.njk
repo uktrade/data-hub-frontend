@@ -1,7 +1,7 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  <h2 class="page-heading">Entity search</h2>
+  <h2 class="heading-large">Entity search</h2>
 
   {% call Example('Simple') %}
     {{ EntitySearchForm(macros.entitySearchForm) }}
@@ -11,7 +11,7 @@
     {{ EntitySearchForm(macros.entitySearchFormGlobal) }}
   {% endcall %}
 
-  <h2 class="page-heading">Standard</h2>
+  <h2 class="heading-large">Standard</h2>
   {% call Example('Normal size') %}
     {{ Form(macros.standardForm) }}
   {% endcall %}

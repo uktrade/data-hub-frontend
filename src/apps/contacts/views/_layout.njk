@@ -2,22 +2,22 @@
 
 {% block local_header %}
   {% set headingBefore %}
-    <a href="{{companyUrl}}">{{contact.company.name}}</a>
+    <a href="/companies/{{ contact.company.id }}">{{ contact.company.name }}</a>
   {% endset %}
 
   {% call LocalHeader({
     headingBefore: headingBefore,
     heading: contact.first_name + ' ' + contact.last_name,
-    headingSuffix: statusbadge('Primary', variation='fuschia') if contact.primary,
+    headingSuffix: '<span class="c-badge c-badge--secondary">Primary</span>',
     modifier: 'light-banner'
   }) %}
     {% if contact.archived %}
-      <p class="infostrip">
+      {% call Message({ type: 'info' }) %}
         This contact has been archived on {{contact.archived_on | formatDate}} by {{contact.archived_by.first_name}} {{contact.archived_by.last_name}}.<br>
         <strong>Reason:</strong> {{contact.archived_reason}}<br>
         <br>
         <a href="/contacts/{{contact.id}}/unarchive">Unarchive</a>
-      </p>
+      {% endcall %}
     {% endif %}
   {% endcall %}
 {% endblock %}

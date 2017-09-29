@@ -27,6 +27,12 @@
                 <li>{{ item }}{{ "," if not loop.last }}</li>
                {% endfor %}
               </ul>
+            {% elif data | isPlainObject %}
+              {% if data.type == "date" %}
+                {{ data.name | formatDate }}
+              {% else %}
+                {{ data.name }}
+              {% endif %}
             {% else %}
               {{ data }}
             {% endif %}

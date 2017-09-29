@@ -1,79 +1,58 @@
-/* eslint camelcase: 0 */
+const { sortBy, pick, omit } = require('lodash')
+const queryString = require('query-string')
+
 const interactionLabels = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
-const interactionDataService = require('../services/data')
 const { getDisplayInteraction } = require('../services/formatting')
+const { transformObjectToOption } = require('../../transformers')
 
-const interactonDisplayOrder = ['company', 'interaction_type', 'subject', 'notes', 'contact', 'date', 'dit_adviser', 'service', 'dit_team']
+const interactonDisplayOrder = [
+  'company',
+  'interaction_type',
+  'subject',
+  'notes',
+  'contact',
+  'date',
+  'dit_adviser',
+  'service',
+  'dit_team',
+]
 
-async function getCommon (req, res, next) {
-  try {
-    const token = req.session.token
-    if (req.params.interactionId && req.params.interactionId !== 'add') {
-      res.locals.interaction = await interactionDataService.getHydratedInteraction(token, req.params.interactionId)
-    }
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
-function getAddStep1 (req, res) {
+function renderCreatePage (req, res) {
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
-
-  const selectableTypes = interactionTypes
-    .sort((a, b) => {
-      const nameA = a.name.toUpperCase()
-      const nameB = b.name.toUpperCase()
-      if (nameA < nameB) {
-        return -1
-      }
-      if (nameA > nameB) {
-        return 1
-      }
-      return 0
-    })
-
-  // Split the list into 2 to show as 2 columns
-  const halfWay = Math.ceil(selectableTypes.length / 2)
-  const interactionTypeColA = []
-  const interactionTypeColB = []
-
-  for (let pos = 0; pos < halfWay; pos += 1) {
-    interactionTypeColA.push(selectableTypes[pos])
-  }
-
-  for (let pos = halfWay; pos < selectableTypes.length; pos += 1) {
-    interactionTypeColB.push(selectableTypes[pos])
-  }
+  const interactionTypeOptions = interactionTypes.map(transformObjectToOption)
 
   res
     .breadcrumb('Add interaction')
     .render('interactions/views/add-step-1.njk', {
-      query: req.query,
-      interactionTypeColA,
-      interactionTypeColB,
+      contactId: req.query.contact,
+      companyId: req.query.company,
+      interactionTypeOptions: sortBy(interactionTypeOptions, 'label'),
     })
 }
 
-function postAddStep1 (req, res) {
-  // error if no selection
+function postAddStep1 (req, res, next) {
   if (!req.body.interaction_type) {
     res.locals.errors = {
-      interaction_type: ['You must select an interaction type'],
+      messages: {
+        interaction_type: ['You must select an interaction type'],
+      },
     }
-    return getAddStep1(req, res)
+    return next()
   }
 
-  // redirect to edit, passing param
+  const interactionData = pick(req.body, 'contact', 'company', 'interaction_type')
+  const interactionQueryString = queryString.stringify(interactionData)
+  const serviceDeliveryQueryString = queryString.stringify(omit(interactionData, 'interaction_type'))
+
   if (req.body.interaction_type === '999') {
-    return res.redirect(`/service-deliveries/create/?company=${req.body.company}&contact=${req.body.contact}`)
+    return res.redirect(`/service-deliveries/create/?${serviceDeliveryQueryString}`)
   }
 
-  return res.redirect(`2?company=${req.body.company}&contact=${req.body.contact}&interaction_type=${req.body.interaction_type}`)
+  return res.redirect(`/interactions/create/2?${interactionQueryString}`)
 }
 
-function getInteractionDetails (req, res, next) {
+function renderDetailsPage (req, res, next) {
   res
     .breadcrumb(`Interaction with ${res.locals.interaction.company.name}`)
     .render('interactions/views/details', {
@@ -84,8 +63,7 @@ function getInteractionDetails (req, res, next) {
 }
 
 module.exports = {
-  getAddStep1,
+  renderCreatePage,
   postAddStep1,
-  getCommon,
-  getInteractionDetails,
+  renderDetailsPage,
 }

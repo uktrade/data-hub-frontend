@@ -9,12 +9,13 @@
   .c-form-group,
   .c-form-actions,
   .c-form-fieldset,
-  .c-error-summary,
-  .results-summary {
+  .c-collection {
     margin-top: $default-spacing-unit * 2;
   }
 
-  .c-form-group--compact {
+  .c-form-group--compact,
+  .c-message-list,
+  .c-message {
     margin-top: $default-spacing-unit;
   }
 

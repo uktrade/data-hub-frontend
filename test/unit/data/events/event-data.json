@@ -1,0 +1,56 @@
+{
+  "id": "31a9f8bd-7796-4af4-8f8c-25450860e2d1",
+  "event_type": {
+    "id": "6031f993-a689-49af-9a11-942a8413a779",
+    "name": "Outward mission"
+  },
+  "location_type": {
+    "id": "cf45bf02-8ea7-4e53-af0e-b5676a30cb96",
+    "name": "Other"
+  },
+  "address_country": {
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United Kingdom"
+  },
+  "uk_region": {
+    "id": "804cd12a-6095-e211-a939-e4115bead28a",
+    "name": "FDI Hub"
+  },
+  "organiser": {
+    "id": "0919a99e-9798-e211-a939-e4115bead28a",
+    "first_name": "Jeff",
+    "last_name": "Smith",
+    "name": "Jeff Smith"
+  },
+  "lead_team": {
+    "id": "42f12898-9698-e211-a939-e4115bead28a",
+    "name": "Association of Dogs"
+  },
+  "teams": [
+    {
+      "id": "32f12898-9698-e211-a939-e4115bead28a",
+      "name": "Association of Cats"
+    }
+  ],
+  "related_programmes": [
+    {
+      "id": "1870d2da-de4f-4adc-baff-e16ec90e4059",
+      "name": "Example Programme"
+    }
+  ],
+  "service": {
+    "id": "9484b82b-3499-e211-a939-e4115bead28a",
+    "name": "Account Management"
+  },
+  "created_on": "2017-09-19T15:20:26.834080",
+  "modified_on": "2017-09-19T15:20:26.834094",
+  "name": "A United Kingdom Get together",
+  "start_date": "2017-11-10",
+  "end_date": "2017-11-11",
+  "address_1": "1 uk street",
+  "address_2": "the lane",
+  "address_town": "plymouth",
+  "address_county": "devon",
+  "address_postcode": "PL1 3FG",
+  "notes": "An example event for testing"
+}

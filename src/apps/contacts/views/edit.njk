@@ -2,7 +2,7 @@
 
 {% block local_header %}
   {% set headingBefore %}
-    <a href="{{companyUrl}}">{{contact.company.name}}</a>
+    <a href="/companies/{{ contact.company.id }}">{{contact.company.name}}</a>
   {% endset %}
 
   {{

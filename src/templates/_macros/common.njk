@@ -1,12 +1,15 @@
 {% from "./common/answers-summary.njk" import AnswersSummary %}
+{% from "./common/breadcrumbs.njk" import Breadcrumbs %}
 {% from "./common/from-now.njk" import FromNow %}
 {% from "./common/global-nav.njk" import GlobalNav %}
 {% from "./common/local-header.njk" import LocalHeader with context %}
 {% from "./common/local-nav.njk" import LocalNav %}
 {% from "./common/pagination.njk" import Pagination %}
 {% from "./common/progress.njk" import Progress %}
+{% from "./common/messages.njk" import Message, MessageList %}
 
 {% set AnswersSummary = AnswersSummary %}
+{% set Breadcrumbs = Breadcrumbs %}
 {% set FromNow = FromNow %}
 {% set GlobalNav = GlobalNav %}
 {% set FromNow = FromNow %}
@@ -14,3 +17,5 @@
 {% set LocalNav = LocalNav %}
 {% set Pagination = Pagination %}
 {% set Progress = Progress %}
+{% set Message = Message %}
+{% set MessageList = MessageList %}

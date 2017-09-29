@@ -27,7 +27,7 @@ const Messages = {
       let link = document.createElement('a')
 
       link.innerHTML = 'Dismiss'
-      link.className = 'c-messages__close'
+      link.className = 'c-message__close'
       link.href = '#'
       link.onclick = (e) => {
         e.preventDefault()

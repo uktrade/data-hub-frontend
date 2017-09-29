@@ -6,20 +6,19 @@
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Company interactions</h2>
-  <p>
-    An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
-  </p>
 
   {% if company.contacts.length %}
-    {{
-      Collection(interactions | assignCopy({
+    <p>
+      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
+    </p>
+
+    {{ Collection(interactions | assignCopy({
         countLabel: 'interaction',
         summaryActionsHTML: addButton
-      }))
-    }}
+    })) }}
   {% else %}
-    <p class="infostrip">
+    {% call Message({ type: 'info' }) %}
       You currently have no contacts for this company. To add an interaction you must first <a href="/contacts/create?company={{company.id}}">add a contact</a>.
-    </p>
+    {% endcall %}
   {% endif %}
 {% endblock %}

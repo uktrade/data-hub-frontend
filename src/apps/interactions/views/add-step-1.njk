@@ -1,41 +1,22 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block body_main_content %}
-  <form method="POST">
-    <input name="company" type="hidden" value="{{query.company}}"/>
-    <input name="contact" type="hidden" value="{{query.contact}}"/>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-    <p>Please select interaction type</p>
-    <fieldset class="form-group radio-list-stacked">
-      <legend class="u-visually-hidden">Please select interaction type</legend>
-      <div class="grid-row">
-        <div class="column-one-third">
-          {% for interactionType in interactionTypeColA %}
-            <label class="block-label form-label-bold selection-button-radio" for="{{interactionType.id}}">
-              <input id="{{interactionType.id}}"
-                type="radio"
-                name="interaction_type"
-                value="{{interactionType.id}}"
-                {% if radioValue == 'yes' or radioValue == true %}checked="checked"{% endif %} />
-              {{interactionType.name}}
-            </label>
-          {% endfor %}
-        </div>
-        <div class="column-one-third">
-          {% for interactionType in interactionTypeColB %}
-            <label class="block-label form-label-bold selection-button-radio" for="{{interactionType.id}}">
-              <input id="{{interactionType.id}}"
-                type="radio"
-                name="interaction_type"
-                value="{{interactionType.id}}"
-                {% if radioValue == 'yes' or radioValue == true %}checked="checked"{% endif %} />
-              {{interactionType.name}}
-            </label>
-          {% endfor %}
-        </div>
-      </div>
-    </fieldset>
-
-    {{ save(backUrl, buttonText="Continue") }}
-  </form>
+  {{ Form({
+    buttonText: 'Continue',
+    errors: errors,
+    hiddenFields: {
+      company: companyId,
+      contact: contactId
+    },
+    children: [
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        modifier: 'columns',
+        label: 'Select interaction type',
+        name: 'interaction_type',
+        options: interactionTypeOptions
+      }
+    ]
+  }) }}
 {% endblock %}

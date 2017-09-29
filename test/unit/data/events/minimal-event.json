@@ -1,0 +1,29 @@
+{
+  "id": "31a9f8bd-7796-4af4-8f8c-25450860e2d1",
+  "event_type": {
+    "id": "6031f993-a689-49af-9a11-942a8413a779",
+    "name": "Outward mission"
+  },
+  "location_type": null,
+  "address_country": {
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United Kingdom"
+  },
+  "uk_region": null,
+  "organiser": null,
+  "lead_team": null,
+  "teams": [],
+  "related_programmes": [],
+  "service": null,
+  "created_on": "2017-09-19T15:20:26.834080",
+  "modified_on": "2017-09-19T15:20:26.834094",
+  "name": "A United Kingdom Get together",
+  "start_date": null,
+  "end_date": null,
+  "address_1": "1 uk street",
+  "address_2": "",
+  "address_town": "plymouth",
+  "address_county": "devon",
+  "address_postcode": "PL1 3FG",
+  "notes": null
+}

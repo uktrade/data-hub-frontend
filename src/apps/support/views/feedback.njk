@@ -1,51 +1,5 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block body_main_content %}
-  {% call Form(form | assign({buttonText: 'Send'})) %}
-    {{ TextField({
-      name: 'title',
-      label: 'Title',
-      hint: 'A brief summary of your feedback/problem',
-      error: form.errors.messages.title,
-      value: form.data.title
-    }) }}
-
-    {{ MultipleChoiceField({
-        type: 'radio',
-        name: 'feedbackType',
-        modifier: 'inline',
-        label: 'Problem or feedback?',
-        error: form.errors.messages.feedbackType,
-        options: form.options.feedbackType,
-        value: form.data.feedbackType
-    }) }}
-
-    {{ TextField({
-      optional: true,
-      type: 'textarea',
-      name: 'description',
-      label: 'Description',
-      hint: 'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
-      error: form.errors.messages.description,
-      value: form.data.description
-    }) }}
-
-    {{ TextField({
-      optional: true,
-      name: 'email',
-      label: 'Email',
-      hint: 'If you wish to be contacted, please provide your email address',
-      error: errors.messages.email,
-      value: form.data.email
-    }) }}
-
-    {{ TextField({
-      optional: true,
-      name: 'browser',
-      label: 'Web browser',
-      hint: 'The name of the web browser and version you were using',
-      error: form.errors.messages.browser,
-      value: form.data.browser
-    }) }}
-  {% endcall %}
+  {{ Form(feedbackForm) }}
 {% endblock %}

@@ -1,18 +1,19 @@
-const { get, flatten } = require('lodash')
-const { requirementsLabels } = require('../../labels')
-const metadataRepo = require('../../../../lib/metadata')
+const { assign, get, flatten } = require('lodash')
 const { updateInvestment } = require('../../repos')
+const { requirementsFormConfig } = require('../../macros')
+const { buildFormWithStateAndErrors } = require('../../../builders')
 
 function populateForm (req, res, next) {
-  res.locals.form = get(res, 'locals.form', {})
-  res.locals.form.labels = requirementsLabels.edit
-  res.locals.form.state = res.locals.investmentData
+  const investmentData = assign({}, res.locals.investmentData, {
+    strategic_drivers: get(res.locals, 'investmentData.strategic_drivers[0].id'),
+    competitor_countries: get(res.locals, 'investmentData.competitor_countries[0].id'),
+    uk_region_locations: get(res.locals, 'investmentData.uk_region_locations[0].id'),
+  })
 
-  res.locals.form.options = {
-    countryOptions: metadataRepo.countryOptions,
-    regionOptions: metadataRepo.regionOptions,
-    strategicDriverOptions: metadataRepo.strategicDriverOptions,
-  }
+  res.locals.requirementsForm = assign(
+    buildFormWithStateAndErrors(requirementsFormConfig, investmentData),
+    { returnLink: `/investment-projects/${investmentData.id}` },
+  )
 
   next()
 }
@@ -20,9 +21,9 @@ function populateForm (req, res, next) {
 function handleFormPost (req, res, next) {
   res.locals.projectId = req.params.id
 
-  const formattedBody = Object.assign({}, req.body, {
+  const formattedBody = assign({}, req.body, {
     strategic_drivers: flatten([req.body.strategic_drivers]),
-    competitor_countries: flatten([req.body.competitor_countries]),
+    competitor_countries: req.body.client_considering_other_countries === 'true' ? flatten([req.body.competitor_countries]) : [],
     uk_region_locations: flatten([req.body.uk_region_locations]),
   })
 
@@ -30,9 +31,7 @@ function handleFormPost (req, res, next) {
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.form = get(res, 'locals.form', {})
-        res.locals.form.errors = err.error
-        res.locals.form.state = req.body
+        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig, req.body, err.error)
 
         next()
       } else {

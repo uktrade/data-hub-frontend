@@ -3,9 +3,10 @@
 {% block main_grid_right_column %}
 
   {% if verfied %}
-    <p class="infostrip">
-      The evaluation section has been now been verified.
-    </p>
+    {{ Message({
+      type: 'info',
+      text:'The evaluation section has been now been verified.'
+    }) }}
   {% endif %}
 
   <h2 class="heading-medium">Project value (Test D)</h2>

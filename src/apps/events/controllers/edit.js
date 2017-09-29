@@ -1,47 +1,42 @@
+/* eslint camelcase: 0 */
 const { eventFormConfig } = require('../macros')
 const { getAdvisers } = require('../../adviser/repos')
-const { transformObjectToOption } = require('../../transformers')
+const { transformEventResponseToFormBody } = require('../transformers')
 const { buildFormWithStateAndErrors } = require('../../builders')
-const { assign, get } = require('lodash')
+const { assign, merge, get, pickBy } = require('lodash')
 
-async function renderEventPage (req, res, next) {
+async function renderEditPage (req, res, next) {
+  const eventData = transformEventResponseToFormBody(res.locals.event)
+  const eventId = get(eventData, 'id', '')
+  const eventName = get(eventData, 'name')
+  const lead_team = eventData.lead_team || get(req, 'session.user.dit_team.id')
+
   try {
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
-    const emptyDate = { year: '', month: '', day: '' }
-    const body = assign({}, req.body, {
-      start_date: emptyDate,
-      end_date: emptyDate,
-      lead_team: get(req, 'session.user.dit_team.id', null),
-    })
+    const advisers = advisersResponse.results
+    const mergedData = pickBy(merge({}, eventData, { lead_team }, res.locals.requestBody))
+
     const eventForm =
       buildFormWithStateAndErrors(
-        eventFormConfig(advisers),
-        body,
-        get(res.locals, 'form.errors.messages')
+        eventFormConfig({ eventId, advisers }),
+        mergedData,
+        get(res.locals, 'form.errors.messages'),
       )
 
     res
-      .breadcrumb('Add event')
+      .breadcrumb(eventName, `/events/${eventId}`)
+      .breadcrumb(`${eventId ? 'Edit' : 'Add'} event`)
       .render('events/views/edit', {
-        title: 'Add event',
-        eventForm,
+        eventForm: assign(eventForm, {
+          returnLink: `/events/${eventId}`,
+          returnText: 'Cancel',
+        }),
       })
   } catch (e) {
     next(e)
   }
 }
 
-function postHandler (req, res, next) {
-  if (get(res.locals, 'form.errors')) {
-    return next()
-  }
-
-  req.flash('success', 'Event created')
-  return res.redirect(`/events/${res.locals.resultId}/details`)
-}
-
 module.exports = {
-  renderEventPage,
-  postHandler,
+  renderEditPage,
 }

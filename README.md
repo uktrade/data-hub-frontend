@@ -30,6 +30,12 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Testing](#testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
+    - [Naming conventions](#naming-conventions)
+      - [Folders](#folders)
+      - [Filenames](#filenames)
+      - [Feature tags](#feature-tags)
+      - [Scenario tags](#scenario-tags)
+
     - [Ignoring features](#ignoring-features)
 - [Continuous Integration](#continuous-integration)
   - [Docker image](#docker-image)
@@ -280,15 +286,49 @@ layouts/
 Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
 
 #### Running acceptance tests
+For information on [cucumber-js](https://github.com/cucumber/cucumber-js) tags please see the `nightwatch-cucumber` docs [executing-individual-feature-files-or-scenarios](http://mucsi96.github.io/nightwatch-cucumber/#executing-individual-feature-files-or-scenarios)
+
 You run acceptance tests via:
 ```
 yarn test:acceptance
+```
+
+You can run a group (folder) of tests via:
+```
+yarn test:acceptance -- --group <folder-name>
+```
+e.g:
+```
+yarn test:acceptance -- --group audit
 ```
 
 You can run a specific feature via:
 ```
 yarn test:acceptance -- --tag <feature-tag>
 ```
+e.g:
+```
+yarn test:acceptance -- --tag audit-company--name
+```
+
+#### Naming conventions
+##### Folders
+We use singular or plural folder names. E.g `contacts`, `companies`, `audit`.
+
+##### Filenames
+
+We use singular names
+- `page-object` names with PascalCase case. E.g `Login`, `Contact`, `ContactList`.
+- `step_definitions` names with Kebabcase case. E.g `login`, `contact`, `company`.
+- `feature` names with Kebabcase case. E.g `create`, `login`, `list`.
+
+##### Feature tags
+We name features after the folder name and file name. So `/auth/login.feature` would have the feature tag `@auth-login`
+
+
+##### Scenario tags
+We name scenarios after the feature name with a double hyphen separating the scenarios tag. So a scenario in the `@auth-login` feature would be `@auth-login--logout`
+
 
 #### Ignoring features
 You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
@@ -298,8 +338,8 @@ You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration. 
 
 ### Docker image
-The acceptance tests use the docker image `ukti/docker-nightwatch-base`. 
-Details can be found in the [GitHub](https://github.com/uktrade/docker-nightwatch-base) repo.
+The acceptance tests use the docker image `ukti/docker-selenium-base`. 
+Details can be found in the [GitHub](https://github.com/uktrade/docker-selenium-base) repo.
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:

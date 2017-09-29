@@ -1,4 +1,4 @@
-const guid = require('../_deprecated/trade-elements/lib/guid')
+const { uniqueId } = require('lodash')
 
 const { parseDateString } = require('../../../common/date')
 const { addClass, removeClass } = require('../_deprecated/lib/element-stuff')
@@ -72,7 +72,7 @@ class SortableTable {
     let keys = []
     // parse the headings into an array of keys.
     headingElements.forEach((headingElement) => {
-      const key = guid()
+      const key = uniqueId('SortableTable__Column-')
       keys.push(key)
       headingElement.setAttribute('data-key', key)
     })

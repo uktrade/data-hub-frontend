@@ -22,34 +22,35 @@
   }) }}
 
   {% if investmentData.archived %}
-      <p class="infostrip">
+      {% call Message({ type: 'info' }) %}
         This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>
         <strong>Archive reason:</strong> {{ investmentData.archived_reason }}<br>
         <br>
         <a href="unarchive">Unarchive</a>
-      </p>
+      {% endcall %}
     {% endif %}
   {% endcall %}
 
 {% endblock %}
 
 {% block main_grid_right_column %}
-  {% call Form({
-    buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
-    action: 'change-project-stage',
-    class: 'flash flash--info',
-    disableFormAction: true if not investmentStatus.currentStage.isComplete,
-    hiddenFields: {
-      next_project_stage: investmentStatus.nextStage.id
-    }
-  }) %}
-    <p>
-      {% if investmentStatus.currentStage.isComplete %}
-        You have added all required information to complete this stage.
-        {% else %}
-        Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
-      {% endif %}
-    </p>
+  {% call Message({ type: 'info', element: 'div' }) %}
+    {% call Form({
+      buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
+      action: 'change-project-stage',
+      disableFormAction: true if not investmentStatus.currentStage.isComplete,
+      hiddenFields: {
+        next_project_stage: investmentStatus.nextStage.id
+      }
+    }) %}
+      <p>
+        {% if investmentStatus.currentStage.isComplete %}
+          You have added all required information to complete this stage.
+          {% else %}
+          Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+        {% endif %}
+      </p>
+    {% endcall %}
   {% endcall %}
 {% endblock %}
 

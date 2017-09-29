@@ -5,22 +5,14 @@ $images-dir: "/images/";
 @import "settings";
 @import "tools";
 @import "generic";
+@import "layout";
 @import "elements";
 @import "objects";
 @import "components";
-@import "layout";
 @import "trumps";
 
 //// application specific (deprecated)
-@import "_deprecated/address";
 @import "_deprecated/dashboard";
-@import "_deprecated/flash";
 @import "_deprecated/errors";
-@import "_deprecated/search";
-@import "_deprecated/shame";
-@import "_deprecated/splitheader";
 @import "_deprecated/tables";
-
-.table--readonly {
-  border-left-width: 5px;
-}
+@import "_deprecated/shame";

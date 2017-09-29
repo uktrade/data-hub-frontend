@@ -1,11 +1,15 @@
+const { map } = require('asyncro')
+const { assign } = require('lodash')
+const queryString = require('query-string')
+
+const logger = require('../../../../config/logger')
 const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
-const { buildQueryString } = require('../../../lib/url-helpers')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
-const { getDisplayCH, getDisplayCompany } = require('../services/formatting')
-const { buildPagination } = require('../../../lib/pagination')
-const { companyDetailsLabels, chDetailsLabels, companyTypeOptions } = require('../labels')
+const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformCompaniesHouseCompanyToListItem } = require('../../companies/transformers')
+const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
 function getAddStepOne (req, res, next) {
   res.render('companies/views/add-step-1.njk', {
@@ -63,77 +67,73 @@ function postAddStepOne (req, res, next) {
       break
   }
 
-  const queryString = buildQueryString(params)
-
   if (req.body.business_type === 'ukother' || req.body.business_type === 'foreign') {
-    return res.redirect(`/companies/add/${req.body.business_type + queryString}`)
+    return res.redirect(`/companies/add?${queryString.stringify(params)}`)
   }
 
-  return res.redirect(`/companies/add-step-2/${queryString}`)
+  return res.redirect(`/companies/add-step-2?${queryString.stringify(params)}`)
 }
 
 async function getAddStepTwo (req, res, next) {
   const searchTerm = req.query.term
-  const currentlySelected = req.query.selected
   const businessType = req.query.business_type
-  const country = req.query.country
   const token = req.session.token
+  let results
 
   if (!searchTerm) {
     return res.render('companies/views/add-step-2.njk', {
       companyTypeOptions,
       businessType,
-      country,
     })
   }
 
   try {
-    let displayDetails
-    let labels
-
-    const companiesHouseAndLtdCompanies = await searchLimitedCompanies({
+    results = await searchLimitedCompanies({
       token,
       searchTerm,
     })
-    const companies = companiesHouseAndLtdCompanies.results
-    companies.pagination = buildPagination(req.query, companiesHouseAndLtdCompanies.results)
-    const highlightedCompany = companiesHouseAndLtdCompanies.results.find((company) => {
-      return company.id === currentlySelected ||
-        (company.company_number && company.company_number === currentlySelected)
-    })
-
-    if (highlightedCompany) {
-      if (highlightedCompany.company_number) {
-        const companiesHouseDetails = await getCHCompany(token, highlightedCompany.company_number)
-          .then((companiesHouseData) => {
-            return {
-              company_number: highlightedCompany.company_number,
-              companies_house_data: companiesHouseData,
-              contacts: [],
-              interactions: [],
-            }
-          })
-        displayDetails = await getDisplayCH(companiesHouseDetails.companies_house_data)
-        labels = chDetailsLabels
-      } else {
-        displayDetails = await getDisplayCompany(highlightedCompany)
-        labels = companyDetailsLabels
-      }
-    }
-
-    res.render('companies/views/add-step-2.njk', {
-      companyTypeOptions,
-      companies,
-      searchTerm,
-      currentlySelected,
-      displayDetails,
-      labels,
-      businessType,
-      country,
-    })
+      .then(response => response.results.filter(x => x.company_number))
+      .then(async (results) => {
+        // TODO: Remove the need to make another call to the API to get the companies house details.
+        // The search API should return companies house companies and their relevant information
+        return map(results, async (result) => {
+          try {
+            result.companies_house_data = await getCHCompany(token, result.company_number)
+            result.url = `/companies/add/${result.company_number}`
+          } catch (error) {
+            logger.error(error)
+          }
+          return result
+        })
+      })
+      .then((results) => {
+        return {
+          page: 1,
+          items: results,
+          count: results.length,
+        }
+      })
+      .then(
+        transformApiResponseToSearchCollection(
+          { query: req.query },
+          transformCompaniesHouseCompanyToListItem,
+          (item) => {
+            return assign({}, item, {
+              meta: item.meta.filter(x => x.label !== 'Sector'),
+            })
+          }
+        )
+      )
   } catch (error) {
-    next(error)
+    logger.error(error)
   }
+
+  res.render('companies/views/add-step-2.njk', {
+    companyTypeOptions,
+    results,
+    searchTerm,
+    businessType,
+  })
 }
 
 module.exports = {

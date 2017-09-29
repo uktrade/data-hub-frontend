@@ -19,7 +19,7 @@ describe('Company transformers', function () {
       expect(actual).to.have.property('id').to.be.a('string')
       expect(actual).to.have.property('type').to.equal('company')
       expect(actual).to.have.property('name').to.be.a('string')
-      expect(actual).to.have.property('url').to.be.equal(`/viewcompanyresult/${companyData.id}`)
+      expect(actual).to.have.property('url').to.be.equal(`/companies/${companyData.id}`)
     })
 
     it('should return have correct meta items for Uk company', () => {
