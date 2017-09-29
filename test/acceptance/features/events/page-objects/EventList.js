@@ -45,7 +45,7 @@ module.exports = {
         },
         eventType: getMetaListItemValueSelector('Type'),
         country: getMetaListItemValueSelector('Country'),
-        region: getMetaListItemValueSelector('Region'),
+        ukRegion: getMetaListItemValueSelector('Region'),
         eventStart: getMetaListItemValueSelector('Begins'),
         eventEnd: getMetaListItemValueSelector('Ends'),
         organiser: getMetaListItemValueSelector('Organiser'),

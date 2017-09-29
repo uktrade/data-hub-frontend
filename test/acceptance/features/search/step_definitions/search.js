@@ -13,19 +13,19 @@ defineSupportCode(({ Then, When, Before }) => {
       eventDetails: {},
     }
     Search.state = {
-      eventNameSuffix: faker.random.uuid(),
+      eventName: `${faker.company.companyName()} ${faker.random.uuid()}`,
     }
   })
 
   When(/^I populate the create event form to search$/, async () => {
     await Event
-      .populateCreateEventForm({ eventNameSuffix: Search.state.eventNameSuffix })
+      .populateCreateEventForm({ name: Search.state.eventName })
   })
 
   When(/^I search for the event$/, async () => {
     await Search
       .waitForElementPresent('@term')
-      .setValue('@term', Search.state.eventNameSuffix)
+      .setValue('@term', Search.state.eventName)
       .sendKeys('@term', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })

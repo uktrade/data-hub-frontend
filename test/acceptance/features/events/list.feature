@@ -27,8 +27,7 @@ Feature: View a list of events
   Scenario: View event uk region
     And I navigate to the event list page
     When I click the add an event link
-    And I populate the create event form
-    And I select country as United Kingdom with a region
+    And I populate the create event form with United Kingdom and a region
     And I click the save button
     Then I see the success message
     When I navigate to the event list page
