@@ -1,4 +1,4 @@
-const { pickBy } = require('lodash')
+const pickBy = require('lodash/pickBy')
 const {
   insertAfter,
   resetFieldValues,
