@@ -39,7 +39,7 @@ function transformDateObjectToDateString (key) {
     return ['year', 'month', 'day']
       .map(x => props[`${key}_${x}`])
       .filter(x => x)
-      .join('-')
+      .join('-') || null
   }
 }
 
