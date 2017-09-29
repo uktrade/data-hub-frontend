@@ -1,5 +1,6 @@
 const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
+const { compact } = require('lodash')
 
 module.exports = {
   url: process.env.QA_HOST + '/events/create',
@@ -41,7 +42,7 @@ module.exports = {
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
     saveButton: {
-      selector: '//button[text()[normalize-space()="Save"]]',
+      selector: '//button[. = "Save"]',
       locateStrategy: 'xpath',
     },
     // Event details page
@@ -77,13 +78,13 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm () {
+      populateCreateEventForm ({ eventNameSuffix }) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
 
         // Store created event details
         this.state.eventDetails = {
-          name: faker.company.companyName(),
+          name: compact([ faker.company.companyName(), eventNameSuffix ]).join(' '),
           address_1: faker.address.streetName(),
           address_2: faker.address.secondaryAddress(),
           address_town: faker.address.city(),
