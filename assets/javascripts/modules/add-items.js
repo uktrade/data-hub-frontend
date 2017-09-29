@@ -1,3 +1,4 @@
+const assign = require('lodash/assign')
 const pickBy = require('lodash/pickBy')
 const {
   insertAfter,
@@ -52,7 +53,7 @@ const AddItems = {
 
   init (wrapper = document, options) {
     this.wrapper = wrapper
-    this.settings = Object.assign({}, this.defaults, options)
+    this.settings = assign({}, this.defaults, options)
 
     this.cacheEls()
     this.bindEvents()
