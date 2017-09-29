@@ -78,13 +78,13 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm ({ eventNameSuffix }) {
+      populateCreateEventForm ({ eventNameSuffix = '' }) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
 
         // Store created event details
         this.state.eventDetails = {
-          name: compact([ faker.company.companyName(), eventNameSuffix ]).join(' '),
+          name: compact([ faker.company.companyName(), eventNameSuffix ]).join(' ').trim(),
           address_1: faker.address.streetName(),
           address_2: faker.address.secondaryAddress(),
           address_town: faker.address.city(),

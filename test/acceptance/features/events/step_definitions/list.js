@@ -29,7 +29,7 @@ defineSupportCode(({ Then, When, Before }) => {
 
   When(/^I populate the create event form$/, async () => {
     await Event
-      .populateCreateEventForm()
+      .populateCreateEventForm({})
   })
 
   When(/^I select country as United Kingdom with a region$/, async () => {
