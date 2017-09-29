@@ -28,6 +28,7 @@ function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
     'name',
     'event_type',
+    'organiser',
     'address_country',
     'uk_region',
     'start_date',

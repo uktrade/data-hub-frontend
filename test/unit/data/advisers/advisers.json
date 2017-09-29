@@ -1,0 +1,90 @@
+{
+  "count": 5,
+  "results": [
+    {
+      "id": "a0dae366-1134-e411-985c-e4115bead28a",
+      "name": "Jeff Smith",
+      "last_login": null,
+      "first_name": "Jeff",
+      "last_name": "Smith",
+      "email": "jeff.smith@mockexample.com",
+      "contact_email": "",
+      "telephone_number": "",
+      "dit_team": {
+        "id": "4348318c-9698-e211-a939-e4115bead28a",
+        "name": "Team A",
+        "role": "66329c18-6095-e211-a939-e4115bead28a",
+        "uk_region": "874cd12a-6095-e211-a939-e4115bead28a",
+        "country": "80756b9a-5d95-e211-a939-e4115bead28a"
+      }
+    },
+    {
+      "id": "e13209b8-8d61-e311-8255-e4115bead28a",
+      "name": "Aaron Mr",
+      "last_login": null,
+      "first_name": "Aaron",
+      "last_name": "Mr",
+      "email": "aaron.mr@mockexample.com",
+      "contact_email": "",
+      "telephone_number": "",
+      "dit_team": {
+        "id": "f57d43ce-9698-e211-a939-e4115bead28a",
+        "name": "Team B",
+        "role": "62329c18-6095-e211-a939-e4115bead28a",
+        "uk_region": null,
+        "country": "81756b9a-5d95-e211-a939-e4115bead28a"
+      }
+    },
+    {
+      "id": "b9d6b3dc-7af4-e411-bcbe-e4115bead28a",
+      "name": "Mr Benjamin",
+      "last_login": null,
+      "first_name": "Mr",
+      "last_name": "Benjamin",
+      "email": "mr.benjamin@mockexample.com",
+      "contact_email": "",
+      "telephone_number": "",
+      "dit_team": {
+        "id": "1a8433c8-9698-e211-a939-e4115bead28a",
+        "name": "Team C",
+        "role": "62329c18-6095-e211-a939-e4115bead28a",
+        "uk_region": null,
+        "country": "5161b8be-5d95-e211-a939-e4115bead28a"
+      }
+    },
+    {
+      "id": "0119a99e-9798-e211-a939-e4115bead28a",
+      "name": "George Chan",
+      "last_login": null,
+      "first_name": "George",
+      "last_name": "Chan",
+      "email": "george.chan@mockexample.com",
+      "contact_email": "",
+      "telephone_number": "",
+      "dit_team": {
+        "id": "ab4d24c2-9698-e211-a939-e4115bead28a",
+        "name": "Team D",
+        "role": "62329c18-6095-e211-a939-e4115bead28a",
+        "uk_region": null,
+        "country": "1f0be5c4-5d95-e211-a939-e4115bead28a"
+      }
+    },
+    {
+      "id": "0919a99e-9798-e211-a939-e4115bead28a",
+      "name": "Fred Rafters",
+      "last_login": null,
+      "first_name": "Fred",
+      "last_name": "Rafters",
+      "email": "fred.rafters@mockexample.com",
+      "contact_email": "",
+      "telephone_number": "",
+      "dit_team": {
+        "id": "346e1abc-9698-e211-a939-e4115bead28a",
+        "name": "Team E",
+        "role": "62329c18-6095-e211-a939-e4115bead28a",
+        "uk_region": null,
+        "country": "955f66a0-5d95-e211-a939-e4115bead28a"
+      }
+    }
+  ]
+}

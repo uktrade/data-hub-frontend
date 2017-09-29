@@ -52,6 +52,15 @@ module.exports = {
         nameInput: {
           selector: '#field-name',
         },
+        organiser: {
+          selector: 'select[name="organiser"]',
+        },
+        country: {
+          selector: 'select[name="address_country"]',
+        },
+        eventType: {
+          selector: 'select[name="event_type"]',
+        },
       },
     },
   },

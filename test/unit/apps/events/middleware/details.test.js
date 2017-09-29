@@ -1,3 +1,4 @@
+const advisersData = require('../../../data/advisers/advisers')
 const eventData = require('../../../data/events/event.json')
 const { merge, assign } = require('lodash')
 
@@ -35,6 +36,7 @@ describe('Event details middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.saveEventStub = this.sandbox.stub()
     this.fetchEventStub = this.sandbox.stub()
+    this.getAdvisersStub = this.sandbox.stub()
     this.transformEventFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformEventResponseToViewRecordStub = this.sandbox.stub()
     this.middleware = proxyquire('~/src/apps/events/middleware/details', {
@@ -48,6 +50,9 @@ describe('Event details middleware', () => {
           id: '2',
           data: 'transformed',
         }),
+      },
+      '../../adviser/repos': {
+        getAdvisers: this.getAdvisersStub.resolves(advisersData),
       },
     })
     this.req = {
@@ -254,12 +259,13 @@ describe('Event details middleware', () => {
       })
     })
 
-    context('when error', () => {
-      it('should call next middleware', async () => {
-        this.fetchEventStub.rejects({ status: 500 })
-        await this.middleware.getEventDetails(this.req, this.res, this.nextSpy, eventData.id)
+    describe('#getAdviserDetails', () => {
+      context('when success', () => {
+        it('should set event data on locals', async () => {
+          await this.middleware.getAdviserDetails(this.req, this.res, this.nextSpy)
 
-        expect(this.nextSpy).to.be.calledWith({ status: 500 })
+          expect(this.res.locals.advisers).to.deep.equal(advisersData)
+        })
       })
     })
   })

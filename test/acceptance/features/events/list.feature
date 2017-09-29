@@ -42,11 +42,17 @@ Feature: View a list of events
     And I click the save button
     Then I see the success message
     When I navigate to the event list page
-    And I filter the events list
+    And I filter the events list by name
+    Then I can view the event
+    And I filter the events list by organiser
+    Then I can view the event
+    And I filter the events list by event type
+    Then I can view the event
+    And I filter the events list by country
     Then I can view the event
 
-  @events-list--sort-a-z
-  Scenario: Sort event list A-Z
+  @events-list--sort-a-z-and-z-a
+  Scenario: Sort event list A-Z and Z-A
     And I navigate to the event list page
     When I click the add an event link
     And I populate the create event form
@@ -60,20 +66,6 @@ Feature: View a list of events
     When I navigate to the event list page
     And I sort the events list name A-Z
     Then I see the list in A-Z alphabetical order
-
-  @events-list--sort-z-a
-  Scenario: Sort event list Z-A
-    And I navigate to the event list page
-    When I click the add an event link
-    And I populate the create event form
-    And I click the save button
-    Then I see the success message
-    When I navigate to the event list page
-    And I click the add an event link
-    And I populate the create event form
-    When I click the save button
-    Then I see the success message
-    When I navigate to the event list page
     And I sort the events list name Z-A
     Then I see the list in Z-A alphabetical order
 

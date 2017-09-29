@@ -41,7 +41,7 @@ module.exports = {
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
     saveButton: {
-      selector: '//button[text() = \'Save and Continue\']',
+      selector: '//button[text()[normalize-space()="Save"]]',
       locateStrategy: 'xpath',
     },
     // Event details page
@@ -65,10 +65,6 @@ module.exports = {
   },
   commands: [
     {
-      selectListOptionByText (listName, text) {
-        return this
-          .click('xpath', `//select[@name="${listName}"]/option[normalize-space(.)="${text}"]`)
-      },
       selectListOption (listName, optionNumber) {
         return this
           .click(`select[name="${listName}"] option:nth-child(${optionNumber})`)
@@ -98,7 +94,7 @@ module.exports = {
           end_date_year: format(futureDate, 'YYYY'),
           end_date_month: format(futureDate, 'MM'),
           end_date_day: format(futureDate, 'D'),
-          notes: faker.lorem.paragraph(),
+          notes: faker.lorem.sentence(),
           location_type: null,
           service: null,
           event_type: null,
