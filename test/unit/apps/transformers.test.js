@@ -102,8 +102,8 @@ describe('Global transformers', () => {
           start_date_year: '2017',
         })
 
-        expect(actualYearMonth).to.equal('2017-09')
-        expect(actualYear).to.equal('2017')
+        expect(actualYearMonth).to.equal('2017-09-')
+        expect(actualYear).to.equal('2017--')
       })
     })
   })
