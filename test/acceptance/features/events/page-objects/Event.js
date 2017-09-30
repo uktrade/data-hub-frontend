@@ -2,6 +2,14 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { camelCase, isNull, pickBy, keys } = require('lodash')
 
+const { getSelectorForElementWithText } = require('../../../common/selectors')
+
+const getDetailsFor = (label) =>
+  getSelectorForElementWithText(label, { el: '//th', child: '/following-sibling::td' })
+
+const getButtonCalled = (label) =>
+  getSelectorForElementWithText(label, { el: '//*', className: 'button' })
+
 module.exports = {
   url: process.env.QA_HOST + '/events/create',
   props: {},
@@ -41,10 +49,7 @@ module.exports = {
     addAnotherSharedTeam: 'input[name="add_team"]',
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
-    saveButton: {
-      selector: '//button[. = "Save"]',
-      locateStrategy: 'xpath',
-    },
+    saveButton: getButtonCalled('Save'),
     // Event details page
     eventNameFromDetails: 'a',
     eventTypeFromDetails: 'a',
