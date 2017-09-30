@@ -11,7 +11,7 @@ const getButtonCalled = (label) =>
   getSelectorForElementWithText(label, { el: '//*', className: 'button' })
 
 module.exports = {
-  url: process.env.QA_HOST + '/events/create',
+  url: `${process.env.QA_HOST}/events/create`,
   props: {},
   elements: {
     eventName: 'input[name="name"]',
