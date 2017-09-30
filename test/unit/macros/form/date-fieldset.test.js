@@ -130,16 +130,14 @@ describe('DateFieldset component', () => {
     })
 
     describe('datetime ISO 8601 string', () => {
-      beforeEach(() => {
+      it('should render three fields with values from ISO time stamp', () => {
         this.component = macros.renderToDom('DateFieldset', {
           name: 'date',
           label: 'Man in space',
           hint: '20th century',
           value: '2007-03-01T13:00:00',
         })
-      })
 
-      it('should render three fields with values from ISO time stamp', () => {
         const inputsValues = Array.from(this.component.querySelectorAll('input')).map(x => x.value)
         const labels = Array.from(this.component.querySelectorAll('label')).map(x => x.textContent.trim())
 
@@ -150,6 +148,25 @@ describe('DateFieldset component', () => {
         expect(labels[2]).to.equal('Year')
         expect(inputsValues[2]).to.equal('2007')
       })
+    })
+
+    it('should render three fields with values from ISO time stamp', () => {
+      this.component = macros.renderToDom('DateFieldset', {
+        name: 'date',
+        label: 'Man in space',
+        hint: '20th century',
+        value: '-03-',
+      })
+
+      const inputsValues = Array.from(this.component.querySelectorAll('input')).map(x => x.value)
+      const labels = Array.from(this.component.querySelectorAll('label')).map(x => x.textContent.trim())
+
+      expect(labels[0]).to.equal('Day')
+      expect(inputsValues[0]).to.equal('')
+      expect(labels[1]).to.equal('Month')
+      expect(inputsValues[1]).to.equal('03')
+      expect(labels[2]).to.equal('Year')
+      expect(inputsValues[2]).to.equal('')
     })
   })
 
