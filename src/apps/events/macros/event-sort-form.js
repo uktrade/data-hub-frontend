@@ -16,8 +16,6 @@ const eventSortForm = {
         { value: 'modified_on:asc', label: 'Least recently updated' },
         { value: 'start_date:asc', label: 'Earliest start date' },
         { value: 'start_date:desc', label: 'Latest start date' },
-        { value: 'end_date:asc', label: 'Earliest end date' },
-        { value: 'end_date:desc', label: 'Latest end date' },
       ],
     },
   ],
