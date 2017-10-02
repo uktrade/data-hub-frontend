@@ -1,3 +1,22 @@
+const { getSelectorForElementWithText } = require('../../../common/selectors')
+
+const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-collection__filter-label',
+    child: '/following-sibling::a',
+  }
+)
+const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  }
+)
+
 module.exports = {
   url: process.env.QA_HOST + '/events',
   props: {},
@@ -5,45 +24,43 @@ module.exports = {
     h1Element: '.c-local-header__heading',
     addEventButton: '#add-event-link',
     sortBy: '#field-sortby',
-    firstHeaderInList: '.c-entity-list li:first-child .c-entity__header a',
-    secondHeaderInList: '.c-entity-list li:nth-child(2) .c-entity__header a',
     xhrTargetElement: '#xhr-outlet',
   },
   sections: {
+    filterTags: {
+      selector: '.c-collection__filter-summary',
+      elements: {
+        eventName: getFilterTagRemoveBtnSelector('Event name'),
+        organiser: getFilterTagRemoveBtnSelector('Organiser'),
+        eventType: getFilterTagRemoveBtnSelector('Type of event'),
+        country: getFilterTagRemoveBtnSelector('Country'),
+        fromDate: getFilterTagRemoveBtnSelector('From'),
+      },
+    },
     firstEventInList: {
       selector: '.c-entity-list li:first-child',
       elements: {
         header: {
           selector: '.c-entity__header a',
         },
-        eventType: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Type"]]/following-sibling::span',
-          locateStrategy: 'xpath',
+        eventType: getMetaListItemValueSelector('Type'),
+        country: getMetaListItemValueSelector('Country'),
+        region: getMetaListItemValueSelector('Region'),
+        eventStart: getMetaListItemValueSelector('Begins'),
+        eventEnd: getMetaListItemValueSelector('Ends'),
+        organiser: getMetaListItemValueSelector('Organiser'),
+        leadTeam: getMetaListItemValueSelector('Lead team'),
+        updated: getMetaListItemValueSelector('Updated'),
+      },
+    },
+    secondEventInList: {
+      selector: '.c-entity-list li:nth-child(2)',
+      elements: {
+        header: {
+          selector: '.c-entity__header a',
         },
-        country: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Country"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
-        region: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Region"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
-        eventStart: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Begins"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
-        eventEnd: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Ends"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
-        organiser: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Organiser"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
-        leadTeam: {
-          selector: '//span[contains(@class,"c-meta-list__item-label")][text()[normalize-space()="Lead team"]]/following-sibling::span',
-          locateStrategy: 'xpath',
-        },
+        eventStart: getMetaListItemValueSelector('Begins'),
+        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     filters: {
@@ -60,6 +77,9 @@ module.exports = {
         },
         eventType: {
           selector: 'select[name="event_type"]',
+        },
+        startDateAfter: {
+          selector: '#field-start_date_after',
         },
       },
     },

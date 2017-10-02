@@ -50,9 +50,11 @@ Feature: View a list of events
     Then I can view the event
     And I filter the events list by country
     Then I can view the event
+    And I filter the events list by start date
+    Then I can view the event
 
-  @events-list--sort-a-z-and-z-a
-  Scenario: Sort event list A-Z and Z-A
+  @events-list--sort
+  Scenario: Sort event list
     And I navigate to the event list page
     When I click the add an event link
     And I populate the create event form
@@ -68,4 +70,8 @@ Feature: View a list of events
     Then I see the list in A-Z alphabetical order
     And I sort the events list name Z-A
     Then I see the list in Z-A alphabetical order
+    And I sort the events list by recently updated
+    Then I see the list in descending recently updated order
+    And I sort the events list by least recently updated
+    Then I see the list in ascending recently updated order
 

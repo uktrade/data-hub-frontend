@@ -33,13 +33,13 @@ const eventFiltersFields = ({ advisers }) => {
     },
     {
       macroName: 'TextField',
-      name: 'start_date',
+      name: 'start_date_after',
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-18`,
     },
     {
       macroName: 'TextField',
-      name: 'end_date',
+      name: 'start_date_before',
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
