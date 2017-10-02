@@ -40,7 +40,6 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.visible('@companies')
       .assert.visible('@contacts')
       .assert.visible('@events')
-      .assert.visible('@interactions')
       .assert.visible('@investmentProjects')
       .assert.visible('@orders')
   })
