@@ -21,11 +21,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .enterCredentials()
   })
 
-  When(/^I submit the form$/, async () => {
-    await Login
-      .submitForm('@signInForm')
-  })
-
   Then(/^I verify that I'm successfully logged in$/, async () => {
     await Login
       .waitForElementVisible('@searchBar')

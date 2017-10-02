@@ -2,8 +2,16 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { camelCase, isNull, pickBy, keys } = require('lodash')
 
+const { getSelectorForElementWithText } = require('../../../common/selectors')
+
+const getDetailsFor = (label) =>
+  getSelectorForElementWithText(label, { el: '//th', child: '/following-sibling::td' })
+
+const getButtonCalled = (label) =>
+  getSelectorForElementWithText(label, { el: '//*', className: 'button' })
+
 module.exports = {
-  url: process.env.QA_HOST + '/events/create',
+  url: `${process.env.QA_HOST}/events/create`,
   props: {},
   elements: {
     eventName: 'input[name="name"]',
@@ -33,36 +41,28 @@ module.exports = {
     serviceError: 'label[for=field-service] span:nth-child(2)',
     leadTeam: 'select[name="lead_team"]',
     organiser: 'select[name="organiser"]',
-    sharedYesContainer: '#group-field-event_shared div div',
-    sharedNoContainer: '#group-field-event_shared div div:nth-child(2)',
     sharedYes: 'label[for=field-event_shared-1]',
     sharedNo: 'label[for=field-event_shared-2]',
     teams: '#field-teams',
     addAnotherSharedTeam: 'input[name="add_team"]',
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
-    saveButton: {
-      selector: '//button[. = "Save"]',
-      locateStrategy: 'xpath',
-    },
+    editButton: getButtonCalled('Edit Event'),
+    saveButton: getButtonCalled('Save'),
     // Event details page
-    eventNameFromDetails: 'a',
-    eventTypeFromDetails: 'a',
+    eventNameFromDetails: '.c-local-header__heading',
+    eventTypeFromDetails: getDetailsFor('Type of event'),
     additionalRefCodeFromDetails: 'a',
-    startDateFromDetails: 'a',
-    endDateFromDetails: 'a',
-    locationTypeFromDetails: 'a',
-    addressLine1FromDetails: 'a',
-    addressLine2FromDetails: 'a',
-    addressTownFromDetails: 'a',
-    addressPostcodeFromDetails: 'a',
-    addressCountryFromDetails: 'a',
-    notesFromDetails: 'a',
-    teamHostingFromDetails: 'a',
-    organiserFromDetails: 'a',
-    sharedYesFromDetails: 'a',
-    sharedTeamsFromDetails: 'a',
-    relatedProgrammesFromDetails: 'a',
+    startDateFromDetails: getDetailsFor('Event start date'),
+    endDateFromDetails: getDetailsFor('Event end date'),
+    locationTypeFromDetails: getDetailsFor('Event location type'),
+    addressFromDetails: getDetailsFor('Address'),
+    notesFromDetails: getDetailsFor('Notes'),
+    teamHostingFromDetails: getDetailsFor('Lead team'),
+    organiserFromDetails: getDetailsFor('Organiser'),
+    otherTeamsFromDetails: getDetailsFor('Other teams'),
+    relatedProgrammesFromDetails: getDetailsFor('Related programmes'),
+    serviceFromDetails: getDetailsFor('Service'),
   },
   commands: [
     {
