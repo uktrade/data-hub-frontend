@@ -279,6 +279,27 @@ describe('Event transformers', () => {
           expect(this.transformedEvent['Other teams']).to.deep.equal(['Team 2', 'Team 3'])
         })
       })
+
+      context('when there is no lead team', () => {
+        beforeEach(() => {
+          const eventWithThreeTeams = Object.assign({}, mockEvent, {
+            lead_team: null,
+            teams: [{
+              id: '2',
+              name: 'Team 2',
+            }, {
+              id: '3',
+              name: 'Team 3',
+            }],
+          })
+
+          this.transformedEvent = transformEventResponseToViewRecord(eventWithThreeTeams)
+        })
+
+        it('should include a list of other teams', () => {
+          expect(this.transformedEvent['Other teams']).to.deep.equal(['Team 2', 'Team 3'])
+        })
+      })
     })
 
     describe('programmes transformer', () => {
