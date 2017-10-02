@@ -6,8 +6,8 @@ const labels = {
       address_country: 'Country',
       uk_region: 'Region',
       organiser: 'Organiser',
-      start_date: 'Starts on or after',
-      end_date: 'Ends on',
+      start_date_after: 'From',
+      start_date_before: 'To',
     },
   },
 }
