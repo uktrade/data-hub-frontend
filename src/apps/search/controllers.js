@@ -7,7 +7,6 @@ const { transformContactToListItem } = require('../contacts/transformers')
 const { transformEventToListItem } = require('../events/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
-const { transformInteractionToListItem } = require('../interactions/transformers')
 
 async function renderSearchResults (req, res) {
   const entity = find(entities, ['path', req.params.searchPath])
@@ -38,10 +37,6 @@ async function renderSearchResults (req, res) {
     itemTransformers.push(transformCompanyToListItem)
     actionButton.text = 'Add company'
     actionButton.url = '/companies/add-step-1'
-  }
-
-  if (searchEntity === 'interaction') {
-    itemTransformers.push(transformInteractionToListItem)
   }
 
   const results = await search({

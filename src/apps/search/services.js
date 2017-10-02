@@ -26,13 +26,6 @@ const entities = [
     count: 0,
   },
   {
-    entity: 'interaction',
-    path: 'interactions',
-    text: 'Interactions',
-    noun: 'interaction',
-    count: 0,
-  },
-  {
     entity: 'investment_project',
     path: 'investment-projects',
     text: 'Investment projects',

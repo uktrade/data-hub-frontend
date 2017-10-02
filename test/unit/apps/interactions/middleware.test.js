@@ -50,24 +50,4 @@ describe('Interactions middleware', () => {
       this.req.body.selectedSortBy = 'subject'
     })
   })
-
-  describe('#getInteractionsCollection', () => {
-    it('should call the search api to get interactions', async () => {
-      await this.middleware.getInteractionsCollection(this.req, this.res, this.next)
-
-      expect(this.searchStub).to.be.calledWith({
-        searchEntity: 'interaction',
-        requestBody: this.req.body,
-        token: this.req.session.token,
-        page: this.req.query.page,
-        isAggregation: false,
-      })
-    })
-    it('should create a collection of interactions', async () => {
-      await this.middleware.getInteractionsCollection(this.req, this.res, this.next)
-
-      expect(this.res.locals.results.count).to.equal(1)
-      expect(this.res.locals.results.items).to.contain(this.transformedInteractionStub)
-    })
-  })
 })
