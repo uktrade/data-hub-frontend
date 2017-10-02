@@ -132,6 +132,8 @@ function transformEventResponseToViewRecord ({
     }
   }
 
+  const otherTeams = lead_team ? reject(teams, lead_team) : teams
+
   return Object.assign(transformedEvent, {
     'Event location type': location_type,
     'Address': getFormattedAddress({
@@ -146,7 +148,7 @@ function transformEventResponseToViewRecord ({
     'Notes': notes,
     'Lead team': lead_team,
     'Organiser': organiser,
-    'Other teams': reject(teams, lead_team).map(x => x.name),
+    'Other teams': otherTeams.map(x => x.name),
     'Related programmes': related_programmes
       .map(item => item.name),
     'Service': service,
