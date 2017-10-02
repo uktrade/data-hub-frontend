@@ -1,6 +1,8 @@
-const { format } = require('date-fns')
+const { compareAsc, compareDesc } = require('date-fns')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+
+const { getDateFor } = require('../../../common/date')
 
 defineSupportCode(({ Then, When, Before }) => {
   const EventList = client.page.EventList()
@@ -11,7 +13,10 @@ defineSupportCode(({ Then, When, Before }) => {
       eventDetails: {},
     }
     EventList.state = {
-      listHeaders: {},
+      list: {
+        firstItem: {},
+        secondItem: {},
+      },
     }
   })
 
@@ -49,21 +54,16 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.containsText('@header', Event.state.eventDetails.name)
       .assert.containsText('@eventType', Event.state.eventDetails.event_type)
       .assert.containsText('@country', Event.state.eventDetails.address_country)
-      .assert.containsText('@eventStart', format(
-        new Date(
-          Event.state.eventDetails.start_date_year,
-          Event.state.eventDetails.start_date_month - 1,
-          Event.state.eventDetails.start_date_day
-        ),
-        'D MMMM YYYY'))
-      .assert.containsText('@eventEnd', format(
-        new Date(
-          Event.state.eventDetails.end_date_year,
-          Event.state.eventDetails.end_date_month - 1,
-          Event.state.eventDetails.end_date_day
-        ),
-        'D MMMM YYYY'
-      ))
+      .assert.containsText('@eventStart', getDateFor({
+        year: Event.state.eventDetails.start_date_year,
+        month: Event.state.eventDetails.start_date_month,
+        day: Event.state.eventDetails.start_date_day,
+      }))
+      .assert.containsText('@eventEnd', getDateFor({
+        year: Event.state.eventDetails.end_date_year,
+        month: Event.state.eventDetails.end_date_month,
+        day: Event.state.eventDetails.end_date_day,
+      }))
       .assert.containsText('@organiser', Event.state.eventDetails.organiser)
       .assert.containsText('@leadTeam', Event.state.eventDetails.lead_team)
   })
@@ -85,6 +85,11 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .assert.containsText('@header', Event.state.eventDetails.name)
+
+    // clear filter
+    await EventList.section.filterTags
+      .click('@eventName')
+      .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by organiser$/, async () => {
@@ -96,6 +101,11 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@organiser')
       .assert.containsText('@organiser', Event.state.eventDetails.organiser)
+
+    // clear filter
+    await EventList.section.filterTags
+      .click('@organiser')
+      .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by country/, async () => {
@@ -107,6 +117,11 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@country')
       .assert.containsText('@country', Event.state.eventDetails.address_country)
+
+    // clear filter
+    await EventList.section.filterTags
+      .click('@country')
+      .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by event type/, async () => {
@@ -118,6 +133,35 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@eventType')
       .assert.containsText('@eventType', Event.state.eventDetails.event_type)
+
+    // clear filter
+    await EventList.section.filterTags
+      .click('@eventType')
+      .wait() // wait for xhr
+  })
+
+  Then(/^I filter the events list by start date/, async () => {
+    const eventDetails = Event.state.eventDetails
+    const startDate = getDateFor({
+      year: eventDetails.start_date_year,
+      month: eventDetails.start_date_month,
+      day: eventDetails.start_date_day,
+    })
+
+    await EventList.section.filters
+      .waitForElementPresent('@startDateAfter')
+      .setValue('@startDateAfter', startDate)
+      .sendKeys('@startDateAfter', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@eventStart')
+      .assert.containsText('@eventStart', startDate)
+
+    // clear filter
+    await EventList.section.filterTags
+      .click('@fromDate')
+      .wait() // wait for xhr
   })
 
   Then(/^I sort the events list name A-Z$/, async () => {
@@ -125,20 +169,22 @@ defineSupportCode(({ Then, When, Before }) => {
       .click('select[name="sortby"] option[value="name:asc"]')
       .wait()// wait for xhr
 
-    await EventList
-      .waitForElementVisible('@firstHeaderInList')
-      .getText('@firstHeaderInList', (firstHeaderText) => {
-        EventList.state.listHeaders.first = firstHeaderText
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@header')
+      .getText('@header', (text) => {
+        EventList.state.list.firstItem.header = text.value
       })
-      .waitForElementVisible('@secondHeaderInList')
-      .getText('@secondHeaderInList', (secondHeaderText) => {
-        EventList.state.listHeaders.second = secondHeaderText
+
+    await EventList.section.secondEventInList
+      .waitForElementVisible('@header')
+      .getText('@header', (text) => {
+        EventList.state.list.secondItem.header = text.value
       })
   })
 
   Then(/^I see the list in A-Z alphabetical order$/, async () => {
     client.expect(
-      EventList.state.listHeaders.first.value < EventList.state.listHeaders.second.value
+      EventList.state.list.firstItem.header < EventList.state.list.secondItem.header
     ).to.be.true
   })
 
@@ -147,20 +193,70 @@ defineSupportCode(({ Then, When, Before }) => {
       .click('select[name="sortby"] option[value="name:desc"]')
       .wait() // wait for xhr
 
-    await EventList
-      .waitForElementVisible('@firstHeaderInList')
-      .getText('@firstHeaderInList', (firstHeaderText) => {
-        EventList.state.listHeaders.first = firstHeaderText
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@header')
+      .getText('@header', (text) => {
+        EventList.state.list.firstItem.header = text.value
       })
-      .waitForElementVisible('@secondHeaderInList')
-      .getText('@secondHeaderInList', (secondHeaderText) => {
-        EventList.state.listHeaders.second = secondHeaderText
+
+    await EventList.section.secondEventInList
+      .waitForElementVisible('@header')
+      .getText('@header', (text) => {
+        EventList.state.list.secondItem.header = text.value
       })
   })
 
   Then(/^I see the list in Z-A alphabetical order$/, async () => {
     client.expect(
-      EventList.state.listHeaders.first.value > EventList.state.listHeaders.second.value
+      EventList.state.list.firstItem.header > EventList.state.list.secondItem.header
     ).to.be.true
+  })
+
+  Then(/^I sort the events list by recently updated$/, async () => {
+    await EventList
+      .click('select[name="sortby"] option[value="modified_on:desc"]')
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@updated')
+      .getText('@updated', (dateString) => {
+        EventList.state.list.firstItem.updated = dateString.value
+      })
+
+    await EventList.section.secondEventInList
+      .waitForElementVisible('@updated')
+      .getText('@updated', (dateString) => {
+        EventList.state.list.secondItem.updated = dateString.value
+      })
+  })
+
+  Then(/^I see the list in descending recently updated order$/, async () => {
+    client.expect(
+      compareDesc(EventList.state.list.firstItem.updated, EventList.state.list.secondItem.updated)
+    ).to.be.within(0, 1)
+  })
+
+  Then(/^I sort the events list by least recently updated$/, async () => {
+    await EventList
+      .click('select[name="sortby"] option[value="modified_on:asc"]')
+      .wait() // wait for xhr
+
+    await EventList.section.firstEventInList
+      .waitForElementVisible('@updated')
+      .getText('@updated', (dateString) => {
+        EventList.state.list.firstItem.updated = dateString.value
+      })
+
+    await EventList.section.secondEventInList
+      .waitForElementVisible('@updated')
+      .getText('@updated', (dateString) => {
+        EventList.state.list.secondItem.updated = dateString.value
+      })
+  })
+
+  Then(/^I see the list in ascending recently updated order$/, async () => {
+    client.expect(
+      compareAsc(EventList.state.list.firstItem.updated, EventList.state.list.secondItem.updated)
+    ).to.be.within(0, 1)
   })
 })
