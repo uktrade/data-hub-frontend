@@ -3,7 +3,7 @@ const { getSelectorForElementWithText } = require('../../../common/selectors')
 const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
   text,
   {
-    el: '//span',
+    el: '//div[contains(@class,"c-collection__filter-summary")]//span',
     className: 'c-collection__filter-label',
     child: '/following-sibling::a',
   }
