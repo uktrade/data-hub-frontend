@@ -44,7 +44,7 @@ const steps = merge({}, createSteps, {
     controller: EditWorkDescriptionController,
   },
   '/payment': {
-    heading: 'Edit quote and payment details',
+    heading: 'Edit invoice details',
     fields: [
       'vat_status',
       'vat_number',

@@ -84,13 +84,6 @@ $_first-element-spacing: $default-spacing-unit * 3;
   margin-bottom: 0;
 }
 
-.c-local-header__content {
-  @include media(tablet) {
-    float: left;
-    width: 70%;
-  }
-}
-
 .c-local-header__actions {
   * + & {
     margin-top: $default-spacing-unit;
@@ -105,11 +98,10 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   @include media(tablet) {
-    float: right;
-    width: 30%;
+    text-align: right;
 
     * + & {
-      margin-top: $_first-element-spacing;
+      margin-top: 0;
     }
   }
 }

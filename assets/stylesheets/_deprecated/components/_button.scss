@@ -41,8 +41,3 @@
 .button--compact {
   padding: 0;
 }
-
-.button--small {
-  @include bold-font(16);
-  padding: .3em .6em .15em;
-}
