@@ -1,6 +1,6 @@
 const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
-const { compact } = require('lodash')
+const { camelCase, isNull, pickBy, keys } = require('lodash')
 
 module.exports = {
   url: process.env.QA_HOST + '/events/create',
@@ -78,13 +78,15 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm ({ eventNameSuffix = '' }) {
+      populateCreateEventForm ({
+        name,
+        addressCountry,
+      } = {}) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
 
-        // Store created event details
         this.state.eventDetails = {
-          name: compact([ faker.company.companyName(), eventNameSuffix ]).join(' ').trim(),
+          name: name || faker.company.companyName(),
           address_1: faker.address.streetName(),
           address_2: faker.address.secondaryAddress(),
           address_town: faker.address.city(),
@@ -99,7 +101,7 @@ module.exports = {
           location_type: null,
           service: null,
           event_type: null,
-          address_country: null,
+          address_country: addressCountry || null,
           organiser: null,
           lead_team: null,
           related_programmes: null,
@@ -107,63 +109,37 @@ module.exports = {
         }
 
         return this
-          .getListOption('@eventType', (eventType) => {
-            this.state.eventDetails.event_type = eventType
-          })
-          .getListOption('@locationType', (locationType) => {
-            this.state.eventDetails.location_type = locationType
-          })
-          .getListOption('@addressCountry', (country) => {
-            this.state.eventDetails.address_country = country
+          .click('@sharedYes')
+          .api.perform(async (done) => {
+            // get select options text
+            await Promise.all(
+              keys(pickBy(this.state.eventDetails, isNull))
+                .map((key) => {
+                  return new Promise((resolve) => {
+                    this.getListOption(`@${camelCase(key)}`, (optionText) => {
+                      this.state.eventDetails[key] = optionText
+                      resolve()
+                    })
+                  })
+                }))
 
-            if (country === 'United Kingdom') {
-              this.getListOption('@ukRegion', (ukRegion) => {
-                this.state.eventDetails.uk_region = ukRegion
+            if (this.state.eventDetails.address_country === 'United Kingdom') {
+              // get and set uk_region
+              await new Promise((resolve) => {
+                this.getListOption('@ukRegion', (ukRegion) => {
+                  this.state.eventDetails.uk_region = ukRegion
+                  resolve()
+                })
               })
             }
-          })
-          .getListOption('@leadTeam', (leadTeam) => {
-            this.state.eventDetails.lead_team = leadTeam
-          })
-          .getListOption('@service', (service) => {
-            this.state.eventDetails.service = service
-          })
-          .getListOption('@organiser', (organiser) => {
-            this.state.eventDetails.organiser = organiser
-          })
-          .getListOption('@teams', (teams) => {
-            this.state.eventDetails.teams = teams
-          })
-          .getListOption('@relatedProgrammes', (relatedProgrammes) => {
-            this.state.eventDetails.related_programmes = relatedProgrammes
-          })
-          .click('@sharedYes')
-          .api.perform(() => {
+
             // loop through all form inputs and set stored values
             for (const key in this.state.eventDetails) {
               if (this.state.eventDetails[key]) {
                 this.setValue(`[name="${key}"]`, this.state.eventDetails[key])
               }
             }
-          })
-      },
-
-      populateCountryAndRegion () {
-        this.state.countryDetails = {
-          address_country: 'United Kingdom',
-          uk_region: null,
-        }
-
-        return this
-          .getListOption('@ukRegion', (ukRegion) => {
-            this.state.countryDetails.uk_region = ukRegion
-          })
-          .api.perform(() => {
-            for (const key in this.state.countryDetails) {
-              if (this.state.countryDetails[key]) {
-                this.setValue(`[name="${key}"]`, this.state.countryDetails[key])
-              }
-            }
+            done()
           })
       },
     },

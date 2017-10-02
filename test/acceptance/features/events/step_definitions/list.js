@@ -34,12 +34,12 @@ defineSupportCode(({ Then, When, Before }) => {
 
   When(/^I populate the create event form$/, async () => {
     await Event
-      .populateCreateEventForm({})
+      .populateCreateEventForm()
   })
 
-  When(/^I select country as United Kingdom with a region$/, async () => {
+  When(/^I populate the create event form with United Kingdom and a region$/, async () => {
     await Event
-      .populateCountryAndRegion()
+      .populateCreateEventForm({ addressCountry: 'United Kingdom' })
   })
 
   Then(/^I am taken to the create event page$/, async () => {
@@ -71,8 +71,8 @@ defineSupportCode(({ Then, When, Before }) => {
   Then(/^I can view the event country and region$/, async () => {
     await EventList.section.firstEventInList
       .waitForElementPresent('@header')
-      .assert.containsText('@country', Event.state.countryDetails.address_country)
-      .assert.containsText('@region', Event.state.countryDetails.uk_region)
+      .assert.containsText('@country', Event.state.eventDetails.address_country)
+      .assert.containsText('@ukRegion', Event.state.eventDetails.uk_region)
   })
 
   Then(/^I filter the events list by name$/, async () => {
