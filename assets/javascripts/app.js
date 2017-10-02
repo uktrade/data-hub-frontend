@@ -1,4 +1,5 @@
 require('core-js/fn/array/from')
+require('core-js/fn/promise')
 require('element-closest')
 require('classlist.js')
 
