@@ -4,12 +4,14 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ When, Then }) => {
   const Form = client.page.Form()
 
-  When(/^I submit the form$/, async () => {
+  When(/^I submit (.+) form$/, async (selector) => {
+    selector = selector === 'the' ? 'form' : selector
+
     await Form
-      .submitForm('form')
+      .submitForm(selector)
   })
 
-  Then(/^I see the error summary$/, async () => {
+  Then(/^I see form error summary$/, async () => {
     await Form
       .assert.visible('@errorSummary')
   })
