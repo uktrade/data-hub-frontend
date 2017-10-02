@@ -36,10 +36,11 @@ function transformDateObjectToDateString (key) {
     throw Error('date object key is required to transform date')
   }
   return function transformDateObjectToStringWithKey (props = {}) {
-    return ['year', 'month', 'day']
+    const dateString = ['year', 'month', 'day']
       .map(x => props[`${key}_${x}`])
-      .filter(x => x)
-      .join('-') || null
+      .join('-')
+
+    return dateString === '--' ? null : dateString
   }
 }
 

@@ -70,6 +70,12 @@ const filters = {
     return assign({}, ...args)
   },
 
+  split (value, separator) {
+    if (!isString(value)) { return value }
+
+    return value.split(separator)
+  },
+
   highlight (string, searchTerm, shouldMatchFullWord = false) {
     if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) { return string }
 
