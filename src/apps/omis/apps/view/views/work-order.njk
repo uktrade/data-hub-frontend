@@ -7,7 +7,7 @@
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
 {% endset %}
 
-{% block main_grid_right_column %}
+{% block body_main_content %}
   {% if not order.editable %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
