@@ -1,13 +1,14 @@
 {% extends "./_layout.njk" %}
 
-{% from "_macros/results.njk" import ResultsSummary %}
+{% from "_macros/collection/collection-header.njk" import CollectionHeader %}
 
 {% block body_main_content %}
-  {% call Example('ResultsFilters') %}
+  {% call Example('CollectionFilters') %}
     {{
       CollectionFilters({
-        filters: [
-          MultipleChoiceField({
+        filtersFields: [
+          {
+            macroName: 'MultipleChoiceField',
             type: 'checkbox',
             name: 'stage',
             label: 'Stage',
@@ -19,9 +20,9 @@
               { label: 'Active' }
             ],
             modifier: ['smaller', 'light']
-          }),
-
-          MultipleChoiceField({
+          },
+          {
+            macroName: 'MultipleChoiceField',
             type: 'radio',
             name: 'investment_type',
             label: 'Investment type',
@@ -33,9 +34,9 @@
             ],
             initialOption: 'All types',
             modifier: ['smaller', 'light']
-          }),
-
-          MultipleChoiceField({
+          },
+          {
+            macroName: 'MultipleChoiceField',
             name: 'sector',
             label: 'Sector',
             value: form.data.filters.sector,
@@ -46,24 +47,24 @@
             ],
             initialOption: 'All sectors',
             modifier: ['smaller', 'light']
-          }),
-
-          TextField({
+          },
+          {
+            macroName: 'TextField',
             label: 'Estimated to land before',
             name: 'estimated_land_date_before',
             placeholder: 'e.g. 2018-07-18',
             hint: 'YYYY-MM-DD',
             value: form.data.filters.estimated_land_date_before,
             modifier: ['small', 'light']
-          })
+          }
         ]
       })
     }}
   {% endcall %}
 
-  {% call Example('ResultsSummary') %}
+  {% call Example('CollectionHeader') %}
     {{
-      ResultsSummary({
+      CollectionHeader({
         count: 10,
         filters: {
           stage: {
