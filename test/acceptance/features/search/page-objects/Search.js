@@ -32,7 +32,6 @@ module.exports = {
         companies: getSearchResultsTabSelector('Companies'),
         contacts: getSearchResultsTabSelector('Contacts'),
         events: getSearchResultsTabSelector('Events'),
-        interactions: getSearchResultsTabSelector('Interactions'),
         investmentProjects: getSearchResultsTabSelector('Investment projects'),
         orders: getSearchResultsTabSelector('Orders'),
       },
