@@ -1,7 +1,6 @@
 describe('Interaction edit controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.saveInteractionFormStub = this.sandbox.stub()
     this.createBlankInteractionForCompanyStub = this.sandbox.stub()
     this.createBlankInteractionForContactStub = this.sandbox.stub()
     this.transformInteractionResponseToFormStub = this.sandbox.stub()
@@ -18,9 +17,6 @@ describe('Interaction edit controller', () => {
     this.getServicesSpy = this.sandbox.spy()
 
     this.edit = proxyquire('~/src/apps/interactions/controllers/edit', {
-      '../services/form': {
-        saveInteractionForm: this.saveInteractionFormStub,
-      },
       '../services/data': {
         createBlankInteractionForCompany: this.createBlankInteractionForCompanyStub,
         createBlankInteractionForContact: this.createBlankInteractionForContactStub,
@@ -64,53 +60,6 @@ describe('Interaction edit controller', () => {
 
   afterEach(() => {
     this.sandbox.restore()
-  })
-
-  describe('#postDetails', () => {
-    context('when errors', () => {
-      it('should not redirect to interaction and call next middleware', async () => {
-        const error = { statusCode: 500 }
-        this.saveInteractionFormStub.rejects(error)
-
-        await this.edit.postDetails(this.req, this.res, this.nextSpy)
-
-        expect(this.res.locals).to.be.an.empty('object')
-        expect(this.res.redirect).have.not.been.called
-        expect(this.nextSpy).have.been.calledWith(error)
-      })
-
-      it('should handle form errors', async () => {
-        const errors = { error: { milk: ['spoiled'] } }
-        this.saveInteractionFormStub.rejects(errors)
-
-        await this.edit.postDetails(this.req, this.res, this.nextSpy)
-
-        expect(this.res.locals.errors).to.equal(errors.error)
-        expect(this.res.redirect).have.not.been.called
-        expect(this.nextSpy).have.been.calledOnce
-        expect(this.nextSpy).have.been.calledWith()
-        expect(this.res.locals.errors).to.deep.equal(errors.error)
-      })
-    })
-
-    context('when success', () => {
-      beforeEach(() => {
-        this.saveInteractionFormStub.resolves({ id: 'goga' })
-      })
-
-      it('should call #saveInteractionForm', async () => {
-        await this.edit.postDetails(this.req, this.res, this.nextSpy)
-
-        expect(this.saveInteractionFormStub).have.been.calledWith(this.req.session.token, this.req.body)
-      })
-
-      it('should redirect to interaction page on success', async () => {
-        await this.edit.postDetails(this.req, this.res, this.nextSpy)
-
-        expect(this.res.redirect).have.been.calledWith(sinon.match.string)
-        expect(this.nextSpy).have.not.been.called
-      })
-    })
   })
 
   describe('#renderEditPage', () => {

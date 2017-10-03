@@ -1,15 +1,16 @@
-const interactionData = require('~/test/unit/data/interactions/search-interaction.json')
+const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
 const {
   transformInteractionToListItem,
   transformInteractionResponseToForm,
+  transformInteractionFormBodyToApiRequest,
 } = require('~/src/apps/interactions/transformers')
 
 describe('Interaction transformers', () => {
   describe('#transformInteractionToListItem', () => {
     context('when the source in an interaction', () => {
       beforeEach(() => {
-        interactionData.kind = 'interaction'
-        this.transformed = transformInteractionToListItem(interactionData)
+        mockInteraction.kind = 'interaction'
+        this.transformed = transformInteractionToListItem(mockInteraction)
       })
 
       it('should transform data from interaction response to list item', () => {
@@ -60,8 +61,8 @@ describe('Interaction transformers', () => {
 
     context('when the source in a service delivery', () => {
       beforeEach(() => {
-        interactionData.kind = 'service_delivery'
-        this.transformed = transformInteractionToListItem(interactionData)
+        mockInteraction.kind = 'service_delivery'
+        this.transformed = transformInteractionToListItem(mockInteraction)
       })
 
       it('should transform data from interaction response to list item', () => {
@@ -125,8 +126,38 @@ describe('Interaction transformers', () => {
         dit_team: '222',
       }
 
-      const actual = transformInteractionResponseToForm(interactionData)
+      const actual = transformInteractionResponseToForm(mockInteraction)
       expect(actual).to.deep.equal(expected)
+    })
+  })
+
+  describe('#transformInteractionFormBodyToApiRequest', () => {
+    it('should set the date', () => {
+      const actual = transformInteractionFormBodyToApiRequest(
+        {
+          props: {
+            date_year: '2018',
+            date_month: '01',
+            date_day: '02',
+          },
+        }
+      )
+
+      expect(actual.date).to.equal('2018-01-02')
+    })
+
+    it('should set the company', () => {
+      const expected = 'company'
+      const actual = transformInteractionFormBodyToApiRequest({ company: expected })
+
+      expect(actual.company).to.equal(expected)
+    })
+
+    it('should set the communication channel', () => {
+      const expected = 'communication channel'
+      const actual = transformInteractionFormBodyToApiRequest({ communicationChannel: expected })
+
+      expect(actual.communication_channel).to.equal(expected)
     })
   })
 })
