@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { get, assign } = require('lodash')
 const dateFns = require('date-fns')
+
+const { transformDateObjectToDateString } = require('../transformers')
 
 function transformInteractionResponseToForm ({
   interaction_type,
@@ -70,7 +72,16 @@ function transformInteractionToListItem ({
   }
 }
 
+function transformInteractionFormBodyToApiRequest ({ props, company, communicationChannel }) {
+  return assign({}, props, {
+    date: transformDateObjectToDateString('date')(props),
+    company: company,
+    communication_channel: communicationChannel,
+  })
+}
+
 module.exports = {
   transformInteractionResponseToForm,
   transformInteractionToListItem,
+  transformInteractionFormBodyToApiRequest,
 }
