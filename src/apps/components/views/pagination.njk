@@ -1,22 +1,23 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
-  {% call Example('Standard') %}
+  {% call Example('Default') %}
     {{
       Pagination({
-        totalPages: 2,
+        totalPages: 3,
         currentPage: 1,
         prev: null,
         next: '?term=samsung&page=2',
         pages: [
           { label: 1, url: '?term=samsung&page=1' },
-          { label: 2, url: '?term=samsung&page=2' }
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: 3, url: '?term=samsung&page=3' }
         ]
       })
     }}
   {% endcall %}
 
-  {% call Example('Showing truncation') %}
+  {% call Example('Truncated pagination') %}
     {{
       Pagination({
         totalPages: 5,
@@ -33,7 +34,7 @@
     }}
   {% endcall %}
 
-  {% call Example('Pageless') %}
+  {% call Example('Pagination with `showPages=false`') %}
     {{
       Pagination({
         totalPages: 5,
