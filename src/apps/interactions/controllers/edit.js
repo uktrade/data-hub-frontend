@@ -4,7 +4,6 @@ const { getContactsForCompany } = require('../../contacts/repos')
 const metadataRepository = require('../../../lib/metadata')
 const { getAllAdvisers } = require('../../adviser/repos')
 const { createBlankInteractionForCompany, createBlankInteractionForContact } = require('../services/data')
-const { saveInteractionForm } = require('../services/form')
 const { transformInteractionResponseToForm } = require('../transformers')
 const { interactionEditFormConfig } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
@@ -45,7 +44,7 @@ async function renderEditPage (req, res, next) {
         }
       ),
       formData,
-      res.locals.errors,
+      get(res.locals, 'form.errors.messages'),
     )
 
     res
@@ -59,20 +58,6 @@ async function renderEditPage (req, res, next) {
   }
 }
 
-async function postDetails (req, res, next) {
-  try {
-    const result = await saveInteractionForm(req.session.token, req.body)
-    res.redirect(`/interactions/${result.id}`)
-  } catch (errors) {
-    if (errors.error) {
-      res.locals.errors = errors.error.errors || errors.error
-      return next()
-    }
-    next(errors)
-  }
-}
-
 module.exports = {
   renderEditPage,
-  postDetails,
 }
