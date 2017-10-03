@@ -33,7 +33,7 @@ function transformInteractionResponseToForm ({
 function transformInteractionToListItem ({
   id,
   subject,
-  interaction_type,
+  kind,
   contact,
   company,
   date,
@@ -47,7 +47,7 @@ function transformInteractionToListItem ({
       {
         label: 'Type',
         type: 'badge',
-        value: interaction_type,
+        value: (kind === 'interaction') ? 'Interaction' : 'Service delivery',
       },
       {
         label: 'Contact',
