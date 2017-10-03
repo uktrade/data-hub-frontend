@@ -8,7 +8,7 @@ const {
   renderBreadcrumbs,
   renderPagination,
   renderProgress,
-  renderResults,
+  renderCollection,
 } = require('./controllers')
 
 const { renderFormElements } = require('./form/controllers')
@@ -24,7 +24,7 @@ router
   .get('/entity-list', renderEntityList)
   .get('/local-header', renderLocalHeader)
   .get('/pagination', renderPagination)
-  .get('/results', getInvestmentProjectsCollection, renderResults)
+  .get('/collection', getInvestmentProjectsCollection, renderCollection)
   .get('/progress', renderProgress)
   .all('/form', renderFormElements)
 

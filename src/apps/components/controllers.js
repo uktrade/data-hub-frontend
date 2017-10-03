@@ -34,10 +34,10 @@ function renderPagination (req, res) {
     .render('components/views/pagination')
 }
 
-function renderResults (req, res) {
+function renderCollection (req, res) {
   return res
-    .breadcrumb('Results')
-    .render('components/views/results')
+    .breadcrumb('Collection')
+    .render('components/views/collection')
 }
 
 async function renderEntityList (req, res) {
@@ -104,5 +104,5 @@ module.exports = {
   renderBreadcrumbs,
   renderPagination,
   renderProgress,
-  renderResults,
+  renderCollection,
 }
