@@ -20,6 +20,10 @@
     "id": "72c226d7-5d95-e211-a939-e4115bead28a",
     "name": "Telephone"
   },
+  "communication_channel": {
+    "id": "72c226d7-5d95-e211-a939-e4115bead28a",
+    "name": "Telephone"
+  },
   "created_on": "2017-05-31T13:06:45.049191",
   "modified_on": "2017-06-28T16:05:19.036841",
   "date": "2017-05-31T00:00:00",
@@ -27,11 +31,15 @@
     "id": "1231231231312",
     "name": "Test service"
   },
-  "subject": "Test interactionss",
+  "subject": "Test interactions",
   "notes": "lorem ipsum",
   "dit_team": {
     "id": "222",
     "name": "Team"
   },
-  "investment_project": null
+  "investment_project": {
+    "id": "bac18331-ca4d-4501-960e-a1bd68b5d47e",
+    "name": "Test project"
+  },
+  "kind": "interaction"
 }

@@ -23,6 +23,7 @@ const {
   mapValues,
   omit,
   pick,
+  lowerCase,
 } = require('lodash')
 
 const { longDateFormat, mediumDateTimeFormat } = require('../../config')
@@ -48,6 +49,7 @@ function pluralise (string, count, pluralisedWord) {
 const filters = {
   stringify: JSON.stringify,
   sentenceCase: Case.sentence,
+  lowerCase,
   assign,
   concat,
   filter,
