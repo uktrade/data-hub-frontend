@@ -54,28 +54,10 @@ function getInteractionsForInvestment (token, investmentId, page) {
   return authorisedRequest(token, `${config.apiRoot}/v3/interaction?investment_project_id=${investmentId}&limit=${limit}&offset=${offset}`)
 }
 
-function createInvestmentInteraction (token, body) {
-  return authorisedRequest(token, {
-    url: `${config.apiRoot}/interaction/`,
-    method: 'POST',
-    body,
-  })
-}
-
-function updateInvestmentInteraction (token, interactionId, body) {
-  return authorisedRequest(token, {
-    url: `${config.apiRoot}/interaction/${interactionId}/`,
-    method: 'PUT',
-    body,
-  })
-}
-
 module.exports = {
   saveInteraction,
   getInteraction,
   getInteractionsForCompany,
   getInteractionsForContact,
   getInteractionsForInvestment,
-  createInvestmentInteraction,
-  updateInvestmentInteraction,
 }
