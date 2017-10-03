@@ -9,7 +9,6 @@ describe('interaction form service', function () {
   let interaction
   let service
   let dit_team
-  const token = '9876'
   let interactionFormService
 
   beforeEach(function () {
@@ -91,59 +90,6 @@ describe('interaction form service', function () {
         dit_team: null,
       }
       expect(interactionFormService.getInteractionAsFormData(freshInteraction)).to.deep.equal(expected)
-    })
-  })
-  describe('Save interaction form format to the API', function () {
-    let interactionForm
-    beforeEach(function () {
-      interactionForm = {
-        id: '999',
-        company: company.id,
-        contact: contact.id,
-        interaction_type: interaction_type.id,
-        subject: 'Test subject',
-        notes: 'Test notes',
-        date_year: '2017',
-        date_month: '2',
-        date_day: '12',
-        dit_adviser: dit_adviser.id,
-        service: service.id,
-        dit_team: dit_team.id,
-      }
-    })
-
-    it('should handle saving a simple form with no problems', function () {
-      return interactionFormService.saveInteractionForm(token, interactionForm)
-        .then((savedInteraction) => {
-          expect(saveInteractionStub).to.have.been.called
-        })
-    })
-    it('should clear fields that are empty strings', function () {
-      interactionForm.subject = ''
-      return interactionFormService.saveInteractionForm(token, interactionForm)
-        .then((savedInteraction) => {
-          expect(saveInteractionStub.firstCall.args[1].subject).to.be.null
-        })
-    })
-    it('convert the date from seperate fields into a single date field', function () {
-      return interactionFormService.saveInteractionForm(token, interactionForm)
-        .then((savedInteraction) => {
-          expect(saveInteractionStub.firstCall.args[1].date).to.equal('2017-2-12T00:00:00.00Z')
-        })
-    })
-    it('should pass back any failures', function (done) {
-      saveInteractionStub = sinon.stub().rejects(new Error('error'))
-
-      interactionFormService = proxyquire('~/src/apps/interactions/services/form', {
-        '../interactions': {
-          saveInteraction: saveInteractionStub,
-        },
-      })
-
-      interactionFormService.saveInteractionForm(token, interactionForm)
-        .catch(() => {
-          done()
-        })
     })
   })
 })

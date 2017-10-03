@@ -7,16 +7,14 @@ function getInteraction (token, interactionId) {
 
 function saveInteraction (token, interaction) {
   const options = {
+    url: `${config.apiRoot}/v3/interaction`,
+    method: 'POST',
     body: interaction,
   }
 
-  if (interaction.id && interaction.id.length > 0) {
-    // update
-    options.url = `${config.apiRoot}/interaction/${interaction.id}/`
-    options.method = 'PUT'
-  } else {
-    options.url = `${config.apiRoot}/interaction/`
-    options.method = 'POST'
+  if (interaction.id) {
+    options.url = `${options.url}/${interaction.id}`
+    options.method = 'PATCH'
   }
 
   return authorisedRequest(token, options)

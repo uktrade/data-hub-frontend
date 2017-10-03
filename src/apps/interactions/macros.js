@@ -42,6 +42,33 @@ const interactionEditFormConfig = function ({
     returnText: 'Cancel',
     children: [
       {
+        macroName: 'MultipleChoiceField',
+        name: 'contact',
+        label: formLabels.contact,
+        initialOption: '-- Select contact --',
+        options () {
+          return contacts.map(transformContactToOption)
+        },
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'dit_team',
+        label: formLabels.dit_team,
+        initialOption: '-- Select provider --',
+        options () {
+          return metaData.teams.map(transformObjectToOption)
+        },
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'service',
+        label: formLabels.service,
+        initialOption: '-- Select service --',
+        options () {
+          return services.map(transformObjectToOption)
+        },
+      },
+      {
         macroName: 'TextField',
         name: 'subject',
         label: formLabels.subject,
@@ -59,40 +86,12 @@ const interactionEditFormConfig = function ({
       },
       {
         macroName: 'MultipleChoiceField',
-        name: 'contact',
-        label: formLabels.contact,
-        optional: true,
-        initialOption: '-- Select contact --',
-        options () {
-          return contacts.map(transformContactToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
         name: 'dit_adviser',
         label: formLabels.dit_adviser,
         optional: true,
         initialOption: '-- Select adviser --',
         options () {
           return get(advisers, 'results', []).map(transformContactToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'service',
-        label: formLabels.service,
-        initialOption: '-- Select service --',
-        options () {
-          return services.map(transformObjectToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'dit_team',
-        label: formLabels.dit_team,
-        initialOption: '-- Select provider --',
-        options () {
-          return metaData.teams.map(transformObjectToOption)
         },
       },
     ],
