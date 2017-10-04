@@ -1,4 +1,4 @@
-@investment-projects-create
+@investment-projects-create @ignore
 Feature: Create a new Investment project
   As an existing user
   I would like to create a new Investment project

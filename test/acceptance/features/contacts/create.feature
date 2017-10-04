@@ -1,4 +1,4 @@
-@contacts-create
+@contacts-create @ignore
 Feature: Create New Contact
   As an existing user
   I would like to create a new contact for a company

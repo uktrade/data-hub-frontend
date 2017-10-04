@@ -1,4 +1,4 @@
-@investment-projects-stage
+@investment-projects-stage @ignore
 Feature: Investment project stages
   As an existing user
   I would like to view different stages of Investment Project

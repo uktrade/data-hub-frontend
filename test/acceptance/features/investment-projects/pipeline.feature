@@ -1,4 +1,4 @@
-@investment-projects-pipeline
+@investment-projects-pipeline @ignore
 Feature: View pipeline of investment projects
   As an existing user
   I would like to view all the Investment projects Pipeline
