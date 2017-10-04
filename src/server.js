@@ -63,8 +63,6 @@ app.use(sessionStore)
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 
-app.use(csrf())
-app.use(csrfToken())
 app.use(compression())
 app.use(i18n)
 
@@ -89,6 +87,8 @@ app.use(auth)
 app.use(user)
 app.use(headers)
 app.use(store())
+app.use(csrf())
+app.use(csrfToken())
 
 // routing
 app.use(slashify())
