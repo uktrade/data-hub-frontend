@@ -4,9 +4,6 @@ const { camelCase, isNull, pickBy, keys } = require('lodash')
 
 const { getSelectorForElementWithText } = require('../../../common/selectors')
 
-const getDetailsFor = (label) =>
-  getSelectorForElementWithText(label, { el: '//th', child: '/following-sibling::td' })
-
 const getButtonCalled = (label) =>
   getSelectorForElementWithText(label, { el: '//*', className: 'button' })
 
@@ -49,20 +46,6 @@ module.exports = {
     addAnotherProgramme: 'input[name="add_related_programme"]',
     editButton: getButtonCalled('Edit Event'),
     saveButton: getButtonCalled('Save'),
-    // Event details page
-    eventNameFromDetails: '.c-local-header__heading',
-    eventTypeFromDetails: getDetailsFor('Type of event'),
-    additionalRefCodeFromDetails: 'a',
-    startDateFromDetails: getDetailsFor('Event start date'),
-    endDateFromDetails: getDetailsFor('Event end date'),
-    locationTypeFromDetails: getDetailsFor('Event location type'),
-    addressFromDetails: getDetailsFor('Address'),
-    notesFromDetails: getDetailsFor('Notes'),
-    teamHostingFromDetails: getDetailsFor('Lead team'),
-    organiserFromDetails: getDetailsFor('Organiser'),
-    otherTeamsFromDetails: getDetailsFor('Other teams'),
-    relatedProgrammesFromDetails: getDetailsFor('Related programmes'),
-    serviceFromDetails: getDetailsFor('Service'),
   },
   commands: [
     {

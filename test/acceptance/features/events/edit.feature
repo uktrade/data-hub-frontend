@@ -6,119 +6,91 @@ Feature: Edit an Event in Data hub
 
   Background:
     Given I am an authenticated user on the data hub website
+    And I navigate to event details page
+    And I click on edit event button
 
   @events-edit--name
   Scenario: Edit event name
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change text field @eventName to random words
+    When I change form text field "name" to random words
     And I submit the form
-    Then I verify that @eventNameFromDetails contains value I entered for @eventName
+    Then details heading should contain what I entered for "name" field
 
   @events-edit--type
   Scenario: Edit event type
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change dropdown event_type to be Seminar
+    When I change form dropdown "event_type" to "Seminar"
     And I submit the form
-    Then I verify that @eventTypeFromDetails contains text Seminar
+    Then details view data for "Type of event" should contain "Seminar"
     When I click on edit event button
-    And I change dropdown event_type to be Exhibition
+    And I change form dropdown "event_type" to Exhibition
     And I submit the form
-    Then I verify that @eventTypeFromDetails contains text Exhibition
+    Then details view data for "Type of event" should contain "Exhibition"
 
   @events-edit--dates
   Scenario: Edit event dates
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change start date to decrease year by one
+    When I change start date to decrease year by one
     And I submit the form
-    Then I verify that the start date has been updated
+    Then details view data for "Event start date" should contain what I entered for "start_date_year" field
 
   @events-edit--location-type
   Scenario: Edit event location type
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change dropdown location_type to be HQ
+    When I change form dropdown "location_type" to "HQ"
     And I submit the form
-    Then I verify that @locationTypeFromDetails contains text HQ
+    Then details view data for "Event location type" should contain "HQ"
     When I click on edit event button
-    And I change dropdown location_type to be Post
+    And I change form dropdown "location_type" to "Post"
     And I submit the form
-    Then I verify that @locationTypeFromDetails contains text Post
+    Then details view data for "Event location type" should contain "Post"
 
   @events-edit--address
   Scenario: Edit event address
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change text field @addressLine1 to a random street address
+    When I change form text field "address_1" to a random street address
     And I submit the form
-    Then I verify that @addressFromDetails contains title-case value I entered for @addressLine1
+    Then details view data for "Address" should contain what I entered for "address_1" field
 
   @events-edit--notes
   Scenario: Edit event notes
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change text field @notes to a random paragraph
+    When I change form text field "notes" to a random paragraph
     And I submit the form
-    Then I verify that @notesFromDetails contains value I entered for @notes
+    Then details view data for "Notes" should contain what I entered for "notes" field
 
   @events-edit--team-hosting
   Scenario: Edit event team hosting
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change dropdown lead_team to be CBBC Leeds
+    When I change form dropdown "lead_team" to "CBBC Leeds"
     And I submit the form
-    Then I verify that @teamHostingFromDetails contains text CBBC Leeds
+    Then details view data for "Lead team" should contain "CBBC Leeds"
     When I click on edit event button
-    And I change dropdown lead_team to be CBBC London
+    And I change form dropdown "lead_team" to "CBBC London"
     And I submit the form
-    Then I verify that @teamHostingFromDetails contains text CBBC London
+    Then details view data for "Lead team" should contain "CBBC London"
 
   @events-edit--organiser
   Scenario: Edit event organiser
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change dropdown organiser to be Adam Smith
+    When I change form dropdown "organiser" to "Michael Wining"
     And I submit the form
-    Then I verify that @organiserFromDetails contains text Adam Smith
+    Then details view data for "Organiser" should contain "Michael Wining"
     When I click on edit event button
-    And I change dropdown organiser to be Adam Brown
+    And I change form dropdown "organiser" to "Barry Oling"
     And I submit the form
-    Then I verify that @organiserFromDetails contains text Adam Brown
+    Then details view data for "Organiser" should contain "Barry Oling"
 
   @events-edit--shared-teams
   Scenario: Edit event shared teams
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I click on form option @sharedYes
-    And I change dropdown teams to be BPI
+    When I select "Yes" for boolean option "event_shared"
+    And I change form dropdown "teams" to "BPI"
     And I submit the form
-    Then I verify that @otherTeamsFromDetails contains text BPI
+    Then details view data for "Other teams" should contain "BPI"
     When I click on edit event button
-    And I click on form option @sharedYes
-    And I change dropdown teams to be Intellect
+    When I select "Yes" for boolean option "event_shared"
+    And I change form dropdown "teams" to "Intellect"
     And I submit the form
-    Then I verify that @otherTeamsFromDetails contains text Intellect
+    Then details view data for "Other teams" should contain "Intellect"
 
   @events-edit--related-programmes
   Scenario: Edit event related programmes
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change dropdown related_programmes to be Grown in Britain
+    When I change form dropdown "related_programmes" to "Grown in Britain"
     And I submit the form
-    Then I verify that @relatedProgrammesFromDetails contains text Grown in Britain
+    Then details view data for "Related programmes" should contain "Grown in Britain"
     When I click on edit event button
-    And I change dropdown related_programmes to be Great Branded
+    And I change form dropdown "related_programmes" to "Great Branded"
     And I submit the form
-    Then I verify that @relatedProgrammesFromDetails contains text Great Branded
+    Then details view data for "Related programmes" should contain "Great Branded"
