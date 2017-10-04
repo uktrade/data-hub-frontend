@@ -1,4 +1,4 @@
-@interactions-list
+@interactions-list @ignore
 Feature: View collection of interactions
   As an existing user
   I would like to view all the Interactions in one place

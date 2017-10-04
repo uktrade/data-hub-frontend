@@ -1,4 +1,4 @@
-@contacts-audit
+@contacts-audit @ignore
 Feature: View Audit history of a contact
   As an existing user
   I would like to track changes to a contact record over time
