@@ -3,9 +3,7 @@ const { get } = require('lodash')
 const metadata = require('../../../lib/metadata')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
-const { getInteraction } = require('../../interactions/repos')
 const { getAdviser } = require('../../adviser/repos')
-const { transformFromApi } = require('../../interactions/services/formatting')
 const { getInvestment } = require('../repos')
 
 function getNextStage (currentStage, projectStages) {
@@ -82,23 +80,7 @@ async function getInvestmentDetails (req, res, next, id = req.params.id) {
   }
 }
 
-async function getInteractionDetails (req, res, next, interactionId = req.params.interactionId) {
-  if (!isValidGuid(interactionId)) {
-    return next()
-  }
-  try {
-    const interactionResponse = await getInteraction(req.session.token, interactionId)
-
-    res.locals.interaction = transformFromApi(interactionResponse)
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   getCompanyDetails,
   getInvestmentDetails,
-  getInteractionDetails,
 }
