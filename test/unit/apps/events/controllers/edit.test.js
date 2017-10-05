@@ -19,7 +19,6 @@ describe('Event edit controller', () => {
         },
       },
       body: {},
-      flash: this.sandbox.spy(),
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
