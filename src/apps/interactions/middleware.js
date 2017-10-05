@@ -1,18 +1,19 @@
 const { search } = require('../search/services')
 const { transformApiResponseToSearchCollection } = require('../search/transformers')
 const { transformInteractionToListItem } = require('./transformers')
-const { getHydratedInteraction } = require('./services/data')
+const { fetchInteraction } = require('./repos')
 
 async function getDetails (req, res, next) {
   try {
     const token = req.session.token
     if (req.params.interactionId && req.params.interactionId !== 'add') {
-      res.locals.interaction = await getHydratedInteraction(token, req.params.interactionId)
+      res.locals.interaction = await fetchInteraction(token, req.params.interactionId)
     }
-    next()
   } catch (error) {
-    next(error)
+    return next(error)
   }
+
+  next()
 }
 
 async function getInteractionsCollection (req, res, next) {
