@@ -63,6 +63,24 @@
     },
     "po_number": {
       "label": "Purchase Order (PO) number"
+    },
+    "billing_address_1": {
+      "label": "Business and street"
+    },
+    "billing_address_2": {
+      "label": "Business and street continued"
+    },
+    "billing_address_town": {
+      "label": "Town or city"
+    },
+    "billing_address_county": {
+      "label": "County"
+    },
+    "billing_address_postcode": {
+      "label": "Postcode"
+    },
+    "billing_address_country": {
+      "label": "Country"
     }
   },
   "errors": {
