@@ -65,7 +65,7 @@ class EditController extends FormController {
       return newValue
     })
 
-    const exemptFields = ['vat_number']
+    const exemptFields = ['vat_number', 'po_number']
     // combine order values and error values
     let combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
     // convert dates to default format
