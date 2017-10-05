@@ -1,4 +1,4 @@
-@companies-list
+@companies-list @ignore
 Feature: View company collection
   As an existing user
   I would like to view all the companies in one place

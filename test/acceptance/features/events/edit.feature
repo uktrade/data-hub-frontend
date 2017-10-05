@@ -1,4 +1,4 @@
-@events-edit
+@events-edit @ignore
 Feature: Edit an Event in Data hub
   As an Event organiser
   I would like to edit an event in data hub

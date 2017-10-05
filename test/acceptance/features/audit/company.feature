@@ -1,4 +1,4 @@
-@audit-company
+@audit-company @ignore
 Feature: View Audit history of a Company
   As an existing user
   I would like to track changes to a Company record over time

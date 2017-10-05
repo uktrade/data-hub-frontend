@@ -7,12 +7,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependencies-{{ checksum "yarn.lock" }}
+          name: Restore yarn dependencies cache
+          key: yarn-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install
       - save_cache:
-          key: dependencies-{{ checksum "yarn.lock" }}
+          name: Save yarn dependencies cache
+          key: yarn-dependencies-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
+            - ~/data-hub-frontend/node_modules
   lint_code:
     docker:
       - image: node:8.5.0
@@ -20,7 +22,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependencies-{{ checksum "yarn.lock" }}
+          name: Restore yarn dependencies cache
+          key: yarn-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Lint code
           command: |
@@ -41,7 +44,8 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependencies-{{ checksum "yarn.lock" }}
+          name: Restore yarn dependencies cache
+          key: yarn-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Run unit tests
           command: |
@@ -59,58 +63,132 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
-  acceptance_tests:
+  user_acceptance_tests:
     docker:
-      - image: ukti/docker-selenium-base
+      - image: ukti/docker-data-hub-base
         environment:
-          TZ: "/usr/share/zoneinfo/Europe/London"
-          REDIS_HOST: localhost
+          API_ROOT: http://localhost:8000
+          API_CLIENT_ID: circleCiClientId
+          API_CLIENT_SECRET: youAintSeenMeRight
+          AWS_DEFAULT_REGION: eu-west-2
+          AWS_ACCESS_KEY_ID: foo
+          AWS_SECRET_ACCESS_KEY: bar
+          CDMS_AUTH_URL: http://example.com
+          DATABASE_URL: postgresql://postgres@localhost/datahub
+          DATAHUB_SECRET: secret
+          DEBUG: 'True'
+          DJANGO_SECRET_KEY: topSecret
+          DJANGO_SETTINGS_MODULE: config.settings.local
+          DOCUMENTS_BUCKET: baz
+          ES_INDEX: test_index
+          ES5_URL: http://localhost:9200
+          POSTGRES_URL: http://localhost:5432
           QA_HOST: http://localhost:3000
           QA_SELENIUM_HOST: 127.0.0.1
           QA_SELENIUM_PORT: 4444
+          QA_USER_EMAIL: circleci@datahub.com
+          QA_USER_PASSWORD: secretSquiR3L
+          REDIS_HOST: localhost
+          TZ: "/usr/share/zoneinfo/Europe/London"
       - image: redis:3.2.10
+      - image: elasticsearch:5.5
+      - image: postgres:9.5
+        environment:
+          POSTGRES_DB: datahub
     parallelism: 4
-    resource_class: large
+#    resource_class: large
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
+       # setup data hub leeloo
+      - run:
+          name: Clone data hub leeloo branch
+          command: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            if [ ${CIRCLE_BRANCH} = "master" ]; then
+              BRANCH="master"
+            else
+              BRANCH="develop"
+            fi
+            git clone --depth 1 -b ${BRANCH} --single-branch git@github.com:uktrade/data-hub-leeloo.git ~/app
+            echo "Data hub leelo - \"${BRANCH}\" branch cloned"
       - restore_cache:
-          key: dependencies-{{ checksum "yarn.lock" }}
+          name: Restore pip cache
+          key: pip-dependencies-{{ checksum "~/app/requirements.txt" }}
+          paths:
+            - ~/cache/pip
+      - run:
+          name: Install pip dependencies
+          command: pip install --cache-dir ~/cache/pip -r ~/app/requirements.txt
+      - save_cache:
+          name: Save pip cache
+          key: pip-dependencies-{{ checksum "~/app/requirements.txt" }}
+          paths:
+            - ~/cache/pip
+      - run:
+          name: Configure and populate postgres db
+          command: |
+            ~/app/manage.py migrate
+            ~/app/manage.py loadmetadata
+            ~/app/manage.py load_omis_metadata
+            ~/app/manage.py createinitialrevisions
+      - run:
+          name: Create data hub leeloo application
+          command: |
+            echo "from oauth2_provider.models import Application; from datahub.oauth.models import OAuthApplicationScope; app = Application.objects.create(name='circleci', client_id='${API_CLIENT_ID}', client_secret='${API_CLIENT_SECRET}', client_type=Application.CLIENT_CONFIDENTIAL, authorization_grant_type=Application.GRANT_PASSWORD); OAuthApplicationScope.objects.create(application=app, scopes=['internal-front-end'])" | ~/app/manage.py shell
+      - run:
+          name: Create data hub leeloo test user
+          command: |
+            echo "from datahub.company.models import Advisor; Advisor.objects.create_user(email='${QA_USER_EMAIL}', password='${QA_USER_PASSWORD}', first_name='Circle', last_name='Ci')" | ~/app/manage.py shell
+      - run: ~/app/manage.py loaddata ~/app/fixtures/test_data.yaml
+      - run: ~/app/manage.py sync_es
+      - run:
+          name: Run data hub leeloo
+          command: ~/app/manage.py runserver
+          background: true
+      - run:
+          name: Wait for postgres db, Elasticsearch and data hub leeloo
+          command: dockerize -wait ${POSTGRES_URL} -wait ${ES5_URL} -wait ${API_ROOT}/admin/ -timeout 60s
+      # setup data hub frontend
+      - restore_cache:
+          name: Restore yarn dependencies cache
+          key: yarn-dependencies-{{ checksum "~/data-hub-frontend/yarn.lock" }}
       - run: yarn build
       - run:
+          name: Start data hub frontend
           command: yarn start
           background: true
       - run:
-          name: Wait for frontend /healthcheck 200 OK
-          command: .circleci/scripts/health-check.sh
-          no_output_timeout: 120s
+          name: Wait for data hub frontend
+          command: dockerize -wait ${QA_HOST}/healthcheck -timeout 60s
       - run:
-          name: Split tests for parallelisation and run acceptance tests
+          name: Split tests for parallelisation and then run acceptance tests
           command: |
             # split .features for parallelisation
-            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split --split-by=filesize)"
+            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split --split-by=timings --timings-type=filename)"
 
             # move groups of .features to folder
-            mkdir -p test/acceptance/features_${CIRCLE_NODE_INDEX}
-            for feature in ${FEATURES}; do
-              mv "$feature" test/acceptance/features_${CIRCLE_NODE_INDEX}
-              printf "including: $(basename "$feature")\n"
+            mkdir -p ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}
+            for featureFile in ${FEATURES}; do
+              FILENAME_WITH_FOLDER=$(basename $(dirname $featureFile))-$(basename $featureFile)
+              mv "$featureFile" ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}/${FILENAME_WITH_FOLDER}
+              printf "including: $(basename $FILENAME_WITH_FOLDER)\n"
             done
 
             # assign .features folder name to env to pass to cucumber.js
-            export FEATURES_FOLDER=test/acceptance/features_${CIRCLE_NODE_INDEX}
+            export FEATURES_FOLDER=~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}
             printf "Features folder created - ${FEATURES_FOLDER}\n"
 
             # run acceptance tests
-            mkdir -p cucumber/{reports,screenshots} seleniumLogs
+            mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
             yarn circle:acceptance
           when: always
       - run:
-          name: Acceptance test reports
+          name: Create acceptance test reports
           command: |
-            node .circleci/scripts/cucumber-report.js
-            .circleci/scripts/rename-reports.sh
-            .circleci/scripts/copy-screenshots.sh
+            node ~/data-hub-frontend/.circleci/scripts/cucumber-report.js
+            ~/data-hub-frontend/.circleci/scripts/rename-reports.sh
+            ~/data-hub-frontend/.circleci/scripts/copy-screenshots.sh
           when: always
       - store_test_results:
           path: cucumber
@@ -127,7 +205,17 @@ workflows:
       - unit_tests:
           requires:
             - build
-# TODO - this work can be turned back on once we have addressed the backend test instance issue
-#      - acceptance_tests:
-#          requires:
-#            - build
+      - start_uat:
+          type: approval
+          requires:
+            - build
+            - lint_code
+            - unit_tests
+          filters:
+            branches:
+              ignore:
+                - master
+                - develop
+      - user_acceptance_tests:
+          requires:
+            - start_uat
