@@ -1,4 +1,4 @@
-@contacts-filter
+@contacts-filter @ignore
 Feature: Filters collections for contact
   As an existing user
   I would like to filter contacts using possible options

@@ -36,10 +36,6 @@ module.exports = {
       },
     },
     circleci: {
-      test_workers: {
-        enabled: true,
-        workers: 'auto',
-      },
       screenshots: {
         enabled: true,
         on_failure: true,

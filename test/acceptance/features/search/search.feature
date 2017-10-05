@@ -1,4 +1,4 @@
-@search
+@search @ignore
 Feature: Search
   As an existing user
   I would like to search the data hub
