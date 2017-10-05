@@ -39,40 +39,6 @@ describe('interaction data service', function () {
     })
   })
 
-  describe('get hydrated interaction', function () {
-    it('should get an interaction and hydrating it by adding the company', function () {
-      interactionDataService.getHydratedInteraction(token, '1234')
-        .then((resultInteraction) => {
-          expect(resultInteraction).to.not.be.null
-          expect(getInteractionStub).to.be.calledWith(token, '1234')
-          expect(getDitCompanyStub).to.be.calledWith(token, interaction.company.id)
-          expect(resultInteraction.company.name).to.equal(company.name)
-        })
-    })
-
-    it('should throw an error if fetching something fails', function (done) {
-      getInteractionStub = sinon.stub().rejects(new Error('error'))
-
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
-        '../../companies/repos': {
-          getDitCompany: getDitCompanyStub,
-        },
-        '../../contacts/repos': {
-          getContact: getContactStub,
-        },
-        '../repos': {
-          getInteraction: getInteractionStub,
-        },
-        '../../../lib/metadata': {
-          interactionTypeOptions: [interaction_type],
-        },
-      })
-      interactionDataService.getHydratedInteraction(token, '1234')
-        .catch(() => {
-          done()
-        })
-    })
-  })
   describe('get interaction type', function () {
     it('should return interaction type details for a given id', function () {
       expect(interactionDataService.getInteractionType('1234')).to.deep.equal(interaction_type)
@@ -227,40 +193,6 @@ describe('interaction data service with investment interaction', function () {
     })
   })
 
-  describe('get hydrated interaction', function () {
-    it('should get an interaction and hydrating it by adding the company', function () {
-      interactionDataService.getHydratedInteraction(token, '1234')
-        .then((resultInteraction) => {
-          expect(resultInteraction).to.not.be.null
-          expect(getInteractionStub).to.be.calledWith(token, '1234')
-          expect(getDitCompanyStub).to.be.calledWith(token, investmentInteraction.contact.company.id)
-          expect(resultInteraction.company.name).to.equal(company.name)
-        })
-    })
-
-    it('should throw an error if fetching something fails', function (done) {
-      getInteractionStub = sinon.stub().rejects(new Error('error'))
-
-      interactionDataService = proxyquire('~/src/apps/interactions/services/data', {
-        '../../companies/repos': {
-          getDitCompany: getDitCompanyStub,
-        },
-        '../../contacts/repos': {
-          getContact: getContactStub,
-        },
-        '../repos': {
-          getInteraction: getInteractionStub,
-        },
-        '../../../lib/metadata': {
-          interactionTypeOptions: [interaction_type],
-        },
-      })
-      interactionDataService.getHydratedInteraction(token, '1234')
-        .catch(() => {
-          done()
-        })
-    })
-  })
   describe('get interaction type', function () {
     it('should return interaction type details for a given id', function () {
       expect(interactionDataService.getInteractionType('1234')).to.deep.equal(interaction_type)

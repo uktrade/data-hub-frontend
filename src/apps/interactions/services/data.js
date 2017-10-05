@@ -2,7 +2,6 @@
 const companyRepository = require('../../companies/repos')
 const contactsRepository = require('../../contacts/repos')
 const metadataRepository = require('../../../lib/metadata')
-const interactionRepository = require('../repos')
 
 function getInteractionType (interactionTypeId) {
   for (const interactionType of metadataRepository.interactionTypeOptions) {
@@ -11,19 +10,6 @@ function getInteractionType (interactionTypeId) {
     }
   }
   return null
-}
-
-function getHydratedInteraction (token, interactionId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const interaction = await interactionRepository.getInteraction(token, interactionId)
-      const companyId = interaction.company ? interaction.company.id : interaction.contact.company.id
-      interaction.company = await companyRepository.getDitCompany(token, companyId)
-      resolve(interaction)
-    } catch (error) {
-      reject(error)
-    }
-  })
 }
 
 function createBlankInteractionForContact (token, dit_adviser, interaction_type, contactId) {
@@ -94,7 +80,6 @@ function createBlankInteractionForCompany (token, dit_adviser, interaction_type,
 
 module.exports = {
   getInteractionType,
-  getHydratedInteraction,
   createBlankInteractionForCompany,
   createBlankInteractionForContact,
 }
