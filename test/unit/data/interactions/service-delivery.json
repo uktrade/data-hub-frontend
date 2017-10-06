@@ -1,0 +1,45 @@
+{
+  "kind": "service_delivery",
+  "id": "7265dc3c-e89d-45ee-8106-d1e370c1c73d",
+  "company": {
+    "id": "dcdabbc9-1781-e411-8955-e4115bead28a",
+    "name": "Samsung"
+  },
+  "interaction_type": {
+    "id": "72c226d7-5d95-e211-a939-e4115bead28a",
+    "name": "Telephone"
+  },
+  "subject": "Test interactions",
+  "notes": "lorem ipsum",
+  "date": "2017-05-31T00:00:00",
+  "dit_adviser": {
+    "id": "8036f207-ae3e-e611-8d53-e4115bed50dc",
+    "first_name": "Test",
+    "last_name": "CMU 1",
+    "name": "Test CMU 1"
+  },
+  "service": {
+    "id": "1231231231312",
+    "name": "Test service"
+  },
+  "dit_team": {
+    "id": "222",
+    "name": "Team"
+  },
+  "contact": {
+    "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",
+    "first_name": "Jackson",
+    "last_name": "Whitfield",
+    "name": "Jackson Whitfield"
+  },
+  "event": {
+    "id": "bac18331-ca4d-4501-960e-a1bd68b5d46e",
+    "name": "Torp - Stracke"
+  },
+  "created_on": "2017-05-31T13:06:45.049191",
+  "modified_on": "2017-06-28T16:05:19.036841",
+  "investment_project": {
+    "id": "bac18331-ca4d-4501-960e-a1bd68b5d47e",
+    "name": "Test project"
+  }
+}
