@@ -1,0 +1,8 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block form %}
+  <p>Your session has timed out due to a long period of inactivity.</p>
+  <p>
+    <a href="{{ baseUrl }}" class="button">Restart</a>
+  </p>
+{% endblock %}

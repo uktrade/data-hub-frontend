@@ -302,8 +302,12 @@ describe('OMIS FormController', () => {
   describe('errorHandler()', () => {
     beforeEach(() => {
       this.errorHandlerSpy = this.sandbox.spy()
+      this.breadcrumbSpy = this.sandbox.stub().returnsThis()
+      this.renderSpy = this.sandbox.spy()
       this.resMock = Object.assign({}, globalRes, {
         redirect: this.redirectSpy,
+        breadcrumb: this.breadcrumbSpy,
+        render: this.renderSpy,
       })
 
       FormController.prototype.errorHandler = this.errorHandlerSpy
@@ -361,6 +365,36 @@ describe('OMIS FormController', () => {
           expect(this.redirectSpy).to.be.calledWith('last-item')
           expect(this.errorHandlerSpy).not.to.be.called
         })
+      })
+    })
+
+    describe('when it returns session timeout error', () => {
+      beforeEach(() => {
+        this.errorMock = new Error()
+        this.errorMock.code = 'SESSION_TIMEOUT'
+        this.reqMock = Object.assign({}, globalReq, {
+          baseUrl: '/journey-base-url',
+        })
+
+        this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set a breadcrumb item', () => {
+        expect(this.breadcrumbSpy).to.be.calledWith('Session expired')
+      })
+
+      it('should render the timeout template', () => {
+        expect(this.renderSpy.args[0][0]).to.equal('omis/apps/create/views/timeout')
+      })
+
+      it('should pass the correct data to the view', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          baseUrl: '/journey-base-url',
+        })
+      })
+
+      it('should not call error handler', () => {
+        expect(this.errorHandlerSpy).not.to.be.called
       })
     })
   })
