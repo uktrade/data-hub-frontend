@@ -3,9 +3,8 @@ const mockInteraction = require('~/test/unit/data/interactions/search-interactio
 
 const {
   transformInteractionToListItem,
-  transformInteractionResponseToForm,
   transformInteractionFormBodyToApiRequest,
-  transformInteractionResponsetoViewRecord,
+  transformInteractionResponseToViewRecord,
 } = require('~/src/apps/interactions/transformers')
 
 describe('Interaction transformers', () => {
@@ -115,25 +114,6 @@ describe('Interaction transformers', () => {
     })
   })
 
-  describe('#transformInteractionResponseToForm', () => {
-    it('should transform data from interaction response to form', () => {
-      const expected = {
-        interaction_type: '72c226d7-5d95-e211-a939-e4115bead28a',
-        company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-        subject: 'Test interactions',
-        notes: 'lorem ipsum',
-        contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-        date: { day: '31', month: '05', year: '2017' },
-        dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
-        service: '1231231231312',
-        dit_team: '222',
-      }
-
-      const actual = transformInteractionResponseToForm(mockInteraction)
-      expect(actual).to.deep.equal(expected)
-    })
-  })
-
   describe('#transformInteractionFormBodyToApiRequest', () => {
     it('should set the date', () => {
       const actual = transformInteractionFormBodyToApiRequest(
@@ -167,7 +147,7 @@ describe('Interaction transformers', () => {
   describe('#transformInteractionResponsetoViewRecord', () => {
     context('when provided a fully populated interaction', () => {
       beforeEach(() => {
-        this.transformed = transformInteractionResponsetoViewRecord(mockInteraction)
+        this.transformed = transformInteractionResponseToViewRecord(mockInteraction)
       })
 
       it('should transform to display format', () => {
@@ -215,7 +195,7 @@ describe('Interaction transformers', () => {
     context('when there is no contact associated with the interaction', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, { contact: null })
-        this.transformed = transformInteractionResponsetoViewRecord(interaction)
+        this.transformed = transformInteractionResponseToViewRecord(interaction)
       })
 
       it('should transform to display format', () => {
@@ -260,7 +240,7 @@ describe('Interaction transformers', () => {
     context('when there is no company associated with the interaction', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, { company: null })
-        this.transformed = transformInteractionResponsetoViewRecord(interaction)
+        this.transformed = transformInteractionResponseToViewRecord(interaction)
       })
 
       it('should transform to display format', () => {
@@ -305,7 +285,7 @@ describe('Interaction transformers', () => {
     context('when there is no investment project associated with the interaction', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, { investment_project: null })
-        this.transformed = transformInteractionResponsetoViewRecord(interaction)
+        this.transformed = transformInteractionResponseToViewRecord(interaction)
       })
 
       it('should transform to display format', () => {
@@ -359,7 +339,7 @@ describe('Interaction transformers', () => {
 
         delete serviceDelivery.communication_channel
 
-        this.transformed = transformInteractionResponsetoViewRecord(serviceDelivery)
+        this.transformed = transformInteractionResponseToViewRecord(serviceDelivery)
       })
 
       it('should transform to display format', () => {
@@ -413,7 +393,7 @@ describe('Interaction transformers', () => {
 
         delete serviceDelivery.communication_channel
 
-        this.transformed = transformInteractionResponsetoViewRecord(serviceDelivery)
+        this.transformed = transformInteractionResponseToViewRecord(serviceDelivery)
       })
 
       it('should transform to display format', () => {

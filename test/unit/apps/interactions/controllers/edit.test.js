@@ -1,60 +1,37 @@
+const { assign, merge } = require('lodash')
+
+const interactionData = require('../../../data/interactions/new-interaction.json')
+
 describe('Interaction edit controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.createBlankInteractionForCompanyStub = this.sandbox.stub()
-    this.createBlankInteractionForContactStub = this.sandbox.stub()
-    this.transformInteractionResponseToFormStub = this.sandbox.stub()
-    this.getContactsForCompanyStub = this.sandbox.stub()
-    this.getAllAdvisersStub = this.sandbox.stub()
-    this.buildFormWithStateAndErrorsStub = this.sandbox.stub().returns({
-      buttonText: 'Save',
-      children: [
-        { macroName: 'TextField', name: 'subject' },
-      ],
-    })
-    this.interactionEditFormConfigStub = this.sandbox.stub().returns({
-    })
-    this.getServicesSpy = this.sandbox.spy()
-
-    this.edit = proxyquire('~/src/apps/interactions/controllers/edit', {
-      '../services/data': {
-        createBlankInteractionForCompany: this.createBlankInteractionForCompanyStub,
-        createBlankInteractionForContact: this.createBlankInteractionForContactStub,
-      },
-      '../transformers': {
-        transformInteractionResponseToForm: this.transformInteractionResponseToFormStub,
-      },
-      '../../contacts/repos': {
-        getContactsForCompany: this.getContactsForCompanyStub,
-      },
-      '../../adviser/repos': {
-        getAllAdvisers: this.getAllAdvisersStub,
-      },
-      '../../../lib/metadata': {
-        getServices: this.getServicesSpy,
-      },
-      '../../builders': {
-        buildFormWithStateAndErrors: this.buildFormWithStateAndErrorsStub,
-      },
-      '../macros': {
-        interactionEditFormConfig: this.interactionEditFormConfigStub,
-      },
-    })
-
+    this.controller = require('~/src/apps/interactions/controllers/edit')
     this.req = {
-      session: { token: 'abcd' },
-      query: {},
+      session: {
+        token: 'abcd',
+        user: {
+        },
+      },
+      query: {
+        interaction_type: '1',
+      },
       body: {},
-      flash: this.sandbox.spy(),
     }
-
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
+      title: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
-      locals: {},
+      locals: {
+        company: {
+          name: 'company',
+        },
+        returnLink: 'return',
+        interactionType: {
+          name: 'interaction type',
+        },
+      },
     }
-
     this.nextSpy = this.sandbox.spy()
   })
 
@@ -63,104 +40,93 @@ describe('Interaction edit controller', () => {
   })
 
   describe('#renderEditPage', () => {
-    beforeEach(() => {
-      this.req.query.interaction_type = 'tel'
-      this.req.session.user = {
-        name: 'Spencer',
-      }
-      this.res.locals.interaction = {
-        id: 1,
-        interaction_type: {
-          name: 'telephone',
-          id: 'tel',
-        },
-        company: {
-          name: 'Hooli Inc',
-        },
-      }
-      this.createBlankInteractionForCompanyStub.resolves(this.res.locals.interaction)
-      this.createBlankInteractionForContactStub.resolves(this.res.locals.interaction)
-      this.transformInteractionResponseToFormStub.returns({
-        interaction_type: 'lunch',
-        company: 'Hooli',
-        subject: 'Introduction',
+    it('should render the interaction page', async () => {
+      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+      expect(this.res.render).to.be.calledWith('interactions/views/edit')
+      expect(this.res.render).to.have.been.calledOnce
+    })
+
+    it('should render the interaction page with a return link', async () => {
+      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+      const actual = this.res.render.getCall(0).args[1].interactionForm.returnLink
+
+      expect(actual).to.equal('return')
+    })
+
+    it('should render the interaction page with an interaction form', async () => {
+      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+      const actual = this.res.render.getCall(0).args[1].interactionForm.children
+
+      expect(actual).to.be.an('array')
+    })
+
+    context('when adding an interaction', () => {
+      it('should add a breadcrumb', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add interaction')
+      })
+
+      it('should add a title', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        expect(this.res.title.firstCall).to.be.calledWith('Add interaction for company')
       })
     })
 
-    context('when errors', () => {
-      it('should call next with error', async () => {
-        const error = new Error('ouch')
-        this.transformInteractionResponseToFormStub.throws(error)
+    context('when editing an interaction', () => {
+      beforeEach(() => {
+        this.res.locals.interaction = assign({}, interactionData, { id: '1' })
+      })
 
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
+      it('should add a breadcrumb', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
 
-        expect(this.nextSpy).have.been.calledWith(error)
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit interaction')
+      })
+
+      it('should add a title', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        expect(this.res.title.firstCall).to.be.calledWith('Edit interaction for company')
       })
     })
 
-    context('when success', () => {
-      it('should call createBlankInteractionForCompany for company', async () => {
-        this.req.query.company = 'Hooli Inc'
-        const expectedArgs = ['abcd', { name: 'Spencer' }, 'tel', 'Hooli Inc']
+    context('when there are validation errors', () => {
+      it('should pre populate the errors', async () => {
+        const messages = {
+          subject: 'error 1',
+          date: 'error 2',
+        }
 
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
+        const fieldLabels = {
+          subject: 'Subject',
+          date: 'Date of interaction',
+        }
 
-        expect(this.createBlankInteractionForCompanyStub).have.been.calledWith(...expectedArgs)
-        expect(this.res.breadcrumb).have.been.calledWith('Edit interaction for Hooli Inc')
-        expect(this.res.render).have.been.calledWith(sinon.match.string)
-      })
-
-      it('should call createBlankInteractionForContact for contact', async () => {
-        this.req.query.contact = 'Bob'
-        const expectedArgs = ['abcd', { name: 'Spencer' }, 'tel', 'Bob']
-
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
-
-        expect(this.createBlankInteractionForContactStub).have.been.calledWith(...expectedArgs)
-        expect(this.res.breadcrumb).have.been.calledWith(sinon.match(/Edit interaction/))
-        expect(this.res.render).have.been.calledWith(sinon.match.string)
-      })
-
-      it('should call functions to populate form options', async () => {
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
-
-        expect(this.buildFormWithStateAndErrorsStub).have.been.calledWith(sinon.match.object, sinon.match.object, undefined)
-        expect(this.interactionEditFormConfigStub).have.been.calledWith(sinon.match.object)
-        expect(this.getContactsForCompanyStub).have.been.calledWith('abcd', sinon.match.string)
-        expect(this.getAllAdvisersStub).have.been.calledWith('abcd')
-        expect(this.getServicesSpy).have.been.calledWith('abcd')
-        expect(this.interactionEditFormConfigStub).have.been.calledWith(sinon.match.object)
-      })
-
-      it('should create formObject in locals', async () => {
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
-
-        expect(this.nextSpy).to.not.be.called
-        expect(this.res.render).to.be.calledWith(
-          sinon.match.string,
-          {
-            editInteractionForm: {
-              buttonText: 'Save',
-              children: [
-                { macroName: 'TextField', name: 'subject' },
-              ],
+        const res = merge({}, this.res, {
+          locals: {
+            form: {
+              errors: {
+                messages,
+              },
             },
-            interactionTypeLabel: 'telephone',
           },
-        )
-      })
+        })
 
-      it('should render edit view', async () => {
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
+        await this.controller.renderEditPage(this.req, res, this.nextSpy)
 
-        expect(this.res.render).have.been.calledWith(sinon.match.string)
-      })
+        const actualErrors = this.res.render.getCall(0).args[1].interactionForm.errors
+        const expectedErrors = {
+          summary: 'Please correct the following errors:',
+          messages,
+          fieldLabels,
+        }
 
-      it('should change page title for new interaction', async () => {
-        this.res.locals.interaction.id = null
-        await this.edit.renderEditPage(this.req, this.res, this.nextSpy)
-
-        expect(this.res.breadcrumb).have.been.calledWith(sinon.match(/Add interaction/))
+        expect(actualErrors).to.deep.equal(expectedErrors)
       })
     })
   })
