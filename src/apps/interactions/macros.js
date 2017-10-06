@@ -1,4 +1,3 @@
-const { get } = require('lodash')
 const formLabels = require('./labels')
 const metaData = require('../../lib/metadata')
 const { transformContactToOption, transformObjectToOption } = require('../transformers')
@@ -91,7 +90,7 @@ const interactionEditFormConfig = function ({
         optional: true,
         initialOption: '-- Select adviser --',
         options () {
-          return get(advisers, 'results', []).map(transformContactToOption)
+          return advisers.map(transformContactToOption)
         },
       },
     ],

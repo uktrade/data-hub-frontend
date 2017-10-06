@@ -1,34 +1,35 @@
 /* eslint-disable camelcase */
 const { get, assign } = require('lodash')
-const dateFns = require('date-fns')
+const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 
 function transformInteractionResponseToForm ({
-  interaction_type,
-  company,
-  subject,
-  notes,
-  contact,
+  id,
   date,
+  company,
+  contact,
   dit_adviser,
   service,
   dit_team,
-}) {
+  interaction_type,
+} = {}) {
+  if (!id) return null
+
+  const isValidDate = isValid(new Date(date))
+
   return {
-    interaction_type: get(interaction_type, 'id'),
     company: get(company, 'id'),
-    subject,
-    notes,
     contact: get(contact, 'id'),
-    date: {
-      day: dateFns.format(date, 'DD'),
-      month: dateFns.format(date, 'MM'),
-      year: dateFns.format(date, 'YYYY'),
-    },
     dit_adviser: get(dit_adviser, 'id'),
     service: get(service, 'id'),
     dit_team: get(dit_team, 'id'),
+    interaction_type: get(interaction_type, 'id'),
+    date: {
+      day: isValidDate ? format(date, 'DD') : '',
+      month: isValidDate ? format(date, 'MM') : '',
+      year: isValidDate ? format(date, 'YYYY') : '',
+    },
   }
 }
 
@@ -72,7 +73,7 @@ function transformInteractionToListItem ({
   }
 }
 
-function transformInteractionResponsetoViewRecord ({
+function transformInteractionResponseToViewRecord ({
   company,
   subject,
   notes,
@@ -140,5 +141,5 @@ module.exports = {
   transformInteractionResponseToForm,
   transformInteractionToListItem,
   transformInteractionFormBodyToApiRequest,
-  transformInteractionResponsetoViewRecord,
+  transformInteractionResponseToViewRecord,
 }
