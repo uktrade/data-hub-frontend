@@ -2,7 +2,7 @@ const { compareAsc, compareDesc } = require('date-fns')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-const { getDateFor } = require('../../../common/date')
+const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Then, When, Before }) => {
   const EventList = client.page.EventList()

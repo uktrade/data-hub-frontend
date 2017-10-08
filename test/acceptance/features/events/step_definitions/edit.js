@@ -3,7 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { format } = require('date-fns')
 
-const World = require('../../../common/world')
+const World = require('../../../helpers/world')
 
 defineSupportCode(({ Before, Then, When }) => {
   const Form = client.page.Form()
