@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const faker = require('faker')
 
-const World = require('../../../common/world')
+const World = require('../../../helpers/world')
 
 const getValue = (value) => {
   switch (value) {
