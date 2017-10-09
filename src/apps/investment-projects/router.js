@@ -31,6 +31,7 @@ const {
 const { renderInvestmentList } = require('./controllers/list')
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 
+const { getInteractionCollection } = require('../interactions/middleware/collection')
 const { renderInteractionList } = require('./controllers/interactions')
 
 const LOCAL_NAV = [
@@ -156,7 +157,7 @@ router
     team.editTeamMembers.getHandler
   )
 
-router.get('/:id/interactions', renderInteractionList)
+router.get('/:investmentId/interactions', getInteractionCollection, renderInteractionList)
 
 router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 

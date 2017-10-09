@@ -13,7 +13,9 @@
   {{
     Collection(interactions | assignCopy({
       countLabel: 'interaction',
-      summaryActionsHTML: addButton
+      summaryActionsHTML: addButton,
+      sortForm: sortForm,
+      query: QUERY
     }))
   }}
 {% endblock %}
