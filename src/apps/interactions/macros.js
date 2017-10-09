@@ -62,6 +62,7 @@ const interactionEditFormConfig = function ({
   contacts = [],
   advisers = [],
   services = [],
+  communicationChannelOptions = [],
 }) {
   return {
     returnLink,
@@ -71,6 +72,15 @@ const interactionEditFormConfig = function ({
       id,
     },
     children: [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'communication_channel',
+        label: 'Communication channel',
+        initialOption: '-- Select method --',
+        options () {
+          return communicationChannelOptions.map(transformObjectToOption)
+        },
+      },
       {
         macroName: 'MultipleChoiceField',
         name: 'contact',
