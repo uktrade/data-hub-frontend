@@ -10,7 +10,7 @@ const queryString = require('query-string')
 const metadataRepository = require('../../../lib/metadata')
 
 const { transformObjectToOption } = require('../../transformers')
-const { transformInteractionResponsetoViewRecord } = require('../transformers')
+const { transformInteractionResponseToViewRecord } = require('../transformers')
 
 function renderCreatePage (req, res) {
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
@@ -50,7 +50,7 @@ function renderDetailsPage (req, res, next) {
   try {
     const { interaction } = res.locals
     const breadcrumb = capitalize(lowerCase(interaction.kind))
-    const interactionViewRecord = transformInteractionResponsetoViewRecord(interaction)
+    const interactionViewRecord = transformInteractionResponseToViewRecord(interaction)
 
     return res
       .breadcrumb(breadcrumb)
