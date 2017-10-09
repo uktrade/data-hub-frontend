@@ -14,7 +14,7 @@ function renderEditPage (req, res) {
   }
 
   if (res.locals.contact) {
-    interactionDefaults.contact = res.locals.contactId
+    interactionDefaults.contact = res.locals.contact
   }
 
   const mergedInteractionData = pickBy(merge({}, interactionDefaults, interactionData, res.locals.requestBody))
