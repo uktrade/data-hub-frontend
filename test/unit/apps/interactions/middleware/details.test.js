@@ -143,10 +143,7 @@ describe('Interaction details middleware', () => {
     context('when success', () => {
       it('should set interaction data on locals', async () => {
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
-
         expect(this.res.locals.interaction).to.deep.equal(interactionData)
-        expect(this.res.locals.interactionViewRecord).to.have.property('id', '1')
-        expect(this.res.locals.interactionViewRecord).to.have.property('data', 'transformed')
       })
     })
   })
