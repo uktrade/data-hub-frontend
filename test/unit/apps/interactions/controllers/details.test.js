@@ -26,11 +26,11 @@ describe('Interaction details controller', () => {
 
     this.transformedInteractionDataMock = {}
 
-    this.transformInteractionResponsetoViewRecordStub = this.sandbox.stub().returns(this.transformedInteractionDataMock)
+    this.transformInteractionResponseToViewRecordStub = this.sandbox.stub().returns(this.transformedInteractionDataMock)
 
     this.controller = proxyquire('~/src/apps/interactions/controllers/details', {
       '../transformers': {
-        transformInteractionResponsetoViewRecord: this.transformInteractionResponsetoViewRecordStub,
+        transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub,
       },
     })
   })
@@ -41,7 +41,7 @@ describe('Interaction details controller', () => {
     })
 
     it('should use the interaction details transformer', () => {
-      expect(this.transformInteractionResponsetoViewRecordStub).to.be.calledWith(this.res.locals.interaction)
+      expect(this.transformInteractionResponseToViewRecordStub).to.be.calledWith(this.res.locals.interaction)
     })
 
     it('should render the interaction details template', () => {

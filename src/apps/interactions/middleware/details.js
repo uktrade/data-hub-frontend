@@ -1,8 +1,5 @@
 const { assign, find } = require('lodash')
-const {
-  transformInteractionResponseToViewRecord,
-  transformInteractionFormBodyToApiRequest,
-} = require('../transformers')
+const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany } = require('../../contacts/repos')
@@ -37,7 +34,6 @@ async function postDetails (req, res, next) {
 async function getInteractionDetails (req, res, next, interactionId) {
   try {
     res.locals.interaction = await fetchInteraction(req.session.token, interactionId)
-    res.locals.interactionViewRecord = transformInteractionResponseToViewRecord(res.locals.interaction)
     next()
   } catch (err) {
     next(err)
