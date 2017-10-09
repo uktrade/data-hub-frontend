@@ -29,6 +29,33 @@ const interactionSortForm = {
   ],
 }
 
+const selectKindFormConfig = function ({
+  returnLink,
+  errors = [],
+}) {
+  return {
+    buttonText: 'Continue',
+    errors: errors,
+    children: [
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        label: 'What type of interaction would you like to record?',
+        name: 'kind',
+        options: [{
+          value: 'interaction',
+          label: 'A standard interaction',
+          hint: 'For example, an email, phone call or meeting',
+        }, {
+          value: 'service_delivery',
+          label: 'A service that you have provided (delivered)',
+          hint: 'For example, a significant assist or outward mission',
+        }],
+      },
+    ],
+  }
+}
+
 const interactionEditFormConfig = function ({
   returnLink,
   contacts = [],
@@ -100,4 +127,5 @@ const interactionEditFormConfig = function ({
 module.exports = {
   interactionSortForm,
   interactionEditFormConfig,
+  selectKindFormConfig,
 }

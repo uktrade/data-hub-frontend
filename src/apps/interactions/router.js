@@ -9,9 +9,10 @@ const {
   getCompanyDetails,
   getAdviserDetails,
 } = require('../interactions/middleware/details')
-const { renderCreatePage, postAddStep1, renderDetailsPage } = require('./controllers/details')
+const { renderDetailsPage } = require('./controllers/details')
 const { renderEditPage } = require('./controllers/edit')
 const { renderInteractionList } = require('./controllers/list')
+const { renderStep1, postStep1 } = require('./controllers/step1')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'date:desc',
@@ -22,11 +23,11 @@ router.param('interactionId', getInteractionDetails)
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getInteractionCollection, renderInteractionList)
 
 router
-  .route(/^\/create(\/1)?$/)
-  .post(postAddStep1)
-  .all(renderCreatePage)
+  .route('/create')
+  .post(postStep1)
+  .all(renderStep1)
 
-router.route(['/create/2', '/:interactionId/edit'])
+router.route(['/create/interaction', '/:interactionId/edit'])
   .post(
     postDetails,
     renderEditPage,
