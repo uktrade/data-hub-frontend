@@ -18,7 +18,7 @@ const {
 } = require('./controllers/exports')
 
 const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
-const { getInteractionCollection } = require('./middleware/interactions')
+const { getInteractionCollection } = require('../interactions/middleware/collection')
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
