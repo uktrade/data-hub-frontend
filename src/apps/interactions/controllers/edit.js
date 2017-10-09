@@ -12,16 +12,30 @@ function renderEditPage (req, res) {
     dit_adviser: req.session.user,
     date: transformDateStringToDateObject(new Date()),
   }
+
+  if (res.locals.contact) {
+    interactionDefaults.contact = res.locals.contactId
+  }
+
   const mergedInteractionData = pickBy(merge({}, interactionDefaults, interactionData, res.locals.requestBody))
+
+  const {
+    advisers,
+    contacts,
+    communicationChannelOptions,
+    services,
+  } = res.locals
+
   const interactionForm =
     buildFormWithStateAndErrors(
-      interactionEditFormConfig(
-        {
-          returnLink: res.locals.returnLink,
-          advisers: get(res.locals, 'advisers.results'),
-          contacts: res.locals.contacts,
-          services: res.locals.services,
-        }),
+      interactionEditFormConfig({
+        returnLink: '',
+        advisers,
+        contacts,
+        communicationChannelOptions,
+        services,
+        id: get(res.locals.interaction, 'id', null),
+      }),
       mergedInteractionData,
       get(res.locals, 'form.errors.messages'),
     )

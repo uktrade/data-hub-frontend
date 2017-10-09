@@ -58,6 +58,7 @@ const selectKindFormConfig = function ({
 
 const interactionEditFormConfig = function ({
   returnLink,
+  id,
   contacts = [],
   advisers = [],
   services = [],
@@ -66,6 +67,9 @@ const interactionEditFormConfig = function ({
     returnLink,
     buttonText: 'Save',
     returnText: 'Cancel',
+    hiddenFields: {
+      id,
+    },
     children: [
       {
         macroName: 'MultipleChoiceField',

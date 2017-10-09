@@ -1,18 +1,16 @@
 const router = require('express').Router()
-
 const { setDefaultQuery } = require('../middleware')
 const { getInteractionCollection } = require('./middleware/collection')
 const {
   postDetails,
   getInteractionDetails,
-  getInteractionTypeAndService,
-  getCompanyDetails,
-  getAdviserDetails,
 } = require('../interactions/middleware/details')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderEditPage } = require('./controllers/edit')
 const { renderInteractionList } = require('./controllers/list')
 const { renderStep1, postStep1 } = require('./controllers/step1')
+const editOptions = require('./middleware/editoptions')
+const relatedData = require('./middleware/relateddata')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'date:desc',
@@ -28,35 +26,8 @@ router
   .all(renderStep1)
 
 router.route(['/create/interaction', '/:interactionId/edit'])
-  .post(
-    postDetails,
-    renderEditPage,
-  )
-  .get(
-    async function (req, res, next) {
-      // set company
-      if (req.query.company) {
-        const companyRepo = require('../companies/repos')
-        res.locals.company = await companyRepo.getDitCompany(req.session.token, req.query.company)
-        res.locals.returnLink = `/companies/${req.query.company}/interactions`
-      } else if (req.query.contact) {
-        const contactRepo = require('../contacts/repos')
-        const contact = await contactRepo.getContact(req.session.token, req.query.contact)
-        res.locals.company = contact.company
-        res.locals.returnLink = `/contacts/${req.query.contact}/interactions`
-      } else {
-        const interactionRepo = require('../interactions/repos')
-        const interaction = await interactionRepo.fetchInteraction(req.session.token, req.params.interactionId)
-        res.locals.company = interaction.company
-        res.locals.returnLink = `/interactions/${req.params.interactionId}`
-      }
-      next()
-    },
-    getAdviserDetails,
-    getCompanyDetails,
-    getInteractionTypeAndService,
-    renderEditPage
-  )
+  .post(postDetails)
+  .all(relatedData, editOptions, renderEditPage)
 
 router.get('/:interactionId', renderDetailsPage)
 
