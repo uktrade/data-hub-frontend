@@ -9,7 +9,7 @@ async function getInteractionCollection (req, res, next) {
     const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
     const contact = req.params.contactId ? { contact: req.params.contactId } : null
     const company = req.params.companyId ? { company: req.params.companyId } : null
-    const requestBody = Object.assign({}, req.body, selectedSortBy, contact, company)
+    const requestBody = assign({}, req.body, selectedSortBy, contact, company)
 
     const sortForm = merge({}, interactionSortForm, {
       hiddenFields: assign({}, omit(req.query, 'sortby')),
