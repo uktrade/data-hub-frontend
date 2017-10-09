@@ -34,11 +34,21 @@ router.route(['/create/2', '/:interactionId/edit'])
   .get(
     async function (req, res, next) {
       // set company
-      const companyRepo = require('../companies/repos')
-      res.locals.company = await companyRepo.getDitCompany(req.session.token, req.query.company)
-
-      // set return link
-      res.locals.returnLink = `/companies/${req.query.company}/interactions`
+      if (req.query.company) {
+        const companyRepo = require('../companies/repos')
+        res.locals.company = await companyRepo.getDitCompany(req.session.token, req.query.company)
+        res.locals.returnLink = `/companies/${req.query.company}/interactions`
+      } else if (req.query.contact) {
+        const contactRepo = require('../contacts/repos')
+        const contact = await contactRepo.getContact(req.session.token, req.query.contact)
+        res.locals.company = contact.company
+        res.locals.returnLink = `/contacts/${req.query.contact}/interactions`
+      } else {
+        const interactionRepo = require('../interactions/repos')
+        const interaction = await interactionRepo.fetchInteraction(req.session.token, req.params.interactionId)
+        res.locals.company = interaction.company
+        res.locals.returnLink = `/interactions/${req.params.interactionId}`
+      }
       next()
     },
     getAdviserDetails,
