@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText } = require('../../../common/selectors')
+const { getSelectorForElementWithText } = require('../../../helpers/selectors')
 
 const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
   text,

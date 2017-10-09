@@ -2,7 +2,7 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { camelCase, isNull, pickBy, keys } = require('lodash')
 
-const { getSelectorForElementWithText } = require('../../../common/selectors')
+const { getSelectorForElementWithText } = require('../../../helpers/selectors')
 
 const getButtonCalled = (label) =>
   getSelectorForElementWithText(label, { el: '//*', className: 'button' })
