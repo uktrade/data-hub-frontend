@@ -1,7 +1,12 @@
-const { assign } = require('lodash')
-
-const { transformInteractionFormBodyToApiRequest } = require('../transformers')
-const { saveInteraction } = require('../repos')
+const { assign, find } = require('lodash')
+const {
+  transformInteractionResponseToViewRecord,
+  transformInteractionFormBodyToApiRequest,
+} = require('../transformers')
+const { fetchInteraction, saveInteraction } = require('../repos')
+const metaDataRepository = require('../../../lib/metadata')
+const { getContactsForCompany } = require('../../contacts/repos')
+const { getAdvisers } = require('../../adviser/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest({
@@ -29,6 +34,48 @@ async function postDetails (req, res, next) {
   }
 }
 
+async function getInteractionDetails (req, res, next, interactionId) {
+  try {
+    res.locals.interaction = await fetchInteraction(req.session.token, interactionId)
+    res.locals.interactionViewRecord = transformInteractionResponseToViewRecord(res.locals.interaction)
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+async function getCompanyDetails (req, res, next) {
+  try {
+    res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+async function getAdviserDetails (req, res, next) {
+  try {
+    res.locals.advisers = await getAdvisers(req.session.token)
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+async function getInteractionTypeAndService (req, res, next) {
+  try {
+    res.locals.interactionType = find(metaDataRepository.interactionTypeOptions, { id: req.query.interaction_type })
+    res.locals.services = await metaDataRepository.getServices(req.session.token)
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
+  getInteractionDetails,
   postDetails,
+  getCompanyDetails,
+  getAdviserDetails,
+  getInteractionTypeAndService,
 }
