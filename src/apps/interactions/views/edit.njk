@@ -3,10 +3,10 @@
 {% block body_main_content %}
   {{ MetaList({
     items: [
-      { label: 'Interaction type', value: interactionTypeLabel }
+      { label: 'Interaction type', value: interactionType.name }
     ],
     itemModifier: 'stacked'
   }) }}
 
-  {{ Form(editInteractionForm) }}
+  {{ RenderAsMacros(interactionForm) }}
 {% endblock %}
