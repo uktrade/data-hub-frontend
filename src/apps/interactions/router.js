@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { setDefaultQuery } = require('../middleware')
-const { getInteractionsCollection, getRequestBody } = require('./middleware')
+const { getInteractionCollection } = require('./middleware/collection')
 const {
   postDetails,
   getInteractionDetails,
@@ -19,7 +19,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 router.param('interactionId', getInteractionDetails)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInteractionsCollection, renderInteractionList)
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getInteractionCollection, renderInteractionList)
 
 router
   .route(/^\/create(\/1)?$/)
