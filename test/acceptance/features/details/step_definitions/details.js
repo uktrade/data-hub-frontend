@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-const World = require('../../../common/world')
+const World = require('../../../helpers/world')
 
 defineSupportCode(({ Then }) => {
   const Details = client.page.Details()

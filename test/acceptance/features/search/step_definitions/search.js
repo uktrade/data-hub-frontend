@@ -2,7 +2,7 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const faker = require('faker')
-const { getDateFor } = require('../../../common/date')
+const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Then, When, Before }) => {
   const Event = client.page.Event()
