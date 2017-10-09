@@ -21,20 +21,6 @@ function saveInteraction (token, interaction) {
 }
 
 /**
- * Get interactions for a company
- *
- * @param {string} token
- * @param {string} companyId
- * @param {number} page
- * @return {Promise<Object[]>} Returns a promise that resolves to an array of API interaction objects
- */
-function getInteractionsForCompany (token, companyId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?company_id=${companyId}&limit=${limit}&offset=${offset}`)
-}
-
-/**
  * Get interactions for a investment
  *
  * @param {string} token
@@ -51,6 +37,5 @@ function getInteractionsForInvestment (token, investmentId, page) {
 module.exports = {
   saveInteraction,
   fetchInteraction,
-  getInteractionsForCompany,
   getInteractionsForInvestment,
 }
