@@ -1,4 +1,4 @@
-@interactions-create
+@interactions-create @ignore
 Feature: Create New Interaction
   As an existing user
   I would like to create a new Interaction for a company

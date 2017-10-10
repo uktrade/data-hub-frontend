@@ -1,4 +1,4 @@
-@contacts-list
+@contacts-list @ignore
 Feature: View Collection of contacts
   As an existing user
   I would like to view all the Contacts in one place

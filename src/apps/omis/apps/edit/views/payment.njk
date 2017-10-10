@@ -1,0 +1,77 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  {{ super() }}
+
+  {% set billingContact = [
+    order.billing_contact_name,
+    order.billing_email,
+    order.billing_phone
+  ] | removeNilAndEmpty %}
+
+  {% if billingContact | length %}
+    <div class="c-form-group">
+      <p class="c-form-group__label">
+        <span class="c-form-group__label-text">
+          Billing contact
+        </span>
+      </p>
+
+      <p>
+        {{ billingContact | join('<br>') | safe }}
+      </p>
+    </div>
+  {% endif %}
+
+  {% set billingAddress = [
+    order.billing_address_1,
+    order.billing_address_2,
+    order.billing_address_town,
+    order.billing_address_county,
+    order.billing_address_postcode,
+    order.billing_address_country.name
+  ] | removeNilAndEmpty %}
+
+  {% set registeredAddress = [
+    company.registered_address_1,
+    company.registered_address_2,
+    company.registered_address_town,
+    company.registered_address_county,
+    company.registered_address_postcode,
+    company.registered_address_country.name
+  ] | removeNilAndEmpty %}
+
+  {% set tradingAddress = [
+    company.trading_address_1,
+    company.trading_address_2,
+    company.trading_address_town,
+    company.trading_address_county,
+    company.trading_address_postcode,
+    company.trading_address_country.name
+  ] | removeNilAndEmpty %}
+
+  <div class="c-form-group">
+    <p class="c-form-group__label">
+      <span class="c-form-group__label-text">
+        Billing address
+      </span>
+    </p>
+
+    <div>
+      {% if billingAddress | length %}
+        {{ billingAddress | join('<br>') | safe }}
+        <br>
+        <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Change address</a>
+      {% else %}
+        {{ (tradingAddress if tradingAddress|length else registeredAddress) | join('<br>') | safe }}
+        {% call Message({ type: 'muted' }) %}
+          The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
+          <br>
+          <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Add billing address</a>
+        {% endcall %}
+      {% endif %}
+    </div>
+  </div>
+
+  {# {{company|dump}} #}
+{% endblock %}

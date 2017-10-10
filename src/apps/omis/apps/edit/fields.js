@@ -131,6 +131,41 @@ const editFields = merge({}, globalFields, {
     modifier: 'medium',
     optional: true,
   },
+  billing_address_1: {
+    fieldType: 'TextField',
+    label: 'fields.billing_address_1.label',
+    validate: 'required',
+  },
+  billing_address_2: {
+    fieldType: 'TextField',
+    label: 'fields.billing_address_2.label',
+    optional: true,
+    isLabelHidden: true,
+    modifier: 'compact',
+  },
+  billing_address_town: {
+    fieldType: 'TextField',
+    label: 'fields.billing_address_town.label',
+    validate: 'required',
+  },
+  billing_address_county: {
+    fieldType: 'TextField',
+    label: 'fields.billing_address_county.label',
+    optional: true,
+  },
+  billing_address_postcode: {
+    fieldType: 'TextField',
+    label: 'fields.billing_address_postcode.label',
+    modifier: 'short',
+    validate: 'required',
+  },
+  billing_address_country: {
+    fieldType: 'MultipleChoiceField',
+    label: 'fields.billing_address_country.label',
+    initialOption: '-- Select country --',
+    options: [],
+    validate: 'required',
+  },
 })
 
 module.exports = editFields

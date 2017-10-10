@@ -28,10 +28,11 @@ function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
     'name',
     'event_type',
+    'organiser',
     'address_country',
     'uk_region',
-    'start_date',
-    'end_date',
+    'start_date_after',
+    'start_date_before',
   ])
 
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null

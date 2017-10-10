@@ -1,31 +1,14 @@
 const { assign, find } = require('lodash')
 
 const eventData = require('../../../data/events/event.json')
+const advisersResponse = require('../../../data/advisers/advisers')
 
 describe('Event edit controller', () => {
-  const createEventsEditController = (getAdvisers) => {
-    return proxyquire('~/src/apps/events/controllers/edit', {
-      '../../adviser/repos': {
-        getAdvisers: getAdvisers,
-      },
-    })
-  }
   const currentUserTeam = 'team1'
 
   beforeEach(() => {
-    const advisersResponse = {
-      results: [
-        { name: 'advisor 1', id: 'advisor1' },
-        { name: 'advisor 2', id: 'advisor2' },
-        { name: 'advisor 3', id: 'advisor3' },
-      ],
-    }
-    const getAdvisersStub = sinon.stub().resolves(advisersResponse)
-
-    this.controller = createEventsEditController(getAdvisersStub)
-
     this.sandbox = sinon.sandbox.create()
-
+    this.controller = require('~/src/apps/events/controllers/edit')
     this.req = {
       session: {
         token: 'abcd',
@@ -36,13 +19,14 @@ describe('Event edit controller', () => {
         },
       },
       body: {},
-      flash: this.sandbox.spy(),
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
-      locals: {},
+      locals: {
+        advisers: advisersResponse,
+      },
     }
     this.next = this.sandbox.spy()
   })
@@ -73,9 +57,26 @@ describe('Event edit controller', () => {
       const eventForm = this.res.render.getCall(0).args[1].eventForm
       const actual = find(eventForm.children, { name: 'organiser' }).options
       const expected = [
-        { value: 'advisor1', label: 'advisor 1' },
-        { value: 'advisor2', label: 'advisor 2' },
-        { value: 'advisor3', label: 'advisor 3' },
+        {
+          label: 'Jeff Smith',
+          value: 'a0dae366-1134-e411-985c-e4115bead28a',
+        },
+        {
+          label: 'Aaron Mr',
+          value: 'e13209b8-8d61-e311-8255-e4115bead28a',
+        },
+        {
+          label: 'Mr Benjamin',
+          value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
+        },
+        {
+          label: 'George Chan',
+          value: '0119a99e-9798-e211-a939-e4115bead28a',
+        },
+        {
+          label: 'Fred Rafters',
+          value: '0919a99e-9798-e211-a939-e4115bead28a',
+        },
       ]
 
       expect(actual).to.deep.equal(expected)
@@ -113,7 +114,7 @@ describe('Event edit controller', () => {
     })
 
     context('when there are validation errors', () => {
-      it('should prepopulate the errors', async () => {
+      it('should pre populate the errors', async () => {
         const messages = {
           name: 'error 1',
           start_date: 'error 2',
@@ -131,6 +132,7 @@ describe('Event edit controller', () => {
                 messages,
               },
             },
+            advisers: advisersResponse,
           },
         })
 
@@ -144,18 +146,6 @@ describe('Event edit controller', () => {
         }
 
         expect(actualErrors).to.deep.equal(expectedErrors)
-      })
-    })
-
-    context('when there is an exception', () => {
-      it('should return an error', async () => {
-        const error = Error('error')
-        const controller = createEventsEditController(sinon.stub().rejects(error))
-
-        await controller.renderEditPage(this.req, this.res, this.next)
-
-        expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
-        expect(this.next).to.have.been.calledOnce
       })
     })
   })

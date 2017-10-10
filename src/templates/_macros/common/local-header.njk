@@ -26,31 +26,29 @@
           {{ MessageList({ items: messages }) }}
         {% endif %}
 
-        {% if props.actions %}
-          <div class="c-local-header__content">
-        {% endif %}
+        <div class="grid-row">
+          <div class="column-{{ 'two-thirds' if props.actions else 'full' }}">
+            {% if props.headingBefore %}
+              <div class="c-local-header__heading-before">
+                {{ props.headingBefore | safe }}
+              </div>
+            {% endif %}
 
-          {% if props.headingBefore %}
-            <div class="c-local-header__heading-before">
-              {{ props.headingBefore | safe }}
+            {% if props.heading %}
+              <h1 class="c-local-header__heading">
+                {{ props.heading }} {{ props.headingSuffix | safe }}
+              </h1>
+            {% endif %}
+
+            {{ caller() if caller }}
+          </div>
+
+          {% if props.actions %}
+            <div class="column-one-third c-local-header__actions">
+              {{ props.actions | safe }}
             </div>
           {% endif %}
-
-          {% if props.heading %}
-            <h1 class="c-local-header__heading">
-              {{ props.heading }} {{ props.headingSuffix | safe }}
-            </h1>
-          {% endif %}
-
-          {{ caller() if caller }}
-
-        {% if props.actions %}
-          </div>
-
-          <div class="c-local-header__actions">
-            {{ props.actions | safe }}
-          </div>
-        {% endif %}
+        </div>
       </div>
     </header>
   {% endif %}

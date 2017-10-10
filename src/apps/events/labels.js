@@ -5,8 +5,9 @@ const labels = {
       event_type: 'Type of event',
       address_country: 'Country',
       uk_region: 'Region',
-      start_date: 'Starts on or after',
-      end_date: 'Ends on',
+      organiser: 'Organiser',
+      start_date_after: 'From',
+      start_date_before: 'To',
     },
   },
 }

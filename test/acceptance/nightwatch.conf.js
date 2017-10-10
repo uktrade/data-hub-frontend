@@ -20,7 +20,6 @@ module.exports = {
   selenium: {
     start_process: true,
     server_path: seleniumServer.path,
-    log_path: 'seleniumLogs',
     host: process.env.QA_SELENIUM_HOST,
     port: process.env.QA_SELENIUM_PORT,
     cli_args: {
@@ -37,10 +36,6 @@ module.exports = {
       },
     },
     circleci: {
-      test_workers: {
-        enabled: true,
-        workers: 'auto',
-      },
       screenshots: {
         enabled: true,
         on_failure: true,

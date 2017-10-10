@@ -1,22 +1,16 @@
-const { sortBy, pick, omit } = require('lodash')
+const {
+  sortBy,
+  pick,
+  omit,
+  lowerCase,
+  capitalize,
+} = require('lodash')
 const queryString = require('query-string')
 
-const interactionLabels = require('../labels')
 const metadataRepository = require('../../../lib/metadata')
-const { getDisplayInteraction } = require('../services/formatting')
-const { transformObjectToOption } = require('../../transformers')
 
-const interactonDisplayOrder = [
-  'company',
-  'interaction_type',
-  'subject',
-  'notes',
-  'contact',
-  'date',
-  'dit_adviser',
-  'service',
-  'dit_team',
-]
+const { transformObjectToOption } = require('../../transformers')
+const { transformInteractionResponseToViewRecord } = require('../transformers')
 
 function renderCreatePage (req, res) {
   const interactionTypes = [...metadataRepository.interactionTypeOptions, { id: 999, name: 'Service delivery' }]
@@ -53,13 +47,19 @@ function postAddStep1 (req, res, next) {
 }
 
 function renderDetailsPage (req, res, next) {
-  res
-    .breadcrumb(`Interaction with ${res.locals.interaction.company.name}`)
-    .render('interactions/views/details', {
-      interactionDetails: getDisplayInteraction(res.locals.interaction),
-      interactionLabels: interactionLabels,
-      interactionDisplayOrder: interactonDisplayOrder,
-    })
+  try {
+    const { interaction } = res.locals
+    const breadcrumb = capitalize(lowerCase(interaction.kind))
+    const interactionViewRecord = transformInteractionResponseToViewRecord(interaction)
+
+    return res
+      .breadcrumb(breadcrumb)
+      .render('interactions/views/details', {
+        interactionViewRecord,
+      })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {

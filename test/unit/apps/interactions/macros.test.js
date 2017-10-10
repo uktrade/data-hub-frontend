@@ -39,11 +39,7 @@ describe('Interaction macros', () => {
     })
 
     it('should return object with transformed dit_adviser options', () => {
-      const actual = this.macros.interactionEditFormConfig({
-        advisers: {
-          results: sampleOptions,
-        },
-      })
+      const actual = this.macros.interactionEditFormConfig({ advisers: sampleOptions })
       actual.children.find(x => x.name === 'dit_adviser').options()
 
       expect(this.transformContactToOptionSpy).to.have.callCount(2)

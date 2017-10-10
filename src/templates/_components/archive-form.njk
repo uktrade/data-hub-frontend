@@ -12,7 +12,7 @@
  #  } %}
  #
 #}
-{% from "_macros/form.njk" import MultipleChoiceField %}
+{% from "_macros/form.njk" import TextField, MultipleChoiceField %}
 
 {% set radioOptions = options | concat('Other') | arrayToLabelValues %}
 {% set radioOptionsPrefix = optionsPrefix %}
@@ -28,14 +28,16 @@
     hint: radioOptionsPrefix
   }) }}
 
-  <div class="js-ConditionalSubfield" data-controlled-by="archived_reason" data-control-value="Other">
-    <div class="form-group">
-      <label class="form-label-bold">Other</label>
-      <input class="form-control" type="text" name="archived_reason_other">
-    </div>
-  </div>
+  {{ TextField({
+    label: 'Other',
+    name: 'archived_reason_other',
+    condition: {
+      name: 'archived_reason',
+      value: 'Other'
+    }
+  }) }}
 
-  <div class="save-bar">
+  <div class="c-form-actions">
     <button class="button button--save" type="submit">Archive</button>
   </div>
 </form>
