@@ -1,5 +1,8 @@
 const { getInteractionsForInvestment } = require('../../interactions/repos')
-const { transformInteractionToListItem } = require('../../interactions/transformers')
+const {
+  transformInteractionToListItem,
+  transformInteractionListItemToHaveUrlPrefix,
+} = require('../../interactions/transformers')
 const { transformApiResponseToCollection } = require('../../transformers')
 
 async function renderInteractionList (req, res, next) {
@@ -11,7 +14,8 @@ async function renderInteractionList (req, res, next) {
     const interactions = await getInteractionsForInvestment(token, investmentId, page)
       .then(transformApiResponseToCollection(
         { entityType: 'interaction' },
-        transformInteractionToListItem
+        transformInteractionToListItem,
+        transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink)
       ))
 
     return res

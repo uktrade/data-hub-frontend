@@ -1,3 +1,5 @@
+const { assign } = require('lodash')
+
 describe('#getInteractionCollection', () => {
   beforeEach(async () => {
     this.sandbox = sinon.sandbox.create()
@@ -9,7 +11,10 @@ describe('#getInteractionCollection', () => {
     })
 
     this.transformedInteractionStub = { id: '1234' }
+    this.transformedInteractionWithUrlPrefixStub = assign({}, this.transformedInteractionStub, { urlPrefix: 'return' })
     this.transformInteractionToListItemStub = this.sandbox.stub().returns(this.transformedInteractionStub)
+    this.transformInteractionListItemToHaveUrlPrefixStub =
+      this.sandbox.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
       '../../search/services': {
@@ -17,6 +22,7 @@ describe('#getInteractionCollection', () => {
       },
       '../transformers': {
         transformInteractionToListItem: this.transformInteractionToListItemStub,
+        transformInteractionListItemToHaveUrlPrefix: this.transformInteractionListItemToHaveUrlPrefixStub,
       },
     })
 
@@ -32,7 +38,9 @@ describe('#getInteractionCollection', () => {
     }
 
     this.res = {
-      locals: {},
+      locals: {
+        returnLink: '/return',
+      },
     }
 
     this.next = this.sandbox.spy()
@@ -55,7 +63,7 @@ describe('#getInteractionCollection', () => {
 
     it('should create a collection of interactions', () => {
       expect(this.res.locals.interactions.count).to.equal(1)
-      expect(this.res.locals.interactions.items).to.contain(this.transformedInteractionStub)
+      expect(this.res.locals.interactions.items[0]).to.deep.equal(this.transformedInteractionWithUrlPrefixStub)
     })
 
     it('sould create a sort form', () => {
