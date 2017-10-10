@@ -1,7 +1,7 @@
 {% extends "./_layout-view.njk" %}
 
 {% set addButton %}
-  <a class="button button-secondary" href="/interactions/create?company={{company.id}}">Add interaction</a>
+  <a class="button button-secondary" href="/companies/{{ company.id }}/interactions/create">Add interaction</a>
 {% endset %}
 
 {% block main_grid_right_column %}
