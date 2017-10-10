@@ -159,7 +159,7 @@ router
     team.editTeamMembers.getHandler
   )
 
-router.get('/:id/interactions', renderInteractionList)
+router.get('/:id/interactions', setInteractionsReturnUrl, renderInteractionList)
 
 router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 

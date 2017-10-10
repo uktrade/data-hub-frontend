@@ -45,6 +45,7 @@ router.get('/:id/unarchive', unarchiveContact)
 
 router.get('/:contactId/interactions',
   getCommon,
+  setInteractionsReturnUrl,
   getInteractionCollection,
   renderInteractions
 )
