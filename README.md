@@ -38,7 +38,8 @@ and be provided with a back end server to provide the API, data storage and sear
 
     - [Ignoring features](#ignoring-features)
 - [Continuous Integration](#continuous-integration)
-  - [Docker image](#docker-image)
+  - [Base docker image](#base-docker-image)
+  - [Data hub backend docker image](#data-hub-backend-docker-image)
   - [Job failure](#job-failure)
 - [Deployment](#deployment)
 
@@ -337,15 +338,18 @@ You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
 ## Continuous Integration
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration. 
 
-### Docker image
-The acceptance tests use the docker image `ukti/docker-data-hub-base` 
+### Base docker image
+The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/docker-data-hub-base` as a base for running a selenium server and data hub frontend 
 Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-base) and [docker](https://hub.docker.com/r/ukti/docker-data-hub-base/) repositories.
+
+### Data hub backend docker image
+The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo). The `uktrade/data-hub-leeloo:latest` docker image that is used is automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/data-hub-leeloo](https://hub.docker.com/r/ukti/data-hub-leeloo).
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:
 - `unit_tests`
 - `lint_code`
-- `acceptance_tests`
+- `user_acceptance_tests`
 
 When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder. 
 This can be accessed by logging in to [CircleCI](https://circleci.com/)
