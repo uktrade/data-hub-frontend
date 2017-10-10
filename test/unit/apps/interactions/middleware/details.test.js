@@ -10,7 +10,7 @@ const interactionTypeOptionsData = [
 ]
 const contactsData = require('../../../data/contacts/contacts.json')
 
-const { assign } = require('lodash')
+const { assign, merge } = require('lodash')
 
 const transformed = {
   id: '1',
@@ -60,7 +60,15 @@ describe('Interaction details middleware', () => {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
-      locals: {},
+      locals: {
+        company: {
+          id: '1',
+        },
+        interactionType: {
+          id: '2',
+        },
+        returnLink: '/return/',
+      },
     }
     this.nextSpy = this.sandbox.spy()
   })
@@ -86,15 +94,15 @@ describe('Interaction details middleware', () => {
       })
 
       it('should redirect on success', async () => {
-        expect(this.res.redirect).to.be.calledWith('/interactions/1')
+        expect(this.res.redirect).to.be.calledWith('/return/1')
       })
     })
 
     context('when all fields are valid for updating', () => {
       beforeEach(async () => {
-        const res = assign({}, this.res, {
+        const res = merge({}, this.res, {
           locals: {
-            interaction: assign({}, interactionData),
+            interaction: interactionData,
           },
         })
         await this.middleware.postDetails(this.req, res, this.nextSpy)
@@ -147,31 +155,21 @@ describe('Interaction details middleware', () => {
     })
   })
 
-  describe('#getCompanyDetails', () => {
+  describe('#getInteractionOptions', () => {
     context('when success', () => {
-      it('should set company data on locals', async () => {
-        const res = assign({}, this.res, { locals: { company: { id: '1' } } })
-        await this.middleware.getCompanyDetails(this.req, res, this.nextSpy)
-
-        expect(res.locals.contacts).to.deep.equal(contactsData)
+      beforeEach(async () => {
+        await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
-    })
-  })
 
-  describe('#getAdviserDetails', () => {
-    context('when success', () => {
-      it('should set advisers data on locals', async () => {
-        await this.middleware.getAdviserDetails(this.req, this.res, this.nextSpy)
+      it('should set contacts on locals', () => {
+        expect(this.res.locals.contacts).to.deep.equal(contactsData)
+      })
 
+      it('should set advisers on locals', () => {
         expect(this.res.locals.advisers).to.deep.equal(advisersData)
       })
-    })
-  })
 
-  describe('#getServices', () => {
-    context('when success', () => {
-      it('should set type and service data on locals', async () => {
-        await this.middleware.getServices(this.req, this.res, this.nextSpy)
+      it('should set services data on locals', async () => {
         expect(this.res.locals.services).to.deep.equal(servicesData)
       })
     })
