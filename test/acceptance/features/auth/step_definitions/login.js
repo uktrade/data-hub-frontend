@@ -4,34 +4,50 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Login = client.page.Login()
 
+  // Given
+
   Given(/^I am an authenticated user on the data hub website$/, async () => {
     await Login
       .navigate()
       .authenticate()
   })
 
-  When(/^I am on the Datahub login page$/, async () => {
+  Given(/^I am not logged in$/, async () => {
+    client
+      .deleteCookies()
+      .refresh()
+
+    await Login
+      .assert.elementPresent('@signInLink')
+  })
+
+  // When
+
+  When(/^I am on the Data Hub login page$/, async () => {
     await Login
       .navigate()
       .waitForElementVisible('@signInForm')
   })
 
-  When(/^I enter my credentials$/, async () => {
+  When(/^I enter correct credentials$/, async () => {
     await Login
       .enterCredentials()
   })
 
-  When(/^I submit the form$/, async () => {
+  When(/^I enter incorrect credentials$/, async () => {
     await Login
-      .submitForm('@signInForm')
+      .setValue('@usernameField', 'not@user')
+      .setValue('@passwordField', 'nah')
   })
 
-  Then(/^I verify that I'm successfully logged in$/, async () => {
+  // Then
+
+  Then(/^I should be successfully logged in$/, async () => {
     await Login
       .waitForElementVisible('@searchBar')
   })
 
-  Then(/^I logout of Datahub website$/, async () => {
+  Then(/^I log out of Data Hub website$/, async () => {
     await Login
       .click('@signOutLink')
   })
@@ -42,16 +58,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@pageHeading', 'Report a problem or leave feedback')
   })
 
-  Then(/^I am not logged in$/, async () => {
-    client
-      .deleteCookies()
-      .refresh()
-
-    await Login
-      .assert.elementPresent('@signInLink')
-  })
-
-  Then(/^I can navigate to the Datahub login page$/, async () => {
+  Then(/^I can navigate to the Data Hub login page$/, async () => {
     await Login
       .click('@signInLink')
       .assert.containsText('@pageHeading', 'Sign in')

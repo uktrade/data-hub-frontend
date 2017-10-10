@@ -1,0 +1,19 @@
+{% extends "./_layout.njk" %}
+
+{% set addButton %}
+  <a href="/interactions/create/1?company={{ investmentData.investor_company.id }}&amp;investment={{ investmentData.id }}" class="button button-secondary">Add interaction</a>
+{% endset %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Investment Interactions</h2>
+  <p>
+    An interaction could be a meeting, call, email or another activity associated with this investment.
+  </p>
+
+  {{
+    Collection(interactions | assignCopy({
+      countLabel: 'interaction',
+      summaryActionsHTML: addButton
+    }))
+  }}
+{% endblock %}

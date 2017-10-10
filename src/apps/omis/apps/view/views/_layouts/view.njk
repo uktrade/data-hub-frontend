@@ -1,10 +1,10 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "_layouts/datahub-base.njk" %}
 
 {% block local_header %}
   {% set actions %}
     <p class="c-local-header__action">
       {% if order.status == 'draft' %}
-        <a href="quote" class="button button--small">Prepare quote</a>
+        <a href="quote" class="button">Preview quote</a>
       {% else %}
         <a href="quote">View quote</a>
       {% endif %}
@@ -30,8 +30,4 @@
     }) }}
 
   {% endcall %}
-{% endblock %}
-
-{% block main_grid_left_column %}
-  {{ LocalNav({ items: localNavItems }) }}
 {% endblock %}

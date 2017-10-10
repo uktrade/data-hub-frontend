@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
-const { setOrderBreadcrumb } = require('../../middleware')
+const { getCompany, setOrderBreadcrumb } = require('../../middleware')
 const { renderWorkOrder, renderQuote } = require('./controllers')
 const {
   setTranslation,
@@ -21,6 +21,10 @@ const LOCAL_NAV = [
 router.use(setLocalNav(LOCAL_NAV))
 router.use(setTranslation)
 router.use(setOrderBreadcrumb)
+
+router.use((req, res, next) => {
+  getCompany(req, res, next, res.locals.order.company.id)
+})
 
 router.get('/', redirectToFirstNavItem)
 router.get('/work-order', getQuote, renderWorkOrder)

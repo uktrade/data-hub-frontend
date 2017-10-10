@@ -2,10 +2,13 @@
 
 {% block main_grid_right_column %}
   <div class="key-value key-value--vertical">
-    <div id="business-type" class="key-value__key form-label-bold">Business type
-      <a href="/companies/add-step-1" class="button-link">Change</a>
+    <div id="business-type" class="key-value__key form-label-bold">
+      Business type
     </div>
-    <div class="key-value__value" aria-labelledby="business-type">{{ companyTypeOptions[businessType] }}</div>
+    <div class="key-value__value" aria-labelledby="business-type">
+      {{ companyTypeOptions[businessType] }}
+      <a href="/companies/add-step-1">Change</a>
+    </div>
   </div>
 
   {{ EntitySearchForm({

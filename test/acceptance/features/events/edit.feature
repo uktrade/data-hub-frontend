@@ -6,113 +6,91 @@ Feature: Edit an Event in Data hub
 
   Background:
     Given I am an authenticated user on the data hub website
+    And I navigate to event details page
+    And I click on edit event button
 
-  @events-edit--name @ignore
+  @events-edit--name
   Scenario: Edit event name
+    When I change form text field "name" to random words
+    And I submit the form
+    Then details heading should contain what I entered for "name" field
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event name field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event name is updated with new value
-
-  @events-edit--type @ignore
+  @events-edit--type
   Scenario: Edit event type
+    When I change form dropdown "event_type" to "Seminar"
+    And I submit the form
+    Then details view data for "Type of event" should contain "Seminar"
+    When I click on edit event button
+    And I change form dropdown "event_type" to Exhibition
+    And I submit the form
+    Then details view data for "Type of event" should contain "Exhibition"
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event type field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event type is updated with new value
-
-  @events-edit--refcode @ignore
-  Scenario: Edit event additional reference code
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event additional reference code field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event additional reference code is updated with new value
-
-  @events-edit--dates @ignore
+  @events-edit--dates
   Scenario: Edit event dates
+    When I change start date to decrease year by one
+    And I submit the form
+    Then details view data for "Event start date" should contain what I entered for "start_date_year" field
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event dates field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event dates is updated with new value
-
-  @events-edit--location-type @ignore
+  @events-edit--location-type
   Scenario: Edit event location type
+    When I change form dropdown "location_type" to "HQ"
+    And I submit the form
+    Then details view data for "Event location type" should contain "HQ"
+    When I click on edit event button
+    And I change form dropdown "location_type" to "Post"
+    And I submit the form
+    Then details view data for "Event location type" should contain "Post"
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event location type field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event location type is updated with new value
-
-  @events-edit--address @ignore
+  @events-edit--address
   Scenario: Edit event address
+    When I change form text field "address_1" to a random street address
+    And I submit the form
+    Then details view data for "Address" should contain what I entered for "address_1" field
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event address field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event address is updated with new value
-
-  @events-edit--notes @ignore
+  @events-edit--notes
   Scenario: Edit event notes
+    When I change form text field "notes" to a random paragraph
+    And I submit the form
+    Then details view data for "Notes" should contain what I entered for "notes" field
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event notes field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event notes is updated with new value
-
-  @events-edit--team-hosting @ignore
+  @events-edit--team-hosting
   Scenario: Edit event team hosting
+    When I change form dropdown "lead_team" to "CBBC Leeds"
+    And I submit the form
+    Then details view data for "Lead team" should contain "CBBC Leeds"
+    When I click on edit event button
+    And I change form dropdown "lead_team" to "CBBC London"
+    And I submit the form
+    Then details view data for "Lead team" should contain "CBBC London"
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event team hosting field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event team hosting is updated with new value
-
-  @events-edit--organiser @ignore
+  @events-edit--organiser
   Scenario: Edit event organiser
+    When I change form dropdown "organiser" to "Michael Wining"
+    And I submit the form
+    Then details view data for "Organiser" should contain "Michael Wining"
+    When I click on edit event button
+    And I change form dropdown "organiser" to "Barry Oling"
+    And I submit the form
+    Then details view data for "Organiser" should contain "Barry Oling"
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event organiser field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event organiser is updated with new value
-
-  @events-edit--shared-teams @ignore
+  @events-edit--shared-teams
   Scenario: Edit event shared teams
+    When I select "Yes" for boolean option "event_shared"
+    And I change form dropdown "teams" to "BPI"
+    And I submit the form
+    Then details view data for "Other teams" should contain "BPI"
+    When I click on edit event button
+    When I select "Yes" for boolean option "event_shared"
+    And I change form dropdown "teams" to "Intellect"
+    And I submit the form
+    Then details view data for "Other teams" should contain "Intellect"
 
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event shared teams field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event shared teams is updated with new value
-
-  @events-edit--related-programmes @ignore
+  @events-edit--related-programmes
   Scenario: Edit event related programmes
-
-    When I navigate to event details page
-    And I click on edit event button
-    And I change event related programmes field to a new value
-    And I click on save button
-    Then I see the event record updated confirmation message
-    And I verify the event related programmes is updated with new value
+    When I change form dropdown "related_programmes" to "Grown in Britain"
+    And I submit the form
+    Then details view data for "Related programmes" should contain "Grown in Britain"
+    When I click on edit event button
+    And I change form dropdown "related_programmes" to "Great Branded"
+    And I submit the form
+    Then details view data for "Related programmes" should contain "Great Branded"

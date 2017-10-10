@@ -1,8 +1,8 @@
-{% extends '_layouts/two-column.njk' %}
+{% extends '_layouts/datahub-base.njk' %}
 
 {% from "_macros/dev.njk" import Example %}
 
-{% block main_grid_right_column %}
+{% block body_main_content %}
   {% if incompleteFields %}
     {% call Message({
       type: 'error',

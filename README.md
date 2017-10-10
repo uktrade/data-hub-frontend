@@ -338,8 +338,8 @@ You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration. 
 
 ### Docker image
-The acceptance tests use the docker image `ukti/docker-selenium-base`. 
-Details can be found in the [GitHub](https://github.com/uktrade/docker-selenium-base) repo.
+The acceptance tests use the docker image `ukti/docker-data-hub-base` 
+Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-base) and [docker](https://hub.docker.com/r/ukti/docker-data-hub-base/) repositories.
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:

@@ -6,6 +6,7 @@ const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditClientDetailsController = require('./controllers/client-details')
 const EditSubscribersController = require('./controllers/subscribers')
 const EditWorkDescriptionController = require('./controllers/work-description')
+const EditBillingAddressController = require('./controllers/billing-address')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
@@ -44,13 +45,27 @@ const steps = merge({}, createSteps, {
     controller: EditWorkDescriptionController,
   },
   '/payment': {
-    heading: 'Edit quote and payment details',
+    heading: 'Edit invoice details',
     fields: [
       'vat_status',
       'vat_number',
       'vat_verified',
       'po_number',
     ],
+    templatePath: 'omis/apps/edit/views',
+    template: 'payment.njk',
+  },
+  '/billing-address': {
+    heading: 'Edit billing address',
+    fields: [
+      'billing_address_1',
+      'billing_address_2',
+      'billing_address_town',
+      'billing_address_county',
+      'billing_address_postcode',
+      'billing_address_country',
+    ],
+    controller: EditBillingAddressController,
   },
 })
 

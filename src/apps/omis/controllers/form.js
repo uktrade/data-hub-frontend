@@ -75,6 +75,14 @@ class FormController extends Controller {
       return res.redirect(lastStep.path)
     }
 
+    if (get(err, 'code') === 'SESSION_TIMEOUT') {
+      return res
+        .breadcrumb('Session expired')
+        .render('omis/apps/create/views/timeout', {
+          baseUrl: req.baseUrl,
+        })
+    }
+
     super.errorHandler(err, req, res, next)
   }
 }

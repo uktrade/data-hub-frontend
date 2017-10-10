@@ -3,20 +3,20 @@
 {% block body_main_content %}
   <h2 class="heading-large">Entity search</h2>
 
-  {% call Example('Simple') %}
+  {% call Example('EntitySearchForm') %}
     {{ EntitySearchForm(macros.entitySearchForm) }}
   {% endcall %}
 
-  {% call Example('Global') %}
+  {% call Example('EntitySearchForm with `global` modifier') %}
     {{ EntitySearchForm(macros.entitySearchFormGlobal) }}
   {% endcall %}
 
   <h2 class="heading-large">Standard</h2>
-  {% call Example('Normal size') %}
+  {% call Example('Default form fields') %}
     {{ Form(macros.standardForm) }}
   {% endcall %}
 
-  {% call Example('Small size') %}
+  {% call Example('Form fields with `small` modifier') %}
     {{ Form({
       children: [
         {
@@ -41,7 +41,7 @@
     }) }}
   {% endcall %}
 
-  {% call Example('Light version') %}
+  {% call Example('Form fields with `light` modifier') %}
     {{ EntitySearchForm({
       inputName: 'term-light',
       inputLabel: 'Search for a company name or contact',
@@ -95,7 +95,7 @@
     }) }}
   {% endcall %}
 
-  {% call Example('Compact version') %}
+  {% call Example('Form fields with `compact` modifier') %}
     {% call Form(form) %}
       {{ TextField({
         name: 'name-small',

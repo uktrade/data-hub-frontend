@@ -15,12 +15,11 @@ const {
   edit,
   evaluation,
   team,
-  interactions,
 } = require('./controllers')
+
 const {
   clientRelationshipManagementFormMiddleware,
   detailsFormMiddleware,
-  interactionsFormMiddleware,
   investmentTypeFormMiddleware,
   projectManagementFormMiddleware,
   projectStageFormMiddleware,
@@ -28,10 +27,11 @@ const {
   valueFormMiddleware,
   teamMembersFormMiddleware,
 } = require('./middleware/forms')
+
 const { renderInvestmentList } = require('./controllers/list')
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 
-const { getInteractionCollection } = require('./middleware/interactions')
+const { renderInteractionList } = require('./controllers/interactions')
 
 const LOCAL_NAV = [
   { path: 'details', label: 'Project details' },
@@ -51,7 +51,6 @@ const DEFAULT_COLLECTION_QUERY = {
 router.use('/:id/', setLocalNav(LOCAL_NAV))
 
 router.param('id', shared.getInvestmentDetails)
-router.param('interactionId', shared.getInteractionDetails)
 router.param('companyId', shared.getCompanyDetails)
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
@@ -157,29 +156,9 @@ router
     team.editTeamMembers.getHandler
   )
 
-router.get('/:id/interactions', getInteractionCollection, interactions.list.indexGetHandler)
-
-router
-  .route('/:id/interactions/create')
-  .get(interactionsFormMiddleware.populateForm, interactions.create.createGetInteractionHandler)
-  .post(
-    interactionsFormMiddleware.populateForm,
-    interactionsFormMiddleware.handleFormPost,
-    interactions.create.createPostInteractionHandler,
-    interactions.create.createGetInteractionHandler
-  )
+router.get('/:id/interactions', renderInteractionList)
 
 router.get('/:id/evaluation', evaluation.renderEvaluationPage)
-
-router
-  .route('/:id/interactions/:interactionId/edit')
-  .get(interactionsFormMiddleware.populateForm, interactions.edit.editGetInteractionHandler)
-  .post(
-    interactionsFormMiddleware.populateForm,
-    interactionsFormMiddleware.handleFormPost,
-    interactions.edit.editPostInteractionHandler,
-    interactions.edit.editGetInteractionHandler
-  )
 
 router.post('/:id/change-project-stage', projectStageFormMiddleware.handleFormPost)
 

@@ -12,17 +12,19 @@
  #}
 {% macro DateFieldset(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
-  {% set value = props.value|default('') %}
-  {% set formattedDate = props.value | formatDate('DD-MM-YYYY') %}
+  {% set value = props.value | default('') %}
 
   {% if value | isPlainObject  %}
     {% set dateObj = props.value %}
-  {% else %}
-    {% set splitDate = formattedDate.split('-') if formattedDate %}
+  {% elif value | isString %}
+    {# Expects YYYY-MM-DD or ISO datetime#}
+    {% set splitDateTime = value | split('T') %}
+    {% set splitDate = splitDateTime[0] | split('-') %}
+
     {% set dateObj = {
-      day: splitDate[0] |  default(''),
+      day: splitDate[2] | default(''),
       month: splitDate[1] | default(''),
-      year: splitDate[2] | default('')
+      year: splitDate[0] | default('')
     } %}
   {% endif %}
 

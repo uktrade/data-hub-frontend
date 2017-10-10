@@ -1,4 +1,4 @@
-const { uniqueId } = require('lodash')
+const uniqueId = require('lodash/uniqueId')
 
 const { parseDateString } = require('../../../common/date')
 const { addClass, removeClass } = require('../_deprecated/lib/element-stuff')
