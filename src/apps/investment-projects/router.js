@@ -29,9 +29,12 @@ const {
 } = require('./middleware/forms')
 
 const { renderInvestmentList } = require('./controllers/list')
-const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
-
 const { renderInteractionList } = require('./controllers/interactions')
+
+const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
+const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+
+const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
   { path: 'details', label: 'Project details' },
@@ -161,5 +164,7 @@ router.get('/:id/interactions', renderInteractionList)
 router.get('/:id/evaluation', evaluation.renderEvaluationPage)
 
 router.post('/:id/change-project-stage', projectStageFormMiddleware.handleFormPost)
+
+router.use('/:id', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
 module.exports = router
