@@ -120,6 +120,15 @@ const interactionEditFormConfig = function ({
           return advisers.map(transformContactToOption)
         },
       },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'communication_channel',
+        label: formLabels.communication_channel,
+        initialOption: '-- Select communication channel --',
+        options () {
+          return metaData.communicationChannelOptions.map(transformObjectToOption)
+        },
+      },
     ],
   }
 }

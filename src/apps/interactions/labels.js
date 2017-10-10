@@ -7,5 +7,5 @@ module.exports = {
   dit_adviser: 'DIT adviser',
   service: 'Service',
   dit_team: 'Service provider',
-  interaction_type: 'Interaction type',
+  communication_channel: 'Communication channel',
 }

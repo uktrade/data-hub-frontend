@@ -1,4 +1,5 @@
-const { assign, find } = require('lodash')
+const { assign } = require('lodash')
+
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
@@ -9,7 +10,6 @@ async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest({
     props: req.body,
     company: req.query.company,
-    communicationChannel: req.query.interaction_type,
   })
 
   try {
@@ -58,9 +58,8 @@ async function getAdviserDetails (req, res, next) {
   }
 }
 
-async function getInteractionTypeAndService (req, res, next) {
+async function getServices (req, res, next) {
   try {
-    res.locals.interactionType = find(metaDataRepository.interactionTypeOptions, { id: req.query.interaction_type })
     res.locals.services = await metaDataRepository.getServices(req.session.token)
     next()
   } catch (err) {
@@ -73,5 +72,5 @@ module.exports = {
   postDetails,
   getCompanyDetails,
   getAdviserDetails,
-  getInteractionTypeAndService,
+  getServices,
 }
