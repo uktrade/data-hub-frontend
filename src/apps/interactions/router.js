@@ -5,7 +5,7 @@ const { getInteractionCollection } = require('./middleware/collection')
 const {
   postDetails,
   getInteractionDetails,
-  getInteractionTypeAndService,
+  getServices,
   getCompanyDetails,
   getAdviserDetails,
 } = require('../interactions/middleware/details')
@@ -54,7 +54,7 @@ router.route(['/create/interaction', '/:interactionId/edit'])
     },
     getAdviserDetails,
     getCompanyDetails,
-    getInteractionTypeAndService,
+    getServices,
     renderEditPage
   )
 

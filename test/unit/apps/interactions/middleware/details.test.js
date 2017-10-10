@@ -54,7 +54,6 @@ describe('Interaction details middleware', () => {
       body: assign({}, interactionData),
       query: {
         company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
-        interaction_type: 'a5d71fdd-5d95-e211-a939-e4115bead28a',
       },
     }
     this.res = {
@@ -169,12 +168,10 @@ describe('Interaction details middleware', () => {
     })
   })
 
-  describe('#getInteractionTypeAndService', () => {
+  describe('#getServices', () => {
     context('when success', () => {
       it('should set type and service data on locals', async () => {
-        await this.middleware.getInteractionTypeAndService(this.req, this.res, this.nextSpy)
-
-        expect(this.res.locals.interactionType).to.deep.equal(interactionTypeOptionsData[1])
+        await this.middleware.getServices(this.req, this.res, this.nextSpy)
         expect(this.res.locals.services).to.deep.equal(servicesData)
       })
     })

@@ -5,7 +5,7 @@ describe('interaction form service', function () {
   let company
   let contact
   let dit_adviser
-  let interaction_type
+  let communication_channel
   let interaction
   let service
   let dit_team
@@ -15,14 +15,14 @@ describe('interaction form service', function () {
     company = { id: '1234', name: 'Fred ltd' }
     contact = { id: '3321', name: 'Fred Smith', first_name: 'Fred', last_name: 'Smith', company }
     dit_adviser = { id: '4455', name: 'Fred Jones', first_name: 'Fred', last_name: 'Jones' }
-    interaction_type = { id: '1234', name: 'Email' }
+    communication_channel = { id: '1234', name: 'Email' }
     service = { id: '6654', name: 'Significant Assist' }
     dit_team = { id: '90934', name: 'North East' }
     interaction = {
       id: '999',
       company,
       contact,
-      interaction_type,
+      communication_channel,
       subject: 'Test subject',
       notes: 'Test notes',
       date: '2017-01-02:T00:00:00.00Z',
@@ -51,7 +51,7 @@ describe('interaction form service', function () {
         id: '999',
         company: company.id,
         contact: contact.id,
-        interaction_type: interaction_type.id,
+        communication_channel: communication_channel.id,
         subject: 'Test subject',
         notes: 'Test notes',
         date: '2017-01-02:T00:00:00.00Z',
@@ -65,7 +65,7 @@ describe('interaction form service', function () {
       const freshInteraction = {
         company,
         contact: null,
-        interaction_type: interaction_type,
+        communication_channel: communication_channel,
         dit_adviser,
         date: '2017-01-02:T00:00:00.00Z',
         service: {
@@ -81,7 +81,7 @@ describe('interaction form service', function () {
         id: null,
         company: company.id,
         contact: null,
-        interaction_type: interaction_type.id,
+        communication_channel: communication_channel.id,
         subject: null,
         notes: null,
         date: '2017-01-02:T00:00:00.00Z',

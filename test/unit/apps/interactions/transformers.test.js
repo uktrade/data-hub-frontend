@@ -135,13 +135,6 @@ describe('Interaction transformers', () => {
 
       expect(actual.company).to.equal(expected)
     })
-
-    it('should set the communication channel', () => {
-      const expected = 'communication channel'
-      const actual = transformInteractionFormBodyToApiRequest({ communicationChannel: expected })
-
-      expect(actual.communication_channel).to.equal(expected)
-    })
   })
 
   describe('#transformInteractionResponsetoViewRecord', () => {

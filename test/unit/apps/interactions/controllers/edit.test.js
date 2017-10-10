@@ -13,7 +13,7 @@ describe('Interaction edit controller', () => {
         },
       },
       query: {
-        interaction_type: '1',
+        communication_channel: '1',
       },
       body: {},
     }
