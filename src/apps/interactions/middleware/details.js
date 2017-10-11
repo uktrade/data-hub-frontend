@@ -9,14 +9,15 @@ const { getAdvisers } = require('../../adviser/repos')
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest({
     props: req.body,
-    company: req.query.company,
+    company: res.locals.company.id,
+    communicationChannel: res.locals.interactionType.id,
   })
 
   try {
     const result = await saveInteraction(req.session.token, res.locals.requestBody)
 
     req.flash('success', `Interaction ${res.locals.interaction ? 'updated' : 'created'}`)
-    return res.redirect(`/interactions/${result.id}`)
+    return res.redirect(res.locals.returnLink + result.id)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
@@ -40,26 +41,10 @@ async function getInteractionDetails (req, res, next, interactionId) {
   }
 }
 
-async function getCompanyDetails (req, res, next) {
-  try {
-    res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
-    next()
-  } catch (err) {
-    next(err)
-  }
-}
-
-async function getAdviserDetails (req, res, next) {
+async function getInteractionOptions (req, res, next) {
   try {
     res.locals.advisers = await getAdvisers(req.session.token)
-    next()
-  } catch (err) {
-    next(err)
-  }
-}
-
-async function getServices (req, res, next) {
-  try {
+    res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
     res.locals.services = await metaDataRepository.getServices(req.session.token)
     next()
   } catch (err) {
@@ -70,7 +55,5 @@ async function getServices (req, res, next) {
 module.exports = {
   getInteractionDetails,
   postDetails,
-  getCompanyDetails,
-  getAdviserDetails,
-  getServices,
+  getInteractionOptions,
 }

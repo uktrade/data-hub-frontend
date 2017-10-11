@@ -1,6 +1,7 @@
 const { getInteractionsForInvestment } = require('../../interactions/repos')
 const { transformInteractionToListItem } = require('../../interactions/transformers')
 const { transformApiResponseToCollection } = require('../../transformers')
+const { getInvestment } = require('../repos')
 
 async function getInteractionCollection (req, res, next) {
   try {
@@ -20,6 +21,29 @@ async function getInteractionCollection (req, res, next) {
   }
 }
 
+function setInteractionsReturnUrl (req, res, next) {
+  res.locals.returnLink = `/investment-projects/${req.params.id}/interactions/`
+  next()
+}
+
+function setInteractionsEntityName (req, res, next) {
+  res.locals.entityName = res.locals.investmentData.name
+  next()
+}
+
+async function setCompanyDetails (req, res, next) {
+  try {
+    const investment = await getInvestment(req.session.token, req.params.id)
+    res.locals.company = investment.investor_company
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getInteractionCollection,
+  setInteractionsReturnUrl,
+  setInteractionsEntityName,
+  setCompanyDetails,
 }
