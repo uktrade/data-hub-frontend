@@ -7,11 +7,7 @@ const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 
 async function postDetails (req, res, next) {
-  res.locals.requestBody = transformInteractionFormBodyToApiRequest({
-    props: req.body,
-    company: res.locals.company.id,
-    communicationChannel: res.locals.interactionType.id,
-  })
+  res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
 
   try {
     const result = await saveInteraction(req.session.token, res.locals.requestBody)

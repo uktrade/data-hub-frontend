@@ -63,11 +63,13 @@ const interactionEditFormConfig = function ({
   contacts = [],
   advisers = [],
   services = [],
+  hiddenFields,
 }) {
   return {
     returnLink,
     buttonText: 'Save',
     returnText: 'Cancel',
+    hiddenFields,
     children: [
       {
         macroName: 'MultipleChoiceField',

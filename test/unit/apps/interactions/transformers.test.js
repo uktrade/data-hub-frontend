@@ -117,24 +117,13 @@ describe('Interaction transformers', () => {
 
   describe('#transformInteractionFormBodyToApiRequest', () => {
     it('should set the date', () => {
-      const actual = transformInteractionFormBodyToApiRequest(
-        {
-          props: {
-            date_year: '2018',
-            date_month: '01',
-            date_day: '02',
-          },
-        }
-      )
+      const actual = transformInteractionFormBodyToApiRequest({
+        date_year: '2018',
+        date_month: '01',
+        date_day: '02',
+      })
 
       expect(actual.date).to.equal('2018-01-02')
-    })
-
-    it('should set the company', () => {
-      const expected = 'company'
-      const actual = transformInteractionFormBodyToApiRequest({ company: expected })
-
-      expect(actual.company).to.equal(expected)
     })
   })
 

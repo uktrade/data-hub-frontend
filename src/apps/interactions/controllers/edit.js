@@ -22,6 +22,10 @@ function renderEditPage (req, res) {
           advisers: get(res.locals, 'advisers.results'),
           contacts: res.locals.contacts,
           services: res.locals.services,
+          hiddenFields: {
+            company: res.locals.company.id,
+            investment_project: get(res.locals, 'investmentData.id'),
+          },
         }),
       mergedInteractionData,
       get(res.locals, 'form.errors.messages'),

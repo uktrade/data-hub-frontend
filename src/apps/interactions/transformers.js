@@ -134,9 +134,8 @@ function transformInteractionResponseToViewRecord ({
   return viewRecord
 }
 
-function transformInteractionFormBodyToApiRequest ({ props, company }) {
+function transformInteractionFormBodyToApiRequest (props) {
   return assign({}, props, {
-    company,
     date: transformDateObjectToDateString('date')(props),
   })
 }
