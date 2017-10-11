@@ -181,27 +181,18 @@ workflows:
       - unit_tests:
           requires:
             - build
-      - start_uat:
-          type: approval
+      - user_acceptance_tests:
           requires:
-            - build
             - lint_code
             - unit_tests
           filters:
             branches:
               ignore:
                 - master
-                - develop
-      - user_acceptance_tests:
-          requires:
-            - start_uat
-          filters:
-            branches:
-              ignore:
-                - master
       - user_acceptance_tests_master:
           requires:
-            - start_uat
+            - lint_code
+            - unit_tests
           filters:
             branches:
               only:
