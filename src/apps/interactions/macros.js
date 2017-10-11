@@ -110,7 +110,6 @@ const interactionEditFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         name: 'dit_adviser',
-        optional: true,
         initialOption: '-- Select adviser --',
         options () {
           return advisers.map(transformContactToOption)
