@@ -13,7 +13,7 @@ function getInteractionAsFormData (interaction) {
     id: interaction.id || null,
     company: getPropertyId(interaction, 'company'),
     contact: getPropertyId(interaction, 'contact'),
-    interaction_type: getPropertyId(interaction, 'interaction_type'),
+    communication_channel: getPropertyId(interaction, 'communication_channel'),
     subject: interaction.subject || null,
     notes: interaction.notes || null,
     date: interaction.date || null,
