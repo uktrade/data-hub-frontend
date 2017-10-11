@@ -281,4 +281,11 @@ defineSupportCode(({ Given, Then, When }) => {
     await Interaction
       .assert.containsText('@subjectFromInteractionDetailsPage', Interaction.subject)
   })
+
+  Then(/^I navigate to contact interactions$/, async () => {
+    await Contact
+      .navigateToContactsPage()
+      .clickOnFirstContactFromList()
+      .clickOnContactInteractions()
+  })
 })

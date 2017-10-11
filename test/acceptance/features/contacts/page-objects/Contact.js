@@ -13,8 +13,12 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    contactsTab: 'a[href*="/contacts"][href*="/companies"]',
-    firstCompanyFromList: '.c-entity-list li:first-child h3 a',
+    interactions: {
+      selector: '//*[contains(@class,"c-local-nav__link") and contains(text(),"Interactions")]',
+      locateStrategy: 'xpath',
+    },
+    contactsTab: 'a[href*="/contacts"]',
+    firstContactFromList: '.c-entity-list li:first-child h3 a',
     addContactButton: '#add-contact-link',
     noContactWarning: '#no-contact-warning',
     contactFirstname: '#field-first_name',
@@ -41,14 +45,13 @@ module.exports = {
 
   commands: [
     {
-      clickOnFirstCompanyFromList () {
+      clickOnFirstContactFromList () {
         return this
-          .click('@firstCompanyFromList')
+          .click('@firstContactFromList')
       },
 
       navigateToContactsPage () {
         return this
-          .clickOnFirstCompanyFromList()
           .click('@contactsTab')
       },
 
@@ -84,6 +87,11 @@ module.exports = {
           .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
           .setValue('@contactNotes', `${faker.name.jobDescriptor()}${firstName}`)
           .submitForm('form')
+      },
+
+      clickOnContactInteractions () {
+        return this
+          .click('@interactions')
       },
 
       createNewPrimaryContactWithNewCompanyAddress (firstName, lastName) {

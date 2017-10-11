@@ -57,6 +57,7 @@ module.exports = {
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
     companyPageHeading: 'h1.c-local-header__heading',
+    firstCompanyFromList: '.c-entity-list li:first-child h3 a',
   },
   commands: [
     {
@@ -64,6 +65,7 @@ module.exports = {
         return this
           .setValue('@searchField', companyName)
           .submitForm('@searchForm')
+          .clickOnFirstCompanyFromList()
       },
 
       createForeignCompany (companyName) {
@@ -136,6 +138,10 @@ module.exports = {
           .setValue('@collectionsCompanyNameInput', [ companyName, this.api.Keys.ENTER ]) // press enter
           .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
           .waitForElementVisible('@xhrTargetElement')
+      },
+      clickOnFirstCompanyFromList () {
+        return this
+          .click('@firstCompanyFromList')
       },
     },
   ],

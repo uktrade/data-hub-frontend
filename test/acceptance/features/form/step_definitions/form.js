@@ -17,6 +17,10 @@ const getValue = (value) => {
   }
 }
 
+function getButtonSelector (text) {
+  return `//*[contains(@class,"button") and contains(text(),"${text}")]`
+}
+
 defineSupportCode(({ When, Then }) => {
   const Form = client.page.Form()
 
@@ -59,5 +63,18 @@ defineSupportCode(({ When, Then }) => {
   Then(/^I see form error summary$/, async () => {
     await Form
       .assert.visible('@errorSummary')
+  })
+
+  Then(/^I see a button to "(.+)"$/, async (buttonTitle) => {
+    const selector = getButtonSelector(buttonTitle)
+    return client
+      .useXpath()
+      .assert.visible(selector)
+      .useCss()
+  })
+
+  When(/^I click on the "(.+)" button$/, async (buttonTitle) => {
+    const selector = getButtonSelector(buttonTitle)
+    client.click('xpath', selector)
   })
 })
