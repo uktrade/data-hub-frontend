@@ -63,9 +63,10 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
-  user_acceptance_tests:
+  user_acceptance_tests: &user_acceptance_tests
     docker:
-      - image: ukti/docker-data-hub-base
+      - &docker_dat_hub_base
+        image: ukti/docker-data-hub-base
         environment:
           API_CLIENT_ID: circleCiClientId
           API_CLIENT_SECRET: youAintSeenMeRight
@@ -77,14 +78,18 @@ jobs:
           QA_USER_PASSWORD: secretSquiR3L
           REDIS_HOST: localhost
           TZ: "/usr/share/zoneinfo/Europe/London"
-      - image: redis:3.2.10
-      - image: elasticsearch:5.5
-      - image: postgres:9.5
+      - &docker_redis
+        image: redis:3.2.10
+      - &docker_elasticsearch
+        image: elasticsearch:5.5
+      - &docker_postgres
+        image: postgres:9.5
         name: postgres
         restart: always
         environment:
           POSTGRES_DB: datahub
-      - image: ukti/data-hub-leeloo
+      - &docker_data_hub_leeloo
+        image: ukti/data-hub-leeloo
         command: ./setup-uat.sh
         environment:
           API_CLIENT_ID: circleCiClientId
@@ -155,6 +160,16 @@ jobs:
           path: cucumber
       - store_artifacts:
           path: cucumber
+  user_acceptance_tests_master:
+    <<: *user_acceptance_tests
+    docker:
+      - *docker_dat_hub_base
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - <<: *docker_data_hub_leeloo
+        image: ukti/data-hub-leeloo:master
+
 workflows:
   version: 2
   datahub:
@@ -180,3 +195,14 @@ workflows:
       - user_acceptance_tests:
           requires:
             - start_uat
+          filters:
+            branches:
+              ignore:
+                - master
+      - user_acceptance_tests_master:
+          requires:
+            - start_uat
+          filters:
+            branches:
+              only:
+                - master
