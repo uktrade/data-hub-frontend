@@ -343,7 +343,11 @@ The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/doc
 Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-base) and [docker](https://hub.docker.com/r/ukti/docker-data-hub-base/) repositories.
 
 ### Data hub backend docker image
-The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo). The `uktrade/data-hub-leeloo:latest` docker image that is used is automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/data-hub-leeloo](https://hub.docker.com/r/ukti/data-hub-leeloo).
+The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo). 
+The `uktrade/data-hub-leeloo` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/data-hub-leeloo](https://hub.docker.com/r/ukti/data-hub-leeloo).
+
+- `user_acceptance_tests` job uses `ukti/data-hub-leeloo:latest`
+- `user_acceptance_tests_master` job uses `ukti/data-hub-leeloo:master`
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:
