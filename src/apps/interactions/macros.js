@@ -1,3 +1,5 @@
+const { assign } = require('lodash')
+
 const formLabels = require('./labels')
 const metaData = require('../../lib/metadata')
 const { transformContactToOption, transformObjectToOption } = require('../transformers')
@@ -70,7 +72,6 @@ const interactionEditFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         name: 'contact',
-        label: formLabels.contact,
         initialOption: '-- Select contact --',
         options () {
           return contacts.map(transformContactToOption)
@@ -79,7 +80,6 @@ const interactionEditFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         name: 'dit_team',
-        label: formLabels.dit_team,
         initialOption: '-- Select provider --',
         options () {
           return metaData.teams.map(transformObjectToOption)
@@ -88,7 +88,6 @@ const interactionEditFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         name: 'service',
-        label: formLabels.service,
         initialOption: '-- Select service --',
         options () {
           return services.map(transformObjectToOption)
@@ -103,17 +102,14 @@ const interactionEditFormConfig = function ({
         macroName: 'TextField',
         type: 'textarea',
         name: 'notes',
-        label: formLabels.notes,
       },
       {
         macroName: 'DateFieldset',
         name: 'date',
-        label: formLabels.date,
       },
       {
         macroName: 'MultipleChoiceField',
         name: 'dit_adviser',
-        label: formLabels.dit_adviser,
         optional: true,
         initialOption: '-- Select adviser --',
         options () {
@@ -123,13 +119,16 @@ const interactionEditFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         name: 'communication_channel',
-        label: formLabels.communication_channel,
         initialOption: '-- Select communication channel --',
         options () {
           return metaData.communicationChannelOptions.map(transformObjectToOption)
         },
       },
-    ],
+    ].map(field => {
+      return assign(field, {
+        label: formLabels[field.name],
+      })
+    }),
   }
 }
 
