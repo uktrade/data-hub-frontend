@@ -28,6 +28,9 @@ describe('Interaction edit controller', () => {
         interactionType: {
           name: 'interaction type',
         },
+        company: {
+          id: '1',
+        },
       },
     }
     this.nextSpy = this.sandbox.spy()
@@ -38,27 +41,56 @@ describe('Interaction edit controller', () => {
   })
 
   describe('#renderEditPage', () => {
-    it('should render the interaction page', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+    context('when rendering the interaction form for a company', () => {
+      it('should render the interaction page', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
 
-      expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
+        expect(this.res.render).to.be.calledWith('interactions/views/edit')
+        expect(this.res.render).to.have.been.calledOnce
+      })
+
+      it('should render the interaction page with a return link', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        const actual = this.res.render.getCall(0).args[1].interactionForm.returnLink
+
+        expect(actual).to.equal('return')
+      })
+
+      it('should render the interaction page with an interaction form', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        const actual = this.res.render.getCall(0).args[1].interactionForm.children
+
+        expect(actual).to.be.an('array')
+      })
+
+      it('should render an interaction form with hidden fields', async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+
+        const actualHiddenFields = this.res.render.getCall(0).args[1].interactionForm.hiddenFields
+
+        expect(actualHiddenFields.company).to.equal('1')
+        expect(actualHiddenFields.investment_project).to.be.undefined
+      })
     })
 
-    it('should render the interaction page with a return link', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+    context('when rendering the interaction form for an investment project', () => {
+      it('should render an interaction form with hidden fields', async () => {
+        const res = merge({}, this.res, {
+          locals: {
+            investmentData: {
+              id: '2',
+            },
+          },
+        })
+        await this.controller.renderEditPage(this.req, res, this.nextSpy)
 
-      const actual = this.res.render.getCall(0).args[1].interactionForm.returnLink
+        const actualHiddenFields = this.res.render.getCall(0).args[1].interactionForm.hiddenFields
 
-      expect(actual).to.equal('return')
-    })
-
-    it('should render the interaction page with an interaction form', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
-      const actual = this.res.render.getCall(0).args[1].interactionForm.children
-
-      expect(actual).to.be.an('array')
+        expect(actualHiddenFields.company).to.equal('1')
+        expect(actualHiddenFields.investment_project).to.equal('2')
+      })
     })
 
     context('when adding an interaction', () => {
