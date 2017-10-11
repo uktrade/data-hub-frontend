@@ -18,7 +18,7 @@
   {{ AnswersSummary({
     heading: 'Client details',
     actions: [{
-      url: 'edit/client-details' if order.editable
+      url: 'edit/client-details' if order.isEditable
     }],
     items: [{
       label: 'Company',
@@ -42,10 +42,10 @@
   {% call AnswersSummary({
     heading: 'Advisers in the market',
     actions: [{
-      url: 'edit/assignees' if order.editable,
+      url: 'edit/assignees' if order.isEditable,
       label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length and order.editable,
+      url: 'edit/assignee-time' if values.assignees.length and order.isEditable,
       label: 'Edit time'
     }]
   }) %}
@@ -97,7 +97,7 @@
   {{ AnswersSummary({
     heading: 'Advisers in the UK',
     actions: [{
-      url: 'edit/subscribers' if order.editable,
+      url: 'edit/subscribers' if order.isEditable,
       label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length,
@@ -107,7 +107,7 @@
   {{ AnswersSummary({
     heading: 'Work description',
     actions: [{
-      url: 'edit/work-description' if order.editable
+      url: 'edit/work-description' if order.isEditable
     }],
     items: [{
       label: 'Delivery date',
@@ -190,7 +190,7 @@
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
-      url: 'edit/payment' if order.editable
+      url: 'edit/payment' if order.isEditable
     }],
     items: [{
       label: 'VAT category',
