@@ -50,13 +50,15 @@
       itemModifier: 'stacked'
     }) }}
 
-    {% call Example(tabTitle = 'Preview') %}
-      <div class="l-markdown">
-        {% markdown %}
-          {{ quote.content }}
-        {% endmarkdown %}
-      </div>
-    {% endcall %}
+    {% if quote.content %}
+      {% call Example(tabTitle = 'Preview') %}
+        <div class="l-markdown">
+          {% markdown %}
+            {{ quote.content }}
+          {% endmarkdown %}
+        </div>
+      {% endcall %}
+    {% endif %}
   {% endif %}
 
   {% if destructive %}
