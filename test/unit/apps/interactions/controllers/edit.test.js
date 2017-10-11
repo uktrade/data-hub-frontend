@@ -23,9 +23,7 @@ describe('Interaction edit controller', () => {
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
       locals: {
-        company: {
-          name: 'company',
-        },
+        entityName: 'company',
         returnLink: 'return',
         interactionType: {
           name: 'interaction type',

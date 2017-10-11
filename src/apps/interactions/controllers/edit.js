@@ -28,7 +28,7 @@ function renderEditPage (req, res) {
 
   res
     .breadcrumb(`${interactionData ? 'Edit' : 'Add'} interaction`)
-    .title(`${interactionData ? 'Edit' : 'Add'} interaction for ${res.locals.company.name}`)
+    .title(`${interactionData ? 'Edit' : 'Add'} interaction for ${res.locals.entityName}`)
     .render('interactions/views/edit', {
       interactionForm,
     })
