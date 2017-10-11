@@ -8,7 +8,7 @@
 {% endset %}
 
 {% block body_main_content %}
-  {% if not order.editable %}
+  {% if order.status === 'quote_awaiting_acceptance' %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
       <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
