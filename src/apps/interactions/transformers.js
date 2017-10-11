@@ -12,7 +12,7 @@ function transformInteractionResponseToForm ({
   dit_adviser,
   service,
   dit_team,
-  interaction_type,
+  communication_channel,
 } = {}) {
   if (!id) return null
 
@@ -24,7 +24,7 @@ function transformInteractionResponseToForm ({
     dit_adviser: get(dit_adviser, 'id'),
     service: get(service, 'id'),
     dit_team: get(dit_team, 'id'),
-    interaction_type: get(interaction_type, 'id'),
+    communication_channel: get(communication_channel, 'id'),
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
@@ -129,11 +129,10 @@ function transformInteractionResponseToViewRecord ({
   return viewRecord
 }
 
-function transformInteractionFormBodyToApiRequest ({ props, company, communicationChannel }) {
+function transformInteractionFormBodyToApiRequest ({ props, company }) {
   return assign({}, props, {
+    company,
     date: transformDateObjectToDateString('date')(props),
-    company: company,
-    communication_channel: communicationChannel,
   })
 }
 
