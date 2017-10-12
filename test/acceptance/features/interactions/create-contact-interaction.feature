@@ -5,7 +5,8 @@ Feature: Create New Contact Interaction
 
   Background:
     Given I am an authenticated user on the data hub website
-    And I navigate to contact interactions
+    And There is a UK ltd company named "Freds" with a contact named "Fred Smith"
+    And I view the interactions for "Fred Smith" at "Freds"
 
   @create-contact-interaction--verify-add
   Scenario: Verify Add interaction option
@@ -14,6 +15,6 @@ Feature: Create New Contact Interaction
   @create-contact-interaction--verify-defaults
   Scenario: Verify the form set the correct default when loaded
     And I click on the "Add interaction" button
-    Then company name is displayed
-    And the "contact" form field should have the contact selected
+    Then details view data for "Company" should contain "Freds"
+    And the "contact" form field should have the value "Fred Smith"
     And the "dit_adviser" form field should have the value "QA"

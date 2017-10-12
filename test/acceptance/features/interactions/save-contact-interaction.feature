@@ -5,7 +5,8 @@ Feature: Create New Contact Interaction
 
   Background:
     Given I am an authenticated user on the data hub website
-    And I navigate to contact interactions
+    And There is a UK ltd company named "Freds" with a contact named "Fred Smith"
+    And I view the interactions for "Fred Smith" at "Freds"
 
   @save-contact-interaction--add-email
   Scenario: Add an email interaction from a contact
@@ -18,8 +19,8 @@ Feature: Create New Contact Interaction
     And I change form text field "notes" to "Test notes"
     And I change form dropdown "communication_channel" to "Email/Website"
     Then I submit the form
-    Then details view should contain a company
-    And details should contain a contact
+    Then details view data for "Company" should contain "Freds"
+    Then details view data for "Contact" should contain "Fred Smith"
     And details view data for "Service provider" should contain "A"
     And details view data for "Service" should contain "A"
     And details view data for "Subject" should contain "Test subject"
@@ -43,7 +44,6 @@ Feature: Create New Contact Interaction
 
   @save-contact-interaction--adds-interaction-to-contact
   Scenario: Add an email interaction from a contact
-    When I navigate to the Interactions page for "David Clarke" at "AT&T"
-    Then I add an "Email/Website" interaction with subject "Test For List"
-    And I navigate to the Interactions page for "David Clarke" at "AT&T"
+    When I add an "Email/Website" interaction for "Fred Smith" at "Freds" with a subject "Test For List"
+    And I navigate to the Interactions page for "Fred Smith" at "Freds"
     Then the first item in the list has a "subject" containing "Test For List"
