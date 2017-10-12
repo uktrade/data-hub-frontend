@@ -93,6 +93,42 @@ describe('Interaction edit controller', () => {
       })
     })
 
+    context('when rendering the interaction form for editing an interaction found from top level navigation', () => {
+      it('should render an interaction form with hidden fields', async () => {
+        const res = assign({}, this.res, {
+          locals: {
+            company: {
+              id: '1',
+            },
+            interaction: {
+              id: '3',
+            },
+          },
+        })
+        await this.controller.renderEditPage(this.req, res, this.nextSpy)
+
+        const actualHiddenFields = this.res.render.getCall(0).args[1].interactionForm.hiddenFields
+
+        expect(actualHiddenFields.company).to.equal('1')
+        expect(actualHiddenFields.id).to.equal('3')
+        expect(actualHiddenFields.investment_project).to.be.undefined
+      })
+
+      it('should add a title without entity name', async () => {
+        const res = assign({}, this.res, {
+          locals: {
+            company: {
+              id: '1',
+            },
+          },
+        })
+
+        await this.controller.renderEditPage(this.req, res, this.nextSpy)
+
+        expect(this.res.title.firstCall).to.be.calledWith('Add interaction')
+      })
+    })
+
     context('when adding an interaction', () => {
       it('should add a breadcrumb', async () => {
         await this.controller.renderEditPage(this.req, this.res, this.nextSpy)

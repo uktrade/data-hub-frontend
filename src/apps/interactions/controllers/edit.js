@@ -23,6 +23,7 @@ function renderEditPage (req, res) {
           contacts: res.locals.contacts,
           services: res.locals.services,
           hiddenFields: {
+            id: get(res.locals, 'interaction.id'),
             company: res.locals.company.id,
             investment_project: get(res.locals, 'investmentData.id'),
           },
@@ -31,9 +32,11 @@ function renderEditPage (req, res) {
       get(res.locals, 'form.errors.messages'),
     )
 
+  const forEntityName = res.locals.entityName ? ` for ${res.locals.entityName}` : ''
+
   res
     .breadcrumb(`${interactionData ? 'Edit' : 'Add'} interaction`)
-    .title(`${interactionData ? 'Edit' : 'Add'} interaction for ${res.locals.entityName}`)
+    .title(`${interactionData ? 'Edit' : 'Add'} interaction${forEntityName}`)
     .render('interactions/views/edit', {
       interactionForm,
     })
