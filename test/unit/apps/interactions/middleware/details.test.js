@@ -22,7 +22,7 @@ describe('Interaction details middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.saveInteractionStub = this.sandbox.stub()
     this.fetchInteractionStub = this.sandbox.stub()
-    this.getAdvisersStub = this.sandbox.stub()
+    this.getAllAdvisersStub = this.sandbox.stub()
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
@@ -36,7 +36,7 @@ describe('Interaction details middleware', () => {
         transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub.returns(transformed),
       },
       '../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub.resolves(advisersData),
+        getAllAdvisers: this.getAllAdvisersStub.resolves(advisersData),
       },
       '../../../lib/metadata': {
         getServices: () => { return servicesData },
@@ -113,6 +113,21 @@ describe('Interaction details middleware', () => {
       })
     })
 
+    context('when all fields are valid for updating an interaction found from the top level navigation', () => {
+      it('should redirect on success', async () => {
+        const res = assign({}, this.res, {
+          breadcrumb: this.sandbox.stub().returnsThis(),
+          render: this.sandbox.spy(),
+          redirect: this.sandbox.spy(),
+          locals: {},
+        })
+
+        await this.middleware.postDetails(this.req, res, this.nextSpy)
+
+        expect(res.redirect).to.be.calledWith('/interactions/1')
+      })
+    })
+
     context('when there is a 400', () => {
       beforeEach(async () => {
         this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' })
@@ -151,6 +166,11 @@ describe('Interaction details middleware', () => {
       it('should set interaction data on locals', async () => {
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
         expect(this.res.locals.interaction).to.deep.equal(interactionData)
+      })
+
+      it('should set company data on locals', async () => {
+        await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
+        expect(this.res.locals.company).to.deep.equal(interactionData.company)
       })
     })
   })
