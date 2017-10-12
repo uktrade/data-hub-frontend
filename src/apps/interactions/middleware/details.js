@@ -13,7 +13,12 @@ async function postDetails (req, res, next) {
     const result = await saveInteraction(req.session.token, res.locals.requestBody)
 
     req.flash('success', `Interaction ${res.locals.interaction ? 'updated' : 'created'}`)
-    return res.redirect(res.locals.returnLink + result.id)
+
+    if (res.locals.returnLink) {
+      return res.redirect(res.locals.returnLink + result.id)
+    }
+
+    return res.redirect(`/interactions/${result.id}`)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
@@ -31,6 +36,7 @@ async function postDetails (req, res, next) {
 async function getInteractionDetails (req, res, next, interactionId) {
   try {
     res.locals.interaction = await fetchInteraction(req.session.token, interactionId)
+    res.locals.company = res.locals.interaction.company
     next()
   } catch (err) {
     next(err)
