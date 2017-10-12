@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, assign } = require('lodash')
+const { get, assign, isUndefined } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -15,6 +15,7 @@ function transformInteractionResponseToForm ({
   dit_adviser,
   company,
   communication_channel,
+  event,
 } = {}) {
   if (!id) return null
 
@@ -35,6 +36,8 @@ function transformInteractionResponseToForm ({
     dit_adviser: get(dit_adviser, 'id'),
     company: get(company, 'id'),
     communication_channel: get(communication_channel, 'id'),
+    is_event: !isUndefined(event),
+    event: get(event, 'id'),
   }
 }
 

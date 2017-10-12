@@ -55,6 +55,9 @@ describe('Interaction details middleware', () => {
       query: {
         company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
       },
+      params: {
+        kind: 'interaction',
+      },
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
