@@ -1,10 +1,12 @@
 const { assign } = require('lodash')
+const { sentence } = require('case')
 
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany } = require('../../contacts/repos')
 const { getAllAdvisers } = require('../../adviser/repos')
+const { getEvents } = require('../../events/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -12,7 +14,7 @@ async function postDetails (req, res, next) {
   try {
     const result = await saveInteraction(req.session.token, res.locals.requestBody)
 
-    req.flash('success', `Interaction ${res.locals.interaction ? 'updated' : 'created'}`)
+    req.flash('success', `${sentence(req.params.kind)} ${res.locals.interaction ? 'updated' : 'created'}`)
 
     if (res.locals.returnLink) {
       return res.redirect(res.locals.returnLink + result.id)
@@ -48,6 +50,7 @@ async function getInteractionOptions (req, res, next) {
     res.locals.advisers = await getAllAdvisers(req.session.token)
     res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
     res.locals.services = await metaDataRepository.getServices(req.session.token)
+    res.locals.events = await getEvents(req.session.token)
     next()
   } catch (err) {
     next(err)

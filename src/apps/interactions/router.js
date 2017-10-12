@@ -17,7 +17,7 @@ router.param('interactionId', getInteractionDetails)
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getInteractionCollection, renderInteractionList)
 
 router
-  .route('/:interactionId/edit')
+  .route('/:interactionId/:kind/edit')
   .post(
     getInteractionOptions,
     postDetails,

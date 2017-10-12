@@ -19,8 +19,8 @@ router
   )
 
 router.route([
-  '/interactions/create/interaction',
-  '/interactions/:interactionId/edit',
+  '/interactions/create/:kind',
+  '/interactions/:interactionId/:kind/edit',
 ])
   .post(
     getInteractionOptions,

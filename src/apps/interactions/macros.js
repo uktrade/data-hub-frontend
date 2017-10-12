@@ -58,7 +58,69 @@ const selectKindFormConfig = function ({
   }
 }
 
-const interactionEditFormConfig = function ({
+const interactionFields = {
+  contact (contacts) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'contact',
+      initialOption: '-- Select contact --',
+      options () {
+        return contacts.map(transformContactToOption)
+      },
+    }
+  },
+  provider: {
+    macroName: 'MultipleChoiceField',
+    name: 'dit_team',
+    initialOption: '-- Select provider --',
+    options () {
+      return metaData.teams.map(transformObjectToOption)
+    },
+  },
+  service (services) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'service',
+      initialOption: '-- Select service --',
+      options () {
+        return services.map(transformObjectToOption)
+      },
+    }
+  },
+  subject: {
+    macroName: 'TextField',
+    name: 'subject',
+  },
+  notes: {
+    macroName: 'TextField',
+    type: 'textarea',
+    name: 'notes',
+  },
+  date: {
+    macroName: 'DateFieldset',
+    name: 'date',
+  },
+  adviser (advisers) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'dit_adviser',
+      initialOption: '-- Select adviser --',
+      options () {
+        return advisers.map(transformContactToOption)
+      },
+    }
+  },
+  communicationChannel: {
+    macroName: 'MultipleChoiceField',
+    name: 'communication_channel',
+    initialOption: '-- Select communication channel --',
+    options () {
+      return metaData.communicationChannelOptions.map(transformObjectToOption)
+    },
+  },
+}
+
+const interactionFormConfig = function ({
   returnLink,
   contacts = [],
   advisers = [],
@@ -71,63 +133,77 @@ const interactionEditFormConfig = function ({
     returnText: 'Cancel',
     hiddenFields,
     children: [
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'contact',
-        initialOption: '-- Select contact --',
-        options () {
-          return contacts.map(transformContactToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'dit_team',
-        initialOption: '-- Select provider --',
-        options () {
-          return metaData.teams.map(transformObjectToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'service',
-        initialOption: '-- Select service --',
-        options () {
-          return services.map(transformObjectToOption)
-        },
-      },
-      {
-        macroName: 'TextField',
-        name: 'subject',
-        label: formLabels.subject,
-      },
-      {
-        macroName: 'TextField',
-        type: 'textarea',
-        name: 'notes',
-      },
-      {
-        macroName: 'DateFieldset',
-        name: 'date',
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'dit_adviser',
-        initialOption: '-- Select adviser --',
-        options () {
-          return advisers.map(transformContactToOption)
-        },
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'communication_channel',
-        initialOption: '-- Select communication channel --',
-        options () {
-          return metaData.communicationChannelOptions.map(transformObjectToOption)
-        },
-      },
+      interactionFields.contact(contacts),
+      interactionFields.provider,
+      interactionFields.service(services),
+      interactionFields.subject,
+      interactionFields.notes,
+      interactionFields.date,
+      interactionFields.adviser(advisers),
+      interactionFields.communicationChannel,
     ].map(field => {
       return assign(field, {
-        label: formLabels[field.name],
+        label: formLabels.interaction[field.name],
+      })
+    }),
+  }
+}
+
+const serviceDeliveryFormConfig = function ({
+  returnLink,
+  contacts = [],
+  advisers = [],
+  services = [],
+  events = [],
+  hiddenFields,
+}) {
+  return {
+    returnLink,
+    buttonText: 'Save',
+    returnText: 'Cancel',
+    hiddenFields,
+    children: [
+      interactionFields.contact(contacts),
+      interactionFields.provider,
+      // TODO this will be going once interactions are within events
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        name: 'is_event',
+        optional: true,
+        modifier: 'inline',
+        options: [
+          {
+            label: 'Yes',
+            value: 'true',
+          },
+          {
+            label: 'No',
+            value: 'false',
+          },
+        ],
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'event',
+        initialOption: '-- Select event --',
+        options () {
+          return events.map(transformObjectToOption)
+        },
+        modifier: 'subfield',
+        condition: {
+          name: 'is_event',
+          value: 'true',
+        },
+      },
+      interactionFields.service(services),
+      interactionFields.subject,
+      interactionFields.notes,
+      interactionFields.date,
+      interactionFields.adviser(advisers),
+    ].map(field => {
+      return assign(field, {
+        label: formLabels.serviceDelivery[field.name],
       })
     }),
   }
@@ -135,6 +211,7 @@ const interactionEditFormConfig = function ({
 
 module.exports = {
   interactionSortForm,
-  interactionEditFormConfig,
   selectKindFormConfig,
+  interactionFormConfig,
+  serviceDeliveryFormConfig,
 }
