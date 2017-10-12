@@ -42,16 +42,16 @@ const selectKindFormConfig = function ({
       {
         macroName: 'MultipleChoiceField',
         type: 'radio',
-        label: 'What type of interaction would you like to record?',
+        label: 'What would you like to record?',
         name: 'kind',
         options: [{
           value: 'interaction',
           label: 'A standard interaction',
-          hint: 'For example, an email, phone call or meeting',
+          hint: 'For example a meeting or email exchange with a customer',
         }, {
           value: 'service_delivery',
-          label: 'A service that you have provided (delivered)',
-          hint: 'For example, a significant assist or outward mission',
+          label: 'A service that has been provided',
+          hint: 'For example account management, a significant assist or an event',
         }],
       },
     ],
