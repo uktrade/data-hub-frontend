@@ -130,7 +130,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "8.5.0"
+    "node": "8.6.0"
   },
   "devDependencies": {
     "chai-as-promised": "^7.1.1",
