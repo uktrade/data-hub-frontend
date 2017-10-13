@@ -20,7 +20,12 @@ function fetchEvent (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/v3/event/${id}`)
 }
 
+function getEvents (token) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/event`)
+}
+
 module.exports = {
   saveEvent,
   fetchEvent,
+  getEvents,
 }

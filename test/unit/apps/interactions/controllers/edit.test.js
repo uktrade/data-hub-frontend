@@ -9,13 +9,15 @@ describe('Interaction edit controller', () => {
     this.req = {
       session: {
         token: 'abcd',
-        user: {
-        },
+        user: { },
       },
       query: {
         communication_channel: '1',
       },
       body: {},
+      params: {
+        kind: 'interaction',
+      },
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
@@ -130,34 +132,68 @@ describe('Interaction edit controller', () => {
     })
 
     context('when adding an interaction', () => {
-      it('should add a breadcrumb', async () => {
+      beforeEach(async () => {
         await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
+      })
+      it('should add a breadcrumb', () => {
         expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add interaction')
       })
 
-      it('should add a title', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
+      it('should add a title', () => {
         expect(this.res.title.firstCall).to.be.calledWith('Add interaction for company')
       })
     })
 
+    context('when adding a service delivery', () => {
+      beforeEach(async () => {
+        const req = merge({}, this.req, {
+          params: {
+            kind: 'service-delivery',
+          },
+        })
+        await this.controller.renderEditPage(req, this.res, this.nextSpy)
+      })
+      it('should add a breadcrumb', () => {
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add service delivery')
+      })
+
+      it('should add a title', () => {
+        expect(this.res.title.firstCall).to.be.calledWith('Add service delivery for company')
+      })
+    })
+
     context('when editing an interaction', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         this.res.locals.interaction = assign({}, interactionData, { id: '1' })
+        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
       })
 
       it('should add a breadcrumb', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
         expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit interaction')
       })
 
       it('should add a title', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
         expect(this.res.title.firstCall).to.be.calledWith('Edit interaction for company')
+      })
+    })
+
+    context('when editing a service delivery', () => {
+      beforeEach(async () => {
+        this.res.locals.interaction = assign({}, interactionData, { id: '1' })
+        const req = merge({}, this.req, {
+          params: {
+            kind: 'service-delivery',
+          },
+        })
+        await this.controller.renderEditPage(req, this.res, this.nextSpy)
+      })
+
+      it('should add a breadcrumb', () => {
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit service delivery')
+      })
+
+      it('should add a title', () => {
+        expect(this.res.title.firstCall).to.be.calledWith('Edit service delivery for company')
       })
     })
 
