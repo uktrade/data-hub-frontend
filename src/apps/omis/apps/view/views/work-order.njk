@@ -8,7 +8,7 @@
 {% endset %}
 
 {% block body_main_content %}
-  {% if order.status === 'quote_awaiting_acceptance' %}
+  {% if not order.editable %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
       <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
@@ -18,7 +18,7 @@
   {{ AnswersSummary({
     heading: 'Client details',
     actions: [{
-      url: 'edit/client-details' if order.isEditable
+      url: 'edit/client-details' if order.editable
     }],
     items: [{
       label: 'Company',
@@ -42,10 +42,10 @@
   {% call AnswersSummary({
     heading: 'Advisers in the market',
     actions: [{
-      url: 'edit/assignees' if order.isEditable,
+      url: 'edit/assignees' if order.editable,
       label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length and order.isEditable,
+      url: 'edit/assignee-time' if values.assignees.length and order.editable,
       label: 'Edit time'
     }]
   }) %}
@@ -97,7 +97,7 @@
   {{ AnswersSummary({
     heading: 'Advisers in the UK',
     actions: [{
-      url: 'edit/subscribers' if order.isEditable,
+      url: 'edit/subscribers' if order.editable,
       label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length,
@@ -107,7 +107,7 @@
   {{ AnswersSummary({
     heading: 'Work description',
     actions: [{
-      url: 'edit/work-description' if order.isEditable
+      url: 'edit/work-description' if order.editable
     }],
     items: [{
       label: 'Delivery date',
@@ -190,7 +190,7 @@
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
-      url: 'edit/payment' if order.isEditable
+      url: 'edit/payment' if order.editable
     }],
     items: [{
       label: 'VAT category',

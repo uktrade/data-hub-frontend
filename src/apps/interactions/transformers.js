@@ -6,14 +6,12 @@ const { transformDateObjectToDateString } = require('../transformers')
 
 function transformInteractionResponseToForm ({
   id,
-  contact,
-  dit_team,
-  service,
-  subject,
-  notes,
   date,
-  dit_adviser,
   company,
+  contact,
+  dit_adviser,
+  service,
+  dit_team,
   communication_channel,
 } = {}) {
   if (!id) return null
@@ -21,20 +19,17 @@ function transformInteractionResponseToForm ({
   const isValidDate = isValid(new Date(date))
 
   return {
-    id: id,
+    company: get(company, 'id'),
     contact: get(contact, 'id'),
-    dit_team: get(dit_team, 'id'),
+    dit_adviser: get(dit_adviser, 'id'),
     service: get(service, 'id'),
-    subject: subject,
-    notes: notes,
+    dit_team: get(dit_team, 'id'),
+    communication_channel: get(communication_channel, 'id'),
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
       year: isValidDate ? format(date, 'YYYY') : '',
     },
-    dit_adviser: get(dit_adviser, 'id'),
-    company: get(company, 'id'),
-    communication_channel: get(communication_channel, 'id'),
   }
 }
 
@@ -134,8 +129,9 @@ function transformInteractionResponseToViewRecord ({
   return viewRecord
 }
 
-function transformInteractionFormBodyToApiRequest (props) {
+function transformInteractionFormBodyToApiRequest ({ props, company }) {
   return assign({}, props, {
+    company,
     date: transformDateObjectToDateString('date')(props),
   })
 }

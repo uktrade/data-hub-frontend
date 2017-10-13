@@ -7,31 +7,23 @@ $_first-element-spacing: $default-spacing-unit * 3;
 
   .l-container {
     border-top: 1px solid transparent;
-  }
 
-  .c-message-list:first-child {
-    margin-top: $default-spacing-unit;
-  }
+    > .c-local-header__heading:first-child {
+      margin-top: $_first-element-spacing;
+    }
 
-  .c-local-header__heading:first-child {
-    margin-top: $_first-element-spacing;
+    > .c-message-list:first-child {
+      margin-top: $default-spacing-unit;
+    }
   }
 
   &[class*="c-local-header--"] {
     padding-bottom: $default-spacing-unit * 2;
   }
 
-  .c-message-list {
-    margin-bottom: $default-spacing-unit;
-  }
-
   .c-entity-search {
     margin-top: $baseline-grid-unit * 20.5;
     padding-bottom: $baseline-grid-unit * 6.25;
-  }
-
-  .c-entity-search__aggregations {
-    margin-bottom: -$baseline-grid-unit * 14.25;
   }
 
   .c-breadcrumb {
@@ -41,15 +33,17 @@ $_first-element-spacing: $default-spacing-unit * 3;
       margin-top: $_first-element-spacing;
     }
 
-    & + .grid-row {
-      .c-entity-search {
-        margin-top: 0;
-      }
-
-      .c-local-header__heading:first-child {
-        margin-top: 0;
-      }
+    & + .c-entity-search {
+      padding-bottom: 0;
     }
+  }
+
+  .c-message-list {
+    margin-bottom: $default-spacing-unit;
+  }
+
+  .c-entity-search__aggregations {
+    margin-bottom: -$default-spacing-unit * 2;
   }
 
   .c-progress {
