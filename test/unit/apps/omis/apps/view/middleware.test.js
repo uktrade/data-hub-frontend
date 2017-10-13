@@ -2,6 +2,8 @@ describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
+    this.getCompanySpy = this.sandbox.spy()
+    this.loggerErrorSpy = this.sandbox.spy()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
@@ -24,6 +26,12 @@ describe('OMIS View middleware', () => {
     }
 
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
+      '../../middleware': {
+        getCompany: this.getCompanySpy,
+      },
+      '../../../../../config/logger': {
+        error: this.loggerErrorSpy,
+      },
       '../../models': {
         Order: {
           previewQuote: this.previewQuoteStub,
@@ -73,172 +81,319 @@ describe('OMIS View middleware', () => {
     })
   })
 
-  describe('getQuote()', () => {
-    context('when no quote exists', () => {
+  describe('setCompany()', () => {
+    context('when no order exists', () => {
       beforeEach(() => {
-        this.previewQuoteStub.resolves({
-          id: '12345',
-          content: 'Quote content',
-        })
+        this.middleware.setCompany({}, this.resMock, this.nextSpy)
       })
 
-      it('should set response as quote property on locals', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+      it('should not call company middleware', () => {
+        expect(this.getCompanySpy).not.to.have.been.called
+      })
 
-        expect(this.resMock.locals).to.have.property('quote')
-        expect(this.resMock.locals.quote).to.deep.equal({
-          id: '12345',
-          content: 'Quote content',
-        })
-        expect(this.nextSpy).to.have.been.calledWith()
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.called
       })
     })
 
-    context('when quote already exists', () => {
+    context('when an order exists', () => {
       beforeEach(() => {
-        const error = {
-          statusCode: 409,
+        this.resMock.locals.order.company = {
+          id: 'company-id',
         }
-        this.previewQuoteStub.rejects(error)
+        this.middleware.setCompany({}, this.resMock, this.nextSpy)
       })
 
-      context('when quote is returned', () => {
+      it('should call company middleware with correct arguments', () => {
+        expect(this.getCompanySpy).to.have.been.calledOnce
+        expect(this.getCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
+      })
+
+      it('should not call next itself', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+  })
+
+  describe('setQuoteSummary()', () => {
+    context('when order is awaiting quote acceptance', () => {
+      beforeEach(() => {
+        this.resMock.locals.order.status = 'quote_awaiting_acceptance'
+      })
+
+      context('when quote resolves', () => {
         beforeEach(() => {
           const mockDate = new Date('2017-08-01')
           this.clock = sinon.useFakeTimers(mockDate.getTime())
-
-          this.getQuoteStub.resolves({
-            id: '12345',
-            content: 'Quote content',
-          })
         })
 
         afterEach(() => {
           this.clock.restore()
         })
 
-        it('should set response as quote property on locals', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals).to.have.property('quote')
-          expect(this.resMock.locals.quote).to.deep.equal({
-            id: '12345',
-            expired: false,
-            content: 'Quote content',
-          })
-          expect(this.nextSpy).to.have.been.calledWith()
-        })
-
         context('when quote has not expired', () => {
-          beforeEach(() => {
+          beforeEach(async () => {
             this.getQuoteStub.resolves({
               id: '12345',
-              expires_on: '2017-08-10',
+              content: 'Quote content',
             })
+
+            await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
           })
 
-          it('should set expired property to false', async () => {
-            await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+          it('should make quote request', () => {
+            expect(this.getQuoteStub).to.have.been.calledWith(this.reqMock.session.token, this.resMock.locals.order.id)
+          })
 
+          it('should set response as quote property on locals', () => {
             expect(this.resMock.locals).to.have.property('quote')
             expect(this.resMock.locals.quote).to.deep.equal({
               id: '12345',
               expired: false,
-              expires_on: '2017-08-10',
+              content: 'Quote content',
             })
+          })
+
+          it('should call next', () => {
             expect(this.nextSpy).to.have.been.calledWith()
           })
         })
 
         context('when quote has expired', () => {
-          beforeEach(() => {
+          beforeEach(async () => {
             this.getQuoteStub.resolves({
               id: '12345',
               expires_on: '2017-07-10',
             })
+
+            await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
           })
 
           it('should set expired property to true', async () => {
-            await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
             expect(this.resMock.locals).to.have.property('quote')
             expect(this.resMock.locals.quote).to.deep.equal({
               id: '12345',
               expired: true,
               expires_on: '2017-07-10',
             })
-            expect(this.nextSpy).to.have.been.calledWith()
           })
         })
       })
 
-      context('when quote cannot be returned', () => {
-        beforeEach(() => {
+      context('when quote rejects', () => {
+        beforeEach(async () => {
           this.error = {
-            statusCode: 404,
+            statusCode: 409,
           }
           this.getQuoteStub.rejects(this.error)
+
+          await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
         })
 
-        it('should call next with the error', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.nextSpy).to.have.been.calledWith(this.error)
-        })
-      })
-
-      context('when quote preview generates an unexpected error', () => {
-        beforeEach(() => {
-          this.error = {
-            statusCode: 500,
-          }
-          this.previewQuoteStub.rejects(this.error)
+        it('should make quote request', () => {
+          expect(this.getQuoteStub).to.have.been.calledWith(this.reqMock.session.token, this.resMock.locals.order.id)
         })
 
-        it('should call next with the error', async () => {
-          await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+        it('should log error', () => {
+          expect(this.loggerErrorSpy).to.have.been.calledOnce
+          expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+        })
 
-          expect(this.nextSpy).to.have.been.calledWith(this.error)
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
         })
       })
     })
 
-    context('when quote cannot be generated because of errors', () => {
-      beforeEach(() => {
-        const error = {
-          statusCode: 400,
-          error: {
-            'service_types': ['Required'],
-            'description': ['Required'],
-          },
-        }
-        this.previewQuoteStub.rejects(error)
+    context('when order is not  awaiting quote acceptance', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order.status = 'draft'
+
+        await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should set errors on locals', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+      it('should not make quote request', () => {
+        expect(this.getQuoteStub).not.to.have.been.called
+      })
 
-        expect(this.resMock.locals).to.have.property('incompleteFields')
-        expect(this.resMock.locals.incompleteFields).to.deep.equal({
-          '/one': {
-            heading: 'Step one',
-            errors: [
-              'service_types',
-            ],
-          },
-          '/three': {
-            heading: 'Step three',
-            errors: [
-              'description',
-            ],
-          },
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('setQuotePreview()', () => {
+    context('when an order is in draft', () => {
+      beforeEach(() => {
+        this.resMock.locals.order.status = 'draft'
+      })
+
+      context('when quote preview resolves', () => {
+        beforeEach(async () => {
+          this.previewQuoteStub.resolves({
+            id: '12345',
+            content: 'Quote content',
+          })
+
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should set response as quote property on locals', () => {
+          expect(this.resMock.locals).to.have.property('quote')
+          expect(this.resMock.locals.quote).to.deep.equal({
+            id: '12345',
+            content: 'Quote content',
+          })
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
         })
       })
 
-      it('should return next without error', async () => {
-        await this.middleware.getQuote(this.reqMock, this.resMock, this.nextSpy)
+      context('when quote preview generates an unexpected error', () => {
+        beforeEach(async () => {
+          this.error = {
+            statusCode: 500,
+          }
+          this.previewQuoteStub.rejects(this.error)
 
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should log error', () => {
+          expect(this.loggerErrorSpy).to.have.been.calledOnce
+          expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when quote preview cannot be generated because of errors', () => {
+        beforeEach(() => {
+          const error = {
+            statusCode: 400,
+            error: {
+              'service_types': ['Required'],
+              'description': ['Required'],
+            },
+          }
+          this.previewQuoteStub.rejects(error)
+        })
+
+        it('should set errors on locals', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals).to.have.property('incompleteFields')
+          expect(this.resMock.locals.incompleteFields).to.deep.equal({
+            '/one': {
+              heading: 'Step one',
+              errors: [
+                'service_types',
+              ],
+            },
+            '/three': {
+              heading: 'Step three',
+              errors: [
+                'description',
+              ],
+            },
+          })
+        })
+
+        it('should return next without error', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+    })
+
+    context('when an order is in draft', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order.status = 'quote_accepted'
+        await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make quote preview request', () => {
+        expect(this.previewQuoteStub).not.to.have.been.called
+      })
+
+      it('should call next', () => {
         expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('setQuote()', () => {
+    context('when an order is not in draft', () => {
+      beforeEach(() => {
+        this.resMock.locals.order.status = 'complete'
+      })
+
+      context('when quote resolves', () => {
+        beforeEach(async () => {
+          this.getQuoteStub.resolves({
+            id: '12345',
+            content: 'Quote content',
+          })
+
+          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should set response as quote property on locals', () => {
+          expect(this.resMock.locals).to.have.property('quote')
+          expect(this.resMock.locals.quote).to.deep.equal({
+            id: '12345',
+            expired: false,
+            content: 'Quote content',
+          })
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when quote generates a 404', () => {
+        beforeEach(async () => {
+          this.error = {
+            statusCode: 404,
+          }
+          this.getQuoteStub.rejects(this.error)
+
+          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should not log error', () => {
+          expect(this.loggerErrorSpy).not.to.have.been.called
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when quote generates an unexpected error', () => {
+        beforeEach(async () => {
+          this.error = {
+            statusCode: 500,
+          }
+          this.getQuoteStub.rejects(this.error)
+
+          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should log error', () => {
+          expect(this.loggerErrorSpy).to.have.been.calledOnce
+          expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
       })
     })
   })

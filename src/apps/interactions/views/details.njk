@@ -2,7 +2,7 @@
 
 {% block main_grid_right_column %}
    {% component 'key-value-table', variant='striped', items=interactionViewRecord %}
-  <a class="button button-secondary" href="{{interaction.id}}/edit">
+  <a class="button button-secondary" href="{{interaction.id}}/{{ interaction.kind | kebabCase }}/edit">
     Edit {{ interaction.kind | lowerCase }}
   </a>
 {% endblock %}
