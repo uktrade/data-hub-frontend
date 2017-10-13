@@ -1,7 +1,7 @@
 const router = require('./router')
 
 module.exports = {
-  displayName: 'Orders (OMIS)',
+  displayName: 'OMIS orders',
   mountpath: '/omis',
   router,
 }

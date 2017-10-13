@@ -50,26 +50,22 @@
       itemModifier: 'stacked'
     }) }}
 
-    {% if quote.content %}
-      {% call Example(tabTitle = 'Preview') %}
-        <div class="l-markdown">
-          {% markdown %}
-            {{ quote.content }}
-          {% endmarkdown %}
-        </div>
-      {% endcall %}
-    {% endif %}
+    {% call Example(tabTitle = 'Preview') %}
+      <div class="l-markdown">
+        {% markdown %}
+          {{ quote.content }}
+        {% endmarkdown %}
+      </div>
+    {% endcall %}
   {% endif %}
 
-  {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
-    {% if destructive %}
-      {{ Message({
-        type: 'error',
-        text: 'Editing the order whilst it is out for acceptance will invalidate the
-        current quote and the client will no longer be able to accept it.'
-      }) }}
-    {% endif %}
-
-    {{ Form(quoteForm) }}
+  {% if destructive %}
+    {{ Message({
+      text: 'Editing the order whilst it is out for acceptance will invalidate the
+      current quote and the client will no longer be able to accept it.',
+      type: 'error'
+    }) }}
   {% endif %}
+
+  {{ Form(quoteForm) }}
 {% endblock %}

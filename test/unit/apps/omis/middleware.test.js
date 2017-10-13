@@ -127,7 +127,7 @@ describe('OMIS middleware', () => {
         const order = Object.assign({}, orderData, {
           subscribers: subscriberData,
           assignees: assigneeData,
-          isEditable: true,
+          editable: true,
         })
         expect(this.resMock.locals).to.have.property('order')
         expect(this.resMock.locals.order).to.deep.equal(order)
@@ -147,10 +147,10 @@ describe('OMIS middleware', () => {
           this.getByIdStub.resolves(draftOrder)
         })
 
-        it('should set isEditable to true', async () => {
+        it('should set editable to true', async () => {
           await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
-          expect(this.resMock.locals.order.isEditable).to.equal(true)
+          expect(this.resMock.locals.order.editable).to.equal(true)
         })
       })
 
@@ -162,10 +162,10 @@ describe('OMIS middleware', () => {
           this.getByIdStub.resolves(quoteOrder)
         })
 
-        it('should set isEditable to false', async () => {
+        it('should set editable to false', async () => {
           await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
-          expect(this.resMock.locals.order.isEditable).to.equal(false)
+          expect(this.resMock.locals.order.editable).to.equal(false)
         })
       })
     })

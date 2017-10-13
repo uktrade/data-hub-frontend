@@ -7,7 +7,7 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    interactionsTab: '.c-local-nav a[href*="interactions"]',
+    interactionsTab: '.c-global-nav a[href*="interactions"]',
     addInteractionButton: 'a[href*="/interactions/create/"]',
     businessCardRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(1)',
     emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(2)',

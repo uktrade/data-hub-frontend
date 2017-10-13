@@ -14,7 +14,7 @@ const globalNavItems = [
   { path: '/events', label: 'Events' },
   { path: '/interactions', label: 'Interactions' },
   { path: '/investment-projects', label: 'Investment projects' },
-  { path: '/omis', label: 'Orders (OMIS)' },
+  { path: '/omis', label: 'OMIS Orders' },
 ]
 
 module.exports = function locals (req, res, next) {
