@@ -1,5 +1,4 @@
-const { pick, kebabCase } = require('lodash')
-const queryString = require('query-string')
+const { kebabCase } = require('lodash')
 const { selectKindFormConfig } = require('../macros')
 
 function postCreate (req, res, next) {
@@ -13,11 +12,7 @@ function postCreate (req, res, next) {
     }
     return next()
   }
-
-  const interactionData = pick(req.query, 'contact', 'company', 'investment', 'returnLink')
-  const createQueryString = queryString.stringify(interactionData)
-
-  return res.redirect(`/interactions/create/${kebabCase(kind)}?${createQueryString}`)
+  return res.redirect(`${res.locals.returnLink}create/${kebabCase(kind)}`)
 }
 
 function renderCreate (req, res) {
