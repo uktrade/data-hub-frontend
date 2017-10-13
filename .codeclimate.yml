@@ -1,11 +1,26 @@
 engines:
-  fixme:
-    enabled: false
-  eslint:
-    enabled: true
   duplication:
     enabled: false
-
+    checks:
+      Similar code:
+        enabled: false
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+    config:
+      strings:
+      - FIXME
+      - BUG
+      - CUSTOM
+exclude_paths:
+- "test/"
 ratings:
    paths:
-   - "**.js"
+   - "src/**/**.js"
+   - "assets/**/**.js"
+   - "config/**/**.js"
+   - "circleci/**/**.js"
