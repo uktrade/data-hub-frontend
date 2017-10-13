@@ -1,7 +1,8 @@
-const { get, filter, mapValues, pickBy } = require('lodash')
+const { assign, get, filter, mapValues, pickBy } = require('lodash')
 const path = require('path')
 const i18nFuture = require('i18n-future')
 
+const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
 const { getCompany } = require('../../middleware')
 const editSteps = require('../edit/steps')
@@ -27,51 +28,78 @@ function setCompany (req, res, next) {
   getCompany(req, res, next, res.locals.order.company.id)
 }
 
-async function getQuote (req, res, next) {
-  const orderId = get(res.locals, 'order.id')
+async function setQuoteSummary (req, res, next) {
+  const order = get(res.locals, 'order')
+
+  if (order.status === 'quote_awaiting_acceptance') {
+    try {
+      const quote = await Order.getQuote(req.session.token, order.id)
+
+      res.locals.quote = assign({}, quote, {
+        expired: new Date(quote.expires_on) < new Date(),
+      })
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  next()
+}
+
+async function setQuotePreview (req, res, next) {
+  if (!get(res.locals, 'order')) {
+    return next()
+  }
+
+  const { id, status } = res.locals.order
+
+  if (status !== 'draft') {
+    return next()
+  }
 
   try {
-    res.locals.quote = await Order.previewQuote(req.session.token, orderId)
-    return next()
+    res.locals.quote = await Order.previewQuote(req.session.token, id)
   } catch (error) {
-    // When quote already exists, get it
-    if (error.statusCode === 409) {
-      try {
-        const quote = await Order.getQuote(req.session.token, orderId)
-
-        res.locals.quote = Object.assign({}, quote, {
-          expired: new Date(quote.expires_on) < new Date(),
-        })
-        return next()
-      } catch (error) {
-        return next(error)
-      }
-    }
-
-    // when preview cannot be generated capture missing data
-    // to render in the view
-    if (error.statusCode === 400) {
-      const quoteErrors = mapValues(editSteps, (step) => {
-        if (!step.fields) { return false }
-
-        const stepErrors = filter(step.fields, (field) => {
-          return error.error.hasOwnProperty(field)
-        })
-
-        if (!stepErrors.length) { return false }
-
-        return {
-          heading: step.heading,
-          errors: stepErrors,
-        }
-      })
-
-      res.locals.incompleteFields = pickBy(quoteErrors)
+    if (error.statusCode !== 400) {
+      logger.error(error)
       return next()
     }
 
-    return next(error)
+    const quoteErrors = mapValues(editSteps, (step) => {
+      if (!step.fields) { return false }
+
+      const stepErrors = filter(step.fields, (field) => {
+        return error.error.hasOwnProperty(field)
+      })
+
+      if (!stepErrors.length) { return false }
+
+      return {
+        heading: step.heading,
+        errors: stepErrors,
+      }
+    })
+
+    res.locals.incompleteFields = pickBy(quoteErrors)
   }
+
+  next()
+}
+
+async function setQuote (req, res, next) {
+  try {
+    const quote = await Order.getQuote(req.session.token, res.locals.order.Id)
+
+    res.locals.quote = assign({}, quote, {
+      expired: new Date(quote.expires_on) < new Date(),
+    })
+  } catch (error) {
+    if (error.statusCode !== 404) {
+      logger.error(error)
+    }
+  }
+
+  next()
 }
 
 async function generateQuote (req, res, next) {
@@ -158,7 +186,9 @@ function setQuoteForm (req, res, next) {
 module.exports = {
   setTranslation,
   setCompany,
-  getQuote,
+  setQuoteSummary,
+  setQuotePreview,
+  setQuote,
   generateQuote,
   cancelQuote,
   setQuoteForm,
