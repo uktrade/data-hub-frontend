@@ -3,6 +3,7 @@ const path = require('path')
 const i18nFuture = require('i18n-future')
 
 const { Order } = require('../../models')
+const { getCompany } = require('../../middleware')
 const editSteps = require('../edit/steps')
 
 const i18n = i18nFuture({
@@ -14,6 +15,16 @@ function setTranslation (req, res, next) {
     return i18n.translate(key)
   }
   next()
+}
+
+function setCompany (req, res, next) {
+  const orderId = get(res.locals, 'order.company.id')
+
+  if (!orderId) {
+    return next()
+  }
+
+  getCompany(req, res, next, res.locals.order.company.id)
 }
 
 async function getQuote (req, res, next) {
@@ -146,6 +157,7 @@ function setQuoteForm (req, res, next) {
 
 module.exports = {
   setTranslation,
+  setCompany,
   getQuote,
   generateQuote,
   cancelQuote,

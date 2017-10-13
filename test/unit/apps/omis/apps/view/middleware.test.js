@@ -2,6 +2,7 @@ describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
+    this.getCompanySpy = this.sandbox.spy()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
@@ -24,6 +25,9 @@ describe('OMIS View middleware', () => {
     }
 
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
+      '../../middleware': {
+        getCompany: this.getCompanySpy,
+      },
       '../../models': {
         Order: {
           previewQuote: this.previewQuoteStub,
@@ -70,6 +74,40 @@ describe('OMIS View middleware', () => {
       expect(this.nextSpy).to.have.been.calledOnce
 
       expect(this.resMock.locals.translate('translation.key')).to.equal('translation.key')
+    })
+  })
+
+  describe('setCompany()', () => {
+    context('when no order exists', () => {
+      beforeEach(() => {
+        this.middleware.setCompany({}, this.resMock, this.nextSpy)
+      })
+
+      it('should not call company middleware', () => {
+        expect(this.getCompanySpy).not.to.have.been.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.called
+      })
+    })
+
+    context('when an order exists', () => {
+      beforeEach(() => {
+        this.resMock.locals.order.company = {
+          id: 'company-id',
+        }
+        this.middleware.setCompany({}, this.resMock, this.nextSpy)
+      })
+
+      it('should call company middleware with correct arguments', () => {
+        expect(this.getCompanySpy).to.have.been.calledOnce
+        expect(this.getCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
+      })
+
+      it('should not call next itself', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
     })
   })
 
