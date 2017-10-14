@@ -32,7 +32,7 @@ async function populateForm (req, res, next) {
 }
 
 function handleFormPost (req, res, next) {
-  res.locals.projectId = req.params.id
+  res.locals.projectId = req.params.investmentId
   updateInvestment(req.session.token, res.locals.projectId, req.body)
     .then(() => next())
     .catch((err) => {
