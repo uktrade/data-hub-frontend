@@ -22,7 +22,7 @@ describe('Investment audit controller', () => {
         token,
       },
       params: {
-        id: '9999',
+        investmentId: '9999',
       },
     }, {
       locals: {
@@ -55,7 +55,7 @@ describe('Investment audit controller', () => {
         token,
       },
       params: {
-        id: '9999',
+        investmentId: '9999',
       },
     }, {
       locals: {
@@ -104,7 +104,7 @@ describe('Investment audit controller', () => {
         token,
       },
       params: {
-        id: '9999',
+        investmentId: '9999',
       },
     }, {
       locals: {
@@ -151,7 +151,7 @@ describe('Investment audit controller', () => {
         token,
       },
       params: {
-        id: '9999',
+        investmentId: '9999',
       },
     }, {
       locals: {
@@ -198,7 +198,7 @@ describe('Investment audit controller', () => {
         token,
       },
       params: {
-        id: '9999',
+        investmentId: '9999',
       },
     }, {
       locals: {

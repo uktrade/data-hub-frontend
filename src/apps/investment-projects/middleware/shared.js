@@ -22,13 +22,13 @@ function getCompanyDetails (req, res, next) {
     .catch(next)
 }
 
-async function getInvestmentDetails (req, res, next, id = req.params.id) {
-  if (!isValidGuid(id)) {
+async function getInvestmentDetails (req, res, next, investmentId = req.params.investmentId) {
+  if (!isValidGuid(investmentId)) {
     return next()
   }
   try {
     const investmentProjectStages = metadata.investmentProjectStage
-    const investmentData = await getInvestment(req.session.token, req.params.id)
+    const investmentData = await getInvestment(req.session.token, investmentId)
     const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
     const ukCompanyId = get(investmentData, 'uk_company.id')
 

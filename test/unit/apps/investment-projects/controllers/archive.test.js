@@ -33,7 +33,7 @@ describe('Investment archive controller', function () {
           archived_reason,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals: {},
@@ -53,7 +53,7 @@ describe('Investment archive controller', function () {
           archived_reason_other,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals: {},
@@ -74,7 +74,7 @@ describe('Investment archive controller', function () {
           archived_reason,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals,
@@ -100,7 +100,7 @@ describe('Investment archive controller', function () {
           archived_reason_other,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals,
@@ -134,7 +134,7 @@ describe('Investment archive controller', function () {
         session: this.session,
         body,
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals,
@@ -163,7 +163,7 @@ describe('Investment archive controller', function () {
         session: this.session,
         body,
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
       }, {
         locals,
@@ -181,7 +181,7 @@ describe('Investment archive controller', function () {
           token: this.token,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
         flash: this.flashStub,
       }, {
@@ -201,7 +201,7 @@ describe('Investment archive controller', function () {
           archived_reason: 'test',
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
         flash: this.flashStub,
       }, {
@@ -222,7 +222,7 @@ describe('Investment archive controller', function () {
           token: this.token,
         },
         params: {
-          id: investmentData.id,
+          investmentId: investmentData.id,
         },
         flash: this.flashStub,
       }, {

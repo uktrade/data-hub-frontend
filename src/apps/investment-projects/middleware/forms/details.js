@@ -82,7 +82,7 @@ async function populateForm (req, res, next) {
 
 function handleFormPost (req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
-  const projectId = res.locals.projectId || req.params.id
+  const projectId = res.locals.projectId || req.params.investmentId
   let saveMethod
 
   if (projectId) {

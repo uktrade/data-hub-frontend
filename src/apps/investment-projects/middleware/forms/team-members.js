@@ -57,9 +57,9 @@ async function populateForm (req, res, next) {
 
 async function handleFormPost (req, res, next) {
   try {
-    res.locals.projectId = req.params.id
+    res.locals.projectId = req.params.investmentId
     const teamMembers = transformDataToTeamMemberArray(req.body)
-    await updateInvestmentTeamMembers(req.session.token, req.params.id, teamMembers)
+    await updateInvestmentTeamMembers(req.session.token, req.params.investmentId, teamMembers)
     next()
   } catch (err) {
     if (err.statusCode === 400) {
