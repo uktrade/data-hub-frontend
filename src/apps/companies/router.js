@@ -22,6 +22,9 @@ const { getInteractionCollection } = require('../interactions/middleware/collect
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
+const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
+
+const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
   { path: 'details', label: 'Details' },
@@ -72,9 +75,11 @@ router.use('/:companyId', setLocalNav(LOCAL_NAV))
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/contacts', renderContacts)
-router.get('/:companyId/interactions', getInteractionCollection, renderInteractions)
+router.get('/:companyId/interactions', setInteractionsReturnUrl, getInteractionCollection, renderInteractions)
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/audit', renderAuditLog)
+
+router.use('/:companyId', setInteractionsReturnUrl, setInteractionsEntityName, interactionsRouter)
 
 module.exports = router

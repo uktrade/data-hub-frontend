@@ -1,34 +1,48 @@
 /* eslint camelcase: 0 */
-const { get, merge, pickBy } = require('lodash')
+const { get, merge, pickBy, lowerCase, snakeCase } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
-const { interactionEditFormConfig } = require('../macros')
+const { interactionFormConfig, serviceDeliveryFormConfig } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
+const formConfigs = {
+  'interaction': interactionFormConfig,
+  'service-delivery': serviceDeliveryFormConfig,
+}
 
 function renderEditPage (req, res) {
   const interactionData = transformInteractionResponseToForm(res.locals.interaction)
   const interactionDefaults = {
     dit_adviser: req.session.user,
     date: transformDateStringToDateObject(new Date()),
+    contact: get(res.locals, 'contact.id'),
   }
   const mergedInteractionData = pickBy(merge({}, interactionDefaults, interactionData, res.locals.requestBody))
   const interactionForm =
     buildFormWithStateAndErrors(
-      interactionEditFormConfig(
+      formConfigs[req.params.kind](
         {
           returnLink: res.locals.returnLink,
           advisers: get(res.locals, 'advisers.results'),
           contacts: res.locals.contacts,
           services: res.locals.services,
+          events: get(res.locals, 'events.results'),
+          hiddenFields: {
+            id: get(res.locals, 'interaction.id'),
+            company: res.locals.company.id,
+            investment_project: get(res.locals, 'investmentData.id'),
+            kind: snakeCase(req.params.kind),
+          },
         }),
       mergedInteractionData,
       get(res.locals, 'form.errors.messages'),
     )
 
+  const forEntityName = res.locals.entityName ? ` for ${res.locals.entityName}` : ''
+
   res
-    .breadcrumb(`${interactionData ? 'Edit' : 'Add'} interaction`)
-    .title(`${interactionData ? 'Edit' : 'Add'} interaction for ${res.locals.company.name}`)
+    .breadcrumb(`${interactionData ? 'Edit' : 'Add'} ${lowerCase(req.params.kind)}`)
+    .title(`${interactionData ? 'Edit' : 'Add'} ${lowerCase(req.params.kind) + forEntityName}`)
     .render('interactions/views/edit', {
       interactionForm,
     })

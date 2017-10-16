@@ -24,6 +24,7 @@ const {
   omit,
   pick,
   lowerCase,
+  kebabCase,
 } = require('lodash')
 
 const { longDateFormat, mediumDateTimeFormat } = require('../../config')
@@ -50,6 +51,7 @@ const filters = {
   stringify: JSON.stringify,
   sentenceCase: Case.sentence,
   lowerCase,
+  kebabCase,
   assign,
   concat,
   filter,

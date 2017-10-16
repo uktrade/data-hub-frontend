@@ -9,8 +9,9 @@ const interactionTypeOptionsData = [
   { id: 'a5d71fdd-5d95-e211-a939-e4115bead28a', name: 'Face to Face' },
 ]
 const contactsData = require('../../../data/contacts/contacts.json')
+const eventsData = require('../../../data/events/collection.json')
 
-const { assign } = require('lodash')
+const { assign, merge } = require('lodash')
 
 const transformed = {
   id: '1',
@@ -22,10 +23,11 @@ describe('Interaction details middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.saveInteractionStub = this.sandbox.stub()
     this.fetchInteractionStub = this.sandbox.stub()
-    this.getAdvisersStub = this.sandbox.stub()
+    this.getAllAdvisersStub = this.sandbox.stub()
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
+    this.getAllEventsStub = this.sandbox.stub()
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
         saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -36,7 +38,7 @@ describe('Interaction details middleware', () => {
         transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub.returns(transformed),
       },
       '../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub.resolves(advisersData),
+        getAllAdvisers: this.getAllAdvisersStub.resolves(advisersData),
       },
       '../../../lib/metadata': {
         getServices: () => { return servicesData },
@@ -44,6 +46,9 @@ describe('Interaction details middleware', () => {
       },
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
+      },
+      '../../events/repos': {
+        getAllEvents: this.getAllEventsStub.returns(eventsData),
       },
     })
     this.req = {
@@ -54,14 +59,24 @@ describe('Interaction details middleware', () => {
       body: assign({}, interactionData),
       query: {
         company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
-        interaction_type: 'a5d71fdd-5d95-e211-a939-e4115bead28a',
+      },
+      params: {
+        kind: 'interaction',
       },
     }
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
-      locals: {},
+      locals: {
+        company: {
+          id: '1',
+        },
+        interactionType: {
+          id: '2',
+        },
+        returnLink: '/return/',
+      },
     }
     this.nextSpy = this.sandbox.spy()
   })
@@ -87,15 +102,15 @@ describe('Interaction details middleware', () => {
       })
 
       it('should redirect on success', async () => {
-        expect(this.res.redirect).to.be.calledWith('/interactions/1')
+        expect(this.res.redirect).to.be.calledWith('/return/1')
       })
     })
 
     context('when all fields are valid for updating', () => {
       beforeEach(async () => {
-        const res = assign({}, this.res, {
+        const res = merge({}, this.res, {
           locals: {
-            interaction: assign({}, interactionData),
+            interaction: interactionData,
           },
         })
         await this.middleware.postDetails(this.req, res, this.nextSpy)
@@ -103,6 +118,21 @@ describe('Interaction details middleware', () => {
 
       it('should flash an updated message', async () => {
         expect(this.req.flash).to.be.calledWith('success', 'Interaction updated')
+      })
+    })
+
+    context('when all fields are valid for updating an interaction found from the top level navigation', () => {
+      it('should redirect on success', async () => {
+        const res = assign({}, this.res, {
+          breadcrumb: this.sandbox.stub().returnsThis(),
+          render: this.sandbox.spy(),
+          redirect: this.sandbox.spy(),
+          locals: {},
+        })
+
+        await this.middleware.postDetails(this.req, res, this.nextSpy)
+
+        expect(res.redirect).to.be.calledWith('/interactions/1')
       })
     })
 
@@ -145,37 +175,34 @@ describe('Interaction details middleware', () => {
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
         expect(this.res.locals.interaction).to.deep.equal(interactionData)
       })
-    })
-  })
 
-  describe('#getCompanyDetails', () => {
-    context('when success', () => {
       it('should set company data on locals', async () => {
-        const res = assign({}, this.res, { locals: { company: { id: '1' } } })
-        await this.middleware.getCompanyDetails(this.req, res, this.nextSpy)
-
-        expect(res.locals.contacts).to.deep.equal(contactsData)
+        await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
+        expect(this.res.locals.company).to.deep.equal(interactionData.company)
       })
     })
   })
 
-  describe('#getAdviserDetails', () => {
+  describe('#getInteractionOptions', () => {
     context('when success', () => {
-      it('should set advisers data on locals', async () => {
-        await this.middleware.getAdviserDetails(this.req, this.res, this.nextSpy)
+      beforeEach(async () => {
+        await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
+      })
 
+      it('should set contacts on locals', () => {
+        expect(this.res.locals.contacts).to.deep.equal(contactsData)
+      })
+
+      it('should set advisers on locals', () => {
         expect(this.res.locals.advisers).to.deep.equal(advisersData)
       })
-    })
-  })
 
-  describe('#getInteractionTypeAndService', () => {
-    context('when success', () => {
-      it('should set type and service data on locals', async () => {
-        await this.middleware.getInteractionTypeAndService(this.req, this.res, this.nextSpy)
-
-        expect(this.res.locals.interactionType).to.deep.equal(interactionTypeOptionsData[1])
+      it('should set services data on locals', async () => {
         expect(this.res.locals.services).to.deep.equal(servicesData)
+      })
+
+      it('should set events data on locals', async () => {
+        expect(this.res.locals.events).to.deep.equal(eventsData)
       })
     })
   })

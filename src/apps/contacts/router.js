@@ -9,7 +9,10 @@ const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { renderInteractions } = require('./controllers/interactions')
 const { getAudit } = require('./controllers/audit')
 
+const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
 const { getInteractionCollection } = require('../interactions/middleware/collection')
+
+const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
   { path: 'details', label: 'Details' },
@@ -42,10 +45,13 @@ router.get('/:id/unarchive', unarchiveContact)
 
 router.get('/:contactId/interactions',
   getCommon,
+  setInteractionsReturnUrl,
   getInteractionCollection,
   renderInteractions
 )
 
 router.get('/:contactId/audit', getCommon, getAudit)
+
+router.use('/:contactId', getCommon, setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
 module.exports = router
