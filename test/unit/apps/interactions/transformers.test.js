@@ -465,7 +465,7 @@ describe('Interaction transformers', () => {
             url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
             name: 'Test project',
           },
-          'Event': null,
+          'Event': 'No',
         })
       })
     })
