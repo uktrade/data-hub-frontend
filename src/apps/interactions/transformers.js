@@ -129,7 +129,7 @@ function transformInteractionResponseToViewRecord ({
     viewRecord['Event'] = event ? {
       url: `/events/${event.id}`,
       name: event.name,
-    } : null
+    } : 'No'
   } else {
     viewRecord['Communication channel'] = communication_channel
   }
