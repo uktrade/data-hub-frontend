@@ -51,7 +51,13 @@ function transformToApi (body) {
     }
 
     if (type === Array) {
-      return [{ id: value }]
+      if (Array.isArray(value)) {
+        return value.map(item => {
+          return { id: item }
+        })
+      } else {
+        return [{ id: value }]
+      }
     } else if (type === Boolean) {
       return value === 'true' | false
     }
@@ -90,7 +96,9 @@ function transformFromApi (body) {
 
   const formatted = mapValues(schema, (type, key) => {
     if (type === Array) {
-      return get(body, `${key}[0].id`, '')
+      const items = get(body, key, [])
+      const ids = items.map(item => item.id)
+      return ids
     } else if (type === Boolean) {
       const value = get(body, key, '')
       return value.toString()

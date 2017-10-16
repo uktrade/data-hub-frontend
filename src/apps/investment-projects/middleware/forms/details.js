@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { get, isEmpty } = require('lodash')
 
 const { transformToApi, transformFromApi } = require('../../services/formatting')
@@ -84,6 +85,24 @@ function handleFormPost (req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
   const projectId = res.locals.projectId || req.params.investmentId
   let saveMethod
+
+  if (req.body.add_contact) {
+    res.locals.form = Object.assign({}, res.locals.form, {
+      state: req.body,
+    })
+
+    let client_contacts = res.locals.form.state.client_contacts
+
+    if (Array.isArray(client_contacts)) {
+      client_contacts.push('')
+    } else {
+      client_contacts = [client_contacts, '']
+    }
+
+    res.locals.form.state.client_contacts = client_contacts
+
+    return next()
+  }
 
   if (projectId) {
     saveMethod = updateInvestment(req.session.token, projectId, formattedBody)
