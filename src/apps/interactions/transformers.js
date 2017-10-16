@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, assign, isUndefined } = require('lodash')
+const { get, assign, isNil } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -36,7 +36,7 @@ function transformInteractionResponseToForm ({
     dit_adviser: get(dit_adviser, 'id'),
     company: get(company, 'id'),
     communication_channel: get(communication_channel, 'id'),
-    is_event: !isUndefined(event),
+    is_event: isNil(event) ? 'false' : 'true',
     event: get(event, 'id'),
   }
 }
@@ -129,7 +129,7 @@ function transformInteractionResponseToViewRecord ({
     viewRecord['Event'] = event ? {
       url: `/events/${event.id}`,
       name: event.name,
-    } : null
+    } : 'No'
   } else {
     viewRecord['Communication channel'] = communication_channel
   }
