@@ -112,14 +112,33 @@
     modifier: 'subfield'
   }) }}
 
-  {{ MultipleChoiceField({
-    name: 'client_contacts',
-    label: 'Client contact',
-    initialOption: '-- Pick a contact --',
-    options: form.options.contacts,
-    error: form.errors.messages['client_contacts'],
-    value: form.state['client_contacts']
-  }) }}
+
+
+  <fieldset
+    class="c-form-fieldset js-AddItems"
+    data-item-selector=".c-form-group"
+    data-add-button-selector=".js-AddItems__add">
+
+    <legend class="c-form-fieldset__legend">
+      <span class="c-form-fieldset__legend-text">Client contact</span>
+    </legend>
+
+    {% for client_contact in form.state['client_contacts'] %}
+      {{ MultipleChoiceField({
+        name: 'client_contacts',
+        label: 'Client contact',
+        isLabelHidden: true,
+        initialOption: '-- Pick a contact --',
+        options: form.options.contacts,
+        value: client_contact
+      }) }}
+    {% endfor %}
+
+
+    <p class="c-form-fieldset__add-another">
+      <input class="button button-secondary js-AddItems__add" type="submit" name="add_contact" value="Add another" data-persist-values="true" data-method="add">
+    </p>
+  </fieldset>
 
 {% if not investmentData.id %}
   {{ MultipleChoiceField({
