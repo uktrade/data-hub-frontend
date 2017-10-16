@@ -1,12 +1,5 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block body_main_content %}
-  {{ MetaList({
-    items: [
-      { label: 'Interaction type', value: interactionType.name }
-    ],
-    itemModifier: 'stacked'
-  }) }}
-
   {{ Form(interactionForm) }}
 {% endblock %}

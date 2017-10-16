@@ -56,18 +56,6 @@ const labels = {
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
     },
   },
-  interactionsLabels: {
-    edit: {
-      interaction_type: 'Interaction Type',
-      subject: 'Subject',
-      notes: 'Interaction notes',
-      contact: 'Interaction contact',
-      date: 'Date of interaction',
-      dit_adviser: 'DIT adviser',
-      service: 'Service type',
-      dit_team: 'Service provider',
-    },
-  },
   evaluationValueLabels: {
     view: {
       sector_name: 'Primary sector',

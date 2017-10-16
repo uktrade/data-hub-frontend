@@ -4,10 +4,6 @@ const servicesData = [
   { id: '9484b82b-3499-e211-a939-e4115bead28a', name: 'Account Management' },
   { id: '632b8708-28b6-e611-984a-e4115bead28a', name: 'Bank Referral' },
 ]
-const interactionTypeOptionsData = [
-  { id: 'a6d71fdd-5d95-e211-a939-e4115bead28a', name: 'Business Card' },
-  { id: 'a5d71fdd-5d95-e211-a939-e4115bead28a', name: 'Face to Face' },
-]
 const contactsData = require('../../../data/contacts/contacts.json')
 const eventsData = require('../../../data/events/collection.json')
 
@@ -42,7 +38,6 @@ describe('Interaction details middleware', () => {
       },
       '../../../lib/metadata': {
         getServices: () => { return servicesData },
-        interactionTypeOptions: interactionTypeOptionsData,
       },
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
@@ -71,9 +66,6 @@ describe('Interaction details middleware', () => {
       locals: {
         company: {
           id: '1',
-        },
-        interactionType: {
-          id: '2',
         },
         returnLink: '/return/',
       },

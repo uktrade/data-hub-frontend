@@ -16,10 +16,6 @@
     "last_name": "CMU 1",
     "name": "Test CMU 1"
   },
-  "interaction_type": {
-    "id": "72c226d7-5d95-e211-a939-e4115bead28a",
-    "name": "Telephone"
-  },
   "communication_channel": {
     "id": "72c226d7-5d95-e211-a939-e4115bead28a",
     "name": "Telephone"
