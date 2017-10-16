@@ -6,7 +6,7 @@ const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany } = require('../../contacts/repos')
 const { getAllAdvisers } = require('../../adviser/repos')
-const { getEvents } = require('../../events/repos')
+const { getAllEvents } = require('../../events/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -50,7 +50,7 @@ async function getInteractionOptions (req, res, next) {
     res.locals.advisers = await getAllAdvisers(req.session.token)
     res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
     res.locals.services = await metaDataRepository.getServices(req.session.token)
-    res.locals.events = await getEvents(req.session.token)
+    res.locals.events = await getAllEvents(req.session.token)
     next()
   } catch (err) {
     next(err)
