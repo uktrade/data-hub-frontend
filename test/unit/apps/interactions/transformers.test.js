@@ -25,7 +25,7 @@ describe('Interaction transformers', () => {
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
-          is_event: false,
+          is_event: 'false',
           event: undefined,
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
@@ -34,7 +34,7 @@ describe('Interaction transformers', () => {
       })
     })
 
-    context('when the source is a service delivery', () => {
+    context('when the source is a service delivery and an event has been selected', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, {
           event: { id: '1' },
@@ -51,8 +51,34 @@ describe('Interaction transformers', () => {
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
-          is_event: true,
+          is_event: 'true',
           event: '1',
+          id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
+          notes: 'lorem ipsum',
+          subject: 'Test interactions',
+        })
+      })
+    })
+
+    context('when the source is a service delivery and an event has been unselected', () => {
+      beforeEach(() => {
+        const interaction = assign({}, mockInteraction, {
+          event: null,
+        })
+        this.transformed = transformInteractionResponseToForm(interaction)
+      })
+
+      it('should transform data from interaction response to list item', () => {
+        expect(this.transformed).to.deep.equal({
+          company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
+          contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+          service: '1231231231312',
+          dit_team: '222',
+          communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
+          date: { day: '31', month: '05', year: '2017' },
+          is_event: 'false',
+          event: undefined,
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
