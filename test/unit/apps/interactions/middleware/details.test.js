@@ -9,6 +9,7 @@ const interactionTypeOptionsData = [
   { id: 'a5d71fdd-5d95-e211-a939-e4115bead28a', name: 'Face to Face' },
 ]
 const contactsData = require('../../../data/contacts/contacts.json')
+const eventsData = require('../../../data/events/collection.json')
 
 const { assign, merge } = require('lodash')
 
@@ -26,6 +27,7 @@ describe('Interaction details middleware', () => {
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
+    this.getAllEventsStub = this.sandbox.stub()
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
         saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -44,6 +46,9 @@ describe('Interaction details middleware', () => {
       },
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
+      },
+      '../../events/repos': {
+        getAllEvents: this.getAllEventsStub.returns(eventsData),
       },
     })
     this.req = {
@@ -194,6 +199,10 @@ describe('Interaction details middleware', () => {
 
       it('should set services data on locals', async () => {
         expect(this.res.locals.services).to.deep.equal(servicesData)
+      })
+
+      it('should set events data on locals', async () => {
+        expect(this.res.locals.events).to.deep.equal(eventsData)
       })
     })
   })
