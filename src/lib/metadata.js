@@ -73,6 +73,7 @@ const metadataItems = [
   ['business-type', 'businessTypeOptions'],
   ['team', 'teams'],
   ['interaction-type', 'interactionTypeOptions'],
+  ['communication-channel', 'communicationChannelOptions'],
   ['service-delivery-status', 'serviceDeliveryStatusOptions'],
   ['service', 'serviceDeliveryServiceOptions'],
   ['event', 'eventOptions'],

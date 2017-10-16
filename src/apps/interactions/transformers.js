@@ -1,35 +1,43 @@
 /* eslint-disable camelcase */
-const { get, assign } = require('lodash')
+const { get, assign, isNil } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 
 function transformInteractionResponseToForm ({
   id,
-  date,
-  company,
   contact,
-  dit_adviser,
-  service,
   dit_team,
-  interaction_type,
+  service,
+  subject,
+  notes,
+  date,
+  dit_adviser,
+  company,
+  communication_channel,
+  event,
 } = {}) {
   if (!id) return null
 
   const isValidDate = isValid(new Date(date))
 
   return {
-    company: get(company, 'id'),
+    id: id,
     contact: get(contact, 'id'),
-    dit_adviser: get(dit_adviser, 'id'),
-    service: get(service, 'id'),
     dit_team: get(dit_team, 'id'),
-    interaction_type: get(interaction_type, 'id'),
+    service: get(service, 'id'),
+    subject: subject,
+    notes: notes,
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
       year: isValidDate ? format(date, 'YYYY') : '',
     },
+    dit_adviser: get(dit_adviser, 'id'),
+    company: get(company, 'id'),
+    communication_channel: get(communication_channel, 'id'),
+    is_event: isNil(event) ? 'false' : 'true',
+    event: get(event, 'id'),
   }
 }
 
@@ -121,7 +129,7 @@ function transformInteractionResponseToViewRecord ({
     viewRecord['Event'] = event ? {
       url: `/events/${event.id}`,
       name: event.name,
-    } : null
+    } : 'No'
   } else {
     viewRecord['Communication channel'] = communication_channel
   }
@@ -129,12 +137,17 @@ function transformInteractionResponseToViewRecord ({
   return viewRecord
 }
 
-function transformInteractionFormBodyToApiRequest ({ props, company, communicationChannel }) {
+function transformInteractionFormBodyToApiRequest (props) {
   return assign({}, props, {
     date: transformDateObjectToDateString('date')(props),
-    company: company,
-    communication_channel: communicationChannel,
   })
+}
+
+function transformInteractionListItemToHaveUrlPrefix (urlPrefix) {
+  return function (item) {
+    if (!urlPrefix) return item
+    return assign({}, item, { urlPrefix: urlPrefix.charAt(0) === '/' ? urlPrefix.substring(1) : urlPrefix })
+  }
 }
 
 module.exports = {
@@ -142,4 +155,5 @@ module.exports = {
   transformInteractionToListItem,
   transformInteractionFormBodyToApiRequest,
   transformInteractionResponseToViewRecord,
+  transformInteractionListItemToHaveUrlPrefix,
 }

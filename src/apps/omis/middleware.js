@@ -23,7 +23,7 @@ async function getOrder (req, res, next, orderId) {
     res.locals.order = Object.assign({}, order, {
       subscribers,
       assignees,
-      editable: order.status === 'draft',
+      isEditable: order.status === 'draft',
     })
   } catch (e) {
     logger.error(e)

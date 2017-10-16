@@ -63,26 +63,14 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
-  user_acceptance_tests:
+  user_acceptance_tests: &user_acceptance_tests
     docker:
-      - image: ukti/docker-data-hub-base
+      - &docker_dat_hub_base
+        image: ukti/docker-data-hub-base
         environment:
-          API_ROOT: http://localhost:8000
           API_CLIENT_ID: circleCiClientId
           API_CLIENT_SECRET: youAintSeenMeRight
-          AWS_DEFAULT_REGION: eu-west-2
-          AWS_ACCESS_KEY_ID: foo
-          AWS_SECRET_ACCESS_KEY: bar
-          CDMS_AUTH_URL: http://example.com
-          DATABASE_URL: postgresql://postgres@localhost/datahub
-          DATAHUB_SECRET: secret
-          DEBUG: 'True'
-          DJANGO_SECRET_KEY: topSecret
-          DJANGO_SETTINGS_MODULE: config.settings.local
-          DOCUMENTS_BUCKET: baz
-          ES_INDEX: test_index
-          ES5_URL: http://localhost:9200
-          POSTGRES_URL: http://localhost:5432
+          API_ROOT: http://localhost:8000
           QA_HOST: http://localhost:3000
           QA_SELENIUM_HOST: 127.0.0.1
           QA_SELENIUM_PORT: 4444
@@ -90,66 +78,44 @@ jobs:
           QA_USER_PASSWORD: secretSquiR3L
           REDIS_HOST: localhost
           TZ: "/usr/share/zoneinfo/Europe/London"
-      - image: redis:3.2.10
-      - image: elasticsearch:5.5
-      - image: postgres:9.5
+      - &docker_redis
+        image: redis:3.2.10
+      - &docker_elasticsearch
+        image: elasticsearch:5.5
+      - &docker_postgres
+        image: postgres:9.5
+        name: postgres
+        restart: always
         environment:
           POSTGRES_DB: datahub
+      - &docker_data_hub_leeloo
+        image: ukti/data-hub-leeloo
+        command: ./setup-uat.sh
+        environment:
+          API_CLIENT_ID: circleCiClientId
+          API_CLIENT_SECRET: youAintSeenMeRight
+          AWS_DEFAULT_REGION: eu-west-2
+          AWS_ACCESS_KEY_ID: foo
+          AWS_SECRET_ACCESS_KEY: bar
+          CDMS_AUTH_URL: http://example.com
+          DATABASE_URL: postgresql://postgres@postgres/datahub
+          DATAHUB_SECRET: secret
+          DEBUG: True
+          DOCUMENTS_BUCKET: baz
+          DJANGO_SECRET_KEY: topSecret
+          DJANGO_SETTINGS_MODULE: config.settings.local
+          ES_INDEX: test_index
+          ES5_URL: http://localhost:9200
+          POSTGRES_URL: tcp://postgres:5432
+          QA_USER_EMAIL: circleci@datahub.com
+          QA_USER_PASSWORD: secretSquiR3L
     parallelism: 4
-#    resource_class: large
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
-       # setup data hub leeloo
       - run:
-          name: Clone data hub leeloo branch
-          command: |
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            if [ ${CIRCLE_BRANCH} = "master" ]; then
-              BRANCH="master"
-            else
-              BRANCH="develop"
-            fi
-            git clone --depth 1 -b ${BRANCH} --single-branch git@github.com:uktrade/data-hub-leeloo.git ~/app
-            echo "Data hub leelo - \"${BRANCH}\" branch cloned"
-      - restore_cache:
-          name: Restore pip cache
-          key: pip-dependencies-{{ checksum "~/app/requirements.txt" }}
-          paths:
-            - ~/cache/pip
-      - run:
-          name: Install pip dependencies
-          command: pip install --cache-dir ~/cache/pip -r ~/app/requirements.txt
-      - save_cache:
-          name: Save pip cache
-          key: pip-dependencies-{{ checksum "~/app/requirements.txt" }}
-          paths:
-            - ~/cache/pip
-      - run:
-          name: Configure and populate postgres db
-          command: |
-            ~/app/manage.py migrate
-            ~/app/manage.py loadmetadata
-            ~/app/manage.py load_omis_metadata
-            ~/app/manage.py createinitialrevisions
-      - run:
-          name: Create data hub leeloo application
-          command: |
-            echo "from oauth2_provider.models import Application; from datahub.oauth.models import OAuthApplicationScope; app = Application.objects.create(name='circleci', client_id='${API_CLIENT_ID}', client_secret='${API_CLIENT_SECRET}', client_type=Application.CLIENT_CONFIDENTIAL, authorization_grant_type=Application.GRANT_PASSWORD); OAuthApplicationScope.objects.create(application=app, scopes=['internal-front-end'])" | ~/app/manage.py shell
-      - run:
-          name: Create data hub leeloo test user
-          command: |
-            echo "from datahub.company.models import Advisor; Advisor.objects.create_user(email='${QA_USER_EMAIL}', password='${QA_USER_PASSWORD}', first_name='Circle', last_name='Ci')" | ~/app/manage.py shell
-      - run: ~/app/manage.py loaddata ~/app/fixtures/test_data.yaml
-      - run: ~/app/manage.py sync_es
-      - run:
-          name: Run data hub leeloo
-          command: ~/app/manage.py runserver
-          background: true
-      - run:
-          name: Wait for postgres db, Elasticsearch and data hub leeloo
-          command: dockerize -wait ${POSTGRES_URL} -wait ${ES5_URL} -wait ${API_ROOT}/admin/ -timeout 60s
-      # setup data hub frontend
+          name: Wait for data hub leeloo
+          command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
       - restore_cache:
           name: Restore yarn dependencies cache
           key: yarn-dependencies-{{ checksum "~/data-hub-frontend/yarn.lock" }}
@@ -194,6 +160,16 @@ jobs:
           path: cucumber
       - store_artifacts:
           path: cucumber
+  user_acceptance_tests_master:
+    <<: *user_acceptance_tests
+    docker:
+      - *docker_dat_hub_base
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - <<: *docker_data_hub_leeloo
+        image: ukti/data-hub-leeloo:master
+
 workflows:
   version: 2
   datahub:
@@ -205,17 +181,19 @@ workflows:
       - unit_tests:
           requires:
             - build
-      - start_uat:
-          type: approval
+      - user_acceptance_tests:
           requires:
-            - build
             - lint_code
             - unit_tests
           filters:
             branches:
               ignore:
                 - master
-                - develop
-      - user_acceptance_tests:
+      - user_acceptance_tests_master:
           requires:
-            - start_uat
+            - lint_code
+            - unit_tests
+          filters:
+            branches:
+              only:
+                - master

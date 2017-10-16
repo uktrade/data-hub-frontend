@@ -1,7 +1,7 @@
 const { omit, merge, assign } = require('lodash')
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
-const { transformInteractionToListItem } = require('../transformers')
+const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
 const { interactionSortForm } = require('../macros')
 
 async function getInteractionCollection (req, res, next) {
@@ -28,6 +28,7 @@ async function getInteractionCollection (req, res, next) {
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
         transformInteractionToListItem,
+        transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink),
       ))
 
     res.locals = assign({}, res.locals, {
