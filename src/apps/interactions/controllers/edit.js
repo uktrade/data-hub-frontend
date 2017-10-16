@@ -16,6 +16,7 @@ function renderEditPage (req, res) {
     dit_adviser: req.session.user,
     date: transformDateStringToDateObject(new Date()),
     contact: get(res.locals, 'contact.id'),
+    dit_team: get(req, 'session.user.dit_team.id'),
   }
   const mergedInteractionData = pickBy(merge({}, interactionDefaults, interactionData, res.locals.requestBody))
   const interactionForm =
