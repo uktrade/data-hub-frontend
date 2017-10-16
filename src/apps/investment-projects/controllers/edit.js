@@ -16,9 +16,9 @@ function editRequirementsGet (req, res) {
   res.render('investment-projects/views/requirements-edit')
 }
 
-function editDetailsPost (req, res) {
-  if (res.locals.form.errors) {
-    return res.render('investment-projects/views/details-edit')
+function editDetailsPost (req, res, next) {
+  if (res.locals.form.errors || req.body.add_contact) {
+    return next()
   }
   req.flash('success', 'Investment details updated')
   return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
