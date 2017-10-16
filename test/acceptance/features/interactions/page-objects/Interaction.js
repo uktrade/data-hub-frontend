@@ -1,7 +1,6 @@
 const faker = require('faker')
 const companyName = ''
 const title = ''
-const type = ''
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -127,10 +126,6 @@ module.exports = {
       getInteractionPageCompanyName () {
         return this
           .getText('@interactionPageCompanyName', (companyName))
-      },
-      getInteractionPageInteractionType () {
-        return this
-          .getText('@interactionPageType', (type))
       },
       enterSubject (subject) {
         return this

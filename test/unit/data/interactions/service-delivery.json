@@ -5,10 +5,6 @@
     "id": "dcdabbc9-1781-e411-8955-e4115bead28a",
     "name": "Samsung"
   },
-  "interaction_type": {
-    "id": "72c226d7-5d95-e211-a939-e4115bead28a",
-    "name": "Telephone"
-  },
   "subject": "Test interactions",
   "notes": "lorem ipsum",
   "date": "2017-05-31T00:00:00",
