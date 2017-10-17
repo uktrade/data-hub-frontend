@@ -17,7 +17,7 @@ function editRequirementsGet (req, res) {
 }
 
 function editDetailsPost (req, res, next) {
-  if (res.locals.form.errors || req.body.add_contact) {
+  if (res.locals.form.errors || req.body['add-item']) {
     return next()
   }
   req.flash('success', 'Investment details updated')

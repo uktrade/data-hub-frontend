@@ -96,23 +96,21 @@
     initialOption: '-- Choose a business activity --',
     options: form.options.businessActivities,
     error: form.errors.messages['business_activities'],
-    value: form.state['business_activities']
+    value: form.state['business_activities'][0]
   }) }}
 
- {{ TextField({
-    name: 'other_business_activity',
-    label: 'Other business activity (please specify)',
-    placeholder: 'e.g meet and greet dinner',
-    error: form.errors.messages['other_business_activity'],
-    value: form.state['other_business_activity'],
-    condition: {
-      name: 'business_activities',
-      value: form.options.businessActivities[8].value
-    },
-    modifier: 'subfield'
-  }) }}
-
-
+  {{ TextField({
+      name: 'other_business_activity',
+      label: 'Other business activity (please specify)',
+      placeholder: 'e.g meet and greet dinner',
+      error: form.errors.messages['other_business_activity'],
+      value: form.state['other_business_activity'],
+      condition: {
+        name: 'business_activities',
+        value: form.options.businessActivities[8].value
+      },
+      modifier: 'subfield'
+    }) }}
 
   <fieldset
     class="c-form-fieldset js-AddItems"
@@ -136,7 +134,7 @@
 
 
     <p class="c-form-fieldset__add-another">
-      <input class="button button-secondary js-AddItems__add" type="submit" name="add_contact" value="Add another" data-persist-values="true" data-method="add">
+      <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another</button>
     </p>
   </fieldset>
 
