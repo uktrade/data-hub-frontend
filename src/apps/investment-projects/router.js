@@ -108,7 +108,7 @@ router.get('/:investmentId/details', details.detailsGetHandler)
 router
   .route('/:investmentId/edit-details')
   .get(detailsFormMiddleware.populateForm, edit.editDetailsGet)
-  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, edit.editDetailsPost)
+  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, edit.editDetailsPost, edit.editDetailsGet)
 
 router
   .route('/:investmentId/edit-value')
