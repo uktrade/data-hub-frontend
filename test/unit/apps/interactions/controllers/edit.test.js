@@ -27,9 +27,6 @@ describe('Interaction edit controller', () => {
       locals: {
         entityName: 'company',
         returnLink: 'return',
-        interactionType: {
-          name: 'interaction type',
-        },
         company: {
           id: '1',
         },
