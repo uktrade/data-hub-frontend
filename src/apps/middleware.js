@@ -29,7 +29,7 @@ function setLocalNav (items = []) {
 function setDefaultQuery (query = {}) {
   return function handleDefaultRedirect (req, res, next) {
     if (isEmpty(req.query)) {
-      return res.redirect(`${req.baseUrl}?${queryString.stringify(query)}`)
+      return res.redirect(`${req.originalUrl}?${queryString.stringify(query)}`)
     }
     next()
   }
