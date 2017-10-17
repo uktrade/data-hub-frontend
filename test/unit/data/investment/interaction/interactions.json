@@ -114,10 +114,6 @@
       },
       "service": null,
       "dit_team": null,
-      "interaction_type": {
-        "id": "74c226d7-5d95-e211-a939-e4115bead28a",
-        "name": "Letter/Fax"
-      },
       "investment_project": {
         "id": "25f760ec-ea65-4b61-b3a0-f79a2abb12ca",
         "created_on": "2017-06-08T11:28:46.602390",
