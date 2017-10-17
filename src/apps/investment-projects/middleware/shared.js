@@ -22,7 +22,9 @@ function getCompanyDetails (req, res, next) {
     .catch(next)
 }
 
-async function getInvestmentDetails (req, res, next, investmentId = req.params.investmentId) {
+async function getInvestmentDetails (req, res, next) {
+  const investmentId = req.params.investmentId
+
   if (!isValidGuid(investmentId)) {
     return next()
   }
