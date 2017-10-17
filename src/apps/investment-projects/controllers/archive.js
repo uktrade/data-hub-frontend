@@ -6,7 +6,7 @@ async function archiveInvestmentProjectHandler (req, res, next) {
   try {
     // Archive the project.
     const reason = (req.body.archived_reason === 'Other') ? req.body.archived_reason_other : req.body.archived_reason
-    await investmentRepository.archiveInvestmentProject(req.session.token, req.params.id, reason)
+    await investmentRepository.archiveInvestmentProject(req.session.token, req.params.investmentId, reason)
 
     res.locals.investmentData = Object.assign({}, res.locals.investmentData, {
       archived: true,
@@ -29,7 +29,7 @@ async function archiveInvestmentProjectHandler (req, res, next) {
 
 async function unarchiveInvestmentProjectHandler (req, res, next) {
   try {
-    await investmentRepository.unarchiveInvestmentProject(req.session.token, req.params.id)
+    await investmentRepository.unarchiveInvestmentProject(req.session.token, req.params.investmentId)
     req.flash('success', 'Investment project updated')
     res.redirect('details')
   } catch (error) {
