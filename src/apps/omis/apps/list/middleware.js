@@ -2,7 +2,7 @@ const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
 const { transformOrderToListItem } = require('../../transformers')
 
-async function getCollection (req, res, next) {
+async function setCollectionResults (req, res, next) {
   try {
     res.locals.results = await search({
       searchEntity: 'order',
@@ -22,7 +22,7 @@ async function getCollection (req, res, next) {
   }
 }
 
-function getRequestBody (req, res, next) {
+function setRequestBody (req, res, next) {
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
 
   req.body = Object.assign({}, req.body, selectedSortBy)
@@ -30,6 +30,6 @@ function getRequestBody (req, res, next) {
 }
 
 module.exports = {
-  getCollection,
-  getRequestBody,
+  setCollectionResults,
+  setRequestBody,
 }
