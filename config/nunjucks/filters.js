@@ -3,6 +3,7 @@ const moment = require('moment')
 require('moment-duration-format')
 const dateFns = require('date-fns')
 const Case = require('case')
+const numeral = require('numeral')
 const {
   assign,
   concat,
@@ -26,8 +27,11 @@ const {
   lowerCase,
   kebabCase,
 } = require('lodash')
+require('numeral/locales/en-gb')
 
-const { longDateFormat, mediumDateTimeFormat } = require('../../config')
+numeral.locale('en-gb')
+
+const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../../config')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
@@ -119,6 +123,10 @@ const filters = {
       return pickBy(collection, isNotEmpty)
     }
     return collection
+  },
+
+  formatCurrency: (value, format = currencyFormat) => {
+    return numeral(value).format(format)
   },
 
   formatNumber: (number, locales = 'en-GB') => {
