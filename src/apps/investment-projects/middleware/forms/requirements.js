@@ -19,7 +19,7 @@ function populateForm (req, res, next) {
 }
 
 function handleFormPost (req, res, next) {
-  res.locals.projectId = req.params.id
+  res.locals.projectId = req.params.investmentId
 
   const formattedBody = assign({}, req.body, {
     strategic_drivers: flatten([req.body.strategic_drivers]),

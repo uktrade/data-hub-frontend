@@ -9,7 +9,7 @@ async function renderInteractionList (req, res, next) {
   try {
     const token = req.session.token
     const page = req.query.page || '1'
-    const investmentId = req.params.id
+    const investmentId = req.params.investmentId
 
     const interactions = await getInteractionsForInvestment(token, investmentId, page)
       .then(transformApiResponseToCollection(

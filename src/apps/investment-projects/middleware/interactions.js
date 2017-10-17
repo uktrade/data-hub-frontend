@@ -7,7 +7,7 @@ async function getInteractionCollection (req, res, next) {
   try {
     const token = req.session.token
     const page = req.query.page || '1'
-    const investmentId = req.params.id
+    const investmentId = req.params.investmentId
 
     res.locals.interactions = await getInteractionsForInvestment(token, investmentId, page)
       .then(transformApiResponseToCollection(
@@ -22,7 +22,7 @@ async function getInteractionCollection (req, res, next) {
 }
 
 function setInteractionsReturnUrl (req, res, next) {
-  res.locals.returnLink = `/investment-projects/${req.params.id}/interactions/`
+  res.locals.returnLink = `/investment-projects/${req.params.investmentId}/interactions/`
   next()
 }
 
@@ -33,7 +33,7 @@ function setInteractionsEntityName (req, res, next) {
 
 async function setCompanyDetails (req, res, next) {
   try {
-    const investment = await getInvestment(req.session.token, req.params.id)
+    const investment = await getInvestment(req.session.token, req.params.investmentId)
     res.locals.company = investment.investor_company
     next()
   } catch (error) {
