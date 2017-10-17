@@ -9,9 +9,9 @@ const listApp = require('./apps/list')
 
 router.param('orderId', getOrder)
 
+router.use(listApp.mountpath, listApp.router)
 router.use(createApp.mountpath, setHomeBreadcrumb(createApp.displayName), createApp.router)
 router.use(editApp.mountpath, editApp.router)
 router.use(viewApp.mountpath, viewApp.router)
-router.use(listApp.mountpath, listApp.router)
 
 module.exports = router
