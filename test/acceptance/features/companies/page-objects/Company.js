@@ -1,3 +1,14 @@
+const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+
+const getCompanyDetailsTabSelector = (text) =>
+  getSelectorForElementWithText(
+    text,
+    {
+      el: '//a',
+      className: 'c-local-nav__link',
+    }
+  )
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {
@@ -139,4 +150,17 @@ module.exports = {
       },
     },
   ],
+  sections: {
+    detailsTabs: {
+      selector: '.c-local-nav',
+      elements: {
+        details: getCompanyDetailsTabSelector('Details'),
+        contacts: getCompanyDetailsTabSelector('Contacts'),
+        interactions: getCompanyDetailsTabSelector('Interactions'),
+        export: getCompanyDetailsTabSelector('Export'),
+        investment: getCompanyDetailsTabSelector('Investment'),
+        auditHistory: getCompanyDetailsTabSelector('Audit history'),
+      },
+    },
+  },
 }
