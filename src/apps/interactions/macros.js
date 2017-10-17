@@ -47,11 +47,11 @@ const selectKindFormConfig = function ({
         options: [{
           value: 'interaction',
           label: 'A standard interaction',
-          hint: 'For example a meeting or email exchange with a customer',
+          hint: 'For example, an email, phone call or meeting',
         }, {
           value: 'service_delivery',
-          label: 'A service that has been provided',
-          hint: 'For example account management, a significant assist or an event',
+          label: 'A service that you have provided',
+          hint: 'For example, account management, a significant assist or an event',
         }],
       },
     ],
