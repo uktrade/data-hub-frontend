@@ -55,9 +55,9 @@ function transformToApi (body) {
         return value.map(item => {
           return { id: item }
         })
-      } else {
-        return [{ id: value }]
       }
+
+      return [{ id: value }]
     } else if (type === Boolean) {
       return value === 'true' | false
     }
@@ -135,6 +135,7 @@ function transformInvestmentDataForView (data) {
     investment_type: getInvestmentTypeDetails(),
     sector: get(data, 'sector.name', null),
     business_activities: data.business_activities.map(i => i.name).join(', '),
+    client_contacts: data.client_contacts.map(i => i.name).join(', '),
     nda_signed: data.nda_signed ? 'Signed' : 'Not signed',
     estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
   })
