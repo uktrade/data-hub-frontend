@@ -5,7 +5,6 @@
   background: $grey-3;
   padding: $default-spacing-unit / 4 0;
   position: relative;
-  z-index: 2;
 
   @include media(tablet) {
     padding: 0;
