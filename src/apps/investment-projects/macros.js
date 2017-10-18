@@ -117,6 +117,40 @@ const requirementsFormConfig = {
         { label: 'No', value: 'false' },
       ],
     },
+    {
+      macroName: 'Fieldset',
+      legend: 'Address',
+      condition: {
+        name: 'site_decided',
+        value: 'true',
+      },
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'address_1',
+          label: 'Street',
+          modifier: 'compact',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_2',
+          label: 'Street 2',
+          isLabelHidden: true,
+          modifier: 'compact',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_town',
+          label: 'Town',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_postcode',
+          label: 'Postcode',
+          modifier: 'short',
+        },
+      ],
+    },
   ],
 }
 
