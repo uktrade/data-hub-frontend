@@ -90,27 +90,41 @@
     value: form.state['sector']
   }) }}
 
-  {{ MultipleChoiceField({
-    name: 'business_activities',
-    label: 'Business activity',
-    initialOption: '-- Choose a business activity --',
-    options: form.options.businessActivities,
-    error: form.errors.messages['business_activities'],
-    value: form.state['business_activities'][0]
-  }) }}
+  <fieldset class="c-form-fieldset">
 
-  {{ TextField({
+    <legend class="c-form-fieldset__legend">
+      <span class="c-form-fieldset__legend-text">Business activities</span>
+    </legend>
+
+    <div class="js-AddItems"
+      data-item-selector=".c-form-group"
+      data-add-button-selector=".js-AddItems__add">
+
+      {% for business_activity in form.state['business_activities'] %}
+        {{ MultipleChoiceField({
+          name: 'business_activities',
+          label: 'Business activity',
+          isLabelHidden: true,
+          initialOption: '-- Choose a business activity --',
+          options: form.options.businessActivities,
+          error: form.errors.messages['business_activities'],
+          value: business_activity
+        }) }}
+      {% endfor %}
+
+      <p class="c-form-fieldset__add-another">
+        <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="business_activities" data-persist-values="true">Add another activity</button>
+      </p>
+    </div>
+
+    {{ TextField({
       name: 'other_business_activity',
-      label: 'Other business activity (please specify)',
+      label: 'Other business activity (if not on list)',
       placeholder: 'e.g meet and greet dinner',
       error: form.errors.messages['other_business_activity'],
-      value: form.state['other_business_activity'],
-      condition: {
-        name: 'business_activities',
-        value: form.options.businessActivities[8].value
-      },
-      modifier: 'subfield'
+      value: form.state['other_business_activity']
     }) }}
+  </fieldset>
 
   <fieldset
     class="c-form-fieldset js-AddItems"
@@ -134,7 +148,7 @@
 
 
     <p class="c-form-fieldset__add-another">
-      <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another</button>
+      <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
     </p>
   </fieldset>
 
