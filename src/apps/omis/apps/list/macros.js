@@ -1,17 +1,10 @@
-const { assign, flatten } = require('lodash')
+const { assign, filter, flatten, includes } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 const metadataRepo = require('../../../../lib/metadata')
 const { transformObjectToOption } = require('../../../transformers')
 
 const filterFields = [
-  {
-    macroName: 'MultipleChoiceField',
-    label: 'Order status',
-    name: 'status',
-    type: 'radio',
-    options: ORDER_STATES,
-  },
   {
     macroName: 'TextField',
     label: 'Order reference',
@@ -26,8 +19,16 @@ const filterFields = [
   },
 ]
 
-const collectionFiltersFields = flatten([filterFields, [
-  {
+const collectionFiltersFields = flatten([
+  [{
+    macroName: 'MultipleChoiceField',
+    label: 'Order status',
+    name: 'status',
+    type: 'radio',
+    options: ORDER_STATES,
+  }],
+  filterFields,
+  [{
     macroName: 'TextField',
     label: 'Contact name',
     name: 'contact_name',
@@ -41,8 +42,35 @@ const collectionFiltersFields = flatten([filterFields, [
     options () {
       return metadataRepo.omisMarketOptions.map(transformObjectToOption)
     },
+  }],
+]).map(filter => {
+  return assign({}, filter, {
+    modifier: ['smaller', 'light'],
+  })
+})
+
+const reconciliationFiltersFields = flatten([
+  [{
+    macroName: 'MultipleChoiceField',
+    label: 'Order status',
+    name: 'status',
+    type: 'radio',
+    options: filter(ORDER_STATES, o => {
+      return !includes(['draft', 'quote_awaiting_acceptance'], o.value)
+    }),
+  }],
+  filterFields,
+  [{
+    macroName: 'TextField',
+    label: 'Net amount',
+    name: 'net_cost',
   },
-]]).map(filter => {
+  {
+    macroName: 'TextField',
+    label: 'Gross amount',
+    name: 'total_cost',
+  }],
+]).map(filter => {
   return assign({}, filter, {
     modifier: ['smaller', 'light'],
   })
@@ -62,12 +90,24 @@ const collectionSortForm = {
       options: [
         { value: 'created_on:desc', label: 'Newest' },
         { value: 'created_on:asc', label: 'Oldest' },
+        { value: 'modified_on:desc', label: 'Recently updated' },
+        { value: 'modified_on:asc', label: 'Least recently updated' },
+        { value: 'delivery_date:asc', label: 'Earliest delivery date' },
+        { value: 'delivery_date:desc', label: 'Latest delivery date' },
       ],
     },
   ],
 }
 
+const reconciliationSortForm = assign({}, collectionSortForm)
+reconciliationSortForm.children[0].options = [
+  { value: 'payment_due_date:asc', label: 'Earliest payment due date' },
+  { value: 'payment_due_date:desc', label: 'Lastest payment due date' },
+]
+
 module.exports = {
-  collectionFiltersFields,
   collectionSortForm,
+  collectionFiltersFields,
+  reconciliationSortForm,
+  reconciliationFiltersFields,
 }
