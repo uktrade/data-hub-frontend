@@ -2,10 +2,7 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { camelCase, isNull, pickBy, keys } = require('lodash')
 
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
-
-const getButtonCalled = (label) =>
-  getSelectorForElementWithText(label, { el: '//*', className: 'button' })
+const { getButtonWithText } = require('../../../helpers/selectors')
 
 module.exports = {
   url: `${process.env.QA_HOST}/events/create`,
@@ -44,8 +41,8 @@ module.exports = {
     addAnotherSharedTeam: 'input[name="add_team"]',
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
-    editButton: getButtonCalled('Edit Event'),
-    saveButton: getButtonCalled('Save'),
+    editButton: getButtonWithText('Edit Event'),
+    saveButton: getButtonWithText('Save'),
   },
   commands: [
     {

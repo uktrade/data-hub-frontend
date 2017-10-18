@@ -32,6 +32,11 @@ defineSupportCode(({ Then, When }) => {
       .createForeignCompany(companyName)
   })
 
+  When(/^the "(.+)" company details tab is clicked$/, async (tabName) => {
+    await Company.section.detailsTabs
+      .click(`@${tabName}`)
+  })
+
   Then(/^The company is present in the search results$/, async () => {
     await Company
       .navigate()
