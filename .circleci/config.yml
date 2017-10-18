@@ -64,6 +64,8 @@ jobs:
       - store_artifacts:
           path: coverage
   user_acceptance_tests: &user_acceptance_tests
+    environment:
+      BASH_ENV: "/usr/local/nvm/nvm.sh"
     docker:
       - &docker_dat_hub_base
         image: ukti/docker-data-hub-base
