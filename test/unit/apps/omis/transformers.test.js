@@ -36,8 +36,9 @@ describe('OMIS list transformers', function () {
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
+            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
           ])
         })
       })
@@ -55,8 +56,9 @@ describe('OMIS list transformers', function () {
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
+            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'Delivery date', type: 'date', value: '2018-10-16T14:18:28.328729' },
           ])
         })

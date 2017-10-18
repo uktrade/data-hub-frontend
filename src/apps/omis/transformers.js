@@ -11,6 +11,7 @@ function transformOrderToListItem ({
   primary_market,
   delivery_date,
   modified_on,
+  created_on,
 } = {}) {
   if (!id || !reference) { return }
 
@@ -35,13 +36,18 @@ function transformOrderToListItem ({
         value: get(company, 'name'),
       },
       {
-        label: 'Updated',
+        label: 'Created',
         type: 'datetime',
-        value: modified_on,
+        value: created_on,
       },
       {
         label: 'Contact',
         value: get(contact, 'name'),
+      },
+      {
+        label: 'Updated',
+        type: 'datetime',
+        value: modified_on,
       },
     ],
   }
