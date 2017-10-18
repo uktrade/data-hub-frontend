@@ -51,6 +51,16 @@ module.exports = {
         leadTeam: getSearchResultSelector('Lead team'),
       },
     },
+    firstCompanySearchResult: {
+      selector: '.c-entity-list li:first-child',
+      elements: {
+        header: {
+          selector: '.c-entity__header a',
+        },
+        sector: getSearchResultSelector('Sector'),
+        registeredAddress: getSearchResultSelector('Registered address'),
+      },
+    },
   },
   commands: [
     {},
