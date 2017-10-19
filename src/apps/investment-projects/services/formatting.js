@@ -326,8 +326,8 @@ function transformClientRelationshipManagementForView (investmentData) {
 
 function transformTeamMembersForView ({ adviser, role }) {
   return {
-    adviser: adviser.name,
-    team: adviser.dit_team.name,
+    adviser: get(adviser, 'name'),
+    team: get(adviser, 'dit_team.name'),
     role: role,
   }
 }
