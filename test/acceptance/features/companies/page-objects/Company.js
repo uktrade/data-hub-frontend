@@ -1,3 +1,5 @@
+const faker = require('faker')
+
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
 const getDetailsTabSelector = (text) =>
@@ -26,53 +28,28 @@ module.exports = {
   elements: {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
-    addNewCompanyButton: 'a[href*="/companies/add-step"]',
-    companyAddForm: '.c-form-actions button',
     addCompanyButton: getButtonWithText('Add company'),
     continueButton: getButtonWithText('Continue'),
     addButton: getButtonWithText('Add'),
     saveAndCreateButton: getButtonWithText('Save and create'),
-    ukPrivateOrPublicLimitedCompanyRadioLabel: 'label[for=field-business_type-1]',
-    otherTypeOfUKOrganisationsRadioLabel: 'label[for=field-business_type-2]',
-    radioLabelForeignOrg: 'label[for=field-business_type-3]',
-    businessTypeForeignDropdownOptionCharity: '#field-business_type_for_other option[value="Charity"]',
-    businessTypeUKOtherDropdownOptionCharity: '#field-business_type_uk_other option[value="Charity"]',
-    newCompanyNameField: '#field-name',
-    newCompanyTradingNameField: '#field-trading_name',
-    newCompanyRegisteredAddress1Field: '#field-registered_address_1',
-    newCompanyRegisteredAddress2Field: '#field-registered_address_2',
-    newCompanyTownField: '#field-registered_address_town',
-    newCompanyCountyField: '#field-registered_address_county',
-    newCompanyCountryField: '#field-registered_address_country',
-    newCompanyPostcodeField: '#field-registered_address_postcode',
-    newCompanyCountryFieldOptionForeign: {
-      selector: '//select[@id="registered_address_country"]/option[normalize-space(.)="Turkey"]',
-      locateStrategy: 'xpath',
-    },
-    newCompanyCountryFieldOptionUK: {
-      selector: '//select[@id="registered_address_country"]/option[normalize-space(.)="United Kingdom"]',
-      locateStrategy: 'xpath',
-    },
-    newCompanyCountryFieldOptionUKRegionEngland: {
-      selector: '//select[@id="uk_region"]/option[normalize-space(.)="England"]',
-      locateStrategy: 'xpath',
-    },
-    newCompanyHeadquartersRadioLabel: {
-      selector: '(//input[@name="headquarters"])[1]/parent::*',
-      locateStrategy: 'xpath',
-    },
-    newCompanySectorField: {
-      selector: '//*[@id="main-content"]/div/article/form/div[5]/select',
-      locateStrategy: 'xpath',
-    },
-    newCompanySectorOption: '#sector option:nth-child(16)',
-    newCompanyWebsiteField: '#field-website',
-    newCompanyDescription: '#field-description',
-    newCompanyNumberOfEmployeesField: '#employee_range',
-    newCompanyAnnualTurnoverField: '#turnover_range',
-    newCompanySearch: '#field-term',
-    parentCompanyResultItem: '.results-list__result:first-child a',
-    parentCompanyResultItemChooseButton: '.results-list__result:first-child .panel .button',
+    ukPrivateOrPublicLimitedCompanyOption: 'label[for=field-business_type-1]',
+    otherTypeOfUKOrganisationOption: 'label[for=field-business_type-2]',
+    otherTypeOfUKOrganisationBusinessType: 'select[name="business_type_uk_other"]',
+    foreignOrganisationOption: 'label[for=field-business_type-3]',
+    foreignOrganisationOptionBusinessType: 'select[name="business_type_for_other"]',
+    name: '#field-name',
+    tradingName: '#field-trading_name',
+    ukRegion: 'select[name="uk_region"]',
+    address1: '#field-registered_address_1',
+    address2: '#field-registered_address_2',
+    town: '#field-registered_address_town',
+    county: '#field-registered_address_county',
+    registeredAddressCountry: 'select[name="registered_address_country"]',
+    postcode: '#field-registered_address_postcode',
+    headquartersOption: 'label[for=field-headquarter_type-2]',
+    sector: '#field-sector',
+    website: '#field-website',
+    parentCompanySearch: '#field-term',
     flashMessage: '.c-message-list li:first-child',
     collectionsCompanyNameInput: '#field-name',
     collectionResultsCompanyName: '.c-entity-list li:first-child .c-entity__title > a',
@@ -91,92 +68,164 @@ module.exports = {
       },
 
       createForeignCompany (companyName) {
-        this.companyName = companyName
+        this.state.companyDetails = {
+          name: companyName,
+          address1: faker.address.streetName(),
+          postcode: faker.address.zipCode(),
+          town: faker.address.city(),
+          website: faker.internet.url(),
+        }
+
+        this
+          .click('@addCompanyButton')
+          .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
+          .waitForElementPresent('@foreignOrganisationOptionBusinessType')
+
         return this
-          .click('@addNewCompanyButton')
-          // step 1
-          .click('@radioLabelForeignOrg')
-          .click('@businessTypeForeignDropdownOptionCharity')
-          .submitForm('@companyAddForm')
-          // step 2
-          .setValue('@newCompanyNameField', companyName)
-          .setValue('@newCompanyRegisteredAddress1Field', '‎‎253 Sok')
-          .setValue('@newCompanyPostcodeField', '48300')
-          .setValue('@newCompanyTownField', 'Istanbul')
-          .click('@newCompanyCountryFieldOptionForeign')
-          .click('@newCompanyHeadquartersRadioLabel')
-          .click('@newCompanySectorOption')
-          .setValue('@newCompanyWebsiteField', 'http://example.com')
-          .submitForm('form')
+          .api.perform(async (done) => {
+            // step 1
+            this.click('@foreignOrganisationOption')
+
+            await new Promise((resolve) => {
+              this.getListOption('@foreignOrganisationOptionBusinessType', (businessType) => {
+                this.setValue(`@foreignOrganisationOptionBusinessType`, businessType)
+                resolve()
+              })
+            })
+
+            this.click('@continueButton')
+
+            // step 2
+            await new Promise((resolve) => {
+              this.getListOption('@registeredAddressCountry', (country) => {
+                this.state.companyDetails.registeredAddressCountry = country
+                resolve()
+              })
+            })
+
+            await new Promise((resolve) => {
+              this.getListOption('@sector', (sector) => {
+                this.state.companyDetails.sector = sector
+                resolve()
+              })
+            })
+
+            for (const key in this.state.companyDetails) {
+              if (this.state.companyDetails[key]) {
+                this.setValue(`@${key}`, this.state.companyDetails[key])
+              }
+            }
+
+            this.click('@saveAndCreateButton')
+            done()
+          })
       },
 
       createUkNonPrivateOrNonPublicLimitedCompany (companyName) {
         this.state.companyDetails = {
-          businessType: 'Charity',
           name: companyName,
-          address1: '1 Regents Street',
-          postcode: 'W1C 2GB',
-          town: 'London',
-          country: 'United Kingdom',
-          ukRegion: 'England',
-          sector: 'Advanced Engineering',
+          address1: faker.address.streetName(),
+          postcode: faker.address.zipCode(),
+          town: faker.address.city(),
         }
 
         this
           .click('@addCompanyButton')
+          .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
+          .waitForElementPresent('@foreignOrganisationOptionBusinessType')
 
-        // step 1
-        this
-          .setValue('@otherTypeOfUKOrganisationsRadioLabel', '')
-          .click('@otherTypeOfUKOrganisationsRadioLabel')
-          .clickListOption('business_type_uk_other', this.state.companyDetails.businessType)
-          .click('@continueButton')
-
-        // step 2
         return this
-          .setValue('@newCompanyNameField', this.state.companyDetails.name)
-          .setValue('@newCompanyRegisteredAddress1Field', this.state.companyDetails.address1)
-          .setValue('@newCompanyPostcodeField', this.state.companyDetails.postcode)
-          .setValue('@newCompanyTownField', this.state.companyDetails.town)
-          .clickListOption('registered_address_country', this.state.companyDetails.country)
-          .clickListOption('uk_region', this.state.companyDetails.ukRegion)
-          .clickListOption('sector', this.state.companyDetails.sector)
-          .click('@saveAndCreateButton')
+          .api.perform(async (done) => {
+            // step 1
+            this.click('@otherTypeOfUKOrganisationOption')
+
+            await new Promise((resolve) => {
+              this.getListOption('@otherTypeOfUKOrganisationBusinessType', (businessType) => {
+                this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
+                resolve()
+              })
+            })
+
+            this.click('@continueButton')
+
+            // step 2
+            await new Promise((resolve) => {
+              this.getListOption('@registeredAddressCountry', (country) => {
+                this.state.companyDetails.registeredAddressCountry = country
+                resolve()
+              })
+            })
+
+            await new Promise((resolve) => {
+              this.getListOption('@sector', (sector) => {
+                this.state.companyDetails.sector = sector
+                resolve()
+              })
+            })
+
+            for (const key in this.state.companyDetails) {
+              if (this.state.companyDetails[key]) {
+                this.setValue(`@${key}`, this.state.companyDetails[key])
+              }
+            }
+
+            this.click('@saveAndCreateButton')
+            done()
+          })
       },
 
       createUkPrivateOrPublicLimitedCompany (companyName) {
         this.state.companyDetails = {
-          name: companyName,
-          ukRegion: 'England',
-          sector: 'Advanced Engineering',
+          tradingName: companyName,
         }
 
         this
           .click('@addCompanyButton')
+          .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
+          .waitForElementPresent('@foreignOrganisationOptionBusinessType')
 
-        // step 1
-        this
-          .setValue('@ukPrivateOrPublicLimitedCompanyRadioLabel', '')
-          .click('@ukPrivateOrPublicLimitedCompanyRadioLabel')
-          .click('@continueButton')
-
-        // step 2
-        this
-          .setValue('@newCompanySearch', this.props.parentCompanySearchTerm)
-          .submitForm('form')
-
-        // step 3
-        this.section.firstParentCompanySearchResult
-          .click('@header')
-        this
-          .click('@addButton')
-
-        // step 4
         return this
-          .setValue('@newCompanyTradingNameField', this.state.companyDetails.name)
-          .clickListOption('uk_region', this.state.companyDetails.ukRegion)
-          .clickListOption('sector', this.state.companyDetails.sector)
-          .click('@saveAndCreateButton')
+          .api.perform(async (done) => {
+            // step 1
+            this
+              .click('@ukPrivateOrPublicLimitedCompanyOption')
+              .click('@continueButton')
+
+            // step 2
+            this
+              .setValue('@parentCompanySearch', this.props.parentCompanySearchTerm)
+              .submitForm('form')
+
+            // step 3
+            this.section.firstParentCompanySearchResult
+              .click('@header')
+            this
+              .click('@addButton')
+
+            // step 4
+            await new Promise((resolve) => {
+              this.getListOption('@ukRegion', (ukRegion) => {
+                this.state.companyDetails.ukRegion = ukRegion
+                resolve()
+              })
+            })
+
+            await new Promise((resolve) => {
+              this.getListOption('@sector', (sector) => {
+                this.state.companyDetails.sector = sector
+                resolve()
+              })
+            })
+
+            for (const key in this.state.companyDetails) {
+              if (this.state.companyDetails[key]) {
+                this.setValue(`@${key}`, this.state.companyDetails[key])
+              }
+            }
+
+            this.click('@saveAndCreateButton')
+            done()
+          })
       },
 
       searchForCompanyInCollection (companyName) {
