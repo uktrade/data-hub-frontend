@@ -135,7 +135,7 @@
   },
   "devDependencies": {
     "chai-as-promised": "^7.1.1",
-    "chromedriver": "^2.32.2",
+    "chromedriver": "^2.33.1",
     "codeclimate-test-reporter": "^0.5.0",
     "cucumber": "^3.0.1",
     "cucumber-html-reporter": "^3.0.1",
@@ -146,7 +146,7 @@
     "nightwatch": "^0.9.16",
     "nightwatch-cucumber": "^8.0.5",
     "pre-commit": "^1.2.2",
-    "selenium-server": "^3.5.3",
+    "selenium-server": "^3.6.0",
     "shortid": "^2.2.8"
   }
 }

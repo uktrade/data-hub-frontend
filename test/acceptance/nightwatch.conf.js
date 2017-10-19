@@ -44,11 +44,13 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'chrome',
         acceptInsecureCerts: true,
+        acceptSslCerts: true,
         javascriptEnabled: true,
         chromeOptions: {
           args: [
             'headless',
             'disable-gpu',
+            '--no-sandbox',
           ],
         },
       },
