@@ -1,0 +1,34 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_right_column %}
+  {% call Collection(results | assign({
+    countLabel: 'order',
+    sortForm: sortForm,
+    query: QUERY
+  })) %}
+    <table>
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Company</th>
+          <th align="right">Net amount</th>
+          <th align="right">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in results.items %}
+          <tr>
+            <td>
+              <a href="/omis/{{ item.id }}">
+                {{ item.reference }}
+              </a>
+            </td>
+            <td>{{ item.company }}</td>
+            <td align="right">{{ item.net_cost | formatCurrency }}</td>
+            <td align="right">{{ item.total_cost | formatCurrency }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endcall %}
+{% endblock %}
