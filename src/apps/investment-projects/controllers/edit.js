@@ -34,7 +34,7 @@ function editValuePost (req, res) {
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }
 
-function editRequirementsPost (req, res, next) {
+function editRequirementsPost (req, res) {
   if (get(res.locals, 'requirementsForm.errors')) {
     return res.render('investment-projects/views/requirements-edit')
   }
