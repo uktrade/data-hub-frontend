@@ -1,17 +1,18 @@
 const router = require('express').Router()
 
 const { setDefaultQuery } = require('../../../middleware')
-const { getCollection, getRequestBody } = require('./middleware')
-const { renderList } = require('./controllers')
+const { setCollectionResults, setReconciliationResults, setRequestBody } = require('./middleware')
+const { renderCollectionList, renderReconciliationList } = require('./controllers')
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'created_on:desc',
 }
 
-router.use(setDefaultQuery(DEFAULT_COLLECTION_QUERY))
-router.use(getCollection)
-router.use(getRequestBody)
+router
+  .route(['/', '/reconciliation'])
+  .all(setDefaultQuery(DEFAULT_COLLECTION_QUERY), setRequestBody)
 
-router.get('/', renderList)
+router.get('/', setCollectionResults, renderCollectionList)
+router.get('/reconciliation', setReconciliationResults, renderReconciliationList)
 
 module.exports = router

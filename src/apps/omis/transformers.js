@@ -57,6 +57,27 @@ function transformOrderToListItem ({
   return item
 }
 
+function transformOrderToTableItem ({
+  id,
+  reference,
+  status,
+  company,
+  net_cost,
+  total_cost,
+} = {}) {
+  if (!id || !reference) { return }
+
+  return {
+    id,
+    reference,
+    status,
+    company: get(company, 'name'),
+    net_cost: parseInt(net_cost) / 100,
+    total_cost: parseInt(total_cost) / 100,
+  }
+}
+
 module.exports = {
   transformOrderToListItem,
+  transformOrderToTableItem,
 }

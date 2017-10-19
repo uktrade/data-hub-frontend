@@ -1,7 +1,12 @@
-function renderList (req, res) {
-  res.render('omis/apps/list/views/list')
+function renderCollectionList (req, res) {
+  res.render('omis/apps/list/views/list-collection')
+}
+
+function renderReconciliationList (req, res) {
+  res.render('omis/apps/list/views/list-reconciliation')
 }
 
 module.exports = {
-  renderList,
+  renderCollectionList,
+  renderReconciliationList,
 }
