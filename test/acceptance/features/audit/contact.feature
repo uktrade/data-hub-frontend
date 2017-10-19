@@ -1,4 +1,4 @@
-@contacts-audit @ignore
+@audit-contact @todo
 Feature: View Audit history of a contact
   As an existing user
   I would like to track changes to a contact record over time
@@ -7,39 +7,47 @@ Feature: View Audit history of a contact
   Background:
     Given I am an authenticated user on the data hub website
 
-  @contacts-audit-name
+  @audit-contact--name
   Scenario: View name of the person who made contact record changes
 
-     And I Amend 1 records of an existing contact record
-     When I search for this Contact record
-     And I navigate to Audit History tab
-     Then I see the name of the person who made the recent contact record changes
+    When I add a new Primary Contact
+    Then I see the success message
+    And I Amend 1 records of an existing contact record
+    When I search for this Contact record
+    And I navigate to Audit History tab
+    Then I see the name of the person who made the recent contact record changes
 
-  @contacts-audit-timestamp
+  @audit-contact--timestamp
   Scenario: View time stamp when the contact record changes
 
-     And I Amend 1 records of an existing contact record
-     When I search for this Contact record
-     And I navigate to Audit History tab
-     Then I see the date time stamp when the recent contact record changed
+    When I add a new Primary Contact
+    Then I see the success message
+    And I Amend 1 records of an existing contact record
+    When I search for this Contact record
+    And I navigate to Audit History tab
+    Then I see the date time stamp when the recent contact record changed
 
-  @contacts-audit-count
+  @audit-contact--count
   Scenario: View the number of changes occurred on a contact record
 
-     And I Amend 2 records of an existing contact record
-     When I search for this Contact record
-     And I navigate to Audit History tab
-     Then I see the total number of changes occurred recently on this contact record
+    When I add a new Primary Contact
+    Then I see the success message
+    And I Amend 2 records of an existing contact record
+    When I search for this Contact record
+    And I navigate to Audit History tab
+    Then I see the total number of changes occurred recently on this contact record
 
-  @contacts-audit-field-names
+  @audit-contact--field-names
   Scenario: View changed field names of a contact record
 
-     And I Amend 1 records of an existing contact record
-     When I search for this Contact record
-     And I navigate to Audit History tab
-     Then I see the field names that were recently changed
+    When I add a new Primary Contact
+    Then I see the success message
+    And I Amend 1 records of an existing contact record
+    When I search for this Contact record
+    And I navigate to Audit History tab
+    Then I see the field names that were recently changed
 
-  @contacts-audit-archived
+  @audit-contact--archived @ignore
   Scenario: View audit log for Archived contact
 
     And I create a new contact
@@ -53,7 +61,7 @@ Feature: View Audit history of a contact
     And I navigate to Audit History tab
     Then I see the details who archived the contact
 
-  @contacts-audit-unarchived
+  @audit-contact--unarchived @ignore
   Scenario: View audit log for UnArchived contact
 
     And I create a new contact
