@@ -1,4 +1,4 @@
-const { flatten, get, isEmpty } = require('lodash')
+const { get, isEmpty } = require('lodash')
 
 const { transformToApi, transformFromApi } = require('../../services/formatting')
 const { isValidGuid } = require('../../../../lib/controller-utils')
@@ -81,6 +81,16 @@ async function populateForm (req, res, next) {
 }
 
 function handleFormPost (req, res, next) {
+  // force contacts and actitivies to be arrays to make handling them consistent,
+  // and avoid issues when errors happen and form is re-built
+  if (!Array.isArray(req.body['client_contacts'])) {
+    req.body['client_contacts'] = [req.body['client_contacts']]
+  }
+
+  if (!Array.isArray(req.body['business_activities'])) {
+    req.body['business_activities'] = [req.body['business_activities']]
+  }
+
   const formattedBody = transformToApi(Object.assign({}, req.body))
   const projectId = res.locals.projectId || req.params.investmentId
   const addKey = req.body['add-item']
@@ -89,7 +99,6 @@ function handleFormPost (req, res, next) {
   // Todo - currently only supports add with non-js,
   // add remove action for non-js later, for now the user just sets the value to nothing.
   if (addKey) {
-    req.body[addKey] = flatten([req.body[addKey]])
     req.body[addKey].push('')
 
     res.locals.form = Object.assign({}, res.locals.form, {
