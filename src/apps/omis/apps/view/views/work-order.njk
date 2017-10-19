@@ -45,8 +45,8 @@
       url: 'edit/assignees' if order.isEditable,
       label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length and order.isEditable,
-      label: 'Edit time'
+      url: 'edit/assignee-time' if order.isEditable,
+      label: 'Estimate time'
     }]
   }) %}
     <tbody>
@@ -83,15 +83,20 @@
       {% endfor %}
     </tbody>
 
-    {% if values.estimatedTimeSum and values.assignees.length %}
-      <tfoot>
-        <tr>
-          <td class="c-answers-summary__footer" colspan="3">
-            <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
-          </td>
-        </tr>
-      </tfoot>
-    {% endif %}
+    <tfoot>
+      <tr>
+        <td class="c-answers-summary__footer" colspan="3">
+          {% if not values.assignees.length or values.estimatedTimeSum < 1 %}
+            <span class="c-answers-summary__footer-value">No time estimated</span>
+          {% else %}
+            <span class="c-answers-summary__footer-value">
+              {{ values.estimatedTimeSum | humanizeDuration }}
+            </span>
+            total estimated time
+          {% endif %}
+        </td>
+      </tr>
+    </tfoot>
   {% endcall %}
 
   {{ AnswersSummary({

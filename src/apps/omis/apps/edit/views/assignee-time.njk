@@ -1,40 +1,54 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  {% set key = 'assignee_time' %}
-  {% set defaultProps = options.fields[key] %}
-  <p>These hours will be used to calculate the cost of the order.</p>
+  {% if not order.assignees.length %}
 
-  <table class="c-answers-summary">
-    <thead>
-      <tr>
-        <th class="c-answers-summary__control" colspan="2">Estimated time (HH:MM)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for assignee in order.assignees %}
-        {% set props = {} | assign(defaultProps, {
-          name: key,
-          idSuffix: assignee.adviser.id,
-          label: translate(defaultProps.label) + ' for ' + assignee.adviser.name,
-          value: values[key][loop.index0] or assignee.estimated_time | formatDuration('hh:mm') if assignee.estimated_time,
-          error: errors[key].message,
-          isLabelHidden: true
-        }) %}
+    {% call Message({ type: 'info', element: 'div' }) %}
+      <p>Advisers in the market must be added before time can be estimated.</p>
+
+      <p>
+        <a href="edit/assignees">Add advisers</a>
+      </p>
+    {% endcall %}
+
+  {% else %}
+
+    {% set key = 'assignee_time' %}
+    {% set defaultProps = options.fields[key] %}
+    <p>These hours will be used to calculate the cost of the order.</p>
+
+    <table class="c-answers-summary">
+      <thead>
         <tr>
-          <th class="c-answers-summary__title">{{ assignee.adviser.name }}</th>
-          <td class="c-answers-summary__control">
-            {{ callAsMacro(props.fieldType)(props) }}
+          <th class="c-answers-summary__control" colspan="2">Estimated time (HH:MM)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for assignee in order.assignees %}
+          {% set props = {} | assign(defaultProps, {
+            name: key,
+            idSuffix: assignee.adviser.id,
+            label: translate(defaultProps.label) + ' for ' + assignee.adviser.name,
+            value: values[key][loop.index0] or assignee.estimated_time | formatDuration('hh:mm') if assignee.estimated_time,
+            error: errors[key].message,
+            isLabelHidden: true
+          }) %}
+          <tr>
+            <th class="c-answers-summary__title">{{ assignee.adviser.name }}</th>
+            <td class="c-answers-summary__control">
+              {{ callAsMacro(props.fieldType)(props) }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="c-answers-summary__title c-answers-summary__title--unstyled">
+            <a href="assignees">Edit advisers</a>
           </td>
         </tr>
-      {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="c-answers-summary__title c-answers-summary__title--unstyled">
-          <a href="assignees">Edit advisers</a>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+      </tfoot>
+    </table>
+
+  {% endif %}
 {% endblock %}

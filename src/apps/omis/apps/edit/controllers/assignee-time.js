@@ -4,6 +4,12 @@ const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class EditAssigneeHoursController extends EditController {
+  configure (req, res, next) {
+    req.form.options.hidePrimaryFormAction = true
+
+    super.configure(req, res, next)
+  }
+
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const timeValues = flatten([data.assignee_time])
