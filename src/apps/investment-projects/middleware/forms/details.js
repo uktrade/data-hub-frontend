@@ -81,11 +81,6 @@ async function populateForm (req, res, next) {
 }
 
 function handleFormPost (req, res, next) {
-  // force contacts and actitivies to be arrays to make handling them consistent,
-  // and avoid issues when errors happen and form is re-built
-  req.body.client_contacts = flatten([req.body.client_contacts])
-  req.body.business_activities = flatten([req.body.client_contacts])
-
   const formattedBody = transformToApi(Object.assign({}, req.body))
   const projectId = res.locals.projectId || req.params.investmentId
   const addKey = req.body['add-item']
@@ -117,8 +112,13 @@ function handleFormPost (req, res, next) {
     })
     .catch((err) => {
       if (err.statusCode === 400) {
+        const state = Object.assign({}, req.body, {
+          client_contacts: flatten([req.body.client_contacts]),
+          business_activities: flatten([req.body.client_contacts]),
+        })
+
         res.locals.form = Object.assign({}, res.locals.form, {
-          state: req.body,
+          state,
           errors: {
             messages: err.error,
           },
