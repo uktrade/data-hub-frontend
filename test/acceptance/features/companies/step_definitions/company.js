@@ -1,12 +1,29 @@
-const shortId = require('shortid')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+const faker = require('faker')
 
-defineSupportCode(({ Then, When }) => {
+defineSupportCode(({ Before, Then, When }) => {
   const Company = client.page.Company()
 
-  When(/^I create a "UK private or public limited company"$/, async () => {
-    const companyName = `QA UK private or public Ltd ${shortId.generate()}`
+  const getFakeName = (name) => {
+    return {
+      name: name,
+      suffix: faker.random.uuid(),
+      getFullName () {
+        return `${this.name} ${this.suffix}`
+      },
+    }
+  }
+
+  Before(() => {
+    Company.state = {
+      companyDetails: {},
+      companyName: getFakeName(faker.company.companyName()),
+    }
+  })
+
+  When(/^a "UK private or public limited company" is created$/, async () => {
+    const companyName = Company.state.companyName.getFullName()
 
     await Company
       .navigate()
@@ -14,8 +31,8 @@ defineSupportCode(({ Then, When }) => {
       .createUkPrivateOrPublicLimitedCompany(companyName)
   })
 
-  When(/^I create a "UK non-private or non-public limited company"$/, async () => {
-    const companyName = `QA UK non-private or non-public Ltd ${shortId.generate()}`
+  When(/^a "UK non-private or non-public limited company" is created$/, async () => {
+    const companyName = Company.state.companyName.getFullName()
 
     await Company
       .navigate()
@@ -23,8 +40,8 @@ defineSupportCode(({ Then, When }) => {
       .createUkNonPrivateOrNonPublicLimitedCompany(companyName)
   })
 
-  When(/^I create a new "Foreign company"$/, async () => {
-    const companyName = `QA Foreign Company ${shortId.generate()}`
+  When(/^a new "Foreign company" is created$/, async () => {
+    const companyName = Company.state.companyName.getFullName()
 
     await Company
       .navigate()
@@ -32,40 +49,50 @@ defineSupportCode(({ Then, When }) => {
       .createForeignCompany(companyName)
   })
 
-  Then(/^The company is present in the search results$/, async () => {
+  Then(/^the company is in the search results$/, async () => {
     await Company
       .navigate()
-      .findCompany(Company.companyName)
-      .assert.containsText('@collectionResultsCompanyName', Company.companyName)
+      .findCompany(Company.state.companyName.suffix)
+      .assert.containsText('@collectionResultsCompanyName', Company.state.companyName.getFullName())
   })
 
   Then(/^The company name is present in the collections results/, async () => {
+    const companyName = Company.state.companyDetails.name
+
     await Company
-      .searchForCompanyInCollection(Company.companyName)
-      .assert.containsText('@collectionResultsCompanyName', Company.companyName)
+      .searchForCompanyInCollection(companyName)
+      .assert.containsText('@collectionResultsCompanyName', companyName)
   })
 
   Then(/^The company sector is present in the collections results$/, async () => {
+    const companyName = Company.state.companyDetails.name
+
     await Company
-      .searchForCompanyInCollection(Company.companyName)
+      .searchForCompanyInCollection(companyName)
       .assert.containsText('@collectionResultsSectorLabel', 'Sector')
   })
 
   Then(/^The company region is present in the collections results$/, async () => {
+    const companyName = Company.state.companyDetails.name
+
     await Company
-      .searchForCompanyInCollection(Company.companyName)
+      .searchForCompanyInCollection(companyName)
       .assert.containsText('@collectionResultsRegionLabel', 'UK region')
   })
 
   Then(/^The company registered address is present in the collections results$/, async () => {
+    const companyName = Company.state.companyDetails.name
+
     await Company
-      .searchForCompanyInCollection(Company.companyName)
+      .searchForCompanyInCollection(companyName)
       .assert.containsText('@collectionResultsRegisteredAddressLabel', 'Registered address')
   })
 
   Then(/^Clicking the company name takes me to the companies page$/, async () => {
+    const companyName = Company.state.companyDetails.name
+
     await Company
       .click('@collectionResultsCompanyName')
-      .assert.containsText('@companyPageHeading', Company.companyName)
+      .assert.containsText('@companyPageHeading', companyName)
   })
 })
