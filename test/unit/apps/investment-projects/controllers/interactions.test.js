@@ -25,7 +25,7 @@ describe('Investment Interactions controller', () => {
       },
       query: { },
       params: {
-        id: 'example-id-1234',
+        investmentId: 'example-id-1234',
       },
     }
 

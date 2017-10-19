@@ -1,4 +1,4 @@
-const { get, isEmpty } = require('lodash')
+const { flatten, get, isEmpty } = require('lodash')
 
 const { transformToApi, transformFromApi } = require('../../services/formatting')
 const { isValidGuid } = require('../../../../lib/controller-utils')
@@ -82,8 +82,22 @@ async function populateForm (req, res, next) {
 
 function handleFormPost (req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
-  const projectId = res.locals.projectId || req.params.id
+  const projectId = res.locals.projectId || req.params.investmentId
+  const addKey = req.body['add-item']
   let saveMethod
+
+  // Todo - currently only supports add with non-js,
+  // add remove action for non-js later, for now the user just sets the value to nothing.
+  if (addKey) {
+    req.body[addKey] = flatten([req.body[addKey]])
+    req.body[addKey].push('')
+
+    res.locals.form = Object.assign({}, res.locals.form, {
+      state: req.body,
+    })
+
+    return next()
+  }
 
   if (projectId) {
     saveMethod = updateInvestment(req.session.token, projectId, formattedBody)

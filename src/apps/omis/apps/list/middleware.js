@@ -1,8 +1,10 @@
+const { assign, pick, pickBy } = require('lodash')
+
 const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
-const { transformOrderToListItem } = require('../../transformers')
+const { transformOrderToListItem, transformOrderToTableItem } = require('../../transformers')
 
-async function getCollection (req, res, next) {
+async function setCollectionResults (req, res, next) {
   try {
     res.locals.results = await search({
       searchEntity: 'order',
@@ -22,14 +24,43 @@ async function getCollection (req, res, next) {
   }
 }
 
-function getRequestBody (req, res, next) {
+async function setReconciliationResults (req, res, next) {
+  try {
+    res.locals.results = await search({
+      searchEntity: 'order',
+      requestBody: req.body,
+      token: req.session.token,
+      page: req.query.page,
+      isAggregation: false,
+    })
+      .then(transformApiResponseToSearchCollection(
+        { query: req.query },
+        transformOrderToTableItem,
+      ))
+
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+function setRequestBody (req, res, next) {
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
 
-  req.body = Object.assign({}, req.body, selectedSortBy)
+  const selectedFiltersQuery = pick(req.query, [
+    'status',
+    'company_name',
+    'contact_name',
+    'primary_market',
+    'reference',
+  ])
+
+  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
   next()
 }
 
 module.exports = {
-  getCollection,
-  getRequestBody,
+  setCollectionResults,
+  setReconciliationResults,
+  setRequestBody,
 }

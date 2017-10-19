@@ -156,7 +156,7 @@ describe('Investment form middleware - client relationship management', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, () => {
@@ -171,7 +171,7 @@ describe('Investment form middleware - client relationship management', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, () => {
@@ -186,7 +186,7 @@ describe('Investment form middleware - client relationship management', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {
@@ -239,7 +239,7 @@ describe('Investment form middleware - client relationship management', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {
@@ -262,7 +262,7 @@ describe('Investment form middleware - client relationship management', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {

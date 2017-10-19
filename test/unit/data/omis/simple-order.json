@@ -51,9 +51,18 @@
   "contacts_not_to_approach": "Brian",
   "contact_email": "",
   "contact_phone": "",
-  "product_info": "",
-  "further_info": "",
-  "existing_agents": "",
-  "permission_to_approach_contacts": "",
-  "delivery_date": ""
+  "product_info": "legacy product info",
+  "further_info": "legacy further info",
+  "existing_agents": "legacy existing agents",
+  "permission_to_approach_contacts": "legacy permission to approach contacts",
+  "delivery_date": "",
+  "po_number": "123PO",
+  "vat_status": "eu",
+  "vat_number": "0123456789",
+  "vat_verified": true,
+  "discount_value": 0,
+  "net_cost": 0,
+  "subtotal_cost": 0,
+  "vat_cost": 0,
+  "total_cost": 0
 }

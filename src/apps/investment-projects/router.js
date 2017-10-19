@@ -51,17 +51,17 @@ const DEFAULT_COLLECTION_QUERY = {
   sortby: 'estimated_land_date:asc',
 }
 
-router.use('/:id/', setLocalNav(LOCAL_NAV))
+router.use('/:investmentId/', setLocalNav(LOCAL_NAV))
 
-router.param('id', shared.getInvestmentDetails)
+router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
 
-router.post('/:id/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
-router.get('/:id/unarchive', archive.unarchiveInvestmentProjectHandler)
+router.post('/:investmentId/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
+router.get('/:investmentId/unarchive', archive.unarchiveInvestmentProjectHandler)
 
-router.get('/:id/audit', audit.getInvestmentAudit)
+router.get('/:investmentId/audit', audit.getInvestmentAudit)
 
 router.get('/create/:companyId?', create.start.redirectHandler, create.start.renderCreatePage)
 
@@ -102,28 +102,28 @@ router
     create.project.renderCreateProjectPage
   )
 
-router.get('/:id', redirectToFirstNavItem)
-router.get('/:id/details', details.detailsGetHandler)
+router.get('/:investmentId', redirectToFirstNavItem)
+router.get('/:investmentId/details', details.detailsGetHandler)
 
 router
-  .route('/:id/edit-details')
+  .route('/:investmentId/edit-details')
   .get(detailsFormMiddleware.populateForm, edit.editDetailsGet)
-  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, edit.editDetailsPost)
+  .post(detailsFormMiddleware.populateForm, detailsFormMiddleware.handleFormPost, edit.editDetailsPost, edit.editDetailsGet)
 
 router
-  .route('/:id/edit-value')
+  .route('/:investmentId/edit-value')
   .get(valueFormMiddleware.populateForm, edit.editValueGet)
   .post(valueFormMiddleware.populateForm, valueFormMiddleware.handleFormPost, edit.editValuePost)
 
 router
-  .route('/:id/edit-requirements')
+  .route('/:investmentId/edit-requirements')
   .get(requirementsFormMiddleware.populateForm, edit.editRequirementsGet)
   .post(requirementsFormMiddleware.populateForm, requirementsFormMiddleware.handleFormPost, edit.editRequirementsPost)
 
-router.get('/:id/team', expandTeamMembers, team.details.getDetailsHandler)
+router.get('/:investmentId/team', expandTeamMembers, team.details.getDetailsHandler)
 
 router
-  .route('/:id/edit-project-management')
+  .route('/:investmentId/edit-project-management')
   .get(getBriefInvestmentSummary, projectManagementFormMiddleware.populateForm, team.editProjectManagement.getHandler)
   .post(
     getBriefInvestmentSummary,
@@ -134,7 +134,7 @@ router
   )
 
 router
-  .route('/:id/edit-client-relationship-management')
+  .route('/:investmentId/edit-client-relationship-management')
   .get(
     clientRelationshipManagementFormMiddleware.populateForm,
     team.editClientRelationshipManagement.getHandler
@@ -147,7 +147,7 @@ router
   )
 
 router
-  .route('/:id/edit-team-members')
+  .route('/:investmentId/edit-team-members')
   .get(
     teamMembersFormMiddleware.populateForm,
     team.editTeamMembers.getHandler
@@ -159,12 +159,12 @@ router
     team.editTeamMembers.getHandler
   )
 
-router.get('/:id/interactions', setInteractionsReturnUrl, renderInteractionList)
+router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderInteractionList)
 
-router.get('/:id/evaluation', evaluation.renderEvaluationPage)
+router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
 
-router.post('/:id/change-project-stage', projectStageFormMiddleware.handleFormPost)
+router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
-router.use('/:id', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+router.use('/:investmentId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
 module.exports = router

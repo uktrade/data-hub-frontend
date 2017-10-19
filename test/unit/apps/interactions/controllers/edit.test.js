@@ -1,15 +1,21 @@
-const { assign, merge } = require('lodash')
+const { assign, merge, find } = require('lodash')
 
 const interactionData = require('../../../data/interactions/new-interaction.json')
 
 describe('Interaction edit controller', () => {
+  const currentUserTeam = 'team1'
+
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.controller = require('~/src/apps/interactions/controllers/edit')
     this.req = {
       session: {
         token: 'abcd',
-        user: { },
+        user: {
+          dit_team: {
+            id: currentUserTeam,
+          },
+        },
       },
       query: {
         communication_channel: '1',
@@ -27,9 +33,6 @@ describe('Interaction edit controller', () => {
       locals: {
         entityName: 'company',
         returnLink: 'return',
-        interactionType: {
-          name: 'interaction type',
-        },
         company: {
           id: '1',
         },
@@ -44,36 +47,39 @@ describe('Interaction edit controller', () => {
 
   describe('#renderEditPage', () => {
     context('when rendering the interaction form for a company', () => {
-      it('should render the interaction page', async () => {
+      beforeEach(async () => {
         await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
+      })
 
+      it('should render the interaction page', async () => {
         expect(this.res.render).to.be.calledWith('interactions/views/edit')
         expect(this.res.render).to.have.been.calledOnce
       })
 
       it('should render the interaction page with a return link', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
         const actual = this.res.render.getCall(0).args[1].interactionForm.returnLink
 
         expect(actual).to.equal('return')
       })
 
       it('should render the interaction page with an interaction form', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
         const actual = this.res.render.getCall(0).args[1].interactionForm.children
 
         expect(actual).to.be.an('array')
       })
 
       it('should render an interaction form with hidden fields', async () => {
-        await this.controller.renderEditPage(this.req, this.res, this.nextSpy)
-
         const actualHiddenFields = this.res.render.getCall(0).args[1].interactionForm.hiddenFields
 
         expect(actualHiddenFields.company).to.equal('1')
         expect(actualHiddenFields.investment_project).to.be.undefined
+      })
+
+      it('should render an interaction form with the service provider pre-seledcted', async () => {
+        const interactionForm = this.res.render.getCall(0).args[1].interactionForm
+        const actualServiceProvider = find(interactionForm.children, { name: 'dit_team' }).value
+
+        expect(actualServiceProvider).to.equal(currentUserTeam)
       })
     })
 

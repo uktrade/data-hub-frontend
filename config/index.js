@@ -43,6 +43,7 @@ const config = {
   zenImpact: process.env.ZEN_IMPACT,
   zenService: process.env.ZEN_SERVICE,
   sentryDsn: process.env.SENTRY_DSN,
+  currencyFormat: '$0,0.00',
   longDateFormat: 'D MMMM YYYY',
   mediumDateFormat: 'D MMM YYYY',
   mediumDateTimeFormat: 'D MMM YYYY, h:mma',
