@@ -11,7 +11,7 @@ describe('Investment projects interactions middleware', () => {
     })
     this.req = {
       params: {
-        id: '1',
+        investmentId: '1',
       },
       session: {
         token: 'abcd',

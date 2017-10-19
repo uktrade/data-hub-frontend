@@ -11,6 +11,7 @@ function transformOrderToListItem ({
   primary_market,
   delivery_date,
   modified_on,
+  created_on,
 } = {}) {
   if (!id || !reference) { return }
 
@@ -35,13 +36,18 @@ function transformOrderToListItem ({
         value: get(company, 'name'),
       },
       {
-        label: 'Updated',
+        label: 'Created',
         type: 'datetime',
-        value: modified_on,
+        value: created_on,
       },
       {
         label: 'Contact',
         value: get(contact, 'name'),
+      },
+      {
+        label: 'Updated',
+        type: 'datetime',
+        value: modified_on,
       },
     ],
   }
@@ -57,6 +63,27 @@ function transformOrderToListItem ({
   return item
 }
 
+function transformOrderToTableItem ({
+  id,
+  reference,
+  status,
+  company,
+  net_cost,
+  total_cost,
+} = {}) {
+  if (!id || !reference) { return }
+
+  return {
+    id,
+    reference,
+    status,
+    company: get(company, 'name'),
+    net_cost: parseInt(net_cost) / 100,
+    total_cost: parseInt(total_cost) / 100,
+  }
+}
+
 module.exports = {
   transformOrderToListItem,
+  transformOrderToTableItem,
 }

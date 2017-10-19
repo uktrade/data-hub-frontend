@@ -88,7 +88,7 @@ describe('Apps middleware', () => {
     it('should redirect to default query if initial query is empty', () => {
       const reqMock = {
         query: {},
-        baseUrl: '/sub-app',
+        originalUrl: '/sub-app',
       }
       this.middleware.setDefaultQuery({
         filter: 'apple',
@@ -104,7 +104,7 @@ describe('Apps middleware', () => {
         query: {
           filter: 'pear',
         },
-        baseUrl: '/sub-app',
+        originalUrl: '/sub-app',
       }
 
       this.middleware.setDefaultQuery({

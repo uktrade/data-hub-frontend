@@ -4,10 +4,6 @@ const metadataRepositoryStub = {
     { id: '1', name: 'Below 10k' },
     { id: '2', name: 'Above 10k' },
   ],
-  interactionTypeOptions: [
-    { id: 'a6d71fdd-5d95-e211-a939-e4115bead28a', name: 'Business Card' },
-    { id: '70c226d7-5d95-e211-a939-e4115bead28a', name: 'example' },
-  ],
 }
 
 describe('Investment form middleware - investment value', () => {

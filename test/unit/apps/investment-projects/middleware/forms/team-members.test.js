@@ -169,7 +169,7 @@ describe('Investment form middleware - team members', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, () => {
@@ -190,7 +190,7 @@ describe('Investment form middleware - team members', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {
@@ -216,7 +216,7 @@ describe('Investment form middleware - team members', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {
@@ -239,7 +239,7 @@ describe('Investment form middleware - team members', () => {
             token: 'mock-token',
           },
           params: {
-            id: investmentData.id,
+            investmentId: investmentData.id,
           },
           body: this.body,
         }, this.resMock, (error) => {

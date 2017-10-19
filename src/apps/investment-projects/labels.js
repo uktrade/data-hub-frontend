@@ -11,6 +11,7 @@ const labels = {
       investment_type: 'Type of investment',
       sector: 'Primary sector',
       business_activities: 'Business activity',
+      client_contacts: 'Client contacts',
       description: 'Project description',
       nda_signed: 'Non-disclosure agreement',
       estimated_land_date: 'Estimated land date',
@@ -54,18 +55,6 @@ const labels = {
       client_considering_other_countries: 'Is the client considering other countries?',
       uk_region_locations: 'Possible UK location for this investment',
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
-    },
-  },
-  interactionsLabels: {
-    edit: {
-      interaction_type: 'Interaction Type',
-      subject: 'Subject',
-      notes: 'Interaction notes',
-      contact: 'Interaction contact',
-      date: 'Date of interaction',
-      dit_adviser: 'DIT adviser',
-      service: 'Service type',
-      dit_team: 'Service provider',
     },
   },
   evaluationValueLabels: {
