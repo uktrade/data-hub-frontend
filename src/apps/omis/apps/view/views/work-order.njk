@@ -207,6 +207,13 @@
       value: costText if values.total_cost,
       fallbackText: 'Estimated hours and VAT category must be set to calculate price'
     }, {
+      label: 'Billing contact',
+      value: billingContact
+    }, {
+      label: 'Billing address',
+      value: billingAddress | join(', ') if billingAddress|length else companyAddress | join(', '),
+      fallbackText: 'Not added'
+    }, {
       label: 'VAT category',
       value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status,
       fallbackText: 'Not set'
@@ -216,13 +223,6 @@
     }, {
       label: 'Purchase Order (PO) number',
       value: values.po_number,
-      fallbackText: 'Not added'
-    }, {
-      label: 'Billing contact',
-      value: billingContact
-    }, {
-      label: 'Billing address',
-      value: billingAddress | join(', ') if billingAddress|length else companyAddress | join(', '),
       fallbackText: 'Not added'
     }]
   }) }}
