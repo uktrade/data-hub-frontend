@@ -187,12 +187,26 @@
 
   {% set companyAddress = tradingAddress if tradingAddress|length else registeredAddress %}
 
+  {% set costText %}
+    {{ values.total_cost | formatCurrency }}
+
+    {% if values.vat_cost > 0 %}
+      ({{ values.net_cost | formatCurrency }} excluding VAT)
+    {% else %}
+      (No VAT applies)
+    {% endif %}
+  {% endset %}
+
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
       url: 'edit/payment' if order.isEditable
     }],
     items: [{
+      label: 'Price',
+      value: costText if values.total_cost,
+      fallbackText: 'Estimated hours and VAT category must be set to calculate price'
+    }, {
       label: 'VAT category',
       value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status,
       fallbackText: 'Not set'
