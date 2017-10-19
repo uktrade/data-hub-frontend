@@ -1,8 +1,6 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  {{ super() }}
-
   {% set billingContact = [
     order.billing_contact_name,
     order.billing_email,
@@ -67,11 +65,11 @@
         {% call Message({ type: 'muted' }) %}
           The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
           <br>
-          <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Add billing address</a>
+          <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Add a different billing address</a>
         {% endcall %}
       {% endif %}
     </div>
   </div>
 
-  {# {{company|dump}} #}
+  {{ super() }}
 {% endblock %}
