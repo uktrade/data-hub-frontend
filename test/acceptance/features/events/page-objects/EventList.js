@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
 const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
   text,
@@ -22,7 +22,7 @@ module.exports = {
   props: {},
   elements: {
     h1Element: '.c-local-header__heading',
-    addEventButton: '#add-event-link',
+    addEventButton: getButtonWithText('Add event'),
     sortBy: '#field-sortby',
     xhrTargetElement: '#xhr-outlet',
   },

@@ -9,20 +9,20 @@ Feature: Create a new company
   @companies-create--uk-private-or-public-ltd-company
   Scenario: Create a UK private or public limited company
 
-    When I create a "UK private or public limited company"
+    When a "UK private or public limited company" is created
     Then I see the success message
-    And The company is present in the search results
+    And the company is in the search results
 
   @companies-create--uk-non-private-or-non-public-ltd-company
   Scenario: Create a UK non-private or non-public limited company
 
-    When I create a "UK non-private or non-public limited company"
+    When a "UK non-private or non-public limited company" is created
     Then I see the success message
-    And The company is present in the search results
+    And the company is in the search results
 
   @companies-create--foreign
   Scenario: Create a foreign company
 
-    When I create a new "Foreign company"
+    When a new "Foreign company" is created
     Then I see the success message
-    And The company is present in the search results
+    And the company is in the search results
