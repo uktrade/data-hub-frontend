@@ -1,218 +1,95 @@
 const faker = require('faker')
-const companyName = ''
-const title = ''
+const { getDate, getMonth, getYear } = require('date-fns')
+const { assign } = require('lodash')
+
+const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+
+const getRadioButtonWithText = (text) =>
+  getSelectorForElementWithText(
+    text,
+    {
+      el: '//span',
+      className: 'c-multiple-choice__label-text',
+    },
+  )
 
 module.exports = {
-  url: process.env.QA_HOST,
   props: {},
   elements: {
-    interactionsTab: '.c-local-nav a[href*="interactions"]',
-    addInteractionButton: 'a[href*="/interactions/create/"]',
-    businessCardRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(1)',
-    emailWebsiteRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(2)',
-    faceToFaceRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(3)',
-    faxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(4)',
-    letterFaxRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(5)',
-    serviceDeliveryRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(6)',
-    smsRadioButton: '#main-content form fieldset div div:nth-child(1) label:nth-child(7)',
-    socialMediaRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(1)',
-    telephoneRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(2)',
-    telexRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(3)',
-    uktiWebsiteRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(4)',
-    undefinedRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(5)',
-    videoTeleconfRadioButton: '#main-content form fieldset div div:nth-child(2) label:nth-child(6)',
-    interactionPageTitle: '#main-content h1',
-    interactionPageCompanyName: '#company-wrapper strong',
-    interactionPageType: '#main-content form div:nth-child(5) strong',
-    interactionPageSubject: '#subject',
-    interactionPageNotes: '#notes',
-    interactionPageCompanyContact: '#contact-wrapper input',
-    interactionPageCompanyContactList: '#contact-wrapper ul li:nth-child(4)',
-    interactionPageDateOfInteraction: '#date_day',
-    interactionPageMonthOfInteraction: '#date_month',
-    interactionPageYearOfInteraction: '#date_year',
-    interactionPageDITadviser: '#dit_adviser',
-    interactionPageService: '#service-wrapper input',
-    interactionPageServiceList: '#service-wrapper ul li:nth-child(1)',
-    interactionPageServiceProvider: '#dit_team-wrapper input',
-    interactionPageServiceProviderList: '#dit_team-wrapper ul li:nth-child(1)',
-    subjectFromInteractionTab: '.c-entity-list__item:nth-child(1) a',
-    interactionUnderSearchPage: '#interactions-list li:nth-child(1)',
-    pickaEvent: '#event option:nth-child(2)',
-    pickaStatus: '#status option:nth-child(2)',
-    pickaUkRegion: '#uk_region option:nth-child(2)',
-    pickaSector: '#sector option:nth-child(2)',
-    countryOfInterest: '#country_of_interest-wrapper input',
-    countryOfInterestList: '#country_of_interest-wrapper ul li:nth-child(6)',
-    editInteractionButton: '.button.button-secondary',
-
-    // Interactions - Collections/List:
-
-    interactionsCollectionsTab: 'a[href*="/search/interactions"]',
-    contactNameFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(1) span:nth-child(2)',
-    AdvisorNameFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(4) span:nth-child(2)',
-    subjectFromList: '.c-entity-list li:first-child .c-entity__title a',
-    dateFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(3) span:nth-child(2)',
-    companyFromList: '.c-entity-list li:first-child .c-entity__content .c-meta-list__item:nth-child(2) span:nth-child(2)',
-    businessType: '.c-entity-list li:first-child .c-entity__badges span:nth-child(2)',
-    subjectFromInteractionDetailsPage: 'tbody tr:nth-child(3) td',
+    addInteractionButton: getButtonWithText('Add interaction'),
+    aStandardInteraction: getRadioButtonWithText('A standard interaction'),
+    aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
+    continueButton: getButtonWithText('Continue'),
+    saveButton: getButtonWithText('Save'),
+    subject: '#field-subject',
+    notes: '#field-notes',
+    dateOfInteractionYear: '#field-date_year',
+    dateOfInteractionMonth: '#field-date_month',
+    dateOfInteractionDay: '#field-date_day',
+    contact: '#field-contact',
+    serviceProvider: '#field-dit_team',
+    service: '#field-service',
+    ditAdviser: '#field-dit_adviser',
+    communicationChannel: '#field-communication_channel',
+    eventYes: 'label[for=field-is_event-1]',
+    eventNo: 'label[for=field-is_event-2]',
+    event: '#field-event',
   },
   commands: [
     {
-      clickInteractionsTab () {
+      createInteraction ({ details = {}, callback }) {
+        const recentDate = faker.date.recent()
+        const interaction = assign({}, {
+          subject: faker.lorem.word(),
+          notes: faker.lorem.sentence(),
+          dateOfInteractionYear: getYear(recentDate),
+          dateOfInteractionMonth: getMonth(recentDate) + 1,
+          dateOfInteractionDay: getDate(recentDate),
+        }, details)
+
+        this.api
+          .perform((done) => {
+            this.getListOption('@contact', (contact) => {
+              interaction.contact = contact
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@serviceProvider', (serviceProvider) => {
+              interaction.serviceProvider = serviceProvider
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@service', (service) => {
+              interaction.service = service
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@ditAdviser', (ditAdviser) => {
+              interaction.ditAdviser = ditAdviser
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@communicationChannel', (communicationChannel) => {
+              interaction.communicationChannel = communicationChannel
+              done()
+            })
+          })
+          .perform((done) => {
+            for (const key in this.state.interactionDetails) {
+              if (interaction[key]) {
+                this.setValue(`@${key}`, this.state.interactionDetails[key])
+              }
+            }
+            done()
+          })
+        this.click('@saveButton')
+
+        callback(interaction)
         return this
-          .click('@interactionsTab')
-      },
-      clickAddInteractionButton () {
-        return this
-          .click('@addInteractionButton')
-      },
-      clickBusinessCardRadioButton () {
-        return this
-          .click('@businessCardRadioButton')
-      },
-      clickEmailWebsiteRadioButton () {
-        return this
-          .click('@emailWebsiteRadioButton')
-      },
-      clickFaceToFaceRadioButton () {
-        return this
-          .click('@faceToFaceRadioButton')
-      },
-      clickFaxRadioButton () {
-        return this
-          .click('@faxRadioButton')
-      },
-      clickLetterFaxRadioButton () {
-        return this
-          .click('@letterFaxRadioButton')
-      },
-      clickServiceDeliveryRadioButton () {
-        return this
-          .click('@serviceDeliveryRadioButton')
-      },
-      clickSmsRadioButton () {
-        return this
-          .click('@smsRadioButton')
-      },
-      clickSocialMediaRadioButton () {
-        return this
-          .click('@socialMediaRadioButton')
-      },
-      clickTelephoneRadioButton () {
-        return this
-          .click('@telephoneRadioButton')
-      },
-      clickTelexRadioButton () {
-        return this
-          .click('@telexRadioButton')
-      },
-      clickUktiWebsiteRadioButton () {
-        return this
-          .click('@uktiWebsiteRadioButton')
-      },
-      clickUndefinedRadioButton () {
-        return this
-          .click('@undefinedRadioButton')
-      },
-      clickVideoTeleconfRadioButton () {
-        return this
-          .click('@videoTeleconfRadioButton')
-      },
-      getInteractionPageTitle () {
-        return this
-          .getText('@interactionPageTitle', (title))
-      },
-      getInteractionPageCompanyName () {
-        return this
-          .getText('@interactionPageCompanyName', (companyName))
-      },
-      enterSubject (subject) {
-        return this
-          .setValue('@interactionPageSubject', subject)
-      },
-      enterNotes (notes) {
-        return this
-          .setValue('@interactionPageNotes', notes)
-      },
-      enterCompanyContact (contactName) {
-        return this
-          .setValue('@interactionPageCompanyContact', contactName)
-          .click('@interactionPageCompanyContactList')
-      },
-      enterDateOfInteraction (date) {
-        return this
-          .setValue('@interactionPageDateOfInteraction', date)
-      },
-      enterMonthOfInteraction (month) {
-        return this
-          .setValue('@interactionPageMonthOfInteraction', month)
-      },
-      enterYearOfInteraction (year) {
-        return this
-          .setValue('@interactionPageYearOfInteraction', year)
-      },
-      enterDITadviser (ditAdviser) {
-        return this
-          .setValue('@interactionPageDITadviser', ditAdviser)
-      },
-      enterService (serviceAdviser) {
-        return this
-          .setValue('@interactionPageService', serviceAdviser)
-          .click('@interactionPageServiceList')
-      },
-      enterServiceProvider (serviceProvider) {
-        return this
-          .setValue('@interactionPageServiceProvider', serviceProvider)
-          .click('@interactionPageServiceProviderList')
-      },
-      navigateToInteractionsPage () {
-        return this
-          .click('@interactionsTab')
-      },
-      enterNewInteractionDetails (subject) {
-        this.subject = subject
-        return this
-          .submitForm('form')
-          .enterSubject(subject)
-          .enterNotes(faker.lorem.sentence())
-          .enterService('a')
-          .enterServiceProvider('a')
-      },
-      selectEvent () {
-        return this
-          .click('@pickaEvent')
-      },
-      selectStatus () {
-        return this
-          .click('@pickaStatus')
-      },
-      selectUKRegion () {
-        return this
-          .click('@pickaUkRegion')
-      },
-      selectSector () {
-        return this
-          .click('@pickaSector')
-      },
-      selectCountryOfInterest () {
-        return this
-          .setValue('@countryOfInterest', 'a')
-          .click('@countryOfInterestList')
-      },
-      setAdditionalFieldsForServiceDelivery (subject) {
-        return this
-          .submitForm('form')
-          .enterServiceProvider('CBBC London')
-          .enterService('Events - UK Based')
-          .enterSubject(subject)
-          .enterNotes(faker.lorem.sentence())
-          .enterCompanyContact('a')
-          .selectStatus()
-          .selectUKRegion()
-          .selectSector()
-          .selectCountryOfInterest()
-          .submitForm('form')
       },
     },
   ],

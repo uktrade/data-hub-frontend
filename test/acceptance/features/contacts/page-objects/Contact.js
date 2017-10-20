@@ -1,5 +1,7 @@
 const faker = require('faker')
 
+const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+
 function generateEmail (firstName, lastName, isAlternative) {
   const suffix = '@example.com'
   let emailParts = [firstName, lastName]
@@ -8,6 +10,15 @@ function generateEmail (firstName, lastName, isAlternative) {
   }
   return emailParts.join('.') + suffix
 }
+
+const getDetailsTabSelector = (text) =>
+  getSelectorForElementWithText(
+    text,
+    {
+      el: '//a',
+      className: 'c-local-nav__link',
+    }
+  )
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -111,4 +122,14 @@ module.exports = {
       },
     },
   ],
+  sections: {
+    detailsTabs: {
+      selector: '.c-local-nav',
+      elements: {
+        details: getDetailsTabSelector('Details'),
+        interactions: getDetailsTabSelector('Interactions'),
+        auditHistory: getDetailsTabSelector('Audit history'),
+      },
+    },
+  },
 }
