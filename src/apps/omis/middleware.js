@@ -24,6 +24,9 @@ async function getOrder (req, res, next, orderId) {
       subscribers,
       assignees,
       isEditable: order.status === 'draft',
+      net_cost: parseInt(order.net_cost) / 100,
+      vat_cost: parseInt(order.vat_cost) / 100,
+      total_cost: parseInt(order.total_cost) / 100,
     })
   } catch (e) {
     logger.error(e)

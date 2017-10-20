@@ -24,6 +24,7 @@
     {{ MetaList({
       items: [
         { 'label': 'Created on', 'value': order.created_on | formatDateTime },
+        { 'label': 'Updated on', 'value': order.updated_on | formatDateTime },
         { 'label': 'Status', 'value': status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), 'safe': true }
       ],
       itemModifier: 'stacked'
