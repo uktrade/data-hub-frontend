@@ -112,8 +112,13 @@ function handleFormPost (req, res, next) {
     })
     .catch((err) => {
       if (err.statusCode === 400) {
+        const state = Object.assign({}, req.body, {
+          client_contacts: flatten([req.body.client_contacts]),
+          business_activities: flatten([req.body.client_contacts]),
+        })
+
         res.locals.form = Object.assign({}, res.locals.form, {
-          state: req.body,
+          state,
           errors: {
             messages: err.error,
           },
