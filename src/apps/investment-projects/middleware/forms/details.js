@@ -1,4 +1,4 @@
-const { flatten, get, isEmpty } = require('lodash')
+const { assign, flatten, get, isEmpty } = require('lodash')
 
 const { transformToApi, transformFromApi } = require('../../services/formatting')
 const { isValidGuid } = require('../../../../lib/controller-utils')
@@ -41,7 +41,10 @@ async function populateForm (req, res, next) {
     res.locals.equityCompany = equityCompany
     res.locals.equityCompanyInvestment = equityCompanyInvestment
     res.locals.form = res.locals.form || {}
-    res.locals.form.state = investmentData
+    res.locals.form.state = assign({}, {
+      client_contacts: [''],
+      business_activities: [''],
+    }, investmentData)
 
     res.locals.form.options = {
       advisers,
@@ -57,7 +60,7 @@ async function populateForm (req, res, next) {
       businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
     }
 
-    if (res.locals.form.state) {
+    if (investmentData) {
       // TODO: This is to support the leading question of whether current
       // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
