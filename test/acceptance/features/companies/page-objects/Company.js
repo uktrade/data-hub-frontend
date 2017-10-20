@@ -68,7 +68,7 @@ module.exports = {
       },
 
       createForeignCompany ({ details = {}, callback }) {
-        const company = assign({
+        const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
@@ -126,7 +126,7 @@ module.exports = {
       },
 
       createUkNonPrivateOrNonPublicLimitedCompany ({ details = {}, callback }) {
-        const company = assign({
+        const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),

@@ -8,7 +8,7 @@ const { getUid, appendUid } = require('../../../helpers/uuid')
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
-defineSupportCode(({ Before, Then, When }) => {
+defineSupportCode(({ Then, When }) => {
   const Company = client.page.Company()
 
   When(/^a "UK private or public limited company" is created$/, async function () {

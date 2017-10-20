@@ -1,60 +1,49 @@
 /* eslint-disable camelcase */
-const { client } = require('nightwatch-cucumber')
-const { defineSupportCode } = require('cucumber')
+const { set } = require('lodash')
 const faker = require('faker')
 
+const { client } = require('nightwatch-cucumber')
+const { defineSupportCode } = require('cucumber')
 const { getDateFor } = require('../../../helpers/date')
+const { getUid, appendUid } = require('../../../helpers/uuid')
 
-defineSupportCode(({ Then, When, Before }) => {
+defineSupportCode(function ({ Then, When }) {
   const Event = client.page.Event()
   const Search = client.page.Search()
   const Company = client.page.Company()
 
-  const getFakeName = (name) => {
-    return {
-      name: name,
-      suffix: faker.random.uuid(),
-      getFullName () {
-        return `${this.name} ${this.suffix}`
-      },
-    }
-  }
+  When(/^I populate the create event form to search$/, async function () {
+    const eventName = appendUid(faker.company.companyName())
 
-  Before(() => {
-    Event.state = {
-      eventDetails: {},
-    }
-    Company.state = {
-      companyDetails: {},
-    }
-    Search.state = {
-      eventName: getFakeName(faker.company.companyName()),
-      companyName: getFakeName(faker.company.companyName()),
-    }
-  })
-
-  When(/^I populate the create event form to search$/, async () => {
     await Event
-      .populateCreateEventForm({ name: Search.state.eventName.getFullName() })
+      .populateCreateEventForm({
+        details: { name: eventName },
+        callback: (event) => set(this.state, 'event', event),
+      })
   })
 
-  When(/^a company is created to search$/, async () => {
+  When(/^a company is created to search$/, async function () {
+    const companyName = appendUid(faker.company.companyName())
+
     await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany(Search.state.companyName.getFullName())
+      .createUkNonPrivateOrNonPublicLimitedCompany({
+        details: { name: companyName },
+        callback: (company) => set(this.state, 'company', company),
+      })
   })
 
-  When(/^I search for the event$/, async () => {
+  When(/^I search for the event$/, async function () {
     await Search
       .waitForElementPresent('@term')
-      .setValue('@term', Search.state.eventName.suffix)
+      .setValue('@term', getUid(this.state.event.name))
       .sendKeys('@term', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })
 
-  When(/^I search for the company/, async () => {
+  When(/^I search for the company/, async function () {
     await Search
       .waitForElementPresent('@term')
-      .setValue('@term', Search.state.companyName.suffix)
+      .setValue('@term', getUid(this.state.company.name))
       .sendKeys('@term', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })
@@ -85,7 +74,7 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.containsText('@resultsCount', resultsCount)
   })
 
-  Then(/^I can view the event in the search results/, async () => {
+  Then(/^I can view the event in the search results/, async function () {
     const {
       start_date_year,
       start_date_month,
@@ -93,28 +82,28 @@ defineSupportCode(({ Then, When, Before }) => {
       end_date_year,
       end_date_month,
       end_date_day,
-    } = Event.state.eventDetails
+    } = this.state.event
 
     const expectedStartDate = getDateFor({ year: start_date_year, month: start_date_month, day: start_date_day })
     const expectedEndDate = getDateFor({ year: end_date_year, month: end_date_month, day: end_date_day })
 
     await Search.section.firstEventSearchResult
       .waitForElementPresent('@header')
-      .assert.containsText('@header', Event.state.eventDetails.name)
-      .assert.containsText('@eventType', Event.state.eventDetails.event_type)
-      .assert.containsText('@country', Event.state.eventDetails.address_country)
+      .assert.containsText('@header', this.state.event.name)
+      .assert.containsText('@eventType', this.state.event.event_type)
+      .assert.containsText('@country', this.state.event.address_country)
       .assert.containsText('@eventStart', expectedStartDate)
       .assert.containsText('@eventEnd', expectedEndDate)
-      .assert.containsText('@organiser', Event.state.eventDetails.organiser)
-      .assert.containsText('@leadTeam', Event.state.eventDetails.lead_team)
+      .assert.containsText('@organiser', this.state.event.organiser)
+      .assert.containsText('@leadTeam', this.state.event.lead_team)
   })
 
-  Then(/^I can view the company in the search results/, async () => {
-    const registeredAddress = `${Company.state.companyDetails.address1}, ${Company.state.companyDetails.town}`
+  Then(/^I can view the company in the search results/, async function () {
+    const registeredAddress = `${this.state.company.address1}, ${this.state.company.town}`
     await Search.section.firstCompanySearchResult
       .waitForElementPresent('@header')
-      .assert.containsText('@header', Company.state.companyDetails.name)
-      .assert.containsText('@sector', Company.state.companyDetails.sector)
+      .assert.containsText('@header', this.state.company.name)
+      .assert.containsText('@sector', this.state.company.sector)
       .assert.containsText('@registeredAddress', registeredAddress)
   })
 })

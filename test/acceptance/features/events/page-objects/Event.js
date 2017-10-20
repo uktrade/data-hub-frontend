@@ -1,6 +1,6 @@
 const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
-const { camelCase, isNull, pickBy, keys } = require('lodash')
+const { camelCase, isNull, pickBy, keys, assign } = require('lodash')
 
 const { getButtonWithText } = require('../../../helpers/selectors')
 
@@ -58,15 +58,11 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm ({
-        name,
-        addressCountry,
-      } = {}) {
+      populateCreateEventForm ({ details = {}, callback }) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
-
-        this.state.eventDetails = {
-          name: name || faker.company.companyName(),
+        const event = assign({}, {
+          name: faker.company.companyName(),
           address_1: faker.address.streetName(),
           address_2: faker.address.secondaryAddress(),
           address_town: faker.address.city(),
@@ -81,46 +77,54 @@ module.exports = {
           location_type: null,
           service: null,
           event_type: null,
-          address_country: addressCountry || null,
+          address_country: null,
           organiser: null,
           lead_team: null,
           related_programmes: null,
           teams: null,
-        }
+        }, details)
 
-        return this
+        this
           .click('@sharedYes')
           .api.perform(async (done) => {
             // get select options text
-            await Promise.all(
-              keys(pickBy(this.state.eventDetails, isNull))
-                .map((key) => {
-                  return new Promise((resolve) => {
-                    this.getListOption(`@${camelCase(key)}`, (optionText) => {
-                      this.state.eventDetails[key] = optionText
-                      resolve()
-                    })
-                  })
-                }))
 
-            if (this.state.eventDetails.address_country === 'United Kingdom') {
-              // get and set uk_region
-              await new Promise((resolve) => {
-                this.getListOption('@ukRegion', (ukRegion) => {
-                  this.state.eventDetails.uk_region = ukRegion
-                  resolve()
+            this
+              .api.perform((done) => {
+                keys(pickBy(event, isNull)).map((key) => {
+                  this.getListOption(`@${camelCase(key)}`, (optionText) => {
+                    event[key] = optionText
+                    done()
+                  })
                 })
               })
+
+            if (event.address_country === 'United Kingdom') {
+              this
+                .api.perform((done) => {
+                  this.getListOption('@ukRegion', (ukRegion) => {
+                    event.uk_region = ukRegion
+                    done()
+                  })
+                })
             }
 
-            // loop through all form inputs and set stored values
-            for (const key in this.state.eventDetails) {
-              if (this.state.eventDetails[key]) {
-                this.setValue(`[name="${key}"]`, this.state.eventDetails[key])
-              }
-            }
+            this
+              .api.perform((done) => {
+                // loop through all form inputs and set stored values
+                for (const key in event) {
+                  if (event[key]) {
+                    this.setValue(`[name="${key}"]`, event[key])
+                  }
+                }
+                done()
+              })
+
             done()
           })
+
+        callback(event)
+        return this
       },
     },
   ],

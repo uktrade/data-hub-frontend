@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-defineSupportCode(({ Then, When, Before }) => {
+defineSupportCode(({ When }) => {
   const Dashboard = client.page.Dashboard()
 
   When(/^I navigate to the dashboard/, async () => {
