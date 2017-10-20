@@ -15,6 +15,16 @@ function getSelectorForElementWithText (text, { el = '//*', className, child } =
   }
 }
 
+/**
+ * Gets XPath selector for button containing text
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getButtonWithText (text) {
+  return getSelectorForElementWithText(text, { el: '//*', className: 'button' })
+}
+
 module.exports = {
   getSelectorForElementWithText,
+  getButtonWithText,
 }

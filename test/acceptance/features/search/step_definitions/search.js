@@ -2,30 +2,59 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const faker = require('faker')
+
 const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Then, When, Before }) => {
   const Event = client.page.Event()
   const Search = client.page.Search()
+  const Company = client.page.Company()
+
+  const getFakeName = (name) => {
+    return {
+      name: name,
+      suffix: faker.random.uuid(),
+      getFullName () {
+        return `${this.name} ${this.suffix}`
+      },
+    }
+  }
 
   Before(() => {
     Event.state = {
       eventDetails: {},
     }
+    Company.state = {
+      companyDetails: {},
+    }
     Search.state = {
-      eventName: `${faker.company.companyName()} ${faker.random.uuid()}`,
+      eventName: getFakeName(faker.company.companyName()),
+      companyName: getFakeName(faker.company.companyName()),
     }
   })
 
   When(/^I populate the create event form to search$/, async () => {
     await Event
-      .populateCreateEventForm({ name: Search.state.eventName })
+      .populateCreateEventForm({ name: Search.state.eventName.getFullName() })
+  })
+
+  When(/^a company is created to search$/, async () => {
+    await Company
+      .createUkNonPrivateOrNonPublicLimitedCompany(Search.state.companyName.getFullName())
   })
 
   When(/^I search for the event$/, async () => {
     await Search
       .waitForElementPresent('@term')
-      .setValue('@term', Search.state.eventName)
+      .setValue('@term', Search.state.eventName.suffix)
+      .sendKeys('@term', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+  })
+
+  When(/^I search for the company/, async () => {
+    await Search
+      .waitForElementPresent('@term')
+      .setValue('@term', Search.state.companyName.suffix)
       .sendKeys('@term', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })
@@ -45,17 +74,12 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.visible('@orders')
   })
 
-  Then(/^I verify the Companies tab is active/, async () => {
+  Then(/^the (.+) tab is active/, async (tabName) => {
     await Search.section.tabs
-      .assert.cssClassPresent('@companies', 'is-active')
+      .assert.cssClassPresent(`@${tabName}`, 'is-active')
   })
 
-  Then(/^I verify the Events tab is active/, async () => {
-    await Search.section.tabs
-      .assert.cssClassPresent('@events', 'is-active')
-  })
-
-  Then(/^I verify there is a results count ([0-9]+)/, async (resultsCount) => {
+  Then(/^there is a results count ([0-9]+)/, async (resultsCount) => {
     await Search
       .assert.visible('@resultsCount')
       .assert.containsText('@resultsCount', resultsCount)
@@ -83,5 +107,14 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.containsText('@eventEnd', expectedEndDate)
       .assert.containsText('@organiser', Event.state.eventDetails.organiser)
       .assert.containsText('@leadTeam', Event.state.eventDetails.lead_team)
+  })
+
+  Then(/^I can view the company in the search results/, async () => {
+    const registeredAddress = `${Company.state.companyDetails.address1}, ${Company.state.companyDetails.town}`
+    await Search.section.firstCompanySearchResult
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', Company.state.companyDetails.name)
+      .assert.containsText('@sector', Company.state.companyDetails.sector)
+      .assert.containsText('@registeredAddress', registeredAddress)
   })
 })
