@@ -1,4 +1,4 @@
-@companies-create
+@companies-create @ignore
 Feature: Create a new company
   As an existing user
   I would like to create a new company in various locations
@@ -6,8 +6,7 @@ Feature: Create a new company
   Background:
     Given I am an authenticated user on the data hub website
 
-  # I dont think this is searching for the correct thing. Ignored to come back to
-  @companies-create--uk-private-or-public-ltd-company @ignore
+  @companies-create--uk-private-or-public-ltd-company
   Scenario: Create a UK private or public limited company
 
     When a "UK private or public limited company" is created
