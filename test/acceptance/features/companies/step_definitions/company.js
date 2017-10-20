@@ -1,98 +1,101 @@
-const { client } = require('nightwatch-cucumber')
-const { defineSupportCode } = require('cucumber')
+const { set } = require('lodash')
 const faker = require('faker')
 
-defineSupportCode(({ Before, Then, When }) => {
+const { client } = require('nightwatch-cucumber')
+const { defineSupportCode } = require('cucumber')
+const { getUid, appendUid } = require('../../../helpers/uuid')
+
+const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
+const dashboardPage = `${process.env.QA_HOST}/`
+
+defineSupportCode(({ Then, When }) => {
   const Company = client.page.Company()
 
-  const getFakeName = (name) => {
-    return {
-      name: name,
-      suffix: faker.random.uuid(),
-      getFullName () {
-        return `${this.name} ${this.suffix}`
-      },
-    }
-  }
+  When(/^a "UK private or public limited company" is created$/, async function () {
+    const companyName = appendUid(faker.company.companyName())
 
-  Before(() => {
-    Company.state = {
-      companyDetails: {},
-      companyName: getFakeName(faker.company.companyName()),
-    }
-  })
-
-  When(/^a "UK private or public limited company" is created$/, async () => {
-    const companyName = Company.state.companyName.getFullName()
+    await client
+      .url(companySearchPage)
 
     await Company
-      .navigate()
-      .findCompany(companyName)
-      .createUkPrivateOrPublicLimitedCompany(companyName)
+      .createUkPrivateOrPublicLimitedCompany({
+        company: { tradingName: companyName },
+        callback: (company) => set(this.state, 'company', company),
+      })
+      .wait() // wait for backend to sync
   })
 
-  When(/^a "UK non-private or non-public limited company" is created$/, async () => {
-    const companyName = Company.state.companyName.getFullName()
+  When(/^a "UK non-private or non-public limited company" is created$/, async function () {
+    const companyName = appendUid(faker.company.companyName())
+
+    await client
+      .url(companySearchPage)
 
     await Company
-      .navigate()
-      .findCompany(companyName)
-      .createUkNonPrivateOrNonPublicLimitedCompany(companyName)
+      .createUkNonPrivateOrNonPublicLimitedCompany({
+        details: { name: companyName },
+        callback: (company) => set(this.state, 'company', company),
+      })
+      .wait() // wait for backend to sync
   })
 
-  When(/^a new "Foreign company" is created$/, async () => {
-    const companyName = Company.state.companyName.getFullName()
+  When(/^a new "Foreign company" is created$/, async function () {
+    const companyName = appendUid(faker.company.companyName())
+
+    await client
+      .url(companySearchPage)
 
     await Company
-      .navigate()
-      .findCompany(companyName)
-      .createForeignCompany(companyName)
+      .createForeignCompany({
+        details: { name: companyName },
+        callback: (company) => set(this.state, 'company', company),
+      })
+      .wait() // wait for backend to sync
   })
 
-  Then(/^the company is in the search results$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(Company.state.companyName.suffix)
-      .assert.containsText('@collectionResultsCompanyName', Company.state.companyName.getFullName())
-  })
+  Then(/^the company is in the search results$/, async function () {
+    const companyName = this.state.company.name
 
-  Then(/^The company name is present in the collections results/, async () => {
-    const companyName = Company.state.companyDetails.name
+    await client
+      .url(dashboardPage)
 
     await Company
-      .searchForCompanyInCollection(companyName)
+      .findCompany(getUid(companyName))
       .assert.containsText('@collectionResultsCompanyName', companyName)
   })
 
-  Then(/^The company sector is present in the collections results$/, async () => {
-    const companyName = Company.state.companyDetails.name
+  Then(/^The company name is present in the collections results/, async function () {
+    const companyName = this.state.company.name
+
+    await client
+      .url(dashboardPage)
 
     await Company
-      .searchForCompanyInCollection(companyName)
+      .searchForCompanyInCollection(getUid(companyName))
+      .assert.containsText('@collectionResultsCompanyName', companyName)
+  })
+
+  Then(/^The company sector is present in the collections results$/, async function () {
+    await Company
+      .searchForCompanyInCollection(getUid(this.state.company.name))
       .assert.containsText('@collectionResultsSectorLabel', 'Sector')
   })
 
-  Then(/^The company region is present in the collections results$/, async () => {
-    const companyName = Company.state.companyDetails.name
-
+  Then(/^The company region is present in the collections results$/, async function () {
     await Company
-      .searchForCompanyInCollection(companyName)
+      .searchForCompanyInCollection(getUid(this.state.company.name))
       .assert.containsText('@collectionResultsRegionLabel', 'UK region')
   })
 
-  Then(/^The company registered address is present in the collections results$/, async () => {
-    const companyName = Company.state.companyDetails.name
-
+  Then(/^The company registered address is present in the collections results$/, async function () {
     await Company
-      .searchForCompanyInCollection(companyName)
+      .searchForCompanyInCollection(getUid(this.state.company.name))
       .assert.containsText('@collectionResultsRegisteredAddressLabel', 'Registered address')
   })
 
-  Then(/^Clicking the company name takes me to the companies page$/, async () => {
-    const companyName = Company.state.companyDetails.name
-
+  Then(/^Clicking the company name takes me to the companies page$/, async function () {
     await Company
       .click('@collectionResultsCompanyName')
-      .assert.containsText('@companyPageHeading', companyName)
+      .assert.containsText('@companyPageHeading', this.state.company.name)
   })
 })
