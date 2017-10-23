@@ -1,5 +1,6 @@
 const subscriberData = require('~/test/unit/data/omis/subscribers.json')
 const assigneeData = require('~/test/unit/data/omis/assignees.json')
+const contactData = require('~/test/unit/data/simple-contact')
 
 const orderMock = {
   id: '1230asd-123dasda',
@@ -16,6 +17,7 @@ describe('OMIS View controllers', () => {
 
     this.getSubscribersStub = this.sandbox.stub().resolves(subscriberData)
     this.getAssigneesStub = this.sandbox.stub().resolves(assigneeData)
+    this.getContactStub = this.sandbox.stub().resolves(contactData)
     this.loggerSpy = this.sandbox.spy()
 
     this.controllers = proxyquire('~/src/apps/omis/apps/view/controllers', {
@@ -27,6 +29,9 @@ describe('OMIS View controllers', () => {
           getSubscribers: this.getSubscribersStub,
           getAssignees: this.getAssigneesStub,
         },
+      },
+      '../../../contacts/repos': {
+        getContact: this.getContactStub,
       },
     })
   })
@@ -79,6 +84,10 @@ describe('OMIS View controllers', () => {
         expect(this.getAssigneesStub).to.have.been.calledWith(tokenMock, orderMock.id)
       })
 
+      it('should get contact with correct args', () => {
+        expect(this.getContactStub).to.have.been.calledWith(tokenMock, orderMock.contact.id)
+      })
+
       it('should call correct template', () => {
         expect(this.renderSpy.args[0][0]).to.equal('omis/apps/view/views/work-order')
       })
@@ -104,6 +113,12 @@ describe('OMIS View controllers', () => {
         const values = this.renderSpy.args[0][1].values
 
         expect(values.assignees).to.be.an('array').to.have.length(2)
+      })
+
+      it('should merge short contact with full contact', () => {
+        const values = this.renderSpy.args[0][1].values
+
+        expect(values.contact).to.be.an('object').to.deep.equal(contactData)
       })
 
       it('should estimate sum correctly', () => {

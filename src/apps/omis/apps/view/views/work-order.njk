@@ -3,8 +3,33 @@
 {% set companyLink %}
   <a href="/companies/{{ values.company.id }}">{{ values.company.name }}</a>
 {% endset %}
-{% set contactLink %}
+{% set contactText %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+
+  <br>
+
+  {% if values.contact_email %}
+    {{ values.contact_email }}
+  {% else %}
+    <a href="mailto:{{ values.contact.email }}">{{ values.contact.email }}</a>
+
+    {% if values.contact.email_alternative %}
+      or <a href="mailto:{{ values.contact.email_alternative }}">{{ values.contact.email_alternative }}</a>
+    {% endif %}
+  {% endif %}
+
+  <br>
+
+  {% if values.contact_phone %}
+    {{ values.contact_phone }}
+  {% else %}
+    ({{ values.contact.telephone_countrycode }})
+    {{ values.contact.telephone_number }}
+
+    {% if values.contact.telephone_alternative %}
+      or {{ values.contact.telephone_alternative }}
+    {% endif %}
+  {% endif %}
 {% endset %}
 
 {% block body_main_content %}
@@ -25,7 +50,7 @@
       value: companyLink
     }, {
       label: 'Contact',
-      value: contactLink
+      value: contactText
     }]
   }) }}
 
