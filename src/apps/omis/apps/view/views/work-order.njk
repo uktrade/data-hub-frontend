@@ -196,9 +196,13 @@
     {{ values.total_cost | formatCurrency }}
 
     {% if values.vat_cost > 0 %}
-      ({{ values.net_cost | formatCurrency }} excluding VAT)
+      ({{ values.subtotal_cost | formatCurrency }} excluding VAT)
     {% else %}
       (No VAT applies)
+    {% endif %}
+
+    {% if values.discount_value %}
+    (includes a net discount of {{ values.discount_value | formatCurrency }})
     {% endif %}
   {% endset %}
 
