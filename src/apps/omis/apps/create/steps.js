@@ -1,5 +1,4 @@
 const {
-  SubscribersController,
   ClientDetailsController,
   MarketController,
   ConfirmController,
@@ -28,13 +27,6 @@ module.exports = {
     next: 'subscribers',
     fields: ['primary_market'],
     controller: MarketController,
-  },
-  '/subscribers': {
-    heading: 'Advisers in the UK',
-    editable: true,
-    next: 'confirm',
-    fields: ['subscribers'],
-    controller: SubscribersController,
   },
   '/confirm': {
     heading: 'Check order details',

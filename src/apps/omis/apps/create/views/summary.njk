@@ -27,24 +27,9 @@
       items: [values.primary_market.name]
     }) }}
 
-    {{ AnswersSummary({
-      heading: 'Advisers in the UK',
-      actions: [{
-        url: 'subscribers/edit',
-        label: 'Add or remove'
-      }],
-      items: values.subscribers if values.subscribers.length else ['Not added at this stage']
-    }) }}
-
     <h2 class="heading-medium">What happens next</h2>
 
-    <p>
-      Continuing with the order will notify the post manager for {{ values.primary_market.name }}
-      {%- if values.subscribers.length -%}
-        and {{ values.subscribers | join(", ") }}
-      {%- endif -%}
-      .
-    </p>
+    <p>Continuing with the order will notify the post manager for {{ values.primary_market.name }}.</p>
 
     <p>You will not be able to edit the company or market (country) after this point.</p>
 
