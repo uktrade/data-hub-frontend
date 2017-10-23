@@ -9,9 +9,8 @@ module.exports = {
   '/': {
     entryPoint: true,
     resetJourney: true,
+    skip: true,
     next: 'client-details',
-    templatePath: 'omis/apps/create/views',
-    template: 'start',
   },
   '/client-details': {
     heading: 'Client details',
