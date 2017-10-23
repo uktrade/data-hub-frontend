@@ -17,12 +17,8 @@ async function getCompany (req, res, next, companyId) {
 async function getOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
-    const subscribers = await Order.getSubscribers(req.session.token, orderId)
-    const assignees = await Order.getAssignees(req.session.token, orderId)
 
     res.locals.order = assign({}, order, {
-      subscribers,
-      assignees,
       isEditable: order.status === 'draft',
     })
 

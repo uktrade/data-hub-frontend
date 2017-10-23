@@ -1,7 +1,5 @@
 const companyData = require('~/test/unit/data/company.json')
 const orderData = require('~/test/unit/data/omis/simple-order.json')
-const subscriberData = require('~/test/unit/data/omis/subscribers.json')
-const assigneeData = require('~/test/unit/data/omis/assignees.json')
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
@@ -11,8 +9,6 @@ describe('OMIS middleware', () => {
     this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
     this.getDitCompanyStub = this.sandbox.stub()
     this.getByIdStub = this.sandbox.stub()
-    this.getSubscribersStub = this.sandbox.stub()
-    this.getAssigneesStub = this.sandbox.stub()
     this.loggerSpy = this.sandbox.spy()
     this.nextSpy = this.sandbox.spy()
 
@@ -38,8 +34,6 @@ describe('OMIS middleware', () => {
       './models': {
         Order: {
           getById: this.getByIdStub,
-          getSubscribers: this.getSubscribersStub,
-          getAssignees: this.getAssigneesStub,
         },
       },
     })
@@ -109,24 +103,18 @@ describe('OMIS middleware', () => {
     context('when model methods resolve', () => {
       beforeEach(() => {
         this.getByIdStub.resolves(orderData)
-        this.getSubscribersStub.resolves(subscriberData)
-        this.getAssigneesStub.resolves(assigneeData)
       })
 
       it('should call model methods with correct arguments', async () => {
         await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
         expect(this.getByIdStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
-        expect(this.getSubscribersStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
-        expect(this.getAssigneesStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
       })
 
       it('should set a order property on locals', async () => {
         await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
         const order = Object.assign({}, orderData, {
-          subscribers: subscriberData,
-          assignees: assigneeData,
           isEditable: true,
         })
         expect(this.resMock.locals).to.have.property('order')
