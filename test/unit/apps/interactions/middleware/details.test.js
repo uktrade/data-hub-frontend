@@ -42,8 +42,8 @@ describe('Interaction details middleware', () => {
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
       },
-      '../../events/repos': {
-        getAllEvents: this.getAllEventsStub.returns(eventsData),
+      '../../search/services': {
+        search: this.getAllEventsStub.returns(eventsData),
       },
     })
     this.req = {
@@ -176,9 +176,36 @@ describe('Interaction details middleware', () => {
   })
 
   describe('#getInteractionOptions', () => {
-    context('when success', () => {
+    context('when interaction', () => {
       beforeEach(async () => {
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
+      })
+
+      it('should set contacts on locals', () => {
+        expect(this.res.locals.contacts).to.deep.equal(contactsData)
+      })
+
+      it('should set advisers on locals', () => {
+        expect(this.res.locals.advisers).to.deep.equal(advisersData)
+      })
+
+      it('should set services data on locals', async () => {
+        expect(this.res.locals.services).to.deep.equal(servicesData)
+      })
+
+      it('should not set events data on locals', async () => {
+        expect(this.res.locals.events).to.be.undefined
+      })
+    })
+
+    context('when service delivery', () => {
+      beforeEach(async () => {
+        const req = merge({}, this.req, {
+          params: {
+            kind: 'service-delivery',
+          },
+        })
+        await this.middleware.getInteractionOptions(req, this.res, this.nextSpy)
       })
 
       it('should set contacts on locals', () => {
