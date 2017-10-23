@@ -90,12 +90,7 @@
     value: form.state['sector']
   }) }}
 
-  <fieldset class="c-form-fieldset {{ 'has-error' if form.errors.messages['business_activities'] }}">
-
-    <legend class="c-form-fieldset__legend">
-      <span class="c-form-fieldset__legend-text">Business activities</span>
-    </legend>
-
+  {% call Fieldset({ legend: 'Business activities' }) %}
     {% if form.errors.messages['business_activities'] %}
       <span class="c-form-group__error-message">{{ form.errors.messages['business_activities'] }}</span>
     {% endif %}
@@ -128,16 +123,9 @@
       error: form.errors.messages['other_business_activity'],
       value: form.state['other_business_activity']
     }) }}
-  </fieldset>
+  {% endcall %}
 
-  <fieldset
-    class="c-form-fieldset {{ 'has-error' if form.errors.messages['client_contacts'] }}"
-    data-item-selector=".c-form-group"
-    data-add-button-selector=".js-AddItems__add">
-
-    <legend class="c-form-fieldset__legend">
-      <span class="c-form-fieldset__legend-text">Client contact</span>
-    </legend>
+  {% call Fieldset({ legend: 'Client contact' }) %}
 
     {% if form.errors.messages['client_contacts'] %}
       <span class="c-form-group__error-message">{{ form.errors.messages['client_contacts'] }}</span>
@@ -164,7 +152,7 @@
         <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
       </p>
     </div>
-  </fieldset>
+  {% endcall %}
 
 {% if not investmentData.id %}
   {{ MultipleChoiceField({
