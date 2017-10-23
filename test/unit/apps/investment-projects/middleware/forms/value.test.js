@@ -4,6 +4,7 @@ const metadataRepositoryStub = {
     { id: '1', name: 'Below 10k' },
     { id: '2', name: 'Above 10k' },
   ],
+  fdiValueOptions: [],
 }
 
 describe('Investment form middleware - investment value', () => {
@@ -43,6 +44,7 @@ describe('Investment form middleware - investment value', () => {
       'number_safeguarded_jobs',
       'r_and_d_budget',
       'total_investment',
+      'fdi_value',
     ])
     expect(this.nextSpy.calledOnce).to.be.true
   })

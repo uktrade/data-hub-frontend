@@ -84,6 +84,18 @@
       error: form.errors.messages.number_safeguarded_jobs
     }) }}
 
+    {% if investmentData.investment_type.name == 'FDI' %}
+      {{ MultipleChoiceField({
+        name: 'fdi_value',
+        optional: true,
+        label: form.labels.fdi_value,
+        value: form.state.fdi_value,
+        error: form.errors.messages.fdi_value,
+        initialOption: '-- Select a project value --',
+        options: form.options.fdiValue
+      }) }}
+    {% endif %}
+
     {{ MultipleChoiceField({
       name: 'government_assistance',
       type: 'radio',

@@ -40,6 +40,7 @@ const labels = {
       export_revenue: 'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
       client_cannot_provide_total_investment: 'Can client provide total investment value?',
       client_cannot_provide_foreign_investment: 'Can client provide foreign equity investment value?',
+      fdi_value: 'Project value',
     },
   },
   requirementsLabels: {
