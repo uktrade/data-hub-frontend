@@ -88,6 +88,7 @@ const metadataItems = [
   ['investment-project-stage', 'investmentStageOptions'],
   ['order-service-type', 'orderServiceTypesOptions'],
   ['omis-market', 'omisMarketOptions'],
+  ['fdi-value', 'fdiValueOptions'],
 ]
 
 const restrictedServiceKeys = [
