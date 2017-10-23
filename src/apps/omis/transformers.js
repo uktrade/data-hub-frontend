@@ -69,7 +69,7 @@ function transformOrderToTableItem ({
   status,
   payment_due_date,
   company,
-  net_cost,
+  subtotal_cost,
   total_cost,
 } = {}) {
   if (!id || !reference) { return }
@@ -80,7 +80,7 @@ function transformOrderToTableItem ({
     status,
     payment_due_date,
     company: get(company, 'name'),
-    net_cost: parseInt(net_cost) / 100,
+    subtotal_cost: parseInt(subtotal_cost) / 100,
     total_cost: parseInt(total_cost) / 100,
   }
 }
