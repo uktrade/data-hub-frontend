@@ -1,0 +1,42 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  <h2 class="heading-medium">Company details</h2>
+  <div>
+    {{ company.name }}
+    <br>
+    {{ [
+      company.registered_address_1,
+      company.registered_address_2,
+      company.registered_address_county,
+      company.registered_address_town,
+      company.registered_address_postcode
+    ] | removeNilAndEmpty | join(", ") }}
+  </div>
+
+  <h2 class="heading-medium">Invoice details</h2>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>Amount (excluding VAT)</th>
+        <td>{{ order.subtotal_cost | formatCurrency }}</td>
+      </tr>
+      <tr>
+        <th>Amount (including VAT)</th>
+        <td>{{ order.total_cost | formatCurrency }}</td>
+      </tr>
+      <tr>
+        <th>Payment due date</th>
+        <td>
+          {{ values.invoice.payment_due_date | formatDate }}
+          ({{ FromNow({ datetime: values.invoice.payment_due_date }) }})
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="heading-medium">Payment details</h2>
+
+  {{ super() }}
+{% endblock %}
