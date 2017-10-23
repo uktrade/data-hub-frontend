@@ -1,0 +1,18 @@
+{% extends "./_layout-view.njk" %}
+
+{% set addButton %}
+  <a class="button button-secondary" href="/omis/create/{{ company.id }}">Add order</a>
+{% endset %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Orders (OMIS)</h2>
+
+  {{
+    Collection(results | assignCopy({
+      sort: sort,
+      countLabel: 'order',
+      query: QUERY,
+      summaryActionsHTML: addButton
+    }))
+  }}
+{% endblock %}
