@@ -3,7 +3,6 @@
   "name": "Example Project",
   "project_code": "DHP-00000117",
   "description": "Example Description",
-  "nda_signed": false,
   "estimated_land_date": "2017-12-22",
   "actual_land_date": "2018-07-21",
   "project_shareable": true,
