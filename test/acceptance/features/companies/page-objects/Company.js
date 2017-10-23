@@ -29,6 +29,7 @@ module.exports = {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
     addCompanyButton: getButtonWithText('Add company'),
+    addInteractionButton: getButtonWithText('Add interaction'),
     continueButton: getButtonWithText('Continue'),
     addButton: getButtonWithText('Add'),
     saveAndCreateButton: getButtonWithText('Save and create'),
@@ -195,7 +196,7 @@ module.exports = {
               .submitForm('form')
 
             // step 3
-            this.section.firstParentCompanySearchResult
+            this.section.firstCompanySearchResult
               .click('@header')
             this
               .click('@addButton')
@@ -252,7 +253,7 @@ module.exports = {
         auditHistory: getDetailsTabSelector('Audit history'),
       },
     },
-    firstParentCompanySearchResult: {
+    firstCompanySearchResult: {
       selector: '.c-entity-list li:first-child',
       elements: {
         header: {
