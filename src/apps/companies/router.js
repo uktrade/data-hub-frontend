@@ -5,6 +5,7 @@ const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/view')
 const { renderInvestments } = require('./controllers/investments')
+const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderInteractions } = require('./controllers/interactions')
 const { renderCompaniesHouseCompany } = require('./controllers/companies-house')
@@ -32,6 +33,7 @@ const LOCAL_NAV = [
   { path: 'interactions', label: 'Interactions' },
   { path: 'exports', label: 'Export' },
   { path: 'investments', label: 'Investment' },
+  { path: 'orders', label: 'Orders (OMIS)' },
   { path: 'audit', label: 'Audit history' },
 ]
 const DEFAULT_COLLECTION_QUERY = {
@@ -78,6 +80,7 @@ router.get('/:companyId/contacts', renderContacts)
 router.get('/:companyId/interactions', setInteractionsReturnUrl, getInteractionCollection, renderInteractions)
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/investments', renderInvestments)
+router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 
 router.use('/:companyId', setInteractionsReturnUrl, setInteractionsEntityName, interactionsRouter)
