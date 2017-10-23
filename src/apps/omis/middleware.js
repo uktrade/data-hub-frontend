@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { assign, get } = require('lodash')
 
 const logger = require('../../../config/logger')
 const { getDitCompany } = require('../companies/repos')
@@ -20,13 +20,21 @@ async function getOrder (req, res, next, orderId) {
     const subscribers = await Order.getSubscribers(req.session.token, orderId)
     const assignees = await Order.getAssignees(req.session.token, orderId)
 
-    res.locals.order = Object.assign({}, order, {
+    res.locals.order = assign({}, order, {
       subscribers,
       assignees,
       isEditable: order.status === 'draft',
-      net_cost: parseInt(order.net_cost) / 100,
-      vat_cost: parseInt(order.vat_cost) / 100,
-      total_cost: parseInt(order.total_cost) / 100,
+    })
+
+    const currencyFields = [
+      'net_cost',
+      'discount_value',
+      'subtotal_cost',
+      'vat_cost',
+      'total_cost',
+    ]
+    currencyFields.forEach((field) => {
+      res.locals.order[field] = parseFloat(res.locals.order[field]) / 100
     })
   } catch (e) {
     logger.error(e)
