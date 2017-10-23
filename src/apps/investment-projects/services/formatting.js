@@ -29,7 +29,6 @@ function transformToApi (body) {
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
-    'project_shareable': Boolean,
   }
 
   const relationshipMgr = body.is_relationship_manager
@@ -89,7 +88,6 @@ function transformFromApi (body) {
     'sector': String,
     'client_contacts': Array,
     'business_activities': Array,
-    'project_shareable': Boolean,
   }
 
   const formatted = mapValues(schema, (type, key) => {

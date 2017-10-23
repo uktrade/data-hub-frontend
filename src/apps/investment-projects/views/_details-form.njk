@@ -271,24 +271,6 @@
     modifier: 'subfield'
   }) }}
 
-  {{ MultipleChoiceField({
-    type: 'radio',
-    name: 'project_shareable',
-    label: 'Can this project be shared with our local partner network, outside of DIT?',
-    value: form.state['project_shareable'],
-    modifier: 'inline',
-    error: form.errors.messages['project_shareable'],
-    options: [
-      {
-        value: 'true',
-        label: 'Yes'
-      }, {
-        value: 'false',
-        label: 'No'
-      }
-    ]
-  }) }}
-
   {{ DateFieldset({
     name: 'estimated_land_date',
     label: 'Estimated land date',
