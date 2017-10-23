@@ -65,7 +65,7 @@ function transformCompanyToListItem ({
     })
   }
 
-  const url = companies_house_data ? `/companies/view/ch/${companies_house_data.company_number}` : `/companies/${id}`
+  const url = companies_house_data && !id ? `/companies/view/ch/${companies_house_data.company_number}` : `/companies/${id}`
 
   return {
     type: 'company',
