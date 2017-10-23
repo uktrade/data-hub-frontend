@@ -90,11 +90,15 @@
     value: form.state['sector']
   }) }}
 
-  <fieldset class="c-form-fieldset">
+  <fieldset class="c-form-fieldset {{ 'has-error' if form.errors.messages['business_activities'] }}">
 
     <legend class="c-form-fieldset__legend">
       <span class="c-form-fieldset__legend-text">Business activities</span>
     </legend>
+
+    {% if form.errors.messages['business_activities'] %}
+      <span class="c-form-group__error-message">{{ form.errors.messages['business_activities'] }}</span>
+    {% endif %}
 
     <div class="js-AddItems"
       data-item-selector=".c-form-group"
@@ -127,7 +131,7 @@
   </fieldset>
 
   <fieldset
-    class="c-form-fieldset js-AddItems"
+    class="c-form-fieldset {{ 'has-error' if form.errors.messages['client_contacts'] }}"
     data-item-selector=".c-form-group"
     data-add-button-selector=".js-AddItems__add">
 
@@ -135,21 +139,31 @@
       <span class="c-form-fieldset__legend-text">Client contact</span>
     </legend>
 
-    {% for client_contact in form.state['client_contacts'] %}
-      {{ MultipleChoiceField({
-        name: 'client_contacts',
-        label: 'Client contact',
-        isLabelHidden: true,
-        initialOption: '-- Pick a contact --',
-        options: form.options.contacts,
-        value: client_contact
-      }) }}
-    {% endfor %}
+    {% if form.errors.messages['client_contacts'] %}
+      <span class="c-form-group__error-message">{{ form.errors.messages['client_contacts'] }}</span>
+    {% endif %}
+
+    <div class="js-AddItems"
+      data-item-selector=".c-form-group"
+      data-add-button-selector=".js-AddItems__add">
+
+      {% for client_contact in form.state['client_contacts'] %}
+        {{ MultipleChoiceField({
+          name: 'client_contacts',
+          label: 'Client contact',
+          isLabelHidden: true,
+          initialOption: '-- Pick a contact --',
+          options: form.options.contacts,
+          error: form.errors.messages['client_contacts'],
+          value: client_contact
+        }) }}
+      {% endfor %}
 
 
-    <p class="c-form-fieldset__add-another">
-      <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
-    </p>
+      <p class="c-form-fieldset__add-another">
+        <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
+      </p>
+    </div>
   </fieldset>
 
 {% if not investmentData.id %}
