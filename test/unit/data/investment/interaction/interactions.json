@@ -123,7 +123,6 @@
         "archived_reason": null,
         "name": "Brian",
         "description": "description",
-        "nda_signed": true,
         "estimated_land_date": "2020-05-01",
         "cdms_project_code": null,
         "project_shareable": true,

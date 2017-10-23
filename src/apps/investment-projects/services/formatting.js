@@ -30,7 +30,6 @@ function transformToApi (body) {
     'client_contacts': Array,
     'business_activities': Array,
     'project_shareable': Boolean,
-    'nda_signed': Boolean,
   }
 
   const relationshipMgr = body.is_relationship_manager
@@ -91,7 +90,6 @@ function transformFromApi (body) {
     'client_contacts': Array,
     'business_activities': Array,
     'project_shareable': Boolean,
-    'nda_signed': Boolean,
   }
 
   const formatted = mapValues(schema, (type, key) => {
@@ -141,7 +139,6 @@ function transformInvestmentDataForView (data) {
     sector: get(data, 'sector.name', null),
     business_activities: businessActivities.map(i => i.name).join(', '),
     client_contacts: data.client_contacts.map(i => i.name).join(', '),
-    nda_signed: data.nda_signed ? 'Signed' : 'Not signed',
     estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
   })
 }
