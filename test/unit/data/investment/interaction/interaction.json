@@ -120,8 +120,6 @@
     "description": "description",
     "estimated_land_date": "2020-05-01",
     "cdms_project_code": null,
-    "project_shareable": true,
-    "not_shareable_reason": null,
     "actual_land_date": null,
     "approved_commitment_to_invest": null,
     "approved_fdi": null,
