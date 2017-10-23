@@ -719,7 +719,7 @@ describe('OMIS View middleware', () => {
           it('should disable form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
                 done()
               } catch (error) {
@@ -737,7 +737,7 @@ describe('OMIS View middleware', () => {
           it('should disable form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
                 done()
               } catch (error) {

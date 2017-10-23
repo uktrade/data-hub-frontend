@@ -88,7 +88,7 @@ async function setQuotePreview (req, res, next) {
 
 async function setQuote (req, res, next) {
   try {
-    const quote = await Order.getQuote(req.session.token, res.locals.order.Id)
+    const quote = await Order.getQuote(req.session.token, res.locals.order.id)
 
     res.locals.quote = assign({}, quote, {
       expired: new Date(quote.expires_on) < new Date(),
@@ -169,7 +169,7 @@ function setQuoteForm (req, res, next) {
     form.buttonModifiers = 'button-secondary'
 
     if (quote.accepted_on || quote.cancelled_on) {
-      form.disableFormAction = true
+      form.hidePrimaryFormAction = true
     }
 
     if (new Date(quote.expires_on) > new Date()) {
