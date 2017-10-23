@@ -17,15 +17,27 @@
     modifier: 'light-banner'
   }) %}
     {% set status = order.status | sentenceCase %}
+    {% set companyText %}
+      <a href="/companies/{{ order.company.id }}">{{ order.company.name }}</a>
+    {% endset %}
     {% set quoteStatusSuffix %}
+      <br>
       (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
     {% endset %}
 
     {{ MetaList({
       items: [
-        { 'label': 'Created on', 'value': order.created_on | formatDateTime },
-        { 'label': 'Updated on', 'value': order.updated_on | formatDateTime },
-        { 'label': 'Status', 'value': status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), 'safe': true }
+      { label: 'Client company', value: companyText | safe },
+      { label: 'Market (country)', value: order.primary_market }
+      ],
+      itemModifier: 'stacked'
+    }) }}
+
+    {{ MetaList({
+      items: [
+        { label: 'Created on', value: order.created_on, type: 'datetime' },
+        { label: 'Updated on', value: order.modified_on, type: 'datetime' },
+        { label: 'Status', value: status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), safe: true }
       ],
       itemModifier: 'stacked'
     }) }}
