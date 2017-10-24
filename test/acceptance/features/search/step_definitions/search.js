@@ -34,18 +34,12 @@ defineSupportCode(function ({ Then, When }) {
 
   When(/^I search for the event$/, async function () {
     await Search
-      .waitForElementPresent('@term')
-      .setValue('@term', getUid(this.state.event.name))
-      .sendKeys('@term', [ client.Keys.ENTER ])
-      .wait() // wait for xhr
+      .search(getUid(this.state.event.name), client.Keys.ENTER)
   })
 
   When(/^I search for the company/, async function () {
     await Search
-      .waitForElementPresent('@term')
-      .setValue('@term', getUid(this.state.company.name))
-      .sendKeys('@term', [ client.Keys.ENTER ])
-      .wait() // wait for xhr
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
   })
 
   When(/^I click the Events tab/, async () => {
