@@ -97,15 +97,14 @@
 
         {{ TextField({
           name: 'registered_address_1',
-          label: 'Business',
-          optional: true,
+          label: 'Address line one',
           value: formData.registered_address_1,
           error: errors.registered_address_1
         }) }}
 
         {{ TextField({
           name: 'registered_address_2',
-          label: 'Street',
+          label: 'Address line two',
           optional: true,
           value: formData.registered_address_2,
           error: errors.registered_address_2
@@ -114,7 +113,6 @@
         {{ TextField({
           name: 'registered_address_town',
           label: 'Town or city',
-          optional: true,
           value: formData.registered_address_town,
           error: errors.registered_address_town
         }) }}
@@ -183,15 +181,14 @@
 
         {{ TextField({
           name: 'trading_address_1',
-          label: 'Business',
-          optional: true,
+          label: 'Address line one',
           value: formData.trading_address_1,
           error: errors.trading_address_1
         }) }}
 
         {{ TextField({
           name: 'trading_address_2',
-          label: 'Street',
+          label: 'Address line two',
           optional: true,
           value: formData.trading_address_2,
           error: errors.trading_address_2
@@ -200,7 +197,6 @@
         {{ TextField({
           name: 'trading_address_town',
           label: 'Town or city',
-          optional: true,
           value: formData.trading_address_town,
           error: errors.trading_address_town
         }) }}
