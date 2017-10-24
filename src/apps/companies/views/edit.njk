@@ -6,11 +6,11 @@
 
 {% block main_grid_right_column %}
   <div class="section">
-    <div class="for-control key-value key-value--vertical">
-      <div id="business-type" class="key-value__key form-label-bold">
-        Business type
-      </div>
-      <div class="key-value__value" aria-labelledby="business-type">
+    <div class="c-form-group">
+      <h3 class="c-form-group__label">
+        <span class="c-form-group__label-text">Business type</span>
+      </h3>
+      <div>
         {{ 'Foreign' if isForeign else 'UK' }}
         {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
 
