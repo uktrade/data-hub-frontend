@@ -80,6 +80,7 @@ jobs:
           QA_USER_PASSWORD: secretSquiR3L
           REDIS_HOST: localhost
           TZ: "/usr/share/zoneinfo/Europe/London"
+          LOG_LEVEL: debug
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch
