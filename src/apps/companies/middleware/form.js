@@ -61,7 +61,7 @@ function populateForm (req, res, next) {
     turnoverOptions: metadataRepository.turnoverOptions.map(transformObjectToOption),
     countryOptions: metadataRepository.countryOptions.map(transformObjectToOption),
     businessType: req.query.business_type || get(res.locals, 'company.business_type.name'),
-    showTradingAddress: get(res.locals, 'form.state.trading_address_country'),
+    showTradingAddress: get(res.locals, 'form.state.trading_address_1'),
   })
 
   next()
