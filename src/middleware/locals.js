@@ -15,6 +15,7 @@ const globalNavItems = [
   { path: '/interactions', label: 'Interactions' },
   { path: '/investment-projects', label: 'Investment projects' },
   { path: '/omis', label: 'Orders (OMIS)' },
+  { path: config.performanceDashboardsUrl, label: 'Performance dashboards' },
 ]
 
 module.exports = function locals (req, res, next) {
