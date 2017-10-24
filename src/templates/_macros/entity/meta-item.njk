@@ -9,6 +9,7 @@
  # @param {string} props.data.name - API data label
  # @param {string} [props.type] - value type (e.g. 'date' to format dates)
  # @param {string} [props.url] - link URL
+ # @param {string} [props.urlLabel] - If the link should be shown next to the data, what text should the url show
  # @param {string} [props.isSelected] - whether the anchor should be have 'is-selected' state
  # @param {string} [props.isInert] - whether the value should be inert even if it has URL
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
@@ -44,7 +45,7 @@
           {{ props.label }}
         </span>
       {% endif %}
-      {% if props.url and not props.isInert %}
+      {% if props.url and not props.isInert and not props.urlLabel %}
         <a
           class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
@@ -52,7 +53,12 @@
           {{- safeValue -}}
         </a>
       {% else %}
-        <span class="{{ itemValueClass }}">{{ safeValue }}</span>
+        <span class="{{ itemValueClass }}">
+          {{ safeValue }}
+          {% if props.url and props.urlLabel %}
+            - <a href="{{ props.url }}">{{ props.urlLabel }}</a>
+          {% endif %}
+        </span>
       {% endif %}
     </div>
   {% endif %}
