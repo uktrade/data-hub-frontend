@@ -13,6 +13,7 @@ const labels = {
       business_activities: 'Business activity',
       client_contacts: 'Client contacts',
       description: 'Project description',
+      anonymous_description: 'Anonymised description',
       estimated_land_date: 'Estimated land date',
     },
   },

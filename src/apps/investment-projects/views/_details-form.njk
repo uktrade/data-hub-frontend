@@ -42,6 +42,16 @@
     value: form.state['description']
   }) }}
 
+  {{ TextField({
+    name: 'anonymous_description',
+    label: 'Anonymised description of the project',
+    hint: 'Do not include company names, financial details or address details',
+    type: 'textarea',
+    optional: true,
+    error: form.errors.messages.anonymous_description,
+    value: form.state['anonymous_description']
+  }) }}
+
 {% if investmentData.id %}
   {{ MultipleChoiceField({
     type: 'radio',
