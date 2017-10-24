@@ -1,4 +1,4 @@
-const { set } = require('lodash')
+const { get, set } = require('lodash')
 const faker = require('faker')
 
 const { client } = require('nightwatch-cucumber')
@@ -18,10 +18,11 @@ defineSupportCode(({ Then, When }) => {
       .url(companySearchPage)
 
     await Company
-      .createUkPrivateOrPublicLimitedCompany({
-        company: { tradingName: companyName },
-        callback: (company) => set(this.state, 'company', company),
-      })
+      .createUkPrivateOrPublicLimitedCompany(
+        this.fixtures.companiesHouseCompany.name,
+        { tradingName: companyName },
+        (company) => set(this.state, 'company', company),
+      )
       .wait() // wait for backend to sync
   })
 
@@ -32,10 +33,10 @@ defineSupportCode(({ Then, When }) => {
       .url(companySearchPage)
 
     await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany({
-        details: { name: companyName },
-        callback: (company) => set(this.state, 'company', company),
-      })
+      .createUkNonPrivateOrNonPublicLimitedCompany(
+        { name: companyName },
+        (company) => set(this.state, 'company', company)
+      )
       .wait() // wait for backend to sync
   })
 
@@ -46,15 +47,15 @@ defineSupportCode(({ Then, When }) => {
       .url(companySearchPage)
 
     await Company
-      .createForeignCompany({
-        details: { name: companyName },
-        callback: (company) => set(this.state, 'company', company),
-      })
+      .createForeignCompany(
+        { name: companyName },
+        (company) => set(this.state, 'company', company)
+      )
       .wait() // wait for backend to sync
   })
 
   Then(/^the company is in the search results$/, async function () {
-    const companyName = this.state.company.name
+    const companyName = get(this.state, 'company.name', get(this.state, 'company.tradingName'))
 
     await client
       .url(dashboardPage)

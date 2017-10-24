@@ -22,9 +22,6 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
 
 module.exports = {
   url: process.env.QA_HOST,
-  props: {
-    parentCompanySearchTerm: 'Apple',
-  },
   elements: {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
@@ -58,7 +55,7 @@ module.exports = {
     collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
-    companyPageHeading: 'h1.c-local-header__heading',
+    pageHeading: 'h1.c-local-header__heading',
   },
   commands: [
     {
@@ -68,7 +65,7 @@ module.exports = {
           .submitForm('@searchForm')
       },
 
-      createForeignCompany ({ details = {}, callback }) {
+      createForeignCompany (details = {}, callback) {
         const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
@@ -95,6 +92,7 @@ module.exports = {
             this
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
+              .waitForElementPresent('@pageHeading')
               .api.perform((done) => {
                 this.getListOption('@registeredAddressCountry', (country) => {
                   company.registeredAddressCountry = country
@@ -126,7 +124,7 @@ module.exports = {
         return this
       },
 
-      createUkNonPrivateOrNonPublicLimitedCompany ({ details = {}, callback }) {
+      createUkNonPrivateOrNonPublicLimitedCompany (details = {}, callback) {
         const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
@@ -150,10 +148,12 @@ module.exports = {
 
             // step 2
             this
+              .waitForElementPresent('@continueButton')
               .click('@continueButton')
+              .waitForElementPresent('@pageHeading')
               .api.perform((done) => {
-                this.getListOption('@registeredAddressCountry', (country) => {
-                  company.registeredAddressCountry = country
+                this.getListOption('@ukRegion', (ukRegion) => {
+                  company.ukRegion = ukRegion
                   done()
                 })
               })
@@ -172,7 +172,9 @@ module.exports = {
                 done()
               })
 
-            this.click('@saveAndCreateButton')
+            this
+              .waitForElementPresent('@saveAndCreateButton')
+              .click('@saveAndCreateButton')
             done()
           })
 
@@ -180,7 +182,7 @@ module.exports = {
         return this
       },
 
-      createUkPrivateOrPublicLimitedCompany ({ company = {}, callback }) {
+      createUkPrivateOrPublicLimitedCompany (parentCompany, company = {}, callback) {
         this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
@@ -192,7 +194,7 @@ module.exports = {
               .click('@continueButton')
 
             // step 2
-              .setValue('@parentCompanySearch', this.props.parentCompanySearchTerm)
+              .setValue('@parentCompanySearch', parentCompany)
               .submitForm('form')
 
             // step 3
@@ -203,6 +205,7 @@ module.exports = {
 
             // step 4
             this
+              .waitForElementPresent('@pageHeading')
               .api.perform((done) => {
                 this.getListOption('@ukRegion', (ukRegion) => {
                   company.ukRegion = ukRegion
