@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, upperFirst } = require('lodash')
 
 const metadata = require('../../../lib/metadata')
 const { isValidGuid } = require('../../../lib/controller-utils')
@@ -51,6 +51,12 @@ async function getInvestmentDetails (req, res, next) {
     res.locals.investmentStatus = {
       id: investmentData.id,
       meta: [
+        {
+          label: 'Status',
+          value: upperFirst(investmentData.status),
+          url: `/investment-projects/${investmentData.id}/status`,
+          urlLabel: 'change',
+        },
         {
           label: 'Project code',
           value: investmentData.project_code,
