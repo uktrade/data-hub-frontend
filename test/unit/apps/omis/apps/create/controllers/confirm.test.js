@@ -1,6 +1,5 @@
 const FormController = require('~/src/apps/omis/controllers/form')
 
-const getAdvisersMockData = require('~/test/unit/data/investment/interaction/advisers')
 const saveMockData = {
   id: '1234567890',
 }
@@ -25,21 +24,15 @@ describe('OMIS create confirm controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.nextSpy = this.sandbox.spy()
-    this.getAdvisersStub = this.sandbox.stub().resolves(getAdvisersMockData)
     this.orderSaveStub = this.sandbox.stub()
-    this.saveSubscribersStub = this.sandbox.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
-      '../../../../adviser/repos': {
-        getAllAdvisers: this.getAdvisersStub,
-      },
       '../../../../../lib/metadata': {
         countryOptions: metadataCountryMockData,
       },
       '../../../models': {
         Order: {
           save: this.orderSaveStub,
-          saveSubscribers: this.saveSubscribersStub,
         },
       },
     })
@@ -64,7 +57,6 @@ describe('OMIS create confirm controller', () => {
       this.valuesMock = {
         contact: '1',
         company: 'company-12345',
-        subscribers: ['0513453c-86bc-e211-a646-e4115bead28a'],
         primary_market: '2',
       }
     })
@@ -79,7 +71,7 @@ describe('OMIS create confirm controller', () => {
       it('should set the correct values', (done) => {
         const nextMock = (e, values) => {
           try {
-            expect(Object.keys(values).length).to.equal(4)
+            expect(Object.keys(values).length).to.equal(3)
             expect(values).to.deep.equal({
               company: {
                 id: '1234567890',
@@ -87,7 +79,6 @@ describe('OMIS create confirm controller', () => {
               },
               contact: 'Fred Stevens',
               primary_market: metadataCountryMockData[1],
-              subscribers: [getAdvisersMockData.results[0].name],
             })
             done()
           } catch (err) {
@@ -114,7 +105,6 @@ describe('OMIS create confirm controller', () => {
             errors: {},
             foo: 'bar',
             fizz: 'buzz',
-            subscribers: ['12345', '67890'],
           }),
           reset: this.resetSpy,
           destroy: this.destroySpy,
@@ -129,7 +119,6 @@ describe('OMIS create confirm controller', () => {
     describe('when the order save was successful', () => {
       beforeEach(() => {
         this.orderSaveStub.resolves(saveMockData)
-        this.saveSubscribersStub.resolves([])
       })
 
       it('should save an order', (done) => {
@@ -139,12 +128,7 @@ describe('OMIS create confirm controller', () => {
               expect(this.orderSaveStub).to.have.been.calledWith('token-12345', {
                 foo: 'bar',
                 fizz: 'buzz',
-                subscribers: ['12345', '67890'],
               })
-              expect(this.saveSubscribersStub).to.have.been.calledWith('token-12345', '1234567890', [
-                { id: '12345' },
-                { id: '67890' },
-              ])
               expect(this.resetSpy).to.have.been.calledTwice
               expect(this.destroySpy).to.have.been.calledTwice
               expect(this.nextSpy).not.to.have.been.called
