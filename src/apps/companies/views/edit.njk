@@ -6,17 +6,16 @@
 
 {% block main_grid_right_column %}
   <div class="section">
-    <div class="for-control key-value key-value--vertical">
-      <div id="business-type" class="key-value__key form-label-bold">
-        Business type
-      </div>
-      <div class="key-value__value" aria-labelledby="business-type">
+    {% call FormGroup({
+      label: 'Business type'
+    }) %}
+      <div>
         {{ 'Foreign' if isForeign else 'UK' }}
         {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
 
         <a href="/companies/add-step-1">Change</a>
       </div>
-    </div>
+    {% endcall %}
   </div>
 
   {% if chDetails %}
@@ -78,32 +77,33 @@
         </legend>
 
         {% if not isForeign %}
-          {{ TextField({
-            name: 'registered_address_pcode_lookup',
-            label: 'Postcode',
-            modifier: ['short', 'PostcodeLookup'],
-            innerHTML: lookupButton
-          }) }}
+          <span class="u-no-js-hidden">
+            {{ TextField({
+              name: 'registered_address_pcode_lookup',
+              label: 'Postcode',
+              modifier: ['short', 'PostcodeLookup'],
+              innerHTML: lookupButton
+            }) }}
 
-          {{ MultipleChoiceField({
-            name: 'registered_address_pcode_result',
-            label: 'Select an address',
-            initialOption: 'Enter a postcode to lookup your address',
-            modifier: 'PostcodeLookupResult'
-          }) }}
+            {{ MultipleChoiceField({
+              name: 'registered_address_pcode_result',
+              label: 'Select an address',
+              initialOption: 'Enter a postcode to lookup your address',
+              modifier: 'PostcodeLookupResult'
+            }) }}
+          </span>
         {% endif %}
 
         {{ TextField({
           name: 'registered_address_1',
-          label: 'Business',
-          optional: true,
+          label: 'Address line one',
           value: formData.registered_address_1,
           error: errors.registered_address_1
         }) }}
 
         {{ TextField({
           name: 'registered_address_2',
-          label: 'Street',
+          label: 'Address line two',
           optional: true,
           value: formData.registered_address_2,
           error: errors.registered_address_2
@@ -112,7 +112,6 @@
         {{ TextField({
           name: 'registered_address_town',
           label: 'Town or city',
-          optional: true,
           value: formData.registered_address_town,
           error: errors.registered_address_town
         }) }}
@@ -134,14 +133,23 @@
           modifier: 'short'
         }) }}
 
-        {{ MultipleChoiceField({
-          name: 'registered_address_country',
-          label: 'Country',
-          initialOption: '-- Select country --',
-          options: countryOptions,
-          value: formData.registered_address_country,
-          error: errors.registered_address_country
-        }) }}
+        {% if not isForeign %}
+          {% call FormGroup({
+            label: 'Country'
+          }) %}
+            <p>United Kingdom</p>
+            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
+          {% endcall %}
+        {% else %}
+          {{ MultipleChoiceField({
+            name: 'registered_address_country',
+            label: 'Country',
+            initialOption: '-- Select country --',
+            options: countryOptions,
+            value: formData.registered_address_country,
+            error: errors.registered_address_country
+          }) }}
+        {% endif %}
       </fieldset>
     {% endif %}
 
@@ -162,32 +170,33 @@
         {% endif %}
 
         {% if not isForeign %}
-          {{ TextField({
-            name: 'trading_address_pcode_lookup',
-            label: 'Postcode',
-            modifier: ['short', 'PostcodeLookup'],
-            innerHTML: lookupButton
-          }) }}
+          <span class="u-no-js-hidden">
+            {{ TextField({
+              name: 'trading_address_pcode_lookup',
+              label: 'Postcode',
+              modifier: ['short', 'PostcodeLookup'],
+              innerHTML: lookupButton
+            }) }}
 
-          {{ MultipleChoiceField({
-            name: 'trading_address_pcode_result',
-            label: 'Select an address',
-            initialOption: 'Enter a postcode to lookup your address',
-            modifier: 'PostcodeLookupResult'
-          }) }}
+            {{ MultipleChoiceField({
+              name: 'trading_address_pcode_result',
+              label: 'Select an address',
+              initialOption: 'Enter a postcode to lookup your address',
+              modifier: 'PostcodeLookupResult'
+            }) }}
+          </span>
         {% endif %}
 
         {{ TextField({
           name: 'trading_address_1',
-          label: 'Business',
-          optional: true,
+          label: 'Address line one',
           value: formData.trading_address_1,
           error: errors.trading_address_1
         }) }}
 
         {{ TextField({
           name: 'trading_address_2',
-          label: 'Street',
+          label: 'Address line two',
           optional: true,
           value: formData.trading_address_2,
           error: errors.trading_address_2
@@ -196,7 +205,6 @@
         {{ TextField({
           name: 'trading_address_town',
           label: 'Town or city',
-          optional: true,
           value: formData.trading_address_town,
           error: errors.trading_address_town
         }) }}
@@ -218,14 +226,24 @@
           modifier: 'short'
         }) }}
 
-        {{ MultipleChoiceField({
-          name: 'trading_address_country',
-          label: 'Country',
-          initialOption: '-- Select country --',
-          options: countryOptions,
-          value: formData.trading_address_country,
-          error: errors.trading_address_country
-        }) }}
+        {% if not isForeign %}
+          {% call FormGroup({
+            label: 'Country'
+          }) %}
+            <p>United Kingdom</p>
+            <input type="hidden" name="trading_address_country" value="">
+          {% endcall %}
+        {% else %}
+          {{ MultipleChoiceField({
+            name: 'trading_address_country',
+            label: 'Country',
+            disabled: true if not isForeign else false,
+            initialOption: '-- Select country --',
+            options: countryOptions,
+            value: formData.trading_address_country,
+            error: errors.trading_address_country
+          }) }}
+        {% endif %}
       </div>
     </fieldset>
 
