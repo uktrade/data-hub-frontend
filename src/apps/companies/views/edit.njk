@@ -164,13 +164,6 @@
       </div>
 
       <div id="trading-address-wrapper" class="{{ 'u-hidden' if not showTradingAddress }}">
-        {% if isCompaniesHouse %}
-          <div class="key-value key-value--vertical form-group">
-            <div id="trading-address-contry-label" class="key-value__key form-label-bold">Country</div>
-            <div class="key-value__value" aria-labelledby="trading-address-contry-label">United Kingdom</div>
-          </div>
-        {% endif %}
-
         {% if not isForeign %}
           <span class="u-no-js-hidden">
             {{ TextField({
