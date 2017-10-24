@@ -78,19 +78,21 @@
         </legend>
 
         {% if not isForeign %}
-          {{ TextField({
-            name: 'registered_address_pcode_lookup',
-            label: 'Postcode',
-            modifier: ['short', 'PostcodeLookup'],
-            innerHTML: lookupButton
-          }) }}
+          <span class="u-no-js-hidden">
+            {{ TextField({
+              name: 'registered_address_pcode_lookup',
+              label: 'Postcode',
+              modifier: ['short', 'PostcodeLookup'],
+              innerHTML: lookupButton
+            }) }}
 
-          {{ MultipleChoiceField({
-            name: 'registered_address_pcode_result',
-            label: 'Select an address',
-            initialOption: 'Enter a postcode to lookup your address',
-            modifier: 'PostcodeLookupResult'
-          }) }}
+            {{ MultipleChoiceField({
+              name: 'registered_address_pcode_result',
+              label: 'Select an address',
+              initialOption: 'Enter a postcode to lookup your address',
+              modifier: 'PostcodeLookupResult'
+            }) }}
+          </span>
         {% endif %}
 
         {{ TextField({
@@ -162,19 +164,21 @@
         {% endif %}
 
         {% if not isForeign %}
-          {{ TextField({
-            name: 'trading_address_pcode_lookup',
-            label: 'Postcode',
-            modifier: ['short', 'PostcodeLookup'],
-            innerHTML: lookupButton
-          }) }}
+          <span class="u-no-js-hidden">
+            {{ TextField({
+              name: 'trading_address_pcode_lookup',
+              label: 'Postcode',
+              modifier: ['short', 'PostcodeLookup'],
+              innerHTML: lookupButton
+            }) }}
 
-          {{ MultipleChoiceField({
-            name: 'trading_address_pcode_result',
-            label: 'Select an address',
-            initialOption: 'Enter a postcode to lookup your address',
-            modifier: 'PostcodeLookupResult'
-          }) }}
+            {{ MultipleChoiceField({
+              name: 'trading_address_pcode_result',
+              label: 'Select an address',
+              initialOption: 'Enter a postcode to lookup your address',
+              modifier: 'PostcodeLookupResult'
+            }) }}
+          </span>
         {% endif %}
 
         {{ TextField({
