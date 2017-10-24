@@ -9,6 +9,7 @@ const { transformObjectToOption } = require('../../transformers')
 const chDetailsDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 
 function populateForm (req, res, next) {
+  const countryQueryParam = get(req.query, 'country')
   const headquarterOptions = metadataRepository.headquarterOptions
     .map(transformObjectToOption)
     .map(option => {
@@ -35,6 +36,15 @@ function populateForm (req, res, next) {
     res.locals.form.state.business_type = get(businessType, 'id')
   }
 
+  if (countryQueryParam && countryQueryParam === 'uk') {
+    const ukCountryOption = find(metadataRepository.countryOptions.map(transformObjectToOption), (option) => {
+      return option.label === 'United Kingdom'
+    })
+
+    res.locals.form.state.registered_address_country = ukCountryOption.value
+    res.locals.form.state.trading_address_country = ukCountryOption.value
+  }
+
   res.locals.formData = assign({}, res.locals.form.state, req.body)
 
   if (!get(res.locals, 'formData.headquarter_type')) {
@@ -51,7 +61,7 @@ function populateForm (req, res, next) {
     turnoverOptions: metadataRepository.turnoverOptions.map(transformObjectToOption),
     countryOptions: metadataRepository.countryOptions.map(transformObjectToOption),
     businessType: req.query.business_type || get(res.locals, 'company.business_type.name'),
-    showTradingAddress: get(res.locals, 'form.state.trading_address_country'),
+    showTradingAddress: get(res.locals, 'form.state.trading_address_1'),
   })
 
   next()
