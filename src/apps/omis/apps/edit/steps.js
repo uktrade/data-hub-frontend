@@ -15,6 +15,7 @@ const steps = merge({}, createSteps, {
   },
   '/subscribers': {
     heading: 'Add or remove advisers in the UK',
+    fields: ['subscribers'],
     controller: EditSubscribersController,
   },
   '/assignees': {
