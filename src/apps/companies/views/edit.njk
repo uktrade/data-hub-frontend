@@ -6,17 +6,16 @@
 
 {% block main_grid_right_column %}
   <div class="section">
-    <div class="c-form-group">
-      <h3 class="c-form-group__label">
-        <span class="c-form-group__label-text">Business type</span>
-      </h3>
+    {% call FormGroup({
+      label: 'Business type'
+    }) %}
       <div>
         {{ 'Foreign' if isForeign else 'UK' }}
         {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
 
         <a href="/companies/add-step-1">Change</a>
       </div>
-    </div>
+    {% endcall %}
   </div>
 
   {% if chDetails %}
@@ -134,14 +133,23 @@
           modifier: 'short'
         }) }}
 
-        {{ MultipleChoiceField({
-          name: 'registered_address_country',
-          label: 'Country',
-          initialOption: '-- Select country --',
-          options: countryOptions,
-          value: formData.registered_address_country,
-          error: errors.registered_address_country
-        }) }}
+        {% if not isForeign %}
+          {% call FormGroup({
+            label: 'Country'
+          }) %}
+            <p>United Kingdom</p>
+            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
+          {% endcall %}
+        {% else %}
+          {{ MultipleChoiceField({
+            name: 'registered_address_country',
+            label: 'Country',
+            initialOption: '-- Select country --',
+            options: countryOptions,
+            value: formData.registered_address_country,
+            error: errors.registered_address_country
+          }) }}
+        {% endif %}
       </fieldset>
     {% endif %}
 
@@ -218,14 +226,24 @@
           modifier: 'short'
         }) }}
 
-        {{ MultipleChoiceField({
-          name: 'trading_address_country',
-          label: 'Country',
-          initialOption: '-- Select country --',
-          options: countryOptions,
-          value: formData.trading_address_country,
-          error: errors.trading_address_country
-        }) }}
+        {% if not isForeign %}
+          {% call FormGroup({
+            label: 'Country'
+          }) %}
+            <p>United Kingdom</p>
+            <input type="hidden" name="trading_address_country" value="">
+          {% endcall %}
+        {% else %}
+          {{ MultipleChoiceField({
+            name: 'trading_address_country',
+            label: 'Country',
+            disabled: true if not isForeign else false,
+            initialOption: '-- Select country --',
+            options: countryOptions,
+            value: formData.trading_address_country,
+            error: errors.trading_address_country
+          }) }}
+        {% endif %}
       </div>
     </fieldset>
 
