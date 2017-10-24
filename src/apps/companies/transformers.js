@@ -130,6 +130,7 @@ function transformCompanyResponseToForm (body) {
     return get(body, `${key}.id`)
   })
 
+  // TODO we need to create an "other" business_type on DH to place any Companies House company_category that do not match DH business_type
   if (body.company_category) {
     const businessType = find(metadataRepository.businessTypeOptions, (type) => {
       return type.name.toLowerCase() === body.company_category.toLowerCase()
