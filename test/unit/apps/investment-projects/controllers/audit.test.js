@@ -47,7 +47,7 @@ describe('Investment audit controller', () => {
     }, {
       name: 'Fred Smith',
       timestamp: '2 June 2017',
-      changes: 5,
+      changes: 4,
     }]
 
     this.controller.getInvestmentAudit({

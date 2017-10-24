@@ -13,7 +13,6 @@ const labels = {
       business_activities: 'Business activity',
       client_contacts: 'Client contacts',
       description: 'Project description',
-      nda_signed: 'Non-disclosure agreement',
       estimated_land_date: 'Estimated land date',
     },
   },
