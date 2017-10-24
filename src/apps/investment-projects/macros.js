@@ -154,8 +154,26 @@ const requirementsFormConfig = {
   ],
 }
 
+const statusFormConfig = {
+  buttonText: 'Save',
+  children: [{
+    macroName: 'MultipleChoiceField',
+    type: 'radio',
+    name: 'status',
+    label: 'Status',
+    isLabelHidden: true,
+    options: [
+      { label: 'Ongoing', value: 'ongoing' },
+      { label: 'Delayed', value: 'delayed' },
+      { label: 'Abandoned', value: 'abandoned' },
+      { label: 'Lost', value: 'lost' },
+    ],
+  }],
+}
+
 module.exports = {
   investmentFiltersFields,
   investmentSortForm,
   requirementsFormConfig,
+  statusFormConfig,
 }
