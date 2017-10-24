@@ -1,4 +1,3 @@
-const { map } = require('asyncro')
 const { assign } = require('lodash')
 const queryString = require('query-string')
 
@@ -92,11 +91,10 @@ async function getAddStepTwo (req, res, next) {
       token,
       searchTerm,
     })
-      .then(response => response.results.filter(x => x.company_number))
-      .then(async (results) => {
+      .then(async (response) => {
         // TODO: Remove the need to make another call to the API to get the companies house details.
         // The search API should return companies house companies and their relevant information
-        return map(results, async (result) => {
+        return Promise.all(response.results.map(async (result) => {
           try {
             result.companies_house_data = await getCHCompany(token, result.company_number)
             result.url = `/companies/add/${result.company_number}`
@@ -104,7 +102,7 @@ async function getAddStepTwo (req, res, next) {
             logger.error(error)
           }
           return result
-        })
+        }))
       })
       .then((results) => {
         return {
