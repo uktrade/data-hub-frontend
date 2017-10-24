@@ -35,10 +35,6 @@ module.exports = {
     businessActivityList: '#field-business_activities option:nth-child(2)',
     projectName: '#field-name',
     description: '#field-description',
-    projectBeSharedYes: 'label[for="field-project_shareable-1"]',
-    projectBeSharedNo: 'label[for="field-project_shareable-2"]',
-    signedaNDAYes: 'label[for="field-nda_signed-1"]',
-    signedaNDANo: 'label[for="field-nda_signed-2"]',
     landMonth: '#field-estimated_land_date_month',
     landYear: '#field-estimated_land_date_year',
     projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
@@ -137,22 +133,6 @@ module.exports = {
         return this
           .setValue('@description', faker.lorem.paragraph())
       },
-      clickProjectBeSharedYes () {
-        return this
-          .click('@projectBeSharedYes')
-      },
-      clickProjectBeSharedNo () {
-        return this
-          .click('@projectBeSharedNo')
-      },
-      clickSignedaNDAYes () {
-        return this
-          .click('@signedaNDAYes')
-      },
-      clicksignedaNDANo () {
-        return this
-          .click('@signedaNDANo')
-      },
       enterLandMonth () {
         return this
           .setValue('@landMonth', faker.random.number({ min: 1, max: 12 }))
@@ -202,8 +182,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
           .submitTheForm()
@@ -225,8 +203,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -247,8 +223,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -269,8 +243,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -291,8 +263,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -313,8 +283,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -330,8 +298,6 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
-          .clickProjectBeSharedYes()
-          .clicksignedaNDANo()
           .enterLandMonth()
           .enterLandYear()
           .submitTheForm()
