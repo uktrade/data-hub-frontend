@@ -9,6 +9,7 @@ function transformCompanyToListItem ({
   sector,
   uk_based,
   uk_region,
+  trading_name,
   trading_address_country,
   trading_address_county,
   trading_address_town,
@@ -66,13 +67,14 @@ function transformCompanyToListItem ({
   }
 
   const url = companies_house_data ? `/companies/view/ch/${companies_house_data.company_number}` : `/companies/${id}`
+  const displayName = trading_name || name
 
   return {
-    type: 'company',
     id,
-    name,
     url,
     meta,
+    type: 'company',
+    name: displayName,
   }
 }
 
