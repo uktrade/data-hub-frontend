@@ -1,6 +1,6 @@
 const faker = require('faker')
 
-const MARKER = '@'
+const MARKER = '|'
 
 /**
  * get the uuid part of string created with the withUid method

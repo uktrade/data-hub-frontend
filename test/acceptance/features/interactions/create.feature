@@ -12,17 +12,17 @@ Background:
 
     And a company is created for interactions
     And a company contact is created for interactions
-    When navigating to the create company interaction step 1 page
+    When navigating to the create company interactions and services step 1 page
     And selecting interaction
     Then there are interaction fields
     And interaction fields are pre-populated
 
-  @interactions-create--contacts-interaction @ignore
+  @interactions-create--contacts-interaction
   Scenario: Save interaction from contacts
 
     And a company is created for interactions
     And a company contact is created for interactions
-    When navigating to the create contact interaction step 1 page
+    When navigating to the create contact interactions and services step 1 page
     And selecting interaction
     Then there are interaction fields
     And interaction fields are pre-populated
@@ -32,7 +32,7 @@ Background:
 
     And a company is created for interactions
     And a company investment project is created for interactions
-    When navigating to the create investment project interaction step 1 page
+    When navigating to the create investment project interactions and services step 1 page
     And selecting interaction
     Then there are interaction fields
     And interaction fields are pre-populated
@@ -42,17 +42,17 @@ Background:
 
     And a company is created for interactions
     And a company contact is created for interactions
-    When navigating to the create company service delivery step 1 page
+    When navigating to the create company interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
     And interaction fields are pre-populated
 
-  @interactions-create--contacts-service-delivery @ignore
+  @interactions-create--contacts-service-delivery
   Scenario: Save service delivery from contacts
 
     And a company is created for interactions
     And a company contact is created for interactions
-    When navigating to the create contact service delivery step 1 page
+    When navigating to the create contact interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
     And interaction fields are pre-populated
@@ -62,7 +62,7 @@ Background:
 
     And a company is created for interactions
     And a company investment project is created for interactions
-    When navigating to the create investment project service delivery step 1 page
+    When navigating to the create investment project interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
     And interaction fields are pre-populated
@@ -72,7 +72,7 @@ Background:
 
     And a company is created for interactions
     And a company contact is created for interactions
-    When navigating to the create company service delivery step 1 page
+    When navigating to the create company interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
     When the interaction events Yes option is chosen
