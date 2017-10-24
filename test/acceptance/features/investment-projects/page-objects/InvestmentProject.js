@@ -35,6 +35,7 @@ module.exports = {
     businessActivityList: '#field-business_activities option:nth-child(2)',
     projectName: '#field-name',
     description: '#field-description',
+    anonymousDescription: '#field-anonymous_description',
     landMonth: '#field-estimated_land_date_month',
     landYear: '#field-estimated_land_date_year',
     projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
@@ -133,6 +134,10 @@ module.exports = {
         return this
           .setValue('@description', faker.lorem.paragraph())
       },
+      enterAnonymousDescription () {
+        return this
+          .setValue('@anonymousDescription', faker.lorem.paragraph(1))
+      },
       enterLandMonth () {
         return this
           .setValue('@landMonth', faker.random.number({ min: 1, max: 12 }))
@@ -182,6 +187,28 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
+          .enterLandMonth()
+          .enterLandYear()
+          .submitTheForm()
+      },
+
+      createNewInvestmentProjectWithoutOptionalFields (projectName) {
+        return this
+          .clickAddInvestmentProjectButton()
+          .clickTypeOfInvestmentFDI()
+          .selectTypeOfFDI()
+          .submitTheForm()
+          .clickEquitySourceYes()
+          .submitTheForm()
+          .selectClientContact()
+          .clickClientRelationshipManagerYes()
+          .clickReferralSourceYes()
+          .selectReferralSourceActivity()
+          .selectPrimarySector()
+          .selectBusinessActivity()
+          .enterProjectName(projectName)
+          .enterDescription()
           .enterLandMonth()
           .enterLandYear()
           .submitTheForm()
@@ -203,6 +230,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -223,6 +251,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -243,6 +272,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -263,6 +293,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -283,6 +314,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
       },
@@ -298,6 +330,7 @@ module.exports = {
           .selectBusinessActivity()
           .enterProjectName(projectName)
           .enterDescription()
+          .enterAnonymousDescription()
           .enterLandMonth()
           .enterLandYear()
           .submitTheForm()
