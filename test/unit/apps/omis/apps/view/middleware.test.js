@@ -1,4 +1,5 @@
 const invoiceMock = require('~/test/unit/data/omis/invoice')
+const paymentsMock = require('~/test/unit/data/omis/payments')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
@@ -9,6 +10,7 @@ describe('OMIS View middleware', () => {
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.getInvoiceStub = this.sandbox.stub()
+    this.getPaymentsStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
     this.flashSpy = this.sandbox.spy()
@@ -40,6 +42,7 @@ describe('OMIS View middleware', () => {
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
           getInvoice: this.getInvoiceStub,
+          getPayments: this.getPaymentsStub,
           createQuote: this.createQuoteStub,
           cancelQuote: this.cancelQuoteStub,
         },
@@ -428,6 +431,45 @@ describe('OMIS View middleware', () => {
         this.getInvoiceStub.rejects(this.error)
 
         await this.middleware.setInvoice(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should log error', () => {
+        expect(this.loggerErrorSpy).to.have.been.calledOnce
+        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('setPayments()', () => {
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getPaymentsStub.resolves(paymentsMock)
+
+        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set response as quote property on locals', () => {
+        expect(this.resMock.locals).to.have.property('payments')
+        expect(this.resMock.locals.payments).to.deep.equal(paymentsMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getPaymentsStub.rejects(this.error)
+
+        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should log error', () => {

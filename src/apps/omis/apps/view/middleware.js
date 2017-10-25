@@ -112,6 +112,16 @@ async function setInvoice (req, res, next) {
   next()
 }
 
+async function setPayments (req, res, next) {
+  try {
+    res.locals.payments = await Order.getPayments(req.session.token, res.locals.order.id)
+  } catch (error) {
+    logger.error(error)
+  }
+
+  next()
+}
+
 async function generateQuote (req, res, next) {
   const orderId = get(res.locals, 'order.id')
 
@@ -200,6 +210,7 @@ module.exports = {
   setQuotePreview,
   setQuote,
   setInvoice,
+  setPayments,
   generateQuote,
   cancelQuote,
   setQuoteForm,
