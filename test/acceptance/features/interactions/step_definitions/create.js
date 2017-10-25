@@ -29,18 +29,18 @@ defineSupportCode(({ Given, When, Then }) => {
   })
 
   Given(/^a company contact is created for interactions$/, async function () {
-    const companyName = this.state.company.name
-
     await client
       .url(dashboardPage)
 
+    await Search
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
+
     await Company
-      .navigate()
-      .findCompany(getUid(companyName))
       .section.firstCompanySearchResult
       .click('@header')
 
     await Company.section.detailsTabs
+      .waitForElementVisible('@contacts')
       .click('@contacts')
 
     await Contact
@@ -52,21 +52,19 @@ defineSupportCode(({ Given, When, Then }) => {
   })
 
   When(/^adding an interaction for the company/, async function () {
-    const companyName = this.state.company.name
-
     await client
       .url(dashboardPage)
 
-    await Company
-      .findCompany(getUid(companyName))
+    await Search
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
 
-    await Company.section.detailsTabs
+    await Company
+      .section.detailsTabs.waitForElementVisible('@interactions')
       .click('@interactions')
-      .wait()
 
     await Company
+      .waitForElementVisible('@addInteractionButton')
       .click('@addInteractionButton')
-      .wait()
 
     await Interaction
       .createInteraction()
@@ -89,24 +87,23 @@ defineSupportCode(({ Given, When, Then }) => {
   })
 
   When(/^navigating to the create company interactions and services step 1 page/, async function () {
-    const companyName = this.state.company.name
-
     await client
       .url(dashboardPage)
 
+    await Search
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
+
     await Company
-      .findCompany(getUid(companyName))
       .section.firstCompanySearchResult
       .click('@header')
-      .wait()
 
     await Company.section.detailsTabs
+      .waitForElementVisible('@interactions')
       .click('@interactions')
-      .wait()
 
     await Company
+      .waitForElementVisible('@addInteractionButton')
       .click('@addInteractionButton')
-      .wait()
   })
 
   When(/^navigating to the create contact interactions and services step 1 page/, async function () {
@@ -120,15 +117,14 @@ defineSupportCode(({ Given, When, Then }) => {
     await Contact
       .section.firstContactSearchResult
       .click('@header')
-      .wait()
 
     await Contact.section.detailsTabs
+      .waitForElementVisible('@interactions')
       .click('@interactions')
-      .wait()
 
     await Contact
+      .waitForElementVisible('@addInteractionButton')
       .click('@addInteractionButton')
-      .wait()
   })
 
   When(/^navigating to the create investment project interactions and services step 1 page/, async function () {
@@ -136,16 +132,16 @@ defineSupportCode(({ Given, When, Then }) => {
 
   When(/^selecting interaction/, async function () {
     await Interaction
+      .waitForElementVisible('@continueButton')
       .click('@aStandardInteraction')
       .click('@continueButton')
-      .wait()
   })
 
   When(/^selecting service delivery/, async function () {
     await Interaction
+      .waitForElementVisible('@continueButton')
       .click('@aServiceThatYouHaveProvided')
       .click('@continueButton')
-      .wait()
   })
 
   When(/^the interaction events Yes option is chosen/, async function () {
@@ -162,6 +158,7 @@ defineSupportCode(({ Given, When, Then }) => {
 
   Then(/^there are interaction fields$/, async function () {
     await Interaction
+      .waitForElementVisible('@contact')
       .assert.visible('@contact')
       .assert.visible('@serviceProvider')
       .assert.visible('@service')
@@ -175,11 +172,11 @@ defineSupportCode(({ Given, When, Then }) => {
       .assert.elementNotPresent('@eventYes')
       .assert.elementNotPresent('@eventNo')
       .assert.elementNotPresent('@event')
-      .wait()
   })
 
   Then(/^there are service delivery fields$/, async function () {
     await Interaction
+      .waitForElementVisible('@contact')
       .assert.visible('@contact')
       .assert.visible('@serviceProvider')
       .assert.visible('@service')
