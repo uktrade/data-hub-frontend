@@ -6,8 +6,7 @@ defineSupportCode(({ Then }) => {
 
   Then(/^I see the success message$/, async () => {
     await Message
-      .waitForElementPresent('@flashMessage')
-      .assert.cssClassPresent('@flashMessage', 'c-message--success')
+      .verifySuccessMessage()
   })
 
   Then(/^I see the error message$/, async () => {
