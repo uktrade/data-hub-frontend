@@ -44,9 +44,8 @@ defineSupportCode(({ Given, When, Then }) => {
       .click('@contacts')
 
     await Contact
-      .createNewPrimaryContact({
-        callback: (contact) => set(this.state, 'contact', contact),
-      })
+      .createNewPrimaryContact({}, (contact) => set(this.state, 'contact', contact))
+      .wait() // wait for backend to sync
   })
 
   Given(/^a company investment project is created for interactions$/, async function () {
