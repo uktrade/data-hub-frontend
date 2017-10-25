@@ -1,11 +1,10 @@
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    editCompanyDetailsButton: 'a[href*="/companies/edit"]',
+    editCompanyDetailsButton: 'a[href*="/companies"][href*="/edit"]',
     auditHistoryTab: 'a[href*="/audit"]',
-    description: '#description',
-    website: '#website',
-    flashInfo: '.c-message--success',
+    description: '#field-description',
+    website: '#field-website',
   },
 
   commands: [
@@ -18,8 +17,6 @@ module.exports = {
           this.clearValue('@website')
           this.setValue('@website', website)
         }
-        this.submitForm('form')
-        this.assert.containsText('@flashInfo', 'Company record updated')
         return this
       },
     },

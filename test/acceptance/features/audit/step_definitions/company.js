@@ -4,14 +4,17 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
+  const Message = client.page.Message()
   const Company = client.page.Company()
   const Contact = client.page.Contact()
-  const auditContact = client.page.AuditContact()
-  const auditCompany = client.page.AuditCompany()
+  const AuditContact = client.page.AuditContact()
+  const AuditCompany = client.page.AuditCompany()
+  const AuditList = client.page.AuditList()
   const foreignCompanyName = 'Venus'
   let companyName
   let description
   let website
+  let userName
 
   Given(/^I Amend (.*) records of an existing company record$/, async (number) => {
     description = faker.name.jobDescriptor()
@@ -19,13 +22,16 @@ defineSupportCode(({ Given, Then, When }) => {
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
-    await auditContact
-      .getText('@lastContactFromList', (result) => {
+    await AuditList.section.lastContactInList
+      .getText('@header', (result) => {
         companyName = result.value
       })
-      .click('@lastContactFromList')
-    await auditCompany
+      .click('@header')
+    await AuditCompany
       .editCompanyRecords(description, website, number)
+      .submitForm('form')
+    await Message
+      .verifySuccessMessage()
   })
 
   When(/^I search for this company record$/, async () => {
@@ -34,26 +40,30 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(companyName)
     await Contact
       .click('@firstCompanyFromList')
+    await AuditContact
+      .getText('@userName', (result) => {
+        userName = result.value
+      })
   })
 
   Then(/^I see the name of the person who made the recent company record changes$/, async () => {
-    await auditContact
-      .verify.containsText('@advisorNameFromList', 'Test CMU 1')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@adviser', userName)
   })
 
   Then(/^I see the date time stamp when the recent company record changed$/, async () => {
-    const datetime = format(new Date(), 'D MMM YYYY')
-    await auditContact
-      .verify.containsText('@createdDateFromFirstList', datetime)
+    const today = format(new Date(), 'D MMM YYYY')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@header', today)
   })
 
   Then(/^I see the total number of changes occurred recently on this company record$/, async () => {
-    await auditContact
-      .verify.containsText('@changedItemsCount', '2 changes')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@changeCount', '2 changes')
   })
 
   Then(/^I see the field names that were recently changed on this company record$/, async () => {
-    await auditContact
-      .verify.containsText('@fieldNameFromList', 'Business description')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@fields', 'Business description')
   })
 })
