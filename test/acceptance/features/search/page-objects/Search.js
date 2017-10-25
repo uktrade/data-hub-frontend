@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
 const getSearchResultsTabSelector = (text) =>
   getSelectorForElementWithText(
@@ -24,6 +24,7 @@ module.exports = {
   elements: {
     term: '#field-term',
     resultsCount: '.c-collection__result-count',
+    addCompanyButton: getButtonWithText('Add company'),
   },
   commands: [
     {
@@ -32,7 +33,7 @@ module.exports = {
           .waitForElementPresent('@term')
           .setValue('@term', term)
           .sendKeys('@term', [ enter ])
-          .wait() // wait for xhr
+          .waitForElementVisible('@addCompanyButton') // wait for xhr
       },
     },
   ],
