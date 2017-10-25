@@ -30,7 +30,7 @@ function populateForm (req, res, next) {
 
   if (get(req.query, 'business_type')) {
     const businessType = find(metadataRepository.businessTypeOptions, (type) => {
-      return type.name.toLowerCase() === req.query.business_type.toLowerCase()
+      return type.id === req.query.business_type
     })
 
     res.locals.form.state.business_type = get(businessType, 'id')
@@ -60,7 +60,7 @@ function populateForm (req, res, next) {
     employeeOptions: metadataRepository.employeeOptions.map(transformObjectToOption),
     turnoverOptions: metadataRepository.turnoverOptions.map(transformObjectToOption),
     countryOptions: metadataRepository.countryOptions.map(transformObjectToOption),
-    businessType: req.query.business_type || get(res.locals, 'company.business_type.name'),
+    businessType: req.query.business_type || get(res.locals, 'company.business_type.id'),
     showTradingAddress: get(res.locals, 'form.state.trading_address_1'),
   })
 
