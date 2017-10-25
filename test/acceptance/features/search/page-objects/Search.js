@@ -25,6 +25,17 @@ module.exports = {
     term: '#field-term',
     resultsCount: '.c-collection__result-count',
   },
+  commands: [
+    {
+      search (term, enter) {
+        return this
+          .waitForElementPresent('@term')
+          .setValue('@term', term)
+          .sendKeys('@term', [ enter ])
+          .wait() // wait for xhr
+      },
+    },
+  ],
   sections: {
     tabs: {
       selector: '.c-entity-search__aggregations',
@@ -62,7 +73,4 @@ module.exports = {
       },
     },
   },
-  commands: [
-    {},
-  ],
 }
