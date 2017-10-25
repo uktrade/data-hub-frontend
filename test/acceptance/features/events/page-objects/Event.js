@@ -85,6 +85,7 @@ module.exports = {
         }, details)
 
         this
+          .waitForElementPresent('@sharedYes')
           .click('@sharedYes')
           .api.perform(async (done) => {
             // get select options text

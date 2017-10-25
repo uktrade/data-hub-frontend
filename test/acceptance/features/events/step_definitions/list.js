@@ -17,7 +17,7 @@ defineSupportCode(({ Then, When }) => {
 
   When(/^I click the add an event link$/, async () => {
     await EventList
-      .assert.elementPresent('@addEventButton')
+      .waitForElementPresent('@addEventButton')
       .click('@addEventButton')
   })
 
