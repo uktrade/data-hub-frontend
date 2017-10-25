@@ -39,6 +39,18 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewInvestmentProject(projectName)
   })
 
+  When(/^I create a new Investment project without optional fields$/, async () => {
+    projectName = faker.commerce.productName()
+    await Company
+      .navigate()
+      .findCompany(foreignCompanyName)
+    await Contact
+      .clickOnFirstCompanyFromList()
+    await InvestmentProject
+      .clickInvestmentsTab()
+      .createNewInvestmentProjectWithoutOptionalFields(projectName)
+  })
+
   Then(/^I verify my newly created Investment project in company profile$/, async () => {
     await Company
       .navigate()
