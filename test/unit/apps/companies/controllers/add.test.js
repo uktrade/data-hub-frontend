@@ -79,7 +79,6 @@ describe('Company add controller', function () {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.companyTypeOptions).to.deep.equal({
             ltd: 'UK private or public limited company',
-            ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
             foreign: 'Foreign organisation',
           })
@@ -99,7 +98,6 @@ describe('Company add controller', function () {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.companyTypeOptions).to.deep.equal({
             ltd: 'UK private or public limited company',
-            ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
             foreign: 'Foreign organisation',
           })
@@ -247,7 +245,6 @@ describe('Company add controller', function () {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.companyTypeOptions).to.deep.equal({
               ltd: 'UK private or public limited company',
-              ltdchild: 'Child of a UK private or public limited company',
               ukother: 'Other type of UK organisation',
               foreign: 'Foreign organisation',
             })
