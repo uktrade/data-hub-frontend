@@ -1,4 +1,5 @@
 const request = require('request-promise')
+const config = require('../../config')
 
 const logger = require('../../config/logger')
 
@@ -54,6 +55,9 @@ module.exports = (token, opts) => {
 
   if (process.env.PROXY) {
     requestOptions.proxy = process.env.PROXY
+    if (config.isDev) {
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+    }
   }
 
   if (token) {
