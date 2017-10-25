@@ -4,26 +4,16 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Given, Then, When }) => {
   const Login = client.page.Login()
 
-  // Given
-
   Given(/^I am an authenticated user on the data hub website$/, async () => {
     await Login
       .navigate()
       .authenticate()
   })
 
-  Given(/^I am not logged in$/, async () => {
-    client
-      .deleteCookies()
-      .refresh()
-
-    await Login
-      .assert.elementPresent('@signInLink')
-  })
-
-  // When
-
   When(/^I am on the Data Hub login page$/, async () => {
+    await client
+      .deleteCookies()
+
     await Login
       .navigate()
       .waitForElementVisible('@signInForm')
@@ -39,8 +29,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .setValue('@usernameField', 'not@user')
       .setValue('@passwordField', 'nah')
   })
-
-  // Then
 
   Then(/^I should be successfully logged in$/, async () => {
     await Login
