@@ -118,6 +118,9 @@ const labels = {
       total_investment: 'Investment value',
       estimated_land_date_before: 'Estimated land date before',
       estimated_land_date_after: 'Estimated land date after',
+      status: 'Status',
+      uk_region_location: 'UK Region',
+      investor_company_country: 'Country of origin',
     },
   },
   clientRelationshipManagementLabels: {
