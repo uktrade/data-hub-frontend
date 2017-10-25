@@ -49,7 +49,6 @@ function postAddStepOne (req, res, next) {
   let params
   switch (req.body.business_type) {
     case 'ltd':
-    case 'ltdchild':
       params = {
         business_type: req.body.business_type,
         country: 'uk',
