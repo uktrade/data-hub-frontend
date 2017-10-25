@@ -173,7 +173,7 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I see the list in A-Z alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header < this.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() < this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
@@ -197,7 +197,7 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I see the list in Z-A alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header > this.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() > this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
