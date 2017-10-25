@@ -35,6 +35,28 @@ const investmentFiltersFields = [
     hint: 'YYYY-MM-DD',
     placeholder: 'e.g. 2019-05-09',
   },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'status',
+    type: 'checkbox',
+    options: metadataRepo.investmentStatusOptions,
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'uk_region_location',
+    initialOption: '-- Select region --',
+    options () {
+      return metadataRepo.regionOptions.map(transformObjectToOption)
+    },
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'investor_company_country',
+    initialOption: '-- Select country --',
+    options () {
+      return metadataRepo.countryOptions.map(transformObjectToOption)
+    },
+  },
 ].map(filter => {
   return Object.assign(filter, {
     label: collectionFilterLabels.edit[filter.name],
@@ -162,12 +184,7 @@ const statusFormConfig = {
     name: 'status',
     label: 'Status',
     isLabelHidden: true,
-    options: [
-      { label: 'Ongoing', value: 'ongoing' },
-      { label: 'Delayed', value: 'delayed' },
-      { label: 'Abandoned', value: 'abandoned' },
-      { label: 'Lost', value: 'lost' },
-    ],
+    options: metadataRepo.investmentStatusOptions,
   }],
 }
 
