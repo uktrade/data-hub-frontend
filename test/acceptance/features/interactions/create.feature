@@ -1,4 +1,4 @@
-@interactions-create @ignore
+@interactions-create
 Feature: Save an Interaction in Data hub
   As a data hub user
   I would like to add an interaction to data hub
