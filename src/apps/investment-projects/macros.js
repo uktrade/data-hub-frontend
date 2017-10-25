@@ -184,12 +184,7 @@ const statusFormConfig = {
     name: 'status',
     label: 'Status',
     isLabelHidden: true,
-    options: [
-      { label: 'Ongoing', value: 'ongoing' },
-      { label: 'Delayed', value: 'delayed' },
-      { label: 'Abandoned', value: 'abandoned' },
-      { label: 'Lost', value: 'lost' },
-    ],
+    options: metadataRepo.investmentStatusOptions,
   }],
 }
 
