@@ -115,7 +115,7 @@
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
-    "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci --skiptags ignore",
+    "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --verbose --env circleci --skiptags ignore",
     "heroku-postbuild": "npm rebuild && npm run build"
   },
   "pre-commit": [
