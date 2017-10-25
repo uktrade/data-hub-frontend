@@ -127,7 +127,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .click('@addInteractionButton')
   })
 
-  When(/^navigating to the create investment project interactions and services step 1 page/, async function () {
+  When(/^navigating to the create investment project interaction page/, async function () {
   })
 
   When(/^selecting interaction/, async function () {

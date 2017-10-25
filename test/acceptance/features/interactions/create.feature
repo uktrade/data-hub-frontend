@@ -31,9 +31,9 @@ Background:
   Scenario: Interaction fields from investment projects
 
     And a company is created for interactions
+    And a company contact is created for interactions
     And a company investment project is created for interactions
-    When navigating to the create investment project interactions and services step 1 page
-    And selecting interaction
+    When navigating to the create investment project interaction page
     Then there are interaction fields
     And interaction fields are pre-populated
 
@@ -53,16 +53,6 @@ Background:
     And a company is created for interactions
     And a company contact is created for interactions
     When navigating to the create contact interactions and services step 1 page
-    And selecting service delivery
-    Then there are service delivery fields
-    And interaction fields are pre-populated
-
-  @interactions-create--investment-projects-service-delivery @ignore
-  Scenario: Save service delivery from investment projects
-
-    And a company is created for interactions
-    And a company investment project is created for interactions
-    When navigating to the create investment project interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
     And interaction fields are pre-populated
