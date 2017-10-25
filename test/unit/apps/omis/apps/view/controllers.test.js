@@ -4,6 +4,7 @@ const contactData = require('~/test/unit/data/simple-contact')
 
 const orderMock = {
   id: '1230asd-123dasda',
+  status: 'draft',
   contact: {
     id: '123dasda-1230asd',
   },
@@ -179,23 +180,48 @@ describe('OMIS View controllers', () => {
     beforeEach(() => {
       this.breadcrumbSpy = this.sandbox.stub().returnsThis()
       this.renderSpy = this.sandbox.spy()
+      this.redirectSpy = this.sandbox.spy()
 
       this.resMock = {
         breadcrumb: this.breadcrumbSpy,
+        redirect: this.redirectSpy,
         render: this.renderSpy,
+        locals: {
+          order: orderMock,
+        },
       }
     })
 
-    it('should set a breadcrumb option', () => {
-      this.controllers.renderPaymentReceipt({}, this.resMock)
+    context('when an order is not paid', () => {
+      it('should redirect back to the order overview', () => {
+        this.controllers.renderPaymentReceipt({}, this.resMock)
 
-      expect(this.breadcrumbSpy).to.have.been.called
+        expect(this.redirectSpy).to.have.been.calledWith(`/omis/${this.resMock.locals.order.id}`)
+      })
     })
 
-    it('should render a template', () => {
-      this.controllers.renderPaymentReceipt({}, this.resMock)
+    context('when an order is in paid state', () => {
+      beforeEach(() => {
+        this.resMock.locals.order.status = 'paid'
+      })
 
-      expect(this.renderSpy).to.have.been.called
+      it('should set a breadcrumb option', () => {
+        this.controllers.renderPaymentReceipt({}, this.resMock)
+
+        expect(this.breadcrumbSpy).to.have.been.called
+      })
+
+      it('should render a template', () => {
+        this.controllers.renderPaymentReceipt({}, this.resMock)
+
+        expect(this.renderSpy).to.have.been.called
+      })
+
+      it('should not redirect', () => {
+        this.controllers.renderPaymentReceipt({}, this.resMock)
+
+        expect(this.redirectSpy).not.to.have.been.called
+      })
     })
   })
 })
