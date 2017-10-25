@@ -1,0 +1,123 @@
+{% extends '_layouts/datahub-base.njk' %}
+
+{% block body_main_content %}
+  {% set billingAddress = [
+    invoice.billing_contact_name,
+    invoice.billing_address_1,
+    invoice.billing_address_2,
+    invoice.billing_address_town,
+    invoice.billing_address_county,
+    invoice.billing_address_postcode,
+    invoice.billing_address_country.name
+  ] | removeNilAndEmpty | join('<br>') %}
+
+  {% set invoiceAddress = [
+    invoice.invoice_company_name,
+    invoice.invoice_address_1,
+    invoice.invoice_address_2,
+    invoice.invoice_address_town,
+    invoice.invoice_address_county,
+    invoice.invoice_address_postcode,
+    invoice.invoice_address_country.name
+  ] | removeNilAndEmpty | join('<br>') %}
+
+  <div class="u-clearfix">
+    <div class="u-float-left">
+      {{ MetaList({
+        items: [
+          { label: 'For the attention of', value: billingAddress, safe: true },
+          { label: 'Purchase order (PO) number', value: invoice.po_number },
+          { label: 'Receipt date', value: invoice.created_on, type: 'datetime' }
+        ],
+        modifier: 'stacked',
+        itemModifier: 'stacked'
+      }) }}
+    </div>
+
+    <div class="u-float-right">
+      {{ MetaList({
+        items: [
+          { label: 'From (charging point)', value: invoiceAddress, safe: true },
+          { label: 'VAT number', value: invoice.invoice_vat_number }
+        ],
+        modifier: 'stacked',
+        itemModifier: 'stacked'
+      }) }}
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Order number</th>
+        <th>Service description</th>
+        <th>Market (country)</th>
+        <th></th>
+        <th align="right">Net amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{ order.reference }}
+        </td>
+        <td>
+          OMIS
+        </td>
+        <td>
+          {{ order.primary_market.name }}
+        </td>
+        <td></td>
+        <td align="right">
+          {{ order.subtotal_cost | formatCurrency }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="table__cell--plain"></td>
+        <th>
+          VAT {{ 'at 20%' if order.vat_cost > 0 }}
+        </th>
+        <td align="right">
+          {{ order.vat_cost | formatCurrency }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" class="table__cell--plain"></td>
+        <th>
+          Total amount
+        </th>
+        <td align="right">
+          <strong>{{ order.total_cost | formatCurrency }}</strong>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <h2 class="heading-medium">Payment details ({{ payments.length }} {{ ' payment' | pluralise(payments.length) }})</h2>
+
+  {% for payment in payments %}
+    <h3 class="heading-small">Payment {{ loop.index }}</h3>
+
+    {{ MetaList({
+      items: [
+        { label: 'Method', value: payment.method | upper },
+        { label: 'Amount received', value: payment.amount | formatCurrency },
+        { label: 'Received on', value: payment.received_on, type: 'date' },
+        { label: 'Transaction reference', value: payment.transaction_reference }
+      ],
+      modifier: 'stacked',
+      itemModifier: 'stacked'
+    }) }}
+  {% endfor %}
+
+  <ul class="list-spaced u-print-hide">
+    <li>
+      <a href="/omis/reconciliation">Reconcile another order</a>
+    </li>
+    <li>
+      <a href="/omis/{{ order.id }}">Return to order</a>
+    </li>
+  </ul>
+{% endblock %}
