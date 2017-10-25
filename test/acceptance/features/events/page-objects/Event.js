@@ -58,7 +58,7 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm ({ details = {}, callback }) {
+      populateCreateEventForm (details = {}, callback) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
         const event = assign({}, {
@@ -88,31 +88,27 @@ module.exports = {
           .waitForElementPresent('@sharedYes')
           .click('@sharedYes')
           .api.perform(async (done) => {
-            // get select options text
-
-            this
-              .api.perform((done) => {
-                keys(pickBy(event, isNull)).map((key) => {
+            Promise.all(
+              keys(pickBy(event, isNull)).map((key) => {
+                return new Promise((resolve) => {
                   this.getListOption(`@${camelCase(key)}`, (optionText) => {
-                    event[key] = optionText
-                    done()
+                    event[key] = optionText.trim()
+                    resolve()
                   })
                 })
               })
-
-            if (event.address_country === 'United Kingdom') {
-              this
-                .api.perform((done) => {
-                  this.getListOption('@ukRegion', (ukRegion) => {
-                    event.uk_region = ukRegion
-                    done()
+            )
+              .then(() => {
+                if (event.address_country === 'United Kingdom') {
+                  return new Promise((resolve) => {
+                    this.getListOption('@ukRegion', (ukRegion) => {
+                      event.uk_region = ukRegion
+                      resolve()
+                    })
                   })
-                })
-            }
-
-            this
-              .api.perform((done) => {
-                // loop through all form inputs and set stored values
+                }
+              })
+              .then(() => {
                 for (const key in event) {
                   if (event[key]) {
                     this.setValue(`[name="${key}"]`, event[key])
@@ -120,8 +116,6 @@ module.exports = {
                 }
                 done()
               })
-
-            done()
           })
 
         callback(event)

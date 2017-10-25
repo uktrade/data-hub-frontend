@@ -9,9 +9,7 @@ defineSupportCode(function ({ Then, When }) {
   When(/^I create an event$/, async function () {
     await Event
       .navigate()
-      .populateCreateEventForm({
-        callback: (event) => set(this.state, 'event', event),
-      })
+      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
       .click('@saveButton')
       .wait()
   })
