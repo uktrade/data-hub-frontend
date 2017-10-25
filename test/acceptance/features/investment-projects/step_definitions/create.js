@@ -46,7 +46,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Contact
       .clickOnFirstCompanyFromList()
     await InvestmentProject
-      .clickInvestmentProjectsTab()
+      .clickInvestmentsTab()
       .getText('@projectNameFromCompanyProfile', (result) => {
         InvestmentProject.assert.equal(result.value, projectName)
       })

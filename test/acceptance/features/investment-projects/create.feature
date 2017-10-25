@@ -1,4 +1,4 @@
-@investment-projects-create @ignore
+@investment-projects-create
 Feature: Create a new Investment project
   As an existing user
   I would like to create a new Investment project
@@ -11,7 +11,7 @@ Feature: Create a new Investment project
 
     When I navigate to Investments page of any company
     Then I verify an option to add a new Investment project
-    And I logout of Data Hub website
+    And I log out of Data Hub website
 
   @investment-projects-create--foreign-equity
   Scenario: Create a new Investment project as a source of foreign equity investment
@@ -21,7 +21,7 @@ Feature: Create a new Investment project
     And I verify my newly created Investment project in company profile
     And I verify Type of Investment is shown as "FDI, Acquisition"
 
-  @investment-projects-create--different-client-relation-manager
+  @investment-projects-create--different-client-relation-manager @ignore
   Scenario: Create a new Investment project with a different client relation manager
 
     When I create a new Investment project with a different client relation manager
@@ -29,7 +29,7 @@ Feature: Create a new Investment project
     And I verify my newly created Investment project in company profile
     And I verify the client relation manager details shown under Project team
 
-  @investment-projects-create--different-referral-source-adviser
+  @investment-projects-create--different-referral-source-adviser @ignore
   Scenario: Create a new Investment project with a different referral source adviser
 
     When I create a new Investment project with a different referral source adviser
@@ -37,7 +37,7 @@ Feature: Create a new Investment project
     And I verify my newly created Investment project in company profile
     And I verify the referral source adviser details shown under Project team
 
-  @investment-projects-create--different-client-referral-contacts
+  @investment-projects-create--different-client-referral-contacts @ignore
   Scenario: Create a new Investment project with different client relation manager and referral source adviser
 
     When I create a new Investment project with different client relation manager and referral source adviser
@@ -61,7 +61,7 @@ Feature: Create a new Investment project
     And I verify my newly created Investment project in company profile
     And I verify Type of Investment is shown as "Non-FDI, Advanced Engineering Supply Chain"
 
-  @investment-projects-create--non-foreign-equity
+  @investment-projects-create--non-foreign-equity @ignore
   Scenario: Create a new Investment project as not a source of foreign equity investment
 
     When I create a new Investment project as not a source of foreign equity investment
