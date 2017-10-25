@@ -22,7 +22,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewPrimaryContactWithNewCompanyAddress(firstName, lastName)
   })
 
-  Given(/^I create a new contact with same address as company$/, async () => {
+  Given(/^I create a new contact with same address as company$/, async function () {
     firstName = faker.name.firstName()
     lastName = faker.name.lastName()
     await Company
@@ -30,7 +30,9 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .navigateToContactsPage()
-      .createNewPrimaryContact(firstName, lastName)
+      .createNewPrimaryContact({ firstName, lastName }, (contact) => {
+        this.state.contact = contact
+      })
   })
 
   When(/^I search for this Contact name$/, async () => {
