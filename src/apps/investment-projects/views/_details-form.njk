@@ -31,7 +31,7 @@
     label: 'Project name',
     placeholder: 'e.g project zeus',
     error: form.errors.messages.name,
-    value: form.state['name']
+    value: form.state.name
   }) }}
 
   {{ TextField({
@@ -39,7 +39,7 @@
     label: 'Project description',
     type: 'textarea',
     error: form.errors.messages.description,
-    value: form.state['description']
+    value: form.state.description
   }) }}
 
   {{ TextField({
@@ -49,7 +49,7 @@
     type: 'textarea',
     optional: true,
     error: form.errors.messages.anonymous_description,
-    value: form.state['anonymous_description']
+    value: form.state.anonymous_description
   }) }}
 
 {% if investmentData.id %}
@@ -57,16 +57,16 @@
     type: 'radio',
     name: 'investment_type',
     label: 'Type of investment',
-    value: form.state['investment_type'],
-    error: form.errors.messages['investment_type'],
+    value: form.state.investment_type,
+    error: form.errors.messages.investment_type,
     options: form.options.investmentTypes
   }) }}
 
   {{ MultipleChoiceField({
     name: 'fdi_type',
     label: 'Type of foreign direct investment (FDI)',
-    error: form.errors.messages['fdi_type'],
-    value: form.state['fdi_type'],
+    error: form.errors.messages.fdi_type,
+    value: form.state.fdi_type,
     options: form.options.fdi,
     initialOption: '-- Select an FDI type --',
     condition: {
@@ -79,8 +79,8 @@
   {{ MultipleChoiceField({
     name: 'non_fdi_type',
     label: 'Type of non-foreign direct investment (Non-FDI)',
-    error: form.errors.messages['non_fdi_type'],
-    value: form.state['non_fdi_type'],
+    error: form.errors.messages.non_fdi_type,
+    value: form.state.non_fdi_type,
     options: form.options.nonFdi,
     initialOption: '-- Select a Non-FDI type --',
     condition: {
@@ -96,27 +96,27 @@
     label: 'Primary sector',
     initialOption: '-- Choose a sector --',
     options: form.options.primarySectors,
-    error: form.errors.messages['sector'],
-    value: form.state['sector']
+    error: form.errors.messages.sector,
+    value: form.state.sector
   }) }}
 
   {% call Fieldset({ legend: 'Business activities' }) %}
-    {% if form.errors.messages['business_activities'] %}
-      <span class="c-form-group__error-message">{{ form.errors.messages['business_activities'] }}</span>
+    {% if form.errors.messages.business_activities %}
+      <span class="c-form-group__error-message">{{ form.errors.messages.business_activities }}</span>
     {% endif %}
 
     <div class="js-AddItems"
       data-item-selector=".c-form-group"
       data-add-button-selector=".js-AddItems__add">
 
-      {% for business_activity in form.state['business_activities'] %}
+      {% for business_activity in form.state.business_activities %}
         {{ MultipleChoiceField({
           name: 'business_activities',
           label: 'Business activity',
           isLabelHidden: true,
           initialOption: '-- Choose a business activity --',
           options: form.options.businessActivities,
-          error: form.errors.messages['business_activities'],
+          error: form.errors.messages.business_activities,
           value: business_activity
         }) }}
       {% endfor %}
@@ -130,29 +130,29 @@
       name: 'other_business_activity',
       label: 'Other business activity (if not on list)',
       placeholder: 'e.g meet and greet dinner',
-      error: form.errors.messages['other_business_activity'],
-      value: form.state['other_business_activity']
+      error: form.errors.messages.other_business_activity,
+      value: form.state.other_business_activity
     }) }}
   {% endcall %}
 
   {% call Fieldset({ legend: 'Client contact' }) %}
 
-    {% if form.errors.messages['client_contacts'] %}
-      <span class="c-form-group__error-message">{{ form.errors.messages['client_contacts'] }}</span>
+    {% if form.errors.messages.client_contacts %}
+      <span class="c-form-group__error-message">{{ form.errors.messages.client_contacts }}</span>
     {% endif %}
 
     <div class="js-AddItems"
       data-item-selector=".c-form-group"
       data-add-button-selector=".js-AddItems__add">
 
-      {% for client_contact in form.state['client_contacts'] %}
+      {% for client_contact in form.state.client_contacts %}
         {{ MultipleChoiceField({
           name: 'client_contacts',
           label: 'Client contact',
           isLabelHidden: true,
           initialOption: '-- Pick a contact --',
           options: form.options.contacts,
-          error: form.errors.messages['client_contacts'],
+          error: form.errors.messages.client_contacts,
           value: client_contact
         }) }}
       {% endfor %}
@@ -169,9 +169,9 @@
     type: 'radio',
     name: 'is_relationship_manager',
     label: 'Are you the client relationship manager for this project?',
-    value: form.state['is_relationship_manager'],
+    value: form.state.is_relationship_manager,
     modifier: 'inline',
-    error: form.errors.messages['is_relationship_manager'],
+    error: form.errors.messages.is_relationship_manager,
     options: [
       {
         value: user.id,
@@ -186,8 +186,8 @@
         macroName: 'MultipleChoiceField',
         name: 'client_relationship_manager',
         label: 'Client relationship manager',
-        error: form.errors.messages['client_relationship_manager'],
-        value: form.state['client_relationship_manager'],
+        error: form.errors.messages.client_relationship_manager,
+        value: form.state.client_relationship_manager,
         options: form.options.advisers,
         initialOption: '-- Select client relationship manager --',
         condition: {
@@ -204,9 +204,9 @@
     type: 'radio',
     name: 'is_referral_source',
     label: 'Are you the referral source for this project?',
-    value: form.state['is_referral_source'],
+    value: form.state.is_referral_source,
     modifier: 'inline',
-    error: form.errors.messages['is_referral_source'],
+    error: form.errors.messages.is_referral_source,
     options: [
       {
         value: user.id,
@@ -222,8 +222,8 @@
     macroName: 'MultipleChoiceField',
     name: 'referral_source_adviser',
     label: 'Referral source adviser',
-    error: form.errors.messages['referral_source_adviser'],
-    value: form.state['referral_source_adviser'],
+    error: form.errors.messages.referral_source_adviser,
+    value: form.state.referral_source_adviser,
     options: form.options.advisers,
     initialOption: '-- Select referral source adviser --',
     modifier: 'subfield',
@@ -238,15 +238,15 @@
     label: 'Referral source activity',
     initialOption: '-- Choose referral source activity --',
     options: form.options.referralSourceActivities,
-    error: form.errors.messages['referral_source_activity'],
-    value: form.state['referral_source_activity']
+    error: form.errors.messages.referral_source_activity,
+    value: form.state.referral_source_activity
   }) }}
 
   {{ MultipleChoiceField({
     name: 'referral_source_activity_marketing',
     label: 'Marketing',
-    error: form.errors.messages['referral_source_activity_marketing'],
-    value: form.state['referral_source_activity_marketing'],
+    error: form.errors.messages.referral_source_activity_marketing,
+    value: form.state.referral_source_activity_marketing,
     options: form.options.referralSourceMarketing,
     initialOption: '-- Choose a marketing type --',
     condition: {
@@ -259,8 +259,8 @@
   {{ MultipleChoiceField({
     name: 'referral_source_activity_website',
     label: 'Website',
-    error: form.errors.messages['referral_source_activity_website'],
-    value: form.state['referral_source_activity_website'],
+    error: form.errors.messages.referral_source_activity_website,
+    value: form.state.referral_source_activity_website,
     options: form.options.referralSourceWebsite,
     initialOption: '-- Choose a website --',
     condition: {
@@ -274,8 +274,8 @@
     name: 'referral_source_activity_event',
     label: 'Event',
     placeholder: 'e.g conversation at conference',
-    error: form.errors.messages['referral_source_activity_event'],
-    value: form.state['referral_source_activity_event'],
+    error: form.errors.messages.referral_source_activity_event,
+    value: form.state.referral_source_activity_event,
     condition: {
       name: 'referral_source_activity',
       value: form.options.referralSourceActivities[2].value
