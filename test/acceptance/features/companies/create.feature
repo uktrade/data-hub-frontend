@@ -1,4 +1,4 @@
-@companies-create @ignore
+@companies-create
 Feature: Create a new company
   As an existing user
   I would like to create a new company in various locations
