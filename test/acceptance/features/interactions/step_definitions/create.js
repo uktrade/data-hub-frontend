@@ -12,6 +12,7 @@ defineSupportCode(({ Given, When, Then }) => {
   const Company = client.page.Company()
   const Interaction = client.page.Interaction()
   const Contact = client.page.Contact()
+  const Search = client.page.Search()
 
   Given(/^a company is created for interactions$/, async function () {
     const companyName = appendUid(faker.company.companyName())
@@ -42,11 +43,10 @@ defineSupportCode(({ Given, When, Then }) => {
     await Company.section.detailsTabs
       .click('@contacts')
 
-    const firstName = faker.name.firstName()
-    const lastName = faker.name.lastName()
-
     await Contact
-      .createNewPrimaryContact(firstName, lastName)
+      .createNewPrimaryContact({
+        callback: (contact) => set(this.state, 'contact', contact),
+      })
   })
 
   Given(/^a company investment project is created for interactions$/, async function () {
@@ -89,7 +89,7 @@ defineSupportCode(({ Given, When, Then }) => {
   When(/^adding a service delivery for the investment project/, async function () {
   })
 
-  When(/^navigating to the create company interaction step 1 page/, async function () {
+  When(/^navigating to the create company interactions and services step 1 page/, async function () {
     const companyName = this.state.company.name
 
     await client
@@ -110,37 +110,29 @@ defineSupportCode(({ Given, When, Then }) => {
       .wait()
   })
 
-  When(/^navigating to the create company service delivery step 1 page/, async function () {
-    const companyName = this.state.company.name
-
+  When(/^navigating to the create contact interactions and services step 1 page/, async function () {
     await client
       .url(dashboardPage)
 
-    await Company
-      .findCompany(getUid(companyName))
-      .section.firstCompanySearchResult
+    await Search
+      .search(getUid(this.state.contact.lastName), client.Keys.ENTER)
+      .section.tabs.click('@contacts')
+
+    await Contact
+      .section.firstContactSearchResult
       .click('@header')
       .wait()
 
-    await Company.section.detailsTabs
+    await Contact.section.detailsTabs
       .click('@interactions')
       .wait()
 
-    await Company
+    await Contact
       .click('@addInteractionButton')
       .wait()
   })
 
-  When(/^navigating to the create contact interaction step 1 page/, async function () {
-  })
-
-  When(/^navigating to the create contact service delivery step 1 page/, async function () {
-  })
-
-  When(/^navigating to the create investment project interaction step 1 page/, async function () {
-  })
-
-  When(/^navigating to the create investment project service delivery step 1 page/, async function () {
+  When(/^navigating to the create investment project interactions and services step 1 page/, async function () {
   })
 
   When(/^selecting interaction/, async function () {
