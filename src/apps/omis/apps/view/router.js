@@ -5,7 +5,11 @@ const {
   setOrderBreadcrumb,
   setArchivedDocumentsBaseUrl,
 } = require('../../middleware')
-const { renderWorkOrder, renderQuote } = require('./controllers')
+const {
+  renderWorkOrder,
+  renderQuote,
+  renderPaymentReceipt,
+} = require('./controllers')
 const {
   setTranslation,
   setCompany,
@@ -13,6 +17,8 @@ const {
   setQuotePreview,
   setQuote,
   setQuoteForm,
+  setInvoice,
+  setPayments,
   generateQuote,
   cancelQuote,
 } = require('./middleware')
@@ -33,6 +39,7 @@ router.use(setArchivedDocumentsBaseUrl)
 
 router.get('/', redirectToFirstNavItem)
 router.get('/work-order', renderWorkOrder)
+router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
   .get(setQuotePreview, setQuote, setQuoteForm, renderQuote)

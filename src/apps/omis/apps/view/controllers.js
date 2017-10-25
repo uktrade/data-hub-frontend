@@ -34,7 +34,14 @@ function renderQuote (req, res) {
     .render('omis/apps/view/views/quote')
 }
 
+function renderPaymentReceipt (req, res) {
+  res
+    .breadcrumb('Payment receipt')
+    .render('omis/apps/view/views/payment-receipt')
+}
+
 module.exports = {
   renderWorkOrder,
   renderQuote,
+  renderPaymentReceipt,
 }
