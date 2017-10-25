@@ -21,6 +21,13 @@ Feature: Create a new Investment project
     And I verify my newly created Investment project in company profile
     And I verify Type of Investment is shown as "FDI, Acquisition"
 
+  @investment-projects-create--no-optional-fields
+  Scenario: Create a new Investment project as a source of foreign equity investment
+
+    When I create a new Investment project without optional fields
+    Then I see the success message
+    And I verify my newly created Investment project in company profile
+
   @investment-projects-create--different-client-relation-manager @ignore
   Scenario: Create a new Investment project with a different client relation manager
 
