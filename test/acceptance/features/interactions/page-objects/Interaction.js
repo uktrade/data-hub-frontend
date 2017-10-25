@@ -37,7 +37,7 @@ module.exports = {
   },
   commands: [
     {
-      createInteraction ({ details = {}, callback }) {
+      createInteraction (details = {}, callback) {
         const recentDate = faker.date.recent()
         const interaction = assign({}, {
           subject: faker.lorem.word(),
@@ -47,8 +47,9 @@ module.exports = {
           dateOfInteractionDay: getDate(recentDate),
         }, details)
 
-        this.api
-          .perform((done) => {
+        this
+          .waitForElementVisible('@saveButton')
+          .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
               done()
@@ -79,13 +80,15 @@ module.exports = {
             })
           })
           .perform((done) => {
-            for (const key in this.state.interactionDetails) {
+            for (const key in interaction) {
               if (interaction[key]) {
-                this.setValue(`@${key}`, this.state.interactionDetails[key])
+                this.clearValue(`@${key}`)
+                this.setValue(`@${key}`, interaction[key])
               }
             }
             done()
           })
+
         this.click('@saveButton')
 
         callback(interaction)
