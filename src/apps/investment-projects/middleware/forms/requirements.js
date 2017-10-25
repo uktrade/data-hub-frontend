@@ -1,14 +1,13 @@
-const { assign, get, flatten } = require('lodash')
+const { assign, flatten } = require('lodash')
 const { updateInvestment } = require('../../repos')
 const { requirementsFormConfig } = require('../../macros')
-const { buildFormWithStateAndErrors } = require('../../../builders')
+const {
+  buildFormWithStateAndErrors,
+  buildFormWithState,
+} = require('../../../builders')
 
 function populateForm (req, res, next) {
-  const investmentData = assign({}, res.locals.investmentData, {
-    strategic_drivers: get(res.locals, 'investmentData.strategic_drivers[0].id'),
-    competitor_countries: get(res.locals, 'investmentData.competitor_countries[0].id'),
-    uk_region_locations: get(res.locals, 'investmentData.uk_region_locations[0].id'),
-  })
+  const investmentData = res.locals.investmentData
 
   res.locals.requirementsForm = assign(
     buildFormWithStateAndErrors(requirementsFormConfig, investmentData),
@@ -18,20 +17,32 @@ function populateForm (req, res, next) {
   next()
 }
 
+// Strips out empty entries so they are not posted (which result in errors)
+// and when an error is thrown it doesn't mean yet another is added
+function cleanArray (values) {
+  return flatten([values])
+    .filter(item => item)
+}
+
 function handleFormPost (req, res, next) {
   res.locals.projectId = req.params.investmentId
 
   const formattedBody = assign({}, req.body, {
-    strategic_drivers: flatten([req.body.strategic_drivers]),
-    competitor_countries: req.body.client_considering_other_countries === 'true' ? flatten([req.body.competitor_countries]) : [],
-    uk_region_locations: flatten([req.body.uk_region_locations]),
+    strategic_drivers: cleanArray(req.body.strategic_drivers),
+    competitor_countries: req.body.client_considering_other_countries === 'true' ? cleanArray(req.body.competitor_countries) : [],
+    uk_region_locations: cleanArray(req.body.uk_region_locations),
   })
+
+  if (req.body.add_item) {
+    res.locals.requirementsForm = buildFormWithState(requirementsFormConfig, formattedBody)
+    return next()
+  }
 
   updateInvestment(req.session.token, res.locals.projectId, formattedBody)
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig, req.body, err.error)
+        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig, formattedBody, err.error)
 
         next()
       } else {
