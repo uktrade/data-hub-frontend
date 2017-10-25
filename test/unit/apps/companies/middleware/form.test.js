@@ -54,7 +54,7 @@ describe('Companies form middleware', function () {
       beforeEach(() => {
         this.reqMock = {
           query: {
-            business_type: 'Charity',
+            business_type: 'example-bussiness-type-id-12345',
           },
         }
 
@@ -62,7 +62,7 @@ describe('Companies form middleware', function () {
           '../../../lib/metadata': Object.assign({}, metadataMock, {
             businessTypeOptions: [{
               name: 'Charity',
-              id: '7890qwerty',
+              id: 'example-bussiness-type-id-12345',
             }],
           }),
         })
@@ -71,7 +71,7 @@ describe('Companies form middleware', function () {
       it('should add it to form state', () => {
         this.middlware.populateForm(this.reqMock, this.resMock, this.nextSpy)
 
-        expect(this.resMock.locals.form.state).to.have.property('business_type', '7890qwerty')
+        expect(this.resMock.locals.form.state).to.have.property('business_type', 'example-bussiness-type-id-12345')
       })
     })
   })
