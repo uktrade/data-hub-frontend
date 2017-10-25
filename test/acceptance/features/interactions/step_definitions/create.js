@@ -51,39 +51,10 @@ defineSupportCode(({ Given, When, Then }) => {
   Given(/^a company investment project is created for interactions$/, async function () {
   })
 
-  When(/^adding an interaction for the company/, async function () {
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name), client.Keys.ENTER)
-
-    await Company
-      .section.detailsTabs.waitForElementVisible('@interactions')
-      .click('@interactions')
-
-    await Company
-      .waitForElementVisible('@addInteractionButton')
-      .click('@addInteractionButton')
-
+  When(/^adding an interaction/, async function () {
     await Interaction
-      .createInteraction()
+      .createInteraction({}, (interaction) => set(this.state, 'interaction', interaction))
       .wait()
-  })
-
-  When(/^adding a service delivery for the company/, async function () {
-  })
-
-  When(/^adding an interaction for the contact/, async function () {
-  })
-
-  When(/^adding a service delivery for the contact/, async function () {
-  })
-
-  When(/^adding an interaction for the investment project/, async function () {
-  })
-
-  When(/^adding a service delivery for the investment project/, async function () {
   })
 
   When(/^navigating to the create company interactions and services step 1 page/, async function () {
