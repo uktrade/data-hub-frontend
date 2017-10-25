@@ -23,17 +23,12 @@ defineSupportCode(({ Then, When }) => {
 
   When(/^I populate the create event form$/, async function () {
     await Event
-      .populateCreateEventForm({
-        callback: (event) => set(this.state, 'event', event),
-      })
+      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
   })
 
   When(/^I populate the create event form with United Kingdom and a region$/, async function () {
     await Event
-      .populateCreateEventForm({
-        details: { address_country: 'United Kingdom' },
-        callback: (event) => set(this.state, 'event', event),
-      })
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, (event) => set(this.state, 'event', event))
   })
 
   Then(/^I am taken to the create event page$/, async () => {
@@ -178,7 +173,7 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I see the list in A-Z alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header < this.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() < this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
@@ -202,7 +197,7 @@ defineSupportCode(({ Then, When }) => {
 
   Then(/^I see the list in Z-A alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header > this.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() > this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
