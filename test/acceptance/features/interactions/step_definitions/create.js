@@ -21,10 +21,10 @@ defineSupportCode(({ Given, When, Then }) => {
       .url(companySearchPage)
 
     await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany({
-        details: { name: companyName },
-        callback: (company) => set(this.state, 'company', company),
-      })
+      .createUkNonPrivateOrNonPublicLimitedCompany(
+        { name: companyName },
+        (company) => set(this.state, 'company', company),
+      )
       .wait() // wait for backend to sync
   })
 
