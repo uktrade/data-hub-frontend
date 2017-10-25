@@ -75,7 +75,7 @@ module.exports = {
           .click('@contactsTab')
       },
 
-      createNewPrimaryContact ({ details = {}, callback }) {
+      createNewPrimaryContact (details = {}, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
 
