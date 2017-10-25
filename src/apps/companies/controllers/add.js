@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 const queryString = require('query-string')
 
 const logger = require('../../../../config/logger')
-const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
+const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
@@ -10,7 +10,10 @@ const { transformApiResponseToSearchCollection } = require('../../search/transfo
 const { transformCompaniesHouseCompanyToListItem } = require('../../companies/transformers')
 const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
-function getAddStepOne (req, res, next) {
+function getAddStepOne (req, res) {
+  const ukOtherCompanyOptions = buildUkOtherCompanyOptions()
+  const foreignOtherCompanyOptions = buildForeignOtherCompanyOptions()
+
   res.render('companies/views/add-step-1.njk', {
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
