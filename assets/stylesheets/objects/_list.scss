@@ -26,3 +26,13 @@
   list-style: disc outside;
   padding-left: 1em;
 }
+
+.list-spaced {
+  * + & {
+    margin-top: $default-spacing-unit * 2;
+  }
+
+  li + li {
+    margin-top: $default-spacing-unit / 2;
+  }
+}
