@@ -1,0 +1,30 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  <h1 class="heading-medium">Recipient company</h1>
+
+  {{ EntitySearchForm({
+    inputName: 'term',
+    inputLabel: 'UK company that will receive the money',
+    inputPlaceholder: 'Search for company',
+    inputHint: 'Search for the registered company name, company number or address',
+    searchTerm: searchTerm,
+    isLabelHidden: false
+  }) }}
+
+  {% if results | length %}
+    {{
+      Collection(results | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'company',
+        listModifier: 'block-links',
+        query: QUERY
+      }))
+    }}
+
+    {{ Message({
+      type: 'muted',
+      text: 'If you can’t find the company you’re looking for, try a different search term, check the company’s website or any email correspondence that contains company registration details'
+    }) }}
+  {% endif %}
+{% endblock %}
