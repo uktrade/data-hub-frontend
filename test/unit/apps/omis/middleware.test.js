@@ -1,6 +1,8 @@
 const companyData = require('~/test/unit/data/company.json')
 const orderData = require('~/test/unit/data/omis/simple-order.json')
 
+const omisArchivedDocumentsBaseUrl = 'http://docs-base-url'
+
 describe('OMIS middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
@@ -24,6 +26,9 @@ describe('OMIS middleware', () => {
     this.middleware = proxyquire('~/src/apps/omis/middleware', {
       '../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
+      },
+      '../../../config': {
+        omisArchivedDocumentsBaseUrl: omisArchivedDocumentsBaseUrl,
       },
       '../../../config/logger': {
         error: this.loggerSpy,
@@ -202,6 +207,18 @@ describe('OMIS middleware', () => {
 
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith({}, this.resMock, this.nextSpy)
+    })
+  })
+
+  describe('setArchivedDocumentsBaseUrl()', () => {
+    it('should call setHomeBreadcrumb with order reference', () => {
+      this.middleware.setArchivedDocumentsBaseUrl({}, this.resMock, this.nextSpy)
+
+      expect(this.resMock.locals).to.have.property('archivedDocumentsBaseUrl')
+      expect(this.resMock.locals.archivedDocumentsBaseUrl).to.equal(omisArchivedDocumentsBaseUrl)
+
+      expect(this.nextSpy).to.have.been.calledOnce
+      expect(this.nextSpy).to.have.been.calledWith()
     })
   })
 })
