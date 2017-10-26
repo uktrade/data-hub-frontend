@@ -35,7 +35,7 @@
       {% else %}
         <tbody>
           {% for item in props.items %}
-            {% if item | isString %}
+            {% if not item | isPlainObject %}
               <tr>
                 <td class="c-answers-summary__content" colspan="2">{{ item }}</td>
               </tr>

@@ -58,6 +58,7 @@
 
   @include media(tablet) {
     display: inline-block;
+    vertical-align: top;
 
     & + & {
       margin-left: $default-spacing-unit * 2;
