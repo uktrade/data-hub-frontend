@@ -80,6 +80,7 @@ This file expects the following environment variables:
 | ZEN_SERVICE | Zendesk service ID |
 | SENTRY_DSN | Sentry DSN (optional) |
 | WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
+| OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
 
 Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
@@ -339,14 +340,14 @@ You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
 
 
 ## Continuous Integration
-Data hub uses [CircleCI](https://circleci.com/) for continuous integration. 
+Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
 
 ### Base docker image
-The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/docker-data-hub-base` as a base for running a selenium server and data hub frontend 
+The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/docker-data-hub-base` as a base for running a selenium server and data hub frontend
 Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-base) and [docker](https://hub.docker.com/r/ukti/docker-data-hub-base/) repositories.
 
 ### Data hub backend docker image
-The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo). 
+The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo).
 The `uktrade/data-hub-leeloo` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/data-hub-leeloo](https://hub.docker.com/r/ukti/data-hub-leeloo).
 
 - `user_acceptance_tests` job uses `ukti/data-hub-leeloo:latest`
@@ -358,7 +359,7 @@ CircleCI has been configured to show you a summary report of what has failed on 
 - `lint_code`
 - `user_acceptance_tests`
 
-When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder. 
+When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder.
 This can be accessed by logging in to [CircleCI](https://circleci.com/)
 
 ## Deployment

@@ -1,5 +1,6 @@
 const { assign, get } = require('lodash')
 
+const config = require('../../../config')
 const logger = require('../../../config/logger')
 const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
@@ -44,8 +45,14 @@ function setOrderBreadcrumb (req, res, next) {
   return setHomeBreadcrumb(reference)(req, res, next)
 }
 
+function setArchivedDocumentsBaseUrl (req, res, next) {
+  res.locals.archivedDocumentsBaseUrl = config.omisArchivedDocumentsBaseUrl
+  next()
+}
+
 module.exports = {
   getCompany,
   getOrder,
   setOrderBreadcrumb,
+  setArchivedDocumentsBaseUrl,
 }
