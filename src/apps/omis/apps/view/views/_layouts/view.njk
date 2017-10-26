@@ -2,13 +2,21 @@
 
 {% block local_header %}
   {% set actions %}
-    <p class="c-local-header__action">
-      {% if order.status == 'draft' %}
-        <a href="quote" class="button">Preview quote</a>
-      {% else %}
-        <a href="quote">View quote</a>
-      {% endif %}
-    </p>
+    {% if order.archived_documents_url_path %}
+      <p class="c-local-header__action">
+        <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}">View files and documents</a>
+        <br>
+        (will open another website)
+      </p>
+    {% else %}
+      <p class="c-local-header__action">
+        {% if order.status == 'draft' %}
+          <a href="quote" class="button">Preview quote</a>
+        {% else %}
+          <a href="quote">View quote</a>
+        {% endif %}
+      </p>
+    {% endif %}
   {% endset %}
 
   {% call LocalHeader({
