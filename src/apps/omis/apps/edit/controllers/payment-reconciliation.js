@@ -1,4 +1,4 @@
-const { assign, pick } = require('lodash')
+const { assign, get, pick } = require('lodash')
 const numeral = require('numeral')
 const chrono = require('chrono-node')
 const dateFns = require('date-fns')
@@ -9,11 +9,18 @@ const { Order } = require('../../../models')
 
 class EditPaymentReconciliationController extends EditController {
   async configure (req, res, next) {
+    const orderStatus = get(res.locals, 'order.status')
+
     req.form.options.disableFormAction = false
     req.form.options = assign({}, req.form.options, {
       buttonText: 'Reconcile payment',
       disableFormAction: false,
     })
+
+    if (orderStatus !== 'quote_accepted') {
+      req.form.options.hidePrimaryFormAction = true
+      req.form.options.returnText = 'Return'
+    }
 
     super.configure(req, res, next)
   }
@@ -64,7 +71,7 @@ class EditPaymentReconciliationController extends EditController {
   }
 
   async successHandler (req, res, next) {
-    const nextUrl = req.form.options.next || `/omis/reconciliation`
+    const nextUrl = `/omis/${res.locals.order.id}/payment-receipt`
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
 
     // convert pounds to pence
