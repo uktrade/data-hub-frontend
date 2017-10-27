@@ -13,13 +13,21 @@ module.exports = {
   commands: [
     {
       editContactDetails (telephone, countryCode, number) {
-        this.click('@editContactDetailsButton')
+        this
+          .click('@editContactDetailsButton')
+          .waitForElementVisible('@telephoneCountryCode')
+          .waitForElementVisible('@telephone')
+
         if (number > 1) {
-          this.clearValue('@telephoneCountryCode')
-          this.setValue('@telephoneCountryCode', countryCode)
+          this
+            .clearValue('@telephoneCountryCode')
+            .setValue('@telephoneCountryCode', countryCode)
         }
-        this.clearValue('@telephone')
-        this.setValue('@telephone', telephone)
+
+        this
+          .clearValue('@telephone')
+          .setValue('@telephone', telephone)
+
         return this
       },
     },
