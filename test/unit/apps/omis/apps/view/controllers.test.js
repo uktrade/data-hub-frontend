@@ -174,4 +174,28 @@ describe('OMIS View controllers', () => {
       expect(this.renderSpy).to.have.been.called
     })
   })
+
+  describe('renderPaymentReceipt()', () => {
+    beforeEach(() => {
+      this.breadcrumbSpy = this.sandbox.stub().returnsThis()
+      this.renderSpy = this.sandbox.spy()
+
+      this.resMock = {
+        breadcrumb: this.breadcrumbSpy,
+        render: this.renderSpy,
+      }
+    })
+
+    it('should set a breadcrumb option', () => {
+      this.controllers.renderPaymentReceipt({}, this.resMock)
+
+      expect(this.breadcrumbSpy).to.have.been.called
+    })
+
+    it('should render a template', () => {
+      this.controllers.renderPaymentReceipt({}, this.resMock)
+
+      expect(this.renderSpy).to.have.been.called
+    })
+  })
 })
