@@ -4,14 +4,8 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(({ Then }) => {
   const Message = client.page.Message()
 
-  Then(/^I see the success message$/, async () => {
+  Then(/^I see the (success|error) message$/, async (messageType) => {
     await Message
-      .verifySuccessMessage()
-  })
-
-  Then(/^I see the error message$/, async () => {
-    await Message
-      .waitForElementPresent('@flashMessage')
-      .assert.cssClassPresent('@flashMessage', 'c-message--error')
+      .verifyMessage(messageType)
   })
 })
