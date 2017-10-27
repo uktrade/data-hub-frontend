@@ -1,0 +1,9 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  <h2 class="heading-medium">Key value table</h2>
+  {% component 'key-value-table', items=tableData %}
+
+  <h2 class="heading-medium">Key value striped</h2>
+  {% component 'key-value-table', items=tableData, variant='striped' %}
+{% endblock %}
