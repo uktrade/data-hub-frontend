@@ -2,6 +2,12 @@
 
 {% block local_header %}
   {% set actions %}
+    {% if order.status in ['paid', 'complete'] %}
+      <p class="c-local-header__action">
+        <a href="payment-receipt">View payment receipt</a>
+      </p>
+    {% endif %}
+
     {% if order.archived_documents_url_path %}
       <p class="c-local-header__action">
         <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}">View files and documents</a>
