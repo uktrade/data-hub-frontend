@@ -89,10 +89,20 @@ const investmentSortForm = {
 const requirementsFormConfig = {
   buttonText: 'Save',
   children: [
-    Object.assign({}, globalFields.strategicDrivers, {
-      initialOption: 'Choose a strategic driver',
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      name: 'strategic_drivers',
       label: requirementsLabels.edit.strategic_drivers,
-    }),
+      optional: true,
+      children: [
+        Object.assign({}, globalFields.strategicDrivers, {
+          initialOption: 'Choose a strategic driver',
+          label: requirementsLabels.edit.strategic_drivers,
+          isLabelHidden: true,
+        }),
+      ],
+    },
     {
       macroName: 'TextField',
       type: 'textarea',
@@ -112,21 +122,38 @@ const requirementsFormConfig = {
         { label: 'No', value: 'false' },
       ],
     },
-    Object.assign({}, globalFields.countries, {
-      name: 'competitor_countries',
-      initialOption: 'Select country',
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
       label: requirementsLabels.edit.competitor_countries,
       modifier: 'subfield',
       condition: {
         name: 'client_considering_other_countries',
         value: 'true',
       },
-    }),
-    Object.assign({}, globalFields.ukRegions, {
-      name: 'uk_region_locations',
+      children: [
+        Object.assign({}, globalFields.countries, {
+          name: 'competitor_countries',
+          initialOption: 'Select country',
+          label: requirementsLabels.edit.competitor_countries,
+          isLabelHidden: true,
+        }),
+      ],
+    },
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
       label: requirementsLabels.edit.uk_region_locations,
-      initialOption: 'Select UK region',
-    }),
+      optional: true,
+      children: [
+        Object.assign({}, globalFields.ukRegions, {
+          name: 'uk_region_locations',
+          label: requirementsLabels.edit.uk_region_locations,
+          initialOption: 'Select UK region',
+          isLabelHidden: true,
+        }),
+      ],
+    },
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',

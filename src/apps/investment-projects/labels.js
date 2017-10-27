@@ -45,16 +45,16 @@ const labels = {
   },
   requirementsLabels: {
     view: {
-      strategic_drivers: 'Main strategic driver',
+      strategic_drivers: 'Strategic drivers',
       client_requirements: 'Client requirements',
       competitor_countries: 'Competitor countries',
       uk_region_locations: 'Possible UK locations',
       uk_company: 'UK recipient company',
     },
     edit: {
-      strategic_drivers: 'Main strategic driver behind this investment',
+      strategic_drivers: 'Strategic drivers behind this investment',
       client_considering_other_countries: 'Is the client considering other countries?',
-      uk_region_locations: 'Possible UK location for this investment',
+      uk_region_locations: 'Possible UK locations for this investment',
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
     },
   },
