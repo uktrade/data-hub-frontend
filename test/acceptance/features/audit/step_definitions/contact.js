@@ -34,7 +34,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .editContactDetails(telephone, countryCode, number)
       .submitForm('form')
     await Message
-      .verifySuccessMessage()
+      .verifyMessage('success')
   })
 
   When(/^I search for this Contact record$/, async () => {
@@ -94,7 +94,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@archiveReason')
       .submitForm('form')
     await Message
-      .verifySuccessMessage()
+      .verifyMessage('success')
   })
 
   When(/^I archive this contact record$/, async () => {
@@ -104,14 +104,14 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@archiveReason')
       .submitForm('form')
     await Message
-      .verifySuccessMessage()
+      .verifyMessage('success')
   })
 
   When(/^I unarchive this contact record$/, async () => {
     await AuditContact
       .click('@unarchiveAnContactButton')
     await Message
-      .verifySuccessMessage()
+      .verifyMessage('success')
   })
 
   Then(/^I see the details who archived the contact$/, async () => {
