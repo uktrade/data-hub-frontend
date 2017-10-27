@@ -26,6 +26,7 @@ module.exports = {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
     addCompanyButton: getButtonWithText('Add company'),
+    addContactButton: getButtonWithText('Add contact'),
     addInteractionButton: getButtonWithText('Add interaction'),
     continueButton: getButtonWithText('Continue'),
     addButton: getButtonWithText('Add'),
@@ -268,6 +269,15 @@ module.exports = {
         natureOfBusiness: getMetaListItemValueSelector('Nature of business (SIC)'),
         type: getMetaListItemValueSelector('type'),
         incorporatedOn: getMetaListItemValueSelector('Incorporated on'),
+      },
+    },
+    firstContactsTabContact: {
+      selector: '.c-entity-list li:first-child',
+      elements: {
+        header: {
+          selector: 'a',
+        },
+        updated: getMetaListItemValueSelector('Updated'),
       },
     },
   },

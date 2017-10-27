@@ -1,45 +1,17 @@
-@contacts-create @ignore
+@contacts-create
 Feature: Create New Contact
-  As an existing user
-  I would like to create a new contact for a company
+  As a data hub user
+  I would like to add an contact to data hub
+  So that I can collect contact data
 
   Background:
     Given I am an authenticated user on the data hub website
 
-  @contacts-create--option
-  Scenario: Verify Add new Contact option
+  @contacts-create--companies-interaction
+  Scenario: Interaction fields from companies
 
-    When I navigate to Contacts page of any company
-    Then I verify an option to add a new contact
-    And I logout of Data Hub website
+    And a company is created for contacts
+    When navigating to the create company contact page
+    And the add new contact button is clicked
+    Then there are contact fields
 
-  @contacts-create--primary
-  Scenario: Add a new Primary Contact
-
-    When I add a new Primary Contact
-    Then I see the Added new contact confirmation message
-    And I verify my newly added contact in company profile
-    And I logout of Data Hub website
-
-  @contacts-create--primary-new-company-address
-  Scenario: Add a new Primary Contact with new Company address
-
-    When I add a new Primary Contact with a new company address
-    Then I see the Added new contact confirmation message
-    And I verify my newly added contact in company profile
-    And I logout of Data Hub website
-
-  @contacts-create--non-primary
-  Scenario: Add a new non-Primary Contact
-
-    When I add a new non Primary Contact
-    Then I see the Added new contact confirmation message
-    And I verify my newly added contact in company profile
-    And I logout of Data Hub website
-
-  @contacts-create--verify
-  Scenario: Verify newly added contact under search landing page
-    When I add a new Primary Contact
-    Then I see the Added new contact confirmation message
-    And I verify my newly added contact under search landing page
-    And I logout of Data Hub website
