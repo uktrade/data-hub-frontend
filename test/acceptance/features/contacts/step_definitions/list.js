@@ -30,7 +30,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .navigateToContactsPage()
-      .createNewPrimaryContact({ firstName, lastName }, (contact) => {
+      .createNewContact({ firstName, lastName }, true, (contact) => {
         this.state.contact = contact
       })
   })

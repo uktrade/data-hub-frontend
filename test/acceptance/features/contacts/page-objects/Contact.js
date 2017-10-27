@@ -31,6 +31,14 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   }
 )
 
+const getCheckBoxLabel = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-multiple-choice__label-text',
+  }
+)
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
@@ -42,13 +50,20 @@ module.exports = {
     firstCompanyFromList: '.c-entity-list li:first-child h3 a',
     noContactWarning: '#no-contact-warning',
     firstName: '#field-first_name',
+    firstNameError: 'label[for=field-first_name] span:nth-child(2)',
     lastName: '#field-last_name',
+    lastNameError: 'label[for=field-last_name] span:nth-child(2)',
     jobTitle: '#field-job_title',
     primaryContactYes: '[for="field-primary-1"]',
     primaryContactNo: '[for="field-primary-2"]',
+    primaryContactError: '#group-field-primary legend span:nth-child(2)',
     telephoneCountryCode: '#field-telephone_countrycode',
+    telephoneCountryCodeError: 'label[for=field-telephone_countrycode] span:nth-child(2)',
     telephoneNumber: '#field-telephone_number',
+    telephoneNumberError: 'label[for=field-telephone_number] span:nth-child(2)',
     emailAddress: '#field-email',
+    emailAddressError: 'label[for=field-email] span:nth-child(2)',
+    acceptsEmailMarketingFromDit: getCheckBoxLabel('Accepts email marketing from DIT'),
     sameAddressYes: '[for="field-address_same_as_company-1"]',
     sameAddressNo: '[for="field-address_same_as_company-2"]',
     alternativePhoneNumber: '#field-telephone_alternative',
@@ -75,7 +90,7 @@ module.exports = {
           .click('@contactsTab')
       },
 
-      createNewPrimaryContact (details = {}, callback) {
+      createNewContact (details = {}, isPrimary, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
 
@@ -93,9 +108,9 @@ module.exports = {
 
         this
           .click('@addContactButton')
-          .api.perform((done) => {
-            this.click('@primaryContactYes')
-            this.click('@sameAddressYes')
+          .api
+          .perform((done) => {
+            this.click(`@primaryContact${isPrimary ? 'Yes' : 'No'}`)
 
             for (const key in contact) {
               if (contact[key]) {
@@ -103,55 +118,66 @@ module.exports = {
               }
             }
 
-            this
-              .waitForElementPresent('@saveButton')
-              .click('@saveButton')
             done()
           })
+          .perform((done) => {
+            this
+              .click('@sameAddressYes')
+
+            done()
+          })
+
+        this.waitForElementPresent('@saveButton').click('@saveButton')
 
         callback(contact)
         return this
       },
 
-      createNewNonPrimaryContact (firstName, lastName) {
-        return this
-          .click('@addContactButton')
-          .setValue('@contactFirstname', firstName)
-          .setValue('@contactLastname', lastName)
-          .setValue('@contactJobTitle', faker.name.jobTitle())
-          .click('@contactPrimaryContactNo')
-          .setValue('@contactTelephoneCountryCode', faker.random.number())
-          .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
-          .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
-          .click('@contactSameAddressYes')
-          .setValue('@contactAlternatePhonenumber', '666555444')
-          .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
-          .setValue('@contactNotes', `${faker.name.jobDescriptor()}${firstName}`)
-          .submitForm('form')
-      },
+      createNewPrimaryContactWithNewCompanyAddress (details = {}, callback) {
+        const firstName = faker.name.firstName()
+        const lastName = appendUid(faker.name.lastName())
 
-      createNewPrimaryContactWithNewCompanyAddress (firstName, lastName) {
-        this.firstname = firstName
-        this.lastname = lastName
-        return this
+        const contact = assign({}, {
+          firstName,
+          lastName,
+          jobTitle: faker.name.jobTitle(),
+          telephoneCountryCode: faker.random.number(),
+          telephoneNumber: faker.phone.phoneNumberFormat(),
+          emailAddress: generateEmail(firstName, lastName),
+          alternativePhoneNumber: '666555444',
+          alternativeEmail: generateEmail(firstName, lastName, true),
+          notes: `${faker.name.jobDescriptor() + firstName}`,
+          ukPostcode: 'EC2Y 9AE',
+        }, details)
+
+        this
           .click('@addContactButton')
-          .setValue('@contactFirstname', firstName)
-          .setValue('@contactLastname', lastName)
-          .setValue('@contactJobTitle', faker.name.jobTitle())
-          .click('@contactPrimaryContactYes')
-          .setValue('@contactTelephoneCountryCode', faker.random.number())
-          .setValue('@contactTelephoneNumber', faker.phone.phoneNumberFormat())
-          .setValue('@contactEmailAddress', generateEmail(firstName, lastName))
-          .click('@contactSameAddressNo')
-          .setValue('@ukPostcode', 'EC2Y 9AE')
-          .click('@findUkAddressButton')
-          .click('@selectUkAddressDropdown')
-          .waitForElementPresent('@selectAnUkAddressFromList')
-          .click('@selectAnUkAddressFromList')
-          .setValue('@contactAlternatePhonenumber', '666555444')
-          .setValue('@contactAlternativeEmail', generateEmail(firstName, lastName, true))
-          .setValue('@contactNotes', `${faker.name.jobDescriptor() + firstName}`)
-          .submitForm('form')
+          .click('@sameAddressNo')
+          .api
+          .perform((done) => {
+            this.click('@primaryContactYes')
+
+            for (const key in contact) {
+              if (contact[key]) {
+                this.setValue(`@${key}`, contact[key])
+              }
+            }
+            done()
+          })
+          .perform((done) => {
+            this
+              .click('@findUkAddressButton')
+              .click('@selectUkAddressDropdown')
+              .waitForElementPresent('@selectAnUkAddressFromList')
+              .click('@selectAnUkAddressFromList')
+
+            done()
+          })
+
+        this.waitForElementPresent('@saveButton').click('@saveButton')
+
+        callback(contact)
+        return this
       },
     },
   ],
