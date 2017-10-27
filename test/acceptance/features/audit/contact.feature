@@ -7,45 +7,35 @@ Feature: View Audit history of a contact
   Background:
     Given I am an authenticated user on the data hub website
 
-  @audit-contact--name
+  @audit-contact--fields
   Scenario: View name of the person who made contact record changes
 
-    When I add a new Primary Contact
+    And a company is created for audit
+    When navigating to the company contacts
+    And a primary contact is added for audit
     Then I see the success message
-    And I Amend 1 records of an existing contact record
+    When navigating to the company contacts for audit
+    And the contact has 1 fields edited for audit
+    Then I see the success message
     When I search for this Contact record
     And I navigate to Audit History tab
     Then I see the name of the person who made the recent contact record changes
-
-  @audit-contact--timestamp
-  Scenario: View time stamp when the contact record changes
-
-    When I add a new Primary Contact
-    Then I see the success message
-    And I Amend 1 records of an existing contact record
-    When I search for this Contact record
-    And I navigate to Audit History tab
-    Then I see the date time stamp when the recent contact record changed
+    And I see the date time stamp when the recent contact record changed
+    And I see the field names that were recently changed
 
   @audit-contact--count
   Scenario: View the number of changes occurred on a contact record
 
-    When I add a new Primary Contact
+    And a company is created for audit
+    When navigating to the company contacts
+    And a primary contact is added for audit
     Then I see the success message
-    And I Amend 2 records of an existing contact record
+    When navigating to the company contacts for audit
+    And the contact has 2 fields edited for audit
+    Then I see the success message
     When I search for this Contact record
     And I navigate to Audit History tab
     Then I see the total number of changes occurred recently on this contact record
-
-  @audit-contact--field-names
-  Scenario: View changed field names of a contact record
-
-    When I add a new Primary Contact
-    Then I see the success message
-    And I Amend 1 records of an existing contact record
-    When I search for this Contact record
-    And I navigate to Audit History tab
-    Then I see the field names that were recently changed
 
   @audit-contact--archived @ignore
   Scenario: View audit log for Archived contact
