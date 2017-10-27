@@ -68,3 +68,11 @@ table.table--key-value.table--small {
     }
   }
 }
+
+.table__actions {
+  float: right;
+}
+
+.table__action {
+  padding-left: $default-spacing-unit / 2;
+}

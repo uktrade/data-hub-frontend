@@ -33,6 +33,15 @@
               {% else %}
                 {{ data.name }}
               {% endif %}
+
+              {% if data.actions %}
+                <span class="table__actions">
+                  {% for item in data.actions %}
+                    <a class="table__action" href="{{ item.url }}">{{ item.label }}</a>
+                  {% endfor %}
+                </span>
+              {% endif %}
+
             {% else %}
               {{ data }}
             {% endif %}
