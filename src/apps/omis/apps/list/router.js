@@ -1,18 +1,34 @@
 const router = require('express').Router()
 
 const { setDefaultQuery } = require('../../../middleware')
-const { setCollectionResults, setReconciliationResults, setRequestBody } = require('./middleware')
 const { renderCollectionList, renderReconciliationList } = require('./controllers')
+const {
+  setCollectionResults,
+  setReconciliationResults,
+  setRequestBody,
+} = require('./middleware')
 
-const DEFAULT_COLLECTION_QUERY = {
+const DEFAULT_QUERY = {
   sortby: 'created_on:desc',
 }
 
-router
-  .route(['/', '/reconciliation'])
-  .all(setDefaultQuery(DEFAULT_COLLECTION_QUERY), setRequestBody)
+const DEFAULT_QUERY_RECONCILIATION = {
+  sortby: 'payment_due_date:asc',
+  status: 'quote_accepted',
+}
 
-router.get('/', setCollectionResults, renderCollectionList)
-router.get('/reconciliation', setReconciliationResults, renderReconciliationList)
+router.get('/',
+  setDefaultQuery(DEFAULT_QUERY),
+  setRequestBody,
+  setCollectionResults,
+  renderCollectionList
+)
+
+router.get('/reconciliation',
+  setDefaultQuery(DEFAULT_QUERY_RECONCILIATION),
+  setRequestBody,
+  setReconciliationResults,
+  renderReconciliationList
+)
 
 module.exports = router

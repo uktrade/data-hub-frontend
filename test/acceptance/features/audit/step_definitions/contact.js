@@ -4,17 +4,20 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 defineSupportCode(({ Given, Then, When }) => {
+  const Message = client.page.Message()
   const Company = client.page.Company()
   const Contact = client.page.Contact()
   const ContactList = client.page.ContactList()
   const AuditContact = client.page.AuditContact()
+  const AuditList = client.page.AuditList()
   const InvestmentStage = client.page.InvestmentStage()
   const foreignCompanyName = 'Lambda Plc'
   let contactName
   let telephone
   let countryCode
+  let userName
 
-  Given(/^I Amend (.*) records of an existing contact record$/, async (number) => {
+  Then(/^I Amend (.*) records of an existing contact record$/, async (number) => {
     telephone = faker.phone.phoneNumber()
     countryCode = faker.random.number()
     await Company
@@ -29,6 +32,9 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@firstCompanyFromList')
     await AuditContact
       .editContactDetails(telephone, countryCode, number)
+      .submitForm('form')
+    await Message
+      .verifySuccessMessage()
   })
 
   When(/^I search for this Contact record$/, async () => {
@@ -39,6 +45,10 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@contactsTab')
     await Contact
       .click('@firstCompanyFromList')
+    await AuditContact
+      .getText('@userName', (result) => {
+        userName = result.value
+      })
   })
 
   When(/^I navigate to Audit History tab$/, async () => {
@@ -47,24 +57,24 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see the name of the person who made the recent contact record changes$/, async () => {
-    await AuditContact
-      .verify.containsText('@advisorNameFromList', 'Test CMU 1')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@adviser', userName)
   })
 
   Then(/^I see the date time stamp when the recent contact record changed$/, async () => {
-    const datetime = format(new Date(), 'D MMM YYYY')
-    await AuditContact
-      .verify.containsText('@createdDateFromFirstList', datetime)
+    const today = format(new Date(), 'D MMM YYYY')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@header', today)
   })
 
   Then(/^I see the total number of changes occurred recently on this contact record$/, async () => {
-    await AuditContact
-      .verify.containsText('@changedItemsCount', '2 changes')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@changeCount', '2 changes')
   })
 
   Then(/^I see the field names that were recently changed$/, async () => {
-    await AuditContact
-      .verify.containsText('@fieldNameFromList', 'Phone number')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@fields', 'Phone number')
   })
 
   Given(/^I archive an existing contact record$/, async () => {
@@ -73,17 +83,18 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await ContactList
       .click('@contactsTab')
-    await AuditContact
-      .getText('@lastContactFromList', (result) => {
+    await AuditList.section.lastContactInList
+      .getText('@header', (result) => {
         contactName = result.value
       })
-      .click('@lastContactFromList')
+      .click('@header')
     await InvestmentStage
       .click('@archiveButton')
     await AuditContact
       .click('@archiveReason')
       .submitForm('form')
-      .assert.containsText('@flashInfo', 'Contact record updated')
+    await Message
+      .verifySuccessMessage()
   })
 
   When(/^I archive this contact record$/, async () => {
@@ -92,22 +103,24 @@ defineSupportCode(({ Given, Then, When }) => {
     await AuditContact
       .click('@archiveReason')
       .submitForm('form')
-      .assert.containsText('@flashInfo', 'Contact record updated')
+    await Message
+      .verifySuccessMessage()
   })
 
   When(/^I unarchive this contact record$/, async () => {
     await AuditContact
       .click('@unarchiveAnContactButton')
-      .assert.containsText('@flashInfo', 'Contact record updated')
+    await Message
+      .verifySuccessMessage()
   })
 
   Then(/^I see the details who archived the contact$/, async () => {
-    await AuditContact
-      .verify.containsText('@advisorNameFromList', 'Test CMU 1')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@adviser', userName)
   })
 
   Then(/^I see the details who unarchived the contact$/, async () => {
-    await AuditContact
-      .verify.containsText('@advisorNameFromList', 'Test CMU 1')
+    await AuditList.section.firstAuditInList
+      .assert.containsText('@adviser', userName)
   })
 })

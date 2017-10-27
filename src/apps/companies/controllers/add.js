@@ -1,9 +1,8 @@
-const { map } = require('asyncro')
 const { assign } = require('lodash')
 const queryString = require('query-string')
 
 const logger = require('../../../../config/logger')
-const { ukOtherCompanyOptions, foreignOtherCompanyOptions } = require('../options')
+const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
 const { getCHCompany } = require('../repos')
 const { isBlank } = require('../../../lib/controller-utils')
 const { searchLimitedCompanies } = require('../../search/services')
@@ -11,7 +10,10 @@ const { transformApiResponseToSearchCollection } = require('../../search/transfo
 const { transformCompaniesHouseCompanyToListItem } = require('../../companies/transformers')
 const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
-function getAddStepOne (req, res, next) {
+function getAddStepOne (req, res) {
+  const ukOtherCompanyOptions = buildUkOtherCompanyOptions()
+  const foreignOtherCompanyOptions = buildForeignOtherCompanyOptions()
+
   res.render('companies/views/add-step-1.njk', {
     ukOtherCompanyOptions,
     foreignOtherCompanyOptions,
@@ -47,7 +49,6 @@ function postAddStepOne (req, res, next) {
   let params
   switch (req.body.business_type) {
     case 'ltd':
-    case 'ltdchild':
       params = {
         business_type: req.body.business_type,
         country: 'uk',
@@ -92,11 +93,10 @@ async function getAddStepTwo (req, res, next) {
       token,
       searchTerm,
     })
-      .then(response => response.results.filter(x => x.company_number))
-      .then(async (results) => {
+      .then(async (response) => {
         // TODO: Remove the need to make another call to the API to get the companies house details.
         // The search API should return companies house companies and their relevant information
-        return map(results, async (result) => {
+        return Promise.all(response.results.map(async (result) => {
           try {
             result.companies_house_data = await getCHCompany(token, result.company_number)
             result.url = `/companies/add/${result.company_number}`
@@ -104,7 +104,7 @@ async function getAddStepTwo (req, res, next) {
             logger.error(error)
           }
           return result
-        })
+        }))
       })
       .then((results) => {
         return {

@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -8,7 +8,6 @@
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "dependencies": {
-    "asyncro": "^2.0.1",
     "autoprefixer": "^7.1.1",
     "axios": "^0.16.2",
     "babel-core": "^6.23.1",
@@ -116,7 +115,7 @@
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
-    "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci --skiptags ignore",
+    "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --verbose --env circleci --skiptags ignore",
     "heroku-postbuild": "npm rebuild && npm run build"
   },
   "pre-commit": [

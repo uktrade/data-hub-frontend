@@ -2,13 +2,27 @@
 
 {% block local_header %}
   {% set actions %}
-    <p class="c-local-header__action">
-      {% if order.status == 'draft' %}
-        <a href="quote" class="button">Preview quote</a>
-      {% else %}
-        <a href="quote">View quote</a>
-      {% endif %}
-    </p>
+    {% if order.status in ['paid', 'complete'] %}
+      <p class="c-local-header__action">
+        <a href="payment-receipt">View payment receipt</a>
+      </p>
+    {% endif %}
+
+    {% if order.archived_documents_url_path %}
+      <p class="c-local-header__action">
+        <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}">View files and documents</a>
+        <br>
+        (will open another website)
+      </p>
+    {% else %}
+      <p class="c-local-header__action">
+        {% if order.status == 'draft' %}
+          <a href="quote" class="button">Preview quote</a>
+        {% else %}
+          <a href="quote">View quote</a>
+        {% endif %}
+      </p>
+    {% endif %}
   {% endset %}
 
   {% call LocalHeader({
@@ -17,15 +31,27 @@
     modifier: 'light-banner'
   }) %}
     {% set status = order.status | sentenceCase %}
+    {% set companyText %}
+      <a href="/companies/{{ order.company.id }}">{{ order.company.name }}</a>
+    {% endset %}
     {% set quoteStatusSuffix %}
+      <br>
       (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
     {% endset %}
 
     {{ MetaList({
       items: [
-        { 'label': 'Created on', 'value': order.created_on | formatDateTime },
-        { 'label': 'Updated on', 'value': order.updated_on | formatDateTime },
-        { 'label': 'Status', 'value': status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), 'safe': true }
+      { label: 'Client company', value: companyText | safe },
+      { label: 'Market (country)', value: order.primary_market }
+      ],
+      itemModifier: 'stacked'
+    }) }}
+
+    {{ MetaList({
+      items: [
+        { label: 'Created on', value: order.created_on, type: 'datetime' },
+        { label: 'Updated on', value: order.modified_on, type: 'datetime' },
+        { label: 'Status', value: status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), safe: true }
       ],
       itemModifier: 'stacked'
     }) }}

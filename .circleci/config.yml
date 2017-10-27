@@ -80,6 +80,7 @@ jobs:
           QA_USER_PASSWORD: secretSquiR3L
           REDIS_HOST: localhost
           TZ: "/usr/share/zoneinfo/Europe/London"
+          LOG_LEVEL: debug
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch
@@ -133,7 +134,7 @@ jobs:
           name: Split tests for parallelisation and then run acceptance tests
           command: |
             # split .features for parallelisation
-            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split --split-by=timings --timings-type=filename)"
+            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split --split-by=filesize)"
 
             # move groups of .features to folder
             mkdir -p ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}

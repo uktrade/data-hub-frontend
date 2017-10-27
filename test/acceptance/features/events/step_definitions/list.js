@@ -1,24 +1,13 @@
 const { compareAsc, compareDesc } = require('date-fns')
+const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 const { getDateFor } = require('../../../helpers/date')
 
-defineSupportCode(({ Then, When, Before }) => {
+defineSupportCode(({ Then, When }) => {
   const EventList = client.page.EventList()
   const Event = client.page.Event()
-
-  Before(() => {
-    Event.state = {
-      eventDetails: {},
-    }
-    EventList.state = {
-      list: {
-        firstItem: {},
-        secondItem: {},
-      },
-    }
-  })
 
   When(/^I navigate to the event list page$/, async () => {
     await EventList
@@ -28,18 +17,18 @@ defineSupportCode(({ Then, When, Before }) => {
 
   When(/^I click the add an event link$/, async () => {
     await EventList
-      .assert.elementPresent('@addEventButton')
+      .waitForElementPresent('@addEventButton')
       .click('@addEventButton')
   })
 
-  When(/^I populate the create event form$/, async () => {
+  When(/^I populate the create event form$/, async function () {
     await Event
-      .populateCreateEventForm()
+      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
   })
 
-  When(/^I populate the create event form with United Kingdom and a region$/, async () => {
+  When(/^I populate the create event form with United Kingdom and a region$/, async function () {
     await Event
-      .populateCreateEventForm({ addressCountry: 'United Kingdom' })
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, (event) => set(this.state, 'event', event))
   })
 
   Then(/^I am taken to the create event page$/, async () => {
@@ -48,43 +37,43 @@ defineSupportCode(({ Then, When, Before }) => {
       .assert.urlEquals(`${EventList.url}/create`)
   })
 
-  Then(/^I can view the event$/, async () => {
+  Then(/^I can view the event$/, async function () {
     await EventList.section.firstEventInList
       .waitForElementPresent('@header')
-      .assert.containsText('@header', Event.state.eventDetails.name)
-      .assert.containsText('@eventType', Event.state.eventDetails.event_type)
-      .assert.containsText('@country', Event.state.eventDetails.address_country)
+      .assert.containsText('@header', this.state.event.name)
+      .assert.containsText('@eventType', this.state.event.event_type)
+      .assert.containsText('@country', this.state.event.address_country)
       .assert.containsText('@eventStart', getDateFor({
-        year: Event.state.eventDetails.start_date_year,
-        month: Event.state.eventDetails.start_date_month,
-        day: Event.state.eventDetails.start_date_day,
+        year: this.state.event.start_date_year,
+        month: this.state.event.start_date_month,
+        day: this.state.event.start_date_day,
       }))
       .assert.containsText('@eventEnd', getDateFor({
-        year: Event.state.eventDetails.end_date_year,
-        month: Event.state.eventDetails.end_date_month,
-        day: Event.state.eventDetails.end_date_day,
+        year: this.state.event.end_date_year,
+        month: this.state.event.end_date_month,
+        day: this.state.event.end_date_day,
       }))
-      .assert.containsText('@organiser', Event.state.eventDetails.organiser)
-      .assert.containsText('@leadTeam', Event.state.eventDetails.lead_team)
+      .assert.containsText('@organiser', this.state.event.organiser)
+      .assert.containsText('@leadTeam', this.state.event.lead_team)
   })
 
-  Then(/^I can view the event country and region$/, async () => {
+  Then(/^I can view the event country and region$/, async function () {
     await EventList.section.firstEventInList
       .waitForElementPresent('@header')
-      .assert.containsText('@country', Event.state.eventDetails.address_country)
-      .assert.containsText('@ukRegion', Event.state.eventDetails.uk_region)
+      .assert.containsText('@country', this.state.event.address_country)
+      .assert.containsText('@ukRegion', this.state.event.uk_region)
   })
 
-  Then(/^I filter the events list by name$/, async () => {
+  Then(/^I filter the events list by name$/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@nameInput')
-      .setValue('@nameInput', Event.state.eventDetails.name)
+      .setValue('@nameInput', this.state.event.name)
       .sendKeys('@nameInput', [ client.Keys.ENTER ])
       .wait() // wait for xhr
 
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
-      .assert.containsText('@header', Event.state.eventDetails.name)
+      .assert.containsText('@header', this.state.event.name)
 
     // clear filter
     await EventList.section.filterTags
@@ -92,15 +81,15 @@ defineSupportCode(({ Then, When, Before }) => {
       .wait() // wait for xhr
   })
 
-  Then(/^I filter the events list by organiser$/, async () => {
+  Then(/^I filter the events list by organiser$/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@organiser')
-      .clickListOption('organiser', Event.state.eventDetails.organiser)
+      .clickListOption('organiser', this.state.event.organiser)
       .wait() // wait for xhr
 
     await EventList.section.firstEventInList
       .waitForElementVisible('@organiser')
-      .assert.containsText('@organiser', Event.state.eventDetails.organiser)
+      .assert.containsText('@organiser', this.state.event.organiser)
 
     // clear filter
     await EventList.section.filterTags
@@ -108,15 +97,15 @@ defineSupportCode(({ Then, When, Before }) => {
       .wait() // wait for xhr
   })
 
-  Then(/^I filter the events list by country/, async () => {
+  Then(/^I filter the events list by country/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('address_country', Event.state.eventDetails.address_country)
+      .clickListOption('address_country', this.state.event.address_country)
       .wait() // wait for xhr
 
     await EventList.section.firstEventInList
       .waitForElementVisible('@country')
-      .assert.containsText('@country', Event.state.eventDetails.address_country)
+      .assert.containsText('@country', this.state.event.address_country)
 
     // clear filter
     await EventList.section.filterTags
@@ -124,15 +113,15 @@ defineSupportCode(({ Then, When, Before }) => {
       .wait() // wait for xhr
   })
 
-  Then(/^I filter the events list by event type/, async () => {
+  Then(/^I filter the events list by event type/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@eventType')
-      .clickListOption('event_type', Event.state.eventDetails.event_type)
+      .clickListOption('event_type', this.state.event.event_type)
       .wait() // wait for xhr
 
     await EventList.section.firstEventInList
       .waitForElementVisible('@eventType')
-      .assert.containsText('@eventType', Event.state.eventDetails.event_type)
+      .assert.containsText('@eventType', this.state.event.event_type)
 
     // clear filter
     await EventList.section.filterTags
@@ -140,12 +129,12 @@ defineSupportCode(({ Then, When, Before }) => {
       .wait() // wait for xhr
   })
 
-  Then(/^I filter the events list by start date/, async () => {
-    const eventDetails = Event.state.eventDetails
+  Then(/^I filter the events list by start date/, async function () {
+    const event = this.state.event
     const startDate = getDateFor({
-      year: eventDetails.start_date_year,
-      month: eventDetails.start_date_month,
-      day: eventDetails.start_date_day,
+      year: event.start_date_year,
+      month: event.start_date_month,
+      day: event.start_date_day,
     })
 
     await EventList.section.filters
@@ -164,7 +153,7 @@ defineSupportCode(({ Then, When, Before }) => {
       .wait() // wait for xhr
   })
 
-  Then(/^I sort the events list name A-Z$/, async () => {
+  Then(/^I sort the events list name A-Z$/, async function () {
     await EventList
       .click('select[name="sortby"] option[value="name:asc"]')
       .wait()// wait for xhr
@@ -172,23 +161,23 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        EventList.state.list.firstItem.header = text.value
+        set(this.state, 'list.firstItem.header', text.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        EventList.state.list.secondItem.header = text.value
+        set(this.state, 'list.secondItem.header', text.value)
       })
   })
 
-  Then(/^I see the list in A-Z alphabetical order$/, async () => {
+  Then(/^I see the list in A-Z alphabetical order$/, async function () {
     client.expect(
-      EventList.state.list.firstItem.header < EventList.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() < this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
-  Then(/^I sort the events list name Z-A$/, async () => {
+  Then(/^I sort the events list name Z-A$/, async function () {
     await EventList
       .click('select[name="sortby"] option[value="name:desc"]')
       .wait() // wait for xhr
@@ -196,23 +185,23 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        EventList.state.list.firstItem.header = text.value
+        set(this.state, 'list.firstItem.header', text.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        EventList.state.list.secondItem.header = text.value
+        set(this.state, 'list.secondItem.header', text.value)
       })
   })
 
-  Then(/^I see the list in Z-A alphabetical order$/, async () => {
+  Then(/^I see the list in Z-A alphabetical order$/, async function () {
     client.expect(
-      EventList.state.list.firstItem.header > EventList.state.list.secondItem.header
+      this.state.list.firstItem.header.toLowerCase() > this.state.list.secondItem.header.toLowerCase()
     ).to.be.true
   })
 
-  Then(/^I sort the events list by recently updated$/, async () => {
+  Then(/^I sort the events list by recently updated$/, async function () {
     await EventList
       .click('select[name="sortby"] option[value="modified_on:desc"]')
       .wait() // wait for xhr
@@ -220,23 +209,23 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@updated')
       .getText('@updated', (dateString) => {
-        EventList.state.list.firstItem.updated = dateString.value
+        set(this.state, 'firstItem.updated ', dateString.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@updated')
       .getText('@updated', (dateString) => {
-        EventList.state.list.secondItem.updated = dateString.value
+        set(this.state, 'list.secondItem.updated', dateString.value)
       })
   })
 
-  Then(/^I see the list in descending recently updated order$/, async () => {
+  Then(/^I see the list in descending recently updated order$/, async function () {
     client.expect(
-      compareDesc(EventList.state.list.firstItem.updated, EventList.state.list.secondItem.updated)
+      compareDesc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
     ).to.be.within(0, 1)
   })
 
-  Then(/^I sort the events list by least recently updated$/, async () => {
+  Then(/^I sort the events list by least recently updated$/, async function () {
     await EventList
       .click('select[name="sortby"] option[value="modified_on:asc"]')
       .wait() // wait for xhr
@@ -244,19 +233,19 @@ defineSupportCode(({ Then, When, Before }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@updated')
       .getText('@updated', (dateString) => {
-        EventList.state.list.firstItem.updated = dateString.value
+        set(this.state, 'list.firstItem.updated', dateString.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@updated')
       .getText('@updated', (dateString) => {
-        EventList.state.list.secondItem.updated = dateString.value
+        set(this.state, 'list.secondItem.updated', dateString.value)
       })
   })
 
-  Then(/^I see the list in ascending recently updated order$/, async () => {
+  Then(/^I see the list in ascending recently updated order$/, async function () {
     client.expect(
-      compareAsc(EventList.state.list.firstItem.updated, EventList.state.list.secondItem.updated)
+      compareAsc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
     ).to.be.within(0, 1)
   })
 })

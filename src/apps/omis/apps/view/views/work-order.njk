@@ -3,8 +3,34 @@
 {% set companyLink %}
   <a href="/companies/{{ values.company.id }}">{{ values.company.name }}</a>
 {% endset %}
-{% set contactLink %}
+
+{% set contactName %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+{% endset %}
+
+{% set contactEmail %}
+  {% if values.contact_email %}
+    {{ values.contact_email }}
+  {% else %}
+    <a href="mailto:{{ values.contact.email }}">{{ values.contact.email }}</a>
+
+    {% if values.contact.email_alternative %}
+      or <a href="mailto:{{ values.contact.email_alternative }}">{{ values.contact.email_alternative }}</a>
+    {% endif %}
+  {% endif %}
+{% endset %}
+
+{% set contactPhone %}
+  {% if values.contact_phone %}
+    {{ values.contact_phone }}
+  {% else %}
+    ({{ values.contact.telephone_countrycode }})
+    {{ values.contact.telephone_number }}
+
+    {% if values.contact.telephone_alternative %}
+      or {{ values.contact.telephone_alternative }}
+    {% endif %}
+  {% endif %}
 {% endset %}
 
 {% block body_main_content %}
@@ -16,27 +42,20 @@
   {% endif %}
 
   {{ AnswersSummary({
-    heading: 'Client details',
+    heading: 'Client contact details',
     actions: [{
       url: 'edit/client-details' if order.isEditable
     }],
     items: [{
-      label: 'Company',
-      value: companyLink
+      label: 'Name',
+      value: contactName
     }, {
-      label: 'Contact',
-      value: contactLink
+      label: 'Phone',
+      value: contactPhone
+    }, {
+      label: 'Email',
+      value: contactEmail
     }]
-  }) }}
-
-  {{ AnswersSummary({
-    heading: 'Market (country)',
-    items: [values.primary_market.name]
-  }) }}
-
-  {{ Message({
-    type: 'muted',
-    text: 'The market cannot be changed. If you have chosen the wrong market you’ll have to cancel the order and create a new one.'
   }) }}
 
   {% call AnswersSummary({
@@ -45,8 +64,8 @@
       url: 'edit/assignees' if order.isEditable,
       label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if values.assignees.length and order.isEditable,
-      label: 'Edit time'
+      url: 'edit/assignee-time' if order.isEditable,
+      label: 'Estimate time'
     }]
   }) %}
     <tbody>
@@ -83,15 +102,20 @@
       {% endfor %}
     </tbody>
 
-    {% if values.estimatedTimeSum and values.assignees.length %}
-      <tfoot>
-        <tr>
-          <td class="c-answers-summary__footer" colspan="3">
-            <span class="c-answers-summary__footer-value">{{ values.estimatedTimeSum | humanizeDuration }}</span> total estimated time
-          </td>
-        </tr>
-      </tfoot>
-    {% endif %}
+    <tfoot>
+      <tr>
+        <td class="c-answers-summary__footer" colspan="3">
+          {% if not values.assignees.length or values.estimatedTimeSum < 1 %}
+            <span class="c-answers-summary__footer-value">No time estimated</span>
+          {% else %}
+            <span class="c-answers-summary__footer-value">
+              {{ values.estimatedTimeSum | humanizeDuration }}
+            </span>
+            total estimated time
+          {% endif %}
+        </td>
+      </tr>
+    </tfoot>
   {% endcall %}
 
   {{ AnswersSummary({
@@ -191,9 +215,13 @@
     {{ values.total_cost | formatCurrency }}
 
     {% if values.vat_cost > 0 %}
-      ({{ values.net_cost | formatCurrency }} excluding VAT)
+      ({{ values.subtotal_cost | formatCurrency }} excluding VAT)
     {% else %}
       (No VAT applies)
+    {% endif %}
+
+    {% if values.discount_value %}
+    (includes a net discount of {{ values.discount_value | formatCurrency }})
     {% endif %}
   {% endset %}
 

@@ -7,6 +7,7 @@ const EditClientDetailsController = require('./controllers/client-details')
 const EditSubscribersController = require('./controllers/subscribers')
 const EditWorkDescriptionController = require('./controllers/work-description')
 const EditBillingAddressController = require('./controllers/billing-address')
+const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
@@ -15,6 +16,7 @@ const steps = merge({}, createSteps, {
   },
   '/subscribers': {
     heading: 'Add or remove advisers in the UK',
+    fields: ['subscribers'],
     controller: EditSubscribersController,
   },
   '/assignees': {
@@ -66,6 +68,17 @@ const steps = merge({}, createSteps, {
       'billing_address_country',
     ],
     controller: EditBillingAddressController,
+  },
+  '/payment-reconciliation': {
+    heading: 'Payment reconciliation',
+    fields: [
+      'amount',
+      'received_on',
+      'transaction_reference',
+    ],
+    templatePath: 'omis/apps/edit/views',
+    template: 'payment-reconciliation.njk',
+    controller: EditPaymentReconciliationController,
   },
 })
 

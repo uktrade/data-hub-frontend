@@ -166,6 +166,26 @@ const editFields = merge({}, globalFields, {
     options: [],
     validate: 'required',
   },
+  amount: {
+    fieldType: 'TextField',
+    label: 'fields.amount.label',
+    hint: 'fields.amount.hint',
+    validate: 'required',
+    modifier: 'medium',
+  },
+  received_on: {
+    fieldType: 'TextField',
+    label: 'fields.received_on.label',
+    hint: 'fields.received_on.hint',
+    validate: ['required', 'date', 'before'],
+    modifier: 'medium',
+  },
+  transaction_reference: {
+    fieldType: 'TextField',
+    label: 'fields.transaction_reference.label',
+    optional: true,
+    modifier: 'medium',
+  },
 })
 
 module.exports = editFields

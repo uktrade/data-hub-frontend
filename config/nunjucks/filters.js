@@ -4,6 +4,7 @@ require('moment-duration-format')
 const dateFns = require('date-fns')
 const Case = require('case')
 const numeral = require('numeral')
+const queryString = require('query-string')
 const {
   assign,
   concat,
@@ -52,8 +53,6 @@ function pluralise (string, count, pluralisedWord) {
 }
 
 const filters = {
-  stringify: JSON.stringify,
-  sentenceCase: Case.sentence,
   lowerCase,
   kebabCase,
   assign,
@@ -73,6 +72,12 @@ const filters = {
   isPlainObject,
   isString,
   pluralise,
+  stringify: JSON.stringify,
+  sentenceCase: Case.sentence,
+
+  encodeQueryString (value) {
+    return encodeURIComponent(queryString.stringify(value))
+  },
 
   assignCopy (...args) {
     return assign({}, ...args)

@@ -22,7 +22,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@addContactButton')
   })
 
-  When(/^I add a new Primary Contact$/, async () => {
+  When(/^I add a new Primary Contact$/, async function () {
     firstName = faker.name.firstName()
     lastName = faker.name.lastName()
     await Company
@@ -30,7 +30,9 @@ defineSupportCode(({ Given, Then, When }) => {
       .findCompany(foreignCompanyName)
     await Contact
       .navigateToContactsPage()
-      .createNewPrimaryContact(firstName, lastName)
+      .createNewPrimaryContact({ firstName, lastName }, (contact) => {
+        this.state.contact = contact
+      })
   })
 
   When(/^I add a new non Primary Contact$/, async () => {

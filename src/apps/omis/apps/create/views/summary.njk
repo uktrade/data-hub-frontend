@@ -2,7 +2,7 @@
 
 {% block form %}
   {% call MultiStepForm({
-    buttonText: 'Create order'
+    buttonText: 'Continue'
   }) %}
 
     {{ AnswersSummary({
@@ -27,23 +27,11 @@
       items: [values.primary_market.name]
     }) }}
 
-    {{ AnswersSummary({
-      heading: 'Advisers in the UK',
-      actions: [{
-        url: 'subscribers/edit',
-        label: 'Add or remove'
-      }],
-      items: values.subscribers if values.subscribers.length else ['Not added at this stage']
-    }) }}
+    <h2 class="heading-medium">What happens next</h2>
 
-    <p>Creating the order will notify the following people by email:</p>
+    <p>Continuing with the order will notify the post manager for {{ values.primary_market.name }}.</p>
 
-    <ul class="list-disc">
-      <li>the post manager for {{ values.primary_market.name }}</li>
-      {% if values.subscribers.length %}
-        <li>{{ values.subscribers | join(", ") }}</li>
-      {% endif %}
-    </ul>
+    <p>You will not be able to edit the company or market (country) after this point.</p>
 
   {% endcall %}
 {% endblock %}

@@ -28,7 +28,7 @@
     },
     "delivery_date": {
       "label": "Delivery date of first activity",
-      "hint": "Try next week, next month or 28/10/2017"
+      "hint": "For example 28/10/2017"
     },
     "contacts_not_to_approach": {
       "label": "Contacts not to approach"
@@ -81,6 +81,17 @@
     },
     "billing_address_country": {
       "label": "Country"
+    },
+    "amount": {
+      "label": "Amount received",
+      "hint": "The amount in GBP"
+    },
+    "received_on": {
+      "label": "Payment received date",
+      "hint": "For example 28/10/2017"
+    },
+    "transaction_reference": {
+      "label": "Transaction reference"
     }
   },
   "errors": {
@@ -98,7 +109,9 @@
     "numeric": "can only contain numbers",
     "date": "must be a valid date",
     "after": "must be in the future",
+    "before": "must be in the past",
     "isDuration": "must be a valid duration format, for example 01:30",
+    "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
     "default": "is required"
   }
 }

@@ -95,7 +95,7 @@ function handleFormPost (req, res, next) {
     req.body[addKey] = flatten([req.body[addKey]])
     req.body[addKey].push('')
 
-    res.locals.form = Object.assign({}, res.locals.form, {
+    res.locals.form = assign({}, res.locals.form, {
       state: req.body,
     })
 
@@ -115,12 +115,12 @@ function handleFormPost (req, res, next) {
     })
     .catch((err) => {
       if (err.statusCode === 400) {
-        const state = Object.assign({}, req.body, {
+        const state = assign({}, req.body, {
           client_contacts: flatten([req.body.client_contacts]),
-          business_activities: flatten([req.body.client_contacts]),
+          business_activities: flatten([req.body.business_activities]),
         })
 
-        res.locals.form = Object.assign({}, res.locals.form, {
+        res.locals.form = assign({}, res.locals.form, {
           state,
           errors: {
             messages: err.error,

@@ -6,6 +6,20 @@ const next = function (error) {
   throw Error(error)
 }
 
+const mockMetadataRepository = {
+  businessTypeOptions: [
+    { name: 'Not Expected', id: '33243434-343656' },
+    { name: 'Charity', id: '1234-5678' },
+    { name: 'Government Dept', id: '3434-343' },
+    { name: 'Intermediary', id: '5656-5656' },
+    { name: 'Limited partnership', id: '7878-7878' },
+    { name: 'Partnership', id: '8989-898-9' },
+    { name: 'Sole Trader', id: '3434-5656' },
+    { name: 'Company', id: '1212-3454567' },
+    { name: 'Random', id: '34343434-343656' },
+  ],
+}
+
 describe('Company add controller', function () {
   let searchLimitedCompaniesStub
   let getDisplayCHStub
@@ -27,6 +41,9 @@ describe('Company add controller', function () {
       '../services/formatting': {
         getDisplayCH: getDisplayCHStub,
       },
+      '../options': proxyquire('~/src/apps/companies/options.js', {
+        '../../lib/metadata': mockMetadataRepository,
+      }),
     })
   })
 
@@ -34,14 +51,14 @@ describe('Company add controller', function () {
     it('should return options for company types', function (done) {
       const req = { session: {} }
       const expected = [
-        { label: 'Charity', value: 'Charity' },
-        { label: 'Government department', value: 'Government department' },
-        { label: 'Intermediary', value: 'Intermediary' },
-        { label: 'Limited partnership', value: 'Limited partnership' },
-        { label: 'Partnership', value: 'Partnership' },
-        { label: 'Sole trader', value: 'Sole trader' },
+        { label: 'Charity', value: '1234-5678' },
+        { label: 'Government department', value: '3434-343' },
+        { label: 'Intermediary', value: '5656-5656' },
+        { label: 'Limited partnership', value: '7878-7878' },
+        { label: 'Partnership', value: '8989-898-9' },
+        { label: 'Sole trader', value: '3434-5656' },
       ]
-      const expectedForeign = [{ value: 'Company', label: 'Company' }, ...expected]
+      const expectedForeign = [ ...expected, { label: 'Company', value: '1212-3454567' } ]
       const res = {
         locals: {},
         render: function (template, options) {
@@ -62,7 +79,6 @@ describe('Company add controller', function () {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.companyTypeOptions).to.deep.equal({
             ltd: 'UK private or public limited company',
-            ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
             foreign: 'Foreign organisation',
           })
@@ -82,7 +98,6 @@ describe('Company add controller', function () {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.companyTypeOptions).to.deep.equal({
             ltd: 'UK private or public limited company',
-            ltdchild: 'Child of a UK private or public limited company',
             ukother: 'Other type of UK organisation',
             foreign: 'Foreign organisation',
           })
@@ -230,7 +245,6 @@ describe('Company add controller', function () {
             const allOptions = mergeLocals(res, options)
             expect(allOptions.companyTypeOptions).to.deep.equal({
               ltd: 'UK private or public limited company',
-              ltdchild: 'Child of a UK private or public limited company',
               ukother: 'Other type of UK organisation',
               foreign: 'Foreign organisation',
             })

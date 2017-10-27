@@ -9,6 +9,7 @@
  # @param {object} [props.errors] - Object containing form errors
  # @param {object} [props.hiddenFields] - Custom fields to be added as hidden inputs
  # @param {boolean} [props.hideFormActions] - Hide form actions
+ # @param {boolean} [props.hidePrimaryFormAction] - Hide primary form action
  # @param {boolean} [props.disableFormAction] - Disable form submit button
  # @param {string} [props.class] - Form class name
  # @param {string} [props.role] - Form role attribute value
@@ -57,7 +58,9 @@
 
     {% if not hideFormActions %}
       <div class="c-form-actions {{ props.actionsClass }}">
-        <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+        {% if not props.hidePrimaryFormAction %}
+          <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+        {% endif %}
         {% if props.returnLink %}
           <a href="{{ props.returnLink }}">{{ returnText }}</a>
         {% endif %}

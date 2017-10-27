@@ -2,8 +2,6 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const faker = require('faker')
 
-const World = require('../../../helpers/world')
-
 const getValue = (value) => {
   switch (value) {
     case 'random words':
@@ -20,22 +18,20 @@ const getValue = (value) => {
 defineSupportCode(({ When, Then }) => {
   const Form = client.page.Form()
 
-  // When
-
-  When(/^I change form text field "(.+)" to (.+)$/, async (fieldName, fieldValue) => {
+  When(/^I change form text field "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
     const fieldSelector = `[name="${fieldName}"]`
 
-    World.state[fieldName] = getValue(fieldValue)
+    this.state[fieldName] = getValue(fieldValue)
 
     await Form
-      .replaceValue(fieldSelector, World.state[fieldName])
+      .replaceValue(fieldSelector, this.state[fieldName])
   })
 
-  When(/^I change form dropdown "(.+)" to (.+)$/, async (fieldName, fieldValue) => {
-    World.state[fieldName] = getValue(fieldValue)
+  When(/^I change form dropdown "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
+    this.state[fieldName] = getValue(fieldValue)
 
     await Form
-      .clickListOption(fieldName, World.state[fieldName])
+      .clickListOption(fieldName, this.state[fieldName])
   })
 
   When(/^I select "(.+)" for boolean option "(.+)"$/, async (label, fieldName) => {
@@ -53,8 +49,6 @@ defineSupportCode(({ When, Then }) => {
     await Form
       .submitForm(selector)
   })
-
-  // Then
 
   Then(/^I see form error summary$/, async () => {
     await Form

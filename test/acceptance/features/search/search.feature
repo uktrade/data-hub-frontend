@@ -24,7 +24,7 @@ Feature: Search
     And there is a results count 1
     And I can view the event in the search results
 
-  @search--companies
+  @search--companies @ignore
   Scenario: Search companies
     And I navigate to the company list page
     When a company is created to search
