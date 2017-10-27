@@ -1,7 +1,7 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  {% if not order.assignees.length %}
+  {% if not assignees.length %}
 
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>Advisers in the market must be added before time can be estimated.</p>
@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for assignee in order.assignees %}
+        {% for assignee in assignees %}
           {% set props = {} | assign(defaultProps, {
             name: key,
             idSuffix: assignee.adviser.id,
