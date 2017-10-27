@@ -28,7 +28,7 @@
         {% for item in results.items %}
           <tr>
             <td>
-              <a href="/omis/{{ item.id }}/edit/payment-reconciliation?returnUrl=/omis/reconciliation">
+              <a href="/omis/{{ item.id }}/edit/payment-reconciliation?returnUrl=/omis/reconciliation?{{ QUERY | encodeQueryString }}">
                 {{ item.reference }}
               </a>
             </td>

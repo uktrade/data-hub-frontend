@@ -1,4 +1,4 @@
-const { merge, sumBy } = require('lodash')
+const { get, merge, sumBy } = require('lodash')
 
 const { Order } = require('../../models')
 const logger = require('../../../../../config/logger')
@@ -35,6 +35,12 @@ function renderQuote (req, res) {
 }
 
 function renderPaymentReceipt (req, res) {
+  const { id, status } = get(res.locals, 'order')
+
+  if (!['paid', 'complete'].includes(status)) {
+    return res.redirect(`/omis/${id}`)
+  }
+
   res
     .breadcrumb('Payment receipt')
     .render('omis/apps/view/views/payment-receipt')
