@@ -31,12 +31,12 @@ defineSupportCode(function ({ Then, When }) {
 
   When(/^I search for the event$/, async function () {
     await Search
-      .search(getUid(this.state.event.name), client.Keys.ENTER)
+      .search(getUid(this.state.event.name))
   })
 
   When(/^I search for the company/, async function () {
     await Search
-      .search(getUid(this.state.company.name), client.Keys.ENTER)
+      .search(getUid(this.state.company.name))
   })
 
   When(/^I click the Events tab/, async () => {

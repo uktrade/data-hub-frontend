@@ -33,7 +33,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .url(dashboardPage)
 
     await Search
-      .search(getUid(this.state.company.name), client.Keys.ENTER)
+      .search(getUid(this.state.company.name))
 
     await Company
       .section.firstCompanySearchResult
@@ -62,7 +62,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .url(dashboardPage)
 
     await Search
-      .search(getUid(this.state.company.name), client.Keys.ENTER)
+      .search(getUid(this.state.company.name))
 
     await Company
       .section.firstCompanySearchResult
@@ -82,7 +82,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .url(dashboardPage)
 
     await Search
-      .search(getUid(this.state.contact.lastName), client.Keys.ENTER)
+      .search(getUid(this.state.contact.lastName))
       .section.tabs.click('@contacts')
 
     await Contact

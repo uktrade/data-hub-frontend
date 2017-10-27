@@ -28,11 +28,11 @@ module.exports = {
   },
   commands: [
     {
-      search (term, enter) {
+      search (term) {
         return this
           .waitForElementPresent('@term')
           .setValue('@term', term)
-          .sendKeys('@term', [ enter ])
+          .sendKeys('@term', [ this.api.Keys.ENTER ])
           .waitForElementVisible('@addCompanyButton') // wait for xhr
       },
     },
