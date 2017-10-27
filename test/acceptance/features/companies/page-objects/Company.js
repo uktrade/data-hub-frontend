@@ -1,15 +1,15 @@
 const faker = require('faker')
+const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
-const getDetailsTabSelector = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//a',
-      className: 'c-local-nav__link',
-    }
-  )
+const getDetailsTabSelector = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//a',
+    className: 'c-local-nav__link',
+  }
+)
 
 const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   text,
@@ -22,13 +22,11 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
 
 module.exports = {
   url: process.env.QA_HOST,
-  props: {
-    parentCompanySearchTerm: 'Apple',
-  },
   elements: {
     searchField: '#field-term',
     searchForm: '.c-entity-search__button',
     addCompanyButton: getButtonWithText('Add company'),
+    addInteractionButton: getButtonWithText('Add interaction'),
     continueButton: getButtonWithText('Continue'),
     addButton: getButtonWithText('Add'),
     saveAndCreateButton: getButtonWithText('Save and create'),
@@ -57,7 +55,7 @@ module.exports = {
     collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
-    companyPageHeading: 'h1.c-local-header__heading',
+    pageHeading: 'h1.c-local-header__heading',
   },
   commands: [
     {
@@ -67,124 +65,128 @@ module.exports = {
           .submitForm('@searchForm')
       },
 
-      createForeignCompany (companyName) {
-        this.state.companyDetails = {
-          name: companyName,
+      createForeignCompany (details = {}, callback) {
+        const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
           website: faker.internet.url(),
-        }
+        }, details)
 
         this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
           .waitForElementPresent('@foreignOrganisationOptionBusinessType')
-
-        return this
-          .api.perform(async (done) => {
+          .api.perform((done) => {
             // step 1
-            this.click('@foreignOrganisationOption')
-
-            await new Promise((resolve) => {
-              this.getListOption('@foreignOrganisationOptionBusinessType', (businessType) => {
-                this.setValue(`@foreignOrganisationOptionBusinessType`, businessType)
-                resolve()
+            this
+              .click('@foreignOrganisationOption')
+              .api.perform((done) => {
+                this.getListOption('@foreignOrganisationOptionBusinessType', (businessType) => {
+                  this.setValue(`@foreignOrganisationOptionBusinessType`, businessType)
+                  done()
+                })
               })
-            })
-
-            this.click('@continueButton')
 
             // step 2
-            await new Promise((resolve) => {
-              this.getListOption('@registeredAddressCountry', (country) => {
-                this.state.companyDetails.registeredAddressCountry = country
-                resolve()
+            this
+              .waitForElementPresent('@continueButton')
+              .click('@continueButton')
+              .waitForElementPresent('@pageHeading')
+              .api.perform((done) => {
+                this.getListOption('@registeredAddressCountry', (country) => {
+                  company.registeredAddressCountry = country
+                  done()
+                })
               })
-            })
-
-            await new Promise((resolve) => {
-              this.getListOption('@sector', (sector) => {
-                this.state.companyDetails.sector = sector
-                resolve()
+              .perform((done) => {
+                this.getListOption('@sector', (sector) => {
+                  company.sector = sector
+                  done()
+                })
               })
-            })
+              .perform((done) => {
+                for (const key in company) {
+                  if (company[key]) {
+                    this.setValue(`@${key}`, company[key])
+                  }
+                }
+                done()
+              })
 
-            for (const key in this.state.companyDetails) {
-              if (this.state.companyDetails[key]) {
-                this.setValue(`@${key}`, this.state.companyDetails[key])
-              }
-            }
-
-            this.click('@saveAndCreateButton')
+            this
+              .waitForElementPresent('@saveAndCreateButton')
+              .click('@saveAndCreateButton')
             done()
           })
+
+        callback(company)
+        return this
       },
 
-      createUkNonPrivateOrNonPublicLimitedCompany (companyName) {
-        this.state.companyDetails = {
-          name: companyName,
+      createUkNonPrivateOrNonPublicLimitedCompany (details = {}, callback) {
+        const company = assign({}, {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
-        }
+        }, details)
 
         this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
           .waitForElementPresent('@foreignOrganisationOptionBusinessType')
-
-        return this
-          .api.perform(async (done) => {
+          .api.perform((done) => {
             // step 1
-            this.click('@otherTypeOfUKOrganisationOption')
-
-            await new Promise((resolve) => {
-              this.getListOption('@otherTypeOfUKOrganisationBusinessType', (businessType) => {
-                this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
-                resolve()
+            this
+              .click('@otherTypeOfUKOrganisationOption')
+              .api.perform((done) => {
+                this.getListOption('@otherTypeOfUKOrganisationBusinessType', (businessType) => {
+                  this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
+                  done()
+                })
               })
-            })
-
-            this.click('@continueButton')
 
             // step 2
-            await new Promise((resolve) => {
-              this.getListOption('@registeredAddressCountry', (country) => {
-                this.state.companyDetails.registeredAddressCountry = country
-                resolve()
+            this
+              .waitForElementPresent('@continueButton')
+              .click('@continueButton')
+              .waitForElementPresent('@pageHeading')
+              .api.perform((done) => {
+                this.getListOption('@ukRegion', (ukRegion) => {
+                  company.ukRegion = ukRegion
+                  done()
+                })
               })
-            })
-
-            await new Promise((resolve) => {
-              this.getListOption('@sector', (sector) => {
-                this.state.companyDetails.sector = sector
-                resolve()
+              .perform((done) => {
+                this.getListOption('@sector', (sector) => {
+                  company.sector = sector
+                  done()
+                })
               })
-            })
+              .perform((done) => {
+                for (const key in company) {
+                  if (company[key]) {
+                    this.setValue(`@${key}`, company[key])
+                  }
+                }
+                done()
+              })
 
-            for (const key in this.state.companyDetails) {
-              if (this.state.companyDetails[key]) {
-                this.setValue(`@${key}`, this.state.companyDetails[key])
-              }
-            }
-
-            this.click('@saveAndCreateButton')
+            this
+              .waitForElementPresent('@saveAndCreateButton')
+              .click('@saveAndCreateButton')
             done()
           })
+
+        callback(company)
+        return this
       },
 
-      createUkPrivateOrPublicLimitedCompany (companyName) {
-        this.state.companyDetails = {
-          tradingName: companyName,
-        }
-
+      createUkPrivateOrPublicLimitedCompany (parentCompany, company = {}, callback) {
         this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
           .waitForElementPresent('@foreignOrganisationOptionBusinessType')
-
-        return this
           .api.perform(async (done) => {
             // step 1
             this
@@ -192,47 +194,51 @@ module.exports = {
               .click('@continueButton')
 
             // step 2
-            this
-              .setValue('@parentCompanySearch', this.props.parentCompanySearchTerm)
+              .setValue('@parentCompanySearch', parentCompany)
               .submitForm('form')
 
             // step 3
-            this.section.firstParentCompanySearchResult
+            this.section.firstCompanySearchResult
               .click('@header')
             this
               .click('@addButton')
 
             // step 4
-            await new Promise((resolve) => {
-              this.getListOption('@ukRegion', (ukRegion) => {
-                this.state.companyDetails.ukRegion = ukRegion
-                resolve()
+            this
+              .waitForElementPresent('@pageHeading')
+              .api.perform((done) => {
+                this.getListOption('@ukRegion', (ukRegion) => {
+                  company.ukRegion = ukRegion
+                  done()
+                })
               })
-            })
-
-            await new Promise((resolve) => {
-              this.getListOption('@sector', (sector) => {
-                this.state.companyDetails.sector = sector
-                resolve()
+              .perform((done) => {
+                this.getListOption('@sector', (sector) => {
+                  company.sector = sector
+                  done()
+                })
               })
-            })
-
-            for (const key in this.state.companyDetails) {
-              if (this.state.companyDetails[key]) {
-                this.setValue(`@${key}`, this.state.companyDetails[key])
-              }
-            }
-
+              .perform((done) => {
+                for (const key in company) {
+                  if (company[key]) {
+                    this.setValue(`@${key}`, company[key])
+                  }
+                }
+                done()
+              })
             this.click('@saveAndCreateButton')
             done()
           })
+
+        callback(company)
+        return this
       },
 
       searchForCompanyInCollection (companyName) {
         this.api.url(`${process.env.QA_HOST}/companies`)
         return this
           .waitForElementPresent('@collectionsCompanyNameInput')
-          .setValue('@collectionsCompanyNameInput', [ companyName, this.api.Keys.ENTER ]) // press enter
+          .setValue('@collectionsCompanyNameInput', [companyName, this.api.Keys.ENTER]) // press enter
           .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
           .waitForElementVisible('@xhrTargetElement')
       },
@@ -250,7 +256,7 @@ module.exports = {
         auditHistory: getDetailsTabSelector('Audit history'),
       },
     },
-    firstParentCompanySearchResult: {
+    firstCompanySearchResult: {
       selector: '.c-entity-list li:first-child',
       elements: {
         header: {

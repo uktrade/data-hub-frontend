@@ -58,6 +58,7 @@
 
   @include media(tablet) {
     display: inline-block;
+    vertical-align: top;
 
     & + & {
       margin-left: $default-spacing-unit * 2;
@@ -102,5 +103,6 @@
 
   .c-meta-list__item + .c-meta-list__item {
     margin-left: 0;
+    margin-top: $default-spacing-unit / 2;
   }
 }

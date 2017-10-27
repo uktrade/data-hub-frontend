@@ -1,3 +1,6 @@
+const invoiceMock = require('~/test/unit/data/omis/invoice')
+const paymentsMock = require('~/test/unit/data/omis/payments')
+
 describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
@@ -6,6 +9,8 @@ describe('OMIS View middleware', () => {
     this.loggerErrorSpy = this.sandbox.spy()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
+    this.getInvoiceStub = this.sandbox.stub()
+    this.getPaymentsStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
     this.flashSpy = this.sandbox.spy()
@@ -36,6 +41,8 @@ describe('OMIS View middleware', () => {
         Order: {
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
+          getInvoice: this.getInvoiceStub,
+          getPayments: this.getPaymentsStub,
           createQuote: this.createQuoteStub,
           cancelQuote: this.cancelQuoteStub,
         },
@@ -398,6 +405,84 @@ describe('OMIS View middleware', () => {
     })
   })
 
+  describe('setInvoice()', () => {
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getInvoiceStub.resolves(invoiceMock)
+
+        await this.middleware.setInvoice(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set response as quote property on locals', () => {
+        expect(this.resMock.locals).to.have.property('invoice')
+        expect(this.resMock.locals.invoice).to.deep.equal(invoiceMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getInvoiceStub.rejects(this.error)
+
+        await this.middleware.setInvoice(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should log error', () => {
+        expect(this.loggerErrorSpy).to.have.been.calledOnce
+        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('setPayments()', () => {
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getPaymentsStub.resolves(paymentsMock)
+
+        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set response as quote property on locals', () => {
+        expect(this.resMock.locals).to.have.property('payments')
+        expect(this.resMock.locals.payments).to.deep.equal(paymentsMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getPaymentsStub.rejects(this.error)
+
+        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should log error', () => {
+        expect(this.loggerErrorSpy).to.have.been.calledOnce
+        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
   describe('generateQuote()', () => {
     context('when Order.createQuote resolves', () => {
       beforeEach(() => {
@@ -719,7 +804,7 @@ describe('OMIS View middleware', () => {
           it('should disable form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
                 done()
               } catch (error) {
@@ -737,7 +822,7 @@ describe('OMIS View middleware', () => {
           it('should disable form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
                 done()
               } catch (error) {

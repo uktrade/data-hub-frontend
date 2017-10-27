@@ -1,5 +1,4 @@
 const {
-  SubscribersController,
   ClientDetailsController,
   MarketController,
   ConfirmController,
@@ -9,9 +8,8 @@ module.exports = {
   '/': {
     entryPoint: true,
     resetJourney: true,
+    skip: true,
     next: 'client-details',
-    templatePath: 'omis/apps/create/views',
-    template: 'start',
   },
   '/client-details': {
     heading: 'Client details',
@@ -29,13 +27,6 @@ module.exports = {
     next: 'subscribers',
     fields: ['primary_market'],
     controller: MarketController,
-  },
-  '/subscribers': {
-    heading: 'Advisers in the UK',
-    editable: true,
-    next: 'confirm',
-    fields: ['subscribers'],
-    controller: SubscribersController,
   },
   '/confirm': {
     heading: 'Check order details',

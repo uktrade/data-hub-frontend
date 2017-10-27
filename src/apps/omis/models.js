@@ -78,6 +78,22 @@ const Order = {
       method: 'POST',
     })
   },
+
+  getInvoice (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/invoice`)
+  },
+
+  getPayments (token, id) {
+    return authorisedRequest(token, `${config.apiRoot}/v3/omis/order/${id}/payment`)
+  },
+
+  savePayments (token, id, body) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/payment`,
+      method: 'POST',
+      body,
+    })
+  },
 }
 
 module.exports = {

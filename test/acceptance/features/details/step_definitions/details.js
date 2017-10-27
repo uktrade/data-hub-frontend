@@ -1,16 +1,12 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-const World = require('../../../helpers/world')
-
 defineSupportCode(({ Then }) => {
   const Details = client.page.Details()
 
-  // Then
-
-  Then(/^details heading should contain what I entered for "(.+)" field$/, async (fieldName) => {
+  Then(/^details heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
     await Details
-      .assert.containsText('@heading', World.state[fieldName])
+      .assert.containsText('@heading', this.state[fieldName])
   })
 
   Then(/^details heading should contain "(.+)"$/, async (value) => {
@@ -18,12 +14,12 @@ defineSupportCode(({ Then }) => {
       .assert.containsText('@heading', value)
   })
 
-  Then(/^details view data for "(.+)" should contain what I entered for "(.+)" field$/, async (detailsItemName, fieldName) => {
+  Then(/^details view data for "(.+)" should contain what I entered for "(.+)" field$/, async function (detailsItemName, fieldName) {
     const detail = await Details.getDetailFor(detailsItemName)
 
     await Details
       .api.useXpath()
-      .assert.containsText(detail.selector, World.state[fieldName])
+      .assert.containsText(detail.selector, this.state[fieldName])
       .useCss()
   })
 

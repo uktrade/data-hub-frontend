@@ -53,7 +53,7 @@ describe('Form component', () => {
       expect(component.querySelector('button.button').textContent).to.equal('Save')
     })
 
-    it('should render form without submit button', () => {
+    it('should render form without form actions', () => {
       const formProps = {
         hideFormActions: true,
       }
@@ -61,6 +61,20 @@ describe('Form component', () => {
         macros.renderToDom('TextField'),
       )
       expect(component.querySelector('.c-form-actions')).to.not.exist
+    })
+
+    it('should render form without submit button', () => {
+      const formProps = {
+        hidePrimaryFormAction: true,
+        returnLink: '/previous-page',
+      }
+      const component = macros.renderWithCallerToDom('Form', formProps)(
+        macros.renderToDom('TextField'),
+      )
+      const returnLink = component.querySelector('[href="/previous-page"]')
+      expect(returnLink).to.exist
+      expect(returnLink.textContent).to.equal('Back')
+      expect(component.querySelector('.c-form-actions .button')).to.not.exist
     })
 
     it('should render form with button modifier as string', () => {

@@ -35,6 +35,28 @@ const investmentFiltersFields = [
     hint: 'YYYY-MM-DD',
     placeholder: 'e.g. 2019-05-09',
   },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'status',
+    type: 'checkbox',
+    options: metadataRepo.investmentStatusOptions,
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'uk_region_location',
+    initialOption: '-- Select region --',
+    options () {
+      return metadataRepo.regionOptions.map(transformObjectToOption)
+    },
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'investor_company_country',
+    initialOption: '-- Select country --',
+    options () {
+      return metadataRepo.countryOptions.map(transformObjectToOption)
+    },
+  },
 ].map(filter => {
   return Object.assign(filter, {
     label: collectionFilterLabels.edit[filter.name],
@@ -67,10 +89,20 @@ const investmentSortForm = {
 const requirementsFormConfig = {
   buttonText: 'Save',
   children: [
-    Object.assign({}, globalFields.strategicDrivers, {
-      initialOption: 'Choose a strategic driver',
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      name: 'strategic_drivers',
       label: requirementsLabels.edit.strategic_drivers,
-    }),
+      optional: true,
+      children: [
+        Object.assign({}, globalFields.strategicDrivers, {
+          initialOption: 'Choose a strategic driver',
+          label: requirementsLabels.edit.strategic_drivers,
+          isLabelHidden: true,
+        }),
+      ],
+    },
     {
       macroName: 'TextField',
       type: 'textarea',
@@ -90,21 +122,38 @@ const requirementsFormConfig = {
         { label: 'No', value: 'false' },
       ],
     },
-    Object.assign({}, globalFields.countries, {
-      name: 'competitor_countries',
-      initialOption: 'Select country',
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
       label: requirementsLabels.edit.competitor_countries,
       modifier: 'subfield',
       condition: {
         name: 'client_considering_other_countries',
         value: 'true',
       },
-    }),
-    Object.assign({}, globalFields.ukRegions, {
-      name: 'uk_region_locations',
+      children: [
+        Object.assign({}, globalFields.countries, {
+          name: 'competitor_countries',
+          initialOption: 'Select country',
+          label: requirementsLabels.edit.competitor_countries,
+          isLabelHidden: true,
+        }),
+      ],
+    },
+    {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
       label: requirementsLabels.edit.uk_region_locations,
-      initialOption: 'Select UK region',
-    }),
+      optional: true,
+      children: [
+        Object.assign({}, globalFields.ukRegions, {
+          name: 'uk_region_locations',
+          label: requirementsLabels.edit.uk_region_locations,
+          initialOption: 'Select UK region',
+          isLabelHidden: true,
+        }),
+      ],
+    },
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',
@@ -117,11 +166,58 @@ const requirementsFormConfig = {
         { label: 'No', value: 'false' },
       ],
     },
+    {
+      macroName: 'Fieldset',
+      legend: 'Address',
+      condition: {
+        name: 'site_decided',
+        value: 'true',
+      },
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'address_1',
+          label: 'Street',
+          modifier: 'compact',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_2',
+          label: 'Street 2',
+          isLabelHidden: true,
+          modifier: 'compact',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_town',
+          label: 'Town',
+        },
+        {
+          macroName: 'TextField',
+          name: 'address_postcode',
+          label: 'Postcode',
+          modifier: 'short',
+        },
+      ],
+    },
   ],
+}
+
+const statusFormConfig = {
+  buttonText: 'Save',
+  children: [{
+    macroName: 'MultipleChoiceField',
+    type: 'radio',
+    name: 'status',
+    label: 'Status',
+    isLabelHidden: true,
+    options: metadataRepo.investmentStatusOptions,
+  }],
 }
 
 module.exports = {
   investmentFiltersFields,
   investmentSortForm,
   requirementsFormConfig,
+  statusFormConfig,
 }

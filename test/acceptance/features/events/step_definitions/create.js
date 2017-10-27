@@ -1,9 +1,18 @@
 const faker = require('faker')
+const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-defineSupportCode(({ Given, Then, When }) => {
+defineSupportCode(function ({ Then, When }) {
   const Event = client.page.Event()
+
+  When(/^I create an event$/, async function () {
+    await Event
+      .navigate()
+      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
+      .click('@saveButton')
+      .wait()
+  })
 
   When(/^I navigate to the create an event page$/, async () => {
     await Event

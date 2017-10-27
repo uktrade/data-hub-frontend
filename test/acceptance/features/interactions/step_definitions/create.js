@@ -1,284 +1,185 @@
-const faker = require('faker')
-const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+const faker = require('faker')
+const { set } = require('lodash')
 
-defineSupportCode(({ Given, Then, When }) => {
+const { getUid, appendUid } = require('../../../helpers/uuid')
+
+const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
+const dashboardPage = `${process.env.QA_HOST}/`
+
+defineSupportCode(({ Given, When, Then }) => {
   const Company = client.page.Company()
-  const Contact = client.page.Contact()
   const Interaction = client.page.Interaction()
-  const foreignCompanyName = 'Lambda plc'
-  let subject
-  let contactname
+  const Contact = client.page.Contact()
+  const Search = client.page.Search()
 
-  When(/^I navigate to Interactions page of any company$/, async () => {
+  Given(/^a company is created for interactions$/, async function () {
+    const companyName = appendUid(faker.company.companyName())
+
+    await client
+      .url(companySearchPage)
+
     await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
+      .createUkNonPrivateOrNonPublicLimitedCompany(
+        { name: companyName },
+        (company) => set(this.state, 'company', company),
+      )
+      .wait() // wait for backend to sync
+  })
+
+  Given(/^a company contact is created for interactions$/, async function () {
+    await client
+      .url(dashboardPage)
+
+    await Search
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
+
+    await Company
+      .section.firstCompanySearchResult
+      .click('@header')
+
+    await Company.section.detailsTabs
+      .waitForElementVisible('@contacts')
+      .click('@contacts')
+
     await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
+      .createNewPrimaryContact({}, (contact) => set(this.state, 'contact', contact))
+      .wait() // wait for backend to sync
   })
 
-  Then(/^I verify an option to add a new Interaction$/, async () => {
-    await Interaction
-      .assert.visible('@addInteractionButton')
+  Given(/^a company investment project is created for interactions$/, async function () {
   })
 
-  When(/^I add a new Business card interaction$/, async () => {
-    subject = faker.random.word()
+  When(/^adding an interaction/, async function () {
+    await Interaction
+      .createInteraction({}, (interaction) => set(this.state, 'interaction', interaction))
+      .wait()
+  })
+
+  When(/^navigating to the create company interactions and services step 1 page/, async function () {
+    await client
+      .url(dashboardPage)
+
+    await Search
+      .search(getUid(this.state.company.name), client.Keys.ENTER)
+
     await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
+      .section.firstCompanySearchResult
+      .click('@header')
+
+    await Company.section.detailsTabs
+      .waitForElementVisible('@interactions')
+      .click('@interactions')
+
+    await Company
+      .waitForElementVisible('@addInteractionButton')
+      .click('@addInteractionButton')
+  })
+
+  When(/^navigating to the create contact interactions and services step 1 page/, async function () {
+    await client
+      .url(dashboardPage)
+
+    await Search
+      .search(getUid(this.state.contact.lastName), client.Keys.ENTER)
+      .section.tabs.click('@contacts')
+
     await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickBusinessCardRadioButton()
-      .enterNewInteractionDetails(subject)
-      .setValue('@interactionPageCompanyContact', 'a')
-      .getText('@interactionPageCompanyContactList', (result) => {
-        contactname = result.value
-      })
-      .click('@interactionPageCompanyContactList')
-      .submitForm('form')
-  })
+      .section.firstContactSearchResult
+      .click('@header')
 
-  When(/^I add a new Email-Website interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
+    await Contact.section.detailsTabs
+      .waitForElementVisible('@interactions')
+      .click('@interactions')
+
     await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickEmailWebsiteRadioButton()
-      .enterNewInteractionDetails(subject)
+      .waitForElementVisible('@addInteractionButton')
+      .click('@addInteractionButton')
   })
 
-  When(/^I add a new Face to face interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickFaceToFaceRadioButton()
-      .enterNewInteractionDetails(subject)
+  When(/^navigating to the create investment project interaction page/, async function () {
   })
 
-  When(/^I add a new Fax interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^selecting interaction/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickFaxRadioButton()
-      .enterNewInteractionDetails(subject)
+      .waitForElementVisible('@continueButton')
+      .click('@aStandardInteraction')
+      .click('@continueButton')
   })
 
-  When(/^I add a new Letter-Fax interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^selecting service delivery/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickLetterFaxRadioButton()
-      .enterNewInteractionDetails(subject)
+      .waitForElementVisible('@continueButton')
+      .click('@aServiceThatYouHaveProvided')
+      .click('@continueButton')
   })
 
-  When(/^I add a new Service delivery interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^the interaction events Yes option is chosen/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickServiceDeliveryRadioButton()
-      .setAdditionalFieldsForServiceDelivery(subject)
+      .setValue('@eventYes', '')
+      .click('@eventYes')
   })
 
-  When(/^I add a new SMS interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^the interaction events No option is chosen/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickSmsRadioButton()
-      .enterNewInteractionDetails(subject)
+      .setValue('@eventNo', '')
+      .click('@eventNo')
   })
 
-  When(/^I add a new Social Media interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  Then(/^there are interaction fields$/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickSocialMediaRadioButton()
-      .enterNewInteractionDetails(subject)
+      .waitForElementVisible('@contact')
+      .assert.visible('@contact')
+      .assert.visible('@serviceProvider')
+      .assert.visible('@service')
+      .assert.visible('@subject')
+      .assert.visible('@notes')
+      .assert.visible('@dateOfInteractionYear')
+      .assert.visible('@dateOfInteractionMonth')
+      .assert.visible('@dateOfInteractionDay')
+      .assert.visible('@ditAdviser')
+      .assert.visible('@communicationChannel')
+      .assert.elementNotPresent('@eventYes')
+      .assert.elementNotPresent('@eventNo')
+      .assert.elementNotPresent('@event')
   })
 
-  When(/^I add a new Telephone interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  Then(/^there are service delivery fields$/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickTelephoneRadioButton()
-      .enterNewInteractionDetails(subject)
+      .waitForElementVisible('@contact')
+      .assert.visible('@contact')
+      .assert.visible('@serviceProvider')
+      .assert.visible('@service')
+      .assert.visible('@subject')
+      .assert.visible('@notes')
+      .assert.visible('@dateOfInteractionYear')
+      .assert.visible('@dateOfInteractionMonth')
+      .assert.visible('@dateOfInteractionDay')
+      .assert.visible('@ditAdviser')
+      .assert.elementNotPresent('@communicationChannel')
+      .assert.visible('@eventYes')
+      .assert.visible('@eventNo')
+      .assert.elementPresent('@event')
   })
 
-  When(/^I add a new Telex interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickTelexRadioButton()
-      .enterNewInteractionDetails(subject)
+  Then(/^interaction fields are pre-populated$/, async function () {
+    const assertIsSet = (result) => client.expect(result.value.length).to.be.greaterThan(0)
+    // TODO test user does not have a DIT team
+    // await Interaction.getValue('@serviceProvider', assertIsSet)
+    await Interaction.getValue('@dateOfInteractionYear', assertIsSet)
+    await Interaction.getValue('@dateOfInteractionMonth', assertIsSet)
+    await Interaction.getValue('@dateOfInteractionDay', assertIsSet)
+    await Interaction.getValue('@ditAdviser', assertIsSet)
   })
 
-  When(/^I add a new UKTI Website interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  Then(/^the interaction events is displayed$/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickUktiWebsiteRadioButton()
-      .enterNewInteractionDetails(subject)
+      .assert.visible('@event')
   })
 
-  When(/^I add a new Undefined interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  Then(/^the interaction events is not displayed$/, async function () {
     await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickUndefinedRadioButton()
-      .enterNewInteractionDetails(subject)
-  })
-
-  When(/^I add a new Video-Teleconf interaction$/, async () => {
-    subject = faker.random.word()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .clickAddInteractionButton()
-      .clickVideoTeleconfRadioButton()
-      .enterNewInteractionDetails(subject)
-  })
-
-  Then(/^I verify my newly added Interaction in company profile$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .navigateToInteractionsPage()
-      .getText('@subjectFromInteractionTab', (result) => {
-        Contact.assert.equal(result.value, subject)
-      })
-  })
-
-  Then(/^I verify my newly added Interaction under search landing page$/, async () => {
-    await Company
-      .navigate()
-    await Interaction
-      .assert.containsText('@interactionUnderSearchPage', foreignCompanyName)
-      .assert.containsText('@interactionUnderSearchPage', subject)
-  })
-
-  Then(/^I see the edit interaction button to confirm successful adding$/, async () => {
-    await Interaction
-      .assert.containsText('@editInteractionButton', 'Edit interaction')
-  })
-
-  Then(/^I see the edit service delivery button to confirm successful adding$/, async () => {
-    await Interaction
-      .assert.containsText('@editInteractionButton', 'Edit service delivery details')
-  })
-
-  When(/^I navigate to interactions collections$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(Interaction.subject)
-    await Interaction
-      .assert.visible('@interactionsCollectionsTab')
-      .click('@interactionsCollectionsTab')
-  })
-
-  Then(/^I view the first and last name of the contact involved in the interaction$/, async () => {
-    await Interaction
-      .assert.containsText('@contactNameFromList', contactname)
-  })
-
-  Then(/^I view the subject line of the interaction$/, async () => {
-    await Interaction
-      .assert.containsText('@subjectFromList', Interaction.subject)
-  })
-
-  Then(/^the date of the interaction is as expected$/, async () => {
-    const datetime = format(new Date(), 'D MMMM YYYY')
-    await Interaction
-      .assert.containsText('@dateFromList', datetime)
-  })
-
-  Then(/^I view the company name of the interaction$/, async () => {
-    await Interaction
-      .assert.containsText('@companyFromList', foreignCompanyName)
-  })
-
-  Then(/^clicking the interaction name takes me to the interaction details page$/, async () => {
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await Interaction
-      .assert.containsText('@subjectFromInteractionDetailsPage', Interaction.subject)
+      .assert.hidden('@event')
   })
 })

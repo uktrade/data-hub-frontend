@@ -1,30 +1,40 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% block main_grid_left_column %}
+  {{ CollectionFilters({
+    query: QUERY,
+    filtersFields: filtersFields
+  }) }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   {% call Collection(results | assign({
     countLabel: 'order',
     sortForm: sortForm,
+    selectedFilters: selectedFilters,
     query: QUERY
   })) %}
     <table>
       <thead>
         <tr>
           <th>Reference</th>
-          <th>Company</th>
-          <th align="right">Net amount</th>
-          <th align="right">Amount</th>
+          <th>Payment due date</th>
+          <th>Company name</th>
+          <th align="right">Amount (ex. VAT)</th>
+          <th align="right">Amount (inc. VAT)</th>
         </tr>
       </thead>
       <tbody>
         {% for item in results.items %}
           <tr>
             <td>
-              <a href="/omis/{{ item.id }}">
+              <a href="/omis/{{ item.id }}/edit/payment-reconciliation?returnUrl=/omis/reconciliation?{{ QUERY | encodeQueryString }}">
                 {{ item.reference }}
               </a>
             </td>
+            <td>{{ item.payment_due_date | formatDate('DD/MM/YYYY') }}</td>
             <td>{{ item.company }}</td>
-            <td align="right">{{ item.net_cost | formatCurrency }}</td>
+            <td align="right">{{ item.subtotal_cost | formatCurrency }}</td>
             <td align="right">{{ item.total_cost | formatCurrency }}</td>
           </tr>
         {% endfor %}

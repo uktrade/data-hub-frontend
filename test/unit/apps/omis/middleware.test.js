@@ -1,7 +1,7 @@
 const companyData = require('~/test/unit/data/company.json')
 const orderData = require('~/test/unit/data/omis/simple-order.json')
-const subscriberData = require('~/test/unit/data/omis/subscribers.json')
-const assigneeData = require('~/test/unit/data/omis/assignees.json')
+
+const omisArchivedDocumentsBaseUrl = 'http://docs-base-url'
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
@@ -11,8 +11,6 @@ describe('OMIS middleware', () => {
     this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
     this.getDitCompanyStub = this.sandbox.stub()
     this.getByIdStub = this.sandbox.stub()
-    this.getSubscribersStub = this.sandbox.stub()
-    this.getAssigneesStub = this.sandbox.stub()
     this.loggerSpy = this.sandbox.spy()
     this.nextSpy = this.sandbox.spy()
 
@@ -29,6 +27,9 @@ describe('OMIS middleware', () => {
       '../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },
+      '../../../config': {
+        omisArchivedDocumentsBaseUrl: omisArchivedDocumentsBaseUrl,
+      },
       '../../../config/logger': {
         error: this.loggerSpy,
       },
@@ -38,8 +39,6 @@ describe('OMIS middleware', () => {
       './models': {
         Order: {
           getById: this.getByIdStub,
-          getSubscribers: this.getSubscribersStub,
-          getAssignees: this.getAssigneesStub,
         },
       },
     })
@@ -109,24 +108,18 @@ describe('OMIS middleware', () => {
     context('when model methods resolve', () => {
       beforeEach(() => {
         this.getByIdStub.resolves(orderData)
-        this.getSubscribersStub.resolves(subscriberData)
-        this.getAssigneesStub.resolves(assigneeData)
       })
 
       it('should call model methods with correct arguments', async () => {
         await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
         expect(this.getByIdStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
-        expect(this.getSubscribersStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
-        expect(this.getAssigneesStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
       })
 
       it('should set a order property on locals', async () => {
         await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
 
         const order = Object.assign({}, orderData, {
-          subscribers: subscriberData,
-          assignees: assigneeData,
           isEditable: true,
         })
         expect(this.resMock.locals).to.have.property('order')
@@ -214,6 +207,18 @@ describe('OMIS middleware', () => {
 
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith({}, this.resMock, this.nextSpy)
+    })
+  })
+
+  describe('setArchivedDocumentsBaseUrl()', () => {
+    it('should call setHomeBreadcrumb with order reference', () => {
+      this.middleware.setArchivedDocumentsBaseUrl({}, this.resMock, this.nextSpy)
+
+      expect(this.resMock.locals).to.have.property('archivedDocumentsBaseUrl')
+      expect(this.resMock.locals.archivedDocumentsBaseUrl).to.equal(omisArchivedDocumentsBaseUrl)
+
+      expect(this.nextSpy).to.have.been.calledOnce
+      expect(this.nextSpy).to.have.been.calledWith()
     })
   })
 })

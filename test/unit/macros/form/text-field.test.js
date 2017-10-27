@@ -14,13 +14,6 @@ describe('TextField component', () => {
       })
       expect(component).to.be.null
     })
-
-    it('should not render if name is not provided', () => {
-      const component = macros.renderToDom('TextField', {
-        label: 'First name',
-      })
-      expect(component).to.be.null
-    })
   })
 
   describe('valid props', () => {

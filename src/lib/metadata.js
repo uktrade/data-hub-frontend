@@ -88,6 +88,7 @@ const metadataItems = [
   ['investment-project-stage', 'investmentStageOptions'],
   ['order-service-type', 'orderServiceTypesOptions'],
   ['omis-market', 'omisMarketOptions'],
+  ['fdi-value', 'fdiValueOptions'],
 ]
 
 const restrictedServiceKeys = [
@@ -154,6 +155,13 @@ module.exports.fetchAll = (cb) => {
 module.exports.REASONS_FOR_ARCHIVE = [
   'Company is dissolved',
   'Other',
+]
+
+module.exports.investmentStatusOptions = [
+  { label: 'Ongoing', value: 'ongoing' },
+  { label: 'Delayed', value: 'delayed' },
+  { label: 'Abandoned', value: 'abandoned' },
+  { label: 'Lost', value: 'lost' },
 ]
 
 module.exports.getServices = function (token) {

@@ -37,6 +37,9 @@ function getRequestBody (req, res, next) {
     'estimated_land_date_before',
     'estimated_land_date_after',
     'client_relationship_manager',
+    'status',
+    'uk_region_location',
+    'investor_company_country',
   ])
 
   const selectedSortBy = req.query.sortby ? {

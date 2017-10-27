@@ -1,118 +1,71 @@
-@interactions-create @ignore
-Feature: Create New Interaction
-  As an existing user
-  I would like to create a new Interaction for a company
+@interactions-create
+Feature: Save an Interaction in Data hub
+  As a data hub user
+  I would like to add an interaction to data hub
+  So that I can collection interaction data
 
-  Background:
-    Given I am an authenticated user on the data hub website
+Background:
+  Given I am an authenticated user on the data hub website
 
-  @interactions-create--verify-add
-  Scenario: Verify Add Interaction option
+  @interactions-create--companies-interaction
+  Scenario: Interaction fields from companies
 
-    When I navigate to Interactions page of any company
-    Then I verify an option to add a new Interaction
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    When navigating to the create company interactions and services step 1 page
+    And selecting interaction
+    Then there are interaction fields
+    And interaction fields are pre-populated
 
-  @interactions-create--add-business-card
-  Scenario: Add a Business card Interaction
+  @interactions-create--contacts-interaction
+  Scenario: Interaction fields from contacts
 
-    When I add a new Business card interaction
-    Then I see the edit interaction button to confirm successful adding
-    And I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    When navigating to the create contact interactions and services step 1 page
+    And selecting interaction
+    Then there are interaction fields
+    And interaction fields are pre-populated
 
-  @interactions-create--add-email-website
-  Scenario: Add a Email/Website Interaction
+  @interactions-create--investment-projects-interaction @ignore
+  Scenario: Interaction fields from investment projects
 
-    When I add a new Email-Website interaction
-    Then I see the edit interaction button to confirm successful adding
-    And I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    And a company investment project is created for interactions
+    When navigating to the create investment project interaction page
+    Then there are interaction fields
+    And interaction fields are pre-populated
 
-  @interactions-create--add-face-to-face
-  Scenario: Add a Face to face Interaction
+  @interactions-create--companies-service-delivery
+  Scenario: Service delivery fields from companies
 
-    When I add a new Face to face interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    When navigating to the create company interactions and services step 1 page
+    And selecting service delivery
+    Then there are service delivery fields
+    And interaction fields are pre-populated
 
-  @interactions-create--add-fax
-  Scenario: Add a Fax Interaction
+  @interactions-create--contacts-service-delivery
+  Scenario: Service delivery fields from contacts
 
-    When I add a new Fax interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    When navigating to the create contact interactions and services step 1 page
+    And selecting service delivery
+    Then there are service delivery fields
+    And interaction fields are pre-populated
 
-  @interactions-create--add-letter-fax
-  Scenario: Add a Letter/Fax Interaction
+  @interactions-create--events-toggle
+  Scenario: Toggle service delivery event association
 
-    When I add a new Letter-Fax interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-sms
-  Scenario: Add a SMS Interaction
-
-    When I add a new SMS interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-media
-  Scenario: Add a Social Media Interaction
-
-    When I add a new Social Media interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-telephone
-  Scenario: Add a Telephone Interaction
-
-    When I add a new Telephone interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-telex
-  Scenario: Add a Telex Interaction
-
-    When I add a new Telex interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-ukti-website
-  Scenario: Add a UKTI Website Interaction
-
-    When I add a new UKTI Website interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-undefined
-  Scenario: Add a Undefined Interaction
-
-    When I add a new Undefined interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--add-teleconf
-  Scenario: Add a Video/Teleconf Interaction
-
-    When I add a new Video-Teleconf interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction in company profile
-    And I logout of Data Hub website
-
-  @interactions-create--verify-add-on-search-landing
-  Scenario: Verify newly added Interaction under search landing page
-
-    When I add a new Business card interaction
-    Then I see the edit interaction button to confirm successful adding
-    Then I verify my newly added Interaction under search landing page
-    And I logout of Data Hub website
+    And a company is created for interactions
+    And a company contact is created for interactions
+    When navigating to the create company interactions and services step 1 page
+    And selecting service delivery
+    Then there are service delivery fields
+    When the interaction events Yes option is chosen
+    Then the interaction events is displayed
+    When the interaction events No option is chosen
+    Then the interaction events is not displayed

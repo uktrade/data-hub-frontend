@@ -48,6 +48,8 @@ const config = {
   mediumDateFormat: 'D MMM YYYY',
   mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
+  performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
+  omisArchivedDocumentsBaseUrl: process.env.OMIS_ARCHIVED_DOCUMENTS_BASE_URL,
 }
 
 module.exports = config

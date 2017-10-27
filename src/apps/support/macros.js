@@ -34,7 +34,6 @@ const feedbackFormConfig = (browserInfo) => ({
     },
     {
       macroName: 'TextField',
-      optional: true,
       name: 'email',
       label: 'Email',
       hint: 'If you wish to be contacted, please provide your email address',

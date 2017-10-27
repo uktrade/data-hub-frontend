@@ -60,7 +60,7 @@ describe('MetaList macro', () => {
           }],
       })
 
-      expect(component.querySelector('.c-meta-list__item-value').textContent).to.equal('26 July 2017')
+      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('26 July 2017')
     })
 
     it('should not render item formatted as date if it has no value', () => {
@@ -78,7 +78,7 @@ describe('MetaList macro', () => {
           }],
       })
 
-      expect(component.querySelector('.c-meta-list__item-value').textContent).to.equal('26 July 2017')
+      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('26 July 2017')
       expect(component.querySelectorAll('.c-meta-list__item')).to.have.length(1)
       expect(component.textContent).not.to.contain('Expiry date')
     })

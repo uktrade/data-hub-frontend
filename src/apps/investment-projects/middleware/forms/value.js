@@ -13,6 +13,7 @@ function populateForm (req, res, next) {
   })
   res.locals.form.options = {
     averageSalaryRange: metadataRepo.salaryRangeOptions.map(transformObjectToOption),
+    fdiValue: metadataRepo.fdiValueOptions.map(transformObjectToOption),
   }
 
   next()
