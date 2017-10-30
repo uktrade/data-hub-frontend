@@ -9,6 +9,7 @@ const {
   renderPagination,
   renderProgress,
   renderCollection,
+  renderKeyValueTables,
 } = require('./controllers')
 
 const { renderFormElements } = require('./form/controllers')
@@ -26,6 +27,7 @@ router
   .get('/pagination', renderPagination)
   .get('/collection', getInvestmentProjectsCollection, renderCollection)
   .get('/progress', renderProgress)
+  .get('/keyvaluetables', renderKeyValueTables)
   .all('/form', renderFormElements)
 
 module.exports = router

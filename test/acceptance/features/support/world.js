@@ -1,4 +1,5 @@
 const fixtures = require('./fixtures')
+const urls = require('./urls')
 const { defineSupportCode } = require('cucumber')
 
 /**
@@ -6,6 +7,7 @@ const { defineSupportCode } = require('cucumber')
  * @constructor
  */
 function World () {
+  this.urls = urls
   this.fixtures = fixtures
   this.state = {}
   this.resetState = function () {
