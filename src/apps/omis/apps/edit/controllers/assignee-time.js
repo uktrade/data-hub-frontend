@@ -1,11 +1,19 @@
-const { filter, flatten, pick } = require('lodash')
+const { filter, flatten, get, pick } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class EditAssigneeHoursController extends EditController {
-  configure (req, res, next) {
-    req.form.options.hidePrimaryFormAction = true
+  async configure (req, res, next) {
+    const orderId = get(res.locals, 'order.id')
+    const token = get(req.session, 'token')
+    const assignees = await Order.getAssignees(token, orderId)
+
+    if (!assignees.length) {
+      req.form.options.hidePrimaryFormAction = true
+    }
+
+    res.locals.assignees = assignees
 
     super.configure(req, res, next)
   }
@@ -20,7 +28,7 @@ class EditAssigneeHoursController extends EditController {
 
       return {
         adviser: {
-          id: res.locals.order.assignees[index].adviser.id,
+          id: res.locals.assignees[index].adviser.id,
         },
         estimated_time: parseInt((hours * 60)) + parseInt(minutes),
       }
