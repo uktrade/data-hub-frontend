@@ -5,10 +5,10 @@ module.exports = {
 
   commands: [
     {
-      verifySuccessMessage () {
+      verifyMessage (messageType) {
         return this
           .waitForElementPresent('@flashMessage')
-          .assert.cssClassPresent('@flashMessage', 'c-message--success')
+          .assert.cssClassPresent('@flashMessage', `c-message--${messageType}`)
       },
     },
   ],

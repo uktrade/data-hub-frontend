@@ -31,7 +31,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .editCompanyRecords(description, website, number)
       .submitForm('form')
     await Message
-      .verifySuccessMessage()
+      .verifyMessage('success')
   })
 
   When(/^I search for this company record$/, async () => {
