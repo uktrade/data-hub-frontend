@@ -12,10 +12,10 @@ const globalNavItems = [
   { path: '/companies', label: 'Companies' },
   { path: '/contacts', label: 'Contacts' },
   { path: '/events', label: 'Events' },
-  { path: '/interactions', label: 'Interactions' },
+  { path: '/interactions', label: 'Interactions and services' },
   { path: '/investment-projects', label: 'Investment projects' },
   { path: '/omis', label: 'Orders (OMIS)' },
-  { path: config.performanceDashboardsUrl, label: 'Performance dashboards' },
+  { path: config.performanceDashboardsUrl, label: 'MI dashboards' },
 ]
 
 module.exports = function locals (req, res, next) {
