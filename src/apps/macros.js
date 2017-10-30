@@ -46,6 +46,7 @@ const globalFields = {
     macroName: 'MultipleChoiceField',
     name: 'strategic_drivers',
     label: 'Strategic drivers',
+    initialOption: '-- Select strategic driver --',
     options () {
       return metadata.strategicDriverOptions.map(transformObjectToOption)
     },

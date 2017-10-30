@@ -1,4 +1,4 @@
-const metadataRepo = require('../../lib/metadata')
+const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
@@ -9,7 +9,7 @@ const investmentFiltersFields = [
     name: 'stage',
     type: 'checkbox',
     options () {
-      return metadataRepo.investmentStageOptions.map(transformObjectToOption)
+      return metadata.investmentStageOptions.map(transformObjectToOption)
     },
   },
   {
@@ -17,11 +17,11 @@ const investmentFiltersFields = [
     name: 'investment_type',
     type: 'checkbox',
     options () {
-      return metadataRepo.investmentTypeOptions.map(transformObjectToOption)
+      return metadata.investmentTypeOptions.map(transformObjectToOption)
     },
   },
   Object.assign({}, globalFields.sectors, {
-    initialOption: 'All sectors',
+    initialOption: '-- All sectors --',
   }),
   {
     macroName: 'TextField',
@@ -39,14 +39,14 @@ const investmentFiltersFields = [
     macroName: 'MultipleChoiceField',
     name: 'status',
     type: 'checkbox',
-    options: metadataRepo.investmentStatusOptions,
+    options: metadata.investmentStatusOptions,
   },
   {
     macroName: 'MultipleChoiceField',
     name: 'uk_region_location',
     initialOption: '-- Select region --',
     options () {
-      return metadataRepo.regionOptions.map(transformObjectToOption)
+      return metadata.regionOptions.map(transformObjectToOption)
     },
   },
   {
@@ -54,7 +54,7 @@ const investmentFiltersFields = [
     name: 'investor_company_country',
     initialOption: '-- Select country --',
     options () {
-      return metadataRepo.countryOptions.map(transformObjectToOption)
+      return metadata.countryOptions.map(transformObjectToOption)
     },
   },
 ].map(filter => {
@@ -97,7 +97,6 @@ const requirementsFormConfig = {
       optional: true,
       children: [
         Object.assign({}, globalFields.strategicDrivers, {
-          initialOption: 'Choose a strategic driver',
           label: requirementsLabels.edit.strategic_drivers,
           isLabelHidden: true,
         }),
@@ -125,6 +124,7 @@ const requirementsFormConfig = {
     {
       macroName: 'AddAnother',
       buttonName: 'add_item',
+      name: 'competitor_countries',
       label: requirementsLabels.edit.competitor_countries,
       modifier: 'subfield',
       condition: {
@@ -134,7 +134,6 @@ const requirementsFormConfig = {
       children: [
         Object.assign({}, globalFields.countries, {
           name: 'competitor_countries',
-          initialOption: 'Select country',
           label: requirementsLabels.edit.competitor_countries,
           isLabelHidden: true,
         }),
@@ -143,14 +142,14 @@ const requirementsFormConfig = {
     {
       macroName: 'AddAnother',
       buttonName: 'add_item',
+      name: 'uk_region_locations',
       label: requirementsLabels.edit.uk_region_locations,
       optional: true,
       children: [
         Object.assign({}, globalFields.ukRegions, {
-          name: 'uk_region_locations',
           label: requirementsLabels.edit.uk_region_locations,
-          initialOption: 'Select UK region',
           isLabelHidden: true,
+          name: 'uk_region_locations',
         }),
       ],
     },
@@ -211,7 +210,7 @@ const statusFormConfig = {
     name: 'status',
     label: 'Status',
     isLabelHidden: true,
-    options: metadataRepo.investmentStatusOptions,
+    options: metadata.investmentStatusOptions,
   }],
 }
 
