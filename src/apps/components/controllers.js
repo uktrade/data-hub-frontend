@@ -96,6 +96,41 @@ function renderProgress (req, res) {
     })
 }
 
+function renderKeyValueTables (req, res) {
+  const tableData = {
+    'Company': 'Acme corp',
+    'Something': {
+      name: 'Else',
+      url: '/components/',
+    },
+    'Date': {
+      type: 'date',
+      name: '20170107',
+    },
+    'Region': {
+      id: '1234',
+      name: 'South',
+    },
+    'Flavours': ['Chocolate', 'Strawberry', 'Melon'],
+    'Related Company': {
+      name: 'Freds Bananas',
+      actions: [{
+        url: '/components/',
+        label: 'Add company',
+      }, {
+        url: '/components/',
+        label: 'Remove company',
+      }],
+    },
+  }
+
+  return res
+    .breadcrumb('Key Value Tables')
+    .render('components/views/keyvaluetables', {
+      tableData,
+    })
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -105,4 +140,5 @@ module.exports = {
   renderPagination,
   renderProgress,
   renderCollection,
+  renderKeyValueTables,
 }
