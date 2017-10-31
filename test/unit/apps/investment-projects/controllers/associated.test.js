@@ -16,7 +16,7 @@ describe('investment associated controller', () => {
         updateInvestment: this.updateInvestmentStub,
       },
       '../../search/services': {
-        search: this.searchStub,
+        searchInvestments: this.searchStub,
       },
       '../../../lib/metadata': {
         investmentTypeOptions: [{
@@ -145,15 +145,9 @@ describe('investment associated controller', () => {
           expect(params.searchTerm).equal('test')
         })
 
-        it('should only search for investment projects', () => {
-          expect(this.searchStub).to.be.called
-          const params = this.searchStub.firstCall.args[0]
-          expect(params.searchEntity).to.equal('investment_project')
-        })
-
         it('should filter search to only include non-FDI results', () => {
           const params = this.searchStub.firstCall.args[0]
-          expect(params.requestBody.investment_type).to.equal('9c364e64-2b28-401b-b2df-50e08b0bca44')
+          expect(params.filters.investment_type).to.equal('9c364e64-2b28-401b-b2df-50e08b0bca44')
         })
 
         it('should allow the user to page through results', () => {
