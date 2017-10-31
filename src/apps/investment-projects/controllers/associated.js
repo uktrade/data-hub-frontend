@@ -1,6 +1,6 @@
 const { find, assign } = require('lodash')
 
-const { search } = require('../../search/services')
+const { searchInvestments } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { updateInvestment } = require('../repos')
 const metadata = require('../../../lib/metadata')
@@ -39,21 +39,20 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
 
   try {
     const investmentTypes = metadata.investmentTypeOptions
-    const nonFDI = find(investmentTypes, (item) => {
+
+    const { id: nonFDIId } = find(investmentTypes, (item) => {
       return item.name.toLowerCase() === 'non-fdi'
     })
 
     res.locals.searchTerm = searchTerm
 
-    res.locals.results = await search({
+    res.locals.results = await searchInvestments({
       token,
       searchTerm,
       page,
-      searchEntity: 'investment_project',
-      requestBody: {
-        investment_type: nonFDI.id,
+      filters: {
+        investment_type: nonFDIId,
       },
-      isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
