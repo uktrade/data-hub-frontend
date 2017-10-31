@@ -172,6 +172,7 @@ module.exports = {
                     this.setValue(`@${key}`, company[key])
                   }
                 }
+                company.country = 'United Kingdom'
                 done()
               })
 

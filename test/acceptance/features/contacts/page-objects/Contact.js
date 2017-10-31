@@ -39,6 +39,14 @@ const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   }
 )
 
+const getTableRowValue = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//th',
+    child: '/following-sibling::td',
+  }
+)
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
@@ -121,6 +129,12 @@ module.exports = {
             done()
           })
           .perform((done) => {
+            contact.acceptsEmailMarketingFromDit = 'Yes'
+            this.click('@acceptsEmailMarketingFromDit')
+
+            done()
+          })
+          .perform((done) => {
             this
               .click('@sameAddressYes')
 
@@ -199,6 +213,19 @@ module.exports = {
         company: getMetaListItemValueSelector('Company'),
         sector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated'),
+      },
+    },
+    contactDetails: {
+      selector: '.table--key-value',
+      elements: {
+        jobTitle: getTableRowValue('Job title'),
+        phoneNumber: getTableRowValue('Phone number'),
+        email: getTableRowValue('Email'),
+        emailMarketing: getTableRowValue('Email marketing'),
+        address: getTableRowValue('Address'),
+        alternativeTelephone: getTableRowValue('Alternative telephone'),
+        alternativeEmail: getTableRowValue('Alternative email'),
+        notes: getTableRowValue('Notes'),
       },
     },
   },
