@@ -46,6 +46,13 @@ const {
   removeUKCompany,
 } = require('./controllers/ukcompany')
 
+const {
+  selectAssociatedInvestmentProject,
+  searchForAssociatedInvestmentProject,
+  renderAssociatedInvestmentProjectResults,
+  removeAssociatedInvestmentProject,
+} = require('./controllers/associated')
+
 const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
@@ -186,5 +193,13 @@ router
 
 router.get('/:investmentId/edit-ukcompany', selectUKCompany, searchForUKCompany, renderCompanyResults)
 router.get('/:investmentId/remove-ukcompany', removeUKCompany)
+
+router.get('/:investmentId/edit-associated',
+  selectAssociatedInvestmentProject,
+  searchForAssociatedInvestmentProject,
+  renderAssociatedInvestmentProjectResults
+)
+
+router.get('/:investmentId/remove-associated', removeAssociatedInvestmentProject)
 
 module.exports = router
