@@ -21,13 +21,11 @@ const eventFormConfig = ({ eventId, advisers }) => {
         macroName: 'DateFieldset',
         name: 'start_date',
         label: 'Event start date',
-        optional: true,
       },
       {
         macroName: 'DateFieldset',
         name: 'end_date',
         label: 'Event end date',
-        optional: true,
       },
       assign({}, globalFields.locationTypes, {
         label: 'Event location type',
