@@ -1,6 +1,7 @@
 const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
+  transformInvestmentListItemToDisableMetaLinks,
 } = require('~/src/apps/investment-projects/transformers')
 
 const investmentProjectsData = require('~/test/unit/data/investment/collection')
@@ -103,6 +104,20 @@ describe('Investment project data transformers', () => {
       expect(result.meta[0].isInert).to.be.true
       expect(result.meta[0].url).to.not.exist
       expect(result.meta[0].isSelected).to.not.exist
+    })
+  })
+
+  describe('#transformInvestmentListItemToDisableMetaLinks', () => {
+    it('should mark any metaItem as inert', () => {
+      const item = {
+        id: '1234',
+        meta: [{
+          name: 'item',
+        }],
+      }
+
+      const transformedItem = transformInvestmentListItemToDisableMetaLinks(item)
+      expect(transformedItem.meta[0].isInert).to.equal(true)
     })
   })
 })
