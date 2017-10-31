@@ -10,13 +10,22 @@ module.exports = {
   commands: [
     {
       editCompanyRecords (description, website, number) {
-        this.click('@editCompanyDetailsButton')
-        this.clearValue('@description')
-        this.setValue('@description', description)
+        this
+          .waitForElementVisible('@editCompanyDetailsButton')
+          .click('@editCompanyDetailsButton')
+
         if (number > 1) {
-          this.clearValue('@website')
-          this.setValue('@website', website)
+          this
+            .waitForElementVisible('@website')
+            .clearValue('@website')
+            .setValue('@website', website)
         }
+
+        this
+          .waitForElementVisible('@description')
+          .clearValue('@description')
+          .setValue('@description', description)
+
         return this
       },
     },
