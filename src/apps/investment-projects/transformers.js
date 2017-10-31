@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { get, isArray } = require('lodash')
+const { get, isArray, assign } = require('lodash')
 const queryString = require('query-string')
 
 function transformInvestmentProjectToListItem ({
@@ -89,7 +89,18 @@ function transformInvestmentListItemToHaveMetaLinks (query = {}) {
   }
 }
 
+function transformInvestmentListItemToDisableMetaLinks (item) {
+  if (!isArray(item.meta)) { return item }
+
+  const meta = item.meta.map(metaItem => {
+    return assign({}, metaItem, { isInert: true })
+  })
+
+  return assign({}, item, { meta })
+}
+
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
+  transformInvestmentListItemToDisableMetaLinks,
 }
