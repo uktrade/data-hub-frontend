@@ -75,6 +75,12 @@ const editFields = merge({}, globalFields, {
     modifier: ['shorter', 'soft'],
     validate: [isDuration],
   },
+  assignee_actual_time: {
+    fieldType: 'TextField',
+    label: 'fields.assignee_actual_time.label',
+    modifier: ['shorter', 'soft'],
+    validate: ['required', isDuration],
+  },
   vat_status: {
     fieldType: 'MultipleChoiceField',
     type: 'radio',
