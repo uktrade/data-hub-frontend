@@ -12,7 +12,7 @@ defineSupportCode(function ({ Then, When }) {
       .navigate()
       .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
       .click('@saveButton')
-      .wait()
+      .wait() // wait for backend to sync
   })
 
   When(/^I navigate to the create an event page$/, async () => {
