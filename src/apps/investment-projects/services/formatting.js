@@ -151,7 +151,7 @@ function transformInvestmentValueForView (data) {
     return (data.government_assistance ? pos : neg) + suffix
   }
 
-  return Object.assign({}, data, {
+  const value = {
     total_investment: data.client_cannot_provide_total_investment
       ? 'Client cannot provide this information'
       : formatCurrency(data.total_investment),
@@ -163,10 +163,6 @@ function transformInvestmentValueForView (data) {
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
     r_and_d_budget: formatBoolean(data.r_and_d_budget, { pos: 'Has', suffix: ' R&D budget' }),
     average_salary: get(data, 'average_salary.name'),
-    non_fdi_r_and_d_budget: formatBoolean(data.non_fdi_r_and_d_budget, {
-      pos: 'Has',
-      suffix: ' linked non-FDI R&D projects',
-    }),
     new_tech_to_uk: formatBoolean(data.new_tech_to_uk, {
       pos: 'Has',
       suffix: ' new-to-world tech, business model or IP',
@@ -181,7 +177,39 @@ function transformInvestmentValueForView (data) {
     business_activities: data.business_activities.filter((activity) => {
       return /^(european|global) headquarters$/i.test(activity.name)
     }).length ? 'Yes' : 'No',
-  })
+  }
+
+  if (data.non_fdi_r_and_d_budget) {
+    value.associated_non_fdi_r_and_d_project = transformAssociatedProject(data)
+  } else {
+    value.associated_non_fdi_r_and_d_project = 'Not linked to a non-FDI R&D project'
+  }
+
+  return value
+}
+
+function transformAssociatedProject (data) {
+  const { id } = data
+
+  if (isPlainObject(data.associated_non_fdi_r_and_d_project)) {
+    const { name, project_code } = data.associated_non_fdi_r_and_d_project
+
+    return {
+      name,
+      actions: [{
+        label: 'Edit project',
+        url: `/investment-projects/${id}/edit-associated?term=${project_code}`,
+      }, {
+        label: 'Remove association',
+        url: `/investment-projects/${id}/remove-associated`,
+      }],
+    }
+  }
+
+  return {
+    name: 'Find project',
+    url: `/investment-projects/${id}/edit-associated`,
+  }
 }
 
 function transformInvestmentRequirementsForView (data) {
