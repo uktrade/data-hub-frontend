@@ -209,4 +209,79 @@ describe('Investment project formatting service', () => {
       })
     })
   })
+
+  describe('#transformInvestmentValueForView', () => {
+    context('when a project says it is associated with a non-fdi r&d project', () => {
+      beforeEach(() => {
+        this.investmentData = Object.assign({}, investmentData, {
+          id: 1,
+          non_fdi_r_and_d_budget: true,
+        })
+      })
+
+      context('and has no associated project yet', () => {
+        beforeEach(() => {
+          this.investmentData = Object.assign({}, this.investmentData, {
+            associated_non_fdi_r_and_d_project: null,
+          })
+
+          this.transformedInvestmentValues = formattingService.transformInvestmentValueForView(this.investmentData)
+        })
+
+        it('should display a link to find the associated investment project', () => {
+          expect(this.transformedInvestmentValues.associated_non_fdi_r_and_d_project).to.deep.equal({
+            name: 'Find project',
+            url: `/investment-projects/1/edit-associated`,
+          })
+        })
+      })
+
+      context('and has an associated r&d project', () => {
+        beforeEach(() => {
+          this.investmentData = Object.assign({}, this.investmentData, {
+            associated_non_fdi_r_and_d_project: {
+              name: 'Freds',
+              id: 'ac035522-ad0b-4eeb-87f4-0ce964e4b999',
+              project_code: 'DHP-00000460',
+            },
+          })
+
+          this.transformedInvestmentValues = formattingService.transformInvestmentValueForView(this.investmentData)
+        })
+
+        it('should show the name of the project associated with this one', () => {
+          expect(this.transformedInvestmentValues.associated_non_fdi_r_and_d_project.name).to.equal('Freds')
+        })
+
+        it('should display an action to edit the associated project', () => {
+          expect(this.transformedInvestmentValues.associated_non_fdi_r_and_d_project.actions[0]).to.deep.equal({
+            label: 'Edit project',
+            url: `/investment-projects/1/edit-associated?term=DHP-00000460`,
+          })
+        })
+
+        it('should display an action to remove the associated project', () => {
+          expect(this.transformedInvestmentValues.associated_non_fdi_r_and_d_project.actions[1]).to.deep.equal({
+            label: 'Remove association',
+            url: `/investment-projects/1/remove-associated`,
+          })
+        })
+      })
+    })
+
+    context('when a project says it is not associated with a non-fdi r&d project', () => {
+      beforeEach(() => {
+        this.investmentData = Object.assign({}, investmentData, {
+          id: 1,
+          non_fdi_r_and_d_budget: false,
+        })
+
+        this.transformedInvestmentValues = formattingService.transformInvestmentValueForView(this.investmentData)
+      })
+
+      it('should indicate there is no non-fdi r&d project', () => {
+        expect(this.transformedInvestmentValues.associated_non_fdi_r_and_d_project).to.equal('Not linked to a non-FDI R&D project')
+      })
+    })
+  })
 })
