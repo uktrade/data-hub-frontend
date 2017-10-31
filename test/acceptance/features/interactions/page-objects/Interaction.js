@@ -49,7 +49,8 @@ module.exports = {
 
         this
           .waitForElementVisible('@saveButton')
-          .api.perform((done) => {
+          .api
+          .perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
               done()
@@ -92,6 +93,70 @@ module.exports = {
         this.click('@saveButton')
 
         callback(interaction)
+        return this
+      },
+
+      createServiceDelivery (details = {}, callback) {
+        const recentDate = faker.date.recent()
+        const serviceDelivery = assign({}, {
+          subject: faker.lorem.word(),
+          notes: faker.lorem.sentence(),
+          dateOfInteractionYear: getYear(recentDate),
+          dateOfInteractionMonth: getMonth(recentDate) + 1,
+          dateOfInteractionDay: getDate(recentDate),
+        }, details)
+
+        this
+          .waitForElementPresent('@eventYes')
+          .click('@eventYes')
+          .api.perform(async (done) => {
+            this
+              .api
+              .perform((done) => {
+                this.getListOption('@contact', (contact) => {
+                  serviceDelivery.contact = contact
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getListOption('@serviceProvider', (serviceProvider) => {
+                  serviceDelivery.serviceProvider = serviceProvider
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getListOption('@event', (event) => {
+                  serviceDelivery.event = event
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getListOption('@service', (service) => {
+                  serviceDelivery.service = service
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getListOption('@ditAdviser', (ditAdviser) => {
+                  serviceDelivery.ditAdviser = ditAdviser
+                  done()
+                })
+              })
+              .perform((done) => {
+                for (const key in serviceDelivery) {
+                  if (serviceDelivery[key]) {
+                    this.clearValue(`@${key}`)
+                    this.setValue(`@${key}`, serviceDelivery[key])
+                  }
+                }
+                done()
+              })
+            done()
+          })
+
+        this.click('@saveButton')
+
+        callback(serviceDelivery)
         return this
       },
     },

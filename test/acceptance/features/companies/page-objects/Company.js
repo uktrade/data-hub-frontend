@@ -61,8 +61,10 @@ module.exports = {
     {
       findCompany (companyName) {
         return this
+          .waitForElementVisible('@searchField')
           .setValue('@searchField', companyName)
           .submitForm('@searchForm')
+          .waitForElementVisible('@addCompanyButton')
       },
 
       createForeignCompany (details = {}, callback) {
