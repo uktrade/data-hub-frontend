@@ -9,11 +9,21 @@ const getGlobalNavSelector = (text) =>
     }
   )
 
+const getDashboardSectionItem = (text, itemNumber) =>
+  getSelectorForElementWithText(
+    text,
+    {
+      el: '//h2',
+      child: `/following-sibling::ol/li[${itemNumber}]`,
+    }
+  )
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
     term: '#field-term',
+    firstMyLatestContact: getDashboardSectionItem('My latest contacts', 1),
   },
   sections: {
     globalNav: {

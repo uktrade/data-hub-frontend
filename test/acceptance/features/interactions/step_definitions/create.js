@@ -44,7 +44,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .click('@contacts')
 
     await Contact
-      .createNewPrimaryContact({}, (contact) => set(this.state, 'contact', contact))
+      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
       .wait() // wait for backend to sync
   })
 

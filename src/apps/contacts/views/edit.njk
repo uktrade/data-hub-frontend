@@ -82,6 +82,20 @@
     }) }}
 
     {{ MultipleChoiceField({
+      type: 'checkbox',
+      name: 'marketing_preferences',
+      label: 'Marketing preferences',
+      isLabelHidden: true,
+      value: formData.marketing_preferences,
+      options: [
+        {
+          label: 'Accepts email marketing from DIT',
+          value: 'accepts_dit_email_marketing'
+        }
+      ]
+    }) }}
+
+    {{ MultipleChoiceField({
       name: 'address_same_as_company',
       type: 'radio',
       label: 'Is the contact’s address the same as the company address?',
