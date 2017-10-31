@@ -1,5 +1,7 @@
 {% from "./form-group.njk" import FormGroup %}
 {% from "./select-box.njk" import SelectBox %}
+{% from "./text-area.njk" import TextArea with context %}
+{% from "./text-field.njk" import TextField %}
 
 {##
  # Render form group with a multi choice field (dropdown, radio, checkboxes)
@@ -53,7 +55,6 @@
   {% if props.type in ['checkbox', 'radio'] %}
     {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
     {% set options = props.options() if props.options | isFunction else props.options %}
-    {% set fieldChildren = props.children | map(callAsMacro) if props.children | isArray else props.children %}
 
     {% if props.type == 'radio' and props.initialOption %}
       <div class="c-multiple-choice {{ modifier }}">
@@ -102,7 +103,5 @@
         {{ children }}
       </div>
     {% endfor %}
-
-    {{ fieldChildren }}
   {% endif %}
 {% endmacro %}
