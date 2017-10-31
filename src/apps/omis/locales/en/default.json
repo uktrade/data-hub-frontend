@@ -42,6 +42,9 @@
     "assignee_time": {
       "label": "Estimated time"
     },
+    "assignee_actual_time": {
+      "label": "Actual time"
+    },
     "vat_status": {
       "label": "VAT category",
       "options": {
