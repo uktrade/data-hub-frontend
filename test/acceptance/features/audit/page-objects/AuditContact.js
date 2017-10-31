@@ -14,17 +14,18 @@ module.exports = {
     {
       editContactDetails (telephone, countryCode, number) {
         this
+          .waitForElementVisible('@editContactDetailsButton')
           .click('@editContactDetailsButton')
-          .waitForElementVisible('@telephoneCountryCode')
-          .waitForElementVisible('@telephone')
 
         if (number > 1) {
           this
+            .waitForElementVisible('@telephoneCountryCode')
             .clearValue('@telephoneCountryCode')
             .setValue('@telephoneCountryCode', countryCode)
         }
 
         this
+          .waitForElementVisible('@telephone')
           .clearValue('@telephone')
           .setValue('@telephone', telephone)
 
