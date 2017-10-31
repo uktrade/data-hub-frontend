@@ -180,24 +180,24 @@
         value: 'false',
         label: 'No'
       }
-    ],
-    children:  [
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'client_relationship_manager',
-        label: 'Client relationship manager',
-        error: form.errors.messages.client_relationship_manager,
-        value: form.state.client_relationship_manager,
-        options: form.options.advisers,
-        initialOption: '-- Select client relationship manager --',
-        condition: {
-          name: 'is_relationship_manager',
-          value: 'false'
-        },
-        modifier: 'subfield'
-      }
     ]
   }) }}
+
+  {{ MultipleChoiceField({
+      macroName: 'MultipleChoiceField',
+      name: 'client_relationship_manager',
+      label: 'Client relationship manager',
+      error: form.errors.messages.client_relationship_manager,
+      value: form.state.client_relationship_manager,
+      options: form.options.advisers,
+      initialOption: '-- Select client relationship manager --',
+      modifier: 'subfield',
+      condition: {
+          name: 'is_relationship_manager',
+          value: 'false'
+      }
+  }) }}
+
 {% endif %}
 
   {{ MultipleChoiceField({
