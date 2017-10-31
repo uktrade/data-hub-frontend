@@ -1,3 +1,5 @@
+const { merge } = require('lodash')
+
 const {
   convertNestedObjects,
   convertYesNoToBoolean,
@@ -28,6 +30,7 @@ function getContactAsFormData (contact) {
     telephone_number: contact.telephone_number,
     telephone_countrycode: contact.telephone_countrycode,
     email: contact.email,
+    marketing_preferences: contact.accepts_dit_email_marketing ? 'accepts_dit_email_marketing' : null,
     address_same_as_company: (contact.address_same_as_company) ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
@@ -55,10 +58,15 @@ function getContactAsFormData (contact) {
 function saveContactForm (token, contactForm) {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataToSave = convertYesNoToBoolean(contactForm)
-      dataToSave = nullEmptyFields(dataToSave)
-      dataToSave = convertNestedObjects(dataToSave, ['title', 'company', 'address_country'])
-      const savedContact = await contactsRepository.saveContact(token, dataToSave)
+      const contactFormWithYesNoAsBool = convertYesNoToBoolean(contactForm)
+      const contactFormWithEmptyAsNull = nullEmptyFields(contactFormWithYesNoAsBool)
+      const transformedContactForm = convertNestedObjects(contactFormWithEmptyAsNull, ['title', 'company', 'address_country'])
+
+      const contactFormForApiRequest = merge({}, transformedContactForm, {
+        accepts_dit_email_marketing: contactForm.marketing_preferences === 'accepts_dit_email_marketing' }
+      )
+
+      const savedContact = await contactsRepository.saveContact(token, contactFormForApiRequest)
       resolve(savedContact)
     } catch (error) {
       reject(error)
