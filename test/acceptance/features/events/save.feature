@@ -20,13 +20,8 @@ Feature: Save a new Event in Data hub
 
     When I navigate to the create an event page
     And I click the save button
-    Then I verify the event name has an error message
-    And I verify the event type has an error message
-    And I verify the event address line 1 has an error message
-    And I verify the event address town has an error message
-    And I verify the event address country has an error message
-    And I verify the event services has an error message
-    Then I see form error summary
+    Then the event fields have error messages
+    And I see form error summary
 
   @events-save--uk-region
   Scenario: Verify event UK region mandatory field
