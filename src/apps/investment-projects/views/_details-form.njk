@@ -181,7 +181,7 @@
         label: 'No'
       }
     ],
-    children:  [
+    children: [
       {
         macroName: 'MultipleChoiceField',
         name: 'client_relationship_manager',
@@ -215,22 +215,23 @@
         value: 'false',
         label: 'No'
       }
+    ],
+    children: [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'referral_source_adviser',
+        label: 'Referral source adviser',
+        error: form.errors.messages.referral_source_adviser,
+        value: form.state.referral_source_adviser,
+        options: form.options.advisers,
+        initialOption: '-- Select referral source adviser --',
+        modifier: 'subfield',
+        condition: {
+          name: 'is_referral_source',
+          value: 'false'
+        }
+      }
     ]
-  }) }}
-
-  {{ MultipleChoiceField({
-    macroName: 'MultipleChoiceField',
-    name: 'referral_source_adviser',
-    label: 'Referral source adviser',
-    error: form.errors.messages.referral_source_adviser,
-    value: form.state.referral_source_adviser,
-    options: form.options.advisers,
-    initialOption: '-- Select referral source adviser --',
-    modifier: 'subfield',
-    condition: {
-      name: 'is_referral_source',
-      value: 'false'
-    }
   }) }}
 
   {{  MultipleChoiceField({
@@ -239,48 +240,50 @@
     initialOption: '-- Choose referral source activity --',
     options: form.options.referralSourceActivities,
     error: form.errors.messages.referral_source_activity,
-    value: form.state.referral_source_activity
-  }) }}
-
-  {{ MultipleChoiceField({
-    name: 'referral_source_activity_marketing',
-    label: 'Marketing',
-    error: form.errors.messages.referral_source_activity_marketing,
-    value: form.state.referral_source_activity_marketing,
-    options: form.options.referralSourceMarketing,
-    initialOption: '-- Choose a marketing type --',
-    condition: {
-      name: 'referral_source_activity',
-      value: form.options.referralSourceActivities[3].value
-    },
-    modifier: 'subfield'
-  }) }}
-
-  {{ MultipleChoiceField({
-    name: 'referral_source_activity_website',
-    label: 'Website',
-    error: form.errors.messages.referral_source_activity_website,
-    value: form.state.referral_source_activity_website,
-    options: form.options.referralSourceWebsite,
-    initialOption: '-- Choose a website --',
-    condition: {
-      name: 'referral_source_activity',
-      value: form.options.referralSourceActivities[9].value
-    },
-    modifier: 'subfield'
-  }) }}
-
-  {{ TextField({
-    name: 'referral_source_activity_event',
-    label: 'Event',
-    placeholder: 'e.g conversation at conference',
-    error: form.errors.messages.referral_source_activity_event,
-    value: form.state.referral_source_activity_event,
-    condition: {
-      name: 'referral_source_activity',
-      value: form.options.referralSourceActivities[2].value
-    },
-    modifier: 'subfield'
+    value: form.state.referral_source_activity,
+    children: [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'referral_source_activity_marketing',
+        label: 'Marketing',
+        error: form.errors.messages.referral_source_activity_marketing,
+        value: form.state.referral_source_activity_marketing,
+        options: form.options.referralSourceMarketing,
+        initialOption: '-- Choose a marketing type --',
+        modifier: 'subfield',
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[3].value
+        }
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'referral_source_activity_website',
+        label: 'Website',
+        error: form.errors.messages.referral_source_activity_website,
+        value: form.state.referral_source_activity_website,
+        options: form.options.referralSourceWebsite,
+        initialOption: '-- Choose a website --',
+        modifier: 'subfield',
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[9].value
+        }
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'referral_source_activity_event',
+        label: 'Event',
+        placeholder: 'e.g conversation at conference',
+        error: form.errors.messages.referral_source_activity_event,
+        value: form.state.referral_source_activity_event,
+        modifier: 'subfield',
+        condition: {
+          name: 'referral_source_activity',
+          value: form.options.referralSourceActivities[2].value
+        }
+      }
+    ]
   }) }}
 
   {{ DateFieldset({
