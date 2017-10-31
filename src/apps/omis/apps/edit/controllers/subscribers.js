@@ -1,4 +1,4 @@
-const { sortBy, pick } = require('lodash')
+const { get, sortBy, pick } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAllAdvisers } = require('../../../../adviser/repos')
@@ -7,10 +7,16 @@ const { Order } = require('../../../models')
 
 class EditSubscribersController extends EditController {
   async configure (req, res, next) {
-    const advisers = await getAllAdvisers(req.session.token)
+    const orderId = get(res.locals, 'order.id')
+    const token = get(req.session, 'token')
+    const advisers = await getAllAdvisers(token)
+    const subscribers = await Order.getSubscribers(token, orderId)
     const options = advisers.results.map(transformObjectToOption)
 
     req.form.options.fields.subscribers.options = sortBy(options, 'label')
+
+    res.locals.order.subscribers = subscribers
+
     super.configure(req, res, next)
   }
 

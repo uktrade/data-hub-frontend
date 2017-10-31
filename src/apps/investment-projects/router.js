@@ -39,6 +39,13 @@ const {
   postStatus,
 } = require('./controllers/status')
 
+const {
+  selectUKCompany,
+  searchForUKCompany,
+  renderCompanyResults,
+  removeUKCompany,
+} = require('./controllers/ukcompany')
+
 const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
@@ -176,5 +183,8 @@ router
   .route('/:investmentId/status')
   .post(postStatus, renderStatusPage)
   .get(renderStatusPage)
+
+router.get('/:investmentId/edit-ukcompany', selectUKCompany, searchForUKCompany, renderCompanyResults)
+router.get('/:investmentId/remove-ukcompany', removeUKCompany)
 
 module.exports = router
