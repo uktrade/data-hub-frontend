@@ -24,7 +24,7 @@ module.exports = {
   '/market': {
     heading: 'Market (country) of interest',
     editable: true,
-    next: 'subscribers',
+    next: 'confirm',
     fields: ['primary_market'],
     controller: MarketController,
   },

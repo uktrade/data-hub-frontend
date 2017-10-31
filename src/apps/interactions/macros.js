@@ -165,6 +165,7 @@ const serviceDeliveryFormConfig = function ({
     children: [
       interactionFields.contact(contacts),
       interactionFields.provider,
+      interactionFields.adviser(advisers),
       // TODO this will be going once interactions are within events
       {
         macroName: 'MultipleChoiceField',
@@ -200,7 +201,6 @@ const serviceDeliveryFormConfig = function ({
       interactionFields.subject,
       interactionFields.notes,
       interactionFields.date,
-      interactionFields.adviser(advisers),
     ].map(field => {
       return assign(field, {
         label: formLabels.serviceDelivery[field.name],
