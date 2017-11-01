@@ -18,6 +18,10 @@ module.exports = {
   page_objects_path: glob.sync(join(__dirname, 'features/**/page-objects')),
   globals_path: 'test/acceptance/global.nightwatch.js',
   selenium: {
+    test_workers: {
+      enabled: true,
+      workers: 'auto',
+    },
     start_process: true,
     server_path: seleniumServer.path,
     host: process.env.QA_SELENIUM_HOST,
