@@ -16,7 +16,7 @@ defineSupportCode(function ({ Then, When }) {
     const eventName = appendUid(faker.company.companyName())
 
     await Event
-      .populateCreateEventForm({ name: eventName }, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({ name: eventName }, true, (event) => set(this.state, 'event', event))
   })
 
   When(/^a company is created to search$/, async function () {

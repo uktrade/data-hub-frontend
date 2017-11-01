@@ -23,12 +23,17 @@ defineSupportCode(({ Then, When }) => {
 
   When(/^I populate the create event form$/, async function () {
     await Event
-      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({}, true, (event) => set(this.state, 'event', event))
   })
 
   When(/^I populate the create event form with United Kingdom and a region$/, async function () {
     await Event
-      .populateCreateEventForm({ address_country: 'United Kingdom' }, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, true, (event) => set(this.state, 'event', event))
+  })
+
+  When(/^I populate the create event form with United Kingdom and without a region$/, async function () {
+    await Event
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, false, (event) => set(this.state, 'event', event))
   })
 
   Then(/^I am taken to the create event page$/, async () => {
