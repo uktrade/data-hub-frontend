@@ -20,7 +20,7 @@ function createZenDeskMessage ({
     },
     custom_fields: [
       { id: config.zenBrowser, value: browser },
-      { id: config.zenService, value: 'datahub_export' },
+      { id: config.zenService, value: config.zenServiceChannel },
     ],
     tags: [feedbackType],
   }
