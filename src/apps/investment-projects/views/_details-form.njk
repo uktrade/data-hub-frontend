@@ -297,4 +297,34 @@
     }
   }) }}
 
+  {{ MultipleChoiceField({
+    name: 'investor_type',
+    label: 'New or existing investor',
+    error: form.errors.messages.investor_type,
+    value: form.state.investor_type,
+    options: form.options.investmentInvestorType,
+    initialOption: '-- Choose an option --',
+    optional: true
+  }) }}
+
+  {{ MultipleChoiceField({
+    name: 'level_of_involvement',
+    label: 'Investor level of involvement',
+    error: form.errors.messages.level_of_involvement,
+    value: form.state.level_of_involvement,
+    options: form.options.investmentInvolvement,
+    initialOption: '-- Choose a level --',
+    optional: true
+  }) }}
+
+  {{ MultipleChoiceField({
+    name: 'specific_programme',
+    label: 'Specific investment programme',
+    error: form.errors.messages.specific_programme,
+    value: form.state.specific_programme,
+    options: form.options.investmentSpecificProgramme,
+    initialOption: '-- Choose a programme --',
+    optional: true
+  }) }}
+
 {% endcall %}
