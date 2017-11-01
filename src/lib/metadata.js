@@ -89,6 +89,9 @@ const metadataItems = [
   ['order-service-type', 'orderServiceTypesOptions'],
   ['omis-market', 'omisMarketOptions'],
   ['fdi-value', 'fdiValueOptions'],
+  ['investment-specific-programme', 'investmentSpecificProgrammeOptions'],
+  ['investment-investor-type', 'investmentInvestorTypeOptions'],
+  ['investment-involvement', 'investmentInvolvementOptions'],
 ]
 
 const restrictedServiceKeys = [
