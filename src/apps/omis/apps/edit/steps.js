@@ -8,6 +8,7 @@ const EditSubscribersController = require('./controllers/subscribers')
 const EditWorkDescriptionController = require('./controllers/work-description')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
+const CompleteOrderController = require('./controllers/complete-order')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
@@ -79,6 +80,15 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'payment-reconciliation.njk',
     controller: EditPaymentReconciliationController,
+  },
+  '/complete-order': {
+    heading: 'Complete order',
+    fields: [
+      'assignee_actual_time',
+    ],
+    templatePath: 'omis/apps/edit/views',
+    template: 'complete-order.njk',
+    controller: CompleteOrderController,
   },
 })
 

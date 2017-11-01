@@ -1,0 +1,36 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  {% if assignees.length %}
+
+    {% set key = 'assignee_actual_time' %}
+    {% set defaultProps = options.fields[key] %}
+
+    <table class="c-answers-summary">
+      <thead>
+        <tr>
+          <th class="c-answers-summary__control" colspan="2">Estimated time (HH:MM)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for assignee in assignees %}
+          {% set props = {} | assign(defaultProps, {
+            name: key,
+            idSuffix: assignee.adviser.id,
+            label: translate(defaultProps.label) + ' for ' + assignee.adviser.name,
+            value: values[key][loop.index0] or assignee.actual_time | formatDuration('hh:mm') if assignee.actual_time,
+            error: errors[key].message,
+            isLabelHidden: true
+          }) %}
+          <tr>
+            <th class="c-answers-summary__title">{{ assignee.adviser.name }}</th>
+            <td class="c-answers-summary__control">
+              {{ callAsMacro(props.fieldType)(props) }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  {% endif %}
+{% endblock %}
