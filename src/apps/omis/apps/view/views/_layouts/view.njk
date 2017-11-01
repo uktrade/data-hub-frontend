@@ -2,6 +2,12 @@
 
 {% block local_header %}
   {% set actions %}
+    {% if order.status in ['paid'] %}
+      <p class="c-local-header__action">
+        <a href="edit/complete-order" class="button">Complete order</a>
+      </p>
+    {% endif %}
+
     {% if order.status in ['paid', 'complete'] %}
       <p class="c-local-header__action">
         <a href="payment-receipt">View payment receipt</a>
