@@ -9,7 +9,9 @@
     <table class="c-answers-summary">
       <thead>
         <tr>
-          <th class="c-answers-summary__control" colspan="2">Estimated time (HH:MM)</th>
+          <th></th>
+          <th class="c-answers-summary__content">Estimated time</th>
+          <th class="c-answers-summary__control">Actual time spent (HH:MM)</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +25,12 @@
             isLabelHidden: true
           }) %}
           <tr>
-            <th class="c-answers-summary__title">{{ assignee.adviser.name }}</th>
+            <th class="c-answers-summary__title">
+              {{ assignee.adviser.name }}
+            </th>
+            <th class="c-answers-summary__content">
+              {{ assignee.estimated_time | humanizeDuration }}
+            </th>
             <td class="c-answers-summary__control">
               {{ callAsMacro(props.fieldType)(props) }}
             </td>
