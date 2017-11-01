@@ -46,6 +46,13 @@ const {
   removeUKCompany,
 } = require('./controllers/ukcompany')
 
+const {
+  selectAssociatedInvestmentProject,
+  searchForAssociatedInvestmentProject,
+  renderAssociatedInvestmentProjectResults,
+  removeAssociatedInvestmentProject,
+} = require('./controllers/associated')
+
 const interactionsRouter = require('../interactions/router.sub-app')
 
 const LOCAL_NAV = [
@@ -186,5 +193,18 @@ router
 
 router.get('/:investmentId/edit-ukcompany', selectUKCompany, searchForUKCompany, renderCompanyResults)
 router.get('/:investmentId/remove-ukcompany', removeUKCompany)
+
+// Todo - DH-1030
+// Currently to associate the user you must click a link in the investment details page after
+// indicating there is an association with a non-fdi r&d project
+// Review the investment flow later to see if this can be improved.
+
+router.get('/:investmentId/edit-associated',
+  selectAssociatedInvestmentProject,
+  searchForAssociatedInvestmentProject,
+  renderAssociatedInvestmentProjectResults
+)
+
+router.get('/:investmentId/remove-associated', removeAssociatedInvestmentProject)
 
 module.exports = router

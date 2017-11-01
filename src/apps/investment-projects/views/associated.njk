@@ -1,0 +1,24 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  <h1 class="heading-medium">Associated project</h1>
+
+  {{ EntitySearchForm({
+    inputName: 'term',
+    inputLabel: 'Project reference of name',
+    inputPlaceholder: 'Search for associated R&D project',
+    inputHint: 'Enter a project reference or name and search',
+    searchTerm: searchTerm,
+    isLabelHidden: false
+  }) }}
+
+  {% if results | length %}
+    {{
+      Collection(results | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'project',
+        query: QUERY
+      }))
+    }}
+  {% endif %}
+{% endblock %}
