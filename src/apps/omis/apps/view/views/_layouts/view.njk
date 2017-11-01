@@ -36,19 +36,26 @@
     heading: order.reference,
     modifier: 'light-banner'
   }) %}
-    {% set status = order.status | sentenceCase %}
-    {% set companyText %}
+    {%- set companyText -%}
       <a href="/companies/{{ order.company.id }}">{{ order.company.name }}</a>
-    {% endset %}
-    {% set quoteStatusSuffix %}
-      <br>
-      (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
-    {% endset %}
+    {%- endset -%}
+    {%- set statusText -%}
+      {{ order.status | sentenceCase }}
+
+      {%- if order.status === 'quote_awaiting_acceptance' -%}
+        <br>
+        (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
+      {%- endif -%}
+
+      {% if order.status === 'complete' %}
+        ({{ FromNow({ datetime: order.completed_on }) }})
+      {% endif %}
+    {%- endset -%}
 
     {{ MetaList({
       items: [
-      { label: 'Client company', value: companyText | safe },
-      { label: 'Market (country)', value: order.primary_market }
+        { label: 'Client company', value: companyText, safe: true },
+        { label: 'Market (country)', value: order.primary_market }
       ],
       itemModifier: 'stacked'
     }) }}
@@ -57,7 +64,7 @@
       items: [
         { label: 'Created on', value: order.created_on, type: 'datetime' },
         { label: 'Updated on', value: order.modified_on, type: 'datetime' },
-        { label: 'Status', value: status + (quoteStatusSuffix if order.status === 'quote_awaiting_acceptance'), safe: true }
+        { label: 'Status', value: statusText, safe: true }
       ],
       itemModifier: 'stacked'
     }) }}
