@@ -78,6 +78,7 @@ This file expects the following environment variables:
 | ZEN_BROWSER | Zendesk browser ID |
 | ZEN_IMPACT | Zendesk impact ID |
 | ZEN_SERVICE | Zendesk service ID |
+| ZEN_SERVICE_CHANNEL | The Zen channel name for the service |
 | SENTRY_DSN | Sentry DSN (optional) |
 | WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
 | OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
