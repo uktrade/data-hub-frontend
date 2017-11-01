@@ -44,7 +44,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .click('@contacts')
 
     await Contact
-      .createNewPrimaryContact({}, (contact) => set(this.state, 'contact', contact))
+      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
       .wait() // wait for backend to sync
   })
 
@@ -54,7 +54,13 @@ defineSupportCode(({ Given, When, Then }) => {
   When(/^adding an interaction/, async function () {
     await Interaction
       .createInteraction({}, (interaction) => set(this.state, 'interaction', interaction))
-      .wait()
+      .wait() // wait for backend to sync
+  })
+
+  When(/^adding a service delivery/, async function () {
+    await Interaction
+      .createServiceDelivery({}, (serviceDelivery) => set(this.state, 'serviceDelivery', serviceDelivery))
+      .wait() // wait for backend to sync
   })
 
   When(/^navigating to the create company interactions and services step 1 page/, async function () {

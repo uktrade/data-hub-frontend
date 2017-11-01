@@ -2,6 +2,7 @@ const faker = require('faker')
 const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+const { getDate, getMonth, getYear, addDays } = require('date-fns')
 
 defineSupportCode(function ({ Then, When }) {
   const Event = client.page.Event()
@@ -11,7 +12,7 @@ defineSupportCode(function ({ Then, When }) {
       .navigate()
       .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
       .click('@saveButton')
-      .wait()
+      .wait() // wait for backend to sync
   })
 
   When(/^I navigate to the create an event page$/, async () => {
@@ -189,9 +190,19 @@ defineSupportCode(function ({ Then, When }) {
   })
 
   When(/^I enter all mandatory fields related to the event$/, async () => {
+    const startDate = faker.date.future()
+    const endDate = addDays(startDate, Math.floor(Math.random() * 20))
+
     await Event
+      .waitForElementVisible('@eventName')
       .setValue('@eventName', faker.company.companyName())
       .selectListOption('event_type', 2)
+      .setValue('@startDateYear', getYear(startDate))
+      .setValue('@startDateMonth', getMonth(startDate))
+      .setValue('@startDateDay', getDate(startDate))
+      .setValue('@endDateYear', getYear(endDate))
+      .setValue('@endDateMonth', getMonth(endDate))
+      .setValue('@endDateDay', getDate(endDate))
       .setValue('@addressLine1', faker.address.streetName())
       .setValue('@addressTown', faker.address.city())
       .setValue('@addressPostcode', faker.address.zipCode())
@@ -225,28 +236,15 @@ defineSupportCode(function ({ Then, When }) {
       .wait() // wait for backend to sync
   })
 
-  Then(/^I verify the event type has an error message$/, async () => {
+  Then(/^the event fields have error messages$/, async () => {
     await Event
-      .assert.visible('@eventTypeError')
-  })
-
-  Then(/^I verify the event address line 1 has an error message$/, async () => {
-    await Event
+      .assert.visible('@nameError')
+      .assert.visible('@typeError')
+      .assert.visible('@startDateError')
+      .assert.visible('@endDateError')
       .assert.visible('@addressLine1Error')
-  })
-
-  Then(/^I verify the event address town has an error message$/, async () => {
-    await Event
       .assert.visible('@addressTownError')
-  })
-
-  Then(/^I verify the event address country has an error message$/, async () => {
-    await Event
       .assert.visible('@addressCountryError')
-  })
-
-  Then(/^I verify the event services has an error message$/, async () => {
-    await Event
       .assert.visible('@serviceError')
   })
 

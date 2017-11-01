@@ -114,5 +114,47 @@ describe('MultipleChoice component', () => {
         })
       })
     })
+
+    context('children are set', () => {
+      beforeEach(() => {
+        this.valueProps = Object.assign({}, minimumProps, {
+          children: [
+            {
+              macroName: 'TextField',
+              name: 'first-child',
+              label: 'First child',
+            },
+            {
+              macroName: 'TextField',
+              name: 'second-child',
+              label: 'Second child',
+            },
+          ],
+        })
+      })
+
+      it('should display first child within form group inner', () => {
+        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
+        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const firstChild = children[0]
+
+        expect(firstChild.querySelector('input').name).to.equal('first-child')
+      })
+
+      it('should display second child within form group inner', () => {
+        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
+        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const secondChild = children[1]
+
+        expect(secondChild.querySelector('input').name).to.equal('second-child')
+      })
+
+      it('should display the correct number of children', () => {
+        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
+        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+
+        expect(children).to.have.length(2)
+      })
+    })
   })
 })
