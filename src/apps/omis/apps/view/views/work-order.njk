@@ -92,7 +92,7 @@
             {% endif %}
           </td>
           <td class="c-answers-summary__content c-answers-summary__content--number">
-            {{ assignee.estimated_time  | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
+            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
           </td>
         </tr>
       {% else %}

@@ -29,7 +29,7 @@
             name: key,
             idSuffix: assignee.adviser.id,
             label: translate(defaultProps.label) + ' for ' + assignee.adviser.name,
-            value: values[key][loop.index0] or assignee.estimated_time | formatDuration('hh:mm') if assignee.estimated_time,
+            value: values[key][loop.index0] or (assignee.estimated_time | formatDuration('hh:mm') if assignee.estimated_time),
             error: errors[key].message,
             isLabelHidden: true
           }) %}
