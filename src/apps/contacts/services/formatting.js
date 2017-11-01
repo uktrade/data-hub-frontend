@@ -1,6 +1,5 @@
 const { getFormattedAddress } = require('../../../lib/address')
 const { newlineToBr } = require('../../../lib/text-formatting')
-const { formatPhone } = require('../../../lib/phone')
 
 function getContactAddress (contact, company) {
   let contactAddress = getFormattedAddress(contact)
@@ -19,9 +18,14 @@ function getContactAddress (contact, company) {
  *
  */
 function getDisplayContact (contact, company) {
+  const telephoneNumber =
+    contact.telephone_countrycode
+      ? `(${contact.telephone_countrycode}) ${contact.telephone_number}`
+      : contact.telephone_number
+
   return {
     job_title: contact.job_title,
-    telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
+    telephone_number: telephoneNumber,
     email: contact.email,
     email_marketing: contact.accepts_dit_email_marketing ? 'Yes' : 'No',
     address: getContactAddress(contact, company),
