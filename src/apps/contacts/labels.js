@@ -4,6 +4,7 @@ const contactDetailsLabels = {
   telephone_number: 'Phone number',
   telephone_countrycode: 'Telephone country code',
   email: 'Email',
+  email_marketing: 'Email marketing',
   address: 'Address',
   telephone_alternative: 'Alternative telephone',
   email_alternative: 'Alternative email',

@@ -23,6 +23,7 @@ function getDisplayContact (contact, company) {
     job_title: contact.job_title,
     telephone_number: formatPhone(contact.telephone_countrycode, contact.telephone_number),
     email: contact.email,
+    email_marketing: contact.accepts_dit_email_marketing ? 'Yes' : 'No',
     address: getContactAddress(contact, company),
     telephone_alternative: contact.telephone_alternative,
     email_alternative: contact.email_alternative,
