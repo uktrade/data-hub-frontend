@@ -26,7 +26,7 @@ const labels = {
       average_salary: 'Average salary of new jobs',
       number_safeguarded_jobs: 'Safeguarded jobs',
       r_and_d_budget: 'R&D budget',
-      non_fdi_r_and_d_budget: 'Non-FDI R&D project',
+      associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
       new_tech_to_uk: 'New-to-world tech',
       export_revenue: 'Export revenue',
     },
