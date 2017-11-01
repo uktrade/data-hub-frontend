@@ -33,6 +33,7 @@ async function getInvestmentDetails (req, res, next) {
     const investmentData = await getInvestment(req.session.token, investmentId)
     const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
     const ukCompanyId = get(investmentData, 'uk_company.id')
+    const clientRelationshipManagerId = get(investmentData, 'client_relationship_manager.id')
 
     investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
 
@@ -41,8 +42,10 @@ async function getInvestmentDetails (req, res, next) {
       investmentData.uk_company = Object.assign({}, investmentData.uk_company, companyDetails)
     }
 
-    const clientRelationshipManager = await getAdviser(req.session.token, investmentData.client_relationship_manager.id)
-    investmentData.client_relationship_manager = clientRelationshipManager
+    if (clientRelationshipManagerId) {
+      const clientRelationshipManager = await getAdviser(req.session.token, clientRelationshipManagerId)
+      investmentData.client_relationship_manager = clientRelationshipManager
+    }
 
     res.locals.investmentData = investmentData
     res.locals.equityCompany = investmentData.investor_company
@@ -68,7 +71,7 @@ async function getInvestmentDetails (req, res, next) {
       ],
       company: {
         name: investmentData.investor_company.name,
-        url: `/companies/${investmentData.investor_company.id}`,
+        url: `/companies/${get(investmentData, 'investor_company.id')}`,
       },
       currentStage: {
         name: investmentData.stage.name,
