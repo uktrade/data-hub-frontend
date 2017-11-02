@@ -49,8 +49,10 @@ const steps = merge({}, createSteps, {
     heading: 'Edit internal information',
     fields: [
       'service_types',
-      'contacts_not_to_approach',
       'sector',
+      'further_info',
+      'existing_agents',
+      'contacts_not_to_approach',
     ],
     controller: EditInternalDetailsController,
   },
