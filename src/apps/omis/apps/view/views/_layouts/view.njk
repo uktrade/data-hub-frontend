@@ -1,33 +1,56 @@
 {% extends "_layouts/datahub-base.njk" %}
 
+{% set actions %}
+  {% if order.status in ['paid'] %}
+    <p class="c-local-header__action">
+      <a href="edit/complete-order" class="button">Complete order</a>
+    </p>
+  {% endif %}
+
+  {% if order.status in ['paid', 'complete'] %}
+    <p class="c-local-header__action">
+      <a href="payment-receipt">View payment receipt</a>
+    </p>
+  {% endif %}
+
+  {% if order.archived_documents_url_path %}
+    <p class="c-local-header__action">
+      <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}">View files and documents</a>
+      <br>
+      (will open another website)
+    </p>
+  {% else %}
+    <p class="c-local-header__action">
+      {% if order.status == 'draft' %}
+        <a href="quote" class="button">Preview quote</a>
+      {% else %}
+        <a href="quote">View quote</a>
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
+    <p class="c-local-header__action">
+      <a href="edit/cancel-order">Cancel order</a>
+    </p>
+  {% endif %}
+{% endset %}
+
+{% set companyText %}
+  <a href="/companies/{{ order.company.id }}">{{ order.company.name }}</a>
+{% endset %}
+
 {% block local_header %}
-  {% set actions %}
-    {% if order.status in ['paid'] %}
-      <p class="c-local-header__action">
-        <a href="edit/complete-order" class="button">Complete order</a>
-      </p>
-    {% endif %}
+  {% set statusText %}
+    {{ order.status | sentenceCase }}
 
-    {% if order.status in ['paid', 'complete'] %}
-      <p class="c-local-header__action">
-        <a href="payment-receipt">View payment receipt</a>
-      </p>
-    {% endif %}
+    {%- if order.status === 'quote_awaiting_acceptance' -%}
+      <br>
+      (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
+    {%- endif -%}
 
-    {% if order.archived_documents_url_path %}
-      <p class="c-local-header__action">
-        <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}">View files and documents</a>
-        <br>
-        (will open another website)
-      </p>
-    {% else %}
-      <p class="c-local-header__action">
-        {% if order.status == 'draft' %}
-          <a href="quote" class="button">Preview quote</a>
-        {% else %}
-          <a href="quote">View quote</a>
-        {% endif %}
-      </p>
+    {% if order.status === 'complete' %}
+      ({{ FromNow({ datetime: order.completed_on }) }})
     {% endif %}
   {% endset %}
 
@@ -36,21 +59,6 @@
     heading: order.reference,
     modifier: 'light-banner'
   }) %}
-    {%- set companyText -%}
-      <a href="/companies/{{ order.company.id }}">{{ order.company.name }}</a>
-    {%- endset -%}
-    {%- set statusText -%}
-      {{ order.status | sentenceCase }}
-
-      {%- if order.status === 'quote_awaiting_acceptance' -%}
-        <br>
-        (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
-      {%- endif -%}
-
-      {% if order.status === 'complete' %}
-        ({{ FromNow({ datetime: order.completed_on }) }})
-      {% endif %}
-    {%- endset -%}
 
     {{ MetaList({
       items: [
