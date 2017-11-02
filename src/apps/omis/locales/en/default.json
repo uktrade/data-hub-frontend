@@ -5,7 +5,6 @@
     },
     "primary_market": {
       "label": "Choose the market (country) where the service is required",
-      "hint": "This will notify the post manager for this region when you submit the order",
       "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
