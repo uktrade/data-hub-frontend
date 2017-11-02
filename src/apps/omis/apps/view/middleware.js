@@ -128,18 +128,18 @@ async function generateQuote (req, res, next) {
   try {
     await Order.createQuote(req.session.token, orderId)
 
-    req.flash('success', 'Quote successfully generated.')
+    req.flash('success', 'Quote has been sent to client.')
     res.redirect(`/omis/${orderId}`)
   } catch (error) {
     const errorCode = error.statusCode
 
     if (errorCode === 400) {
-      req.flash('error', 'Quote could not be generated. Some fields were missing.')
+      req.flash('error', 'Quote could not be sent to client. Some fields were missing.')
       return res.redirect(`/omis/${orderId}`)
     }
 
     if (errorCode === 409) {
-      req.flash('error', 'Quote could not be generated. A valid quote already exists.')
+      req.flash('error', 'Quote could not be sent to client. A valid quote already exists.')
       return res.redirect(`/omis/${orderId}`)
     }
 
@@ -174,7 +174,7 @@ function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
   const form = {
-    buttonText: 'Send quote',
+    buttonText: 'Send quote to client',
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }
