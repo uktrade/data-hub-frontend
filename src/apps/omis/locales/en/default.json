@@ -101,6 +101,9 @@
     },
     "transaction_reference": {
       "label": "Transaction reference"
+    },
+    "cancellation_reason": {
+      "label": "Reason for cancelling"
     }
   },
   "errors": {
