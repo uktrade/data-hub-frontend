@@ -10,6 +10,11 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@term')
   })
 
+  When(/^the (.+) link in the global nav is clicked$/, async (link) => {
+    await Dashboard.section.globalNav
+      .click(`@${link}`)
+  })
+
   Then(/^there should be global nav links$/, async () => {
     await Dashboard.section.globalNav
       .assert.visible('@companies')
