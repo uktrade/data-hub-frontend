@@ -6,6 +6,7 @@ const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditClientDetailsController = require('./controllers/client-details')
 const EditSubscribersController = require('./controllers/subscribers')
 const EditQuoteDetailsController = require('./controllers/quote-details')
+const EditInternalDetailsController = require('./controllers/internal-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
@@ -46,6 +47,15 @@ const steps = merge({}, createSteps, {
       'delivery_date',
     ],
     controller: EditQuoteDetailsController,
+  },
+  '/internal-details': {
+    heading: 'Edit internal information',
+    fields: [
+      'service_types',
+      'contacts_not_to_approach',
+      'sector',
+    ],
+    controller: EditInternalDetailsController,
   },
   '/payment': {
     heading: 'Edit invoice details',
