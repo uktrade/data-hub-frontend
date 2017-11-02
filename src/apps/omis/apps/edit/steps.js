@@ -5,7 +5,7 @@ const EditAssigneesController = require('./controllers/assignees')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditClientDetailsController = require('./controllers/client-details')
 const EditSubscribersController = require('./controllers/subscribers')
-const EditWorkDescriptionController = require('./controllers/work-description')
+const EditQuoteDetailsController = require('./controllers/quote-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
@@ -36,8 +36,8 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'assignee-time.njk',
   },
-  '/work-description': {
-    heading: 'Edit work description',
+  '/quote-details': {
+    heading: 'Edit quote information',
     fields: [
       'service_types',
       'description',
@@ -45,7 +45,7 @@ const steps = merge({}, createSteps, {
       'sector',
       'delivery_date',
     ],
-    controller: EditWorkDescriptionController,
+    controller: EditQuoteDetailsController,
   },
   '/payment': {
     heading: 'Edit invoice details',
