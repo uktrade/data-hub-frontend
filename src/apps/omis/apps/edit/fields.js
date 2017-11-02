@@ -205,6 +205,13 @@ const editFields = merge({}, globalFields, {
     optional: true,
     modifier: 'medium',
   },
+  cancellation_reason: {
+    fieldType: 'MultipleChoiceField',
+    label: 'fields.cancellation_reason.label',
+    type: 'radio',
+    options: [],
+    validate: ['required'],
+  },
 })
 
 module.exports = editFields
