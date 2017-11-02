@@ -6,7 +6,6 @@ const { EditController } = require('../../../controllers')
 const { transformObjectToOption } = require('../../../../transformers')
 const metadataRepo = require('../../../../../lib/metadata')
 
-class EditWorkDescriptionController extends EditController {
   configure (req, res, next) {
     const filteredServiceTypes = filter(metadataRepo.orderServiceTypesOptions, (service) => {
       if (!service.disabled_on) { return true }
@@ -30,6 +29,7 @@ class EditWorkDescriptionController extends EditController {
     super.configure(req, res, next)
   }
 
+class EditQuoteDetailsController extends EditController {
   process (req, res, next) {
     const deliveryDateStr = req.body.delivery_date
     const parsedDeliveryDate = chrono.en_GB.parseDate(deliveryDateStr)
@@ -57,4 +57,4 @@ class EditWorkDescriptionController extends EditController {
   }
 }
 
-module.exports = EditWorkDescriptionController
+module.exports = EditQuoteDetailsController
