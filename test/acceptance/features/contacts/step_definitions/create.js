@@ -163,7 +163,7 @@ defineSupportCode(({ Given, Then, When }) => {
     } = this.state.contact
 
     const expectedAddress = `${address1}, ${town}, ${country}`
-    const expectedTelephoneNumber = `${telephoneCountryCode} ${telephoneNumber}`
+    const expectedTelephoneNumber = `(${telephoneCountryCode}) ${telephoneNumber}`
 
     await Contact
       .section.contactDetails
