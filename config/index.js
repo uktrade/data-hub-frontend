@@ -56,6 +56,14 @@ const config = {
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
   omisArchivedDocumentsBaseUrl: process.env.OMIS_ARCHIVED_DOCUMENTS_BASE_URL,
+  oauth: {
+    url: process.env.OAUTH2_AUTH_URL,
+    clientId: process.env.OAUTH2_CLIENT_ID,
+    clientSecret: process.env.OAUTH2_CLIENT_SECRET,
+    redirectUri: process.env.OAUTH2_REDIRECT_URL,
+    tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
+    token: process.env.OAUTH2_DEV_TOKEN,
+  },
 }
 
 module.exports = config
