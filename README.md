@@ -64,24 +64,40 @@ This file expects the following environment variables:
 | Name | Description |
 |:-----|:------------|
 | API_ROOT | The url for a back end server instance for the service |
-| POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
 | API_CLIENT_ID | Half the credentials needed to talk to the back end |
-| API_CLIET_SECRET | The second half of the credentials needed to talk to the backend |
-| GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with google tag manager to track usage |
-| REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
-| REDIS_URL | A full length url to conenct to redis |
-| REDISTOGO_URL | Probably for use with heroku |
+| API_CLIENT_SECRET | The second half of the credentials needed to talk to the backend |
 | ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
-| ZEN_TOKEN | Zendesk auth token |
+| CI | Set to true for UAT testing, otherwise ignore |
+| FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
+| GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with Google Tag Manager to track usage |
+| LOG_LEVEL | How much logging to output: defaults to `debug` in dev and `error` everywhere else |
+| METADATA_TTL | How long to store dropdown data etc for, in seconds. Defaults to 15 minutes |
+| NODE_ENV | Whether to run the app in dev mode. Set to `production` in production, otherwise don't set for dev behaviour |
+| OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
+| POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
+| PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
+| QA_HOST | URL of the app under test |
+| QA_SELENIUM_HOST | URL of the Selenium server |
+| QA_SELENIUM_PORT | Port to use for the Selenium server |
+| QA_USER_EMAIL | Test user login |
+| QA_USER_PASSWORD | Test user password |
+| REDISTOGO_URL | For use with heroku (deprecated) |
+| REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url - defaults to 'redis'|
+| REDIS_PORT | Redis port, defaults to `6379` |
+| REDIS_URL | A full length url to connect to redis |
+| REDIS_USE_TLS | Boolean - whether Redis is proxied through stunnel or not. Defaults to false |
+| SENTRY_DSN | Sentry DSN (optional) |
+| SESSION_SECRET | String to encrypt session data with |
+| SESSION_TTL | How long the user session lasts, in millis. Defaults to 2 hours |
+| WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
+| ZEN_BROWSER | Zendesk browser ID |
 | ZEN_DOMAIN | Domain used on Zendesk |
 | ZEN_EMAIL | Zendesk email address |
-| ZEN_BROWSER | Zendesk browser ID |
 | ZEN_IMPACT | Zendesk impact ID |
 | ZEN_SERVICE | Zendesk service ID |
-| ZEN_SERVICE_CHANNEL | The Zen channel name for the service |
-| SENTRY_DSN | Sentry DSN (optional) |
-| WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
-| OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
+| ZEN_SERVICE_CHANNEL | The Zen channel name for the service - defaults to `datahub` |
+| ZEN_TOKEN | Zendesk auth token |
+
 
 Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
