@@ -40,10 +40,7 @@ const steps = merge({}, createSteps, {
   '/quote-details': {
     heading: 'Edit quote information',
     fields: [
-      'service_types',
       'description',
-      'contacts_not_to_approach',
-      'sector',
       'delivery_date',
     ],
     controller: EditQuoteDetailsController,
