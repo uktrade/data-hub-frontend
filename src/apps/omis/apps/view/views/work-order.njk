@@ -138,6 +138,18 @@
       value: values.delivery_date | formatDate if values.delivery_date,
       fallbackText: 'Not set'
     }, {
+      label: 'Description of the activity',
+      value: values.description,
+      fallbackText: 'Not added'
+    }]
+  }) }}
+
+  {{ AnswersSummary({
+    heading: 'Internal use only',
+    actions: [{
+      url: 'edit/internal-details' if order.isEditable
+    }],
+    items: [{
       label: 'Service type' | pluralise(values.service_types.length),
       value: values.service_types | map('name') | join(', ') if values.service_types.length,
       fallbackText: 'None selected'
@@ -145,10 +157,6 @@
       label: 'Sector',
       value: values.sector.name,
       fallbackText: 'Not selected'
-    }, {
-      label: 'Description of the activity',
-      value: values.description,
-      fallbackText: 'Not added'
     }, {
       label: 'Contacts not to approach',
       value: values.contacts_not_to_approach,
