@@ -120,14 +120,30 @@ describe('MultipleChoice component', () => {
         this.valueProps = Object.assign({}, minimumProps, {
           children: [
             {
-              macroName: 'TextField',
+              macroName: 'SelectBox',
               name: 'first-child',
               label: 'First child',
+              class: 'child',
+              options: [{
+                id: '1234',
+                name: 'Fred Flintstone',
+              }, {
+                id: '4321',
+                name: 'Barney Rubble',
+              }],
             },
             {
-              macroName: 'TextField',
+              macroName: 'SelectBox',
               name: 'second-child',
               label: 'Second child',
+              class: 'child',
+              options: [{
+                id: '1234',
+                name: 'Fred Flintstone',
+              }, {
+                id: '4321',
+                name: 'Barney Rubble',
+              }],
             },
           ],
         })
@@ -135,23 +151,17 @@ describe('MultipleChoice component', () => {
 
       it('should display first child within form group inner', () => {
         const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
-        const firstChild = children[0]
-
-        expect(firstChild.querySelector('input').name).to.equal('first-child')
+        expect(component.querySelector('.c-form-group__inner [name="first-child"]')).to.not.eq(null)
       })
 
       it('should display second child within form group inner', () => {
         const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
-        const secondChild = children[1]
-
-        expect(secondChild.querySelector('input').name).to.equal('second-child')
+        expect(component.querySelector('.c-form-group__inner [name="second-child"]')).to.not.eq(null)
       })
 
       it('should display the correct number of children', () => {
         const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const children = component.querySelectorAll('.c-form-group__inner .child')
 
         expect(children).to.have.length(2)
       })
