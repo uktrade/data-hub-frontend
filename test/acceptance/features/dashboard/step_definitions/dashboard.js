@@ -25,4 +25,19 @@ defineSupportCode(({ When, Then }) => {
       .assert.visible('@ordersOmis')
       .assert.visible('@miDashboards')
   })
+
+  // TODO make sure support can be accessed form different pages
+  // TODO make sure support form works
+  // TODO potentially send test support request, if we can somehow test it has been received?
+  // TODO maybe even split support out into its own thing
+  Then(/^I navigate to the support page$/, async () => {
+    await Dashboard.section.globalHeader
+      .assert.visible('@support')
+      .click('@support')
+
+    await Dashboard
+      .waitForElementVisible('@pageHeading')
+      .assert.visible('@pageHeading')
+      .assert.containsText('@pageHeading', 'Report a problem or leave feedback')
+  })
 })
