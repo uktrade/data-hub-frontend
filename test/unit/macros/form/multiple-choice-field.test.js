@@ -1,5 +1,5 @@
 const { getMacros } = require('~/test/unit/macro-helper')
-const macros = getMacros('form/multiple-choice-field')
+const macros = getMacros('form')
 
 describe('MultipleChoice component', () => {
   const minimumProps = {
