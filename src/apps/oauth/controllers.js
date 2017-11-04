@@ -1,7 +1,7 @@
 const request = require('request-promise')
 const queryString = require('query-string')
 const uuid = require('uuid')
-const { set } = require('lodash')
+const { get, set } = require('lodash')
 
 const config = require('./../../../config')
 
@@ -22,26 +22,26 @@ function getAccessToken (oauthCode) {
   return request(options)
 }
 
-function callbackOAuth (req, res, next) {
-  const errorParam = req.query.error
+async function callbackOAuth (req, res, next) {
+  const errorQueryParam = get(req.query, 'error')
+  const stateQueryParam = get(req.query, 'state')
+  const sessionOAuthState = get(req.session, 'oauth.state')
 
-  // TODO create error page with information for users
-  if (errorParam) {
-    return next(Error(errorParam))
+  if (errorQueryParam) {
+    return renderHelpPage(req, res, next, errorQueryParam)
   }
 
-  if (req.session.oauth.stateId !== req.query.state) {
-    return next(Error('state sent from OAuth does not match session stateId'))
+  if (sessionOAuthState !== stateQueryParam) {
+    return renderHelpPage(req, res, next, 'state_mismatch')
   }
 
-  return getAccessToken(req.query.code)
-    .then((data) => {
-      req.session.token = data.access_token
-      return res.redirect(req.session.returnTo || '/')
-    })
-    .catch((err) => {
-      return next(err)
-    })
+  try {
+    const data = await getAccessToken(req.query.code)
+    set(req, 'session.token', data.access_token)
+    return res.redirect(req.session.returnTo || '/')
+  } catch (error) {
+    return next(error)
+  }
 }
 
 function redirectOAuth (req, res) {
@@ -54,11 +54,28 @@ function redirectOAuth (req, res) {
     idp: 'cirrus',
   }
 
-  set(req.session, 'oauth.stateId', stateId) // used to check the callback received contains the same state id
+  set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
   return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
+}
+
+function renderHelpPage (req, res, next, errorCode) {
+  const errorMessages = {
+    'access-denied': 'Access denied',
+    invalid_scope: 'Invalid scope',
+    state_mismatch: 'State mismatch',
+  }
+
+  return res
+    .breadcrumb('Contact Live Services')
+    .render('oauth/views/help-page', {
+      heading: 'Contact Live Services',
+      errorCode,
+      errorMessage: errorMessages[errorCode],
+    })
 }
 
 module.exports = {
   callbackOAuth,
   redirectOAuth,
+  renderHelpPage,
 }
