@@ -112,6 +112,7 @@ jobs:
           POSTGRES_URL: tcp://postgres:5432
           QA_USER_EMAIL: circleci@datahub.com
           QA_USER_PASSWORD: secretSquiR3L
+          SSO_ENABLED: 'false'
     parallelism: 6
     working_directory: ~/data-hub-frontend
     steps:
