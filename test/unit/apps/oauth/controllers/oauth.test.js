@@ -7,12 +7,15 @@ describe('OAuth controller', () => {
     this.sandbox = sinon.sandbox.create()
     this.mockUuid = this.sandbox.stub()
     this.mockConfig = {}
+    this.breadcrumbSpy = this.sandbox.stub().returnsThis()
     this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
     })
     this.resMock = assign({}, globalRes, {
       redirect: this.sandbox.spy(),
+      breadcrumb: this.breadcrumbSpy,
+      render: this.sandbox.spy(),
     })
     this.reqMock = assign({}, globalReq, {
       session: {},
@@ -47,26 +50,31 @@ describe('OAuth controller', () => {
 
       expect(this.resMock.redirect).to.be.calledWith(`${mockOauthConfig.url}?${expectedOauthRedirectUrl}`)
       expect(this.resMock.redirect).to.have.been.calledOnce
-      expect(this.reqMock.session.oauth.stateId).to.equal(mockUUID)
+      expect(this.reqMock.session.oauth.state).to.equal(mockUUID)
     })
   })
 
   describe('#callbackOAuth', () => {
-    context('when there is a state query param', () => {
-      const mockStateId = 'mock-state-id'
+    const helpPageTitle = 'Contact Live Services'
 
-      it('should show error with stateId mismatch', () => {
-        set(this.reqMock, 'query.state', mockStateId)
-        set(this.reqMock, 'session.oauth.stateId', 'non-matching-state-id')
+    context('when there is a state query param', () => {
+      const mockState = 'mock-state-d'
+
+      it('should show error with state mismatch', () => {
+        set(this.reqMock, 'query.state', mockState)
+        set(this.reqMock, 'session.oauth.state', 'non-matching-state-id')
 
         this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
 
-        expect(this.nextSpy).to.be.calledOnce
-        expect(this.nextSpy.args[0][0] instanceof Error).to.be.true
-        expect(this.nextSpy.args[0][0].message).to.equal('state sent from OAuth does not match session stateId')
+        expect(this.resMock.breadcrumb).to.have.been.calledWith(helpPageTitle)
+        expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
+          heading: helpPageTitle,
+          errorCode: 'state_mismatch',
+          errorMessage: 'State mismatch',
+        }))
       })
 
-      it('should proceed when stateIds match', async () => {
+      it('should proceed when state values match', async () => {
         const mockOauthAccessToken = 'mockAccessToken'
         const mockAuthCode = 'mock-auth-code'
         const mockFetchUrl = {
@@ -81,10 +89,10 @@ describe('OAuth controller', () => {
           clientId: 'mockClientId',
         })
         set(this.reqMock, 'query', {
-          state: mockStateId,
+          state: mockState,
           code: mockAuthCode,
         })
-        set(this.reqMock, 'session.oauth.stateId', mockStateId)
+        set(this.reqMock, 'session.oauth.state', mockState)
 
         nock(mockFetchUrl.host)
           .post(mockFetchUrl.path)
@@ -99,21 +107,52 @@ describe('OAuth controller', () => {
     })
 
     context('when there is an error query param', () => {
-      it('should show error', () => {
-        const mockError = 'mockError'
+      it('should show "Invalid scope" error', () => {
+        const mockError = 'invalid_scope'
 
         set(this.reqMock, 'query.error', mockError)
         this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
 
-        expect(this.nextSpy).to.be.calledOnce
-        expect(this.nextSpy.args[0][0] instanceof Error).to.be.true
-        expect(this.nextSpy.args[0][0].message).to.equal(mockError)
+        expect(this.resMock.breadcrumb).to.have.been.calledWith(helpPageTitle)
+        expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
+          heading: helpPageTitle,
+          errorCode: mockError,
+          errorMessage: 'Invalid scope',
+        }))
+      })
+
+      it('should show "Access denied" error', () => {
+        const mockError = 'access-denied'
+
+        set(this.reqMock, 'query.error', mockError)
+        this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.resMock.breadcrumb).to.have.been.calledWith(helpPageTitle)
+        expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
+          heading: helpPageTitle,
+          errorCode: mockError,
+          errorMessage: 'Access denied',
+        }))
+      })
+
+      it('should show help page without matching code error', () => {
+        const mockError = 'random-code'
+
+        set(this.reqMock, 'query.error', mockError)
+        this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.resMock.breadcrumb).to.have.been.calledWith(helpPageTitle)
+        expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
+          heading: helpPageTitle,
+          errorCode: mockError,
+          errorMessage: undefined,
+        }))
       })
     })
 
     describe('#getBearerToken', () => {
       const mockOauthAccessToken = 'mockAccessToken'
-      const mockStateId = 'mock-state-id'
+      const mockState = 'mock-state-id'
       const mockAuthCode = 'mock-auth-code'
       const mockFetchUrl = {
         host: 'http://mock-oauth-host',
@@ -128,10 +167,10 @@ describe('OAuth controller', () => {
           clientId: 'mockClientId',
         })
         set(this.reqMock, 'query', {
-          state: mockStateId,
+          state: mockState,
           code: mockAuthCode,
         })
-        set(this.reqMock, 'session.oauth.stateId', mockStateId)
+        set(this.reqMock, 'session.oauth.state', mockState)
       })
 
       it('should show redirect to root page url', async () => {
