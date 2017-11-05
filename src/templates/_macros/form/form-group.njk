@@ -31,7 +31,7 @@
   {% set fieldsetModifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
-  {% if props.label -%}
+  {% if props.label and props.name -%}
     <{{ groupElement }}
       id="group-{{ props.fieldId }}"
       class="
