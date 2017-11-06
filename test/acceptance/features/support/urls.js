@@ -9,8 +9,14 @@ const deepMap = (value, host) => {
 }
 
 const urls = {
+  contacts: {
+    collection: 'contacts',
+  },
   events: {
     collection: 'events',
+  },
+  interactions: {
+    collection: 'interactions',
   },
   investmentProjects: {
     collection: 'investment-projects',

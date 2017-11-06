@@ -126,6 +126,8 @@ module.exports = {
               }
             }
 
+            contact.header = `${contact.firstName} ${contact.lastName}`
+
             done()
           })
           .perform((done) => {
@@ -141,7 +143,9 @@ module.exports = {
             done()
           })
 
-        this.waitForElementPresent('@saveButton').click('@saveButton')
+        this
+          .waitForElementPresent('@saveButton')
+          .click('@saveButton')
 
         callback(contact)
         return this
