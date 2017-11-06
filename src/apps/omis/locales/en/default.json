@@ -31,7 +31,14 @@
       "hint": "For example 28/10/2017"
     },
     "contacts_not_to_approach": {
-      "label": "Contacts not to approach"
+      "label": "Specific people or organisations the company does not want DIT to talk to"
+    },
+    "existing_agents": {
+      "label": "Contacts the company already has in the market"
+    },
+    "further_info": {
+      "label": "Additional notes and useful information",
+      "hint": "For example other client comments or requirements"
     },
     "assignees": {
       "legend": "Advisers",
