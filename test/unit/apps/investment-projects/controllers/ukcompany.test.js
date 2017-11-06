@@ -107,40 +107,64 @@ describe('investment uk company', () => {
 
   describe('#searchForUKCompany', () => {
     context('when a search term is provided', () => {
-      context('and search returns results', () => {
-        beforeEach(async () => {
-          this.req.query.term = 'test'
-          await this.controller.searchForUKCompany(this.req, this.res, this.next)
-        })
-
-        it('should call search', () => {
-          expect(this.searchStub).to.be.calledWith({
-            token: 'abcd',
-            searchTerm: 'test',
-            isUkBased: true,
-          })
-        })
-
-        it('should transform the result', () => {
-          expect(this.transformerStub).to.be.calledOnce
-        })
-
-        it('should pass the result onto the next controller', () => {
-          expect(this.res.locals).to.have.property('results')
-        })
+      beforeEach(async () => {
+        this.req.query.term = 'test'
+        await this.controller.searchForUKCompany(this.req, this.res, this.next)
       })
 
-      context('and search causes an error', () => {
-        beforeEach(async () => {
-          this.req.query.term = 'test'
-          this.error = this.sandbox.stub()
-          this.searchStub.rejects(this.error)
-          await this.controller.searchForUKCompany(this.req, this.res, this.next)
-        })
+      it('should call search', () => {
+        expect(this.searchStub).to.be.called
+      })
 
-        it('should pass the error to next', () => {
-          expect(this.next).to.be.calledWith(this.error)
-        })
+      it('should search for the term provided', () => {
+        const searchParams = this.searchStub.firstCall.args[0]
+        expect(searchParams.searchTerm).to.equal('test')
+      })
+
+      it('should search for a uk company', () => {
+        const searchParams = this.searchStub.firstCall.args[0]
+        expect(searchParams.isUkBased).to.equal(true)
+      })
+    })
+
+    context('when a different page is requested', () => {
+      beforeEach(async () => {
+        this.req.query.term = 'test'
+        this.req.query.page = '2'
+        await this.controller.searchForUKCompany(this.req, this.res, this.next)
+      })
+
+      it('should search the requested page', () => {
+        const searchParams = this.searchStub.firstCall.args[0]
+        expect(searchParams.page).to.equal('2')
+      })
+    })
+
+    context('when search returns results', () => {
+      beforeEach(async () => {
+        this.req.query.term = 'test'
+        await this.controller.searchForUKCompany(this.req, this.res, this.next)
+      })
+
+      it('should transform the result', () => {
+        expect(this.transformerStub).to.be.calledOnce
+      })
+
+      it('should pass the result onto the next controller', () => {
+        expect(this.res.locals).to.have.property('results')
+      })
+    })
+
+    context('when search causes an error', () => {
+      beforeEach(async () => {
+        this.req.query.term = 'test'
+        this.error = this.sandbox.stub()
+        this.searchStub.rejects(this.error)
+        await this.controller.searchForUKCompany(this.req, this.res, this.next)
+      })
+
+      it('should pass the error to next', () => {
+        expect(this.next).to.be.calledWith(this.error)
       })
     })
 

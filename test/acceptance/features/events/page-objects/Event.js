@@ -60,7 +60,7 @@ module.exports = {
         return this
           .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
       },
-      populateCreateEventForm (details = {}, callback) {
+      populateCreateEventForm (details = {}, selectUkRegion, callback) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
         const event = assign({}, {
@@ -101,7 +101,7 @@ module.exports = {
               })
             )
               .then(() => {
-                if (event.address_country === 'United Kingdom') {
+                if (event.address_country === 'United Kingdom' && selectUkRegion) {
                   return new Promise((resolve) => {
                     this.getListOption('@ukRegion', (ukRegion) => {
                       event.uk_region = ukRegion

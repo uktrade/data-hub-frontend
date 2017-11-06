@@ -45,6 +45,7 @@ describe('Investment form middleware - investment value', () => {
       'r_and_d_budget',
       'total_investment',
       'fdi_value',
+      'associated_non_fdi_r_and_d_project',
     ])
     expect(this.nextSpy.calledOnce).to.be.true
   })

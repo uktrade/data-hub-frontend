@@ -20,7 +20,7 @@
   {{ renderButton('details', 'Edit summary', true) }}
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% if requirements | removeNilAndEmpty | length %}
+  {% if requirements | removeNilAndEmpty | length > 1 %}
     {% component 'key-value-table', items=requirements, variant='striped' %}
     {{ renderButton('requirements', 'Edit requirements', true) }}
   {% else %}
@@ -32,7 +32,7 @@
   {% endif %}
 
   <h2 class="heading-medium">Value</h2>
-  {% if values | length %}
+  {% if values | length > 1 %}
     {% component 'key-value-table', items=values, variant='striped' %}
     {{ renderButton('value', 'Edit value', true) }}
   {% else %}

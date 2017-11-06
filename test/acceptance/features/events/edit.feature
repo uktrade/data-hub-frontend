@@ -9,11 +9,6 @@ Feature: Edit an Event in Data hub
   Background:
     Given I am an authenticated user on the data hub website
 
-  @events-edit--create-event
-  Scenario: Create an event for later scenarios
-    When I create an event
-    Then I see the success message
-
   @events-edit--name
   Scenario: Edit event name
     And I navigate to event details page
