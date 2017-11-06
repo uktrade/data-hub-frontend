@@ -70,18 +70,12 @@ jobs:
       - &docker_dat_hub_base
         image: ukti/docker-data-hub-base
         environment:
-          - &api_client_id
-            API_CLIENT_ID: circleCiClientId
-          - &api_client_secret
-            API_CLIENT_SECRET: youAintSeenMeRight
           - API_ROOT: http://localhost:8000
           - QA_HOST: http://localhost:3000
           - QA_SELENIUM_HOST: 127.0.0.1
           - QA_SELENIUM_PORT: 4444
           - &qa_user_email
-            QA_USER_EMAIL: circleci@datahub.com
-          - &qa_user_password
-            QA_USER_PASSWORD: secretSquiR3L
+          - QA_USER_EMAIL: circleci@datahub.com
           - REDIS_HOST: localhost
           - TZ: "/usr/share/zoneinfo/Europe/London"
           - LOG_LEVEL: debug
@@ -101,8 +95,6 @@ jobs:
         image: ukti/data-hub-leeloo
         command: ./setup-uat.sh
         environment:
-          - *api_client_id
-          - *api_client_secret
           - AWS_DEFAULT_REGION: eu-west-2
           - AWS_ACCESS_KEY_ID: foo
           - AWS_SECRET_ACCESS_KEY: bar
@@ -118,7 +110,6 @@ jobs:
           - POSTGRES_URL: tcp://postgres:5432
           - SSO_ENABLED: 'False'
           - *qa_user_email
-          - *qa_user_password
           - *oauth2_dev_token
     parallelism: 6
     working_directory: ~/data-hub-frontend

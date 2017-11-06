@@ -66,8 +66,6 @@ This file expects the following environment variables:
 | Name | Description |
 |:-----|:------------|
 | API_ROOT | The url for a back end server instance for the service |
-| API_CLIENT_ID | Half the credentials needed to talk to the back end |
-| API_CLIENT_SECRET | The second half of the credentials needed to talk to the backend |
 | ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
 | CI | Set to true for UAT testing, otherwise ignore |
 | FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
@@ -89,7 +87,6 @@ This file expects the following environment variables:
 | QA_SELENIUM_HOST | URL of the Selenium server |
 | QA_SELENIUM_PORT | Port to use for the Selenium server |
 | QA_USER_EMAIL | Test user login |
-| QA_USER_PASSWORD | Test user password |
 | REDISTOGO_URL | For use with heroku (deprecated) |
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url - defaults to 'redis'|
 | REDIS_PORT | Redis port, defaults to `6379` |
