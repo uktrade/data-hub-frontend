@@ -59,6 +59,19 @@ const editFields = merge({}, globalFields, {
     label: 'fields.contacts_not_to_approach.label',
     optional: true,
   },
+  existing_agents: {
+    fieldType: 'TextField',
+    type: 'textarea',
+    label: 'fields.existing_agents.label',
+    optional: true,
+  },
+  further_info: {
+    fieldType: 'TextField',
+    type: 'textarea',
+    label: 'fields.further_info.label',
+    hint: 'fields.further_info.hint',
+    optional: true,
+  },
   assignees: {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.assignees.legend',
