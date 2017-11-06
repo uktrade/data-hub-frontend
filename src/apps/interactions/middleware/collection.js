@@ -1,26 +1,15 @@
-const { omit, merge, assign } = require('lodash')
+const { assign, pick, merge, omit } = require('lodash')
+
+const { interactionSortForm } = require('../macros')
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
-const { interactionSortForm } = require('../macros')
 
 async function getInteractionCollection (req, res, next) {
   try {
-    const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
-    const contact = req.params.contactId ? { contact: req.params.contactId } : null
-    const company = req.params.companyId ? { company: req.params.companyId } : null
-    const requestBody = assign({}, req.body, selectedSortBy, contact, company)
-
-    const sortForm = merge({}, interactionSortForm, {
-      hiddenFields: assign({}, omit(req.query, 'sortby')),
-      children: [
-        { value: req.query.sortby },
-      ],
-    })
-
-    const interactions = await search({
+    res.locals.interactions = await search({
       searchEntity: 'interaction',
-      requestBody,
+      requestBody: req.body,
       token: req.session.token,
       page: req.query.page,
       isAggregation: false,
@@ -31,17 +20,48 @@ async function getInteractionCollection (req, res, next) {
         transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink),
       ))
 
-    res.locals = assign({}, res.locals, {
-      sortForm,
-      interactions,
-    })
-
     next()
   } catch (error) {
     next(error)
   }
 }
 
+function getInteractionsRequestBody (req, res, next) {
+  const searchBody = pick(req.query, [
+    'kind',
+    'communication_channel',
+    'dit_adviser',
+    'date_after',
+    'date_before',
+    'sortby',
+  ])
+
+  if (req.params.contactId) {
+    searchBody.contact = req.params.contactId
+  }
+
+  if (req.params.companyId) {
+    searchBody.company = req.params.companyId
+  }
+
+  req.body = assign({}, req.body, searchBody)
+
+  next()
+}
+
+function getInteractionSortForm (req, res, next) {
+  res.locals.sortForm = merge({}, interactionSortForm, {
+    hiddenFields: assign({}, omit(req.query, 'sortby')),
+    children: [
+      { value: req.query.sortby },
+    ],
+  })
+
+  next()
+}
+
 module.exports = {
   getInteractionCollection,
+  getInteractionsRequestBody,
+  getInteractionSortForm,
 }

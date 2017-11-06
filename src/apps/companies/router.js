@@ -19,7 +19,12 @@ const {
 } = require('./controllers/exports')
 
 const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
-const { getInteractionCollection } = require('../interactions/middleware/collection')
+const {
+  getInteractionCollection,
+  getInteractionsRequestBody,
+  getInteractionSortForm,
+} = require('../interactions/middleware/collection')
+
 const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
@@ -77,7 +82,13 @@ router.use('/:companyId', setLocalNav(LOCAL_NAV))
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/contacts', renderContacts)
-router.get('/:companyId/interactions', setInteractionsReturnUrl, getInteractionCollection, renderInteractions)
+router.get('/:companyId/interactions',
+  setInteractionsReturnUrl,
+  getInteractionsRequestBody,
+  getInteractionCollection,
+  getInteractionSortForm,
+  renderInteractions
+)
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)

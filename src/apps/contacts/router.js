@@ -10,7 +10,11 @@ const { renderInteractions } = require('./controllers/interactions')
 const { getAudit } = require('./controllers/audit')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
-const { getInteractionCollection } = require('../interactions/middleware/collection')
+const {
+  getInteractionCollection,
+  getInteractionsRequestBody,
+  getInteractionSortForm,
+} = require('../interactions/middleware/collection')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
@@ -46,7 +50,9 @@ router.get('/:id/unarchive', unarchiveContact)
 router.get('/:contactId/interactions',
   getCommon,
   setInteractionsReturnUrl,
+  getInteractionsRequestBody,
   getInteractionCollection,
+  getInteractionSortForm,
   renderInteractions
 )
 

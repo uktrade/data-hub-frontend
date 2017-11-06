@@ -5,7 +5,12 @@ const { renderDetailsPage } = require('./controllers/details')
 const { renderInteractionList } = require('./controllers/list')
 
 const { setDefaultQuery } = require('../middleware')
-const { getInteractionCollection } = require('./middleware/collection')
+const {
+  getInteractionCollection,
+  getInteractionsRequestBody,
+  getInteractionSortForm,
+} = require('./middleware/collection')
+
 const { postDetails, getInteractionOptions, getInteractionDetails } = require('./middleware/details')
 
 const DEFAULT_COLLECTION_QUERY = {
@@ -14,7 +19,13 @@ const DEFAULT_COLLECTION_QUERY = {
 
 router.param('interactionId', getInteractionDetails)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getInteractionCollection, renderInteractionList)
+router.get('/',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getInteractionsRequestBody,
+  getInteractionCollection,
+  getInteractionSortForm,
+  renderInteractionList
+)
 
 router
   .route('/:interactionId/:kind/edit')
