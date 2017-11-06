@@ -6,8 +6,7 @@ Feature: View company collection
   And be able to navigate to a chosen company page
 
   Background:
-    Given I am an authenticated user on the data hub website
-    When I create a "UK private or public limited company"
+    Given I create a "UK private or public limited company"
 
   @companies-list--name
   Scenario: View company name in collection results

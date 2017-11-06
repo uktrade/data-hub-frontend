@@ -70,17 +70,17 @@ jobs:
       - &docker_dat_hub_base
         image: ukti/docker-data-hub-base
         environment:
-          API_CLIENT_ID: circleCiClientId
-          API_CLIENT_SECRET: youAintSeenMeRight
-          API_ROOT: http://localhost:8000
-          QA_HOST: http://localhost:3000
-          QA_SELENIUM_HOST: 127.0.0.1
-          QA_SELENIUM_PORT: 4444
-          QA_USER_EMAIL: circleci@datahub.com
-          QA_USER_PASSWORD: secretSquiR3L
-          REDIS_HOST: localhost
-          TZ: "/usr/share/zoneinfo/Europe/London"
-          LOG_LEVEL: debug
+          - API_ROOT: http://localhost:8000
+          - QA_HOST: http://localhost:3000
+          - QA_SELENIUM_HOST: 127.0.0.1
+          - QA_SELENIUM_PORT: 4444
+          - &qa_user_email
+          - QA_USER_EMAIL: circleci@datahub.com
+          - REDIS_HOST: localhost
+          - TZ: "/usr/share/zoneinfo/Europe/London"
+          - LOG_LEVEL: debug
+          - &oauth2_dev_token
+            OAUTH2_DEV_TOKEN: topSecretSquirrel
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch
@@ -95,24 +95,22 @@ jobs:
         image: ukti/data-hub-leeloo
         command: ./setup-uat.sh
         environment:
-          API_CLIENT_ID: circleCiClientId
-          API_CLIENT_SECRET: youAintSeenMeRight
-          AWS_DEFAULT_REGION: eu-west-2
-          AWS_ACCESS_KEY_ID: foo
-          AWS_SECRET_ACCESS_KEY: bar
-          CDMS_AUTH_URL: http://example.com
-          DATABASE_URL: postgresql://postgres@postgres/datahub
-          DATAHUB_SECRET: secret
-          DEBUG: True
-          DOCUMENTS_BUCKET: baz
-          DJANGO_SECRET_KEY: topSecret
-          DJANGO_SETTINGS_MODULE: config.settings.local
-          ES_INDEX: test_index
-          ES5_URL: http://localhost:9200
-          POSTGRES_URL: tcp://postgres:5432
-          QA_USER_EMAIL: circleci@datahub.com
-          QA_USER_PASSWORD: secretSquiR3L
-          SSO_ENABLED: 'false'
+          - AWS_DEFAULT_REGION: eu-west-2
+          - AWS_ACCESS_KEY_ID: foo
+          - AWS_SECRET_ACCESS_KEY: bar
+          - CDMS_AUTH_URL: http://example.com
+          - DATABASE_URL: postgresql://postgres@postgres/datahub
+          - DATAHUB_SECRET: secret
+          - DEBUG: True
+          - DOCUMENTS_BUCKET: baz
+          - DJANGO_SECRET_KEY: topSecret
+          - DJANGO_SETTINGS_MODULE: config.settings.local
+          - ES_INDEX: test_index
+          - ES5_URL: http://localhost:9200
+          - POSTGRES_URL: tcp://postgres:5432
+          - SSO_ENABLED: 'False'
+          - *qa_user_email
+          - *oauth2_dev_token
     parallelism: 6
     working_directory: ~/data-hub-frontend
     steps:
