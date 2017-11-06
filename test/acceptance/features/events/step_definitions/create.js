@@ -2,7 +2,7 @@ const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-defineSupportCode(function ({ Then, When }) {
+defineSupportCode(function ({ Given, Then, When }) {
   const Event = client.page.Event()
 
   When(/^I create an event$/, async function () {
@@ -13,7 +13,7 @@ defineSupportCode(function ({ Then, When }) {
       .wait() // wait for backend to sync
   })
 
-  When(/^I navigate to the create an event page$/, async () => {
+  Given(/^I navigate to the create an event page$/, async () => {
     await Event
       .navigate()
   })

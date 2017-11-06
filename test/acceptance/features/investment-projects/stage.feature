@@ -8,6 +8,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--requirements-details
   Scenario: Update requirements section under Prospect stage for FDI type
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Requirements section under Details tab
@@ -16,6 +17,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--location-details @ignore
   Scenario: Update location section under Prospect stage
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for location section under Details tab
@@ -24,6 +26,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-details
   Scenario: Update Value section under Prospect stage
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -33,6 +36,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-no-financial-assistance
   Scenario: Update Value section with Not receiving government financial assistance
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -43,6 +47,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-no-budget
   Scenario: Update Value section with No budget for a research and development
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -53,6 +58,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-no-r-and-d-project
   Scenario: Update Value section with Not associated with a non-FDI R&D project
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -63,6 +69,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-no-world-tech
   Scenario: Update Value section with No new to world technology
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -73,6 +80,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--value-no-export
   Scenario: Update Value section with No export of their products and services
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Value section under Details tab
@@ -83,6 +91,7 @@ Feature: Investment project stages
 
   @investment-projects-stage--assign-pm-stage @ignore
   Scenario: Move project from Prospect stage to Assign PM stage
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Requirements section under Details tab
@@ -95,6 +104,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Email verification when project moves from Prospect stage to Assign PM stage
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Requirements section under Details tab
@@ -107,6 +117,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario Outline: Changing the Project states in Prospect stage
+
     Given I am an authenticated Client relationship manager user on Data Hub website
     When I navigate to my Investment project
     Then I verify the project is in Ongoing state
@@ -126,6 +137,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Update Project Manager section under Assign PM stage
+
     Given I am an authenticated Investment services team user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Project Manager section under Project team tab
@@ -135,6 +147,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Update Project Assurance section under Assign PM stage
+
     Given I am an authenticated Investment services team user on Data Hub website
     When I navigate to my Investment project
     And I enter all required fields for Project Assurance section under Project team tab
@@ -143,6 +156,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Move project from Assign PM stage to Active stage
+
     Given I am an authenticated Investment services team user on Data Hub website
     And I enter all required fields for Project Manager section under Project team tab
     And I enter all required fields for Project Assurance section under Project team tab
@@ -153,6 +167,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Email verification when project moves from Assign PM stage to Active stage
+
     Given I am an authenticated Investment services team user on Data Hub website
     And I enter all required fields for Project Manager section under Project team tab
     And I enter all required fields for Project Assurance section under Project team tab
@@ -167,6 +182,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Update Investment project summary section under Active stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     And I enter actual landing date under Investment details tab
@@ -176,6 +192,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Update Requirements and Location section under Active stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     And I enter Investment location under Investment details tab
@@ -186,6 +203,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Update Value section under Active stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     And I upload an Evidence for Value section under Investment details tab
@@ -194,6 +212,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Move project from Active stage to Verify Win stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     And I enter actual landing date under Investment details tab
@@ -209,6 +228,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Email verification when project moves from Active stage to Verify Win stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     And I enter actual landing date under Investment details tab
@@ -224,6 +244,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario Outline: Changing the Project states in Active stage
+
     Given I am an authenticated Allocated Project Manager user on Data Hub website
     When I navigate to my Investment project within Active stage
     Then I verify the project is in Ongoing state
@@ -243,6 +264,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Access and Update all sections under Verify Win stage
+
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
     And I access all the sections to verify any pending information under Evaluation tab
@@ -252,6 +274,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Move project from Verify Win stage to Won stage
+
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
     And I access all the sections to verify any pending information under Evaluation tab
@@ -263,6 +286,7 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Email verification when project moves from Active stage to Verify Win stage
+
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
     And I access all the sections to verify any pending information under Evaluation tab
@@ -275,12 +299,14 @@ Feature: Investment project stages
 
   @ignore
   Scenario: Verify the Project state in Verify win stage
+
     Given I am an authenticated Verification Team user on Data Hub website
     When I navigate to my Investment project within Verify Win stage
     Then I verify the project is in Ongoing state
 
   @ignore
   Scenario: Verify the Project state in Won stage
+
     Given I am an authenticated Allocated project manager user on Data Hub website
     When I navigate to my Investment project within Won stage
     Then I verify the project is in Won state
