@@ -9,10 +9,12 @@ const { defineSupportCode } = require('cucumber')
 function World () {
   this.urls = urls
   this.fixtures = fixtures
-  this.state = {}
   this.resetState = function () {
-    this.state = {}
+    this.state = {
+      username: 'Circle Ci',
+    }
   }
+  this.resetState()
 }
 
 defineSupportCode(({ setWorldConstructor }) => {

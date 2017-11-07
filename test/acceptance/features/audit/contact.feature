@@ -34,31 +34,37 @@ Feature: View Audit history of a contact
     And I navigate to Audit History tab
     Then I see the total number of changes occurred recently on this contact record
 
-  @audit-contact--archived @ignore
+  @audit-contact--archived
   Scenario: View audit log for Archived contact
 
-    Given I create a new contact
-    When I search for this Contact name
-    And I click on contacts tab
+    Given a company is created for audit
+    When navigating to the company contacts
+    And a primary contact is added
+    Then I see the success message
+    When I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
-    And I search for this Contact name
-    And I click on contacts tab
+    And I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who archived the contact
 
-  @audit-contact--unarchived @ignore
+  @audit-contact--unarchived
   Scenario: View audit log for UnArchived contact
 
-    Given I create a new contact
-    When I search for this Contact name
-    And I click on contacts tab
+    Given a company is created for audit
+    When navigating to the company contacts
+    And a primary contact is added
+    Then I see the success message
+    And I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
     And I unarchive this contact record
-    And I search for this Contact name
-    And I click on contacts tab
+    And I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who unarchived the contact
