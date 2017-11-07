@@ -5,6 +5,7 @@ const i18nFuture = require('i18n-future')
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
 const { getCompany } = require('../../middleware')
+const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
 const i18n = i18nFuture({
@@ -114,7 +115,9 @@ async function setInvoice (req, res, next) {
 
 async function setPayments (req, res, next) {
   try {
-    res.locals.payments = await Order.getPayments(req.session.token, res.locals.order.id)
+    const payments = await Order.getPayments(req.session.token, res.locals.order.id)
+
+    res.locals.payments = payments.map(transformPaymentToView)
   } catch (error) {
     logger.error(error)
   }

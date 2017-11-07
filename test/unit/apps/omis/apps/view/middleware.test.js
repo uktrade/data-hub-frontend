@@ -13,6 +13,7 @@ describe('OMIS View middleware', () => {
     this.getPaymentsStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
+    this.transformPaymentToViewStub = this.sandbox.stub().returnsArg(0)
     this.flashSpy = this.sandbox.spy()
     this.nextSpy = this.sandbox.spy()
 
@@ -33,6 +34,9 @@ describe('OMIS View middleware', () => {
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
       '../../middleware': {
         getCompany: this.getCompanySpy,
+      },
+      '../../transformers': {
+        transformPaymentToView: this.transformPaymentToViewStub,
       },
       '../../../../../config/logger': {
         error: this.loggerErrorSpy,
@@ -452,8 +456,15 @@ describe('OMIS View middleware', () => {
         await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should set response as quote property on locals', () => {
+      it('should set payments property on locals', () => {
         expect(this.resMock.locals).to.have.property('payments')
+      })
+
+      it('should set correct number of payments', () => {
+        expect(this.resMock.locals.payments).to.have.length(2)
+      })
+
+      it('should set correct objects on payments', () => {
         expect(this.resMock.locals.payments).to.deep.equal(paymentsMock)
       })
 
