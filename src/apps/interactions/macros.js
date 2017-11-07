@@ -4,6 +4,8 @@ const formLabels = require('./labels')
 const metaData = require('../../lib/metadata')
 const { transformContactToOption, transformObjectToOption } = require('../transformers')
 
+const currentYear = (new Date()).getFullYear()
+
 const interactionSortForm = {
   method: 'get',
   class: 'c-collection__sort-form js-AutoSubmit',
@@ -120,6 +122,47 @@ const interactionFields = {
   },
 }
 
+const interactionFiltersFieldConfig = function (advisers) {
+  return [
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'kind',
+      type: 'checkbox',
+      options: [
+        { value: 'interaction', label: 'Interaction' },
+        { value: 'service_delivery', label: 'Service delivery' },
+      ],
+    },
+    assign(
+      {},
+      interactionFields.communicationChannel,
+      { initialOption: '-- All channels --' }
+    ),
+    assign(
+      {},
+      interactionFields.adviser(advisers),
+      { initialOption: '-- All advisers --' }
+    ),
+    {
+      macroName: 'TextField',
+      name: 'date_after',
+      hint: 'YYYY-MM-DD',
+      placeholder: `e.g. ${currentYear}-07-18`,
+    },
+    {
+      macroName: 'TextField',
+      name: 'date_before',
+      hint: 'YYYY-MM-DD',
+      placeholder: `e.g. ${currentYear}-07-21`,
+    },
+  ].map(filter => {
+    return assign(filter, {
+      label: formLabels.filters[filter.name],
+      modifier: ['smaller', 'light'],
+    })
+  })
+}
+
 const interactionFormConfig = function ({
   returnLink,
   contacts = [],
@@ -210,6 +253,7 @@ const serviceDeliveryFormConfig = function ({
 }
 
 module.exports = {
+  interactionFiltersFieldConfig,
   interactionSortForm,
   selectKindFormConfig,
   interactionFormConfig,
