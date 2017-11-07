@@ -9,7 +9,7 @@ Feature: View Audit history of a contact
 
     Given a company is created for audit
     When navigating to the company contacts
-    And a primary contact is added for audit
+    And a primary contact is added
     Then I see the success message
     When navigating to the company contacts for audit
     And the contact has 1 fields edited for audit
@@ -25,7 +25,7 @@ Feature: View Audit history of a contact
 
     Given a company is created for audit
     When navigating to the company contacts
-    And a primary contact is added for audit
+    And a primary contact is added
     Then I see the success message
     When navigating to the company contacts for audit
     And the contact has 2 fields edited for audit
