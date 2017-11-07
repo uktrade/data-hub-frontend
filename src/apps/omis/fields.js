@@ -12,7 +12,6 @@ module.exports = {
   primary_market: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.primary_market.label',
-    hint: 'fields.primary_market.hint',
     validate: 'required',
     initialOption: '-- Select market --',
     options: [],

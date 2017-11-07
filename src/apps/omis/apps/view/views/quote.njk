@@ -8,7 +8,7 @@
       type: 'error',
       element: 'div'
     }) %}
-      <p>To generate a quote you must complete the following information:</p>
+      <p>To preview a quote you must complete the following:</p>
 
       <ul class="list-disc">
         {% for stepUrl, stepData in incompleteFields %}
@@ -33,7 +33,13 @@
 
     {{ MetaList({
       items: [
-        { label: expiryLabel, value: quote.expires_on, type: 'fromNow' },
+        { label: expiryLabel, value: quote.expires_on, type: 'fromNow' }
+      ],
+      itemModifier: 'stacked'
+    }) }}
+
+    {{ MetaList({
+      items: [
         { label: 'Sent on', value: quote.created_on, type: 'datetime' },
         { label: 'Sent by', value: quote.created_by if quote.created_on }
       ],
@@ -51,7 +57,7 @@
     }) }}
 
     {% if quote.content %}
-      {% call Example(tabTitle = 'Preview') %}
+      {% call Example(tabTitle = '') %}
         <div class="l-markdown">
           {% markdown %}
             {{ quote.content }}
@@ -69,7 +75,21 @@
         }) }}
       {% endif %}
     {% endif %}
+<<<<<<< HEAD
   {% endif %}
 
   {{ Form(quoteForm) }}
+=======
+
+    <p>The quote should be reviewed by your manager before being sent.</p>
+  {% endif %}
+
+  {{ Form(quoteForm) }}
+
+  <h2 class="heading-medium">What happens next</h2>
+
+  <ul class="list-disc">
+    <li>This will send an email with a link to this quote to the client ([[EMAIL]]) for acceptance.</li>
+  </ul>
+>>>>>>> 086d3c5a... Improve quote language to be clearer about what is happening and what actions need to be taken
 {% endblock %}

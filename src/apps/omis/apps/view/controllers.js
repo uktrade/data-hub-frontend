@@ -30,7 +30,7 @@ async function renderWorkOrder (req, res) {
 
 function renderQuote (req, res) {
   res
-    .breadcrumb('Quote')
+    .breadcrumb('Quote preview')
     .render('omis/apps/view/views/quote')
 }
 

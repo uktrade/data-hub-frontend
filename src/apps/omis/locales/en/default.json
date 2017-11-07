@@ -5,7 +5,6 @@
     },
     "primary_market": {
       "label": "Choose the market (country) where the service is required",
-      "hint": "This will notify the post manager for this region when you submit the order",
       "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
@@ -106,12 +105,12 @@
   },
   "errors": {
     "quote": {
-      "service_types": "Service types the order covers",
-      "description": "Description of the work or activity",
-      "delivery_date": "Delivery date at least 21 days from now",
-      "assignees": "At least one adviser in the market",
-      "assignee_time": "Some time allocated to an adviser in market",
-      "vat_status": "VAT category"
+      "service_types": "Choose at least one service type the order covers",
+      "description": "Add a description of the work or activity",
+      "delivery_date": "Set a delivery date of at least 21 days from now",
+      "assignees": "Add at least one adviser in the market",
+      "assignee_time": "Allocate time to at least one adviser in the market",
+      "vat_status": "Choose a VAT category"
     }
   },
   "validation": {
