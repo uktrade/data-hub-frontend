@@ -180,21 +180,20 @@ function setQuoteForm (req, res, next) {
   }
 
   if (res.locals.incompleteFields) {
-    form.disableFormAction = true
+    form.hidePrimaryFormAction = true
   }
 
-  if (get(quote, 'created_on')) {
+  if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
     form.buttonModifiers = 'button-secondary'
 
-    if (quote.accepted_on || quote.cancelled_on) {
+    if (quote.accepted_on) {
       form.hidePrimaryFormAction = true
     }
 
-    if (new Date(quote.expires_on) > new Date()) {
+    if (!quote.accepted_on && new Date(quote.expires_on) > new Date()) {
       form.buttonModifiers = 'button--destructive'
-
       res.locals.destructive = true
     }
   }
