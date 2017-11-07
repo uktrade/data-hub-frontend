@@ -7,7 +7,8 @@ Feature: View collection of interactions
   @interactions-list--browse
   Scenario: Browse to interactions from dashboard
 
-    Given the interactionsAndServices link in the global nav is clicked
+    Given I navigate to the dashboard
+    When the interactions and services link in the global nav is clicked
     Then the interaction list is displayed
 
   @interactions-list--name @ignore
