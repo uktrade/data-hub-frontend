@@ -822,9 +822,10 @@ describe('OMIS View middleware', () => {
           it('should contain default form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Send quote')
+                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Send quote to client')
                 expect(this.resMock.locals.quoteForm).to.have.property('returnText', 'Return to order')
                 expect(this.resMock.locals.quoteForm).to.have.property('returnLink', '/omis/123456789')
+                expect(this.resMock.locals.quoteForm).to.not.have.property('hidePrimaryFormAction')
 
                 done()
               } catch (error) {
