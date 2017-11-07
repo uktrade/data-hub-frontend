@@ -91,4 +91,37 @@ describe('OMIS list transformers', function () {
       })
     })
   })
+
+  describe('#transformPaymentToView', () => {
+    const payment = require('~/test/unit/data/omis/payments.json')[0]
+
+    context('when given an unqualified result', () => {
+      it('should return undefined', () => {
+        expect(this.transformers.transformPaymentToView()).to.be.undefined
+        expect(this.transformers.transformPaymentToView({ a: 'b' })).to.be.undefined
+        expect(this.transformers.transformPaymentToView({ id: 'abcd' })).to.be.undefined
+      })
+    })
+
+    context('when given a qualified result', () => {
+      it('should return the correct properties', () => {
+        const actual = this.transformers.transformPaymentToView(payment)
+
+        expect(actual).to.have.property('reference').a('string')
+        expect(actual).to.have.property('transaction_reference').a('string')
+        expect(actual).to.have.property('additional_reference').a('string')
+        expect(actual).to.have.property('method').a('string')
+        expect(actual).to.have.property('received_on').a('string')
+        expect(actual).to.have.property('created_on').a('string')
+        expect(actual).to.have.property('amount').a('number')
+      })
+
+      it('should convert amount to pounds', () => {
+        const actual = this.transformers.transformPaymentToView(payment)
+        const amount = actual.amount
+
+        expect(amount).to.equal(53.43)
+      })
+    })
+  })
 })
