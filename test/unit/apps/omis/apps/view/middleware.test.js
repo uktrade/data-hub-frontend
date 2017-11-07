@@ -723,12 +723,12 @@ describe('OMIS View middleware', () => {
       })
     })
 
-    context('when quote preview errors exist exist', () => {
+    context('when quote preview errors exist', () => {
       beforeEach(() => {
         this.resMock.locals.incompleteFields = ['service_types']
       })
 
-      it('should set disable the form actions', (done) => {
+      it('should hide the primary form action', (done) => {
         const nextSpy = () => {
           try {
             expect(this.resMock.locals).to.have.property('quoteForm')
@@ -736,7 +736,7 @@ describe('OMIS View middleware', () => {
             expect(this.resMock.locals.quoteForm).to.have.property('buttonText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnLink')
-            expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+            expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
             done()
           } catch (error) {
@@ -819,10 +819,12 @@ describe('OMIS View middleware', () => {
         })
 
         context('when quote has been cancelled', () => {
-          it('should disable form actions', (done) => {
+          it('should contain default form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Send quote')
+                expect(this.resMock.locals.quoteForm).to.have.property('returnText', 'Return to order')
+                expect(this.resMock.locals.quoteForm).to.have.property('returnLink', '/omis/123456789')
 
                 done()
               } catch (error) {
