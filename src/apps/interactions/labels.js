@@ -24,7 +24,16 @@ const serviceDelivery = {
   event: 'Event',
 }
 
+const filters = {
+  kind: 'Kind',
+  communication_channel: 'Communication channel',
+  dit_adviser: 'Adviser',
+  date_after: 'From',
+  date_before: 'To',
+}
+
 module.exports = {
   interaction,
   serviceDelivery,
+  filters,
 }
