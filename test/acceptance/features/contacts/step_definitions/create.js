@@ -1,11 +1,8 @@
-const faker = require('faker')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { set } = require('lodash')
 
-const { getUid, appendUid } = require('../../../helpers/uuid')
+const { getUid } = require('../../../helpers/uuid')
 
-const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
 defineSupportCode(({ Given, Then, When }) => {
@@ -13,20 +10,6 @@ defineSupportCode(({ Given, Then, When }) => {
   const Contact = client.page.Contact()
   const Search = client.page.Search()
   const Dashboard = client.page.Dashboard()
-
-  Given(/^a company is created for contacts/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
-    await client
-      .url(companySearchPage)
-
-    await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany(
-        { name: companyName },
-        (company) => set(this.state, 'company', company),
-      )
-      .wait() // wait for backend to sync
-  })
 
   When(/^a primary contact is added$/, async function () {
     await Contact

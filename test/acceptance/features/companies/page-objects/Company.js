@@ -2,6 +2,7 @@ const faker = require('faker')
 const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const { appendUid } = require('../../../helpers/uuid')
 
 const getDetailsTabSelector = (text) => getSelectorForElementWithText(
   text,
@@ -70,6 +71,7 @@ module.exports = {
 
       createForeignCompany (details = {}, callback) {
         const company = assign({}, {
+          name: appendUid(faker.company.companyName()),
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
@@ -129,6 +131,7 @@ module.exports = {
 
       createUkNonPrivateOrNonPublicLimitedCompany (details = {}, callback) {
         const company = assign({}, {
+          name: appendUid(faker.company.companyName()),
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
