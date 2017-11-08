@@ -1,5 +1,13 @@
 const { getSelectorForElementWithText } = require('../../../helpers/selectors')
 
+const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-collection__filter-label',
+    child: '/following-sibling::a',
+  }
+)
 const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   text,
   {
@@ -35,15 +43,46 @@ module.exports = {
     companyFromThirdList: '.c-entity-list__item:nth-child(3) .c-meta-list__item:nth-child(1) .c-meta-list__item-value',
   },
   sections: {
+    filterTags: {
+      selector: '.c-collection__filter-summary',
+      elements: {
+        company: getFilterTagRemoveBtnSelector('Company name'),
+        sector: getFilterTagRemoveBtnSelector('Sectors'),
+        country: getFilterTagRemoveBtnSelector('Country'),
+        ukRegion: getFilterTagRemoveBtnSelector('UK Region'),
+      },
+    },
     firstContactInList: {
       selector: '.c-entity-list li:first-child',
       elements: {
         header: {
           selector: '.c-entity__header a',
         },
-        company: getMetaListItemValueSelector('Company'),
-        sector: getMetaListItemValueSelector('Sector'),
+        companyName: getMetaListItemValueSelector('Company'),
+        companySector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated'),
+      },
+      commands: [
+        {
+          getSelectorForBadgeWithText (text) {
+            return getSelectorForElementWithText(
+              text,
+              {
+                el: '//span',
+                className: 'c-badge',
+              }
+            )
+          },
+        },
+      ],
+    },
+    filters: {
+      selector: '.c-collection-filters',
+      elements: {
+        company: '#field-company_name',
+        sector: '#field-company_sector',
+        country: '#field-address_country',
+        ukRegion: '#field-company_uk_region',
       },
     },
   },
