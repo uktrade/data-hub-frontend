@@ -7,7 +7,7 @@ Feature: View Collection of contacts
   @contacts-collection--view
   Scenario: View contact collection
 
-    Given a company is created for contacts
+    Given a company is created
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message

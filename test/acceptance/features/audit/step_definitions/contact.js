@@ -1,12 +1,10 @@
-const faker = require('faker')
 const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { merge, set } = require('lodash')
 
-const { getUid, appendUid } = require('../../../helpers/uuid')
+const { getUid } = require('../../../helpers/uuid')
 
-const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
 defineSupportCode(({ Given, Then, When }) => {
@@ -18,20 +16,6 @@ defineSupportCode(({ Given, Then, When }) => {
   const AuditContact = client.page.AuditContact()
   const AuditList = client.page.AuditList()
   const InvestmentStage = client.page.InvestmentStage()
-
-  Given(/^a company is created for audit/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
-    await client
-      .url(companySearchPage)
-
-    await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany(
-        { name: companyName },
-        (company) => set(this.state, 'company', company),
-      )
-      .wait() // wait for backend to sync
-  })
 
   Given(/^I archive an existing contact record$/, async function () {
     await Company

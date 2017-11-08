@@ -7,7 +7,7 @@ Feature: Create New Contact
   @contacts-create--companies-interaction
   Scenario: Interaction fields from companies
 
-    Given a company is created for contacts
+    Given a company is created
     When navigating to the create company contact page
     And the add new contact button is clicked
     Then there are contact fields
