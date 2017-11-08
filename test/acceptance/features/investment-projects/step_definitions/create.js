@@ -2,6 +2,8 @@ const faker = require('faker')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
+const { appendUid } = require('../../../helpers/uuid')
+
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
@@ -28,7 +30,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project as a source of foreign equity investment$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -40,7 +42,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project without optional fields$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -73,7 +75,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project with a different client relation manager$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -100,7 +102,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project with a different referral source adviser$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -127,7 +129,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project with different client relation manager and referral source adviser$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -162,7 +164,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project with FDI as Investment type$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -175,7 +177,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project with Non-FDI as Investment type$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
@@ -188,7 +190,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I create a new Investment project as not a source of foreign equity investment$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(ukLtdCompanyName)
