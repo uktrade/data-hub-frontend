@@ -51,11 +51,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .verifyMessage('success')
   })
 
-  When(/^a primary contact is added for audit$/, async function () {
-    await Contact
-      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
-  })
-
   When(/^navigating to the company contacts for audit$/, async function () {
     await client
       .url(dashboardPage)
