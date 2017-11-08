@@ -9,6 +9,7 @@
     "API_CLIENT_SECRET": { "required": true },
     "API_ROOT": { "required": true },
     "POSTCODE_KEY": { "required": true },
+    "OAUTH2_DEV_TOKEN": { "required": true },
     "ZEN_TOKEN": { "required": true },
     "ZEN_DOMAIN": { "required": true },
     "ZEN_EMAIL": { "required": true },
