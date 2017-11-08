@@ -7,7 +7,7 @@ Feature: View Audit history of a contact
   @audit-contact--fields
   Scenario: View name of the person who made contact record changes
 
-    Given a company is created for audit
+    Given a company is created
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message
@@ -23,7 +23,7 @@ Feature: View Audit history of a contact
   @audit-contact--count
   Scenario: View the number of changes occurred on a contact record
 
-    Given a company is created for audit
+    Given a company is created
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message
@@ -37,7 +37,7 @@ Feature: View Audit history of a contact
   @audit-contact--archived
   Scenario: View audit log for Archived contact
 
-    Given a company is created for audit
+    Given a company is created
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message
@@ -54,7 +54,7 @@ Feature: View Audit history of a contact
   @audit-contact--unarchived
   Scenario: View audit log for UnArchived contact
 
-    Given a company is created for audit
+    Given a company is created
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message

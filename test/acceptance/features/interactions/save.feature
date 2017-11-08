@@ -7,7 +7,7 @@ Feature: Save a new interaction in Data hub
   @interaction-save--companies-interaction-submit
   Scenario: Companies interaction is saved
 
-    Given a company is created for interactions
+    Given a company is created
     And a company contact is created for interactions
     When navigating to the create company interactions and services step 1 page
     And selecting interaction
@@ -17,7 +17,7 @@ Feature: Save a new interaction in Data hub
   @interaction-save--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
-    Given a company is created for interactions
+    Given a company is created
     And a company contact is created for interactions
     When navigating to the create company interactions and services step 1 page
     And selecting service delivery

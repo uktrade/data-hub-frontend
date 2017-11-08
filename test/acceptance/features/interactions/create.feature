@@ -7,7 +7,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--companies-interaction
   Scenario: Interaction fields from companies
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then navigating to the create company interactions and services step 1 page
     And selecting interaction
@@ -17,7 +17,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--contacts-interaction
   Scenario: Interaction fields from contacts
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then navigating to the create contact interactions and services step 1 page
     And selecting interaction
@@ -27,7 +27,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--investment-projects-interaction @ignore
   Scenario: Interaction fields from investment projects
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then a company investment project is created for interactions
     When navigating to the create investment project interaction page
@@ -37,7 +37,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--companies-service-delivery
   Scenario: Service delivery fields from companies
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then navigating to the create company interactions and services step 1 page
     And selecting service delivery
@@ -47,7 +47,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--contacts-service-delivery
   Scenario: Service delivery fields from contacts
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then navigating to the create contact interactions and services step 1 page
     And selecting service delivery
@@ -57,7 +57,7 @@ Feature: Save an Interaction in Data hub
   @interactions-create--events-toggle
   Scenario: Toggle service delivery event association
 
-    Given a company is created for interactions
+    Given a company is created
     When a company contact is created for interactions
     Then navigating to the create company interactions and services step 1 page
     And selecting service delivery
