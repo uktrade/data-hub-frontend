@@ -13,7 +13,10 @@ const common = {
   devtool: 'source-map',
   entry: {
     styles: './assets/stylesheets/application.scss',
-    app: './assets/javascripts/app.js',
+    app: [
+      './assets/javascripts/vendor/details.polyfill.js',
+      './assets/javascripts/app.js',
+    ],
     'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
   output: {

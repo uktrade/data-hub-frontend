@@ -1,0 +1,26 @@
+{##
+ # Render a details element with summary and progressively revealed content
+ #
+ # @param {object} props
+ # @param {string} props.summary - Summary text to always be visible
+ # @param {string} [props.text] - A string to render as the contents
+ # @param {function} [props.caller] - Optional inner contents
+ #
+ #}
+{% macro HiddenContent(props) %}
+  {%- if props.summary -%}
+    <details>
+      <summary>
+        <span class="details__summary">{{ props.summary }}</span>
+      </summary>
+
+      <div class="details__content">
+        {% if caller %}
+          {{ caller() }}
+        {% else %}
+          {{ props.text }}
+        {% endif %}
+      </div>
+    </details>
+  {%- endif -%}
+{% endmacro %}
