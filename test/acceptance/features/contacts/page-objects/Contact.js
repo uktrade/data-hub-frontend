@@ -83,6 +83,7 @@ module.exports = {
     findUkAddressButton: '.postcode-lookup-button',
     selectUkAddressDropdown: '#field-postcode-address-suggestions',
     selectAnUkAddressFromList: '#field-postcode-address-suggestions option:nth-child(3)',
+    headingCompanyLink: '.c-local-header__heading-before a',
   },
 
   commands: [

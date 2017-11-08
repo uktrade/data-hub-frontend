@@ -131,32 +131,4 @@ defineSupportCode(({ Given, Then, When }) => {
     await Dashboard
       .assert.containsText('@firstMyLatestContact', dashboardContactEntry)
   })
-
-  Then(/^the contact details are displayed$/, async function () {
-    const { address1, town, country } = this.state.company
-    const {
-      jobTitle,
-      telephoneCountryCode,
-      telephoneNumber,
-      emailAddress,
-      alternativePhoneNumber,
-      alternativeEmail,
-      notes,
-      acceptsEmailMarketingFromDit,
-    } = this.state.contact
-
-    const expectedAddress = `${address1}, ${town}, ${country}`
-    const expectedTelephoneNumber = `(${telephoneCountryCode}) ${telephoneNumber}`
-
-    await Contact
-      .section.contactDetails
-      .assert.containsText('@jobTitle', jobTitle)
-      .assert.containsText('@phoneNumber', expectedTelephoneNumber)
-      .assert.containsText('@email', emailAddress)
-      .assert.containsText('@emailMarketing', acceptsEmailMarketingFromDit)
-      .assert.containsText('@address', expectedAddress)
-      .assert.containsText('@alternativeTelephone', alternativePhoneNumber)
-      .assert.containsText('@alternativeEmail', alternativeEmail)
-      .assert.containsText('@notes', notes)
-  })
 })
