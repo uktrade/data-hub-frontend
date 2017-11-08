@@ -60,7 +60,7 @@
       {% call Example(tabTitle = '') %}
         <div class="l-markdown">
           {% markdown %}
-            {{ quote.content }}
+            {{ quote.content | safe }}
           {% endmarkdown %}
         </div>
       {% endcall %}
