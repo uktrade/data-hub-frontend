@@ -93,27 +93,35 @@ module.exports = {
             Promise.all(
               keys(pickBy(event, isNull)).map((key) => {
                 return new Promise((resolve) => {
-                  this.getListOption(`@${camelCase(key)}`, (optionText) => {
-                    event[key] = optionText.trim()
-                    resolve()
-                  })
+                  const selector = `@${camelCase(key)}`
+                  this
+                    .waitForElementPresent(selector)
+                    .getListOption(selector, (optionText) => {
+                      event[key] = optionText.trim()
+                      resolve()
+                    })
                 })
               })
             )
               .then(() => {
                 if (event.address_country === 'United Kingdom' && selectUkRegion) {
                   return new Promise((resolve) => {
-                    this.getListOption('@ukRegion', (ukRegion) => {
-                      event.uk_region = ukRegion
-                      resolve()
-                    })
+                    this
+                      .waitForElementPresent('@ukRegion')
+                      .getListOption('@ukRegion', (ukRegion) => {
+                        event.uk_region = ukRegion
+                        resolve()
+                      })
                   })
                 }
               })
               .then(() => {
                 for (const key in event) {
                   if (event[key]) {
-                    this.setValue(`[name="${key}"]`, event[key])
+                    const selector = `[name="${key}"]`
+                    this
+                      .waitForElementPresent(selector)
+                      .setValue(selector, event[key])
                   }
                 }
                 done()
