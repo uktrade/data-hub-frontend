@@ -24,7 +24,7 @@ function transformCompanyToListItem ({
   registered_address_2,
   companies_house_data,
 } = {}) {
-  if (!id || !name) { return }
+  if (!id && !get(companies_house_data, 'company_number')) { return }
 
   const meta = []
   const isTradingAddress = trading_address_town && trading_address_postcode && trading_address_1
@@ -66,7 +66,7 @@ function transformCompanyToListItem ({
     })
   }
 
-  const url = companies_house_data ? `/companies/view/ch/${companies_house_data.company_number}` : `/companies/${id}`
+  const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
   const displayName = trading_name || name
 
   return {
