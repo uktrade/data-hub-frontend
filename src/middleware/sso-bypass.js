@@ -11,7 +11,7 @@ const ssoBypass = () => {
   return function (req, res, next) {
     const token = get(config, 'oauth.token')
 
-    if (config.isDev && token) {
+    if (token) {
       req.session.token = token
     }
     next()

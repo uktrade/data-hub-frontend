@@ -4,10 +4,6 @@ const isDev = process.env.NODE_ENV !== 'production'
 const isProd = process.env.NODE_ENV === 'production'
 const root = path.normalize(`${__dirname}/..`)
 
-if (isProd && process.env['OAUTH2_DEV_TOKEN']) {
-  throw new Error('Environment variable "OAUTH2_DEV_TOKEN" not allowed in Production')
-}
-
 const config = {
   root,
   buildDir: path.join(root, '.build'),
