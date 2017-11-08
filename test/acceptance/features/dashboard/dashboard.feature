@@ -7,11 +7,11 @@ Feature: Search
   @dashboard--global-nav
   Scenario: Display global nav
 
-    Given I navigate to the dashboard
+    When I navigate to the dashboard
     Then there should be global nav links
 
   @dashboard--support-page
   Scenario: Navigate to the support page
 
-    Given I navigate to the dashboard
+    When I navigate to the dashboard
     Then I navigate to the support page
