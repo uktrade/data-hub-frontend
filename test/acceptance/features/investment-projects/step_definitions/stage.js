@@ -2,6 +2,8 @@ const faker = require('faker')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
+const { appendUid } = require('../../../helpers/uuid')
+
 defineSupportCode(({ Given, Then, When }) => {
   const InvestmentStage = client.page.InvestmentStage()
   const Contact = client.page.Contact()
@@ -25,7 +27,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I navigate to my Investment project$/, async () => {
-    projectName = faker.commerce.productName()
+    projectName = appendUid(faker.commerce.productName())
     await Company
       .navigate()
       .findCompany(foreignCompanyName)
