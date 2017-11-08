@@ -1,0 +1,21 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  {% call Example('Simple hidden text') %}
+    {{ HiddenContent({
+      summary: 'Want to reveal more text?',
+      text: 'This extra text will be displayed'
+    }) }}
+  {% endcall %}
+
+  {% call Example('Hidden text (nested content)') %}
+    {% call HiddenContent({
+      summary: 'Want to reveal more things?'
+    }) %}
+      {{ Message ({
+        type: 'muted',
+        text: 'Some extra text that is displayed within another macro (Message).'
+      }) }}
+    {% endcall %}
+  {% endcall %}
+{% endblock %}
