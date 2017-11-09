@@ -19,9 +19,9 @@ Feature: View Collection of contacts
       | Sector  | company.sector |
       | Updated |                |
     And the Contact has badges
-      | text           |
-      | Primary        |
-      | United Kingdom |
+      | text         |
+      | Contact type |
+      | Country      |
 
 
   @contacts-collection--filter

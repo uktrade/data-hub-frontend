@@ -1,6 +1,6 @@
 const { lowerCase } = require('lodash')
 
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
 module.exports = {
   elements: {
@@ -32,25 +32,13 @@ module.exports = {
           text,
           {
             el: '//span',
-            className: 'c-badge',
-          }
+            className: 'c-meta-list__item-label',
+            child: '/following-sibling::span',
+          },
         )
       },
-      getSelectorForFilterWithTypeAndText (text, type) {
-        return getSelectorForElementWithText(
-          text,
-          {
-            el: '//span',
-            className: 'c-form-group__label-text',
-            child: `/../..//${type}`,
-          }
-        )
-      },
-      getSortByOptionSelectorWithText (text) {
-        return {
-          selector: `//select[@id="field-sortby"]/option[normalize-space(.)="${text}"]`,
-          locateStrategy: 'xpath',
-        }
+      getButtonSelectorWithText (text) {
+        return getButtonWithText(text)
       },
     },
   ],
@@ -64,7 +52,6 @@ module.exports = {
     collectionHeader: {
       selector: '.c-collection__header',
       elements: {
-        addLink: '.c-collection__header-actions > a.button',
         paginationSummary: '.c-collection__pagination-summary',
       },
     },
