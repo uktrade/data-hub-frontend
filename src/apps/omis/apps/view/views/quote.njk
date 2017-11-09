@@ -59,9 +59,13 @@
     {% if quote.content %}
       {% call Example(tabTitle = '') %}
         <div class="l-markdown">
-          {% markdown %}
-            {{ quote.content }}
-          {% endmarkdown %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.content | safe }}{% endmarkdown %}
+
+          {% call HiddenContent({ summary: 'View full terms and conditions' }) %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
+          {% endcall %}
         </div>
       {% endcall %}
     {% endif %}
@@ -79,7 +83,10 @@
   {% endif %}
 
   {% if order.status === 'draft' and quote %}
-    <p>The quote should be reviewed by your manager before being sent.</p>
+    {{ Message({
+      type: 'info',
+      text: 'Quotes should be reviewed by a manager before being sent.'
+    }) }}
 
     <h2 class="heading-medium">What happens next</h2>
 
