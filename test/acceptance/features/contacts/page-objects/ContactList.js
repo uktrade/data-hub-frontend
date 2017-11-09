@@ -17,6 +17,15 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   }
 )
 
+const getBadgeWithText = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  },
+)
+
 module.exports = {
   url: `${process.env.QA_HOST}/contacts`,
   elements: {
@@ -53,7 +62,7 @@ module.exports = {
       },
     },
     firstContactInList: {
-      selector: '.c-entity-list li:first-child',
+      selector: '.c-entity-list li:nth-child(1)',
       elements: {
         header: {
           selector: '.c-entity__header a',
@@ -61,20 +70,8 @@ module.exports = {
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated'),
+        countryBadge: getBadgeWithText('Country'),
       },
-      commands: [
-        {
-          getSelectorForBadgeWithText (text) {
-            return getSelectorForElementWithText(
-              text,
-              {
-                el: '//span',
-                className: 'c-badge',
-              }
-            )
-          },
-        },
-      ],
     },
     filters: {
       selector: '.c-collection-filters',
@@ -83,6 +80,12 @@ module.exports = {
         sector: '#field-company_sector',
         country: '#field-address_country',
         ukRegion: '#field-company_uk_region',
+      },
+    },
+    collectionHeader: {
+      selector: '.c-collection__header',
+      elements: {
+        sortBy: '#field-sortby',
       },
     },
   },

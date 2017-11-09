@@ -1,6 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { get, camelCase } = require('lodash')
+const { get, set, camelCase } = require('lodash')
+const { compareDesc } = require('date-fns')
 
 const { getUid } = require('../../../helpers/uuid')
 
@@ -47,6 +48,206 @@ defineSupportCode(({ Given, Then, When }) => {
       .wait() // wait for xhr
   })
 
+  When(/^the contacts are sorted by (Newest)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value)
+      })
+  })
+
+  When(/^the contacts are sorted by (Oldest)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value)
+      })
+  })
+
+  When(/^the contacts are sorted by (Recently updated)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@updated', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value)
+      })
+  })
+
+  When(/^the contacts are sorted by (Least recently updated)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@updated', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value)
+      })
+  })
+
+  When(/^the contacts are sorted by (First name: A-Z)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        const name = result.value.split(' ')[0]
+        set(this.state, 'collection.firstItem.field', name.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (First name: Z-A)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        const name = result.value.split(' ')[0]
+        set(this.state, 'collection.lastItem.field', name.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Last name: A-Z)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        const name = result.value.split(' ')[0]
+        set(this.state, 'collection.firstItem.field', name.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Last name: Z-A)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@header', (result) => {
+        const name = result.value.split(' ')[0]
+        set(this.state, 'collection.lastItem.field', name.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Country: A-Z)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@countryBadge', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Country: Z-A)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@countryBadge', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Company: A-Z)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@companyName', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Company: Z-A)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@companyName', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Sector: A-Z)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@companySector', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
+      })
+  })
+
+  When(/^the contacts are sorted by (Sector: Z-A)$/, async function (sortOption) {
+    await ContactList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await ContactList
+      .section.firstContactInList
+      .getText('@companySector', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
+      })
+  })
+
   Then(/^the contacts should be filtered by ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
     const entityTypeField = camelCase(`${entityType} ${field}`)
     const selector = `@${entityTypeField}`
@@ -58,13 +259,35 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^the contacts should be filtered to show badge ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
-    const badgeText = get(this.state, `${entityType}.${field}`)
-    const badge = ContactList.section.firstContactInList
-      .getSelectorForBadgeWithText(badgeText)
+    const expectedBadgeText = get(this.state, `${entityType}.${field}`)
 
-    await ContactList.section.firstContactInList
-      .api.useXpath()
-      .assert.visible(badge.selector)
-      .useCss()
+    ContactList
+      .section.firstContactInList
+      .waitForElementVisible('@countryBadge')
+      .assert.containsText('@countryBadge', expectedBadgeText)
+  })
+
+  Then(/^the contacts should have been correctly sorted for date fields$/, async function () {
+    const firstItemField = get(this.state, `collection.firstItem.field`)
+    const lastItemField = get(this.state, `collection.lastItem.field`)
+
+    client.expect(compareDesc(firstItemField, lastItemField)).to.be.within(0, 1)
+  })
+
+  Then(/^the contacts should have been correctly sorted by creation date$/, async function () {
+    const firstItemField = get(this.state, `collection.firstItem.field`)
+    const lastItemField = get(this.state, `collection.lastItem.field`)
+    const expectedFirstItemField = get(this.state, 'contact.header')
+    const expectedLastItemField = this.fixtures.contact.georginaClark.name
+
+    client.expect(firstItemField).to.equal(expectedFirstItemField)
+    client.expect(lastItemField).to.equal(expectedLastItemField)
+  })
+
+  Then(/^the contacts should have been correctly sorted for text fields$/, async function () {
+    const firstItemField = get(this.state, `collection.firstItem.field`)
+    const lastItemField = get(this.state, `collection.lastItem.field`)
+
+    return client.expect(firstItemField < lastItemField).to.be.true
   })
 })
