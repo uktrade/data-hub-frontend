@@ -41,6 +41,13 @@
     {% endcall %}
   {% endif %}
 
+  {% if order.status === 'cancelled' %}
+    {% call Message({ type: 'info', element: 'div' }) %}
+      <p>Order cancelled on {{ order.cancelled_on | formatDateTime }} by {{ order.cancelled_by.name }}.</p>
+      <p>It was cancelled because {{ order.cancellation_reason.name | lower }}.</p>
+    {% endcall %}
+  {% endif %}
+
   {{ AnswersSummary({
     heading: 'Client contact details',
     actions: [{

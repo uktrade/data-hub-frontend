@@ -10,6 +10,7 @@ const EditInternalDetailsController = require('./controllers/internal-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
+const CancelOrderController = require('./controllers/cancel-order')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
@@ -98,6 +99,13 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'complete-order.njk',
     controller: CompleteOrderController,
+  },
+  '/cancel-order': {
+    heading: 'Cancel an order',
+    fields: [
+      'cancellation_reason',
+    ],
+    controller: CancelOrderController,
   },
 })
 
