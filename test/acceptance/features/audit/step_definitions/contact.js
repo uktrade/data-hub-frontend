@@ -20,7 +20,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Given(/^I archive an existing contact record$/, async function () {
     await Company
       .navigate()
-      .findCompany(this.fixtures.foreignCompany.name)
+      .findCompany(this.fixtures.company.foreign.name)
     await ContactList
       .click('@contactsTab')
     await AuditList.section.lastContactInList

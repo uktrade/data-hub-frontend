@@ -19,7 +19,7 @@ defineSupportCode(({ Then, When }) => {
 
     await Company
       .createUkPrivateOrPublicLimitedCompany(
-        this.fixtures.companiesHouseCompany.name,
+        this.fixtures.company.companiesHouse.name,
         { tradingName: companyName },
         (company) => set(this.state, 'company', company),
       )

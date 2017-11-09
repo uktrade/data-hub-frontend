@@ -3,13 +3,20 @@
  * @type {}
  */
 module.exports = {
-  companiesHouseCompany: {
-    name: 'Mercury Ltd',
+  company: {
+    companiesHouse: {
+      name: 'Mercury Ltd',
+    },
+    foreign: {
+      name: 'Lambda plc',
+    },
+    ukLtd: {
+      name: 'Venus ltd',
+    },
   },
-  foreignCompany: {
-    name: 'Lambda plc',
-  },
-  ukLtdCompany: {
-    name: 'Venus ltd',
+  contact: {
+    georginaClark: {
+      name: 'Georgina Clark',
+    },
   },
 }
