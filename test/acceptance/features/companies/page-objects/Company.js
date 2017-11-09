@@ -186,6 +186,7 @@ module.exports = {
                   }
                 }
                 companyStep2.country = 'United Kingdom'
+                companyStep2.header = companyStep2.name
                 done()
               })
               .perform(() => {
