@@ -6,11 +6,14 @@ describe('Company transformers', function () {
   describe('#transformCompanyToListItem', () => {
     const companyData = require('~/test/unit/data/company')
 
-    it('should return undefined for unqualified result', () => {
+    it('should return undefined if there is no companies house data or datahub data', () => {
       expect(transformCompanyToListItem()).to.be.undefined
       expect(transformCompanyToListItem({ a: 'b' })).to.be.undefined
-      expect(transformCompanyToListItem({ id: 'abcd' })).to.be.undefined
       expect(transformCompanyToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
+    })
+
+    it('should return undefined if companies house is incomplete', () => {
+      expect(transformCompanyToListItem({ companies_house_data: {} })).to.be.undefined
     })
 
     it('should return an object with data for company list item', () => {
@@ -55,12 +58,23 @@ describe('Company transformers', function () {
 
     it('should return correct URL for Companies House company', () => {
       const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+        id: null,
         companies_house_data: {
           company_number: 10203040,
         },
       }))
 
       expect(actual).to.have.property('url', '/companies/view/ch/10203040')
+    })
+
+    it('should return correct URL for company with both datahub and companies house data', () => {
+      const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+        companies_house_data: {
+          company_number: 10203040,
+        },
+      }))
+
+      expect(actual).to.have.property('url').to.be.equal(`/companies/${companyData.id}`)
     })
   })
 })
