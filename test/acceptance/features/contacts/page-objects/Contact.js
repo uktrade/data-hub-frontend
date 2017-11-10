@@ -39,6 +39,14 @@ const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   }
 )
 
+const getTableRowValue = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//th',
+    child: '/following-sibling::td',
+  }
+)
+
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
@@ -75,6 +83,7 @@ module.exports = {
     findUkAddressButton: '.postcode-lookup-button',
     selectUkAddressDropdown: '#field-postcode-address-suggestions',
     selectAnUkAddressFromList: '#field-postcode-address-suggestions option:nth-child(3)',
+    headingCompanyLink: '.c-local-header__heading-before a',
   },
 
   commands: [
@@ -118,6 +127,14 @@ module.exports = {
               }
             }
 
+            contact.header = `${contact.firstName} ${contact.lastName}`
+
+            done()
+          })
+          .perform((done) => {
+            contact.acceptsEmailMarketingFromDit = 'Yes'
+            this.click('@acceptsEmailMarketingFromDit')
+
             done()
           })
           .perform((done) => {
@@ -127,7 +144,9 @@ module.exports = {
             done()
           })
 
-        this.waitForElementPresent('@saveButton').click('@saveButton')
+        this
+          .waitForElementPresent('@saveButton')
+          .click('@saveButton')
 
         callback(contact)
         return this
@@ -199,6 +218,19 @@ module.exports = {
         company: getMetaListItemValueSelector('Company'),
         sector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated'),
+      },
+    },
+    contactDetails: {
+      selector: '.table--key-value',
+      elements: {
+        jobTitle: getTableRowValue('Job title'),
+        phoneNumber: getTableRowValue('Phone number'),
+        email: getTableRowValue('Email'),
+        emailMarketing: getTableRowValue('Email marketing'),
+        address: getTableRowValue('Address'),
+        alternativeTelephone: getTableRowValue('Alternative telephone'),
+        alternativeEmail: getTableRowValue('Alternative email'),
+        notes: getTableRowValue('Notes'),
       },
     },
   },

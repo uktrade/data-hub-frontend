@@ -59,6 +59,19 @@ const editFields = merge({}, globalFields, {
     label: 'fields.contacts_not_to_approach.label',
     optional: true,
   },
+  existing_agents: {
+    fieldType: 'TextField',
+    type: 'textarea',
+    label: 'fields.existing_agents.label',
+    optional: true,
+  },
+  further_info: {
+    fieldType: 'TextField',
+    type: 'textarea',
+    label: 'fields.further_info.label',
+    hint: 'fields.further_info.hint',
+    optional: true,
+  },
   assignees: {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.assignees.legend',
@@ -74,6 +87,12 @@ const editFields = merge({}, globalFields, {
     label: 'fields.assignee_time.label',
     modifier: ['shorter', 'soft'],
     validate: [isDuration],
+  },
+  assignee_actual_time: {
+    fieldType: 'TextField',
+    label: 'fields.assignee_actual_time.label',
+    modifier: ['shorter', 'soft'],
+    validate: ['required', isDuration],
   },
   vat_status: {
     fieldType: 'MultipleChoiceField',
@@ -185,6 +204,13 @@ const editFields = merge({}, globalFields, {
     label: 'fields.transaction_reference.label',
     optional: true,
     modifier: 'medium',
+  },
+  cancellation_reason: {
+    fieldType: 'MultipleChoiceField',
+    label: 'fields.cancellation_reason.label',
+    type: 'radio',
+    options: [],
+    validate: ['required'],
   },
 })
 

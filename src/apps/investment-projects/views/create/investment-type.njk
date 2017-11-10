@@ -64,23 +64,7 @@
       }, {
         value: form.options.investmentTypesObj.non_fdi.value,
         label: form.options.investmentTypesObj.non_fdi.label,
-        hint: nonFdiHintLink | safe,
-        children:  [
-          {
-            macroName: 'MultipleChoiceField',
-            name: 'non_fdi_type',
-            label: 'Type of non-foreign direct investment (Non-FDI)',
-            error: form.errors.messages['non_fdi_type'],
-            value: form.state['non_fdi_type'],
-            options: form.options.nonFdi,
-            initialOption: '-- Select a Non-FDI type --',
-            condition: {
-              name: 'investment_type',
-              value: form.options.investmentTypesObj.non_fdi.value
-            },
-            modifier: 'subfield'
-          }
-        ]
+        hint: nonFdiHintLink | safe
       }
     ]
   %}

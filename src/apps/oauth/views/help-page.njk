@@ -1,0 +1,12 @@
+{% extends "_layouts/datahub-base.njk" %}
+
+{% block body_main_content %}
+  {# TODO add live service contact details once supplied from content and design #}
+
+  <h2 class="heading-medium">{{ errorMessage }}</h2>
+  {{ MetaList({
+    items: [
+      { label: 'Error Code', value: errorCode }
+    ]
+  }) }}
+{% endblock %}

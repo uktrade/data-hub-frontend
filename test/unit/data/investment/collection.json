@@ -71,7 +71,6 @@
       "referral_source_activity_marketing": null,
       "referral_source_activity_event": "",
       "fdi_type": null,
-      "non_fdi_type": null,
       "client_cannot_provide_total_investment": null,
       "total_investment": null,
       "client_cannot_provide_foreign_investment": null,
@@ -167,7 +166,6 @@
       "referral_source_activity_website": null,
       "referral_source_activity_marketing": null,
       "referral_source_activity_event": "",
-      "non_fdi_type": null,
       "client_cannot_provide_total_investment": null,
       "total_investment": null,
       "client_cannot_provide_foreign_investment": null,
@@ -217,10 +215,6 @@
       "investment_type": {
         "id": "9c364e64-2b28-401b-b2df-50e08b0bca44",
         "name": "Non-FDI"
-      },
-      "non_fdi_type": {
-        "id": "2eba3d6a-b1ef-4075-a053-9d70813f7447",
-        "name": "Advanced Engineering Supply Chain"
       },
       "stage": {
         "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",

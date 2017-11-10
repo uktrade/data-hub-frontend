@@ -1,5 +1,13 @@
 const { getSelectorForElementWithText } = require('../../../helpers/selectors')
 
+const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-collection__filter-label',
+    child: '/following-sibling::a',
+  }
+)
 const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   text,
   {
@@ -7,6 +15,15 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
     className: 'c-meta-list__item-label',
     child: '/following-sibling::span',
   }
+)
+
+const getBadgeWithText = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  },
 )
 
 module.exports = {
@@ -35,15 +52,40 @@ module.exports = {
     companyFromThirdList: '.c-entity-list__item:nth-child(3) .c-meta-list__item:nth-child(1) .c-meta-list__item-value',
   },
   sections: {
+    filterTags: {
+      selector: '.c-collection__filter-summary',
+      elements: {
+        company: getFilterTagRemoveBtnSelector('Company name'),
+        sector: getFilterTagRemoveBtnSelector('Sectors'),
+        country: getFilterTagRemoveBtnSelector('Country'),
+        ukRegion: getFilterTagRemoveBtnSelector('UK Region'),
+      },
+    },
     firstContactInList: {
-      selector: '.c-entity-list li:first-child',
+      selector: '.c-entity-list li:nth-child(1)',
       elements: {
         header: {
           selector: '.c-entity__header a',
         },
-        company: getMetaListItemValueSelector('Company'),
-        sector: getMetaListItemValueSelector('Sector'),
+        companyName: getMetaListItemValueSelector('Company'),
+        companySector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated'),
+        countryBadge: getBadgeWithText('Country'),
+      },
+    },
+    filters: {
+      selector: '.c-collection-filters',
+      elements: {
+        company: '#field-company_name',
+        sector: '#field-company_sector',
+        country: '#field-address_country',
+        ukRegion: '#field-company_uk_region',
+      },
+    },
+    collectionHeader: {
+      selector: '.c-collection__header',
+      elements: {
+        sortBy: '#field-sortby',
       },
     },
   },

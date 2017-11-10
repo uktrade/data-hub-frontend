@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { set } = require('lodash')
+const { set, camelCase } = require('lodash')
 const faker = require('faker')
 
 const { client } = require('nightwatch-cucumber')
@@ -11,12 +11,13 @@ defineSupportCode(function ({ Then, When }) {
   const Event = client.page.Event()
   const Search = client.page.Search()
   const Company = client.page.Company()
+  const Dashboard = client.page.Dashboard()
 
   When(/^I populate the create event form to search$/, async function () {
     const eventName = appendUid(faker.company.companyName())
 
     await Event
-      .populateCreateEventForm({ name: eventName }, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({ name: eventName }, true, (event) => set(this.state, 'event', event))
   })
 
   When(/^a company is created to search$/, async function () {
@@ -30,18 +31,32 @@ defineSupportCode(function ({ Then, When }) {
   })
 
   When(/^I search for the event$/, async function () {
+    await Dashboard
+      .navigate()
+
     await Search
       .search(getUid(this.state.event.name))
   })
 
   When(/^I search for the company/, async function () {
+    await Dashboard
+      .navigate()
+
     await Search
       .search(getUid(this.state.company.name))
   })
 
-  When(/^I click the Events tab/, async () => {
+  When(/^I search for the contact/, async function () {
+    await Dashboard
+      .navigate()
+
+    await Search
+      .search(getUid(this.state.contact.lastName))
+  })
+
+  When(/^the (.+) tab is clicked/, async (tabName) => {
     await Search.section.tabs
-      .click('@events')
+      .click(`@${camelCase(tabName)}`)
   })
 
   Then(/^I verify the tabs are displayed$/, async () => {
@@ -56,7 +71,7 @@ defineSupportCode(function ({ Then, When }) {
 
   Then(/^the (.+) tab is active/, async (tabName) => {
     await Search.section.tabs
-      .assert.cssClassPresent(`@${tabName}`, 'is-active')
+      .assert.cssClassPresent(`@${camelCase(tabName)}`, 'is-active')
   })
 
   Then(/^there is a results count ([0-9]+)/, async (resultsCount) => {

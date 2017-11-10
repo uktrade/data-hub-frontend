@@ -5,9 +5,12 @@ const EditAssigneesController = require('./controllers/assignees')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditClientDetailsController = require('./controllers/client-details')
 const EditSubscribersController = require('./controllers/subscribers')
-const EditWorkDescriptionController = require('./controllers/work-description')
+const EditQuoteDetailsController = require('./controllers/quote-details')
+const EditInternalDetailsController = require('./controllers/internal-details')
 const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
+const CompleteOrderController = require('./controllers/complete-order')
+const CancelOrderController = require('./controllers/cancel-order')
 
 const steps = merge({}, createSteps, {
   '/client-details': {
@@ -35,16 +38,24 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'assignee-time.njk',
   },
-  '/work-description': {
-    heading: 'Edit work description',
+  '/quote-details': {
+    heading: 'Edit quote information',
     fields: [
-      'service_types',
       'description',
-      'contacts_not_to_approach',
-      'sector',
       'delivery_date',
     ],
-    controller: EditWorkDescriptionController,
+    controller: EditQuoteDetailsController,
+  },
+  '/internal-details': {
+    heading: 'Edit internal information',
+    fields: [
+      'service_types',
+      'sector',
+      'further_info',
+      'existing_agents',
+      'contacts_not_to_approach',
+    ],
+    controller: EditInternalDetailsController,
   },
   '/payment': {
     heading: 'Edit invoice details',
@@ -79,6 +90,22 @@ const steps = merge({}, createSteps, {
     templatePath: 'omis/apps/edit/views',
     template: 'payment-reconciliation.njk',
     controller: EditPaymentReconciliationController,
+  },
+  '/complete-order': {
+    heading: 'Complete order',
+    fields: [
+      'assignee_actual_time',
+    ],
+    templatePath: 'omis/apps/edit/views',
+    template: 'complete-order.njk',
+    controller: CompleteOrderController,
+  },
+  '/cancel-order': {
+    heading: 'Cancel an order',
+    fields: [
+      'cancellation_reason',
+    ],
+    controller: CancelOrderController,
   },
 })
 

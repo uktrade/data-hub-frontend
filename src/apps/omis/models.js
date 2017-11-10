@@ -94,6 +94,22 @@ const Order = {
       body,
     })
   },
+
+  complete (token, id, body) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/complete`,
+      method: 'POST',
+      body,
+    })
+  },
+
+  cancel (token, id, body) {
+    return authorisedRequest(token, {
+      url: `${config.apiRoot}/v3/omis/order/${id}/cancel`,
+      method: 'POST',
+      body,
+    })
+  },
 }
 
 module.exports = {

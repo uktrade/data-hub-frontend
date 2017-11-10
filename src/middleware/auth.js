@@ -1,6 +1,5 @@
 module.exports = function auth (req, res, next) {
-  const url = req.url
-  const passThrough = /^\/(support|healthcheck|sign-in|sign-out)\b/.test(url) || req.session.token
+  const passThrough = /^\/(healthcheck|oauth|oauth\/callback)\b/.test(req.url) || req.session.token
 
   if (passThrough) {
     return next()
@@ -8,5 +7,5 @@ module.exports = function auth (req, res, next) {
 
   req.session.returnTo = req.originalUrl
 
-  return res.redirect('/sign-in')
+  return res.redirect('/oauth')
 }
