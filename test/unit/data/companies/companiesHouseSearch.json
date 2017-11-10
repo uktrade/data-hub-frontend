@@ -1,0 +1,49 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "id": "12581977",
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "name": "FRED CONSULTANTS LIMITED",
+      "registered_address_1": "FRED COTTAGE SMITH LANE",
+      "registered_address_2": "WINKFIELD",
+      "registered_address_town": "WINDSOR",
+      "registered_address_county": "BERKSHIRE",
+      "registered_address_postcode": "SL9 9RE",
+      "company_number": "01234567896",
+      "company_category": "Private Limited Company",
+      "company_status": "Active",
+      "sic_code_1": "62020 - Information technology consultancy activities",
+      "sic_code_2": "9999 - Animal trainer",
+      "sic_code_3": "",
+      "sic_code_4": "",
+      "uri": "http://business.data.gov.uk/id/company/01234567896",
+      "incorporation_date": "2002-01-07"
+    },
+    {
+      "id": "14498779",
+      "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "name": "SAMLEXSITE SECURITY SERVICES LIMITED",
+      "registered_address_1": "124 NORTH TENTH STREET",
+      "registered_address_2": "",
+      "registered_address_town": "MILTON KEYNES",
+      "registered_address_county": "",
+      "registered_address_postcode": "MK9 3AY",
+      "company_number": "10566574",
+      "company_category": "Private Limited Company",
+      "company_status": "Active",
+      "sic_code_1": "80100 - Private security activities",
+      "sic_code_2": "",
+      "sic_code_3": "",
+      "sic_code_4": "",
+      "uri": "http://business.data.gov.uk/id/company/10566574",
+      "incorporation_date": "2017-01-17"
+    }
+  ]
+}
