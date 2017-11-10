@@ -62,7 +62,7 @@ Feature: Create a new Investment project
     Given I create a new Investment project with Non-FDI as Investment type
     Then I see the success message
     And I verify my newly created Investment project in company profile
-    And I verify Type of Investment is shown as "Non-FDI, Advanced Engineering Supply Chain"
+    And I verify Type of Investment is shown as "Non-FDI"
 
   @investment-projects-create--non-foreign-equity @ignore
   Scenario: Create a new Investment project as not a source of foreign equity investment

@@ -55,7 +55,6 @@ async function populateForm (req, res, next) {
         investmentTypes,
         investmentTypesObj: buildMetaDataObj(investmentTypes),
         fdi: metadata.fdiOptions.map(transformObjectToOption),
-        nonFdi: metadata.nonFdiOptions.map(transformObjectToOption),
         referralSourceActivities: metadata.referralSourceActivityOptions.map(transformObjectToOption),
         referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
         referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
