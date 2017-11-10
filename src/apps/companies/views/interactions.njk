@@ -16,7 +16,7 @@
       Collection(interactions | assignCopy({
         countLabel: 'interaction',
         summaryActionsHTML: addButton,
-        sortForm: sortForm,
+        sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
         query: QUERY
       }))
     }}
