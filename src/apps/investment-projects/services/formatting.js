@@ -27,7 +27,6 @@ function transformToApi (body) {
     'investor_company': Object,
     'investment_type': Object,
     'fdi_type': Object,
-    'non_fdi_type': Object,
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
@@ -86,7 +85,6 @@ function transformFromApi (body) {
     'investor_company': String,
     'investment_type': String,
     'fdi_type': String,
-    'non_fdi_type': String,
     'sector': String,
     'client_contacts': Array,
     'business_activities': Array,
@@ -120,7 +118,6 @@ function transformInvestmentDataForView (data) {
     const types = [
       data.investment_type.name,
       get(data, 'fdi_type.name'),
-      get(data, 'non_fdi_type.name'),
     ]
     return compact(types).join(', ')
   }
