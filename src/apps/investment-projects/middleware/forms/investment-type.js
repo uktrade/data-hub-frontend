@@ -12,7 +12,6 @@ function populateForm (req, res, next) {
     investmentTypes,
     investmentTypesObj: buildMetaDataObj(investmentTypes),
     fdi: metadata.fdiOptions.map(transformObjectToOption),
-    nonFdi: metadata.nonFdiOptions.map(transformObjectToOption),
   }
 
   next()
@@ -30,10 +29,6 @@ function validateForm (req, res, next) {
 
   if (req.body.investment_type === investmentTypeOptions.fdi.value && !req.body.fdi_type) {
     errors.messages.fdi_type = ['Please choose FDI type']
-  }
-
-  if (req.body.investment_type === investmentTypeOptions.non_fdi.value && !req.body.non_fdi_type) {
-    errors.messages.non_fdi_type = ['Please choose Non-FDI type']
   }
 
   res.locals.form = Object.assign({}, res.locals.form, {

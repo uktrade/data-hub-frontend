@@ -33,7 +33,6 @@ function postHandler (req, res, next) {
   req.store('investment_details', {
     'investment_type': investmentTypeId,
     'fdi_type': req.body.fdi_type,
-    'non_fdi_type': req.body.non_fdi_type,
   })
 
   if (

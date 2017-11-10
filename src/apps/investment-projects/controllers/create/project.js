@@ -19,14 +19,12 @@ function getHandler (req, res, next) {
   if (investmentDetails) {
     const investmentType = find(metadata.investmentTypeOptions.map(transformObjectToOption), { value: investmentDetails.investment_type })
     const fdiType = find(metadata.fdiOptions.map(transformObjectToOption), { value: investmentDetails.fdi_type })
-    const nonFdiType = find(metadata.nonFdiOptions.map(transformObjectToOption), { value: investmentDetails.non_fdi_type })
 
     res.locals.form = get(res, 'locals.form', { options: {} })
     res.locals.form.options = Object.assign({}, res.locals.form.options, {
       investmentDetails: {
         'investment_type': investmentType,
         'fdi_type': fdiType,
-        'non_fdi_type': nonFdiType,
       },
     })
   }
