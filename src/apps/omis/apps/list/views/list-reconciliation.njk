@@ -1,16 +1,19 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block main_grid_left_column %}
-  {{ CollectionFilters({
-    query: QUERY,
-    filtersFields: filtersFields
-  }) }}
+  {{
+    CollectionFilters({
+      query: QUERY,
+      filtersFields: filtersFields,
+      action: CURRENT_PATH
+    })
+  }}
 {% endblock %}
 
 {% block main_grid_right_column %}
   {% call Collection(results | assign({
     countLabel: 'order',
-    sortForm: sortForm,
+    sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
     selectedFilters: selectedFilters,
     query: QUERY
   })) %}
