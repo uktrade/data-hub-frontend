@@ -5,6 +5,7 @@ const { getSelectorForElementWithText, getButtonWithText } = require('../../../h
 module.exports = {
   elements: {
     pagination: '.c-pagination',
+    filterTags: '.c-collection__filter-tag',
   },
   commands: [
     {

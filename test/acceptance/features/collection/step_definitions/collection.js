@@ -89,4 +89,11 @@ defineSupportCode(({ When, Then }) => {
         .useCss()
     }
   })
+
+  Then(/^there are no filters selected$/, async function () {
+    await Collection
+      .api.elements('css selector', '.c-collection__filter-tag', (result) => {
+        client.expect(result.value.length).to.equal(0)
+      })
+  })
 })
