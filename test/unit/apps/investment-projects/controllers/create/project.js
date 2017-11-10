@@ -1,7 +1,6 @@
 const mockInvestmentDetails = {
   'investment_type': '1',
   'fdi_type': '2',
-  'non_fdi_type': undefined,
 }
 
 describe('Investment create controller', () => {
@@ -21,10 +20,6 @@ describe('Investment create controller', () => {
         fdiOptions: [
           { id: '1', name: 'FDI options #1' },
           { id: '2', name: 'FDI options #2' },
-        ],
-        nonFdiOptions: [
-          { id: '1', name: 'Non-FDI options #1' },
-          { id: '2', name: 'Non-FDI options #2' },
         ],
       },
     })
@@ -61,7 +56,6 @@ describe('Investment create controller', () => {
         const expectedInvestmentDetails = {
           investment_type: { value: '1', label: 'Example investment type #1' },
           fdi_type: { value: '2', label: 'FDI options #2' },
-          non_fdi_type: undefined,
         }
 
         this.resMock = {
