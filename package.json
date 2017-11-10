@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "2.4.2",
+  "version": "3.0.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -91,6 +91,7 @@
     "sniffr": "^1.1.4",
     "style-loader": "^0.18.2",
     "uglify": "^0.1.5",
+    "uuid": "^3.1.0",
     "wavy": "^1.0.4",
     "webpack": "^3.4.1",
     "webpack-assets-manifest": "^1.0.0",

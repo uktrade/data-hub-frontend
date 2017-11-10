@@ -1,21 +1,19 @@
-const faker = require('faker')
 const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { getDate, getMonth, getYear, addDays } = require('date-fns')
 
-defineSupportCode(function ({ Then, When }) {
+defineSupportCode(function ({ Given, Then, When }) {
   const Event = client.page.Event()
 
   When(/^I create an event$/, async function () {
     await Event
       .navigate()
-      .populateCreateEventForm({}, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({}, true, (event) => set(this.state, 'event', event))
       .click('@saveButton')
       .wait() // wait for backend to sync
   })
 
-  When(/^I navigate to the create an event page$/, async () => {
+  Given(/^I navigate to the create an event page$/, async () => {
     await Event
       .navigate()
   })
@@ -187,27 +185,6 @@ defineSupportCode(function ({ Then, When }) {
   When(/^I add it to the programmes list$/, async () => {
     await Event
       .click('@addAnotherProgramme')
-  })
-
-  When(/^I enter all mandatory fields related to the event$/, async () => {
-    const startDate = faker.date.future()
-    const endDate = addDays(startDate, Math.floor(Math.random() * 20))
-
-    await Event
-      .waitForElementVisible('@eventName')
-      .setValue('@eventName', faker.company.companyName())
-      .selectListOption('event_type', 2)
-      .setValue('@startDateYear', getYear(startDate))
-      .setValue('@startDateMonth', getMonth(startDate))
-      .setValue('@startDateDay', getDate(startDate))
-      .setValue('@endDateYear', getYear(endDate))
-      .setValue('@endDateMonth', getMonth(endDate))
-      .setValue('@endDateDay', getDate(endDate))
-      .setValue('@addressLine1', faker.address.streetName())
-      .setValue('@addressTown', faker.address.city())
-      .setValue('@addressPostcode', faker.address.zipCode())
-      .setValue('@addressCountry', faker.address.country())
-      .selectListOption('service', 2)
   })
 
   Then(/^I verify there should be ([0-9]) programmes lists$/, async (expected) => {

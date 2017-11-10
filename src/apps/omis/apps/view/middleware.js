@@ -5,6 +5,7 @@ const i18nFuture = require('i18n-future')
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
 const { getCompany } = require('../../middleware')
+const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
 const i18n = i18nFuture({
@@ -114,7 +115,9 @@ async function setInvoice (req, res, next) {
 
 async function setPayments (req, res, next) {
   try {
-    res.locals.payments = await Order.getPayments(req.session.token, res.locals.order.id)
+    const payments = await Order.getPayments(req.session.token, res.locals.order.id)
+
+    res.locals.payments = payments.map(transformPaymentToView)
   } catch (error) {
     logger.error(error)
   }
@@ -128,18 +131,18 @@ async function generateQuote (req, res, next) {
   try {
     await Order.createQuote(req.session.token, orderId)
 
-    req.flash('success', 'Quote successfully generated.')
+    req.flash('success', 'Quote has been sent to client.')
     res.redirect(`/omis/${orderId}`)
   } catch (error) {
     const errorCode = error.statusCode
 
     if (errorCode === 400) {
-      req.flash('error', 'Quote could not be generated. Some fields were missing.')
+      req.flash('error', 'Quote could not be sent to client. Some fields were missing.')
       return res.redirect(`/omis/${orderId}`)
     }
 
     if (errorCode === 409) {
-      req.flash('error', 'Quote could not be generated. A valid quote already exists.')
+      req.flash('error', 'Quote could not be sent to client. A valid quote already exists.')
       return res.redirect(`/omis/${orderId}`)
     }
 
@@ -174,27 +177,26 @@ function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
   const form = {
-    buttonText: 'Send quote',
+    buttonText: 'Send quote to client',
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }
 
   if (res.locals.incompleteFields) {
-    form.disableFormAction = true
+    form.hidePrimaryFormAction = true
   }
 
-  if (get(quote, 'created_on')) {
+  if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
     form.buttonModifiers = 'button-secondary'
 
-    if (quote.accepted_on || quote.cancelled_on) {
+    if (quote.accepted_on) {
       form.hidePrimaryFormAction = true
     }
 
-    if (new Date(quote.expires_on) > new Date()) {
+    if (!quote.accepted_on && new Date(quote.expires_on) > new Date()) {
       form.buttonModifiers = 'button--destructive'
-
       res.locals.destructive = true
     }
   }

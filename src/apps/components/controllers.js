@@ -131,6 +131,12 @@ function renderKeyValueTables (req, res) {
     })
 }
 
+function renderHiddenText (req, res) {
+  return res
+    .breadcrumb('Hidden text')
+    .render('components/views/hidden-text')
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -141,4 +147,5 @@ module.exports = {
   renderProgress,
   renderCollection,
   renderKeyValueTables,
+  renderHiddenText,
 }

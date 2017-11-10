@@ -13,6 +13,7 @@ describe('OMIS View middleware', () => {
     this.getPaymentsStub = this.sandbox.stub()
     this.createQuoteStub = this.sandbox.stub()
     this.cancelQuoteStub = this.sandbox.stub()
+    this.transformPaymentToViewStub = this.sandbox.stub().returnsArg(0)
     this.flashSpy = this.sandbox.spy()
     this.nextSpy = this.sandbox.spy()
 
@@ -33,6 +34,9 @@ describe('OMIS View middleware', () => {
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
       '../../middleware': {
         getCompany: this.getCompanySpy,
+      },
+      '../../transformers': {
+        transformPaymentToView: this.transformPaymentToViewStub,
       },
       '../../../../../config/logger': {
         error: this.loggerErrorSpy,
@@ -452,8 +456,15 @@ describe('OMIS View middleware', () => {
         await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should set response as quote property on locals', () => {
+      it('should set payments property on locals', () => {
         expect(this.resMock.locals).to.have.property('payments')
+      })
+
+      it('should set correct number of payments', () => {
+        expect(this.resMock.locals.payments).to.have.length(2)
+      })
+
+      it('should set correct objects on payments', () => {
         expect(this.resMock.locals.payments).to.deep.equal(paymentsMock)
       })
 
@@ -723,12 +734,12 @@ describe('OMIS View middleware', () => {
       })
     })
 
-    context('when quote preview errors exist exist', () => {
+    context('when quote preview errors exist', () => {
       beforeEach(() => {
         this.resMock.locals.incompleteFields = ['service_types']
       })
 
-      it('should set disable the form actions', (done) => {
+      it('should hide the primary form action', (done) => {
         const nextSpy = () => {
           try {
             expect(this.resMock.locals).to.have.property('quoteForm')
@@ -736,7 +747,7 @@ describe('OMIS View middleware', () => {
             expect(this.resMock.locals.quoteForm).to.have.property('buttonText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnLink')
-            expect(this.resMock.locals.quoteForm).to.have.property('disableFormAction', true)
+            expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
 
             done()
           } catch (error) {
@@ -819,10 +830,13 @@ describe('OMIS View middleware', () => {
         })
 
         context('when quote has been cancelled', () => {
-          it('should disable form actions', (done) => {
+          it('should contain default form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Send quote to client')
+                expect(this.resMock.locals.quoteForm).to.have.property('returnText', 'Return to order')
+                expect(this.resMock.locals.quoteForm).to.have.property('returnLink', '/omis/123456789')
+                expect(this.resMock.locals.quoteForm).to.not.have.property('hidePrimaryFormAction')
 
                 done()
               } catch (error) {

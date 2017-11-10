@@ -34,6 +34,7 @@ async function searchForUKCompany (req, res, next) {
     res.locals.results = await searchCompanies({
       token,
       searchTerm,
+      page: req.query.page,
       isUkBased: true,
     }).then(
       transformApiResponseToSearchCollection(

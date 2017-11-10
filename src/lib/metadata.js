@@ -82,13 +82,16 @@ const metadataItems = [
   ['investment-type', 'investmentTypeOptions'],
   ['investment-project-stage', 'investmentProjectStage'],
   ['fdi-type', 'fdiOptions'],
-  ['non-fdi-type', 'nonFdiOptions'],
   ['salary-range', 'salaryRangeOptions'],
   ['investment-strategic-driver', 'strategicDriverOptions'],
   ['investment-project-stage', 'investmentStageOptions'],
   ['order-service-type', 'orderServiceTypesOptions'],
+  ['order-cancellation-reason', 'orderCancellationReasons'],
   ['omis-market', 'omisMarketOptions'],
   ['fdi-value', 'fdiValueOptions'],
+  ['investment-specific-programme', 'investmentSpecificProgrammeOptions'],
+  ['investment-investor-type', 'investmentInvestorTypeOptions'],
+  ['investment-involvement', 'investmentInvolvementOptions'],
 ]
 
 const restrictedServiceKeys = [

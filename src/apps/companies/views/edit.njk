@@ -4,18 +4,19 @@
   <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
+{% set businessType %}
+  {{ 'Foreign' if isForeign else 'UK' }}
+  {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
+{% endset %}
+
 {% block main_grid_right_column %}
   <div class="section">
-    {% call FormGroup({
-      label: 'Business type'
-    }) %}
-      <div>
-        {{ 'Foreign' if isForeign else 'UK' }}
-        {{ 'limited company' if isCompaniesHouse else businessType or '(type of organisation not known)' }}
-
-        <a href="/companies/add-step-1">Change</a>
-      </div>
-    {% endcall %}
+    <h2 class="heading-medium">Business type</h2>
+    {{ MetaList({
+        items: [
+          { label: businessType, value: '<a href="/companies/add-step-1">Change</a>', safe: true }
+        ]
+      }) }}
   </div>
 
   {% if chDetails %}
@@ -134,12 +135,11 @@
         }) }}
 
         {% if not isForeign %}
-          {% call FormGroup({
-            label: 'Country'
-          }) %}
+          <div class="section">
+            <h2 class="heading-medium">Country</h2>
             <p>United Kingdom</p>
             <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
-          {% endcall %}
+          </div>
         {% else %}
           {{ MultipleChoiceField({
             name: 'registered_address_country',
@@ -222,12 +222,11 @@
         }) }}
 
         {% if not isForeign %}
-          {% call FormGroup({
-            label: 'Country'
-          }) %}
+          <div class="section">
+            <h2 class="heading-medium">Country</h2>
             <p>United Kingdom</p>
             <input type="hidden" name="trading_address_country" value="">
-          {% endcall %}
+          </div>
         {% else %}
           {{ MultipleChoiceField({
             name: 'trading_address_country',

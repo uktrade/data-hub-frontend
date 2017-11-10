@@ -4,18 +4,17 @@ Feature: View a list of events
   I would like to view a list of events
   So search for events and filter and sort the results
 
-  Background:
-    Given I am an authenticated user on the data hub website
-
   @events-list--add
   Scenario: Add event
-    And I navigate to the event list page
+
+    Given I navigate to the event list page
     When I click the add an event link
     Then I am taken to the create event page
 
   @events-list--view
   Scenario: View event list
-    And I navigate to the event list page
+
+    Given I navigate to the event list page
     When I click the add an event link
     And I populate the create event form
     And I click the save button
@@ -25,7 +24,8 @@ Feature: View a list of events
 
   @events-list--view-uk-region
   Scenario: View event uk region
-    And I navigate to the event list page
+
+    Given I navigate to the event list page
     When I click the add an event link
     And I populate the create event form with United Kingdom and a region
     And I click the save button
@@ -35,7 +35,8 @@ Feature: View a list of events
 
   @events-list--filter
   Scenario: Filter event list
-    And I navigate to the event list page
+
+    Given I navigate to the event list page
     When I click the add an event link
     And I populate the create event form
     And I click the save button
@@ -54,7 +55,8 @@ Feature: View a list of events
 
   @events-list--sort
   Scenario: Sort event list
-    And I navigate to the event list page
+
+    Given I navigate to the event list page
     When I click the add an event link
     And I populate the create event form
     And I click the save button

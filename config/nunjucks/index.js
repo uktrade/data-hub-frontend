@@ -3,6 +3,8 @@ const njkMarkdown = require('nunjucks-markdown')
 const md = require('markdown-it')({
   html: true,
   typographer: true,
+  breaks: true,
+  linkify: true,
 })
 
 const logger = require('../logger')

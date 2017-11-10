@@ -27,7 +27,6 @@ function transformToApi (body) {
     'investor_company': Object,
     'investment_type': Object,
     'fdi_type': Object,
-    'non_fdi_type': Object,
     'sector': Object,
     'client_contacts': Array,
     'business_activities': Array,
@@ -86,7 +85,6 @@ function transformFromApi (body) {
     'investor_company': String,
     'investment_type': String,
     'fdi_type': String,
-    'non_fdi_type': String,
     'sector': String,
     'client_contacts': Array,
     'business_activities': Array,
@@ -120,7 +118,6 @@ function transformInvestmentDataForView (data) {
     const types = [
       data.investment_type.name,
       get(data, 'fdi_type.name'),
-      get(data, 'non_fdi_type.name'),
     ]
     return compact(types).join(', ')
   }
@@ -151,7 +148,7 @@ function transformInvestmentValueForView (data) {
     return (data.government_assistance ? pos : neg) + suffix
   }
 
-  return Object.assign({}, data, {
+  const value = {
     total_investment: data.client_cannot_provide_total_investment
       ? 'Client cannot provide this information'
       : formatCurrency(data.total_investment),
@@ -163,10 +160,6 @@ function transformInvestmentValueForView (data) {
     government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
     r_and_d_budget: formatBoolean(data.r_and_d_budget, { pos: 'Has', suffix: ' R&D budget' }),
     average_salary: get(data, 'average_salary.name'),
-    non_fdi_r_and_d_budget: formatBoolean(data.non_fdi_r_and_d_budget, {
-      pos: 'Has',
-      suffix: ' linked non-FDI R&D projects',
-    }),
     new_tech_to_uk: formatBoolean(data.new_tech_to_uk, {
       pos: 'Has',
       suffix: ' new-to-world tech, business model or IP',
@@ -181,7 +174,39 @@ function transformInvestmentValueForView (data) {
     business_activities: data.business_activities.filter((activity) => {
       return /^(european|global) headquarters$/i.test(activity.name)
     }).length ? 'Yes' : 'No',
-  })
+  }
+
+  if (data.non_fdi_r_and_d_budget) {
+    value.associated_non_fdi_r_and_d_project = transformAssociatedProject(data)
+  } else {
+    value.associated_non_fdi_r_and_d_project = 'Not linked to a non-FDI R&D project'
+  }
+
+  return value
+}
+
+function transformAssociatedProject (data) {
+  const { id } = data
+
+  if (isPlainObject(data.associated_non_fdi_r_and_d_project)) {
+    const { name, project_code } = data.associated_non_fdi_r_and_d_project
+
+    return {
+      name,
+      actions: [{
+        label: 'Edit project',
+        url: `/investment-projects/${id}/edit-associated?term=${project_code}`,
+      }, {
+        label: 'Remove association',
+        url: `/investment-projects/${id}/remove-associated`,
+      }],
+    }
+  }
+
+  return {
+    name: 'Find project',
+    url: `/investment-projects/${id}/edit-associated`,
+  }
 }
 
 function transformInvestmentRequirementsForView (data) {

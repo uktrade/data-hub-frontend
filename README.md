@@ -23,6 +23,8 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Installation](#installation)
     - [Run in production mode](#run-in-production-mode)
     - [Run in development mode](#run-in-development-mode)
+    - [OAuth](#oauth)
+    - [Bypassing OAuth in development mode](#bypassing-oauth-in-development-mode)
   - [Other Scripts](#other-scripts)
 - [Making changes](#making-changes)
 - [Components](#components)
@@ -64,24 +66,44 @@ This file expects the following environment variables:
 | Name | Description |
 |:-----|:------------|
 | API_ROOT | The url for a back end server instance for the service |
-| POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
-| API_CLIENT_ID | Half the credentials needed to talk to the back end |
-| API_CLIET_SECRET | The second half of the credentials needed to talk to the backend |
-| GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with google tag manager to track usage |
-| REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url |
-| REDIS_URL | A full length url to conenct to redis |
-| REDISTOGO_URL | Probably for use with heroku |
 | ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
-| ZEN_TOKEN | Zendesk auth token |
+| CI | Set to true for UAT testing, otherwise ignore |
+| FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
+| GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with Google Tag Manager to track usage |
+| LOG_LEVEL | How much logging to output: defaults to `debug` in dev and `error` everywhere else |
+| METADATA_TTL | How long to store dropdown data etc for, in seconds. Defaults to 15 minutes |
+| NODE_ENV | Whether to run the app in dev mode. Set to `production` in production, otherwise don't set for dev behaviour |
+| OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
+| OAUTH2_TOKEN_FETCH_URL | OAuth fetch token url
+| OAUTH2_USER_PROFILE_URL | OAuth user profile url
+| OAUTH2_AUTH_URL | OAuth auth url
+| OAUTH2_CLIENT_ID | OAuth client id
+| OAUTH2_CLIENT_SECRET | OAuth client secret
+| OAUTH2_REDIRECT_URL | OAuth callback url
+| OAUTH2_DEV_TOKEN | Token used to bypass OAuth for development purposes
+| POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
+| PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
+| QA_HOST | URL of the app under test |
+| QA_SELENIUM_HOST | URL of the Selenium server |
+| QA_SELENIUM_PORT | Port to use for the Selenium server |
+| QA_USER_EMAIL | Test user login |
+| REDISTOGO_URL | For use with heroku (deprecated) |
+| REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url - defaults to 'redis'|
+| REDIS_PORT | Redis port, defaults to `6379` |
+| REDIS_URL | A full length url to connect to redis |
+| REDIS_USE_TLS | Boolean - whether Redis is proxied through stunnel or not. Defaults to false |
+| SENTRY_DSN | Sentry DSN (optional) |
+| SESSION_SECRET | String to encrypt session data with |
+| SESSION_TTL | How long the user session lasts, in millis. Defaults to 2 hours |
+| WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
+| ZEN_BROWSER | Zendesk browser ID |
 | ZEN_DOMAIN | Domain used on Zendesk |
 | ZEN_EMAIL | Zendesk email address |
-| ZEN_BROWSER | Zendesk browser ID |
 | ZEN_IMPACT | Zendesk impact ID |
 | ZEN_SERVICE | Zendesk service ID |
-| ZEN_SERVICE_CHANNEL | The Zen channel name for the service |
-| SENTRY_DSN | Sentry DSN (optional) |
-| WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
-| OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
+| ZEN_SERVICE_CHANNEL | The Zen channel name for the service - defaults to `datahub` |
+| ZEN_TOKEN | Zendesk auth token |
+
 
 Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
 To start the server just:
@@ -149,6 +171,17 @@ or Visual Studio Code.
 ```
 yarn run develop
 ```
+
+#### OAuth
+Data hub uses [uktrade/staff-sso](https://github.com/uktrade/staff-sso) for OAuth. Details of the required environment
+variables needed to setup OAuth can be seen in the env section of this README. For further information about how to 
+setup OAuth please speak to the [#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team.
+
+#### Bypassing OAuth in development mode
+Developers can bypass SSO functionality by providing a valid `OAUTH2_DEV_TOKEN` environment variable. This Access token
+needs to either by from the OAuth provider or from our Backend. Developers can also tests SSO functionality locally by 
+removing the `OAUTH2_DEV_TOKEN` environment variable. To use OAuth locally you will then need to setup SSO. You can do 
+this by speaking with the [#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team.
 
 ### Other Scripts
 

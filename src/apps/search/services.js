@@ -1,4 +1,5 @@
 const queryString = require('query-string')
+const { assign } = require('lodash')
 
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
@@ -54,14 +55,14 @@ function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregat
     url: isAggregation ? searchUrl : `${searchUrl}/${searchEntity}`,
     method: isAggregation ? 'GET' : 'POST',
   }
-  requestBody = Object.assign({}, requestBody, {
+  requestBody = assign({}, requestBody, {
     term: searchTerm,
     limit,
     offset: (page * limit) - limit,
   })
 
   if (isAggregation) {
-    options.qs = Object.assign(requestBody, {
+    options.qs = assign(requestBody, {
       entity: searchEntity,
     })
   } else {
@@ -84,6 +85,7 @@ function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }
   const body = {
     original_query: searchTerm,
     uk_based: isUkBased,
+    isAggregation: false,
   }
   const options = {
     url: `${config.apiRoot}/v3/search/company?${queryString.stringify(queryParams)}`,
@@ -99,14 +101,37 @@ function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }
     })
 }
 
+function searchInvestments ({ token, searchTerm, page = 1, limit = 10, filters = {} }) {
+  const queryParams = {
+    offset: (page * limit) - limit,
+    limit,
+  }
+  const body = assign({}, filters, {
+    original_query: searchTerm,
+    searchEntity: 'investment_project',
+  })
+
+  const options = {
+    url: `${config.apiRoot}/v3/search/investment_project?${queryString.stringify(queryParams)}`,
+    method: 'POST',
+    body,
+  }
+
+  return authorisedRequest(token, options)
+    .then((result) => {
+      result.page = page
+      return result
+    })
+}
+
 function searchForeignCompanies (options) {
-  const optionsUkBasedFalse = Object.assign({}, options, { isUkBased: false })
+  const optionsUkBasedFalse = assign({}, options, { isUkBased: false })
 
   return searchCompanies(optionsUkBasedFalse)
 }
 
 function searchLimitedCompanies (options) {
-  const optionsUkBasedTrue = Object.assign({}, options, { isUkBased: true })
+  const optionsUkBasedTrue = assign({}, options, { isUkBased: true })
 
   return searchCompanies(optionsUkBasedTrue)
     .then((result) => {
@@ -129,4 +154,5 @@ module.exports = {
   searchCompanies,
   searchLimitedCompanies,
   searchForeignCompanies,
+  searchInvestments,
 }

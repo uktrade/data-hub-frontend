@@ -85,7 +85,30 @@ function transformOrderToTableItem ({
   }
 }
 
+function transformPaymentToView ({
+  reference,
+  created_on,
+  transaction_reference,
+  additional_reference,
+  amount,
+  method,
+  received_on,
+} = {}) {
+  if (!reference) { return }
+
+  return {
+    reference,
+    created_on,
+    transaction_reference,
+    additional_reference,
+    method,
+    received_on,
+    amount: parseFloat(amount) / 100,
+  }
+}
+
 module.exports = {
   transformOrderToListItem,
   transformOrderToTableItem,
+  transformPaymentToView,
 }

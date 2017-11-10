@@ -1,12 +1,10 @@
-const faker = require('faker')
 const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { merge, set } = require('lodash')
 
-const { getUid, appendUid } = require('../../../helpers/uuid')
+const { getUid } = require('../../../helpers/uuid')
 
-const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
 defineSupportCode(({ Given, Then, When }) => {
@@ -19,24 +17,10 @@ defineSupportCode(({ Given, Then, When }) => {
   const AuditList = client.page.AuditList()
   const InvestmentStage = client.page.InvestmentStage()
 
-  Given(/^a company is created for audit/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
-    await client
-      .url(companySearchPage)
-
-    await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany(
-        { name: companyName },
-        (company) => set(this.state, 'company', company),
-      )
-      .wait() // wait for backend to sync
-  })
-
   Given(/^I archive an existing contact record$/, async function () {
     await Company
       .navigate()
-      .findCompany(this.fixtures.foreignCompany.name)
+      .findCompany(this.fixtures.company.foreign.name)
     await ContactList
       .click('@contactsTab')
     await AuditList.section.lastContactInList
@@ -49,11 +33,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .submitForm('form')
     await Message
       .verifyMessage('success')
-  })
-
-  When(/^a primary contact is added for audit$/, async function () {
-    await Contact
-      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
   })
 
   When(/^navigating to the company contacts for audit$/, async function () {

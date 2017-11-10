@@ -4,15 +4,12 @@ Feature: View Audit history of a contact
   I would like to track changes to a contact record over time
   So that I can cross-check the validity and accuracy of a given contact record
 
-  Background:
-    Given I am an authenticated user on the data hub website
-
   @audit-contact--fields
   Scenario: View name of the person who made contact record changes
 
-    And a company is created for audit
+    Given a company is created
     When navigating to the company contacts
-    And a primary contact is added for audit
+    And a primary contact is added
     Then I see the success message
     When navigating to the company contacts for audit
     And the contact has 1 fields edited for audit
@@ -26,9 +23,9 @@ Feature: View Audit history of a contact
   @audit-contact--count
   Scenario: View the number of changes occurred on a contact record
 
-    And a company is created for audit
+    Given a company is created
     When navigating to the company contacts
-    And a primary contact is added for audit
+    And a primary contact is added
     Then I see the success message
     When navigating to the company contacts for audit
     And the contact has 2 fields edited for audit
@@ -37,31 +34,37 @@ Feature: View Audit history of a contact
     And I navigate to Audit History tab
     Then I see the total number of changes occurred recently on this contact record
 
-  @audit-contact--archived @ignore
+  @audit-contact--archived
   Scenario: View audit log for Archived contact
 
-    And I create a new contact
-    When I search for this Contact name
-    When I click on contacts tab
-    When I click on the first contact collection link
+    Given a company is created
+    When navigating to the company contacts
+    And a primary contact is added
+    Then I see the success message
+    When I search for the contact
+    And the contacts tab is clicked
+    And I click on the first contact collection link
     And I archive this contact record
-    And I search for this Contact name
-    And I click on contacts tab
+    And I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who archived the contact
 
-  @audit-contact--unarchived @ignore
+  @audit-contact--unarchived
   Scenario: View audit log for UnArchived contact
 
-    And I create a new contact
-    When I search for this Contact name
-    When I click on contacts tab
-    When I click on the first contact collection link
+    Given a company is created
+    When navigating to the company contacts
+    And a primary contact is added
+    Then I see the success message
+    And I search for the contact
+    And the contacts tab is clicked
+    And I click on the first contact collection link
     And I archive this contact record
-    Then I unarchive this contact record
-    And I search for this Contact name
-    And I click on contacts tab
+    And I unarchive this contact record
+    And I search for the contact
+    And the contacts tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who unarchived the contact

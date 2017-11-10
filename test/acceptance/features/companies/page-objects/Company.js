@@ -2,6 +2,7 @@ const faker = require('faker')
 const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const { appendUid } = require('../../../helpers/uuid')
 
 const getDetailsTabSelector = (text) => getSelectorForElementWithText(
   text,
@@ -17,6 +18,14 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
     el: '//span',
     className: 'c-meta-list__item-label',
     child: '/following-sibling::span',
+  }
+)
+
+const getTableRowValue = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//th',
+    child: '/following-sibling::td',
   }
 )
 
@@ -70,6 +79,7 @@ module.exports = {
 
       createForeignCompany (details = {}, callback) {
         const company = assign({}, {
+          name: appendUid(faker.company.companyName()),
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
@@ -128,7 +138,9 @@ module.exports = {
       },
 
       createUkNonPrivateOrNonPublicLimitedCompany (details = {}, callback) {
-        const company = assign({}, {
+        const companyStep1 = {}
+        const companyStep2 = assign({}, {
+          name: appendUid(faker.company.companyName()),
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
@@ -144,6 +156,7 @@ module.exports = {
               .click('@otherTypeOfUKOrganisationOption')
               .api.perform((done) => {
                 this.getListOption('@otherTypeOfUKOrganisationBusinessType', (businessType) => {
+                  companyStep1.businessType = businessType
                   this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
                   done()
                 })
@@ -156,32 +169,36 @@ module.exports = {
               .waitForElementPresent('@pageHeading')
               .api.perform((done) => {
                 this.getListOption('@ukRegion', (ukRegion) => {
-                  company.ukRegion = ukRegion
+                  companyStep2.ukRegion = ukRegion
                   done()
                 })
               })
               .perform((done) => {
                 this.getListOption('@sector', (sector) => {
-                  company.sector = sector
+                  companyStep2.sector = sector
                   done()
                 })
               })
               .perform((done) => {
-                for (const key in company) {
-                  if (company[key]) {
-                    this.setValue(`@${key}`, company[key])
+                for (const key in companyStep2) {
+                  if (companyStep2[key]) {
+                    this.setValue(`@${key}`, companyStep2[key])
                   }
                 }
+                companyStep2.country = 'United Kingdom'
+                companyStep2.header = companyStep2.name
                 done()
               })
+              .perform(() => {
+                this
+                  .waitForElementPresent('@saveAndCreateButton')
+                  .click('@saveAndCreateButton')
 
-            this
-              .waitForElementPresent('@saveAndCreateButton')
-              .click('@saveAndCreateButton')
+                callback(assign({}, companyStep1, companyStep2))
+              })
             done()
           })
 
-        callback(company)
         return this
       },
 
@@ -278,6 +295,16 @@ module.exports = {
           selector: 'a',
         },
         updated: getMetaListItemValueSelector('Updated'),
+      },
+    },
+    companyDetails: {
+      selector: '.table--key-value',
+      elements: {
+        businessType: getTableRowValue('Business type'),
+        primaryAddress: getTableRowValue('Primary address'),
+        ukRegion: getTableRowValue('UK region'),
+        headquarters: getTableRowValue('Headquarters'),
+        sector: getTableRowValue('Sector'),
       },
     },
   },

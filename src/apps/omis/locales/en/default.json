@@ -5,7 +5,6 @@
     },
     "primary_market": {
       "label": "Choose the market (country) where the service is required",
-      "hint": "This will notify the post manager for this region when you submit the order",
       "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
     },
     "subscribers": {
@@ -31,7 +30,14 @@
       "hint": "For example 28/10/2017"
     },
     "contacts_not_to_approach": {
-      "label": "Contacts not to approach"
+      "label": "Specific people or organisations the company does not want DIT to talk to"
+    },
+    "existing_agents": {
+      "label": "Contacts the company already has in the market"
+    },
+    "further_info": {
+      "label": "Additional notes and useful information",
+      "hint": "For example other client comments or requirements"
     },
     "assignees": {
       "legend": "Advisers",
@@ -41,6 +47,9 @@
     },
     "assignee_time": {
       "label": "Estimated time"
+    },
+    "assignee_actual_time": {
+      "label": "Actual time"
     },
     "vat_status": {
       "label": "VAT category",
@@ -92,16 +101,19 @@
     },
     "transaction_reference": {
       "label": "Transaction reference"
+    },
+    "cancellation_reason": {
+      "label": "Reason for cancelling"
     }
   },
   "errors": {
     "quote": {
-      "service_types": "Service types the order covers",
-      "description": "Description of the work or activity",
-      "delivery_date": "Delivery date at least 21 days from now",
-      "assignees": "At least one adviser in the market",
-      "assignee_time": "Some time allocated to an adviser in market",
-      "vat_status": "VAT category"
+      "service_types": "Choose at least one service type the order covers",
+      "description": "Add a description of the work or activity",
+      "delivery_date": "Set a delivery date of at least 21 days from now",
+      "assignees": "Add at least one adviser in the market",
+      "assignee_time": "Allocate time to at least one adviser in the market",
+      "vat_status": "Choose a VAT category"
     }
   },
   "validation": {

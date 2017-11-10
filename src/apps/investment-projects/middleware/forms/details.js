@@ -9,6 +9,7 @@ const {
   transformObjectToOption,
   transformContactToOption,
 } = require('../../../transformers')
+const { filterDisabledOption } = require('../../../filters')
 const {
   createInvestmentProject,
   getEquityCompanyDetails,
@@ -37,28 +38,39 @@ async function populateForm (req, res, next) {
       return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
     })
 
-    res.locals.clientCompanyId = clientCompanyId || equityCompanyId
-    res.locals.equityCompany = equityCompany
-    res.locals.equityCompanyInvestment = equityCompanyInvestment
-    res.locals.form = res.locals.form || {}
-    res.locals.form.state = assign({}, {
+    const state = assign({}, {
       client_contacts: [''],
       business_activities: [''],
     }, investmentData)
 
-    res.locals.form.options = {
-      advisers,
-      contacts,
-      investmentTypes,
-      investmentTypesObj: buildMetaDataObj(investmentTypes),
-      fdi: metadata.fdiOptions.map(transformObjectToOption),
-      nonFdi: metadata.nonFdiOptions.map(transformObjectToOption),
-      referralSourceActivities: metadata.referralSourceActivityOptions.map(transformObjectToOption),
-      referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
-      referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
-      primarySectors: metadata.sectorOptions.map(transformObjectToOption),
-      businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
-    }
+    res.locals.clientCompanyId = clientCompanyId || equityCompanyId
+    res.locals.equityCompany = equityCompany
+    res.locals.equityCompanyInvestment = equityCompanyInvestment
+
+    res.locals.form = assign({}, res.locals.form, {
+      state,
+      options: {
+        advisers,
+        contacts,
+        investmentTypes,
+        investmentTypesObj: buildMetaDataObj(investmentTypes),
+        fdi: metadata.fdiOptions.map(transformObjectToOption),
+        referralSourceActivities: metadata.referralSourceActivityOptions.map(transformObjectToOption),
+        referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
+        referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
+        primarySectors: metadata.sectorOptions.map(transformObjectToOption),
+        businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
+        investmentSpecificProgramme: metadata.investmentSpecificProgrammeOptions
+          .map(transformObjectToOption)
+          .filter(filterDisabledOption(state.specific_programme)),
+        investmentInvestorType: metadata.investmentInvestorTypeOptions
+          .map(transformObjectToOption)
+          .filter(filterDisabledOption(state.investor_type)),
+        investmentInvolvement: metadata.investmentInvolvementOptions
+          .map(transformObjectToOption)
+          .filter(filterDisabledOption(state.level_of_involvement)),
+      },
+    })
 
     if (investmentData) {
       // TODO: This is to support the leading question of whether current

@@ -10,6 +10,7 @@ const {
   renderProgress,
   renderCollection,
   renderKeyValueTables,
+  renderHiddenText,
 } = require('./controllers')
 
 const { renderFormElements } = require('./form/controllers')
@@ -28,6 +29,7 @@ router
   .get('/collection', getInvestmentProjectsCollection, renderCollection)
   .get('/progress', renderProgress)
   .get('/keyvaluetables', renderKeyValueTables)
+  .get('/hidden-text', renderHiddenText)
   .all('/form', renderFormElements)
 
 module.exports = router

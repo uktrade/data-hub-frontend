@@ -9,9 +9,18 @@ describe('Company collection middleware', () => {
       .reply(200, {
         count: 3,
         results: [
-          { name: 'A' },
-          { name: 'B' },
-          { name: 'C' },
+          {
+            id: '111',
+            name: 'A',
+          },
+          {
+            id: '222',
+            name: 'B',
+          },
+          {
+            id: '333',
+            name: 'C',
+          },
         ],
       })
 

@@ -1,10 +1,20 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% block main_grid_left_column %}
+  {{
+    CollectionFilters({
+      query: QUERY,
+      filtersFields: filtersFields
+    })
+  }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   {{
     Collection(interactions | assign({
       countLabel: 'interaction',
       sortForm: sortForm,
+      selectedFilters: selectedFilters,
       query: QUERY
     }))
   }}

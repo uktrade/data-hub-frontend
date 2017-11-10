@@ -1,6 +1,7 @@
 const path = require('path')
 
-const isDev = (process.env.NODE_ENV !== 'production')
+const isDev = process.env.NODE_ENV !== 'production'
+const isProd = process.env.NODE_ENV === 'production'
 const root = path.normalize(`${__dirname}/..`)
 
 const config = {
@@ -9,13 +10,11 @@ const config = {
   env: process.env.NODE_ENV,
   ci: process.env.CI,
   isDev,
-  isProd: process.env.NODE_ENV === 'production',
+  isProd,
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {
     authUrl: '/token/',
-    clientId: process.env.API_CLIENT_ID,
-    clientSecret: process.env.API_CLIENT_SECRET,
   },
   postcodeLookup: {
     apiKey: process.env.POSTCODE_KEY,
@@ -51,6 +50,14 @@ const config = {
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
   omisArchivedDocumentsBaseUrl: process.env.OMIS_ARCHIVED_DOCUMENTS_BASE_URL,
+  oauth: {
+    url: process.env.OAUTH2_AUTH_URL,
+    clientId: process.env.OAUTH2_CLIENT_ID,
+    clientSecret: process.env.OAUTH2_CLIENT_SECRET,
+    redirectUri: process.env.OAUTH2_REDIRECT_URL,
+    tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
+    token: process.env.OAUTH2_DEV_TOKEN,
+  },
 }
 
 module.exports = config
