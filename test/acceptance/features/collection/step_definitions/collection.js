@@ -34,6 +34,17 @@ defineSupportCode(({ When, Then }) => {
       .useCss()
   })
 
+  Then(/^there is an (.+) button in the collection header$/, async function (buttonText) {
+    const button = Collection
+      .getButtonSelectorWithText(buttonText)
+
+    await Collection
+      .section.collectionHeader
+      .api.useXpath()
+      .assert.visible(button.selector)
+      .useCss()
+  })
+
   Then(/^I can view the (.+) in the collection$/, async function (entityType, dataTable) {
     const entityHeaderName = get(this.state, `${camelCase(entityType)}.header`)
 
