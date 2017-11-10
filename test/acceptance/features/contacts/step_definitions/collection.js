@@ -13,6 +13,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Contact
       .click('@firstCompanyFromList')
   })
+
   When(/^I filter the contacts list by company/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@company')
@@ -253,7 +254,8 @@ defineSupportCode(({ Given, Then, When }) => {
     const selector = `@${entityTypeField}`
     const expected = get(this.state, `${entityType}.${field}`)
 
-    await ContactList.section.firstContactInList
+    await ContactList
+      .section.firstContactInList
       .waitForElementVisible(selector)
       .assert.containsText(selector, expected)
   })
@@ -261,7 +263,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^the contacts should be filtered to show badge ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
     const expectedBadgeText = get(this.state, `${entityType}.${field}`)
 
-    ContactList
+    await ContactList
       .section.firstContactInList
       .waitForElementVisible('@countryBadge')
       .assert.containsText('@countryBadge', expectedBadgeText)
