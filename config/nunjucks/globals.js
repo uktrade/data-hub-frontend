@@ -4,7 +4,7 @@ const queryString = require('query-string')
 
 module.exports = {
   serviceTitle: 'Data Hub',
-  projectPhase: 'alpha',
+  projectPhase: 'beta',
   description: 'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
   feedbackLink: '/support',
 
