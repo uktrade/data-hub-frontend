@@ -6,7 +6,7 @@
       Business type
     </div>
     <div class="key-value__value" aria-labelledby="business-type">
-      {{ companyTypeOptions[businessType] }}
+      UK private or public limited company
       <a href="/companies/add-step-1">Change</a>
     </div>
   </div>
@@ -18,28 +18,23 @@
     inputHint: 'Search for the registered company name, company number or address',
     searchTerm: searchTerm,
     isLabelHidden: false,
-    hiddenFields: {
-      business_type: businessType
-    },
     action: '/companies/add-step-2'
   }) }}
 
-  {% if results | length %}
-    {{
-      Collection(results | assign({
-        highlightTerm: searchTerm,
-        countLabel: 'company',
-        listModifier: 'block-links',
-        query: QUERY
-      }))
-    }}
+  {{
+    Collection(results | assign({
+      highlightTerm: searchTerm,
+      countLabel: 'company',
+      listModifier: 'block-links',
+      query: QUERY
+    }))
+  }}
 
-    {{ Message({
-      type: 'muted',
-      text: 'If you can’t find the company you’re looking for, try a different search term, check the company’s website or any email correspondence that contains company registration details'
-    }) }}
+  {{ Message({
+    type: 'muted',
+    text: 'If you can’t find the company you’re looking for, try a different search term, check the company’s website or any email correspondence that contains company registration details'
+  }) }}
 
-    {{ Pagination(companies.pagination) }}
+  {{ Pagination(companies.pagination) }}
 
-  {% endif %}
 {% endblock %}

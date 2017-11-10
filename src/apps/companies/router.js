@@ -1,6 +1,11 @@
 const router = require('express').Router()
 
-const { addController } = require('./controllers')
+const {
+  renderAddStepOne,
+  postAddStepOne,
+  renderAddStepTwo,
+} = require('./controllers/add')
+
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/view')
@@ -25,7 +30,7 @@ const {
   getInteractionSortForm,
 } = require('../interactions/middleware/collection')
 
-const { getRequestBody, getCompanyCollection } = require('./middleware/collection')
+const { getRequestBody, getCompanyCollection, getLimitedCompaniesCollection } = require('./middleware/collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
@@ -52,10 +57,10 @@ router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCo
 
 router
   .route('/add-step-1')
-  .get(addController.getAddStepOne)
-  .post(addController.postAddStepOne)
+  .get(renderAddStepOne)
+  .post(postAddStepOne, renderAddStepOne)
 
-router.get('/add-step-2', addController.getAddStepTwo)
+router.get('/add-step-2', getLimitedCompaniesCollection, renderAddStepTwo)
 
 router
   .route('/:companyId/exports/edit')
