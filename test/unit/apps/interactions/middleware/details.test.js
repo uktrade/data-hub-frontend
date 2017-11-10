@@ -19,7 +19,7 @@ describe('Interaction details middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.saveInteractionStub = this.sandbox.stub()
     this.fetchInteractionStub = this.sandbox.stub()
-    this.getAllAdvisersStub = this.sandbox.stub()
+    this.getAdvisersStub = this.sandbox.stub()
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
@@ -34,7 +34,7 @@ describe('Interaction details middleware', () => {
         transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub.returns(transformed),
       },
       '../../adviser/repos': {
-        getAllAdvisers: this.getAllAdvisersStub.resolves(advisersData),
+        getAdvisers: this.getAdvisersStub.resolves(advisersData),
       },
       '../../../lib/metadata': {
         getServices: () => { return servicesData },
