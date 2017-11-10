@@ -54,6 +54,7 @@ module.exports = {
       selector: '.c-collection__header',
       elements: {
         paginationSummary: '.c-collection__pagination-summary',
+        resultCount: '.c-collection__result-count',
       },
     },
     firstCollectionItem: {

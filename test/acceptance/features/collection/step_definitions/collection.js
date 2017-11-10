@@ -1,4 +1,4 @@
-const { get, camelCase } = require('lodash')
+const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -10,6 +10,13 @@ defineSupportCode(({ When, Then }) => {
 
     await client
       .url(url)
+
+    await Collection
+      .section.collectionHeader
+      .waitForElementVisible('@resultCount')
+      .getText('@resultCount', (result) => {
+        set(this.state, 'collection.resultCount', result.value)
+      })
   })
 
   When(/^I click the "(.+)" link$/, async (linkTextContent) => {
@@ -94,6 +101,16 @@ defineSupportCode(({ When, Then }) => {
     await Collection
       .api.elements('css selector', '.c-collection__filter-tag', (result) => {
         client.expect(result.value.length).to.equal(0)
+      })
+  })
+
+  Then(/^the result count should be reset$/, async function () {
+    await Collection
+      .section.collectionHeader
+      .waitForElementVisible('@resultCount')
+      .getText('@resultCount', (result) => {
+        const expected = get(this.state, 'collection.resultCount')
+        client.expect(result.value).to.equal(expected)
       })
   })
 })

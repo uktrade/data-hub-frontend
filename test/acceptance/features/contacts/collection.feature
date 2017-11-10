@@ -36,14 +36,17 @@ Feature: View Collection of contacts
     Then the contacts should be filtered by company name
     When the company filter is cleared
     Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
     When the sector filter is cleared
     Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
     When the country filter is cleared
     Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by country
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
