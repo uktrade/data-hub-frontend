@@ -27,8 +27,6 @@ module.exports = {
     typeOfFDIListCapitalOnly: '#field-fdi_type option:nth-child(3)',
     typeOfFDIListMerger: '#field-fdi_type option:nth-child(7)',
     typeOfFDIListRetention: '#field-fdi_type option:nth-child(8)',
-    typeOfNonFDI: '#field-non_fdi_type',
-    typeOfNonFDIList: '#field-non_fdi_type option:nth-child(2)',
     primarySector: '#field-sector',
     primarySectorList: '#field-sector option:nth-child(2)',
     businessActivity: '#field-business_activities',
@@ -110,11 +108,6 @@ module.exports = {
         return this
           .click('@typeOfFDI')
           .click('@typeOfFDIListAcquisition')
-      },
-      selectTypeOfNonFDI () {
-        return this
-          .click('@typeOfNonFDI')
-          .click('@typeOfNonFDIList')
       },
       selectPrimarySector () {
         return this
@@ -302,7 +295,6 @@ module.exports = {
         return this
           .clickAddInvestmentProjectButton()
           .clickTypeOfInvestmentNonFDI()
-          .selectTypeOfNonFDI()
           .submitTheForm()
           .clickEquitySourceYes()
           .submitTheForm()
