@@ -22,22 +22,6 @@
   }
 }
 
-.global-header__crest {
-  background: url("../../../images/dit-crest__white.png") 6px 0 no-repeat transparent;
-  background-size: contain;
-  border-left: 2px solid $white;
-  display: inline-block;
-  height: 30px;
-  margin-right: 8px;
-  width: 36px;
-  vertical-align: text-bottom;
-
-  @include device-pixel-ratio(2) {
-    background-image: url("../../../images/dit-crest__white@2x.png");
-    background-size: 28px 30px;
-  }
-}
-
 .global-header__link {
   display: inline-block;
   color: inherit;
@@ -70,6 +54,7 @@
   @include bold-font(36);
   color: inherit;
   line-height: .9;
+  white-space: nowrap;
 
   @include media(tablet) {
     line-height: .9;
