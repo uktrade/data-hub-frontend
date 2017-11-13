@@ -4,7 +4,7 @@
   {% if not assignees.length %}
 
     {% call Message({ type: 'info', element: 'div' }) %}
-      <p>Advisers in the market must be added before time can be estimated.</p>
+      <p>Advisers in the market must be added before hours can be estimated.</p>
 
       <p>
         <a href="assignees">Add advisers</a>
@@ -15,14 +15,14 @@
 
     {% set key = 'assignee_time' %}
     {% set defaultProps = options.fields[key] %}
-    <p>These hours will be used to calculate the cost of the order.</p>
+    <p>Estimated hours will be used to calculate the cost of the order.</p>
 
     <p>All work will be charged at £55 per hour.</p>
 
     <table class="c-answers-summary">
       <thead>
         <tr>
-          <th class="c-answers-summary__control" colspan="2">Estimated time (HH:MM)</th>
+          <th class="c-answers-summary__control" colspan="2">Estimated hours</th>
         </tr>
       </thead>
       <tbody>
