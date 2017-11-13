@@ -3,7 +3,7 @@ const { isArray, merge } = require('lodash')
 const globalFields = require('../../fields')
 
 function isDuration (value) {
-  const regex = /^\d+:\d{2}$/
+  const regex = /^\d*$/
 
   if (!isArray(value)) {
     if (!value) { return true }
