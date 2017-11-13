@@ -3,7 +3,7 @@ const { filter, flatten, get, pick } = require('lodash')
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
-class EditAssigneeHoursController extends EditController {
+class EditAssigneeTimeController extends EditController {
   async configure (req, res, next) {
     const orderId = get(res.locals, 'order.id')
     const token = get(req.session, 'token')
@@ -51,4 +51,4 @@ class EditAssigneeHoursController extends EditController {
   }
 }
 
-module.exports = EditAssigneeHoursController
+module.exports = EditAssigneeTimeController
