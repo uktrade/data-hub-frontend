@@ -1,5 +1,5 @@
 @contacts-collection
-Feature: View Collection of contacts
+Feature: View collection of contacts
   As an existing user
   I would like to view all the Contacts in one place
   And be able to read the contact details as expected
