@@ -5,7 +5,7 @@ Feature: View collection of companies
   And be able to read the companies details as expected
 
   @companies-collection--view
-  Scenario: View contact collection
+  Scenario: View companies collection
 
     Given a company is created
     Then I see the success message
