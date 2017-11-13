@@ -1,8 +1,11 @@
-const { pick, pickBy } = require('lodash')
+const { pick, pickBy, assign } = require('lodash')
 
-const { search } = require('../../search/services')
+const { search, searchLimitedCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
-const { transformCompanyToListItem } = require('../transformers')
+const {
+  transformCompanyToListItem,
+  transformCompaniesHouseCompanyToListItem,
+} = require('../transformers')
 
 async function getCompanyCollection (req, res, next) {
   try {
@@ -24,6 +27,37 @@ async function getCompanyCollection (req, res, next) {
   }
 }
 
+async function getLimitedCompaniesCollection (req, res, next) {
+  const searchTerm = res.locals.searchTerm = req.query.term
+
+  if (!searchTerm) {
+    return next()
+  }
+
+  try {
+    res.locals.results = await searchLimitedCompanies({
+      searchTerm,
+      token: req.session.token,
+      page: req.query.page,
+    })
+      .then(
+        transformApiResponseToSearchCollection(
+          { query: req.query },
+          transformCompaniesHouseCompanyToListItem,
+          (item) => {
+            return assign({}, item, {
+              url: `/companies/add/${item.id}`,
+            })
+          }
+        )
+      )
+
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
     'name',
@@ -36,7 +70,7 @@ function getRequestBody (req, res, next) {
     sortby: req.query.sortby,
   } : null
 
-  req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
 
   next()
 }
@@ -44,4 +78,5 @@ function getRequestBody (req, res, next) {
 module.exports = {
   getRequestBody,
   getCompanyCollection,
+  getLimitedCompaniesCollection,
 }
