@@ -105,7 +105,7 @@
         </tr>
       {% else %}
         <tr>
-          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">None added</td>
+          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">No advisers added</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -133,7 +133,7 @@
       label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length,
-    fallbackText: 'None added'
+    fallbackText: 'No advisers added'
   }) }}
 
   {{ AnswersSummary({
