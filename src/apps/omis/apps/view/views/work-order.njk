@@ -73,7 +73,7 @@
       label: 'Add or remove'
     }, {
       url: 'edit/assignee-time' if order.isEditable,
-      label: 'Estimate time'
+      label: 'Estimate hours'
     }]
   }) %}
     <tbody>
@@ -100,7 +100,7 @@
             {% endif %}
           </td>
           <td class="c-answers-summary__content c-answers-summary__content--number">
-            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
+            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No hours estimated' }}
           </td>
         </tr>
       {% else %}
@@ -119,7 +119,7 @@
             <span class="c-answers-summary__footer-value">
               {{ values.estimatedTimeSum | humanizeDuration }}
             </span>
-            total estimated time
+            estimated in total
           {% endif %}
         </td>
       </tr>
