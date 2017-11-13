@@ -220,8 +220,6 @@ module.exports = {
             // step 3
             this.section.firstCompanySearchResult
               .click('@header')
-            this
-              .click('@addButton')
 
             // step 4
             this
