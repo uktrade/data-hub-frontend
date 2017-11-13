@@ -160,11 +160,13 @@ module.exports.REASONS_FOR_ARCHIVE = [
   'Other',
 ]
 
+// Todo - Move to metadata repo in back end
 module.exports.investmentStatusOptions = [
   { label: 'Ongoing', value: 'ongoing' },
   { label: 'Delayed', value: 'delayed' },
   { label: 'Abandoned', value: 'abandoned' },
   { label: 'Lost', value: 'lost' },
+  { label: 'Dormant', value: 'dormant' },
 ]
 
 module.exports.getServices = function (token) {
