@@ -47,3 +47,17 @@ Feature: View collection of companies
 #    Then the companies should be filtered to show badge company UK region
 #    When I click on the first company collection link
 #    Then the company details UK region is displayed
+
+
+  @companies-collection--sort
+  Scenario: Sort companies list
+
+    Given a company is created
+    Then I see the success message
+    When I navigate to the Companies collection page
+    When the companies are sorted by Recently updated
+    When the companies are sorted by Least recently updated
+    Then the companies should have been correctly sorted by updated date
+    When the companies are sorted by Company name: A-Z
+    When the companies are sorted by Company name: Z-A
+    Then the companies should have been correctly sorted for text fields

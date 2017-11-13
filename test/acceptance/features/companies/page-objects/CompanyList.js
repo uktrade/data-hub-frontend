@@ -46,5 +46,11 @@ module.exports = {
         ukRegion: '#field-uk_region',
       },
     },
+    collectionHeader: {
+      selector: '.c-collection__header',
+      elements: {
+        sortBy: '#field-sortby',
+      },
+    },
   },
 }
