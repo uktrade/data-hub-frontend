@@ -113,9 +113,7 @@
     <tfoot>
       <tr>
         <td class="c-answers-summary__footer" colspan="3">
-          {% if not values.assignees.length or values.estimatedTimeSum < 1 %}
-            <span class="c-answers-summary__footer-value">No time estimated</span>
-          {% else %}
+          {% if values.estimatedTimeSum %}
             <span class="c-answers-summary__footer-value">
               {{ values.estimatedTimeSum | humanizeDuration }}
             </span>
