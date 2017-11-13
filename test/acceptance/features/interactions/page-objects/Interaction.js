@@ -87,6 +87,7 @@ module.exports = {
                 this.setValue(`@${key}`, interaction[key])
               }
             }
+            interaction.header = interaction.subject
             done()
           })
 
@@ -149,6 +150,7 @@ module.exports = {
                     this.setValue(`@${key}`, serviceDelivery[key])
                   }
                 }
+                serviceDelivery.header = serviceDelivery.subject
                 done()
               })
             done()
