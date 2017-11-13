@@ -10,8 +10,8 @@
       <thead>
         <tr>
           <th></th>
-          <th class="c-answers-summary__content">Estimated time</th>
-          <th class="c-answers-summary__control">Actual time spent (HH:MM)</th>
+          <th class="c-answers-summary__content">Original estimate</th>
+          <th class="c-answers-summary__control">Hours spent</th>
         </tr>
       </thead>
       <tbody>
@@ -20,7 +20,7 @@
             name: key,
             idSuffix: assignee.adviser.id,
             label: translate(defaultProps.label) + ' for ' + assignee.adviser.name,
-            value: values[key][loop.index0] or (assignee.actual_time | formatDuration('hh:mm') if assignee.actual_time),
+            value: values[key][loop.index0] or (assignee.actual_time / 60 if assignee.actual_time),
             error: errors[key].message,
             isLabelHidden: true
           }) %}

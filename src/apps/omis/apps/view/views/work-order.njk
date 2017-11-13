@@ -73,7 +73,7 @@
       label: 'Add or remove'
     }, {
       url: 'edit/assignee-time' if order.isEditable,
-      label: 'Estimate time'
+      label: 'Estimate hours'
     }]
   }) %}
     <tbody>
@@ -99,13 +99,13 @@
               {% endcall %}
             {% endif %}
           </td>
-          <td class="c-answers-summary__content c-answers-summary__content--number">
-            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
+          <td class="c-answers-summary__content c-answers-summary__content--number {{ 'c-answers-summary__content--muted' if not assignee.estimated_time }}">
+            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No hours estimated' }}
           </td>
         </tr>
       {% else %}
         <tr>
-          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">None added</td>
+          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">No advisers added</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -113,13 +113,11 @@
     <tfoot>
       <tr>
         <td class="c-answers-summary__footer" colspan="3">
-          {% if not values.assignees.length or values.estimatedTimeSum < 1 %}
-            <span class="c-answers-summary__footer-value">No time estimated</span>
-          {% else %}
+          {% if values.estimatedTimeSum %}
             <span class="c-answers-summary__footer-value">
               {{ values.estimatedTimeSum | humanizeDuration }}
             </span>
-            total estimated time
+            estimated in total
           {% endif %}
         </td>
       </tr>
@@ -133,7 +131,7 @@
       label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length,
-    fallbackText: 'None added'
+    fallbackText: 'No advisers added'
   }) }}
 
   {{ AnswersSummary({

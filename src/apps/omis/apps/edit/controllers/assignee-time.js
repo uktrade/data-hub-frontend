@@ -3,7 +3,7 @@ const { filter, flatten, get, pick } = require('lodash')
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
-class EditAssigneeHoursController extends EditController {
+class EditAssigneeTimeController extends EditController {
   async configure (req, res, next) {
     const orderId = get(res.locals, 'order.id')
     const token = get(req.session, 'token')
@@ -22,15 +22,11 @@ class EditAssigneeHoursController extends EditController {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const timeValues = flatten([data.assignee_time])
     const assignees = timeValues.map((value, index) => {
-      if (!value) { return }
-
-      const [ hours, minutes ] = value.split(':')
-
       return {
         adviser: {
           id: res.locals.assignees[index].adviser.id,
         },
-        estimated_time: parseInt((hours * 60)) + parseInt(minutes),
+        estimated_time: parseInt(value || 0) * 60,
       }
     })
 
@@ -51,4 +47,4 @@ class EditAssigneeHoursController extends EditController {
   }
 }
 
-module.exports = EditAssigneeHoursController
+module.exports = EditAssigneeTimeController
