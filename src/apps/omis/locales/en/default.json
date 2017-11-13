@@ -46,10 +46,10 @@
       "label": "Adviser"
     },
     "assignee_time": {
-      "label": "Estimated time"
+      "label": "Estimated hours"
     },
     "assignee_actual_time": {
-      "label": "Actual time"
+      "label": "Hours spent"
     },
     "vat_status": {
       "label": "VAT category",
@@ -112,7 +112,7 @@
       "description": "Add a description of the work or activity",
       "delivery_date": "Set a delivery date of at least 21 days from now",
       "assignees": "Add at least one adviser in the market",
-      "assignee_time": "Allocate time to at least one adviser in the market",
+      "assignee_time": "Allocate hours to at least one adviser in the market",
       "vat_status": "Choose a VAT category"
     }
   },
@@ -122,7 +122,7 @@
     "date": "must be a valid date",
     "after": "must be in the future",
     "before": "must be in the past",
-    "isDuration": "must be a valid duration format, for example 01:30",
+    "isDuration": "must be a whole number, for example 1",
     "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
     "default": "is required"
   }
