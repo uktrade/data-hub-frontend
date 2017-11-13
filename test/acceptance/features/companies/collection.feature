@@ -22,8 +22,8 @@ Feature: View collection of companies
       | UK region      |
 
 
-  @company-collection--filter
-  Scenario: Filter contact list
+  @companies-collection--filter
+  Scenario: Filter companies list
 
     Given a company is created
     Then I see the success message
