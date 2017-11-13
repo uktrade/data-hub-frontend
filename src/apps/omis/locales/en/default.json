@@ -118,6 +118,7 @@
   },
   "validation": {
     "required": "cannot not be blank",
+    "arrayRequired": "cannot not be blank",
     "numeric": "can only contain numbers",
     "date": "must be a valid date",
     "after": "must be in the future",
