@@ -1,4 +1,4 @@
-const zipWith = require('lodash/zipWith')
+const { zipWith, get } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
 const { updateInvestmentTeamMembers } = require('../../repos')
 const { teamMembersLabels } = require('../../labels')
@@ -63,10 +63,21 @@ async function handleFormPost (req, res, next) {
     next()
   } catch (err) {
     if (err.statusCode === 400) {
+      const teamMembers = transformDataToTeamMemberArray(req.body)
+      const roleError = get(err, 'error.role')
+      let messages = {}
+      if (roleError) {
+        teamMembers.forEach((item, i) => {
+          if (item.role === '') {
+            messages['role-' + i] = roleError
+          }
+        })
+      }
       res.locals.form = Object.assign({}, res.locals.form, {
-        errors: err.error,
-        state: req.body,
+        errors: { messages },
+        state: { teamMembers },
       })
+
       next()
     } else {
       next(err)
