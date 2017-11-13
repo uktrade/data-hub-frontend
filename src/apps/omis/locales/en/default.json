@@ -122,7 +122,7 @@
     "date": "must be a valid date",
     "after": "must be in the future",
     "before": "must be in the past",
-    "isDuration": "must be a valid duration format, for example 01:30",
+    "isDuration": "must be a whole number, for example 1",
     "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
     "default": "is required"
   }
