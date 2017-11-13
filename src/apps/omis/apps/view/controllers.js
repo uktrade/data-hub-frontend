@@ -29,8 +29,11 @@ async function renderWorkOrder (req, res) {
 }
 
 function renderQuote (req, res) {
+  const orderStatus = get(res.locals, 'order.status')
+  const heading = `Quote${orderStatus === 'draft' ? ' preview' : ''}`
+
   res
-    .breadcrumb('Quote preview')
+    .breadcrumb(heading)
     .render('omis/apps/view/views/quote')
 }
 
