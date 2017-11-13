@@ -1,5 +1,12 @@
 /* eslint-disable camelcase */
-const { assign, find, get, isPlainObject, mapValues } = require('lodash')
+const {
+  assign,
+  find,
+  get,
+  isPlainObject,
+  mapValues,
+  capitalize,
+} = require('lodash')
 
 const metadataRepository = require('../../lib/metadata')
 
@@ -78,33 +85,75 @@ function transformCompanyToListItem ({
   }
 }
 
-function transformCompaniesHouseCompanyToListItem (props) {
-  return assign({}, transformCompanyToListItem(props), {
+function transformCompaniesHouseCompanyToListItem ({
+  name,
+  registered_address_1,
+  registered_address_2,
+  registered_address_town,
+  registered_address_county,
+  registered_address_postcode,
+  company_number,
+  company_category,
+  company_status,
+  sic_code_1,
+  sic_code_2,
+  sic_code_3,
+  sic_code_4,
+  incorporation_date,
+}) {
+  const address = [
+    capitalize(registered_address_1),
+    capitalize(registered_address_2),
+    capitalize(registered_address_town),
+    capitalize(registered_address_county),
+    registered_address_postcode,
+  ]
+    .filter(item => item.length)
+    .join(', ')
+
+  const sicCodes = [
+    sic_code_1,
+    sic_code_2,
+    sic_code_3,
+    sic_code_4,
+  ]
+    .filter(item => item.length)
+    .join(', ')
+
+  return {
+    name: capitalize(name),
+    id: company_number,
+    type: 'companies_house',
+    url: `/view/ch/${company_number}`,
     meta: [
       {
         label: 'Status',
-        value: get(props, 'companies_house_data.company_status'),
+        value: company_status,
         type: 'badge',
       },
       {
         label: 'Company number',
-        value: get(props, 'company_number'),
+        value: company_number,
       },
       {
         label: 'Type',
-        value: get(props, 'companies_house_data.company_category'),
+        value: company_category,
       },
       {
         label: 'Nature of business (SIC)',
-        value: get(props, 'companies_house_data.sic_code_1'),
+        value: sicCodes,
       },
       {
         label: 'Incorporated on',
-        value: get(props, 'companies_house_data.incorporation_date'),
+        value: incorporation_date,
         type: 'date',
       },
+      {
+        label: 'Address',
+        value: address,
+      },
     ],
-  })
+  }
 }
 
 // TODO: This is a temporary transformer to transform an API response into

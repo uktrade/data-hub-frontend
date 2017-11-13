@@ -12,7 +12,7 @@ module.exports = {
     next: 'client-details',
   },
   '/client-details': {
-    heading: 'Client details',
+    heading: 'Choose the contact at the client company',
     backLink: null,
     editable: true,
     next: 'market',

@@ -16,6 +16,7 @@ describe('OMIS create client details controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.nextSpy = this.sandbox.spy()
+    this.breadcrumbStub = this.sandbox.stub().returnsThis()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -28,6 +29,7 @@ describe('OMIS create client details controller', () => {
       this.reqMock = Object.assign({}, globalReq, {
         form: {
           options: {
+            heading: 'Client contact for the client company',
             fields: {
               contact: {},
             },
@@ -35,6 +37,7 @@ describe('OMIS create client details controller', () => {
         },
       })
       this.resMock = Object.assign({}, globalRes, {
+        breadcrumb: this.breadcrumbStub,
         locals: {
           company: undefined,
         },
@@ -44,13 +47,16 @@ describe('OMIS create client details controller', () => {
     })
 
     describe('when a company exists', () => {
-      it('should set the list of contacts', () => {
+      beforeEach(() => {
         this.resMock.locals.company = {
+          name: 'Company',
           contacts: contactsMockData,
         }
 
         this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+      })
 
+      it('should set the list of contacts', () => {
         expect(this.reqMock.form.options.fields.contact.options).to.deep.equal([
           {
             value: '2',
@@ -61,6 +67,14 @@ describe('OMIS create client details controller', () => {
             label: 'Fred Stevens',
           },
         ])
+        expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should update the heading', () => {
+        expect(this.reqMock.form.options.heading).to.equal('Client contact for Company')
+      })
+
+      it('should call the parent method', () => {
         expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, this.resMock, this.nextSpy)
       })
     })

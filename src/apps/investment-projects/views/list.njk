@@ -6,7 +6,8 @@
   {{
     CollectionFilters({
       query: QUERY,
-      filtersFields: filtersFields
+      filtersFields: filtersFields,
+      action: CURRENT_PATH
     })
   }}
 {% endblock %}
@@ -14,7 +15,7 @@
 {% block main_grid_right_column %}
   {{
     Collection(results | assign({
-      sortForm: sortForm,
+      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
       selectedFilters: selectedFilters,
       countLabel: 'project',
       query: QUERY

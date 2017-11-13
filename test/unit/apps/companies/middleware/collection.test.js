@@ -1,6 +1,7 @@
 const nock = require('nock')
 const config = require('~/config')
 const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware/collection')
+const companiesHouseSearchResults = require('~/test/unit/data/companies/companiesHouseSearch.json')
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
@@ -94,6 +95,57 @@ describe('Company collection middleware', () => {
 
       expect(this.req.body).to.be.an('object').and.empty
       expect(this.next).to.have.been.calledOnce
+    })
+  })
+
+  describe('#getLimitedCompaniesCollection', () => {
+    context('when search returns results', () => {
+      beforeEach(async () => {
+        this.searchStub = this.sandbox.stub().resolves(companiesHouseSearchResults)
+        this.transformerStub = this.sandbox.stub().returns({
+          id: '1234',
+          name: 'Freds',
+          meta: [],
+        })
+
+        const collectionMiddleware = proxyquire('~/src/apps/companies/middleware/collection', {
+          '../../search/services': {
+            searchLimitedCompanies: this.searchStub,
+          },
+          '../transformers': {
+            transformCompaniesHouseCompanyToListItem: this.transformerStub,
+          },
+        })
+
+        this.req = Object.assign({}, this.req, {
+          query: {
+            term: 'fred',
+            page: '2',
+          },
+        })
+
+        await collectionMiddleware.getLimitedCompaniesCollection(this.req, this.res, this.next)
+      })
+
+      it('should search for companies house results', () => {
+        expect(this.searchStub).to.be.calledWith({
+          token: 'abcd',
+          searchTerm: 'fred',
+          page: '2',
+        })
+      })
+
+      it('should use the companies house transformer', () => {
+        expect(this.transformerStub).to.be.called
+      })
+
+      it('should include results', () => {
+        expect(this.res.locals).to.have.property('results')
+      })
+
+      it('should adjust the url in the search results to point to the add company screen', () => {
+        expect(this.res.locals.results.items[0].url).to.equal('/companies/add/1234')
+      })
     })
   })
 })
