@@ -25,15 +25,21 @@
   {% endif %}
 
   {% if quote %}
-    {% if order.status === 'quote_awaiting_acceptance' %}
-      {% set expiryLabel = 'Expire' + ('d' if quote.expired else 's') %}
-    {% else %}
-      {% set expiryLabel = 'Will expire' %}
-    {% endif %}
+    {% set expiryLabel %}
+      {% if order.status === 'quote_awaiting_acceptance' %}
+        Expire{{ 'd' if quote.expired else 's' }} on
+      {% else %}
+        Will expire on
+      {% endif %}
+    {% endset %}
+
+    {% set expiryValue %}
+      {{ quote.expires_on | formatDate }} ({{ quote.expires_on | fromNow }})
+    {% endset %}
 
     {{ MetaList({
       items: [
-        { label: expiryLabel, value: quote.expires_on, type: 'fromNow' }
+        { label: expiryLabel, value: expiryValue }
       ],
       itemModifier: 'stacked'
     }) }}
