@@ -1,4 +1,4 @@
-const { isArray, merge } = require('lodash')
+const { isArray, flatten, merge } = require('lodash')
 
 const globalFields = require('../../fields')
 
@@ -21,6 +21,14 @@ function isDuration (value) {
   })
 
   return valid
+}
+
+function arrayRequired (value) {
+  const invalidItems = flatten([value]).filter(itemValue => {
+    return itemValue === undefined || itemValue === ''
+  })
+
+  return invalidItems.length === 0
 }
 
 const editFields = merge({}, globalFields, {
@@ -92,7 +100,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     label: 'fields.assignee_actual_time.label',
     modifier: ['shorter', 'soft'],
-    validate: ['required', isDuration],
+    validate: [arrayRequired, isDuration],
   },
   vat_status: {
     fieldType: 'MultipleChoiceField',
