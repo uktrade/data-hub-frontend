@@ -25,5 +25,26 @@ Feature: View collection of contacts
     And the Interaction has badges for interactions and services
       | text |
       | Type |
+
+
+  @interactions-collection--view-service-delivery
+  Scenario: View service delivery in interactions and services collection
+
+    Given a company is created
+    When navigating to the company contacts
+    And a primary contact is added
+    And navigating to the create company interactions and services step 1 page
+    And selecting service delivery
+    And adding a service delivery
+    Then I see the success message
+    When I navigate to the Interactions and services collection page
+    Then there are Interactions headings
+    And I can view the Service delivery in the collection for interactions and services
+      | label   | statePath                  |
+      | Contact | contact.header             |
+      | Company | company.name               |
+      | Date    |                            |
+      | Adviser | serviceDelivery.ditAdviser |
+    And the Service delivery has badges for interactions and services
       | text |
       | Type |
