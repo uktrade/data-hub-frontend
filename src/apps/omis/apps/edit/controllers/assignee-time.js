@@ -22,15 +22,11 @@ class EditAssigneeTimeController extends EditController {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const timeValues = flatten([data.assignee_time])
     const assignees = timeValues.map((value, index) => {
-      if (!value) { return }
-
-      const [ hours, minutes ] = value.split(':')
-
       return {
         adviser: {
           id: res.locals.assignees[index].adviser.id,
         },
-        estimated_time: parseInt((hours * 60)) + parseInt(minutes),
+        estimated_time: parseInt(value || 0) * 60,
       }
     })
 
