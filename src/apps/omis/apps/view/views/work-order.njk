@@ -99,7 +99,7 @@
               {% endcall %}
             {% endif %}
           </td>
-          <td class="c-answers-summary__content c-answers-summary__content--number">
+          <td class="c-answers-summary__content c-answers-summary__content--number {{ 'c-answers-summary__content--muted' if not assignee.estimated_time }}">
             {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No hours estimated' }}
           </td>
         </tr>
