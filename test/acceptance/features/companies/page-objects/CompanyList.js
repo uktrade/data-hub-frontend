@@ -42,7 +42,7 @@ module.exports = {
       elements: {
         company: '#field-name',
         sector: '#field-sector',
-        country: '#field-trading_address_country',
+        country: '#field-country',
         ukRegion: '#field-uk_region',
       },
     },
