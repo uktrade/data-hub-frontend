@@ -1,36 +1,37 @@
 {% extends "./_layouts/view.njk" %}
 
-{% set companyLink %}
-  <a href="/companies/{{ values.company.id }}">{{ values.company.name }}</a>
-{% endset %}
-
 {% set contactName %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
 {% endset %}
 
 {% set contactEmail %}
-  {% if values.contact_email %}
-    {{ values.contact_email }}
-  {% else %}
-    <a href="mailto:{{ values.contact.email }}">{{ values.contact.email }}</a>
+  {% set emails = [
+    values.contact_email,
+    values.contact.email,
+    values.contact.email_alternative
+  ] %}
 
-    {% if values.contact.email_alternative %}
-      or <a href="mailto:{{ values.contact.email_alternative }}">{{ values.contact.email_alternative }}</a>
-    {% endif %}
-  {% endif %}
+  {% for email in emails | removeNilAndEmpty %}
+    <a href="mailto:{{ email }}">{{ email }}</a>
+    <br>
+  {% endfor %}
 {% endset %}
 
 {% set contactPhone %}
+  {% set phones = [
+    values.contact.telephone_number,
+    values.contact.telephone_alternative
+  ] %}
+
   {% if values.contact_phone %}
     {{ values.contact_phone }}
-  {% else %}
-    ({{ values.contact.telephone_countrycode }})
-    {{ values.contact.telephone_number }}
-
-    {% if values.contact.telephone_alternative %}
-      or {{ values.contact.telephone_alternative }}
-    {% endif %}
+    <br>
   {% endif %}
+
+  {% for phone in phones | removeNilAndEmpty %}
+    ({{ values.contact.telephone_countrycode }}) {{ phone }}
+    <br>
+  {% endfor %}
 {% endset %}
 
 {% block body_main_content %}
