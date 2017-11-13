@@ -37,12 +37,14 @@
       {{ quote.expires_on | formatDate }} ({{ quote.expires_on | fromNow }})
     {% endset %}
 
-    {{ MetaList({
-      items: [
-        { label: expiryLabel, value: expiryValue }
-      ],
-      itemModifier: 'stacked'
-    }) }}
+    {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
+      {{ MetaList({
+        items: [
+          { label: expiryLabel, value: expiryValue }
+        ],
+        itemModifier: 'stacked'
+      }) }}
+    {% endif %}
 
     {{ MetaList({
       items: [
