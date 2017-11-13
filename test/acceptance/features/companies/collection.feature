@@ -36,17 +36,17 @@ Feature: View collection of companies
     When the sector filter is cleared
     Then there are no filters selected
     And the result count should be reset
-#    When I filter the companies list by country TODO: bug fix https://uktrade.atlassian.net/browse/DH-1154
-#    Then the companies should be filtered to show badge company country
-#    When the country filter is cleared
-#    Then there are no filters selected
-#    And the result count should be reset
-#    When I filter the companies list by country TODO: bug fix https://uktrade.atlassian.net/browse/DH-1155
-#    And I filter the companies list by UK region
-#    Then the companies should be filtered to show badge company country
-#    Then the companies should be filtered to show badge company UK region
-#    When I click on the first company collection link
-#    Then the company details UK region is displayed
+    When I filter the companies list by country
+    Then the companies should be filtered to show badge company country
+    When the country filter is cleared
+    Then there are no filters selected
+    And the result count should be reset
+    When I filter the companies list by country
+    And I filter the companies list by UK region
+    Then the companies should be filtered to show badge company country
+    Then the companies should be filtered to show badge company UK region
+    When I click on the first company collection link
+    Then the company details UK region is displayed
 
 
   @companies-collection--sort

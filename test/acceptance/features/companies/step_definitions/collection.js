@@ -5,12 +5,13 @@ const { get, set } = require('lodash')
 const { getUid } = require('../../../helpers/uuid')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Company = client.page.Company()
   const CompanyList = client.page.CompanyList()
 
   When(/^I click on the first company collection link$/, async function () {
-    await Company
-      .click('@firstCompanyFromList')
+    await CompanyList
+      .section.firstCompanyInList
+      .waitForElementVisible('@header')
+      .click('@header')
   })
 
   When(/^I filter the companies list by company/, async function () {
@@ -31,7 +32,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the companies list by country$/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('trading_address_country', this.state.company.country)
+      .clickListOption('country', this.state.company.country)
       .wait() // wait for xhr
   })
 
