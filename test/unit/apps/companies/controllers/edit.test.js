@@ -159,6 +159,12 @@ describe('Company export controller', () => {
       const label = this.controller.getBusinessTypeLabel(false, true, uuid)
       expect(label).to.equal('Foreign Company')
     })
+
+    it('should handle unrecognised uuids', () => {
+      const uuid = '98d14e94-milk-eggs-beef-e4115bead28a'
+      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      expect(label).to.equal(undefined)
+    })
   })
 
   describe('renderForm', () => {
