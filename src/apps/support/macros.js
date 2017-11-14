@@ -11,16 +11,19 @@ const feedbackFormConfig = (browserInfo) => ({
       macroName: 'MultipleChoiceField',
       type: 'radio',
       name: 'feedbackType',
-      modifier: 'inline',
-      label: 'Problem or feedback?',
+      label: 'Choose one of these',
       options: [
         {
+          value: 'user_admin',
+          label: 'I don\'t have access',
+        },
+        {
           value: 'bug',
-          label: 'Problem',
+          label: 'I have another problem',
         },
         {
           value: 'feedback',
-          label: 'Feedback',
+          label: 'I\'ve got some feedback',
         },
       ],
     },
