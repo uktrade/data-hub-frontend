@@ -61,6 +61,12 @@ defineSupportCode(function ({ Then, When }) {
       .waitForElementVisible(selector)
       .click(selector)
   })
+
+  When(/^the first search result is clicked/, async () => {
+    await Search
+      .section.firstSearchResult
+      .waitForElementVisible('@header')
+      .click('@header')
   })
 
   Then(/^I verify the tabs are displayed$/, async () => {
