@@ -1,0 +1,9 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  {% call Message({ type: 'muted' }) %}
+    {{ company.name }}'s primary sector is <strong>{{ company.sector.name }}</strong>
+  {% endcall %}
+
+  {{ super() }}
+{% endblock %}
