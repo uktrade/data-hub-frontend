@@ -77,7 +77,11 @@ describe('OMIS create confirm controller', () => {
                 id: '1234567890',
                 contacts: contactsMockData,
               },
-              contact: 'Fred Stevens',
+              contact: {
+                id: '1',
+                first_name: 'Fred',
+                last_name: 'Stevens',
+              },
               primary_market: metadataCountryMockData[1],
             })
             done()

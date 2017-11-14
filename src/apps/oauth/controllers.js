@@ -28,11 +28,11 @@ async function callbackOAuth (req, res, next) {
   const sessionOAuthState = get(req.session, 'oauth.state')
 
   if (errorQueryParam) {
-    return renderHelpPage(req, res, next, errorQueryParam)
+    return renderHelpPage(req, res, next)
   }
 
   if (sessionOAuthState !== stateQueryParam) {
-    return renderHelpPage(req, res, next, 'state_mismatch')
+    return next(Error('There has been an OAuth stateId mismatch'))
   }
 
   try {
@@ -58,19 +58,10 @@ function redirectOAuth (req, res) {
   return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
 }
 
-function renderHelpPage (req, res, next, errorCode) {
-  const errorMessages = {
-    'access-denied': 'Access denied',
-    invalid_scope: 'Invalid scope',
-    state_mismatch: 'State mismatch',
-  }
-
+function renderHelpPage (req, res, next) {
   return res
-    .breadcrumb('Contact Live Services')
     .render('oauth/views/help-page', {
-      heading: 'Contact Live Services',
-      errorCode,
-      errorMessage: errorMessages[errorCode],
+      heading: 'You don\'t have permission to access this service',
     })
 }
 

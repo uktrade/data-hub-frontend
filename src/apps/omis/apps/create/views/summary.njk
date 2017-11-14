@@ -1,6 +1,12 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block form %}
+  {% set contactValue %}
+    {{ values.contact.first_name }} {{ values.contact.last_name }}
+    {%- if values.contact.job_title -%}
+      , {{ values.contact.job_title }}
+    {%- endif -%}
+  {% endset %}
   {% call MultiStepForm({
     buttonText: 'Continue'
   }) %}
@@ -15,7 +21,7 @@
         value: values.company.name
       }, {
         label: 'Contact',
-        value: values.contact
+        value: contactValue
       }]
     }) }}
 

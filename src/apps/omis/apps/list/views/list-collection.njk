@@ -4,7 +4,8 @@
   {{
     CollectionFilters({
       query: QUERY,
-      filtersFields: filtersFields
+      filtersFields: filtersFields,
+      action: CURRENT_PATH
     })
   }}
 {% endblock %}
@@ -13,7 +14,7 @@
   {{
     Collection(results | assign({
       countLabel: 'order',
-      sortForm: sortForm,
+      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
       selectedFilters: selectedFilters,
       query: QUERY
     }))
