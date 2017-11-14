@@ -18,7 +18,9 @@ function getBusinessTypeLabel (isLimitedCompany, isForeign, businessTypeUUID) {
     return 'UK limited company'
   }
   const businessTypeOption = getBusinessTypeOption(businessTypeUUID)
-  return (isForeign ? 'Foreign ' : 'UK ') + businessTypeOption.label
+  if (businessTypeOption) {
+    return (isForeign ? 'Foreign ' : 'UK ') + businessTypeOption.label
+  }
 }
 
 function renderForm (req, res) {
