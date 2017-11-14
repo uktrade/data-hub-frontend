@@ -34,9 +34,19 @@
       id: company.id
     }
   }) %}
+
+    {% if isCompaniesHouse %}
+      {{ TextField({
+        name: 'company_number',
+        label: 'Company number',
+        optional: false,
+        value: formData.company_number,
+        error: errors.company_number
+      }) }}
+    {% endif %}
+
     {% if companiesHouseRecord %}
       <input type="hidden" name="name" value="{{ formData.name }}">
-      <input type="hidden" name="company_number" value="{{ formData.company_number }}">
       <input type="hidden" name="registered_address_1" value="{{ formData.registered_address_1 }}">
       <input type="hidden" name="registered_address_2" value="{{ formData.registered_address_2 }}">
       <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}">
@@ -51,6 +61,7 @@
         value: formData.trading_name,
         error: errors.trading_name
       }) }}
+
     {% else %}
       {{ TextField({
         name: 'name',
