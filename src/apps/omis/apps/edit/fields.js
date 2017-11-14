@@ -73,6 +73,11 @@ const editFields = merge({}, globalFields, {
     hint: 'fields.further_info.hint',
     optional: true,
   },
+  sector: {
+    condition: null,
+    dependent: null,
+    modifier: '',
+  },
   assignees: {
     fieldType: 'MultipleChoiceField',
     legend: 'fields.assignees.legend',
