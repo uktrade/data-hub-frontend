@@ -55,8 +55,12 @@ defineSupportCode(function ({ Then, When }) {
   })
 
   When(/^the (.+) tab is clicked/, async (tabName) => {
+    const selector = `@${camelCase(tabName)}`
+
     await Search.section.tabs
-      .click(`@${camelCase(tabName)}`)
+      .waitForElementVisible(selector)
+      .click(selector)
+  })
   })
 
   Then(/^I verify the tabs are displayed$/, async () => {
