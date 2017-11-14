@@ -308,6 +308,7 @@ function transformBriefInvestmentSummary (data) {
   const investorCompany = data.investor_company
   const competitorCountries = data.competitor_countries || []
   const regionLocations = data.uk_region_locations || []
+  const date = moment(data.estimated_land_date)
 
   return {
     sector: get(data, 'sector.name', null),
@@ -315,11 +316,14 @@ function transformBriefInvestmentSummary (data) {
       name: investorCompany.name,
       url: `/companies/${investorCompany.id}`,
     },
-    website: (investorCompany.website) ? `<a href="${investorCompany.website}">${investorCompany.website}</a>` : '',
+    website: investorCompany.website ? {
+      name: investorCompany.website,
+      url: investorCompany.website,
+    } : null,
     account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
-    estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
+    estimated_land_date: date.isValid() ? date.format('MMMM YYYY') : null,
     total_investment: formatCurrency(data.total_investment),
   }
 }
