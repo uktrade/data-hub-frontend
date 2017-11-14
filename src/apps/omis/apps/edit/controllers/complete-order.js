@@ -33,13 +33,11 @@ class CompleteOrderController extends EditController {
     const assignees = timeValues.map((value, index) => {
       if (!value) { return }
 
-      const [ hours, minutes ] = value.split(':')
-
       return {
         adviser: {
           id: res.locals.assignees[index].adviser.id,
         },
-        actual_time: parseInt((hours * 60)) + parseInt(minutes),
+        actual_time: parseInt(value) * 60,
       }
     })
 

@@ -119,6 +119,6 @@ Feature: Edit an Event in Data hub
     And I submit the form
     Then details view data for "Related programmes" should contain "Grown in Britain"
     When I click on edit event button
-    And I change form dropdown "related_programmes" to "Great Branded"
+    And I change form dropdown "related_programmes" to "GREAT Branded"
     And I submit the form
-    Then details view data for "Related programmes" should contain "Great Branded"
+    Then details view data for "Related programmes" should contain "GREAT Branded"

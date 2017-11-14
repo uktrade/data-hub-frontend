@@ -1,5 +1,5 @@
 @contacts-collection
-Feature: View Collection of contacts
+Feature: View collection of contacts
   As an existing user
   I would like to view all the Contacts in one place
   And be able to read the contact details as expected
@@ -35,13 +35,19 @@ Feature: View Collection of contacts
     And I filter the contacts list by company
     Then the contacts should be filtered by company name
     When the company filter is cleared
-    And I filter the contacts list by sector
+    Then there are no filters selected
+    And the result count should be reset
+    When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
     When the sector filter is cleared
-    And I filter the contacts list by country
+    Then there are no filters selected
+    And the result count should be reset
+    When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
     When the country filter is cleared
-    And I filter the contacts list by country
+    Then there are no filters selected
+    And the result count should be reset
+    When I filter the contacts list by country
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
     When I click on the first contact collection link

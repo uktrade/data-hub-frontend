@@ -1,36 +1,37 @@
 {% extends "./_layouts/view.njk" %}
 
-{% set companyLink %}
-  <a href="/companies/{{ values.company.id }}">{{ values.company.name }}</a>
-{% endset %}
-
 {% set contactName %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
 {% endset %}
 
 {% set contactEmail %}
-  {% if values.contact_email %}
-    {{ values.contact_email }}
-  {% else %}
-    <a href="mailto:{{ values.contact.email }}">{{ values.contact.email }}</a>
+  {% set emails = [
+    values.contact_email,
+    values.contact.email,
+    values.contact.email_alternative
+  ] %}
 
-    {% if values.contact.email_alternative %}
-      or <a href="mailto:{{ values.contact.email_alternative }}">{{ values.contact.email_alternative }}</a>
-    {% endif %}
-  {% endif %}
+  {% for email in emails | removeNilAndEmpty %}
+    <a href="mailto:{{ email }}">{{ email }}</a>
+    <br>
+  {% endfor %}
 {% endset %}
 
 {% set contactPhone %}
+  {% set phones = [
+    values.contact.telephone_number,
+    values.contact.telephone_alternative
+  ] %}
+
   {% if values.contact_phone %}
     {{ values.contact_phone }}
-  {% else %}
-    ({{ values.contact.telephone_countrycode }})
-    {{ values.contact.telephone_number }}
-
-    {% if values.contact.telephone_alternative %}
-      or {{ values.contact.telephone_alternative }}
-    {% endif %}
+    <br>
   {% endif %}
+
+  {% for phone in phones | removeNilAndEmpty %}
+    ({{ values.contact.telephone_countrycode }}) {{ phone }}
+    <br>
+  {% endfor %}
 {% endset %}
 
 {% block body_main_content %}
@@ -72,7 +73,7 @@
       label: 'Add or remove'
     }, {
       url: 'edit/assignee-time' if order.isEditable,
-      label: 'Estimate time'
+      label: 'Estimate hours'
     }]
   }) %}
     <tbody>
@@ -98,13 +99,13 @@
               {% endcall %}
             {% endif %}
           </td>
-          <td class="c-answers-summary__content c-answers-summary__content--number">
-            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No time estimated' }}
+          <td class="c-answers-summary__content c-answers-summary__content--number {{ 'c-answers-summary__content--muted' if not assignee.estimated_time }}">
+            {{ assignee.estimated_time | humanizeDuration if assignee.estimated_time else 'No hours estimated' }}
           </td>
         </tr>
       {% else %}
         <tr>
-          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">None added</td>
+          <td class="c-answers-summary__content c-answers-summary__content--muted" colspan="3">No advisers added</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -112,13 +113,11 @@
     <tfoot>
       <tr>
         <td class="c-answers-summary__footer" colspan="3">
-          {% if not values.assignees.length or values.estimatedTimeSum < 1 %}
-            <span class="c-answers-summary__footer-value">No time estimated</span>
-          {% else %}
+          {% if values.estimatedTimeSum %}
             <span class="c-answers-summary__footer-value">
               {{ values.estimatedTimeSum | humanizeDuration }}
             </span>
-            total estimated time
+            estimated in total
           {% endif %}
         </td>
       </tr>
@@ -132,7 +131,7 @@
       label: 'Add or remove'
     }],
     items: values.subscribers | map('name') if values.subscribers.length,
-    fallbackText: 'None added'
+    fallbackText: 'No advisers added'
   }) }}
 
   {{ AnswersSummary({

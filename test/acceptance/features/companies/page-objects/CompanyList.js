@@ -9,6 +9,15 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   }
 )
 
+const getBadgeWithText = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  },
+)
+
 module.exports = {
   url: `${process.env.QA_HOST}/companies`,
   props: {},
@@ -23,8 +32,24 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
-        sector: getMetaListItemValueSelector('Sector'),
-        registeredAddress: getMetaListItemValueSelector('Registered address'),
+        companySector: getMetaListItemValueSelector('Sector'),
+        countryBadge: getBadgeWithText('Country'),
+        ukRegionBadge: getBadgeWithText('UK region'),
+      },
+    },
+    filters: {
+      selector: '.c-collection-filters',
+      elements: {
+        company: '#field-name',
+        sector: '#field-sector',
+        country: '#field-country',
+        ukRegion: '#field-uk_region',
+      },
+    },
+    collectionHeader: {
+      selector: '.c-collection__header',
+      elements: {
+        sortBy: '#field-sortby',
       },
     },
   },

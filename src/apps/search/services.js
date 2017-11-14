@@ -130,21 +130,25 @@ function searchForeignCompanies (options) {
   return searchCompanies(optionsUkBasedFalse)
 }
 
-function searchLimitedCompanies (options) {
-  const optionsUkBasedTrue = assign({}, options, { isUkBased: true })
+function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
+  const queryParams = {
+    offset: (page * limit) - limit,
+    limit,
+  }
+  const body = {
+    original_query: searchTerm,
+  }
 
-  return searchCompanies(optionsUkBasedTrue)
+  const options = {
+    url: `${config.apiRoot}/v3/search/companieshousecompany?${queryString.stringify(queryParams)}`,
+    method: 'POST',
+    body,
+  }
+
+  return authorisedRequest(token, options)
     .then((result) => {
-      const limitedCompanies = result.results.filter((company) => {
-        return company.company_number ||
-          (company.business_type && company.business_type.name.toLowerCase().includes('limited company'))
-      })
-
-      return {
-        page: result.page,
-        results: limitedCompanies,
-        count: result.count,
-      }
+      result.page = page
+      return result
     })
 }
 

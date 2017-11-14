@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { keyBy, snakeCase, isPlainObject, isFunction } = require('lodash')
+const { filter, keyBy, snakeCase, isPlainObject, isFunction } = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
 const { buildPagination } = require('../lib/pagination')
@@ -18,10 +18,10 @@ function transformStringToOption (string) {
   }
 }
 
-function transformContactToOption ({ id, first_name, last_name }) {
+function transformContactToOption ({ id, first_name, last_name, job_title, email }) {
   return {
     value: id,
-    label: `${first_name} ${last_name}`,
+    label: filter([`${first_name} ${last_name}`, job_title]).join(', '),
   }
 }
 
