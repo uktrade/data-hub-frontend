@@ -112,4 +112,7 @@ const steps = merge({}, createSteps, {
 // Market cannot be edited after creation
 delete steps['/market']
 
+// Sector can be edited as part of a different section at this stage
+delete steps['/sector']
+
 module.exports = steps
