@@ -49,8 +49,7 @@ function renderDetails (req, res) {
     companyDetailsLabels: companyDetailsLabels,
     accountManagementDisplayLabels: accountManagementDisplayLabels,
     accountManagementDisplay: {
-      // TODO: Should this get real data back?
-      oneListAccountManager: 'None',
+      oneListAccountManager: get(res.locals, 'company.one_list_account_owner.name', 'None'),
       oneListTier: get(res.locals, 'company.classification.name', 'None'),
     },
   })
