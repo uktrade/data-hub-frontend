@@ -22,6 +22,9 @@
     "description": {
       "label": "Description of the work or activity"
     },
+    "use_sector_from_company": {
+      "label": "Do you want to use the company's primary sector (shown above) for this order?"
+    },
     "sector": {
       "label": "Sector"
     },

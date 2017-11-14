@@ -1,17 +1,21 @@
-const { find, unset } = require('lodash')
+const { assign, find, get, unset } = require('lodash')
 
 const metadataRepo = require('../../../../../lib/metadata')
 const { FormController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class ConfirmController extends FormController {
-  async getValues (req, res, next) {
+  getValues (req, res, next) {
     super.getValues(req, res, (err, values) => {
-      values.company = res.locals.company
-      values.contact = find(values.company.contacts, { id: values.contact })
-      values.primary_market = find(metadataRepo.countryOptions, { id: values.primary_market })
+      const company = get(res.locals, 'company')
+      const summaryValues = assign({}, values, {
+        company,
+        contact: find(company.contacts, { id: values.contact }),
+        primary_market: find(metadataRepo.countryOptions, { id: values.primary_market }),
+        sector: find(metadataRepo.sectorOptions, { id: values.sector }),
+      })
 
-      next(err, values)
+      next(err, summaryValues)
     })
   }
 
