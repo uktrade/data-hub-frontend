@@ -5,7 +5,7 @@
 module.exports = {
   company: {
     companiesHouse: {
-      name: 'Mercury Ltd',
+      name: 'Exobite Skeletons Ltd',
     },
     foreign: {
       name: 'Lambda plc',
