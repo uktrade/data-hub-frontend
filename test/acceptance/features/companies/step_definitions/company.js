@@ -1,9 +1,8 @@
 const { get, set } = require('lodash')
-const faker = require('faker')
 
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { getUid, appendUid } = require('../../../helpers/uuid')
+const { getUid } = require('../../../helpers/uuid')
 
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
@@ -12,45 +11,35 @@ defineSupportCode(({ Then, When }) => {
   const Company = client.page.Company()
 
   When(/^a "UK private or public limited company" is created$/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
     await client
       .url(companySearchPage)
 
     await Company
       .createUkPrivateOrPublicLimitedCompany(
-        this.fixtures.company.companiesHouse.name,
-        { tradingName: companyName },
+        this.fixtures.company.companiesHouse,
+        {},
         (company) => set(this.state, 'company', company),
       )
       .wait() // wait for backend to sync
   })
 
   When(/^a "UK non-private or non-public limited company" is created$/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
     await client
       .url(companySearchPage)
 
     await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany(
-        { name: companyName },
-        (company) => set(this.state, 'company', company)
-      )
+      .createUkNonPrivateOrNonPublicLimitedCompany({}, (company) => {
+        set(this.state, 'company', company)
+      })
       .wait() // wait for backend to sync
   })
 
   When(/^a new "Foreign company" is created$/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
     await client
       .url(companySearchPage)
 
     await Company
-      .createForeignCompany(
-        { name: companyName },
-        (company) => set(this.state, 'company', company)
-      )
+      .createForeignCompany({}, (company) => set(this.state, 'company', company))
       .wait() // wait for backend to sync
   })
 

@@ -73,5 +73,13 @@ module.exports = {
         registeredAddress: getSearchResultSelector('Registered address'),
       },
     },
+    firstSearchResult: {
+      selector: '.c-entity-list li:first-child',
+      elements: {
+        header: {
+          selector: '.c-entity__header a',
+        },
+      },
+    },
   },
 }
