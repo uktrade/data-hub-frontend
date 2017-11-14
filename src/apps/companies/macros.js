@@ -12,7 +12,6 @@ const companyFiltersFields = [
     initialOption: 'All sectors',
   }),
   Object.assign({}, globalFields.countries, {
-    name: 'trading_address_country',
     initialOption: 'All countries',
   }),
   Object.assign({}, globalFields.ukRegions, {

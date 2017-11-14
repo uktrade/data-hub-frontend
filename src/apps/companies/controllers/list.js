@@ -11,7 +11,7 @@ function renderCompanyList (req, res) {
   })
 
   const selectedFilters = buildSelectedFiltersSummary(companyFiltersFields, req.query)
-  const isUKSelected = get(selectedFilters, 'trading_address_country.valueLabel') === 'United Kingdom'
+  const isUKSelected = get(selectedFilters, 'country.valueLabel') === 'United Kingdom'
 
   const visibleFiltersFields = companyFiltersFields.filter(field => {
     if (field.name === 'uk_region') {

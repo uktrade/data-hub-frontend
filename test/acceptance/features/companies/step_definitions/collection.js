@@ -1,16 +1,17 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { get } = require('lodash')
+const { get, set } = require('lodash')
 
 const { getUid } = require('../../../helpers/uuid')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Company = client.page.Company()
   const CompanyList = client.page.CompanyList()
 
   When(/^I click on the first company collection link$/, async function () {
-    await Company
-      .click('@firstCompanyFromList')
+    await CompanyList
+      .section.firstCompanyInList
+      .waitForElementVisible('@header')
+      .click('@header')
   })
 
   When(/^I filter the companies list by company/, async function () {
@@ -31,7 +32,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the companies list by country$/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('trading_address_country', this.state.company.country)
+      .clickListOption('country', this.state.company.country)
       .wait() // wait for xhr
   })
 
@@ -40,6 +41,34 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementPresent('@ukRegion')
       .clickListOption('uk_region', this.state.company.ukRegion)
       .wait() // wait for xhr
+  })
+
+  When(/^the companies are sorted by (Company name: A-Z|Recently updated)$/, async function (sortOption) {
+    await CompanyList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await CompanyList
+      .section.firstCompanyInList
+      .getText('@header', (result) => {
+        set(this.state, 'collection.firstItem.field', result.value)
+      })
+  })
+
+  When(/^the companies are sorted by (Company name: Z-A|Least recently updated)$/, async function (sortOption) {
+    await CompanyList
+      .section.collectionHeader
+      .waitForElementVisible('@sortBy')
+      .clickListOption('sortby', sortOption)
+      .wait() // wait for xhr
+
+    await CompanyList
+      .section.firstCompanyInList
+      .getText('@header', (result) => {
+        set(this.state, 'collection.lastItem.field', result.value)
+      })
   })
 
   Then(/^the companies should be filtered by company name/, async function () {
@@ -76,5 +105,22 @@ defineSupportCode(({ Given, Then, When }) => {
       .section.firstCompanyInList
       .waitForElementVisible('@ukRegionBadge')
       .assert.containsText('@ukRegionBadge', expectedBadgeText)
+  })
+
+  Then(/^the companies should have been correctly sorted by updated date$/, async function () {
+    const firstItemField = get(this.state, 'collection.firstItem.field')
+    const lastItemField = get(this.state, 'collection.lastItem.field')
+    const expectedFirstItemField = get(this.state, 'company.header')
+    const expectedLastItemField = this.fixtures.company.foreign.name
+
+    client.expect(firstItemField).to.equal(expectedFirstItemField)
+    client.expect(lastItemField).to.equal(expectedLastItemField)
+  })
+
+  Then(/^the companies should have been correctly sorted for text fields$/, async function () {
+    const firstItemField = get(this.state, 'collection.firstItem.field')
+    const lastItemField = get(this.state, 'collection.lastItem.field')
+
+    return client.expect(firstItemField < lastItemField).to.be.true
   })
 })

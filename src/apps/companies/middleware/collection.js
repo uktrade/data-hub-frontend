@@ -62,7 +62,7 @@ function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
     'name',
     'sector',
-    'trading_address_country',
+    'country',
     'uk_region',
   ])
 
