@@ -19,7 +19,7 @@ const urls = {
   events: {
     collection: 'events',
   },
-  interactions: {
+  interactionsAndServices: {
     collection: 'interactions',
   },
   investmentProjects: {
