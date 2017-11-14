@@ -105,11 +105,18 @@ defineSupportCode(function ({ Then, When }) {
   })
 
   Then(/^I can view the company in the search results/, async function () {
-    const registeredAddress = `${this.state.company.address1}, ${this.state.company.town}`
+    const {
+      address1,
+      town,
+      name,
+      sector,
+    } = this.state.company
+    const registeredAddress = `${address1}, ${town}`
+
     await Search.section.firstCompanySearchResult
       .waitForElementPresent('@header')
-      .assert.containsText('@header', this.state.company.name)
-      .assert.containsText('@sector', this.state.company.sector)
+      .assert.containsText('@header', name)
+      .assert.containsText('@sector', sector)
       .assert.containsText('@registeredAddress', registeredAddress)
   })
 })
