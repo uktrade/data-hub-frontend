@@ -1,4 +1,5 @@
 const { title } = require('case')
+const { omitBy } = require('lodash')
 
 const { companyDetailsLabels, chDetailsLabels, hqLabels } = require('../labels')
 const { getFormattedAddress } = require('../../../lib/address')
@@ -41,10 +42,9 @@ function getDisplayCompany (company) {
     turnover_range: (company.turnover_range && company.turnover_range.name) ? company.turnover_range.name : null,
     account_manager: (company.account_manager && company.account_manager.name) ? company.account_manager.name : null,
     headquarter_type: (company.headquarter_type && company.headquarter_type.name && company.headquarter_type.name.length > 0) ? hqLabels[company.headquarter_type.name] : 'Not a headquarters',
-    trading_name: company.trading_name || null,
+    trading_name: (company.trading_name && company.trading_name.length > 0) ? company.trading_name : null,
+    vat_number: company.vat_number,
   }
-
-  if (company.trading_name && company.trading_name.length > 0) displayCompany.trading_name = company.trading_name
 
   const registeredAddress = getFormattedAddress(company, 'registered')
   displayCompany.registered_address = registeredAddress
@@ -61,7 +61,8 @@ function getDisplayCompany (company) {
 
   if (company.uk_region && company.uk_region.name && company.uk_region.name !== 'Undefined') displayCompany.uk_region = company.uk_region.name
 
-  return displayCompany
+  // Strip out empty or null fields
+  return omitBy(displayCompany, val => !val)
 }
 
 module.exports = {
