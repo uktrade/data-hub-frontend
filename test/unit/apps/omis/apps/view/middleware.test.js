@@ -1,6 +1,7 @@
 const contactMock = require('~/test/unit/data/contacts/contacts')[0]
 const invoiceMock = require('~/test/unit/data/omis/invoice')
 const paymentsMock = require('~/test/unit/data/omis/payments')
+const assigneesMock = require('~/test/unit/data/omis/assignees')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
@@ -9,6 +10,7 @@ describe('OMIS View middleware', () => {
     this.getCompanySpy = this.sandbox.spy()
     this.loggerErrorSpy = this.sandbox.spy()
     this.getContactStub = this.sandbox.stub()
+    this.getAssigneesStub = this.sandbox.stub()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.getInvoiceStub = this.sandbox.stub()
@@ -48,6 +50,7 @@ describe('OMIS View middleware', () => {
       },
       '../../models': {
         Order: {
+          getAssignees: this.getAssigneesStub,
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
           getInvoice: this.getInvoiceStub,
@@ -160,6 +163,52 @@ describe('OMIS View middleware', () => {
         this.getContactStub.rejects(this.error)
 
         await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should log error', () => {
+        expect(this.loggerErrorSpy).to.have.been.calledOnce
+        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('setAssignees()', () => {
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getAssigneesStub.resolves(assigneesMock)
+
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set assignees property on locals', () => {
+        expect(this.resMock.locals).to.have.property('assignees')
+      })
+
+      it('should set correct number of assignees', () => {
+        expect(this.resMock.locals.assignees).to.have.length(2)
+      })
+
+      it('should set correct objects on assignees', () => {
+        expect(this.resMock.locals.assignees).to.deep.equal(assigneesMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getAssigneesStub.rejects(this.error)
+
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should log error', () => {
