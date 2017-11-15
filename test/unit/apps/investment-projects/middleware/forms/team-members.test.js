@@ -10,7 +10,9 @@ describe('Investment form middleware - team members', () => {
     this.nextSpy = this.sandbox.spy()
     this.resMock = {
       locals: {
-        form: {},
+        form: {
+          state: {},
+        },
         investmentData,
       },
     }
@@ -205,9 +207,10 @@ describe('Investment form middleware - team members', () => {
         this.error = {
           statusCode: 400,
           error: {
-            project_assurance_adviser: 'Cannot be null',
+            role: ['This field is required'],
           },
         }
+        const resMock = Object.assign({}, this.resMock)
 
         this.updateInvestmentTeamMembersStub.rejects(this.error)
 
@@ -218,11 +221,20 @@ describe('Investment form middleware - team members', () => {
           params: {
             investmentId: investmentData.id,
           },
-          body: this.body,
-        }, this.resMock, (error) => {
+          body: {
+            adviser: ['1234', '4321', '4323'],
+            role: ['manager', 'supervisor', ''],
+          },
+        }, resMock, (error) => {
           expect(error).to.equal(undefined)
-          expect(this.resMock.locals.form.state).to.deep.equal(this.body)
-          expect(this.resMock.locals.form.errors).to.deep.equal(this.error.error)
+          expect(resMock.locals.form.state.teamMembers).to.deep.equal([
+            { adviser: '1234', role: 'manager' },
+            { adviser: '4321', role: 'supervisor' },
+            { adviser: '4323', role: '' },
+          ])
+          expect(this.resMock.locals.form.errors.messages).to.deep.equal({
+            'role-2': ['This field is required'],
+          })
           done()
         })
       })

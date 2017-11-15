@@ -47,13 +47,6 @@ const editFields = merge({}, globalFields, {
     type: 'textarea',
     label: 'fields.description.label',
   },
-  sector: {
-    fieldType: 'MultipleChoiceField',
-    label: 'fields.sector.label',
-    optional: true,
-    initialOption: '-- Select sector --',
-    options: [],
-  },
   delivery_date: {
     fieldType: 'TextField',
     label: 'fields.delivery_date.label',
@@ -79,6 +72,11 @@ const editFields = merge({}, globalFields, {
     label: 'fields.further_info.label',
     hint: 'fields.further_info.hint',
     optional: true,
+  },
+  sector: {
+    condition: null,
+    dependent: null,
+    modifier: '',
   },
   assignees: {
     fieldType: 'MultipleChoiceField',

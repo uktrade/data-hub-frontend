@@ -1,5 +1,12 @@
 {% extends "./_layout-edit.njk" %}
 
+{% block local_header %}
+  {{ LocalHeader({
+    heading: 'Edit export markets',
+    modifier: 'light-banner'
+  }) }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Add export market(s)</h2>
 
