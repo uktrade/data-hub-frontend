@@ -1,3 +1,5 @@
+const { merge } = require('lodash')
+
 describe('OMIS list transformers', function () {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
@@ -121,6 +123,59 @@ describe('OMIS list transformers', function () {
         const amount = actual.amount
 
         expect(amount).to.equal(53.43)
+      })
+    })
+  })
+
+  describe('#transformSubscriberToView', () => {
+    const subscriber = require('~/test/unit/data/omis/subscribers.json')[0]
+    const subscriberWithTeam = merge({}, subscriber, {
+      dit_team: {
+        uk_region: {
+          name: 'London',
+        },
+      },
+    })
+
+    context('when given an unqualified result', () => {
+      it('should return undefined', () => {
+        expect(this.transformers.transformSubscriberToView()()).to.be.undefined
+        expect(this.transformers.transformSubscriberToView()({ a: 'b' })).to.be.undefined
+        expect(this.transformers.transformSubscriberToView()({ name: 'abcd' })).to.be.undefined
+      })
+    })
+
+    context('when given a qualified result', () => {
+      context('when the subscriber is not the current user', () => {
+        it('should return just the name', () => {
+          const actual = this.transformers.transformSubscriberToView()(subscriber)
+
+          expect(actual).to.equal('Puck Head')
+        })
+
+        context('when the subscriber has a UK region', () => {
+          it('should return the name and Uk region', () => {
+            const actual = this.transformers.transformSubscriberToView()(subscriberWithTeam)
+
+            expect(actual).to.equal('Puck Head, London')
+          })
+        })
+      })
+
+      context('when the subscriber is the current user', () => {
+        it('should return the name with suffix', () => {
+          const actual = this.transformers.transformSubscriberToView(subscriber.id)(subscriber)
+
+          expect(actual).to.equal('Puck Head (you)')
+        })
+
+        context('when the subscriber has a UK region', () => {
+          it('should return the name and Uk region', () => {
+            const actual = this.transformers.transformSubscriberToView(subscriber.id)(subscriberWithTeam)
+
+            expect(actual).to.equal('Puck Head, London (you)')
+          })
+        })
       })
     })
   })
