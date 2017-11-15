@@ -1,5 +1,5 @@
 @companies-details
-Feature: Blah
+Feature: Company details
 
   @companies-details--cdms-reference
   Scenario: Company has CDMS reference
