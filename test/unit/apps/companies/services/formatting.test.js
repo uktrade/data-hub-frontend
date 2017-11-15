@@ -34,7 +34,7 @@ describe('Company formatting service', () => {
       expect(actual).to.be.null
     })
     describe('company contains CDMS data', () => {
-      it('should show company data, even empty values', () => {
+      it('should show company data', () => {
         const company = {
           'id': '3a4b36c6-a950-43c5-ba41-82cf6bffaa91',
           'name': 'Fresh Flowers',
@@ -111,6 +111,7 @@ describe('Company formatting service', () => {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
             'name': 'London',
           },
+          vat_number: '123412341234',
         }
         const expected = {
           business_type: 'Company',
@@ -123,13 +124,21 @@ describe('Company formatting service', () => {
           sector: 'Giftware, Jewellery and Tableware',
           website: '<a href="http://www.test.com">http://www.test.com</a>',
           description: 'description',
-          employee_range: null,
-          turnover_range: null,
           account_manager: 'Yvonne Ahern',
           country: 'United Kingdom',
+          vat_number: '123412341234',
         }
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual).to.deep.equal(expected)
+      })
+      it('should not return a vat number if it is empty', () => {
+        const company = {
+          'id': '1234',
+          'vat_number': '',
+        }
+
+        const actual = companyFormattingService.getDisplayCompany(company)
+        expect(actual).to.not.have.property('vat_number')
       })
       it('should convert website to link', () => {
         const company = {
