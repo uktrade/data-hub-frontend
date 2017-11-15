@@ -44,6 +44,7 @@ function getDisplayCompany (company) {
     headquarter_type: (company.headquarter_type && company.headquarter_type.name && company.headquarter_type.name.length > 0) ? hqLabels[company.headquarter_type.name] : 'Not a headquarters',
     trading_name: (company.trading_name && company.trading_name.length > 0) ? company.trading_name : null,
     vat_number: company.vat_number,
+    reference_code: company.reference_code || null,
   }
 
   const registeredAddress = getFormattedAddress(company, 'registered')
