@@ -54,9 +54,9 @@ module.exports = {
     county: '#field-registered_address_county',
     registeredAddressCountry: 'select[name="registered_address_country"]',
     postcode: '#field-registered_address_postcode',
-    headquartersOption: 'label[for=field-headquarter_type-2]',
     sector: '#field-sector',
     website: '#field-website',
+    description: '#field-description',
     parentCompanySearch: '#field-term',
     flashMessage: '.c-message-list li:first-child',
     collectionsCompanyNameInput: '#field-name',
@@ -84,7 +84,9 @@ module.exports = {
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
           website: faker.internet.url(),
+          description: faker.lorem.sentence(),
         }, details)
+        const companyRadioButtons = {}
 
         this
           .click('@addCompanyButton')
@@ -119,21 +121,49 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                this.getRadioOption('headquarter_type', (result) => {
+                  companyRadioButtons.headquarterType = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('employee_range', (result) => {
+                  companyRadioButtons.employeeRange = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('turnover_range', (result) => {
+                  companyRadioButtons.turnoverRange = result
+                  done()
+                })
+              })
+              .perform(() => {
                 for (const key in company) {
                   if (company[key]) {
                     this.setValue(`@${key}`, company[key])
                   }
                 }
-                done()
+                for (const key in companyRadioButtons) {
+                  this.api.useCss().click(companyRadioButtons[key].labelSelector)
+                  company[key] = companyRadioButtons[key].text
+                }
+              })
+              .perform(() => {
+                this
+                  .waitForElementPresent('@saveAndCreateButton')
+                  .click('@saveAndCreateButton')
+
+                const { address1, town, postcode, registeredAddressCountry } = company
+                callback(assign({}, company, {
+                  header: company.name,
+                  primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
+                }))
               })
 
-            this
-              .waitForElementPresent('@saveAndCreateButton')
-              .click('@saveAndCreateButton')
             done()
           })
 
-        callback(company)
         return this
       },
 
@@ -144,7 +174,10 @@ module.exports = {
           address1: faker.address.streetName(),
           postcode: faker.address.zipCode(),
           town: faker.address.city(),
+          website: faker.internet.url(),
+          description: faker.lorem.sentence(),
         }, details)
+        const companyStep2RadioOptions = {}
 
         this
           .click('@addCompanyButton')
@@ -180,21 +213,46 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                this.getRadioOption('headquarter_type', (result) => {
+                  companyStep2RadioOptions.headquarterType = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('employee_range', (result) => {
+                  companyStep2RadioOptions.employeeRange = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('turnover_range', (result) => {
+                  companyStep2RadioOptions.turnoverRange = result
+                  done()
+                })
+              })
+              .perform(() => {
                 for (const key in companyStep2) {
                   if (companyStep2[key]) {
                     this.setValue(`@${key}`, companyStep2[key])
                   }
                 }
-                companyStep2.country = 'United Kingdom'
-                companyStep2.header = companyStep2.name
-                done()
+                for (const key in companyStep2RadioOptions) {
+                  this.api.useCss().click(companyStep2RadioOptions[key].labelSelector)
+                  companyStep2[key] = companyStep2RadioOptions[key].text
+                }
               })
               .perform(() => {
                 this
                   .waitForElementPresent('@saveAndCreateButton')
                   .click('@saveAndCreateButton')
 
-                callback(assign({}, companyStep1, companyStep2))
+                const { address1, town } = companyStep2
+                const country = 'United Kingdom'
+                callback(assign({}, companyStep1, companyStep2, {
+                  country,
+                  header: companyStep2.name,
+                  primaryAddress: `${address1}, ${town}, ${country}`,
+                }))
               })
             done()
           })
@@ -202,7 +260,14 @@ module.exports = {
         return this
       },
 
-      createUkPrivateOrPublicLimitedCompany (parentCompany, company = {}, callback) {
+      createUkPrivateOrPublicLimitedCompany (parentCompany, details = {}, callback) {
+        const company = assign({}, {
+          tradingName: appendUid(faker.company.companyName()),
+          website: faker.internet.url(),
+          description: faker.lorem.sentence(),
+        }, details)
+        const companyRadioButtons = {}
+
         this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
@@ -214,7 +279,7 @@ module.exports = {
               .click('@continueButton')
 
             // step 2
-              .setValue('@parentCompanySearch', parentCompany)
+              .setValue('@parentCompanySearch', parentCompany.name)
               .submitForm('form')
 
             // step 3
@@ -237,18 +302,48 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                this.getRadioOption('headquarter_type', (result) => {
+                  companyRadioButtons.headquarterType = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('employee_range', (result) => {
+                  companyRadioButtons.employeeRange = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('turnover_range', (result) => {
+                  companyRadioButtons.turnoverRange = result
+                  done()
+                })
+              })
+              .perform(() => {
                 for (const key in company) {
                   if (company[key]) {
                     this.setValue(`@${key}`, company[key])
                   }
                 }
-                done()
+                for (const key in companyRadioButtons) {
+                  this.api.useCss().click(companyRadioButtons[key].labelSelector)
+                  company[key] = companyRadioButtons[key].text
+                }
               })
-            this.click('@saveAndCreateButton')
+              .perform(() => {
+                this
+                  .waitForElementPresent('@saveAndCreateButton')
+                  .click('@saveAndCreateButton')
+
+                const { address1, town, postcode, country } = parentCompany
+                callback(assign({}, company, {
+                  header: company.name,
+                  primaryAddress: `${address1}, ${town}, ${postcode}, ${country}`,
+                }))
+              })
             done()
           })
 
-        callback(company)
         return this
       },
 
@@ -303,6 +398,10 @@ module.exports = {
         ukRegion: getTableRowValue('UK region'),
         headquarters: getTableRowValue('Headquarters'),
         sector: getTableRowValue('Sector'),
+        website: getTableRowValue('Website'),
+        businessDescription: getTableRowValue('Business description'),
+        numberOfEmployees: getTableRowValue('Number of employees'),
+        annualTurnover: getTableRowValue('Annual turnover'),
       },
     },
   },

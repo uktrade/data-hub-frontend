@@ -21,11 +21,10 @@ Feature: Search
     And there is a results count 1
     And I can view the event in the search results
 
-  @search--companies @ignore
+  @search--companies
   Scenario: Search companies
 
-    Given I navigate to the company list page
-    When a company is created to search
+    Given a company is created
     Then I see the success message
     When I search for the company
     Then I verify the tabs are displayed
