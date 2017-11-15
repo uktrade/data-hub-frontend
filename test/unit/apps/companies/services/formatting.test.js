@@ -111,7 +111,8 @@ describe('Company formatting service', () => {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
             'name': 'London',
           },
-          vat_number: '123412341234',
+          'vat_number': '123412341234',
+          'reference_code': 'ORG-12345678',
         }
         const expected = {
           business_type: 'Company',
@@ -127,6 +128,7 @@ describe('Company formatting service', () => {
           account_manager: 'Yvonne Ahern',
           country: 'United Kingdom',
           vat_number: '123412341234',
+          reference_code: 'ORG-12345678',
         }
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual).to.deep.equal(expected)
@@ -139,6 +141,15 @@ describe('Company formatting service', () => {
 
         const actual = companyFormattingService.getDisplayCompany(company)
         expect(actual).to.not.have.property('vat_number')
+      })
+      it('should not return a reference code if it is empty', () => {
+        const company = {
+          'id': '1234',
+          'reference_code': '',
+        }
+
+        const actual = companyFormattingService.getDisplayCompany(company)
+        expect(actual).to.not.have.property('reference_code')
       })
       it('should convert website to link', () => {
         const company = {
