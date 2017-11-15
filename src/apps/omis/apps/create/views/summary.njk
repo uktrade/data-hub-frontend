@@ -33,6 +33,14 @@
       items: [values.primary_market.name]
     }) }}
 
+    {{ AnswersSummary({
+      heading: 'Sector',
+      actions: [{
+        url: 'sector/edit'
+      }],
+      items: [values.sector.name]
+    }) }}
+
     <h2 class="heading-medium">What happens next</h2>
 
     <p>Continuing with the order will notify the post manager for {{ values.primary_market.name }}.</p>

@@ -4,9 +4,6 @@
   <h2 class="heading-medium">Assign project specialist and team members</h2>
 
   {% call Form(form) %}
-    {% if form.errors.team_members %}
-      <div class="error">{{ form.errors.team_members }}</div>
-    {% endif %}
     <div class="js-AddItems"
       data-item-selector=".c-form-fieldset"
       data-item-name="team member"
@@ -28,7 +25,8 @@
               name: 'role',
               label: form.labels.role,
               value: teamMember.role,
-              idSuffix: loop.index
+              idSuffix: loop.index0,
+              error: form.errors.messages['role-' + loop.index0]
             }) }}
           {% endcall %}
         {% endfor %}

@@ -1,13 +1,12 @@
-const { nullEmptyFields, convertYesNoToBoolean } = require('../../../lib/property-helpers')
+const { convertYesNoToBoolean } = require('../../../lib/property-helpers')
 const companyRepository = require('../repos')
 
 async function saveCompanyForm (token, companyForm) {
   return new Promise(async (resolve, reject) => {
     try {
-      let dataToSave = convertYesNoToBoolean(companyForm)
-      dataToSave = nullEmptyFields(dataToSave)
-      const savedContact = await companyRepository.saveCompany(token, dataToSave)
-      resolve(savedContact)
+      const dataToSave = convertYesNoToBoolean(companyForm)
+      const savedCompany = await companyRepository.saveCompany(token, dataToSave)
+      resolve(savedCompany)
     } catch (error) {
       reject(error)
     }

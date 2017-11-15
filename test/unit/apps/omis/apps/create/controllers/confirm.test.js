@@ -10,6 +10,13 @@ const metadataCountryMockData = [{
   id: '2',
   name: 'Country Two',
 }]
+const metadataSectorMockData = [{
+  id: '1',
+  name: 'ICT',
+}, {
+  id: '2',
+  name: 'Engineering',
+}]
 const contactsMockData = [{
   id: '1',
   first_name: 'Fred',
@@ -29,6 +36,7 @@ describe('OMIS create confirm controller', () => {
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
       '../../../../../lib/metadata': {
         countryOptions: metadataCountryMockData,
+        sectorOptions: metadataSectorMockData,
       },
       '../../../models': {
         Order: {
@@ -58,6 +66,7 @@ describe('OMIS create confirm controller', () => {
         contact: '1',
         company: 'company-12345',
         primary_market: '2',
+        sector: '2',
       }
     })
 
@@ -71,7 +80,7 @@ describe('OMIS create confirm controller', () => {
       it('should set the correct values', (done) => {
         const nextMock = (e, values) => {
           try {
-            expect(Object.keys(values).length).to.equal(3)
+            expect(Object.keys(values).length).to.equal(4)
             expect(values).to.deep.equal({
               company: {
                 id: '1234567890',
@@ -83,6 +92,10 @@ describe('OMIS create confirm controller', () => {
                 last_name: 'Stevens',
               },
               primary_market: metadataCountryMockData[1],
+              sector: {
+                id: '2',
+                name: 'Engineering',
+              },
             })
             done()
           } catch (err) {

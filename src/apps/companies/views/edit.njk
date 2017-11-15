@@ -9,7 +9,11 @@
     <h2 class="heading-medium">Business type</h2>
     {{ MetaList({
         items: [
-          { label: businessTypeLabel | default('(type of organisation not known)'), value: '<a href="/companies/add-step-1">Change</a>', safe: true }
+          {
+            label: businessTypeLabel | default('(type of organisation not known)'),
+            value: '&nbsp;' if company.id else '<a href="/companies/add-step-1">Change</a>',
+            safe: true
+          }
         ]
       }) }}
   </div>
@@ -300,5 +304,14 @@
       value: formData.turnover_range,
       error: errors.turnover_range
     }) }}
+
+    {% if not isForeign %}
+      {{ TextField({
+        name: 'vat_number',
+        label: 'VAT number',
+        value: formData.vat_number,
+        error: errors.vat_number
+      }) }}
+    {% endif %}
   {% endcall %}
 {% endblock %}
