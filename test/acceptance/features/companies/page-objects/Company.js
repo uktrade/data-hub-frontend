@@ -402,6 +402,7 @@ module.exports = {
         businessDescription: getTableRowValue('Business description'),
         numberOfEmployees: getTableRowValue('Number of employees'),
         annualTurnover: getTableRowValue('Annual turnover'),
+        cdmsReference: getTableRowValue('CDMS reference'),
       },
     },
   },
