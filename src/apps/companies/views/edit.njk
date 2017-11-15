@@ -304,5 +304,14 @@
       value: formData.turnover_range,
       error: errors.turnover_range
     }) }}
+
+    {% if not isForeign %}
+      {{ TextField({
+        name: 'vat_number',
+        label: 'VAT number',
+        value: formData.vat_number,
+        error: errors.vat_number
+      }) }}
+    {% endif %}
   {% endcall %}
 {% endblock %}

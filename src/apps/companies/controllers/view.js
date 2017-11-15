@@ -16,6 +16,7 @@ const companyDetailsDisplayOrder = [
   'description',
   'employee_range',
   'turnover_range',
+  'vat_number',
 ]
 const companiesHouseDetailsDisplayOrder = [
   'trading_name',
