@@ -33,6 +33,7 @@ const companyDetailsLabels = {
   company_number: 'Companies House number',
   account_manager_id: 'Account manager',
   vat_number: 'VAT number',
+  reference_code: 'CDMS reference',
 }
 const chDetailsLabels = {
   name: 'Registered name',
