@@ -2,7 +2,6 @@ const { get, merge, sumBy } = require('lodash')
 
 const { Order } = require('../../models')
 const logger = require('../../../../../config/logger')
-const { getContact } = require('../../../contacts/repos')
 
 async function renderWorkOrder (req, res) {
   const order = res.locals.order
@@ -11,12 +10,11 @@ async function renderWorkOrder (req, res) {
   try {
     const subscribers = await Order.getSubscribers(req.session.token, order.id)
     const assignees = await Order.getAssignees(req.session.token, order.id)
-    const contact = await getContact(req.session.token, order.contact.id)
 
     values = merge({}, order, {
-      contact,
       subscribers,
       assignees,
+      contact: res.locals.contact,
       estimatedTimeSum: sumBy(assignees, 'estimated_time'),
     })
   } catch (e) {
