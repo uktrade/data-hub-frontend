@@ -42,6 +42,18 @@ async function setContact (req, res, next) {
   next()
 }
 
+async function setAssignees (req, res, next) {
+  try {
+    const orderId = get(res.locals, 'order.id')
+    const assignees = await Order.getAssignees(req.session.token, orderId)
+
+    res.locals.assignees = assignees
+  } catch (error) {
+    logger.error(error)
+  }
+  next()
+}
+
 async function setQuoteSummary (req, res, next) {
   const order = get(res.locals, 'order')
 
@@ -222,6 +234,7 @@ module.exports = {
   setTranslation,
   setCompany,
   setContact,
+  setAssignees,
   setQuoteSummary,
   setQuotePreview,
   setQuote,

@@ -6,10 +6,10 @@ const logger = require('../../../../../config/logger')
 async function renderWorkOrder (req, res) {
   const order = res.locals.order
   let values
+  const assignees = res.locals.assignees
 
   try {
     const subscribers = await Order.getSubscribers(req.session.token, order.id)
-    const assignees = await Order.getAssignees(req.session.token, order.id)
 
     values = merge({}, order, {
       subscribers,
