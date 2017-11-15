@@ -5,7 +5,7 @@ const { getInvestmentProjectAuditLog } = require('../repos')
 
 function formatAuditLog (logEntry) {
   return {
-    name: logEntry.user.name,
+    name: get(logEntry, 'user.name'),
     timestamp: formatLongDate(logEntry.timestamp),
     changes: (logEntry.changes && Object.keys(logEntry.changes).length) || 0,
   }
