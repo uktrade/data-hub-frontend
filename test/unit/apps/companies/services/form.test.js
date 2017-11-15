@@ -33,15 +33,6 @@ describe('company form service', function () {
           expect(saveCompanyStub).to.be.calledWith('1234', { thing: true, other: false })
         })
     })
-    it('nulls empty fields', function () {
-      const company = {
-        thing: '',
-      }
-      return companyFormService.saveCompanyForm('1234', company)
-        .then((result) => {
-          expect(saveCompanyStub).to.be.calledWith('1234', { thing: null })
-        })
-    })
     it('handles errors', function () {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
       companyFormService = proxyquire('~/src/apps/companies/services/form', {
