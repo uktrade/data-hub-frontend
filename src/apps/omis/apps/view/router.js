@@ -15,6 +15,7 @@ const {
   setCompany,
   setContact,
   setAssignees,
+  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,
@@ -40,7 +41,7 @@ router.use(setQuoteSummary)
 router.use(setArchivedDocumentsBaseUrl)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/work-order', setContact, setAssignees, renderWorkOrder)
+router.get('/work-order', setContact, setAssignees, setSubscribers, renderWorkOrder)
 router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
