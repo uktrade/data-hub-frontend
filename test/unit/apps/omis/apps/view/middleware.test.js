@@ -1,3 +1,4 @@
+const contactMock = require('~/test/unit/data/contacts/contacts')[0]
 const invoiceMock = require('~/test/unit/data/omis/invoice')
 const paymentsMock = require('~/test/unit/data/omis/payments')
 
@@ -7,6 +8,7 @@ describe('OMIS View middleware', () => {
 
     this.getCompanySpy = this.sandbox.spy()
     this.loggerErrorSpy = this.sandbox.spy()
+    this.getContactStub = this.sandbox.stub()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.getInvoiceStub = this.sandbox.stub()
@@ -40,6 +42,9 @@ describe('OMIS View middleware', () => {
       },
       '../../../../../config/logger': {
         error: this.loggerErrorSpy,
+      },
+      '../../../contacts/repos': {
+        getContact: this.getContactStub,
       },
       '../../models': {
         Order: {
@@ -122,6 +127,48 @@ describe('OMIS View middleware', () => {
 
       it('should not call next itself', () => {
         expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+  })
+
+  describe('setContact()', () => {
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getContactStub.resolves(contactMock)
+
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should set contact property on locals', () => {
+        expect(this.resMock.locals.order).to.have.property('contact')
+      })
+
+      it('should set correct contact object', () => {
+        expect(this.resMock.locals.order.contact).to.deep.equal(contactMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getContactStub.rejects(this.error)
+
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should log error', () => {
+        expect(this.loggerErrorSpy).to.have.been.calledOnce
+        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
       })
     })
   })

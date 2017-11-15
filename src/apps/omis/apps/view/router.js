@@ -13,6 +13,7 @@ const {
 const {
   setTranslation,
   setCompany,
+  setContact,
   setQuoteSummary,
   setQuotePreview,
   setQuote,
@@ -38,7 +39,7 @@ router.use(setQuoteSummary)
 router.use(setArchivedDocumentsBaseUrl)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/work-order', renderWorkOrder)
+router.get('/work-order', setContact, renderWorkOrder)
 router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
