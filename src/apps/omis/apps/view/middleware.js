@@ -54,6 +54,18 @@ async function setAssignees (req, res, next) {
   next()
 }
 
+async function setSubscribers (req, res, next) {
+  try {
+    const orderId = get(res.locals, 'order.id')
+    const subscribers = await Order.getSubscribers(req.session.token, orderId)
+
+    res.locals.subscribers = subscribers
+  } catch (error) {
+    logger.error(error)
+  }
+  next()
+}
+
 async function setQuoteSummary (req, res, next) {
   const order = get(res.locals, 'order')
 
@@ -235,6 +247,7 @@ module.exports = {
   setCompany,
   setContact,
   setAssignees,
+  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,
