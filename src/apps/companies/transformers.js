@@ -9,6 +9,7 @@ const {
 } = require('lodash')
 
 const metadataRepository = require('../../lib/metadata')
+const { getFormattedAddress } = require('../../lib/address')
 
 function transformCompanyToListItem ({
   id,
@@ -92,6 +93,7 @@ function transformCompaniesHouseCompanyToListItem ({
   registered_address_town,
   registered_address_county,
   registered_address_postcode,
+  registered_address_country,
   company_number,
   company_category,
   company_status,
@@ -101,16 +103,6 @@ function transformCompaniesHouseCompanyToListItem ({
   sic_code_4,
   incorporation_date,
 }) {
-  const address = [
-    capitalize(registered_address_1),
-    capitalize(registered_address_2),
-    capitalize(registered_address_town),
-    capitalize(registered_address_county),
-    registered_address_postcode,
-  ]
-    .filter(item => item.length)
-    .join(', ')
-
   const sicCodes = transformSicCodes({ sic_code_1, sic_code_2, sic_code_3, sic_code_4 })
 
   return {
@@ -143,7 +135,14 @@ function transformCompaniesHouseCompanyToListItem ({
       },
       {
         label: 'Address',
-        value: address,
+        value: getFormattedAddress({
+          address_1: registered_address_1,
+          address_2: registered_address_2,
+          address_town: registered_address_town,
+          address_county: registered_address_county,
+          address_postcode: registered_address_postcode,
+          address_country: registered_address_country,
+        }),
       },
     ],
   }
