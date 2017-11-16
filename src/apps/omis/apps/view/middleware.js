@@ -118,6 +118,7 @@ async function setQuotePreview (req, res, next) {
       }
     })
 
+    res.locals.missingLeadAssignee = error.error.hasOwnProperty('assignee_lead')
     res.locals.incompleteFields = pickBy(quoteErrors)
   }
 
