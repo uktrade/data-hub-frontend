@@ -1,7 +1,6 @@
-const { assign } = require('lodash')
-
-const companyData = require('~/test/unit/data/companies/company.json')
-const viewController = require('~/src/apps/companies/controllers/details')
+const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany.json')
+const minimalCompany = require('~/test/unit/data/companies/minimalCompany.json')
+const { renderDetails } = require('~/src/apps/companies/controllers/details')
 
 describe('Companies details controller', () => {
   beforeEach(() => {
@@ -27,56 +26,58 @@ describe('Companies details controller', () => {
     this.sandbox.restore()
   })
 
-  describe('renderDetails', () => {
-    context('when there is one list data associated with a company', () => {
+  describe('#renderDetails', () => {
+    context('when the company contains companes house data', () => {
       beforeEach(() => {
-        const company = assign({}, companyData, {
-          one_list_account_owner: {
-            id: '888',
-            name: 'Fred Bloggs',
-          },
-          classification: {
-            id: '777',
-            name: 'Top',
-          },
-        })
-
-        this.res.locals = assign({}, this.res.locals, { company })
-        viewController.renderDetails(this.req, this.res)
+        this.res.locals.company = companiesHouseCompany
+        renderDetails(this.req, this.res, this.next)
       })
 
-      it('should pass account management display data to the view', () => {
-        expect(this.res.locals).to.have.deep.property('accountManagementDisplay', {
-          oneListAccountManager: 'Fred Bloggs',
-          oneListTier: 'Top',
-        })
+      it('should render the correct template', () => {
+        const templateName = this.res.render.firstCall.args[0]
+        expect(templateName).to.equal('companies/views/details')
       })
 
-      it('should pass account management labels to the view', () => {
-        expect(this.res.locals).to.have.property('accountManagementDisplayLabels')
+      it('should include company details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.companyDetails).to.not.be.null
+      })
+
+      it('should include companies house details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.chDetails).to.not.be.null
+      })
+
+      it('should include one list information', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.accountManagementDetails).to.not.be.null
       })
     })
 
-    context('when there is no one list data associated with a company', () => {
+    context('when the company has no companies house data', () => {
       beforeEach(() => {
-        const company = assign({}, companyData, {
-          one_list_account_owner: null,
-          classification: null,
-        })
-
-        this.res.locals = assign({}, this.res.locals, { company })
-        viewController.renderDetails(this.req, this.res)
+        this.res.locals.company = minimalCompany
+        renderDetails(this.req, this.res, this.next)
       })
 
-      it('should indicate there is non one list account information', () => {
-        expect(this.res.locals).to.have.deep.property('accountManagementDisplay', {
-          oneListAccountManager: 'None',
-          oneListTier: 'None',
-        })
+      it('should render the correct template', () => {
+        const templateName = this.res.render.firstCall.args[0]
+        expect(templateName).to.equal('companies/views/details')
       })
 
-      it('should pass account management labels to the view', () => {
-        expect(this.res.locals).to.have.property('accountManagementDisplayLabels')
+      it('should include company details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.companyDetails).to.not.be.null
+      })
+
+      it('should include companies house details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.chDetails).to.be.null
+      })
+
+      it('should include one list information', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.accountManagementDetails).to.not.be.null
       })
     })
   })
