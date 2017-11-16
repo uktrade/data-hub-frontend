@@ -2,6 +2,8 @@ const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
+const { getButtonWithText } = require('../../../helpers/selectors')
+
 defineSupportCode(({ When, Then }) => {
   const Collection = client.page.Collection()
 
@@ -20,11 +22,15 @@ defineSupportCode(({ When, Then }) => {
   })
 
   When(/^I click the "(.+)" link$/, async (linkTextContent) => {
+    const { selector: addLink } = getButtonWithText(linkTextContent)
+
     await Collection
-      .section.collectionHeader
-      .waitForElementPresent('@addLink')
-      .assert.containsText('@addLink', linkTextContent)
-      .click('@addLink')
+      .api.useXpath()
+      .waitForElementVisible(addLink)
+      .assert.containsText(addLink, linkTextContent)
+      .click(addLink)
+      .useCss()
+  })
   })
 
   Then(/^there are (.+) headings$/, async function (collectionType) {
