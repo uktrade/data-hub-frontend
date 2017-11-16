@@ -1,3 +1,4 @@
+const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -14,21 +15,23 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^a primary contact is added$/, async function () {
     await Contact
       .createNewContact({}, true, (contact) => {
-        this.state.contact = contact
+        set(this.state, 'contact', contact)
+        set(this.state, 'contact.type', 'Primary')
       })
   })
 
   When(/^a primary contact with new company address is added$/, async function () {
     await Contact
       .createNewPrimaryContactWithNewCompanyAddress({}, (contact) => {
-        this.state.contact = contact
+        set(this.state, 'contact', contact)
+        set(this.state, 'contact.type', 'Primary')
       })
   })
 
   When(/^a non-primary contact is added$/, async function () {
     await Contact
       .createNewContact({}, false, (contact) => {
-        this.state.contact = contact
+        set(this.state, 'contact', contact)
       })
   })
 

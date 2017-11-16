@@ -65,7 +65,6 @@ module.exports = {
     collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
-    pageHeading: 'h1.c-local-header__heading',
   },
   commands: [
     {
@@ -107,7 +106,10 @@ module.exports = {
             this
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
-              .waitForElementPresent('@pageHeading')
+              .section.localHeader
+              .waitForElementPresent('@header')
+
+            this
               .api.perform((done) => {
                 this.getListOption('@registeredAddressCountry', (country) => {
                   company.registeredAddressCountry = country
@@ -199,7 +201,10 @@ module.exports = {
             this
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
-              .waitForElementPresent('@pageHeading')
+              .section.localHeader
+              .waitForElementPresent('@header')
+
+            this
               .api.perform((done) => {
                 this.getListOption('@ukRegion', (ukRegion) => {
                   companyStep2.ukRegion = ukRegion
@@ -250,7 +255,7 @@ module.exports = {
                 const country = 'United Kingdom'
                 callback(assign({}, companyStep1, companyStep2, {
                   country,
-                  header: companyStep2.name,
+                  heading: companyStep2.name,
                   primaryAddress: `${address1}, ${town}, ${country}`,
                 }))
               })
@@ -268,27 +273,32 @@ module.exports = {
         }, details)
         const companyRadioButtons = {}
 
-        this
+        return this
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
           .waitForElementPresent('@foreignOrganisationOptionBusinessType')
-          .api.perform(async (done) => {
+          .api.perform((done) => {
             // step 1
             this
+              .waitForElementPresent('@ukPrivateOrPublicLimitedCompanyOption')
               .click('@ukPrivateOrPublicLimitedCompanyOption')
               .click('@continueButton')
 
             // step 2
+              .waitForElementPresent('@parentCompanySearch')
               .setValue('@parentCompanySearch', parentCompany.name)
               .submitForm('form')
 
             // step 3
             this.section.firstCompanySearchResult
+              .waitForElementPresent('@header')
               .click('@header')
 
             // step 4
+            this.section.localHeader
+              .waitForElementPresent('@header')
+
             this
-              .waitForElementPresent('@pageHeading')
               .api.perform((done) => {
                 this.getListOption('@ukRegion', (ukRegion) => {
                   company.ukRegion = ukRegion
@@ -343,8 +353,6 @@ module.exports = {
               })
             done()
           })
-
-        return this
       },
 
       searchForCompanyInCollection (companyName) {
@@ -358,6 +366,12 @@ module.exports = {
     },
   ],
   sections: {
+    localHeader: {
+      selector: '.c-local-header',
+      elements: {
+        header: '.c-local-header__heading',
+      },
+    },
     detailsTabs: {
       selector: '.c-local-nav',
       elements: {
@@ -370,7 +384,7 @@ module.exports = {
       },
     },
     firstCompanySearchResult: {
-      selector: '.c-entity-list li:first-child',
+      selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: {
           selector: 'a',
