@@ -31,6 +31,14 @@ defineSupportCode(({ When, Then }) => {
       .click(addLink)
       .useCss()
   })
+
+  Then(/^I capture the modified on date for the first item$/, async function () {
+    await Collection
+      .section.firstCollectionItem
+      .waitForElementPresent('@updated')
+      .getText('@updated', (updated) => {
+        set(this.state, 'collection.updated', updated.value)
+      })
   })
 
   Then(/^there are (.+) headings$/, async function (collectionType) {
