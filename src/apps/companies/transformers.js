@@ -39,9 +39,23 @@ function transformCompanyToListItem ({
   let address
 
   if (isTradingAddress) {
-    address = [trading_address_1, trading_address_town, trading_address_postcode]
+    address = getFormattedAddress({
+      address_1: trading_address_1,
+      address_2: trading_address_2,
+      address_town: trading_address_town,
+      address_county: trading_address_county,
+      address_postcode: trading_address_postcode,
+      address_country: trading_address_country,
+    })
   } else {
-    address = [registered_address_1, registered_address_town, registered_address_postcode]
+    address = getFormattedAddress({
+      address_1: registered_address_1,
+      address_2: registered_address_2,
+      address_town: registered_address_town,
+      address_county: registered_address_county,
+      address_postcode: registered_address_postcode,
+      address_country: registered_address_country,
+    })
   }
 
   if (sector) {
@@ -70,7 +84,7 @@ function transformCompanyToListItem ({
   if (address) {
     meta.push({
       label: isTradingAddress ? 'Trading address' : 'Registered address',
-      value: address.filter(x => x).join(', '),
+      value: address,
     })
   }
 
