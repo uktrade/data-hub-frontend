@@ -1,12 +1,10 @@
 const { assign, find, get } = require('lodash')
 
 const metadataRepository = require('../../../lib/metadata')
-const { hqLabels, chDetailsLabels } = require('../labels')
+const { hqLabels } = require('../labels')
 const companyFormService = require('../services/form')
 const { transformCompanyResponseToForm } = require('../transformers')
 const { transformObjectToOption } = require('../../transformers')
-
-const chDetailsDisplayOrder = ['name', 'company_number', 'registered_address', 'business_type', 'company_status', 'incorporation_date', 'sic_code']
 
 function populateForm (req, res, next) {
   const countryQueryParam = get(req.query, 'country')
@@ -52,8 +50,6 @@ function populateForm (req, res, next) {
   }
 
   res.locals = assign({}, res.locals, {
-    chDetailsLabels,
-    chDetailsDisplayOrder,
     headquarterOptions,
     regionOptions: metadataRepository.regionOptions.map(transformObjectToOption),
     sectorOptions: metadataRepository.sectorOptions.map(transformObjectToOption),
