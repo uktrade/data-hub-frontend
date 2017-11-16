@@ -129,6 +129,22 @@ describe('Answers Summary macro', () => {
       })
     })
 
+    context('with an ID', () => {
+      beforeEach(() => {
+        this.component = commonMacros.renderToDom('AnswersSummary', {
+          items,
+          id: 'component-id',
+        })
+      })
+      it('should add an id attribute to table element', () => {
+        expect(this.component.hasAttribute('id')).to.equal(true)
+      })
+
+      it('should set the correct value to the id attribute', () => {
+        expect(this.component.getAttribute('id')).to.equal('component-id')
+      })
+    })
+
     context('with actions', () => {
       beforeEach(() => {
         this.component = commonMacros.renderToDom('AnswersSummary', {
