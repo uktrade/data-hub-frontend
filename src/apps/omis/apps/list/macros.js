@@ -99,11 +99,20 @@ const collectionSortForm = {
   ],
 }
 
-const reconciliationSortForm = assign({}, collectionSortForm)
-reconciliationSortForm.children[0].options = [
-  { value: 'payment_due_date:asc', label: 'Earliest payment due date' },
-  { value: 'payment_due_date:desc', label: 'Lastest payment due date' },
-]
+const reconciliationSortForm = assign({}, collectionSortForm, {
+  children: [
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'Sort by',
+      name: 'sortby',
+      modifier: ['small', 'inline', 'light'],
+      options: [
+        { value: 'payment_due_date:asc', label: 'Earliest payment due date' },
+        { value: 'payment_due_date:desc', label: 'Lastest payment due date' },
+      ],
+    },
+  ],
+})
 
 module.exports = {
   collectionSortForm,
