@@ -12,6 +12,9 @@ const templateGlobals = require('./globals')
 
 const COMPONENTS_PATH = '_components/' // relative to templates path
 const COMPONENT_EXT = 'njk'
+const WHITESPACE_AT_START = /^\s+/
+const WHITESPACE_BETWEEN_TAGS = />\s+</g
+const WHITESPACE_AT_END = /\s+$/
 
 function ComponentExtension (env) {
   this.tags = ['component']
@@ -45,6 +48,27 @@ function ComponentExtension (env) {
   }
 }
 
+function SafeSpacelessExtension () {
+  this.tags = ['safespaceless']
+
+  this.parse = function (parser, nodes) {
+    const token = parser.nextToken()
+    const args = parser.parseSignature(null, true)
+    parser.advanceAfterBlockEnd(token.value)
+    const body = parser.parseUntilBlocks('end' + this.tags[0])
+    parser.advanceAfterBlockEnd()
+    return new nodes.CallExtension(this, 'run', args, [body])
+  }
+
+  this.run = function (context, body) {
+    const result = body()
+      .replace(WHITESPACE_AT_START, '')
+      .replace(WHITESPACE_BETWEEN_TAGS, '><')
+      .replace(WHITESPACE_AT_END, '')
+    return new nunjucks.runtime.SafeString(result)
+  }
+}
+
 module.exports = (app, config) => {
   const env = nunjucks.configure([
     `${config.root}/src/apps`,
@@ -66,6 +90,7 @@ module.exports = (app, config) => {
 
   // Custom extensions
   env.addExtension('ComponentExtension', new ComponentExtension(env))
+  env.addExtension('SafeSpacelessExtension', new SafeSpacelessExtension())
 
   // Global variables
   Object.keys(templateGlobals).forEach((global) => {

@@ -30,7 +30,13 @@ const XHR = {
     this.injectResponseInHtml(res.data)
 
     if (params) {
-      history.push(`?${queryString.stringify(params)}`, { data: res.data })
+      const url = `?${queryString.stringify(params)}`
+      try {
+        history.push(url, { data: res.data })
+      } catch (err) {
+        // state was too large for browser to handle. Do full page load.
+        window.location.assign(url)
+      }
     }
 
     return res
