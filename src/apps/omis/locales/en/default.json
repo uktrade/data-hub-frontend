@@ -117,6 +117,7 @@
       "assignees": "Add at least one adviser in the market",
       "assignee_time": "Allocate hours to at least one adviser in the market",
       "vat_status": "Choose a VAT category",
+      "vat_number": "Enter the EU company's VAT number",
       "vat_verified": "Verify the EU company's VAT number"
     }
   },
