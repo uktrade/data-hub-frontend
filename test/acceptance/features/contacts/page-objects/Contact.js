@@ -127,7 +127,7 @@ module.exports = {
               }
             }
 
-            contact.header = `${contact.firstName} ${contact.lastName}`
+            contact.heading = `${contact.firstName} ${contact.lastName}`
 
             done()
           })
@@ -144,12 +144,11 @@ module.exports = {
             done()
           })
 
-        this
-          .waitForElementPresent('@saveButton')
-          .click('@saveButton')
-
-        callback(contact)
         return this
+          .waitForElementPresent('@saveButton')
+          .click('@saveButton', () => {
+            callback(contact)
+          })
       },
 
       createNewPrimaryContactWithNewCompanyAddress (details = {}, callback) {
@@ -169,7 +168,7 @@ module.exports = {
           ukPostcode: 'EC2Y 9AE',
         }, details)
 
-        this
+        return this
           .click('@addContactButton')
           .click('@sameAddressNo')
           .api
@@ -192,11 +191,10 @@ module.exports = {
 
             done()
           })
-
-        this.waitForElementPresent('@saveButton').click('@saveButton')
-
-        callback(contact)
-        return this
+          .waitForElementPresent('@saveButton')
+          .click('@saveButton', () => {
+            callback(contact)
+          })
       },
     },
   ],

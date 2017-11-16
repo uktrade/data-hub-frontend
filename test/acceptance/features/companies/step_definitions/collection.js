@@ -72,7 +72,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^the companies should be filtered by company name/, async function () {
-    const expected = get(this.state, `company.header`)
+    const expected = get(this.state, `company.heading`)
 
     await CompanyList
       .section.firstCompanyInList
@@ -110,7 +110,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^the companies should have been correctly sorted by updated date$/, async function () {
     const firstItemField = get(this.state, 'collection.firstItem.field')
     const lastItemField = get(this.state, 'collection.lastItem.field')
-    const expectedFirstItemField = get(this.state, 'company.header')
+    const expectedFirstItemField = get(this.state, 'company.heading')
     const expectedLastItemField = this.fixtures.company.foreign.name
 
     client.expect(firstItemField).to.equal(expectedFirstItemField)

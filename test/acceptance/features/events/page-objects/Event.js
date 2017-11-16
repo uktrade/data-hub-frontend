@@ -86,10 +86,10 @@ module.exports = {
           teams: null,
         }, details)
 
-        this
+        return this
           .waitForElementPresent('@sharedYes')
           .click('@sharedYes')
-          .api.perform(async (done) => {
+          .api.perform((done) => {
             Promise.all(
               keys(pickBy(event, isNull)).map((key) => {
                 return new Promise((resolve) => {
@@ -127,9 +127,9 @@ module.exports = {
                 done()
               })
           })
-
-        callback(event)
-        return this
+          .perform(() => {
+            callback(event)
+          })
       },
     },
   ],
