@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 const { getFormattedAddress } = require('../../../lib/address')
 const { getDitCompany, getCHCompany } = require('../repos')
 
@@ -22,9 +24,8 @@ async function getCompany (req, res, next, id) {
     const company = await getDitCompany(req.session.token, id)
 
     company.address = getHeadingAddress(company)
-
     res.locals.company = company
-
+    res.locals.companiesHouseCategory = get(company, 'companies_house_data.company_category')
     next()
   } catch (error) {
     next(error)
@@ -33,7 +34,9 @@ async function getCompany (req, res, next, id) {
 
 async function getCompaniesHouseRecord (req, res, next, companyNumber) {
   try {
-    res.locals.companiesHouseRecord = await getCHCompany(req.session.token, companyNumber)
+    const companiesHouseRecord = await getCHCompany(req.session.token, companyNumber)
+    res.locals.companiesHouseCategory = companiesHouseRecord.company_category
+    res.locals.companiesHouseRecord = companiesHouseRecord
     next()
   } catch (error) {
     next(error)
