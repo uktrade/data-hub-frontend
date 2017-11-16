@@ -54,10 +54,7 @@ module.exports = {
           })
           .getText('@projectCode', (projectCode) => {
             set(projectDetails, 'projectCode', projectCode.value)
-          })
-          .api.perform((done) => {
             callback(projectDetails)
-            done()
           })
       },
       selectFdiTypeOfInvestmentProject (projectDetails = {}, callback) {
