@@ -9,6 +9,7 @@ const {
   transformCompaniesHouseCompanyToListItem,
   transformCompanyResponseToViewRecord,
   transformCompaniesHouseResponseToViewRecord,
+  transformCompanyResponseToOneListViewRecord,
 } = require('~/src/apps/companies/transformers')
 
 describe('Company transformers', function () {
@@ -350,6 +351,50 @@ describe('Company transformers', function () {
 
       it('should return the formatted SIC codes', () => {
         expect(this.viewRecord).to.have.property('Nature of business (SIC)', '82990 - Other business support service activities n.e.c., more stuff')
+      })
+    })
+  })
+
+  describe('#transformCompanyResponseToOneListViewRecord', () => {
+    context('when there is one list information', () => {
+      beforeEach(() => {
+        const company = assign({}, minimalCompany, {
+          one_list_account_owner: null,
+          classification: null,
+        })
+
+        this.viewRecord = transformCompanyResponseToOneListViewRecord(company)
+      })
+
+      it('indicate there is no one list account management information', () => {
+        expect(this.viewRecord).to.deep.equal({
+          'One List account manager': 'None',
+          'One List tier': 'None',
+        })
+      })
+    })
+
+    context('when there is no one list information', () => {
+      beforeEach(() => {
+        const company = assign({}, minimalCompany, {
+          one_list_account_owner: {
+            id: '1234',
+            name: 'The owner',
+          },
+          classification: {
+            id: '4321',
+            name: 'The classification',
+          },
+        })
+
+        this.viewRecord = transformCompanyResponseToOneListViewRecord(company)
+      })
+
+      it('indicate there is no one list account management information', () => {
+        expect(this.viewRecord).to.deep.equal({
+          'One List account manager': 'The owner',
+          'One List tier': 'The classification',
+        })
       })
     })
   })
