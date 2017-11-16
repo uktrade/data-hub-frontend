@@ -67,6 +67,7 @@
   }) }}
 
   {% call AnswersSummary({
+    id: 'assignees',
     heading: 'Advisers in the market',
     actions: [{
       url: 'edit/assignees' if order.isEditable,
