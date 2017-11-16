@@ -11,6 +11,13 @@
       <p>To preview a quote you must complete the following:</p>
 
       <ul class="list-disc">
+        {% if missingLeadAssignee %}
+          <li>
+            <a href="/omis/{{ order.id }}#assignees">
+              {{ translate('errors.quote.assignee_lead') }}
+            </a>
+          </li>
+        {% endif %}
         {% for stepUrl, stepData in incompleteFields %}
           {% for field in stepData.errors %}
             <li>
@@ -22,87 +29,88 @@
         {% endfor %}
       </ul>
     {% endcall %}
-  {% endif %}
+  {% else %}
 
-  {% if quote %}
-    {% set expiryLabel %}
-      {% if order.status === 'quote_awaiting_acceptance' %}
-        Expire{{ 'd' if quote.expired else 's' }} on
-      {% else %}
-        Will expire on
+    {% if quote %}
+      {% set expiryLabel %}
+        {% if order.status === 'quote_awaiting_acceptance' %}
+          Expire{{ 'd' if quote.expired else 's' }} on
+        {% else %}
+          Will expire on
+        {% endif %}
+      {% endset %}
+
+      {% set expiryValue %}
+        {{ quote.expires_on | formatDate }} ({{ quote.expires_on | fromNow }})
+      {% endset %}
+
+      {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
+        {{ MetaList({
+          items: [
+            { label: expiryLabel, value: expiryValue }
+          ],
+          itemModifier: 'stacked'
+        }) }}
       {% endif %}
-    {% endset %}
 
-    {% set expiryValue %}
-      {{ quote.expires_on | formatDate }} ({{ quote.expires_on | fromNow }})
-    {% endset %}
-
-    {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
       {{ MetaList({
         items: [
-          { label: expiryLabel, value: expiryValue }
+          { label: 'Sent on', value: quote.created_on, type: 'datetime' },
+          { label: 'Sent by', value: quote.created_by if quote.created_on }
         ],
         itemModifier: 'stacked'
       }) }}
-    {% endif %}
 
-    {{ MetaList({
-      items: [
-        { label: 'Sent on', value: quote.created_on, type: 'datetime' },
-        { label: 'Sent by', value: quote.created_by if quote.created_on }
-      ],
-      itemModifier: 'stacked'
-    }) }}
+      {{ MetaList({
+        items: [
+          { label: 'Cancelled on', value: quote.cancelled_on, type: 'datetime' },
+          { label: 'Cancelled by', value: quote.cancelled_by },
+          { label: 'Accepted on', value: quote.accepted_on, type: 'datetime' },
+          { label: 'Accepted by', value: quote.accepted_by }
+        ],
+        itemModifier: 'stacked'
+      }) }}
 
-    {{ MetaList({
-      items: [
-        { label: 'Cancelled on', value: quote.cancelled_on, type: 'datetime' },
-        { label: 'Cancelled by', value: quote.cancelled_by },
-        { label: 'Accepted on', value: quote.accepted_on, type: 'datetime' },
-        { label: 'Accepted by', value: quote.accepted_by }
-      ],
-      itemModifier: 'stacked'
-    }) }}
+      {% if quote.content %}
+        {% call Example(tabTitle = '') %}
+          <div class="l-markdown">
+  {# Ugly indentation is so that markdown spacing is handled correctly #}
+  {% markdown %}{{ quote.content | safe }}{% endmarkdown %}
 
-    {% if quote.content %}
-      {% call Example(tabTitle = '') %}
-        <div class="l-markdown">
-{# Ugly indentation is so that markdown spacing is handled correctly #}
-{% markdown %}{{ quote.content | safe }}{% endmarkdown %}
-
-          {% call HiddenContent({ summary: 'View full terms and conditions' }) %}
-{# Ugly indentation is so that markdown spacing is handled correctly #}
-{% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
-          {% endcall %}
-        </div>
-      {% endcall %}
-    {% endif %}
-
-    {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
-      {% if destructive %}
-        {{ Message({
-          type: 'error',
-          text: 'Editing the order whilst it is out for acceptance will invalidate the
-          current quote and the client will no longer be able to accept it.'
-        }) }}
+            {% call HiddenContent({ summary: 'View full terms and conditions' }) %}
+  {# Ugly indentation is so that markdown spacing is handled correctly #}
+  {% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
+            {% endcall %}
+          </div>
+        {% endcall %}
       {% endif %}
+
+      {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
+        {% if destructive %}
+          {{ Message({
+            type: 'error',
+            text: 'Editing the order whilst it is out for acceptance will invalidate the
+            current quote and the client will no longer be able to accept it.'
+          }) }}
+        {% endif %}
+      {% endif %}
+
     {% endif %}
 
+    {% if order.status === 'draft' and quote %}
+      {{ Message({
+        type: 'info',
+        text: 'Quotes should be reviewed by a manager before being sent.'
+      }) }}
+
+      <h2 class="heading-medium">What happens next</h2>
+
+      <ul class="list-disc">
+        <li>An email with a link to this quote will be sent to the client for acceptance</li>
+      </ul>
+    {% endif %}
+
+    {{ Form(quoteForm) }}
+
   {% endif %}
-
-  {% if order.status === 'draft' and quote %}
-    {{ Message({
-      type: 'info',
-      text: 'Quotes should be reviewed by a manager before being sent.'
-    }) }}
-
-    <h2 class="heading-medium">What happens next</h2>
-
-    <ul class="list-disc">
-      <li>An email with a link to this quote will be sent to the client for acceptance</li>
-    </ul>
-  {% endif %}
-
-  {{ Form(quoteForm) }}
-
 {% endblock %}

@@ -459,6 +459,48 @@ describe('OMIS View middleware', () => {
           })
         })
 
+        it('should set a missingLeadAssignee property', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals).to.have.property('missingLeadAssignee')
+        })
+
+        it('should set a missingLeadAssignee to false', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.missingLeadAssignee).to.equal(false)
+        })
+
+        it('should return next without error', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when quote preview errors contains assignee_lead error', () => {
+        beforeEach(() => {
+          const error = {
+            statusCode: 400,
+            error: {
+              'assignee_lead': ['Required'],
+            },
+          }
+          this.previewQuoteStub.rejects(error)
+        })
+
+        it('should set a missingLeadAssignee property', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals).to.have.property('missingLeadAssignee')
+        })
+
+        it('should set a missingLeadAssignee to true', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.missingLeadAssignee).to.equal(true)
+        })
+
         it('should return next without error', async () => {
           await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
 
