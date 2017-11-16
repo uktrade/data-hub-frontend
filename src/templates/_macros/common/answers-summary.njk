@@ -7,6 +7,7 @@
  # @param {string} props.items.label - item label
  # @param {string} [props.items.fallbackText] - fallback text if value is empty
  # @param {string} [props.fallbackText] - component level fallback when items is a list of strings
+ # @param {string} [props.id] - ID to use for table
  # @param {string} [props.heading] - heading to use as caption for the table
  # @param {object[]} [props.actions] - array of actions to display
  # @param {string} [props.actions.url] - URL for the action
@@ -16,7 +17,10 @@
  #}
 {% macro AnswersSummary(props) %}
   {% if props.items or props.fallbackText or caller %}
-    <table class="c-answers-summary">
+    <table
+      class="c-answers-summary"
+      {% if props.id %}id="{{ props.id }}"{% endif %}
+    >
       {% if props.heading or props.actions.length %}
         <caption class="c-answers-summary__heading">
           {{ props.heading }}
