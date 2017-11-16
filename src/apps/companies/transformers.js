@@ -9,6 +9,7 @@ const {
 } = require('lodash')
 
 const metadataRepository = require('../../lib/metadata')
+const { getFormattedAddress } = require('../../lib/address')
 
 function transformCompanyToListItem ({
   id,
@@ -38,9 +39,23 @@ function transformCompanyToListItem ({
   let address
 
   if (isTradingAddress) {
-    address = [trading_address_1, trading_address_town, trading_address_postcode]
+    address = getFormattedAddress({
+      address_1: trading_address_1,
+      address_2: trading_address_2,
+      address_town: trading_address_town,
+      address_county: trading_address_county,
+      address_postcode: trading_address_postcode,
+      address_country: trading_address_country,
+    })
   } else {
-    address = [registered_address_1, registered_address_town, registered_address_postcode]
+    address = getFormattedAddress({
+      address_1: registered_address_1,
+      address_2: registered_address_2,
+      address_town: registered_address_town,
+      address_county: registered_address_county,
+      address_postcode: registered_address_postcode,
+      address_country: registered_address_country,
+    })
   }
 
   if (sector) {
@@ -69,7 +84,7 @@ function transformCompanyToListItem ({
   if (address) {
     meta.push({
       label: isTradingAddress ? 'Trading address' : 'Registered address',
-      value: address.filter(x => x).join(', '),
+      value: address,
     })
   }
 
@@ -92,6 +107,7 @@ function transformCompaniesHouseCompanyToListItem ({
   registered_address_town,
   registered_address_county,
   registered_address_postcode,
+  registered_address_country,
   company_number,
   company_category,
   company_status,
@@ -101,24 +117,7 @@ function transformCompaniesHouseCompanyToListItem ({
   sic_code_4,
   incorporation_date,
 }) {
-  const address = [
-    capitalize(registered_address_1),
-    capitalize(registered_address_2),
-    capitalize(registered_address_town),
-    capitalize(registered_address_county),
-    registered_address_postcode,
-  ]
-    .filter(item => item.length)
-    .join(', ')
-
-  const sicCodes = [
-    sic_code_1,
-    sic_code_2,
-    sic_code_3,
-    sic_code_4,
-  ]
-    .filter(item => item.length)
-    .join(', ')
+  const sicCodes = transformSicCodes({ sic_code_1, sic_code_2, sic_code_3, sic_code_4 })
 
   return {
     name: capitalize(name),
@@ -150,7 +149,14 @@ function transformCompaniesHouseCompanyToListItem ({
       },
       {
         label: 'Address',
-        value: address,
+        value: getFormattedAddress({
+          address_1: registered_address_1,
+          address_2: registered_address_2,
+          address_town: registered_address_town,
+          address_county: registered_address_county,
+          address_postcode: registered_address_postcode,
+          address_country: registered_address_country,
+        }),
       },
     ],
   }
@@ -189,6 +195,22 @@ function transformCompanyResponseToForm (body) {
   }
 
   return assign({}, body, formatted)
+}
+
+function transformSicCodes ({
+  sic_code_1,
+  sic_code_2,
+  sic_code_3,
+  sic_code_4,
+}) {
+  return [
+    sic_code_1,
+    sic_code_2,
+    sic_code_3,
+    sic_code_4,
+  ]
+    .filter(item => item.length)
+    .join(', ')
 }
 
 module.exports = {

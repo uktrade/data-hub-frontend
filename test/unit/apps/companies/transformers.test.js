@@ -135,7 +135,7 @@ describe('Company transformers', function () {
     it('should format the address and return as meta data', () => {
       expect(this.transformed.meta[5]).to.deep.equal({
         label: 'Address',
-        value: 'Fred cottage smith lane, Winkfield, Windsor, Berkshire, SL9 9RE',
+        value: 'Fred Cottage Smith Lane, Winkfield, Windsor, Berkshire, SL9 9RE, United Kingdom',
       })
     })
   })
