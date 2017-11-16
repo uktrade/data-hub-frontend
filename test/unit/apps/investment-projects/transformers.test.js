@@ -31,7 +31,7 @@ describe('Investment project data transformers', () => {
 
       expect(firstItem.meta[3].name).to.equal('estimated_land_date')
       expect(firstItem.meta[3].isInert).to.be.true
-      expect(firstItem.meta[3].type).to.equal('date')
+      expect(firstItem.meta[3].type).to.equal('dateMonthYear')
     })
   })
 

@@ -40,7 +40,7 @@ function transformInvestmentProjectToListItem ({
   }
   if (estimated_land_date) {
     meta.push({
-      type: 'date',
+      type: 'dateMonthYear',
       name: 'estimated_land_date',
       label: 'Land date',
       value: estimated_land_date,
