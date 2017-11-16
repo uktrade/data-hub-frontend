@@ -1,8 +1,9 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { set } = require('lodash')
+const { get, set, camelCase } = require('lodash')
 
 const { getUid } = require('../../../helpers/uuid')
+const { getDateFor } = require('../../../helpers/date')
 
 const dashboardPage = `${process.env.QA_HOST}/`
 
@@ -37,13 +38,29 @@ defineSupportCode(({ Given, When, Then }) => {
 
   When(/^adding an interaction/, async function () {
     await Interaction
-      .createInteraction({}, (interaction) => set(this.state, 'interaction', interaction))
+      .createInteraction({}, (interaction) => {
+        set(this.state, 'interaction', interaction)
+        set(this.state, 'interaction.date', getDateFor({
+          year: get(this.state, 'interaction.dateOfInteractionYear'),
+          month: get(this.state, 'interaction.dateOfInteractionMonth'),
+          day: get(this.state, 'interaction.dateOfInteractionDay'),
+        }))
+        set(this.state, 'interaction.type', 'Interaction')
+      })
       .wait() // wait for backend to sync
   })
 
   When(/^adding a service delivery/, async function () {
     await Interaction
-      .createServiceDelivery({}, (serviceDelivery) => set(this.state, 'serviceDelivery', serviceDelivery))
+      .createServiceDelivery({}, (serviceDelivery) => {
+        set(this.state, 'serviceDelivery', serviceDelivery)
+        set(this.state, 'serviceDelivery.date', getDateFor({
+          year: get(this.state, 'serviceDelivery.dateOfInteractionYear'),
+          month: get(this.state, 'serviceDelivery.dateOfInteractionMonth'),
+          day: get(this.state, 'serviceDelivery.dateOfInteractionDay'),
+        }))
+        set(this.state, 'serviceDelivery.type', 'Service delivery')
+      })
       .wait() // wait for backend to sync
   })
 
