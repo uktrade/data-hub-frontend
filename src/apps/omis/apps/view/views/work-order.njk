@@ -130,7 +130,7 @@
       url: 'edit/subscribers' if order.isEditable,
       label: 'Add or remove'
     }],
-    items: values.subscribers | map('name') if values.subscribers.length,
+    items: values.subscribers,
     fallbackText: 'No advisers added'
   }) }}
 
