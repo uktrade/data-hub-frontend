@@ -189,4 +189,39 @@ defineSupportCode(({ Given, When, Then }) => {
     await Interaction
       .assert.hidden('@event')
   })
+
+  /**
+   * The filtering available for Interactions and Service Delivery is particularly hard to pin down a specific
+   * Interaction or Service Delivery. This is by design. The filtering here combined with random dates for creation
+   * of an Interaction or Service Delivery should mean we always find what we are looking for in teh first
+   * result of the Collection.
+   */
+  Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
+    const filtersSection = Interaction.section.filters
+    const interactionType = camelCase(typeOfInteraction)
+    const date = getDateFor({
+      year: get(this.state, `${interactionType}.dateOfInteractionYear`),
+      month: get(this.state, `${interactionType}.dateOfInteractionMonth`),
+      day: get(this.state, `${interactionType}.dateOfInteractionDay`),
+    }, 'YYYY-M-D')
+
+    await filtersSection
+      .waitForElementPresent(`@${interactionType}`)
+      .click(`@${interactionType}`)
+      .wait() // wait for xhr
+      .clickListOption('dit_adviser', get(this.state, `${interactionType}.ditAdviser`))
+      .wait() // wait for xhr
+      .setValue('@dateFrom', date)
+      .sendKeys('@dateFrom', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+      .setValue('@dateTo', date)
+      .sendKeys('@dateTo', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+
+    if (interactionType === 'interaction') {
+      await filtersSection
+        .clickListOption('communication_channel', get(this.state, 'interaction.communicationChannel'))
+        .wait() // wait for xhr
+    }
+  })
 })
