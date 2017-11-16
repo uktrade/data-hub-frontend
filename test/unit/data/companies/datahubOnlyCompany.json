@@ -4,7 +4,7 @@
   "name": "SAMSUNG BIOEPIS UK LIMITED",
   "trading_name": "Fred",
   "uk_based": true,
-  "company_number": "08840722",
+  "company_number": null,
   "vat_number": "123412341234",
   "registered_address_1": "5TH FLOOR, PROFILE WEST",
   "registered_address_2": "950 GREAT WEST ROAD",
@@ -43,29 +43,7 @@
   },
   "children": [],
   "classification": null,
-  "companies_house_data": {
-    "id": 14499900,
-    "name": "SAMSUNG BIOEPIS UK LIMITED",
-    "registered_address_1": "5TH FLOOR, PROFILE WEST",
-    "registered_address_2": "950 GREAT WEST ROAD",
-    "registered_address_town": "BRENTFORD",
-    "registered_address_county": "MIDDLESEX",
-    "registered_address_postcode": "TW8 9ES",
-    "company_number": "08840722",
-    "company_category": "Private Limited Company",
-    "company_status": "Active",
-    "sic_code_1": "82990 - Other business support service activities n.e.c.",
-    "sic_code_2": "",
-    "sic_code_3": "more stuff",
-    "sic_code_4": "",
-    "uri": "http://business.data.gov.uk/id/company/08840722",
-    "incorporation_date": "2014-01-10",
-    "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "disabled_on": null,
-        "name": "United Kingdom"
-    }
-},
+  "companies_house_data": null,
   "contacts": [],
   "employee_range": null,
   "export_to_countries": [
@@ -86,7 +64,7 @@
   ],
   "headquarter_type": {
     "id": "11322",
-    "name": "European headquarters (EHQ)"
+    "name": "ehq"
   },
   "one_list_account_owner": null,
   "parent": null,
