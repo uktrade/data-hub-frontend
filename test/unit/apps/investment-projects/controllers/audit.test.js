@@ -215,4 +215,51 @@ describe('Investment audit controller', () => {
       },
     }, this.next)
   })
+
+  describe('formatAuditLog', () => {
+    beforeEach(() => {
+      this.timestamp = '2017-08-09T13:25:29.568665Z'
+      this.formattedDate = '9 August 2017'
+      this.changes = {
+        'thing': 'a thing',
+        'other thing': 'another thing',
+      }
+    })
+
+    it('should return the user name', () => {
+      const actual = this.controller.formatAuditLog({
+        user: { name: 'James Example' },
+        timestamp: this.timestamp,
+        changes: this.changes,
+      })
+      expect(actual).to.deep.equal({
+        name: 'James Example',
+        timestamp: this.formattedDate,
+        changes: 2,
+      })
+    })
+    it('should handle absent users', () => {
+      const actual = this.controller.formatAuditLog({
+        timestamp: this.timestamp,
+        changes: this.changes,
+      })
+      expect(actual).to.deep.equal({
+        name: undefined,
+        timestamp: this.formattedDate,
+        changes: 2,
+      })
+    })
+    it('should handle empty users', () => {
+      const actual = this.controller.formatAuditLog({
+        user: {},
+        timestamp: this.timestamp,
+        changes: this.changes,
+      })
+      expect(actual).to.deep.equal({
+        name: undefined,
+        timestamp: this.formattedDate,
+        changes: 2,
+      })
+    })
+  })
 })
