@@ -11,6 +11,13 @@
       <p>To preview a quote you must complete the following:</p>
 
       <ul class="list-disc">
+        {% if missingLeadAssignee %}
+          <li>
+            <a href="/omis/{{ order.id }}#assignees">
+              {{ translate('errors.quote.assignee_lead') }}
+            </a>
+          </li>
+        {% endif %}
         {% for stepUrl, stepData in incompleteFields %}
           {% for field in stepData.errors %}
             <li>
