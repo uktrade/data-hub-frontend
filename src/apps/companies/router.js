@@ -30,7 +30,7 @@ const {
 } = require('../interactions/middleware/collection')
 
 const { getRequestBody, getCompanyCollection, getLimitedCompaniesCollection } = require('./middleware/collection')
-const { populateForm, handleFormPost } = require('./middleware/form')
+const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
 
@@ -70,10 +70,14 @@ router
   .route([
     '/add',
     '/add/:companyNumber',
-    '/:companyId/edit',
   ])
   .get(populateForm, renderForm)
   .post(populateForm, handleFormPost, renderForm)
+
+router
+  .route('/:companyId/edit')
+  .get(setIsEditMode, populateForm, renderForm)
+  .post(setIsEditMode, populateForm, handleFormPost, renderForm)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)

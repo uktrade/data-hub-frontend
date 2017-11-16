@@ -204,4 +204,13 @@ describe('Companies form middleware', function () {
       })
     })
   })
+
+  describe('setIsEditMode', () => {
+    it('should set edit mode', () => {
+      expect(this.resMock.locals.isEditMode).to.equal(undefined)
+      this.middleware.setIsEditMode(this.reqMock, this.resMock, this.nextSpy)
+      expect(this.resMock.locals.isEditMode).to.equal(true)
+      expect(this.nextSpy).to.have.been.calledOnce
+    })
+  })
 })
