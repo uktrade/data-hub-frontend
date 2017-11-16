@@ -19,6 +19,7 @@ const {
   companyDetailsLabels,
   hqLabels,
   chDetailsLabels,
+  accountManagementDisplayLabels,
 } = require('./labels')
 
 function transformCompanyToListItem ({
@@ -310,6 +311,15 @@ function transformCompaniesHouseResponseToViewRecord ({
   return pickBy(getDataLabels(viewRecord, chDetailsLabels))
 }
 
+function transformCompanyResponseToOneListViewRecord ({ one_list_account_owner, classification }) {
+  const viewRecord = {
+    oneListAccountManager: get(one_list_account_owner, 'name', 'None'),
+    oneListTier: get(classification, 'name', 'None'),
+  }
+
+  return getDataLabels(viewRecord, accountManagementDisplayLabels)
+}
+
 function transformSicCodes ({
   sic_code_1,
   sic_code_2,
@@ -332,4 +342,5 @@ module.exports = {
   transformCompanyResponseToForm,
   transformCompanyResponseToViewRecord,
   transformCompaniesHouseResponseToViewRecord,
+  transformCompanyResponseToOneListViewRecord,
 }
