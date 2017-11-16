@@ -8,13 +8,14 @@ Feature: Save a new Event in Data hub
   Scenario: Verify event is submitted
 
     Given I create an event
+    And I click the save button
     Then I see the success message
 
   @events-save--mandatory-fields
   Scenario: Verify event mandatory fields
 
     Given I navigate to the event list page
-    When I click the add an event link
+    When I click the "Add event" link
     And I click the save button
     Then the event fields have error messages
     And I see form error summary
@@ -23,7 +24,7 @@ Feature: Save a new Event in Data hub
   Scenario: Verify event UK region mandatory field
 
     Given I navigate to the event list page
-    When I click the add an event link
+    When I click the "Add event" link
     When I populate the create event form with United Kingdom and without a region
     And I click the save button
     And I verify the event UK region has an error message
