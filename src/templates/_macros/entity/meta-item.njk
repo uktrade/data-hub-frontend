@@ -25,6 +25,8 @@
   {% if props.value %}
     {% if props.type === 'date' %}
       {% set metaItemValue = props.value | formatDate %}
+    {% elif props.type === 'dateMonthYear' %}
+      {% set metaItemValue = props.value | formatDate('MMMM YYYY') %}
     {% elif props.type === 'datetime' %}
       {% set metaItemValue = props.value | formatDateTime %}
     {% elif props.type === 'fromNow' %}
