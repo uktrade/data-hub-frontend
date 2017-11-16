@@ -111,14 +111,7 @@ function transformCompaniesHouseCompanyToListItem ({
     .filter(item => item.length)
     .join(', ')
 
-  const sicCodes = [
-    sic_code_1,
-    sic_code_2,
-    sic_code_3,
-    sic_code_4,
-  ]
-    .filter(item => item.length)
-    .join(', ')
+  const sicCodes = transformSicCodes({ sic_code_1, sic_code_2, sic_code_3, sic_code_4 })
 
   return {
     name: capitalize(name),
@@ -189,6 +182,22 @@ function transformCompanyResponseToForm (body) {
   }
 
   return assign({}, body, formatted)
+}
+
+function transformSicCodes ({
+  sic_code_1,
+  sic_code_2,
+  sic_code_3,
+  sic_code_4,
+}) {
+  return [
+    sic_code_1,
+    sic_code_2,
+    sic_code_3,
+    sic_code_4,
+  ]
+    .filter(item => item.length)
+    .join(', ')
 }
 
 module.exports = {
