@@ -13,7 +13,6 @@ const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderInteractions } = require('./controllers/interactions')
-const { renderCompaniesHouseCompany } = require('./controllers/companies-house')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const {
@@ -78,9 +77,6 @@ router
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
-
-// TODO: Removes need for `/view/ch/` in path
-router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
 
 router.use('/:companyId', setLocalNav(LOCAL_NAV))
 
