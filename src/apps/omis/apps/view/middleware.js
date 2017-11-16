@@ -5,6 +5,7 @@ const i18nFuture = require('i18n-future')
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
 const { getCompany } = require('../../middleware')
+const { getContact } = require('../../../contacts/repos')
 const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
@@ -27,6 +28,42 @@ function setCompany (req, res, next) {
   }
 
   getCompany(req, res, next, res.locals.order.company.id)
+}
+
+async function setContact (req, res, next) {
+  try {
+    const contactId = get(res.locals, 'order.contact.id')
+    const contact = await getContact(req.session.token, contactId)
+
+    res.locals.order.contact = contact
+  } catch (error) {
+    logger.error(error)
+  }
+  next()
+}
+
+async function setAssignees (req, res, next) {
+  try {
+    const orderId = get(res.locals, 'order.id')
+    const assignees = await Order.getAssignees(req.session.token, orderId)
+
+    res.locals.assignees = assignees
+  } catch (error) {
+    logger.error(error)
+  }
+  next()
+}
+
+async function setSubscribers (req, res, next) {
+  try {
+    const orderId = get(res.locals, 'order.id')
+    const subscribers = await Order.getSubscribers(req.session.token, orderId)
+
+    res.locals.subscribers = subscribers
+  } catch (error) {
+    logger.error(error)
+  }
+  next()
 }
 
 async function setQuoteSummary (req, res, next) {
@@ -208,6 +245,9 @@ function setQuoteForm (req, res, next) {
 module.exports = {
   setTranslation,
   setCompany,
+  setContact,
+  setAssignees,
+  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,

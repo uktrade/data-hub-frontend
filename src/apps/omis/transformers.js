@@ -107,8 +107,29 @@ function transformPaymentToView ({
   }
 }
 
+function transformSubscriberToView (currentUserId) {
+  return function ({
+    name,
+    id,
+    dit_team,
+  } = {}) {
+    if (!id) { return }
+
+    const ukTeam = get(dit_team, 'uk_region.name')
+    const teamLabel = ukTeam ? `, ${ukTeam}` : ''
+    const youLabel = id === currentUserId ? ' (you)' : ''
+
+    return [
+      name,
+      teamLabel,
+      youLabel,
+    ].join('')
+  }
+}
+
 module.exports = {
   transformOrderToListItem,
   transformOrderToTableItem,
   transformPaymentToView,
+  transformSubscriberToView,
 }
