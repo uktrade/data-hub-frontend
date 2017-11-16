@@ -115,6 +115,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
@@ -122,9 +127,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
+              label: 'Channel',
+              value: {
+                id: '72c226d7-5d95-e211-a939-e4115bead28a',
+                name: 'Telephone',
+              },
             },
             {
               label: 'Adviser',
@@ -167,6 +174,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
@@ -174,9 +186,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
+              label: 'Channel',
+              value: {
+                id: '72c226d7-5d95-e211-a939-e4115bead28a',
+                name: 'Telephone',
+              },
             },
             {
               label: 'Adviser',
