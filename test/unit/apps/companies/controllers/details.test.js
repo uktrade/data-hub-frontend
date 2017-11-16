@@ -1,9 +1,9 @@
 const { assign } = require('lodash')
 
 const companyData = require('~/test/unit/data/companies/company.json')
-const viewController = require('~/src/apps/companies/controllers/view')
+const viewController = require('~/src/apps/companies/controllers/details')
 
-describe('Companies view controller', () => {
+describe('Companies details controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
