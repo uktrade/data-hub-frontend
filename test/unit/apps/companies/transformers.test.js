@@ -5,8 +5,8 @@ const minimalCompany = require('~/test/unit/data/companies/minimal-company.json'
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 
 const {
-  transformCompanyToListItem,
-  transformCompaniesHouseCompanyToListItem,
+  transformCompanyResponseToListItem,
+  transformCompaniesHouseResponseToListItem,
   transformCompanyResponseToViewRecord,
   transformCompaniesHouseResponseToViewRecord,
   transformCompanyResponseToOneListViewRecord,
@@ -17,17 +17,17 @@ describe('Company transformers', function () {
     const companyData = require('~/test/unit/data/company')
 
     it('should return undefined if there is no companies house data or datahub data', () => {
-      expect(transformCompanyToListItem()).to.be.undefined
-      expect(transformCompanyToListItem({ a: 'b' })).to.be.undefined
-      expect(transformCompanyToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
+      expect(transformCompanyResponseToListItem()).to.be.undefined
+      expect(transformCompanyResponseToListItem({ a: 'b' })).to.be.undefined
+      expect(transformCompanyResponseToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
     })
 
     it('should return undefined if companies house is incomplete', () => {
-      expect(transformCompanyToListItem({ companies_house_data: {} })).to.be.undefined
+      expect(transformCompanyResponseToListItem({ companies_house_data: {} })).to.be.undefined
     })
 
     it('should return an object with data for company list item', () => {
-      const actual = transformCompanyToListItem(companyData)
+      const actual = transformCompanyResponseToListItem(companyData)
 
       expect(actual).to.have.property('id').to.be.a('string')
       expect(actual).to.have.property('type').to.equal('company')
@@ -36,7 +36,7 @@ describe('Company transformers', function () {
     })
 
     it('should return have correct meta items for Uk company', () => {
-      const actual = transformCompanyToListItem(companyData)
+      const actual = transformCompanyResponseToListItem(companyData)
 
       expect(actual).to.have.property('meta').an('array').to.have.length(4)
       expect(actual.meta[0]).to.have.property('label', 'Sector')
@@ -46,7 +46,7 @@ describe('Company transformers', function () {
     })
 
     it('should return have correct meta items for non-UK company', () => {
-      const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+      const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
         uk_based: false,
       }))
 
@@ -55,7 +55,7 @@ describe('Company transformers', function () {
     })
 
     it('should return have correct meta items for company with trading address', () => {
-      const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+      const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
         trading_address_postcode: 'W1C 2BA',
         trading_address_town: 'London',
         trading_address_1: '100 Bolton Road',
@@ -67,7 +67,7 @@ describe('Company transformers', function () {
     })
 
     it('should return correct URL for Companies House company', () => {
-      const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+      const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
         id: null,
         companies_house_data: {
           company_number: 10203040,
@@ -78,7 +78,7 @@ describe('Company transformers', function () {
     })
 
     it('should return correct URL for company with both datahub and companies house data', () => {
-      const actual = transformCompanyToListItem(Object.assign({}, companyData, {
+      const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
         companies_house_data: {
           company_number: 10203040,
         },
@@ -90,7 +90,7 @@ describe('Company transformers', function () {
 
   describe('#transformCompaniesHouseCompanyTolistItem', () => {
     beforeEach(() => {
-      this.transformed = transformCompaniesHouseCompanyToListItem(companiesHouseSearchResults.results[0])
+      this.transformed = transformCompaniesHouseResponseToListItem(companiesHouseSearchResults.results[0])
     })
 
     it('should include the company number as an id', () => {
