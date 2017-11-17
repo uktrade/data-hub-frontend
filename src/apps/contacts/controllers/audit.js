@@ -11,7 +11,7 @@ async function getAudit (req, res, next) {
 
     const auditLog = await getContactAuditLog(token, contactId, page)
       .then(transformApiResponseToCollection(
-        { entityType: 'audit' },
+        { entityType: 'audit', query: req.query },
         transformAuditLogToListItem(contactDetailsLabels)
       ))
 
