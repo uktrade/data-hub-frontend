@@ -3,14 +3,7 @@
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Contact details</h2>
-  {{ keyvaluetable(
-      contactDetails,
-      stripey=true,
-      labels=contactDetailsLabels,
-      keyorder=contactDetailsDisplayOrder,
-      id="contact-details",
-      shownull=true)
-  }}
+  {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details' %}
 
   {% if not contact.archived %}
     <p>
