@@ -75,7 +75,7 @@ describe('Contact audit controller', () => {
 
   it('should transform the results returned', (done) => {
     try {
-      const options = { entityType: 'audit' }
+      const options = { entityType: 'audit', query: this.req.query }
 
       this.controller.getAudit(this.req, {
         breadcrumb: this.breadcrumbStub,
