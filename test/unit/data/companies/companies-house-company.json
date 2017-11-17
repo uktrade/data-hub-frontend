@@ -1,0 +1,105 @@
+{
+  "id": "72fda78f-bdc3-44dc-9c22-c8ac82f7bda4",
+  "reference_code": "ORG-12345678",
+  "name": "SAMSUNG BIOEPIS UK LIMITED",
+  "trading_name": "Fred",
+  "uk_based": true,
+  "company_number": "08840722",
+  "vat_number": "123412341234",
+  "registered_address_1": "5TH FLOOR, PROFILE WEST",
+  "registered_address_2": "950 GREAT WEST ROAD",
+  "registered_address_town": "BRENTFORD",
+  "registered_address_county": "MIDDLESEX",
+  "registered_address_postcode": "TW8 9ES",
+  "registered_address_country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+  },
+  "created_on": "2017-11-13T13:09:29.008940Z",
+  "modified_on": "2017-11-15T14:14:03.006642Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "description",
+  "website": "http://www.test.com",
+  "trading_address_1": "Business Innovation & Skills",
+  "trading_address_2": "1 Victoria Street",
+  "trading_address_town": "London",
+  "trading_address_county": "Greater London",
+  "trading_address_postcode": "SW1H 0ET",
+  "trading_address_country": {
+    "id": "1234",
+    "name": "United Kingdom"
+  },
+  "account_manager": {
+    "id": "4234124124124",
+    "name": "Yvonne Ahern"
+  },
+  "business_type": {
+      "name": "Private limited company",
+      "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
+  },
+  "children": [],
+  "classification": null,
+  "companies_house_data": {
+    "id": 14499900,
+    "name": "SAMSUNG BIOEPIS UK LIMITED",
+    "registered_address_1": "5TH FLOOR, PROFILE WEST",
+    "registered_address_2": "950 GREAT WEST ROAD",
+    "registered_address_town": "BRENTFORD",
+    "registered_address_county": "MIDDLESEX",
+    "registered_address_postcode": "TW8 9ES",
+    "company_number": "08840722",
+    "company_category": "Private Limited Company",
+    "company_status": "Active",
+    "sic_code_1": "82990 - Other business support service activities n.e.c.",
+    "sic_code_2": "",
+    "sic_code_3": "more stuff",
+    "sic_code_4": "",
+    "uri": "http://business.data.gov.uk/id/company/08840722",
+    "incorporation_date": "2014-01-10",
+    "registered_address_country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "disabled_on": null,
+        "name": "United Kingdom"
+    }
+},
+  "contacts": [],
+  "employee_range": null,
+  "export_to_countries": [
+      {
+          "name": "Albania",
+          "id": "945f66a0-5d95-e211-a939-e4115bead28a"
+      },
+      {
+          "name": "Austria",
+          "id": "a05f66a0-5d95-e211-a939-e4115bead28a"
+      }
+  ],
+  "future_interest_countries": [
+      {
+          "name": "Aruba",
+          "id": "9e5f66a0-5d95-e211-a939-e4115bead28a"
+      }
+  ],
+  "headquarter_type": {
+    "id": "11322",
+    "name": "European headquarters (EHQ)"
+  },
+  "one_list_account_owner": null,
+  "parent": null,
+  "sector": {
+      "name": "Aerospace : Manufacturing and Assembly : Space Technology",
+      "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
+  },
+  "turnover_range": null,
+  "uk_region": {
+      "name": "North East",
+      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "investment_projects_invested_in": [],
+  "investment_projects_invested_in_count": 0,
+  "export_experience_category": null
+}

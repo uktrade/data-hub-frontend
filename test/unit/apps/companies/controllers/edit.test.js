@@ -171,7 +171,7 @@ describe('Company export controller', () => {
     it('should treat non-uk company as foreign', () => {
       const reqMock = this.buildReq({ query: { country: 'non-uk' } })
       const resMock = this.buildRes({
-        locals: { companiesHouseRecord: { country: 'uk' } },
+        locals: {},
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
       expect(this.renderSpy.args[0][1].isForeign).to.equal(true)
@@ -195,7 +195,6 @@ describe('Company export controller', () => {
       const resMock = this.buildRes({
         locals: {
           company: { 'uk_based': true },
-          companiesHouseRecord: { country: 'uk' },
         },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
@@ -206,7 +205,6 @@ describe('Company export controller', () => {
       const reqMock = this.buildReq({ query: {} })
       const resMock = this.buildRes({
         locals: {
-          companiesHouseRecord: { country: 'uk' },
           companiesHouseCategory: 'limited company',
         },
       })

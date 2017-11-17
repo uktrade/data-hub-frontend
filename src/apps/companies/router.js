@@ -8,7 +8,7 @@ const {
 
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
-const { renderDetails } = require('./controllers/view')
+const { renderDetails } = require('./controllers/details')
 const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')

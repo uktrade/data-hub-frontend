@@ -20,7 +20,7 @@
 
   {% if chDetails %}
     <div class="section">
-      {{ keyvaluetable(chDetails, labels=chDetailsLabels, keyorder=chDetailsDisplayOrder, class="table--small", id="ch-details") }}
+      {% component 'key-value-table', variant='readonly', items=chDetails %}
       <div class="table_footnote">Data from <strong>Companies House</strong></div>
     </div>
   {% endif %}
