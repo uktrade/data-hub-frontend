@@ -1,5 +1,17 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { get, pickBy } = require('lodash')
+
+const { getFormattedAddress } = require('../../lib/address')
+const { getDataLabels } = require('../../lib/controller-utils')
+const { contactDetailsLabels } = require('./labels')
+
+function getContactAddress (address_same_as_company, contactAddressFields, company) {
+  if (!address_same_as_company) {
+    return getFormattedAddress(contactAddressFields)
+  }
+
+  return getFormattedAddress(company, 'trading') || getFormattedAddress(company, 'registered')
+}
 
 function transformContactToListItem ({
   id,
@@ -73,6 +85,58 @@ function transformContactToListItem ({
   return item
 }
 
+/**
+ * Translate a raw contact object into a formatted contact
+ * to display on the screen
+ * @param {object} contact
+ * @param {object} company
+ * @returns {object} displayContact A contact that can be put into a key value table
+ *
+ */
+function transformContactToView ({
+  telephone_countrycode,
+  telephone_number,
+  job_title,
+  email,
+  accepts_dit_email_marketing,
+  address_1,
+  address_2,
+  address_town,
+  address_county,
+  address_postcode,
+  address_country,
+  telephone_alternative,
+  email_alternative,
+  notes,
+  address_same_as_company,
+}, company) {
+  const telephoneNumber =
+    telephone_countrycode
+      ? `(${telephone_countrycode}) ${telephone_number}`
+      : telephone_number
+
+  const viewRecord = {
+    job_title,
+    email,
+    telephone_alternative,
+    email_alternative,
+    notes,
+    telephone_number: telephoneNumber,
+    email_marketing: accepts_dit_email_marketing ? 'Yes' : 'No',
+    address: getContactAddress(address_same_as_company, {
+      address_1,
+      address_2,
+      address_town,
+      address_county,
+      address_postcode,
+      address_country,
+    }, company),
+  }
+
+  return pickBy(getDataLabels(viewRecord, contactDetailsLabels))
+}
+
 module.exports = {
   transformContactToListItem,
+  transformContactToView,
 }
