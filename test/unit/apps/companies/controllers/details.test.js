@@ -1,5 +1,5 @@
-const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany.json')
-const minimalCompany = require('~/test/unit/data/companies/minimalCompany.json')
+const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
+const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const { renderDetails } = require('~/src/apps/companies/controllers/details')
 
 describe('Companies details controller', () => {

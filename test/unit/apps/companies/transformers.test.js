@@ -1,8 +1,8 @@
 const { some, assign } = require('lodash')
-const companiesHouseSearchResults = require('~/test/unit/data/companies/companiesHouseSearch.json')
-const datahubOnlyCompany = require('~/test/unit/data/companies/datahubOnlyCompany.json')
-const minimalCompany = require('~/test/unit/data/companies/minimalCompany.json')
-const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany.json')
+const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
+const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
+const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
+const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 
 const {
   transformCompanyToListItem,

@@ -1,6 +1,6 @@
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
-const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany')
-const displayHouseCompany = require('~/test/unit/data/companies/displayCompaniesHouse')
+const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
+const displayHouseCompany = require('~/test/unit/data/companies/display-companies-house')
 
 const next = function (error) {
   throw Error(error)

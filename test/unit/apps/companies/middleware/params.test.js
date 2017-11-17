@@ -1,4 +1,4 @@
-const companiesHouseCompany = require('~/test/unit/data/companies/companiesHouseCompany')
+const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
 
 describe('Companies form middleware', function () {
   beforeEach(() => {
