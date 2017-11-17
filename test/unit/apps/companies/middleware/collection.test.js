@@ -1,7 +1,7 @@
 const nock = require('nock')
 const config = require('~/config')
 const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware/collection')
-const companiesHouseSearchResults = require('~/test/unit/data/companies/companiesHouseSearch.json')
+const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
