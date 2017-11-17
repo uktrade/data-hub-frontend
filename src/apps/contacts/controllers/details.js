@@ -1,7 +1,6 @@
 const contactsRepository = require('../repos')
 const companyRepository = require('../../companies/repos')
-const contactFormattingService = require('../services/formatting')
-const { contactDetailsLabels } = require('../labels')
+const { transformContactToView } = require('../transformers')
 
 const reasonForArchiveOptions = [
   'Left the company',
@@ -30,12 +29,9 @@ async function getCommon (req, res, next) {
 
 function getDetails (req, res, next) {
   try {
-    res.locals.tab = 'details'
-    res.locals.contactDetails = contactFormattingService.getDisplayContact(res.locals.contact, res.locals.company)
-    res.locals.contactDetailsLabels = contactDetailsLabels
-    res.locals.contactDetailsDisplayOrder = Object.keys(res.locals.contactDetails)
-
-    res.render('contacts/views/details')
+    res.render('contacts/views/details', {
+      contactDetails: transformContactToView(res.locals.contact, res.locals.company),
+    })
   } catch (error) {
     next(error)
   }
