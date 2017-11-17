@@ -13,6 +13,7 @@ const templateGlobals = require('./globals')
 const COMPONENTS_PATH = '_components/' // relative to templates path
 const COMPONENT_EXT = 'njk'
 const WHITESPACE_AT_START = /^\s+/
+const WHITESPACE_AT_NEWLINE = /\n\s+/g
 const WHITESPACE_BETWEEN_TAGS = />\s+</g
 const WHITESPACE_AT_END = /\s+$/
 
@@ -65,6 +66,7 @@ function SafeSpacelessExtension () {
       .replace(WHITESPACE_AT_START, '')
       .replace(WHITESPACE_BETWEEN_TAGS, '><')
       .replace(WHITESPACE_AT_END, '')
+      .replace(WHITESPACE_AT_NEWLINE, '')
     return new nunjucks.runtime.SafeString(result)
   }
 }
