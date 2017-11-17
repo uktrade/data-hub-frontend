@@ -1,4 +1,4 @@
-const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
+const { contactAuditLabels } = require('~/src/apps/contacts/labels')
 const auditLog = require('~/test/unit/data/audit/contact-audit.json')
 
 describe('Audit transformers', () => {
@@ -15,7 +15,7 @@ describe('Audit transformers', () => {
       query: {},
     }
 
-    this.transformer = this.transformers.transformAuditLogToListItem(contactDetailsLabels)
+    this.transformer = this.transformers.transformAuditLogToListItem(contactAuditLabels)
   })
 
   afterEach(() => {

@@ -1,4 +1,15 @@
 const contactDetailsLabels = {
+  job_title: 'Job title',
+  telephone_number: 'Phone number',
+  telephone_alternative: 'Alternative telephone',
+  address: 'Address',
+  email: 'Email',
+  email_alternative: 'Alternative email',
+  notes: 'Notes',
+  email_marketing: 'Email marketing',
+}
+
+const contactAuditLabels = {
   title: 'Title',
   job_title: 'Job title',
   telephone_number: 'Phone number',
@@ -27,4 +38,7 @@ const contactDetailsLabels = {
   archived_by_id: 'Archived by',
 }
 
-module.exports = { contactDetailsLabels }
+module.exports = {
+  contactDetailsLabels,
+  contactAuditLabels,
+}
