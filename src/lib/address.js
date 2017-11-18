@@ -1,5 +1,7 @@
 const { title } = require('case')
 
+// TODO review this file and what it is doing
+// TODO align all addresses across the app to use the same format
 function getFormattedAddress (object, key) {
   if (key) {
     key = `${key}_`
