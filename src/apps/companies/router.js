@@ -30,7 +30,7 @@ const {
 } = require('../interactions/middleware/collection')
 
 const { getRequestBody, getCompanyCollection, getLimitedCompaniesCollection } = require('./middleware/collection')
-const { getCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
+const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
@@ -89,9 +89,9 @@ router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getCompanyContactRequestBody,
+  setCompanyContactRequestBody,
   getCompanyContactCollection,
-  renderContacts,
+  renderContacts
 )
 
 router.get('/:companyId/interactions',

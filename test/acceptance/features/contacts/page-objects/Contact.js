@@ -116,9 +116,8 @@ module.exports = {
         }, details)
 
         this
-          .click('@addContactButton')
-          .api
-          .perform((done) => {
+          .click('@addContactButton') // TODO does this need to click the button considering we have `I click the "(.+)" link`
+          .api.perform((done) => {
             this.click(`@primaryContact${isPrimary ? 'Yes' : 'No'}`)
 
             for (const key in contact) {

@@ -3,14 +3,13 @@ const {
   assign,
   reject,
   pick,
-  mapValues,
-  isArray,
   pickBy,
 } = require('lodash')
 
 const { search } = require('../../search/services')
 const { transformApiResponseToCollection } = require('../../transformers')
 const { transformContactToListItem } = require('../../contacts/transformers')
+const removeArray = require('../../../lib/remove-array')
 
 async function getCompanyContactCollection (req, res, next) {
   try {
@@ -27,7 +26,7 @@ async function getCompanyContactCollection (req, res, next) {
           transformContactToListItem,
           (contact) => {
             const meta = reject(contact.meta, ['label', 'Company'])
-            return Object.assign({}, contact, { meta })
+            return assign({}, contact, { meta })
           }
         )
       )
@@ -38,13 +37,16 @@ async function getCompanyContactCollection (req, res, next) {
   }
 }
 
-function getCompanyContactRequestBody (req, res, next) {
+function setCompanyContactRequestBody (req, res, next) {
   const requestParams = {
     company: get(req.params, 'companyId'),
   }
-  const selectedFiltersQuery = mapValues(pick(req.query, 'archived'), (value) => {
-    return isArray(value) ? null : value
-  })
+  const selectedFiltersQuery = removeArray(pick(req.query, [
+    'archived',
+    'company_sector',
+    'address_country',
+    'company_uk_region',
+  ]), 'archived')
 
   const selectedSortBy = req.query.sortby
     ? { sortby: req.query.sortby }
@@ -56,6 +58,6 @@ function getCompanyContactRequestBody (req, res, next) {
 }
 
 module.exports = {
-  getCompanyContactRequestBody,
+  setCompanyContactRequestBody,
   getCompanyContactCollection,
 }

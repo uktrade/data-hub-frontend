@@ -35,9 +35,9 @@ defineSupportCode(({ When, Then }) => {
   Then(/^I capture the modified on date for the first item$/, async function () {
     await Collection
       .section.firstCollectionItem
-      .waitForElementPresent('@updated')
-      .getText('@updated', (updated) => {
-        set(this.state, 'collection.updated', updated.value)
+      .waitForElementPresent('@updatedOn')
+      .getText('@updatedOn', (updatedOn) => {
+        set(this.state, 'collection.updated', updatedOn.value)
       })
   })
 
