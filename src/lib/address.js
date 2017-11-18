@@ -16,8 +16,6 @@ function getFormattedAddress (object, key) {
 
   if (object[`${key}address_country`] && object[`${key}address_country`].name && object[`${key}address_country`].name.length > 0) {
     addressStr += title(object[`${key}address_country`].name)
-  } else if (addressStr.length > 0) {
-    addressStr += 'United Kingdom'
   }
 
   if (addressStr.length === 0) {
@@ -25,6 +23,8 @@ function getFormattedAddress (object, key) {
   }
 
   return addressStr
+    .trim()
+    .replace(/,$/, '')
 }
 
 module.exports = { getFormattedAddress }

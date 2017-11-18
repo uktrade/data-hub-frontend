@@ -48,7 +48,7 @@ describe('Contact formatting service', () => {
         telephone_number: '(+44) 7814 333 777',
         email: 'fred@test.com',
         email_marketing: 'No',
-        address: '10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom',
+        address: '10 the Street, Warble, Big Town, Large County, LL1 1LL',
         telephone_alternative: '07814 000 333',
         email_alternative: 'fred@gmail.com',
         notes: 'some notes',
