@@ -12,7 +12,7 @@ Feature: View a list of events
     Then I am taken to the "Add event" page
 
   @events-collection--view
-  Scenario: View event list
+  Scenario: View event collection
 
     Given I navigate to the Events collection page
     When I click the "Add event" link
