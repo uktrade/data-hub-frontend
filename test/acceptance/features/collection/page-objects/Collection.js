@@ -60,7 +60,7 @@ module.exports = {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: '.c-entity__title',
-        updated: getSelectorForMetaListItemValue('Updated'),
+        updatedOn: getSelectorForMetaListItemValue('Updated on'),
       },
     },
     filters: {

@@ -11,8 +11,7 @@
       query: QUERY,
       filtersFields: filtersFields,
       action: CURRENT_PATH
-    })
-  }}
+  }) }}
 
   {{ Collection(contactResults | assign({
       countLabel: 'contact',
@@ -21,6 +20,5 @@
       query: QUERY,
       action: CURRENT_PATH,
       summaryActionsHTML: addProjectButton
-    }))
-  }}
+  })) }}
 {% endblock %}

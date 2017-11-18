@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, pickBy } = require('lodash')
+const { get, pickBy, findIndex } = require('lodash')
 
 const { getFormattedAddress } = require('../../lib/address')
 const { getDataLabels } = require('../../lib/controller-utils')
@@ -18,6 +18,7 @@ function transformContactToListItem ({
   first_name,
   last_name,
   address_country,
+  company_uk_region,
   company,
   modified_on,
   archived,
@@ -40,13 +41,17 @@ function transformContactToListItem ({
         value: get(company, 'name'),
       },
       {
-        label: archived_on ? 'Archived' : 'Updated',
-        type: 'datetime',
-        value: archived_on || modified_on,
-      },
-      {
         label: 'Sector',
         value: get(company_sector, 'name'),
+      },
+      {
+        label: 'Country',
+        value: get(address_country, 'name'),
+      },
+      {
+        label: 'Updated on',
+        type: 'datetime',
+        value: modified_on,
       },
     ],
   }
@@ -61,24 +66,19 @@ function transformContactToListItem ({
     })
   }
 
-  item.meta.push(
-    {
-      label: 'Country',
-      type: 'badge',
-      value: get(address_country, 'name'),
-    })
-
-  if (archived_reason) {
+  if (archived_on) {
     item.meta.push({
-      label: 'Reason to archive',
-      value: archived_reason,
+      label: 'Status',
+      type: 'badge',
+      value: 'Archived',
     })
   }
 
-  if (archived_by) {
-    item.meta.push({
-      label: 'Archived by',
-      value: archived_by,
+  if (company_uk_region) {
+    const countryIndex = findIndex(item.meta, ['label', 'Country'])
+    item.meta.splice((countryIndex + 1), 0, {
+      label: 'Uk Region',
+      value: company_uk_region,
     })
   }
 

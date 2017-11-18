@@ -1,4 +1,4 @@
-@contacts-collection
+@contacts-collection @collection
 Feature: View collection of contacts
   As an existing user
   I would like to view all the Contacts in one place
@@ -13,16 +13,18 @@ Feature: View collection of contacts
     Then I see the success message
     Then I capture the modified on date for the first item
     When I navigate to the Contacts collection page
-    Then there are Contacts headings
+    Then I confirm I am on the Contacts page
+    And the results count header for contacts is present
     And I can view the Contact in the collection
       | text         | expected           |
       | Company      | company.name       |
       | Sector       | company.sector     |
       | Updated      | collection.updated |
+      | Country      | company.country |
+      | Uk Region    | company.ukRegion |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
-      | Country      | company.country    |
 
   @contacts-collection--filter
   Scenario: Filter contact list
