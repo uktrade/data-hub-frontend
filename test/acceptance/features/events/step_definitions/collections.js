@@ -21,16 +21,6 @@ defineSupportCode(({ Then, When }) => {
       .populateCreateEventForm({}, true, (event) => {
         set(this.state, 'event', event)
         set(this.state, 'event.heading', get(this.state, 'event.name'))
-        set(this.state, 'event.startDate', getDateFor({
-          year: get(this.state, 'event.start_date_year'),
-          month: get(this.state, 'event.start_date_month'),
-          day: get(this.state, 'event.start_date_day'),
-        }))
-        set(this.state, 'event.endDate', getDateFor({
-          year: get(this.state, 'event.end_date_year'),
-          month: get(this.state, 'event.end_date_month'),
-          day: get(this.state, 'event.end_date_day'),
-        }))
       })
   })
 
@@ -51,21 +41,24 @@ defineSupportCode(({ Then, When }) => {
   })
 
   Then(/^I can view the event$/, async function () {
+    const startDate = getDateFor({
+      year: get(this.state, 'event.start_date_year'),
+      month: get(this.state, 'event.start_date_month'),
+      day: get(this.state, 'event.start_date_day'),
+    })
+    const endDate = getDateFor({
+      year: get(this.state, 'event.end_date_year'),
+      month: get(this.state, 'event.end_date_month'),
+      day: get(this.state, 'event.end_date_day'),
+    })
+
     await EventList.section.firstEventInList
       .waitForElementPresent('@header')
       .assert.containsText('@header', this.state.event.name)
       .assert.containsText('@eventType', this.state.event.event_type)
       .assert.containsText('@country', this.state.event.address_country)
-      .assert.containsText('@eventStart', getDateFor({
-        year: this.state.event.start_date_year,
-        month: this.state.event.start_date_month,
-        day: this.state.event.start_date_day,
-      }))
-      .assert.containsText('@eventEnd', getDateFor({
-        year: this.state.event.end_date_year,
-        month: this.state.event.end_date_month,
-        day: this.state.event.end_date_day,
-      }))
+      .assert.containsText('@eventStart', startDate)
+      .assert.containsText('@eventEnd', endDate)
       .assert.containsText('@organiser', this.state.event.organiser)
       .assert.containsText('@leadTeam', this.state.event.lead_team)
   })
