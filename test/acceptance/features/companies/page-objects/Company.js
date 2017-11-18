@@ -277,7 +277,7 @@ module.exports = {
           .click('@addCompanyButton')
           .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
           .waitForElementPresent('@foreignOrganisationOptionBusinessType')
-          .api.perform((done) => {
+          .api.perform(() => {
             // step 1
             this
               .waitForElementPresent('@ukPrivateOrPublicLimitedCompanyOption')
@@ -351,7 +351,6 @@ module.exports = {
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${country}`,
                 }))
               })
-            done()
           })
       },
 
