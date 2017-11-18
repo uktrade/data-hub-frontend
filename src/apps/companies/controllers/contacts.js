@@ -1,26 +1,28 @@
-const { reject } = require('lodash')
+const { merge, omit } = require('lodash')
 
-const { transformContactToListItem } = require('../../contacts/transformers')
+const { contactFiltersFields: filtersFields, contactSortForm } = require('../macros')
+const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderContacts (req, res, next) {
-  const { id, name, contacts } = res.locals.company
+  const { id: companyId, name: companyName } = res.locals.company
 
-  const transformedContacts = contacts
-    .map(transformContactToListItem)
-    .map(contact => {
-      const meta = reject(contact.meta, ['label', 'Company'])
-      return Object.assign({}, contact, { meta })
-    })
-  const activeContacts = transformedContacts.filter(contact => !contact.isArchived)
-  const archivedContacts = transformedContacts.filter(contact => contact.isArchived)
+  const sortForm = merge({}, contactSortForm, {
+    hiddenFields: Object.assign({}, omit(req.query, 'sortby')),
+    children: [
+      { value: req.query.sortby },
+    ],
+  })
+
+  const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
   res
-    .breadcrumb(name, `/companies/${id}`)
+    .breadcrumb(companyName, `/companies/${companyId}`)
     .breadcrumb('Contacts')
     .render('companies/views/contacts', {
-      activeContacts,
-      archivedContacts,
-      addContactUrl: `/contacts/create?company=${id}`,
+      sortForm,
+      filtersFields,
+      selectedFilters,
+      addContactUrl: `/contacts/create?company=${companyId}`,
     })
 }
 

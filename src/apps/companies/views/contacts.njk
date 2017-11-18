@@ -7,20 +7,20 @@
 
   <h2 class="heading-medium">Contacts</h2>
 
-  {{ Collection({
-    id: 'contact-list',
-    items: activeContacts,
-    count: activeContacts.length,
-    countLabel: 'active contact',
-    summaryActionsHTML: addProjectButton
-  }) }}
+  {{ CollectionFilters({
+      query: QUERY,
+      filtersFields: filtersFields,
+      action: CURRENT_PATH
+    })
+  }}
 
-  {% if archivedContacts | length %}
-    {{ Collection({
-      id: 'archived-contact-list',
-      items: archivedContacts,
-      count: archivedContacts.length,
-      countLabel: 'archived contact'
-    }) }}
-  {% endif %}
+  {{ Collection(contactResults | assign({
+      countLabel: 'contact',
+      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+      selectedFilters: selectedFilters,
+      query: QUERY,
+      action: CURRENT_PATH,
+      summaryActionsHTML: addProjectButton
+    }))
+  }}
 {% endblock %}
