@@ -77,13 +77,17 @@ defineSupportCode(({ When, Then }) => {
 
     for (const row of dataTable.hashes()) {
       const metaListValueElement = Collection.getSelectorForMetaListItemValue(row.text)
-      const expectedMetaListText = get(this.state, row.expected)
+      const expectedMetaListValue = get(this.state, row.expected)
 
-      await Collection
-        .section.firstCollectionItem
-        .api.useXpath()
-        .assert.containsText(metaListValueElement.selector, expectedMetaListText)
-        .useCss()
+      // If we have a value in state that we expecting then test for its contents
+      // meaning we can specify metaItems that only appear when specific entries have been made to a form. e.g Uk region
+      if (expectedMetaListValue) {
+        await Collection
+          .section.firstCollectionItem
+          .api.useXpath()
+          .assert.containsText(metaListValueElement.selector, expectedMetaListValue)
+          .useCss()
+      }
     }
   })
 
