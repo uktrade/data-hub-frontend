@@ -101,9 +101,6 @@
       "label": "Payment received date",
       "hint": "For example 28/10/2017"
     },
-    "transaction_reference": {
-      "label": "Transaction reference"
-    },
     "cancellation_reason": {
       "label": "Reason for cancelling"
     }
