@@ -31,47 +31,59 @@ function setCompany (req, res, next) {
 }
 
 async function setContact (req, res, next) {
+  const contactId = get(res.locals, 'order.contact.id')
+
+  if (!contactId) {
+    return next()
+  }
+
   try {
-    const contactId = get(res.locals, 'order.contact.id')
     const contact = await getContact(req.session.token, contactId)
 
     res.locals.order.contact = contact
+    next()
   } catch (error) {
-    logger.error(error)
+    next(error)
   }
-  next()
 }
 
 async function setAssignees (req, res, next) {
-  try {
-    const orderId = get(res.locals, 'order.id')
-    const assignees = await Order.getAssignees(req.session.token, orderId)
+  const orderId = get(res.locals, 'order.id')
 
-    res.locals.assignees = assignees
-  } catch (error) {
-    logger.error(error)
+  if (orderId) {
+    try {
+      const assignees = await Order.getAssignees(req.session.token, orderId)
+
+      res.locals.assignees = assignees
+    } catch (error) {
+      return next(error)
+    }
   }
   next()
 }
 
 async function setSubscribers (req, res, next) {
-  try {
-    const orderId = get(res.locals, 'order.id')
-    const subscribers = await Order.getSubscribers(req.session.token, orderId)
+  const orderId = get(res.locals, 'order.id')
 
-    res.locals.subscribers = subscribers
-  } catch (error) {
-    logger.error(error)
+  if (orderId) {
+    try {
+      const subscribers = await Order.getSubscribers(req.session.token, orderId)
+
+      res.locals.subscribers = subscribers
+    } catch (error) {
+      return next(error)
+    }
   }
   next()
 }
 
 async function setQuoteSummary (req, res, next) {
-  const order = get(res.locals, 'order')
+  const orderId = get(res.locals, 'order.id')
+  const orderStatus = get(res.locals, 'order.status')
 
-  if (order.status === 'quote_awaiting_acceptance') {
+  if (orderStatus === 'quote_awaiting_acceptance') {
     try {
-      const quote = await Order.getQuote(req.session.token, order.id)
+      const quote = await Order.getQuote(req.session.token, orderId)
 
       res.locals.quote = assign({}, quote, {
         expired: new Date(quote.expires_on) < new Date(),

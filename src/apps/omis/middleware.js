@@ -1,7 +1,6 @@
 const { assign, get } = require('lodash')
 
 const config = require('../../../config')
-const logger = require('../../../config/logger')
 const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
@@ -33,10 +32,11 @@ async function getOrder (req, res, next, orderId) {
     currencyFields.forEach((field) => {
       res.locals.order[field] = parseFloat(res.locals.order[field]) / 100
     })
-  } catch (e) {
-    logger.error(e)
+
+    next()
+  } catch (error) {
+    next(error)
   }
-  next()
 }
 
 function setOrderBreadcrumb (req, res, next) {

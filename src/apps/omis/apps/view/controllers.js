@@ -5,7 +5,7 @@ const { transformSubscriberToView } = require('../../transformers')
 function renderWorkOrder (req, res) {
   const order = res.locals.order
   const assignees = res.locals.assignees
-  const subscribers = res.locals.subscribers.map(transformSubscriberToView(get(res.locals, 'user.id')))
+  const subscribers = get(res.locals, 'subscribers', []).map(transformSubscriberToView(get(res.locals, 'user.id')))
 
   const values = merge({}, order, {
     assignees,
