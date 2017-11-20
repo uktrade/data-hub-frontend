@@ -5,7 +5,7 @@ const { mediumDateTimeFormat } = require('../../../config')
 
 function transformChanges (changes, labels) {
   return Object.keys(changes)
-    .map(key => labels[key] || key)
+    .map(key => labels[key] || labels[key.replace(/_id$/, '')] || key)
     .join(', ')
 }
 
@@ -46,4 +46,5 @@ function transformAuditLogToListItem (labels = {}) {
 
 module.exports = {
   transformAuditLogToListItem,
+  transformChanges,
 }
