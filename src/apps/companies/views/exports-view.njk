@@ -1,11 +1,10 @@
 {% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
-  {{ super() }}
-
   <h2 class="heading-medium">Exports</h2>
 
-  {{ keyvaluetable(exportDetails, id="company-exports", labels=exportDetailsLabels, keyorder=exportDetailsDisplayOrder) }}
+  {% component 'key-value-table', items=exportDetails %}
+
   <p class="actions">
     <a href="/companies/{{company.id}}/exports/edit" class="button button-secondary">Edit summary</a>
   </p>

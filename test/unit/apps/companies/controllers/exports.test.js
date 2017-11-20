@@ -9,6 +9,7 @@ describe('Company export controller', () => {
     this.renderSpy = this.sandbox.spy()
     this.nextSpy = this.sandbox.spy()
     this.redirectSpy = this.sandbox.spy()
+    this.transformerSpy = this.sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/exports', {
       '../repos': {
@@ -20,6 +21,9 @@ describe('Company export controller', () => {
           name: 'France',
         }],
       },
+      '../transformers': {
+        transformCompanyResponseToExportDetailsViewRecord: this.transformerSpy,
+      },
     })
 
     this.reqMock = {
@@ -27,6 +31,7 @@ describe('Company export controller', () => {
         token: tokenMock,
       },
     }
+
     this.resMock = {
       breadcrumb: this.breadcrumbStub,
       render: this.renderSpy,
@@ -47,7 +52,11 @@ describe('Company export controller', () => {
     })
 
     it('should set correct breadcrumbs', () => {
-      expect(this.breadcrumbStub).to.have.been.calledTwice
+      expect(this.breadcrumbStub).to.be.calledWith('Exports')
+    })
+
+    it('should call the transformer to get the deails', () => {
+      expect(this.transformerSpy).to.be.calledWith(companyMock)
     })
 
     it('should render the correct view', () => {
@@ -55,20 +64,8 @@ describe('Company export controller', () => {
       expect(this.renderSpy).to.have.been.calledOnce
     })
 
-    it('send labels to view', () => {
-      expect(this.renderSpy.args[0][1]).to.have.property('exportDetailsLabels')
-    })
-
-    it('send display order to view', () => {
-      expect(this.renderSpy.args[0][1]).to.have.property('exportDetailsDisplayOrder')
-    })
-
     it('should exports to view', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('exportDetails')
-      expect(this.renderSpy.args[0][1].exportDetails).to.deep.equal({
-        exportToCountries: 'France<br>Italy',
-        futureInterestCountries: 'Germany<br>Argentina',
-      })
     })
   })
 

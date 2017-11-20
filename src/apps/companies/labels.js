@@ -61,4 +61,16 @@ const accountManagementDisplayLabels = {
   oneListAccountManager: 'One List account manager',
 }
 
-module.exports = { companyDetailsLabels, chDetailsLabels, companyTypeOptions, hqLabels, accountManagementDisplayLabels }
+const exportDetailsLabels = {
+  exportToCountries: 'Currently exporting to',
+  futureInterestCountries: 'Future countries of interest',
+}
+
+module.exports = {
+  companyDetailsLabels,
+  chDetailsLabels,
+  companyTypeOptions,
+  hqLabels,
+  accountManagementDisplayLabels,
+  exportDetailsLabels,
+}
