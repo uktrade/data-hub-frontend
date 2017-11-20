@@ -15,15 +15,16 @@ async function postcodeLookupHandler (req, res) {
   try {
     const postcode = req.params.postcode
     const addresses = await lookupAddress(postcode)
+    const unitedKingdomCountryId = metadata.countryOptions.find(
+      country => country.name.toLowerCase() === 'united kingdom'
+    ).id
     const augmentedAddresses = addresses.map(address => {
-      return Object.assign({}, address, {
-        country: metadata.countryOptions.find(country => country.name.toLowerCase() === 'united kingdom').id,
-      })
+      return Object.assign({}, address, { country: unitedKingdomCountryId })
     })
 
     res.json(augmentedAddresses)
   } catch (error) {
-    res.json({ error })
+    res.status(error.statusCode).json({ message: error.message })
   }
 }
 
