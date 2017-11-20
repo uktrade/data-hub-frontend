@@ -40,6 +40,13 @@ module.exports = {
       getButtonSelectorWithText (text) {
         return getButtonWithText(text)
       },
+      captureResultCount (callback) {
+        return this.section.collectionHeader
+          .waitForElementVisible('@resultCount')
+          .getText('@resultCount', (result) => {
+            callback(result.value)
+          })
+      },
     },
   ],
   sections: {

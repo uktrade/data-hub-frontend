@@ -6,7 +6,9 @@ Feature: View a list of Investment Projects
 
   @investment-projects-collection--view
   Scenario: View Investment Projects list
-    Given I navigate to the Investment Projects page for Lambda plc
+
+    Given I navigate to the Company Lambda plc
+    When I navigate to the Investment Projects investment page
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
