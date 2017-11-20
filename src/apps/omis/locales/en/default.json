@@ -4,8 +4,7 @@
       "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Choose the market (country) where the service is required",
-      "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
+      "label": "Choose the market (country) where the service is required"
     },
     "subscribers": {
       "legend": "Advisers",
@@ -30,7 +29,7 @@
     },
     "delivery_date": {
       "label": "Delivery date of first activity",
-      "hint": "For example 28/10/2017"
+      "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
       "label": "Specific people or organisations the company does not want DIT to talk to"
