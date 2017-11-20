@@ -85,7 +85,6 @@ const steps = merge({}, createSteps, {
     fields: [
       'amount',
       'received_on',
-      'transaction_reference',
     ],
     templatePath: 'omis/apps/edit/views',
     template: 'payment-reconciliation.njk',

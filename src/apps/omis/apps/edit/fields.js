@@ -205,12 +205,6 @@ const editFields = merge({}, globalFields, {
     validate: ['required', 'date', 'before'],
     modifier: 'medium',
   },
-  transaction_reference: {
-    fieldType: 'TextField',
-    label: 'fields.transaction_reference.label',
-    optional: true,
-    modifier: 'medium',
-  },
   cancellation_reason: {
     fieldType: 'MultipleChoiceField',
     label: 'fields.cancellation_reason.label',
