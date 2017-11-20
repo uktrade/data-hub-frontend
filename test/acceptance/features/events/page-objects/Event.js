@@ -1,8 +1,9 @@
 const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
-const { camelCase, isNull, pickBy, keys, assign } = require('lodash')
+const { get, camelCase, isNull, pickBy, keys, assign } = require('lodash')
 
 const { getButtonWithText } = require('../../../helpers/selectors')
+const { getDateFor } = require('../../../helpers/date')
 
 module.exports = {
   url: `${process.env.QA_HOST}/events/create`,
@@ -86,10 +87,10 @@ module.exports = {
           teams: null,
         }, details)
 
-        this
+        return this
           .waitForElementPresent('@sharedYes')
           .click('@sharedYes')
-          .api.perform(async (done) => {
+          .api.perform((done) => {
             Promise.all(
               keys(pickBy(event, isNull)).map((key) => {
                 return new Promise((resolve) => {
@@ -127,9 +128,22 @@ module.exports = {
                 done()
               })
           })
+          .perform(() => {
+            const eventWithDates = assign({}, event, {
+              startDate: getDateFor({
+                year: get(event, 'start_date_year'),
+                month: get(event, 'start_date_month'),
+                day: get(event, 'start_date_day'),
+              }),
+              endDate: getDateFor({
+                year: get(event, 'end_date_year'),
+                month: get(event, 'end_date_month'),
+                day: get(event, 'end_date_day'),
+              }),
+            })
 
-        callback(event)
-        return this
+            callback(eventWithDates)
+          })
       },
     },
   ],

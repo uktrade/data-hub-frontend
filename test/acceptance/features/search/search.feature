@@ -8,7 +8,7 @@ Feature: Search
   Scenario: Search events
 
     Given I navigate to the event list page
-    When I click the add an event link
+    When I click the "Add event" link
     And I populate the create event form to search
     And I click the save button
     Then I see the success message

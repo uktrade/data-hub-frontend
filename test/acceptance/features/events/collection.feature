@@ -1,43 +1,63 @@
-@events-list
+@events-collection
 Feature: View a list of events
   As an Event organiser
   I would like to view a list of events
   So search for events and filter and sort the results
 
-  @events-list--add
+  @events-collection--add
   Scenario: Add event
 
     Given I navigate to the event list page
-    When I click the add an event link
-    Then I am taken to the create event page
+    When I click the "Add event" link
+    Then I am taken to the "Add event" page
 
-  @events-list--view
-  Scenario: View event list
+  @events-collection--view
+  Scenario: View event collection
 
-    Given I navigate to the event list page
-    When I click the add an event link
+    Given I navigate to the Events collection page
+    When I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I navigate to the event list page
-    Then I can view the event
+    When I navigate to the Events collection page
+    Then I can view the Event in the collection
+      | text            | expected              |
+      | Type            | event.event_type      |
+      | Begins          | event.startDate       |
+      | Ends            | event.endDate         |
+      | Organiser       | event.organiser       |
+      | Lead team       | event.lead_team       |
+    And the Event has badges
+      | text            | expected              |
+      | Country         | event.address_country |
+      | Region          | event.uk_region       |
 
-  @events-list--view-uk-region
+  @events-collection--view-uk-region
   Scenario: View event uk region
 
-    Given I navigate to the event list page
-    When I click the add an event link
+    Given I navigate to the Events collection page
+    When I click the "Add event" link
     And I populate the create event form with United Kingdom and a region
     And I click the save button
     Then I see the success message
-    When I navigate to the event list page
-    Then I can view the event country and region
+    When I navigate to the Events collection page
+    Then I can view the Event in the collection
+      | text            | expected              |
+      | Type            | event.event_type      |
+      | Begins          | event.startDate       |
+      | Ends            | event.endDate         |
+      | Organiser       | event.organiser       |
+      | Lead team       | event.lead_team       |
+    And the Event has badges
+      | text            | expected              |
+      | Country         | event.address_country |
+      | Region          | event.uk_region       |
 
-  @events-list--filter
+  @events-collection--filter
   Scenario: Filter event list
 
     Given I navigate to the event list page
-    When I click the add an event link
+    When I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
@@ -53,16 +73,16 @@ Feature: View a list of events
     And I filter the events list by start date
     Then I can view the event
 
-  @events-list--sort
+  @events-collection--sort
   Scenario: Sort event list
 
     Given I navigate to the event list page
-    When I click the add an event link
+    When I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
     When I navigate to the event list page
-    And I click the add an event link
+    And I click the "Add event" link
     And I populate the create event form
     When I click the save button
     Then I see the success message

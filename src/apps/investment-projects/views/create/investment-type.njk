@@ -40,52 +40,6 @@
     <a href="/investment-projects/create/investment-type/info#non-fdi" target="info">Is this is a Non-FDI project?</a>
   {% endset %}
 
-  {% set investmentOptions = [
-      {
-        value: form.options.investmentTypesObj.fdi.value,
-        label: form.options.investmentTypesObj.fdi.label,
-        hint: fdiHintLink | safe,
-        children:  [
-          {
-            macroName: 'MultipleChoiceField',
-            name: 'fdi_type',
-            label: 'Type of foreign direct investment (FDI)',
-            error: form.errors.messages['fdi_type'],
-            value: form.state['fdi_type'],
-            options: form.options.fdi,
-            initialOption: '-- Select an FDI type --',
-            condition: {
-              name: 'investment_type',
-              value: form.options.investmentTypesObj.fdi.value
-            },
-            modifier: 'subfield'
-          }
-        ]
-      }, {
-        value: form.options.investmentTypesObj.non_fdi.value,
-        label: form.options.investmentTypesObj.non_fdi.label,
-        hint: nonFdiHintLink | safe
-      }
-    ]
-  %}
-
-
-
-  {% if company.uk_based %}
-    {% set commitmentToInvestHintLink %}
-      <a href="/investment-projects/create/investment-type/info#commitment-to-invest" target="info">Is this a Commitment to invest project?</a>
-    {% endset %}
-
-    {% set investmentOptions = investmentOptions.concat([
-        {
-          value: form.options.investmentTypesObj.commitment_to_invest.value,
-          label: form.options.investmentTypesObj.commitment_to_invest.label,
-          hint: commitmentToInvestHintLink | safe
-        }
-      ])
-    %}
-  {% endif %}
-
   {% call Form(form | assign({
     buttonText: 'Continue',
     hiddenFields: {
@@ -94,14 +48,40 @@
   })) %}
 
     {{ MultipleChoiceField({
-        type: 'radio',
-        name: 'investment_type',
-        label: 'Type of investment',
-        value: form.state['investment_type'],
-        error: form.errors.messages['investment_type'],
-        options: investmentOptions
-      })
-    }}
+      type: 'radio',
+      name: 'investment_type',
+      label: 'Type of investment',
+      value: form.state['investment_type'],
+      error: form.errors.messages['investment_type'],
+      options: [
+        {
+          value: form.options.investmentTypesObj.fdi.value,
+          label: form.options.investmentTypesObj.fdi.label,
+          hint: fdiHintLink | safe,
+          children:  [
+            {
+              macroName: 'MultipleChoiceField',
+              name: 'fdi_type',
+              label: 'Type of foreign direct investment (FDI)',
+              error: form.errors.messages['fdi_type'],
+              value: form.state['fdi_type'],
+              options: form.options.fdi,
+              initialOption: '-- Select an FDI type --',
+              condition: {
+                name: 'investment_type',
+                value: form.options.investmentTypesObj.fdi.value
+              },
+              modifier: 'subfield'
+            }
+          ]
+        },
+        {
+          value: form.options.investmentTypesObj.non_fdi.value,
+          label: form.options.investmentTypesObj.non_fdi.label,
+          hint: nonFdiHintLink | safe
+        }
+      ]
+    }) }}
 
   {% endcall %}
 
