@@ -1,3 +1,4 @@
+# TODO archived filters and sort
 @companies-collection @collection
 Feature: View collection of companies
   As an existing user

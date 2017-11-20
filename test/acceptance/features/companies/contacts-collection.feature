@@ -1,3 +1,4 @@
+# TODO archived filters and sort
 @companies-contact-collection @collection
 Feature: View collection of contacts for a company
   As an existing user
