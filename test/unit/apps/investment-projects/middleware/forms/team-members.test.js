@@ -326,5 +326,15 @@ describe('Investment form middleware - team members', () => {
 
       expect(actual).to.deep.equal(expected)
     })
+
+    it('should handle absent adviser and return empty array', () => {
+      const body = {}
+
+      const expected = []
+
+      const actual = this.controller.transformDataToTeamMemberArray(body)
+
+      expect(actual).to.deep.equal(expected)
+    })
   })
 })

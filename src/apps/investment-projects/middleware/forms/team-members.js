@@ -1,4 +1,4 @@
-const { zipWith, get } = require('lodash')
+const { zipWith, get, isArray, isString } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
 const { updateInvestmentTeamMembers } = require('../../repos')
 const { teamMembersLabels } = require('../../labels')
@@ -7,17 +7,13 @@ const { transformObjectToOption } = require('../../../transformers')
 // Transform the form posted to an array of objects to save
 // and filter out any blanks
 function transformDataToTeamMemberArray (body) {
-  if (Array.isArray(body.adviser)) {
-    return zipWith(body.adviser, body.role, (adviser, role) => ({ adviser, role }))
-      .filter(member => member.adviser.length > 0)
-  } else if (body.adviser.length > 0) {
-    return [{
-      adviser: body.adviser,
-      role: body.role,
-    }]
+  let teamMembers = []
+  if (isArray(body.adviser)) {
+    teamMembers = zipWith(body.adviser, body.role, (adviser, role) => ({ adviser, role }))
+  } else if (isString(body.adviser)) {
+    teamMembers = [{ adviser: body.adviser, role: body.role }]
   }
-
-  return []
+  return teamMembers.filter(member => member.adviser.length)
 }
 
 async function populateForm (req, res, next) {
