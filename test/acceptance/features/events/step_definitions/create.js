@@ -5,11 +5,12 @@ const { defineSupportCode } = require('cucumber')
 defineSupportCode(function ({ Given, Then, When }) {
   const Event = client.page.Event()
 
-  When(/^I create an event$/, async function () {
+  Given(/^I create an event$/, async function () {
     await Event
       .navigate()
-      .populateCreateEventForm({}, true, (event) => set(this.state, 'event', event))
-      .click('@saveButton')
+      .populateCreateEventForm({}, true, (event) => {
+        set(this.state, 'event', event)
+      })
       .wait() // wait for backend to sync
   })
 
@@ -209,6 +210,7 @@ defineSupportCode(function ({ Given, Then, When }) {
 
   Then(/^I click the save button$/, async () => {
     await Event
+      .waitForElementPresent('@saveButton')
       .click('@saveButton')
       .wait() // wait for backend to sync
   })

@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { set } = require('lodash')
 
-defineSupportCode(({ Given, Then, When }) => {
+defineSupportCode(({ Given }) => {
   const Company = client.page.Company()
 
   Given(/^a company is created$/, async function () {
@@ -10,7 +10,9 @@ defineSupportCode(({ Given, Then, When }) => {
       .url(this.urls.companies.search)
 
     await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany({}, (company) => set(this.state, 'company', company))
+      .createUkNonPrivateOrNonPublicLimitedCompany({}, (company) => {
+        set(this.state, 'company', company)
+      })
       .wait() // wait for backend to sync
   })
 })

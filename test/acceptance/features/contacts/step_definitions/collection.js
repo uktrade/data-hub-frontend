@@ -279,7 +279,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^the contacts should have been correctly sorted by creation date$/, async function () {
     const firstItemField = get(this.state, 'collection.firstItem.field')
     const lastItemField = get(this.state, 'collection.lastItem.field')
-    const expectedFirstItemField = get(this.state, 'contact.header')
+    const expectedFirstItemField = get(this.state, 'contact.heading')
     const expectedLastItemField = this.fixtures.contact.georginaClark.name
 
     client.expect(firstItemField).to.equal(expectedFirstItemField)

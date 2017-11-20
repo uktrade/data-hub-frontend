@@ -6,90 +6,57 @@ Feature: Create a new Investment project
   @investment-projects-create--verify-add
   Scenario: Verify Add Investment project option
 
-    Given I navigate to Investments page of any company
-    When I verify an option to add a new Investment project
+    Given I navigate to the Investment Projects page for Lambda plc
+    And I click the "Add investment project" link
+    Then I am taken to the "Add investment project" page
 
-  @investment-projects-create--foreign-equity
-  Scenario: Create a new Investment project as a source of foreign equity investment
+  @investment-projects-create--fdi
+  Scenario: Add a Foreign Direct Investment (FDI) Investment project
 
-    Given I create a new Investment project as a source of foreign equity investment
+    Given I navigate to the Investment Projects page for Lambda plc
+    And I click the "Add investment project" link
+    Then I am taken to the "Add investment project" page
+    When I select FDI as the Investment project type
+    And I choose Yes for "Will this company be the source of foreign equity investment?"
+    And I populate the create Investment Project form
     Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify Type of Investment is shown as "FDI, Acquisition"
+    And Investment project summary has all of the entered information
 
-  @investment-projects-create--no-optional-fields
-  Scenario: Create a new Investment project as a source of foreign equity investment
+  @investment-projects-create--fdi-different-source-of-equity
+  Scenario: Add a Foreign Direct Investment (FDI) Investment project with a separate company as the source of foreign equity
 
-    Given I create a new Investment project without optional fields
+    Given I navigate to the Investment Projects page for Lambda plc
+    And I click the "Add investment project" link
+    Then I am taken to the "Add investment project" page
+    When I select FDI as the Investment project type
+    And I choose No for "Will this company be the source of foreign equity investment?"
+    And I search for the foreign source of equity Mars Exports Ltd
+    Then I can view the Equity Source in the collection
+      | text               | expected                               |
+      | Registered address | investmentProject.equitySource.address |
+    And the Equity Source has badges
+      | text               | expected                               |
+      | Country            | investmentProject.equitySource.country |
+    Then I choose the first item in the collection
+    When I populate the create Investment Project form
     Then I see the success message
-    And I verify my newly created Investment project in company profile
+    And Investment project summary has all of the entered information
 
-  @investment-projects-create--different-client-relation-manager @ignore
-  Scenario: Create a new Investment project with a different client relation manager
+  @investment-projects-create--non-fdi
+  Scenario: Add a Non Foreign Direct Investment (Non-FDI) Investment project
 
-    Given I create a new Investment project with a different client relation manager
+    Given I navigate to the Investment Projects page for Venus Ltd
+    And I click the "Add investment project" link
+    Then I am taken to the "Add investment project" page
+    When I select Non FDI as the Investment project type
+    And I search for the foreign source of equity Lambda plc
+    Then I can view the Equity Source in the collection
+      | text               | expected                               |
+      | Registered address | investmentProject.equitySource.address |
+    And the Equity Source has badges
+      | text               | expected                               |
+      | Country            | investmentProject.equitySource.country |
+    Then I choose the first item in the collection
+    When I populate the create Investment Project form
     Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify the client relation manager details shown under Project team
-
-  @investment-projects-create--different-referral-source-adviser @ignore
-  Scenario: Create a new Investment project with a different referral source adviser
-
-    Given I create a new Investment project with a different referral source adviser
-    Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify the referral source adviser details shown under Project team
-
-  @investment-projects-create--different-client-referral-contacts @ignore
-  Scenario: Create a new Investment project with different client relation manager and referral source adviser
-
-    Given I create a new Investment project with different client relation manager and referral source adviser
-    Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify the client relation manager and referral source adviser details shown under Project team
-
-  @investment-projects-create--FDItype
-  Scenario: Create a new Investment project with FDI as Investment type
-
-    Given I create a new Investment project with FDI as Investment type
-    Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify Type of Investment is shown as "FDI, Acquisition"
-
-  @investment-projects-create--non-FDItype
-  Scenario: Create a new Investment project with Non-FDI as Investment type
-
-    Given I create a new Investment project with Non-FDI as Investment type
-    Then I see the success message
-    And I verify my newly created Investment project in company profile
-    And I verify Type of Investment is shown as "Non-FDI"
-
-  @investment-projects-create--non-foreign-equity @ignore
-  Scenario: Create a new Investment project as not a source of foreign equity investment
-
-    Given I create a new Investment project as not a source of foreign equity investment
-    Then I see the success message
-    And I verify my newly created foreign equity Investment project in company profile
-
-  @investment-search-FDItype
-  Scenario: Search for newly created FDI Investment project
-
-    Given I create a new Investment project with FDI as Investment type
-    Then I see the success message
-    When I search for my newly created Investment project
-    Then I verify it is displayed in the search results
-
-  @investment-search-nonFDItype
-  Scenario: Search for newly created Non-FDI Investment project
-
-    Given I create a new Investment project with Non-FDI as Investment type
-    Then I see the success message
-    When I search for my newly created Investment project
-    Then I verify it is displayed in the search results
-
-  @investment-search-CTItype @ignore
-  Scenario: Search for newly created commitment to invest type Investment project
-
-    Given I create a new Investment project as a source of foreign equity investment
-    When I search for my newly created Investment project
-    Then I verify it is displayed in the search results
+    And Investment project summary has all of the entered information

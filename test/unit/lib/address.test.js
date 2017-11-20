@@ -43,7 +43,7 @@ describe('Address formatter', function () {
       address_postcode: 'LL1 1LL',
     }
     const actual = address.getFormattedAddress(source)
-    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
+    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL')
   })
   it('should format an address with field names containing a prefix', function () {
     const source = {
@@ -56,7 +56,7 @@ describe('Address formatter', function () {
     }
 
     const actual = address.getFormattedAddress(source, 'trading')
-    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL, United Kingdom')
+    expect(actual).equal('10 the Street, Warble, Big Town, Large County, LL1 1LL')
   })
   it('should return null when the address is empty', function () {
     const source = {
