@@ -16,16 +16,16 @@ Feature: View collection of contacts
     Then I see the success message
     When I navigate to the Interactions and services collection page
     Then there are Interactions headings
-    And I can view the Interaction in the collection for interactions and services
-      | label   | statePath              |
-      | Contact | contact.header         |
+    Then I filter the collections to view the Interaction I have just created
+    And I can view the Interaction in the collection
+      | text    | expected               |
+      | Contact | contact.heading        |
       | Company | company.name           |
-      | Date    |                        |
+      | Date    | interaction.date       |
       | Adviser | interaction.ditAdviser |
-    And the Interaction has badges for interactions and services
-      | text |
-      | Type |
-
+    And the Interaction has badges
+      | text    | expected               |
+      | Type    | interaction.type       |
 
   @interactions-collection--view-service-delivery
   Scenario: View service delivery in interactions and services collection
@@ -39,12 +39,13 @@ Feature: View collection of contacts
     Then I see the success message
     When I navigate to the Interactions and services collection page
     Then there are Interactions headings
-    And I can view the Service delivery in the collection for interactions and services
-      | label   | statePath                  |
-      | Contact | contact.header             |
+    Then I filter the collections to view the Service Delivery I have just created
+    And I can view the Service delivery in the collection
+      | text    | expected                   |
+      | Contact | contact.heading            |
       | Company | company.name               |
-      | Date    |                            |
+      | Date    | serviceDelivery.date       |
       | Adviser | serviceDelivery.ditAdviser |
-    And the Service delivery has badges for interactions and services
-      | text |
-      | Type |
+    And the Service delivery has badges
+      | text    | expected                   |
+      | Type    | serviceDelivery.type       |

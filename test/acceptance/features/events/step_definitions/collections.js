@@ -1,5 +1,5 @@
 const { compareAsc, compareDesc } = require('date-fns')
-const { set } = require('lodash')
+const { get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -9,64 +9,58 @@ defineSupportCode(({ Then, When }) => {
   const EventList = client.page.EventList()
   const Event = client.page.Event()
 
+  // TODO feels like this can be DRY'd up (see location)
   When(/^I navigate to the event list page$/, async () => {
     await EventList
       .navigate()
       .waitForElementPresent('@h1Element')
   })
 
-  When(/^I click the add an event link$/, async () => {
-    await EventList
-      .waitForElementPresent('@addEventButton')
-      .click('@addEventButton')
-  })
-
   When(/^I populate the create event form$/, async function () {
     await Event
-      .populateCreateEventForm({}, true, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({}, true, (event) => {
+        set(this.state, 'event', event)
+        set(this.state, 'event.heading', get(this.state, 'event.name'))
+      })
   })
 
   When(/^I populate the create event form with United Kingdom and a region$/, async function () {
     await Event
-      .populateCreateEventForm({ address_country: 'United Kingdom' }, true, (event) => set(this.state, 'event', event))
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, true, (event) => {
+        set(this.state, 'event', event)
+        set(this.state, 'event.heading', event.name)
+      })
   })
 
   When(/^I populate the create event form with United Kingdom and without a region$/, async function () {
     await Event
-      .populateCreateEventForm({ address_country: 'United Kingdom' }, false, (event) => set(this.state, 'event', event))
-  })
-
-  Then(/^I am taken to the create event page$/, async () => {
-    await EventList
-      .waitForElementPresent('@h1Element')
-      .assert.urlEquals(`${EventList.url}/create`)
+      .populateCreateEventForm({ address_country: 'United Kingdom' }, false, (event) => {
+        set(this.state, 'event', event)
+        set(this.state, 'event.heading', event.name)
+      })
   })
 
   Then(/^I can view the event$/, async function () {
+    const startDate = getDateFor({
+      year: get(this.state, 'event.start_date_year'),
+      month: get(this.state, 'event.start_date_month'),
+      day: get(this.state, 'event.start_date_day'),
+    })
+    const endDate = getDateFor({
+      year: get(this.state, 'event.end_date_year'),
+      month: get(this.state, 'event.end_date_month'),
+      day: get(this.state, 'event.end_date_day'),
+    })
+
     await EventList.section.firstEventInList
       .waitForElementPresent('@header')
       .assert.containsText('@header', this.state.event.name)
       .assert.containsText('@eventType', this.state.event.event_type)
       .assert.containsText('@country', this.state.event.address_country)
-      .assert.containsText('@eventStart', getDateFor({
-        year: this.state.event.start_date_year,
-        month: this.state.event.start_date_month,
-        day: this.state.event.start_date_day,
-      }))
-      .assert.containsText('@eventEnd', getDateFor({
-        year: this.state.event.end_date_year,
-        month: this.state.event.end_date_month,
-        day: this.state.event.end_date_day,
-      }))
+      .assert.containsText('@eventStart', startDate)
+      .assert.containsText('@eventEnd', endDate)
       .assert.containsText('@organiser', this.state.event.organiser)
       .assert.containsText('@leadTeam', this.state.event.lead_team)
-  })
-
-  Then(/^I can view the event country and region$/, async function () {
-    await EventList.section.firstEventInList
-      .waitForElementPresent('@header')
-      .assert.containsText('@country', this.state.event.address_country)
-      .assert.containsText('@ukRegion', this.state.event.uk_region)
   })
 
   Then(/^I filter the events list by name$/, async function () {
@@ -166,19 +160,19 @@ defineSupportCode(({ Then, When }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        set(this.state, 'list.firstItem.header', text.value)
+        set(this.state, 'list.firstItem.heading', text.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        set(this.state, 'list.secondItem.header', text.value)
+        set(this.state, 'list.secondItem.heading', text.value)
       })
   })
 
   Then(/^I see the list in A-Z alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header.toLowerCase() < this.state.list.secondItem.header.toLowerCase()
+      this.state.list.firstItem.heading.toLowerCase() < this.state.list.secondItem.heading.toLowerCase()
     ).to.be.true
   })
 
@@ -190,19 +184,19 @@ defineSupportCode(({ Then, When }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        set(this.state, 'list.firstItem.header', text.value)
+        set(this.state, 'list.firstItem.heading', text.value)
       })
 
     await EventList.section.secondEventInList
       .waitForElementVisible('@header')
       .getText('@header', (text) => {
-        set(this.state, 'list.secondItem.header', text.value)
+        set(this.state, 'list.secondItem.heading', text.value)
       })
   })
 
   Then(/^I see the list in Z-A alphabetical order$/, async function () {
     client.expect(
-      this.state.list.firstItem.header.toLowerCase() > this.state.list.secondItem.header.toLowerCase()
+      this.state.list.firstItem.heading.toLowerCase() > this.state.list.secondItem.heading.toLowerCase()
     ).to.be.true
   })
 

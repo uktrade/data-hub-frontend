@@ -214,28 +214,25 @@ async function cancelQuote (req, res, next) {
 function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
+  const orderStatus = get(res.locals, 'order.status')
   const form = {
     buttonText: 'Send quote to client',
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }
 
-  if (res.locals.incompleteFields) {
+  if (res.locals.incompleteFields || ['cancelled'].includes(orderStatus)) {
     form.hidePrimaryFormAction = true
   }
 
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
-    form.buttonModifiers = 'button-secondary'
+    form.buttonModifiers = 'button--destructive'
+    res.locals.destructive = true
 
     if (quote.accepted_on) {
       form.hidePrimaryFormAction = true
-    }
-
-    if (!quote.accepted_on && new Date(quote.expires_on) > new Date()) {
-      form.buttonModifiers = 'button--destructive'
-      res.locals.destructive = true
     }
   }
 

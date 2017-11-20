@@ -1,8 +1,8 @@
 const faker = require('faker')
-const { getDate, getMonth, getYear } = require('date-fns')
 const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const { generateFutureDate } = require('../../../helpers/date')
 
 const getRadioButtonWithText = (text) =>
   getSelectorForElementWithText(
@@ -37,14 +37,14 @@ module.exports = {
   },
   commands: [
     {
-      createInteraction (details = {}, callback) {
-        const recentDate = faker.date.recent()
+      createInteraction (details = {}, callback) { // TODO feels that some duplication between this and createServiceDelivery can be DRY'd up
+        const futureDate = generateFutureDate()
         const interaction = assign({}, {
           subject: faker.lorem.word(),
           notes: faker.lorem.sentence(),
-          dateOfInteractionYear: getYear(recentDate),
-          dateOfInteractionMonth: getMonth(recentDate) + 1,
-          dateOfInteractionDay: getDate(recentDate),
+          dateOfInteractionYear: futureDate.year,
+          dateOfInteractionMonth: futureDate.month,
+          dateOfInteractionDay: futureDate.day,
         }, details)
 
         this
@@ -87,24 +87,23 @@ module.exports = {
                 this.setValue(`@${key}`, interaction[key])
               }
             }
-            interaction.header = interaction.subject
+            interaction.heading = interaction.subject
             done()
           })
 
-        this.click('@saveButton')
-
-        callback(interaction)
-        return this
+        return this.click('@saveButton', () => {
+          callback(interaction)
+        })
       },
 
       createServiceDelivery (details = {}, callback) {
-        const recentDate = faker.date.recent()
+        const futureDate = generateFutureDate()
         const serviceDelivery = assign({}, {
           subject: faker.lorem.word(),
           notes: faker.lorem.sentence(),
-          dateOfInteractionYear: getYear(recentDate),
-          dateOfInteractionMonth: getMonth(recentDate) + 1,
-          dateOfInteractionDay: getDate(recentDate),
+          dateOfInteractionYear: futureDate.year,
+          dateOfInteractionMonth: futureDate.month,
+          dateOfInteractionDay: futureDate.day,
         }, details)
 
         this
@@ -150,17 +149,27 @@ module.exports = {
                     this.setValue(`@${key}`, serviceDelivery[key])
                   }
                 }
-                serviceDelivery.header = serviceDelivery.subject
+                serviceDelivery.heading = serviceDelivery.subject
                 done()
               })
             done()
           })
 
-        this.click('@saveButton')
-
-        callback(serviceDelivery)
-        return this
+        return this.click('@saveButton', () => {
+          callback(serviceDelivery)
+        })
       },
     },
   ],
+  sections: {
+    filters: {
+      selector: '.c-collection-filters',
+      elements: {
+        interaction: 'label[for=field-kind-1]',
+        serviceDelivery: 'label[for=field-kind-2]',
+        dateFrom: '#field-date_after',
+        dateTo: '#field-date_before',
+      },
+    },
+  },
 }

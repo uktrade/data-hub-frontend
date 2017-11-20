@@ -4,7 +4,7 @@ Feature: Company details
   @companies-details--cdms-reference
   Scenario: Company has CDMS reference
 
-    When browsing to company fixture Venus ltd
+    When browsing to company fixture Venus Ltd
     Then the company details CDMS reference is displayed
 
   @companies-details--no-cdms-reference

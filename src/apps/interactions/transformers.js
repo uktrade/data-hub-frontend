@@ -49,6 +49,7 @@ function transformInteractionToListItem ({
   company,
   date,
   dit_adviser,
+  communication_channel,
 }) {
   return {
     id,
@@ -65,13 +66,17 @@ function transformInteractionToListItem ({
         value: contact,
       },
       {
+        label: 'Date',
+        value: date,
+        type: 'date',
+      },
+      {
         label: 'Company',
         value: company,
       },
       {
-        label: 'Date',
-        value: date,
-        type: 'date',
+        label: 'Channel',
+        value: communication_channel,
       },
       {
         label: 'Adviser',

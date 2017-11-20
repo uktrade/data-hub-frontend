@@ -11,18 +11,18 @@ Feature: View collection of contacts
     When navigating to the company contacts
     And a primary contact is added
     Then I see the success message
+    Then I capture the modified on date for the first item
     When I navigate to the Contacts collection page
     Then there are Contacts headings
     And I can view the Contact in the collection
-      | label   | statePath      |
-      | Company | company.name   |
-      | Sector  | company.sector |
-      | Updated |                |
+      | text         | expected           |
+      | Company      | company.name       |
+      | Sector       | company.sector     |
+      | Updated      | collection.updated |
     And the Contact has badges
-      | text         |
-      | Contact type |
-      | Country      |
-
+      | text         | expected           |
+      | Contact type | contact.type       |
+      | Country      | company.country    |
 
   @contacts-collection--filter
   Scenario: Filter contact list
