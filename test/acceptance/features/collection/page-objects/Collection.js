@@ -50,12 +50,6 @@ module.exports = {
     },
   ],
   sections: {
-    localHeader: {
-      selector: '.c-local-header',
-      elements: {
-        header: 'h1.c-local-header__heading',
-      },
-    },
     collectionHeader: {
       selector: '.c-collection__header',
       elements: {
