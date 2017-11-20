@@ -37,6 +37,10 @@
     <table>
       <tbody>
         <tr>
+          <th>Order reference</th>
+          <td>{{ order.reference }}</td>
+        </tr>
+        <tr>
           <th>Amount (excluding VAT)</th>
           <td>{{ order.subtotal_cost | formatCurrency }}</td>
         </tr>
