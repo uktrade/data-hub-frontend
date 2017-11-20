@@ -2,7 +2,7 @@ const { get, find } = require('lodash')
 
 const { entities, search } = require('./services')
 const { transformApiResponseToSearchCollection } = require('./transformers')
-const { transformCompanyToListItem } = require('../companies/transformers')
+const { transformCompanyResponseToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
 const { transformEventToListItem } = require('../events/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
@@ -35,7 +35,7 @@ async function renderSearchResults (req, res) {
   }
 
   if (searchEntity === 'company') {
-    itemTransformers.push(transformCompanyToListItem)
+    itemTransformers.push(transformCompanyResponseToListItem)
     actionButton.text = 'Add company'
     actionButton.url = '/companies/add-step-1'
   }
