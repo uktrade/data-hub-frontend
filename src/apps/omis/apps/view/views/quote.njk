@@ -85,14 +85,14 @@
         {% endcall %}
       {% endif %}
 
-      {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}
-        {% if destructive %}
-          {{ Message({
-            type: 'error',
-            text: 'Editing the order whilst it is out for acceptance will invalidate the
-            current quote and the client will no longer be able to accept it.'
-          }) }}
-        {% endif %}
+      {% if order.status in ['quote_awaiting_acceptance'] and destructive %}
+        {% call Message({
+          type: 'error',
+          element: 'div'
+        }) %}
+          <p>The client will no longer be able to accept the quote once it has been cancelled.</p>
+          <p>They will be notified by email.</p>
+        {% endcall %}
       {% endif %}
 
     {% endif %}
