@@ -1,32 +1,18 @@
-const { assign, filter, flatten, map } = require('lodash')
+const { assign, filter, flatten } = require('lodash')
 
 const metadataRepo = require('../../../lib/metadata')
 const { saveCompany } = require('../repos')
 const { transformObjectToOption } = require('../../transformers')
-
-const exportDetailsLabels = {
-  exportToCountries: 'Currently exporting to',
-  futureInterestCountries: 'Future countries of interest',
-}
+const { transformCompanyResponseToExportDetailsViewRecord } = require('../transformers')
+const { exportDetailsLabels } = require('../labels')
 
 function renderExports (req, res) {
-  const {
-    id,
-    name,
-    export_to_countries,
-    future_interest_countries,
-  } = res.locals.company
+  const exportDetails = transformCompanyResponseToExportDetailsViewRecord(res.locals.company)
 
   res
-    .breadcrumb(name, `/companies/${id}`)
     .breadcrumb('Exports')
     .render('companies/views/exports-view', {
-      exportDetailsLabels,
-      exportDetailsDisplayOrder: ['exportToCountries', 'futureInterestCountries'],
-      exportDetails: {
-        exportToCountries: map(export_to_countries, 'name').join('<br>'),
-        futureInterestCountries: map(future_interest_countries, 'name').join('<br>'),
-      },
+      exportDetails,
     })
 }
 
