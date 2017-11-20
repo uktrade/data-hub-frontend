@@ -15,7 +15,8 @@ Feature: View collection of contacts
     And adding an interaction
     Then I see the success message
     When I navigate to the Interactions and services collection page
-    Then there are Interactions headings
+    Then I confirm I am on the Interactions page
+    And the results count header for interactions is present
     Then I filter the collections to view the Interaction I have just created
     And I can view the Interaction in the collection
       | text    | expected               |
@@ -38,7 +39,8 @@ Feature: View collection of contacts
     And adding a service delivery
     Then I see the success message
     When I navigate to the Interactions and services collection page
-    Then there are Interactions headings
+    Then I confirm I am on the Interactions page
+    And the results count header for interactions is present
     Then I filter the collections to view the Service Delivery I have just created
     And I can view the Service delivery in the collection
       | text    | expected                   |

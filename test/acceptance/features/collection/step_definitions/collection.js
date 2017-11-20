@@ -14,10 +14,8 @@ defineSupportCode(({ When, Then }) => {
       .url(url)
 
     await Collection
-      .section.collectionHeader
-      .waitForElementVisible('@resultCount')
-      .getText('@resultCount', (result) => {
-        set(this.state, 'collection.resultCount', result.value)
+      .captureResultCount((count) => {
+        set(this.state, 'collection.resultCount', count)
       })
   })
 
@@ -41,17 +39,20 @@ defineSupportCode(({ When, Then }) => {
       })
   })
 
-  Then(/^there are (.+) headings$/, async function (collectionType) {
-    await Collection
-      .section.localHeader
-      .waitForElementPresent('@header')
-      .assert.containsText('@header', collectionType)
+  Then(/^the results count header for (.+) is present$/, async function (collectionType) {
+    const resultsCountHeaderSelector = Collection
+      .getSelectorForResultsCountHeader(collectionType)
 
-    const resultsCountHeaderSelector = Collection.getSelectorForResultsCountHeader(collectionType)
+    await Collection
+      .captureResultCount((count) => {
+        set(this.state, 'collection.resultCount', count)
+      })
 
     await Collection
       .api.useXpath()
       .assert.visible(resultsCountHeaderSelector.selector)
+      .assert.containsText(resultsCountHeaderSelector.selector, collectionType)
+      .assert.containsText(resultsCountHeaderSelector.selector, get(this.state, 'collection.resultCount'))
       .useCss()
   })
 
