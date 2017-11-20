@@ -34,7 +34,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   When(/^I choose (.+) for "Will this company be the source of foreign equity investment\?"$/, async function (choice) {
     if (lowerCase(choice) === 'yes') {
-      set(this.state, 'investmentProject.equitySource.name', get(this.state, 'investmentProject.company.name'))
+      set(this.state, 'investmentProject.equitySource.name', get(this.state, 'company.name'))
     }
 
     await InvestmentProject
