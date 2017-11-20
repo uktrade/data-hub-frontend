@@ -29,7 +29,7 @@
     },
     "delivery_date": {
       "label": "Delivery date of first activity",
-      "hint": "For example 28/10/2017"
+      "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
       "label": "Specific people or organisations the company does not want DIT to talk to"
