@@ -227,15 +227,11 @@ function setQuoteForm (req, res, next) {
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
-    form.buttonModifiers = 'button-secondary'
+    form.buttonModifiers = 'button--destructive'
+    res.locals.destructive = true
 
     if (quote.accepted_on) {
       form.hidePrimaryFormAction = true
-    }
-
-    if (!quote.accepted_on && new Date(quote.expires_on) > new Date()) {
-      form.buttonModifiers = 'button--destructive'
-      res.locals.destructive = true
     }
   }
 
