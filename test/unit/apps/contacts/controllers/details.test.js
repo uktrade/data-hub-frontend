@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const contact = require('../../../data/simple-contact')
+const contact = require('~/test/unit/data/contacts/contact.json')
 
 describe('Contact controller', () => {
   beforeEach(() => {

@@ -1,6 +1,6 @@
 const subscriberData = require('~/test/unit/data/omis/subscribers.json')
 const assigneeData = require('~/test/unit/data/omis/assignees.json')
-const contactData = require('~/test/unit/data/simple-contact')
+const contactData = require('~/test/unit/data/contacts/contact.json')
 
 const orderMock = {
   id: '1230asd-123dasda',
