@@ -18,6 +18,10 @@ module.exports = {
       town: 'Paris',
       postcode: '75001',
       country: 'France',
+      businessType: 'Company',
+      sector: 'Retail',
+      employeeRange: '500+',
+      turnoverRange: '£33.5M+',
     },
     foreignOther: {
       pk: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
