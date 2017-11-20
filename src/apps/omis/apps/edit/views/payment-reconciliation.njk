@@ -61,5 +61,12 @@
     <h2 class="heading-medium">Payment details</h2>
 
     {{ super() }}
+
+    {% call HiddenContent({ summary: 'Something is wrong with the payment' }) %}
+      {% call Message({ type: 'muted' }) %}
+        <a href="/omis/{{ order.id }}">View the order</a> to contact an adviser
+          in the UK or contact <a href="mailto:omis.orders@digital.trade.gov.uk">omis.orders@digital.trade.gov.uk</a>.
+      {% endcall %}
+    {% endcall %}
   {% endif %}
 {% endblock %}
