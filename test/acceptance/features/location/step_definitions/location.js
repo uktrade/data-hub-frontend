@@ -10,4 +10,11 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@header')
       .assert.containsText('@header', text)
   })
+
+  Then(/^I confirm I am on the (.+) page$/, async (text) => {
+    await Location
+      .section.localHeader
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', text)
+  })
 })
