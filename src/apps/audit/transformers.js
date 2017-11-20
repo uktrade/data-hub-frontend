@@ -1,4 +1,5 @@
 /* eslint camelcase: 0 */
+const { get } = require('lodash')
 const dateFns = require('date-fns')
 const { mediumDateTimeFormat } = require('../../../config')
 
@@ -30,7 +31,7 @@ function transformAuditLogToListItem (labels = {}) {
       contentMetaModifier: 'stacked',
       meta: [{
         label: 'Adviser',
-        value: logEntry.user.name,
+        value: get(logEntry, 'user.name'),
       }, {
         label: 'Change count',
         type: 'badge',
