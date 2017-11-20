@@ -1,5 +1,5 @@
 const auditLog = require('~/test/unit/data/audit/contact-audit.json')
-const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
+const { contactAuditLabels } = require('~/src/apps/contacts/labels')
 
 describe('Contact audit controller', () => {
   beforeEach(() => {
@@ -81,7 +81,7 @@ describe('Contact audit controller', () => {
         breadcrumb: this.breadcrumbStub,
         render: (template, data) => {
           expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options, this.generatedTransformer)
-          expect(this.transformAuditLogToListItemStub).to.be.calledWith(contactDetailsLabels)
+          expect(this.transformAuditLogToListItemStub).to.be.calledWith(contactAuditLabels)
           done()
         },
       }, done)

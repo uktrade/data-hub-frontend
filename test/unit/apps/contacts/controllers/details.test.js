@@ -1,37 +1,27 @@
+const { assign } = require('lodash')
+
+const contact = require('~/test/unit/data/contacts/contact.json')
+
 describe('Contact controller', () => {
-  const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
-
-  const createContactController = (getContact, getDisplayContact, getDitCompany) => {
-    return proxyquire('~/src/apps/contacts/controllers/details', {
-      '../repos': {
-        getContact: getContact,
-      },
-      '../services/formatting': {
-        getDisplayContact: getDisplayContact,
-      },
-      '../../companies/repos': {
-        getDitCompany: getDitCompany,
-      },
-    })
-  }
-
   beforeEach(() => {
-    const contact = require('../../../data/simple-contact')
-    const contactDetails = { id: contact.id, name: contact.first_name.toLowerCase() }
-
-    const getContactStub = sinon.stub().resolves(contact)
-    const getDisplayContactStub = sinon.stub().returns(contactDetails)
-    const getDitCompanyStub = sinon.stub().resolves(contact.company)
-
     this.sandbox = sinon.sandbox.create()
 
-    this.contactController = createContactController(
-      getContactStub,
-      getDisplayContactStub,
-      getDitCompanyStub,
-    )
+    this.getContactStub = this.sandbox.stub().resolves(contact)
+    this.getDitCompanyStub = this.sandbox.stub().resolves(contact.company)
 
-    this.contactDetails = contactDetails
+    this.transformerStub = this.sandbox.stub()
+
+    this.contactController = proxyquire('~/src/apps/contacts/controllers/details', {
+      '../repos': {
+        getContact: this.getContactStub,
+      },
+      '../../companies/repos': {
+        getDitCompany: this.getDitCompanyStub,
+      },
+      '../transformers': {
+        transformContactToView: this.transformerStub,
+      },
+    })
 
     this.req = {
       session: {
@@ -41,11 +31,10 @@ describe('Contact controller', () => {
         contactId: '12651151-2149-465e-871b-ac45bc568a62',
       },
     }
+
     this.res = {
       locals: {},
-      breadcrumb () {
-        return this
-      },
+      breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
     }
 
@@ -86,14 +75,9 @@ describe('Contact controller', () => {
 
     it('should handle an error', async () => {
       const error = Error('error')
-      const contactController = createContactController(
-        sinon.stub().rejects(error),
-        sinon.stub().rejects(error),
-        sinon.stub().rejects(error),
-        sinon.stub().rejects(error)
-      )
+      this.getContactStub.rejects(error)
 
-      await contactController.getCommon(this.req, this.res, this.next)
+      await this.contactController.getCommon(this.req, this.res, this.next)
 
       expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
       expect(this.next).to.have.been.calledOnce
@@ -101,34 +85,24 @@ describe('Contact controller', () => {
   })
 
   describe('#getDetails', () => {
-    it('should get the tab', () => {
-      this.contactController.getDetails(this.req, this.res, this.next)
+    context('when called with a contact', () => {
+      beforeEach(() => {
+        this.res.locals = assign({}, this.res.locals, { contact })
+        this.contactController.getDetails(this.req, this.res, this.next)
+      })
 
-      expect(this.res.locals.tab).to.equal('details')
-    })
+      it('should return the contact details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options).to.have.property('contactDetails')
+      })
 
-    it('should get the contact details', () => {
-      this.contactController.getDetails(this.req, this.res, this.next)
+      it('should call the details transformer', () => {
+        expect(this.transformerStub).to.be.calledWith(contact)
+      })
 
-      expect(this.res.locals.contactDetails).to.deep.equal(this.contactDetails)
-    })
-
-    it('should get the contact details labels', () => {
-      this.contactController.getDetails(this.req, this.res, this.next)
-
-      expect(this.res.locals.contactDetailsLabels).to.deep.equal(contactDetailsLabels)
-    })
-
-    it('should get the contact details display order', () => {
-      this.contactController.getDetails(this.req, this.res, this.next)
-
-      expect(this.res.locals.contactDetailsDisplayOrder).to.deep.equal(['id', 'name'])
-    })
-
-    it('should render the contact details view', () => {
-      this.contactController.getDetails(this.req, this.res, this.next)
-
-      expect(this.res.render).to.be.calledWith('contacts/views/details')
+      it('should render the contact details view', () => {
+        expect(this.res.render).to.be.calledWith('contacts/views/details')
+      })
     })
   })
 })
