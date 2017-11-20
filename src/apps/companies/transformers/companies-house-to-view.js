@@ -8,7 +8,7 @@ const { getDataLabels } = require('../../../lib/controller-utils')
 const { transformSicCodes } = require('./shared')
 const { chDetailsLabels } = require('../labels')
 
-module.exports = function transformCompaniesHouseResponseToViewRecord ({
+module.exports = function transformCompaniesHouseToView ({
   name,
   registered_address_1,
   registered_address_2,

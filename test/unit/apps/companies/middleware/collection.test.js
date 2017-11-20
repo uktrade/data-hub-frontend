@@ -113,7 +113,7 @@ describe('Company collection middleware', () => {
             searchLimitedCompanies: this.searchStub,
           },
           '../transformers': {
-            transformCompaniesHouseResponseToListItem: this.transformerStub,
+            transformCompaniesHouseToListItem: this.transformerStub,
           },
         })
 

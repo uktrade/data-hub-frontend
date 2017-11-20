@@ -4,7 +4,7 @@ const { flatten } = require('lodash')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { exportDetailsLabels } = require('../labels')
 
-module.exports = function transformCompanyResponseToExportDetailsViewRecord ({
+module.exports = function transformCompanyToExportDetailsView ({
   export_to_countries,
   future_interest_countries,
 }) {
