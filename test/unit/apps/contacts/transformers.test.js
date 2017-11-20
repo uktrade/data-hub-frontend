@@ -1,5 +1,5 @@
 const { assign } = require('lodash')
-
+const contactSearchResult = require('~/test/unit/data/contacts/contact-search-result.json')
 const contact = require('~/test/unit/data/contacts/contact.json')
 const company = require('~/test/unit/data/companies/companies-house-company.json')
 
@@ -10,8 +10,6 @@ const {
 
 describe('Contact transformers', function () {
   describe('#transformContactToListItem', () => {
-    const simpleContact = require('~/test/unit/data/simple-contact')
-
     it('should return undefined for unqualified result', () => {
       expect(transformContactToListItem()).to.be.undefined
       expect(transformContactToListItem({ a: 'b' })).to.be.undefined
@@ -20,7 +18,7 @@ describe('Contact transformers', function () {
     })
 
     it('should return an object with data for active contact list item', () => {
-      const actual = transformContactToListItem(simpleContact)
+      const actual = transformContactToListItem(contactSearchResult)
 
       expect(actual).to.have.property('id').a('string')
       expect(actual).to.have.property('type').a('string')
@@ -36,7 +34,7 @@ describe('Contact transformers', function () {
     })
 
     it('should return an object with data for archived contact list item', () => {
-      const archivedContact = Object.assign({}, simpleContact, {
+      const archivedContact = Object.assign({}, contactSearchResult, {
         archived: true,
         archived_on: '2017-03-14T14:49:17',
         archived_by: 'Sam Smith',
