@@ -1,5 +1,5 @@
 const { searchCompanies } = require('../../search/services')
-const { transformCompanyToListItem } = require('../../companies/transformers')
+const { transformCompanyResponseToListItem } = require('../../companies/transformers')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { updateInvestment } = require('../repos')
 
@@ -39,7 +39,7 @@ async function searchForUKCompany (req, res, next) {
     }).then(
       transformApiResponseToSearchCollection(
         { query: req.query },
-        transformCompanyToListItem,
+        transformCompanyResponseToListItem,
         (item) => {
           return Object.assign({}, item, {
             url: `?company=${item.id}`,
