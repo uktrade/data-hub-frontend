@@ -5,29 +5,15 @@ const { defineSupportCode } = require('cucumber')
 const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Given, Then, When }) => {
-  const Search = client.page.Search()
-  const Company = client.page.Company()
   const InvestmentProject = client.page.InvestmentProject()
 
-  Given(/^I navigate to the Investment Projects page for (.+)$/, async function (companyName) {
-    set(this.state, 'investmentProject.company.name', companyName)
-
-    await Search
-      .navigate()
-      .search(companyName)
-      .section.firstCompanySearchResult
-      .waitForElementPresent('@header')
-      .click('@header')
-
-    await Company
-      .section.localHeader
-      .waitForElementPresent('@header')
-      .assert.containsText('@header', companyName)
+  Given(/^I navigate to the Investment Projects (.+) page$/, async function (pageName) {
+    const tag = `@${pageName}`
 
     await InvestmentProject
       .section.detailsTabs
-      .waitForElementPresent('@investment')
-      .click('@investment')
+      .waitForElementPresent(tag)
+      .click(tag)
   })
 
   When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
