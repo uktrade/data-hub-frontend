@@ -1,17 +1,17 @@
-const transformCompaniesHouseResponseToListItem = require('./companies-house-response-to-list-item')
-const transformCompaniesHouseResponseToViewRecord = require('./companies-house-response-to-view-record')
-const transformCompanyResponseToExportDetailsViewRecord = require('./company-response-to-export-details-view-record')
-const transformCompanyResponseToForm = require('./company-response-to-form')
-const transformCompanyResponseToListItem = require('./company-response-to-list-item')
-const transformCompanyResponseToOneListViewRecord = require('./company-response-to-one-list-view-record')
-const transformCompanyResponseToViewRecord = require('./company-response-to-view-record')
+const transformCompaniesHouseToListItem = require('./companies-house-to-list-item')
+const transformCompaniesHouseToView = require('./companies-house-to-view')
+const transformCompanyToExportDetailsView = require('./company-to-export-details-view')
+const transformCompanyToForm = require('./company-to-form')
+const transformCompanyToListItem = require('./company-to-list-item')
+const transformCompanyToOneListView = require('./company-to-one-list-view')
+const transformCompanyToView = require('./company-to-view')
 
 module.exports = {
-  transformCompaniesHouseResponseToListItem,
-  transformCompaniesHouseResponseToViewRecord,
-  transformCompanyResponseToExportDetailsViewRecord,
-  transformCompanyResponseToForm,
-  transformCompanyResponseToListItem,
-  transformCompanyResponseToOneListViewRecord,
-  transformCompanyResponseToViewRecord,
+  transformCompaniesHouseToListItem,
+  transformCompaniesHouseToView,
+  transformCompanyToExportDetailsView,
+  transformCompanyToForm,
+  transformCompanyToListItem,
+  transformCompanyToOneListView,
+  transformCompanyToView,
 }

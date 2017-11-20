@@ -3,8 +3,8 @@ const { pick, pickBy, assign } = require('lodash')
 const { search, searchLimitedCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
-  transformCompanyResponseToListItem,
-  transformCompaniesHouseResponseToListItem,
+  transformCompanyToListItem,
+  transformCompaniesHouseToListItem,
 } = require('../transformers')
 
 async function getCompanyCollection (req, res, next) {
@@ -18,7 +18,7 @@ async function getCompanyCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
-        transformCompanyResponseToListItem,
+        transformCompanyToListItem,
       ))
 
     next()
@@ -43,7 +43,7 @@ async function getLimitedCompaniesCollection (req, res, next) {
       .then(
         transformApiResponseToSearchCollection(
           { query: req.query },
-          transformCompaniesHouseResponseToListItem,
+          transformCompaniesHouseToListItem,
           (item) => {
             return assign({}, item, {
               url: `/companies/add/${item.id}`,

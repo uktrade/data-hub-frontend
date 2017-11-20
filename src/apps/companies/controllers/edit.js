@@ -1,6 +1,6 @@
 const { assign, find, get } = require('lodash')
 
-const { transformCompaniesHouseResponseToViewRecord } = require('../transformers')
+const { transformCompaniesHouseToView } = require('../transformers')
 
 const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
 
@@ -40,7 +40,7 @@ function renderForm (req, res) {
   if (res.locals.companiesHouseRecord) {
     res.locals = assign({}, res.locals, {
       isCompaniesHouse: true,
-      chDetails: transformCompaniesHouseResponseToViewRecord(res.locals.companiesHouseRecord),
+      chDetails: transformCompaniesHouseToView(res.locals.companiesHouseRecord),
     })
   }
   const businessTypeLabel = getBusinessTypeLabel(

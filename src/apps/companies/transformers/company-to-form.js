@@ -14,7 +14,7 @@ const metadataRepository = require('../../../lib/metadata')
 //
 // Will be replaced with newer form builder transformers once the form view is
 // replaced with newer form macros
-module.exports = function transformCompanyResponseToForm (body) {
+module.exports = function transformCompanyToForm (body) {
   if (!isPlainObject(body)) { return }
 
   const schema = {

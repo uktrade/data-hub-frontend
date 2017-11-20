@@ -4,7 +4,7 @@ const { capitalize } = require('lodash')
 const { getFormattedAddress } = require('../../../lib/address')
 const { transformSicCodes } = require('./shared')
 
-module.exports = function transformCompaniesHouseResponseToListItem ({
+module.exports = function transformCompaniesHouseToListItem ({
   name,
   registered_address_1,
   registered_address_2,
