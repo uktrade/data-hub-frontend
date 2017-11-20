@@ -13,6 +13,7 @@ defineSupportCode(({ Given, When, Then }) => {
   const Contact = client.page.Contact()
   const Search = client.page.Search()
 
+  // TODO potentially split this apart it feels like it is difficult to reuse becaseu it is doing a few things
   Given(/^a company contact is created for interactions$/, async function () {
     await client
       .url(dashboardPage)
