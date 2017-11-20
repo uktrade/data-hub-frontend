@@ -41,6 +41,30 @@ describe('Audit transformers', () => {
     })
   })
 
+  context('when the user is absent', () => {
+    it('should use default text', () => {
+      const logLine = Object.assign({}, auditLog.results[0])
+      delete logLine.user
+      const transformedItem = this.transformer(logLine)
+
+      expect(transformedItem.meta[0]).to.deep.equal({
+        label: 'Adviser',
+        value: 'Unknown adviser',
+      })
+    })
+  })
+
+  context('when the user is blank', () => {
+    it('should use default text', () => {
+      const logLine = Object.assign({}, auditLog.results[0], { user: undefined })
+      const transformedItem = this.transformer(logLine)
+      expect(transformedItem.meta[0]).to.deep.equal({
+        label: 'Adviser',
+        value: 'Unknown adviser',
+      })
+    })
+  })
+
   describe('change count', () => {
     it('should describe multiple of changes', () => {
       const transformedItem = this.transformer(auditLog.results[1])
