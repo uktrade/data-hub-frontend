@@ -1,4 +1,4 @@
-@investment-projects-collection
+@investment-projects-collection  @collection
 Feature: View a list of Investment Projects
   As an Data hub user
   I would like to view a list of Investment Projects

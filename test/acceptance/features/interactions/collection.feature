@@ -1,4 +1,4 @@
-@interactions-collection
+@interactions-collection @collection
 Feature: View collection of contacts
   As an existing user
   I would like to view all the interactions in one place
