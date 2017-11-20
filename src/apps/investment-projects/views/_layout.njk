@@ -34,24 +34,26 @@
 {% endblock %}
 
 {% block main_grid_right_column %}
-  {% call Message({ type: 'info', element: 'div' }) %}
-    {% call Form({
-      buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
-      action: 'change-project-stage',
-      disableFormAction: true if not investmentStatus.currentStage.isComplete,
-      hiddenFields: {
-        next_project_stage: investmentStatus.nextStage.id
-      }
-    }) %}
-      <p>
-        {% if investmentStatus.currentStage.isComplete %}
-          You have added all required information to complete this stage.
-          {% else %}
-          Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
-        {% endif %}
-      </p>
+  {% if investmentStatus.nextStage %}
+    {% call Message({ type: 'info', element: 'div' }) %}
+      {% call Form({
+        buttonText: 'Move to ' + investmentStatus.nextStage.name + ' stage',
+        action: 'change-project-stage',
+        disableFormAction: true if not investmentStatus.currentStage.isComplete,
+        hiddenFields: {
+          next_project_stage: investmentStatus.nextStage.id
+        }
+      }) %}
+        <p>
+          {% if investmentStatus.currentStage.isComplete %}
+            You have added all required information to complete this stage.
+            {% else %}
+            Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+          {% endif %}
+        </p>
+      {% endcall %}
     {% endcall %}
-  {% endcall %}
+  {% endif %}
 {% endblock %}
 
 {% block main_grid_left_column %}
