@@ -1,7 +1,7 @@
 const { getContactAuditLog } = require('../repos')
 const { transformApiResponseToCollection } = require('../../transformers')
 const { transformAuditLogToListItem } = require('../../audit/transformers')
-const { contactDetailsLabels } = require('../labels')
+const { contactAuditLabels } = require('../labels')
 
 async function getAudit (req, res, next) {
   try {
@@ -12,7 +12,7 @@ async function getAudit (req, res, next) {
     const auditLog = await getContactAuditLog(token, contactId, page)
       .then(transformApiResponseToCollection(
         { entityType: 'audit', query: req.query },
-        transformAuditLogToListItem(contactDetailsLabels)
+        transformAuditLogToListItem(contactAuditLabels)
       ))
 
     return res
