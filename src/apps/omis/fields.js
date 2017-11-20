@@ -15,7 +15,6 @@ module.exports = {
     validate: 'required',
     initialOption: '-- Select country --',
     options: [],
-    supportingContent: 'fields.primary_market.supportingContent',
   },
   use_sector_from_company: {
     fieldType: 'MultipleChoiceField',
