@@ -40,15 +40,16 @@ module.exports = {
       getButtonSelectorWithText (text) {
         return getButtonWithText(text)
       },
+      captureResultCount (callback) {
+        return this.section.collectionHeader
+          .waitForElementVisible('@resultCount')
+          .getText('@resultCount', (result) => {
+            callback(result.value)
+          })
+      },
     },
   ],
   sections: {
-    localHeader: {
-      selector: '.c-local-header',
-      elements: {
-        header: 'h1.c-local-header__heading',
-      },
-    },
     collectionHeader: {
       selector: '.c-collection__header',
       elements: {
@@ -60,7 +61,7 @@ module.exports = {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: '.c-entity__title',
-        updated: getSelectorForMetaListItemValue('Updated'),
+        updatedOn: getSelectorForMetaListItemValue('Updated on'),
       },
     },
     filters: {

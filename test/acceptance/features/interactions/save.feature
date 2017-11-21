@@ -8,7 +8,14 @@ Feature: Save a new interaction in Data hub
   Scenario: Companies interaction is saved
 
     Given a company is created
-    And a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     When navigating to the create company interactions and services step 1 page
     And selecting interaction
     And adding an interaction
@@ -18,7 +25,14 @@ Feature: Save a new interaction in Data hub
   Scenario: Companies service delivery is saved
 
     Given a company is created
-    And a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     When navigating to the create company interactions and services step 1 page
     And selecting service delivery
     And adding a service delivery

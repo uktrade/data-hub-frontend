@@ -14,10 +14,8 @@ defineSupportCode(({ When, Then }) => {
       .url(url)
 
     await Collection
-      .section.collectionHeader
-      .waitForElementVisible('@resultCount')
-      .getText('@resultCount', (result) => {
-        set(this.state, 'collection.resultCount', result.value)
+      .captureResultCount((count) => {
+        set(this.state, 'collection.resultCount', count)
       })
   })
 
@@ -35,23 +33,26 @@ defineSupportCode(({ When, Then }) => {
   Then(/^I capture the modified on date for the first item$/, async function () {
     await Collection
       .section.firstCollectionItem
-      .waitForElementPresent('@updated')
-      .getText('@updated', (updated) => {
-        set(this.state, 'collection.updated', updated.value)
+      .waitForElementPresent('@updatedOn')
+      .getText('@updatedOn', (updatedOn) => {
+        set(this.state, 'collection.updated', updatedOn.value)
       })
   })
 
-  Then(/^there are (.+) headings$/, async function (collectionType) {
-    await Collection
-      .section.localHeader
-      .waitForElementPresent('@header')
-      .assert.containsText('@header', collectionType)
+  Then(/^the results count header for (.+) is present$/, async function (collectionType) {
+    const resultsCountHeaderSelector = Collection
+      .getSelectorForResultsCountHeader(collectionType)
 
-    const resultsCountHeaderSelector = Collection.getSelectorForResultsCountHeader(collectionType)
+    await Collection
+      .captureResultCount((count) => {
+        set(this.state, 'collection.resultCount', count)
+      })
 
     await Collection
       .api.useXpath()
       .assert.visible(resultsCountHeaderSelector.selector)
+      .assert.containsText(resultsCountHeaderSelector.selector, collectionType)
+      .assert.containsText(resultsCountHeaderSelector.selector, get(this.state, 'collection.resultCount'))
       .useCss()
   })
 
@@ -76,13 +77,17 @@ defineSupportCode(({ When, Then }) => {
 
     for (const row of dataTable.hashes()) {
       const metaListValueElement = Collection.getSelectorForMetaListItemValue(row.text)
-      const expectedMetaListText = get(this.state, row.expected)
+      const expectedMetaListValue = get(this.state, row.expected)
 
-      await Collection
-        .section.firstCollectionItem
-        .api.useXpath()
-        .assert.containsText(metaListValueElement.selector, expectedMetaListText)
-        .useCss()
+      // If we have a value in state that we expecting then test for its contents
+      // meaning we can specify metaItems that only appear when specific entries have been made to a form. e.g Uk region
+      if (expectedMetaListValue) {
+        await Collection
+          .section.firstCollectionItem
+          .api.useXpath()
+          .assert.containsText(metaListValueElement.selector, expectedMetaListValue)
+          .useCss()
+      }
     }
   })
 

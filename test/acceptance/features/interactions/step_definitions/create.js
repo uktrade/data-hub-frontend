@@ -13,26 +13,6 @@ defineSupportCode(({ Given, When, Then }) => {
   const Contact = client.page.Contact()
   const Search = client.page.Search()
 
-  Given(/^a company contact is created for interactions$/, async function () {
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name))
-
-    await Company
-      .section.firstCompanySearchResult
-      .click('@header')
-
-    await Company.section.detailsTabs
-      .waitForElementVisible('@contacts')
-      .click('@contacts')
-
-    await Contact
-      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
-      .wait() // wait for backend to sync
-  })
-
   Given(/^a company investment project is created for interactions$/, async function () {
   })
 

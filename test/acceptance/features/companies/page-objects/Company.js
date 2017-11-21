@@ -106,7 +106,8 @@ module.exports = {
             this
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
-              .section.localHeader
+
+            this.api.page.Location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -201,7 +202,8 @@ module.exports = {
             this
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
-              .section.localHeader
+
+            this.api.page.Location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -295,7 +297,7 @@ module.exports = {
               .click('@header')
 
             // step 4
-            this.section.localHeader
+            this.api.page.Location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -365,12 +367,6 @@ module.exports = {
     },
   ],
   sections: {
-    localHeader: {
-      selector: '.c-local-header',
-      elements: {
-        header: '.c-local-header__heading',
-      },
-    },
     detailsTabs: {
       selector: '.c-local-nav',
       elements: {
