@@ -230,7 +230,7 @@ module.exports = {
         saveButton: getButtonWithText('Save'),
       },
     },
-    localHeader: {
+    localHeader: { // TODO move this work to Location feature
       selector: '.c-local-header',
       elements: {
         header: '.c-local-header__heading',
