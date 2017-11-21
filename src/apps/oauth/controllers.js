@@ -32,7 +32,7 @@ async function callbackOAuth (req, res, next) {
   }
 
   if (sessionOAuthState !== stateQueryParam) {
-    return next(Error('There has been an OAuth stateId mismatch sessionOAuthState = ' + sessionOAuthState + ' stateQueryParam = ' + stateQueryParam))
+    return next(Error('There has been an OAuth stateId mismatch sessionOAuthState = ' + sessionOAuthState + ' stateQueryParam = ' + stateQueryParam + '. Original URL was req.originalUrl'))
   }
 
   try {

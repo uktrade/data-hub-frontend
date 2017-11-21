@@ -64,7 +64,7 @@ describe('OAuth controller', () => {
         this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
         expect(this.nextSpy.calledOnce).to.be.true
         expect(this.nextSpy.args[0][0] instanceof Error).to.be.true
-        expect(this.nextSpy.args[0][0].message).to.equal('There has been an OAuth stateId mismatch')
+        expect(this.nextSpy.args[0][0].message).to.have.string('There has been an OAuth stateId mismatch')
       })
 
       it('should proceed when state values match', async () => {
