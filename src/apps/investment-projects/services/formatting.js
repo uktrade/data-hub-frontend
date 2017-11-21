@@ -308,7 +308,7 @@ function transformBriefInvestmentSummary (data) {
   const investorCompany = data.investor_company
   const competitorCountries = data.competitor_countries || []
   const regionLocations = data.uk_region_locations || []
-  const date = moment(data.estimated_land_date)
+  const date = moment(data.estimated_land_date, 'YYYY-MM-DD')
 
   return {
     sector: get(data, 'sector.name', null),
