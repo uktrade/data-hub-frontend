@@ -11,8 +11,7 @@
         items: [
           {
             label: businessTypeLabel | default('(type of organisation not known)'),
-            value: '&nbsp;' if isEditMode else '<a href="/companies/add-step-1">Change</a>',
-            safe: true
+            value: ('&nbsp;' if isEditMode else '<a href="/companies/add-step-1">Change</a>') | safe
           }
         ]
       }) }}
