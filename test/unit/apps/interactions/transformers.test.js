@@ -147,6 +147,26 @@ describe('Interaction transformers', () => {
       })
     })
 
+    context('when the source is an interaction with an empty subject', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: '' }))
+      })
+
+      it('should transform data from interaction response to list item', () => {
+        expect(this.transformed).have.property('name', 'No subject')
+      })
+    })
+
+    context('when the source is an interaction with a null subject', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: null }))
+      })
+
+      it('should transform data from interaction response to list item', () => {
+        expect(this.transformed).have.property('name', 'No subject')
+      })
+    })
+
     context('when the source is a service delivery', () => {
       beforeEach(() => {
         const serviceDelivery = assign({}, mockInteraction, { kind: 'service_delivery' })
