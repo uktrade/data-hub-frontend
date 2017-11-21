@@ -1,11 +1,17 @@
+const { assign } = require('lodash')
 const config = require('../../../config')
 const logger = require('../../../config/logger')
 const authorisedRequest = require('../../lib/authorised-request')
 
 // TODO: Make sure this is removed and replaced with a better way to
 // filter/select advisers
+// TODO: advisers with no name are filtered on the front end. Make changes on
+// the back end to make this not necessary.
 function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
+    .then(data => assign({}, data, {
+      results: data.results.filter(adviser => Boolean(adviser.first_name || adviser.last_name)),
+    }))
 }
 
 function getAdviser (token, id) {
