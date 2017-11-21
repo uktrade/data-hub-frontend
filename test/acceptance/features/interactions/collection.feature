@@ -9,7 +9,11 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     And navigating to the create company interactions and services step 1 page
     And selecting interaction
     And adding an interaction
@@ -33,7 +37,11 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     And navigating to the create company interactions and services step 1 page
     And selecting service delivery
     And adding a service delivery

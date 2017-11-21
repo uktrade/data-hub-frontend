@@ -10,7 +10,9 @@ Feature: View Audit history of a contact
     Given a company is created
     When navigating to the company contacts
     And a primary contact is added
+    When I submit the form
     Then I see the success message
+    Then I wait and then refresh the page
     When navigating to the company contacts for audit
     And the contact has 1 fields edited for audit
     Then I see the success message
@@ -25,7 +27,9 @@ Feature: View Audit history of a contact
 
     Given a company is created
     When navigating to the company contacts
-    And a primary contact is added
+    And I click the "Add contact" link
+    Then a primary contact is added
+    When I submit the form
     Then I see the success message
     When navigating to the company contacts for audit
     And the contact has 2 fields edited for audit
@@ -39,7 +43,9 @@ Feature: View Audit history of a contact
 
     Given a company is created
     When navigating to the company contacts
-    And a primary contact is added
+    And I click the "Add contact" link
+    Then a primary contact is added
+    When I submit the form
     Then I see the success message
     When I search for the contact
     And the contacts tab is clicked
@@ -56,8 +62,11 @@ Feature: View Audit history of a contact
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
     Then I see the success message
+    Then I wait and then refresh the page
     And I search for the contact
     And the contacts tab is clicked
     And I click on the first contact collection link

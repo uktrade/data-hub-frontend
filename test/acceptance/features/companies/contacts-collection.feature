@@ -6,15 +6,17 @@ Feature: View collection of contacts for a company
   And be able to read the contact details as expected
 
   @companies-contact-collection--view
-  Scenario: View contact collection
+  Scenario: View companies contact collection
 
     Given I navigate to the Company Lambda plc
     When I navigate to the companies contacts page
+    And I click the "Add contact" link
     And a primary contact is added
-    Then I confirm I am on the Lambda plc page
-    And I see the success message
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
+    And I confirm I am on the Lambda plc page
     Then I capture the modified on date for the first item
-    Then I confirm I am on the Lambda plc page
     And the results count header for contacts is present
     And I can view the Contact in the collection
       | text         | expected           |
@@ -27,13 +29,16 @@ Feature: View collection of contacts for a company
       | Contact type | contact.type       |
 
   @companies-contact-collection--filter
-  Scenario: Filter contact list
+  Scenario: Filter companies contact list
 
     Given I navigate to the Company Lambda plc
     When I navigate to the companies contacts page
-    And a primary contact is added
+    And I click the "Add contact" link
+    And a primary contact with new company address is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then I confirm I am on the Lambda plc page
-    And I see the success message
     And the results count header for contacts is present
     When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
@@ -48,13 +53,16 @@ Feature: View collection of contacts for a company
 
 
   @companies-contact-collection--sort
-  Scenario: Sort contact list
+  Scenario: Sort companies contact list
 
     Given I navigate to the Company Lambda plc
     When I navigate to the companies contacts page
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then I confirm I am on the Lambda plc page
-    And I see the success message
     And the results count header for contacts is present
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest

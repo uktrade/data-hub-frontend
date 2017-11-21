@@ -9,8 +9,11 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    When I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
     Then I see the success message
+    Then I wait and then refresh the page
     Then I capture the modified on date for the first item
     When I navigate to the Contacts collection page
     Then I confirm I am on the Contacts page
@@ -31,8 +34,11 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
     Then I see the success message
+    Then I wait and then refresh the page
     When I navigate to the Contacts collection page
     And I filter the contacts list by company
     Then the contacts should be filtered by company name
@@ -62,8 +68,11 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
     Then I see the success message
+    Then I wait and then refresh the page
     When I navigate to the Contacts collection page
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest
