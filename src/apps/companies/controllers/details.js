@@ -1,7 +1,7 @@
 const {
-  transformCompanyResponseToViewRecord,
-  transformCompaniesHouseResponseToViewRecord,
-  transformCompanyResponseToOneListViewRecord,
+  transformCompanyToView,
+  transformCompaniesHouseToView,
+  transformCompanyToOneListView,
 } = require('../transformers')
 
 function renderDetails (req, res) {
@@ -10,9 +10,9 @@ function renderDetails (req, res) {
   res
     .breadcrumb(company.name)
     .render('companies/views/details', {
-      companyDetails: transformCompanyResponseToViewRecord(company),
-      accountManagementDetails: transformCompanyResponseToOneListViewRecord(company),
-      chDetails: company.companies_house_data ? transformCompaniesHouseResponseToViewRecord(company.companies_house_data) : null,
+      companyDetails: transformCompanyToView(company),
+      accountManagementDetails: transformCompanyToOneListView(company),
+      chDetails: company.companies_house_data ? transformCompaniesHouseToView(company.companies_house_data) : null,
     })
 }
 

@@ -1,9 +1,9 @@
 const { assign } = require('lodash')
 
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const transformCompanyResponseToOneListViewRecord = require('~/src/apps/companies/transformers/company-response-to-one-list-view-record')
+const transformCompanyToOneListView = require('~/src/apps/companies/transformers/company-to-one-list-view')
 
-describe('transformCompanyResponseToOneListViewRecord', () => {
+describe('transformCompanyToOneListView', () => {
   context('when there is one list information', () => {
     beforeEach(() => {
       const company = assign({}, minimalCompany, {
@@ -11,7 +11,7 @@ describe('transformCompanyResponseToOneListViewRecord', () => {
         classification: null,
       })
 
-      this.viewRecord = transformCompanyResponseToOneListViewRecord(company)
+      this.viewRecord = transformCompanyToOneListView(company)
     })
 
     it('indicate there is no one list account management information', () => {
@@ -35,7 +35,7 @@ describe('transformCompanyResponseToOneListViewRecord', () => {
         },
       })
 
-      this.viewRecord = transformCompanyResponseToOneListViewRecord(company)
+      this.viewRecord = transformCompanyToOneListView(company)
     })
 
     it('indicate there is no one list account management information', () => {

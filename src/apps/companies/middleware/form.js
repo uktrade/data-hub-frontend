@@ -3,7 +3,7 @@ const { assign, find, get } = require('lodash')
 const metadataRepository = require('../../../lib/metadata')
 const { hqLabels } = require('../labels')
 const companyFormService = require('../services/form')
-const { transformCompanyResponseToForm } = require('../transformers')
+const { transformCompanyToForm } = require('../transformers')
 const { transformObjectToOption } = require('../../transformers')
 
 function populateForm (req, res, next) {
@@ -23,7 +23,7 @@ function populateForm (req, res, next) {
   })
 
   res.locals.form = assign({}, res.locals.form, {
-    state: transformCompanyResponseToForm(res.locals.companiesHouseRecord || res.locals.company) || {},
+    state: transformCompanyToForm(res.locals.companiesHouseRecord || res.locals.company) || {},
   })
 
   if (get(req.query, 'business_type')) {

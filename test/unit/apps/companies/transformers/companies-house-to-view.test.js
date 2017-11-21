@@ -1,10 +1,10 @@
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
-const transformCompaniesHouseResponseToViewRecord = require('~/src/apps/companies/transformers/companies-house-response-to-view-record')
+const transformCompaniesHouseToView = require('~/src/apps/companies/transformers/companies-house-to-view')
 
-describe('transformCompaniesHouseResponseToViewRecord', () => {
+describe('transformCompaniesHouseToView', () => {
   context('when companies data is provided', () => {
     beforeEach(() => {
-      this.viewRecord = transformCompaniesHouseResponseToViewRecord(companiesHouseCompany.companies_house_data)
+      this.viewRecord = transformCompaniesHouseToView(companiesHouseCompany.companies_house_data)
     })
 
     it('should return the fields expected in the correct order', () => {

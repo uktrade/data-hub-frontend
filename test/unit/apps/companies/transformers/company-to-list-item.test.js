@@ -1,21 +1,21 @@
 const { some } = require('lodash')
 
 const companyData = require('~/test/unit/data/company')
-const transformCompanyResponseToListItem = require('~/src/apps/companies/transformers/company-response-to-list-item')
+const transformCompanyToListItem = require('~/src/apps/companies/transformers/company-to-list-item')
 
-describe('transformCompanyResponseToListItem', () => {
+describe('transformCompanyToListItem', () => {
   it('should return undefined if there is no companies house data or datahub data', () => {
-    expect(transformCompanyResponseToListItem()).to.be.undefined
-    expect(transformCompanyResponseToListItem({ a: 'b' })).to.be.undefined
-    expect(transformCompanyResponseToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
+    expect(transformCompanyToListItem()).to.be.undefined
+    expect(transformCompanyToListItem({ a: 'b' })).to.be.undefined
+    expect(transformCompanyToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
   })
 
   it('should return undefined if companies house is incomplete', () => {
-    expect(transformCompanyResponseToListItem({ companies_house_data: {} })).to.be.undefined
+    expect(transformCompanyToListItem({ companies_house_data: {} })).to.be.undefined
   })
 
   it('should return an object with data for company list item', () => {
-    const actual = transformCompanyResponseToListItem(companyData)
+    const actual = transformCompanyToListItem(companyData)
 
     expect(actual).to.have.property('id').to.be.a('string')
     expect(actual).to.have.property('type').to.equal('company')
@@ -24,7 +24,7 @@ describe('transformCompanyResponseToListItem', () => {
   })
 
   it('should return have correct meta items for Uk company', () => {
-    const actual = transformCompanyResponseToListItem(companyData)
+    const actual = transformCompanyToListItem(companyData)
 
     expect(actual).to.have.property('meta').an('array').to.have.length(4)
     expect(actual.meta[0]).to.have.property('label', 'Sector')
@@ -34,7 +34,7 @@ describe('transformCompanyResponseToListItem', () => {
   })
 
   it('should return have correct meta items for non-UK company', () => {
-    const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
+    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
       uk_based: false,
     }))
 
@@ -43,7 +43,7 @@ describe('transformCompanyResponseToListItem', () => {
   })
 
   it('should return have correct meta items for company with trading address', () => {
-    const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
+    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
       trading_address_postcode: 'W1C 2BA',
       trading_address_town: 'London',
       trading_address_1: '100 Bolton Road',
@@ -55,7 +55,7 @@ describe('transformCompanyResponseToListItem', () => {
   })
 
   it('should return correct URL for Companies House company', () => {
-    const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
+    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
       id: null,
       companies_house_data: {
         company_number: 10203040,
@@ -66,7 +66,7 @@ describe('transformCompanyResponseToListItem', () => {
   })
 
   it('should return correct URL for company with both datahub and companies house data', () => {
-    const actual = transformCompanyResponseToListItem(Object.assign({}, companyData, {
+    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
       companies_house_data: {
         company_number: 10203040,
       },

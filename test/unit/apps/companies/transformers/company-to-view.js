@@ -3,12 +3,12 @@ const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-comp
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 
-const transformCompanyResponseToViewRecord = require('~/src/apps/companies/transformers/company-response-to-view-record')
+const transformCompanyToView = require('~/src/apps/companies/transformers/company-to-view')
 
-describe('transformCompanyResponseToViewRecord', () => {
+describe('transformCompanyToView', () => {
   context('when called with a fully populated datahub only company', () => {
     beforeEach(() => {
-      this.viewRecord = transformCompanyResponseToViewRecord(datahubOnlyCompany)
+      this.viewRecord = transformCompanyToView(datahubOnlyCompany)
     })
 
     it('should contain just the fields expected', () => {
@@ -82,7 +82,7 @@ describe('transformCompanyResponseToViewRecord', () => {
 
   context('when called with a minimally populated company', () => {
     beforeEach(() => {
-      this.viewRecord = transformCompanyResponseToViewRecord(minimalCompany)
+      this.viewRecord = transformCompanyToView(minimalCompany)
     })
 
     it('should contain just the fields expected', () => {
@@ -109,7 +109,7 @@ describe('transformCompanyResponseToViewRecord', () => {
 
   context('called with a datahub company with companies house data', () => {
     beforeEach(() => {
-      this.viewRecord = transformCompanyResponseToViewRecord(companiesHouseCompany)
+      this.viewRecord = transformCompanyToView(companiesHouseCompany)
     })
 
     it('should not include the business type', () => {
@@ -140,7 +140,7 @@ describe('transformCompanyResponseToViewRecord', () => {
         uk_region: null,
       })
 
-      this.viewRecord = transformCompanyResponseToViewRecord(foreignCompany)
+      this.viewRecord = transformCompanyToView(foreignCompany)
     })
 
     it('should contain just the fields expected', () => {
