@@ -1,9 +1,12 @@
 const request = require('request-promise')
 const queryString = require('query-string')
 const uuid = require('uuid')
+
 const { get, set } = require('lodash')
 
 const config = require('./../../../config')
+// @TODO remove this once we've diagnosed the cause of the mismatches
+const logger = require('./../../../config/logger')
 
 function getAccessToken (oauthCode) {
   const options = {
@@ -32,7 +35,12 @@ async function callbackOAuth (req, res, next) {
   }
 
   if (sessionOAuthState !== stateQueryParam) {
-    return next(Error('There has been an OAuth stateId mismatch'))
+    // @TODO remove this once we've diagnosed the cause of the mismatches
+    logger.error('OAuth mismatch')
+    logger.error(`sessionOAuthState: ${stateQueryParam}`)
+    logger.error(`stateQueryParam: ${stateQueryParam}`)
+    logger.error(`Original URL: ${req.originalUrl}`)
+    return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
   }
 
   try {
