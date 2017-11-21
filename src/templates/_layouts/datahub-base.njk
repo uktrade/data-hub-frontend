@@ -17,13 +17,6 @@
   {{ super() }}
 
   {% include "_includes/google-tag-manager-snippet.njk" %}
-
-  {% if user %}
-    <script>
-      if (!window.DIT) window.DIT = {};
-      window.DIT.user = {{ user | stringify | safe }};
-    </script>
-  {% endif %}
 {% endblock %}
 
 {% block header_menu %}
