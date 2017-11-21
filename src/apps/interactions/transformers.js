@@ -54,7 +54,7 @@ function transformInteractionToListItem ({
   return {
     id,
     type: 'interaction',
-    name: subject,
+    name: subject || 'No subject',
     meta: [
       {
         label: 'Type',
