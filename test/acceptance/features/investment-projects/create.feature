@@ -6,14 +6,16 @@ Feature: Create a new Investment project
   @investment-projects-create--verify-add
   Scenario: Verify Add Investment project option
 
-    Given I navigate to the Investment Projects page for Lambda plc
+    Given I navigate to the Company Lambda plc
+    When I navigate to the companies investment page
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
 
   @investment-projects-create--fdi
   Scenario: Add a Foreign Direct Investment (FDI) Investment project
 
-    Given I navigate to the Investment Projects page for Lambda plc
+    Given I navigate to the Company Lambda plc
+    When I navigate to the companies investment page
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -25,7 +27,8 @@ Feature: Create a new Investment project
   @investment-projects-create--fdi-different-source-of-equity
   Scenario: Add a Foreign Direct Investment (FDI) Investment project with a separate company as the source of foreign equity
 
-    Given I navigate to the Investment Projects page for Lambda plc
+    Given I navigate to the Company Lambda plc
+    When I navigate to the companies investment page
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -45,7 +48,8 @@ Feature: Create a new Investment project
   @investment-projects-create--non-fdi
   Scenario: Add a Non Foreign Direct Investment (Non-FDI) Investment project
 
-    Given I navigate to the Investment Projects page for Venus Ltd
+    Given I navigate to the Company Venus Ltd
+    When I navigate to the companies investment page
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select Non FDI as the Investment project type
