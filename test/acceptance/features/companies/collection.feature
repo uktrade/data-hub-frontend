@@ -1,4 +1,5 @@
-@companies-collection
+# TODO archived filters and sort
+@companies-collection @collection
 Feature: View collection of companies
   As an existing user
   I would like to view all the Companies in one place
@@ -10,7 +11,8 @@ Feature: View collection of companies
     Given a company is created
     Then I see the success message
     When I navigate to the Companies collection page
-    Then there are Companies headings
+    Then I confirm I am on the Companies page
+    And the results count header for companies is present
     And there is an Add company button in the collection header
     And I can view the Company in the collection
       | text               | expected                  |

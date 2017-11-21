@@ -35,7 +35,7 @@ defineSupportCode(({ Given, Then, When }) => {
       })
   })
 
-  When(/^navigating to the company contacts$/, async function () {
+  When(/^navigating to the company contacts$/, async function () { // TODO DRY up
     await client
       .url(dashboardPage)
 
@@ -54,7 +54,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementVisible('@addContactButton')
   })
 
-  When(/^navigating to the create company contact page/, async function () {
+  When(/^navigating to the create company contact page/, async function () { // TODO DRY up
     await client
       .url(dashboardPage)
 
@@ -71,16 +71,6 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await Company
       .waitForElementVisible('@addContactButton')
-  })
-
-  When(/^the add new contact button is clicked/, async function () {
-    await Contact
-      .click('@addContactButton')
-  })
-
-  When(/^the save button is clicked/, async function () {
-    await Contact
-      .click('@saveButton')
   })
 
   When(/^the contact is clicked/, async function () {
@@ -89,7 +79,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@header')
   })
 
-  Then(/^there are contact fields$/, async function () {
+  Then(/^there are contact fields$/, async function () { // TODO this can be DRY'd up to use a generic datatable to assert what the form contains
     await Contact
       .waitForElementVisible('@firstName')
       .assert.visible('@firstName')
@@ -101,8 +91,8 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@telephoneNumber')
       .assert.visible('@emailAddress')
       .assert.visible('@acceptsEmailMarketingFromDit')
-      .assert.visible('@sameAddressYes')
-      .assert.visible('@sameAddressNo')
+      .assert.visible('@sameAddressAsCompanyYes')
+      .assert.visible('@sameAddressAsCompanyNo')
       .assert.visible('@alternativePhoneNumber')
       .assert.visible('@alternativeEmail')
       .assert.visible('@notes')

@@ -1,4 +1,4 @@
-@interactions-collection
+@interactions-collection @collection
 Feature: View collection of contacts
   As an existing user
   I would like to view all the interactions in one place
@@ -9,13 +9,18 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     And navigating to the create company interactions and services step 1 page
     And selecting interaction
     And adding an interaction
     Then I see the success message
     When I navigate to the Interactions and services collection page
-    Then there are Interactions headings
+    Then I confirm I am on the Interactions page
+    And the results count header for interactions is present
     Then I filter the collections to view the Interaction I have just created
     And I can view the Interaction in the collection
       | text    | expected               |
@@ -32,13 +37,18 @@ Feature: View collection of contacts
 
     Given a company is created
     When navigating to the company contacts
+    And I click the "Add contact" link
     And a primary contact is added
+    When I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     And navigating to the create company interactions and services step 1 page
     And selecting service delivery
     And adding a service delivery
     Then I see the success message
     When I navigate to the Interactions and services collection page
-    Then there are Interactions headings
+    Then I confirm I am on the Interactions page
+    And the results count header for interactions is present
     Then I filter the collections to view the Service Delivery I have just created
     And I can view the Service delivery in the collection
       | text    | expected                   |

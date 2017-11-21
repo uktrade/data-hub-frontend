@@ -1,26 +1,37 @@
-const { reject } = require('lodash')
+const { merge, omit, assign, reject, get } = require('lodash')
 
-const { transformContactToListItem } = require('../../contacts/transformers')
+const { contactFiltersFields, companyContactSortForm } = require('../../contacts/macros')
+const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderContacts (req, res, next) {
-  const { id, name, contacts } = res.locals.company
+  const { id: companyId, name: companyName } = res.locals.company
+  const companyContactFiltersFields = reject(contactFiltersFields, ['name', 'company_name'])
 
-  const transformedContacts = contacts
-    .map(transformContactToListItem)
-    .map(contact => {
-      const meta = reject(contact.meta, ['label', 'Company'])
-      return Object.assign({}, contact, { meta })
-    })
-  const activeContacts = transformedContacts.filter(contact => !contact.isArchived)
-  const archivedContacts = transformedContacts.filter(contact => contact.isArchived)
+  const sortForm = merge({}, companyContactSortForm, {
+    hiddenFields: assign({}, omit(req.query, 'sortby')),
+    children: [
+      { value: req.query.sortby },
+    ],
+  })
+
+  const selectedFilters = buildSelectedFiltersSummary(companyContactFiltersFields, req.query)
+  const isUKSelected = get(selectedFilters, 'address_country.valueLabel') === 'United Kingdom'
+
+  const visibleFiltersFields = companyContactFiltersFields.filter(field => {
+    if (field.name === 'company_uk_region') {
+      return isUKSelected
+    }
+    return true
+  })
 
   res
-    .breadcrumb(name, `/companies/${id}`)
+    .breadcrumb(companyName, `/companies/${companyId}`)
     .breadcrumb('Contacts')
     .render('companies/views/contacts', {
-      activeContacts,
-      archivedContacts,
-      addContactUrl: `/contacts/create?company=${id}`,
+      sortForm,
+      selectedFilters,
+      filtersFields: visibleFiltersFields,
+      addContactUrl: `/contacts/create?company=${companyId}`,
     })
 }
 

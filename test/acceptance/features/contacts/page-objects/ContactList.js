@@ -17,15 +17,6 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   }
 )
 
-const getBadgeWithText = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  },
-)
-
 module.exports = {
   url: `${process.env.QA_HOST}/contacts`,
   elements: {
@@ -69,8 +60,8 @@ module.exports = {
         },
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
-        updated: getMetaListItemValueSelector('Updated'),
-        countryBadge: getBadgeWithText('Country'),
+        updated: getMetaListItemValueSelector('Updated on'),
+        countryBadge: getMetaListItemValueSelector('Country'),
       },
     },
     filters: {
