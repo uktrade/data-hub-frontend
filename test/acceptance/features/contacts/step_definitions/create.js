@@ -35,7 +35,7 @@ defineSupportCode(({ Given, Then, When }) => {
       })
   })
 
-  When(/^navigating to the company contacts$/, async function () {
+  When(/^navigating to the company contacts$/, async function () { // TODO DRY up
     await client
       .url(dashboardPage)
 
@@ -54,7 +54,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementVisible('@addContactButton')
   })
 
-  When(/^navigating to the create company contact page/, async function () {
+  When(/^navigating to the create company contact page/, async function () { // TODO DRY up
     await client
       .url(dashboardPage)
 
@@ -79,7 +79,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@header')
   })
 
-  Then(/^there are contact fields$/, async function () {
+  Then(/^there are contact fields$/, async function () { // TODO this can be DRY'd up to use a generic datatable to assert what the form contains
     await Contact
       .waitForElementVisible('@firstName')
       .assert.visible('@firstName')
