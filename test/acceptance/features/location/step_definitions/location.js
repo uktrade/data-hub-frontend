@@ -17,4 +17,10 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@header')
       .assert.containsText('@header', text)
   })
+
+  Then(/^I wait and then refresh the page$/, async () => {
+    await client
+      .wait()
+      .refresh()
+  })
 })
