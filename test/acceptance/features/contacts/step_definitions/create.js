@@ -73,16 +73,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementVisible('@addContactButton')
   })
 
-  When(/^the add new contact button is clicked/, async function () {
-    await Contact
-      .click('@addContactButton')
-  })
-
-  When(/^the save button is clicked/, async function () {
-    await Contact
-      .click('@saveButton')
-  })
-
   When(/^the contact is clicked/, async function () {
     await Company
       .section.firstContactsTabContact

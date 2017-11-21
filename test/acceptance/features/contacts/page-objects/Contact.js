@@ -51,7 +51,6 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    addContactButton: getButtonWithText('Add contact'),
     saveButton: getButtonWithText('Save'),
     addInteractionButton: getButtonWithText('Add interaction'),
     contactsTab: 'a[href*="/contacts"][href*="/companies"]',

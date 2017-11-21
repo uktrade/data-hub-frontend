@@ -9,6 +9,6 @@ Feature: Create New Contact
 
     Given a company is created
     When navigating to the create company contact page
-    And the add new contact button is clicked
+    And I click the "Add contact" link
     Then there are contact fields
 
