@@ -22,7 +22,7 @@ describe('Company export controller', () => {
         }],
       },
       '../transformers': {
-        transformCompanyResponseToExportDetailsViewRecord: this.transformerSpy,
+        transformCompanyToExportDetailsView: this.transformerSpy,
       },
     })
 

@@ -1,9 +1,9 @@
 const { assign } = require('lodash')
 
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const { transformCompanyResponseToExportDetailsViewRecord } = require('~/src/apps/companies/transformers')
+const { transformCompanyToExportDetailsView } = require('~/src/apps/companies/transformers')
 
-describe('transformCompanyResponseToExportDetailsViewRecord', () => {
+describe('transformCompanyToExportDetailsView', () => {
   context('when the company is exporting to one country', () => {
     beforeEach(() => {
       const company = assign({}, minimalCompany, {
@@ -17,7 +17,7 @@ describe('transformCompanyResponseToExportDetailsViewRecord', () => {
         }],
       })
 
-      this.viewRecord = transformCompanyResponseToExportDetailsViewRecord(company)
+      this.viewRecord = transformCompanyToExportDetailsView(company)
     })
 
     it('Should show the country currently exporting to', () => {
@@ -41,7 +41,7 @@ describe('transformCompanyResponseToExportDetailsViewRecord', () => {
         }],
       })
 
-      this.viewRecord = transformCompanyResponseToExportDetailsViewRecord(company)
+      this.viewRecord = transformCompanyToExportDetailsView(company)
     })
 
     it('Should show the countries currently exporting to', () => {
@@ -62,7 +62,7 @@ describe('transformCompanyResponseToExportDetailsViewRecord', () => {
         }],
       })
 
-      this.viewRecord = transformCompanyResponseToExportDetailsViewRecord(company)
+      this.viewRecord = transformCompanyToExportDetailsView(company)
     })
 
     it('Should show the country the company wants to export to', () => {
@@ -86,7 +86,7 @@ describe('transformCompanyResponseToExportDetailsViewRecord', () => {
         }],
       })
 
-      this.viewRecord = transformCompanyResponseToExportDetailsViewRecord(company)
+      this.viewRecord = transformCompanyToExportDetailsView(company)
     })
 
     it('Should show the coiuntries the company wants to export to', () => {

@@ -1,9 +1,9 @@
 const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
-const transformCompaniesHouseResponseToListItem = require('~/src/apps/companies/transformers/companies-house-response-to-list-item')
+const transformCompaniesHouseToListItem = require('~/src/apps/companies/transformers/companies-house-to-list-item')
 
-describe('transformCompaniesHouseResponseTolistItem', () => {
+describe('transformCompaniesHouseToListItem', () => {
   beforeEach(() => {
-    this.transformed = transformCompaniesHouseResponseToListItem(companiesHouseSearchResults.results[0])
+    this.transformed = transformCompaniesHouseToListItem(companiesHouseSearchResults.results[0])
   })
 
   it('should include the company number as an id', () => {

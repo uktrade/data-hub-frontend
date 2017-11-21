@@ -3,11 +3,11 @@ const { assign, filter, flatten } = require('lodash')
 const metadataRepo = require('../../../lib/metadata')
 const { saveCompany } = require('../repos')
 const { transformObjectToOption } = require('../../transformers')
-const { transformCompanyResponseToExportDetailsViewRecord } = require('../transformers')
+const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels } = require('../labels')
 
 function renderExports (req, res) {
-  const exportDetails = transformCompanyResponseToExportDetailsViewRecord(res.locals.company)
+  const exportDetails = transformCompanyToExportDetailsView(res.locals.company)
 
   res
     .breadcrumb('Exports')

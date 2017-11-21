@@ -3,7 +3,7 @@ const { get } = require('lodash')
 
 const { getFormattedAddress } = require('../../../lib/address')
 
-module.exports = function transformCompanyResponseToListItem ({
+module.exports = function transformCompanyToListItem ({
   id,
   name,
   sector,

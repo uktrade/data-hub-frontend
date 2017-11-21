@@ -6,7 +6,7 @@ const { getPrimarySectorName } = require('../../../../common/transform-sectors')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { companyDetailsLabels, hqLabels } = require('../labels')
 
-module.exports = function transformCompanyResponseToViewRecord ({
+module.exports = function transformCompanyToView ({
   uk_based,
   uk_region,
   sector,
