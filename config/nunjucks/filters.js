@@ -72,7 +72,6 @@ const filters = {
   isPlainObject,
   isString,
   pluralise,
-  stringify: JSON.stringify,
   sentenceCase: Case.sentence,
 
   encodeQueryString (value) {
