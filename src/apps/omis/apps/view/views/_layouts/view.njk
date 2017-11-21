@@ -62,7 +62,7 @@
 
     {{ MetaList({
       items: [
-        { label: 'Client company', value: companyText, safe: true },
+        { label: 'Client company', value: companyText | safe },
         { label: 'Market (country)', value: order.primary_market }
       ],
       itemModifier: 'stacked'
@@ -72,7 +72,7 @@
       items: [
         { label: 'Created on', value: order.created_on, type: 'datetime' },
         { label: 'Updated on', value: order.modified_on, type: 'datetime' },
-        { label: 'Status', value: statusText, safe: true }
+        { label: 'Status', value: statusText | safe }
       ],
       itemModifier: 'stacked'
     }) }}
