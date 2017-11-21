@@ -63,7 +63,7 @@ Feature: Create New Contact
 
     Given a company is created
     When navigating to the company contacts
-    And the add new contact button is clicked
-    And the save button is clicked
+    And I click the "Add contact" link
+    When I submit the form
     Then the contact fields have error messages
     And I see form error summary
