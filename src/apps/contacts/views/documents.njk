@@ -1,0 +1,17 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Documents</h2>
+  <p>
+    {% if archivedDocumentPath %}
+      <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
+        View files and documents
+      </a>
+      <br>
+      <span id="external-link-label">(will open another website)</span>
+    {% else %}
+      There are no files or documents
+    {% endif %}
+  </p>
+
+{% endblock %}
