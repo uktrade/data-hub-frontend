@@ -116,17 +116,15 @@ defineSupportCode(function ({ Then, When }) {
 
   Then(/^I can view the company in the search results/, async function () {
     const {
-      address1,
-      town,
       name,
       sector,
+      primaryAddress,
     } = this.state.company
-    const registeredAddress = `${address1}, ${town}`
 
     await Search.section.firstCompanySearchResult
       .waitForElementPresent('@header')
       .assert.containsText('@header', name)
       .assert.containsText('@sector', sector)
-      .assert.containsText('@registeredAddress', registeredAddress)
+      .assert.containsText('@registeredAddress', primaryAddress)
   })
 })
