@@ -138,6 +138,10 @@ async function setQuotePreview (req, res, next) {
 }
 
 async function setQuote (req, res, next) {
+  if (res.locals.quote) {
+    return next()
+  }
+
   try {
     const quote = await Order.getQuote(req.session.token, res.locals.order.id)
 
