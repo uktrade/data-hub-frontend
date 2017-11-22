@@ -43,6 +43,7 @@ function setCompanyContactRequestBody (req, res, next) {
   }
   const selectedFiltersQuery = removeArray(pick(req.query, [
     'archived',
+    'name',
     'company_sector',
     'address_country',
     'company_uk_region',
