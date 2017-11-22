@@ -1,5 +1,6 @@
 const { assign } = require('lodash')
 const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
+const archivedDocumentsBaseUrl = 'http://base'
 
 const {
   transformInteractionResponseToForm,
@@ -7,7 +8,11 @@ const {
   transformInteractionFormBodyToApiRequest,
   transformInteractionResponseToViewRecord,
   transformInteractionListItemToHaveUrlPrefix,
-} = require('~/src/apps/interactions/transformers')
+} = proxyquire('~/src/apps/interactions/transformers', {
+  '../../../config': {
+    archivedDocumentsBaseUrl,
+  },
+})
 
 describe('Interaction transformers', () => {
   describe('#transformInteractionResponseToForm', () => {
@@ -283,6 +288,10 @@ describe('Interaction transformers', () => {
             id: '72c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Telephone',
           },
+          'Documents': {
+            url: 'http://base/documents/123',
+            name: 'Documents',
+          },
         })
       })
     })
@@ -526,6 +535,54 @@ describe('Interaction transformers', () => {
             name: 'Test project',
           },
           'Event': 'No',
+        })
+      })
+    })
+
+    context('when there is not an archived documents URL path', () => {
+      beforeEach(() => {
+        const interaction = assign({}, mockInteraction, { archived_documents_url_path: '' })
+        this.transformed = transformInteractionResponseToViewRecord(interaction)
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          'Company': {
+            url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a',
+            name: 'Samsung',
+          },
+          'Contact': {
+            url: '/contacts/b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            name: 'Jackson Whitfield',
+          },
+          'Service provider': {
+            id: '222',
+            name: 'Team',
+          },
+          'Service': {
+            id: '1231231231312',
+            name: 'Test service',
+          },
+          'Subject': 'Test interactions',
+          'Notes': 'lorem ipsum',
+          'Interaction date': {
+            type: 'date',
+            name: '2017-05-31T00:00:00',
+          },
+          'DIT adviser': {
+            id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+            first_name: 'Test',
+            last_name: 'CMU 1',
+            name: 'Test CMU 1',
+          },
+          'Investment project': {
+            url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+          'Communication channel': {
+            id: '72c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Telephone',
+          },
         })
       })
     })
