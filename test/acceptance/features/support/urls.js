@@ -34,6 +34,9 @@ const urls = {
   },
   interactionsAndServices: {
     collection: 'interactions',
+    getDetails (id) {
+      return `${host}/interactions/${id}`
+    },
   },
   investmentProjects: {
     collection: 'investment-projects',
