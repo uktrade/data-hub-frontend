@@ -138,11 +138,33 @@ describe('OMIS View middleware', () => {
   })
 
   describe('setContact()', () => {
-    context('when invoice call resolves', () => {
+    context('when no contact ID exists', () => {
       beforeEach(async () => {
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getContactStub).not.to.have.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when API call resolves', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order.contact = {
+          id: 'contact-id',
+        }
         this.getContactStub.resolves(contactMock)
 
         await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getContact with correct arguments', () => {
+        expect(this.getContactStub).to.have.been.calledOnce
+        expect(this.getContactStub).to.have.been.calledWith('12345', 'contact-id')
       })
 
       it('should set contact property on locals', () => {
@@ -160,6 +182,9 @@ describe('OMIS View middleware', () => {
 
     context('when call generates an error', () => {
       beforeEach(async () => {
+        this.resMock.locals.order.contact = {
+          id: 'contact-id',
+        }
         this.error = {
           statusCode: 500,
         }
@@ -168,23 +193,38 @@ describe('OMIS View middleware', () => {
         await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should log error', () => {
-        expect(this.loggerErrorSpy).to.have.been.calledOnce
-        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      it('should call next with error', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+      })
+    })
+  })
+
+  describe('setAssignees()', () => {
+    context('when no order ID exists', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order = null
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getAssigneesStub).not.to.have.called
       })
 
       it('should call next', () => {
         expect(this.nextSpy).to.have.been.calledWith()
       })
     })
-  })
 
-  describe('setAssignees()', () => {
     context('when invoice call resolves', () => {
       beforeEach(async () => {
         this.getAssigneesStub.resolves(assigneesMock)
 
         await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getAssigneesStub with correct arguments', () => {
+        expect(this.getAssigneesStub).to.have.been.calledOnce
+        expect(this.getAssigneesStub).to.have.been.calledWith('12345', '123456789')
       })
 
       it('should set assignees property on locals', () => {
@@ -214,23 +254,38 @@ describe('OMIS View middleware', () => {
         await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should log error', () => {
-        expect(this.loggerErrorSpy).to.have.been.calledOnce
-        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+      })
+    })
+  })
+
+  describe('setSubscribers()', () => {
+    context('when no order ID exists', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order = null
+        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getSubscribersStub).not.to.have.called
       })
 
       it('should call next', () => {
         expect(this.nextSpy).to.have.been.calledWith()
       })
     })
-  })
 
-  describe('setSubscribers()', () => {
     context('when invoice call resolves', () => {
       beforeEach(async () => {
         this.getSubscribersStub.resolves(subscribersMock)
 
         await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getAssigneesStub with correct arguments', () => {
+        expect(this.getSubscribersStub).to.have.been.calledOnce
+        expect(this.getSubscribersStub).to.have.been.calledWith('12345', '123456789')
       })
 
       it('should set subscribers property on locals', () => {
@@ -260,13 +315,8 @@ describe('OMIS View middleware', () => {
         await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should log error', () => {
-        expect(this.loggerErrorSpy).to.have.been.calledOnce
-        expect(this.loggerErrorSpy).to.have.been.calledWith(this.error)
-      })
-
       it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
     })
   })
