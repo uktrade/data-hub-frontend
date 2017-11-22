@@ -49,7 +49,7 @@
       (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
     {%- endif -%}
 
-    {% if order.status === 'complete' %}
+    {% if order.status === 'complete' and order.completed_on %}
       ({{ FromNow({ datetime: order.completed_on }) }})
     {% endif %}
   {% endset %}
