@@ -42,6 +42,11 @@ Feature: View collection of contacts
     When I navigate to the Contacts collection page
     When the status filter is cleared
     Then there are no filters selected
+    And I filter the contacts list by contact
+    Then the contacts should be filtered by contact name
+    When the contact filter is cleared
+    Then there are no filters selected
+    And the result count should be reset
     And I filter the contacts list by company
     Then the contacts should be filtered by company name
     When the company filter is cleared

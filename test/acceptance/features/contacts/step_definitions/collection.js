@@ -14,6 +14,14 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@firstCompanyFromList')
   })
 
+  When(/^I filter the contacts list by contact/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@contact')
+      .setValue('@contact', getUid(this.state.contact.lastName))
+      .sendKeys('@contact', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+  })
+
   When(/^I filter the contacts list by company/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@company')
@@ -251,8 +259,17 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^the contacts should be filtered by ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
     const entityTypeField = camelCase(`${entityType} ${field}`)
-    const selector = `@${entityTypeField}`
-    const expected = get(this.state, `${entityType}.${field}`)
+
+    let selector
+    let expected
+
+    if (entityTypeField === 'contactName') {
+      selector = '@header'
+      expected = `${get(this.state, 'contact.firstName')} ${get(this.state, 'contact.lastName')}`
+    } else {
+      selector = `@${entityTypeField}`
+      expected = get(this.state, `${entityType}.${field}`)
+    }
 
     await ContactList
       .section.firstContactInList
