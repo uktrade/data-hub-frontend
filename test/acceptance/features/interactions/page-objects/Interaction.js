@@ -13,6 +13,13 @@ const getRadioButtonWithText = (text) =>
     },
   )
 
+const getLinkWithText = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//a',
+  },
+)
+
 module.exports = {
   props: {},
   elements: {
@@ -169,6 +176,12 @@ module.exports = {
         serviceDelivery: 'label[for=field-kind-2]',
         dateFrom: '#field-date_after',
         dateTo: '#field-date_before',
+      },
+    },
+    details: {
+      selector: '.table--key-value',
+      elements: {
+        documentsLink: getLinkWithText('Documents'),
       },
     },
   },

@@ -57,6 +57,16 @@ module.exports = {
       name: 'Grand exhibition',
     },
   },
+  interaction: {
+    attendedGammaEvent: {
+      pk: 'ec4a46ef-6e50-4a5c-bba0-e311f0471312',
+      subject: 'Attended gamma event',
+    },
+    grandExhibition: {
+      pk: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
+      subject: 'Provided funding information',
+    },
+  },
   investmentProject: {
     newHotelCommitmentToInvest: {
       pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
