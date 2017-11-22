@@ -576,11 +576,32 @@ describe('OMIS View middleware', () => {
   })
 
   describe('setQuote()', () => {
-    context('when an order is not in draft', () => {
-      beforeEach(() => {
-        this.resMock.locals.order.status = 'complete'
+    context('when quote already exists on locals', () => {
+      beforeEach(async () => {
+        this.resMock.locals.quote = {
+          id: '12345',
+          content: 'Quote content',
+        }
+        await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
       })
 
+      it('should not make call to get quote', () => {
+        expect(this.getQuoteStub).not.to.have.been.called
+      })
+
+      it('should not change quote property on locals', () => {
+        expect(this.resMock.locals.quote).to.deep.equal({
+          id: '12345',
+          content: 'Quote content',
+        })
+      })
+
+      it('should call next with no error', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when quote does not exist on locals', () => {
       context('when quote resolves', () => {
         beforeEach(async () => {
           this.getQuoteStub.resolves({
