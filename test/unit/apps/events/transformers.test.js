@@ -1,13 +1,18 @@
 /* eslint camelcase: 0 */
 const { assign } = require('lodash')
 
+const mockEvent = require('~/test/unit/data/events/event-data')
+const archivedDocumentsBaseUrl = 'http://base'
+
 const {
   transformEventToListItem,
   transformEventResponseToViewRecord,
   transformEventFormBodyToApiRequest,
-} = require('~/src/apps/events/transformers')
-
-const mockEvent = require('~/test/unit/data/events/event-data')
+} = proxyquire('~/src/apps/events/transformers', {
+  '../../../config': {
+    archivedDocumentsBaseUrl,
+  },
+})
 
 describe('Event transformers', () => {
   describe('#transformEventToListItem', () => {
@@ -106,6 +111,10 @@ describe('Event transformers', () => {
             id: '9484b82b-3499-e211-a939-e4115bead28a',
             name: 'Account Management',
           },
+          'Documents': {
+            url: 'http://base/documents/123',
+            name: 'Documents',
+          },
         })
       })
     })
@@ -135,6 +144,58 @@ describe('Event transformers', () => {
           'Other teams': [],
           'Region': null,
           'Service': null,
+        })
+      })
+    })
+
+    context('when there is not an archived documents URL path', () => {
+      beforeEach(() => {
+        const event = assign({}, mockEvent, { archived_documents_url_path: '' })
+        this.transformedEvent = transformEventResponseToViewRecord(event)
+      })
+
+      it('should transform to a display event', () => {
+        expect(this.transformedEvent).to.deep.equal({
+          'Address': '1 Uk Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Event end date': {
+            type: 'date',
+            name: '2017-11-11',
+          },
+          'Type of event': {
+            id: '6031f993-a689-49af-9a11-942a8413a779',
+            name: 'Outward mission',
+          },
+          'Lead team': {
+            id: '42f12898-9698-e211-a939-e4115bead28a',
+            name: 'Association of Dogs',
+          },
+          'Event location type': {
+            id: 'cf45bf02-8ea7-4e53-af0e-b5676a30cb96',
+            name: 'Other',
+          },
+          'Notes': 'An example event for testing',
+          'Organiser': {
+            id: '0919a99e-9798-e211-a939-e4115bead28a',
+            first_name: 'Jeff',
+            last_name: 'Smith',
+            name: 'Jeff Smith',
+          },
+          'Related programmes': ['Example Programme'],
+          'Event start date': {
+            type: 'date',
+            name: '2017-11-10',
+          },
+          'Other teams': [
+            'Association of Cats',
+          ],
+          'Region': {
+            id: '804cd12a-6095-e211-a939-e4115bead28a',
+            name: 'FDI Hub',
+          },
+          'Service': {
+            id: '9484b82b-3499-e211-a939-e4115bead28a',
+            name: 'Account Management',
+          },
         })
       })
     })
