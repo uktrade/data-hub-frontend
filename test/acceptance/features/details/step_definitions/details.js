@@ -47,4 +47,9 @@ defineSupportCode(({ Then }) => {
         .useCss()
     }
   })
+
+  Then(/^there should not be a local nav$/, async () => {
+    await Details
+      .assert.elementNotPresent('@localNav')
+  })
 })

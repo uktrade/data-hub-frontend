@@ -47,4 +47,24 @@ module.exports = {
       name: 'Johnny Cakeman',
     },
   },
+  event: {
+    oneDayExhibition: {
+      pk: 'b93d4273-36fe-4008-ac40-fbc197910791',
+      name: 'One-day exhibition',
+    },
+    grandExhibition: {
+      pk: 'bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
+      name: 'Grand exhibition',
+    },
+  },
+  investmentProject: {
+    newHotelCommitmentToInvest: {
+      pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+      name: 'New hotel (commitment to invest)',
+    },
+    newRollercoaster: {
+      pk: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
+      name: 'New rollercoaster',
+    },
+  },
 }
