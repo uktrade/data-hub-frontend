@@ -40,6 +40,8 @@ Feature: View collection of contacts for a company
     Then I wait and then refresh the page
     Then I confirm I am on the Lambda plc page
     And the results count header for contacts is present
+    When the status filter is cleared
+    Then there are no filters selected
     When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
     When the sector filter is cleared

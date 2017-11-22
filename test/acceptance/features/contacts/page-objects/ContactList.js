@@ -50,6 +50,7 @@ module.exports = {
         sector: getFilterTagRemoveBtnSelector('Sectors'),
         country: getFilterTagRemoveBtnSelector('Country'),
         ukRegion: getFilterTagRemoveBtnSelector('UK Region'),
+        status: getFilterTagRemoveBtnSelector('Status'),
       },
     },
     firstContactInList: {
