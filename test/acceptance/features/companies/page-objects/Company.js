@@ -3,6 +3,7 @@ const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
+const { getAddress } = require('../../../helpers/address')
 
 const getDetailsTabSelector = (text) => getSelectorForElementWithText(
   text,
@@ -347,10 +348,9 @@ module.exports = {
                   .waitForElementPresent('@saveAndCreateButton')
                   .click('@saveAndCreateButton')
 
-                const { address1, town, postcode, country } = parentCompany
                 callback(assign({}, company, {
                   header: company.name,
-                  primaryAddress: `${address1}, ${town}, ${postcode}, ${country}`,
+                  primaryAddress: getAddress(parentCompany),
                 }))
               })
           })
