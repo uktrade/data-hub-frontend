@@ -40,6 +40,9 @@ const urls = {
   },
   investmentProjects: {
     collection: 'investment-projects',
+    getDetails (id) {
+      return `${host}/investment-projects/${id}/details`
+    },
   },
 }
 
