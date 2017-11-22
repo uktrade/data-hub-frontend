@@ -1,5 +1,5 @@
 const faker = require('faker')
-const { assign, forEach, set, pick } = require('lodash')
+const { assign } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
@@ -78,14 +78,6 @@ module.exports = {
     notes: '#field-notes',
     contactUnderSearchPage: '#contacts-list li:first-child',
     contactFullname: '#contact-list .c-entity-list li:first-child .c-entity__title > a',
-    ukPostcode: '#field-postcode-lookup',
-    postCodeLookupButton: getButtonWithText('Find UK address'),
-    postCodeLookupSuggestions: '#field-postcode-address-suggestions',
-    postCodeLookupAddress1: '#field-address_1',
-    postCodeLookupAddress2: '#field-address_2',
-    postCodeLookupTown: '#field-address_town',
-    postCodeLookupCounty: '#field-address_county',
-    postCodeLookupCountry: '#field-address_country',
     headingCompanyLink: '.c-local-header__heading-before a', // TODO move this work to Location feature
   },
 
@@ -157,16 +149,15 @@ module.exports = {
           alternativePhoneNumber: '666555444',
           alternativeEmail: generateEmail(firstName, lastName, true),
           notes: `${faker.name.jobDescriptor() + firstName}`,
-          ukPostcode: 'EC2Y 9AE',
         }, details)
-        const postCodeLookupDetails = {
+        const postcodeLookup = {
           address1: 'postCodeLookupAddress1',
           address2: 'postCodeLookupAddress2',
           town: 'postCodeLookupTown',
           county: 'postCodeLookupCounty',
           country: 'postCodeLookupCountry',
+          postcode: 'postCode',
         }
-        let contactWithPostCodeDetails
 
         this.api.page.Location().section.localHeader
           .waitForElementPresent('@header')
@@ -184,43 +175,20 @@ module.exports = {
             done()
           })
 
-        return this
-          .click('@postCodeLookupButton')
-          .wait() // wait for xhr to come back for postcode lookup
-          .api.perform((done) => {
-            this.getListOption('@postCodeLookupSuggestions', (addressOption) => {
-              this.setValue('@postCodeLookupSuggestions', addressOption)
-              done()
-            })
-          })
+        return this.api
           .perform((done) => {
-            const promises = []
-            // record information that has come from postcode lookup
-            // select elements
-            forEach(pick(postCodeLookupDetails, ['country']), (value, key) => {
-              promises.push(new Promise((resolve) => {
-                this.getListOption(`@${value}`, (optionText) => {
-                  set(postCodeLookupDetails, key, optionText)
-                  resolve()
-                })
-              }))
-            })
-            // text inputs
-            forEach(pick(postCodeLookupDetails, ['address1', 'address2', 'county', 'town']), (value, key) => {
-              promises.push(new Promise((resolve) => {
-                this.getValue(`@${value}`, (textInput) => {
-                  set(postCodeLookupDetails, key, textInput.value.trim())
-                  resolve()
-                })
-              }))
-            })
-
-            Promise.all(promises)
-              .then(() => {
-                contactWithPostCodeDetails = assign({}, contact, postCodeLookupDetails)
-              })
-              .then(() => {
-                callback(contactWithPostCodeDetails)
+            this.api
+              .page.Address()
+              .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
+                callback(assign(
+                  {},
+                  {
+                    acceptsEmailMarketingFromDit: 'No',
+                    type: 'Primary',
+                  },
+                  addressInputValues,
+                  contact
+                ))
                 done()
               })
           })

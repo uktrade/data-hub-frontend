@@ -175,13 +175,17 @@ module.exports = {
         const companyStep1 = {}
         const companyStep2 = assign({}, {
           name: appendUid(faker.company.companyName()),
-          address1: faker.address.streetName(),
-          postcode: faker.address.zipCode(),
-          town: faker.address.city(),
           website: faker.internet.url(),
           description: faker.lorem.sentence(),
         }, details)
         const companyStep2RadioOptions = {}
+        const postcodeLookup = {
+          postcode: 'companyPostCode',
+          address1: 'companyPostCodeLookupAddress1',
+          address2: 'companyPostCodeLookupAddress2',
+          town: 'companyPostCodeLookupTown',
+          county: 'companyPostCodeLookupCounty',
+        }
 
         this
           .click('@addCompanyButton')
@@ -238,7 +242,7 @@ module.exports = {
                   done()
                 })
               })
-              .perform(() => {
+              .perform((done) => {
                 for (const key in companyStep2) {
                   if (companyStep2[key]) {
                     this.setValue(`@${key}`, companyStep2[key])
@@ -248,19 +252,30 @@ module.exports = {
                   this.api.useCss().click(companyStep2RadioOptions[key].labelSelector)
                   companyStep2[key] = companyStep2RadioOptions[key].text
                 }
+                done()
               })
-              .perform(() => {
-                this
-                  .waitForElementPresent('@saveAndCreateButton')
-                  .click('@saveAndCreateButton')
 
-                const { address1, town } = companyStep2
-                const country = 'United Kingdom'
-                callback(assign({}, companyStep1, companyStep2, {
-                  country,
-                  heading: companyStep2.name,
-                  primaryAddress: `${address1}, ${town}, ${country}`,
-                }))
+            this.api
+              .perform((done) => {
+                this.api
+                  .page.Address()
+                  .getAddressInputValues('GL11 4DH', postcodeLookup, '@companyPostCodeLookupSuggestions', (addressInputValues) => {
+                    const country = 'United Kingdom'
+                    const primaryAddress = getAddress(assign({}, companyStep2, addressInputValues, { country }))
+
+                    this
+                      .waitForElementPresent('@saveAndCreateButton')
+                      .click('@saveAndCreateButton')
+
+                    callback(assign({}, companyStep1, companyStep2, {
+                      addressInputValues,
+                      heading: companyStep2.name,
+                      primaryAddress,
+                      country,
+                    }))
+
+                    done()
+                  })
               })
             done()
           })

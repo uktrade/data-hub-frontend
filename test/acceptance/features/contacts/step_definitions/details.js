@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
@@ -28,7 +30,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@phoneNumber', expectedTelephoneNumber)
       .assert.containsText('@email', emailAddress)
       .assert.containsText('@emailMarketing', acceptsEmailMarketingFromDit)
-      .assert.containsText('@address', expectedAddress)
+      .assert.containsText('@address', contactAddress)
       .assert.containsText('@alternativeTelephone', alternativePhoneNumber)
       .assert.containsText('@alternativeEmail', alternativeEmail)
       .assert.containsText('@notes', notes)
