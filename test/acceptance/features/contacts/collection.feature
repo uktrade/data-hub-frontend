@@ -87,7 +87,7 @@ Feature: View collection of contacts
     Then the contacts should have been correctly sorted for text fields
 #    When the contacts are sorted by Last name: A-Z
 #    When the contacts are sorted by Last name: Z-A
-#    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated
+#    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated (is the problem when two are identical?)
     When the contacts are sorted by Country: A-Z
     When the contacts are sorted by Country: Z-A
     Then the contacts should have been correctly sorted for text fields
