@@ -40,10 +40,10 @@ defineSupportCode(({ Then }) => {
     })
 
     for (const row of expectedLocalNav) {
-      const detailsTabSelector = Details.getDetailsTabSelector(row.text)
+      const localNavItemSelector = Details.getLocalNavItemSelector(row.text)
       await Details
         .api.useXpath()
-        .assert.visible(detailsTabSelector.selector)
+        .assert.visible(localNavItemSelector.selector)
         .useCss()
     }
   })
