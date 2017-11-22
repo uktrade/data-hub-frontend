@@ -12,6 +12,7 @@ const {
   archive,
   audit,
   details,
+  documents,
   edit,
   evaluation,
   team,
@@ -61,6 +62,7 @@ const LOCAL_NAV = [
   { path: 'interactions', label: 'Interactions' },
   { path: 'evaluation', label: 'Evaluations' },
   { path: 'audit', label: 'Audit history' },
+  { path: 'documents', label: 'Documents' },
 ]
 
 const currentYear = (new Date()).getFullYear()
@@ -70,7 +72,7 @@ const DEFAULT_COLLECTION_QUERY = {
   sortby: 'estimated_land_date:asc',
 }
 
-router.use('/:investmentId/', setLocalNav(LOCAL_NAV))
+router.use('/:investmentId', setLocalNav(LOCAL_NAV))
 
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
@@ -206,5 +208,7 @@ router.get('/:investmentId/edit-associated',
 )
 
 router.get('/:investmentId/remove-associated', removeAssociatedInvestmentProject)
+
+router.get('/:investmentId/documents', documents.renderDocuments)
 
 module.exports = router
