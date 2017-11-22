@@ -164,29 +164,21 @@ describe('OMIS middleware', () => {
     })
 
     context('when a model method rejects', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         this.error = {
           statusCode: 404,
         }
         this.getByIdStub.rejects(this.error)
+
+        await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
       })
 
-      it('should not set an order property on locals', async () => {
-        await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
-
+      it('should not set an order property on locals', () => {
         expect(this.resMock.locals).to.not.have.property('order')
       })
 
-      it('should log the error', async () => {
-        await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
-
-        expect(this.loggerSpy).to.have.been.calledWith(this.error)
-      })
-
-      it('should call next without an error', async () => {
-        await this.middleware.getOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
-
-        expect(this.nextSpy).to.have.been.calledWith()
+      it('should call next with an error', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
     })
   })

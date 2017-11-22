@@ -47,155 +47,265 @@ describe('Error Middleware Test', () => {
   })
 
   describe('catchAll method', () => {
-    it('should log a 404 and render response', () => {
-      const nextSpy = this.sandbox.spy()
-      const responseRenderSpy = this.sandbox.spy()
-      const mockResponse = {
-        status: () => {
-          return {
-            render: responseRenderSpy,
-          }
-        },
+    beforeEach(() => {
+      this.nextSpy = this.sandbox.spy()
+      this.statusStub = this.sandbox.stub().returnsThis()
+      this.renderSpy = this.sandbox.spy()
+      this.error = new Error('A mock error')
+
+      this.responseMock = {
+        status: this.statusStub,
+        render: this.renderSpy,
         locals: {
           BREADCRUMBS: [],
         },
-        headersSent: false,
       }
-      const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
-      const error = new Error(`mock ${errorCode404} error`)
-
-      error.statusCode = errorCode404
-      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
-
-      expect(responsestatusCodeSpy.calledOnce).to.be.true
-      expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode404)
-      expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors')
-      expect(responseRenderSpy.args[0][1]).to.eql({
-        'devErrorDetail': error,
-        'statusCode': errorCode404,
-        'statusMessage': 'Sorry we couldn\'t find that page!',
-      })
-      expect(this.winstonInfoStub.args[0][0] instanceof Error).to.be.true
-      expect(this.winstonInfoStub.args[0][0].message).to.equal(`mock ${errorCode404} error`)
-      expect(this.winstonInfoStub.args[0][0].statusCode).to.equal(errorCode404)
     })
 
-    it('should log a 500 and render response', () => {
-      const nextSpy = this.sandbox.spy()
-      const responseRenderSpy = this.sandbox.spy()
-      const mockResponse = {
-        status: () => {
-          return {
-            render: responseRenderSpy,
-          }
-        },
-        locals: {
-          BREADCRUMBS: [],
-        },
-        headersSent: false,
-      }
-      const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
-      const error = new Error(`mock ${errorCode500} error`)
-
-      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
-
-      expect(responsestatusCodeSpy.calledOnce).to.be.true
-      expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode500)
-      expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors')
-      expect(responseRenderSpy.args[0][1]).to.eql({
-        'devErrorDetail': error,
-        'statusCode': errorCode500,
-        'statusMessage': 'Sorry something has gone wrong!',
+    context('when header have already been sent', () => {
+      beforeEach(() => {
+        this.responseMock.headersSent = true
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
       })
-      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
-      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
-      expect(this.winstonErrorStub.args[0][0].statusCode).to.equal(errorCode500)
+
+      it('should call next middleware with error', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+      })
+
+      it('should not render a template', () => {
+        expect(this.renderSpy).not.to.have.been.called
+      })
     })
 
-    it('should log a 403 and render response', () => {
-      const nextSpy = this.sandbox.spy()
-      const responseRenderSpy = this.sandbox.spy()
-      const mockResponse = {
-        status: () => {
-          return {
-            render: responseRenderSpy,
-          }
-        },
-        locals: {
-          BREADCRUMBS: [],
-        },
-        headersSent: false,
-      }
-      const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
-      const error = new Error(`mock ${errorCode403} error`)
-
-      error.statusCode = errorCode403
-      error.code = 'EBADCSRFTOKEN'
-
-      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
-
-      expect(responsestatusCodeSpy.calledOnce).to.be.true
-      expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode403)
-      expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors')
-      expect(responseRenderSpy.args[0][1]).to.eql({
-        'devErrorDetail': error,
-        'statusCode': errorCode403,
-        'statusMessage': 'This form has been tampered with',
+    context('when not in development mode', () => {
+      beforeEach(() => {
+        this.errorsStub(false).catchAll(this.error, null, this.responseMock, this.nextSpy)
       })
-      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
-      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode403} error`)
-      expect(this.winstonErrorStub.args[0][0].statusCode).to.equal(errorCode403)
-      expect(nextSpy.calledOnce).to.be.false
+
+      it('should send showStackTrace property to template', () => {
+        expect(this.renderSpy.args[0][1]).to.have.property('showStackTrace')
+      })
+
+      it('should set showStackTrace to false', () => {
+        expect(this.renderSpy.args[0][1].showStackTrace).to.equal(false)
+      })
     })
 
-    it('should log a 500 and render response without error information', () => {
-      const nextSpy = this.sandbox.spy()
-      const responseRenderSpy = this.sandbox.spy()
-      const mockResponse = {
-        status: () => {
-          return {
-            render: responseRenderSpy,
-          }
-        },
-        locals: {
-          BREADCRUMBS: [],
-        },
-        headersSent: false,
-      }
-      const responsestatusCodeSpy = this.sandbox.spy(mockResponse, 'status')
-      const error = new Error(`mock ${errorCode500} error`)
-
-      this.errorsStub(!isDev).catchAll(error, null, mockResponse, nextSpy)
-
-      expect(responsestatusCodeSpy.calledOnce).to.be.true
-      expect(responsestatusCodeSpy.args[0][0]).to.equal(errorCode500)
-      expect(responseRenderSpy.calledOnce).to.be.true
-      expect(responseRenderSpy.args[0][0]).to.equal('errors')
-      expect(responseRenderSpy.args[0][1]).to.eql({
-        'devErrorDetail': false,
-        'statusCode': errorCode500,
-        'statusMessage': 'Sorry something has gone wrong!',
+    context('with a 404 error status code', () => {
+      beforeEach(() => {
+        this.error.statusCode = errorCode404
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
       })
-      expect(this.winstonErrorStub.args[0][0] instanceof Error).to.be.true
-      expect(this.winstonErrorStub.args[0][0].message).to.equal(`mock ${errorCode500} error`)
-      expect(this.winstonErrorStub.args[0][0].statusCode).to.equal(errorCode500)
+
+      it('should set correct status code on response', () => {
+        expect(this.statusStub).to.have.been.calledOnce
+        expect(this.statusStub).to.have.been.calledWith(errorCode404)
+      })
+
+      it('should call the errors template', () => {
+        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.renderSpy.args[0][0]).to.equal('errors')
+      })
+
+      it('should pass correct values to template', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          error: this.error,
+          statusCode: errorCode404,
+          statusMessage: 'Page not found',
+          showStackTrace: true,
+        })
+      })
+
+      it('should not render breadcrumbs', () => {
+        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
+      })
+
+      it('should log info level message to logger', () => {
+        expect(this.winstonInfoStub).to.have.been.calledOnce
+        expect(this.winstonInfoStub).to.have.been.calledWith(this.error)
+      })
+
+      it('should not log error level message to logger', () => {
+        expect(this.winstonErrorStub).not.to.have.been.called
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
     })
 
-    it('should drop through to next middleware as headers have already been sent', () => {
-      const nextSpy = this.sandbox.spy()
-      const mockResponse = {
-        headersSent: true,
-      }
-      const error = new Error('mock headers sent error')
+    context('with a standard 403 error status code', () => {
+      beforeEach(() => {
+        this.error.statusCode = errorCode403
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+      })
 
-      this.errorsStub(isDev).catchAll(error, null, mockResponse, nextSpy)
+      it('should set correct status code on response', () => {
+        expect(this.statusStub).to.have.been.calledOnce
+        expect(this.statusStub).to.have.been.calledWith(errorCode403)
+      })
 
-      expect(nextSpy.args[0][0] instanceof Error).to.be.true
-      expect(nextSpy.args[0][0].message).to.equal('mock headers sent error')
-      expect(nextSpy.args[0][0].statusCode).to.equal(errorCode500)
+      it('should call the errors template', () => {
+        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.renderSpy.args[0][0]).to.equal('errors')
+      })
+
+      it('should pass correct values to template', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          error: this.error,
+          statusCode: errorCode403,
+          statusMessage: 'You don’t have permission to view this page',
+          showStackTrace: true,
+        })
+      })
+
+      it('should not render breadcrumbs', () => {
+        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
+      })
+
+      it('should log error level message to logger', () => {
+        expect(this.winstonErrorStub).to.have.been.calledOnce
+        expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
+      })
+
+      it('should not log info level message to logger', () => {
+        expect(this.winstonInfoStub).not.to.have.been.called
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
+    context('with a CSRF 403 error status code', () => {
+      beforeEach(() => {
+        this.error.statusCode = errorCode403
+        this.error.code = 'EBADCSRFTOKEN'
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+      })
+
+      it('should set correct status code on response', () => {
+        expect(this.statusStub).to.have.been.calledOnce
+        expect(this.statusStub).to.have.been.calledWith(errorCode403)
+      })
+
+      it('should call the errors template', () => {
+        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.renderSpy.args[0][0]).to.equal('errors')
+      })
+
+      it('should pass correct values to template', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          error: this.error,
+          statusCode: errorCode403,
+          statusMessage: 'This form has been tampered with',
+          showStackTrace: true,
+        })
+      })
+
+      it('should not render breadcrumbs', () => {
+        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
+      })
+
+      it('should log error level message to logger', () => {
+        expect(this.winstonErrorStub).to.have.been.calledOnce
+        expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
+      })
+
+      it('should not log info level message to logger', () => {
+        expect(this.winstonInfoStub).not.to.have.been.called
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
+    context('with a 500 error status code', () => {
+      beforeEach(() => {
+        this.error.statusCode = errorCode500
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+      })
+
+      it('should set correct status code on response', () => {
+        expect(this.statusStub).to.have.been.calledOnce
+        expect(this.statusStub).to.have.been.calledWith(errorCode500)
+      })
+
+      it('should call the errors template', () => {
+        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.renderSpy.args[0][0]).to.equal('errors')
+      })
+
+      it('should pass correct values to template', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          error: this.error,
+          statusCode: errorCode500,
+          statusMessage: 'Page unavailable',
+          showStackTrace: true,
+        })
+      })
+
+      it('should not render breadcrumbs', () => {
+        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
+      })
+
+      it('should log error level message to logger', () => {
+        expect(this.winstonErrorStub).to.have.been.calledOnce
+        expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
+      })
+
+      it('should not log info level message to logger', () => {
+        expect(this.winstonInfoStub).not.to.have.been.called
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
+    context('with no error status code', () => {
+      beforeEach(() => {
+        this.statusCode = 500
+        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+      })
+
+      it('should set correct status code on response', () => {
+        expect(this.statusStub).to.have.been.calledOnce
+        expect(this.statusStub).to.have.been.calledWith(this.statusCode)
+      })
+
+      it('should call the errors template', () => {
+        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.renderSpy.args[0][0]).to.equal('errors')
+      })
+
+      it('should pass correct values to template', () => {
+        expect(this.renderSpy.args[0][1]).to.deep.equal({
+          error: this.error,
+          statusCode: this.statusCode,
+          statusMessage: 'Page unavailable',
+          showStackTrace: true,
+        })
+      })
+
+      it('should not render breadcrumbs', () => {
+        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
+      })
+
+      it('should log error level message to logger', () => {
+        expect(this.winstonErrorStub).to.have.been.calledOnce
+        expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
+      })
+
+      it('should not log info level message to logger', () => {
+        expect(this.winstonInfoStub).not.to.have.been.called
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
     })
   })
 })
