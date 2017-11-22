@@ -26,6 +26,7 @@ const LOCAL_NAV = [
 
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
+  archived: false,
 }
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getContactsCollection, renderContactList)
