@@ -39,7 +39,12 @@ module.exports = {
   },
   contact: {
     georginaClark: {
+      pk: '048f2edc-e7ed-4881-b1cc-29142a80238a',
       name: 'Georgina Clark',
+    },
+    johnnyCakeman: {
+      pk: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
+      name: 'Johnny Cakeman',
     },
   },
 }

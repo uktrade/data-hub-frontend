@@ -22,6 +22,9 @@ const urls = {
   },
   contacts: {
     collection: 'contacts',
+    getDetails (id) {
+      return `${host}/contacts/${id}/details`
+    },
   },
   events: {
     collection: 'events',
