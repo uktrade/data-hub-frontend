@@ -48,7 +48,7 @@
                 <tr>
                   <th class="c-answers-summary__title" scope="row">{{ item.label }}</th>
                   <td class="c-answers-summary__content {{ 'c-answers-summary__content--muted' if not item.value }}">
-                    {{ item.value | safe if item.value else item.fallbackText }}
+                    {{ item.value if item.value else item.fallbackText }}
                   </td>
                 </tr>
               {% endif %}

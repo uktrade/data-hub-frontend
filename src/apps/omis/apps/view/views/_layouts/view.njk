@@ -49,7 +49,7 @@
       (expire{{ 'd' if quote.expired else 's' }} {{ FromNow({ datetime: quote.expires_on }) }})
     {%- endif -%}
 
-    {% if order.status === 'complete' %}
+    {% if order.status === 'complete' and order.completed_on %}
       ({{ FromNow({ datetime: order.completed_on }) }})
     {% endif %}
   {% endset %}
@@ -62,7 +62,7 @@
 
     {{ MetaList({
       items: [
-        { label: 'Client company', value: companyText, safe: true },
+        { label: 'Client company', value: companyText | safe },
         { label: 'Market (country)', value: order.primary_market }
       ],
       itemModifier: 'stacked'
@@ -72,7 +72,7 @@
       items: [
         { label: 'Created on', value: order.created_on, type: 'datetime' },
         { label: 'Updated on', value: order.modified_on, type: 'datetime' },
-        { label: 'Status', value: statusText, safe: true }
+        { label: 'Status', value: statusText | safe }
       ],
       itemModifier: 'stacked'
     }) }}

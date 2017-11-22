@@ -15,7 +15,6 @@
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
  # @param {string} [props.badgeModifier] - modifier for badge
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
- # @param {string} [props.safe] - is a safe string
  #}
 {% macro MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
@@ -35,11 +34,7 @@
       {% set metaItemValue = props.value.name | default(props.value) %}
     {% endif %}
 
-    {% if props.safe %}
-      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) | safe %}
-    {% else %}
-      {% set safeValue = metaItemValue | highlight(props.highlightTerm, true) %}
-    {% endif %}
+    {% set value = metaItemValue | highlight(props.highlightTerm, true) %}
 
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
@@ -52,11 +47,11 @@
           class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
-          {{- safeValue -}}
+          {{- value -}}
         </a>
       {% else %}
         <span class="{{ itemValueClass }}">
-          {{ safeValue }}
+          {{ value }}
           {% if props.url and props.urlLabel %}
             - <a href="{{ props.url }}">{{ props.urlLabel }}</a>
           {% endif %}
