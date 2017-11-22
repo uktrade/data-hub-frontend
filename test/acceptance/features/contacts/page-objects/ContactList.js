@@ -46,6 +46,7 @@ module.exports = {
     filterTags: {
       selector: '.c-collection__filter-summary',
       elements: {
+        contact: getFilterTagRemoveBtnSelector('Contact name'),
         company: getFilterTagRemoveBtnSelector('Company name'),
         sector: getFilterTagRemoveBtnSelector('Sectors'),
         country: getFilterTagRemoveBtnSelector('Country'),
@@ -59,6 +60,7 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
+
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
         updated: getMetaListItemValueSelector('Updated on'),
@@ -68,6 +70,7 @@ module.exports = {
     filters: {
       selector: '.c-collection-filters',
       elements: {
+        contact: '#field-name',
         company: '#field-company_name',
         sector: '#field-company_sector',
         country: '#field-address_country',
