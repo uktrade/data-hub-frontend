@@ -24,7 +24,6 @@ defineSupportCode(({ Given, Then, When }) => {
     await Contact
       .createNewPrimaryContactWithNewCompanyAddress({}, (contact) => {
         set(this.state, 'contact', contact)
-        set(this.state, 'contact.type', 'Primary')
       })
   })
 
