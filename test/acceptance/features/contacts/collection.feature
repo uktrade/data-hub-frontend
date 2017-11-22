@@ -40,6 +40,8 @@ Feature: View collection of contacts
     Then I see the success message
     Then I wait and then refresh the page
     When I navigate to the Contacts collection page
+    When the status filter is cleared
+    Then there are no filters selected
     And I filter the contacts list by company
     Then the contacts should be filtered by company name
     When the company filter is cleared
