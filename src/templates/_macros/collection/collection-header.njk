@@ -9,7 +9,7 @@
  # @param {object}   [props.selectedFilters] - an object containing selected filters
  # @param {object}   [props.sortForm] - object containing sorting form
  # @param {string}   [props.highlightTerm] - text to highlight
- # @param {string}   [props.actionsHTML] - HTML content for actions block
+ # @param {string}   [props.actionsHTML] - HTML content for actions block (safe to render HTML)
 #}
 {% macro CollectionHeader(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
