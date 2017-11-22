@@ -3,6 +3,7 @@ const { assign, get, reject, castArray, compact, uniq } = require('lodash')
 
 const { getFormattedAddress } = require('../../lib/address')
 const { transformDateObjectToDateString } = require('../transformers')
+const config = require('../../../config')
 
 const castToArrayAndRemoveEmpty = (value) => compact(castArray(value))
 
@@ -108,6 +109,7 @@ function transformEventResponseToViewRecord ({
   teams,
   related_programmes,
   service,
+  archived_documents_url_path,
 }) {
   teams = teams || []
   related_programmes = related_programmes || []
@@ -134,7 +136,7 @@ function transformEventResponseToViewRecord ({
 
   const otherTeams = lead_team ? reject(teams, lead_team) : teams
 
-  return Object.assign(transformedEvent, {
+  const viewRecord = assign({}, transformedEvent, {
     'Event location type': location_type,
     'Address': getFormattedAddress({
       address_1,
@@ -149,10 +151,24 @@ function transformEventResponseToViewRecord ({
     'Lead team': lead_team,
     'Organiser': organiser,
     'Other teams': otherTeams.map(x => x.name),
-    'Related programmes': related_programmes
-      .map(item => item.name),
+    'Related programmes': related_programmes.map(item => item.name),
     'Service': service,
   })
+
+  viewRecord['Documents'] = {
+    name: 'There are no files or documents',
+  }
+
+  if (archived_documents_url_path) {
+    viewRecord['Documents'] = {
+      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+      name: 'View files and documents',
+      hint: '(will open another website)',
+      hintId: 'external-link-label',
+    }
+  }
+
+  return viewRecord
 }
 
 function transformEventResponseToFormBody (props = {}) {
