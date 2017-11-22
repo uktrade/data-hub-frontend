@@ -28,6 +28,9 @@ const urls = {
   },
   events: {
     collection: 'events',
+    getDetails (id) {
+      return `${host}/events/${id}`
+    },
   },
   interactionsAndServices: {
     collection: 'interactions',
