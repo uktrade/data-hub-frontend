@@ -75,6 +75,8 @@ module.exports = {
         sector: '#field-company_sector',
         country: '#field-address_country',
         ukRegion: '#field-company_uk_region',
+        active: 'label[for=field-archived-1]',
+        inactive: 'label[for=field-archived-2]',
       },
     },
     collectionHeader: {
