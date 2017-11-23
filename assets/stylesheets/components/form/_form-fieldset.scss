@@ -32,12 +32,13 @@
 
 // Modifiers
 fieldset.c-form-fieldset--subfield {
+  border-left: 0;
+  padding-left: $default-spacing-unit * 2;
   position: relative;
-  margin-left: $default-spacing-unit * 2;
 
   &::before {
     position: absolute;
-    left: 0;
+    left: $default-spacing-unit;
     top: 0;
     bottom: 0;
     border-left: 5px solid $grey-2;
