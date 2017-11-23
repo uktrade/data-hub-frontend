@@ -54,7 +54,7 @@
   {{ AnswersSummary({
     heading: 'Client contact details',
     actions: [{
-      url: 'edit/client-details' if order.isEditable
+      url: 'edit/client-details' if order.canEditOrder
     }],
     items: [{
       label: 'Name',
@@ -72,10 +72,10 @@
     id: 'assignees',
     heading: 'Advisers in the market',
     actions: [{
-      url: 'edit/assignees' if order.isEditable,
+      url: 'edit/assignees' if order.canEditOrders,
       label: 'Add or remove'
     }, {
-      url: 'edit/assignee-time' if order.isEditable,
+      url: 'edit/assignee-time' if order.canEditOrder,
       label: 'Estimate hours'
     }]
   }) %}
@@ -89,7 +89,7 @@
             {% endif %}
           </th>
           <td class="c-answers-summary__content c-answers-summary__control">
-            {% if not assignee.is_lead %}
+            {% if not assignee.is_lead and order.canEditOrder %}
               {% call Form ({
                 action: 'edit/lead-assignee',
                 hideFormActions: true,
@@ -130,7 +130,7 @@
   {{ AnswersSummary({
     heading: 'Advisers in the UK',
     actions: [{
-      url: 'edit/subscribers' if order.isEditable,
+      url: 'edit/subscribers' if order.canEditOrders,
       label: 'Add or remove'
     }],
     items: values.subscribers,
@@ -140,7 +140,7 @@
   {{ AnswersSummary({
     heading: 'Information for the quote',
     actions: [{
-      url: 'edit/quote-details' if order.isEditable
+      url: 'edit/quote-details' if order.canEditOrder
     }],
     items: [{
       label: 'Delivery date',
@@ -156,7 +156,7 @@
   {{ AnswersSummary({
     heading: 'Internal use only',
     actions: [{
-      url: 'edit/internal-details' if order.isEditable
+      url: 'edit/internal-details' if order.canEditOrder
     }],
     items: [{
       label: 'Service type' | pluralise(values.service_types.length),
@@ -245,7 +245,7 @@
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
-      url: 'edit/payment' if order.isEditable
+      url: 'edit/payment' if order.canEditOrder
     }],
     items: [{
       label: 'Price',
