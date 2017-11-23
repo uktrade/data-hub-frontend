@@ -33,8 +33,14 @@ function arrayRequired (value) {
 
 const editFields = merge({}, globalFields, {
   subscribers: {
-    hint: 'fields.subscribers.hint.edit',
-    optional: false,
+    fieldType: 'MultipleChoiceField',
+    legend: 'fields.subscribers.legend',
+    label: 'fields.subscribers.label',
+    hint: 'fields.subscribers.hint',
+    addButtonText: 'fields.subscribers.addButtonText',
+    repeatable: true,
+    initialOption: '-- Select adviser --',
+    options: [],
   },
   service_types: {
     fieldType: 'MultipleChoiceField',
