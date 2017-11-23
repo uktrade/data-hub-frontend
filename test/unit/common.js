@@ -5,6 +5,7 @@ const reqres = require('reqres')
 
 chai.use(require('sinon-chai'))
 chai.use(require('chai-as-promised'))
+chai.use(require('chai-subset'))
 
 // mocha globals
 global.expect = chai.expect
