@@ -7,7 +7,7 @@
 }
 
 .c-message {
-  @include bold-font(20);
+  @include core-font(20);
   border: 5px solid;
   padding: $default-spacing-unit;
   position: relative;
@@ -22,10 +22,6 @@
   * {
     margin-top: 0;
     margin-bottom: 0;
-
-    &:not(button) {
-      font-weight: 700;
-    }
   }
 
   > *:not([type="hidden"]) + * {
@@ -49,6 +45,19 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+.c-message--info,
+.c-message--success,
+.c-message--warning,
+.c-message--error {
+  font-weight: 700;
+
+  * {
+    &:not(button) {
+      font-weight: 700;
+    }
   }
 }
 
@@ -77,11 +86,4 @@
   border-color: $grey-2;
   background: $grey-4;
   font-size: inherit;
-  font-weight: inherit;
-
-  * {
-    &:not(button) {
-      font-weight: inherit;
-    }
-  }
 }
