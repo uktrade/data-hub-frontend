@@ -17,6 +17,6 @@
   {{ super() }}
 
   {% call Message({ type: 'muted' }) %}
-    If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">create a new one</a>.
+    If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
   {% endcall %}
 {% endblock %}
