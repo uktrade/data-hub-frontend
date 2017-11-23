@@ -14,7 +14,7 @@ async function getCompany (req, res, next, companyId) {
   }
 }
 
-async function getOrder (req, res, next, orderId) {
+async function setOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
 
@@ -52,7 +52,7 @@ function setArchivedDocumentsBaseUrl (req, res, next) {
 
 module.exports = {
   getCompany,
-  getOrder,
+  setOrder,
   setOrderBreadcrumb,
   setArchivedDocumentsBaseUrl,
 }
