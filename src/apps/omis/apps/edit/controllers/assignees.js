@@ -8,6 +8,7 @@ const { Order } = require('../../../models')
 class EditAssigneesController extends EditController {
   async configure (req, res, next) {
     const orderId = get(res.locals, 'order.id')
+    const canEditOrder = get(res.locals, 'order.canEditOrder')
     const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
     const token = get(req.session, 'token')
     const advisers = await getAdvisers(token)
@@ -15,6 +16,7 @@ class EditAssigneesController extends EditController {
     const options = advisers.results.map(transformObjectToOption)
 
     req.form.options.fields.assignees.options = sortBy(options, 'label')
+    req.form.options.fields.assignees.canRemove = canEditOrder
     req.form.options.disableFormAction = !canEditAdvisers
 
     res.locals.order.assignees = assignees
