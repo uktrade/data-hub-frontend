@@ -1,5 +1,7 @@
 const router = require('express').Router()
+const { get } = require('lodash')
 
+const { archivedDocumentsBaseUrl } = require('../../../config')
 const {
   renderAddStepOne,
   postAddStepOne,
@@ -84,7 +86,20 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-router.use('/:companyId', setLocalNav(LOCAL_NAV))
+router.use('/:companyId', (req, res, next) => {
+  const archivedDocumentsUrlPath = get(res.locals, 'company.archived_documents_url_path')
+  const localNav = LOCAL_NAV.slice()
+
+  if (archivedDocumentsUrlPath) {
+    localNav.push({
+      label: 'Documents',
+      url: archivedDocumentsBaseUrl + archivedDocumentsUrlPath,
+      isExternal: true,
+    })
+  }
+
+  setLocalNav(localNav)(req, res, next)
+})
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
