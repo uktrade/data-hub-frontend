@@ -40,23 +40,34 @@ Feature: View collection of contacts
     Then I see the success message
     Then I wait and then refresh the page
     When I navigate to the Contacts collection page
-    When the status filter is cleared
+    And I filter the contacts list by contact
+    Then the contacts should be filtered by contact name
+    When the contact filter is cleared
+    And the status filter is cleared
     Then there are no filters selected
-    And I filter the contacts list by company
+    When I filter the contacts list by active status
+    Then the result count should be reset
+    When I filter the contacts list by company
     Then the contacts should be filtered by company name
     When the company filter is cleared
+    And the status filter is cleared
     Then there are no filters selected
-    And the result count should be reset
+    When I filter the contacts list by active status
+    Then the result count should be reset
     When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
     When the sector filter is cleared
+    And the status filter is cleared
     Then there are no filters selected
-    And the result count should be reset
+    When I filter the contacts list by active status
+    Then the result count should be reset
     When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
     When the country filter is cleared
+    And the status filter is cleared
     Then there are no filters selected
-    And the result count should be reset
+    When I filter the contacts list by active status
+    Then the result count should be reset
     When I filter the contacts list by country
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
