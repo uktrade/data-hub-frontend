@@ -116,6 +116,7 @@ describe('OMIS middleware', () => {
 
         const order = Object.assign({}, orderData, {
           canEditOrder: true,
+          canEditAdvisers: true,
         })
         expect(this.resMock.locals).to.have.property('order')
         expect(this.resMock.locals.order).to.deep.equal(order)
@@ -128,32 +129,78 @@ describe('OMIS middleware', () => {
       })
 
       context('when order is in draft', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           const draftOrder = Object.assign({}, orderData, {
             status: 'draft',
           })
           this.getByIdStub.resolves(draftOrder)
+
+          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
         })
 
-        it('should set canEditOrder to true', async () => {
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
-
+        it('should be able to edit order', () => {
           expect(this.resMock.locals.order.canEditOrder).to.equal(true)
+        })
+
+        it('should be able to edit advisers', () => {
+          expect(this.resMock.locals.order.canEditAdvisers).to.equal(true)
         })
       })
 
       context('when order is not in draft', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           const quoteOrder = Object.assign({}, orderData, {
             status: 'quote_awaiting_acceptance',
           })
           this.getByIdStub.resolves(quoteOrder)
+
+          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
         })
 
-        it('should set canEditOrder to false', async () => {
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
-
+        it('should not be able to edit order', () => {
           expect(this.resMock.locals.order.canEditOrder).to.equal(false)
+        })
+
+        it('should be able to edit advisers', () => {
+          expect(this.resMock.locals.order.canEditAdvisers).to.equal(true)
+        })
+      })
+
+      context('when order is complete', () => {
+        beforeEach(async () => {
+          const quoteOrder = Object.assign({}, orderData, {
+            status: 'complete',
+          })
+          this.getByIdStub.resolves(quoteOrder)
+
+          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        })
+
+        it('should not be able to edit order', () => {
+          expect(this.resMock.locals.order.canEditOrder).to.equal(false)
+        })
+
+        it('should not be able to edit advisers', () => {
+          expect(this.resMock.locals.order.canEditAdvisers).to.equal(false)
+        })
+      })
+
+      context('when order is cancelled', () => {
+        beforeEach(async () => {
+          const quoteOrder = Object.assign({}, orderData, {
+            status: 'cancelled',
+          })
+          this.getByIdStub.resolves(quoteOrder)
+
+          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        })
+
+        it('should not be able to edit order', () => {
+          expect(this.resMock.locals.order.canEditOrder).to.equal(false)
+        })
+
+        it('should not be able to edit advisers', () => {
+          expect(this.resMock.locals.order.canEditAdvisers).to.equal(false)
         })
       })
     })

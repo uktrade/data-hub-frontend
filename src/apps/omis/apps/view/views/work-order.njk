@@ -72,7 +72,7 @@
     id: 'assignees',
     heading: 'Advisers in the market',
     actions: [{
-      url: 'edit/assignees' if order.canEditOrders,
+      url: 'edit/assignees' if order.canEditAdvisers,
       label: 'Add or remove'
     }, {
       url: 'edit/assignee-time' if order.canEditOrder,
@@ -130,7 +130,7 @@
   {{ AnswersSummary({
     heading: 'Advisers in the UK',
     actions: [{
-      url: 'edit/subscribers' if order.canEditOrders,
+      url: 'edit/subscribers' if order.canEditAdvisers,
       label: 'Add or remove'
     }],
     items: values.subscribers,
