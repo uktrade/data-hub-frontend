@@ -18,7 +18,7 @@ function editHandler (req, res, next) {
   const defaults = {
     buttonText: 'Save and return',
     returnText: 'Return without saving',
-    disableFormAction: !order.isEditable,
+    disableFormAction: !order.canEditOrder,
     journeyName: 'edit',
     name: 'edit',
     route: '/edit',
