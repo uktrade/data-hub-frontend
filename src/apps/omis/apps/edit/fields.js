@@ -143,6 +143,7 @@ const editFields = merge({}, globalFields, {
     type: 'radio',
     modifier: ['inline', 'subfield'],
     label: 'fields.vat_verified.label',
+    validate: ['required'],
     options: [{
       value: 'true',
       label: 'Yes',
