@@ -24,9 +24,17 @@ module.exports = function transformCompanyToListItem ({
   registered_address_2,
   companies_house_data,
 } = {}) {
-  if (!id && !get(companies_house_data, 'company_number')) { return }
+  if (!id) { return }
 
   const meta = []
+
+  if (trading_name) {
+    meta.push({
+      label: 'Trading name',
+      value: trading_name,
+    })
+  }
+
   const isTradingAddress = trading_address_town && trading_address_postcode && trading_address_1
   let address
 
@@ -53,7 +61,7 @@ module.exports = function transformCompanyToListItem ({
   if (sector) {
     meta.push({
       label: 'Sector',
-      value: sector,
+      value: get(sector, 'name'),
     })
   }
 
@@ -69,7 +77,7 @@ module.exports = function transformCompanyToListItem ({
     meta.push({
       label: 'UK region',
       type: 'badge',
-      value: uk_region,
+      value: get(uk_region, 'name'),
     })
   }
 
@@ -81,13 +89,12 @@ module.exports = function transformCompanyToListItem ({
   }
 
   const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
-  const displayName = trading_name || name
 
   return {
     id,
+    name,
     url,
     meta,
     type: 'company',
-    name: displayName,
   }
 }
