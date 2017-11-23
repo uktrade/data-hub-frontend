@@ -4,7 +4,7 @@ const i18nFuture = require('i18n-future')
 
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
-const { getCompany } = require('../../middleware')
+const { setCompany: setCompanyMW } = require('../../middleware')
 const { getContact } = require('../../../contacts/repos')
 const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
@@ -27,7 +27,7 @@ function setCompany (req, res, next) {
     return next()
   }
 
-  getCompany(req, res, next, res.locals.order.company.id)
+  setCompanyMW(req, res, next, res.locals.order.company.id)
 }
 
 async function setContact (req, res, next) {

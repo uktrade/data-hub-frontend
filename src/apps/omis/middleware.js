@@ -5,7 +5,7 @@ const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
 
-async function getCompany (req, res, next, companyId) {
+async function setCompany (req, res, next, companyId) {
   try {
     res.locals.company = await getDitCompany(req.session.token, companyId)
     next()
@@ -14,7 +14,7 @@ async function getCompany (req, res, next, companyId) {
   }
 }
 
-async function getOrder (req, res, next, orderId) {
+async function setOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
 
@@ -51,8 +51,8 @@ function setArchivedDocumentsBaseUrl (req, res, next) {
 }
 
 module.exports = {
-  getCompany,
-  getOrder,
+  setCompany,
+  setOrder,
   setOrderBreadcrumb,
   setArchivedDocumentsBaseUrl,
 }

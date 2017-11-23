@@ -8,7 +8,7 @@ describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.getCompanySpy = this.sandbox.spy()
+    this.setCompanySpy = this.sandbox.spy()
     this.loggerErrorSpy = this.sandbox.spy()
     this.getContactStub = this.sandbox.stub()
     this.getAssigneesStub = this.sandbox.stub()
@@ -39,7 +39,7 @@ describe('OMIS View middleware', () => {
 
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
       '../../middleware': {
-        getCompany: this.getCompanySpy,
+        setCompany: this.setCompanySpy,
       },
       '../../transformers': {
         transformPaymentToView: this.transformPaymentToViewStub,
@@ -110,7 +110,7 @@ describe('OMIS View middleware', () => {
       })
 
       it('should not call company middleware', () => {
-        expect(this.getCompanySpy).not.to.have.been.called
+        expect(this.setCompanySpy).not.to.have.been.called
       })
 
       it('should call next', () => {
@@ -127,8 +127,8 @@ describe('OMIS View middleware', () => {
       })
 
       it('should call company middleware with correct arguments', () => {
-        expect(this.getCompanySpy).to.have.been.calledOnce
-        expect(this.getCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
+        expect(this.setCompanySpy).to.have.been.calledOnce
+        expect(this.setCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
       })
 
       it('should not call next itself', () => {

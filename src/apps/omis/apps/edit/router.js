@@ -1,10 +1,10 @@
 const router = require('express').Router()
 
 const { editRedirect, editHandler, editLeadAssignee } = require('./controllers')
-const { getCompany, setOrderBreadcrumb } = require('../../middleware')
+const { setCompany, setOrderBreadcrumb } = require('../../middleware')
 
 router.use((req, res, next) => {
-  getCompany(req, res, next, res.locals.order.company.id)
+  setCompany(req, res, next, res.locals.order.company.id)
 })
 
 router.use(setOrderBreadcrumb)
