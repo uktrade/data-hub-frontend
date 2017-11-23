@@ -51,6 +51,20 @@ defineSupportCode(({ Given, Then, When }) => {
       .wait() // wait for xhr
   })
 
+  When(/^I filter the contacts list by inactive status/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@inactive')
+      .clic('@inactive')
+      .wait() // wait for xhr
+  })
+
+  When(/^I filter the contacts list by active status/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@active')
+      .click('@active')
+      .wait() // wait for xhr
+  })
+
   When(/^the (.+) filter is cleared$/, async function (filterName) {
     await ContactList.section.filterTags
       .click(`@${filterName}`)
