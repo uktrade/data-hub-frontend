@@ -1,4 +1,5 @@
 const { contactAuditLabels } = require('~/src/apps/contacts/labels')
+const { companyDetailsLabels } = require('~/src/apps/companies/labels')
 const auditLog = require('~/test/unit/data/audit/contact-audit.json')
 
 describe('Audit transformers', () => {
@@ -92,6 +93,39 @@ describe('Audit transformers', () => {
         label: 'Change count',
         type: 'badge',
         value: 'No changes saved',
+      })
+    })
+  })
+
+  describe('transformChanges', () => {
+    context('when encountering a recognised field', () => {
+      it('strips the human-friendly label is returned', () => {
+        const actual = this.transformers.transformChanges(
+          { account_manager: {} },
+          companyDetailsLabels,
+        )
+        const expected = companyDetailsLabels.account_manager
+        expect(actual).to.equal(expected)
+      })
+    })
+    context('when encountering a field with an _id suffix', () => {
+      it('strips the _id suffix and retrieves the human-friendly label', () => {
+        const actual = this.transformers.transformChanges(
+          { account_manager_id: {} },
+          companyDetailsLabels,
+        )
+        const expected = companyDetailsLabels.account_manager
+        expect(actual).to.equal(expected)
+      })
+    })
+
+    context('when encountering an unrecognised field', () => {
+      it('uses the key', () => {
+        const actual = this.transformers.transformChanges(
+          { unknown_field: {} },
+          companyDetailsLabels,
+        )
+        expect(actual).to.equal('unknown_field')
       })
     })
   })
