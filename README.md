@@ -66,6 +66,7 @@ This file expects the following environment variables:
 | Name | Description |
 |:-----|:------------|
 | API_ROOT | The url for a back end server instance for the service |
+| ARCHIVED_DOCUMENTS_BASE_URL | The url for the archived documents store |
 | ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
 | CI | Set to true for UAT testing, otherwise ignore |
 | FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
