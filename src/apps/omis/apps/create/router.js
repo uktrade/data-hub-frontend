@@ -9,7 +9,7 @@ const i18n = i18nFuture({
 const steps = require('./steps')
 const fields = require('../../fields')
 const { FormController } = require('../../controllers')
-const { getCompany } = require('../../middleware')
+const { setCompany } = require('../../middleware')
 
 const config = {
   controller: FormController,
@@ -19,7 +19,7 @@ const config = {
   translate: i18n.translate.bind(i18n),
 }
 
-router.param('companyId', getCompany)
+router.param('companyId', setCompany)
 
 router.use('/:companyId?', wizard(steps, fields, config))
 
