@@ -124,6 +124,7 @@
     "before": "must be in the past",
     "isDuration": "must be a whole number, for example 1",
     "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
+    "validEUVatNumber": "must be a valid EU VAT number including the country code, for example ATU12345678 for Austria",
     "default": "is required"
   }
 }
