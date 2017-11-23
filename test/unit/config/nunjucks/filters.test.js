@@ -1,50 +1,97 @@
 const filters = require('~/config/nunjucks/filters')
 
 describe('nunjucks filters', () => {
+  beforeEach(() => {
+    this.mockString = 'Here is an example phrase'
+  })
+
   describe('#highlight', () => {
-    it('should not render highlight for empty string', () => {
-      const searchTerm = ''
-      const mockString = 'we should see nothing highlighted here'
-
-      const highlightedString = filters.highlight(mockString, searchTerm)
-
-      expect(highlightedString).to.equal('we should see nothing highlighted here')
+    context('when search term is empty', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '')
+      })
+      it('should not render any highlights', () => {
+        expect(this.highlightedString).to.equal(this.mockString)
+      })
     })
 
-    it('should not render highlight for string with white space', () => {
-      const searchTerm = ' '
-      const mockString = 'we should see nothing highlighted here'
-
-      const highlightedString = filters.highlight(mockString, searchTerm)
-
-      expect(highlightedString).to.equal('we should see nothing highlighted here')
+    context('when search term contains white space', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, ' ')
+      })
+      it('should not render any highlights', () => {
+        expect(this.highlightedString).to.equal(this.mockString)
+      })
     })
 
-    it('should render string with partial highlight (default)', () => {
-      const searchTerm = 'examp'
-      const mockString = 'we should see example term highlighted here'
-
-      const highlightedString = filters.highlight(mockString, searchTerm)
-
-      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">examp</span>le term highlighted here`)
+    context('when the search term is not a string', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, { url: 'invalid' })
+      })
+      it('should return the original string', () => {
+        expect(this.highlightedString).to.equal(this.mockString)
+      })
     })
 
-    it('should render string only with full word highlight', () => {
-      const searchTerm = 'example term'
-      const mockString = 'we should see example term highlighted here'
+    context('when passed a term with a partial match', () => {
+      context('and when called with default parameters', () => {
+        beforeEach(() => {
+          this.highlightedString = filters.highlight(this.mockString, 'exam')
+        })
 
-      const highlightedString = filters.highlight(mockString, searchTerm, true)
+        it('should highlight a partial match', () => {
+          expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        })
+      })
 
-      expect(highlightedString.val).to.equal(`we should see <span class="u-highlight">example term</span> highlighted here`)
+      context('and when told to highlight only exact match', () => {
+        beforeEach(() => {
+          this.highlightedString = filters.highlight(this.mockString, 'exam', true)
+        })
+
+        it('should not highlight a partial match', () => {
+          expect(this.highlightedString.val).to.equal(this.mockString)
+        })
+      })
     })
 
-    it('should render string without highlight', () => {
-      const searchTerm = 'example term'
-      const mockString = 'we should not see another term highlighted here'
+    context('when passed a term that is not found', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, 'example term')
+      })
+      it('should not render any highlights', () => {
+        expect(this.highlightedString.val).to.equal(this.mockString)
+      })
+    })
 
-      const highlightedString = filters.highlight(mockString, searchTerm)
+    context('when the term is surrounded by *', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '*exam*')
+      })
 
-      expect(highlightedString.val).to.equal(mockString)
+      it('should ignore the * in the term', () => {
+        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+      })
+    })
+
+    context('when search term start with +', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '+exam')
+      })
+
+      it('ignore the + in the term', () => {
+        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+      })
+    })
+
+    context('when search term starts with ?', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '?exam')
+      })
+
+      it('should ignore the ? in the term', () => {
+        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+      })
     })
   })
 
