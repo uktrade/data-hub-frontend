@@ -28,7 +28,6 @@ describe('Apps middleware', () => {
 
       this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
-      expect(resMock.locals).to.haveOwnProperty('localNavItems')
       expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/first')
       expect(resMock.locals.localNavItems[0].isActive).to.be.false
       expect(this.nextSpy.calledOnce).to.be.true
@@ -45,10 +44,29 @@ describe('Apps middleware', () => {
       }
       this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
-      expect(resMock.locals).to.haveOwnProperty('localNavItems')
       expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/first')
       expect(resMock.locals.localNavItems[0].isActive).to.be.true
       expect(this.nextSpy.calledOnce).to.be.true
+    })
+
+    context('when a nav item has the external property set', () => {
+      it('should set url on the nav item link to url value', () => {
+        const url = 'http://url/path'
+        const mockNavItem = {
+          url,
+          isExternal: true,
+        }
+        const reqMock = {}
+        const resMock = {
+          locals: {},
+        }
+
+        this.middleware.setLocalNav([ mockNavItem ])(reqMock, resMock, this.nextSpy)
+
+        expect(resMock.locals.localNavItems[0].url).to.equal(url)
+        expect(resMock.locals.localNavItems[0].isActive).to.be.false
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
     })
   })
 

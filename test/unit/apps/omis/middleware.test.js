@@ -1,7 +1,7 @@
 const companyData = require('~/test/unit/data/company.json')
 const orderData = require('~/test/unit/data/omis/simple-order.json')
 
-const omisArchivedDocumentsBaseUrl = 'http://docs-base-url'
+const archivedDocumentsBaseUrl = 'http://docs-base-url'
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('OMIS middleware', () => {
         getDitCompany: this.getDitCompanyStub,
       },
       '../../../config': {
-        omisArchivedDocumentsBaseUrl: omisArchivedDocumentsBaseUrl,
+        archivedDocumentsBaseUrl,
       },
       '../../../config/logger': {
         error: this.loggerSpy,
@@ -207,7 +207,7 @@ describe('OMIS middleware', () => {
       this.middleware.setArchivedDocumentsBaseUrl({}, this.resMock, this.nextSpy)
 
       expect(this.resMock.locals).to.have.property('archivedDocumentsBaseUrl')
-      expect(this.resMock.locals.archivedDocumentsBaseUrl).to.equal(omisArchivedDocumentsBaseUrl)
+      expect(this.resMock.locals.archivedDocumentsBaseUrl).to.equal(archivedDocumentsBaseUrl)
 
       expect(this.nextSpy).to.have.been.calledOnce
       expect(this.nextSpy).to.have.been.calledWith()

@@ -16,7 +16,7 @@ function setHomeBreadcrumb (name) {
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
     res.locals.localNavItems = items.map(item => {
-      const url = `${req.baseUrl}/${item.path}`
+      const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
       return Object.assign(item, {
         url,
         isActive: res.locals.CURRENT_PATH === url,

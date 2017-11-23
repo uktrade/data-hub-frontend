@@ -81,6 +81,7 @@ jobs:
           - LOG_LEVEL: debug
           - &oauth2_dev_token
             OAUTH2_DEV_TOKEN: topSecretSquirrel
+            ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch

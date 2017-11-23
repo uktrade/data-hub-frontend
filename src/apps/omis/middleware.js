@@ -46,7 +46,7 @@ function setOrderBreadcrumb (req, res, next) {
 }
 
 function setArchivedDocumentsBaseUrl (req, res, next) {
-  res.locals.archivedDocumentsBaseUrl = config.omisArchivedDocumentsBaseUrl
+  res.locals.archivedDocumentsBaseUrl = config.archivedDocumentsBaseUrl
   next()
 }
 

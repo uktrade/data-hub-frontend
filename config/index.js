@@ -49,7 +49,7 @@ const config = {
   mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
-  omisArchivedDocumentsBaseUrl: process.env.OMIS_ARCHIVED_DOCUMENTS_BASE_URL,
+  archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,
     clientId: process.env.OAUTH2_CLIENT_ID,
