@@ -19,6 +19,7 @@ const removeButtonClass = 'js-AddItems__remove'
  *
  * Settings can be passed using data attributes to customise how the module behaves:
  *
+ * @param {boolean} [canRemove=true] - Whether any items can be removed
  * @param {boolean} [canRemoveAll=false] - Whether all items can be removed
  * @param {string} [itemSelector='.js-AddItems__item'] - The piece of HTML that should be duplicated
  * @param {string} [itemName='item'] - Name to use when adding/removing items
@@ -42,6 +43,7 @@ const removeButtonClass = 'js-AddItems__remove'
  */
 const AddItems = {
   defaults: {
+    canRemove: true,
     canRemoveAll: false,
     itemSelector: '.js-AddItems__item',
     itemName: 'item',
@@ -74,7 +76,9 @@ const AddItems = {
 
   render () {
     this.insertAddButton()
-    this.insertRemoveButtons()
+    if (this.settings.canRemove) {
+      this.insertRemoveButtons()
+    }
 
     this.decorateButtons()
     this.updateButtonState()
@@ -171,7 +175,9 @@ const AddItems = {
   },
 
   removeItem (item) {
-    item.parentNode.removeChild(item)
+    if (this.settings.canRemove) {
+      item.parentNode.removeChild(item)
+    }
   },
 }
 
@@ -181,6 +187,7 @@ module.exports = {
 
     elements.forEach((element) => {
       const settings = {
+        canRemove: !element.hasAttribute('data-can-remove') || (element.getAttribute('data-can-remove') === 'true'),
         canRemoveAll: element.hasAttribute('data-can-remove-all'),
         itemSelector: element.getAttribute('data-item-selector'),
         itemName: element.getAttribute('data-item-name'),
@@ -195,7 +202,9 @@ module.exports = {
           value: page,
         },
       })
-      addItems.init(element, pickBy(settings))
+      addItems.init(element, pickBy(settings, (setting) => {
+        return setting !== null && setting !== undefined
+      }))
     })
   },
 }
