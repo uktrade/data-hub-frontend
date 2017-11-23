@@ -33,8 +33,16 @@ class EditAssigneesController extends EditController {
     })
 
     try {
-      await Order.forceSaveAssignees(req.session.token, res.locals.order.id, assignees)
-      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
+      const orderId = get(res.locals, 'order.id')
+      const canEditOrder = get(res.locals, 'order.canEditOrder')
+      const token = get(req.session, 'token')
+      const nextUrl = get(req, 'form.options.next') || `/omis/${orderId}`
+
+      if (canEditOrder) {
+        await Order.forceSaveAssignees(token, orderId, assignees)
+      } else {
+        await Order.saveAssignees(token, orderId, assignees)
+      }
 
       req.journeyModel.reset()
       req.journeyModel.destroy()
