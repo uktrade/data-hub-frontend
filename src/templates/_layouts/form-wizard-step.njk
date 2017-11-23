@@ -29,8 +29,18 @@
               {% set fieldValues = values[key] if values[key].length else [''] %}
               {% set addButtonText = props.addButtonText or 'Add another' %}
               {% set removeButtonText = props.removeButtonText or 'Remove' %}
+              {% set canRemove = props.canRemove | default(true) %}
 
-              <div class="js-AddItems" data-item-selector=".c-form-group--AddItem" data-item-name="adviser" data-can-remove-all>
+              <div
+                class="js-AddItems"
+                data-item-selector=".c-form-group--AddItem"
+                data-item-name="adviser"
+                {% if canRemove %}
+                data-can-remove-all
+                {% else %}
+                data-can-remove="false"
+                {% endif %}
+              >
                 {% call FormGroup({} | assign(props, {
                   element: 'fieldset',
                   label: translate(props.legend),
@@ -51,7 +61,7 @@
                       modifier: ['compact', 'AddItem'],
                       isLabelHidden: true,
                       groupClass: 'js-AddItems__item',
-                      innerHTML: removeButton
+                      innerHTML: removeButton if canRemove
                     })) }}
                   {% endfor %}
                 {% endcall %}
