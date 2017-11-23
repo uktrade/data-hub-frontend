@@ -28,6 +28,7 @@ async function getContactsCollection (req, res, next) {
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = removeArray(pick(req.query, [
     'archived',
+    'name',
     'company_name',
     'company_sector',
     'address_country',
