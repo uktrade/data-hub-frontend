@@ -8,10 +8,7 @@
     },
     "subscribers": {
       "legend": "Advisers",
-      "hint": {
-        "create": "For example International trade advisers or language advisers. They will be informed of the order once you submit it.",
-        "edit": "For example International trade advisers or language advisers"
-      },
+      "hint": "For example International trade advisers or language advisers",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
