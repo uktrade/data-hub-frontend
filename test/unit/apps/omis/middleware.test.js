@@ -48,7 +48,7 @@ describe('OMIS middleware', () => {
     this.sandbox.restore()
   })
 
-  describe('getCompany()', () => {
+  describe('setCompany()', () => {
     beforeEach(() => {
       this.companyId = 'c-1234567890'
     })
@@ -59,20 +59,20 @@ describe('OMIS middleware', () => {
       })
 
       it('should call getDitCompany() with correct arguments', async () => {
-        await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
         expect(this.getDitCompanyStub).to.have.been.calledWith(this.reqMock.session.token, this.companyId)
       })
 
       it('should set a company property on locals', async () => {
-        await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
         expect(this.resMock.locals).to.have.property('company')
         expect(this.resMock.locals.company).to.deep.equal(companyData)
       })
 
       it('should call next with no errors', async () => {
-        await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
         expect(this.nextSpy).to.have.been.calledWith()
       })
@@ -87,13 +87,13 @@ describe('OMIS middleware', () => {
       })
 
       it('should call next with an error', async () => {
-        await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
         expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
 
       it('should not set a company property on locals', async () => {
-        await this.middleware.getCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
 
         expect(this.resMock.locals).to.not.have.property('company')
       })
