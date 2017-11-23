@@ -19,7 +19,7 @@ Feature: Create New Contact
     When the contact is clicked
     Then the contact details are displayed
 
-  @contacts-save--primary-new-company-address @ignore
+  @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
 
     Given a company is created
@@ -30,6 +30,8 @@ Feature: Create New Contact
     Then I see the success message
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
+    When the contact is clicked
+    Then the contact details are displayed
 
   @contacts-save--non-primary
   Scenario: Add a new non-primary contact
