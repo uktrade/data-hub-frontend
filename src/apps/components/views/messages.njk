@@ -2,10 +2,22 @@
 
 {% block body_main_content %}
   {% call Example('Individual message') %}
-    {{ Message({
-      text: 'An information message',
-      type: 'info'
-    }) }}
+    {% call Message({
+      type: 'info',
+      element: 'div'
+    }) %}
+      <p>A message with <a href="">a link</a> and <strong>strong text</strong>.</p>
+      <p><button class="button">button</button></p>
+    {% endcall %}
+
+    {% call Message({
+      type: 'muted',
+      element: 'div'
+    }) %}
+      <p>A message with <strong>strong text</strong>.</p>
+      <p><a href="">A link</a></p>
+      <p><button class="button">button</button></p>
+    {% endcall %}
   {% endcall %}
 
   {% call Example('Message list (dismissable)') %}
@@ -14,7 +26,8 @@
         info: ['An information message'],
         success: ['A success message'],
         warning: ['A warning message'],
-        error: ['An error message']
+        error: ['An error message'],
+        muted: ['An muted informational message']
       }
     }) }}
   {% endcall %}
