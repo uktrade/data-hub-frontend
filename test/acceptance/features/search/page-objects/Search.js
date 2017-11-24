@@ -71,6 +71,7 @@ module.exports = {
         },
         sector: getSearchResultSelector('Sector'),
         registeredAddress: getSearchResultSelector('Registered address'),
+        tradingName: getSearchResultSelector('Trading name'),
       },
     },
     firstSearchResult: {
