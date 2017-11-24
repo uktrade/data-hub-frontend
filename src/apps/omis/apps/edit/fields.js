@@ -77,6 +77,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     type: 'textarea',
     label: 'fields.existing_agents.label',
+    hint: 'fields.existing_agents.hint',
     optional: true,
   },
   further_info: {
