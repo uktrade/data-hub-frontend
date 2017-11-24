@@ -32,11 +32,12 @@
       "label": "Specific people or organisations the company does not want DIT to talk to"
     },
     "existing_agents": {
-      "label": "Contacts the company already has in the market"
+      "label": "Contacts the company already has in the market",
+      "hint": "For example partners, suppliers or distributors"
     },
     "further_info": {
-      "label": "Additional notes and useful information",
-      "hint": "For example other client comments or requirements"
+      "label": "Internal notes and useful information",
+      "hint": "For example specific client requirements, market and distribution strategies or key deadlines"
     },
     "assignees": {
       "legend": "Advisers",
@@ -52,6 +53,7 @@
     },
     "vat_status": {
       "label": "VAT category",
+      "hint": "Choose a VAT category based on the billing address country",
       "options": {
         "uk": "Inside UK",
         "eu": "Inside EU",
@@ -62,7 +64,7 @@
       "label": "VAT number"
     },
     "vat_verified": {
-      "label": "Is the VAT number valid?",
+      "label": "Has a valid VAT number valid been supplied?",
       "options": {
         "unverified": "Not verified",
         "valid": "Valid",

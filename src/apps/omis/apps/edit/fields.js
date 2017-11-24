@@ -77,6 +77,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     type: 'textarea',
     label: 'fields.existing_agents.label',
+    hint: 'fields.existing_agents.hint',
     optional: true,
   },
   further_info: {
@@ -144,7 +145,7 @@ const editFields = merge({}, globalFields, {
       name: 'vat_status',
       value: 'eu',
     },
-    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/">Validate the EU VAT number</a></p>',
+    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/" aria-labelledby="external-link-label">Validate the EU VAT number</a> <span id="external-link-label">(will open another website)</span></p>',
   },
   vat_verified: {
     fieldType: 'MultipleChoiceField',
@@ -161,6 +162,10 @@ const editFields = merge({}, globalFields, {
       label: 'No',
     }],
     condition: {
+      name: 'vat_status',
+      value: 'eu',
+    },
+    dependent: {
       name: 'vat_status',
       value: 'eu',
     },
