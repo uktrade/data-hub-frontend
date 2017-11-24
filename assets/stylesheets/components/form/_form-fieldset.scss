@@ -45,4 +45,12 @@ fieldset.c-form-fieldset--subfield {
     margin-left: -$default-spacing-unit;
     content: "";
   }
+
+  &.has-error {
+    padding-left: $default-spacing-unit * 2;
+
+    &::before {
+      border-left-color: $error-colour;
+    }
+  }
 }
