@@ -51,7 +51,7 @@
 
 // States
 .c-form-group.has-error {
-  border-left: 5px solid $error-colour;
+  border-left-color: $error-colour;
   padding-left: $default-spacing-unit;
 }
 
