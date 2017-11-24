@@ -11,7 +11,7 @@ Feature: Create a new company
 
     When a "UK private or public limited company" is created
     Then I see the success message
-    And the company is in the search results
+    And the company trading name is in the search results
     When the first search result is clicked
     Then the company details are displayed
 
