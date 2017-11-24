@@ -83,6 +83,7 @@ This file expects the following environment variables:
 | OAUTH2_REDIRECT_URL | OAuth callback url
 | OAUTH2_DEV_TOKEN | Token used to bypass OAuth for development purposes
 | POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
+| PROJECT_PHASE | Which badge to display in header: 'Alpha', 'Beta' or 'Demo' - defaults to 'Beta' @TODO - remove when Demo site is decommissioned|
 | PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
 | QA_HOST | URL of the app under test |
 | QA_SELENIUM_HOST | URL of the Selenium server |

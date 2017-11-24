@@ -42,6 +42,8 @@ const config = {
   zenImpact: process.env.ZEN_IMPACT,
   zenService: process.env.ZEN_SERVICE,
   zenServiceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+  // @TODO - remove when demo site is decommissioned
+  projectPhase: process.env.PROJECT_PHASE || 'beta',
   sentryDsn: process.env.SENTRY_DSN,
   currencyFormat: '$0,0.00',
   longDateFormat: 'D MMMM YYYY',
