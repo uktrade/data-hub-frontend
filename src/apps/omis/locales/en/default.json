@@ -53,6 +53,7 @@
     },
     "vat_status": {
       "label": "VAT category",
+      "hint": "Choose a VAT category based on the billing address country",
       "options": {
         "uk": "Inside UK",
         "eu": "Inside EU",
@@ -63,7 +64,7 @@
       "label": "VAT number"
     },
     "vat_verified": {
-      "label": "Is the VAT number valid?",
+      "label": "Has a valid VAT number valid been supplied?",
       "options": {
         "unverified": "Not verified",
         "valid": "Valid",
