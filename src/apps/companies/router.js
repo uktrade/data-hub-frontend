@@ -1,5 +1,7 @@
 const router = require('express').Router()
+const { get } = require('lodash')
 
+const { archivedDocumentsBaseUrl } = require('../../../config')
 const {
   renderAddStepOne,
   postAddStepOne,
@@ -8,12 +10,11 @@ const {
 
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
-const { renderDetails } = require('./controllers/view')
+const { renderDetails } = require('./controllers/details')
 const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderInteractions } = require('./controllers/interactions')
-const { renderCompaniesHouseCompany } = require('./controllers/companies-house')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const {
@@ -31,7 +32,8 @@ const {
 } = require('../interactions/middleware/collection')
 
 const { getRequestBody, getCompanyCollection, getLimitedCompaniesCollection } = require('./middleware/collection')
-const { populateForm, handleFormPost } = require('./middleware/form')
+const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
+const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
 
@@ -48,6 +50,7 @@ const LOCAL_NAV = [
 ]
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
+  archived: false,
 }
 
 router.param('companyId', getCompany)
@@ -71,22 +74,42 @@ router
   .route([
     '/add',
     '/add/:companyNumber',
-    '/:companyId/edit',
   ])
   .get(populateForm, renderForm)
   .post(populateForm, handleFormPost, renderForm)
 
+router
+  .route('/:companyId/edit')
+  .get(setIsEditMode, populateForm, renderForm)
+  .post(setIsEditMode, populateForm, handleFormPost, renderForm)
+
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-// TODO: Removes need for `/view/ch/` in path
-router.get('/view/ch/:companyNumber', renderCompaniesHouseCompany)
+router.use('/:companyId', (req, res, next) => {
+  const archivedDocumentsUrlPath = get(res.locals, 'company.archived_documents_url_path')
+  const localNav = LOCAL_NAV.slice()
 
-router.use('/:companyId', setLocalNav(LOCAL_NAV))
+  if (archivedDocumentsUrlPath) {
+    localNav.push({
+      label: 'Documents',
+      url: archivedDocumentsBaseUrl + archivedDocumentsUrlPath,
+      isExternal: true,
+    })
+  }
+
+  setLocalNav(localNav)(req, res, next)
+})
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
-router.get('/:companyId/contacts', renderContacts)
+router.get('/:companyId/contacts',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  setCompanyContactRequestBody,
+  getCompanyContactCollection,
+  renderContacts
+)
+
 router.get('/:companyId/interactions',
   setInteractionsReturnUrl,
   getInteractionsRequestBody,

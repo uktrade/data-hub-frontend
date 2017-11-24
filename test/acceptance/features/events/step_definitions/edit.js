@@ -10,10 +10,12 @@ defineSupportCode(({ When }) => {
   const Event = client.page.Event()
   const EventList = client.page.EventList()
 
+  // TODO feels like this can be DRY'd up (see location)
   When(/^I navigate to event details page$/, async () => {
     await EventList
       .navigate()
       .section.firstEventInList
+      .waitForElementPresent('@header')
       .click('@header')
   })
 

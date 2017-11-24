@@ -78,91 +78,91 @@ describe('Company export controller', () => {
 
   describe('getBusinessTypeLabel()', () => {
     it('should handle UK limited company', () => {
-      const label = this.controller.getBusinessTypeLabel(true, false, null)
+      const label = this.controller.getBusinessTypeLabel('limited company', false, null)
       expect(label).to.equal('UK limited company')
     })
 
     it('should handle UK charity', () => {
       const uuid = '9dd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Charity')
     })
 
     it('should handle UK government department', () => {
       const uuid = '9cd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Government Dept')
     })
 
     it('should handle UK Intermediary', () => {
       const uuid = '9bd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Intermediary')
     })
 
     it('should handle UK Limited partnership', () => {
       const uuid = '8b6eaf7e-03e7-e611-bca1-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Limited partnership')
     })
 
     it('should handle UK Partnership', () => {
       const uuid = '9ad14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Partnership')
     })
 
     it('should handle UK Sole trader', () => {
       const uuid = '99d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, false, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
       expect(label).to.equal('UK Sole Trader')
     })
 
     it('should handle Foreign charity', () => {
       const uuid = '9dd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Charity')
     })
 
     it('should handle Foreign government department', () => {
       const uuid = '9cd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Government Dept')
     })
 
     it('should handle Foreign Intermediary', () => {
       const uuid = '9bd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Intermediary')
     })
 
     it('should handle Foreign Limited partnership', () => {
       const uuid = '8b6eaf7e-03e7-e611-bca1-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Limited partnership')
     })
 
     it('should handle Foreign Partnership', () => {
       const uuid = '9ad14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Partnership')
     })
 
     it('should handle Foreign Sole trader', () => {
       const uuid = '99d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Sole Trader')
     })
 
     it('should handle Foreign Company', () => {
       const uuid = '98d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal('Foreign Company')
     })
 
     it('should handle unrecognised uuids', () => {
       const uuid = '98d14e94-milk-eggs-beef-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(false, true, uuid)
+      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
       expect(label).to.equal(undefined)
     })
   })
@@ -171,7 +171,7 @@ describe('Company export controller', () => {
     it('should treat non-uk company as foreign', () => {
       const reqMock = this.buildReq({ query: { country: 'non-uk' } })
       const resMock = this.buildRes({
-        locals: { companiesHouseRecord: { country: 'uk' } },
+        locals: {},
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
       expect(this.renderSpy.args[0][1].isForeign).to.equal(true)
@@ -195,7 +195,6 @@ describe('Company export controller', () => {
       const resMock = this.buildRes({
         locals: {
           company: { 'uk_based': true },
-          companiesHouseRecord: { country: 'uk' },
         },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
@@ -205,7 +204,9 @@ describe('Company export controller', () => {
     it('should expose businessTypeLabel', () => {
       const reqMock = this.buildReq({ query: {} })
       const resMock = this.buildRes({
-        locals: { companiesHouseRecord: { country: 'uk' } },
+        locals: {
+          companiesHouseCategory: 'limited company',
+        },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
       expect(this.renderSpy.args[0][1].businessTypeLabel).to.equal('UK limited company')

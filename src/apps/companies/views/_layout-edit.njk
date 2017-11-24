@@ -2,7 +2,7 @@
 
 {% block local_header %}
   {{ LocalHeader({
-    heading: 'Edit company' if formData.id else 'Add company',
+    heading: 'Edit company' if isEditMode else 'Add company',
     modifier: 'light-banner'
   }) }}
 {% endblock %}

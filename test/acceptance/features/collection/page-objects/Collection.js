@@ -2,6 +2,14 @@ const { lowerCase } = require('lodash')
 
 const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
 
+const getSelectorForMetaListItemValue = (text) => {
+  return getSelectorForElementWithText(text, {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  })
+}
+
 module.exports = {
   elements: {
     pagination: '.c-pagination',
@@ -18,21 +26,12 @@ module.exports = {
           }
         )
       },
-      getSelectorForMetaListItem (label) {
-        return getSelectorForElementWithText(
-          label,
-          {
-            el: '//span',
-            className: 'c-meta-list__item-label',
-            child: '/following-sibling::span',
-          }
-        )
-      },
+      getSelectorForMetaListItemValue,
       getSelectorForBadgeWithText (text) {
         return getSelectorForElementWithText(
           text,
           {
-            el: '//span',
+            el: '//article[contains(@class, "c-collection")]//ol[contains(@class,"c-entity-list")]/li[1]//span',
             className: 'c-meta-list__item-label',
             child: '/following-sibling::span',
           },
@@ -41,15 +40,16 @@ module.exports = {
       getButtonSelectorWithText (text) {
         return getButtonWithText(text)
       },
+      captureResultCount (callback) {
+        return this.section.collectionHeader
+          .waitForElementVisible('@resultCount')
+          .getText('@resultCount', (result) => {
+            callback(result.value)
+          })
+      },
     },
   ],
   sections: {
-    localHeader: {
-      selector: '.c-local-header',
-      elements: {
-        header: 'h1.c-local-header__heading',
-      },
-    },
     collectionHeader: {
       selector: '.c-collection__header',
       elements: {
@@ -61,6 +61,7 @@ module.exports = {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: '.c-entity__title',
+        updatedOn: getSelectorForMetaListItemValue('Updated on'),
       },
     },
     filters: {

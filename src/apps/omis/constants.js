@@ -13,11 +13,11 @@ const ORDER_STATES = [
   },
   {
     value: 'paid',
-    label: 'Paid',
+    label: 'Payment received',
   },
   {
     value: 'complete',
-    label: 'Complete',
+    label: 'Completed',
   },
   {
     value: 'cancelled',

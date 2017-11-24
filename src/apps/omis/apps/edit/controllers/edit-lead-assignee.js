@@ -22,7 +22,7 @@ async function editLeadAssignee (req, res, next) {
 
     await Order.saveAssignees(req.session.token, orderId, assignees)
 
-    req.flash('success', `Lead post adviser set to ${get(leadAdviser, 'adviser.name')}`)
+    req.flash('success', `Lead adviser in the market set to ${get(leadAdviser, 'adviser.name')}`)
     res.redirect(returnUrl)
   } catch (error) {
     next(error)

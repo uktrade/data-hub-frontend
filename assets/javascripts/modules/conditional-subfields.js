@@ -139,8 +139,11 @@ const ConditionalSubfields = {
 
       Array.from(children).forEach((field) => {
         if (!field.getAttribute('data-persist-values')) {
-          field.value = ''
-          field.checked = false
+          if (['select', 'radio', 'checkbox'].indexOf(field.type) > -1) {
+            field.checked = false
+          } else {
+            field.value = ''
+          }
         }
 
         const event = this.wrapper.createEvent('HTMLEvents')

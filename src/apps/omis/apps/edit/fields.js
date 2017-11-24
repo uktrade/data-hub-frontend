@@ -1,4 +1,5 @@
 const { isArray, flatten, merge } = require('lodash')
+const FormController = require('hmpo-form-controller')
 
 const globalFields = require('../../fields')
 
@@ -31,10 +32,22 @@ function arrayRequired (value) {
   return invalidItems.length === 0
 }
 
+function validEUVatNumber (value) {
+  const regex = /^(ATU[0-9]{8}|BE0[0-9]{9}|BG[0-9]{9,10}|CY[0-9]{8}L|CZ[0-9]{8,10}|DE[0-9]{9}|DK[0-9]{8}|EE[0-9]{9}|EL|GR[0-9]{9}|ES[0-9A-Z][0-9]{7}[0-9A-Z]|FI[0-9]{8}|FR[0-9A-Z]{2}[0-9]{9}|GB([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|HU[0-9]{8}|IE[0-9]S[0-9]{5}L|IT[0-9]{11}|LT([0-9]{9}|[0-9]{12})|LU[0-9]{8}|LV[0-9]{11}|MT[0-9]{8}|NL[0-9]{9}B[0-9]{2}|PL[0-9]{10}|PT[0-9]{9}|RO[0-9]{2,10}|SE[0-9]{12}|SI[0-9]{8}|SK[0-9]{10})$/
+
+  return value === '' || FormController.validators.regex(value, regex)
+}
+
 const editFields = merge({}, globalFields, {
   subscribers: {
-    hint: 'fields.subscribers.hint.edit',
-    optional: false,
+    fieldType: 'MultipleChoiceField',
+    legend: 'fields.subscribers.legend',
+    label: 'fields.subscribers.label',
+    hint: 'fields.subscribers.hint',
+    addButtonText: 'fields.subscribers.addButtonText',
+    repeatable: true,
+    initialOption: '-- Select adviser --',
+    options: [],
   },
   service_types: {
     fieldType: 'MultipleChoiceField',
@@ -64,6 +77,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     type: 'textarea',
     label: 'fields.existing_agents.label',
+    hint: 'fields.existing_agents.hint',
     optional: true,
   },
   further_info: {
@@ -126,17 +140,19 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     label: 'fields.vat_number.label',
     modifier: ['subfield', 'medium'],
+    validate: [validEUVatNumber],
     condition: {
       name: 'vat_status',
       value: 'eu',
     },
-    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/">Validate the EU VAT number</a></p>',
+    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/" aria-labelledby="external-link-label">Validate the EU VAT number</a> <span id="external-link-label">(will open another website)</span></p>',
   },
   vat_verified: {
     fieldType: 'MultipleChoiceField',
     type: 'radio',
     modifier: ['inline', 'subfield'],
     label: 'fields.vat_verified.label',
+    validate: ['required'],
     options: [{
       value: 'true',
       label: 'Yes',
@@ -146,6 +162,10 @@ const editFields = merge({}, globalFields, {
       label: 'No',
     }],
     condition: {
+      name: 'vat_status',
+      value: 'eu',
+    },
+    dependent: {
       name: 'vat_status',
       value: 'eu',
     },
@@ -203,12 +223,6 @@ const editFields = merge({}, globalFields, {
     label: 'fields.received_on.label',
     hint: 'fields.received_on.hint',
     validate: ['required', 'date', 'before'],
-    modifier: 'medium',
-  },
-  transaction_reference: {
-    fieldType: 'TextField',
-    label: 'fields.transaction_reference.label',
-    optional: true,
     modifier: 'medium',
   },
   cancellation_reason: {

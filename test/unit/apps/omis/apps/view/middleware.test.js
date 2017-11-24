@@ -1,12 +1,18 @@
+const contactMock = require('~/test/unit/data/contacts/contacts')[0]
 const invoiceMock = require('~/test/unit/data/omis/invoice')
 const paymentsMock = require('~/test/unit/data/omis/payments')
+const assigneesMock = require('~/test/unit/data/omis/assignees')
+const subscribersMock = require('~/test/unit/data/omis/subscribers')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
-    this.getCompanySpy = this.sandbox.spy()
+    this.setCompanySpy = this.sandbox.spy()
     this.loggerErrorSpy = this.sandbox.spy()
+    this.getContactStub = this.sandbox.stub()
+    this.getAssigneesStub = this.sandbox.stub()
+    this.getSubscribersStub = this.sandbox.stub()
     this.previewQuoteStub = this.sandbox.stub()
     this.getQuoteStub = this.sandbox.stub()
     this.getInvoiceStub = this.sandbox.stub()
@@ -33,7 +39,7 @@ describe('OMIS View middleware', () => {
 
     this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
       '../../middleware': {
-        getCompany: this.getCompanySpy,
+        setCompany: this.setCompanySpy,
       },
       '../../transformers': {
         transformPaymentToView: this.transformPaymentToViewStub,
@@ -41,8 +47,13 @@ describe('OMIS View middleware', () => {
       '../../../../../config/logger': {
         error: this.loggerErrorSpy,
       },
+      '../../../contacts/repos': {
+        getContact: this.getContactStub,
+      },
       '../../models': {
         Order: {
+          getAssignees: this.getAssigneesStub,
+          getSubscribers: this.getSubscribersStub,
           previewQuote: this.previewQuoteStub,
           getQuote: this.getQuoteStub,
           getInvoice: this.getInvoiceStub,
@@ -99,7 +110,7 @@ describe('OMIS View middleware', () => {
       })
 
       it('should not call company middleware', () => {
-        expect(this.getCompanySpy).not.to.have.been.called
+        expect(this.setCompanySpy).not.to.have.been.called
       })
 
       it('should call next', () => {
@@ -116,12 +127,196 @@ describe('OMIS View middleware', () => {
       })
 
       it('should call company middleware with correct arguments', () => {
-        expect(this.getCompanySpy).to.have.been.calledOnce
-        expect(this.getCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
+        expect(this.setCompanySpy).to.have.been.calledOnce
+        expect(this.setCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
       })
 
       it('should not call next itself', () => {
         expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+  })
+
+  describe('setContact()', () => {
+    context('when no contact ID exists', () => {
+      beforeEach(async () => {
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getContactStub).not.to.have.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when API call resolves', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order.contact = {
+          id: 'contact-id',
+        }
+        this.getContactStub.resolves(contactMock)
+
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getContact with correct arguments', () => {
+        expect(this.getContactStub).to.have.been.calledOnce
+        expect(this.getContactStub).to.have.been.calledWith('12345', 'contact-id')
+      })
+
+      it('should set contact property on locals', () => {
+        expect(this.resMock.locals.order).to.have.property('contact')
+      })
+
+      it('should set correct contact object', () => {
+        expect(this.resMock.locals.order.contact).to.deep.equal(contactMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order.contact = {
+          id: 'contact-id',
+        }
+        this.error = {
+          statusCode: 500,
+        }
+        this.getContactStub.rejects(this.error)
+
+        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next with error', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+      })
+    })
+  })
+
+  describe('setAssignees()', () => {
+    context('when no order ID exists', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order = null
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getAssigneesStub).not.to.have.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getAssigneesStub.resolves(assigneesMock)
+
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getAssigneesStub with correct arguments', () => {
+        expect(this.getAssigneesStub).to.have.been.calledOnce
+        expect(this.getAssigneesStub).to.have.been.calledWith('12345', '123456789')
+      })
+
+      it('should set assignees property on locals', () => {
+        expect(this.resMock.locals).to.have.property('assignees')
+      })
+
+      it('should set correct number of assignees', () => {
+        expect(this.resMock.locals.assignees).to.have.length(2)
+      })
+
+      it('should set correct objects on assignees', () => {
+        expect(this.resMock.locals.assignees).to.deep.equal(assigneesMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getAssigneesStub.rejects(this.error)
+
+        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+      })
+    })
+  })
+
+  describe('setSubscribers()', () => {
+    context('when no order ID exists', () => {
+      beforeEach(async () => {
+        this.resMock.locals.order = null
+        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not make an API request', () => {
+        expect(this.getSubscribersStub).not.to.have.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when invoice call resolves', () => {
+      beforeEach(async () => {
+        this.getSubscribersStub.resolves(subscribersMock)
+
+        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call getAssigneesStub with correct arguments', () => {
+        expect(this.getSubscribersStub).to.have.been.calledOnce
+        expect(this.getSubscribersStub).to.have.been.calledWith('12345', '123456789')
+      })
+
+      it('should set subscribers property on locals', () => {
+        expect(this.resMock.locals).to.have.property('subscribers')
+      })
+
+      it('should set correct number of subscribers', () => {
+        expect(this.resMock.locals.subscribers).to.have.length(2)
+      })
+
+      it('should set correct objects on subscribers', () => {
+        expect(this.resMock.locals.subscribers).to.deep.equal(subscribersMock)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when call generates an error', () => {
+      beforeEach(async () => {
+        this.error = {
+          statusCode: 500,
+        }
+        this.getSubscribersStub.rejects(this.error)
+
+        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
     })
   })
@@ -314,6 +509,48 @@ describe('OMIS View middleware', () => {
           })
         })
 
+        it('should set a missingLeadAssignee property', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals).to.have.property('missingLeadAssignee')
+        })
+
+        it('should set a missingLeadAssignee to false', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.missingLeadAssignee).to.equal(false)
+        })
+
+        it('should return next without error', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when quote preview errors contains assignee_lead error', () => {
+        beforeEach(() => {
+          const error = {
+            statusCode: 400,
+            error: {
+              'assignee_lead': ['Required'],
+            },
+          }
+          this.previewQuoteStub.rejects(error)
+        })
+
+        it('should set a missingLeadAssignee property', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals).to.have.property('missingLeadAssignee')
+        })
+
+        it('should set a missingLeadAssignee to true', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.missingLeadAssignee).to.equal(true)
+        })
+
         it('should return next without error', async () => {
           await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
 
@@ -339,11 +576,32 @@ describe('OMIS View middleware', () => {
   })
 
   describe('setQuote()', () => {
-    context('when an order is not in draft', () => {
-      beforeEach(() => {
-        this.resMock.locals.order.status = 'complete'
+    context('when quote already exists on locals', () => {
+      beforeEach(async () => {
+        this.resMock.locals.quote = {
+          id: '12345',
+          content: 'Quote content',
+        }
+        await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
       })
 
+      it('should not make call to get quote', () => {
+        expect(this.getQuoteStub).not.to.have.been.called
+      })
+
+      it('should not change quote property on locals', () => {
+        expect(this.resMock.locals.quote).to.deep.equal({
+          id: '12345',
+          content: 'Quote content',
+        })
+      })
+
+      it('should call next with no error', () => {
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when quote does not exist on locals', () => {
       context('when quote resolves', () => {
         beforeEach(async () => {
           this.getQuoteStub.resolves({
@@ -770,7 +1028,7 @@ describe('OMIS View middleware', () => {
           try {
             expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
             expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button-secondary')
+            expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
             done()
           } catch (error) {

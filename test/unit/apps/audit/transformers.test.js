@@ -1,4 +1,4 @@
-const { contactDetailsLabels } = require('~/src/apps/contacts/labels')
+const { contactAuditLabels } = require('~/src/apps/contacts/labels')
 const auditLog = require('~/test/unit/data/audit/contact-audit.json')
 
 describe('Audit transformers', () => {
@@ -15,7 +15,7 @@ describe('Audit transformers', () => {
       query: {},
     }
 
-    this.transformer = this.transformers.transformAuditLogToListItem(contactDetailsLabels)
+    this.transformer = this.transformers.transformAuditLogToListItem(contactAuditLabels)
   })
 
   afterEach(() => {
@@ -38,6 +38,30 @@ describe('Audit transformers', () => {
     expect(transformedItem.meta[2]).to.deep.equal({
       label: 'Fields',
       value: 'Address same as company, Address line 1, Address line 2, Town, County, Country, Postcode',
+    })
+  })
+
+  context('when the user is absent', () => {
+    it('should use default text', () => {
+      const logLine = Object.assign({}, auditLog.results[0])
+      delete logLine.user
+      const transformedItem = this.transformer(logLine)
+
+      expect(transformedItem.meta[0]).to.deep.equal({
+        label: 'Adviser',
+        value: 'Unknown adviser',
+      })
+    })
+  })
+
+  context('when the user is blank', () => {
+    it('should use default text', () => {
+      const logLine = Object.assign({}, auditLog.results[0], { user: undefined })
+      const transformedItem = this.transformer(logLine)
+      expect(transformedItem.meta[0]).to.deep.equal({
+        label: 'Adviser',
+        value: 'Unknown adviser',
+      })
     })
   })
 

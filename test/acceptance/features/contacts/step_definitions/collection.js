@@ -14,6 +14,14 @@ defineSupportCode(({ Given, Then, When }) => {
       .click('@firstCompanyFromList')
   })
 
+  When(/^I filter the contacts list by contact/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@contact')
+      .setValue('@contact', getUid(this.state.contact.lastName))
+      .sendKeys('@contact', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+  })
+
   When(/^I filter the contacts list by company/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@company')
@@ -40,6 +48,20 @@ defineSupportCode(({ Given, Then, When }) => {
     await ContactList.section.filters
       .waitForElementPresent('@ukRegion')
       .clickListOption('company_uk_region', this.state.company.ukRegion)
+      .wait() // wait for xhr
+  })
+
+  When(/^I filter the contacts list by inactive status/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@inactive')
+      .clic('@inactive')
+      .wait() // wait for xhr
+  })
+
+  When(/^I filter the contacts list by active status/, async function () {
+    await ContactList.section.filters
+      .waitForElementPresent('@active')
+      .click('@active')
       .wait() // wait for xhr
   })
 
@@ -251,8 +273,17 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^the contacts should be filtered by ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
     const entityTypeField = camelCase(`${entityType} ${field}`)
-    const selector = `@${entityTypeField}`
-    const expected = get(this.state, `${entityType}.${field}`)
+
+    let selector
+    let expected
+
+    if (entityTypeField === 'contactName') {
+      selector = '@header'
+      expected = `${get(this.state, 'contact.firstName')} ${get(this.state, 'contact.lastName')}`
+    } else {
+      selector = `@${entityTypeField}`
+      expected = get(this.state, `${entityType}.${field}`)
+    }
 
     await ContactList
       .section.firstContactInList
@@ -279,7 +310,7 @@ defineSupportCode(({ Given, Then, When }) => {
   Then(/^the contacts should have been correctly sorted by creation date$/, async function () {
     const firstItemField = get(this.state, 'collection.firstItem.field')
     const lastItemField = get(this.state, 'collection.lastItem.field')
-    const expectedFirstItemField = get(this.state, 'contact.header')
+    const expectedFirstItemField = get(this.state, 'contact.heading')
     const expectedLastItemField = this.fixtures.contact.georginaClark.name
 
     client.expect(firstItemField).to.equal(expectedFirstItemField)

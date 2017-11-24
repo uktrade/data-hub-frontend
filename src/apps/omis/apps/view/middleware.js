@@ -4,7 +4,8 @@ const i18nFuture = require('i18n-future')
 
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
-const { getCompany } = require('../../middleware')
+const { setCompany: setCompanyMW } = require('../../middleware')
+const { getContact } = require('../../../contacts/repos')
 const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
@@ -26,15 +27,63 @@ function setCompany (req, res, next) {
     return next()
   }
 
-  getCompany(req, res, next, res.locals.order.company.id)
+  setCompanyMW(req, res, next, res.locals.order.company.id)
+}
+
+async function setContact (req, res, next) {
+  const contactId = get(res.locals, 'order.contact.id')
+
+  if (!contactId) {
+    return next()
+  }
+
+  try {
+    const contact = await getContact(req.session.token, contactId)
+
+    res.locals.order.contact = contact
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function setAssignees (req, res, next) {
+  const orderId = get(res.locals, 'order.id')
+
+  if (orderId) {
+    try {
+      const assignees = await Order.getAssignees(req.session.token, orderId)
+
+      res.locals.assignees = assignees
+    } catch (error) {
+      return next(error)
+    }
+  }
+  next()
+}
+
+async function setSubscribers (req, res, next) {
+  const orderId = get(res.locals, 'order.id')
+
+  if (orderId) {
+    try {
+      const subscribers = await Order.getSubscribers(req.session.token, orderId)
+
+      res.locals.subscribers = subscribers
+    } catch (error) {
+      return next(error)
+    }
+  }
+  next()
 }
 
 async function setQuoteSummary (req, res, next) {
-  const order = get(res.locals, 'order')
+  const orderId = get(res.locals, 'order.id')
+  const orderStatus = get(res.locals, 'order.status')
 
-  if (order.status === 'quote_awaiting_acceptance') {
+  if (orderStatus === 'quote_awaiting_acceptance') {
     try {
-      const quote = await Order.getQuote(req.session.token, order.id)
+      const quote = await Order.getQuote(req.session.token, orderId)
 
       res.locals.quote = assign({}, quote, {
         expired: new Date(quote.expires_on) < new Date(),
@@ -81,6 +130,7 @@ async function setQuotePreview (req, res, next) {
       }
     })
 
+    res.locals.missingLeadAssignee = error.error.hasOwnProperty('assignee_lead')
     res.locals.incompleteFields = pickBy(quoteErrors)
   }
 
@@ -88,6 +138,10 @@ async function setQuotePreview (req, res, next) {
 }
 
 async function setQuote (req, res, next) {
+  if (res.locals.quote) {
+    return next()
+  }
+
   try {
     const quote = await Order.getQuote(req.session.token, res.locals.order.id)
 
@@ -176,28 +230,25 @@ async function cancelQuote (req, res, next) {
 function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
+  const orderStatus = get(res.locals, 'order.status')
   const form = {
     buttonText: 'Send quote to client',
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }
 
-  if (res.locals.incompleteFields) {
+  if (res.locals.incompleteFields || ['cancelled'].includes(orderStatus)) {
     form.hidePrimaryFormAction = true
   }
 
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Cancel quote'
-    form.buttonModifiers = 'button-secondary'
+    form.buttonModifiers = 'button--destructive'
+    res.locals.destructive = true
 
     if (quote.accepted_on) {
       form.hidePrimaryFormAction = true
-    }
-
-    if (!quote.accepted_on && new Date(quote.expires_on) > new Date()) {
-      form.buttonModifiers = 'button--destructive'
-      res.locals.destructive = true
     }
   }
 
@@ -208,6 +259,9 @@ function setQuoteForm (req, res, next) {
 module.exports = {
   setTranslation,
   setCompany,
+  setContact,
+  setAssignees,
+  setSubscribers,
   setQuoteSummary,
   setQuotePreview,
   setQuote,

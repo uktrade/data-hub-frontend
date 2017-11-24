@@ -51,7 +51,6 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    addContactButton: getButtonWithText('Add contact'),
     saveButton: getButtonWithText('Save'),
     addInteractionButton: getButtonWithText('Add interaction'),
     contactsTab: 'a[href*="/contacts"][href*="/companies"]',
@@ -72,18 +71,14 @@ module.exports = {
     emailAddress: '#field-email',
     emailAddressError: 'label[for=field-email] span:nth-child(2)',
     acceptsEmailMarketingFromDit: getCheckBoxLabel('Accepts email marketing from DIT'),
-    sameAddressYes: '[for="field-address_same_as_company-1"]',
-    sameAddressNo: '[for="field-address_same_as_company-2"]',
+    sameAddressAsCompanyYes: '[for="field-address_same_as_company-1"]',
+    sameAddressAsCompanyNo: '[for="field-address_same_as_company-2"]',
     alternativePhoneNumber: '#field-telephone_alternative',
     alternativeEmail: '#field-email_alternative',
     notes: '#field-notes',
     contactUnderSearchPage: '#contacts-list li:first-child',
     contactFullname: '#contact-list .c-entity-list li:first-child .c-entity__title > a',
-    ukPostcode: '#field-postcode-lookup',
-    findUkAddressButton: '.postcode-lookup-button',
-    selectUkAddressDropdown: '#field-postcode-address-suggestions',
-    selectAnUkAddressFromList: '#field-postcode-address-suggestions option:nth-child(3)',
-    headingCompanyLink: '.c-local-header__heading-before a',
+    headingCompanyLink: '.c-local-header__heading-before a', // TODO move this work to Location feature
   },
 
   commands: [
@@ -115,10 +110,9 @@ module.exports = {
           notes: `${faker.name.jobDescriptor() + firstName}`,
         }, details)
 
-        this
-          .click('@addContactButton')
-          .api
-          .perform((done) => {
+        return this
+          .waitForElementPresent('@primaryContactYes')
+          .api.perform((done) => {
             this.click(`@primaryContact${isPrimary ? 'Yes' : 'No'}`)
 
             for (const key in contact) {
@@ -127,35 +121,24 @@ module.exports = {
               }
             }
 
-            contact.header = `${contact.firstName} ${contact.lastName}`
+            contact.heading = `${contact.firstName} ${contact.lastName}`
 
             done()
           })
           .perform((done) => {
             contact.acceptsEmailMarketingFromDit = 'Yes'
-            this.click('@acceptsEmailMarketingFromDit')
-
-            done()
-          })
-          .perform((done) => {
             this
-              .click('@sameAddressYes')
+              .click('@acceptsEmailMarketingFromDit')
+              .click('@sameAddressAsCompanyYes')
 
+            callback(contact)
             done()
           })
-
-        this
-          .waitForElementPresent('@saveButton')
-          .click('@saveButton')
-
-        callback(contact)
-        return this
       },
 
       createNewPrimaryContactWithNewCompanyAddress (details = {}, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
-
         const contact = assign({}, {
           firstName,
           lastName,
@@ -166,16 +149,24 @@ module.exports = {
           alternativePhoneNumber: '666555444',
           alternativeEmail: generateEmail(firstName, lastName, true),
           notes: `${faker.name.jobDescriptor() + firstName}`,
-          ukPostcode: 'EC2Y 9AE',
         }, details)
+        const postcodeLookup = {
+          address1: 'postCodeLookupAddress1',
+          address2: 'postCodeLookupAddress2',
+          town: 'postCodeLookupTown',
+          county: 'postCodeLookupCounty',
+          country: 'postCodeLookupCountry',
+          postcode: 'postCode',
+        }
 
+        this.api.page.Location().section.localHeader
+          .waitForElementPresent('@header')
+
+        // setup form to use the postCode lookup functionality
         this
-          .click('@addContactButton')
-          .click('@sameAddressNo')
-          .api
-          .perform((done) => {
-            this.click('@primaryContactYes')
-
+          .click('@primaryContactYes')
+          .click('@sameAddressAsCompanyNo')
+          .api.perform((done) => {
             for (const key in contact) {
               if (contact[key]) {
                 this.setValue(`@${key}`, contact[key])
@@ -183,20 +174,24 @@ module.exports = {
             }
             done()
           })
+
+        return this.api
           .perform((done) => {
-            this
-              .click('@findUkAddressButton')
-              .click('@selectUkAddressDropdown')
-              .waitForElementPresent('@selectAnUkAddressFromList')
-              .click('@selectAnUkAddressFromList')
-
-            done()
+            this.api
+              .page.Address()
+              .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
+                callback(assign(
+                  {},
+                  {
+                    acceptsEmailMarketingFromDit: 'No',
+                    type: 'Primary',
+                  },
+                  addressInputValues,
+                  contact
+                ))
+                done()
+              })
           })
-
-        this.waitForElementPresent('@saveButton').click('@saveButton')
-
-        callback(contact)
-        return this
       },
     },
   ],

@@ -23,6 +23,7 @@ const companyDetailsLabels = {
   registered_address_county: 'Registered address county',
   registered_address_postcode: 'Registered address postcode',
   registered_address_country: 'Registered address country',
+  country: 'Country',
   business_type_for_other: 'Type of organisation',
   business_type_uk_other: 'Type of organisation',
   headquarter_type: 'Headquarters',
@@ -31,8 +32,9 @@ const companyDetailsLabels = {
   archived_reason: 'Archived reason',
   archived_by_id: 'Archived by',
   company_number: 'Companies House number',
-  account_manager_id: 'Account manager',
+  account_manager: 'Account manager',
   vat_number: 'VAT number',
+  reference_code: 'CDMS reference',
 }
 const chDetailsLabels = {
   name: 'Registered name',
@@ -40,8 +42,8 @@ const chDetailsLabels = {
   registered_address: 'Registered office address',
   business_type: 'Company type',
   company_status: 'Company status',
-  sic_code: 'Nature of business (SIC)',
   incorporation_date: 'Incorporated on',
+  sic_code: 'Nature of business (SIC)',
 }
 const companyTypeOptions = {
   ltd: 'UK private or public limited company',
@@ -59,4 +61,16 @@ const accountManagementDisplayLabels = {
   oneListAccountManager: 'One List account manager',
 }
 
-module.exports = { companyDetailsLabels, chDetailsLabels, companyTypeOptions, hqLabels, accountManagementDisplayLabels }
+const exportDetailsLabels = {
+  exportToCountries: 'Currently exporting to',
+  futureInterestCountries: 'Future countries of interest',
+}
+
+module.exports = {
+  companyDetailsLabels,
+  chDetailsLabels,
+  companyTypeOptions,
+  hqLabels,
+  accountManagementDisplayLabels,
+  exportDetailsLabels,
+}

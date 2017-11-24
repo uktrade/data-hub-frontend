@@ -1,332 +1,276 @@
+const { getYear, addYears } = require('date-fns')
+const { set, lowerCase, forEach } = require('lodash')
 const faker = require('faker')
+
+const { getButtonWithText, getSelectorForElementWithText } = require('../../../helpers/selectors')
+const {
+  storeSelectValue,
+  storeSelectSubFieldValues,
+  storeRadioSubFieldValues,
+} = require('../../../helpers/state')
+
+const getDetailsTabSelector = (text) => getSelectorForElementWithText(text, {
+  el: '//a',
+  className: 'c-local-nav__link',
+})
+
+const getHeaderSelector = (text) => getSelectorForElementWithText(text, {
+  el: '//h2',
+  className: 'heading-medium',
+})
+
+const getTableCellValueByName = (text) => getSelectorForElementWithText(text, {
+  el: '//th',
+  child: '/following-sibling::td',
+})
+
+const getTableCellAnchorByName = (text) => getSelectorForElementWithText(text, {
+  el: '//th',
+  child: '/following-sibling::td/a',
+})
+
+const getHeaderMetaValueByName = (text) => getSelectorForElementWithText(text, {
+  el: '//header//span',
+  className: 'c-meta-list__item-label',
+  child: '/following-sibling::span',
+})
 
 module.exports = {
   url: process.env.QA_HOST,
-  elements: {
-    investmentsTab: 'a[href*="/investments"]',
-    addInvestmentProjectButton: '#main-content div article div a',
-    equitySourceYes: 'label[for="field-is_equity_source-1"]',
-    equitySourceNo: 'label[for="field-is_equity_source-2"]',
-    clientContact: '#field-client_contacts',
-    clientContactList: '#field-client_contacts option:nth-child(2)',
-    clientRelationshipManagerYes: 'label[for="field-is_relationship_manager-1"]',
-    clientRelationshipManagerNo: 'label[for="field-is_relationship_manager-2"]',
-    clientRelationshipManager: '#field-client_relationship_manager',
-    clientRelationshipManagerList: '#field-client_relationship_manager option:nth-child(2)',
-    referralSourceAdviser: '#field-referral_source_adviser',
-    referralSourceAdviserList: '#field-referral_source_adviser option:nth-child(2)',
-    referralSourceYes: 'label[for="field-is_referral_source-1"]',
-    referralSourceNo: 'label[for="field-is_referral_source-2"]',
-    referralSourceActivity: '#field-referral_source_activity',
-    referralSourceActivityList: '#field-referral_source_activity option:nth-child(2)',
-    typeOfInvestmentCommitmentToInvest: 'label[for="field-investment_type-3"] span:first-child',
-    typeOfInvestmentFDI: 'label[for="field-investment_type-1"] span:first-child',
-    typeOfInvestmentNonFDI: 'label[for="field-investment_type-2"] span:first-child',
-    typeOfFDI: '#field-fdi_type',
-    typeOfFDIListAcquisition: '#field-fdi_type option:nth-child(2)',
-    typeOfFDIListCapitalOnly: '#field-fdi_type option:nth-child(3)',
-    typeOfFDIListMerger: '#field-fdi_type option:nth-child(7)',
-    typeOfFDIListRetention: '#field-fdi_type option:nth-child(8)',
-    primarySector: '#field-sector',
-    primarySectorList: '#field-sector option:nth-child(2)',
-    businessActivity: '#field-business_activities',
-    businessActivityList: '#field-business_activities option:nth-child(2)',
-    projectName: '#field-name',
-    description: '#field-description',
-    anonymousDescription: '#field-anonymous_description',
-    landMonth: '#field-estimated_land_date_month',
-    landYear: '#field-estimated_land_date_year',
-    projectNameFromCompanyProfile: '.c-entity-list li:first-child a',
-    projectNameFromSummaryPage: '.c-local-header__heading',
-    projectTeamTab: 'a[href*="/team"]',
-    clientRelationsshipManagementAdviserName: 'article table:nth-child(2) tbody tr:nth-child(1) td:nth-child(2)',
-    referralSourceAdviserName: 'article table:nth-child(2) tbody tr:nth-child(2) td:nth-child(2)',
-    typeOfInvestmentFromProjectDetails: 'article table:nth-child(3) tbody tr:nth-child(2) td:nth-child(2)',
-    sourceCompanySearch: '#field-q',
-    firstCompanyFromList: '.c-entity-list li:first-child h3 a',
-    investmentprojecttab: 'a[href*="/search/investment-projects"]',
-  },
-
   commands: [
     {
-      clickInvestmentsTab () {
-        return this
-          .click('@investmentsTab')
+      storeProjectDetails (callback) {
+        const projectDetails = {}
+
+        return this.section.localHeader
+          .getText('@stage', (stage) => {
+            set(projectDetails, 'stage', stage.value)
+          })
+          .getText('@status', (status) => {
+            set(projectDetails, 'status', status.value)
+          })
+          .getText('@valuation', (valuation) => {
+            set(projectDetails, 'valuation', valuation.value)
+          })
+          .getText('@projectCode', (projectCode) => {
+            set(projectDetails, 'projectCode', projectCode.value)
+            callback(projectDetails)
+          })
       },
-      clickAddInvestmentProjectButton () {
-        return this
-          .click('@addInvestmentProjectButton')
-      },
-      clickEquitySourceYes () {
-        return this
-          .click('@equitySourceYes')
-      },
-      clickEquitySourceNo () {
-        return this
-          .click('@equitySourceNo')
-      },
-      selectClientContact () {
-        return this
-          // .setValue('@clientContact', 'c')
-          .click('@clientContact')
-          .click('@clientContactList')
-      },
-      clickClientRelationshipManagerYes () {
-        return this
-          .click('@clientRelationshipManagerYes')
-      },
-      clickClientRelationshipManagerNo () {
-        return this
-          .click('@clientRelationshipManagerNo')
-      },
-      clickReferralSourceYes () {
-        return this
-          .click('@referralSourceYes')
-      },
-      clickReferralSourceNo () {
-        return this
-          .click('@referralSourceNo')
-      },
-      selectReferralSourceActivity () {
-        return this
-          .click('@referralSourceActivity')
-          .click('@referralSourceActivityList')
-      },
-      clickTypeOfInvestmentCommitmentToInvest () {
-        return this
-          .click('@typeOfInvestmentCommitmentToInvest')
-      },
-      clickTypeOfInvestmentFDI () {
-        return this
-          .click('@typeOfInvestmentFDI')
-      },
-      clickTypeOfInvestmentNonFDI () {
-        return this
-          .click('@typeOfInvestmentNonFDI')
-      },
-      selectTypeOfFDI () {
-        return this
-          .click('@typeOfFDI')
-          .click('@typeOfFDIListAcquisition')
-      },
-      selectPrimarySector () {
-        return this
-          .click('@primarySector')
-          .click('@primarySectorList')
-      },
-      selectBusinessActivity () {
-        return this
-          .click('@businessActivity')
-          .click('@businessActivityList')
-      },
-      enterProjectName (projectName) {
-        return this
-          .setValue('@projectName', projectName)
-      },
-      enterDescription () {
-        return this
-          .setValue('@description', faker.lorem.paragraph())
-      },
-      enterAnonymousDescription () {
-        return this
-          .setValue('@anonymousDescription', faker.lorem.paragraph(1))
-      },
-      enterLandMonth () {
-        return this
-          .setValue('@landMonth', faker.random.number({ min: 1, max: 12 }))
-      },
-      enterLandYear () {
-        return this
-          .setValue('@landYear', faker.random.number({ min: 2018, max: 2020 }))
-      },
-      clickOnProjectNameFromCompanyProfile () {
-        return this
-          .click('@projectNameFromCompanyProfile')
-      },
-      clickOnProjectTeamTab () {
-        return this
-          .click('@projectTeamTab')
-      },
-      enterSourceCompanySearch (companyName) {
-        return this
-          .setValue('@sourceCompanySearch', companyName)
-      },
-      clickOnCompanyFromList () {
-        return this
-          .click('@firstCompanyFromList')
-      },
-      submitTheForm () {
-        return this
+      selectFdiTypeOfInvestmentProject (projectDetails = {}, callback) {
+        const typeOfInvestment = this.section.typeOfInvestment
+
+        return typeOfInvestment
+          .waitForElementPresent('@fdi')
+          .click('@fdi')
+          .api.perform((done) => {
+            typeOfInvestment.getListOption('@fdiType', (subType) => {
+              typeOfInvestment.setValue('@fdiType', subType)
+              set(projectDetails, 'subType', subType)
+              callback(projectDetails)
+              done()
+            })
+          })
           .submitForm('form')
       },
-      clickOnInvestmentProjectsTabUnderSearch () {
-        return this
-          .click('@investmentprojecttab')
+      selectNonFdiTypeOfInvestmentProject () {
+        this
+          .section.typeOfInvestment
+          .waitForElementPresent('@nonFdi')
+          .click('@nonFdi')
+          .submitForm('form')
       },
+      populateForm (callback) {
+        const nextYear = getYear(addYears(Date.now(), 1))
+        const projectForm = this.section.projectForm
+        const promises = []
+        const project = {
+          name: faker.company.companyName(),
+          description: faker.lorem.sentence(),
+          anonymousDescription: faker.lorem.sentence(),
+          primarySector: 'select',
+          businessActivity: 'select',
+          otherBusinessActivity: faker.lorem.word(),
+          estimatedLandDateYear: faker.random.number({ min: nextYear, max: nextYear + 40 }),
+          estimatedLandDateMonth: faker.random.number({ min: 1, max: 12 }),
+          investorType: 'select',
+          levelOfInvolvement: 'select',
+          specificInvestmentProgramme: 'select',
+          clientContact: 'select',
+          clientRelationshipManager: {
+            inputType: 'radio',
+            options: [
+              'clientRelationshipManagerYes',
+              'clientRelationshipManagerNo',
+            ],
+            values: {
+              clientRelationshipManagerNo: {
+                inputType: 'select',
+              },
+            },
+          },
+          referralSource: {
+            inputType: 'radio',
+            options: [
+              'referralSourceYes',
+              'referralSourceNo',
+            ],
+            values: {
+              referralSourceNo: {
+                inputType: 'select',
+              },
+            },
+          },
+          referralSourceActivity: {
+            inputType: 'select',
+            values: {
+              referralSourceActivityMarketing: {
+                inputType: 'select',
+                value: 'marketing',
+              },
+              referralSourceActivityEvent: {
+                inputType: 'text',
+                value: 'event',
+              },
+              referralSourceActivityWebsite: {
+                inputType: 'select',
+                value: 'website',
+              },
+            },
+          },
+        }
 
-      createNewInvestmentProject (projectName) {
         return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-          .submitTheForm()
+          .api.perform((done) => {
+            forEach(project, (value, key) => {
+              if (value.inputType === 'radio') {
+                promises.push(storeRadioSubFieldValues(project, key, value, projectForm))
+              }
+
+              if (value.inputType === 'select') {
+                promises.push(storeSelectSubFieldValues(project, key, value, projectForm))
+              }
+
+              if (value === 'select') {
+                promises.push(storeSelectValue(project, key, projectForm))
+              }
+            })
+
+            Promise.all(promises)
+              .then(() => {
+                forEach(project, (value, key) => {
+                  projectForm.setValue(`@${key}`, value)
+                })
+                done()
+              })
+          })
+          .submitForm('form', () => {
+            callback(project)
+          })
       },
-
-      createNewInvestmentProjectWithoutOptionalFields (projectName) {
+      setEquitySource (choice) {
         return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterLandMonth()
-          .enterLandYear()
-          .submitTheForm()
+          .section.equitySource
+          .waitForElementPresent('@yes')
+          .waitForElementPresent('@no')
+          .click(`@${lowerCase(choice)}`)
+          .submitForm('form')
       },
-
-      createNewInvestmentProjectWithDifferentClientRelationManager (projectName) {
-        return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerNo()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-      },
-
-      createNewInvestmentProjectWithDifferentReferralSourceAdviser (projectName) {
-        return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceNo()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-      },
-
-      createNewInvestmentProjectWithDifferentClientAndReferralDetails (projectName) {
-        return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerNo()
-          .clickReferralSourceNo()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-      },
-
-      createNewInvestmentProjectWithFDIasInvestmentType (projectName) {
-        return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentFDI()
-          .selectTypeOfFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-      },
-
-      createNewInvestmentProjectWithNonFDIasInvestmentType (projectName) {
-        return this
-          .clickAddInvestmentProjectButton()
-          .clickTypeOfInvestmentNonFDI()
-          .submitTheForm()
-          .clickEquitySourceYes()
-          .submitTheForm()
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-      },
-
-      createNewInvestmentProjectAsNonForeignEquityInvestment (projectName) {
-        return this
-          .selectClientContact()
-          .clickClientRelationshipManagerYes()
-          .clickReferralSourceYes()
-          .selectReferralSourceActivity()
-          .clickTypeOfInvestmentCommitmentToInvest()
-          .selectPrimarySector()
-          .selectBusinessActivity()
-          .enterProjectName(projectName)
-          .enterDescription()
-          .enterAnonymousDescription()
-          .enterLandMonth()
-          .enterLandYear()
-          .submitTheForm()
+      searchForEquitySourceCompany (sourceOfForeignEquity) {
+        return this.section.equitySource
+          .waitForElementPresent('@searchInput')
+          .setValue('@searchInput', sourceOfForeignEquity)
+          .submitForm('@searchForm')
       },
     },
   ],
+  sections: {
+    typeOfInvestment: {
+      selector: '#group-field-investment_type',
+      elements: {
+        fdi: 'label[for=field-investment_type-1]',
+        fdiType: '#field-fdi_type',
+        nonFdi: 'label[for=field-investment_type-2]',
+      },
+    },
+    equitySource: {
+      selector: '.main-content__inner',
+      elements: {
+        yes: 'label[for=field-is_equity_source-1]',
+        no: 'label[for=field-is_equity_source-2]',
+        searchInput: '#field-term',
+        searchForm: '.c-entity-search',
+      },
+    },
+    projectForm: {
+      selector: 'form',
+      elements: {
+        name: '#field-name',
+        description: '#field-description',
+        anonymousDescription: '#field-anonymous_description',
+        primarySector: '#field-sector',
+        businessActivity: '#field-business_activities',
+        otherBusinessActivity: '#field-other_business_activity',
+        clientRelationshipManager: '#field-client_relationship_manager',
+        clientRelationshipManagerYes: 'label[for=field-is_relationship_manager-1]',
+        clientRelationshipManagerNo: 'label[for=field-is_relationship_manager-2]',
+        referralSource: '#field-referral_source_adviser',
+        referralSourceYes: 'label[for=field-is_referral_source-1]',
+        referralSourceNo: 'label[for=field-is_referral_source-1]',
+        referralSourceActivity: '#field-referral_source_activity',
+        referralSourceActivityEvent: '#field-referral_source_activity_event',
+        referralSourceActivityMarketing: '#field-referral_source_activity_marketing',
+        referralSourceActivityWebsite: '#field-referral_source_activity_website',
+        estimatedLandDateYear: '#field-estimated_land_date_year',
+        estimatedLandDateMonth: '#field-estimated_land_date_month',
+        investorType: '#field-investor_type',
+        levelOfInvolvement: '#field-level_of_involvement',
+        specificInvestmentProgramme: '#field-specific_programme',
+        clientContact: '#field-client_contacts',
+        saveButton: getButtonWithText('Save'),
+      },
+    },
+    localHeader: { // TODO move this work to Location feature
+      selector: '.c-local-header',
+      elements: {
+        header: '.c-local-header__heading',
+        clientCompany: '.c-local-header__heading-before > a',
+        status: getHeaderMetaValueByName('Status'),
+        projectCode: getHeaderMetaValueByName('Project code'),
+        valuation: getHeaderMetaValueByName('Valuation'),
+        stage: {
+          selector: '//ol[contains(@class,"c-progress-bar")]/li[contains(@class,"is-active")]/span',
+          locateStrategy: 'xpath',
+        },
+      },
+    },
+    detailsTabs: {
+      selector: '.c-local-nav',
+      elements: {
+        investment: getDetailsTabSelector('Investment'),
+      },
+    },
+    projectDetails: {
+      selector: '.main-content__inner',
+      sections: {
+        summary: {
+          selector: '.column-three-quarters',
+          elements: {
+            header: getHeaderSelector('Investment project summary'),
+            clientLink: getTableCellAnchorByName('Client'),
+            typeOfInvestment: getTableCellValueByName('Type of investment'),
+            primarySector: getTableCellValueByName('Primary sector'),
+            businessActivity: getTableCellValueByName('Business activity'),
+            clientContact: getTableCellValueByName('Client contacts'),
+            projectDescription: getTableCellValueByName('Project description'),
+            anonDescription: getTableCellValueByName('Anonymised description'),
+            estimatedLandDate: getTableCellValueByName('Estimated land date'),
+            newOrExistingInvestor: getTableCellValueByName('New or existing investor'),
+            levelOfInvolvement: getTableCellValueByName('Level of involvement'),
+            specificInvestmentProgramme: getTableCellValueByName('Specific investment programme'),
+          },
+        },
+      },
+    },
+  },
 }

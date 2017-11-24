@@ -1,6 +1,6 @@
 const { assign, find, get } = require('lodash')
 
-const companyFormattingService = require('../services/formatting')
+const { transformCompaniesHouseToView } = require('../transformers')
 
 const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
 
@@ -13,13 +13,14 @@ function getBusinessTypeOption (businessTypeUUID) {
   )
 }
 
-function getBusinessTypeLabel (isLimitedCompany, isForeign, businessTypeUUID) {
-  if (isLimitedCompany) {
-    return 'UK limited company'
+function getBusinessTypeLabel (companiesHouseCategory, isForeign, businessTypeUUID) {
+  let prefix = isForeign ? 'Foreign' : 'UK'
+  if (companiesHouseCategory) {
+    return `${prefix} ${companiesHouseCategory}`
   }
   const businessTypeOption = getBusinessTypeOption(businessTypeUUID)
   if (businessTypeOption) {
-    return (isForeign ? 'Foreign ' : 'UK ') + businessTypeOption.label
+    return `${prefix} ${businessTypeOption.label}`
   }
 }
 
@@ -35,16 +36,15 @@ function renderForm (req, res) {
   if (req.query.country === 'non-uk') {
     isForeign = true
   }
-  const isCompaniesHouse = !!res.locals.companiesHouseRecord
 
   if (res.locals.companiesHouseRecord) {
     res.locals = assign({}, res.locals, {
-      isCompaniesHouse,
-      chDetails: companyFormattingService.getDisplayCH(res.locals.companiesHouseRecord),
+      isCompaniesHouse: true,
+      chDetails: transformCompaniesHouseToView(res.locals.companiesHouseRecord),
     })
   }
   const businessTypeLabel = getBusinessTypeLabel(
-    isCompaniesHouse, isForeign, res.locals.businessType
+    res.locals.companiesHouseCategory, isForeign, res.locals.businessType
   )
 
   res

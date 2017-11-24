@@ -1,12 +1,11 @@
 const { assign, get } = require('lodash')
 
 const config = require('../../../config')
-const logger = require('../../../config/logger')
 const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
 
-async function getCompany (req, res, next, companyId) {
+async function setCompany (req, res, next, companyId) {
   try {
     res.locals.company = await getDitCompany(req.session.token, companyId)
     next()
@@ -15,7 +14,7 @@ async function getCompany (req, res, next, companyId) {
   }
 }
 
-async function getOrder (req, res, next, orderId) {
+async function setOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
 
@@ -33,10 +32,11 @@ async function getOrder (req, res, next, orderId) {
     currencyFields.forEach((field) => {
       res.locals.order[field] = parseFloat(res.locals.order[field]) / 100
     })
-  } catch (e) {
-    logger.error(e)
+
+    next()
+  } catch (error) {
+    next(error)
   }
-  next()
 }
 
 function setOrderBreadcrumb (req, res, next) {
@@ -46,13 +46,13 @@ function setOrderBreadcrumb (req, res, next) {
 }
 
 function setArchivedDocumentsBaseUrl (req, res, next) {
-  res.locals.archivedDocumentsBaseUrl = config.omisArchivedDocumentsBaseUrl
+  res.locals.archivedDocumentsBaseUrl = config.archivedDocumentsBaseUrl
   next()
 }
 
 module.exports = {
-  getCompany,
-  getOrder,
+  setCompany,
+  setOrder,
   setOrderBreadcrumb,
   setArchivedDocumentsBaseUrl,
 }

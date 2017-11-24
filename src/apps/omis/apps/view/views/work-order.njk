@@ -6,14 +6,15 @@
 
 {% set contactEmail %}
   {% set emails = [
-    values.contact_email,
-    values.contact.email,
-    values.contact.email_alternative
+    values.contact_email | escape,
+    values.contact.email | escape,
+    values.contact.email_alternative | escape
   ] %}
 
+  {% set newLine = joiner('<br>') %}
   {% for email in emails | removeNilAndEmpty %}
-    <a href="mailto:{{ email }}">{{ email }}</a>
-    <br>
+    {{ newLine() | safe }}
+    <a href="mailto:{{ email | escape }}">{{ email | escape }}</a>
   {% endfor %}
 {% endset %}
 
@@ -21,24 +22,25 @@
   {% set phones = [
     values.contact.telephone_number,
     values.contact.telephone_alternative
-  ] %}
+  ] | removeNilAndEmpty %}
 
   {% if values.contact_phone %}
     {{ values.contact_phone }}
     <br>
   {% endif %}
 
+  {% set newLine = joiner('<br>') %}
   {% for phone in phones | removeNilAndEmpty %}
+    {{ newLine() | safe }}
     ({{ values.contact.telephone_countrycode }}) {{ phone }}
-    <br>
   {% endfor %}
 {% endset %}
 
 {% block body_main_content %}
   {% if order.status === 'quote_awaiting_acceptance' %}
     {% call Message({ type: 'info', element: 'div' }) %}
-      <p>You cannot edit the order whilst a quote is awaiting acceptance.</p>
-      <p>You must <a href="quote">cancel the quote</a> to edit the order.</p>
+      <p>You cannot edit the order once a quote has been sent.</p>
+      <p><a href="quote">Cancel the quote</a> to edit the order.</p>
     {% endcall %}
   {% endif %}
 
@@ -56,17 +58,18 @@
     }],
     items: [{
       label: 'Name',
-      value: contactName
+      value: contactName | safe
     }, {
       label: 'Phone',
-      value: contactPhone
+      value: contactPhone | safe
     }, {
       label: 'Email',
-      value: contactEmail
+      value: contactEmail | safe
     }]
   }) }}
 
   {% call AnswersSummary({
+    id: 'assignees',
     heading: 'Advisers in the market',
     actions: [{
       url: 'edit/assignees' if order.isEditable,
@@ -130,7 +133,7 @@
       url: 'edit/subscribers' if order.isEditable,
       label: 'Add or remove'
     }],
-    items: values.subscribers | map('name') if values.subscribers.length,
+    items: values.subscribers,
     fallbackText: 'No advisers added'
   }) }}
 
@@ -164,13 +167,13 @@
       value: values.sector.name,
       fallbackText: 'Not selected'
     }, {
-      label: 'Further information',
+      label: 'Internal notes and useful information',
       value: values.further_info
     }, {
-      label: 'Existing representatives',
+      label: 'Contacts the company already has in the market',
       value: values.existing_agents
     }, {
-      label: 'Contacts not to approach',
+      label: 'Specific people or organisations the company does not want DIT to talk to',
       value: values.contacts_not_to_approach,
       fallbackText: 'None added'
     }, {
@@ -191,8 +194,8 @@
   {% endif %}
 
   {% set billingContact = [
-    values.billing_contact_name,
-    values.billing_email,
+    values.billing_contact_name | escape,
+    values.billing_email | escape,
     values.billing_phone
   ] | removeNilAndEmpty | join('<br>') %}
 
@@ -250,7 +253,7 @@
       fallbackText: 'Estimated hours and VAT category must be set to calculate price'
     }, {
       label: 'Billing contact',
-      value: billingContact
+      value: billingContact | safe
     }, {
       label: 'Billing address',
       value: billingAddress | join(', ') if billingAddress|length else companyAddress | join(', '),

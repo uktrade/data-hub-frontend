@@ -13,7 +13,6 @@ describe('OAuth controller', () => {
     })
     this.resMock = assign({}, globalRes, {
       redirect: this.sandbox.spy(),
-      breadcrumb: this.breadcrumbSpy,
       render: this.sandbox.spy(),
     })
     this.reqMock = assign({}, globalReq, {
