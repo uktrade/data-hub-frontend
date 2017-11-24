@@ -81,4 +81,18 @@ defineSupportCode(({ Then, When }) => {
       .findCompany(getUid(companyName))
       .assert.containsText('@collectionResultsCompanyName', companyName)
   })
+
+  Then(/^the company trading name is in the search results$/, async function () {
+    const companyName = get(this.state, 'company.tradingName')
+
+    await client
+      .url(dashboardPage)
+
+    await Search
+      .navigate()
+      .search(companyName)
+      .section.firstCompanySearchResult
+      .waitForElementPresent('@tradingName')
+      .assert.containsText('@tradingName', companyName)
+  })
 })
