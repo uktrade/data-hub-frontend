@@ -108,7 +108,7 @@ const reconciliationSortForm = assign({}, collectionSortForm, {
       modifier: ['small', 'inline', 'light'],
       options: [
         { value: 'payment_due_date:asc', label: 'Earliest payment due date' },
-        { value: 'payment_due_date:desc', label: 'Lastest payment due date' },
+        { value: 'payment_due_date:desc', label: 'Latest payment due date' },
       ],
     },
   ],

@@ -42,7 +42,7 @@
 
 {% block local_header %}
   {% set statusText %}
-    {{ order.status | sentenceCase }}
+    {{ translate('status.' + order.status) }}
 
     {%- if order.status === 'quote_awaiting_acceptance' -%}
       <br>
