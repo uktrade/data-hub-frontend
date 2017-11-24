@@ -18,6 +18,11 @@ class EditAssigneeTimeController extends EditController {
     super.configure(req, res, next)
   }
 
+  process (req, res, next) {
+    req.form.values.assignee_time = flatten([req.form.values.assignee_time])
+    next()
+  }
+
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const timeValues = flatten([data.assignee_time])
