@@ -44,13 +44,18 @@
           next_project_stage: investmentStatus.nextStage.id
         }
       }) %}
-        <p>
           {% if investmentStatus.currentStage.isComplete %}
-            You have added all required information to complete this stage.
-            {% else %}
-            Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+            <p>You have added all required information to complete this stage.</p>
+          {% else %}
+            <p>To move to the {{ investmentStatus.nextStage.name }} stage complete the following:</p>
+            <ul class="list-disc">
+              {% for form in investmentStatus.currentStage.incompleteFields  %}
+                <li>
+                  <a href="{{ form.url }}">{{ form.text }} form</a>
+                </li>
+              {% endfor %}
+            </ul>
           {% endif %}
-        </p>
       {% endcall %}
     {% endcall %}
   {% endif %}

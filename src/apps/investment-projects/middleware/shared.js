@@ -1,6 +1,7 @@
 const { get, upperFirst } = require('lodash')
 
 const metadata = require('../../../lib/metadata')
+const { buildIncompleteFormList } = require('../helpers')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
@@ -76,6 +77,7 @@ async function getInvestmentDetails (req, res, next) {
       currentStage: {
         name: investmentData.stage.name,
         isComplete: investmentData.team_complete && investmentData.requirements_complete && investmentData.value_complete,
+        incompleteFields: buildIncompleteFormList(get(investmentData, 'incomplete_fields', [])),
       },
       nextStage: getNextStage(investmentData.stage.name, investmentProjectStages),
     }
