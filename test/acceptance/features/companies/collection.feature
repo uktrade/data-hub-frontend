@@ -17,7 +17,7 @@ Feature: View collection of companies
     And I can view the Company in the collection
       | text               | expected                  |
       | Sector             | company.sector            |
-      | Registered address | company.primaryAddress    |
+      | Primary address    | company.primaryAddress    |
     And the Company has badges
       | text               | expected                  |
       | Country            | company.country           |
