@@ -128,5 +128,13 @@
     "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
     "validEUVatNumber": "must be a valid EU VAT number including the country code, for example ATU12345678 for Austria",
     "default": "is required"
+  },
+  "status": {
+    "draft": "Draft",
+    "quote_awaiting_acceptance": "Quote awaiting acceptance",
+    "quote_accepted": "Quote accepted",
+    "paid": "Payment received",
+    "complete": "Completed",
+    "cancelled": "Cancelled"
   }
 }
