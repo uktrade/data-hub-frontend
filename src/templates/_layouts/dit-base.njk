@@ -82,7 +82,7 @@
                     {% endif %}
                   </span>
                 </a>
-                {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta'] %}
+                {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta', 'demo'] %}
                   <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
                 {% endif %}
               </div>
@@ -96,7 +96,7 @@
         <main class="main-content" id="main-content">
           {% block body_main_header %}
             {% block body_main_phase_banner %}
-              {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta'] or feedbackLink) %}
+              {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta', 'demo'] or feedbackLink) %}
                 <div class="phase-banner">
                   <div class="l-container">
                     <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
