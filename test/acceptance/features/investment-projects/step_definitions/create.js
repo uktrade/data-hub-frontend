@@ -1,233 +1,150 @@
-const faker = require('faker')
+const { get, set, lowerCase, assign, find } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
+const { getDateFor } = require('../../../helpers/date')
+
 defineSupportCode(({ Given, Then, When }) => {
-  const Company = client.page.Company()
-  const Contact = client.page.Contact()
   const InvestmentProject = client.page.InvestmentProject()
-  const foreignCompanyName = 'Lambda plc'
-  const ukLtdCompanyName = 'Venus ltd'
-  let projectName
-  let actualName
-  let actualAdviserName
 
-  When(/^I navigate to Investments page of any company$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  Given(/^I navigate to the Investment Projects (.+) page$/, async function (pageName) {
+    const tag = `@${pageName}`
+
     await InvestmentProject
-      .clickInvestmentsTab()
+      .section.detailsTabs
+      .waitForElementPresent(tag)
+      .click(tag)
   })
 
-  Then(/^I verify an option to add a new Investment project$/, async () => {
-    await InvestmentProject
-      .assert.visible('@addInvestmentProjectButton')
+  When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
+    if (lowerCase(investmentType) === 'fdi') {
+      await InvestmentProject
+        .selectFdiTypeOfInvestmentProject({
+          type: 'FDI',
+        }, (investmentProject) => {
+          set(this.state, 'investmentProject', assign({}, get(this.state, 'investmentProject'), investmentProject))
+        })
+    } else {
+      await InvestmentProject
+        .selectNonFdiTypeOfInvestmentProject()
+
+      set(this.state, 'investmentProject.type', 'Non-FDI')
+    }
   })
 
-  When(/^I create a new Investment project as a source of foreign equity investment$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^I choose (.+) for "Will this company be the source of foreign equity investment\?"$/, async function (choice) {
+    if (lowerCase(choice) === 'yes') {
+      set(this.state, 'investmentProject.equitySource.name', get(this.state, 'company.name'))
+    }
+
     await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProject(projectName)
+      .setEquitySource(choice)
   })
 
-  When(/^I create a new Investment project without optional fields$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
+  When(/^I populate the create Investment Project form$/, async function () {
     await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithoutOptionalFields(projectName)
-  })
+      .section.projectForm
+      .assert.visible('@name')
+      .assert.visible('@description')
+      .assert.visible('@anonymousDescription')
+      .assert.visible('@primarySector')
+      .assert.visible('@businessActivity')
+      .assert.visible('@otherBusinessActivity')
+      .assert.visible('@clientRelationshipManagerYes')
+      .assert.visible('@clientRelationshipManagerNo')
+      .assert.visible('@referralSourceYes')
+      .assert.visible('@referralSourceNo')
+      .assert.visible('@estimatedLandDateYear')
+      .assert.visible('@estimatedLandDateMonth')
+      .assert.visible('@investorType')
+      .assert.visible('@levelOfInvolvement')
+      .assert.visible('@specificInvestmentProgramme')
+      .assert.visible('@clientContact')
+      .assert.visible('@saveButton')
 
-  Then(/^I verify my newly created Investment project in company profile$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
     await InvestmentProject
-      .clickInvestmentsTab()
-      .getText('@projectNameFromCompanyProfile', (result) => {
-        InvestmentProject.assert.equal(result.value, projectName)
+      .populateForm((investmentProject) => {
+        set(this.state, 'investmentProject', assign({}, get(this.state, 'investmentProject'), investmentProject))
+        set(this.state, 'investmentProject.heading', investmentProject.name)
+        set(this.state, 'investmentProject.estimatedLandDate', getDateFor({
+          year: this.state.investmentProject.estimatedLandDateYear,
+          month: this.state.investmentProject.estimatedLandDateMonth,
+          day: 1,
+        }, 'MMMM YYYY'))
       })
   })
 
-  Then(/^I verify Type of Investment is shown as "([^"]*)"$/, async (typeOfInvestment) => {
+  Then(/^Investment project summary has all of the entered information$/, async function () {
+    const projectDetailsSection = InvestmentProject.section.projectDetails.section.summary
+
+    await projectDetailsSection
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', 'Investment project summary')
+      .assert.visible('@clientLink')
+      .assert.containsText('@clientLink', get(this.state, 'investmentProject.equitySource.name'))
+      .assert.visible('@typeOfInvestment')
+      .assert.containsText('@typeOfInvestment', get(this.state, 'investmentProject.type'))
+      .assert.visible('@primarySector')
+      .assert.containsText('@primarySector', get(this.state, 'investmentProject.primarySector'))
+      .assert.visible('@businessActivity')
+      .assert.containsText('@businessActivity', get(this.state, 'investmentProject.businessActivity'))
+      .assert.visible('@clientContact')
+      // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
+      .assert.containsText('@clientContact', get(this.state, 'investmentProject.clientContact').split(',')[0])
+      .assert.visible('@projectDescription')
+      .assert.containsText('@projectDescription', get(this.state, 'investmentProject.description'))
+      .assert.visible('@anonDescription')
+      .assert.containsText('@anonDescription', get(this.state, 'investmentProject.anonymousDescription'))
+      .assert.visible('@estimatedLandDate')
+      .assert.containsText('@estimatedLandDate', get(this.state, 'investmentProject.estimatedLandDate'))
+      .assert.visible('@levelOfInvolvement')
+      .assert.containsText('@levelOfInvolvement', get(this.state, 'investmentProject.levelOfInvolvement'))
+      .assert.visible('@specificInvestmentProgramme')
+      .assert.containsText('@specificInvestmentProgramme', get(this.state, 'investmentProject.specificInvestmentProgramme'))
+      .assert.visible('@newOrExistingInvestor')
+      .assert.containsText('@newOrExistingInvestor', get(this.state, 'investmentProject.investorType'))
+  })
+
+  When(/^I navigate to the Investment Projects source of equity investment$/, async function () {
+    const equitySource = get(this.state, 'investmentProject.equitySource.name')
+    const projectSummarySection = InvestmentProject.section.projectDetails.section.summary
+
+    await projectSummarySection
+      .assert.containsText('@header', 'Investment project summary')
+      .assert.containsText('@clientLink', equitySource)
+      .waitForElementPresent('@header')
+
     await InvestmentProject
-      .clickOnProjectNameFromCompanyProfile()
-      .getText('@typeOfInvestmentFromProjectDetails', (result) => {
-        InvestmentProject.assert.equal(result.value, typeOfInvestment)
+      .storeProjectDetails((projectDetails) => {
+        set(this.state, 'investmentProject', assign({}, projectDetails, get(this.state, 'investmentProject')))
       })
+
+    await projectSummarySection
+      .click('@clientLink')
+
+    await InvestmentProject
+      .section.localHeader
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', equitySource)
+
+    await InvestmentProject
+      .section.detailsTabs
+      .waitForElementPresent('@investment')
+      .click('@investment')
   })
 
-  When(/^I create a new Investment project with a different client relation manager$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithDifferentClientRelationManager(projectName)
-      .click('@clientRelationshipManager')
-      .getText('@clientRelationshipManagerList', (result) => {
-        actualName = result.value
-      })
-      .click('@clientRelationshipManagerList')
-      .submitTheForm()
-  })
+  When(/^I search for the foreign source of equity (.+)$/, async function (companyName) {
+    const sourceOfForeignEquity = find(this.fixtures.company, ['name', companyName])
 
-  Then(/^I verify the client relation manager details shown under Project team$/, async () => {
     await InvestmentProject
-      .clickOnProjectNameFromCompanyProfile()
-      .clickOnProjectTeamTab()
-      .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        InvestmentProject.assert.equal(result.value, actualName.trim())
-      })
-  })
+      .searchForEquitySourceCompany(sourceOfForeignEquity.name)
 
-  When(/^I create a new Investment project with a different referral source adviser$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithDifferentReferralSourceAdviser(projectName)
-      .click('@referralSourceAdviser')
-      .getText('@referralSourceAdviserList', (result) => {
-        actualName = result.value
-      })
-      .click('@referralSourceAdviserList')
-      .submitTheForm()
-  })
-
-  Then(/^I verify the referral source adviser details shown under Project team$/, async () => {
-    await InvestmentProject
-      .clickOnProjectNameFromCompanyProfile()
-      .clickOnProjectTeamTab()
-      .getText('@referralSourceAdviserName', (result) => {
-        InvestmentProject.assert.equal(result.value, actualName.trim())
-      })
-  })
-
-  When(/^I create a new Investment project with different client relation manager and referral source adviser$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithDifferentClientAndReferralDetails(projectName)
-      .click('@clientRelationshipManager')
-      .getText('@clientRelationshipManagerList', (result) => {
-        actualName = result.value
-      })
-      .click('@clientRelationshipManagerList')
-      .click('@referralSourceAdviser')
-      .getText('@referralSourceAdviserList', (result) => {
-        actualAdviserName = result.value
-      })
-      .click('@referralSourceAdviserList')
-      .submitTheForm()
-  })
-
-  Then(/^I verify the client relation manager and referral source adviser details shown under Project team$/, async () => {
-    await InvestmentProject
-      .clickOnProjectNameFromCompanyProfile()
-      .clickOnProjectTeamTab()
-      .getText('@clientRelationsshipManagementAdviserName', (result) => {
-        InvestmentProject.assert.equal(result.value, actualName.trim())
-      })
-      .getText('@referralSourceAdviserName', (result) => {
-        InvestmentProject.assert.equal(result.value, actualAdviserName.trim())
-      })
-  })
-
-  When(/^I create a new Investment project with FDI as Investment type$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithFDIasInvestmentType(projectName)
-      .submitTheForm()
-  })
-
-  When(/^I create a new Investment project with Non-FDI as Investment type$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .createNewInvestmentProjectWithNonFDIasInvestmentType(projectName)
-      .submitTheForm()
-  })
-
-  When(/^I create a new Investment project as not a source of foreign equity investment$/, async () => {
-    projectName = faker.commerce.productName()
-    await Company
-      .navigate()
-      .findCompany(ukLtdCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .clickAddInvestmentProjectButton()
-      .enterSourceCompanySearch(foreignCompanyName)
-      .submitForm('form')
-      .clickOnCompanyFromList()
-    await InvestmentProject
-      .createNewInvestmentProjectAsNonForeignEquityInvestment(projectName)
-  })
-
-  Then(/^I verify my newly created foreign equity Investment project in company profile$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(foreignCompanyName)
-    await Contact
-      .clickOnFirstCompanyFromList()
-    await InvestmentProject
-      .clickInvestmentsTab()
-      .getText('@projectNameFromCompanyProfile', (result) => {
-        InvestmentProject.assert.equal(result.value, projectName)
-      })
-  })
-
-  When(/^I search for my newly created Investment project$/, async () => {
-    await Company
-      .navigate()
-      .findCompany(projectName)
-  })
-
-  Then(/^I verify it is displayed in the search results$/, async () => {
-    await InvestmentProject
-      .clickOnInvestmentProjectsTabUnderSearch()
-      .getText('@projectNameFromCompanyProfile', (result) => {
-        InvestmentProject.assert.equal(result.value, projectName)
-      })
+    set(this.state, 'investmentProject.equitySource', {
+      name: sourceOfForeignEquity.name,
+      heading: sourceOfForeignEquity.name,
+      address: `${sourceOfForeignEquity.address1}, ${sourceOfForeignEquity.town}, ${sourceOfForeignEquity.postcode}`,
+      country: sourceOfForeignEquity.country,
+    })
+    set(this.state, 'equitySource.heading', sourceOfForeignEquity.name)
   })
 })

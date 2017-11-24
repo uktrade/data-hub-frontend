@@ -1,16 +1,33 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: statusMessage, modifier: 'light-banner' }) %}
-    <p>{{ statusCode }}</p>
-  {% endcall %}
+  {{ LocalHeader({ heading: statusMessage, modifier: 'light-banner' }) }}
 {% endblock %}
 
 {% block body_main_content %}
-  {% if devErrorDetail %}
+  {% if statusCode == '404' %}
+    <p>If you entered a web address check it was correct.</p>
+
+    <p>If you followed a link here <a href="/support">let us know</a>.</p>
+  {% elseif statusCode == '403' and error.code === 'EBADCSRFTOKEN' %}
+    <p>Try to submit the form again in a few moments.</p>
+
+    <p>If you’re still having trouble <a href="/support">report a problem</a>.</p>
+  {% elseif statusCode == '403' %}
+    <p>If you think you should have access or need to sign up to a DIT system then <a href="/support">request access</a>.</p>
+  {% else %}
+    <p>We are experiencing technical problems and the error has been reported. Try again in a few moments.</p>
+
+    <p>If you’re still having trouble <a href="/support">report a problem</a>.</p>
+  {% endif %}
+
+  <p>You can also <a href="/">browse or search from the homepage</a> to find the information you need.</p>
+
+  {% if showStackTrace %}
+    <h3 class="heading-medium">{{ statusCode }}</h3>
     <dl class="stack-trace">
-      <dt class="stack-trace__heading">{{ devErrorDetail.message }}</dt>
-      <dd class="stack-trace__details">{{ devErrorDetail.stack }}</dd>
+      <dt class="stack-trace__heading">{{ error.message }}</dt>
+      <dd class="stack-trace__details">{{ error.stack }}</dd>
     </dl>
   {% endif %}
 {% endblock %}

@@ -37,6 +37,7 @@ async function populateForm (req, res, next) {
     const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption).filter((investmentType) => {
       return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
     })
+    const referralSourceActivities = metadata.referralSourceActivityOptions.map(transformObjectToOption)
 
     const state = assign({}, {
       client_contacts: [''],
@@ -53,9 +54,10 @@ async function populateForm (req, res, next) {
         advisers,
         contacts,
         investmentTypes,
+        referralSourceActivities,
         investmentTypesObj: buildMetaDataObj(investmentTypes),
         fdi: metadata.fdiOptions.map(transformObjectToOption),
-        referralSourceActivities: metadata.referralSourceActivityOptions.map(transformObjectToOption),
+        referralSourceActivitiesObj: buildMetaDataObj(referralSourceActivities),
         referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
         referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
         primarySectors: metadata.sectorOptions.map(transformObjectToOption),

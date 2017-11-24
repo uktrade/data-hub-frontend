@@ -2,30 +2,30 @@
 
 {% block body_main_content %}
   {% set billingAddress = [
-    invoice.billing_contact_name,
-    invoice.billing_address_1,
-    invoice.billing_address_2,
-    invoice.billing_address_town,
-    invoice.billing_address_county,
-    invoice.billing_address_postcode,
-    invoice.billing_address_country.name
+    invoice.billing_contact_name | escape,
+    invoice.billing_address_1 | escape,
+    invoice.billing_address_2 | escape,
+    invoice.billing_address_town | escape,
+    invoice.billing_address_county | escape,
+    invoice.billing_address_postcode | escape,
+    invoice.billing_address_country.name | escape
   ] | removeNilAndEmpty | join('<br>') %}
 
   {% set invoiceAddress = [
-    invoice.invoice_company_name,
-    invoice.invoice_address_1,
-    invoice.invoice_address_2,
-    invoice.invoice_address_town,
-    invoice.invoice_address_county,
-    invoice.invoice_address_postcode,
-    invoice.invoice_address_country.name
+    invoice.invoice_company_name | escape,
+    invoice.invoice_address_1 | escape,
+    invoice.invoice_address_2 | escape,
+    invoice.invoice_address_town | escape,
+    invoice.invoice_address_county | escape,
+    invoice.invoice_address_postcode | escape,
+    invoice.invoice_address_country.name | escape
   ] | removeNilAndEmpty | join('<br>') %}
 
   <div class="u-clearfix">
     <div class="u-float-left">
       {{ MetaList({
         items: [
-          { label: 'For the attention of', value: billingAddress, safe: true },
+          { label: 'For the attention of', value: billingAddress | safe },
           { label: 'Purchase order (PO) number', value: invoice.po_number },
           { label: 'Receipt date', value: invoice.created_on, type: 'datetime' }
         ],
@@ -37,7 +37,7 @@
     <div class="u-float-right">
       {{ MetaList({
         items: [
-          { label: 'From (charging point)', value: invoiceAddress, safe: true },
+          { label: 'From (charging point)', value: invoiceAddress | safe },
           { label: 'VAT number', value: invoice.invoice_vat_number }
         ],
         modifier: 'stacked',

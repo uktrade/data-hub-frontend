@@ -31,4 +31,20 @@ defineSupportCode(({ Then }) => {
       .assert.containsText(detail.selector, value)
       .useCss()
   })
+
+  Then(/^there should be a local nav$/, async (dataTable) => {
+    const expectedLocalNav = dataTable.hashes()
+
+    await Details.api.elements('css selector', '.c-local-nav__link', (result) => {
+      client.expect(result.value.length).to.equal(expectedLocalNav.length)
+    })
+
+    for (const row of expectedLocalNav) {
+      const detailsTabSelector = Details.getDetailsTabSelector(row.text)
+      await Details
+        .api.useXpath()
+        .assert.visible(detailsTabSelector.selector)
+        .useCss()
+    }
+  })
 })

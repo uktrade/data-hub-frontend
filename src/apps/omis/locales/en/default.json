@@ -4,15 +4,11 @@
       "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Choose the market (country) where the service is required",
-      "supportingContent": "This is not a list of all countries, but those where DIT currently provide this service."
+      "label": "Choose the market (country) where the service is required"
     },
     "subscribers": {
       "legend": "Advisers",
-      "hint": {
-        "create": "For example International trade advisers or language advisers. They will be informed of the order once you submit it.",
-        "edit": "For example International trade advisers or language advisers"
-      },
+      "hint": "For example International trade advisers or language advisers",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
@@ -30,17 +26,18 @@
     },
     "delivery_date": {
       "label": "Delivery date of first activity",
-      "hint": "For example 28/10/2017"
+      "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
       "label": "Specific people or organisations the company does not want DIT to talk to"
     },
     "existing_agents": {
-      "label": "Contacts the company already has in the market"
+      "label": "Contacts the company already has in the market",
+      "hint": "For example partners, suppliers or distributors"
     },
     "further_info": {
-      "label": "Additional notes and useful information",
-      "hint": "For example other client comments or requirements"
+      "label": "Internal notes and useful information",
+      "hint": "For example specific client requirements, market and distribution strategies or key deadlines"
     },
     "assignees": {
       "legend": "Advisers",
@@ -56,6 +53,7 @@
     },
     "vat_status": {
       "label": "VAT category",
+      "hint": "Choose a VAT category based on the billing address country",
       "options": {
         "uk": "Inside UK",
         "eu": "Inside EU",
@@ -66,7 +64,7 @@
       "label": "VAT number"
     },
     "vat_verified": {
-      "label": "Is the VAT number valid?",
+      "label": "Has a valid VAT number valid been supplied?",
       "options": {
         "unverified": "Not verified",
         "valid": "Valid",
@@ -102,9 +100,6 @@
       "label": "Payment received date",
       "hint": "For example 28/10/2017"
     },
-    "transaction_reference": {
-      "label": "Transaction reference"
-    },
     "cancellation_reason": {
       "label": "Reason for cancelling"
     }
@@ -116,7 +111,9 @@
       "delivery_date": "Set a delivery date of at least 21 days from now",
       "assignees": "Add at least one adviser in the market",
       "assignee_time": "Allocate hours to at least one adviser in the market",
+      "assignee_lead": "Set a lead adviser",
       "vat_status": "Choose a VAT category",
+      "vat_number": "Enter the EU company's VAT number",
       "vat_verified": "Verify the EU company's VAT number"
     }
   },
@@ -129,6 +126,15 @@
     "before": "must be in the past",
     "isDuration": "must be a whole number, for example 1",
     "isGreaterThanAmount": "must be equal to or larger than the invoice amount",
+    "validEUVatNumber": "must be a valid EU VAT number including the country code, for example ATU12345678 for Austria",
     "default": "is required"
+  },
+  "status": {
+    "draft": "Draft",
+    "quote_awaiting_acceptance": "Quote awaiting acceptance",
+    "quote_accepted": "Quote accepted",
+    "paid": "Payment received",
+    "complete": "Completed",
+    "cancelled": "Cancelled"
   }
 }

@@ -115,6 +115,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
@@ -122,9 +127,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
+              label: 'Channel',
+              value: {
+                id: '72c226d7-5d95-e211-a939-e4115bead28a',
+                name: 'Telephone',
+              },
             },
             {
               label: 'Adviser',
@@ -137,6 +144,26 @@ describe('Interaction transformers', () => {
             },
           ],
         })
+      })
+    })
+
+    context('when the source is an interaction with an empty subject', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: '' }))
+      })
+
+      it('should transform data from interaction response to list item', () => {
+        expect(this.transformed).have.property('name', 'No subject')
+      })
+    })
+
+    context('when the source is an interaction with a null subject', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: null }))
+      })
+
+      it('should transform data from interaction response to list item', () => {
+        expect(this.transformed).have.property('name', 'No subject')
       })
     })
 
@@ -167,6 +194,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
@@ -174,9 +206,11 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
+              label: 'Channel',
+              value: {
+                id: '72c226d7-5d95-e211-a939-e4115bead28a',
+                name: 'Telephone',
+              },
             },
             {
               label: 'Adviser',

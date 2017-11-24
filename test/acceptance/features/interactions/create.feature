@@ -8,7 +8,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Interaction fields from companies
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then navigating to the create company interactions and services step 1 page
     And selecting interaction
     Then there are interaction fields
@@ -18,7 +25,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Interaction fields from contacts
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then navigating to the create contact interactions and services step 1 page
     And selecting interaction
     Then there are interaction fields
@@ -28,7 +42,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Interaction fields from investment projects
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then a company investment project is created for interactions
     When navigating to the create investment project interaction page
     Then there are interaction fields
@@ -38,7 +59,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Service delivery fields from companies
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then navigating to the create company interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
@@ -48,7 +76,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Service delivery fields from contacts
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then navigating to the create contact interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields
@@ -58,7 +93,14 @@ Feature: Save an Interaction in Data hub
   Scenario: Toggle service delivery event association
 
     Given a company is created
-    When a company contact is created for interactions
+    When I search for the company
+    And the first search result is clicked
+    And I navigate to the companies contacts page
+    And I click the "Add contact" link
+    When a primary contact is added
+    And I submit the form
+    Then I see the success message
+    Then I wait and then refresh the page
     Then navigating to the create company interactions and services step 1 page
     And selecting service delivery
     Then there are service delivery fields

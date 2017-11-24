@@ -29,9 +29,11 @@
     {% for option in options %}
       {% set label = option.name or option.label %}
       {% set value = option.id or option.value %}
-      <option value="{{ value }}" {% if value and fieldValue === value %}selected{% endif %}>
-        {{ label }}
-      </option>
+      {% safespaceless %}
+        <option value="{{ value }}" {% if value and fieldValue === value %}selected{% endif %}>
+          {{ label }}
+        </option>
+      {% endsafespaceless %}
     {% endfor %}
   </select>
 {% endmacro %}

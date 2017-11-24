@@ -1,8 +1,9 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { set } = require('lodash')
+const { get, set, camelCase } = require('lodash')
 
 const { getUid } = require('../../../helpers/uuid')
+const { getDateFor } = require('../../../helpers/date')
 
 const dashboardPage = `${process.env.QA_HOST}/`
 
@@ -12,38 +13,34 @@ defineSupportCode(({ Given, When, Then }) => {
   const Contact = client.page.Contact()
   const Search = client.page.Search()
 
-  Given(/^a company contact is created for interactions$/, async function () {
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name))
-
-    await Company
-      .section.firstCompanySearchResult
-      .click('@header')
-
-    await Company.section.detailsTabs
-      .waitForElementVisible('@contacts')
-      .click('@contacts')
-
-    await Contact
-      .createNewContact({}, true, (contact) => set(this.state, 'contact', contact))
-      .wait() // wait for backend to sync
-  })
-
   Given(/^a company investment project is created for interactions$/, async function () {
   })
 
   When(/^adding an interaction/, async function () {
     await Interaction
-      .createInteraction({}, (interaction) => set(this.state, 'interaction', interaction))
+      .createInteraction({}, (interaction) => {
+        set(this.state, 'interaction', interaction)
+        set(this.state, 'interaction.date', getDateFor({
+          year: get(this.state, 'interaction.dateOfInteractionYear'),
+          month: get(this.state, 'interaction.dateOfInteractionMonth'),
+          day: get(this.state, 'interaction.dateOfInteractionDay'),
+        }))
+        set(this.state, 'interaction.type', 'Interaction')
+      })
       .wait() // wait for backend to sync
   })
 
   When(/^adding a service delivery/, async function () {
     await Interaction
-      .createServiceDelivery({}, (serviceDelivery) => set(this.state, 'serviceDelivery', serviceDelivery))
+      .createServiceDelivery({}, (serviceDelivery) => {
+        set(this.state, 'serviceDelivery', serviceDelivery)
+        set(this.state, 'serviceDelivery.date', getDateFor({
+          year: get(this.state, 'serviceDelivery.dateOfInteractionYear'),
+          month: get(this.state, 'serviceDelivery.dateOfInteractionMonth'),
+          day: get(this.state, 'serviceDelivery.dateOfInteractionDay'),
+        }))
+        set(this.state, 'serviceDelivery.type', 'Service delivery')
+      })
       .wait() // wait for backend to sync
   })
 
@@ -171,5 +168,40 @@ defineSupportCode(({ Given, When, Then }) => {
   Then(/^the interaction events is not displayed$/, async function () {
     await Interaction
       .assert.hidden('@event')
+  })
+
+  /**
+   * The filtering available for Interactions and Service Delivery is particularly hard to pin down a specific
+   * Interaction or Service Delivery. This is by design. The filtering here combined with random dates for creation
+   * of an Interaction or Service Delivery should mean we always find what we are looking for in teh first
+   * result of the Collection.
+   */
+  Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
+    const filtersSection = Interaction.section.filters
+    const interactionType = camelCase(typeOfInteraction)
+    const date = getDateFor({
+      year: get(this.state, `${interactionType}.dateOfInteractionYear`),
+      month: get(this.state, `${interactionType}.dateOfInteractionMonth`),
+      day: get(this.state, `${interactionType}.dateOfInteractionDay`),
+    }, 'YYYY-M-D')
+
+    await filtersSection
+      .waitForElementPresent(`@${interactionType}`)
+      .click(`@${interactionType}`)
+      .wait() // wait for xhr
+      .clickListOption('dit_adviser', get(this.state, `${interactionType}.ditAdviser`))
+      .wait() // wait for xhr
+      .setValue('@dateFrom', date)
+      .sendKeys('@dateFrom', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+      .setValue('@dateTo', date)
+      .sendKeys('@dateTo', [ client.Keys.ENTER ])
+      .wait() // wait for xhr
+
+    if (interactionType === 'interaction') {
+      await filtersSection
+        .clickListOption('communication_channel', get(this.state, 'interaction.communicationChannel'))
+        .wait() // wait for xhr
+    }
   })
 })

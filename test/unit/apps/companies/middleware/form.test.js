@@ -32,8 +32,6 @@ describe('Companies form middleware', function () {
     it('should include the required properties in the response', () => {
       this.middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.resMock.locals).to.have.property('chDetailsLabels')
-      expect(this.resMock.locals).to.have.property('chDetailsDisplayOrder')
       expect(this.resMock.locals).to.have.property('regionOptions')
       expect(this.resMock.locals).to.have.property('sectorOptions')
       expect(this.resMock.locals).to.have.property('employeeOptions')
@@ -202,6 +200,15 @@ describe('Companies form middleware', function () {
           expect(this.nextSpy).to.have.been.calledWith(this.error)
         })
       })
+    })
+  })
+
+  describe('setIsEditMode', () => {
+    it('should set edit mode', () => {
+      expect(this.resMock.locals.isEditMode).to.equal(undefined)
+      this.middleware.setIsEditMode(this.reqMock, this.resMock, this.nextSpy)
+      expect(this.resMock.locals.isEditMode).to.equal(true)
+      expect(this.nextSpy).to.have.been.calledOnce
     })
   })
 })

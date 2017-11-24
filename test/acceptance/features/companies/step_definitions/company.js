@@ -1,4 +1,4 @@
-const { get, set } = require('lodash')
+const { get, set, find, assign } = require('lodash')
 
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
@@ -9,6 +9,34 @@ const dashboardPage = `${process.env.QA_HOST}/`
 
 defineSupportCode(({ Then, When }) => {
   const Company = client.page.Company()
+  const Search = client.page.Search()
+  const Location = client.page.Location()
+
+  When(/^I navigate to the Company (.+)$/, async function (companyName) {
+    const companyFixtureDetails = find(this.fixtures.company, ['name', companyName])
+    set(this.state, 'company', assign({}, get(this.state, 'company'), companyFixtureDetails))
+
+    await Search
+      .navigate()
+      .search(companyName)
+      .section.firstCompanySearchResult
+      .waitForElementPresent('@header')
+      .click('@header')
+
+    await Location
+      .section.localHeader
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', companyName)
+  })
+
+  When(/^I navigate to the companies (.+) page$/, async function (pageName) {
+    const tag = `@${pageName}`
+
+    await Company
+      .section.detailsTabs
+      .waitForElementPresent(tag)
+      .click(tag)
+  })
 
   When(/^a "UK private or public limited company" is created$/, async function () {
     await client
@@ -16,7 +44,7 @@ defineSupportCode(({ Then, When }) => {
 
     await Company
       .createUkPrivateOrPublicLimitedCompany(
-        this.fixtures.company.companiesHouse,
+        get(this.fixtures, 'company.companiesHouse'),
         {},
         (company) => set(this.state, 'company', company),
       )

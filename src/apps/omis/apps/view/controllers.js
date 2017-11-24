@@ -1,27 +1,18 @@
 const { get, merge, sumBy } = require('lodash')
 
-const { Order } = require('../../models')
-const logger = require('../../../../../config/logger')
-const { getContact } = require('../../../contacts/repos')
+const { transformSubscriberToView } = require('../../transformers')
 
-async function renderWorkOrder (req, res) {
+function renderWorkOrder (req, res) {
   const order = res.locals.order
-  let values
+  const assignees = res.locals.assignees
+  const subscribers = get(res.locals, 'subscribers', []).map(transformSubscriberToView(get(res.locals, 'user.id')))
 
-  try {
-    const subscribers = await Order.getSubscribers(req.session.token, order.id)
-    const assignees = await Order.getAssignees(req.session.token, order.id)
-    const contact = await getContact(req.session.token, order.contact.id)
-
-    values = merge({}, order, {
-      contact,
-      subscribers,
-      assignees,
-      estimatedTimeSum: sumBy(assignees, 'estimated_time'),
-    })
-  } catch (e) {
-    logger.error(e)
-  }
+  const values = merge({}, order, {
+    assignees,
+    subscribers,
+    contact: res.locals.contact,
+    estimatedTimeSum: sumBy(assignees, 'estimated_time'),
+  })
 
   res.render('omis/apps/view/views/work-order', {
     values,

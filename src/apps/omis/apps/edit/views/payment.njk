@@ -2,9 +2,9 @@
 
 {% block fields %}
   {% set billingContact = [
-    order.billing_contact_name,
-    order.billing_email,
-    order.billing_phone
+    order.billing_contact_name | escape,
+    order.billing_email | escape,
+    order.billing_phone | escape
   ] | removeNilAndEmpty %}
 
   {% if billingContact | length %}
@@ -22,30 +22,30 @@
   {% endif %}
 
   {% set billingAddress = [
-    order.billing_address_1,
-    order.billing_address_2,
-    order.billing_address_town,
-    order.billing_address_county,
-    order.billing_address_postcode,
-    order.billing_address_country.name
+    order.billing_address_1 | escape,
+    order.billing_address_2 | escape,
+    order.billing_address_town | escape,
+    order.billing_address_county | escape,
+    order.billing_address_postcode | escape,
+    order.billing_address_country.name | escape
   ] | removeNilAndEmpty %}
 
   {% set registeredAddress = [
-    company.registered_address_1,
-    company.registered_address_2,
-    company.registered_address_town,
-    company.registered_address_county,
-    company.registered_address_postcode,
-    company.registered_address_country.name
+    company.registered_address_1 | escape,
+    company.registered_address_2 | escape,
+    company.registered_address_town | escape,
+    company.registered_address_county | escape,
+    company.registered_address_postcode | escape,
+    company.registered_address_country.name | escape
   ] | removeNilAndEmpty %}
 
   {% set tradingAddress = [
-    company.trading_address_1,
-    company.trading_address_2,
-    company.trading_address_town,
-    company.trading_address_county,
-    company.trading_address_postcode,
-    company.trading_address_country.name
+    company.trading_address_1 | escape,
+    company.trading_address_2 | escape,
+    company.trading_address_town | escape,
+    company.trading_address_county | escape,
+    company.trading_address_postcode | escape,
+    company.trading_address_country.name | escape
   ] | removeNilAndEmpty %}
 
   <div class="c-form-group">

@@ -4,7 +4,7 @@ const { search, searchLimitedCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformCompanyToListItem,
-  transformCompaniesHouseCompanyToListItem,
+  transformCompaniesHouseToListItem,
 } = require('../transformers')
 
 async function getCompanyCollection (req, res, next) {
@@ -43,7 +43,7 @@ async function getLimitedCompaniesCollection (req, res, next) {
       .then(
         transformApiResponseToSearchCollection(
           { query: req.query },
-          transformCompaniesHouseCompanyToListItem,
+          transformCompaniesHouseToListItem,
           (item) => {
             return assign({}, item, {
               url: `/companies/add/${item.id}`,

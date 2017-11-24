@@ -16,7 +16,7 @@ const selectMarkup = `<div id="group-field-adviser" class="c-form-group js-advis
   </div>
 </div>`
 
-function makeSingleFieldset (allowDeleteAll = false) {
+function makeSingleFieldset (allowDeleteAll = false, allowDelete = true) {
   const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
     formMacros.render('MultipleChoiceField', {
       label: 'Test label',
@@ -37,6 +37,7 @@ function makeSingleFieldset (allowDeleteAll = false) {
   const HTML = `
     <div class="js-AddItems"
       data-item-selector=".c-form-fieldset"
+      ${allowDelete ? '' : 'data-can-remove="false"'}
       ${allowDeleteAll ? 'data-can-remove-all' : ''}>${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
@@ -47,7 +48,7 @@ function makeSingleFieldset (allowDeleteAll = false) {
   return { document, wrapper }
 }
 
-function makeMultipleFieldset (allowDeleteAll = false) {
+function makeMultipleFieldset (allowDeleteAll = false, allowDelete = true) {
   const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
     formMacros.render('MultipleChoiceField', {
       label: 'Test label',
@@ -68,6 +69,7 @@ function makeMultipleFieldset (allowDeleteAll = false) {
   const HTML = `
     <div class="js-AddItems"
       data-item-selector=".c-form-fieldset"
+      ${allowDelete ? '' : 'data-can-remove="false"'}
       ${allowDeleteAll ? 'data-can-remove-all' : ''}>${fieldset}${fieldset}</div>`
 
   const { window } = new JSDOM(HTML)
@@ -206,21 +208,8 @@ describe('Add another', () => {
 
       describe('(allow remove all)', () => {
         beforeEach(() => {
-          const { document, wrapper } = makeMultipleFieldset(true)
-          this.document = document
+          const { wrapper } = makeMultipleFieldset(true)
           this.wrapper = wrapper
-        })
-
-        it('should add a remove button when there is only one fragment', () => {
-          const { document, wrapper } = makeSingleFieldset(true)
-          this.document = document
-          this.wrapper = wrapper
-
-          expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(1)
-        })
-
-        it('should add a remove button when there is more than one fragment', () => {
-          expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
 
         it('should remove an element if the remove button is pressed', () => {
@@ -238,6 +227,47 @@ describe('Add another', () => {
           addButtonElement.click()
 
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
+        })
+
+        context('when multiple items', () => {
+          it('should add multiple remove button', () => {
+            expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
+          })
+        })
+
+        context('when only one item', () => {
+          beforeEach(() => {
+            const { wrapper } = makeSingleFieldset(true)
+            this.wrapper = wrapper
+          })
+
+          it('should add one remove button', () => {
+            expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(1)
+          })
+        })
+      })
+
+      describe('(disallow remove any)', () => {
+        context('when only one item', () => {
+          beforeEach(() => {
+            const { wrapper } = makeSingleFieldset(false, false)
+            this.wrapper = wrapper
+          })
+
+          it('should not add a remove button', () => {
+            expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
+          })
+        })
+
+        context('when multiple items', () => {
+          beforeEach(() => {
+            const { wrapper } = makeMultipleFieldset(false, false)
+            this.wrapper = wrapper
+          })
+
+          it('should not add a remove button', () => {
+            expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
+          })
         })
       })
     })
