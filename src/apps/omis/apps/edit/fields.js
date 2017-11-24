@@ -165,6 +165,10 @@ const editFields = merge({}, globalFields, {
       name: 'vat_status',
       value: 'eu',
     },
+    dependent: {
+      name: 'vat_status',
+      value: 'eu',
+    },
   },
   po_number: {
     fieldType: 'TextField',
