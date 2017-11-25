@@ -28,20 +28,50 @@ describe('Key/value table component', () => {
   })
 
   it('should render a table with link', () => {
+    const name = '#1 label content'
+    const url = '/label-1'
     const component = renderComponentToDom(
       'key-value-table',
       {
         items: {
           'First label': {
-            name: '#1 label content',
-            url: '/label-1',
+            name,
+            url,
           },
         },
       }
     )
 
-    expect(component.querySelector('td').innerHTML.trim())
-      .to.equal('<a href="/label-1">#1 label content</a>')
+    expect(component.querySelector('td').innerHTML
+      .trim()
+      .replace(/\s+/g, ' '))
+      .to.equal(`<a href="${url}">${name}</a>`)
+  })
+
+  it('should render a table with link containing hint', () => {
+    const hint = 'example hint'
+    const hintId = 'mock-id'
+    const name = '#1 label content'
+    const url = '/label-1'
+
+    const component = renderComponentToDom(
+      'key-value-table',
+      {
+        items: {
+          'First label': {
+            name,
+            url,
+            hint,
+            hintId,
+          },
+        },
+      }
+    )
+
+    expect(component.querySelector('td').innerHTML
+      .trim()
+      .replace(/\s+/g, ' '))
+      .to.equal(`<a aria-labelledby="${hintId}" href="${url}">${name}</a> <span id="${hintId}">${hint}</span>`)
   })
 
   it('should render a table with an object with a name', () => {

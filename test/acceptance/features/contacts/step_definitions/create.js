@@ -11,6 +11,7 @@ defineSupportCode(({ Given, Then, When }) => {
   const Contact = client.page.Contact()
   const Search = client.page.Search()
   const Dashboard = client.page.Dashboard()
+  const Location = client.page.Location()
 
   When(/^a primary contact is added$/, async function () {
     await Contact
@@ -45,7 +46,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .section.firstCompanySearchResult
       .click('@header')
 
-    await Company.section.detailsTabs
+    await Location.section.detailsTabs
       .waitForElementVisible('@contacts')
       .click('@contacts')
 
@@ -64,7 +65,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .section.firstCompanySearchResult
       .click('@header')
 
-    await Company.section.detailsTabs
+    await Location.section.detailsTabs
       .waitForElementVisible('@contacts')
       .click('@contacts')
 

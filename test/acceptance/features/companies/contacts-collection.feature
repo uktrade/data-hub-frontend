@@ -9,7 +9,7 @@ Feature: View collection of contacts for a company
   Scenario: View companies contact collection
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies contacts page
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     And I submit the form
@@ -32,7 +32,7 @@ Feature: View collection of contacts for a company
   Scenario: Filter companies contact list
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies contacts page
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact with new company address is added
     When I submit the form
@@ -68,7 +68,7 @@ Feature: View collection of contacts for a company
   Scenario: Sort companies contact list
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies contacts page
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

@@ -13,15 +13,6 @@ function generateEmail (firstName, lastName, isAlternative) {
   return emailParts.join('.') + suffix
 }
 
-const getDetailsTabSelector = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//a',
-      className: 'c-local-nav__link',
-    }
-  )
-
 const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   text,
   {
@@ -196,14 +187,6 @@ module.exports = {
     },
   ],
   sections: {
-    detailsTabs: {
-      selector: '.c-local-nav',
-      elements: {
-        details: getDetailsTabSelector('Details'),
-        interactions: getDetailsTabSelector('Interactions'),
-        auditHistory: getDetailsTabSelector('Audit history'),
-      },
-    },
     firstContactSearchResult: {
       selector: '.c-entity-list li:first-child',
       elements: {

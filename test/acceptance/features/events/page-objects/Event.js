@@ -2,8 +2,15 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { get, camelCase, isNull, pickBy, keys, assign } = require('lodash')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
+const { getButtonWithText, getSelectorForElementWithText } = require('../../../helpers/selectors')
 const { getDateFor } = require('../../../helpers/date')
+
+const getLinkWithText = (text) => getSelectorForElementWithText(
+  text,
+  {
+    el: '//a',
+  },
+)
 
 module.exports = {
   url: `${process.env.QA_HOST}/events/create`,
@@ -147,4 +154,12 @@ module.exports = {
       },
     },
   ],
+  sections: {
+    details: {
+      selector: '.table--key-value',
+      elements: {
+        documentsLink: getLinkWithText('Documents'),
+      },
+    },
+  },
 }

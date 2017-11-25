@@ -16,11 +16,24 @@
   <table class="table--key-value{{ ' table--' + variant if variant }}">
     <tbody>
       {% for label, data in items %}
+        {% set id = data.id %}
         <tr>
           <th>{{ label }}</th>
           <td>
             {% if data.url %}
-              <a href="{{ data.url }}">{{ data.name }}</a>
+              <a
+                {% if data.hintId %}aria-labelledby="{{ data.hintId }}"{% endif %}
+                href="{{ data.url }}"
+              >
+                {{- data.name -}}
+              </a>
+              {% if data.hint %}
+                <span
+                  {% if data.hintId %}id="{{ data.hintId }}"{% endif %}
+                >
+                  {{- data.hint -}}
+                </span>
+              {% endif  %}
             {% elif data | isArray %}
               <ul>
                {% for item in data | removeNilAndEmpty %}

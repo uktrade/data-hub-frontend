@@ -5,14 +5,6 @@ const { getSelectorForElementWithText, getButtonWithText } = require('../../../h
 const { appendUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
 
-const getDetailsTabSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//a',
-    className: 'c-local-nav__link',
-  }
-)
-
 const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
   text,
   {
@@ -382,17 +374,6 @@ module.exports = {
     },
   ],
   sections: {
-    detailsTabs: {
-      selector: '.c-local-nav',
-      elements: {
-        details: getDetailsTabSelector('Details'),
-        contacts: getDetailsTabSelector('Contacts'),
-        interactions: getDetailsTabSelector('Interactions'),
-        export: getDetailsTabSelector('Export'),
-        investment: getDetailsTabSelector('Investment'),
-        auditHistory: getDetailsTabSelector('Audit history'),
-      },
-    },
     firstCompanySearchResult: {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
