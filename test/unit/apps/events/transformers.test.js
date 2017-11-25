@@ -112,8 +112,10 @@ describe('Event transformers', () => {
             name: 'Account Management',
           },
           'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
             url: 'http://base/documents/123',
-            name: 'Documents',
           },
         })
       })
@@ -128,6 +130,9 @@ describe('Event transformers', () => {
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
           'Address': '1 Uk Street, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Documents': {
+            name: 'There are no files or documents',
+          },
           'Type of event': {
             id: '6031f993-a689-49af-9a11-942a8413a779',
             name: 'Outward mission',
@@ -157,6 +162,9 @@ describe('Event transformers', () => {
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
           'Address': '1 Uk Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Documents': {
+            name: 'There are no files or documents',
+          },
           'Event end date': {
             type: 'date',
             name: '2017-11-11',

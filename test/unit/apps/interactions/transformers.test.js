@@ -274,6 +274,12 @@ describe('Interaction transformers', () => {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
           'DIT adviser': {
             id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
             first_name: 'Test',
@@ -287,10 +293,6 @@ describe('Interaction transformers', () => {
           'Communication channel': {
             id: '72c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Telephone',
-          },
-          'Documents': {
-            url: 'http://base/documents/123',
-            name: 'Documents',
           },
         })
       })
@@ -319,6 +321,12 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
           'Interaction date': {
             type: 'date',
             name: '2017-05-31T00:00:00',
@@ -368,6 +376,12 @@ describe('Interaction transformers', () => {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
           'DIT adviser': {
             id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
             first_name: 'Test',
@@ -412,6 +426,12 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
           'Interaction date': {
             type: 'date',
             name: '2017-05-31T00:00:00',
@@ -480,6 +500,12 @@ describe('Interaction transformers', () => {
             url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
             name: 'Test project',
           },
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
           'Event': {
             url: '/events/4444',
             name: 'Event title',
@@ -535,6 +561,12 @@ describe('Interaction transformers', () => {
             name: 'Test project',
           },
           'Event': 'No',
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
         })
       })
     })
@@ -565,6 +597,9 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
+          'Documents': {
+            name: 'There are no files or documents',
+          },
           'Interaction date': {
             type: 'date',
             name: '2017-05-31T00:00:00',
