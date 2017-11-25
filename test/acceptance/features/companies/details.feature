@@ -1,4 +1,4 @@
-@companies-details
+@companies-details @details
 Feature: Company details
 
   @companies-details--cdms-reference
@@ -16,6 +16,8 @@ Feature: Company details
       | Audit history               |
       | Documents                   |
     And the company details CDMS reference is displayed
+    When I click the Documents local nav link
+    Then view should contain the Documents link
 
   @companies-details--no-cdms-reference
   Scenario: Company does not have CDMS reference
@@ -30,7 +32,10 @@ Feature: Company details
       | Investment                  |
       | Orders (OMIS)               |
       | Audit history               |
+      | Documents                   |
     And the company details CDMS reference is not displayed
+    When I click the Documents local nav link
+    Then view should not contain the Documents link
 
 
 
