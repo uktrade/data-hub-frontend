@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, get } = require('lodash')
 
 const { transformEventResponseToViewRecord, transformEventFormBodyToApiRequest } = require('../transformers')
 const { fetchEvent, saveEvent } = require('../repos')
@@ -42,9 +42,10 @@ async function getEventDetails (req, res, next, eventId) {
   }
 }
 
-async function getAdviserDetails (req, res, next) {
+async function setActiveAdvisers (req, res, next) {
   try {
-    res.locals.advisers = await getAdvisers(req.session.token)
+    const currentAdviser = get(req.locals, 'event.adviser.id')
+    res.locals.advisers = await getAdvisers(req.session.token, false, currentAdviser)
     next()
   } catch (err) {
     next(err)
@@ -53,6 +54,6 @@ async function getAdviserDetails (req, res, next) {
 
 module.exports = {
   getEventDetails,
-  getAdviserDetails,
+  setActiveAdvisers,
   postDetails,
 }

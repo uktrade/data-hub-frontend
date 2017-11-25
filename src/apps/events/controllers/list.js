@@ -3,7 +3,7 @@ const { eventFiltersFields, eventSortForm } = require('../macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderEventList (req, res) {
-  const advisers = get(res.locals, 'advisers.results')
+  const advisers = get(res.locals, 'advisers')
   const sortForm = merge({}, eventSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
