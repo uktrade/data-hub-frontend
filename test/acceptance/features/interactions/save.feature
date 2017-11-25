@@ -10,7 +10,7 @@ Feature: Save a new interaction in Data hub
     Given a company is created
     When I search for the company
     And the first search result is clicked
-    And I navigate to the companies contacts page
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     When a primary contact is added
     And I submit the form
@@ -27,7 +27,7 @@ Feature: Save a new interaction in Data hub
     Given a company is created
     When I search for the company
     And the first search result is clicked
-    And I navigate to the companies contacts page
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     When a primary contact is added
     When I submit the form

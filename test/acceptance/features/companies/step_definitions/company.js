@@ -32,7 +32,7 @@ defineSupportCode(({ Then, When }) => {
   When(/^I navigate to the companies (.+) page$/, async function (pageName) {
     const tag = `@${pageName}`
 
-    await Company
+    await Location
       .section.detailsTabs
       .waitForElementPresent(tag)
       .click(tag)
