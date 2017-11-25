@@ -4,9 +4,10 @@ const { sentence } = require('case')
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
-const { getContactsForCompany } = require('../../contacts/repos')
+const { getContactsForCompany, getContact } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { getActiveEvents } = require('../../events/repos')
+const { getDitCompany } = require('../../companies/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -37,8 +38,25 @@ async function postDetails (req, res, next) {
 
 async function getInteractionDetails (req, res, next, interactionId) {
   try {
-    res.locals.interaction = await fetchInteraction(req.session.token, interactionId)
-    res.locals.company = res.locals.interaction.company
+    const token = req.session.token
+    const interaction = res.locals.interaction = await fetchInteraction(token, interactionId)
+
+    // Get the company associated with the interaction. This can be in the interaction
+    // record, or in the case of editing investment interactions it is the company
+    // associated with the interaction contact.
+    if (interaction.company) {
+      res.locals.company = interaction.company
+      return next()
+    }
+
+    const contactId = get(interaction, 'contact.id')
+    if (!contactId) {
+      return next(new Error('An interaction must have a company or contact associated with it'))
+    }
+
+    const contact = await getContact(token, contactId)
+    res.locals.company = await getDitCompany(token, contact.company.id)
+
     next()
   } catch (err) {
     next(err)

@@ -23,6 +23,9 @@ describe('Interaction details middleware', () => {
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
+    this.getContactStub = this.sandbox.stub()
+    this.getDitCompanyStub = this.sandbox.stub()
+
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
         saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -40,11 +43,16 @@ describe('Interaction details middleware', () => {
       },
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
+        getContact: this.getContactStub,
       },
       '../../events/repos': {
         getActiveEvents: this.sandbox.stub().resolves(eventsData.results),
       },
+      '../../companies/repos': {
+        getDitCompany: this.getDitCompanyStub,
+      },
     })
+
     this.req = {
       session: {
         token: 'abcd',
@@ -58,6 +66,7 @@ describe('Interaction details middleware', () => {
         kind: 'interaction',
       },
     }
+
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
@@ -69,6 +78,7 @@ describe('Interaction details middleware', () => {
         returnLink: '/return/',
       },
     }
+
     this.nextSpy = this.sandbox.spy()
   })
 
@@ -161,15 +171,52 @@ describe('Interaction details middleware', () => {
   })
 
   describe('#getInteractionDetails', () => {
-    context('when success', () => {
-      it('should set interaction data on locals', async () => {
+    context('when provided an interaction with a company associated', () => {
+      beforeEach(async () => {
+        this.company = this.sandbox.mock()
+        this.interaction = assign({}, interactionData, { company: this.company })
+        this.fetchInteractionStub.resolves(this.interaction)
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
-        expect(this.res.locals.interaction).to.deep.equal(interactionData)
       })
 
-      it('should set company data on locals', async () => {
+      it('should set interaction data on locals', async () => {
+        expect(this.res.locals.interaction).to.deep.equal(this.interaction)
+      })
+
+      it('should set company to the one associated with the interaction', async () => {
+        expect(this.res.locals.company).to.deep.equal(this.company)
+      })
+    })
+
+    context('when provided an investment interaction with no company', () => {
+      beforeEach(async () => {
+        this.interaction = assign({}, interactionData, {
+          company: null,
+          contact: {
+            id: '4444',
+          },
+        })
+
+        this.fetchInteractionStub.resolves(this.interaction)
+
+        this.getContactStub.resolves({
+          company: {
+            id: '1234',
+          },
+        })
+
+        this.company = this.sandbox.mock()
+        this.getDitCompanyStub.resolves(this.company)
+
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
-        expect(this.res.locals.company).to.deep.equal(interactionData.company)
+      })
+
+      it('should set interaction data on locals', async () => {
+        expect(this.res.locals.interaction).to.deep.equal(this.interaction)
+      })
+
+      it('should set company to the one associated with the interaction contact', async () => {
+        expect(this.res.locals.company).to.deep.equal(this.company)
       })
     })
   })
