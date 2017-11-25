@@ -24,6 +24,10 @@
     margin-bottom: 0;
   }
 
+  ul + .c-form-actions {
+    margin-top: $default-spacing-unit;
+  }
+
   > *:not([type="hidden"]) + * {
     margin-top: $default-spacing-unit;
     margin-bottom: 0;
