@@ -138,7 +138,7 @@ describe('transformCompanyToListItem', () => {
 
     it('does not include the registered address', () => {
       expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Registered address',
+        label: 'Primary address',
         value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
       }])
     })
@@ -161,7 +161,7 @@ describe('transformCompanyToListItem', () => {
 
     it('returns a formatted registered address', () => {
       expect(this.listItem.meta).to.containSubset([{
-        label: 'Registered address',
+        label: 'Primary address',
         value: 'Leeds City Centre, Leeds, EX1 2PL, United Kingdom',
       }])
     })
