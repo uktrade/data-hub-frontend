@@ -3,7 +3,7 @@ const router = require('express').Router()
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderInteractionList } = require('./controllers/list')
-
+const { setAllAdvisers } = require('../adviser/middleware')
 const { setDefaultQuery } = require('../middleware')
 const {
   getInteractionCollection,
@@ -24,6 +24,7 @@ router.get('/',
   getInteractionsRequestBody,
   getInteractionCollection,
   getInteractionSortForm,
+  setAllAdvisers,
   renderInteractionList
 )
 

@@ -1,11 +1,9 @@
-const { getAdvisers } = require('../../adviser/repos')
 const { interactionFiltersFieldConfig } = require('../macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 
 async function renderInteractionList (req, res, next) {
   try {
-    const { results: advisers } = await getAdvisers(req.session.token)
-    const filtersFields = interactionFiltersFieldConfig(advisers)
+    const filtersFields = interactionFiltersFieldConfig(res.locals.advisers)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
     res.render('interactions/views/list', {
