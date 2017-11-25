@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, get } = require('lodash')
 const { sentence } = require('case')
 
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
@@ -6,7 +6,7 @@ const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
-const { search } = require('../../search/services')
+const { getActiveEvents } = require('../../events/repos')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -52,13 +52,7 @@ async function getInteractionOptions (req, res, next) {
     res.locals.services = await metaDataRepository.getServices(req.session.token)
 
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await search({
-        searchEntity: 'event',
-        requestBody: { sortby: 'name:asc' },
-        token: req.session.token,
-        limit: 100000,
-        isAggregation: false,
-      })
+      res.locals.events = await getActiveEvents(req.session.token, get(req.params, 'interactionId'))
     }
 
     next()

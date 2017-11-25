@@ -23,7 +23,6 @@ describe('Interaction details middleware', () => {
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
-    this.getAllEventsStub = this.sandbox.stub()
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
         saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -42,8 +41,8 @@ describe('Interaction details middleware', () => {
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
       },
-      '../../search/services': {
-        search: this.getAllEventsStub.returns(eventsData),
+      '../../events/repos': {
+        getActiveEvents: this.sandbox.stub().resolves(eventsData.results),
       },
     })
     this.req = {
@@ -221,7 +220,7 @@ describe('Interaction details middleware', () => {
       })
 
       it('should set events data on locals', async () => {
-        expect(this.res.locals.events).to.deep.equal(eventsData)
+        expect(this.res.locals.events).to.deep.equal(eventsData.results)
       })
     })
   })
