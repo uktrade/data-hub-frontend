@@ -9,9 +9,13 @@ class EditAssigneesController extends EditController {
   async configure (req, res, next) {
     const orderId = get(res.locals, 'order.id')
     const token = get(req.session, 'token')
+
+    // Todo - update to pass parameter to just get active advisers and
+    // pass in the existing adviser id to make sure it is not filtered out
     const advisers = await getAdvisers(token)
+
     const assignees = await Order.getAssignees(token, orderId)
-    const options = advisers.results.map(transformObjectToOption)
+    const options = advisers.map(transformObjectToOption)
 
     res.locals.order.assignees = assignees
     req.form.options.fields.assignees.options = sortBy(options, 'label')
