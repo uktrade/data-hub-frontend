@@ -52,4 +52,12 @@ defineSupportCode(({ Then }) => {
     await Details
       .assert.elementNotPresent('@localNav')
   })
+
+  Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink) => {
+    const tag = noDocumentsLink ? '@noDocumentsMessage' : '@documentsLink'
+
+    await Details
+      .waitForElementPresent(tag)
+      .assert.visible(tag)
+  })
 })
