@@ -27,7 +27,7 @@ function renderEditPage (req, res) {
           advisers: get(res.locals, 'advisers.results'),
           contacts: res.locals.contacts,
           services: res.locals.services,
-          events: get(res.locals, 'events.results'),
+          events: res.locals.events,
           hiddenFields: {
             id: get(res.locals, 'interaction.id'),
             company: res.locals.company.id,
