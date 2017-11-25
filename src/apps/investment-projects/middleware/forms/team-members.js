@@ -20,7 +20,7 @@ async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
+    const advisers = advisersResponse.map(transformObjectToOption)
 
     const teamMembers = investmentData.team_members.map((teamMember) => ({
       adviser: teamMember.adviser.id,

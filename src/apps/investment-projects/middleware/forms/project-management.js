@@ -9,7 +9,7 @@ async function populateForm (req, res, next) {
     const investmentData = res.locals.investmentData
 
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
+    const advisers = advisersResponse.map(transformObjectToOption)
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: projectManagementLabels.edit,

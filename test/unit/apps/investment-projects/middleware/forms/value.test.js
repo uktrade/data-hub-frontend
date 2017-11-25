@@ -10,7 +10,7 @@ const metadataRepositoryStub = {
 describe('Investment form middleware - investment value', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
+    this.getAdvisersStub = this.sandbox.stub().resolves(advisorData.results)
     this.nextSpy = this.sandbox.spy()
     this.resMock = {
       locals: {},
