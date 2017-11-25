@@ -1,10 +1,7 @@
 const router = require('express').Router()
 
 const { setLocalNav, redirectToFirstNavItem } = require('../../../middleware')
-const {
-  setOrderBreadcrumb,
-  setArchivedDocumentsBaseUrl,
-} = require('../../middleware')
+const { setOrderBreadcrumb } = require('../../middleware')
 const {
   renderWorkOrder,
   renderQuote,
@@ -38,7 +35,6 @@ router.use(setTranslation)
 router.use(setCompany)
 router.use(setOrderBreadcrumb)
 router.use(setQuoteSummary)
-router.use(setArchivedDocumentsBaseUrl)
 
 router.get('/', redirectToFirstNavItem)
 router.get('/work-order', setContact, setAssignees, setSubscribers, renderWorkOrder)

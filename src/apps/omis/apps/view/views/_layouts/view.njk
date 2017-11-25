@@ -15,7 +15,7 @@
 
   {% if order.archived_documents_url_path %}
     <p class="c-local-header__action">
-      <a href="{{ archivedDocumentsBaseUrl }}{{ order.archived_documents_url_path }}" aria-labelledby="external-docs-label">View files and documents</a>
+      <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ order.archived_documents_url_path }}" aria-labelledby="external-docs-label">View files and documents</a>
       <br>
       <span id="external-docs-label">(will open another website)</span>
     </p>

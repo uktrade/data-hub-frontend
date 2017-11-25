@@ -3,6 +3,7 @@ const { get, assign, isNil } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
+const config = require('../../../config')
 
 function transformInteractionResponseToForm ({
   id,
@@ -99,6 +100,7 @@ function transformInteractionResponseToViewRecord ({
   communication_channel,
   event,
   kind,
+  archived_documents_url_path,
 }) {
   const contactLink = contact ? {
     url: `/contacts/${contact.id}`,
@@ -114,6 +116,19 @@ function transformInteractionResponseToViewRecord ({
     url: `/investment-projects/${investment_project.id}`,
     name: investment_project.name,
   } : null
+
+  let documentsLink = {
+    name: 'There are no files or documents',
+  }
+
+  if (archived_documents_url_path) {
+    documentsLink = {
+      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+      name: 'View files and documents',
+      hint: '(will open another website)',
+      hintId: 'external-link-label',
+    }
+  }
 
   const viewRecord = {
     'Company': companyLink,
@@ -137,6 +152,10 @@ function transformInteractionResponseToViewRecord ({
     } : 'No'
   } else {
     viewRecord['Communication channel'] = communication_channel
+  }
+
+  if (documentsLink) {
+    viewRecord['Documents'] = documentsLink
   }
 
   return viewRecord

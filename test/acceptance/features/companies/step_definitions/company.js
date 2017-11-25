@@ -29,10 +29,10 @@ defineSupportCode(({ Then, When }) => {
       .assert.containsText('@header', companyName)
   })
 
-  When(/^I navigate to the companies (.+) page$/, async function (pageName) {
+  When(/^I navigate to the companies (.+) page$/, async function (pageName) { // TODO please use work in Location (remove this)
     const tag = `@${pageName}`
 
-    await Company
+    await Location
       .section.detailsTabs
       .waitForElementPresent(tag)
       .click(tag)

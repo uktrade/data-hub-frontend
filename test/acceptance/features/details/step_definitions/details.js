@@ -40,11 +40,24 @@ defineSupportCode(({ Then }) => {
     })
 
     for (const row of expectedLocalNav) {
-      const detailsTabSelector = Details.getDetailsTabSelector(row.text)
+      const localNavItemSelector = Details.getLocalNavItemSelector(row.text)
       await Details
         .api.useXpath()
-        .assert.visible(detailsTabSelector.selector)
+        .assert.visible(localNavItemSelector.selector)
         .useCss()
     }
+  })
+
+  Then(/^there should not be a local nav$/, async () => {
+    await Details
+      .assert.elementNotPresent('@localNav')
+  })
+
+  Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink) => {
+    const tag = noDocumentsLink ? '@noDocumentsMessage' : '@documentsLink'
+
+    await Details
+      .waitForElementPresent(tag)
+      .assert.visible(tag)
   })
 })
