@@ -13,8 +13,6 @@ defineSupportCode(({ When, Then }) => {
     await client
       .url(url)
 
-    // Todo - Also capture the default filters selected if there are
-    // any and change the reset filters function to use that state.
     await Collection
       .captureResultCount((count) => {
         set(this.state, 'collection.resultCount', count)
