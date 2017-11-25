@@ -36,7 +36,7 @@ const formFields = {
 const linkDetails = {
   requirements: {
     url: 'edit-requirements',
-    text: 'Requirements and location',
+    text: 'Requirements and location form',
   },
   value: {
     url: 'edit-value',
@@ -44,12 +44,25 @@ const linkDetails = {
   },
   projectManagement: {
     url: 'edit-project-management',
-    text: 'Assign project management',
+    text: 'Assign project management form',
   },
   associatedNonFdiRandDProject: {
     url: 'edit-associated',
-    text: 'Associated project Non-FDI R&D project',
+    text: 'Associated project Non-FDI R&D project form',
   },
+}
+
+const toCompleteStageMessages = {
+  prospect: [
+    {
+      text: 'Contact the "Trade and Investment Analysis and Performance team"',
+    },
+  ],
+  active: [
+    {
+      html: 'Upload evidence documents on the <a href="https://ukticonnect.sharepoint.com/int-ti/Value/FDI-teamsite/Pages/default.aspx" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>',
+    },
+  ],
 }
 
 function buildFormLinks (forms, links) {
@@ -78,4 +91,5 @@ function buildIncompleteFormList (incompleteFields = [], formContents = formFiel
 
 module.exports = {
   buildIncompleteFormList,
+  toCompleteStageMessages,
 }
