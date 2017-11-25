@@ -36,7 +36,7 @@ Feature: Create a new Investment project
     And I search for the foreign source of equity Mars Exports Ltd
     Then I can view the Equity Source in the collection
       | text               | expected                               |
-      | Registered address | investmentProject.equitySource.address |
+      | Primary address    | investmentProject.equitySource.address |
     And the Equity Source has badges
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |
@@ -56,7 +56,7 @@ Feature: Create a new Investment project
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
       | text               | expected                               |
-      | Registered address | investmentProject.equitySource.address |
+      | Primary address    | investmentProject.equitySource.address |
     And the Equity Source has badges
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |

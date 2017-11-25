@@ -6,7 +6,7 @@
       modifier: 'light-banner'
     })
   %}
-    <p class="c-local-header__heading-after">{{ company.address }}</p>
+    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
     {% if company.archived %}
       {% call Message({ type: 'info' }) %}
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
