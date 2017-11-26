@@ -52,6 +52,7 @@ const config = {
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
   archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
+  teamSiteSharePointUrl: process.env.TEAM_SITE_SHARE_POINT_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,
     clientId: process.env.OAUTH2_CLIENT_ID,
