@@ -26,7 +26,6 @@ async function populateForm (req, res, next) {
 
     next()
   } catch (error) {
-    console.log('EH:', error)
     next(error)
   }
 }
