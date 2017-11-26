@@ -25,7 +25,7 @@ function postHandler (req, res, next) {
   if (returnUrl) {
     return res.redirect(returnUrl)
   }
-  return next()
+  return res.redirect(`/investment-projects/${res.locals.investmentData.id}/team`)
 }
 
 module.exports = {

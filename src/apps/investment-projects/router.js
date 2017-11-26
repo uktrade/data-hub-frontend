@@ -150,8 +150,7 @@ router
     getBriefInvestmentSummary,
     projectManagementFormMiddleware.populateForm,
     projectManagementFormMiddleware.handleFormPost,
-    team.editProjectManagement.postHandler,
-    team.details.getDetailsHandler
+    team.editProjectManagement.postHandler
   )
 
 router

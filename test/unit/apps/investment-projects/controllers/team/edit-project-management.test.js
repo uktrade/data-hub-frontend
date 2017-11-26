@@ -69,9 +69,8 @@ describe('Investment project, project management team, edit controller', () => {
           },
         }), this.nextStub)
 
-        expect(this.resMock.redirect).to.not.be.called
+        expect(this.resMock.redirect).to.be.calledWith(`/investment-projects/${investmentData.id}/team`)
         expect(this.flashStub).to.calledWith('success', 'Investment details updated')
-        expect(this.nextStub).to.be.calledOnce
       })
     })
 
@@ -95,7 +94,6 @@ describe('Investment project, project management team, edit controller', () => {
 
         expect(this.flashStub).to.calledWith('success', 'Investment details updated')
         expect(this.resMock.redirect).to.be.calledWith(mockReturnUrl)
-        expect(this.nextStub).to.not.be.called
       })
     })
 
