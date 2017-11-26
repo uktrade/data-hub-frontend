@@ -1,5 +1,7 @@
 const { get, indexOf, forEach, uniq } = require('lodash')
 
+const config = require('../../../config')
+
 const formFields = {
   value: [
     'total_investment',
@@ -60,7 +62,7 @@ const toCompleteStageMessages = {
   ],
   active: [
     {
-      html: 'Upload evidence documents on the <a href="https://ukticonnect.sharepoint.com/int-ti/Value/FDI-teamsite/Pages/default.aspx" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>',
+      html: `Upload evidence documents on the <a href="${config.teamSiteSharePointUrl}" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>`,
     },
   ],
 }
