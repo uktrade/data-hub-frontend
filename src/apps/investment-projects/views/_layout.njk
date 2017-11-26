@@ -45,7 +45,7 @@
         }
       }) %}
           {% if investmentStatus.currentStage.isComplete %}
-            {% if investmentStatus.currentStage.messages %}
+            {% if investmentStatus.currentStage.messages | length %}
               <p>Before you move to the {{ investmentStatus.nextStage.name }} stage:</p>
               <ul class="list-disc">
                 {% for message in investmentStatus.currentStage.messages  %}
