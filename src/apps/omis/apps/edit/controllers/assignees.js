@@ -12,7 +12,7 @@ class EditAssigneesController extends EditController {
 
     // Todo - update to pass parameter to just get active advisers and
     // pass in the existing adviser id to make sure it is not filtered out
-    const advisers = await getAdvisers(token)
+    const advisers = await getAdvisers({ token })
 
     const assignees = await Order.getAssignees(token, orderId)
     const options = advisers.map(transformObjectToOption)
