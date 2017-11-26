@@ -97,6 +97,7 @@ This file expects the following environment variables:
 | SENTRY_DSN | Sentry DSN (optional) |
 | SESSION_SECRET | String to encrypt session data with |
 | SESSION_TTL | How long the user session lasts, in millis. Defaults to 2 hours |
+| TEAM_SITE_SHARE_POINT_URL | Team site share point url |
 | WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
 | ZEN_BROWSER | Zendesk browser ID |
 | ZEN_DOMAIN | Domain used on Zendesk |
