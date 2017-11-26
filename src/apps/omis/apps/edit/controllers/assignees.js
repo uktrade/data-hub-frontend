@@ -7,30 +7,32 @@ const { Order } = require('../../../models')
 
 class EditAssigneesController extends EditController {
   async configure (req, res, next) {
-    const orderId = get(res.locals, 'order.id')
-    const canEditOrder = get(res.locals, 'order.canEditOrder')
-    const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
-    const token = get(req.session, 'token')
-    const advisers = await getAdvisers(token)
-    const assignees = await Order.getAssignees(token, orderId)
-    const options = advisers.results.map(transformObjectToOption)
+    try {
+      const orderId = get(res.locals, 'order.id')
+      const canEditOrder = get(res.locals, 'order.canEditOrder')
+      const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
+      const token = get(req.session, 'token')
+      const advisers = await getAdvisers(token)
+      const assignees = await Order.getAssignees(token, orderId)
+      const options = advisers.results.map(transformObjectToOption)
 
-    req.form.options.fields.assignees.options = sortBy(options, 'label')
-    req.form.options.fields.assignees.canRemove = canEditOrder
-    req.form.options.disableFormAction = !canEditAdvisers
+      req.form.options.fields.assignees.options = sortBy(options, 'label')
+      req.form.options.fields.assignees.canRemove = canEditOrder
+      req.form.options.disableFormAction = !canEditAdvisers
 
-    res.locals.order.assignees = assignees
+      res.locals.order.assignees = assignees
 
-    super.configure(req, res, next)
+      super.configure(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const assignees = data.assignees.map((id) => {
       return {
-        adviser: {
-          id,
-        },
+        adviser: { id },
       }
     })
 
