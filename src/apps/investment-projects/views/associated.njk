@@ -17,6 +17,7 @@
       Collection(results | assign({
         highlightTerm: searchTerm,
         countLabel: 'project',
+        listModifier: 'block-links',
         query: QUERY
       }))
     }}
