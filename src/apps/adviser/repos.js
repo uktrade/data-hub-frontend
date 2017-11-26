@@ -12,13 +12,13 @@ function adviserHasName (adviser) {
 
 /**
  *
- * @param {string} token Session token for API calls
- * @param {boolean} includeDisabled Should the response include advisers marked as disabled?
- * @param {string} currentAdviser The ID of an adviser that should be included in the list irrespective of if
+ * @param {string} options token Session token for API calls
+ * @param {boolean} options.includeDisabled Should the response include advisers marked as disabled?
+ * @param {string} options.currentAdviser The ID of an adviser that should be included in the list irrespective of if
  *                                the list excludes disabled advisers and the adviser is disabled.
  * @returns {promise[Array]} Returns an array of adviser objects
  */
-async function getAdvisers (token, includeDisabled = true, currentAdviser = null) {
+async function getAdvisers ({ token, includeDisabled = true, currentAdviser = null }) {
   const { results } = await authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
 
   if (includeDisabled) {

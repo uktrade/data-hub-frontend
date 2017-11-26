@@ -14,7 +14,7 @@ describe('Adviser repository', () => {
       })
 
       it('will be filtered out', async () => {
-        const actual = await repos.getAdvisers(123)
+        const actual = await repos.getAdvisers({ token: '1234' })
         expect(actual.length).to.equal(4)
       })
     })
@@ -26,7 +26,7 @@ describe('Adviser repository', () => {
           .reply(200, adviserData)
       })
       it('will not filter out any advisers', async () => {
-        const actual = await repos.getAdvisers(123)
+        const actual = await repos.getAdvisers({ token: '123' })
         expect(actual.length).to.equal(5)
       })
     })
@@ -58,7 +58,7 @@ describe('Adviser repository', () => {
       context('and when the caller wishes to only see active users', () => {
         context('and when the caller does not specify an adviser that must be returned', () => {
           beforeEach(async () => {
-            this.advisersResult = await repos.getAdvisers('1234', false)
+            this.advisersResult = await repos.getAdvisers({ token: '1234', includeDisabled: false })
           })
 
           it('should return just the active adviser', () => {
@@ -73,7 +73,7 @@ describe('Adviser repository', () => {
 
         context('and when the caller specified an adviser that must be returned', () => {
           beforeEach(async () => {
-            this.advisersResult = await repos.getAdvisers('1234', false, '2')
+            this.advisersResult = await repos.getAdvisers({ token: '1234', includeDisabled: false, currentAdviser: '2' })
           })
 
           it('should return just the active adviser', () => {
@@ -94,7 +94,7 @@ describe('Adviser repository', () => {
 
       context('and when the caller wishes to see all advisers', () => {
         beforeEach(async () => {
-          this.advisersResult = await repos.getAdvisers('1234')
+          this.advisersResult = await repos.getAdvisers({ token: '1234' })
         })
 
         it('should return just the active adviser', () => {
