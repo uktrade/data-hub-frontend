@@ -38,6 +38,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await Contact
       .section.contactDetails
+      .waitForElementPresent('@jobTitle')
       .assert.containsText('@jobTitle', jobTitle)
       .assert.containsText('@phoneNumber', expectedTelephoneNumber)
       .assert.containsText('@email', emailAddress)
@@ -50,6 +51,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
   Then(/^the contact heading company link is clicked$/, async function () {
     await Contact
+      .waitForElementPresent('@headingCompanyLink')
       .click('@headingCompanyLink')
   })
 })
