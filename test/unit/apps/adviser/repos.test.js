@@ -29,7 +29,7 @@ describe('Adviser repository', () => {
       })
 
       it('will be filtered out', async () => {
-        const actualAdvisers = await repos.getAdvisers({ token: '1234' })
+        const actualAdvisers = await repos.getAdvisers('1234')
         const expectedAdvisers = [this.advisers[0], this.advisers[1]]
         expect(actualAdvisers).to.deep.equal(expectedAdvisers)
       })
@@ -62,7 +62,7 @@ describe('Adviser repository', () => {
       context('and when the caller wishes to only see active users', () => {
         context('and when the caller does not specify an adviser that must be returned', () => {
           beforeEach(async () => {
-            this.advisersResult = await repos.getAdvisers({ token: '1234', includeDisabled: false })
+            this.advisersResult = await repos.getAdvisers('1234', { includeDisabled: false })
           })
 
           it('should return just the active adviser', () => {
@@ -73,7 +73,7 @@ describe('Adviser repository', () => {
 
         context('and when the caller specified an adviser that must be returned', () => {
           beforeEach(async () => {
-            this.advisersResult = await repos.getAdvisers({ token: '1234', includeDisabled: false, currentAdviser: '2' })
+            this.advisersResult = await repos.getAdvisers('1234', { includeDisabled: false, currentAdviser: '2' })
           })
 
           it('should return just the active adviser', () => {
@@ -85,7 +85,7 @@ describe('Adviser repository', () => {
 
       context('and when the caller wishes to see all advisers', () => {
         beforeEach(async () => {
-          this.advisersResult = await repos.getAdvisers({ token: '1234' })
+          this.advisersResult = await repos.getAdvisers('1234')
         })
 
         it('should return just the active adviser', () => {

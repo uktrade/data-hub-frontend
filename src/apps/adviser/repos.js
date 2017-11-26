@@ -18,7 +18,7 @@ function adviserHasName (adviser) {
  *                                the list excludes disabled advisers and the adviser is disabled.
  * @returns {promise[Array]} Returns an array of adviser objects
  */
-async function getAdvisers ({ token, includeDisabled = true, currentAdviser = null }) {
+async function getAdvisers (token, { includeDisabled = true, currentAdviser = null } = {}) {
   const { results } = await authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
 
   if (includeDisabled) {
