@@ -10,6 +10,7 @@ jobs:
           name: Restore yarn dependencies cache
           key: yarn-dependencies-{{ checksum "yarn.lock" }}
       - run: yarn install
+      - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
           name: Save yarn dependencies cache
           key: yarn-dependencies-{{ checksum "yarn.lock" }}
