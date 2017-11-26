@@ -151,7 +151,7 @@ router
     projectManagementFormMiddleware.populateForm,
     projectManagementFormMiddleware.handleFormPost,
     team.editProjectManagement.postHandler,
-    team.editProjectManagement.getHandler
+    team.details.getDetailsHandler
   )
 
 router
