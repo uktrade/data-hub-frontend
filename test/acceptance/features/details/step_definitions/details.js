@@ -6,11 +6,13 @@ defineSupportCode(({ Then }) => {
 
   Then(/^details heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
     await Details
+      .waitForElementPresent('@heading')
       .assert.containsText('@heading', this.state[fieldName])
   })
 
   Then(/^details heading should contain "(.+)"$/, async (value) => {
     await Details
+      .waitForElementPresent('@heading')
       .assert.containsText('@heading', value)
   })
 
@@ -19,6 +21,7 @@ defineSupportCode(({ Then }) => {
 
     await Details
       .api.useXpath()
+      .waitForElementPresent(detail.selector)
       .assert.containsText(detail.selector, this.state[fieldName])
       .useCss()
   })
@@ -28,6 +31,7 @@ defineSupportCode(({ Then }) => {
 
     await Details
       .api.useXpath()
+      .waitForElementPresent(detail.selector)
       .assert.containsText(detail.selector, value)
       .useCss()
   })
@@ -43,6 +47,7 @@ defineSupportCode(({ Then }) => {
       const localNavItemSelector = Details.getLocalNavItemSelector(row.text)
       await Details
         .api.useXpath()
+        .waitForElementPresent(localNavItemSelector.selector)
         .assert.visible(localNavItemSelector.selector)
         .useCss()
     }
