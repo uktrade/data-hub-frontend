@@ -19,7 +19,7 @@ function transformDataToTeamMemberArray (body) {
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
-    const advisersResponse = await getAdvisers({ token: req.session.token })
+    const advisersResponse = await getAdvisers(req.session.token)
     const advisers = advisersResponse.map(transformObjectToOption)
 
     const teamMembers = investmentData.team_members.map((teamMember) => ({

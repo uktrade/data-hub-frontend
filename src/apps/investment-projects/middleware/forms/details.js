@@ -25,7 +25,7 @@ async function populateForm (req, res, next) {
   }
 
   try {
-    const advisersResponse = await getAdvisers({ token: req.session.token })
+    const advisersResponse = await getAdvisers(req.session.token)
     const {
       equityCompany,
       equityCompanyInvestment,
