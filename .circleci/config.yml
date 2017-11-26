@@ -1,3 +1,4 @@
+## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
 version: 2
 jobs:
   build:
