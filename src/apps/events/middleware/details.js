@@ -45,7 +45,7 @@ async function getEventDetails (req, res, next, eventId) {
 async function setActiveAdvisers (req, res, next) {
   try {
     const currentAdviser = get(req.locals, 'event.adviser.id')
-    res.locals.advisers = await getAdvisers(req.session.token, false, currentAdviser)
+    res.locals.advisers = await getAdvisers({ token: req.session.token, includeDisabled: false, currentAdviser })
     next()
   } catch (err) {
     next(err)
