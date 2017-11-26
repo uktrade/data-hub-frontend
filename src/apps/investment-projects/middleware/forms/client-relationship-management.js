@@ -11,7 +11,7 @@ async function populateForm (req, res, next) {
 
     // Todo - update to pass parameter to just get active advisers and
     // pass in the existing adviser id to make sure it is not filtered out
-    const advisersResponse = await getAdvisers(req.session.token)
+    const advisersResponse = await getAdvisers({ token: req.session.token })
     const advisers = advisersResponse.map(transformObjectToOption)
 
     res.locals.form = Object.assign({}, res.locals.form, {
