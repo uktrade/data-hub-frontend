@@ -71,8 +71,8 @@ describe('Investment project, project management team, edit controller', () => {
 
   describe('#postHandler', () => {
     describe('without errors', () => {
-      it('should redirect to the product team details page', (done) => {
-        this.controller.postHandler({
+      it('should redirect to the product team details page', async () => {
+        await this.controller.postHandler({
           session: {
             token: 'abcd',
           },
@@ -85,16 +85,10 @@ describe('Investment project, project management team, edit controller', () => {
             investmentData,
           },
           breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
-              expect(this.flashStub).to.calledWith('success', 'Investment details updated')
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
         }, this.nextStub)
+
+        expect(this.flashStub).to.calledWith('success', 'Investment details updated')
+        expect(this.nextStub).to.be.calledOnce
       })
     })
 

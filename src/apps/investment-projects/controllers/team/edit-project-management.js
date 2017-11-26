@@ -19,7 +19,7 @@ function postHandler (req, res, next) {
     return next()
   }
   req.flash('success', 'Investment details updated')
-  return res.redirect(`/investment-projects/${res.locals.investmentData.id}/team`)
+  return next()
 }
 
 module.exports = {
