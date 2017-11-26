@@ -55,7 +55,7 @@ const linkDetails = {
 const toCompleteStageMessages = {
   prospect: [
     {
-      text: 'Contact the "Trade and Investment Analysis and Performance team"',
+      text: 'Contact the Trade and Investment Analysis and Performance team',
     },
   ],
   active: [
