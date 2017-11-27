@@ -9,15 +9,6 @@ const {
 } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 
-function generateEmail (firstName, lastName, isAlternative) {
-  const suffix = '@example.com'
-  let emailParts = [firstName, lastName]
-  if (isAlternative) {
-    return emailParts.reverse().join('.') + suffix
-  }
-  return emailParts.join('.') + suffix
-}
-
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   text,
   {
@@ -34,7 +25,6 @@ module.exports = {
     addInteractionButton: getButtonWithText('Add interaction'),
     contactsTab: 'a[href*="/contacts"][href*="/companies"]',
     firstCompanyFromList: '.c-entity-list li:first-child h3 a',
-    noContactWarning: '#no-contact-warning',
     firstName: '#field-first_name',
     firstNameError: 'label[for=field-first_name] span:nth-child(2)',
     lastName: '#field-last_name',
@@ -55,8 +45,6 @@ module.exports = {
     alternativePhoneNumber: '#field-telephone_alternative',
     alternativeEmail: '#field-email_alternative',
     notes: '#field-notes',
-    contactUnderSearchPage: '#contacts-list li:first-child',
-    contactFullname: '#contact-list .c-entity-list li:first-child .c-entity__title > a',
     headingCompanyLink: '.c-local-header__heading-before a', // TODO move this work to Location feature
   },
 
@@ -83,9 +71,9 @@ module.exports = {
           jobTitle: faker.name.jobTitle(),
           telephoneCountryCode: faker.random.number(),
           telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: generateEmail(firstName, lastName),
+          emailAddress: faker.internet.email(firstName, lastName),
           alternativePhoneNumber: '666555444',
-          alternativeEmail: generateEmail(firstName, lastName, true),
+          alternativeEmail: faker.internet.email(lastName, firstName),
           notes: `${faker.name.jobDescriptor() + firstName}`,
         }, details)
 
@@ -124,9 +112,9 @@ module.exports = {
           jobTitle: faker.name.jobTitle(),
           telephoneCountryCode: faker.random.number(),
           telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: generateEmail(firstName, lastName),
+          emailAddress: faker.internet.email(firstName, lastName),
           alternativePhoneNumber: '666555444',
-          alternativeEmail: generateEmail(firstName, lastName, true),
+          alternativeEmail: faker.internet.email(lastName, firstName),
           notes: `${faker.name.jobDescriptor() + firstName}`,
         }, details)
         const postcodeLookup = {
