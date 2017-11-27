@@ -55,14 +55,14 @@ const linkDetails = {
 }
 
 const toCompleteStageMessages = {
-  prospect: [
-    {
-      text: 'Contact the Trade and Investment Analysis and Performance team',
-    },
-  ],
   active: [
     {
       html: `Upload evidence documents on the <a href="${config.teamSiteSharePointUrl}" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>`,
+    },
+  ],
+  verifyWin: [
+    {
+      html: `Review the evidence for this investment project on the <a href="${config.teamSiteSharePointUrl}" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>`,
     },
   ],
 }
