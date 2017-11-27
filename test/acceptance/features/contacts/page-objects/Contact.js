@@ -55,12 +55,6 @@ module.exports = {
           .click('@firstCompanyFromList')
       },
 
-      navigateToContactsPage () {
-        return this
-          .clickOnFirstCompanyFromList()
-          .click('@contactsTab')
-      },
-
       createNewContact (details = {}, isPrimary, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
