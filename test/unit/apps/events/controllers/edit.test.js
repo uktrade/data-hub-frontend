@@ -1,7 +1,8 @@
 const { assign, find } = require('lodash')
+const nock = require('nock')
 
+const config = require('~/config')
 const eventData = require('../../../data/events/event.json')
-const advisersResponse = require('../../../data/advisers/advisers')
 
 describe('Event edit controller', () => {
   const currentUserTeam = 'team1'
@@ -9,6 +10,7 @@ describe('Event edit controller', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
     this.controller = require('~/src/apps/events/controllers/edit')
+
     this.req = {
       session: {
         token: 'abcd',
@@ -20,15 +22,33 @@ describe('Event edit controller', () => {
       },
       body: {},
     }
+
     this.res = {
       breadcrumb: this.sandbox.stub().returnsThis(),
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
-      locals: {
-        advisers: advisersResponse,
-      },
+      locals: { },
     }
+
     this.next = this.sandbox.spy()
+
+    this.advisers = [{
+      id: '1',
+      name: 'Fred Flintstone',
+      disabled_on: '2017-01-01',
+    }, {
+      id: '2',
+      name: 'Wilma Flintstone',
+      disabled_on: '2017-01-01',
+    }, {
+      id: '3',
+      name: 'Barney Rubble',
+      disabled_on: null,
+    }]
+
+    nock(config.apiRoot)
+      .get(`/adviser/?limit=100000&offset=0`)
+      .reply(200, { results: this.advisers })
   })
 
   afterEach(() => {
@@ -51,37 +71,6 @@ describe('Event edit controller', () => {
       expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
     })
 
-    it('should populate the event form with organisers', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
-
-      const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'organiser' }).options
-      const expected = [
-        {
-          label: 'Jeff Smith',
-          value: 'a0dae366-1134-e411-985c-e4115bead28a',
-        },
-        {
-          label: 'Aaron Mr',
-          value: 'e13209b8-8d61-e311-8255-e4115bead28a',
-        },
-        {
-          label: 'Mr Benjamin',
-          value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
-        },
-        {
-          label: 'George Chan',
-          value: '0119a99e-9798-e211-a939-e4115bead28a',
-        },
-        {
-          label: 'Fred Rafters',
-          value: '0919a99e-9798-e211-a939-e4115bead28a',
-        },
-      ]
-
-      expect(actual).to.deep.equal(expected)
-    })
-
     it('should prepopulate the team hosting the event with the current user team', async () => {
       await this.controller.renderEditPage(this.req, this.res, this.next)
 
@@ -92,11 +81,22 @@ describe('Event edit controller', () => {
     })
 
     context('when adding an event', () => {
-      it('should add a breadcrumb', async () => {
+      beforeEach(async () => {
         await this.controller.renderEditPage(this.req, this.res, this.next)
+      })
 
+      it('should add a breadcrumb', () => {
         expect(this.res.breadcrumb.firstCall).to.be.calledWith(undefined)
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Add event')
+      })
+
+      it('should only include active organisers', () => {
+        const organiserFieldOptions = getOrganiserFieldOptions(this.res)
+        const expectedAdvisers = [{
+          label: 'Barney Rubble',
+          value: '3',
+        }]
+        expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
       })
     })
 
@@ -110,6 +110,47 @@ describe('Event edit controller', () => {
 
         expect(this.res.breadcrumb.firstCall).to.be.calledWith('name', '/events/123')
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Edit event')
+      })
+
+      context('and when the organiser is active', () => {
+        beforeEach(async () => {
+          this.res.locals.event = assign({}, eventData, {
+            organiser: this.advisers[2],
+          })
+
+          await this.controller.renderEditPage(this.req, this.res, this.next)
+        })
+
+        it('should only include active organisers', () => {
+          const organiserFieldOptions = getOrganiserFieldOptions(this.res)
+          const expectedAdvisers = [{
+            label: 'Barney Rubble',
+            value: '3',
+          }]
+          expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
+        })
+      })
+
+      context('and when the organiser is inactive', () => {
+        beforeEach(async () => {
+          this.res.locals.event = assign({}, eventData, {
+            organiser: this.advisers[1],
+          })
+
+          await this.controller.renderEditPage(this.req, this.res, this.next)
+        })
+
+        it('should only include active organisers and the current one', () => {
+          const organiserFieldOptions = getOrganiserFieldOptions(this.res)
+          const expectedAdvisers = [{
+            label: 'Wilma Flintstone',
+            value: '2',
+          }, {
+            label: 'Barney Rubble',
+            value: '3',
+          }]
+          expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
+        })
       })
     })
 
@@ -125,18 +166,17 @@ describe('Event edit controller', () => {
           start_date: 'Event start date',
         }
 
-        const res = assign({}, this.res, {
+        this.res = assign({}, this.res, {
           locals: {
             form: {
               errors: {
                 messages,
               },
             },
-            advisers: advisersResponse,
           },
         })
 
-        await this.controller.renderEditPage(this.req, res, this.next)
+        await this.controller.renderEditPage(this.req, this.res, this.next)
 
         const actualErrors = this.res.render.getCall(0).args[1].eventForm.errors
         const expectedErrors = {
@@ -149,4 +189,11 @@ describe('Event edit controller', () => {
       })
     })
   })
+
+  function getOrganiserFieldOptions (res) {
+    const renderOptions = res.render.firstCall.args[1]
+    const formFields = renderOptions.eventForm.children
+    const organiserField = find(formFields, field => field.name === 'organiser')
+    return organiserField.options
+  }
 })
