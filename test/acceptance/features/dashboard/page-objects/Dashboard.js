@@ -1,10 +1,7 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getLinkWithText } = require('../../../helpers/selectors')
 
-const getAnchorWithText = (text, className) => getSelectorForElementWithText(
-  text, { el: '//a', className }
-)
-const getGlobalNavAnchorWithText = (text) => getAnchorWithText(text, 'c-global-nav__link')
-const getGlobalHeaderAnchorWithText = (text) => getAnchorWithText(text, 'proposition-menu__link')
+const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'c-global-nav__link')
+const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'proposition-menu__link')
 
 const getDashboardSectionItem = (text, itemNumber) => getSelectorForElementWithText(
   text,
