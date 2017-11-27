@@ -177,4 +177,31 @@ describe('OAuth controller', () => {
       })
     })
   })
+
+  describe('#signOutOAuth', () => {
+    beforeEach(() => {
+      this.mockOauthConfig = {
+        logoutUrl: 'https://logout-url',
+      }
+      set(this.mockConfig, 'oauth', this.mockOauthConfig)
+    })
+
+    it('should reset session properties', () => {
+      set(this.reqMock.session, {
+        user: {
+          name: 'Barry',
+        },
+        returnTo: '/path',
+        token: 'abcd',
+      })
+
+      this.controller.signOutOAuth(this.reqMock, this.resMock, this.nextSpy)
+      expect(this.reqMock.session).to.be.null
+    })
+
+    it('should redirect', () => {
+      this.controller.signOutOAuth(this.reqMock, this.resMock, this.nextSpy)
+      expect(this.resMock.redirect).to.be.calledWith(this.mockOauthConfig.logoutUrl)
+    })
+  })
 })

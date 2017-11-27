@@ -65,8 +65,15 @@ function renderHelpPage (req, res, next) {
     })
 }
 
+function signOutOAuth (req, res) {
+  req.session = null
+  res.clearCookie('datahub.sid')
+  res.redirect(config.oauth.logoutUrl)
+}
+
 module.exports = {
   callbackOAuth,
   redirectOAuth,
   renderHelpPage,
+  signOutOAuth,
 }
