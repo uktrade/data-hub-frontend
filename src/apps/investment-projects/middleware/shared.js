@@ -1,4 +1,4 @@
-const { get, upperFirst, lowerCase } = require('lodash')
+const { get, upperFirst, camelCase } = require('lodash')
 
 const metadata = require('../../../lib/metadata')
 const { buildIncompleteFormList, toCompleteStageMessages } = require('../helpers')
@@ -79,7 +79,7 @@ async function getInvestmentDetails (req, res, next) {
         name: stageName,
         isComplete: investmentData.team_complete && investmentData.requirements_complete && investmentData.value_complete,
         incompleteFields: buildIncompleteFormList(get(investmentData, 'incomplete_fields', [])),
-        messages: get(toCompleteStageMessages, lowerCase(stageName), []),
+        messages: get(toCompleteStageMessages, camelCase(stageName), []),
       },
       nextStage: getNextStage(stageName, investmentProjectStages),
     }
