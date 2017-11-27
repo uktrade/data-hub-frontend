@@ -35,13 +35,16 @@ const config = {
   },
   assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
-  zenUrl: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
-  zenToken: process.env.ZEN_TOKEN,
-  zenEmail: process.env.ZEN_EMAIL,
-  zenBrowser: process.env.ZEN_BROWSER,
-  zenImpact: process.env.ZEN_IMPACT,
-  zenService: process.env.ZEN_SERVICE,
-  zenServiceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+  zen: {
+    // TODO tidy up the configuration of zendesk URLs
+    url: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
+    token: process.env.ZEN_TOKEN,
+    email: process.env.ZEN_EMAIL,
+    browser: process.env.ZEN_BROWSER,
+    impact: process.env.ZEN_IMPACT,
+    service: process.env.ZEN_SERVICE,
+    serviceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+  },
   // @TODO - remove when demo site is decommissioned
   projectPhase: process.env.PROJECT_PHASE || 'beta',
   sentryDsn: process.env.SENTRY_DSN,

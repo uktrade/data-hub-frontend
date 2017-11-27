@@ -9,7 +9,7 @@ async function postFeedback (req, res, next) {
   const messages = pickBy({
     title: !title && 'Your feedback needs a title',
     feedbackType: !feedbackType && 'You need to choose between raising a problem and leaving feedback',
-    email: (email && !email.match(/.*@.*\..*/)) && 'A valid email address is required',
+    email: (!email.match(/.*@.*\..*/)) && 'A valid email address is required',
   })
 
   res.locals.formErrors = Object.assign({}, res.locals.formErrors, {
