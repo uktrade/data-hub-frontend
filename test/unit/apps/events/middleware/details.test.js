@@ -52,7 +52,7 @@ describe('Event details middleware', () => {
         }),
       },
       '../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub.resolves(advisersData),
+        getAdvisers: this.getAdvisersStub.resolves(advisersData.results),
       },
     })
     this.req = {
@@ -259,12 +259,11 @@ describe('Event details middleware', () => {
       })
     })
 
-    describe('#getAdviserDetails', () => {
+    describe('#setActiveAdvisers', () => {
       context('when success', () => {
         it('should set event data on locals', async () => {
-          await this.middleware.getAdviserDetails(this.req, this.res, this.nextSpy)
-
-          expect(this.res.locals.advisers).to.deep.equal(advisersData)
+          await this.middleware.setActiveAdvisers(this.req, this.res, this.nextSpy)
+          expect(this.res.locals.advisers).to.deep.equal(advisersData.results)
         })
       })
     })

@@ -25,7 +25,7 @@ describe('Event edit controller', () => {
       render: this.sandbox.spy(),
       redirect: this.sandbox.spy(),
       locals: {
-        advisers: advisersResponse,
+        advisers: advisersResponse.results,
       },
     }
     this.next = this.sandbox.spy()
@@ -132,7 +132,7 @@ describe('Event edit controller', () => {
                 messages,
               },
             },
-            advisers: advisersResponse,
+            advisers: advisersResponse.results,
           },
         })
 

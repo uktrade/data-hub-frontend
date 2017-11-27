@@ -65,9 +65,13 @@ async function getInteractionDetails (req, res, next, interactionId) {
 
 async function getInteractionOptions (req, res, next) {
   try {
-    res.locals.advisers = await getAdvisers(req.session.token)
-    res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
-    res.locals.services = await metaDataRepository.getServices(req.session.token)
+    const currentAdviser = get(res.locals, 'interaction.dit_advisor.id')
+
+    res.locals = assign({}, res.locals, {
+      advisers: await getAdvisers(req.session.token, { includeDisabled: false, currentAdviser }),
+      contacts: await getContactsForCompany(req.session.token, res.locals.company.id),
+      services: await metaDataRepository.getServices(req.session.token),
+    })
 
     if (req.params.kind === 'service-delivery') {
       res.locals.events = await getActiveEvents(req.session.token, get(req.params, 'interactionId'))

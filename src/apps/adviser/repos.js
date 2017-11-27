@@ -1,17 +1,33 @@
-const { assign } = require('lodash')
 const config = require('../../../config')
 const logger = require('../../../config/logger')
 const authorisedRequest = require('../../lib/authorised-request')
+const { filterDisabledOption } = require('../filters')
 
-// TODO: Make sure this is removed and replaced with a better way to
-// filter/select advisers
 // TODO: advisers with no name are filtered on the front end. Make changes on
 // the back end to make this not necessary.
-function getAdvisers (token) {
-  return authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
-    .then(data => assign({}, data, {
-      results: data.results.filter(adviser => Boolean(adviser.first_name || adviser.last_name)),
-    }))
+
+function adviserHasName (adviser) {
+  return Boolean(adviser.first_name || adviser.last_name)
+}
+
+/**
+ *
+ * @param {string} options token Session token for API calls
+ * @param {boolean} options.includeDisabled Should the response include advisers marked as disabled?
+ * @param {string} options.currentAdviser The ID of an adviser that should be included in the list irrespective of if
+ *                                the list excludes disabled advisers and the adviser is disabled.
+ * @returns {promise[Array]} Returns an array of adviser objects
+ */
+async function getAdvisers (token, { includeDisabled = true, currentAdviser = null } = {}) {
+  const { results } = await authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
+
+  if (includeDisabled) {
+    return results.filter(adviserHasName)
+  }
+
+  return results
+    .filter(filterDisabledOption(currentAdviser))
+    .filter(adviserHasName)
 }
 
 function getAdviser (token, id) {

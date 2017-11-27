@@ -37,7 +37,7 @@ describe('Event list controller', () => {
       render: this.sandbox.spy(),
       query: {},
       locals: {
-        advisers: advisersData,
+        advisers: advisersData.results,
       },
     }
     this.eventFiltersFieldsStub = this.sandbox.stub()

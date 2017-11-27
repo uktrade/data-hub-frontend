@@ -3,7 +3,8 @@ const router = require('express').Router()
 const { setDefaultQuery } = require('../middleware')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderEditPage } = require('./controllers/edit')
-const { postDetails, getEventDetails, getAdviserDetails } = require('./middleware/details')
+const { postDetails, getEventDetails, setActiveAdvisers } = require('./middleware/details')
+const { setAllAdvisers } = require('../adviser/middleware')
 const { getRequestBody, getEventsCollection } = require('./middleware/collection')
 const { renderEventList } = require('./controllers/list')
 
@@ -15,14 +16,14 @@ router.param('id', getEventDetails)
 
 router.get('/',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getAdviserDetails,
+  setAllAdvisers,
   getRequestBody,
   getEventsCollection,
   renderEventList,
 )
 
 router.route(['/create', '/:id/edit'])
-  .all(getAdviserDetails)
+  .all(setActiveAdvisers)
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 

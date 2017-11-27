@@ -6,7 +6,7 @@ const { assign, merge, get, pickBy } = require('lodash')
 
 function renderEditPage (req, res) {
   const eventData = transformEventResponseToFormBody(res.locals.event)
-  const advisers = get(res.locals, 'advisers.results')
+  const advisers = get(res.locals, 'advisers')
   const eventId = get(eventData, 'id', '')
   const eventName = get(eventData, 'name')
   const lead_team = eventData.lead_team || get(req, 'session.user.dit_team.id')

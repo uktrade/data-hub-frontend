@@ -32,7 +32,7 @@ async function populateForm (req, res, next) {
     } = await getEquityCompanyDetails(req.session.token, equityCompanyId)
 
     const contacts = equityCompany.contacts.map(transformContactToOption)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
+    const advisers = advisersResponse.map(transformObjectToOption)
     const investmentData = transformFromApi(res.locals.investmentData)
     const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption).filter((investmentType) => {
       return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
