@@ -44,13 +44,33 @@
           next_project_stage: investmentStatus.nextStage.id
         }
       }) %}
-        <p>
           {% if investmentStatus.currentStage.isComplete %}
-            You have added all required information to complete this stage.
+            {% if investmentStatus.currentStage.messages | length %}
+              <p>Before you move to the {{ investmentStatus.nextStage.name }} stage:</p>
+              <ul class="list-disc">
+                {% for message in investmentStatus.currentStage.messages  %}
+                  <li>
+                    {% if message.html %}
+                      {{ message.html | safe }}
+                    {% else %}
+                      {{ message.text }}
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
             {% else %}
-            Complete this stage to move to the {{ investmentStatus.nextStage.name }} stage.
+              <p>You have added all required information to complete this stage.</p>
+            {% endif %}
+          {% else %}
+            <p>To move to the {{ investmentStatus.nextStage.name }} stage complete the following:</p>
+            <ul class="list-disc">
+              {% for form in investmentStatus.currentStage.incompleteFields  %}
+                <li>
+                    <a href="{{ form.url }}?returnUrl={{ CANONICAL_URL }}">{{ form.text }}</a>
+                </li>
+              {% endfor %}
+            </ul>
           {% endif %}
-        </p>
       {% endcall %}
     {% endcall %}
   {% endif %}

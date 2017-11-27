@@ -83,6 +83,7 @@ This file expects the following environment variables:
 | OAUTH2_REDIRECT_URL | OAuth callback url
 | OAUTH2_DEV_TOKEN | Token used to bypass OAuth for development purposes
 | POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
+| PROJECT_PHASE | Which badge to display in header: 'Alpha', 'Beta' or 'Demo' - defaults to 'Beta' @TODO - remove when Demo site is decommissioned|
 | PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
 | QA_HOST | URL of the app under test |
 | QA_SELENIUM_HOST | URL of the Selenium server |
@@ -96,6 +97,7 @@ This file expects the following environment variables:
 | SENTRY_DSN | Sentry DSN (optional) |
 | SESSION_SECRET | String to encrypt session data with |
 | SESSION_TTL | How long the user session lasts, in millis. Defaults to 2 hours |
+| TEAM_SITE_SHARE_POINT_URL | Team site share point url |
 | WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
 | ZEN_BROWSER | Zendesk browser ID |
 | ZEN_DOMAIN | Domain used on Zendesk |

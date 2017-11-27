@@ -6,15 +6,7 @@ const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Given, Then, When }) => {
   const InvestmentProject = client.page.InvestmentProject()
-
-  Given(/^I navigate to the Investment Projects (.+) page$/, async function (pageName) {
-    const tag = `@${pageName}`
-
-    await InvestmentProject
-      .section.detailsTabs
-      .waitForElementPresent(tag)
-      .click(tag)
-  })
+  const Location = client.page.Location()
 
   When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
     if (lowerCase(investmentType) === 'fdi') {
@@ -127,7 +119,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementPresent('@header')
       .assert.containsText('@header', equitySource)
 
-    await InvestmentProject
+    await Location
       .section.detailsTabs
       .waitForElementPresent('@investment')
       .click('@investment')

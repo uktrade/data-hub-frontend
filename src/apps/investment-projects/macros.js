@@ -94,7 +94,6 @@ const requirementsFormConfig = {
       buttonName: 'add_item',
       name: 'strategic_drivers',
       label: requirementsLabels.edit.strategic_drivers,
-      optional: true,
       children: [
         Object.assign({}, globalFields.strategicDrivers, {
           label: requirementsLabels.edit.strategic_drivers,
@@ -106,14 +105,12 @@ const requirementsFormConfig = {
       macroName: 'TextField',
       type: 'textarea',
       name: 'client_requirements',
-      optional: true,
       label: requirementsLabels.edit.client_requirements,
     },
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',
       modifier: 'inline',
-      optional: true,
       name: 'client_considering_other_countries',
       label: requirementsLabels.edit.client_considering_other_countries,
       options: [
@@ -144,7 +141,6 @@ const requirementsFormConfig = {
       buttonName: 'add_item',
       name: 'uk_region_locations',
       label: requirementsLabels.edit.uk_region_locations,
-      optional: true,
       children: [
         Object.assign({}, globalFields.ukRegions, {
           label: requirementsLabels.edit.uk_region_locations,
@@ -158,7 +154,6 @@ const requirementsFormConfig = {
       type: 'radio',
       modifier: 'inline',
       name: 'site_decided',
-      optional: true,
       label: requirementsLabels.edit.site_decided,
       options: [
         { label: 'Yes', value: 'true' },

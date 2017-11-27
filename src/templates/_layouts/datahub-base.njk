@@ -33,6 +33,11 @@
           <a href="/profile" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/profile' }}">{{ user.name }}</a>
         </li>
       {% endif %}
+      {% if user %}
+        <li class="proposition-menu__item">
+            <a href="/oauth/sign-out" class="proposition-menu__link">Sign out</a>
+        </li>
+      {% endif %}
     </ul>
   </nav>
 {% endblock %}

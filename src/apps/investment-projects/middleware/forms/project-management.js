@@ -22,11 +22,13 @@ async function populateForm (req, res, next) {
       },
       buttonText: 'Save',
       returnLink: `/investment-projects/${investmentData.id}/team`,
+      hiddenFields: {
+        returnUrl: get(req.query, 'returnUrl'),
+      },
     })
 
     next()
   } catch (error) {
-    console.log('EH:', error)
     next(error)
   }
 }

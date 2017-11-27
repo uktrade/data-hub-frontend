@@ -1,3 +1,4 @@
+const { assign } = require('lodash')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { briefInvestmentSummaryLabels } = require('~/src/apps/investment-projects/labels')
 
@@ -8,6 +9,17 @@ describe('Investment project, project management team, edit controller', () => {
     this.flashStub = this.sandbox.stub()
     this.getDataLabelsStub = this.sandbox.stub()
     this.breadcrumbStub = function () { return this }
+    this.reqMock = assign({}, globalReq, {
+      session: {
+        token: '1234',
+      },
+      flash: this.flashStub,
+    })
+    this.resMock = assign({}, globalRes, {
+      redirect: this.sandbox.spy(),
+      render: this.sandbox.spy(),
+      breadcrumb: this.breadcrumbStub,
+    })
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/edit-project-management', {
       '../../../../lib/controller-utils': {
@@ -21,90 +33,73 @@ describe('Investment project, project management team, edit controller', () => {
   })
 
   describe('#getHandler', () => {
-    it('should render edit project management view', (done) => {
-      this.controller.getHandler({
-        session: {
-          token: 'abcd',
-        },
-      }, {
+    it('should render edit project management view', async () => {
+      await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
           investmentData,
         },
-        breadcrumb: this.breadcrumbStub,
-        render: (template) => {
-          try {
-            expect(template).to.equal('investment-projects/views/team/edit-project-management')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.nextStub)
+      }), this.nextStub)
+
+      expect(this.resMock.render).to.have.been.calledWith('investment-projects/views/team/edit-project-management')
     })
 
-    it('should get formatted data for summary view', (done) => {
-      const briefInvestmentSummaryData = {
-        id: 1,
-      }
+    it('should get formatted data for summary view', async () => {
+      const briefInvestmentSummaryData = { id: 1 }
 
-      this.controller.getHandler({
-        session: {
-          token: 'abcd',
-        },
-      }, {
+      await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
           investmentData,
           briefInvestmentSummaryData,
         },
-        breadcrumb: this.breadcrumbStub,
-        render: (template) => {
-          try {
-            expect(this.getDataLabelsStub).to.be.calledWith(briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.nextStub)
+      }), this.nextStub)
+
+      expect(this.getDataLabelsStub).to.be.calledWith(briefInvestmentSummaryData, briefInvestmentSummaryLabels.view)
     })
   })
 
   describe('#postHandler', () => {
-    describe('without errors', () => {
-      it('should redirect to the product team details page', (done) => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-          flash: this.flashStub,
-        }, {
+    context('without errors', () => {
+      it('should redirect to the project details page', async () => {
+        await this.controller.postHandler(this.reqMock, assign({}, this.resMock, {
           locals: {
             form: {
               errors: {},
             },
             investmentData,
           },
-          breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
-              expect(this.flashStub).to.calledWith('success', 'Investment details updated')
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
-        }, this.nextStub)
+        }), this.nextStub)
+
+        expect(this.resMock.redirect).to.be.calledWith(`/investment-projects/${investmentData.id}/team`)
+        expect(this.flashStub).to.calledWith('success', 'Investment details updated')
       })
     })
 
-    describe('when form errors exist', () => {
-      it('should pass the error onto the edit form', () => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
+    context('without errors and returnUrl query', () => {
+      it('should redirect to the returnUrl page', async () => {
+        const mockReturnUrl = 'mock-url'
+
+        await this.controller.postHandler(assign({}, this.reqMock, {
+          body: {
+            returnUrl: mockReturnUrl,
           },
-        }, {
+        }),
+        assign({}, this.resMock, {
+          locals: {
+            form: {
+              errors: {},
+            },
+            investmentData,
+          },
+        }), this.nextStub)
+
+        expect(this.flashStub).to.calledWith('success', 'Investment details updated')
+        expect(this.resMock.redirect).to.be.calledWith(mockReturnUrl)
+      })
+    })
+
+    context('when form errors exist', () => {
+      it('should pass the error onto the edit form', () => {
+        this.controller.postHandler(this.reqMock, assign({}, this.resMock, {
           locals: {
             form: {
               errors: {
@@ -112,8 +107,7 @@ describe('Investment project, project management team, edit controller', () => {
               },
             },
           },
-          breadcrumb: this.breadcrumbStub,
-        }, this.nextStub)
+        }), this.nextStub)
 
         expect(this.nextStub).to.be.calledOnce
       })

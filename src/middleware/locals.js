@@ -26,6 +26,7 @@ module.exports = function locals (req, res, next) {
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.originalUrl,
     CURRENT_PATH: req.path,
+    ARCHIVED_DOCUMENT_BASE_URL: config.archivedDocumentsBaseUrl,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,

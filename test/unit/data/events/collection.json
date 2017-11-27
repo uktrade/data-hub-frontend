@@ -55,7 +55,8 @@
       "address_town": "plymouth",
       "address_county": "",
       "address_postcode": "PL1 4FG",
-      "notes": "mock example event"
+      "notes": "mock example event",
+      "disabled_on": null
     },
     {
       "id": "2f4cbd6e-9cc7-4b03-93fe-80a4d8cea4af",
@@ -103,7 +104,8 @@
       "address_county": "",
       "address_postcode": "",
       "uk_region": null,
-      "notes": "This is going to be an amazing event"
+      "notes": "This is going to be an amazing event",
+      "disabled_on": null
     },
     {
       "id": "4aa90860-ddb8-4cc0-8d5f-e0c26567abe4",
@@ -156,7 +158,8 @@
       "address_county": "country",
       "address_postcode": "",
       "uk_region": null,
-      "notes": "notes"
+      "notes": "notes",
+      "disabled_on": "2017-09-19"
     }
   ]
 }

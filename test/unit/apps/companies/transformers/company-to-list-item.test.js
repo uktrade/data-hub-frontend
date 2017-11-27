@@ -1,77 +1,169 @@
-const { some } = require('lodash')
+const { assign } = require('lodash')
 
 const companyData = require('~/test/unit/data/company')
 const transformCompanyToListItem = require('~/src/apps/companies/transformers/company-to-list-item')
 
 describe('transformCompanyToListItem', () => {
-  it('should return undefined if there is no companies house data or datahub data', () => {
-    expect(transformCompanyToListItem()).to.be.undefined
-    expect(transformCompanyToListItem({ a: 'b' })).to.be.undefined
-    expect(transformCompanyToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
+  context('when there is no companies house data or datahub data', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem()
+    })
+
+    it('should return undefined', () => {
+      expect(this.listItem).to.be.undefined
+    })
   })
 
-  it('should return undefined if companies house is incomplete', () => {
-    expect(transformCompanyToListItem({ companies_house_data: {} })).to.be.undefined
+  context('when the object passed to the transformer is not a company', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem({ a: 'b' })
+    })
+
+    it('should return undefined', () => {
+      expect(this.listItem).to.be.undefined
+    })
   })
 
-  it('should return an object with data for company list item', () => {
-    const actual = transformCompanyToListItem(companyData)
+  context('when passed a company with no ID', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem({ a: 'b' })
+    })
 
-    expect(actual).to.have.property('id').to.be.a('string')
-    expect(actual).to.have.property('type').to.equal('company')
-    expect(actual).to.have.property('name').to.be.a('string')
-    expect(actual).to.have.property('url').to.be.equal(`/companies/${companyData.id}`)
+    it('should return undefined', () => {
+      expect(this.listItem).to.be.undefined
+    })
   })
 
-  it('should return have correct meta items for Uk company', () => {
-    const actual = transformCompanyToListItem(companyData)
+  context('when called with a fully populated company', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(companyData)
+    })
 
-    expect(actual).to.have.property('meta').an('array').to.have.length(4)
-    expect(actual.meta[0]).to.have.property('label', 'Sector')
-    expect(actual.meta[1]).to.have.property('label', 'Country')
-    expect(actual.meta[2]).to.have.property('label', 'UK region')
-    expect(actual.meta[3]).to.have.property('label', 'Registered address')
+    it('should return the id of the company', () => {
+      expect(this.listItem).to.have.property('id', 'dcdabbc9-1781-e411-8955-e4115bead28a')
+    })
+
+    it('should return a type of company', () => {
+      expect(this.listItem).to.have.property('type', 'company')
+    })
+
+    it('should return the company name', () => {
+      expect(this.listItem).to.have.property('name', 'Wonka Industries')
+    })
+
+    it('should return a url to view the company', () => {
+      expect(this.listItem).to.have.property('url', '/companies/dcdabbc9-1781-e411-8955-e4115bead28a')
+    })
   })
 
-  it('should return have correct meta items for non-UK company', () => {
-    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
-      uk_based: false,
-    }))
+  context('when the company is based in the uk', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(companyData)
+    })
 
-    expect(actual).to.have.property('meta').an('array').to.have.length(3)
-    expect(some(actual.meta, { label: 'UK region' })).to.be.false
+    it('should return the business sector for the company', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Sector',
+        value: 'ICT',
+      }])
+    })
+
+    it('should return the country', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Country',
+        type: 'badge',
+        value: 'United Kingdom',
+      }])
+    })
+
+    it('should return the UK region', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'UK region',
+        type: 'badge',
+        value: 'Yorkshire and The Humber',
+      }])
+    })
   })
 
-  it('should return have correct meta items for company with trading address', () => {
-    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
-      trading_address_postcode: 'W1C 2BA',
-      trading_address_town: 'London',
-      trading_address_1: '100 Bolton Road',
-    }))
+  context('when called with a non-UK company', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(assign({}, companyData, {
+        uk_based: false,
+      }))
+    })
 
-    expect(actual).to.have.property('meta').an('array').to.have.length(4)
-    expect(some(actual.meta, { label: 'Registered address' })).to.be.false
-    expect(some(actual.meta, { label: 'Trading address' })).to.be.true
+    it('should return the business sector for the company', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Sector',
+        value: 'ICT',
+      }])
+    })
+
+    it('should return the country', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Country',
+        type: 'badge',
+        value: 'United Kingdom',
+      }])
+    })
+
+    it('should not return the region', () => {
+      expect(this.listItem.meta).to.not.containSubset([{
+        label: 'UK region',
+        type: 'badge',
+        value: 'Yorkshire and The Humber',
+      }])
+    })
   })
 
-  it('should return correct URL for Companies House company', () => {
-    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
-      id: null,
-      companies_house_data: {
-        company_number: 10203040,
-      },
-    }))
+  context('when the company has a trading address', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(assign({}, companyData, {
+        trading_address_postcode: 'W1C 2BA',
+        trading_address_town: 'London',
+        trading_address_1: '100 Bolton Road',
+        trading_address_country: {
+          id: '123',
+          name: 'United Kingdom',
+        },
+      }))
+    })
 
-    expect(actual).to.have.property('url', '/companies/view/ch/10203040')
+    it('should include the trading address in the result', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Trading address',
+        value: '100 Bolton Road, London, W1C 2BA, United Kingdom',
+      }])
+    })
+
+    it('does not include the registered address', () => {
+      expect(this.listItem.meta).to.not.containSubset([{
+        label: 'Primary address',
+        value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
+      }])
+    })
   })
 
-  it('should return correct URL for company with both datahub and companies house data', () => {
-    const actual = transformCompanyToListItem(Object.assign({}, companyData, {
-      companies_house_data: {
-        company_number: 10203040,
-      },
-    }))
+  context('when the company does not have a trading address', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(assign({}, companyData, {
+        trading_address_postcode: null,
+        trading_address_town: null,
+        trading_address_1: null,
+      }))
+    })
 
-    expect(actual).to.have.property('url').to.be.equal(`/companies/${companyData.id}`)
+    it('should not include the trading address in the result', () => {
+      expect(this.listItem.meta).to.not.containSubset([{
+        label: 'Trading address',
+      }])
+    })
+
+    it('returns a formatted registered address', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Primary address',
+        value: 'Leeds City Centre, Leeds, EX1 2PL, United Kingdom',
+      }])
+    })
   })
 })

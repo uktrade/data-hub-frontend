@@ -45,6 +45,13 @@ const chDetailsLabels = {
   incorporation_date: 'Incorporated on',
   sic_code: 'Nature of business (SIC)',
 }
+
+const address = {
+  companyRegisteredAddress: 'Primary address',
+  companyTradingAddress: 'Trading address',
+  companiesHouseRegisteredAddress: 'Registered address',
+}
+
 const companyTypeOptions = {
   ltd: 'UK private or public limited company',
   ukother: 'Other type of UK organisation',
@@ -73,4 +80,5 @@ module.exports = {
   hqLabels,
   accountManagementDisplayLabels,
   exportDetailsLabels,
+  address,
 }
