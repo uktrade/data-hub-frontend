@@ -5,6 +5,7 @@ const {
   getSelectorForElementWithText,
   getButtonWithText,
   getDetailsTableRowValue,
+  getMetaListItemValueSelector,
 } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 
@@ -16,15 +17,6 @@ function generateEmail (firstName, lastName, isAlternative) {
   }
   return emailParts.join('.') + suffix
 }
-
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  }
-)
 
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   text,

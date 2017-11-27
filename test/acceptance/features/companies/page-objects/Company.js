@@ -2,21 +2,12 @@ const faker = require('faker')
 const { assign } = require('lodash')
 
 const {
-  getSelectorForElementWithText,
+  getMetaListItemValueSelector,
   getButtonWithText,
   getDetailsTableRowValue,
 } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
-
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  }
-)
 
 module.exports = {
   url: process.env.QA_HOST,
