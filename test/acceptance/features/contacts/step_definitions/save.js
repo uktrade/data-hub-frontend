@@ -54,25 +54,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .waitForElementVisible('@addContactButton')
   })
 
-  When(/^navigating to the create company contact page/, async function () { // TODO DRY up
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name))
-
-    await Company
-      .section.firstCompanySearchResult
-      .click('@header')
-
-    await Location.section.detailsTabs
-      .waitForElementVisible('@contacts')
-      .click('@contacts')
-
-    await Company
-      .waitForElementVisible('@addContactButton')
-  })
-
   When(/^the contact is clicked/, async function () {
     await Company
       .section.firstContactsTabContact
