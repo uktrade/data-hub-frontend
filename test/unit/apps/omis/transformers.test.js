@@ -114,7 +114,6 @@ describe('OMIS list transformers', function () {
 
         expect(actual).to.have.property('id').a('string')
         expect(actual).to.have.property('reference').a('string')
-        expect(actual).to.have.property('status').a('string')
         expect(actual).to.have.property('subtotal_cost').a('number')
         expect(actual).to.have.property('total_cost').a('number')
         expect(actual).to.have.property('company').a('string')

@@ -69,7 +69,6 @@ function transformOrderToListItem ({
 function transformOrderToTableItem ({
   id,
   reference,
-  status,
   payment_due_date,
   company,
   subtotal_cost,
@@ -80,7 +79,6 @@ function transformOrderToTableItem ({
   return {
     id,
     reference,
-    status,
     payment_due_date,
     company: get(company, 'name'),
     subtotal_cost: parseInt(subtotal_cost) / 100,
