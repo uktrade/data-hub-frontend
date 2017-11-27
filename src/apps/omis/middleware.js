@@ -18,7 +18,8 @@ async function setOrder (req, res, next, orderId) {
     const order = await Order.getById(req.session.token, orderId)
 
     res.locals.order = assign({}, order, {
-      isEditable: order.status === 'draft',
+      canEditOrder: order.status === 'draft',
+      canEditAdvisers: !['cancelled', 'complete'].includes(order.status),
     })
 
     const currencyFields = [

@@ -7,17 +7,23 @@ const { Order } = require('../../../models')
 
 class EditSubscribersController extends EditController {
   async configure (req, res, next) {
-    const orderId = get(res.locals, 'order.id')
-    const token = get(req.session, 'token')
-    const advisers = await getAdvisers(token)
-    const subscribers = await Order.getSubscribers(token, orderId)
-    const options = advisers.results.map(transformObjectToOption)
+    try {
+      const orderId = get(res.locals, 'order.id')
+      const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
+      const token = get(req.session, 'token')
+      const advisers = await getAdvisers(token)
+      const subscribers = await Order.getSubscribers(token, orderId)
+      const options = advisers.results.map(transformObjectToOption)
 
-    req.form.options.fields.subscribers.options = sortBy(options, 'label')
+      req.form.options.disableFormAction = !canEditAdvisers
+      req.form.options.fields.subscribers.options = sortBy(options, 'label')
 
-    res.locals.order.subscribers = subscribers
+      res.locals.order.subscribers = subscribers
 
-    super.configure(req, res, next)
+      super.configure(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async successHandler (req, res, next) {
