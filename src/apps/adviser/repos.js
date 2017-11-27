@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { get } = require('lodash')
 const config = require('../../../config')
 const logger = require('../../../config/logger')
 const authorisedRequest = require('../../lib/authorised-request')
@@ -9,9 +9,14 @@ const authorisedRequest = require('../../lib/authorised-request')
 // the back end to make this not necessary.
 function getAdvisers (token) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/?limit=100000&offset=0`)
-    .then(data => assign({}, data, {
-      results: data.results.filter(adviser => Boolean(adviser.first_name || adviser.last_name)),
-    }))
+    .then(response => {
+      const results = response.results.filter(adviser => get(adviser, 'name', '').trim().length)
+
+      return {
+        results,
+        count: results.length,
+      }
+    })
 }
 
 function getAdviser (token, id) {
