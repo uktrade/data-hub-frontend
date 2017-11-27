@@ -7,7 +7,7 @@ Feature: Create a new Investment project
   Scenario: Verify Add Investment project option
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies investment page
+    When I click the Investment local nav link
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
 
@@ -15,7 +15,7 @@ Feature: Create a new Investment project
   Scenario: Add a Foreign Direct Investment (FDI) Investment project
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies investment page
+    When I click the Investment local nav link
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -28,7 +28,7 @@ Feature: Create a new Investment project
   Scenario: Add a Foreign Direct Investment (FDI) Investment project with a separate company as the source of foreign equity
 
     Given I navigate to the Company Lambda plc
-    When I navigate to the companies investment page
+    When I click the Investment local nav link
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -36,7 +36,7 @@ Feature: Create a new Investment project
     And I search for the foreign source of equity Mars Exports Ltd
     Then I can view the Equity Source in the collection
       | text               | expected                               |
-      | Registered address | investmentProject.equitySource.address |
+      | Primary address    | investmentProject.equitySource.address |
     And the Equity Source has badges
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |
@@ -49,14 +49,14 @@ Feature: Create a new Investment project
   Scenario: Add a Non Foreign Direct Investment (Non-FDI) Investment project
 
     Given I navigate to the Company Venus Ltd
-    When I navigate to the companies investment page
+    When I click the Investment local nav link
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select Non FDI as the Investment project type
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
       | text               | expected                               |
-      | Registered address | investmentProject.equitySource.address |
+      | Primary address    | investmentProject.equitySource.address |
     And the Equity Source has badges
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |

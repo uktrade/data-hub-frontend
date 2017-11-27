@@ -7,30 +7,46 @@ const { Order } = require('../../../models')
 
 class EditAssigneesController extends EditController {
   async configure (req, res, next) {
-    const orderId = get(res.locals, 'order.id')
-    const token = get(req.session, 'token')
-    const advisers = await getAdvisers(token)
-    const assignees = await Order.getAssignees(token, orderId)
-    const options = advisers.results.map(transformObjectToOption)
+    try {
+      const orderId = get(res.locals, 'order.id')
+      const canEditOrder = get(res.locals, 'order.canEditOrder')
+      const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
+      const token = get(req.session, 'token')
+      const advisers = await getAdvisers(token)
+      const assignees = await Order.getAssignees(token, orderId)
+      const options = advisers.results.map(transformObjectToOption)
 
-    res.locals.order.assignees = assignees
-    req.form.options.fields.assignees.options = sortBy(options, 'label')
-    super.configure(req, res, next)
+      req.form.options.fields.assignees.options = sortBy(options, 'label')
+      req.form.options.fields.assignees.canRemove = canEditOrder
+      req.form.options.disableFormAction = !canEditAdvisers
+
+      res.locals.order.assignees = assignees
+
+      super.configure(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
     const assignees = data.assignees.map((id) => {
       return {
-        adviser: {
-          id,
-        },
+        adviser: { id },
       }
     })
 
     try {
-      await Order.forceSaveAssignees(req.session.token, res.locals.order.id, assignees)
-      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
+      const orderId = get(res.locals, 'order.id')
+      const canEditOrder = get(res.locals, 'order.canEditOrder')
+      const token = get(req.session, 'token')
+      const nextUrl = get(req, 'form.options.next') || `/omis/${orderId}`
+
+      if (canEditOrder) {
+        await Order.forceSaveAssignees(token, orderId, assignees)
+      } else {
+        await Order.saveAssignees(token, orderId, assignees)
+      }
 
       req.journeyModel.reset()
       req.journeyModel.destroy()

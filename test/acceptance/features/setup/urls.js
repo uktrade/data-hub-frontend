@@ -22,15 +22,27 @@ const urls = {
   },
   contacts: {
     collection: 'contacts',
+    getDetails (id) {
+      return `${host}/contacts/${id}/details`
+    },
   },
   events: {
     collection: 'events',
+    getDetails (id) {
+      return `${host}/events/${id}`
+    },
   },
   interactionsAndServices: {
     collection: 'interactions',
+    getDetails (id) {
+      return `${host}/interactions/${id}`
+    },
   },
   investmentProjects: {
     collection: 'investment-projects',
+    getDetails (id) {
+      return `${host}/investment-projects/${id}/details`
+    },
   },
 }
 

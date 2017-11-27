@@ -9,11 +9,6 @@ const {
   storeRadioSubFieldValues,
 } = require('../../../helpers/state')
 
-const getDetailsTabSelector = (text) => getSelectorForElementWithText(text, {
-  el: '//a',
-  className: 'c-local-nav__link',
-})
-
 const getHeaderSelector = (text) => getSelectorForElementWithText(text, {
   el: '//h2',
   className: 'heading-medium',
@@ -242,12 +237,6 @@ module.exports = {
           selector: '//ol[contains(@class,"c-progress-bar")]/li[contains(@class,"is-active")]/span',
           locateStrategy: 'xpath',
         },
-      },
-    },
-    detailsTabs: {
-      selector: '.c-local-nav',
-      elements: {
-        investment: getDetailsTabSelector('Investment'),
       },
     },
     projectDetails: {

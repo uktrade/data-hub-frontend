@@ -29,10 +29,10 @@ defineSupportCode(({ Then, When }) => {
       .assert.containsText('@header', companyName)
   })
 
-  When(/^I navigate to the companies (.+) page$/, async function (pageName) {
+  When(/^I navigate to the companies (.+) page$/, async function (pageName) { // TODO please use work in Location (remove this)
     const tag = `@${pageName}`
 
-    await Company
+    await Location
       .section.detailsTabs
       .waitForElementPresent(tag)
       .click(tag)
@@ -80,5 +80,19 @@ defineSupportCode(({ Then, When }) => {
     await Company
       .findCompany(getUid(companyName))
       .assert.containsText('@collectionResultsCompanyName', companyName)
+  })
+
+  Then(/^the company trading name is in the search results$/, async function () {
+    const companyName = get(this.state, 'company.tradingName')
+
+    await client
+      .url(dashboardPage)
+
+    await Search
+      .navigate()
+      .search(companyName)
+      .section.firstCompanySearchResult
+      .waitForElementPresent('@tradingName')
+      .assert.containsText('@tradingName', companyName)
   })
 })

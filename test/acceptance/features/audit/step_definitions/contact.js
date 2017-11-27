@@ -16,6 +16,7 @@ defineSupportCode(({ Given, Then, When }) => {
   const AuditContact = client.page.AuditContact()
   const AuditList = client.page.AuditList()
   const InvestmentStage = client.page.InvestmentStage()
+  const Location = client.page.Location()
 
   Given(/^I archive an existing contact record$/, async function () {
     await Company
@@ -46,7 +47,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .section.firstCompanySearchResult
       .click('@header')
 
-    await Company.section.detailsTabs
+    await Location.section.detailsTabs
       .waitForElementVisible('@contacts')
       .click('@contacts')
 

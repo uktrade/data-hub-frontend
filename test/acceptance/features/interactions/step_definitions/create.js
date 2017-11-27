@@ -12,6 +12,7 @@ defineSupportCode(({ Given, When, Then }) => {
   const Interaction = client.page.Interaction()
   const Contact = client.page.Contact()
   const Search = client.page.Search()
+  const Location = client.page.Location()
 
   Given(/^a company investment project is created for interactions$/, async function () {
   })
@@ -55,7 +56,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .section.firstCompanySearchResult
       .click('@header')
 
-    await Company.section.detailsTabs
+    await Location.section.detailsTabs
       .waitForElementVisible('@interactions')
       .click('@interactions')
 
@@ -76,7 +77,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .section.firstContactSearchResult
       .click('@header')
 
-    await Contact.section.detailsTabs
+    await Location.section.detailsTabs
       .waitForElementVisible('@interactions')
       .click('@interactions')
 

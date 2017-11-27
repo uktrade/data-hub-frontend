@@ -35,13 +35,18 @@ const config = {
   },
   assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
-  zenUrl: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
-  zenToken: process.env.ZEN_TOKEN,
-  zenEmail: process.env.ZEN_EMAIL,
-  zenBrowser: process.env.ZEN_BROWSER,
-  zenImpact: process.env.ZEN_IMPACT,
-  zenService: process.env.ZEN_SERVICE,
-  zenServiceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+  zen: {
+    // TODO tidy up the configuration of zendesk URLs
+    url: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
+    token: process.env.ZEN_TOKEN,
+    email: process.env.ZEN_EMAIL,
+    browser: process.env.ZEN_BROWSER,
+    impact: process.env.ZEN_IMPACT,
+    service: process.env.ZEN_SERVICE,
+    serviceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+  },
+  // @TODO - remove when demo site is decommissioned
+  projectPhase: process.env.PROJECT_PHASE || 'beta',
   sentryDsn: process.env.SENTRY_DSN,
   currencyFormat: '$0,0.00',
   longDateFormat: 'D MMMM YYYY',
@@ -50,6 +55,7 @@ const config = {
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
   archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
+  teamSiteSharePointUrl: process.env.TEAM_SITE_SHARE_POINT_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,
     clientId: process.env.OAUTH2_CLIENT_ID,
@@ -57,6 +63,7 @@ const config = {
     redirectUri: process.env.OAUTH2_REDIRECT_URL,
     tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
     token: process.env.OAUTH2_DEV_TOKEN,
+    logoutUrl: process.env.OAUTH2_LOGOUT_URL,
   },
 }
 

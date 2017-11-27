@@ -1,3 +1,4 @@
+## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
 version: 2
 jobs:
   build:
@@ -8,11 +9,12 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependencies-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}
       - run: yarn install
+      - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependencies-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}
           paths:
             - ~/data-hub-frontend/node_modules
   lint_code:
@@ -23,7 +25,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependencies-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}
       - run:
           name: Lint code
           command: |
@@ -45,7 +47,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependencies-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}
       - run:
           name: Run unit tests
           command: |
@@ -121,7 +123,7 @@ jobs:
           command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependencies-{{ checksum "~/data-hub-frontend/yarn.lock" }}
+          key: yarn-dependency-{{ checksum "~/data-hub-frontend/yarn.lock" }}
       - run: yarn build
       - run:
           name: Start data hub frontend
@@ -134,7 +136,7 @@ jobs:
           name: Split tests for parallelisation and then run acceptance tests
           command: |
             # split .features for parallelisation
-            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split --split-by=filesize)"
+            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split)"
 
             # move groups of .features to folder
             mkdir -p ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}

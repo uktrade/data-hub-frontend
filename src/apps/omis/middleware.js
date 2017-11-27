@@ -1,6 +1,5 @@
 const { assign, get } = require('lodash')
 
-const config = require('../../../config')
 const { getDitCompany } = require('../companies/repos')
 const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
@@ -19,7 +18,8 @@ async function setOrder (req, res, next, orderId) {
     const order = await Order.getById(req.session.token, orderId)
 
     res.locals.order = assign({}, order, {
-      isEditable: order.status === 'draft',
+      canEditOrder: order.status === 'draft',
+      canEditAdvisers: !['cancelled', 'complete'].includes(order.status),
     })
 
     const currencyFields = [
@@ -45,14 +45,8 @@ function setOrderBreadcrumb (req, res, next) {
   return setHomeBreadcrumb(reference)(req, res, next)
 }
 
-function setArchivedDocumentsBaseUrl (req, res, next) {
-  res.locals.archivedDocumentsBaseUrl = config.archivedDocumentsBaseUrl
-  next()
-}
-
 module.exports = {
   setCompany,
   setOrder,
   setOrderBreadcrumb,
-  setArchivedDocumentsBaseUrl,
 }

@@ -2,6 +2,7 @@ const create = require('./create')
 const archive = require('./archive')
 const audit = require('./audit')
 const details = require('./details')
+const documents = require('./documents')
 const edit = require('./edit')
 const evaluation = require('./evaluation')
 const interactions = require('./interactions')
@@ -12,6 +13,7 @@ module.exports = {
   archive,
   audit,
   details,
+  documents,
   edit,
   evaluation,
   interactions,

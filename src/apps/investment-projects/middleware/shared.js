@@ -1,6 +1,7 @@
-const { get, upperFirst } = require('lodash')
+const { get, upperFirst, camelCase } = require('lodash')
 
 const metadata = require('../../../lib/metadata')
+const { buildIncompleteFormList, toCompleteStageMessages } = require('../helpers')
 const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
@@ -34,6 +35,7 @@ async function getInvestmentDetails (req, res, next) {
     const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
     const ukCompanyId = get(investmentData, 'uk_company.id')
     const clientRelationshipManagerId = get(investmentData, 'client_relationship_manager.id')
+    const stageName = investmentData.stage.name
 
     investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
 
@@ -74,10 +76,12 @@ async function getInvestmentDetails (req, res, next) {
         url: `/companies/${get(investmentData, 'investor_company.id')}`,
       },
       currentStage: {
-        name: investmentData.stage.name,
+        name: stageName,
         isComplete: investmentData.team_complete && investmentData.requirements_complete && investmentData.value_complete,
+        incompleteFields: buildIncompleteFormList(get(investmentData, 'incomplete_fields', [])),
+        messages: get(toCompleteStageMessages, camelCase(stageName), []),
       },
-      nextStage: getNextStage(investmentData.stage.name, investmentProjectStages),
+      nextStage: getNextStage(stageName, investmentProjectStages),
     }
 
     res.breadcrumb({

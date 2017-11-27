@@ -1,30 +1,15 @@
 const { get } = require('lodash')
 
-const { getFormattedAddress } = require('../../../lib/address')
 const { getDitCompany, getCHCompany } = require('../repos')
-
-// TODO: Use transformer to return correct address object and handle display
-// in view layer
-function getHeadingAddress (company) {
-  // If this is a CDMS company
-  const cdmsTradingAddress = getFormattedAddress(company, 'trading')
-  if (cdmsTradingAddress) {
-    return cdmsTradingAddress
-  }
-
-  if (company.companies_house_data && company.companies_house_data !== null) {
-    return getFormattedAddress(company.companies_house_data, 'registered')
-  }
-
-  return getFormattedAddress(company, 'registered')
-}
+const { getCompanyAddress } = require('../transformers/shared')
 
 async function getCompany (req, res, next, id) {
   try {
     const company = await getDitCompany(req.session.token, id)
+    const address = getCompanyAddress(company)
 
-    company.address = getHeadingAddress(company)
     res.locals.company = company
+    res.locals.headingAddress = get(address, 'value')
     res.locals.companiesHouseCategory = get(company, 'companies_house_data.company_category')
     next()
   } catch (error) {

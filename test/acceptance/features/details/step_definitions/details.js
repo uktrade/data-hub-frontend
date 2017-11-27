@@ -6,11 +6,13 @@ defineSupportCode(({ Then }) => {
 
   Then(/^details heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
     await Details
+      .waitForElementPresent('@heading')
       .assert.containsText('@heading', this.state[fieldName])
   })
 
   Then(/^details heading should contain "(.+)"$/, async (value) => {
     await Details
+      .waitForElementPresent('@heading')
       .assert.containsText('@heading', value)
   })
 
@@ -19,6 +21,7 @@ defineSupportCode(({ Then }) => {
 
     await Details
       .api.useXpath()
+      .waitForElementPresent(detail.selector)
       .assert.containsText(detail.selector, this.state[fieldName])
       .useCss()
   })
@@ -28,6 +31,7 @@ defineSupportCode(({ Then }) => {
 
     await Details
       .api.useXpath()
+      .waitForElementPresent(detail.selector)
       .assert.containsText(detail.selector, value)
       .useCss()
   })
@@ -40,11 +44,25 @@ defineSupportCode(({ Then }) => {
     })
 
     for (const row of expectedLocalNav) {
-      const detailsTabSelector = Details.getDetailsTabSelector(row.text)
+      const localNavItemSelector = Details.getLocalNavItemSelector(row.text)
       await Details
         .api.useXpath()
-        .assert.visible(detailsTabSelector.selector)
+        .waitForElementPresent(localNavItemSelector.selector)
+        .assert.visible(localNavItemSelector.selector)
         .useCss()
     }
+  })
+
+  Then(/^there should not be a local nav$/, async () => {
+    await Details
+      .assert.elementNotPresent('@localNav')
+  })
+
+  Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink) => {
+    const tag = noDocumentsLink ? '@noDocumentsMessage' : '@documentsLink'
+
+    await Details
+      .waitForElementPresent(tag)
+      .assert.visible(tag)
   })
 })

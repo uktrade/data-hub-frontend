@@ -6,6 +6,7 @@ const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
+const { renderDocuments } = require('./controllers/documents')
 const { renderInteractions } = require('./controllers/interactions')
 const { getAudit } = require('./controllers/audit')
 
@@ -22,6 +23,7 @@ const LOCAL_NAV = [
   { path: 'details', label: 'Details' },
   { path: 'interactions', label: 'Interactions' },
   { path: 'audit', label: 'Audit history' },
+  { path: 'documents', label: 'Documents' },
 ]
 
 const DEFAULT_COLLECTION_QUERY = {
@@ -36,7 +38,8 @@ router
   .get(editDetails)
   .post(postDetails)
 
-router.use('/:contactId', setLocalNav(LOCAL_NAV))
+router.use('/:contactId', getCommon, setLocalNav(LOCAL_NAV))
+
 router.get('/:contactId', redirectToFirstNavItem)
 router.get('/:contactId/details', getCommon, getDetails)
 
@@ -58,6 +61,8 @@ router.get('/:contactId/interactions',
 )
 
 router.get('/:contactId/audit', getCommon, getAudit)
+
+router.get('/:contactId/documents', renderDocuments)
 
 router.use('/:contactId', getCommon, setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 

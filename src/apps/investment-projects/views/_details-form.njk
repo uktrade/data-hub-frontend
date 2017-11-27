@@ -47,7 +47,6 @@
     label: 'Anonymised description of the project',
     hint: 'Do not include company names, financial details or address details',
     type: 'textarea',
-    optional: true,
     error: form.errors.messages.anonymous_description,
     value: form.state.anonymous_description
   }) }}
@@ -289,8 +288,7 @@
     error: form.errors.messages.investor_type,
     value: form.state.investor_type,
     options: form.options.investmentInvestorType,
-    initialOption: '-- Choose an option --',
-    optional: true
+    initialOption: '-- Choose an option --'
   }) }}
 
   {{ MultipleChoiceField({
@@ -299,8 +297,7 @@
     error: form.errors.messages.level_of_involvement,
     value: form.state.level_of_involvement,
     options: form.options.investmentInvolvement,
-    initialOption: '-- Choose a level --',
-    optional: true
+    initialOption: '-- Choose a level --'
   }) }}
 
   {{ MultipleChoiceField({
@@ -309,8 +306,7 @@
     error: form.errors.messages.specific_programme,
     value: form.state.specific_programme,
     options: form.options.investmentSpecificProgramme,
-    initialOption: '-- Choose a programme --',
-    optional: true
+    initialOption: '-- Choose a programme --'
   }) }}
 
 {% endcall %}

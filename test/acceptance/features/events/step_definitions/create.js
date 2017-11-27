@@ -14,7 +14,7 @@ defineSupportCode(function ({ Given, Then, When }) {
       .wait() // wait for backend to sync
   })
 
-  Given(/^I navigate to the create an event page$/, async () => {
+  Given(/^I navigate to the create an event page$/, async () => { // TODO this can be dried up please see Location
     await Event
       .navigate()
   })

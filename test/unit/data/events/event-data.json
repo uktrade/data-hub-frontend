@@ -52,5 +52,6 @@
   "address_town": "plymouth",
   "address_county": "devon",
   "address_postcode": "PL1 3FG",
-  "notes": "An example event for testing"
+  "notes": "An example event for testing",
+  "archived_documents_url_path": "/documents/123"
 }
