@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { get } = require('lodash')
 
 const config = require('../../../config')
 
@@ -19,19 +20,19 @@ function createZenDeskMessage ({
       body: description,
     },
     custom_fields: [
-      { id: config.zenBrowser, value: browser },
-      { id: config.zenService, value: config.zenServiceChannel },
+      { id: get(config, 'zen.browser'), value: browser },
+      { id: get(config, 'zen.service'), value: get(config, 'zen.serviceChannel') },
     ],
     tags: [feedbackType],
   }
 }
 
 function postToZenDesk (ticket) {
-  return axios.post(config.zenUrl, { ticket },
+  return axios.post(config.zen.url, { ticket },
     {
       auth: {
-        username: `${config.zenEmail}/token`,
-        password: config.zenToken,
+        username: `${config.zen.email}/token`,
+        password: config.zen.token,
       },
     }
   )
