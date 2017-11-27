@@ -1,7 +1,11 @@
 const faker = require('faker')
 const { assign } = require('lodash')
 
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getDetailsTableRowValue,
+} = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
 
@@ -11,14 +15,6 @@ const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
     el: '//span',
     className: 'c-meta-list__item-label',
     child: '/following-sibling::span',
-  }
-)
-
-const getTableRowValue = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//th',
-    child: '/following-sibling::td',
   }
 )
 
@@ -398,16 +394,16 @@ module.exports = {
     companyDetails: {
       selector: '.table--key-value',
       elements: {
-        businessType: getTableRowValue('Business type'),
-        primaryAddress: getTableRowValue('Primary address'),
-        ukRegion: getTableRowValue('UK region'),
-        headquarters: getTableRowValue('Headquarters'),
-        sector: getTableRowValue('Sector'),
-        website: getTableRowValue('Website'),
-        businessDescription: getTableRowValue('Business description'),
-        numberOfEmployees: getTableRowValue('Number of employees'),
-        annualTurnover: getTableRowValue('Annual turnover'),
-        cdmsReference: getTableRowValue('CDMS reference'),
+        businessType: getDetailsTableRowValue('Business type'),
+        primaryAddress: getDetailsTableRowValue('Primary address'),
+        ukRegion: getDetailsTableRowValue('UK region'),
+        headquarters: getDetailsTableRowValue('Headquarters'),
+        sector: getDetailsTableRowValue('Sector'),
+        website: getDetailsTableRowValue('Website'),
+        businessDescription: getDetailsTableRowValue('Business description'),
+        numberOfEmployees: getDetailsTableRowValue('Number of employees'),
+        annualTurnover: getDetailsTableRowValue('Annual turnover'),
+        cdmsReference: getDetailsTableRowValue('CDMS reference'),
       },
     },
   },
