@@ -1,11 +1,19 @@
-const { merge } = require('lodash')
+const { assign, merge } = require('lodash')
 
 describe('OMIS list transformers', function () {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
 
     this.transformers = proxyquire('~/src/apps/omis/transformers', {
-      'date-fns/format': this.sandbox.stub().returnsArg(0),
+      './constants': {
+        ORDER_STATES: [
+          {
+            value: 'draft',
+            label: 'Draft',
+          },
+        ],
+        '@noCallThru': false,
+      },
     })
   })
 
@@ -45,10 +53,30 @@ describe('OMIS list transformers', function () {
         })
       })
 
+      context('without a valid status', () => {
+        it('should set Status to undefined', () => {
+          const order = assign({}, simpleOrder, {
+            status: 'dummy',
+          })
+          const actual = this.transformers.transformOrderToListItem(order)
+
+          expect(actual).to.have.property('meta').an('array').to.deep.equal([
+            { label: 'Status', type: 'badge', value: undefined },
+            { label: 'Market', type: 'badge', value: 'France' },
+            { label: 'Company', value: 'Venus Ltd' },
+            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
+            { label: 'Contact', value: 'Jenny Cakeman' },
+            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+          ])
+        })
+      })
+
       context('with delivery date', () => {
         it('should return a transformed object', () => {
-          simpleOrder.delivery_date = '2018-10-16T14:18:28.328729'
-          const actual = this.transformers.transformOrderToListItem(simpleOrder)
+          const order = assign({}, simpleOrder, {
+            delivery_date: '2018-10-16T14:18:28.328729',
+          })
+          const actual = this.transformers.transformOrderToListItem(order)
 
           expect(actual).to.have.property('id').a('string')
           expect(actual).to.have.property('name').a('string')
