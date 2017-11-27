@@ -1,7 +1,11 @@
 const faker = require('faker')
 const { assign } = require('lodash')
 
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getDetailsTableRowValue,
+} = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 
 function generateEmail (firstName, lastName, isAlternative) {
@@ -27,14 +31,6 @@ const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   {
     el: '//span',
     className: 'c-multiple-choice__label-text',
-  }
-)
-
-const getTableRowValue = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//th',
-    child: '/following-sibling::td',
   }
 )
 
@@ -201,14 +197,14 @@ module.exports = {
     contactDetails: {
       selector: '.table--key-value',
       elements: {
-        jobTitle: getTableRowValue('Job title'),
-        phoneNumber: getTableRowValue('Phone number'),
-        email: getTableRowValue('Email'),
-        emailMarketing: getTableRowValue('Email marketing'),
-        address: getTableRowValue('Address'),
-        alternativeTelephone: getTableRowValue('Alternative telephone'),
-        alternativeEmail: getTableRowValue('Alternative email'),
-        notes: getTableRowValue('Notes'),
+        jobTitle: getDetailsTableRowValue('Job title'),
+        phoneNumber: getDetailsTableRowValue('Phone number'),
+        email: getDetailsTableRowValue('Email'),
+        emailMarketing: getDetailsTableRowValue('Email marketing'),
+        address: getDetailsTableRowValue('Address'),
+        alternativeTelephone: getDetailsTableRowValue('Alternative telephone'),
+        alternativeEmail: getDetailsTableRowValue('Alternative email'),
+        notes: getDetailsTableRowValue('Notes'),
       },
     },
   },

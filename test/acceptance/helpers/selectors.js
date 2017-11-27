@@ -24,7 +24,23 @@ function getButtonWithText (text) {
   return getSelectorForElementWithText(text, { el: '//*', className: 'button' })
 }
 
+/**
+ * Gets XPath selector for the value of a details table key value pair
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getDetailsTableRowValue (text) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//th',
+      child: '/following-sibling::td',
+    }
+  )
+}
+
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
+  getDetailsTableRowValue,
 }
