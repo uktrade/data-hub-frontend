@@ -39,8 +39,25 @@ function getDetailsTableRowValue (text) {
   )
 }
 
+/**
+ * Gets XPath selector the selector for the meta item label value from entity lists
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getMetaListItemValueSelector (text) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//span',
+      className: 'c-meta-list__item-label',
+      child: '/following-sibling::span',
+    }
+  )
+}
+
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
   getDetailsTableRowValue,
+  getMetaListItemValueSelector,
 }
