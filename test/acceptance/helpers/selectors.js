@@ -55,9 +55,26 @@ function getMetaListItemValueSelector (text) {
   )
 }
 
+/**
+ * Gets XPath selector for an anchor tag containing text
+ * @param text
+ * @param className
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getLinkWithText (text, className) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//a',
+      className,
+    },
+  )
+}
+
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
   getDetailsTableRowValue,
   getMetaListItemValueSelector,
+  getLinkWithText,
 }
