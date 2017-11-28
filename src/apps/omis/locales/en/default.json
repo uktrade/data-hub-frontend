@@ -64,7 +64,7 @@
       "label": "VAT number"
     },
     "vat_verified": {
-      "label": "Has a valid VAT number valid been supplied?",
+      "label": "Has a valid VAT number been supplied?",
       "options": {
         "unverified": "Not verified",
         "valid": "Valid",
