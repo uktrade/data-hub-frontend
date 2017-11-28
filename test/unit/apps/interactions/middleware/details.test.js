@@ -1,4 +1,3 @@
-const advisersData = require('../../../data/advisers/advisers')
 const interactionData = require('../../../data/interactions/new-interaction.json')
 const servicesData = [
   { id: '9484b82b-3499-e211-a939-e4115bead28a', name: 'Account Management' },
@@ -25,6 +24,23 @@ describe('Interaction details middleware', () => {
     this.getContactsForCompanyStub = this.sandbox.stub()
     this.getContactStub = this.sandbox.stub()
     this.getDitCompanyStub = this.sandbox.stub()
+
+    const advisersData = {
+      count: 3,
+      results: [{
+        id: '1',
+        name: 'Fred Flintstone',
+        disabled_on: '2017-01-01',
+      }, {
+        id: '2',
+        name: 'Wilma Flintstone',
+        disabled_on: '2017-01-01',
+      }, {
+        id: '3',
+        name: 'Barney Rubble',
+        disabled_on: null,
+      }],
+    }
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
@@ -222,6 +238,14 @@ describe('Interaction details middleware', () => {
   })
 
   describe('#getInteractionOptions', () => {
+    beforeEach(() => {
+      this.res.locals.interaction = assign({}, interactionData, {
+        dit_adviser: {
+          id: '2',
+        },
+      })
+    })
+
     context('when interaction', () => {
       beforeEach(async () => {
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
@@ -231,8 +255,18 @@ describe('Interaction details middleware', () => {
         expect(this.res.locals.contacts).to.deep.equal(contactsData)
       })
 
-      it('should set advisers on locals', () => {
-        expect(this.res.locals.advisers).to.deep.equal(advisersData)
+      it('should set adviser to only active and current advisers', () => {
+        const expectedAdvisers = [{
+          id: '2',
+          name: 'Wilma Flintstone',
+          disabled_on: '2017-01-01',
+        }, {
+          id: '3',
+          name: 'Barney Rubble',
+          disabled_on: null,
+        }]
+
+        expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
       it('should set services data on locals', async () => {
@@ -258,8 +292,18 @@ describe('Interaction details middleware', () => {
         expect(this.res.locals.contacts).to.deep.equal(contactsData)
       })
 
-      it('should set advisers on locals', () => {
-        expect(this.res.locals.advisers).to.deep.equal(advisersData)
+      it('shuld set adviser to only active and current advisers', () => {
+        const expectedAdvisers = [{
+          id: '2',
+          name: 'Wilma Flintstone',
+          disabled_on: '2017-01-01',
+        }, {
+          id: '3',
+          name: 'Barney Rubble',
+          disabled_on: null,
+        }]
+
+        expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
       it('should set services data on locals', async () => {
