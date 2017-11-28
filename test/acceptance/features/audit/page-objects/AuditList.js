@@ -1,13 +1,4 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
-
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  }
-)
+const { getMetaListItemValueSelector } = require('../../../helpers/selectors')
 
 module.exports = {
   sections: {

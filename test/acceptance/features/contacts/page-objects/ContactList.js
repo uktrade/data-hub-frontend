@@ -1,4 +1,7 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getMetaListItemValueSelector,
+} = require('../../../helpers/selectors')
 
 const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
   text,
@@ -6,14 +9,6 @@ const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
     el: '//span',
     className: 'c-collection__filter-label',
     child: '/following-sibling::a',
-  }
-)
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
   }
 )
 

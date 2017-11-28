@@ -1,7 +1,11 @@
 const faker = require('faker')
 const { assign } = require('lodash')
 
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getLinkWithText,
+} = require('../../../helpers/selectors')
 const { generateFutureDate } = require('../../../helpers/date')
 
 const getRadioButtonWithText = (text) =>
@@ -12,13 +16,6 @@ const getRadioButtonWithText = (text) =>
       className: 'c-multiple-choice__label-text',
     },
   )
-
-const getLinkWithText = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//a',
-  },
-)
 
 module.exports = {
   props: {},
