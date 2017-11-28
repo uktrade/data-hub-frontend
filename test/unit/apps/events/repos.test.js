@@ -74,20 +74,14 @@ describe('Event repos', () => {
   })
 
   describe('#getActiveEvents', () => {
-    context('When there is a mix of active and inactive events', () => {
+    context('When there is a mix of active and inactive events on the server', () => {
       beforeEach(() => {
         this.currentId = '3'
 
         this.eventCollection = {
           results: [{
-            id: '1',
-            disabled_on: '2017-01-01',
-          }, {
             id: '2',
             disabled_on: null,
-          }, {
-            id: '3',
-            disabled_on: '2017-01-01',
           }],
         }
 
@@ -101,47 +95,17 @@ describe('Event repos', () => {
           this.events = await this.repos.getActiveEvents('1234')
         })
 
-        it('should call search to get the events', () => {
+        it('should call search to get the active events', () => {
           expect(this.searchSpy).to.be.calledWith({
             searchEntity: 'event',
-            requestBody: { sortby: 'name:asc' },
+            requestBody: {
+              sortby: 'name:asc',
+              disabled_on_exists: false,
+            },
             token: '1234',
             limit: 100000,
             isAggregation: false,
           })
-        })
-
-        it('should return only the active events', () => {
-          expect(this.events).to.deep.eq([{
-            id: '2',
-            disabled_on: null,
-          }])
-        })
-      })
-
-      context('and a current inactive event', () => {
-        beforeEach(async () => {
-          this.events = await this.repos.getActiveEvents('1234', this.currentId)
-        })
-
-        it('should call search to get the events', () => {
-          expect(this.searchSpy).to.be.calledWith({
-            searchEntity: 'event',
-            requestBody: { sortby: 'name:asc' },
-            token: '1234',
-            limit: 100000,
-            isAggregation: false,
-          })
-        })
-
-        it('should return active events and the current inactive one', () => {
-          expect(this.events).to.deep.eq([{
-            id: '2',
-            disabled_on: null,
-          }, {
-            id: '3',
-            disabled_on: '2017-01-01',
-          }])
         })
       })
     })

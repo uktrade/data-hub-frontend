@@ -76,7 +76,7 @@ async function getInteractionOptions (req, res, next) {
     res.locals.services = await metaDataRepository.getServices(req.session.token)
 
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await getActiveEvents(req.session.token, get(req.params, 'interactionId'))
+      res.locals.events = await getActiveEvents(req.session.token)
     }
 
     next()
