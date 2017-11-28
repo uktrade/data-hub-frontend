@@ -24,7 +24,57 @@ function getButtonWithText (text) {
   return getSelectorForElementWithText(text, { el: '//*', className: 'button' })
 }
 
+/**
+ * Gets XPath selector for the value of a details table key value pair
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getDetailsTableRowValue (text) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//th',
+      child: '/following-sibling::td',
+    }
+  )
+}
+
+/**
+ * Gets XPath selector the selector for the meta item label value from entity lists
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getMetaListItemValueSelector (text) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//span',
+      className: 'c-meta-list__item-label',
+      child: '/following-sibling::span',
+    }
+  )
+}
+
+/**
+ * Gets XPath selector for an anchor tag containing text
+ * @param text
+ * @param className
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getLinkWithText (text, className) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//a',
+      className,
+    },
+  )
+}
+
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
+  getDetailsTableRowValue,
+  getMetaListItemValueSelector,
+  getLinkWithText,
 }
