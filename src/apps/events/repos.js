@@ -1,7 +1,6 @@
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
 const { search } = require('../search/services')
-const { filterDisabledOption } = require('../filters')
 
 function saveEvent (token, event) {
   const options = {
@@ -33,20 +32,22 @@ function getAllEvents (token) {
 /**
  *
  * @param {string} token Session token to use for API requests
- * @param {string} currentEventId The id for an event that must be included in the list irrigardless of if is disabled or not (the current value)
  *
  * @returns {promise[Array]} Returns an array of event objects that have not been disabled or are the current event
  */
-async function getActiveEvents (token, currentEventId) {
+async function getActiveEvents (token) {
   const eventsResponse = await search({
     searchEntity: 'event',
-    requestBody: { sortby: 'name:asc' },
+    requestBody: {
+      sortby: 'name:asc',
+      disabled_on_exists: false,
+    },
     token: token,
     limit: 100000,
     isAggregation: false,
   })
 
-  return eventsResponse.results.filter(filterDisabledOption(currentEventId))
+  return eventsResponse.results
 }
 
 module.exports = {
