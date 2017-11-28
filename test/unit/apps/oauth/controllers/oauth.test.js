@@ -14,6 +14,7 @@ describe('OAuth controller', () => {
     this.resMock = assign({}, globalRes, {
       redirect: this.sandbox.spy(),
       render: this.sandbox.spy(),
+      clearCookie: this.sandbox.spy(),
     })
     this.reqMock = assign({}, globalReq, {
       session: {},
@@ -183,10 +184,8 @@ describe('OAuth controller', () => {
       this.mockOauthConfig = {
         logoutUrl: 'https://logout-url',
       }
-      set(this.mockConfig, 'oauth', this.mockOauthConfig)
-    })
 
-    it('should reset session properties', () => {
+      set(this.mockConfig, 'oauth', this.mockOauthConfig)
       set(this.reqMock.session, {
         user: {
           name: 'Barry',
@@ -196,11 +195,18 @@ describe('OAuth controller', () => {
       })
 
       this.controller.signOutOAuth(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should reset session properties', () => {
       expect(this.reqMock.session).to.be.null
     })
 
+    it('should clear the cookie', () => {
+      expect(this.resMock.clearCookie).to.be.calledWith('datahub.sid')
+      expect(this.resMock.clearCookie).to.be.calledOnce
+    })
+
     it('should redirect', () => {
-      this.controller.signOutOAuth(this.reqMock, this.resMock, this.nextSpy)
       expect(this.resMock.redirect).to.be.calledWith(this.mockOauthConfig.logoutUrl)
     })
   })
