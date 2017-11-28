@@ -258,15 +258,5 @@ describe('Event details middleware', () => {
         expect(this.res.locals.eventViewRecord).to.have.property('data', 'transformed')
       })
     })
-
-    describe('#getAdviserDetails', () => {
-      context('when success', () => {
-        it('should set event data on locals', async () => {
-          await this.middleware.getAdviserDetails(this.req, this.res, this.nextSpy)
-
-          expect(this.res.locals.advisers).to.deep.equal(advisersData)
-        })
-      })
-    })
   })
 })
