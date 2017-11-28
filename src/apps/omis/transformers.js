@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
-const Case = require('case')
+const { find, get } = require('lodash')
+
+const { ORDER_STATES } = require('./constants')
 
 function transformOrderToListItem ({
   id,
@@ -15,6 +16,8 @@ function transformOrderToListItem ({
 } = {}) {
   if (!id || !reference) { return }
 
+  const orderState = find(ORDER_STATES, { value: status })
+
   const item = {
     id,
     type: 'order',
@@ -24,7 +27,7 @@ function transformOrderToListItem ({
       {
         label: 'Status',
         type: 'badge',
-        value: Case.sentence(status),
+        value: get(orderState, 'label'),
       },
       {
         label: 'Market',
@@ -66,7 +69,6 @@ function transformOrderToListItem ({
 function transformOrderToTableItem ({
   id,
   reference,
-  status,
   payment_due_date,
   company,
   subtotal_cost,
@@ -77,7 +79,6 @@ function transformOrderToTableItem ({
   return {
     id,
     reference,
-    status,
     payment_due_date,
     company: get(company, 'name'),
     subtotal_cost: parseInt(subtotal_cost) / 100,

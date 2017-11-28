@@ -1,40 +1,19 @@
 const faker = require('faker')
 const { assign } = require('lodash')
 
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getDetailsTableRowValue,
+  getMetaListItemValueSelector,
+} = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
-
-function generateEmail (firstName, lastName, isAlternative) {
-  const suffix = '@example.com'
-  let emailParts = [firstName, lastName]
-  if (isAlternative) {
-    return emailParts.reverse().join('.') + suffix
-  }
-  return emailParts.join('.') + suffix
-}
-
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  }
-)
 
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   text,
   {
     el: '//span',
     className: 'c-multiple-choice__label-text',
-  }
-)
-
-const getTableRowValue = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//th',
-    child: '/following-sibling::td',
   }
 )
 
@@ -46,7 +25,6 @@ module.exports = {
     addInteractionButton: getButtonWithText('Add interaction'),
     contactsTab: 'a[href*="/contacts"][href*="/companies"]',
     firstCompanyFromList: '.c-entity-list li:first-child h3 a',
-    noContactWarning: '#no-contact-warning',
     firstName: '#field-first_name',
     firstNameError: 'label[for=field-first_name] span:nth-child(2)',
     lastName: '#field-last_name',
@@ -67,8 +45,6 @@ module.exports = {
     alternativePhoneNumber: '#field-telephone_alternative',
     alternativeEmail: '#field-email_alternative',
     notes: '#field-notes',
-    contactUnderSearchPage: '#contacts-list li:first-child',
-    contactFullname: '#contact-list .c-entity-list li:first-child .c-entity__title > a',
     headingCompanyLink: '.c-local-header__heading-before a', // TODO move this work to Location feature
   },
 
@@ -77,12 +53,6 @@ module.exports = {
       clickOnFirstCompanyFromList () {
         return this
           .click('@firstCompanyFromList')
-      },
-
-      navigateToContactsPage () {
-        return this
-          .clickOnFirstCompanyFromList()
-          .click('@contactsTab')
       },
 
       createNewContact (details = {}, isPrimary, callback) {
@@ -95,9 +65,9 @@ module.exports = {
           jobTitle: faker.name.jobTitle(),
           telephoneCountryCode: faker.random.number(),
           telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: generateEmail(firstName, lastName),
+          emailAddress: faker.internet.email(firstName, lastName),
           alternativePhoneNumber: '666555444',
-          alternativeEmail: generateEmail(firstName, lastName, true),
+          alternativeEmail: faker.internet.email(lastName, firstName),
           notes: `${faker.name.jobDescriptor() + firstName}`,
         }, details)
 
@@ -136,9 +106,9 @@ module.exports = {
           jobTitle: faker.name.jobTitle(),
           telephoneCountryCode: faker.random.number(),
           telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: generateEmail(firstName, lastName),
+          emailAddress: faker.internet.email(firstName, lastName),
           alternativePhoneNumber: '666555444',
-          alternativeEmail: generateEmail(firstName, lastName, true),
+          alternativeEmail: faker.internet.email(lastName, firstName),
           notes: `${faker.name.jobDescriptor() + firstName}`,
         }, details)
         const postcodeLookup = {
@@ -201,14 +171,14 @@ module.exports = {
     contactDetails: {
       selector: '.table--key-value',
       elements: {
-        jobTitle: getTableRowValue('Job title'),
-        phoneNumber: getTableRowValue('Phone number'),
-        email: getTableRowValue('Email'),
-        emailMarketing: getTableRowValue('Email marketing'),
-        address: getTableRowValue('Address'),
-        alternativeTelephone: getTableRowValue('Alternative telephone'),
-        alternativeEmail: getTableRowValue('Alternative email'),
-        notes: getTableRowValue('Notes'),
+        jobTitle: getDetailsTableRowValue('Job title'),
+        phoneNumber: getDetailsTableRowValue('Phone number'),
+        email: getDetailsTableRowValue('Email'),
+        emailMarketing: getDetailsTableRowValue('Email marketing'),
+        address: getDetailsTableRowValue('Address'),
+        alternativeTelephone: getDetailsTableRowValue('Alternative telephone'),
+        alternativeEmail: getDetailsTableRowValue('Alternative email'),
+        notes: getDetailsTableRowValue('Notes'),
       },
     },
   },

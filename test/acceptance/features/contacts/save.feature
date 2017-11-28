@@ -10,10 +10,11 @@ Feature: Create New Contact
     Given a company is created
     When navigating to the company contacts
     And I click the "Add contact" link
-    And a primary contact is added
-    When I submit the form
+    Then there are contact fields
+    When a primary contact is added
+    And I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
+    And I wait and then refresh the page
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
     When the contact is clicked
@@ -25,8 +26,9 @@ Feature: Create New Contact
     Given a company is created
     When navigating to the company contacts
     And I click the "Add contact" link
-    And a primary contact with new company address is added
-    When I submit the form
+    Then there are contact fields
+    When a primary contact with new company address is added
+    And I submit the form
     Then I see the success message
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
@@ -39,8 +41,9 @@ Feature: Create New Contact
     Given a company is created
     When navigating to the company contacts
     And I click the "Add contact" link
-    And a non-primary contact is added
-    When I submit the form
+    Then there are contact fields
+    When a non-primary contact is added
+    And I submit the form
     Then I see the success message
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
@@ -53,10 +56,11 @@ Feature: Create New Contact
     Given a company is created
     When navigating to the company contacts
     And I click the "Add contact" link
-    And a primary contact is added
-    When I submit the form
+    Then there are contact fields
+    When a primary contact is added
+    And I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
+    And I wait and then refresh the page
     When I navigate to the dashboard
     Then the contact is displayed on the dashboard
 
@@ -66,6 +70,7 @@ Feature: Create New Contact
     Given a company is created
     When navigating to the company contacts
     And I click the "Add contact" link
+    Then there are contact fields
     When I submit the form
     Then the contact fields have error messages
     And I see form error summary

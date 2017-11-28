@@ -24,7 +24,7 @@ function renderEditPage (req, res) {
       formConfigs[req.params.kind](
         {
           returnLink: res.locals.returnLink,
-          advisers: get(res.locals, 'advisers.results'),
+          advisers: res.locals.advisers,
           contacts: res.locals.contacts,
           services: res.locals.services,
           events: res.locals.events,
