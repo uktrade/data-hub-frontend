@@ -1,3 +1,6 @@
+const nock = require('nock')
+
+const config = require('~/config')
 const advisersData = require('../../../data/advisers/advisers')
 
 const standardMacros = [
@@ -46,6 +49,24 @@ describe('Event list controller', () => {
         eventFiltersFields: this.eventFiltersFieldsStub,
       },
     })
+
+    const advisers = [{
+      id: '1',
+      name: 'Fred Flintstone',
+      disabled_on: '2017-01-01',
+    }, {
+      id: '2',
+      name: 'Wilma Flintstone',
+      disabled_on: '2017-01-01',
+    }, {
+      id: '3',
+      name: 'Barney Rubble',
+      disabled_on: null,
+    }]
+
+    nock(config.apiRoot)
+      .get(`/adviser/?limit=100000&offset=0`)
+      .reply(200, { results: advisers })
   })
 
   afterEach(() => {
@@ -53,12 +74,12 @@ describe('Event list controller', () => {
   })
 
   describe('#renderEventList', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       this.eventFiltersFieldsStub.returns(standardMacros)
+      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
     })
 
     it('should render collection page as expected', () => {
-      this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('filtersFields'))
@@ -71,9 +92,9 @@ describe('Event list controller', () => {
       this.eventFiltersFieldsStub.returns(countryAndUkRegionMacros)
     })
 
-    it('should render collection without region if non-UK country is selected', () => {
+    it('should render collection without region if non-UK country is selected', async () => {
       this.reqMock.query = { address_country: 'non-uk' }
-      this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
+      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
 
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
@@ -87,9 +108,9 @@ describe('Event list controller', () => {
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
     })
 
-    it('should render collection with region if UK is selected', () => {
+    it('should render collection with region if UK is selected', async () => {
       this.reqMock.query = { address_country: 'uk' }
-      this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
+      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
 
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))

@@ -1,13 +1,8 @@
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
-
-const getMetaListItemValueSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//span',
-    className: 'c-meta-list__item-label',
-    child: '/following-sibling::span',
-  }
-)
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getMetaListItemValueSelector,
+} = require('../../../helpers/selectors')
 
 const getBadgeWithText = (text) => getSelectorForElementWithText(
   text,

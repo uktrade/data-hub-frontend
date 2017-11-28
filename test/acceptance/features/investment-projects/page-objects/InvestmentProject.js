@@ -2,7 +2,11 @@ const { getYear, addYears } = require('date-fns')
 const { set, lowerCase, forEach } = require('lodash')
 const faker = require('faker')
 
-const { getButtonWithText, getSelectorForElementWithText } = require('../../../helpers/selectors')
+const {
+  getButtonWithText,
+  getSelectorForElementWithText,
+  getDetailsTableRowValue,
+} = require('../../../helpers/selectors')
 const {
   storeSelectValue,
   storeSelectSubFieldValues,
@@ -12,11 +16,6 @@ const {
 const getHeaderSelector = (text) => getSelectorForElementWithText(text, {
   el: '//h2',
   className: 'heading-medium',
-})
-
-const getTableCellValueByName = (text) => getSelectorForElementWithText(text, {
-  el: '//th',
-  child: '/following-sibling::td',
 })
 
 const getTableCellAnchorByName = (text) => getSelectorForElementWithText(text, {
@@ -247,16 +246,16 @@ module.exports = {
           elements: {
             header: getHeaderSelector('Investment project summary'),
             clientLink: getTableCellAnchorByName('Client'),
-            typeOfInvestment: getTableCellValueByName('Type of investment'),
-            primarySector: getTableCellValueByName('Primary sector'),
-            businessActivity: getTableCellValueByName('Business activity'),
-            clientContact: getTableCellValueByName('Client contacts'),
-            projectDescription: getTableCellValueByName('Project description'),
-            anonDescription: getTableCellValueByName('Anonymised description'),
-            estimatedLandDate: getTableCellValueByName('Estimated land date'),
-            newOrExistingInvestor: getTableCellValueByName('New or existing investor'),
-            levelOfInvolvement: getTableCellValueByName('Level of involvement'),
-            specificInvestmentProgramme: getTableCellValueByName('Specific investment programme'),
+            typeOfInvestment: getDetailsTableRowValue('Type of investment'),
+            primarySector: getDetailsTableRowValue('Primary sector'),
+            businessActivity: getDetailsTableRowValue('Business activity'),
+            clientContact: getDetailsTableRowValue('Client contacts'),
+            projectDescription: getDetailsTableRowValue('Project description'),
+            anonDescription: getDetailsTableRowValue('Anonymised description'),
+            estimatedLandDate: getDetailsTableRowValue('Estimated land date'),
+            newOrExistingInvestor: getDetailsTableRowValue('New or existing investor'),
+            levelOfInvolvement: getDetailsTableRowValue('Level of involvement'),
+            specificInvestmentProgramme: getDetailsTableRowValue('Specific investment programme'),
           },
         },
       },

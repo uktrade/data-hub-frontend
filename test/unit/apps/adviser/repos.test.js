@@ -12,20 +12,34 @@ describe('Adviser repository', () => {
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, badAdviserData)
       })
+
       it('will be filtered out', async () => {
+        const expected = {
+          count: 4,
+          results: [
+            badAdviserData.results[1],
+            badAdviserData.results[2],
+            badAdviserData.results[3],
+            badAdviserData.results[4],
+          ],
+        }
+
         const actual = await repos.getAdvisers(123)
-        expect(actual.results.length).to.equal(4)
+
+        expect(actual).to.deep.equal(expected)
       })
     })
+
     context('when all advisers have names', () => {
       beforeEach(() => {
         nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, adviserData)
       })
+
       it('will not filter out any advisers', async () => {
         const actual = await repos.getAdvisers(123)
-        expect(actual.results.length).to.equal(5)
+        expect(actual).to.deep.equal(adviserData)
       })
     })
   })
