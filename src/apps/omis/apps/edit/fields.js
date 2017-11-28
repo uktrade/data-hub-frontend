@@ -166,7 +166,7 @@ const editFields = merge({}, globalFields, {
       value: 'eu',
     },
     dependent: {
-      name: 'vat_status',
+      field: 'vat_status',
       value: 'eu',
     },
   },
