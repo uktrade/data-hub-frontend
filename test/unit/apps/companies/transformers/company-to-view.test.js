@@ -33,7 +33,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5th Floor, Profile West, 950 Great West Road, Brentford, Middlesex, TW8 9ES, United Kingdom')
+      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
     })
 
     it('should supply the trading name', () => {
@@ -95,7 +95,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5th Floor, Profile West, Brentford, Middlesex, TW8 9ES, United Kingdom')
+      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
     })
 
     it('should supply the uk region', () => {
@@ -153,7 +153,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5th Floor, Profile West, Brentford, Middlesex, TW8 9ES, France')
+      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, BRENTFORD, MIDDLESEX, TW8 9ES, France')
     })
 
     it('should supply the country', () => {
