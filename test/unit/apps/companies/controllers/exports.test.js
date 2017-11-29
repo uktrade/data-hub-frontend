@@ -163,8 +163,9 @@ describe('Company export controller', () => {
   describe('handleEditFormPost()', () => {
     beforeEach(() => {
       this.reqMock.body = {
-        export_to_countries: '123456',
-        future_interest_countries: ['67890', 'abcde'],
+        export_experience_category: '111',
+        export_to_countries: '222',
+        future_interest_countries: ['333', '444'],
       }
     })
 
@@ -180,10 +181,10 @@ describe('Company export controller', () => {
       })
 
       it('should call save method with flattened body data', () => {
-        expect(this.saveCompany.args[0][1]).to.have.property('export_to_countries')
-        expect(this.saveCompany.args[0][1].export_to_countries).to.deep.equal(['123456'])
-        expect(this.saveCompany.args[0][1]).to.have.property('future_interest_countries')
-        expect(this.saveCompany.args[0][1].future_interest_countries).to.deep.equal(['67890', 'abcde'])
+        const actualData = this.saveCompany.args[0][1]
+        expect(actualData.export_experience_category).to.equal('111')
+        expect(actualData.export_to_countries).to.deep.equal(['222'])
+        expect(actualData.future_interest_countries).to.deep.equal(['333', '444'])
       })
 
       it('should redirect to exports routes', () => {
