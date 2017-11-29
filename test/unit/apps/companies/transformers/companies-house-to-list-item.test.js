@@ -51,10 +51,10 @@ describe('transformCompaniesHouseToListItem', () => {
     })
   })
 
-  it('should format the address and return as meta data', () => {
+  it('should return as meta data', () => {
     expect(this.transformed.meta[5]).to.deep.equal({
       label: 'Address',
-      value: 'Fred Cottage Smith Lane, Winkfield, Windsor, Berkshire, SL9 9RE, United Kingdom',
+      value: 'FRED COTTAGE SMITH LANE, WINKFIELD, WINDSOR, BERKSHIRE, SL9 9RE, United Kingdom',
     })
   })
 })
