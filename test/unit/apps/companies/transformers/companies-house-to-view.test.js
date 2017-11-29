@@ -36,7 +36,10 @@ describe('transformCompaniesHouseToView', () => {
     })
 
     it('should return the registered address', () => {
-      expect(this.viewRecord).to.have.property('Registered office address', '5th Floor, Profile West, 950 Great West Road, Brentford, Middlesex, TW8 9ES, United Kingdom')
+      expect(this.viewRecord).to.have.property(
+        'Registered office address',
+        '5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom'
+      )
     })
 
     it('should return the incorporation date', () => {
@@ -44,7 +47,10 @@ describe('transformCompaniesHouseToView', () => {
     })
 
     it('should return the formatted SIC codes', () => {
-      expect(this.viewRecord).to.have.property('Nature of business (SIC)', '82990 - Other business support service activities n.e.c., more stuff')
+      expect(this.viewRecord).to.have.property(
+        'Nature of business (SIC)',
+        '82990 - Other business support service activities n.e.c., more stuff'
+      )
     })
   })
 })
