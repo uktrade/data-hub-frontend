@@ -51,6 +51,7 @@ async function handleEditFormPost (req, res, next) {
   const futureInterestCountries = flatten([req.body.future_interest_countries])
 
   const data = assign({}, res.locals.company, {
+    export_experience_category: req.body.export_experience_category,
     export_to_countries: filter(exportToCountries),
     future_interest_countries: filter(futureInterestCountries),
   })
