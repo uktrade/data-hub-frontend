@@ -92,6 +92,7 @@ const metadataItems = [
   ['investment-specific-programme', 'investmentSpecificProgrammeOptions'],
   ['investment-investor-type', 'investmentInvestorTypeOptions'],
   ['investment-involvement', 'investmentInvolvementOptions'],
+  ['export-experience-category', 'exportExperienceCategory'],
 ]
 
 const restrictedServiceKeys = [

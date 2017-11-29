@@ -17,14 +17,17 @@ function renderExports (req, res) {
 }
 
 function populateExportForm (req, res, next) {
-  const { export_to_countries, future_interest_countries } = res.locals.company
+  const {
+    export_to_countries,
+    future_interest_countries,
+    export_experience_category,
+  } = res.locals.company
 
-  const savedValues = {
+  res.locals.formData = assign({}, {
+    export_experience_category,
     export_to_countries: export_to_countries.map(country => country.id),
     future_interest_countries: future_interest_countries.map(country => country.id),
-  }
-
-  res.locals.formData = assign({}, savedValues, req.body)
+  }, req.body)
 
   next()
 }
@@ -38,6 +41,7 @@ function renderExportEdit (req, res) {
     .breadcrumb('Edit')
     .render('companies/views/exports-edit', {
       exportDetailsLabels,
+      exportExperienceCategories: metadataRepo.exportExperienceCategory.map(transformObjectToOption),
       countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),
     })
 }
