@@ -71,7 +71,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 Uk Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': '1 UK Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
           'Event end date': {
             type: 'date',
             name: '2017-11-11',
@@ -129,7 +129,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 Uk Street, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': '1 UK Street, Plymouth, Devon, PL1 3FG, United Kingdom',
           'Documents': {
             name: 'There are no files or documents',
           },
@@ -161,7 +161,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 Uk Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': '1 UK Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
           'Documents': {
             name: 'There are no files or documents',
           },
