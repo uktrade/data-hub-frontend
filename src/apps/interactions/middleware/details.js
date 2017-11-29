@@ -6,14 +6,9 @@ const { fetchInteraction, saveInteraction } = require('../repos')
 const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany, getContact } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
+const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
 const { getDitCompany } = require('../../companies/repos')
-const { filterDisabledOption } = require('../../filters')
-
-async function getActiveAdvisers (token, currentAdviser) {
-  const allAdvisers = await getAdvisers(token)
-  return allAdvisers.results.filter(filterDisabledOption(currentAdviser))
-}
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -71,12 +66,19 @@ async function getInteractionDetails (req, res, next, interactionId) {
 
 async function getInteractionOptions (req, res, next) {
   try {
-    res.locals.advisers = await getActiveAdvisers(req.session.token, get(res.locals, 'interaction.dit_adviser.id'))
-    res.locals.contacts = await getContactsForCompany(req.session.token, res.locals.company.id)
-    res.locals.services = await metaDataRepository.getServices(req.session.token)
+    const token = req.session.token
+    const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+    const company = get(res.locals, 'company.id')
+    const advisers = await getAdvisers(token)
+
+    res.locals = assign({}, res.locals, {
+      advisers: filterActiveAdvisers({ advisers: advisers.results, includeAdviser: currentAdviser }),
+      contacts: await getContactsForCompany(token, company),
+      services: await metaDataRepository.getServices(token),
+    })
 
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await getActiveEvents(req.session.token)
+      res.locals.events = await getActiveEvents(token)
     }
 
     next()
