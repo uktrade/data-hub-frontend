@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, pickBy, isNotEmpty, keys, has } = require('lodash')
 
 const {
   detailsLabels,
@@ -18,10 +18,22 @@ function detailsGetHandler (req, res, next) {
     const transformedValue = transformInvestmentValueForView(res.locals.investmentData)
     const transformedRequirements = transformInvestmentRequirementsForView(res.locals.investmentData)
 
+    // When getting requirements, strip out empty or null rows
+    // Then if there are no requirements, or the only one is the uk company,
+    // set a flag so the user is told to add requirements, otherwise just show them and the edit button
+    const requirements = pickBy(getDataLabels(transformedRequirements, requirementsLabels.view), isNotEmpty)
+    const requirementKeyCount = keys(requirements).length
+    let isRequirementsStarted = false
+
+    if (requirementKeyCount > 1 || (requirementKeyCount === 1 && !has(requirements, requirementsLabels.view.uk_company))) {
+      isRequirementsStarted = true
+    }
+
     return res.render('investment-projects/views/details', {
+      requirements,
+      isRequirementsStarted,
       details: getDataLabels(transformedDetails, detailsLabels.view),
       values: getDataLabels(transformedValue, valueLabels.view),
-      requirements: getDataLabels(transformedRequirements, requirementsLabels.view),
     })
   }
   return next()

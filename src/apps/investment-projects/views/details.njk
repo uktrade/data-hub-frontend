@@ -20,14 +20,16 @@
   {{ renderButton('details', 'Edit summary', true) }}
 
   <h2 class="heading-medium">Requirements and location</h2>
-  {% if requirements | removeNilAndEmpty | length > 1 %}
-    {% component 'key-value-table', items=requirements, variant='striped' %}
+  {% component 'key-value-table', items=requirements, variant='striped' %}
+
+  {% if isRequirementsStarted %}
     {{ renderButton('requirements', 'Edit requirements', true) }}
   {% else %}
     {{ Message({
       type: 'muted',
       text: 'Please complete this section to move to Assign PM stage'
     }) }}
+
     {{ renderButton('requirements', 'Add requirements') }}
   {% endif %}
 
