@@ -1,4 +1,3 @@
-const logger = require('../../../config/logger')
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
 
@@ -39,21 +38,15 @@ function unarchiveContact (token, contactId) {
   })
 }
 
-function getContactsForCompany (token, companyId) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const response = await authorisedRequest(token, {
-        url: `${config.apiRoot}/v3/contact`,
-        qs: {
-          company_id: companyId,
-        },
-      })
-      resolve(response.results)
-    } catch (error) {
-      logger.error(error)
-      reject(error)
-    }
+async function getContactsForCompany (token, companyId) {
+  const response = await authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/contact`,
+    qs: {
+      company_id: companyId,
+      limit: 500,
+    },
   })
+  return response.results
 }
 
 function getContactAuditLog (token, contactId, page = 1) {
