@@ -10,15 +10,6 @@ defineSupportCode(({ When, Then }) => {
       .click('@sendButton')
   })
 
-  Then(/^there are support fields$/, async function () {
-    await Support.section.form
-      .assert.visible('@title')
-      .assert.visible('@chooseOneOfThese')
-      .assert.visible('@description')
-      .assert.visible('@email')
-      .assert.visible('@webBrowser')
-  })
-
   Then(/^the support fields have error messages$/, async function () {
     await Support.section.form
       .assert.visible('@titleError')

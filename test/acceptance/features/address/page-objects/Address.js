@@ -26,6 +26,7 @@ module.exports = {
           .setValue(`@${get(stateStore, 'postcode')}`, postcode)
           .click('@postCodeLookupButton')
           .wait() // wait for xhr to come back for postcode lookup
+          .waitForElementPresent(suggestionsElem)
           .api.perform((done) => {
             this.getListOption(suggestionsElem, (addressOption) => {
               this.setValue(suggestionsElem, addressOption)

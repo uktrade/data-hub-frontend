@@ -20,6 +20,10 @@ describe('Company export controller', () => {
           id: '1234',
           name: 'France',
         }],
+        exportExperienceCategory: [{
+          id: '73023b55-9568-4e3f-a134-53ec58451d3f',
+          name: 'Export growth',
+        }],
       },
       '../transformers': {
         transformCompanyToExportDetailsView: this.transformerSpy,
@@ -78,6 +82,10 @@ describe('Company export controller', () => {
       it('should populate formData on locals', () => {
         expect(this.resMock.locals).to.have.property('formData')
         expect(this.resMock.locals.formData).to.deep.equal({
+          export_experience_category: {
+            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+            name: 'Increasing export markets',
+          },
           export_to_countries: ['1234', '2234'],
           future_interest_countries: ['4321', '5678'],
         })
@@ -101,6 +109,10 @@ describe('Company export controller', () => {
       it('should populate formData on locals', () => {
         expect(this.resMock.locals).to.have.property('formData')
         expect(this.resMock.locals.formData).to.deep.equal({
+          export_experience_category: {
+            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+            name: 'Increasing export markets',
+          },
           export_to_countries: ['09876'],
           future_interest_countries: ['67890'],
         })
@@ -131,7 +143,15 @@ describe('Company export controller', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('exportDetailsLabels')
     })
 
-    it('should exports to view', () => {
+    it('send export experience cateogries options to view', () => {
+      expect(this.renderSpy.args[0][1]).to.have.property('exportExperienceCategories')
+      expect(this.renderSpy.args[0][1].exportExperienceCategories).to.deep.equal([{
+        value: '73023b55-9568-4e3f-a134-53ec58451d3f',
+        label: 'Export growth',
+      }])
+    })
+
+    it('send country options to view', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('countryOptions')
       expect(this.renderSpy.args[0][1].countryOptions).to.deep.equal([{
         value: '1234',
@@ -143,8 +163,9 @@ describe('Company export controller', () => {
   describe('handleEditFormPost()', () => {
     beforeEach(() => {
       this.reqMock.body = {
-        export_to_countries: '123456',
-        future_interest_countries: ['67890', 'abcde'],
+        export_experience_category: '111',
+        export_to_countries: '222',
+        future_interest_countries: ['333', '444'],
       }
     })
 
@@ -160,10 +181,10 @@ describe('Company export controller', () => {
       })
 
       it('should call save method with flattened body data', () => {
-        expect(this.saveCompany.args[0][1]).to.have.property('export_to_countries')
-        expect(this.saveCompany.args[0][1].export_to_countries).to.deep.equal(['123456'])
-        expect(this.saveCompany.args[0][1]).to.have.property('future_interest_countries')
-        expect(this.saveCompany.args[0][1].future_interest_countries).to.deep.equal(['67890', 'abcde'])
+        const actualData = this.saveCompany.args[0][1]
+        expect(actualData.export_experience_category).to.equal('111')
+        expect(actualData.export_to_countries).to.deep.equal(['222'])
+        expect(actualData.future_interest_countries).to.deep.equal(['333', '444'])
       })
 
       it('should redirect to exports routes', () => {
