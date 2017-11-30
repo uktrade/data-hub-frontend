@@ -24,7 +24,7 @@ describe('transformCompanyToExportDetailsView', () => {
     })
 
     it('should show the export win category', () => {
-      expect(this.viewRecord).to.have.property('Export win cateogory', null)
+      expect(this.viewRecord).to.have.property('Export win category', null)
     })
   })
 
@@ -58,7 +58,7 @@ describe('transformCompanyToExportDetailsView', () => {
     })
 
     it('should show the export win category', () => {
-      expect(this.viewRecord).to.have.property('Export win cateogory', this.exportExperienceCategory)
+      expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
     })
   })
 
@@ -98,7 +98,7 @@ describe('transformCompanyToExportDetailsView', () => {
     })
 
     it('should show the export win category', () => {
-      expect(this.viewRecord).to.have.property('Export win cateogory', this.exportExperienceCategory)
+      expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
     })
   })
 })
