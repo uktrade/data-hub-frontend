@@ -197,7 +197,7 @@
     values.billing_contact_name | escape,
     values.billing_email | escape,
     values.billing_phone
-  ] | removeNilAndEmpty | join('<br>') %}
+  ] | removeNilAndEmpty %}
 
   {% set billingAddress = [
     values.billing_address_1,
@@ -228,6 +228,18 @@
 
   {% set companyAddress = tradingAddress if tradingAddress|length else registeredAddress %}
 
+  {% set addressValue %}
+    {% if billingAddress | length %}
+      {{ billingAddress | join(', ') }}
+    {% else %}
+      <p>{{ companyAddress | join(', ') }}</p>
+
+      {% call Message({ type: 'muted' }) %}
+        The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
+      {% endcall %}
+    {% endif %}
+  {% endset %}
+
   {% set costText %}
     {{ values.total_cost | formatCurrency }}
 
@@ -253,11 +265,10 @@
       fallbackText: 'Estimated hours and VAT category must be set to calculate price'
     }, {
       label: 'Billing contact',
-      value: billingContact | safe
+      value: billingContact | join('<br>') | safe if billingContact|length
     }, {
       label: 'Billing address',
-      value: billingAddress | join(', ') if billingAddress|length else companyAddress | join(', '),
-      fallbackText: 'Not added'
+      value: addressValue | safe
     }, {
       label: 'VAT category',
       value: translate('fields.vat_status.options.' + values.vat_status) if values.vat_status,
@@ -271,11 +282,5 @@
       fallbackText: 'Not added'
     }]
   }) }}
-
-  {% if not billingAddress | length %}
-    {% call Message({ type: 'muted' }) %}
-      The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
-    {% endcall %}
-  {% endif %}
 
 {% endblock %}
