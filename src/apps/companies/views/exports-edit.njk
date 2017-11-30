@@ -17,9 +17,17 @@
       id: company.id
     }
   }) %}
+    {{ MultipleChoiceField({
+      name: 'export_experience_category',
+      label: exportDetailsLabels.exportExperienceCategory,
+      value: formData.export_experience_category,
+      options: exportExperienceCategories,
+      initialOption: '-- Select category --'
+    }) }}
+
     {# TODO: Make these work without JavaScript #}
     {% set exportCountries = formData.export_to_countries if formData.export_to_countries.length else ['']%}
-    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+    <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
       <label class="c-form-group__label">
         <span class="c-form-group__label-text">
           Select a market this company currently exports to (optional)
@@ -43,7 +51,7 @@
 
     {# TODO: Make these work without JavaScript #}
     {% set futureCountries = formData.future_interest_countries if formData.future_interest_countries.length else ['']%}
-    <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
+    <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
       <label class="c-form-group__label">
         <span class="c-form-group__label-text">
           Future markets of interest (optional)
