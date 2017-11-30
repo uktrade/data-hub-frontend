@@ -47,6 +47,7 @@ fieldset.c-form-fieldset--subfield {
   }
 
   &.has-error {
+    border-left: 0;
     padding-left: $default-spacing-unit * 2;
 
     &::before {
