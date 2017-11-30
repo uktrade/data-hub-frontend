@@ -73,7 +73,7 @@
     heading: 'Advisers in the market',
     actions: [{
       url: 'edit/assignees' if order.canEditAdvisers,
-      label: 'Add or remove'
+      label: 'Add or remove' if order.canEditOrder else 'Add'
     }, {
       url: 'edit/assignee-time' if order.canEditOrder,
       label: 'Estimate hours'
