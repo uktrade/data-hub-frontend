@@ -170,7 +170,7 @@ const filters = {
 
   humanizeDuration: (value, measurement = 'minutes') => {
     const duration = moment.duration(value, measurement)
-    const hoursSuffix = pluralise('hour', duration.hours())
+    const hoursSuffix = pluralise('hour', duration.asHours())
 
     return duration.format(`h [${hoursSuffix}]`)
   },
