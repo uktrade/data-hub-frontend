@@ -195,6 +195,7 @@ workflows:
               ignore:
                 - master
                 - /^skip-tests.*/
+                - /^release.*/
       - user_acceptance_tests_master:
           requires:
             - lint_code
