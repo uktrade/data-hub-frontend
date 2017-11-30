@@ -1,6 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const faker = require('faker')
+const { snakeCase } = require('lodash')
 
 const getValue = (value) => {
   switch (value) {
@@ -12,6 +13,26 @@ const getValue = (value) => {
       return faker.address.streetAddress()
     default:
       return value.replace(/^"(.+)"$/g, '$1')
+  }
+}
+
+const FIELD_TYPES = {
+  text: 'Text',
+  radioList: 'Radio list',
+}
+
+const getSelectorsForElement = (type, name) => {
+  switch (type) {
+    case FIELD_TYPES.text:
+      return {
+        label: `label[for=field-${snakeCase(name)}] > span`,
+        element: `#field-${snakeCase(name)}`,
+      }
+    case FIELD_TYPES.radioList:
+      return {
+        label: `#group-field-${snakeCase(name)} > legend > span`,
+        element: `#group-field-${snakeCase(name)}`,
+      }
   }
 }
 
@@ -53,5 +74,15 @@ defineSupportCode(({ When, Then }) => {
   Then(/^I see form error summary$/, async () => {
     await Form
       .assert.visible('@errorSummary')
+  })
+
+  Then(/^there are form fields$/, async function (dataTable) {
+    for (const row of dataTable.hashes()) {
+      const selectors = getSelectorsForElement(row.type, row.name)
+      await client
+        .waitForElementPresent(selectors.element)
+        .assert.visible(selectors.label)
+        .assert.visible(selectors.element)
+    }
   })
 })
