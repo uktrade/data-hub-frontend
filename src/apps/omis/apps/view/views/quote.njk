@@ -21,7 +21,7 @@
         {% for stepUrl, stepData in incompleteFields %}
           {% for field in stepData.errors %}
             <li>
-              <a href="/omis/{{ order.id }}/edit{{ stepUrl }}?returnUrl=/omis/{{ order.id }}/quote#field-{{ field }}">
+              <a href="/omis/{{ order.id }}/edit{{ stepUrl }}?returnUrl={{ ORIGINAL_URL }}#field-{{ field }}">
                 {{ translate('errors.quote.' + field) }}
               </a>
             </li>

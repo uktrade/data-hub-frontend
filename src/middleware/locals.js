@@ -24,7 +24,7 @@ module.exports = function locals (req, res, next) {
 
   res.locals = Object.assign({}, res.locals, {
     BASE_URL: baseUrl,
-    CANONICAL_URL: baseUrl + req.originalUrl,
+    ORIGINAL_URL: baseUrl + req.originalUrl,
     CURRENT_PATH: req.path,
     ARCHIVED_DOCUMENT_BASE_URL: config.archivedDocumentsBaseUrl,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
