@@ -43,6 +43,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
     - [Ignoring features](#ignoring-features)
 - [Continuous Integration](#continuous-integration)
+  - [Running CI jobs](#running-ci-jobs)
   - [Base docker image](#base-docker-image)
   - [Data hub backend docker image](#data-hub-backend-docker-image)
   - [Job failure](#job-failure)
@@ -378,6 +379,11 @@ You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
 
 ## Continuous Integration
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
+
+### Running CI jobs
+- All branches run the `lint_code`, `unit_tests` and `user_acceptance_tests` CI jobs
+- You can skip the `user_acceptance_tests` CI job by using a branch starting with `/^skip-tests.*/`
+- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo/tree/master) 
 
 ### Base docker image
 The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/docker-data-hub-base` as a base for running a selenium server and data hub frontend
