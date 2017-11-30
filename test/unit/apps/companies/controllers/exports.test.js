@@ -143,7 +143,7 @@ describe('Company export controller', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('exportDetailsLabels')
     })
 
-    it('send export experience cateogries options to view', () => {
+    it('send export experience categories options to view', () => {
       expect(this.renderSpy.args[0][1]).to.have.property('exportExperienceCategories')
       expect(this.renderSpy.args[0][1].exportExperienceCategories).to.deep.equal([{
         value: '73023b55-9568-4e3f-a134-53ec58451d3f',
