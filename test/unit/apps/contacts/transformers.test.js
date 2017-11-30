@@ -238,7 +238,7 @@ describe('Contact transformers', function () {
       })
 
       it('should use the company registered address', () => {
-        expect(this.view).to.have.property('Address', '5th Floor, Profile West, 950 Great West Road, Brentford, Middlesex, TW8 9ES, United Kingdom')
+        expect(this.view).to.have.property('Address', '5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
       })
     })
   })
