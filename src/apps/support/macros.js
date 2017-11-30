@@ -10,7 +10,7 @@ const feedbackFormConfig = (browserInfo) => ({
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',
-      name: 'feedbackType',
+      name: 'feedback_type',
       label: 'Choose one of these',
       options: [
         {

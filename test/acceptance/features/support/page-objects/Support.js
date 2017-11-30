@@ -21,7 +21,7 @@ module.exports = {
         return this.section.form
           .waitForElementPresent('@sendButton')
           .api.perform((done) => {
-            this.getRadioOption('feedbackType', (result) => {
+            this.getRadioOption('feedback_type', (result) => {
               supportRequestRadioOptions.employeeRange = result
               done()
             })
@@ -53,8 +53,8 @@ module.exports = {
       elements: {
         title: '#field-title',
         titleError: 'label[for=field-title] span:nth-child(2)',
-        chooseOneOfThese: '#group-field-feedbackType',
-        chooseOneOfTheseError: '#group-field-feedbackType span.c-form-group__error-message',
+        chooseOneOfThese: '#group-field-feedback_type',
+        chooseOneOfTheseError: '#group-field-feedback_type span.c-form-group__error-message',
         description: '#field-description',
         email: '#field-email',
         emailError: 'label[for=field-email] span:nth-child(2)',

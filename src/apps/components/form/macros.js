@@ -24,7 +24,7 @@ const standardFormConfig = {
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',
-      name: 'feedbackType',
+      name: 'feedback_type',
       modifier: 'inline',
       label: 'Inline inputs',
       options: [
