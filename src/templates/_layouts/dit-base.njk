@@ -11,6 +11,10 @@
         <meta name="description" content="{{ description }}">
       {% endif -%}
 
+      {% if CANONICAL_URL %}
+        <link rel="canonical" href="{{ CANONICAL_URL }}">
+      {% endif %}
+
       {% block head_content %}
         <!--[if IE]><link rel="shortcut icon" href="{{ getAssetPath('images/favicon.ico') }}" type="image/x-icon"><![endif]-->
         <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
