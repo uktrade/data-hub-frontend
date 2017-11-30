@@ -69,7 +69,7 @@ const accountManagementDisplayLabels = {
 }
 
 const exportDetailsLabels = {
-  exportExperienceCategory: 'Export win cateogory',
+  exportExperienceCategory: 'Export win category',
   exportToCountries: 'Currently exporting to',
   futureInterestCountries: 'Future countries of interest',
 }
