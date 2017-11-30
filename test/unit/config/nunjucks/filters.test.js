@@ -329,4 +329,30 @@ describe('nunjucks filters', () => {
         .to.equal('c-custom-component c-custom-component--modifier c-custom-component--another-modifier')
     })
   })
+
+  describe('#humanizeDuration', () => {
+    context('when hours is 1', () => {
+      it('should return singular format', () => {
+        expect(filters.humanizeDuration(60)).to.equal('1 hour')
+      })
+    })
+
+    context('when hours is 0', () => {
+      it('should return singular format', () => {
+        expect(filters.humanizeDuration(0)).to.equal('0 hours')
+      })
+    })
+
+    context('when hours is greater than 1', () => {
+      it('should return plural format', () => {
+        expect(filters.humanizeDuration(120)).to.equal('2 hours')
+      })
+    })
+
+    context('when using a different format', () => {
+      it('should return format as hours', () => {
+        expect(filters.humanizeDuration(2, 'hours')).to.equal('2 hours')
+      })
+    })
+  })
 })
