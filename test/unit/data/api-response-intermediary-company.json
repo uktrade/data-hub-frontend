@@ -155,6 +155,10 @@
         "name": "Argentina"
       }
     ],
+    "export_experience_category": {
+      "id": "8b05e8c7-1812-46bf-bab7-a0096ab5689f",
+      "name": "Increasing export markets"
+    },
     "uk_based": true,
     "account_manager": null,
     "registered_address_1": "Annexe -  Blackthorn Cottage",

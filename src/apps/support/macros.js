@@ -10,7 +10,7 @@ const feedbackFormConfig = (browserInfo) => ({
     {
       macroName: 'MultipleChoiceField',
       type: 'radio',
-      name: 'feedbackType',
+      name: 'feedback_type',
       label: 'Choose one of these',
       options: [
         {
@@ -29,7 +29,6 @@ const feedbackFormConfig = (browserInfo) => ({
     },
     {
       macroName: 'TextField',
-      optional: true,
       type: 'textarea',
       name: 'description',
       label: 'Description',
@@ -39,7 +38,6 @@ const feedbackFormConfig = (browserInfo) => ({
       macroName: 'TextField',
       name: 'email',
       label: 'Email',
-      hint: 'If you wish to be contacted, please provide your email address',
     },
     {
       macroName: 'TextField',

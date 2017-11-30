@@ -1,14 +1,15 @@
+/* eslint-disable camelcase */
 const { isEmpty, pickBy } = require('lodash')
 
 const logger = require('../../../config/logger')
 const { createZenDeskMessage, postToZenDesk } = require('./services')
 
 async function postFeedback (req, res, next) {
-  const { title, feedbackType, email } = req.body
+  const { title, feedback_type, email } = req.body
 
   const messages = pickBy({
     title: !title && 'Your feedback needs a title',
-    feedbackType: !feedbackType && 'You need to choose between raising a problem and leaving feedback',
+    feedback_type: !feedback_type && 'You need to choose between raising a problem and leaving feedback',
     email: (!email.match(/.*@.*\..*/)) && 'A valid email address is required',
   })
 

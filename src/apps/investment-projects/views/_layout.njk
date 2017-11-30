@@ -66,7 +66,7 @@
             <ul class="list-disc">
               {% for form in investmentStatus.currentStage.incompleteFields  %}
                 <li>
-                    <a href="{{ form.url }}?returnUrl={{ CANONICAL_URL }}">{{ form.text }}</a>
+                    <a href="{{ form.url }}?returnUrl={{ ORIGINAL_URL }}">{{ form.text }}</a>
                 </li>
               {% endfor %}
             </ul>

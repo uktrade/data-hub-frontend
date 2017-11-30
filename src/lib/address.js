@@ -1,32 +1,21 @@
-const { title } = require('case')
+const { get, compact } = require('lodash')
 
-// TODO review this file and what it is doing
 // TODO align all addresses across the app to use the same format
-function getFormattedAddress (object, key) {
-  if (key) {
-    key = `${key}_`
-  } else {
-    key = ''
-  }
+function getFormattedAddress (entity, key) {
+  const prefix = key ? `${key}_` : ''
 
-  let addressStr = ''
-  if (object[`${key}address_1`] && object[`${key}address_1`].length > 0) addressStr += title(`${object[`${key}address_1`]}, `)
-  if (object[`${key}address_2`] && object[`${key}address_2`].length > 0) addressStr += title(`${object[`${key}address_2`]}, `)
-  if (object[`${key}address_town`] && object[`${key}address_town`].length > 0) addressStr += title(`${object[`${key}address_town`]}, `)
-  if (object[`${key}address_county`] && object[`${key}address_county`].length > 0) addressStr += title(`${object[`${key}address_county`]}, `)
-  if (object[`${key}address_postcode`] && object[`${key}address_postcode`].length > 0) addressStr += `${object[`${key}address_postcode`]}, `
+  const addressParts = compact([
+    get(entity, `${prefix}address_1`),
+    get(entity, `${prefix}address_2`),
+    get(entity, `${prefix}address_town`),
+    get(entity, `${prefix}address_county`),
+    get(entity, `${prefix}address_postcode`),
+    get(entity, `${prefix}address_country.name`),
+  ])
 
-  if (object[`${key}address_country`] && object[`${key}address_country`].name && object[`${key}address_country`].name.length > 0) {
-    addressStr += title(object[`${key}address_country`].name)
-  }
-
-  if (addressStr.length === 0) {
-    return null
-  }
-
-  return addressStr
-    .trim()
-    .replace(/,$/, '')
+  return addressParts.length ? addressParts.join(', ') : null
 }
 
-module.exports = { getFormattedAddress }
+module.exports = {
+  getFormattedAddress,
+}

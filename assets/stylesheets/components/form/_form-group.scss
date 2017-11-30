@@ -51,8 +51,24 @@
 
 // States
 .c-form-group.has-error {
-  border-left-color: $error-colour;
+  border-left: 5px solid $error-colour;
   padding-left: $default-spacing-unit;
+}
+
+fieldset.c-form-group.has-error {
+  border-left: 0;
+  padding-left: $default-spacing-unit + 5;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: $default-spacing-unit;
+    top: 0;
+    bottom: 0;
+    border-left: 5px solid $error-colour;
+    margin-left: -$default-spacing-unit;
+    content: "";
+  }
 }
 
 .c-form-group:target {

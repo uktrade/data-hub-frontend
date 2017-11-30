@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const axios = require('axios')
 const { get } = require('lodash')
 
@@ -8,7 +9,7 @@ function createZenDeskMessage ({
   title,
   description = '',
   browser,
-  feedbackType,
+  feedback_type,
 }) {
   return {
     requester: {
@@ -23,7 +24,7 @@ function createZenDeskMessage ({
       { id: get(config, 'zen.browser'), value: browser },
       { id: get(config, 'zen.service'), value: get(config, 'zen.serviceChannel') },
     ],
-    tags: [feedbackType],
+    tags: [ feedback_type ],
   }
 }
 
