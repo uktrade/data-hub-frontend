@@ -1,10 +1,16 @@
+const nock = require('nock')
+const { set } = require('lodash')
+
+const config = require('~/config')
 const interactionData = require('../../../data/interactions/new-interaction.json')
 const servicesData = [
   { id: '9484b82b-3499-e211-a939-e4115bead28a', name: 'Account Management' },
   { id: '632b8708-28b6-e611-984a-e4115bead28a', name: 'Bank Referral' },
 ]
-const contactsData = require('../../../data/contacts/contacts.json')
-const eventsData = require('../../../data/events/collection.json')
+const contactsData = require('~/test/unit/data/contacts/contacts.json')
+const eventsData = require('~/test/unit/data/events/collection.json')
+
+const adviserFilters = require('~/src/apps/adviser/filters')
 
 const { assign, merge } = require('lodash')
 
@@ -24,23 +30,7 @@ describe('Interaction details middleware', () => {
     this.getContactsForCompanyStub = this.sandbox.stub()
     this.getContactStub = this.sandbox.stub()
     this.getDitCompanyStub = this.sandbox.stub()
-
-    const advisersData = {
-      count: 3,
-      results: [{
-        id: '1',
-        name: 'Fred Flintstone',
-        disabled_on: '2017-01-01',
-      }, {
-        id: '2',
-        name: 'Wilma Flintstone',
-        disabled_on: '2017-01-01',
-      }, {
-        id: '3',
-        name: 'Barney Rubble',
-        disabled_on: null,
-      }],
-    }
+    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
@@ -51,8 +41,8 @@ describe('Interaction details middleware', () => {
         transformInteractionFormBodyToApiRequest: this.transformInteractionFormBodyToApiRequestStub.returns(transformed),
         transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub.returns(transformed),
       },
-      '../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub.resolves(advisersData),
+      '../../adviser/filters': {
+        filterActiveAdvisers: this.filterActiveAdvisersSpy,
       },
       '../../../lib/metadata': {
         getServices: () => { return servicesData },
@@ -96,6 +86,21 @@ describe('Interaction details middleware', () => {
     }
 
     this.nextSpy = this.sandbox.spy()
+
+    this.activeInactiveAdviserData = {
+      count: 5,
+      results: [
+        { id: '1', name: 'Jeff Smith', is_active: true },
+        { id: '2', name: 'John Smith', is_active: true },
+        { id: '3', name: 'Zac Smith', is_active: true },
+        { id: '4', name: 'Fred Smith', is_active: false },
+        { id: '5', name: 'Jim Smith', is_active: false },
+      ],
+    }
+
+    nock(config.apiRoot)
+      .get(`/adviser/?limit=100000&offset=0`)
+      .reply(200, this.activeInactiveAdviserData)
   })
 
   afterEach(() => {
@@ -237,17 +242,19 @@ describe('Interaction details middleware', () => {
     })
   })
 
-  describe('#getInteractionOptions', () => {
+  describe('#getInteractionOOptions', () => {
     beforeEach(() => {
       this.res.locals.interaction = assign({}, interactionData, {
         dit_adviser: {
-          id: '2',
+          id: this.activeInactiveAdviserData.results[4].id,
         },
       })
     })
 
     context('when interaction', () => {
       beforeEach(async () => {
+        this.currentAdviser = this.activeInactiveAdviserData.results[3]
+        set(this.res.locals, 'interaction.dit_adviser', this.currentAdviser)
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
 
@@ -255,17 +262,13 @@ describe('Interaction details middleware', () => {
         expect(this.res.locals.contacts).to.deep.equal(contactsData)
       })
 
-      it('should set adviser to only active and current advisers', () => {
-        const expectedAdvisers = [{
-          id: '2',
-          name: 'Wilma Flintstone',
-          disabled_on: '2017-01-01',
-        }, {
-          id: '3',
-          name: 'Barney Rubble',
-          disabled_on: null,
-        }]
+      it('should get active advisers and the current adviser', () => {
+        expect(this.filterActiveAdvisersSpy).to.be.calledOnce
+        expect(this.filterActiveAdvisersSpy).to.be.calledWith({ advisers: this.activeInactiveAdviserData.results, includeAdviser: this.currentAdviser.id })
+      })
 
+      it('should set the active advisers on the response object', () => {
+        const expectedAdvisers = this.activeInactiveAdviserData.results.slice(0, 4)
         expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
@@ -280,29 +283,29 @@ describe('Interaction details middleware', () => {
 
     context('when service delivery', () => {
       beforeEach(async () => {
-        const req = merge({}, this.req, {
+        this.req = assign({}, this.req, {
           params: {
             kind: 'service-delivery',
           },
         })
-        await this.middleware.getInteractionOptions(req, this.res, this.nextSpy)
+
+        this.currentAdviser = this.activeInactiveAdviserData.results[3]
+        this.res.locals.interaction.dit_adviser = this.currentAdviser
+
+        await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
 
       it('should set contacts on locals', () => {
         expect(this.res.locals.contacts).to.deep.equal(contactsData)
       })
 
-      it('shuld set adviser to only active and current advisers', () => {
-        const expectedAdvisers = [{
-          id: '2',
-          name: 'Wilma Flintstone',
-          disabled_on: '2017-01-01',
-        }, {
-          id: '3',
-          name: 'Barney Rubble',
-          disabled_on: null,
-        }]
+      it('should get active advisers and the current adviser', () => {
+        expect(this.filterActiveAdvisersSpy).to.be.calledOnce
+        expect(this.filterActiveAdvisersSpy).to.be.calledWith({ advisers: this.activeInactiveAdviserData.results, includeAdviser: this.currentAdviser.id })
+      })
 
+      it('should set the active advisers on the response object', () => {
+        const expectedAdvisers = this.activeInactiveAdviserData.results.slice(0, 4)
         expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
