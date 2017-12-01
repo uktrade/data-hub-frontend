@@ -29,18 +29,15 @@ function getAllEvents (token) {
   return authorisedRequest(token, `${config.apiRoot}/v3/event?limit=100000&offset=0`)
 }
 
-/**
- *
- * @param {string} token Session token to use for API requests
- *
- * @returns {promise[Array]} Returns an array of event objects that have not been disabled or are the current event
- */
-async function getActiveEvents (token) {
+async function getActiveEvents (token, createdOn) {
   const eventsResponse = await search({
     searchEntity: 'event',
     requestBody: {
       sortby: 'name:asc',
-      disabled_on_exists: false,
+      disabled_on: {
+        after: createdOn || (new Date()).toISOString(),
+        exists: false,
+      },
     },
     token: token,
     limit: 100000,
