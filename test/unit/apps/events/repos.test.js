@@ -1,5 +1,3 @@
-const nock = require('nock')
-
 const config = require('~/config')
 const { search } = require('~/src/apps/search/services')
 

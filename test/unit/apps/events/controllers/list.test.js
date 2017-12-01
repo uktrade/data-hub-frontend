@@ -1,5 +1,3 @@
-const nock = require('nock')
-
 const config = require('~/config')
 const advisersData = require('../../../data/advisers/advisers')
 
