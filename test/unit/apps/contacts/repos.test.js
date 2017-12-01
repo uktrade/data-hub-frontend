@@ -10,14 +10,19 @@ const companyId = '23232323'
 
 describe('Investment repository', () => {
   describe('#getContactsForCompany', () => {
-    nock(config.apiRoot)
-      .get(`/v3/contact?company_id=${companyId}&limit=500`)
-      .reply(200, contactsApiResult)
+    beforeEach(async () => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/v3/contact?company_id=${companyId}&limit=500`)
+        .reply(200, contactsApiResult)
+      this.contacts = await getContactsForCompany('token', companyId)
+    })
 
     it('should return company contacts array', async () => {
-      const actual = await getContactsForCompany('token', companyId)
+      expect(this.contacts).to.deep.equal(contactsApiResult.results)
+    })
 
-      return expect(actual).to.deep.equal(contactsApiResult.results)
+    it('nock mocked scope has been called', () => {
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 })

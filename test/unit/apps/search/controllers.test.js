@@ -15,22 +15,6 @@ describe('Search Controller #renderSearchResults', () => {
   }
 
   beforeEach(async () => {
-    nock(config.apiRoot).get(`/v3/search`)
-      .query(Object.assign({}, searchQuery, { entity: 'investment_project' }))
-      .reply(200, investmentResponse)
-
-    nock(config.apiRoot).get(`/v3/search`)
-      .query(Object.assign({}, searchQuery, { entity: 'contact' }))
-      .reply(200, contactResponse)
-
-    nock(config.apiRoot).get(`/v3/search`)
-      .query(Object.assign({}, searchQuery, { entity: 'company' }))
-      .reply(200, companyResponse)
-
-    nock(config.apiRoot).get(`/v3/search`)
-      .query(Object.assign({}, searchQuery, { entity: 'event' }))
-      .reply(200, eventResponse)
-
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
     this.renderFunction = this.sandbox.spy()
@@ -50,6 +34,10 @@ describe('Search Controller #renderSearchResults', () => {
     }
   })
 
+  afterEach(() => {
+    this.sandbox.restore()
+  })
+
   context('for invalid paths', () => {
     it('should redirect to index', async () => {
       this.req.params.searchPath = 'dummy-path'
@@ -60,95 +48,129 @@ describe('Search Controller #renderSearchResults', () => {
     })
   })
 
-  it('should call render with investment projects data', async () => {
-    this.req.params.searchPath = 'investment-projects'
-    await renderSearchResults(this.req, this.res, this.next)
+  context('for investment projects', () => {
+    beforeEach(async () => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/v3/search`)
+        .query(Object.assign({}, searchQuery, { entity: 'investment_project' }))
+        .reply(200, investmentResponse)
+      this.req.params.searchPath = 'investment-projects'
+      this.searchResults = await renderSearchResults(this.req, this.res, this.next)
+    })
 
-    expect(this.renderFunction).to.be.calledWith(
-      sinon.match.any,
-      sinon.match({
-        searchEntity: 'investment_project',
-        searchTerm: 'london',
-        results: sinon.match.object,
-      })
-    )
+    it('should call render with investment projects data', async () => {
+      expect(this.renderFunction).to.be.calledWith(
+        sinon.match.any,
+        sinon.match({
+          searchEntity: 'investment_project',
+          searchTerm: 'london',
+          results: sinon.match.object,
+        })
+      )
+    })
+
+    it('should transform investment projects data', () => {
+      expect(this.renderFunction.getCall(0).args[1].results.items[0].type).to.equal('investment-project')
+    })
+
+    it('nock mocked scope has been called', () => {
+      expect(this.nockScope.isDone()).to.be.true
+    })
   })
 
-  it('should transform investment projects data', async () => {
-    this.req.params.searchPath = 'investment-projects'
-    await renderSearchResults(this.req, this.res, this.next)
+  context('for contacts', () => {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/v3/search`)
+        .query(Object.assign({}, searchQuery, { entity: 'contact' }))
+        .reply(200, contactResponse)
+    })
 
-    const actualItems = this.renderFunction.getCall(0).args[1].results.items
+    it('should call render with contacts data', async () => {
+      this.req.params.searchPath = 'contacts'
+      await renderSearchResults(this.req, this.res, this.next)
 
-    expect(actualItems[0].type).to.equal('investment-project')
+      expect(this.renderFunction).to.be.calledWith(
+        'search/view',
+        sinon.match({
+          searchEntity: 'contact',
+          searchTerm: 'london',
+          results: sinon.match.object,
+        })
+      )
+    })
+
+    it('should transform contacts data', async () => {
+      this.req.params.searchPath = 'contacts'
+      await renderSearchResults(this.req, this.res, this.next)
+
+      const actualItems = this.renderFunction.getCall(0).args[1].results.items
+
+      expect(actualItems[0].type).to.equal('contact')
+    })
   })
 
-  it('should call render with contacts data', async () => {
-    this.req.params.searchPath = 'contacts'
-    await renderSearchResults(this.req, this.res, this.next)
+  context('for companies', () => {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/v3/search`)
+        .query(Object.assign({}, searchQuery, { entity: 'company' }))
+        .reply(200, companyResponse)
+    })
 
-    expect(this.renderFunction).to.be.calledWith(
-      'search/view',
-      sinon.match({
-        searchEntity: 'contact',
-        searchTerm: 'london',
-        results: sinon.match.object,
-      })
-    )
+    it('should call render with companies data', async () => {
+      this.req.params.searchPath = 'companies'
+      await renderSearchResults(this.req, this.res, this.next)
+
+      expect(this.renderFunction).to.be.calledWith(
+        'search/view',
+        sinon.match({
+          searchEntity: 'company',
+          searchTerm: 'london',
+          results: sinon.match.object,
+        })
+      )
+    })
+
+    it('should transform companies data', async () => {
+      this.req.params.searchPath = 'companies'
+      await renderSearchResults(this.req, this.res, this.next)
+
+      const actualItems = this.renderFunction.getCall(0).args[1].results.items
+
+      expect(actualItems[0].type).to.equal('company')
+    })
   })
 
-  it('should transform contacts data', async () => {
-    this.req.params.searchPath = 'contacts'
-    await renderSearchResults(this.req, this.res, this.next)
+  context('investment projects', () => {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/v3/search`)
+        .query(Object.assign({}, searchQuery, { entity: 'event' }))
+        .reply(200, eventResponse)
+    })
 
-    const actualItems = this.renderFunction.getCall(0).args[1].results.items
+    it('should call render with events data', async () => {
+      this.req.params.searchPath = 'events'
+      await renderSearchResults(this.req, this.res, this.next)
 
-    expect(actualItems[0].type).to.equal('contact')
-  })
+      expect(this.renderFunction).to.be.calledWith(
+        'search/view',
+        sinon.match({
+          searchEntity: 'event',
+          searchTerm: 'london',
+          results: sinon.match.object,
+        })
+      )
+    })
 
-  it('should call render with companies data', async () => {
-    this.req.params.searchPath = 'companies'
-    await renderSearchResults(this.req, this.res, this.next)
+    it('should transform events data', async () => {
+      this.req.params.searchPath = 'events'
+      await renderSearchResults(this.req, this.res, this.next)
 
-    expect(this.renderFunction).to.be.calledWith(
-      'search/view',
-      sinon.match({
-        searchEntity: 'company',
-        searchTerm: 'london',
-        results: sinon.match.object,
-      })
-    )
-  })
+      const actualItems = this.renderFunction.getCall(0).args[1].results.items
 
-  it('should transform companies data', async () => {
-    this.req.params.searchPath = 'companies'
-    await renderSearchResults(this.req, this.res, this.next)
-
-    const actualItems = this.renderFunction.getCall(0).args[1].results.items
-
-    expect(actualItems[0].type).to.equal('company')
-  })
-
-  it('should call render with events data', async () => {
-    this.req.params.searchPath = 'events'
-    await renderSearchResults(this.req, this.res, this.next)
-
-    expect(this.renderFunction).to.be.calledWith(
-      'search/view',
-      sinon.match({
-        searchEntity: 'event',
-        searchTerm: 'london',
-        results: sinon.match.object,
-      })
-    )
-  })
-
-  it('should transform events data', async () => {
-    this.req.params.searchPath = 'events'
-    await renderSearchResults(this.req, this.res, this.next)
-
-    const actualItems = this.renderFunction.getCall(0).args[1].results.items
-
-    expect(actualItems[0].type).to.equal('event')
+      expect(actualItems[0].type).to.equal('event')
+    })
   })
 })
