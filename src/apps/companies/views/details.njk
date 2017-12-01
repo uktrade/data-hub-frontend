@@ -23,6 +23,7 @@
   <div class="section">
     <h2 class="heading-medium">Account management</h2>
     {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
+    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button-secondary">Edit</a></p>
   </div>
 
   {% if company.id and not company.archived %}

@@ -22,6 +22,7 @@ const {
   renderExportEdit,
   handleEditFormPost,
 } = require('./controllers/exports')
+const { renderAccountManagementEditPage } = require('./controllers/account-management')
 
 const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
 const {
@@ -35,6 +36,7 @@ const { setCompanyContactRequestBody, getCompanyContactCollection } = require('.
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
+const { populateAccountManagementForm } = require('./middleware/account-management')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
@@ -82,6 +84,10 @@ router
   .route('/:companyId/edit')
   .get(setIsEditMode, populateForm, renderForm)
   .post(setIsEditMode, populateForm, handleFormPost, renderForm)
+
+router
+  .route('/:companyId/account-management/edit')
+  .get(populateAccountManagementForm, renderAccountManagementEditPage)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)

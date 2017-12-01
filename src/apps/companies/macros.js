@@ -1,4 +1,8 @@
+const { assign } = require('lodash')
+
 const { globalFields } = require('../macros')
+const formLabels = require('./labels')
+const { transformObjectToOption } = require('../transformers')
 
 const companyFiltersFields = [
   {
@@ -45,7 +49,34 @@ const companySortForm = {
   ],
 }
 
+const accountManagementFormConfig = function ({
+  returnLink,
+  advisers = [],
+}) {
+  return {
+    returnLink,
+    buttonText: 'Save',
+    returnText: 'Cancel',
+    children: [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'one_list_account_owner',
+        initialOption: '-- Select account manager --',
+        optional: true,
+        options () {
+          return advisers.map(transformObjectToOption)
+        },
+      },
+    ].map(field => {
+      return assign(field, {
+        label: formLabels.accountManagementDisplayLabels[field.name],
+      })
+    }),
+  }
+}
+
 module.exports = {
   companySortForm,
   companyFiltersFields,
+  accountManagementFormConfig,
 }

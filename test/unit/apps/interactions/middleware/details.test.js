@@ -98,7 +98,12 @@ describe('Interaction details middleware', () => {
       ],
     }
 
-    nock(config.apiRoot)
+    // TODO fix this when https://github.com/uktrade/data-hub-frontend/pull/1056 is merged
+    nock(config.apiRoot, {
+      reqheaders: {
+        'Authorization': `Bearer ${this.req.session.token}`,
+      },
+    })
       .get(`/adviser/?limit=100000&offset=0`)
       .reply(200, this.activeInactiveAdviserData)
   })
