@@ -1,4 +1,4 @@
-const nock = require('nock')
+
 const queryString = require('query-string')
 const { assign, set } = require('lodash')
 

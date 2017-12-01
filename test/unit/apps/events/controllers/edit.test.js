@@ -1,5 +1,4 @@
 const { assign, find } = require('lodash')
-const nock = require('nock')
 
 const config = require('~/config')
 const eventData = require('~/test/unit/data/events/event.json')

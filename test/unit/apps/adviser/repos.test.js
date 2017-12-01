@@ -1,4 +1,3 @@
-const nock = require('nock')
 const adviserData = require('~/test/unit/data/advisers/advisers.json')
 const badAdviserData = require('~/test/unit/data/advisers/advisers-with-bad-data.json')
 const config = require('~/config')
