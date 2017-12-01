@@ -36,7 +36,7 @@ const { setCompanyContactRequestBody, getCompanyContactCollection } = require('.
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
-const { populateAccountManagementForm } = require('./middleware/account-management')
+const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
@@ -88,6 +88,7 @@ router
 router
   .route('/:companyId/account-management/edit')
   .get(populateAccountManagementForm, renderAccountManagementEditPage)
+  .post(populateAccountManagementForm, postAccountManagementDetails, renderAccountManagementEditPage)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
