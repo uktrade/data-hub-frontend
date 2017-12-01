@@ -64,8 +64,8 @@ const hqLabels = {
   'ukhq': 'UK headquarters (UK HQ)',
 }
 const accountManagementDisplayLabels = {
-  oneListTier: 'One List tier',
-  oneListAccountManager: 'One List account manager',
+  one_list_tier: 'One List tier',
+  one_list_account_owner: 'One List account manager',
 }
 
 const exportDetailsLabels = {
