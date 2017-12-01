@@ -2,14 +2,22 @@ const { assign, find } = require('lodash')
 const nock = require('nock')
 
 const config = require('~/config')
-const eventData = require('../../../data/events/event.json')
+const eventData = require('~/test/unit/data/events/event.json')
+const adviserFilters = require('~/src/apps/adviser/filters')
 
 describe('Event edit controller', () => {
   const currentUserTeam = 'team1'
 
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.controller = require('~/src/apps/events/controllers/edit')
+
+    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+
+    this.controller = proxyquire('~/src/apps/events/controllers/edit', {
+      '../../adviser/filters': {
+        filterActiveAdvisers: this.filterActiveAdvisersSpy,
+      },
+    })
 
     this.req = {
       session: {
@@ -32,23 +40,20 @@ describe('Event edit controller', () => {
 
     this.next = this.sandbox.spy()
 
-    this.advisers = [{
-      id: '1',
-      name: 'Fred Flintstone',
-      disabled_on: '2017-01-01',
-    }, {
-      id: '2',
-      name: 'Wilma Flintstone',
-      disabled_on: '2017-01-01',
-    }, {
-      id: '3',
-      name: 'Barney Rubble',
-      disabled_on: null,
-    }]
+    this.activeInactiveAdviserData = {
+      count: 5,
+      results: [
+        { id: '1', name: 'Jeff Smith', is_active: true },
+        { id: '2', name: 'John Smith', is_active: true },
+        { id: '3', name: 'Zac Smith', is_active: true },
+        { id: '4', name: 'Fred Smith', is_active: false },
+        { id: '5', name: 'Jim Smith', is_active: false },
+      ],
+    }
 
     nock(config.apiRoot)
       .get(`/adviser/?limit=100000&offset=0`)
-      .reply(200, { results: this.advisers })
+      .reply(200, this.activeInactiveAdviserData)
   })
 
   afterEach(() => {
@@ -90,13 +95,22 @@ describe('Event edit controller', () => {
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Add event')
       })
 
-      it('should only include active organisers', () => {
-        const organiserFieldOptions = getOrganiserFieldOptions(this.res)
-        const expectedAdvisers = [{
-          label: 'Barney Rubble',
-          value: '3',
-        }]
-        expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
+      it('should get all active advisers', () => {
+        expect(this.filterActiveAdvisersSpy).to.be.calledWith({
+          advisers: this.activeInactiveAdviserData.results,
+          includeAdviser: undefined,
+        })
+      })
+
+      it('should render the form with the active advisers', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+        ]
+
+        const formOrganizerFieldOptions = getOrganiserFieldOptions(this.res)
+        expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
     })
 
@@ -114,42 +128,32 @@ describe('Event edit controller', () => {
 
       context('and when the organiser is active', () => {
         beforeEach(async () => {
+          this.currentAdviser = this.activeInactiveAdviserData.results[3]
+
           this.res.locals.event = assign({}, eventData, {
-            organiser: this.advisers[2],
+            organiser: this.currentAdviser,
           })
 
           await this.controller.renderEditPage(this.req, this.res, this.next)
         })
 
-        it('should only include active organisers', () => {
-          const organiserFieldOptions = getOrganiserFieldOptions(this.res)
-          const expectedAdvisers = [{
-            label: 'Barney Rubble',
-            value: '3',
-          }]
-          expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
-        })
-      })
-
-      context('and when the organiser is inactive', () => {
-        beforeEach(async () => {
-          this.res.locals.event = assign({}, eventData, {
-            organiser: this.advisers[1],
+        it('should filters the advisers and include the current one', () => {
+          expect(this.filterActiveAdvisersSpy).to.be.calledWith({
+            advisers: this.activeInactiveAdviserData.results,
+            includeAdviser: this.currentAdviser.id,
           })
-
-          await this.controller.renderEditPage(this.req, this.res, this.next)
         })
 
-        it('should only include active organisers and the current one', () => {
-          const organiserFieldOptions = getOrganiserFieldOptions(this.res)
-          const expectedAdvisers = [{
-            label: 'Wilma Flintstone',
-            value: '2',
-          }, {
-            label: 'Barney Rubble',
-            value: '3',
-          }]
-          expect(organiserFieldOptions).to.deep.equal(expectedAdvisers)
+        it('should render the form with the active advisers', () => {
+          const expectedOptions = [
+            { label: 'Jeff Smith', value: '1' },
+            { label: 'John Smith', value: '2' },
+            { label: 'Zac Smith', value: '3' },
+            { label: 'Fred Smith', value: '4' },
+          ]
+
+          const formOrganizerFieldOptions = getOrganiserFieldOptions(this.res)
+          expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
         })
       })
     })
