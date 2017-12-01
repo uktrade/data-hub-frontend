@@ -1,21 +1,25 @@
+const { assign } = require('lodash')
+
 const nock = require('nock')
 const config = require('~/config')
 const { search } = require('~/src/apps/search/services')
 
 describe('Search service', function () {
-  describe('searchService.search method', function () {
-    it('the result should contain correct details', function () {
-      const searchTerm = 'testTerm'
-      const searchEntity = 'company'
-      const mockResponse = {
-        message: 'expected response',
-      }
-      const expectedResponse = {
-        message: 'expected response',
-        page: 1,
-      }
+  beforeEach(() => {
+    this.sandbox = sinon.sandbox.create()
+  })
 
-      nock(config.apiRoot)
+  afterEach(() => {
+    this.sandbox.restore()
+  })
+
+  describe('#search', () => {
+    const searchTerm = 'testTerm'
+    const searchEntity = 'company'
+    const mockResponse = { message: 'mock response' }
+
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
         .get(`/v3/search`)
         .query({
           term: searchTerm,
@@ -24,15 +28,21 @@ describe('Search service', function () {
           offset: 0,
         })
         .reply(200, mockResponse)
+    })
 
-      search({
+    it('the result should contain correct details', async () => {
+      const expectedResponse = assign({}, mockResponse, {
+        page: 1,
+      })
+
+      const actual = await search({
         token: 'token',
         searchTerm,
         searchEntity,
       })
-        .then((response) => {
-          expect(response).to.deep.equal(expectedResponse)
-        })
+
+      expect(actual).to.deep.equal(expectedResponse)
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 })

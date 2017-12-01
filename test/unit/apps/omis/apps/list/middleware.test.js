@@ -6,10 +6,6 @@ const orderCollectionData = require('~/test/unit/data/omis/collection.json')
 
 describe('OMIS list middleware', () => {
   beforeEach(() => {
-    nock(config.apiRoot)
-      .post(`/v3/search/order`)
-      .reply(200, orderCollectionData)
-
     this.sandbox = sinon.sandbox.create()
     this.next = this.sandbox.spy()
     this.req = assign({}, globalReq, {
@@ -24,43 +20,59 @@ describe('OMIS list middleware', () => {
     this.sandbox.restore()
   })
 
-  describe('#setCollectionResults', () => {
-    beforeEach(async () => {
-      this.req.query = {
-        status: 'draft',
-        company_name: 'samsung',
-        sortby: 'name:asc',
-      }
-      await this.controller.setCollectionResults(this.req, this.res, this.next)
+  describe('Results', () => {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .post(`/v3/search/order`)
+        .reply(200, orderCollectionData)
     })
 
-    it('should set results property on locals with pagination', () => {
-      const actual = this.res.locals.results
-      expect(actual).to.have.property('count')
-      expect(actual).to.have.property('items')
-      expect(actual).to.have.property('pagination')
-      expect(actual.count).to.equal(3)
-      expect(this.next).to.have.been.calledOnce
-    })
-  })
+    context('#setCollectionResults', () => {
+      beforeEach(async () => {
+        this.req.query = {
+          status: 'draft',
+          company_name: 'samsung',
+          sortby: 'name:asc',
+        }
+        await this.controller.setCollectionResults(this.req, this.res, this.next)
+      })
 
-  describe('#setReconciliationResults', () => {
-    beforeEach(async () => {
-      this.req.query = {
-        status: 'draft',
-        company_name: 'samsung',
-        sortby: 'name:asc',
-      }
-      await this.controller.setCollectionResults(this.req, this.res, this.next)
+      it('should set results property on locals with pagination', () => {
+        const actual = this.res.locals.results
+        expect(actual).to.have.property('count')
+        expect(actual).to.have.property('items')
+        expect(actual).to.have.property('pagination')
+        expect(actual.count).to.equal(3)
+        expect(this.next).to.have.been.calledOnce
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
     })
 
-    it('should set results property on locals with pagination', () => {
-      const actual = this.res.locals.results
-      expect(actual).to.have.property('count')
-      expect(actual).to.have.property('items')
-      expect(actual).to.have.property('pagination')
-      expect(actual.count).to.equal(3)
-      expect(this.next).to.have.been.calledOnce
+    context('#setReconciliationResults', () => {
+      beforeEach(async () => {
+        this.req.query = {
+          status: 'draft',
+          company_name: 'samsung',
+          sortby: 'name:asc',
+        }
+        await this.controller.setCollectionResults(this.req, this.res, this.next)
+      })
+
+      it('should set results property on locals with pagination', () => {
+        const actual = this.res.locals.results
+        expect(actual).to.have.property('count')
+        expect(actual).to.have.property('items')
+        expect(actual).to.have.property('pagination')
+        expect(actual.count).to.equal(3)
+        expect(this.next).to.have.been.calledOnce
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
     })
   })
 
