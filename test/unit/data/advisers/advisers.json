@@ -21,6 +21,7 @@
     {
       "id": "e13209b8-8d61-e311-8255-e4115bead28a",
       "name": "Aaron Mr",
+      "is_active": true,
       "last_login": null,
       "first_name": "Aaron",
       "last_name": "Mr",
@@ -38,6 +39,7 @@
     {
       "id": "b9d6b3dc-7af4-e411-bcbe-e4115bead28a",
       "name": "Mr Benjamin",
+      "is_active": true,
       "last_login": null,
       "first_name": "Mr",
       "last_name": "Benjamin",
@@ -55,6 +57,7 @@
     {
       "id": "0119a99e-9798-e211-a939-e4115bead28a",
       "name": "George Chan",
+      "is_active": false,
       "last_login": null,
       "first_name": "George",
       "last_name": "Chan",
@@ -72,6 +75,7 @@
     {
       "id": "0919a99e-9798-e211-a939-e4115bead28a",
       "name": "Fred Rafters",
+      "is_active": false,
       "last_login": null,
       "first_name": "Fred",
       "last_name": "Rafters",
