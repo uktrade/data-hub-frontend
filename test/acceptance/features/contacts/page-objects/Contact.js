@@ -8,6 +8,7 @@ const {
   getMetaListItemValueSelector,
 } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
+const { getAddress } = require('../../../helpers/address')
 
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   text,
@@ -86,14 +87,16 @@ module.exports = {
 
             done()
           })
-          .perform((done) => {
-            contact.acceptsEmailMarketingFromDit = 'Yes'
+          .perform(() => {
             this
               .click('@acceptsEmailMarketingFromDit')
               .click('@sameAddressAsCompanyYes')
 
-            callback(contact)
-            done()
+            callback(assign({}, contact, {
+              acceptsEmailMarketingFromDit: 'Yes',
+              primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
+              address: getAddress(contact),
+            }))
           })
       },
 
@@ -141,15 +144,12 @@ module.exports = {
             this.api
               .page.Address()
               .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
-                callback(assign(
-                  {},
-                  {
-                    acceptsEmailMarketingFromDit: 'No',
-                    type: 'Primary',
-                  },
-                  addressInputValues,
-                  contact
-                ))
+                callback(assign({}, {
+                  acceptsEmailMarketingFromDit: 'No',
+                  type: 'Primary',
+                  primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
+                  address: getAddress(addressInputValues),
+                }, addressInputValues, contact))
                 done()
               })
           })

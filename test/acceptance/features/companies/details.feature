@@ -15,7 +15,15 @@ Feature: Company details
       | Orders (OMIS)               |
       | Audit history               |
       | Documents                   |
-    And the company details CDMS reference is displayed
+    And the Company summary details are displayed
+      | key                       | value                   |
+      | Business type             | company.businessType    |
+      | Primary address           | company.primaryAddress  |
+      | UK region                 | company.ukRegion        |
+      | Headquarters              | company.headquarterType |
+      | Sector                    | company.sector          |
+      | Business description      | company.description     |
+      | CDMS reference            | company.referenceCode   |
     When I click the Documents local nav link
     Then view should contain the Documents link
 
@@ -33,7 +41,16 @@ Feature: Company details
       | Orders (OMIS)               |
       | Audit history               |
       | Documents                   |
-    And the company details CDMS reference is not displayed
+    And the Company summary details are displayed
+      | key                       | value                     |
+      | Business type             | company.businessType      |
+      | Primary address           | company.primaryAddress    |
+      | Headquarters              | company.headquarterType   |
+      | Sector                    | company.sector            |
+      | Business description      | company.description       |
+      | Number of employees       | company.employeeRange     |
+      | Annual turnover           | company.turnoverRange     |
+      | Country                   | company.country           |
     When I click the Documents local nav link
     Then view should not contain the Documents link
 
