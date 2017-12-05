@@ -18,7 +18,17 @@ Feature: Create New Contact
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
     When the contact is clicked
-    Then the contact details are displayed
+    Then the Contact details details are displayed
+      | key                   | value                                |
+      | Job title             | contact.jobTitle                     |
+      | Phone number          | contact.primaryPhoneNumber           |
+      | Alternative telephone | contact.alternativePhoneNumber       |
+      | Address               | contact.address                      |
+      | Email                 | contact.emailAddress                 |
+      | Alternative email     | contact.alternativeEmail             |
+      | Notes                 | contact.notes                        |
+      | Email marketing       | contact.acceptsEmailMarketingFromDit |
+
 
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
@@ -33,7 +43,17 @@ Feature: Create New Contact
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
     When the contact is clicked
-    Then the contact details are displayed
+    Then the Contact details details are displayed
+      | key                   | value                                |
+      | Job title             | contact.jobTitle                     |
+      | Phone number          | contact.primaryPhoneNumber           |
+      | Alternative telephone | contact.alternativePhoneNumber       |
+      | Address               | contact.address                      |
+      | Email                 | contact.emailAddress                 |
+      | Alternative email     | contact.alternativeEmail             |
+      | Notes                 | contact.notes                        |
+      | Email marketing       | contact.acceptsEmailMarketingFromDit |
+
 
   @contacts-save--non-primary
   Scenario: Add a new non-primary contact
@@ -48,7 +68,17 @@ Feature: Create New Contact
     When navigating to the company contacts
     Then the contact is displayed on the company contact tab
     When the contact is clicked
-    Then the contact details are displayed
+    Then the Contact details details are displayed
+      | key                   | value                                |
+      | Job title             | contact.jobTitle                     |
+      | Phone number          | contact.primaryPhoneNumber           |
+      | Alternative telephone | contact.alternativePhoneNumber       |
+      | Address               | contact.address                      |
+      | Email                 | contact.emailAddress                 |
+      | Alternative email     | contact.alternativeEmail             |
+      | Notes                 | contact.notes                        |
+      | Email marketing       | contact.acceptsEmailMarketingFromDit |
+
 
   @contacts-save--primary-dashboard
   Scenario: New primary contact is visible on the dashboard
@@ -63,6 +93,7 @@ Feature: Create New Contact
     And I wait and then refresh the page
     When I navigate to the dashboard
     Then the contact is displayed on the dashboard
+
 
   @contacts-save--mandatory-fields
   Scenario: Contact fields are mandatory

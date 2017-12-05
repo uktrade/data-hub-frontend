@@ -385,16 +385,7 @@ module.exports = {
     companyDetails: {
       selector: '.table--key-value',
       elements: {
-        businessType: getDetailsTableRowValue('Business type'),
-        primaryAddress: getDetailsTableRowValue('Primary address'),
         ukRegion: getDetailsTableRowValue('UK region'),
-        headquarters: getDetailsTableRowValue('Headquarters'),
-        sector: getDetailsTableRowValue('Sector'),
-        website: getDetailsTableRowValue('Website'),
-        businessDescription: getDetailsTableRowValue('Business description'),
-        numberOfEmployees: getDetailsTableRowValue('Number of employees'),
-        annualTurnover: getDetailsTableRowValue('Annual turnover'),
-        cdmsReference: getDetailsTableRowValue('CDMS reference'),
       },
     },
   },
