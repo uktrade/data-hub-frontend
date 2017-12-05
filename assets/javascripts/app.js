@@ -12,6 +12,7 @@ const ErrorSummary = require('./modules/error-summary')
 const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
 const AddItems = require('./modules/add-items')
+const PrintDialog = require('./modules/print-dialog')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
@@ -25,6 +26,7 @@ ErrorSummary.init()
 AutoSubmit.init()
 XhrLink.init()
 AddItems.init()
+PrintDialog.init()
 
 // Deprecated
 CompanyAdd.init()
