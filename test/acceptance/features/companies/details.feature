@@ -6,15 +6,15 @@ Feature: Company details
 
     When browsing to company fixture Venus Ltd
     Then there should be a local nav
-      | text                        |
-      | Details                     |
-      | Contacts                    |
-      | Interactions                |
-      | Export                      |
-      | Investment                  |
-      | Orders (OMIS)               |
-      | Audit history               |
-      | Documents                   |
+      | text                      |
+      | Details                   |
+      | Contacts                  |
+      | Interactions              |
+      | Export                    |
+      | Investment                |
+      | Orders (OMIS)             |
+      | Audit history             |
+      | Documents                 |
     And the Company summary details are displayed
       | key                       | value                   |
       | Business type             | company.businessType    |
@@ -32,15 +32,15 @@ Feature: Company details
 
     When browsing to company fixture Lambda plc
     Then there should be a local nav
-      | text                        |
-      | Details                     |
-      | Contacts                    |
-      | Interactions                |
-      | Export                      |
-      | Investment                  |
-      | Orders (OMIS)               |
-      | Audit history               |
-      | Documents                   |
+      | text                      |
+      | Details                   |
+      | Contacts                  |
+      | Interactions              |
+      | Export                    |
+      | Investment                |
+      | Orders (OMIS)             |
+      | Audit history             |
+      | Documents                 |
     And the Company summary details are displayed
       | key                       | value                     |
       | Business type             | company.businessType      |
