@@ -24,6 +24,10 @@ Feature: Company details
       | Sector                    | company.sector          |
       | Business description      | company.description     |
       | CDMS reference            | company.referenceCode   |
+    And the Account management details are displayed
+      | key                       | value                   |
+      | One List tier             | None                    |
+      | One List account manager  | None                    |
     When I click the Documents local nav link
     Then view should contain the Documents link
 
@@ -51,6 +55,10 @@ Feature: Company details
       | Number of employees       | company.employeeRange     |
       | Annual turnover           | company.turnoverRange     |
       | Country                   | company.country           |
+    And the Account management details are displayed
+      | key                       | value                   |
+      | One List tier             | None                    |
+      | One List account manager  | None                    |
     When I click the Documents local nav link
     Then view should not contain the Documents link
 
