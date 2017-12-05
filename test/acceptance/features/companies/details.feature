@@ -28,8 +28,6 @@ Feature: Company details
       | key                       | value                   |
       | One List tier             | None                    |
       | One List account manager  | None                    |
-    When I click the Documents local nav link
-    Then view should contain the Documents link
 
   @companies-details--no-cdms-reference
   Scenario: Company does not have CDMS reference
@@ -59,9 +57,3 @@ Feature: Company details
       | key                       | value                   |
       | One List tier             | None                    |
       | One List account manager  | None                    |
-    When I click the Documents local nav link
-    Then view should not contain the Documents link
-
-
-
-
