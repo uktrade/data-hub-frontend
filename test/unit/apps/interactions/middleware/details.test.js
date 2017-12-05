@@ -1,5 +1,6 @@
 const nock = require('nock')
 const { set } = require('lodash')
+const { assign, merge } = require('lodash')
 
 const config = require('~/config')
 const interactionData = require('../../../data/interactions/new-interaction.json')
@@ -8,11 +9,10 @@ const servicesData = [
   { id: '632b8708-28b6-e611-984a-e4115bead28a', name: 'Bank Referral' },
 ]
 const contactsData = require('~/test/unit/data/contacts/contacts.json')
+
 const eventsData = require('~/test/unit/data/events/collection.json')
 
 const adviserFilters = require('~/src/apps/adviser/filters')
-
-const { assign, merge } = require('lodash')
 
 const transformed = {
   id: '1',
@@ -24,7 +24,6 @@ describe('Interaction details middleware', () => {
     this.sandbox = sinon.sandbox.create()
     this.saveInteractionStub = this.sandbox.stub()
     this.fetchInteractionStub = this.sandbox.stub()
-    this.getAdvisersStub = this.sandbox.stub()
     this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
     this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
     this.getContactsForCompanyStub = this.sandbox.stub()
@@ -98,7 +97,12 @@ describe('Interaction details middleware', () => {
       ],
     }
 
-    nock(config.apiRoot)
+    // TODO fix this when https://github.com/uktrade/data-hub-frontend/pull/1056 is merged
+    nock(config.apiRoot, {
+      reqheaders: {
+        'Authorization': `Bearer ${this.req.session.token}`,
+      },
+    })
       .get(`/adviser/?limit=100000&offset=0`)
       .reply(200, this.activeInactiveAdviserData)
   })
@@ -301,7 +305,10 @@ describe('Interaction details middleware', () => {
 
       it('should get active advisers and the current adviser', () => {
         expect(this.filterActiveAdvisersSpy).to.be.calledOnce
-        expect(this.filterActiveAdvisersSpy).to.be.calledWith({ advisers: this.activeInactiveAdviserData.results, includeAdviser: this.currentAdviser.id })
+        expect(this.filterActiveAdvisersSpy).to.be.calledWith({
+          advisers: this.activeInactiveAdviserData.results,
+          includeAdviser: this.currentAdviser.id,
+        })
       })
 
       it('should set the active advisers on the response object', () => {

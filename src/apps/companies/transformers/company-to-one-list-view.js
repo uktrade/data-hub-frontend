@@ -6,8 +6,8 @@ const { accountManagementDisplayLabels } = require('../labels')
 
 module.exports = function transformCompanyToOneListView ({ one_list_account_owner, classification }) {
   const viewRecord = {
-    oneListAccountManager: get(one_list_account_owner, 'name', 'None'),
-    oneListTier: get(classification, 'name', 'None'),
+    one_list_account_owner: get(one_list_account_owner, 'name', 'None'),
+    one_list_tier: get(classification, 'name', 'None'),
   }
 
   return getDataLabels(viewRecord, accountManagementDisplayLabels)
