@@ -1,8 +1,8 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { set } = require('lodash')
+const { set, get, assign } = require('lodash')
 
-defineSupportCode(({ Given }) => {
+defineSupportCode(({ Given, When }) => {
   const Company = client.page.Company()
 
   Given(/^a company is created$/, async function () {
@@ -14,5 +14,13 @@ defineSupportCode(({ Given }) => {
         set(this.state, 'company', company)
       })
       .wait() // wait for backend to sync
+  })
+
+  When(/^the Account management details are updated$/, async function () {
+    await Company
+      .updateAccountManagement((accountManagement) => {
+        const company = get(this.state, 'company')
+        set(this.state, 'company', assign({}, company, accountManagement))
+      })
   })
 })
