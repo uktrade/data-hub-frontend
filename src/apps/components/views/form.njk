@@ -1,6 +1,23 @@
 {% extends "./_layout.njk" %}
 
 {% block body_main_content %}
+  <h2 class="heading-large">Buttons</h2>
+
+  {% call Example('Primary button') %}
+    <button class="button">Primary button</button>
+    <button class="button" disabled="disabled">Disabled primary button</button>
+  {% endcall %}
+
+  {% call Example('Secondary button') %}
+    <button class="button button--secondary">Secondary button</button>
+    <button class="button button--secondary" disabled="disabled">Disabled secondary button</button>
+  {% endcall %}
+
+  {% call Example('Destructive button') %}
+    <button class="button button--destructive">Destructive button</button>
+    <button class="button button--destructive" disabled="disabled">Disabled destructive button</button>
+  {% endcall %}
+
   <h2 class="heading-large">Entity search</h2>
 
   {% call Example('EntitySearchForm') %}
