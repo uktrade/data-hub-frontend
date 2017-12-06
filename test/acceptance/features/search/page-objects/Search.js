@@ -8,6 +8,7 @@ const getSearchResultsTabSelector = (text) =>
       className: 'c-entity-search__aggregations-item',
     }
   )
+
 const getSearchResultSelector = (text) =>
   getSelectorForElementWithText(
     text,
@@ -40,6 +41,11 @@ module.exports = {
   sections: {
     tabs: {
       selector: '.c-entity-search__aggregations',
+      commands: [
+        {
+          getSearchResultsTabSelector,
+        },
+      ],
       elements: {
         company: getSearchResultsTabSelector('Companies'),
         contact: getSearchResultsTabSelector('Contacts'),

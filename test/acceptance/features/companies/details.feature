@@ -4,7 +4,7 @@ Feature: Company details
   @companies-details--cdms-reference
   Scenario: Company has CDMS reference
 
-    When browsing to company fixture Venus Ltd
+    Given I navigate to company fixture Venus Ltd
     Then there should be a local nav
       | text                      |
       | Details                   |
@@ -32,7 +32,7 @@ Feature: Company details
   @companies-details--no-cdms-reference
   Scenario: Company does not have CDMS reference
 
-    When browsing to company fixture Lambda plc
+    Given I navigate to company fixture Lambda plc
     Then there should be a local nav
       | text                      |
       | Details                   |

@@ -120,7 +120,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@header', equitySource)
 
     await Location
-      .section.detailsTabs
+      .section.localNav
       .waitForElementPresent('@investment')
       .click('@investment')
   })

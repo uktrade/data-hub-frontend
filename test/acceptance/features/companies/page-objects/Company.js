@@ -7,7 +7,7 @@ const {
   getDetailsTableRowValue,
   getSelectorForElementWithText,
 } = require('../../../helpers/selectors')
-const { appendUid } = require('../../../helpers/uuid')
+const { appendUid, getUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
 
 const getSelectorForDetailsSectionEditButton = (sectionTitle) => {
@@ -150,6 +150,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
+                  uniqueSearchTerm: getUid(company.name),
                 }))
               })
 
@@ -260,6 +261,7 @@ module.exports = {
                       heading: companyStep2.name,
                       primaryAddress,
                       country,
+                      uniqueSearchTerm: getUid(companyStep2.name),
                     }))
 
                     done()
@@ -354,6 +356,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: getAddress(parentCompany),
+                  uniqueSearchTerm: getUid(company.tradingName),
                 }))
               })
           })

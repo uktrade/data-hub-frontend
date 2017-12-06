@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { set, camelCase } = require('lodash')
+const { set } = require('lodash')
 const faker = require('faker')
 
 const { client } = require('nightwatch-cucumber')
@@ -43,12 +43,14 @@ defineSupportCode(function ({ Then, When }) {
       .search(getUid(this.state.contact.lastName))
   })
 
-  When(/^the (.+) tab is clicked/, async (tabName) => {
-    const selector = `@${camelCase(tabName)}`
+  When(/^the (.+) search tab is clicked/, async (tabText) => {
+    const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
 
     await Search.section.tabs
-      .waitForElementVisible(selector)
-      .click(selector)
+      .api.useXpath()
+      .waitForElementVisible(searchTabSelector.selector)
+      .click(searchTabSelector.selector)
+      .useCss()
   })
 
   When(/^the first search result is clicked/, async () => {
@@ -58,19 +60,26 @@ defineSupportCode(function ({ Then, When }) {
       .click('@header')
   })
 
-  Then(/^I verify the tabs are displayed$/, async () => {
-    await Search.section.tabs
-      .assert.visible('@companies')
-      .assert.visible('@contacts')
-      .assert.visible('@events')
-      .assert.visible('@interactions')
-      .assert.visible('@investmentProjects')
-      .assert.visible('@orders')
+  Then(/^I verify the search tabs are displayed$/, async (expectedSearchTabs) => {
+    for (const expectedSearchTab of expectedSearchTabs.hashes()) {
+      const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(expectedSearchTab.text)
+
+      await Search.section.tabs
+        .api.useXpath()
+        .waitForElementPresent(searchTabSelector.selector)
+        .assert.visible(searchTabSelector.selector)
+        .useCss()
+    }
   })
 
-  Then(/^the (.+) tab is active/, async (tabName) => {
+  Then(/^the (.+) search tab is active/, async (tabText) => {
+    const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
+
     await Search.section.tabs
-      .assert.cssClassPresent(`@${camelCase(tabName)}`, 'is-active')
+      .api.useXpath()
+      .waitForElementPresent(searchTabSelector.selector)
+      .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
+      .useCss()
   })
 
   Then(/^there is a results count ([0-9]+)/, async (resultsCount) => {
