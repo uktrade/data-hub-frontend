@@ -10,7 +10,6 @@ const { getUid, appendUid } = require('../../../helpers/uuid')
 defineSupportCode(function ({ Then, When }) {
   const Event = client.page.Event()
   const Search = client.page.Search()
-  const Company = client.page.Company()
   const Dashboard = client.page.Dashboard()
 
   When(/^I populate the create event form to search$/, async function () {
@@ -18,16 +17,6 @@ defineSupportCode(function ({ Then, When }) {
 
     await Event
       .populateCreateEventForm({ name: eventName }, true, (event) => set(this.state, 'event', event))
-  })
-
-  When(/^a company is created to search$/, async function () {
-    const companyName = appendUid(faker.company.companyName())
-
-    await Company
-      .createUkNonPrivateOrNonPublicLimitedCompany({
-        details: { name: companyName },
-        callback: (company) => set(this.state, 'company', company),
-      })
   })
 
   When(/^I search for the event$/, async function () {
