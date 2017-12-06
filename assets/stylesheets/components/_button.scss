@@ -34,7 +34,8 @@
   outline: none;
 }
 
-.button-secondary {
+// modifiers
+.button--secondary {
   @include button ($grey-2);
 
   &:link,
@@ -44,7 +45,6 @@
   }
 }
 
-// modifiers
 .button--destructive {
   @include button($red);
 }
