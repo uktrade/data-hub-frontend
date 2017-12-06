@@ -1,7 +1,7 @@
 {% extends "./_layout-edit.njk" %}
 
 {% set lookupButton %}
-  <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
+  <button class="button button--secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
 {% block main_grid_right_column %}
@@ -157,8 +157,8 @@
       </legend>
       {# TODO make trading address work without JavaScript #}
       <div class="form-group">
-        <button id="add-trading-address" class="button-secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
-        <button id="remove-trading-address" class="button-secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
+        <button id="add-trading-address" class="button--secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
+        <button id="remove-trading-address" class="button--secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
       </div>
 
       <div id="trading-address-wrapper" class="{{ 'u-hidden' if not showTradingAddress }}">
