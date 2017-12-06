@@ -1,5 +1,6 @@
-const { zipWith, get, isArray, isString } = require('lodash')
+const { zipWith, get, isArray, isString, assign } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
+const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateInvestmentTeamMembers } = require('../../repos')
 const { teamMembersLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
@@ -16,31 +17,32 @@ function transformDataToTeamMemberArray (body) {
   return teamMembers.filter(member => member.adviser.length)
 }
 
+function getTeamMemberItem ({ teamMember, advisers }) {
+  const adviser = get(teamMember, 'adviser.id')
+
+  const options = filterActiveAdvisers({
+    advisers,
+    includeAdviser: adviser,
+  }).map(transformObjectToOption)
+
+  return {
+    options,
+    adviser,
+    role: get(teamMember, 'role'),
+  }
+}
+
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
 
-    const teamMembers = investmentData.team_members.map((teamMember) => ({
-      adviser: teamMember.adviser.id,
-      role: teamMember.role,
-    }))
+    const teamMembers = investmentData.team_members.map((teamMember) => getTeamMemberItem({ teamMember, advisers: advisersResponse.results }))
+    teamMembers.push(getTeamMemberItem({ advisers: advisersResponse.results }))
 
-    // Add an extra blank record to allow user to add a team member
-    teamMembers.push({
-      adviser: null,
-      role: null,
-    })
-
-    res.locals.form = Object.assign({}, res.locals.form, {
+    res.locals.form = assign({}, res.locals.form, {
       labels: teamMembersLabels.edit,
-      state: {
-        teamMembers,
-      },
-      options: {
-        advisers,
-      },
+      fields: { teamMembers },
       buttonText: 'Save',
       returnLink: `/investment-projects/${investmentData.id}/team`,
     })
