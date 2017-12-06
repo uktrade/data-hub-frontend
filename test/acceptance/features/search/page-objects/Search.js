@@ -41,12 +41,12 @@ module.exports = {
     tabs: {
       selector: '.c-entity-search__aggregations',
       elements: {
-        companies: getSearchResultsTabSelector('Companies'),
-        contacts: getSearchResultsTabSelector('Contacts'),
-        events: getSearchResultsTabSelector('Events'),
-        interactions: getSearchResultsTabSelector('Interactions'),
-        investmentProjects: getSearchResultsTabSelector('Investment projects'),
-        orders: getSearchResultsTabSelector('Orders'),
+        company: getSearchResultsTabSelector('Companies'),
+        contact: getSearchResultsTabSelector('Contacts'),
+        event: getSearchResultsTabSelector('Events'),
+        interaction: getSearchResultsTabSelector('Interactions'),
+        investmentProject: getSearchResultsTabSelector('Investment projects'),
+        order: getSearchResultsTabSelector('Orders'),
       },
     },
     firstEventSearchResult: {

@@ -14,10 +14,10 @@ Feature: Search
     Then I see the success message
     When I search for the event
     Then I verify the tabs are displayed
-    And the companies tab is active
+    And the company tab is active
     And there is a results count 0
-    When the events tab is clicked
-    Then the events tab is active
+    When the event tab is clicked
+    Then the event tab is active
     And there is a results count 1
     And I can view the event in the search results
 
@@ -28,6 +28,6 @@ Feature: Search
     Then I see the success message
     When I search for the company
     Then I verify the tabs are displayed
-    And the companies tab is active
+    And the company tab is active
     And there is a results count 1
     And I can view the company in the search results
