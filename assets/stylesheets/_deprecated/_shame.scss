@@ -24,10 +24,6 @@
   margin-bottom: 30px;
 }
 
-.column-three-quarters .form-control {
-  width: 100%;
-}
-
 .table_footnote {
   @include core-font(16);
   color: #6f777b;
@@ -40,36 +36,6 @@
 
 .actions {
   margin: 20px 0;
-}
-
-.button-secondary.hidden {
-  display: none;
-}
-
-.js-enabled .block-label.selection-button-radio,
-.js-enabled .block-label.selection-button-checkbox {
-  &::before,
-  &::after {
-    box-sizing: content-box;
-  }
-
-  &::after {
-    -ms-transform: rotate(-45deg);
-  }
-}
-
-select.form-control {
-  height: 38px;
-  line-height: 38px;
-  outline: 0;
-
-  &:focus {
-    box-shadow: 0 0 0 3px $focus-colour;
-  }
-}
-
-fieldset.error {
-  margin-bottom: 20px;
 }
 
 strong {
