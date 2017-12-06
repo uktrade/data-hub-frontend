@@ -9,15 +9,10 @@ $asset-path: "../" !default;
 // GOV UK Elements
 @import "~govuk-elements-sass/public/sass/elements/helpers";
 @import "~govuk-elements-sass/public/sass/elements/reset";
-@import "~govuk-elements-sass/public/sass/elements/forms";
-@import "~govuk-elements-sass/public/sass/elements/forms/form-block-labels";
-@import "~govuk-elements-sass/public/sass/elements/forms/form-validation";
-@import "~govuk-elements-sass/public/sass/elements/tables";
 @import "~govuk-elements-sass/public/sass/elements/buttons";
 @import "~govuk-elements-sass/public/sass/elements/elements-typography";
 @import "~govuk-elements-sass/public/sass/elements/layout";
 @import "~govuk-elements-sass/public/sass/elements/lists";
-@import "~govuk-elements-sass/public/sass/elements/panels";
 
 @import "../tools/mixins";
 @import "../settings/layout";
@@ -25,5 +20,4 @@ $asset-path: "../" !default;
 
 // Component styles
 @import "components/button";
-@import "components/panel";
 @import "components/table";
