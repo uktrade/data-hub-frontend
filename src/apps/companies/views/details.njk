@@ -4,10 +4,10 @@
   <h2 class="heading-medium">Company summary</h2>
 
   {% if chDetails %}
-    <div class="dark-panel">
-      {% component 'key-value-table', variant='readonly', items=chDetails %}
-      <p class="footnote">Powered by data from <strong>Companies House</strong></p>
-    </div>
+    {% call Message({ type: 'muted', element: 'div' }) %}
+      {% component 'key-value-table', items=chDetails %}
+      <p>Powered by data from <strong>Companies House</strong></p>
+    {% endcall %}
   {% endif %}
 
   {% if companyDetails %}

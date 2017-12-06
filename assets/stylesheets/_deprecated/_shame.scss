@@ -1,37 +1,7 @@
 @import "../tools/mixins/typography";
 
-.dark-panel {
-  background: $grey-4;
-  border-top: 1px solid $border-colour;
-  margin-bottom: 0;
-
-  .table--key-value tbody tr:first-child {
-    td,
-    th {
-      border-top: 0;
-    }
-  }
-
-  p.footnote {
-    color: $grey-1;
-    padding-left: 25px;
-    padding-bottom: 10px;
-    margin: 0;
-  }
-}
-
 .section {
   margin-bottom: 30px;
-}
-
-.table_footnote {
-  @include core-font(16);
-  color: #6f777b;
-  margin-bottom: 15px;
-
-  strong {
-    @include bold-font(16);
-  }
 }
 
 .actions {
@@ -44,8 +14,4 @@ strong {
 
 .column-three-quarters {
   @include grid-column(3 / 4, tablet);
-}
-
-.table--readonly {
-  border-left-width: 5px;
 }

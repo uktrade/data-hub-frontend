@@ -18,10 +18,11 @@
   </div>
 
   {% if chDetails %}
-    <div class="section">
-      {% component 'key-value-table', variant='readonly', items=chDetails %}
-      <div class="table_footnote">Data from <strong>Companies House</strong></div>
-    </div>
+    {# TODO Do we even still need this? It's not currently being displayed (Bug?) #}
+    {% call Message({ type: 'muted', element: 'div' }) %}
+      {% component 'key-value-table', items=chDetails %}
+      <p>Powered by data from <strong>Companies House</strong></p>
+    {% endcall %}
   {% endif %}
 
   {% call Form({
