@@ -6,8 +6,7 @@
 
 .button {
   @include button ($button-colour);
-  @include box-sizing (border-box);
-  vertical-align: top;
+  padding-bottom: .526315em;
 
   @include media (mobile) {
     width: 100%;
@@ -25,11 +24,6 @@
   outline: 3px solid $focus-colour;
 }
 
-// Disabled buttons
-.button[disabled="disabled"] {
-  background: $button-colour;
-}
-
 .button[disabled="disabled"]:focus {
   outline: none;
 }
@@ -37,16 +31,12 @@
 // modifiers
 .button--secondary {
   @include button ($grey-2);
-
-  &:link,
-  &:visited {
-    background-color: $grey-2;
-    color: $black;
-  }
+  padding-bottom: .526315em;
 }
 
 .button--destructive {
   @include button($red);
+  padding-bottom: .526315em;
 }
 
 .button--link {
