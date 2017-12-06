@@ -1,5 +1,6 @@
 const { get } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
+const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateCompany } = require('../../../companies/repos')
 const { updateInvestment } = require('../../repos')
 const { clientRelationshipManagementLabels } = require('../../labels')
@@ -8,18 +9,30 @@ const { transformObjectToOption } = require('../../../transformers')
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
+    const clientRelationshipManager = get(investmentData, 'client_relationship_manager.id', null)
+    const accountManager = get(investmentData, 'investor_company.account_manager.id', null)
 
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
+
+    const clientRelationshipManagerOptions = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: clientRelationshipManager,
+    }).map(transformObjectToOption)
+
+    const accountManagerOptions = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: accountManager,
+    }).map(transformObjectToOption)
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,
       state: {
-        client_relationship_manager: get(investmentData, 'client_relationship_manager.id', null),
-        account_manager: get(investmentData, 'investor_company.account_manager.id', null),
+        client_relationship_manager: clientRelationshipManager,
+        account_manager: accountManager,
       },
       options: {
-        advisers,
+        clientRelationshipManagers: clientRelationshipManagerOptions,
+        accountManagers: accountManagerOptions,
       },
       hiddenFields: {
         investor_company: get(investmentData, 'investor_company.id'),
