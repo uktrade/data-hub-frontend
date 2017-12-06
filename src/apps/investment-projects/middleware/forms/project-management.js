@@ -1,5 +1,6 @@
-const { get } = require('lodash')
+const { get, assign } = require('lodash')
 const { getAdvisers } = require('../../../adviser/repos')
+const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateInvestment } = require('../../repos')
 const { projectManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
@@ -7,18 +8,30 @@ const { transformObjectToOption } = require('../../../transformers')
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
+    const projectManager = get(investmentData, 'project_manager.id')
+    const projectAssuranceAdviser = get(investmentData, 'project_assurance_adviser.id')
 
     const advisersResponse = await getAdvisers(req.session.token)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
 
-    res.locals.form = Object.assign({}, res.locals.form, {
+    const projectManagers = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: projectManager,
+    }).map(transformObjectToOption)
+
+    const projectAssuranceAdvisers = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: projectAssuranceAdviser,
+    }).map(transformObjectToOption)
+
+    res.locals.form = assign({}, res.locals.form, {
       labels: projectManagementLabels.edit,
       state: {
-        project_manager: get(investmentData, 'project_manager.id'),
-        project_assurance_adviser: get(investmentData, 'project_assurance_adviser.id'),
+        project_manager: projectManager,
+        project_assurance_adviser: projectAssuranceAdviser,
       },
       options: {
-        advisers,
+        projectManagers,
+        projectAssuranceAdvisers,
       },
       buttonText: 'Save',
       returnLink: `/investment-projects/${investmentData.id}/team`,
