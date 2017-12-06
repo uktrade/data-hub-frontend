@@ -1,3 +1,11 @@
+const uuid = require('uuid')
+const { assign } = require('lodash')
+const nock = require('nock')
+
+const config = require('~/config')
+const metadata = require('~/src/lib/metadata')
+const companyData = require('~/test/unit/data/companies/company.json')
+
 describe('investment details middleware', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
@@ -5,27 +13,51 @@ describe('investment details middleware', () => {
 
     this.updateInvestmentStub = this.sandbox.stub().resolves({ id: '999' })
     this.createInvestmentStub = this.sandbox.stub().resolves({ id: '888' })
+    this.getEquityCompanyDetailsStub = this.sandbox.stub().resolves(companyData)
 
     this.req = {
       session: {
-        token: '1234',
+        token: uuid(),
+        user: {
+          id: '4321',
+          name: 'Julie Brown',
+        },
       },
       body: {},
       params: {},
+      query: {},
     }
 
     this.res = {
       locals: {
         form: {},
       },
+      redirect: this.sandbox.stub(),
     }
 
     this.detailsMiddleware = proxyquire('~/src/apps/investment-projects/middleware/forms/details', {
       '../../repos': {
         updateInvestment: this.updateInvestmentStub,
         createInvestmentProject: this.createInvestmentStub,
+        getEquityCompanyDetails: this.getEquityCompanyDetailsStub,
       },
+      '../../../../lib/metadata': assign({}, metadata, {
+        investmentTypeOptions: [],
+        referralSourceActivityOptions: [],
+        fdiOptions: [],
+        referralSourceMarketingOptions: [],
+        referralSourceWebsiteOptions: [],
+        sectorOptions: [],
+        businessActivityOptions: [],
+        investmentSpecificProgrammeOptions: [],
+        investmentInvestorTypeOptions: [],
+        investmentInvolvementOptions: [],
+      }),
     })
+  })
+
+  afterEach(() => {
+    this.sandbox.restore()
   })
 
   describe('#handleFormPost', () => {
@@ -146,6 +178,112 @@ describe('investment details middleware', () => {
 
       it('should return a form state with an additional empty contact', () => {
         expect(this.res.locals.form.state.business_activities).to.deep.equal(['4321', '8765', ''])
+      })
+    })
+  })
+
+  describe('#populateForm', () => {
+    beforeEach(() => {
+      this.advisersData = {
+        count: 5,
+        results: [
+          { id: '1', name: 'Jeff Smith', is_active: true },
+          { id: '2', name: 'John Smith', is_active: true },
+          { id: '3', name: 'Zac Smith', is_active: true },
+          { id: '4', name: 'Fred Smith', is_active: false },
+          { id: '5', name: 'Jim Smith', is_active: false },
+        ],
+      }
+    })
+
+    context('when adding a new project', () => {
+      beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.advisersData)
+
+        this.req.params = assign({}, this.req.params, { equityCompanyId: uuid() })
+        await this.detailsMiddleware.populateForm(this.req, this.res, this.next)
+      })
+
+      it('includes all active adviser options for client relationship manager', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+        ]
+
+        expect(this.res.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
+      })
+
+      it('includes all active adviser options for referral source adviser', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+        ]
+
+        expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when editing a project with an inactive adviser', () => {
+      beforeEach(async () => {
+        this.req.params = assign({}, this.req.params, { equityCompanyId: uuid() })
+
+        nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.advisersData)
+          .get(`/v3/company/${this.req.params.equityCompanyId}`)
+          .reply(200, companyData)
+          .get(`/v3/investment?investor_company_id=${this.req.params.equityCompanyId}&limit=10&offset=0`)
+          .reply(200, { count: 0, results: [] })
+
+        this.res.locals = assign({}, this.res.locals, {
+          investmentData: {
+            id: uuid(),
+            client_relationship_manager: {
+              id: '4',
+              name: 'Fred Smith',
+            },
+            referral_source_adviser: {
+              id: '5',
+              name: 'Jim Smith',
+            },
+          },
+        })
+
+        await this.detailsMiddleware.populateForm(this.req, this.res, this.next)
+      })
+
+      it('includes all active adviser options for client relationship manager', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Fred Smith', value: '4' },
+        ]
+
+        expect(this.res.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
+      })
+
+      it('includes all active adviser options for referral source adviser', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Jim Smith', value: '5' },
+        ]
+
+        expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })
