@@ -1,23 +1,21 @@
 $gt-big-phone: ">414px";
 $asset-path: "../" !default;
 
-// GOV UK Toolkit
-// These govuk_frontend_toolkit helpers are used in govuk-elements-sass work
-@import "~govuk_frontend_toolkit/stylesheets/grid_layout";
-@import "~govuk_frontend_toolkit/stylesheets/typography";
-@import "~govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
-// GOV UK Elements
-@import "~govuk-elements-sass/public/sass/elements/helpers";
-@import "~govuk-elements-sass/public/sass/elements/reset";
-@import "~govuk-elements-sass/public/sass/elements/buttons";
-@import "~govuk-elements-sass/public/sass/elements/elements-typography";
-@import "~govuk-elements-sass/public/sass/elements/layout";
-@import "~govuk-elements-sass/public/sass/elements/lists";
-
 @import "../tools/mixins";
 @import "../settings/layout";
 @import "../settings/colours";
 
+// GOV UK Toolkit
+// These govuk_frontend_toolkit helpers are used in govuk-elements-sass work
+@import "~govuk_frontend_toolkit/stylesheets/grid_layout";
+@import "~govuk_frontend_toolkit/stylesheets/typography";
+// GOV UK Elements
+@import "~govuk-elements-sass/public/sass/elements/helpers";
+@import "~govuk-elements-sass/public/sass/elements/reset";
+@import "~govuk-elements-sass/public/sass/elements/elements-typography";
+@import "~govuk-elements-sass/public/sass/elements/layout";
+@import "~govuk-elements-sass/public/sass/elements/lists";
+
+
 // Component styles
-@import "components/button";
 @import "components/table";
