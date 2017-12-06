@@ -4,6 +4,7 @@ const { transformToApi, transformFromApi } = require('../../services/formatting'
 const { isValidGuid } = require('../../../../lib/controller-utils')
 const metadata = require('../../../../lib/metadata')
 const { getAdvisers } = require('../../../adviser/repos')
+const { filterActiveAdvisers } = require('../../../adviser/filters')
 const {
   buildMetaDataObj,
   transformObjectToOption,
@@ -25,15 +26,14 @@ async function populateForm (req, res, next) {
   }
 
   try {
-    const advisersResponse = await getAdvisers(req.session.token)
+    const investmentData = transformFromApi(res.locals.investmentData)
     const {
       equityCompany,
       equityCompanyInvestment,
     } = await getEquityCompanyDetails(req.session.token, equityCompanyId)
 
-    const contacts = equityCompany.contacts.map(transformContactToOption)
-    const advisers = advisersResponse.results.map(transformObjectToOption)
-    const investmentData = transformFromApi(res.locals.investmentData)
+    const contacts = get(equityCompany, 'contacts', []).map(transformContactToOption)
+
     const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption).filter((investmentType) => {
       return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
     })
@@ -44,6 +44,18 @@ async function populateForm (req, res, next) {
       business_activities: [''],
     }, investmentData)
 
+    const advisersResponse = await getAdvisers(req.session.token)
+
+    const clientRelationshipManagers = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: get(investmentData, 'client_relationship_manager'),
+    }).map(transformObjectToOption)
+
+    const referralSourceAdvisers = filterActiveAdvisers({
+      advisers: advisersResponse.results,
+      includeAdviser: get(investmentData, 'referral_source_adviser'),
+    }).map(transformObjectToOption)
+
     res.locals.clientCompanyId = clientCompanyId || equityCompanyId
     res.locals.equityCompany = equityCompany
     res.locals.equityCompanyInvestment = equityCompanyInvestment
@@ -51,7 +63,8 @@ async function populateForm (req, res, next) {
     res.locals.form = assign({}, res.locals.form, {
       state,
       options: {
-        advisers,
+        clientRelationshipManagers,
+        referralSourceAdvisers,
         contacts,
         investmentTypes,
         referralSourceActivities,
@@ -63,14 +76,14 @@ async function populateForm (req, res, next) {
         primarySectors: metadata.sectorOptions.map(transformObjectToOption),
         businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
         investmentSpecificProgramme: metadata.investmentSpecificProgrammeOptions
-          .map(transformObjectToOption)
-          .filter(filterDisabledOption(state.specific_programme)),
+          .filter(filterDisabledOption(state.specific_programme))
+          .map(transformObjectToOption),
         investmentInvestorType: metadata.investmentInvestorTypeOptions
-          .map(transformObjectToOption)
-          .filter(filterDisabledOption(state.investor_type)),
+          .filter(filterDisabledOption(state.investor_type))
+          .map(transformObjectToOption),
         investmentInvolvement: metadata.investmentInvolvementOptions
-          .map(transformObjectToOption)
-          .filter(filterDisabledOption(state.level_of_involvement)),
+          .filter(filterDisabledOption(state.level_of_involvement))
+          .map(transformObjectToOption),
       },
     })
 
