@@ -8,14 +8,14 @@ Feature: Create New Contact
   Scenario: Add a new primary contact
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
     And I submit the form
     Then I see the success message
     And I wait and then refresh the page
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -34,13 +34,13 @@ Feature: Create New Contact
   Scenario: Add a new primary contact with new company address
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact with new company address is added
     And I submit the form
     Then I see the success message
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -59,13 +59,13 @@ Feature: Create New Contact
   Scenario: Add a new non-primary contact
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then there are contact fields
     When a non-primary contact is added
     And I submit the form
     Then I see the success message
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -84,7 +84,7 @@ Feature: Create New Contact
   Scenario: New primary contact is visible on the dashboard
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
@@ -99,7 +99,7 @@ Feature: Create New Contact
   Scenario: Contact fields are mandatory
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then there are contact fields
     When I submit the form

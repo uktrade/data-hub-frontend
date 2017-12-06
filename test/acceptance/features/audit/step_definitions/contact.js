@@ -3,12 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { merge, set } = require('lodash')
 
-const { getUid } = require('../../../helpers/uuid')
-
-const dashboardPage = `${process.env.QA_HOST}/`
-
 defineSupportCode(({ Given, Then, When }) => {
-  const Search = client.page.Search()
   const Message = client.page.Message()
   const Company = client.page.Company()
   const Contact = client.page.Contact()
@@ -16,7 +11,6 @@ defineSupportCode(({ Given, Then, When }) => {
   const AuditContact = client.page.AuditContact()
   const AuditList = client.page.AuditList()
   const InvestmentStage = client.page.InvestmentStage()
-  const Location = client.page.Location()
 
   Given(/^I archive an existing contact record$/, async function () {
     await Company
@@ -34,25 +28,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .submitForm('form')
     await Message
       .verifyMessage('success')
-  })
-
-  When(/^navigating to the company contacts for audit$/, async function () {
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name))
-
-    await Company
-      .section.firstCompanySearchResult
-      .click('@header')
-
-    await Location.section.detailsTabs
-      .waitForElementVisible('@contacts')
-      .click('@contacts')
-
-    await Company
-      .waitForElementVisible('@addContactButton')
   })
 
   When(/^the contact has ([0-9]) fields edited for audit$/, async function (count) {
