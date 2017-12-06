@@ -5,9 +5,17 @@ const {
   getMetaListItemValueSelector,
   getButtonWithText,
   getDetailsTableRowValue,
+  getSelectorForElementWithText,
 } = require('../../../helpers/selectors')
 const { appendUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
+
+const getSelectorForDetailsSectionEditButton = (sectionTitle) => {
+  return getSelectorForElementWithText(sectionTitle, {
+    el: '//h2',
+    child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
+  })
+}
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -45,6 +53,7 @@ module.exports = {
     collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
+    accountManagementEditButton: getSelectorForDetailsSectionEditButton('Account management'),
   },
   commands: [
     {
@@ -358,6 +367,43 @@ module.exports = {
           .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
           .waitForElementVisible('@xhrTargetElement')
       },
+
+      updateAccountManagement (callback) {
+        const accountManagement = {}
+
+        this
+          .waitForElementPresent('@accountManagementEditButton')
+          .click('@accountManagementEditButton')
+
+        this
+          .section.accountManagementForm
+          .waitForElementPresent('@oneListAccountOwner')
+          .api.perform((done) => {
+            this
+              .section.accountManagementForm
+              .getListOption('@oneListAccountOwner', (oneListAccountOwner) => {
+                accountManagement.oneListAccountOwner = oneListAccountOwner
+                done()
+              })
+          })
+          .perform(() => {
+            for (const key in accountManagement) {
+              if (accountManagement[key]) {
+                this
+                  .section.accountManagementForm
+                  .setValue(`@${key}`, accountManagement[key])
+              }
+            }
+          })
+          .perform(() => {
+            this
+              .section.accountManagementForm
+              .waitForElementPresent('@saveButton')
+              .click('@saveButton')
+
+            callback(accountManagement)
+          })
+      },
     },
   ],
   sections: {
@@ -385,16 +431,14 @@ module.exports = {
     companyDetails: {
       selector: '.table--key-value',
       elements: {
-        businessType: getDetailsTableRowValue('Business type'),
-        primaryAddress: getDetailsTableRowValue('Primary address'),
         ukRegion: getDetailsTableRowValue('UK region'),
-        headquarters: getDetailsTableRowValue('Headquarters'),
-        sector: getDetailsTableRowValue('Sector'),
-        website: getDetailsTableRowValue('Website'),
-        businessDescription: getDetailsTableRowValue('Business description'),
-        numberOfEmployees: getDetailsTableRowValue('Number of employees'),
-        annualTurnover: getDetailsTableRowValue('Annual turnover'),
-        cdmsReference: getDetailsTableRowValue('CDMS reference'),
+      },
+    },
+    accountManagementForm: {
+      selector: 'form',
+      elements: {
+        oneListAccountOwner: '#field-one_list_account_owner',
+        saveButton: getButtonWithText('Save'),
       },
     },
   },
