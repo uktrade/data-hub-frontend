@@ -42,6 +42,10 @@
   float: right !important;
 }
 
+.u-max-width--50 {
+  max-width: 50%;
+}
+
 .u-loading {
   &::before {
     animation: growRight 3s;
