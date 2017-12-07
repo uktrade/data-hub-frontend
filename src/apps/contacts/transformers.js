@@ -17,6 +17,7 @@ function transformContactToListItem ({
   id,
   first_name,
   last_name,
+  job_title,
   address_country,
   company_uk_region,
   company,
@@ -71,6 +72,13 @@ function transformContactToListItem ({
       label: 'Status',
       type: 'badge',
       value: 'Archived',
+    })
+  }
+
+  if (job_title) {
+    item.meta.unshift({
+      label: 'Job title',
+      value: job_title,
     })
   }
 

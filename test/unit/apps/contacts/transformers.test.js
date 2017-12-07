@@ -25,6 +25,7 @@ describe('Contact transformers', function () {
       expect(actual).to.have.property('name').a('string')
       expect(actual).to.have.property('isArchived').a('boolean').to.be.false
       expect(actual).to.have.property('meta').an('array').to.deep.equal([
+        { label: 'Job title', value: 'Director' },
         { label: 'Company', value: 'Fred ltd' },
         { label: 'Sector', value: 'Aerospace' },
         { label: 'Country', value: 'United Kingdom' },
@@ -47,6 +48,7 @@ describe('Contact transformers', function () {
       expect(actual).to.have.property('name').a('string')
       expect(actual).to.have.property('isArchived').a('boolean').to.be.true
       expect(actual).to.have.property('meta').an('array').to.deep.equal([
+        { label: 'Job title', value: 'Director' },
         { label: 'Company', value: 'Fred ltd' },
         { label: 'Sector', value: 'Aerospace' },
         { label: 'Country', value: 'United Kingdom' },
