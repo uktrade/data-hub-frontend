@@ -20,11 +20,12 @@ Feature: View collection of contacts
     And the results count header for contacts is present
     And I can view the Contact in the collection
       | text         | expected           |
+      | Job title    | contact.jobTitle   |
       | Company      | company.name       |
       | Sector       | company.sector     |
       | Updated      | collection.updated |
-      | Country      | company.country |
-      | Uk Region    | company.ukRegion |
+      | Country      | company.country    |
+      | Uk Region    | company.ukRegion   |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
