@@ -11,14 +11,8 @@
 /// @prop {number} level - level on the type scale
 /// @prop {number} font-weight [400] - thickness of font weight
 @mixin _type-setting($level: 0, $font-weight: 400) {
-  @if $is-print {
-    font-family: $print-font-stack;
-    font-size: type-scale($level, "print");
-  } @else {
-    font-family: $dit-font-stack;
-    font-size: type-scale($level, "small");
-  }
-
+  font-family: $dit-font-stack;
+  font-size: type-scale($level, "small");
   font-weight: $font-weight;
   line-height: line-height($level, "small");
   text-transform: none;
@@ -31,6 +25,11 @@
   @include media(desktop) {
     font-size: type-scale($level);
     line-height: line-height($level);
+  }
+
+  @media print {
+    font-family: $print-font-stack;
+    font-size: type-scale($level, "print");
   }
 }
 
