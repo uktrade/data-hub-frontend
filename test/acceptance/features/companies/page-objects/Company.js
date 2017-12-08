@@ -7,10 +7,10 @@ const {
   getDetailsTableRowValue,
   getSelectorForElementWithText,
 } = require('../../../helpers/selectors')
-const { appendUid } = require('../../../helpers/uuid')
+const { appendUid, getUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
 
-const getSelectorForDetailsSectionEditButton = (sectionTitle) => {
+const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
   return getSelectorForElementWithText(sectionTitle, {
     el: '//h2',
     child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
@@ -54,6 +54,7 @@ module.exports = {
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
     accountManagementEditButton: getSelectorForDetailsSectionEditButton('Account management'),
+    exportsEditButton: getSelectorForDetailsSectionEditButton('Exports'),
   },
   commands: [
     {
@@ -150,6 +151,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
+                  uniqueSearchTerm: getUid(company.name),
                 }))
               })
 
@@ -260,6 +262,7 @@ module.exports = {
                       heading: companyStep2.name,
                       primaryAddress,
                       country,
+                      uniqueSearchTerm: getUid(companyStep2.name),
                     }))
 
                     done()
@@ -354,6 +357,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: getAddress(parentCompany),
+                  uniqueSearchTerm: getUid(company.tradingName),
                 }))
               })
           })
@@ -404,6 +408,43 @@ module.exports = {
             callback(accountManagement)
           })
       },
+
+      updateExports (callback) {
+        const exports = {}
+
+        this
+          .waitForElementPresent('@exportsEditButton')
+          .click('@exportsEditButton')
+
+        this
+          .section.exportsForm
+          .waitForElementPresent('@exportWinCategory')
+          .api.perform((done) => {
+            this
+              .section.exportsForm
+              .getListOption('@exportWinCategory', (exportWinCategory) => {
+                exports.exportWinCategory = exportWinCategory
+                done()
+              })
+          })
+          .perform(() => {
+            for (const key in exports) {
+              if (exports[key]) {
+                this
+                  .section.exportsForm
+                  .setValue(`@${key}`, exports[key])
+              }
+            }
+          })
+          .perform(() => {
+            this
+              .section.exportsForm
+              .waitForElementPresent('@saveButton')
+              .click('@saveButton')
+
+            callback(exports)
+          })
+      },
     },
   ],
   sections: {
@@ -439,6 +480,13 @@ module.exports = {
       elements: {
         oneListAccountOwner: '#field-one_list_account_owner',
         saveButton: getButtonWithText('Save'),
+      },
+    },
+    exportsForm: {
+      selector: 'form',
+      elements: {
+        exportWinCategory: '#field-export_experience_category',
+        saveButton: getButtonWithText('Update'),
       },
     },
   },

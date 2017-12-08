@@ -16,15 +16,15 @@ describe('transformCompanyToExportDetailsView', () => {
     })
 
     it('should show the country currently exporting to', () => {
-      expect(this.viewRecord).to.have.property('Currently exporting to', '')
+      expect(this.viewRecord).to.have.property('Currently exporting to', 'None')
     })
 
     it('should not show the country the company wants to export to', () => {
-      expect(this.viewRecord).to.have.property('Future countries of interest', '')
+      expect(this.viewRecord).to.have.property('Future countries of interest', 'None')
     })
 
     it('should show the export win category', () => {
-      expect(this.viewRecord).to.have.property('Export win category', null)
+      expect(this.viewRecord).to.have.property('Export win category', 'None')
     })
   })
 

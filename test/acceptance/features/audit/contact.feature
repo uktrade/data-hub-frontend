@@ -8,13 +8,13 @@ Feature: View Audit history of a contact
   Scenario: View name of the person who made contact record changes
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When navigating to the company contacts for audit
+    When I navigate to the company "Contacts" tab
     And the contact has 1 fields edited for audit
     Then I see the success message
     When I search for this Contact record
@@ -27,12 +27,12 @@ Feature: View Audit history of a contact
   Scenario: View the number of changes occurred on a contact record
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then a primary contact is added
     When I submit the form
     Then I see the success message
-    When navigating to the company contacts for audit
+    When I navigate to the company "Contacts" tab
     And the contact has 2 fields edited for audit
     Then I see the success message
     When I search for this Contact record
@@ -43,17 +43,17 @@ Feature: View Audit history of a contact
   Scenario: View audit log for Archived contact
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     Then a primary contact is added
     When I submit the form
     Then I see the success message
     When I search for the contact
-    And the contacts tab is clicked
+    And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
     And I search for the contact
-    And the contacts tab is clicked
+    And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who archived the contact
@@ -62,19 +62,19 @@ Feature: View Audit history of a contact
   Scenario: View audit log for UnArchived contact
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
     And I search for the contact
-    And the contacts tab is clicked
+    And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
     And I unarchive this contact record
     And I search for the contact
-    And the contacts tab is clicked
+    And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
     Then I see the details who unarchived the contact
