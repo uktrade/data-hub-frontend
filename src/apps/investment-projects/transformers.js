@@ -1,6 +1,7 @@
 /* eslint camelcase: 0 */
-const { get, isArray, assign } = require('lodash')
+const { get, isArray, assign, compact, pickBy } = require('lodash')
 const queryString = require('query-string')
+const labels = require('./labels')
 
 function transformInvestmentProjectToListItem ({
   id,
@@ -12,55 +13,25 @@ function transformInvestmentProjectToListItem ({
   estimated_land_date,
   sector,
 }) {
-  const meta = []
-
-  if (stage) {
-    meta.push({
-      name: 'stage',
-      label: 'Stage',
-      value: stage,
-      type: 'badge',
+  const metaItems = [
+    { key: 'stage', value: stage, type: 'badge' },
+    { key: 'investment_type', value: investment_type, type: 'badge', badgeModifier: 'secondary' },
+    { key: 'investor_company', value: investor_company },
+    { key: 'estimated_land_date', value: estimated_land_date, type: 'dateMonthYear', isInert: true },
+    { key: 'sector', value: sector },
+  ].map(({ key, value, type, badgeModifier, isInert }) => {
+    if (!value) return
+    return assign({}, pickBy({ value, type, badgeModifier, isInert }), {
+      label: labels.investmentProjectMetaItemLabels[key],
     })
-  }
-  if (investment_type) {
-    meta.push({
-      name: 'investment_type',
-      label: 'Investment type',
-      value: investment_type,
-      type: 'badge',
-      badgeModifier: 'secondary',
-    })
-  }
-  if (investor_company) {
-    meta.push({
-      name: 'investor_company',
-      label: 'Investor',
-      value: investor_company,
-    })
-  }
-  if (estimated_land_date) {
-    meta.push({
-      type: 'dateMonthYear',
-      name: 'estimated_land_date',
-      label: 'Land date',
-      value: estimated_land_date,
-      isInert: true,
-    })
-  }
-  if (sector) {
-    meta.push({
-      name: 'sector',
-      label: 'Sector',
-      value: sector,
-    })
-  }
+  })
 
   return {
     id,
     name,
     type: 'investment-project',
     code: project_code,
-    meta,
+    meta: compact(metaItems),
   }
 }
 
