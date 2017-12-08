@@ -1,5 +1,3 @@
-const nock = require('nock')
-
 const config = require('~/config')
 const advisersData = require('../../../data/advisers/advisers')
 
@@ -64,7 +62,7 @@ describe('Event list controller', () => {
       disabled_on: null,
     }]
 
-    nock(config.apiRoot)
+    this.nockScope = nock(config.apiRoot)
       .get(`/adviser/?limit=100000&offset=0`)
       .reply(200, { results: advisers })
   })
@@ -84,6 +82,10 @@ describe('Event list controller', () => {
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('filtersFields'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
+    })
+
+    it('nock mocked scope has been called', () => {
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 
@@ -122,6 +124,11 @@ describe('Event list controller', () => {
         )
       )
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
+    })
+
+    it('nock mocked scope has been called', async () => {
+      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 })

@@ -6,6 +6,7 @@
     "expect": true,
     "proxyquire": true,
     "sinon": true,
+    "nock": true,
     "rootPath": true,
     "globalReq": true,
     "globalRes": true
