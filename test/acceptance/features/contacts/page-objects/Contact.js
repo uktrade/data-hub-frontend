@@ -7,7 +7,7 @@ const {
   getDetailsTableRowValue,
   getMetaListItemValueSelector,
 } = require('../../../helpers/selectors')
-const { appendUid } = require('../../../helpers/uuid')
+const { appendUid, getUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
 
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
@@ -96,6 +96,7 @@ module.exports = {
               acceptsEmailMarketingFromDit: 'Yes',
               primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
               address: getAddress(contact),
+              uniqueSearchTerm: getUid(contact.lastName),
             }))
           })
       },
@@ -149,6 +150,7 @@ module.exports = {
                   type: 'Primary',
                   primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
                   address: getAddress(addressInputValues),
+                  uniqueSearchTerm: getUid(contact.lastName),
                 }, addressInputValues, contact))
                 done()
               })

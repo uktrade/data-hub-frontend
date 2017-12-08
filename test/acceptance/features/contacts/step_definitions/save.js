@@ -2,16 +2,10 @@ const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-const { getUid } = require('../../../helpers/uuid')
-
-const dashboardPage = `${process.env.QA_HOST}/`
-
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
   const Contact = client.page.Contact()
-  const Search = client.page.Search()
   const Dashboard = client.page.Dashboard()
-  const Location = client.page.Location()
 
   When(/^a primary contact is added$/, async function () {
     await Contact
@@ -33,25 +27,6 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewContact({}, false, (contact) => {
         set(this.state, 'contact', contact)
       })
-  })
-
-  When(/^navigating to the company contacts$/, async function () { // TODO DRY up
-    await client
-      .url(dashboardPage)
-
-    await Search
-      .search(getUid(this.state.company.name))
-
-    await Company
-      .section.firstCompanySearchResult
-      .click('@header')
-
-    await Location.section.detailsTabs
-      .waitForElementVisible('@contacts')
-      .click('@contacts')
-
-    await Company
-      .waitForElementVisible('@addContactButton')
   })
 
   When(/^the contact is clicked/, async function () {

@@ -16,8 +16,20 @@ module.exports = {
         header: '.c-local-header__heading',
       },
     },
-    detailsTabs: {
+    localNav: {
       selector: '.c-local-nav',
+      commands: [
+        {
+          getLocalNavLinkSelector (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//a',
+                className: 'c-local-nav__link',
+              }
+            )
+          },
+        },
+      ],
       elements: {
         details: getDetailsTabSelector('Details'),
         contacts: getDetailsTabSelector('Contacts'),
