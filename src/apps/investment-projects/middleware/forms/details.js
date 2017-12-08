@@ -27,6 +27,8 @@ async function populateForm (req, res, next) {
 
   try {
     const investmentData = transformFromApi(res.locals.investmentData)
+    const createdOn = get(investmentData, 'created_on')
+
     const {
       equityCompany,
       equityCompanyInvestment,
@@ -76,13 +78,22 @@ async function populateForm (req, res, next) {
         primarySectors: metadata.sectorOptions.map(transformObjectToOption),
         businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
         investmentSpecificProgramme: metadata.investmentSpecificProgrammeOptions
-          .filter(filterDisabledOption(state.specific_programme))
+          .filter(filterDisabledOption({
+            createdOn,
+            currentValue: state.specific_programme,
+          }))
           .map(transformObjectToOption),
         investmentInvestorType: metadata.investmentInvestorTypeOptions
-          .filter(filterDisabledOption(state.investor_type))
+          .filter(filterDisabledOption({
+            createdOn,
+            currentValue: state.investor_type,
+          }))
           .map(transformObjectToOption),
         investmentInvolvement: metadata.investmentInvolvementOptions
-          .filter(filterDisabledOption(state.level_of_involvement))
+          .filter(filterDisabledOption({
+            createdOn,
+            currentValue: state.level_of_involvement,
+          }))
           .map(transformObjectToOption),
       },
     })
