@@ -1,5 +1,11 @@
 /* eslint-disable camelcase */
-const { filter, keyBy, snakeCase, isPlainObject, isFunction } = require('lodash')
+const {
+  filter,
+  keyBy,
+  snakeCase,
+  isPlainObject,
+  isFunction,
+} = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
 const { buildPagination } = require('../lib/pagination')
