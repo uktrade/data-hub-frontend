@@ -35,15 +35,15 @@
 }
 
 .u-float-left {
-  @include media(tablet) {
-    float: left !important;
-  }
+  float: left !important;
 }
 
 .u-float-right {
-  @include media(tablet) {
-    float: right !important;
-  }
+  float: right !important;
+}
+
+.u-max-width--50 {
+  max-width: 50%;
 }
 
 .u-loading {
