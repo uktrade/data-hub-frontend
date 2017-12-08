@@ -10,12 +10,12 @@
       data-can-remove-all
     >
       <div>
-        {% for teamMember in form.state.teamMembers %}
+        {% for teamMember in form.fields.teamMembers %}
           {% call Fieldset({ legend: 'Team member' }) %}
             {{ MultipleChoiceField({
               name: 'adviser',
               label: form.labels.adviser,
-              options: form.options.advisers,
+              options: teamMember.options,
               value: teamMember.adviser,
               idSuffix: loop.index,
               initialOption: '-- Select an adviser --'

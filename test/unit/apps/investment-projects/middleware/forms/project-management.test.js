@@ -1,3 +1,7 @@
+const nock = require('nock')
+const { assign } = require('lodash')
+
+const config = require('~/config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
 const { projectManagementLabels } = require('~/src/apps/investment-projects/labels')
@@ -15,32 +19,24 @@ describe('Investment form middleware - project magement', () => {
         },
       }
 
-      this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/project-management', {
-        '../../../adviser/repos': {
-          getAdvisers: this.getAdvisersStub,
-        },
-      })
+      this.controller = require('~/src/apps/investment-projects/middleware/forms/project-management')
+
+      this.nockScope = nock(config.apiRoot)
+        .get(`/adviser/?limit=100000&offset=0`)
+        .reply(200, {
+          count: 5,
+          results: [
+            { id: '1', name: 'Jeff Smith', is_active: true },
+            { id: '2', name: 'John Smith', is_active: true },
+            { id: '3', name: 'Zac Smith', is_active: true },
+            { id: '4', name: 'Fred Smith', is_active: false },
+            { id: '5', name: 'Jim Smith', is_active: false },
+          ],
+        })
     })
 
     afterEach(() => {
       this.sandbox.restore()
-    })
-
-    it('should generate a list of advisers to use for adviser dropdowns', (done) => {
-      const mockAdviser = advisorData.results[0]
-      const expectedAdvisors = [{
-        value: mockAdviser.id,
-        label: mockAdviser.name,
-      }]
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisors)
-        done()
-      })
     })
 
     it('should populate the form state with the existing project management team if there is data', (done) => {
@@ -67,6 +63,54 @@ describe('Investment form middleware - project magement', () => {
       }, this.resMock, () => {
         expect(this.resMock.locals.form.labels).to.deep.equal(projectManagementLabels.edit)
         done()
+      })
+    })
+
+    context('when the investment data contains project management information', () => {
+      beforeEach(async () => {
+        this.reqMock = {
+          session: {
+            token: 'mock-token',
+          },
+        }
+
+        this.resMock = {
+          locals: {
+            form: {},
+            investmentData: assign({}, investmentData, {
+              project_manager: { id: '4', name: 'Fred Smith' },
+              project_assurance_adviser: { id: '5', name: 'Jim Smith' },
+            }),
+          },
+        }
+
+        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('includes all active adviser options for project manager', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Fred Smith', value: '4' },
+        ]
+
+        expect(this.resMock.locals.form.options.projectManagers).to.deep.equal(expectedOptions)
+      })
+
+      it('includes all active adviser options for project assurance advisor', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Jim Smith', value: '5' },
+        ]
+
+        expect(this.resMock.locals.form.options.projectAssuranceAdvisers).to.deep.equal(expectedOptions)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

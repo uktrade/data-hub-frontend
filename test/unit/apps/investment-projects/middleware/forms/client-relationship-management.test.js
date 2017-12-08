@@ -1,3 +1,7 @@
+const nock = require('nock')
+const { assign } = require('lodash')
+
+const config = require('~/config')
 const investmentData = require('~/test/unit/data/investment/investment-data-account-manager.json')
 const companyData = require('~/test/unit/data/company.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
@@ -7,7 +11,6 @@ describe('Investment form middleware - client relationship management', () => {
   describe('#populateForm', () => {
     beforeEach(() => {
       this.sandbox = sinon.sandbox.create()
-      this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
       this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
       this.nextSpy = this.sandbox.spy()
       this.resMock = {
@@ -18,34 +21,27 @@ describe('Investment form middleware - client relationship management', () => {
       }
 
       this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/client-relationship-management', {
-        '../../../adviser/repos': {
-          getAdvisers: this.getAdvisersStub,
-        },
         '../../../companies/repos': {
           updateCompany: this.updateCompanyStub,
         },
       })
+
+      this.nockScope = nock(config.apiRoot)
+        .get(`/adviser/?limit=100000&offset=0`)
+        .reply(200, {
+          count: 5,
+          results: [
+            { id: '1', name: 'Jeff Smith', is_active: true },
+            { id: '2', name: 'John Smith', is_active: true },
+            { id: '3', name: 'Zac Smith', is_active: true },
+            { id: '4', name: 'Fred Smith', is_active: false },
+            { id: '5', name: 'Jim Smith', is_active: false },
+          ],
+        })
     })
 
     afterEach(() => {
       this.sandbox.restore()
-    })
-
-    it('should generate a list of advisers to use for adviser dropdowns', (done) => {
-      const mockAdviser = advisorData.results[0]
-      const expectedAdvisors = [{
-        value: mockAdviser.id,
-        label: mockAdviser.name,
-      }]
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisors)
-        done()
-      })
     })
 
     it('should populate the form state with the existing client relationship management if there is data', (done) => {
@@ -113,6 +109,56 @@ describe('Investment form middleware - client relationship management', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
         expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
         done()
+      })
+    })
+
+    context('when the investment data contains relationship management information', () => {
+      beforeEach(async () => {
+        this.reqMock = {
+          session: {
+            token: 'mock-token',
+          },
+        }
+
+        this.resMock = {
+          locals: {
+            form: {},
+            investmentData: assign({}, investmentData, {
+              client_relationship_manager: { id: '4', name: 'Fred Smith' },
+              investor_company: {
+                account_manager: { id: '5', name: 'Jim Smith' },
+              },
+            }),
+          },
+        }
+
+        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('includes all active adviser options for client relationship manager', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Fred Smith', value: '4' },
+        ]
+
+        expect(this.resMock.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
+      })
+
+      it('includes all active adviser options for account manager', () => {
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Jim Smith', value: '5' },
+        ]
+
+        expect(this.resMock.locals.form.options.accountManagers).to.deep.equal(expectedOptions)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })
