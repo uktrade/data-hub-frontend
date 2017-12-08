@@ -138,6 +138,13 @@ const labels = {
     view: roleAdviserTeam,
     edit: roleAdviserTeam,
   },
+  investmentProjectMetaItemLabels: {
+    stage: 'Stage',
+    investment_type: 'Investment type',
+    investor_company: 'Investor',
+    estimated_land_date: 'Land date',
+    sector: 'Sector',
+  },
 }
 
 labels.valueLabels.edit = Object.assign({}, labels.valueLabels.view, labels.valueLabels.edit)

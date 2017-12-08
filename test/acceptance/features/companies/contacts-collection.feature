@@ -23,7 +23,7 @@ Feature: View collection of contacts for a company
       | Sector       | company.sector     |
       | Updated      | collection.updated |
       | Country      | company.country    |
-      | Uk Region    | company.ukRegion   |
+      | UK region    | company.ukRegion   |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
