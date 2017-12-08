@@ -1,4 +1,3 @@
-
 const queryString = require('query-string')
 const { assign, set } = require('lodash')
 
@@ -141,50 +140,69 @@ describe('OAuth controller', () => {
         set(this.reqMock, 'session.oauth.state', mockState)
       })
 
-      it('should show redirect to root page url', async () => {
-        this.nockScope = nock(mockFetchUrl.host)
-          .post(mockFetchUrl.path)
-          .reply(200, { access_token: mockOauthAccessToken })
+      context('redirect to root', () => {
+        beforeEach(async () => {
+          this.nockScope = nock(mockFetchUrl.host)
+            .post(mockFetchUrl.path)
+            .reply(200, { access_token: mockOauthAccessToken })
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
 
-        await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        it('should show redirect to root page url', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+          expect(this.resMock.redirect.args[0][0]).to.equal('/')
+          expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+        })
 
-        expect(this.resMock.redirect).to.have.been.calledOnce
-        expect(this.resMock.redirect.args[0][0]).to.equal('/')
-        expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+        it('nock mocked scope has been called', () => {
+          expect(this.nockScope.isDone()).to.be.true
+        })
       })
 
-      it('should show redirect to returnTo url', async () => {
+      context('redirect to returnTo', () => {
         const returnToUrl = 'return/to/url'
-        set(this.reqMock, 'session.returnTo', returnToUrl)
 
-        this.nockScope = nock(mockFetchUrl.host)
-          .post(mockFetchUrl.path)
-          .reply(200, { access_token: mockOauthAccessToken })
+        beforeEach(async () => {
+          set(this.reqMock, 'session.returnTo', returnToUrl)
 
-        await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          this.nockScope = nock(mockFetchUrl.host)
+            .post(mockFetchUrl.path)
+            .reply(200, { access_token: mockOauthAccessToken })
 
-        expect(this.resMock.redirect).to.have.been.calledOnce
-        expect(this.resMock.redirect.args[0][0]).to.equal(returnToUrl)
-        expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should show redirect to returnTo url', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+          expect(this.resMock.redirect.args[0][0]).to.equal(returnToUrl)
+          expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+        })
+
+        it('nock mocked scope has been called', () => {
+          expect(this.nockScope.isDone()).to.be.true
+        })
       })
 
-      it('should handle error as expected', async () => {
+      context('redirect to returnTo', () => {
         const returnedError = 'terrible things happen in the upside down'
 
-        this.nockScope = nock(mockFetchUrl.host)
-          .post(mockFetchUrl.path)
-          .replyWithError(returnedError)
+        beforeEach(async () => {
+          this.nockScope = nock(mockFetchUrl.host)
+            .post(mockFetchUrl.path)
+            .replyWithError(returnedError)
 
-        await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
 
-        expect(this.nextSpy).to.have.been.calledOnce
-        expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${returnedError}`)
-        expect(this.reqMock.session.token).to.be.undefined
-      })
+        it('should handle error as expected', async () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${returnedError}`)
+          expect(this.reqMock.session.token).to.be.undefined
+        })
 
-      it('nock mocked scope has been called', async () => {
-        await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
-        expect(this.nockScope.isDone()).to.be.true
+        it('nock mocked scope has been called', () => {
+          expect(this.nockScope.isDone()).to.be.true
+        })
       })
     })
   })
