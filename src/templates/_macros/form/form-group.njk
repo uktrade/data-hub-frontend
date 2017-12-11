@@ -12,6 +12,7 @@
  # @param {boolean} [props.isLabelHidden=false] - Whether input label should be hidden
  # @param {string} [props.condition.name] - Name of the field that controls this form group if it is a subfield
  # @param {string} [props.condition.value] - Value of the field that controls this form group if it is a subfield
+ # @param {object} [props.dataAttributes] - Key/value pair of data attributes to add to form group element
  # @param {string} [props.innerHTML] - Optional inner HTML content
  # @param {array}  [props.children] - an array of inner macro configurations
  #
@@ -46,6 +47,9 @@
         data-controlled-by="{{ props.condition.name }}"
         data-control-value="{{ props.condition.value }}"
       {% endif %}
+      {% for key, value in props.dataAttributes %}
+        data-{{key }}="{{ value }}"
+      {% endfor %}
     >
       <{{ labelElement }}
         class="
