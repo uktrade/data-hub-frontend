@@ -43,7 +43,13 @@
 
     <h2 class="heading-medium">What happens next</h2>
 
-    <p>Continuing with the order will notify the post manager for {{ values.primary_market.name }}.</p>
+    <p>
+      Continuing with the order will notify the post manager for {{ values.primary_market.name }}
+      {%- if company.uk_region -%}
+        &nbsp;and the region manager for {{ company.uk_region.name }}
+      {%- endif -%}
+      .
+    </p>
 
     <p>You will not be able to edit the company or market (country) after this point.</p>
 
