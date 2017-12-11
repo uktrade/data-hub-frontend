@@ -18,6 +18,50 @@
     <button class="button button--destructive" disabled="disabled">Disabled destructive button</button>
   {% endcall %}
 
+  <h2 class="heading-large">Typeahead</h2>
+
+  {% call Example('Adviser select') %}
+    {% call FormGroup({
+      name: 'advisers',
+      fieldId: 'advisers',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name',
+      class: 'js-Autocomplete'
+    }) %}
+      <div class="js-Autocomplete__element"></div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Adviser select (overlay)') %}
+    {% call FormGroup({
+      name: 'advisers-overlay',
+      fieldId: 'advisers-overlay',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name',
+      class: 'js-Autocomplete',
+      dataAttributes: {
+        'display-menu': 'overlay'
+      }
+    }) %}
+      <div class="js-Autocomplete__element"></div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Adviser select (show all values)') %}
+    {% call FormGroup({
+      name: 'advisers-overlay',
+      fieldId: 'advisers-overlay',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name',
+      class: 'js-Autocomplete',
+      dataAttributes: {
+        'show-all-values': true
+      }
+    }) %}
+      <div class="js-Autocomplete__element"></div>
+    {% endcall %}
+  {% endcall %}
+
   <h2 class="heading-large">Entity search</h2>
 
   {% call Example('EntitySearchForm') %}
