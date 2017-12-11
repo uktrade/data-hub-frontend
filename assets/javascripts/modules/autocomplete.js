@@ -5,8 +5,6 @@ const get = require('lodash/get')
 const isString = require('lodash/isString')
 const pickBy = require('lodash/pickBy')
 
-const advisers = require('../advisers.json')
-
 function highlight (string, searchTerm, shouldMatchFullWord = false) {
   if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) {
     return string
@@ -25,7 +23,7 @@ function highlight (string, searchTerm, shouldMatchFullWord = false) {
 }
 
 function suggest (query, populateResults) {
-  const results = advisers.results
+  const results = get(window, 'DIT.advisers', [])
   const filteredResults = results.filter(result => {
     const matches = [
       result.name,
