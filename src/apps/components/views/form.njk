@@ -62,6 +62,47 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Repeatable adviser select') %}
+    <div
+      class="js-AddItems"
+      data-item-name="adviser"
+      data-can-remove-all
+    >
+      {% call FormGroup({
+        name: 'advisers-repeatable',
+        fieldId: 'advisers-repeatable',
+        element: 'fieldset',
+        label: 'Group of advisers',
+        hint: 'Select multiple'
+      }) %}
+        {% set removeButton %}
+          <button class="button button--link c-form-group__action js-AddItems__remove" name="remove-item">
+            Remove adviser
+          </button>
+        {% endset %}
+
+        {% call FormGroup({
+          name: 'advisers-repeatabe-1',
+          fieldId: 'advisers-repeatabe-1',
+          label: 'Select an adviser',
+          modifier: 'compact',
+          isLabelHidden: true,
+          hint: 'Enter a name, email or team name',
+          class: 'js-Autocomplete js-AddItems__item',
+          innerHTML: removeButton
+        }) %}
+          <div class="js-Autocomplete__element"></div>
+        {% endcall %}
+      {% endcall %}
+
+      <p class="c-form-group c-form-group--compact">
+        <button class="button button--secondary js-AddItems__add" name="add-item">
+          Add adviser
+        </button>
+      </p>
+    </div>
+  {% endcall %}
+
   <h2 class="heading-large">Entity search</h2>
 
   {% call Example('EntitySearchForm') %}
