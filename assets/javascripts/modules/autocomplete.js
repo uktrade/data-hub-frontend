@@ -52,7 +52,11 @@ const Autocomplete = {
         return get(suggestion, 'name')
       },
       suggestion: (suggestion, query) => {
-        const html = `${suggestion.name} &lt;${suggestion.email}&gt;, ${get(suggestion, 'dit_team.name')}`
+        const html = `
+          <span class="autocomplete__option-title">${suggestion.name}</span>
+          &lt;${suggestion.email}&gt;
+          <span class="autocomplete__option-meta">${get(suggestion, 'dit_team.name')}</span>
+        `
         return highlight(html, query)
       },
     },
