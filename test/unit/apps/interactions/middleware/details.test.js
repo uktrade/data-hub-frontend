@@ -13,6 +13,7 @@ const contactsData = require('~/test/unit/data/contacts/contacts.json')
 const eventsData = require('~/test/unit/data/events/collection.json')
 
 const adviserFilters = require('~/src/apps/adviser/filters')
+const eventsRepos = require('~/src/apps/events/repos')
 
 const transformed = {
   id: '1',
@@ -29,6 +30,7 @@ describe('Interaction details middleware', () => {
     this.getContactStub = sandbox.stub()
     this.getDitCompanyStub = sandbox.stub()
     this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.getActiveEventsSpy = sandbox.spy(eventsRepos, 'getActiveEvents')
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
@@ -48,9 +50,6 @@ describe('Interaction details middleware', () => {
       '../../contacts/repos': {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
         getContact: this.getContactStub,
-      },
-      '../../events/repos': {
-        getActiveEvents: sandbox.stub().resolves(eventsData.results),
       },
       '../../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
@@ -232,12 +231,8 @@ describe('Interaction details middleware', () => {
     })
   })
 
-  describe('#getInteractionOOptions', () => {
+  describe('#getInteractionOptions', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
-        .get(`/adviser/?limit=100000&offset=0`)
-        .reply(200, this.activeInactiveAdviserData)
-
       this.res.locals.interaction = assign({}, interactionData, {
         dit_adviser: {
           id: this.activeInactiveAdviserData.results[4].id,
@@ -247,6 +242,10 @@ describe('Interaction details middleware', () => {
 
     context('when interaction', () => {
       beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.activeInactiveAdviserData)
+
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
         set(this.res.locals, 'interaction.dit_adviser', this.currentAdviser)
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
@@ -281,6 +280,12 @@ describe('Interaction details middleware', () => {
 
     context('when service delivery', () => {
       beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.activeInactiveAdviserData)
+          .post(`/v3/search/event`)
+          .reply(200, eventsData)
+
         this.req = assign({}, this.req, {
           params: {
             kind: 'service-delivery',
@@ -288,7 +293,10 @@ describe('Interaction details middleware', () => {
         })
 
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
-        this.res.locals.interaction.dit_adviser = this.currentAdviser
+        this.res.locals.interaction = {
+          created_on: '20170-01-01T10:20:30Z',
+          dit_adviser: this.currentAdviser,
+        }
 
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
@@ -310,11 +318,15 @@ describe('Interaction details middleware', () => {
         expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
-      it('should set services data on locals', async () => {
+      it('should set services data on locals', () => {
         expect(this.res.locals.services).to.deep.equal(servicesData)
       })
 
-      it('should set events data on locals', async () => {
+      it('should get the active events for the record', () => {
+        expect(this.getActiveEventsSpy).to.be.calledWith(this.req.session.token, this.res.locals.interaction.created_on)
+      })
+
+      it('should set events data on locals', () => {
         expect(this.res.locals.events).to.deep.equal(eventsData.results)
       })
 
