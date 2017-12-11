@@ -30,6 +30,10 @@ AddItems.init()
 PrintDialog.init()
 Autocomplete.init()
 
+document.addEventListener('AddItems_Render', () => {
+  Autocomplete.init()
+})
+
 // Deprecated
 CompanyAdd.init()
 CompanyEdit.init()
