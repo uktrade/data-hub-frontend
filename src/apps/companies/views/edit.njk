@@ -1,7 +1,7 @@
 {% extends "./_layout-edit.njk" %}
 
 {% set lookupButton %}
-  <button class="button button-secondary postcode-lookup-button" type="button">Find UK address</button>
+  <button class="button button--secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
 {% block main_grid_right_column %}
@@ -18,10 +18,11 @@
   </div>
 
   {% if chDetails %}
-    <div class="section">
-      {% component 'key-value-table', variant='readonly', items=chDetails %}
-      <div class="table_footnote">Data from <strong>Companies House</strong></div>
-    </div>
+    {# TODO Do we even still need this? It's not currently being displayed (Bug?) #}
+    {% call Message({ type: 'muted', element: 'div' }) %}
+      {% component 'key-value-table', items=chDetails %}
+      <p>Powered by data from <strong>Companies House</strong></p>
+    {% endcall %}
   {% endif %}
 
   {% call Form({
@@ -157,8 +158,8 @@
       </legend>
       {# TODO make trading address work without JavaScript #}
       <div class="form-group">
-        <button id="add-trading-address" class="button-secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
-        <button id="remove-trading-address" class="button-secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
+        <button id="add-trading-address" class="button--secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
+        <button id="remove-trading-address" class="button--secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
       </div>
 
       <div id="trading-address-wrapper" class="{{ 'u-hidden' if not showTradingAddress }}">

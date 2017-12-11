@@ -4,10 +4,10 @@
   <h2 class="heading-medium">Company summary</h2>
 
   {% if chDetails %}
-    <div class="dark-panel">
-      {% component 'key-value-table', variant='readonly', items=chDetails %}
-      <p class="footnote">Powered by data from <strong>Companies House</strong></p>
-    </div>
+    {% call Message({ type: 'muted', element: 'div' }) %}
+      {% component 'key-value-table', items=chDetails %}
+      <p>Powered by data from <strong>Companies House</strong></p>
+    {% endcall %}
   {% endif %}
 
   {% if companyDetails %}
@@ -15,7 +15,7 @@
   {% endif %}
 
   {% if company.id %}
-    <p><a href="/companies/{{company.id}}/edit" class="button button-secondary">Edit</a></p>
+    <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit</a></p>
   {% else %}
     <p><a href="/companies/add/{{company.company_number}}" class="button">Add</a></p>
   {% endif %}
@@ -23,7 +23,7 @@
   <div class="section">
     <h2 class="heading-medium">Account management</h2>
     {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
-    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button-secondary">Edit</a></p>
+    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button--secondary">Edit</a></p>
   </div>
 
   {% if company.id and not company.archived %}
