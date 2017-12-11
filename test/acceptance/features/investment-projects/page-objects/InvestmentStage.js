@@ -5,10 +5,10 @@ module.exports = {
   elements: {
     // Project details:
     addRequirmentsButton: 'a[href="edit-requirements"]',
-    editRequirmentsButton: 'a[class="button-secondary"][href="edit-requirements"]',
+    editRequirmentsButton: 'a[class="button--secondary"][href="edit-requirements"]',
     addValueButton: 'a[href="edit-value"]',
-    editValueButton: 'a[class="button-secondary"][href="edit-value"]',
-    editPMButton: 'a[class="button button-secondary"][href="edit-project-management"]',
+    editValueButton: 'a[class="button--secondary"][href="edit-value"]',
+    editPMButton: 'a[class="button button--secondary"][href="edit-project-management"]',
     editSummaryButton: 'a[href="edit-details"]',
     archiveButton: 'a[aria-hidden="false"]',
 
