@@ -1,6 +1,7 @@
 @import "../../settings";
 
 .c-form-control {
+  appearance: none;
   border: 2px solid $text-colour;
   background-color: $white;
   display: inline-block;
