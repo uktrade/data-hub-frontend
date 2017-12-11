@@ -2,6 +2,12 @@ $images-dir: "/images/";
 
 @import "_deprecated/trade-elements";
 
+@import "~accessible-autocomplete/src/autocomplete.css";
+
+.autocomplete__dropdown-arrow-down {
+  z-index: auto;
+}
+
 @import "settings";
 @import "tools";
 @import "generic";
