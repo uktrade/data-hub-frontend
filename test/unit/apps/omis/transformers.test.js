@@ -43,6 +43,7 @@ describe('OMIS list transformers', () => {
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
             { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+            { label: 'UK region', value: 'London' },
           ])
         })
       })
@@ -61,6 +62,7 @@ describe('OMIS list transformers', () => {
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
             { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+            { label: 'UK region', value: 'London' },
           ])
         })
       })
@@ -83,6 +85,7 @@ describe('OMIS list transformers', () => {
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
             { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
+            { label: 'UK region', value: 'London' },
             { label: 'Delivery date', type: 'date', value: '2018-10-16T14:18:28.328729' },
           ])
         })
