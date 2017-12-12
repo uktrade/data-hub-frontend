@@ -1,4 +1,4 @@
-const { assign, find, get } = require('lodash')
+const { assign, find, get, isEmpty } = require('lodash')
 
 const { transformCompaniesHouseToView } = require('../transformers')
 
@@ -44,14 +44,17 @@ function renderForm (req, res) {
     })
   }
   const businessTypeLabel = getBusinessTypeLabel(
-    res.locals.companiesHouseCategory, isForeign, res.locals.businessType
+    res.locals.companiesHouseCategory, isForeign, get(res.locals, 'formData.business_type')
   )
+
+  const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
 
   res
     .breadcrumb(pageTitle)
     .render('companies/views/edit', {
       isForeign,
       businessTypeLabel,
+      showTradingAddress,
     })
 }
 
