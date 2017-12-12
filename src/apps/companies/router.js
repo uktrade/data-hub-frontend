@@ -78,12 +78,12 @@ router
     '/add/:companyNumber',
   ])
   .get(populateForm, renderForm)
-  .post(populateForm, handleFormPost, renderForm)
+  .post(handleFormPost, populateForm, renderForm)
 
 router
   .route('/:companyId/edit')
   .get(setIsEditMode, populateForm, renderForm)
-  .post(setIsEditMode, populateForm, handleFormPost, renderForm)
+  .post(handleFormPost, setIsEditMode, populateForm, renderForm)
 
 router
   .route('/:companyId/account-management/edit')
