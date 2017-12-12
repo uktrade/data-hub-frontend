@@ -1,5 +1,8 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+const { get } = require('lodash')
+
+const { getDetailsTableRowValue } = require('../../../helpers/selectors')
 
 defineSupportCode(({ Then }) => {
   const Details = client.page.Details()
@@ -64,5 +67,34 @@ defineSupportCode(({ Then }) => {
     await Details
       .waitForElementPresent(tag)
       .assert.visible(tag)
+  })
+
+  Then(/^the (.+) details are displayed$/, async function (detailsTableTitle, dataTable) {
+    const expectedDetails = dataTable.hashes()
+    const detailsTableSelector = Details.getSelectorForDetailsTableWithTitle(detailsTableTitle)
+
+    await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
+      client.expect(result.value.length).to.equal(expectedDetails.length)
+    })
+
+    for (const row of expectedDetails) {
+      if (row.key === 'Business type') {
+        // todo: case issues
+        continue
+      }
+      if (row.key === 'Sector') {
+        // todo: https://uktrade.atlassian.net/browse/DH-1086
+        continue
+      }
+      const rowValueSelector = getDetailsTableRowValue(row.key)
+      const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
+      const expectedValue = row.value === 'None' ? 'None' : get(this.state, row.value)
+
+      await Details
+        .api.useXpath()
+        .waitForElementPresent(detailsTableRowValueXPathSelector)
+        .assert.containsText(detailsTableRowValueXPathSelector, expectedValue)
+        .useCss()
+    }
   })
 })

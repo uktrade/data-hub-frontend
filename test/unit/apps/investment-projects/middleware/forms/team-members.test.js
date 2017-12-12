@@ -1,13 +1,24 @@
+const nock = require('nock')
+const { assign } = require('lodash')
+const uuid = require('uuid')
+
+const config = require('~/config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const adviserData = require('~/test/unit/data/investment/interaction/advisers')
 const { teamMembersLabels } = require('~/src/apps/investment-projects/labels')
 
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {
     this.sandbox = sinon.sandbox.create()
-    this.getAdvisersStub = this.sandbox.stub().resolves(adviserData)
+
     this.updateInvestmentTeamMembersStub = this.sandbox.stub().resolves({})
+
     this.nextSpy = this.sandbox.spy()
+    this.reqMock = {
+      session: {
+        token: uuid(),
+      },
+    }
+
     this.resMock = {
       locals: {
         form: {
@@ -18,9 +29,6 @@ describe('Investment form middleware - team members', () => {
     }
 
     this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/team-members', {
-      '../../../adviser/repos': {
-        getAdvisers: this.getAdvisersStub,
-      },
       '../../repos': {
         updateInvestmentTeamMembers: this.updateInvestmentTeamMembersStub,
       },
@@ -32,126 +40,138 @@ describe('Investment form middleware - team members', () => {
   })
 
   describe('#populateForm', () => {
-    it('should generate a list of advisers to use for adviser dropdowns', (done) => {
-      const mockAdviser = adviserData.results[0]
-      const expectedAdvisers = [{
-        value: mockAdviser.id,
-        label: mockAdviser.name,
-      }]
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.options.advisers).to.deep.equal(expectedAdvisers)
-        done()
-      })
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/adviser/?limit=100000&offset=0`)
+        .reply(200, {
+          count: 5,
+          results: [
+            { id: '1', name: 'Jeff Smith', is_active: true },
+            { id: '2', name: 'John Smith', is_active: true },
+            { id: '3', name: 'Zac Smith', is_active: true },
+            { id: '4', name: 'Fred Smith', is_active: false },
+            { id: '5', name: 'Jim Smith', is_active: false },
+          ],
+        })
     })
 
-    it('should populate the form state with the existing team members if there is data', (done) => {
-      const investmentDataWithTeam = Object.assign({}, investmentData, {
-        team_members: [{
-          adviser: {
-            id: '1234',
-          },
-          role: 'manager',
-        }, {
-          adviser: {
-            id: '4321',
-          },
-          role: 'director',
-        }],
+    context('when the investment project contains team members', () => {
+      beforeEach(async () => {
+        this.resMock.locals.investmentData = assign({}, this.resMock.locals.investmentData, {
+          team_members: [{
+            adviser: { id: '4', name: 'Fred Smith' },
+            role: 'Manager',
+          }],
+        })
+
+        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      this.resMock = {
-        locals: {
-          form: {},
-          investmentData: investmentDataWithTeam,
-        },
-      }
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        const state = this.resMock.locals.form.state
-        expect(state.teamMembers[0].adviser).to.equal('1234')
-        expect(state.teamMembers[0].role).to.equal('manager')
-        expect(state.teamMembers[1].adviser).to.equal('4321')
-        expect(state.teamMembers[1].role).to.equal('director')
-        done()
-      })
-    })
-
-    it('should include a blank record to allow things to be added when there are existing members', (done) => {
-      const investmentDataWithTeam = Object.assign({}, investmentData, {
-        team_members: [{
-          adviser: {
-            id: '1234',
-          },
-          role: 'manager',
-        }, {
-          adviser: {
-            id: '4321',
-          },
-          role: 'director',
-        }],
+      it('should include transformed team members', () => {
+        expect(this.resMock.locals.form.fields).to.have.property('teamMembers')
       })
 
-      this.resMock = {
-        locals: {
-          form: {},
-          investmentData: investmentDataWithTeam,
-        },
-      }
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        const state = this.resMock.locals.form.state
-        expect(state.teamMembers[2].adviser).to.equal(null)
-        expect(state.teamMembers[2].role).to.equal(null)
-        done()
+      it('should include the adviser id for a team member', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+        expect(teamMember).to.have.property('adviser', '4')
       })
-    })
 
-    it('should include a blank record to allow things to be added when there are no existing members', (done) => {
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        const state = this.resMock.locals.form.state
-        expect(state.teamMembers[0].adviser).to.equal(null)
-        expect(state.teamMembers[0].role).to.equal(null)
-        done()
+      it('should include the role for a team member', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+        expect(teamMember).to.have.property('role', 'Manager')
       })
-    })
 
-    it('should include labels for the form', (done) => {
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
+      it('should include active adviser options for a team member', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+          { label: 'Fred Smith', value: '4' },
+        ]
+
+        expect(teamMember.options).to.deep.equal(expectedOptions)
+      })
+
+      it('should include a blank team member with no id', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[1]
+        expect(teamMember).to.have.property('adviser', undefined)
+      })
+
+      it('should include a blank team member for no role', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[1]
+        expect(teamMember).to.have.property('role', undefined)
+      })
+
+      it('should include a blank team member with active adviser options', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[1]
+
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+        ]
+
+        expect(teamMember.options).to.deep.equal(expectedOptions)
+      })
+
+      it('should include labels for the form', () => {
         expect(this.resMock.locals.form.labels).to.deep.equal(teamMembersLabels.edit)
-        done()
       })
-    })
 
-    it('should include button text and a return link', (done) => {
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
+      it('should include button text and a return link', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
         expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
-        done()
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when the investment project contains no team member data', () => {
+      beforeEach(async () => {
+        this.resMock.locals.investmentData = assign({}, this.resMock.locals.investmentData, {
+          team_members: [],
+        })
+
+        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should include a blank team member with no id', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+        expect(teamMember).to.have.property('adviser', undefined)
+      })
+
+      it('should include a blank team member for no role', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+        expect(teamMember).to.have.property('role', undefined)
+      })
+
+      it('should include a blank team member with active adviser options', () => {
+        const teamMember = this.resMock.locals.form.fields.teamMembers[0]
+
+        const expectedOptions = [
+          { label: 'Jeff Smith', value: '1' },
+          { label: 'John Smith', value: '2' },
+          { label: 'Zac Smith', value: '3' },
+        ]
+
+        expect(teamMember.options).to.deep.equal(expectedOptions)
+      })
+
+      it('should include labels for the form', () => {
+        expect(this.resMock.locals.form.labels).to.deep.equal(teamMembersLabels.edit)
+      })
+
+      it('should include button text and a return link', () => {
+        expect(this.resMock.locals.form.buttonText).to.equal('Save')
+        expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })
@@ -159,7 +179,7 @@ describe('Investment form middleware - team members', () => {
   describe('#handleFormpost', () => {
     beforeEach(() => {
       this.body = {
-        adviser: ['1234', '4321'],
+        adviser: ['1', '2'],
         role: ['manager', 'supervisor'],
       }
     })
@@ -176,10 +196,10 @@ describe('Investment form middleware - team members', () => {
           body: this.body,
         }, this.resMock, () => {
           expect(this.updateInvestmentTeamMembersStub).to.be.calledWith('mock-token', investmentData.id, [{
-            adviser: '1234',
+            adviser: '1',
             role: 'manager',
           }, {
-            adviser: '4321',
+            adviser: '2',
             role: 'supervisor',
           }])
           done()
@@ -210,7 +230,7 @@ describe('Investment form middleware - team members', () => {
             role: ['This field is required'],
           },
         }
-        const resMock = Object.assign({}, this.resMock)
+        const resMock = assign({}, this.resMock)
 
         this.updateInvestmentTeamMembersStub.rejects(this.error)
 
@@ -222,15 +242,15 @@ describe('Investment form middleware - team members', () => {
             investmentId: investmentData.id,
           },
           body: {
-            adviser: ['1234', '4321', '4323'],
+            adviser: ['1', '2', '3'],
             role: ['manager', 'supervisor', ''],
           },
         }, resMock, (error) => {
           expect(error).to.equal(undefined)
           expect(resMock.locals.form.state.teamMembers).to.deep.equal([
-            { adviser: '1234', role: 'manager' },
-            { adviser: '4321', role: 'supervisor' },
-            { adviser: '4323', role: '' },
+            { adviser: '1', role: 'manager' },
+            { adviser: '2', role: 'supervisor' },
+            { adviser: '3', role: '' },
           ])
           expect(this.resMock.locals.form.errors.messages).to.deep.equal({
             'role-2': ['This field is required'],

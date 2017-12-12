@@ -1,31 +1,18 @@
-const nock = require('nock')
 const config = require('~/config')
 const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware/collection')
 const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
-    nock(config.apiRoot)
-      .post(`/v3/search/company`)
-      .reply(200, {
-        count: 3,
-        results: [
-          {
-            id: '111',
-            name: 'A',
-          },
-          {
-            id: '222',
-            name: 'B',
-          },
-          {
-            id: '333',
-            name: 'C',
-          },
-        ],
-      })
-
     this.sandbox = sinon.sandbox.create()
+    this.mockCompanyResults = {
+      count: 3,
+      results: [
+        { id: '111', name: 'A' },
+        { id: '222', name: 'B' },
+        { id: '333', name: 'C' },
+      ],
+    }
     this.next = this.sandbox.spy()
     this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
@@ -41,6 +28,10 @@ describe('Company collection middleware', () => {
 
   describe('#getCompanyCollection', () => {
     beforeEach(async () => {
+      this.nockScope = nock(config.apiRoot)
+        .post(`/v3/search/company`)
+        .reply(200, this.mockCompanyResults)
+
       this.req.query = {
         stage: 'i1',
         sector: 's1',
@@ -56,6 +47,10 @@ describe('Company collection middleware', () => {
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
       expect(this.next).to.have.been.calledOnce
+    })
+
+    it('nock mocked scope has been called', () => {
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 

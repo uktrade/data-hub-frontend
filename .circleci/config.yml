@@ -205,3 +205,8 @@ workflows:
               only:
                 - master
                 - /^release.*/
+
+notify:
+  webhooks:
+    - url: https://data-hub-circleci-geckoboard.herokuapp.com/parse-payload
+

@@ -10,13 +10,13 @@ module.exports = function transformCompanyToExportDetailsView ({
   future_interest_countries,
 }) {
   const viewRecord = {
-    exportExperienceCategory: export_experience_category,
+    exportExperienceCategory: export_experience_category || 'None',
     exportToCountries: flatten([export_to_countries])
       .map(country => (country.name || null))
-      .join(', '),
+      .join(', ') || 'None',
     futureInterestCountries: flatten([future_interest_countries])
       .map(country => (country.name || null))
-      .join(', '),
+      .join(', ') || 'None',
   }
 
   return getDataLabels(viewRecord, exportDetailsLabels)

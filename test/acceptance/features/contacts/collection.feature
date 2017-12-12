@@ -8,8 +8,8 @@ Feature: View collection of contacts
   Scenario: View contact collection
 
     Given a company is created
-    When navigating to the company contacts
-    When I click the "Add contact" link
+    When I navigate to the company "Contacts" tab
+    And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
     Then I see the success message
@@ -20,11 +20,12 @@ Feature: View collection of contacts
     And the results count header for contacts is present
     And I can view the Contact in the collection
       | text         | expected           |
+      | Job title    | contact.jobTitle   |
       | Company      | company.name       |
       | Sector       | company.sector     |
       | Updated      | collection.updated |
-      | Country      | company.country |
-      | Uk Region    | company.ukRegion |
+      | Country      | company.country    |
+      | UK region    | company.ukRegion   |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
@@ -33,7 +34,7 @@ Feature: View collection of contacts
   Scenario: Filter contact list
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
@@ -80,7 +81,7 @@ Feature: View collection of contacts
   Scenario: Sort contact list
 
     Given a company is created
-    When navigating to the company contacts
+    When I navigate to the company "Contacts" tab
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

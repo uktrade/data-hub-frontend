@@ -9,6 +9,10 @@
   @include media(tablet) {
     padding: 0;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .c-global-nav__link {

@@ -38,7 +38,19 @@ const contactAuditLabels = {
   archived_by_id: 'Archived by',
 }
 
+const contactMetaItemLabels = {
+  job_title: 'Job title',
+  company: 'Company',
+  company_sector: 'Sector',
+  address_country: 'Country',
+  company_uk_region: 'UK region',
+  modified_on: 'Updated on',
+  contact_type: 'Contact type',
+  archived_on: 'Status',
+}
+
 module.exports = {
   contactDetailsLabels,
   contactAuditLabels,
+  contactMetaItemLabels,
 }

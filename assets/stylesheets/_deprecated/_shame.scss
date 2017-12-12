@@ -1,75 +1,11 @@
 @import "../tools/mixins/typography";
 
-.dark-panel {
-  background: $grey-4;
-  border-top: 1px solid $border-colour;
-  margin-bottom: 0;
-
-  .table--key-value tbody tr:first-child {
-    td,
-    th {
-      border-top: 0;
-    }
-  }
-
-  p.footnote {
-    color: $grey-1;
-    padding-left: 25px;
-    padding-bottom: 10px;
-    margin: 0;
-  }
-}
-
 .section {
   margin-bottom: 30px;
 }
 
-.column-three-quarters .form-control {
-  width: 100%;
-}
-
-.table_footnote {
-  @include core-font(16);
-  color: #6f777b;
-  margin-bottom: 15px;
-
-  strong {
-    @include bold-font(16);
-  }
-}
-
 .actions {
   margin: 20px 0;
-}
-
-.button-secondary.hidden {
-  display: none;
-}
-
-.js-enabled .block-label.selection-button-radio,
-.js-enabled .block-label.selection-button-checkbox {
-  &::before,
-  &::after {
-    box-sizing: content-box;
-  }
-
-  &::after {
-    -ms-transform: rotate(-45deg);
-  }
-}
-
-select.form-control {
-  height: 38px;
-  line-height: 38px;
-  outline: 0;
-
-  &:focus {
-    box-shadow: 0 0 0 3px $focus-colour;
-  }
-}
-
-fieldset.error {
-  margin-bottom: 20px;
 }
 
 strong {
@@ -78,8 +14,4 @@ strong {
 
 .column-three-quarters {
   @include grid-column(3 / 4, tablet);
-}
-
-.table--readonly {
-  border-left-width: 5px;
 }

@@ -15,11 +15,13 @@
 
 .c-meta-list__item-label {
   color: $grey-1;
+  word-break: break-all;
 }
 
 .c-meta-list__item-value {
   color: $text-colour;
   display: inline-block;
+  word-break: break-all;
 
   &:link,
   &:visited {

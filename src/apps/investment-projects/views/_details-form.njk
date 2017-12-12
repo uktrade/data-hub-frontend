@@ -107,7 +107,7 @@
       {% endfor %}
 
       <p class="c-form-fieldset__add-another">
-        <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="business_activities" data-persist-values="true">Add another activity</button>
+        <button class="button button--secondary js-AddItems__add" type="submit" name="add-item" value="business_activities" data-persist-values="true">Add another activity</button>
       </p>
     </div>
 
@@ -144,7 +144,7 @@
 
 
       <p class="c-form-fieldset__add-another">
-        <button class="button button-secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
+        <button class="button button--secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
       </p>
     </div>
   {% endcall %}
@@ -173,7 +173,7 @@
         label: 'Client relationship manager',
         error: form.errors.messages.client_relationship_manager,
         value: form.state.client_relationship_manager,
-        options: form.options.advisers,
+        options: form.options.clientRelationshipManagers,
         initialOption: '-- Select client relationship manager --',
         condition: {
           name: 'is_relationship_manager',
@@ -208,7 +208,7 @@
         label: 'Referral source adviser',
         error: form.errors.messages.referral_source_adviser,
         value: form.state.referral_source_adviser,
-        options: form.options.advisers,
+        options: form.options.referralSourceAdvisers,
         initialOption: '-- Select referral source adviser --',
         modifier: 'subfield',
         condition: {

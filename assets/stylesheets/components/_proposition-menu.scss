@@ -11,6 +11,10 @@
     @include bold-font(16);
     float: right;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .proposition-menu__item {
