@@ -1,5 +1,5 @@
 /* eslint no-new: 0 */
-const { hide, show } = require('./lib/element-stuff')
+const { hide, show } = require('../lib/helpers')
 require('./lookup-address')
 
 const CompanyEdit = {

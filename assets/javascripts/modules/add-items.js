@@ -6,7 +6,7 @@ const {
   regenIds,
   closest,
   removeElement,
-} = require('../_deprecated/lib/element-stuff')
+} = require('../lib/helpers')
 
 const addButtonClass = 'js-AddItems__add'
 const removeButtonClass = 'js-AddItems__remove'
