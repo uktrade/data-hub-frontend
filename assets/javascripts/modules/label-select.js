@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('../_deprecated/lib/element-stuff.js')
+const { addClass, removeClass } = require('../lib/helpers')
 
 function getControlLabel (control) {
   if (control.type !== 'checkbox') { return }

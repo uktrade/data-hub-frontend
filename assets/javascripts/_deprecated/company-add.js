@@ -1,4 +1,4 @@
-const { addClass, removeClass } = require('./lib/element-stuff')
+const { addClass, removeClass } = require('../lib/helpers')
 
 const CompanyAdd = {
   init () {
