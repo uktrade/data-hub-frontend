@@ -2,7 +2,7 @@
 
 {% macro renderButton(endpoint, label, isSecondary) %}
   <p>
-    <a href="edit-{{ endpoint }}" class="button{{ '-secondary' if isSecondary }}">
+    <a href="edit-{{ endpoint }}" class="button{{ '--secondary' if isSecondary }}">
       {{ label }}
     </a>
   </p>
