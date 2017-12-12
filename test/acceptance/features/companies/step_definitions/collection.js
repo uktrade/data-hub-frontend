@@ -2,8 +2,6 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { get, set } = require('lodash')
 
-const { getUid } = require('../../../helpers/uuid')
-
 defineSupportCode(({ Given, Then, When }) => {
   const CompanyList = client.page.CompanyList()
 
@@ -17,7 +15,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the companies list by company/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@company')
-      .setValue('@company', getUid(this.state.company.name))
+      .setValue('@company', this.state.company.uniqueSearchTerm)
       .sendKeys('@company', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })

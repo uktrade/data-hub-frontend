@@ -13,11 +13,18 @@ Feature: Search
     And I click the save button
     Then I see the success message
     When I search for the event
-    Then I verify the tabs are displayed
-    And the companies tab is active
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Events              |
+      | Interactions        |
+      | Investment projects |
+      | Orders              |
+    And the Companies search tab is active
     And there is a results count 0
-    When the events tab is clicked
-    Then the events tab is active
+    When the Events search tab is clicked
+    Then the Events search tab is active
     And there is a results count 1
     And I can view the event in the search results
 
@@ -27,7 +34,14 @@ Feature: Search
     Given a company is created
     Then I see the success message
     When I search for the company
-    Then I verify the tabs are displayed
-    And the companies tab is active
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Events              |
+      | Interactions        |
+      | Investment projects |
+      | Orders              |
+    And the Companies search tab is active
     And there is a results count 1
     And I can view the company in the search results

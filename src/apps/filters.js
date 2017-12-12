@@ -1,12 +1,15 @@
-/**
- *
- * @param {string} [currentValue] - The current value for a field so that the options filtered include the current
- *                                  even if invalid
- * @returns {function} - a filter function that will filter out inactive or non-current values
- */
-function filterDisabledOption (currentValue = null) {
+function filterDisabledOption ({ currentValue = null, createdOn } = {}) {
+  const createdOnTime = Date.parse(createdOn) || Date.now()
+
   return function (item) {
-    return !item.disabled_on || item.id === currentValue
+    if (!item.disabled_on) {
+      return true
+    }
+
+    const isDisabled = Date.parse(item.disabled_on) > createdOnTime
+    const isCurrentValue = item.id === currentValue
+
+    return (isDisabled || isCurrentValue)
   }
 }
 

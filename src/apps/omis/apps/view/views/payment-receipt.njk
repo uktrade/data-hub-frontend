@@ -22,7 +22,7 @@
   ] | removeNilAndEmpty | join('<br>') %}
 
   <div class="u-clearfix">
-    <div class="u-float-left">
+    <div class="u-max-width--50 u-float-left">
       {{ MetaList({
         items: [
           { label: 'For the attention of', value: billingAddress | safe },
@@ -34,7 +34,7 @@
       }) }}
     </div>
 
-    <div class="u-float-right">
+    <div class="u-max-width--50 u-float-right">
       {{ MetaList({
         items: [
           { label: 'From (charging point)', value: invoiceAddress | safe },
@@ -115,6 +115,9 @@
   <ul class="list-spaced u-print-hide">
     <li>
       <a href="/omis/{{ order.id }}">Return to order</a>
+    </li>
+    <li>
+      <button class="u-icon-print u-no-js-hidden js-print-dialog">Print payment receipt</button></li>
     </li>
   </ul>
 {% endblock %}

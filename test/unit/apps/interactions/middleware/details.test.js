@@ -1,4 +1,4 @@
-const nock = require('nock')
+
 const { set } = require('lodash')
 const { assign, merge } = require('lodash')
 
@@ -96,15 +96,6 @@ describe('Interaction details middleware', () => {
         { id: '5', name: 'Jim Smith', is_active: false },
       ],
     }
-
-    // TODO fix this when https://github.com/uktrade/data-hub-frontend/pull/1056 is merged
-    nock(config.apiRoot, {
-      reqheaders: {
-        'Authorization': `Bearer ${this.req.session.token}`,
-      },
-    })
-      .get(`/adviser/?limit=100000&offset=0`)
-      .reply(200, this.activeInactiveAdviserData)
   })
 
   afterEach(() => {
@@ -248,6 +239,10 @@ describe('Interaction details middleware', () => {
 
   describe('#getInteractionOOptions', () => {
     beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get(`/adviser/?limit=100000&offset=0`)
+        .reply(200, this.activeInactiveAdviserData)
+
       this.res.locals.interaction = assign({}, interactionData, {
         dit_adviser: {
           id: this.activeInactiveAdviserData.results[4].id,
@@ -282,6 +277,10 @@ describe('Interaction details middleware', () => {
 
       it('should not set events data on locals', async () => {
         expect(this.res.locals.events).to.be.undefined
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
 
@@ -322,6 +321,10 @@ describe('Interaction details middleware', () => {
 
       it('should set events data on locals', async () => {
         expect(this.res.locals.events).to.deep.equal(eventsData.results)
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

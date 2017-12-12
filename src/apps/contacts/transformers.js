@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-const { get, pickBy, findIndex } = require('lodash')
+const { get, pickBy, compact, assign } = require('lodash')
 
 const { getFormattedAddress } = require('../../lib/address')
 const { getDataLabels } = require('../../lib/controller-utils')
-const { contactDetailsLabels } = require('./labels')
+const { contactDetailsLabels, contactMetaItemLabels } = require('./labels')
 
 function getContactAddress (address_same_as_company, contactAddressFields, company) {
   if (!address_same_as_company) {
@@ -17,72 +17,41 @@ function transformContactToListItem ({
   id,
   first_name,
   last_name,
+  job_title,
   address_country,
   company_uk_region,
   company,
   modified_on,
   archived,
-  archived_by,
   archived_on,
-  archived_reason,
   company_sector,
   primary,
 } = {}) {
   if (!id || !first_name || !last_name) { return }
 
-  const item = {
+  const metaItems = [
+    { key: 'company', value: get(company, 'name') },
+    { key: 'job_title', value: job_title },
+    { key: 'company_sector', value: get(company_sector, 'name') },
+    { key: 'address_country', value: get(address_country, 'name') },
+    { key: 'company_uk_region', value: company_uk_region },
+    { key: 'modified_on', value: modified_on, type: 'datetime' },
+    { key: 'contact_type', value: (primary ? 'Primary' : null), type: 'badge', badgeModifier: 'secondary' },
+    { key: 'archived_on', value: (archived_on ? 'Archived' : null), type: 'badge' },
+  ].map(({ key, value, type, badgeModifier }) => {
+    if (!value) return
+    return assign({}, pickBy({ value, type, badgeModifier }), {
+      label: contactMetaItemLabels[key],
+    })
+  })
+
+  return {
     id,
     type: 'contact',
     name: `${first_name} ${last_name}`.trim(),
     isArchived: archived,
-    meta: [
-      {
-        label: 'Company',
-        value: get(company, 'name'),
-      },
-      {
-        label: 'Sector',
-        value: get(company_sector, 'name'),
-      },
-      {
-        label: 'Country',
-        value: get(address_country, 'name'),
-      },
-      {
-        label: 'Updated on',
-        type: 'datetime',
-        value: modified_on,
-      },
-    ],
+    meta: compact(metaItems),
   }
-
-  // Add Contact type as first badge to be displayed
-  if (primary) {
-    item.meta.push({
-      label: 'Contact type',
-      value: 'Primary',
-      type: 'badge',
-      badgeModifier: 'secondary',
-    })
-  }
-
-  if (archived_on) {
-    item.meta.push({
-      label: 'Status',
-      type: 'badge',
-      value: 'Archived',
-    })
-  }
-
-  if (company_uk_region) {
-    const countryIndex = findIndex(item.meta, ['label', 'Country'])
-    item.meta.splice((countryIndex + 1), 0, {
-      label: 'Uk Region',
-      value: company_uk_region,
-    })
-  }
-
-  return item
 }
 
 /**

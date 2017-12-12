@@ -7,12 +7,12 @@ const { getUid } = require('../../../helpers/uuid')
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
-defineSupportCode(({ Then, When }) => {
+defineSupportCode(({ Given, When, Then }) => {
   const Company = client.page.Company()
   const Search = client.page.Search()
   const Location = client.page.Location()
 
-  When(/^I navigate to the Company (.+)$/, async function (companyName) {
+  Given(/^I navigate to company fixture (.+)$/, async function (companyName) {
     const companyFixtureDetails = find(this.fixtures.company, ['name', companyName])
     set(this.state, 'company', assign({}, get(this.state, 'company'), companyFixtureDetails))
 
@@ -33,7 +33,7 @@ defineSupportCode(({ Then, When }) => {
     const tag = `@${pageName}`
 
     await Location
-      .section.detailsTabs
+      .section.localNav
       .waitForElementPresent(tag)
       .click(tag)
   })

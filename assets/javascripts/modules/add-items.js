@@ -109,7 +109,7 @@ const AddItems = {
     }
 
     const addButtonElement = this.document.createElement('button')
-    addButtonElement.className = `button button-secondary ${addButtonClass}`
+    addButtonElement.className = `button button--secondary ${addButtonClass}`
 
     const addButtonWrapper = this.document.createElement('p')
     addButtonWrapper.className = 'c-form-group c-form-group--compact'

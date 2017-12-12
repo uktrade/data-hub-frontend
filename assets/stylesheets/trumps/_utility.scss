@@ -35,15 +35,15 @@
 }
 
 .u-float-left {
-  @include media(tablet) {
-    float: left !important;
-  }
+  float: left !important;
 }
 
 .u-float-right {
-  @include media(tablet) {
-    float: right !important;
-  }
+  float: right !important;
+}
+
+.u-max-width--50 {
+  max-width: 50%;
 }
 
 .u-loading {
@@ -57,6 +57,33 @@
     z-index: 10;
     border-top: 2px solid $light-blue;
     border-bottom: 1px solid rgba($white, .6);
+  }
+}
+
+.u-icon-print {
+  background: url("../../images/icon--print.png") no-repeat 0 50%;
+  border: 0;
+  color: $link-colour;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0 0 0 28px;
+  text-decoration: underline;
+
+  &:hover {
+    color: $link-hover-colour;
+  }
+
+  &:active {
+    color: $link-active-colour;
+  }
+
+  &:visited {
+    color: $link-visited-colour;
+  }
+
+  @include device-pixel-ratio {
+    background-image: url("../../images/icon--print@2x.png");
+    background-size: 16px 18px;
   }
 }
 

@@ -10,7 +10,17 @@ Feature: Create a new company
     Then I see the success message
     And the company trading name is in the search results
     When the first search result is clicked
-    Then the company details are displayed
+    Then the Company summary details are displayed
+      | key                   | value                   |
+      | Business type         | company.businessType    |
+      | Primary address       | company.primaryAddress  |
+      | UK region             | company.ukRegion        |
+      | Headquarters          | company.headquarterType |
+      | Sector                | company.sector          |
+      | Website               | company.website         |
+      | Business description  | company.description     |
+      | Number of employees   | company.employeeRange   |
+      | Annual turnover       | company.turnoverRange   |
 
   @companies-save--uk-non-private-or-non-public-ltd-company
   Scenario: Create a UK non-private or non-public limited company
@@ -19,7 +29,17 @@ Feature: Create a new company
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked
-    Then the company details are displayed
+    Then the Company summary details are displayed
+      | key                   | value                   |
+      | Business type         | company.businessType    |
+      | Primary address       | company.primaryAddress  |
+      | UK region             | company.ukRegion        |
+      | Headquarters          | company.headquarterType |
+      | Sector                | company.sector          |
+      | Website               | company.website         |
+      | Business description  | company.description     |
+      | Number of employees   | company.employeeRange   |
+      | Annual turnover       | company.turnoverRange   |
 
   @companies-save--foreign
   Scenario: Create a foreign company
@@ -28,4 +48,14 @@ Feature: Create a new company
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked
-    Then the company details are displayed
+    Then the Company summary details are displayed
+      | key                   | value                            |
+      | Business type         | company.businessType             |
+      | Primary address       | company.primaryAddress           |
+      | Headquarters          | company.headquarterType          |
+      | Sector                | company.sector                   |
+      | Website               | company.website                  |
+      | Business description  | company.description              |
+      | Number of employees   | company.employeeRange            |
+      | Annual turnover       | company.turnoverRange            |
+      | Country               | company.registeredAddressCountry |

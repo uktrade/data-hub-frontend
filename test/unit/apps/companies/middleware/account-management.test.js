@@ -1,6 +1,5 @@
 const accountManagementData = require('../../../data/interactions/new-interaction.json')
 const { assign, set, filter } = require('lodash')
-const nock = require('nock')
 
 const config = require('~/config')
 const adviserFilters = require('~/src/apps/adviser/filters')
@@ -55,15 +54,6 @@ describe('Companies account management middleware', () => {
         { id: '5', name: 'Jim Smith', is_active: false },
       ],
     }
-
-    // TODO fix this when https://github.com/uktrade/data-hub-frontend/pull/1056 is merged
-    nock(config.apiRoot, {
-      reqheaders: {
-        'Authorization': `Bearer ${this.reqMock.session.token}`,
-      },
-    })
-      .get('/adviser/?limit=100000&offset=0')
-      .reply(200, this.activeInactiveAdviserData)
   })
 
   afterEach(() => {
@@ -72,6 +62,10 @@ describe('Companies account management middleware', () => {
 
   describe('#populateAccountManagementForm', () => {
     beforeEach(async () => {
+      this.nockScope = nock(config.apiRoot)
+        .get('/adviser/?limit=100000&offset=0')
+        .reply(200, this.activeInactiveAdviserData)
+
       this.currentAdviser = this.activeInactiveAdviserData.results[3]
       set(this.resMock, 'locals.interaction.dit_adviser', this.currentAdviser)
 
@@ -86,6 +80,10 @@ describe('Companies account management middleware', () => {
     it('should set the active advisers', () => {
       const expectedAdvisers = filter(this.activeInactiveAdviserData.results, 'is_active')
       expect(this.resMock.locals.advisers).to.deep.equal(expectedAdvisers)
+    })
+
+    it('nock mocked scope has been called', () => {
+      expect(this.nockScope.isDone()).to.be.true
     })
   })
 

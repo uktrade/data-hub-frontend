@@ -1,5 +1,3 @@
-const nock = require('nock')
-
 const config = require('~/config')
 const { search } = require('~/src/apps/search/services')
 
@@ -10,7 +8,6 @@ describe('Event repos', () => {
     this.sandbox = sinon.sandbox.create()
     this.authorisedRequestStub = this.sandbox.stub().resolves()
     this.searchSpy = this.sandbox.spy(search)
-
     this.repos = proxyquire('~/src/apps/events/repos', {
       '../../lib/authorised-request': this.authorisedRequestStub,
       '../search/services': {
@@ -85,7 +82,7 @@ describe('Event repos', () => {
           }],
         }
 
-        nock(config.apiRoot)
+        this.nockScope = nock(config.apiRoot)
           .post('/v3/search/event')
           .reply(200, this.eventCollection)
       })
@@ -106,6 +103,10 @@ describe('Event repos', () => {
             limit: 100000,
             isAggregation: false,
           })
+        })
+
+        it('nock mocked scope has been called', () => {
+          expect(this.nockScope.isDone()).to.be.true
         })
       })
     })

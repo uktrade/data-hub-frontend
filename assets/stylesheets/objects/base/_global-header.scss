@@ -4,6 +4,10 @@
 .global-header {
   background-color: $black;
   color: $white;
+
+  @media print {
+    color: $black;
+  }
 }
 
 .global-header__inner {

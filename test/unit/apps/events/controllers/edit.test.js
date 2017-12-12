@@ -1,5 +1,4 @@
 const { assign, find } = require('lodash')
-const nock = require('nock')
 
 const config = require('~/config')
 const eventData = require('~/test/unit/data/events/event.json')
@@ -51,8 +50,12 @@ describe('Event edit controller', () => {
       ],
     }
 
-    nock(config.apiRoot)
-      .get(`/adviser/?limit=100000&offset=0`)
+    this.nockScope = nock(config.apiRoot)
+      .get('/adviser/')
+      .query({
+        limit: 100000,
+        offset: 0,
+      })
       .reply(200, this.activeInactiveAdviserData)
   })
 
@@ -61,28 +64,32 @@ describe('Event edit controller', () => {
   })
 
   describe('#renderEditPage', () => {
-    it('should render the event page', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
+    context('when rendering the page', () => {
+      beforeEach(async () => {
+        await this.controller.renderEditPage(this.req, this.res, this.next)
+      })
 
-      expect(this.res.render).to.be.calledWith('events/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
-    })
+      it('should render the event page', () => {
+        expect(this.res.render).to.be.calledWith('events/views/edit')
+        expect(this.res.render).to.have.been.calledOnce
+      })
 
-    it('should render the event page with an event form', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
+      it('should render the event page with an event form', () => {
+        const actual = this.res.render.getCall(0).args[1].eventForm
 
-      const actual = this.res.render.getCall(0).args[1].eventForm
+        expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
+      })
 
-      expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
-    })
+      it('should prepopulate the team hosting the event with the current user team', () => {
+        const eventForm = this.res.render.getCall(0).args[1].eventForm
+        const actual = find(eventForm.children, { name: 'lead_team' }).value
 
-    it('should prepopulate the team hosting the event with the current user team', async () => {
-      await this.controller.renderEditPage(this.req, this.res, this.next)
+        expect(actual).to.equal(currentUserTeam)
+      })
 
-      const eventForm = this.res.render.getCall(0).args[1].eventForm
-      const actual = find(eventForm.children, { name: 'lead_team' }).value
-
-      expect(actual).to.equal(currentUserTeam)
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
     })
 
     context('when adding an event', () => {
@@ -112,6 +119,10 @@ describe('Event edit controller', () => {
         const formOrganizerFieldOptions = getOrganiserFieldOptions(this.res)
         expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
     })
 
     context('when editing an event', () => {
@@ -124,6 +135,7 @@ describe('Event edit controller', () => {
 
         expect(this.res.breadcrumb.firstCall).to.be.calledWith('name', '/events/123')
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Edit event')
+        expect(this.nockScope.isDone()).to.be.true
       })
 
       context('and when the organiser is active', () => {
@@ -154,6 +166,10 @@ describe('Event edit controller', () => {
 
           const formOrganizerFieldOptions = getOrganiserFieldOptions(this.res)
           expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
+        })
+
+        it('nock mocked scope has been called', () => {
+          expect(this.nockScope.isDone()).to.be.true
         })
       })
     })
@@ -190,6 +206,7 @@ describe('Event edit controller', () => {
         }
 
         expect(actualErrors).to.deep.equal(expectedErrors)
+        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

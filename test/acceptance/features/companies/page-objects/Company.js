@@ -5,9 +5,17 @@ const {
   getMetaListItemValueSelector,
   getButtonWithText,
   getDetailsTableRowValue,
+  getSelectorForElementWithText,
 } = require('../../../helpers/selectors')
-const { appendUid } = require('../../../helpers/uuid')
+const { appendUid, getUid } = require('../../../helpers/uuid')
 const { getAddress } = require('../../../helpers/address')
+
+const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
+  return getSelectorForElementWithText(sectionTitle, {
+    el: '//h2',
+    child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
+  })
+}
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -45,6 +53,8 @@ module.exports = {
     collectionResultsRegisteredAddressLabel: '.c-entity-list li:first-child .c-entity__content .c-meta-list > div:last-child .c-meta-list__item-label',
     collectionResultsRegionLabel: '.c-entity-list li:first-child .c-entity__badges .c-meta-list > div:last-child .c-meta-list__item-label',
     xhrTargetElement: '#xhr-outlet',
+    accountManagementEditButton: getSelectorForDetailsSectionEditButton('Account management'),
+    exportsEditButton: getSelectorForDetailsSectionEditButton('Exports'),
   },
   commands: [
     {
@@ -141,6 +151,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
+                  uniqueSearchTerm: getUid(company.name),
                 }))
               })
 
@@ -251,6 +262,7 @@ module.exports = {
                       heading: companyStep2.name,
                       primaryAddress,
                       country,
+                      uniqueSearchTerm: getUid(companyStep2.name),
                     }))
 
                     done()
@@ -345,6 +357,7 @@ module.exports = {
                 callback(assign({}, company, {
                   header: company.name,
                   primaryAddress: getAddress(parentCompany),
+                  uniqueSearchTerm: getUid(company.tradingName),
                 }))
               })
           })
@@ -357,6 +370,80 @@ module.exports = {
           .setValue('@collectionsCompanyNameInput', [companyName, this.api.Keys.ENTER]) // press enter
           .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
           .waitForElementVisible('@xhrTargetElement')
+      },
+
+      updateAccountManagement (callback) {
+        const accountManagement = {}
+
+        this
+          .waitForElementPresent('@accountManagementEditButton')
+          .click('@accountManagementEditButton')
+
+        this
+          .section.accountManagementForm
+          .waitForElementPresent('@oneListAccountOwner')
+          .api.perform((done) => {
+            this
+              .section.accountManagementForm
+              .getListOption('@oneListAccountOwner', (oneListAccountOwner) => {
+                accountManagement.oneListAccountOwner = oneListAccountOwner
+                done()
+              })
+          })
+          .perform(() => {
+            for (const key in accountManagement) {
+              if (accountManagement[key]) {
+                this
+                  .section.accountManagementForm
+                  .setValue(`@${key}`, accountManagement[key])
+              }
+            }
+          })
+          .perform(() => {
+            this
+              .section.accountManagementForm
+              .waitForElementPresent('@saveButton')
+              .click('@saveButton')
+
+            callback(accountManagement)
+          })
+      },
+
+      updateExports (callback) {
+        const exports = {}
+
+        this
+          .waitForElementPresent('@exportsEditButton')
+          .click('@exportsEditButton')
+
+        this
+          .section.exportsForm
+          .waitForElementPresent('@exportWinCategory')
+          .api.perform((done) => {
+            this
+              .section.exportsForm
+              .getListOption('@exportWinCategory', (exportWinCategory) => {
+                exports.exportWinCategory = exportWinCategory
+                done()
+              })
+          })
+          .perform(() => {
+            for (const key in exports) {
+              if (exports[key]) {
+                this
+                  .section.exportsForm
+                  .setValue(`@${key}`, exports[key])
+              }
+            }
+          })
+          .perform(() => {
+            this
+              .section.exportsForm
+              .waitForElementPresent('@saveButton')
+              .click('@saveButton')
+
+            callback(exports)
+          })
       },
     },
   ],
@@ -385,16 +472,21 @@ module.exports = {
     companyDetails: {
       selector: '.table--key-value',
       elements: {
-        businessType: getDetailsTableRowValue('Business type'),
-        primaryAddress: getDetailsTableRowValue('Primary address'),
         ukRegion: getDetailsTableRowValue('UK region'),
-        headquarters: getDetailsTableRowValue('Headquarters'),
-        sector: getDetailsTableRowValue('Sector'),
-        website: getDetailsTableRowValue('Website'),
-        businessDescription: getDetailsTableRowValue('Business description'),
-        numberOfEmployees: getDetailsTableRowValue('Number of employees'),
-        annualTurnover: getDetailsTableRowValue('Annual turnover'),
-        cdmsReference: getDetailsTableRowValue('CDMS reference'),
+      },
+    },
+    accountManagementForm: {
+      selector: 'form',
+      elements: {
+        oneListAccountOwner: '#field-one_list_account_owner',
+        saveButton: getButtonWithText('Save'),
+      },
+    },
+    exportsForm: {
+      selector: 'form',
+      elements: {
+        exportWinCategory: '#field-export_experience_category',
+        saveButton: getButtonWithText('Update'),
       },
     },
   },
