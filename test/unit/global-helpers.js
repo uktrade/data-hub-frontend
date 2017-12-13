@@ -1,4 +1,4 @@
-afterEach(function () {
+afterEach(() => {
   sandbox.restore()
   nock.cleanAll()
 })

@@ -5,31 +5,31 @@ const {
   getDataLabels,
 } = require('~/src/lib/controller-utils')
 
-describe('isBlank', function () {
-  it('should detects undefined variables', function () {
+describe('isBlank', () => {
+  it('should detects undefined variables', () => {
     let e
     expect(isBlank(e)).to.be.true
   })
-  it('should detect passing an unknown key', function () {
+  it('should detect passing an unknown key', () => {
     let e = {}
     expect(isBlank(e.x)).to.be.true
   })
-  it('should detect an empty string', function () {
+  it('should detect an empty string', () => {
     expect(isBlank('')).to.be.true
   })
-  it('should detect undefined', function () {
+  it('should detect undefined', () => {
     expect(isBlank(undefined)).to.be.true
   })
-  it('should know when it is sent a valid string', function () {
+  it('should know when it is sent a valid string', () => {
     expect(isBlank('test')).to.be.false
   })
-  it('should know when it is sent a valid object', function () {
+  it('should know when it is sent a valid object', () => {
     expect(isBlank({ x: 1 })).to.be.false
   })
 })
 
-describe('transformV2Errors: Formatting V2 service delivery endpoint errors', function () {
-  it('Should warn if the Service Delivery triple does not exist', function () {
+describe('transformV2Errors: Formatting V2 service delivery endpoint errors', () => {
+  it('Should warn if the Service Delivery triple does not exist', () => {
     const source = [
       {
         'detail': 'This combination of service and service provider does not exist.',
@@ -42,7 +42,7 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
     expect(actual.Alert).to.exist
     expect(actual.Alert).to.equal('This combination of service and service provider does not exist.')
   })
-  it('Should return multiple errors when presented with an array of errors', function () {
+  it('Should return multiple errors when presented with an array of errors', () => {
     const source = [
       {
         'detail': 'Required',
@@ -114,7 +114,7 @@ describe('transformV2Errors: Formatting V2 service delivery endpoint errors', fu
 
     expect(transformedErrors).to.deep.equal(expectedErrors)
   })
-  it('Should match keys not specially defined', function () {
+  it('Should match keys not specially defined', () => {
     const source = [
       {
         'detail': "{'data': {'type': 'Foo'}} has no key id",

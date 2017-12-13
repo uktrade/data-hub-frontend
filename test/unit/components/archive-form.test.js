@@ -28,10 +28,10 @@ const HTML = `
   </form>
 `
 const event = {
-  preventDefault: function () {},
+  preventDefault: () => {},
 }
 
-describe('archive form control', function () {
+describe('archive form control', () => {
   beforeEach(() => {
     const { window } = new JSDOM(HTML)
     this.document = window.document

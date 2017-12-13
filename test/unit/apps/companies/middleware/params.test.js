@@ -2,7 +2,7 @@ const companiesHouseCompany = require('~/test/unit/data/companies/companies-hous
 const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
 const companiesHouseRecord = require('~/test/unit/data/companies/companies-house.json')
 
-describe('Companies form middleware', function () {
+describe('Companies form middleware', () => {
   beforeEach(() => {
     this.nextSpy = sandbox.spy()
     this.getDitCompanyStub = sandbox.stub()

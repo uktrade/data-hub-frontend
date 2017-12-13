@@ -3,7 +3,7 @@ const { render } = require('~/test/unit/nunjucks')
 const { expectField, expectRadioField, expectHiddenField } = require('~/test/unit/form-helpers')
 const contactLabels = require('~/src/apps/contacts/labels')
 
-describe('Contact controller, edit', function () {
+describe('Contact controller, edit', () => {
   let contactEditController
   let getDitCompanyStub
   let saveContactFormStub
@@ -14,7 +14,7 @@ describe('Contact controller, edit', function () {
     throw Error('error')
   }
 
-  beforeEach(function () {
+  beforeEach(() => {
     company = {
       id: '1234',
       name: 'Fred ltd.',
@@ -24,7 +24,7 @@ describe('Contact controller, edit', function () {
     getContactAsFormDataStub = sinon.stub().returns({ id: '1234', name: 'Thing' })
     saveContactFormStub = sinon.stub().returns({ id: '1234', first_name: 'Fred', last_name: 'Smith' })
 
-    this.breadcrumbStub = function () {
+    this.breadcrumbStub = () => {
       return this
     }
 
@@ -45,8 +45,8 @@ describe('Contact controller, edit', function () {
     })
   })
 
-  describe('get', function () {
-    describe('existing contact', function () {
+  describe('get', () => {
+    describe('existing contact', () => {
       let req
       let res
       let contact
@@ -55,7 +55,7 @@ describe('Contact controller, edit', function () {
         throw error
       }
 
-      beforeEach(function () {
+      beforeEach(() => {
         contact = {
           id: '12651151-2149-465e-871b-ac45bc568a62',
           created_on: '2017-02-14T14:49:17',
@@ -106,7 +106,7 @@ describe('Contact controller, edit', function () {
       })
 
       it('should create a form based on the existing contact', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(getContactAsFormDataStub).to.have.been.calledWith(contact)
           expect(res.locals).to.have.property('formData')
           done()
@@ -114,7 +114,7 @@ describe('Contact controller, edit', function () {
         contactEditController.editDetails(req, res, next)
       })
       it('should include an expanded company', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, contact.company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
@@ -122,14 +122,14 @@ describe('Contact controller, edit', function () {
         contactEditController.editDetails(req, res, next)
       })
       it('should provide a back link to the contact', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(res.locals.backUrl).to.equal('/contacts/12651151-2149-465e-871b-ac45bc568a62')
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
     })
-    describe('new contact for company', function () {
+    describe('new contact for company', () => {
       let req
       let res
 
@@ -137,7 +137,7 @@ describe('Contact controller, edit', function () {
         throw error
       }
 
-      beforeEach(function () {
+      beforeEach(() => {
         req = {
           session: {
             token: '321',
@@ -154,14 +154,14 @@ describe('Contact controller, edit', function () {
       })
 
       it('should return a form pre-populated with just the company id', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(res.locals.formData).to.deep.equal({ company: company.id })
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
       it('should include an expanded company', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
@@ -169,14 +169,14 @@ describe('Contact controller, edit', function () {
         contactEditController.editDetails(req, res, next)
       })
       it('should provide a back link to the company', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(res.locals.backUrl).to.equal('/companies/1234/contacts')
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
     })
-    describe('handle editing a form post that produced errors', function () {
+    describe('handle editing a form post that produced errors', () => {
       let req
       let body
       let res
@@ -184,7 +184,7 @@ describe('Contact controller, edit', function () {
         throw error
       }
 
-      beforeEach(function () {
+      beforeEach(() => {
         body = {
           id: '222',
           first_name: 'Fred',
@@ -207,14 +207,14 @@ describe('Contact controller, edit', function () {
         }
       })
       it('should use the pre posted form for edit', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(res.locals.formData).to.deep.equal(body)
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
       it('should include an expanded company', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(req.session.token, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
@@ -222,23 +222,23 @@ describe('Contact controller, edit', function () {
         contactEditController.editDetails(req, res, next)
       })
       it('should provide a back link to the company', function (done) {
-        res.render = function () {
+        res.render = () => {
           expect(res.locals.backUrl).to.equal('/companies/1234/contacts')
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
     })
-    it('common details', function () {
+    it('common details', () => {
       it('should include country options for drop down')
       it('should include labels')
       it('should include cross script token')
     })
   })
-  describe('render', function () {
+  describe('render', () => {
     const countryOptions = [{ id: '134', name: 'United Kingdom' }]
     let locals
-    beforeEach(function () {
+    beforeEach(() => {
       locals = {
         formData: {
           id: '321',
@@ -266,7 +266,7 @@ describe('Contact controller, edit', function () {
         contactLabels,
       }
     })
-    it('should render all the required fields on the page', function () {
+    it('should render all the required fields on the page', () => {
       return render('../../src/apps/contacts/views/edit.njk', locals)
         .then((document) => {
           expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
@@ -291,13 +291,13 @@ describe('Contact controller, edit', function () {
         })
     })
   })
-  describe('save', function () {
+  describe('save', () => {
     let body
     let flashStub
     let req
     let res
 
-    beforeEach(function () {
+    beforeEach(() => {
       flashStub = sinon.stub()
       res = {
         locals: {},
@@ -319,7 +319,7 @@ describe('Contact controller, edit', function () {
       req.body = body
     })
     it('should save the form data to the back end', function (done) {
-      res.redirect = function () {
+      res.redirect = () => {
         expect(saveContactFormStub).to.be.calledWith(req.session.token, body)
         done()
       }
