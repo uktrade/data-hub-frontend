@@ -41,18 +41,17 @@ router
 router.use('/:contactId', getCommon, setLocalNav(LOCAL_NAV))
 
 router.get('/:contactId', redirectToFirstNavItem)
-router.get('/:contactId/details', getCommon, getDetails)
+router.get('/:contactId/details', getDetails)
 
 router
   .route('/:contactId/edit')
-  .get(getCommon, editDetails)
-  .post(getCommon, postDetails)
+  .get(editDetails)
+  .post(postDetails)
 
 router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)
 
 router.get('/:contactId/interactions',
-  getCommon,
   setInteractionsReturnUrl,
   getInteractionsRequestBody,
   getInteractionCollection,
@@ -60,10 +59,10 @@ router.get('/:contactId/interactions',
   renderInteractions
 )
 
-router.get('/:contactId/audit', getCommon, getAudit)
+router.get('/:contactId/audit', getAudit)
 
 router.get('/:contactId/documents', renderDocuments)
 
-router.use('/:contactId', getCommon, setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+router.use('/:contactId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
 module.exports = router
