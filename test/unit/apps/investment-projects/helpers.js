@@ -33,10 +33,6 @@ describe('buildIncompleteFormList', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   context('without arguments ', () => {
     it('should provide an empty array', () => {
       const expectedLinkObjects = buildIncompleteFormList()

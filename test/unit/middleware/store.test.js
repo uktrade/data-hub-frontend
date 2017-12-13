@@ -7,10 +7,6 @@ describe('Store middleware', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('store middleware sets up correctly', () => {
     it('req should have expected store methods', () => {
       this.storeMiddleware(this.reqMock, {}, this.nextSpy)

@@ -15,10 +15,6 @@ describe('OMIS list middleware', () => {
     this.controller = require('~/src/apps/omis/apps/list/middleware')
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('Results', () => {
     beforeEach(() => {
       this.nockScope = nock(config.apiRoot)

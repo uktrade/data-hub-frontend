@@ -26,10 +26,6 @@ describe('Investment team details controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   it('should get formatted project management data', (done) => {
     const data = Object.assign({}, investmentData)
     this.controller.getDetailsHandler(this.reqStub, {

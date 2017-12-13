@@ -24,10 +24,6 @@ describe('Companies form middleware', function () {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('getCompany', () => {
     context('when the API returns a company without companies house data', () => {
       beforeEach(async () => {

@@ -19,10 +19,6 @@ describe('Search transformers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#transformApiResponseToSearchCollection', () => {
     it('should return a function when high-order function is called without arguments', () => {
       expect(this.transformers.transformApiResponseToSearchCollection()).to.be.a('function')

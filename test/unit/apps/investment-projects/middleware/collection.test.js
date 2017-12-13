@@ -12,10 +12,6 @@ describe('Investment projects collection middleware', () => {
     this.controller = require('~/src/apps/investment-projects/middleware/collection')
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getInvestmentProjectsCollection', () => {
     beforeEach(async () => {
       this.nockScope = nock(config.apiRoot)

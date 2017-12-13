@@ -34,10 +34,6 @@ describe('Investment form middleware - project magement', () => {
         })
     })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
-
     it('should populate the form state with the existing project management team if there is data', (done) => {
       const expectedFormState = {
         project_manager: investmentData.project_manager.id,
@@ -137,10 +133,6 @@ describe('Investment form middleware - project magement', () => {
         })
       })
 
-      afterEach(() => {
-        this.sandbox.restore()
-      })
-
       it('updates the investment data', (done) => {
         this.controller.handleFormPost({
           session: {
@@ -185,10 +177,6 @@ describe('Investment form middleware - project magement', () => {
             updateInvestment: this.updateInvestmentStub,
           },
         })
-      })
-
-      afterEach(() => {
-        this.sandbox.restore()
       })
 
       it('sets form error data for the following controllers if form error', (done) => {

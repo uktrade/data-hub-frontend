@@ -44,10 +44,6 @@ describe('Company controller, archive', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('archiveCompany()', () => {
     context('when no reason is supplied', () => {
       beforeEach(() => {

@@ -33,10 +33,6 @@ describe('Search Controller #renderSearchResults', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   context('for invalid paths', () => {
     it('should redirect to index', async () => {
       this.req.params.searchPath = 'dummy-path'

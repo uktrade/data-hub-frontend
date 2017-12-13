@@ -21,10 +21,6 @@ describe('Investment evaluation controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderEvaluationPage', () => {
     it('should return evaluation details', (done) => {
       this.controller.renderEvaluationPage({

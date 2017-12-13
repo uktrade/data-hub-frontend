@@ -18,10 +18,6 @@ describe('OMIS EditController', () => {
     this.controller = new this.ControllerClass({ route: '/' })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('successHandler()', () => {
     beforeEach(() => {
       this.resetSpy = sandbox.spy()

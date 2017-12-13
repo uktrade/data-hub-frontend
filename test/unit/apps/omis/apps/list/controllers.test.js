@@ -30,10 +30,6 @@ describe('OMIS list controllers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('renderCollectionList()', () => {
     beforeEach(() => {
       this.controller.renderCollectionList(this.req, this.res)

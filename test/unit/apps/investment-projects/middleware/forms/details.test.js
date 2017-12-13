@@ -55,10 +55,6 @@ describe('investment details middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#handleFormPost', () => {
     context('when saving a new investment project', () => {
       beforeEach(async () => {

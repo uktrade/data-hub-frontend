@@ -24,10 +24,6 @@ describe('OMIS View controllers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('renderWorkOrder()', () => {
     beforeEach(() => {
       this.breadcrumbSpy = sandbox.stub().returnsThis()

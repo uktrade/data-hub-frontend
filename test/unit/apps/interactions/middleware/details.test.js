@@ -97,10 +97,6 @@ describe('Interaction details middleware', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#postDetails', () => {
     context('when all fields are valid for creating', () => {
       beforeEach(async () => {

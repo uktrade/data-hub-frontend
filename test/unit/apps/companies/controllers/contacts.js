@@ -34,10 +34,6 @@ describe('Company contact list controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderContacts', () => {
     it('should render collection page with locals', () => {
       this.controller.renderContacts(this.reqMock, this.resMock, this.next)

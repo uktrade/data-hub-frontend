@@ -19,11 +19,6 @@ describe('XHR', () => {
     XHR = proxyquire('~/assets/javascripts/lib/xhr', {
       'history': { createBrowserHistory: () => history },
     })
-    this.sandbox = sinon.sandbox.create()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('updateOutlet', () => {

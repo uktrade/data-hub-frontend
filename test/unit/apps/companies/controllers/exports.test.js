@@ -45,10 +45,6 @@ describe('Company export controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('renderExports()', () => {
     beforeEach(() => {
       this.controller.renderExports(this.reqMock, this.resMock, this.nextSpy)

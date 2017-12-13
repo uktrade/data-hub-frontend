@@ -71,10 +71,6 @@ describe('Company export controller', () => {
     this.resMock = this.buildRes({})
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('getBusinessTypeLabel()', () => {
     it('should handle UK limited company', () => {
       const label = this.controller.getBusinessTypeLabel('limited company', false, null)

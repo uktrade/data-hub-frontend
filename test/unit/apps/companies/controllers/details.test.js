@@ -20,10 +20,6 @@ describe('Companies details controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderDetails', () => {
     context('when the company contains companes house data', () => {
       beforeEach(() => {

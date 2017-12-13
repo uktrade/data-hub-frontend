@@ -19,10 +19,6 @@ describe('user middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   context('if user already exists on session', () => {
     beforeEach(() => {
       this.reqMock = {

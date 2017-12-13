@@ -9,10 +9,6 @@ describe('OMIS FormController', () => {
     this.controller = new Controller({ route: '/' })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('configure()', () => {
     beforeEach(() => {
       this.breadcrumbSpy = sandbox.spy()

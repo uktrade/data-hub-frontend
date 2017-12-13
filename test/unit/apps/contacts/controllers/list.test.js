@@ -27,10 +27,6 @@ describe('Contact list controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderContactList', () => {
     it('should render collection page with locals', () => {
       this.controller.renderContactList(this.req, this.res, this.next)

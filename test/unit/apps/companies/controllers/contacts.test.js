@@ -22,10 +22,6 @@ describe('Company contacts controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('renderContacts()', () => {
     describe('all scenarios', () => {
       beforeEach(() => {

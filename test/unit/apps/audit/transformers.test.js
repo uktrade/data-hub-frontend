@@ -16,10 +16,6 @@ describe('Audit transformers', () => {
     this.transformer = this.transformers.transformAuditLogToListItem(contactAuditLabels)
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   it('should return a formatted audit history item when there are changes', () => {
     const transformedItem = this.transformer(auditLog.results[0])
 

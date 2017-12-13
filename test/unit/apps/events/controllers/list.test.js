@@ -66,10 +66,6 @@ describe('Event list controller', () => {
       .reply(200, { results: advisers })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderEventList', () => {
     beforeEach(async () => {
       this.eventFiltersFieldsStub.returns(standardMacros)

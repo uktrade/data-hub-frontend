@@ -15,10 +15,6 @@ describe('OMIS list transformers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#transformOrderToListItem', () => {
     const simpleOrder = require('~/test/unit/data/omis/simple-order.json')
 
