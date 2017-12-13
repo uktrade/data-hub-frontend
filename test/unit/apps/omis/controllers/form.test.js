@@ -4,9 +4,8 @@ const Controller = require('~/src/apps/omis/controllers/form')
 
 describe('OMIS FormController', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.stub()
-    this.redirectSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.stub()
+    this.redirectSpy = sandbox.spy()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -16,7 +15,7 @@ describe('OMIS FormController', () => {
 
   describe('configure()', () => {
     beforeEach(() => {
-      this.breadcrumbSpy = this.sandbox.spy()
+      this.breadcrumbSpy = sandbox.spy()
       this.reqMock = Object.assign({}, globalReq, {
         form: {
           options: {},
@@ -164,7 +163,7 @@ describe('OMIS FormController', () => {
 
     context('when form submission is a save', () => {
       it('should call next()', () => {
-        const saveValuesSpy = this.sandbox.spy()
+        const saveValuesSpy = sandbox.spy()
         FormController.prototype.saveValues = saveValuesSpy
 
         this.controller.process(this.reqMock, this.resMock, this.nextSpy)
@@ -178,7 +177,7 @@ describe('OMIS FormController', () => {
   describe('saveValues()', () => {
     context('when form submission is a save', () => {
       beforeEach(() => {
-        this.saveValuesSpy = this.sandbox.spy()
+        this.saveValuesSpy = sandbox.spy()
         this.reqMock = Object.assign({}, globalReq, {
           form: {
             values: {
@@ -232,7 +231,7 @@ describe('OMIS FormController', () => {
 
   describe('getErrors()', () => {
     beforeEach(() => {
-      this.getErrorsStub = this.sandbox.stub()
+      this.getErrorsStub = sandbox.stub()
 
       FormController.prototype.getErrors = this.getErrorsStub
     })
@@ -301,9 +300,9 @@ describe('OMIS FormController', () => {
 
   describe('errorHandler()', () => {
     beforeEach(() => {
-      this.errorHandlerSpy = this.sandbox.spy()
-      this.breadcrumbSpy = this.sandbox.stub().returnsThis()
-      this.renderSpy = this.sandbox.spy()
+      this.errorHandlerSpy = sandbox.spy()
+      this.breadcrumbSpy = sandbox.stub().returnsThis()
+      this.renderSpy = sandbox.spy()
       this.resMock = Object.assign({}, globalRes, {
         redirect: this.redirectSpy,
         breadcrumb: this.breadcrumbSpy,
@@ -329,7 +328,7 @@ describe('OMIS FormController', () => {
 
     describe('when it returns missing prereq error', () => {
       beforeEach(() => {
-        this.getStub = this.sandbox.stub()
+        this.getStub = sandbox.stub()
         this.errorMock = new Error()
         this.errorMock.code = 'MISSING_PREREQ'
         this.reqMock = Object.assign({}, globalReq, {

@@ -6,22 +6,20 @@ const subscribersMock = require('~/test/unit/data/omis/subscribers')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.setCompanySpy = this.sandbox.spy()
-    this.loggerErrorSpy = this.sandbox.spy()
-    this.getContactStub = this.sandbox.stub()
-    this.getAssigneesStub = this.sandbox.stub()
-    this.getSubscribersStub = this.sandbox.stub()
-    this.previewQuoteStub = this.sandbox.stub()
-    this.getQuoteStub = this.sandbox.stub()
-    this.getInvoiceStub = this.sandbox.stub()
-    this.getPaymentsStub = this.sandbox.stub()
-    this.createQuoteStub = this.sandbox.stub()
-    this.cancelQuoteStub = this.sandbox.stub()
-    this.transformPaymentToViewStub = this.sandbox.stub().returnsArg(0)
-    this.flashSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
+    this.setCompanySpy = sandbox.spy()
+    this.loggerErrorSpy = sandbox.spy()
+    this.getContactStub = sandbox.stub()
+    this.getAssigneesStub = sandbox.stub()
+    this.getSubscribersStub = sandbox.stub()
+    this.previewQuoteStub = sandbox.stub()
+    this.getQuoteStub = sandbox.stub()
+    this.getInvoiceStub = sandbox.stub()
+    this.getPaymentsStub = sandbox.stub()
+    this.createQuoteStub = sandbox.stub()
+    this.cancelQuoteStub = sandbox.stub()
+    this.transformPaymentToViewStub = sandbox.stub().returnsArg(0)
+    this.flashSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.resMock = {
       locals: {

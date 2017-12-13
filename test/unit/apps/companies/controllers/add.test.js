@@ -20,7 +20,7 @@ const mockMetadataRepository = {
   ],
 }
 
-describe('Company add controller', function () {
+describe('Company add controller', () => {
   let searchLimitedCompaniesStub
   let getDisplayCHStub
   let getCHCompanyStub

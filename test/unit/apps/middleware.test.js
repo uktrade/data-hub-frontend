@@ -1,13 +1,7 @@
 describe('Apps middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.middleware = require('~/src/apps/middleware')
-
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('setLocalNav()', () => {
@@ -82,7 +76,7 @@ describe('Apps middleware', () => {
     }]
 
     it('should redirect to the first item', () => {
-      const redirectMock = this.sandbox.spy()
+      const redirectMock = sandbox.spy()
       const resMock = this.reqMock = Object.assign({}, globalRes, {
         redirect: redirectMock,
         locals: {
@@ -99,7 +93,7 @@ describe('Apps middleware', () => {
   describe('setDefaultQuery()', () => {
     beforeEach(() => {
       this.resMock = {
-        redirect: this.sandbox.spy(),
+        redirect: sandbox.spy(),
       }
     })
 

@@ -241,8 +241,7 @@ describe('Company repository', () => {
 
   describe('Update company', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.authorisedRequestStub = this.sandbox.stub().resolves(companyData)
+      this.authorisedRequestStub = sandbox.stub().resolves(companyData)
       this.repo = proxyquire('~/src/apps/companies/repos', {
         '../../lib/authorised-request': this.authorisedRequestStub,
         '../../../config': {

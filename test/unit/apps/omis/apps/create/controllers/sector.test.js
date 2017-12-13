@@ -19,8 +19,7 @@ const Controller = proxyquire('~/src/apps/omis/apps/create/controllers/sector', 
 
 describe('OMIS create sector controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -40,7 +39,7 @@ describe('OMIS create sector controller', () => {
         },
       })
 
-      this.sandbox.spy(FormController.prototype, 'configure')
+      sandbox.spy(FormController.prototype, 'configure')
     })
 
     it('should set the list of markets', () => {
@@ -82,7 +81,7 @@ describe('OMIS create sector controller', () => {
         },
       })
 
-      this.sandbox.stub(FormController.prototype, 'saveValues')
+      sandbox.stub(FormController.prototype, 'saveValues')
     })
 
     context('when using company\'s sector', () => {

@@ -4,7 +4,6 @@ const companiesHouseSearchResults = require('~/test/unit/data/companies/companie
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.mockCompanyResults = {
       count: 3,
       results: [
@@ -13,7 +12,7 @@ describe('Company collection middleware', () => {
         { id: '333', name: 'C' },
       ],
     }
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
     this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
     })
@@ -96,8 +95,8 @@ describe('Company collection middleware', () => {
   describe('#getLimitedCompaniesCollection', () => {
     context('when search returns results', () => {
       beforeEach(async () => {
-        this.searchStub = this.sandbox.stub().resolves(companiesHouseSearchResults)
-        this.transformerStub = this.sandbox.stub().returns({
+        this.searchStub = sandbox.stub().resolves(companiesHouseSearchResults)
+        this.transformerStub = sandbox.stub().returns({
           id: '1234',
           name: 'Freds',
           meta: [],

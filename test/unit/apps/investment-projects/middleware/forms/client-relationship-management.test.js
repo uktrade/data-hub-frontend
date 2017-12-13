@@ -10,9 +10,8 @@ const { clientRelationshipManagementLabels } = require('~/src/apps/investment-pr
 describe('Investment form middleware - client relationship management', () => {
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-      this.nextSpy = this.sandbox.spy()
+      this.updateCompanyStub = sandbox.stub().resolves(companyData)
+      this.nextSpy = sandbox.spy()
       this.resMock = {
         locals: {
           form: {},
@@ -174,10 +173,9 @@ describe('Investment form middleware - client relationship management', () => {
 
     describe('post with no errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-        this.updateInvestmentStub = this.sandbox.stub().resolves(advisorData)
-        this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub().resolves(advisorData)
+        this.updateCompanyStub = sandbox.stub().resolves(companyData)
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }
@@ -244,11 +242,9 @@ describe('Investment form middleware - client relationship management', () => {
 
     describe('When a form is posted with errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-
-        this.updateInvestmentStub = this.sandbox.stub()
-        this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub()
+        this.updateCompanyStub = sandbox.stub().resolves(companyData)
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }

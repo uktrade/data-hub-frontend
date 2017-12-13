@@ -1,9 +1,7 @@
 const { assign, merge } = require('lodash')
 
-describe('OMIS list transformers', function () {
+describe('OMIS list transformers', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.transformers = proxyquire('~/src/apps/omis/transformers', {
       './constants': {
         ORDER_STATES: [

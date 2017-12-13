@@ -33,12 +33,11 @@ const expectedBody = {
 
 describe('Event details middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.saveEventStub = this.sandbox.stub()
-    this.fetchEventStub = this.sandbox.stub()
-    this.getAdvisersStub = this.sandbox.stub()
-    this.transformEventFormBodyToApiRequestStub = this.sandbox.stub()
-    this.transformEventResponseToViewRecordStub = this.sandbox.stub()
+    this.saveEventStub = sandbox.stub()
+    this.fetchEventStub = sandbox.stub()
+    this.getAdvisersStub = sandbox.stub()
+    this.transformEventFormBodyToApiRequestStub = sandbox.stub()
+    this.transformEventResponseToViewRecordStub = sandbox.stub()
     this.middleware = proxyquire('~/src/apps/events/middleware/details', {
       '../repos': {
         saveEvent: this.saveEventStub.resolves({ id: '1' }),
@@ -59,20 +58,16 @@ describe('Event details middleware', () => {
       session: {
         token: 'abcd',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
       body: assign({}, eventData),
     }
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {},
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#postDetails', () => {

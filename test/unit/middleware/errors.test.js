@@ -7,9 +7,8 @@ const isDev = true
 
 describe('Error Middleware Test', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.winstonErrorStub = this.sandbox.stub()
-    this.winstonInfoStub = this.sandbox.stub()
+    this.winstonErrorStub = sandbox.stub()
+    this.winstonInfoStub = sandbox.stub()
 
     this.errorsStub = (isDev) => {
       return proxyquire('~/src/middleware/errors', {
@@ -24,13 +23,9 @@ describe('Error Middleware Test', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('notFound method', () => {
     it('should log a 404 and drop through to next middleware', () => {
-      const nextSpy = this.sandbox.spy()
+      const nextSpy = sandbox.spy()
       const mockResponse = {
         locals: {
           BREADCRUMBS: [],
@@ -48,9 +43,9 @@ describe('Error Middleware Test', () => {
 
   describe('catchAll method', () => {
     beforeEach(() => {
-      this.nextSpy = this.sandbox.spy()
-      this.statusStub = this.sandbox.stub().returnsThis()
-      this.renderSpy = this.sandbox.spy()
+      this.nextSpy = sandbox.spy()
+      this.statusStub = sandbox.stub().returnsThis()
+      this.renderSpy = sandbox.spy()
       this.error = new Error('A mock error')
 
       this.responseMock = {

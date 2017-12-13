@@ -7,11 +7,9 @@ const metadataMock = {
   countryOptions: [],
 }
 
-describe('Companies form middleware', function () {
+describe('Companies form middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
     this.reqMock = {
       query: {},
     }
@@ -86,10 +84,10 @@ describe('Companies form middleware', function () {
     }
 
     beforeEach(() => {
-      this.flashSpy = this.sandbox.spy()
-      this.breadcrumbStub = this.sandbox.stub().returnsThis()
-      this.redirectSpy = this.sandbox.spy()
-      this.saveCompanyFormStub = this.sandbox.stub()
+      this.flashSpy = sandbox.spy()
+      this.breadcrumbStub = sandbox.stub().returnsThis()
+      this.redirectSpy = sandbox.spy()
+      this.saveCompanyFormStub = sandbox.stub()
 
       this.reqMock = {
         body,

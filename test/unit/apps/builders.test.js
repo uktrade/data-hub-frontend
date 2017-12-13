@@ -277,9 +277,8 @@ describe('Global builders', () => {
   describe('#buildFormWithStateAndErrors', () => {
     beforeEach(() => {
       this.builders = rewire('~/src/apps/builders')
-      this.sandbox = sinon.sandbox.create()
-      this.buildFormWithStateSpy = this.sandbox.stub()
-      this.buildFormWithErrorsSpy = this.sandbox.stub()
+      this.buildFormWithStateSpy = sandbox.stub()
+      this.buildFormWithErrorsSpy = sandbox.stub()
       this.builders.__set__('buildFormWithState', this.buildFormWithStateSpy)
       this.builders.__set__('buildFormWithErrors', this.buildFormWithErrorsSpy)
     })
@@ -305,21 +304,19 @@ describe('Global builders', () => {
       this.builders.buildFormWithStateAndErrors(formObject, requestBody, errorsObject)
 
       expect(this.buildFormWithStateSpy).to.be.calledWith(formObject, requestBody)
-      expect(this.buildFormWithErrorsSpy).to.be.calledWith(this.sandbox.match.any, errorsObject)
+      expect(this.buildFormWithErrorsSpy).to.be.calledWith(sandbox.match.any, errorsObject)
     })
   })
 
   describe('#buildSelectedFiltersSummary', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-
       this.fields = [
         {
           macroName: 'MultipleChoiceField',
           name: 'stage',
           label: 'State',
           type: 'checkbox',
-          options: this.sandbox.stub().returns([
+          options: sandbox.stub().returns([
             { value: 'a', label: 'A' },
             { value: 'b', label: 'B' },
             { value: 'c', label: 'C' },

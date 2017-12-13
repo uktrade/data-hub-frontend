@@ -2,7 +2,6 @@ const { assign, set } = require('lodash')
 
 describe('SSO bypass middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.mockConfig = {}
     this.ssoBypassMiddleware = proxyquire.noCallThru().load('~/src/middleware/sso-bypass', {
       '../../config': this.mockConfig,
@@ -10,11 +9,7 @@ describe('SSO bypass middleware', () => {
     this.reqMock = assign({}, globalReq, {
       session: {},
     })
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('without oauth bypass token', () => {

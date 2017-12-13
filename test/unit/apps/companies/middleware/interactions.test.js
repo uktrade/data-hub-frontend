@@ -1,6 +1,5 @@
 describe('Companies interactions middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.middleware = require('~/src/apps/companies/middleware/interactions')
     this.req = {
       params: {
@@ -14,11 +13,7 @@ describe('Companies interactions middleware', () => {
         },
       },
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#setInteractionsReturnUrl', () => {

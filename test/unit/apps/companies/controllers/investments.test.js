@@ -4,14 +4,12 @@ const tokenMock = '12345abcde'
 
 describe('Company investments controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.getCompanyInvestmentProjectsStub = this.sandbox.stub()
-    this.transformInvestmentProjectToListItemSpy = this.sandbox.spy()
-    this.transformApiResponseToCollectionSpy = this.sandbox.spy()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
+    this.getCompanyInvestmentProjectsStub = sandbox.stub()
+    this.transformInvestmentProjectToListItemSpy = sandbox.spy()
+    this.transformApiResponseToCollectionSpy = sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
       '../../investment-projects/repos': {
