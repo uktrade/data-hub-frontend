@@ -47,6 +47,7 @@ module.exports = {
         },
       ],
       elements: {
+        isActive: '.is-active',
         company: getSearchResultsTabSelector('Companies'),
         contact: getSearchResultsTabSelector('Contacts'),
         event: getSearchResultsTabSelector('Events'),
