@@ -55,10 +55,6 @@ describe('Companies account management middleware', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#populateAccountManagementForm', () => {
     beforeEach(async () => {
       this.nockScope = nock(config.apiRoot)

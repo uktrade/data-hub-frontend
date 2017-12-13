@@ -38,10 +38,6 @@ describe('Company investments controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   context('when investments returns successfully', () => {
     beforeEach(() => {
       this.searchStub.resolves(ordersMock.results)

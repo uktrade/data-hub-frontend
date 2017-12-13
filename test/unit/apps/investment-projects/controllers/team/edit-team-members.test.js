@@ -9,10 +9,6 @@ describe('Investment project, team members, edit controller', () => {
     this.controller = require('~/src/apps/investment-projects/controllers/team/edit-team-members')
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getHandler', () => {
     it('should render edit project management view', (done) => {
       this.controller.getHandler({

@@ -47,10 +47,6 @@ describe('OMIS create confirm controller', () => {
     this.controller = new this.ControllerClass({ route: '/' })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('getValues()', () => {
     beforeEach(() => {
       this.resMock = Object.assign({}, globalRes, {

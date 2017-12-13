@@ -14,10 +14,6 @@ describe('Investment project, client relationship management, edit controller', 
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getHandler', () => {
     it('should render edit client relationship management view', (done) => {
       this.controller.getHandler({

@@ -9,10 +9,6 @@ describe('Global transformers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#transformObjectToOption', () => {
     it('should return value and label from id and name', () => {
       const actual = this.transformers.transformObjectToOption({

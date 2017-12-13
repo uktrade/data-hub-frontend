@@ -39,10 +39,6 @@ describe('Investment form middleware - client relationship management', () => {
         })
     })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
-
     it('should populate the form state with the existing client relationship management if there is data', (done) => {
       const expectedFormState = {
         client_relationship_manager: investmentData.client_relationship_manager.id,
@@ -190,10 +186,6 @@ describe('Investment form middleware - client relationship management', () => {
         })
       })
 
-      afterEach(() => {
-        this.sandbox.restore()
-      })
-
       it('updates the investment data', (done) => {
         this.controller.handleFormPost({
           session: {
@@ -260,10 +252,6 @@ describe('Investment form middleware - client relationship management', () => {
             updateCompany: this.updateCompanyStub,
           },
         })
-      })
-
-      afterEach(() => {
-        this.sandbox.restore()
       })
 
       it('should set form error data for the following controllers if form error', (done) => {

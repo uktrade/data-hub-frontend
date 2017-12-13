@@ -15,10 +15,6 @@ describe('Event repos', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#saveEvent', () => {
     context('when POST request', () => {
       const eventMock = { name: 'Convention' }

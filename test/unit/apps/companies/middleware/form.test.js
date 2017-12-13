@@ -22,10 +22,6 @@ describe('Companies form middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('populateForm()', () => {
     it('should include the required properties in the response', () => {
       this.middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)

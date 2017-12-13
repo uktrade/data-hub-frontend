@@ -6,10 +6,6 @@ describe('breadcrumbs middleware', () => {
     this.resMock = {}
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('init()', () => {
     beforeEach(() => {
       this.init = breadcrumbs.init()

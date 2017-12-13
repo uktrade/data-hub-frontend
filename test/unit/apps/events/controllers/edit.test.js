@@ -57,10 +57,6 @@ describe('Event edit controller', () => {
       .reply(200, this.activeInactiveAdviserData)
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#renderEditPage', () => {
     context('when rendering the page', () => {
       beforeEach(async () => {

@@ -283,10 +283,6 @@ describe('Global builders', () => {
       this.builders.__set__('buildFormWithErrors', this.buildFormWithErrorsSpy)
     })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
-
     it('should return form without calling any functions', () => {
       const formObject = {
         children: [

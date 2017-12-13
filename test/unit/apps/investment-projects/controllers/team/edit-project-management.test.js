@@ -27,10 +27,6 @@ describe('Investment project, project management team, edit controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getHandler', () => {
     it('should render edit project management view', async () => {
       await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {

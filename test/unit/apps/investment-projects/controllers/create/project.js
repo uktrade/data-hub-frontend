@@ -24,10 +24,6 @@ describe('Investment create controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#createGetHandler', () => {
     describe('when no company ID is provided', () => {
       it('should redirect to the start', (done) => {

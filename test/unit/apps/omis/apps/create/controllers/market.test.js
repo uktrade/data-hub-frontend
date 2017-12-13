@@ -24,10 +24,6 @@ describe('OMIS create market controller', () => {
     this.controller = new Controller({ route: '/' })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('configure()', () => {
     beforeEach(() => {
       this.reqMock = Object.assign({}, globalReq, {

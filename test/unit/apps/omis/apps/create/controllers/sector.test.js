@@ -23,10 +23,6 @@ describe('OMIS create sector controller', () => {
     this.controller = new Controller({ route: '/' })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('configure()', () => {
     beforeEach(() => {
       this.reqMock = Object.assign({}, globalReq, {

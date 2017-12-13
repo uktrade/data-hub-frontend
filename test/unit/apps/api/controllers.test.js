@@ -22,10 +22,6 @@ describe('api controllers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('postcodeLookupHandler', () => {
     context('when the external api service returns successful response', () => {
       beforeEach(async () => {

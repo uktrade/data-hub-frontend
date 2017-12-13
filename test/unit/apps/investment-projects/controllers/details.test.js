@@ -14,10 +14,6 @@ describe('Investment details controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#detailsGetHandler', () => {
     it('should return investment details', (done) => {
       this.controller.detailsGetHandler({

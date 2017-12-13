@@ -85,10 +85,6 @@ describe('OMIS View middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('setTranslation()', () => {
     it('should set a translate method on locals', () => {
       this.middleware.setTranslation({}, this.resMock, this.nextSpy)

@@ -23,10 +23,6 @@ describe('Investment form middleware - investment value', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   it('should set form labels', () => {
     this.controller.populateForm({}, this.resMock, this.nextSpy)
 

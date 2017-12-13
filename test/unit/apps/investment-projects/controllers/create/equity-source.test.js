@@ -39,10 +39,6 @@ describe('Investment start controller', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getHandler', () => {
     describe('when no company ID is present', () => {
       it('should render company details and search', (done) => {

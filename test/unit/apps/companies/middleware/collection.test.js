@@ -21,10 +21,6 @@ describe('Company collection middleware', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getCompanyCollection', () => {
     beforeEach(async () => {
       this.nockScope = nock(config.apiRoot)

@@ -33,10 +33,6 @@ describe('Investment form middleware - team members', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#populateForm', () => {
     beforeEach(() => {
       this.nockScope = nock(config.apiRoot)

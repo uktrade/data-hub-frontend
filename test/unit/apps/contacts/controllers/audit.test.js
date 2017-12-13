@@ -35,10 +35,6 @@ describe('Contact audit controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   it('should call the contact audit repository', (done) => {
     try {
       this.controller.getAudit(this.req, {

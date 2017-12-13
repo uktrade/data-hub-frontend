@@ -37,10 +37,6 @@ describe('OMIS middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('setCompany()', () => {
     beforeEach(() => {
       this.companyId = 'c-1234567890'

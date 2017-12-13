@@ -250,10 +250,6 @@ describe('Company repository', () => {
       })
     })
 
-    afterEach(() => {
-      this.sandbox.restore()
-    })
-
     it('should make the correct call to the API', () => {
       return this.repo.updateCompany('1234', '999', { account_manager: '8888' })
         .then(() => {

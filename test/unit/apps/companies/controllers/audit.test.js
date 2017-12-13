@@ -38,10 +38,6 @@ describe('Company audit controller', () => {
     }
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   context('when audit returns successfully', () => {
     beforeEach(() => {
       this.getCompanyAuditLogStub.resolves(auditLogMock)

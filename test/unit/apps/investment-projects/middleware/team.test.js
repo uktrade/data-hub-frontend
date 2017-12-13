@@ -43,10 +43,6 @@ describe('Investment team middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getBriefInvestmentSummary', () => {
     it('should call brief investment summary formatter with expanded project', (done) => {
       this.teamMiddleware.getBriefInvestmentSummary({

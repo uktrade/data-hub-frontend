@@ -17,10 +17,6 @@ describe('Event collection middleware', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getEventsCollection', () => {
     beforeEach(() => {
       this.req.query = {
