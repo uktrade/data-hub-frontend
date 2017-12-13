@@ -1,6 +1,6 @@
 /* eslint handle-callback-err: 0, camelcase: 0 */
 
-describe('interaction form service', function () {
+describe('interaction form service', () => {
   let saveInteractionStub
   let company
   let contact
@@ -11,7 +11,7 @@ describe('interaction form service', function () {
   let dit_team
   let interactionFormService
 
-  beforeEach(function () {
+  beforeEach(() => {
     company = { id: '1234', name: 'Fred ltd' }
     contact = { id: '3321', name: 'Fred Smith', first_name: 'Fred', last_name: 'Smith', company }
     dit_adviser = { id: '4455', name: 'Fred Jones', first_name: 'Fred', last_name: 'Jones' }
@@ -45,8 +45,8 @@ describe('interaction form service', function () {
     })
   })
 
-  describe('Convert API to Form', function () {
-    it('should an existing API format interaction entity into a format for use with a HTML form', function () {
+  describe('Convert API to Form', () => {
+    it('should an existing API format interaction entity into a format for use with a HTML form', () => {
       const expected = {
         id: '999',
         company: company.id,
@@ -61,7 +61,7 @@ describe('interaction form service', function () {
       }
       expect(interactionFormService.getInteractionAsFormData(interaction)).to.deep.equal(expected)
     })
-    it('should handle new blank interactions being editing for the first time', function () {
+    it('should handle new blank interactions being editing for the first time', () => {
       const freshInteraction = {
         company,
         contact: null,
