@@ -17,7 +17,6 @@ const common = {
       './assets/javascripts/vendor/details.polyfill.js',
       './assets/javascripts/app.js',
     ],
-    'trade-elements-components': './assets/javascripts/_deprecated/trade-elements/trade-elements-components.js',
   },
   output: {
     path: config.buildDir,
