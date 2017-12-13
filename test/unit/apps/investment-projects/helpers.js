@@ -13,7 +13,6 @@ const formTwoMockLinkDetails = {
 
 describe('buildIncompleteFormList', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.mockLinkDetails = {
       formOne: assign({}, formOneMockLinkDetails),
       formTwo: assign({}, formTwoMockLinkDetails),

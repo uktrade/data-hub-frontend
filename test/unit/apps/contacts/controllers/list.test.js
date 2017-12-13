@@ -1,7 +1,6 @@
 describe('Contact list controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
     this.req = {
       session: {
         token: 'abcd',
@@ -9,11 +8,11 @@ describe('Contact list controller', () => {
       query: {},
     }
     this.res = {
-      render: this.sandbox.spy(),
+      render: sandbox.spy(),
       query: {},
     }
 
-    this.buildSelectedFiltersSummaryStub = this.sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/contacts/controllers/list', {
       '../../builders': {

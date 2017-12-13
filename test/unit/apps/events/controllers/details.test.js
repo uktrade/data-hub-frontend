@@ -1,7 +1,5 @@
 describe('Event details controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.controller = proxyquire('~/src/apps/events/controllers/details', {
       '../labels': {
         displayEventLabels: {
@@ -20,8 +18,8 @@ describe('Event details controller', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
       locals: {
         event: {
           name: 'Dance',
@@ -29,11 +27,7 @@ describe('Event details controller', () => {
       },
     }
 
-    this.next = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.next = sandbox.spy()
   })
 
   describe('#renderDetailsPage', async () => {

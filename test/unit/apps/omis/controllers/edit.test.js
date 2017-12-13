@@ -4,9 +4,8 @@ const updateMockData = {
 
 describe('OMIS EditController', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.stub()
-    this.orderUpdateStub = this.sandbox.stub()
+    this.nextSpy = sandbox.stub()
+    this.orderUpdateStub = sandbox.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/controllers/edit', {
       '../models': {
@@ -25,9 +24,9 @@ describe('OMIS EditController', () => {
 
   describe('successHandler()', () => {
     beforeEach(() => {
-      this.resetSpy = this.sandbox.spy()
-      this.destroySpy = this.sandbox.spy()
-      this.flashSpy = this.sandbox.spy()
+      this.resetSpy = sandbox.spy()
+      this.destroySpy = sandbox.spy()
+      this.flashSpy = sandbox.spy()
 
       this.reqMock = Object.assign({}, globalReq, {
         form: {
@@ -180,7 +179,7 @@ describe('OMIS EditController', () => {
 
       it('should save an order', (done) => {
         const resMock = {
-          redirect: this.sandbox.spy(),
+          redirect: sandbox.spy(),
         }
         const nextMock = (error) => {
           try {

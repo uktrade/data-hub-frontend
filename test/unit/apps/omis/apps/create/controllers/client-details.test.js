@@ -14,9 +14,8 @@ const contactsMockData = [{
 
 describe('OMIS create client details controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
+    this.nextSpy = sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -43,7 +42,7 @@ describe('OMIS create client details controller', () => {
         },
       })
 
-      this.sandbox.spy(FormController.prototype, 'configure')
+      sandbox.spy(FormController.prototype, 'configure')
     })
 
     describe('when a company exists', () => {

@@ -8,11 +8,9 @@ const { teamMembersLabels } = require('~/src/apps/investment-projects/labels')
 
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
+    this.updateInvestmentTeamMembersStub = sandbox.stub().resolves({})
 
-    this.updateInvestmentTeamMembersStub = this.sandbox.stub().resolves({})
-
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
     this.reqMock = {
       session: {
         token: uuid(),

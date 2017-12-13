@@ -2,15 +2,9 @@ const { getMacros } = require('~/test/unit/macro-helper')
 
 describe('LocalHeader macro', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.commonMacros = getMacros('common', {
-      getMessages: this.sandbox.stub(),
+      getMessages: sandbox.stub(),
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('invalid props', () => {

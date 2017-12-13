@@ -8,11 +8,10 @@ const tokenMock = '12345abcde'
 
 describe('OMIS edit subscribers controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
-    this.getAdvisersStub = this.sandbox.stub().resolves(advisersMock)
-    this.getSubscribersStub = this.sandbox.stub().resolves(subscribersMock)
-    this.saveSubscribersStub = this.sandbox.stub().resolves(subscribersMock)
+    this.nextSpy = sandbox.spy()
+    this.getAdvisersStub = sandbox.stub().resolves(advisersMock)
+    this.getSubscribersStub = sandbox.stub().resolves(subscribersMock)
+    this.saveSubscribersStub = sandbox.stub().resolves(subscribersMock)
 
     const Controller = proxyquire('~/src/apps/omis/apps/edit/controllers/subscribers', {
       '../../../../adviser/repos': {
@@ -53,7 +52,7 @@ describe('OMIS edit subscribers controller', () => {
         },
       })
 
-      this.sandbox.spy(FormController.prototype, 'configure')
+      sandbox.spy(FormController.prototype, 'configure')
     })
 
     context('when async calls resolve', () => {
@@ -136,10 +135,10 @@ describe('OMIS edit subscribers controller', () => {
 
   describe('successHandler()', () => {
     beforeEach(() => {
-      this.resetSpy = this.sandbox.spy()
-      this.destroySpy = this.sandbox.spy()
-      this.flashSpy = this.sandbox.spy()
-      this.redirectSpy = this.sandbox.spy()
+      this.resetSpy = sandbox.spy()
+      this.destroySpy = sandbox.spy()
+      this.flashSpy = sandbox.spy()
+      this.redirectSpy = sandbox.spy()
 
       this.reqMock = Object.assign({}, globalReq, {
         form: {

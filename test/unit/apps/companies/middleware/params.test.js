@@ -4,10 +4,9 @@ const companiesHouseRecord = require('~/test/unit/data/companies/companies-house
 
 describe('Companies form middleware', function () {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
-    this.getDitCompanyStub = this.sandbox.stub()
-    this.getCHCompanyStub = this.sandbox.stub()
+    this.nextSpy = sandbox.spy()
+    this.getDitCompanyStub = sandbox.stub()
+    this.getCHCompanyStub = sandbox.stub()
     this.reqMock = { query: {}, session: { token: 2 } }
     this.resMock = { locals: {} }
 
@@ -17,7 +16,7 @@ describe('Companies form middleware', function () {
         getCHCompany: this.getCHCompanyStub,
       },
       '../transformers/shared': {
-        getCompanyAddress: this.sandbox.stub().returns({
+        getCompanyAddress: sandbox.stub().returns({
           label: 'label',
           value: 'address',
         }),

@@ -2,8 +2,7 @@ const contactData = { company: { name: 'company' } }
 
 describe('Contacts interactions middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.getContactStub = this.sandbox.stub().returns(contactData)
+    this.getContactStub = sandbox.stub().returns(contactData)
     this.middleware = proxyquire('~/src/apps/contacts/middleware/interactions', {
       '../../contacts/repos': {
         getContact: this.getContactStub,
@@ -25,11 +24,7 @@ describe('Contacts interactions middleware', () => {
         },
       },
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#setInteractionsReturnUrl', () => {

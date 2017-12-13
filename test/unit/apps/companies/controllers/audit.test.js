@@ -4,14 +4,12 @@ const tokenMock = '12345abcde'
 
 describe('Company audit controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.getCompanyAuditLogStub = this.sandbox.stub()
-    this.transformApiResponseToCollectionSpy = this.sandbox.spy()
-    this.transformAuditLogToListItemSpy = this.sandbox.spy()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
+    this.getCompanyAuditLogStub = sandbox.stub()
+    this.transformApiResponseToCollectionSpy = sandbox.spy()
+    this.transformAuditLogToListItemSpy = sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
       '../repos': {

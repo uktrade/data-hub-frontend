@@ -8,12 +8,11 @@ const companyData = require('~/test/unit/data/companies/company.json')
 
 describe('investment details middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.stub()
+    this.next = sandbox.stub()
 
-    this.updateInvestmentStub = this.sandbox.stub().resolves({ id: '999' })
-    this.createInvestmentStub = this.sandbox.stub().resolves({ id: '888' })
-    this.getEquityCompanyDetailsStub = this.sandbox.stub().resolves(companyData)
+    this.updateInvestmentStub = sandbox.stub().resolves({ id: '999' })
+    this.createInvestmentStub = sandbox.stub().resolves({ id: '888' })
+    this.getEquityCompanyDetailsStub = sandbox.stub().resolves(companyData)
 
     this.req = {
       session: {
@@ -32,7 +31,7 @@ describe('investment details middleware', () => {
       locals: {
         form: {},
       },
-      redirect: this.sandbox.stub(),
+      redirect: sandbox.stub(),
     }
 
     this.detailsMiddleware = proxyquire('~/src/apps/investment-projects/middleware/forms/details', {

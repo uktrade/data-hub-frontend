@@ -2,12 +2,9 @@ const companyMock = require('~/test/unit/data/companies/company.json')
 
 describe('Company contacts controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.nextSpy = this.sandbox.spy()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.transformContactToListItemSpy = this.sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.transformContactToListItemSpy = sandbox.spy()
 
     this.controller = require('~/src/apps/companies/controllers/contacts')
 

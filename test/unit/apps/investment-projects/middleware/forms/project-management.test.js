@@ -9,9 +9,8 @@ const { projectManagementLabels } = require('~/src/apps/investment-projects/labe
 describe('Investment form middleware - project magement', () => {
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
-      this.nextSpy = this.sandbox.spy()
+      this.getAdvisersStub = sandbox.stub().resolves(advisorData)
+      this.nextSpy = sandbox.spy()
       this.resMock = {
         locals: {
           form: {},
@@ -125,9 +124,8 @@ describe('Investment form middleware - project magement', () => {
 
     describe('post with no errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-        this.updateInvestmentStub = this.sandbox.stub().resolves(advisorData)
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub().resolves(advisorData)
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }
@@ -176,10 +174,8 @@ describe('Investment form middleware - project magement', () => {
 
     describe('post with form errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-
-        this.updateInvestmentStub = this.sandbox.stub()
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub()
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }
