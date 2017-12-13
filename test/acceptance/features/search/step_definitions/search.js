@@ -78,6 +78,7 @@ defineSupportCode(function ({ Then, When }) {
     await Search.section.tabs
       .api.useXpath()
       .waitForElementPresent(searchTabSelector.selector)
+      .waitForElementPresent('@isActive')
       .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
       .useCss()
   })
