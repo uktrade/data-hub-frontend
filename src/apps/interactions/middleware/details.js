@@ -66,6 +66,7 @@ async function getInteractionDetails (req, res, next, interactionId) {
 
 async function getInteractionOptions (req, res, next) {
   try {
+    const interaction = res.locals.interaction
     const token = req.session.token
     const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
     const company = get(res.locals, 'company.id')
@@ -78,7 +79,7 @@ async function getInteractionOptions (req, res, next) {
     })
 
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await getActiveEvents(token)
+      res.locals.events = await getActiveEvents(token, get(interaction, 'created_on'))
     }
 
     next()
