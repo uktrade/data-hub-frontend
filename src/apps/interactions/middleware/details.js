@@ -79,7 +79,7 @@ async function getInteractionOptions (req, res, next) {
     })
 
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await getActiveEvents(token, interaction.created_on)
+      res.locals.events = await getActiveEvents(token, get(interaction, 'created_on'))
     }
 
     next()
