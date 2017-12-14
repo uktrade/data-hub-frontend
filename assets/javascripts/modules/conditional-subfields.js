@@ -39,7 +39,7 @@
 const uniq = require('lodash/uniq')
 const includes = require('lodash/includes')
 
-const { addClass, removeClass } = require('../_deprecated/lib/element-stuff.js')
+const { addClass, removeClass } = require('../lib/helpers')
 
 const ConditionalSubfields = {
   selector: 'js-ConditionalSubfield',
