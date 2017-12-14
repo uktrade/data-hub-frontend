@@ -10,9 +10,8 @@ const { clientRelationshipManagementLabels } = require('~/src/apps/investment-pr
 describe('Investment form middleware - client relationship management', () => {
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-      this.nextSpy = this.sandbox.spy()
+      this.updateCompanyStub = sandbox.stub().resolves(companyData)
+      this.nextSpy = sandbox.spy()
       this.resMock = {
         locals: {
           form: {},
@@ -38,10 +37,6 @@ describe('Investment form middleware - client relationship management', () => {
             { id: '5', name: 'Jim Smith', is_active: false },
           ],
         })
-    })
-
-    afterEach(() => {
-      this.sandbox.restore()
     })
 
     it('should populate the form state with the existing client relationship management if there is data', (done) => {
@@ -174,10 +169,9 @@ describe('Investment form middleware - client relationship management', () => {
 
     describe('post with no errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-        this.updateInvestmentStub = this.sandbox.stub().resolves(advisorData)
-        this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub().resolves(advisorData)
+        this.updateCompanyStub = sandbox.stub().resolves(companyData)
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }
@@ -190,10 +184,6 @@ describe('Investment form middleware - client relationship management', () => {
             updateCompany: this.updateCompanyStub,
           },
         })
-      })
-
-      afterEach(() => {
-        this.sandbox.restore()
       })
 
       it('updates the investment data', (done) => {
@@ -244,11 +234,9 @@ describe('Investment form middleware - client relationship management', () => {
 
     describe('When a form is posted with errors', () => {
       beforeEach(() => {
-        this.sandbox = sinon.sandbox.create()
-
-        this.updateInvestmentStub = this.sandbox.stub()
-        this.updateCompanyStub = this.sandbox.stub().resolves(companyData)
-        this.nextSpy = this.sandbox.spy()
+        this.updateInvestmentStub = sandbox.stub()
+        this.updateCompanyStub = sandbox.stub().resolves(companyData)
+        this.nextSpy = sandbox.spy()
         this.resMock = {
           locals: {},
         }
@@ -264,10 +252,6 @@ describe('Investment form middleware - client relationship management', () => {
             updateCompany: this.updateCompanyStub,
           },
         })
-      })
-
-      afterEach(() => {
-        this.sandbox.restore()
       })
 
       it('should set form error data for the following controllers if form error', (done) => {

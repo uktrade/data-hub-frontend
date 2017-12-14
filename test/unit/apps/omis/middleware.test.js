@@ -3,14 +3,12 @@ const orderData = require('~/test/unit/data/omis/simple-order.json')
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.setHomeBreadcrumbReturnSpy = this.sandbox.spy()
-    this.setHomeBreadcrumbStub = this.sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
-    this.getDitCompanyStub = this.sandbox.stub()
-    this.getByIdStub = this.sandbox.stub()
-    this.loggerSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
+    this.setHomeBreadcrumbReturnSpy = sandbox.spy()
+    this.setHomeBreadcrumbStub = sandbox.stub().returns(this.setHomeBreadcrumbReturnSpy)
+    this.getDitCompanyStub = sandbox.stub()
+    this.getByIdStub = sandbox.stub()
+    this.loggerSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.resMock = {
       locals: {},
@@ -37,10 +35,6 @@ describe('OMIS middleware', () => {
         },
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('setCompany()', () => {

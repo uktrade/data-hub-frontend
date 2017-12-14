@@ -1,17 +1,12 @@
 describe('CRSF token', () => {
   beforeEach(() => {
     this.csrfMiddleware = require('~/src/middleware/csrf-token')()
-    this.sandbox = sinon.sandbox.create()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('set a CSRF token', () => {
     it('should set the csrf token on response locals object', () => {
-      const csrfSpy = this.sandbox.spy()
-      const nextSpy = this.sandbox.spy()
+      const csrfSpy = sandbox.spy()
+      const nextSpy = sandbox.spy()
       const reqMock = { csrfToken: csrfSpy }
       const resMock = { locals: {} }
 

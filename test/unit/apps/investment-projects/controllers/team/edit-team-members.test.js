@@ -2,16 +2,11 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment project, team members, edit controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextStub = this.sandbox.stub()
-    this.flashStub = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.nextStub = sandbox.stub()
+    this.flashStub = sandbox.stub()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.controller = require('~/src/apps/investment-projects/controllers/team/edit-team-members')
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#getHandler', () => {

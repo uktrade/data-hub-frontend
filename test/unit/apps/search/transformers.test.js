@@ -1,9 +1,8 @@
 describe('Search transformers', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.transformApiResponseToCollectionInnerStub = this.sandbox.stub().returns()
-    this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
-    this.buildSearchAggregationStub = this.sandbox.stub()
+    this.transformApiResponseToCollectionInnerStub = sandbox.stub().returns()
+    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.buildSearchAggregationStub = sandbox.stub()
 
     this.responseMock = {
       aggregations: {},
@@ -18,10 +17,6 @@ describe('Search transformers', () => {
         buildSearchAggregation: this.buildSearchAggregationStub,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#transformApiResponseToSearchCollection', () => {
@@ -60,8 +55,8 @@ describe('Search transformers', () => {
     })
 
     it('should call transformApiResponseToCollection transformer with given transformers', () => {
-      const firstItemTransformerSpy = this.sandbox.spy()
-      const secondItemTransformerSpy = this.sandbox.spy()
+      const firstItemTransformerSpy = sandbox.spy()
+      const secondItemTransformerSpy = sandbox.spy()
 
       this.transformers.transformApiResponseToSearchCollection(
         undefined,

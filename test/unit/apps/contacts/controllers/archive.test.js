@@ -2,7 +2,7 @@ const next = function (error) {
   throw Error(error)
 }
 
-describe('Contact controller, archive', function () {
+describe('Contact controller, archive', () => {
   let contactRepositoryArchiveContactStub
   let contactRepositoryUnArchiveContactStub
   let flashStub
@@ -11,7 +11,7 @@ describe('Contact controller, archive', function () {
 
   let contactArchiveController
 
-  beforeEach(function () {
+  beforeEach(() => {
     contactRepositoryArchiveContactStub = sinon.stub().resolves(null)
     contactRepositoryUnArchiveContactStub = sinon.stub().resolves(null)
     contactArchiveController = proxyquire('~/src/apps/contacts/controllers/archive', {
@@ -31,7 +31,7 @@ describe('Contact controller, archive', function () {
     }
     const res = {
       locals: {},
-      redirect: function () {
+      redirect: () => {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason)
         done()
       },
@@ -48,7 +48,7 @@ describe('Contact controller, archive', function () {
     }
     const res = {
       locals: {},
-      redirect: function () {
+      redirect: () => {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason_other)
         done()
       },
@@ -99,7 +99,7 @@ describe('Contact controller, archive', function () {
     }
     const res = {
       locals: {},
-      redirect: function () {
+      redirect: () => {
         expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(token, id)
         done()
       },
@@ -124,7 +124,7 @@ describe('Contact controller, archive', function () {
       flash: flashStub,
     }
     const res = {
-      render: function () {
+      render: () => {
         throw Error('Should have called next')
       },
     }
@@ -152,7 +152,7 @@ describe('Contact controller, archive', function () {
       flash: flashStub,
     }
     const res = {
-      render: function () {
+      render: () => {
         throw Error('Should have called next')
       },
     }

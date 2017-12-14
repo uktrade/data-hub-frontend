@@ -3,12 +3,7 @@ const resMock = {}
 describe('Auth middleware', () => {
   beforeEach(() => {
     this.authMiddleware = require('~/src/middleware/auth')
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('authenticated/allowed requests', () => {
@@ -48,7 +43,7 @@ describe('Auth middleware', () => {
         session: {},
       }
       const resMock = {
-        redirect: this.sandbox.stub(),
+        redirect: sandbox.stub(),
       }
 
       this.authMiddleware(reqMock, resMock, this.nextSpy)

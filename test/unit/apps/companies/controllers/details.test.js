@@ -4,8 +4,6 @@ const { renderDetails } = require('~/src/apps/companies/controllers/details')
 
 describe('Companies details controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.req = {
       session: {
         token: '1234',
@@ -17,13 +15,9 @@ describe('Companies details controller', () => {
 
     this.res = {
       locals: {},
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.stub(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.stub(),
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#renderDetails', () => {

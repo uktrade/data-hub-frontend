@@ -1,17 +1,12 @@
 describe('Global transformers', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.buildPaginationSpy = this.sandbox.spy()
+    this.buildPaginationSpy = sandbox.spy()
 
     this.transformers = proxyquire('~/src/apps/transformers', {
       '../lib/pagination': {
         buildPagination: this.buildPaginationSpy,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#transformObjectToOption', () => {
@@ -191,8 +186,8 @@ describe('Global transformers', () => {
     })
 
     it('should return a collection object with items transformed by given transformer with arguments', () => {
-      const itemTransformerInnerSpy = this.sandbox.spy()
-      const itemTransformerSpy = this.sandbox.stub().returns(itemTransformerInnerSpy)
+      const itemTransformerInnerSpy = sandbox.spy()
+      const itemTransformerSpy = sandbox.stub().returns(itemTransformerInnerSpy)
       const itemTransformerOptions = { query: { term: 'bobby' } }
 
       const actual = this.transformers.transformApiResponseToCollection(
@@ -206,8 +201,8 @@ describe('Global transformers', () => {
     })
 
     it('should return a collection object with items transformed by multiple transformers', () => {
-      const firstItemTransformerSpy = this.sandbox.spy()
-      const secondItemTransformerSpy = this.sandbox.spy()
+      const firstItemTransformerSpy = sandbox.spy()
+      const secondItemTransformerSpy = sandbox.spy()
 
       const actual = this.transformers.transformApiResponseToCollection(
         undefined,

@@ -8,7 +8,7 @@ const {
   transformContactToView,
 } = require('~/src/apps/contacts/transformers')
 
-describe('Contact transformers', function () {
+describe('Contact transformers', () => {
   describe('#transformContactToListItem', () => {
     it('should return undefined for unqualified result', () => {
       expect(transformContactToListItem()).to.be.undefined

@@ -21,15 +21,14 @@ const transformed = {
 
 describe('Interaction details middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.saveInteractionStub = this.sandbox.stub()
-    this.fetchInteractionStub = this.sandbox.stub()
-    this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
-    this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
-    this.getContactsForCompanyStub = this.sandbox.stub()
-    this.getContactStub = this.sandbox.stub()
-    this.getDitCompanyStub = this.sandbox.stub()
-    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.saveInteractionStub = sandbox.stub()
+    this.fetchInteractionStub = sandbox.stub()
+    this.transformInteractionFormBodyToApiRequestStub = sandbox.stub()
+    this.transformInteractionResponseToViewRecordStub = sandbox.stub()
+    this.getContactsForCompanyStub = sandbox.stub()
+    this.getContactStub = sandbox.stub()
+    this.getDitCompanyStub = sandbox.stub()
+    this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
@@ -51,7 +50,7 @@ describe('Interaction details middleware', () => {
         getContact: this.getContactStub,
       },
       '../../events/repos': {
-        getActiveEvents: this.sandbox.stub().resolves(eventsData.results),
+        getActiveEvents: sandbox.stub().resolves(eventsData.results),
       },
       '../../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
@@ -62,7 +61,7 @@ describe('Interaction details middleware', () => {
       session: {
         token: 'abcd',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
       body: assign({}, interactionData),
       query: {
         company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
@@ -73,9 +72,9 @@ describe('Interaction details middleware', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         company: {
           id: '1',
@@ -84,7 +83,7 @@ describe('Interaction details middleware', () => {
       },
     }
 
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.activeInactiveAdviserData = {
       count: 5,
@@ -96,10 +95,6 @@ describe('Interaction details middleware', () => {
         { id: '5', name: 'Jim Smith', is_active: false },
       ],
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#postDetails', () => {
@@ -141,9 +136,9 @@ describe('Interaction details middleware', () => {
     context('when all fields are valid for updating an interaction found from the top level navigation', () => {
       it('should redirect on success', async () => {
         const res = assign({}, this.res, {
-          breadcrumb: this.sandbox.stub().returnsThis(),
-          render: this.sandbox.spy(),
-          redirect: this.sandbox.spy(),
+          breadcrumb: sandbox.stub().returnsThis(),
+          render: sandbox.spy(),
+          redirect: sandbox.spy(),
           locals: {},
         })
 
@@ -189,7 +184,7 @@ describe('Interaction details middleware', () => {
   describe('#getInteractionDetails', () => {
     context('when provided an interaction with a company associated', () => {
       beforeEach(async () => {
-        this.company = this.sandbox.mock()
+        this.company = sandbox.mock()
         this.interaction = assign({}, interactionData, { company: this.company })
         this.fetchInteractionStub.resolves(this.interaction)
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
@@ -221,7 +216,7 @@ describe('Interaction details middleware', () => {
           },
         })
 
-        this.company = this.sandbox.mock()
+        this.company = sandbox.mock()
         this.getDitCompanyStub.resolves(this.company)
 
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
