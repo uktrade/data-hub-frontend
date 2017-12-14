@@ -37,7 +37,7 @@ async function callbackOAuth (req, res, next) {
   if (sessionOAuthState !== stateQueryParam) {
     // @TODO remove this once we've diagnosed the cause of the mismatches
     logger.error('OAuth mismatch')
-    logger.error(`sessionOAuthState: ${stateQueryParam}`)
+    logger.error(`sessionOAuthState: ${sessionOAuthState}`)
     logger.error(`stateQueryParam: ${stateQueryParam}`)
     logger.error(`Original URL: ${req.originalUrl}`)
     return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
