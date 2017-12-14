@@ -2,8 +2,7 @@ const { merge, find } = require('lodash')
 
 describe('investment status controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.updateInvestmentStub = this.sandbox.stub().resolves()
+    this.updateInvestmentStub = sandbox.stub().resolves()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/status', {
       '../repos': {
@@ -19,14 +18,14 @@ describe('investment status controller', () => {
       params: {
         investmentId: '111',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      title: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      title: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         investmentData: {
           id: '111',
@@ -35,11 +34,7 @@ describe('investment status controller', () => {
       },
     }
 
-    this.next = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.next = sandbox.spy()
   })
 
   describe('#renderStatusPage', () => {
@@ -154,7 +149,7 @@ describe('investment status controller', () => {
 
     context('when a post causes form errors', () => {
       beforeEach(async () => {
-        this.error = this.sandbox.stub()
+        this.error = sandbox.stub()
 
         this.updateInvestmentStub.rejects({
           statusCode: 400,
@@ -175,7 +170,7 @@ describe('investment status controller', () => {
 
     context('when a post causes an unknown error', () => {
       beforeEach(async () => {
-        this.error = this.sandbox.stub()
+        this.error = sandbox.stub()
 
         this.updateInvestmentStub.rejects(this.error)
 

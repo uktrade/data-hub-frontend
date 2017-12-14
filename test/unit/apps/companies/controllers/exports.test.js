@@ -3,13 +3,12 @@ const tokenMock = '12345abcde'
 
 describe('Company export controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.saveCompany = this.sandbox.stub()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
-    this.redirectSpy = this.sandbox.spy()
-    this.transformerSpy = this.sandbox.spy()
+    this.saveCompany = sandbox.stub()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
+    this.redirectSpy = sandbox.spy()
+    this.transformerSpy = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/exports', {
       '../repos': {
@@ -44,10 +43,6 @@ describe('Company export controller', () => {
         company: companyMock,
       },
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('renderExports()', () => {

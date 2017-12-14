@@ -8,9 +8,7 @@ describe('Event edit controller', () => {
   const currentUserTeam = 'team1'
 
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
 
     this.controller = proxyquire('~/src/apps/events/controllers/edit', {
       '../../adviser/filters': {
@@ -31,13 +29,13 @@ describe('Event edit controller', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: { },
     }
 
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
 
     this.activeInactiveAdviserData = {
       count: 5,
@@ -57,10 +55,6 @@ describe('Event edit controller', () => {
         offset: 0,
       })
       .reply(200, this.activeInactiveAdviserData)
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#renderEditPage', () => {

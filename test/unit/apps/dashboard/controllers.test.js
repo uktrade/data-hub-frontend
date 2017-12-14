@@ -1,7 +1,5 @@
 describe('dashboard controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.reqMock = Object.assign({}, globalReq, {
       session: {
         token: 'abcd',
@@ -10,13 +8,13 @@ describe('dashboard controller', () => {
 
     this.resMock = {
       locals: {},
-      render: this.sandbox.spy(),
-      title: this.sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      title: sandbox.stub().returnsThis(),
     }
 
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
-    this.fetchHomepageDataStub = this.sandbox.stub()
+    this.fetchHomepageDataStub = sandbox.stub()
 
     this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
       './repos': {

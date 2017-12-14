@@ -4,14 +4,12 @@ const tokenMock = '12345abcde'
 
 describe('Company investments controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
-    this.searchStub = this.sandbox.stub()
-    this.transformOrderToListItemSpy = this.sandbox.spy()
-    this.transformApiResponseToCollectionSpy = this.sandbox.spy()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
+    this.searchStub = sandbox.stub()
+    this.transformOrderToListItemSpy = sandbox.spy()
+    this.transformApiResponseToCollectionSpy = sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/orders', {
       '../../search/services': {
@@ -38,10 +36,6 @@ describe('Company investments controller', () => {
         company: companyMock,
       },
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   context('when investments returns successfully', () => {

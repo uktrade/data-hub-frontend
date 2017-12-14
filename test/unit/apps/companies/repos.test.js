@@ -6,7 +6,7 @@ describe('Company repository', () => {
     describe('Handle response from server', () => {
       describe('Successfully save a company', () => {
         let companyRepository
-        const authorisedRequestStub = function () {
+        const authorisedRequestStub = () => {
           return new Promise((resolve) => {
             resolve({
               id: '1234',
@@ -31,7 +31,7 @@ describe('Company repository', () => {
       })
       describe('Save a company and get a 400', () => {
         let companyRepository
-        const authorisedRequestStub = function () {
+        const authorisedRequestStub = () => {
           return new Promise((resolve, reject) => {
             reject({
               error: {
@@ -86,7 +86,7 @@ describe('Company repository', () => {
       })
       describe('Save a company and get a formatted 500', () => {
         let companyRepository
-        const authorisedRequestStub = function () {
+        const authorisedRequestStub = () => {
           return new Promise((resolve, reject) => {
             reject({
               error: { 'detail': 'Service Unavailable' },
@@ -126,7 +126,7 @@ describe('Company repository', () => {
       })
       describe('Save a company and get a generic 500', () => {
         let companyRepository
-        const authorisedRequestStub = function () {
+        const authorisedRequestStub = () => {
           return new Promise((resolve, reject) => {
             reject({
               error: 'Service Unavailable',
@@ -241,18 +241,13 @@ describe('Company repository', () => {
 
   describe('Update company', () => {
     beforeEach(() => {
-      this.sandbox = sinon.sandbox.create()
-      this.authorisedRequestStub = this.sandbox.stub().resolves(companyData)
+      this.authorisedRequestStub = sandbox.stub().resolves(companyData)
       this.repo = proxyquire('~/src/apps/companies/repos', {
         '../../lib/authorised-request': this.authorisedRequestStub,
         '../../../config': {
           apiRoot: 'http://test.com',
         },
       })
-    })
-
-    afterEach(() => {
-      this.sandbox.restore()
     })
 
     it('should make the correct call to the API', () => {

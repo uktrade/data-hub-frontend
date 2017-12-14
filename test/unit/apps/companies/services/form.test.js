@@ -1,8 +1,8 @@
-describe('company form service', function () {
+describe('company form service', () => {
   let companyFormService
   let saveCompanyStub
 
-  beforeEach(function () {
+  beforeEach(() => {
     saveCompanyStub = sinon.stub().resolves({ id: '1234' })
 
     companyFormService = proxyquire('~/src/apps/companies/services/form', {
@@ -12,8 +12,8 @@ describe('company form service', function () {
     })
   })
 
-  describe('save', function () {
-    it('saves company data to repository', function () {
+  describe('save', () => {
+    it('saves company data to repository', () => {
       const company = {
         thing: 'yes',
         other: 'no',
@@ -23,7 +23,7 @@ describe('company form service', function () {
           expect(saveCompanyStub).to.be.called
         })
     })
-    it('converts yes/no to true/false', function () {
+    it('converts yes/no to true/false', () => {
       const company = {
         thing: 'yes',
         other: 'no',
@@ -33,7 +33,7 @@ describe('company form service', function () {
           expect(saveCompanyStub).to.be.calledWith('1234', { thing: true, other: false })
         })
     })
-    it('handles errors', function () {
+    it('handles errors', () => {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
       companyFormService = proxyquire('~/src/apps/companies/services/form', {
         '../repos': {

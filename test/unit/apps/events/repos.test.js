@@ -5,19 +5,14 @@ const token = 'abcd'
 
 describe('Event repos', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.authorisedRequestStub = this.sandbox.stub().resolves()
-    this.searchSpy = this.sandbox.spy(search)
+    this.authorisedRequestStub = sandbox.stub().resolves()
+    this.searchSpy = sandbox.spy(search)
     this.repos = proxyquire('~/src/apps/events/repos', {
       '../../lib/authorised-request': this.authorisedRequestStub,
       '../search/services': {
         search: this.searchSpy,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#saveEvent', () => {

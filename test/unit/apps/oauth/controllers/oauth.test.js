@@ -3,26 +3,21 @@ const { assign, set } = require('lodash')
 
 describe('OAuth controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.mockUuid = this.sandbox.stub()
+    this.mockUuid = sandbox.stub()
     this.mockConfig = {}
     this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
     })
     this.resMock = assign({}, globalRes, {
-      redirect: this.sandbox.spy(),
-      render: this.sandbox.spy(),
-      clearCookie: this.sandbox.spy(),
+      redirect: sandbox.spy(),
+      render: sandbox.spy(),
+      clearCookie: sandbox.spy(),
     })
     this.reqMock = assign({}, globalReq, {
       session: {},
     })
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#redirectOAuth', () => {
