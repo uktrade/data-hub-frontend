@@ -224,7 +224,7 @@
           <div class="section">
             <h2 class="heading-medium">Country</h2>
             <p>United Kingdom</p>
-            <input type="hidden" name="trading_address_country" value="">
+            <input type="hidden" name="trading_address_country" value="{{ formData.trading_address_country }}">
           </div>
         {% else %}
           {{ MultipleChoiceField({
