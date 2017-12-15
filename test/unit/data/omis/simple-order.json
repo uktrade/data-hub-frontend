@@ -64,5 +64,6 @@
   "net_cost": 0,
   "subtotal_cost": 0,
   "vat_cost": 0,
-  "total_cost": 0
+  "total_cost": 0,
+  "uk_region": "London"
 }
