@@ -7,9 +7,11 @@ const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels } = require('../labels')
 
 function renderExports (req, res) {
+  const { id, name } = res.locals.company
   const exportDetails = transformCompanyToExportDetailsView(res.locals.company)
 
   res
+    .breadcrumb(name, `/companies/${id}`)
     .breadcrumb('Exports')
     .render('companies/views/exports-view', {
       exportDetails,
