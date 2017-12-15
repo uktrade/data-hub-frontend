@@ -3,7 +3,6 @@ const { assign } = require('lodash')
 
 const {
   getSelectorForElementWithText,
-  getButtonWithText,
   getDetailsTableRowValue,
   getMetaListItemValueSelector,
 } = require('../../../helpers/selectors')
@@ -22,9 +21,6 @@ module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    saveButton: getButtonWithText('Save'),
-    addInteractionButton: getButtonWithText('Add interaction'),
-    contactsTab: 'a[href*="/contacts"][href*="/companies"]',
     firstCompanyFromList: '.c-entity-list li:first-child h3 a',
     firstName: '#field-first_name',
     firstNameError: 'label[for=field-first_name] span:nth-child(2)',
@@ -37,7 +33,6 @@ module.exports = {
     telephoneCountryCode: '#field-telephone_countrycode',
     telephoneCountryCodeError: 'label[for=field-telephone_countrycode] span:nth-child(2)',
     telephoneNumber: '#field-telephone_number',
-    telephoneNumberError: 'label[for=field-telephone_number] span:nth-child(2)',
     emailAddress: '#field-email',
     emailAddressError: 'label[for=field-email] span:nth-child(2)',
     acceptsEmailMarketingFromDit: getCheckBoxLabel('Accepts email marketing from DIT'),
