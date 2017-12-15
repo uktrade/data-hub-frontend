@@ -118,6 +118,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'MultipleChoiceField',
     type: 'radio',
     label: 'fields.vat_status.label',
+    hint: 'fields.vat_status.hint',
     options: [
       {
         value: 'outside_eu',
