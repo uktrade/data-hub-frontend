@@ -63,7 +63,6 @@
   {{ super() }}
   <!--[if gt IE 8]><!-->
     {% block javascript %}
-      <script src="{{ getAssetPath('trade-elements-components.js') }}"></script>
       <script src="{{ getAssetPath('app.js') }}"></script>
     {% endblock %}
   <!--<![endif]-->
