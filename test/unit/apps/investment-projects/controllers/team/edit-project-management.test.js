@@ -4,11 +4,10 @@ const { briefInvestmentSummaryLabels } = require('~/src/apps/investment-projects
 
 describe('Investment project, project management team, edit controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextStub = this.sandbox.stub()
-    this.flashStub = this.sandbox.stub()
-    this.getDataLabelsStub = this.sandbox.stub()
-    this.breadcrumbStub = function () { return this }
+    this.nextStub = sandbox.stub()
+    this.flashStub = sandbox.stub()
+    this.getDataLabelsStub = sandbox.stub()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
     this.reqMock = assign({}, globalReq, {
       session: {
         token: '1234',
@@ -16,8 +15,8 @@ describe('Investment project, project management team, edit controller', () => {
       flash: this.flashStub,
     })
     this.resMock = assign({}, globalRes, {
-      redirect: this.sandbox.spy(),
-      render: this.sandbox.spy(),
+      redirect: sandbox.spy(),
+      render: sandbox.spy(),
       breadcrumb: this.breadcrumbStub,
     })
 
@@ -26,10 +25,6 @@ describe('Investment project, project management team, edit controller', () => {
         getDataLabels: this.getDataLabelsStub,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#getHandler', () => {

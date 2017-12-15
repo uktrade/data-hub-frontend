@@ -3,8 +3,6 @@ const interactionData = require('~/test/unit/data/interactions/search-interactio
 
 describe('Interaction details controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.req = {
       params: {
         id: '1234',
@@ -15,18 +13,18 @@ describe('Interaction details controller', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
       locals: {
         interaction: interactionData,
       },
     }
 
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
 
     this.transformedInteractionDataMock = {}
 
-    this.transformInteractionResponseToViewRecordStub = this.sandbox.stub().returns(this.transformedInteractionDataMock)
+    this.transformInteractionResponseToViewRecordStub = sandbox.stub().returns(this.transformedInteractionDataMock)
 
     this.controller = proxyquire('~/src/apps/interactions/controllers/details', {
       '../transformers': {

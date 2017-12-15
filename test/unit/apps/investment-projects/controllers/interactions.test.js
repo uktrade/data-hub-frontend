@@ -3,12 +3,10 @@ const { transformInteractionToListItem } = require('~/src/apps/interactions/tran
 
 describe('Investment Interactions controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.transformedInteractions = {}
 
-    this.getInteractionsForInvestmentStub = this.sandbox.stub().resolves(interactionsListData)
-    this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformedInteractions)
+    this.getInteractionsForInvestmentStub = sandbox.stub().resolves(interactionsListData)
+    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformedInteractions)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/interactions', {
       '../../interactions/repos': {
@@ -30,16 +28,12 @@ describe('Investment Interactions controller', () => {
     }
 
     this.resMock = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
+      breadcrumb: sandbox.stub().returnsThis(),
       locals: {},
-      render: this.sandbox.spy(),
+      render: sandbox.spy(),
     }
 
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#renderInteractionList', () => {

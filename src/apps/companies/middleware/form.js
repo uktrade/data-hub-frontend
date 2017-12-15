@@ -1,75 +1,92 @@
 const { assign, find, get } = require('lodash')
 
-const metadataRepository = require('../../../lib/metadata')
+const { getOptions } = require('../../../lib/options')
 const { hqLabels } = require('../labels')
 const companyFormService = require('../services/form')
 const { transformCompanyToForm } = require('../transformers')
-const { transformObjectToOption } = require('../../transformers')
 
-function populateForm (req, res, next) {
-  const countryQueryParam = get(req.query, 'country')
-  const headquarterOptions = metadataRepository.headquarterOptions
-    .map(transformObjectToOption)
-    .map(option => {
-      return {
-        value: option.value,
-        label: hqLabels[option.label],
-      }
+function getHeadquarterOptions (token) {
+  return getOptions(token, 'headquarter-type')
+    .then((options) => {
+      const headquarterOptions = options.map(option => {
+        return {
+          value: option.value,
+          label: hqLabels[option.label],
+        }
+      })
+
+      headquarterOptions.unshift({
+        value: 'not_headquarters',
+        label: 'Not a headquarters',
+      })
+
+      return headquarterOptions
+    })
+}
+
+async function getCompanyFormOptions (token, formData, createdOn) {
+  return {
+    headquarters: await getHeadquarterOptions(token),
+    regions: await getOptions(token, 'uk-region', { createdOn, currentValue: formData.uk_region }),
+    sectors: await getOptions(token, 'sector', { createdOn, currentValue: formData.sector }),
+    employees: await getOptions(token, 'employee-range', { createdOn, currentValue: formData.employee_range }),
+    turnovers: await getOptions(token, 'turnover', { createdOn, currentValue: formData.turnover_range }),
+    countries: await getOptions(token, 'country', { createdOn, currentValue: formData.registered_address_country }),
+  }
+}
+
+async function populateForm (req, res, next) {
+  try {
+    const token = req.session.token
+    const createdOn = get(res.locals, 'company.created_on')
+
+    const defaultCompanyData = transformCompanyToForm(res.locals.companiesHouseRecord || res.locals.company)
+    const formData = assign({}, defaultCompanyData, req.body)
+
+    if (get(req.query, 'business_type')) {
+      formData.business_type = req.query.business_type
+    }
+
+    if (!get(formData.headquarter_type)) {
+      formData.headquarter_type = 'not_headquarters'
+    }
+
+    res.locals = assign({}, res.locals, {
+      formData,
+      options: await getCompanyFormOptions(token, formData, createdOn),
     })
 
-  headquarterOptions.unshift({
-    value: 'not_headquarters',
-    label: 'Not a headquarters',
-  })
-
-  res.locals.form = assign({}, res.locals.form, {
-    state: transformCompanyToForm(res.locals.companiesHouseRecord || res.locals.company) || {},
-  })
-
-  if (get(req.query, 'business_type')) {
-    const businessType = find(metadataRepository.businessTypeOptions, (type) => {
-      return type.id === req.query.business_type
-    })
-
-    res.locals.form.state.business_type = get(businessType, 'id')
+    next()
+  } catch (error) {
+    next(error)
   }
-
-  if (countryQueryParam && countryQueryParam === 'uk') {
-    const ukCountryOption = find(metadataRepository.countryOptions.map(transformObjectToOption), (option) => {
-      return option.label === 'United Kingdom'
-    })
-
-    res.locals.form.state.registered_address_country = ukCountryOption.value
-    res.locals.form.state.trading_address_country = ukCountryOption.value
-  }
-
-  res.locals.formData = assign({}, res.locals.form.state, req.body)
-
-  if (!get(res.locals, 'formData.headquarter_type')) {
-    res.locals.formData.headquarter_type = 'not_headquarters'
-  }
-
-  res.locals = assign({}, res.locals, {
-    headquarterOptions,
-    regionOptions: metadataRepository.regionOptions.map(transformObjectToOption),
-    sectorOptions: metadataRepository.sectorOptions.map(transformObjectToOption),
-    employeeOptions: metadataRepository.employeeOptions.map(transformObjectToOption),
-    turnoverOptions: metadataRepository.turnoverOptions.map(transformObjectToOption),
-    countryOptions: metadataRepository.countryOptions.map(transformObjectToOption),
-    businessType: req.query.business_type || get(res.locals, 'company.business_type.id'),
-    showTradingAddress: get(res.locals, 'form.state.trading_address_1'),
-  })
-
-  next()
 }
 
 async function handleFormPost (req, res, next) {
-  if (get(req.body, 'headquarter_type') === 'not_headquarters') {
-    req.body.headquarter_type = ''
-  }
-
   try {
-    const savedCompany = await companyFormService.saveCompanyForm(req.session.token, req.body)
+    const token = req.session.token
+    const countryQueryParam = get(req.query, 'country')
+
+    if (get(req.body, 'headquarter_type') === 'not_headquarters') {
+      req.body.headquarter_type = ''
+    }
+
+    if (countryQueryParam && countryQueryParam === 'uk') {
+      const countryOptions = await getOptions(token, 'country')
+      const ukCountryOption = find(countryOptions, (option) => {
+        return option.label === 'United Kingdom'
+      })
+
+      if (get(req.body, 'registered_address_1')) {
+        req.body.registered_address_country = ukCountryOption.value
+      }
+
+      if (get(req.body, 'trading_address_1')) {
+        req.body.trading_address_country = ukCountryOption.value
+      }
+    }
+
+    const savedCompany = await companyFormService.saveCompanyForm(token, req.body)
 
     req.flash('success', 'Company record updated')
     res.redirect(`/companies/${savedCompany.id}`)

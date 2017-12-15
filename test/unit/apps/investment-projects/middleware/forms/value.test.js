@@ -9,9 +9,8 @@ const metadataRepositoryStub = {
 
 describe('Investment form middleware - investment value', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.getAdvisersStub = this.sandbox.stub().resolves(advisorData)
-    this.nextSpy = this.sandbox.spy()
+    this.getAdvisersStub = sandbox.stub().resolves(advisorData)
+    this.nextSpy = sandbox.spy()
     this.resMock = {
       locals: {},
     }
@@ -22,10 +21,6 @@ describe('Investment form middleware - investment value', () => {
         getAdvisers: this.getAdvisersStub,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   it('should set form labels', () => {

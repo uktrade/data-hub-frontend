@@ -3,8 +3,6 @@ const auditLog = require('~/test/unit/data/audit/contact-audit.json')
 
 describe('Audit transformers', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.buildPaginationStub = sinon.sandbox.stub()
     this.transformers = proxyquire('~/src/apps/audit/transformers', {
       '../../lib/pagination': {
@@ -16,10 +14,6 @@ describe('Audit transformers', () => {
     }
 
     this.transformer = this.transformers.transformAuditLogToListItem(contactAuditLabels)
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   it('should return a formatted audit history item when there are changes', () => {

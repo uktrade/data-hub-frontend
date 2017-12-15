@@ -4,17 +4,12 @@ const investmentCollectioData = require('~/test/unit/data/investment/collection.
 
 describe('Investment projects collection middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
     this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
     })
     this.res = Object.assign({}, globalRes)
     this.controller = require('~/src/apps/investment-projects/middleware/collection')
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#getInvestmentProjectsCollection', () => {

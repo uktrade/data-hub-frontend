@@ -51,6 +51,7 @@ function setRequestBody (req, res, next) {
     'company_name',
     'contact_name',
     'primary_market',
+    'uk_region',
     'reference',
     'total_cost',
     'net_cost',

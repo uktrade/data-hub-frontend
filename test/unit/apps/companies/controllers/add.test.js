@@ -20,13 +20,13 @@ const mockMetadataRepository = {
   ],
 }
 
-describe('Company add controller', function () {
+describe('Company add controller', () => {
   let searchLimitedCompaniesStub
   let getDisplayCHStub
   let getCHCompanyStub
   let companyAddController
 
-  beforeEach(function () {
+  beforeEach(() => {
     searchLimitedCompaniesStub = sinon.stub().resolves(companiesHouseAndLtdCompanies)
     getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
@@ -47,7 +47,7 @@ describe('Company add controller', function () {
     })
   })
 
-  describe('Get step 1', function () {
+  describe('Get step 1', () => {
     it('should return options for company types', function (done) {
       const req = { session: {} }
       const expected = [
@@ -109,8 +109,8 @@ describe('Company add controller', function () {
       companyAddController.renderAddStepOne(req, res, next)
     })
   })
-  describe('Post step 1', function () {
-    describe('forward to next page', function () {
+  describe('Post step 1', () => {
+    describe('forward to next page', () => {
       it('should forward the user to step 2 when adding a uk ltd.', function (done) {
         const req = {
           body: {
@@ -162,7 +162,7 @@ describe('Company add controller', function () {
         companyAddController.postAddStepOne(req, res, next)
       })
     })
-    describe('errors', function () {
+    describe('errors', () => {
       it('should show an error when no option selected', function (done) {
         const req = {
           body: {},

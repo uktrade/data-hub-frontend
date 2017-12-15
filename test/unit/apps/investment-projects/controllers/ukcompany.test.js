@@ -2,10 +2,9 @@ const investmentData = { investor_company: { name: 'company' } }
 
 describe('investment uk company', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.updateInvestmentStub = this.sandbox.stub().resolves(investmentData)
-    this.searchStub = this.sandbox.stub().resolves()
-    this.transformerStub = this.sandbox.stub()
+    this.updateInvestmentStub = sandbox.stub().resolves(investmentData)
+    this.searchStub = sandbox.stub().resolves()
+    this.transformerStub = sandbox.stub()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/ukcompany', {
       '../../search/services': {
@@ -27,7 +26,7 @@ describe('investment uk company', () => {
       session: {
         token: 'abcd',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
     }
     this.res = {
       locals: {
@@ -35,11 +34,11 @@ describe('investment uk company', () => {
           name: 'investment',
         },
       },
-      render: this.sandbox.spy(),
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      redirect: this.sandbox.spy(),
+      render: sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      redirect: sandbox.spy(),
     }
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
   })
 
   describe('#selectUKCompany', () => {
@@ -69,7 +68,7 @@ describe('investment uk company', () => {
       context('server returns an error', () => {
         beforeEach(async () => {
           this.req.query.company = '1234'
-          this.error = this.sandbox.stub()
+          this.error = sandbox.stub()
 
           this.updateInvestmentStub.rejects(this.error)
 
@@ -158,7 +157,7 @@ describe('investment uk company', () => {
     context('when search causes an error', () => {
       beforeEach(async () => {
         this.req.query.term = 'test'
-        this.error = this.sandbox.stub()
+        this.error = sandbox.stub()
         this.searchStub.rejects(this.error)
         await this.controller.searchForUKCompany(this.req, this.res, this.next)
       })
@@ -210,7 +209,7 @@ describe('investment uk company', () => {
 
     context('when there is an error removing the company from the investment', () => {
       beforeEach(async () => {
-        this.error = this.sandbox.stub()
+        this.error = sandbox.stub()
 
         this.updateInvestmentStub.rejects(this.error)
         await this.controller.removeUKCompany(this.req, this.res, this.next)

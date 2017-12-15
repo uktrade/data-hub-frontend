@@ -3,15 +3,7 @@ const { assign } = require('lodash')
 const config = require('~/config')
 const { search } = require('~/src/apps/search/services')
 
-describe('Search service', function () {
-  beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
+describe('Search service', () => {
   describe('#search', () => {
     const searchTerm = 'testTerm'
     const searchEntity = 'company'

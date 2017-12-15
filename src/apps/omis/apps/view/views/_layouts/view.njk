@@ -63,7 +63,8 @@
     {{ MetaList({
       items: [
         { label: 'Client company', value: companyText | safe },
-        { label: 'Market (country)', value: order.primary_market }
+        { label: 'Market (country)', value: order.primary_market },
+        { label: 'UK region', value: order.uk_region }
       ],
       itemModifier: 'stacked'
     }) }}

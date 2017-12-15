@@ -2,8 +2,7 @@ const investmentData = { investor_company: { name: 'company' } }
 
 describe('Investment projects interactions middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.getInvestmentStub = this.sandbox.stub().returns(investmentData)
+    this.getInvestmentStub = sandbox.stub().returns(investmentData)
     this.middleware = proxyquire('~/src/apps/investment-projects/middleware/interactions', {
       '../repos': {
         getInvestment: this.getInvestmentStub,
@@ -24,11 +23,7 @@ describe('Investment projects interactions middleware', () => {
         },
       },
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#setInteractionsReturnUrl', () => {

@@ -17,23 +17,22 @@ function createMiddleware (updateCompany, filterActiveAdvisers) {
 
 describe('Companies account management middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.updateCompanyStub = this.sandbox.stub()
-    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.updateCompanyStub = sandbox.stub()
+    this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
     this.middleware = createMiddleware(this.updateCompanyStub.resolves({ id: '1' }), this.filterActiveAdvisersSpy)
 
     this.reqMock = {
       session: {
         token: 'efgh',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
       body: assign({}, accountManagementData),
     }
 
     this.resMock = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         company: {
           id: '1',
@@ -42,7 +41,7 @@ describe('Companies account management middleware', () => {
       },
     }
 
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.activeInactiveAdviserData = {
       count: 5,
@@ -54,10 +53,6 @@ describe('Companies account management middleware', () => {
         { id: '5', name: 'Jim Smith', is_active: false },
       ],
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#populateAccountManagementForm', () => {

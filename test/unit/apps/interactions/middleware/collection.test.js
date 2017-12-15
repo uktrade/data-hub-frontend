@@ -1,8 +1,6 @@
 const { assign } = require('lodash')
 describe('interaction collection middleware', () => {
   beforeEach(async () => {
-    this.sandbox = sinon.sandbox.create()
-
     this.req = {
       body: {},
       session: {
@@ -20,27 +18,23 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    this.next = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.reset()
+    this.next = sandbox.spy()
   })
 
   describe('#getInteractionCollection', () => {
     beforeEach(async () => {
-      this.transformApiResponseToSearchCollectionStub = this.sandbox.stub()
+      this.transformApiResponseToSearchCollectionStub = sandbox.stub()
 
-      this.searchStub = this.sandbox.stub().resolves({
+      this.searchStub = sandbox.stub().resolves({
         count: 1,
         results: [{ id: '1' }],
       })
 
       this.transformedInteractionStub = { id: '1234' }
       this.transformedInteractionWithUrlPrefixStub = assign({}, this.transformedInteractionStub, { urlPrefix: 'return' })
-      this.transformInteractionToListItemStub = this.sandbox.stub().returns(this.transformedInteractionStub)
+      this.transformInteractionToListItemStub = sandbox.stub().returns(this.transformedInteractionStub)
       this.transformInteractionListItemToHaveUrlPrefixStub =
-        this.sandbox.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
+        sandbox.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
 
       this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
         '../../search/services': {

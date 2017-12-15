@@ -3,18 +3,14 @@ const { contactAuditLabels } = require('~/src/apps/contacts/labels')
 
 describe('Contact audit controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.transformed = {}
-    this.getContactAuditLogStub = this.sandbox.stub().resolves(auditLog)
-    this.transformApiResponseToCollectionInnerStub = this.sandbox.stub().returns()
-    this.transformApiResponseToCollectionStub = this.sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
-    this.generatedTransformer = this.sandbox.stub()
-    this.transformAuditLogToListItemStub = this.sandbox.stub().returns(this.generatedTransformer)
+    this.getContactAuditLogStub = sandbox.stub().resolves(auditLog)
+    this.transformApiResponseToCollectionInnerStub = sandbox.stub().returns()
+    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.generatedTransformer = sandbox.stub()
+    this.transformAuditLogToListItemStub = sandbox.stub().returns(this.generatedTransformer)
 
-    this.breadcrumbStub = function () {
-      return this
-    }
+    this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/contacts/controllers/audit', {
       '../repos': {
@@ -37,10 +33,6 @@ describe('Contact audit controller', () => {
         token: '9999',
       },
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   it('should call the contact audit repository', (done) => {

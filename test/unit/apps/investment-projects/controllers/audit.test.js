@@ -4,10 +4,9 @@ const token = 'abcd'
 
 describe('Investment audit controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.stub()
-    this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(investmentProjectAuditData.results)
-    this.breadcrumbStub = function () { return this }
+    this.next = sandbox.stub()
+    this.getInvestmentProjectAuditLog = sandbox.stub().resolves(investmentProjectAuditData.results)
+    this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {
@@ -85,7 +84,7 @@ describe('Investment audit controller', () => {
       },
     }]
 
-    this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(badDate)
+    this.getInvestmentProjectAuditLog = sandbox.stub().resolves(badDate)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {
@@ -132,7 +131,7 @@ describe('Investment audit controller', () => {
       changes: null,
     }]
 
-    this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(nullChangeSet)
+    this.getInvestmentProjectAuditLog = sandbox.stub().resolves(nullChangeSet)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {
@@ -179,7 +178,7 @@ describe('Investment audit controller', () => {
       changes: {},
     }]
 
-    this.getInvestmentProjectAuditLog = this.sandbox.stub().resolves(emptyChangeSet)
+    this.getInvestmentProjectAuditLog = sandbox.stub().resolves(emptyChangeSet)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
       '../repos': {

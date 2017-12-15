@@ -20,7 +20,6 @@ const getRadioButtonWithText = (text) =>
 module.exports = {
   props: {},
   elements: {
-    addInteractionButton: getButtonWithText('Add interaction'),
     aStandardInteraction: getRadioButtonWithText('A standard interaction'),
     aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
     continueButton: getButtonWithText('Continue'),

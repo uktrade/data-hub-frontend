@@ -10,6 +10,7 @@ function transformOrderToListItem ({
   company,
   contact,
   primary_market,
+  uk_region,
   delivery_date,
   modified_on,
   created_on,
@@ -51,6 +52,10 @@ function transformOrderToListItem ({
         label: 'Updated',
         type: 'datetime',
         value: modified_on,
+      },
+      {
+        label: 'UK region',
+        value: uk_region,
       },
     ],
   }

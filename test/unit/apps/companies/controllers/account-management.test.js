@@ -1,6 +1,5 @@
 describe('Companies account management controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.controller = require('~/src/apps/companies/controllers/account-management')
     this.reqMock = {
       session: {
@@ -9,10 +8,10 @@ describe('Companies account management controller', () => {
       body: {},
     }
     this.resMock = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      title: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      title: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         entityName: 'company',
         returnLink: 'return',
@@ -23,11 +22,7 @@ describe('Companies account management controller', () => {
         advisers: [],
       },
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#renderAccountManagementEditPage', () => {

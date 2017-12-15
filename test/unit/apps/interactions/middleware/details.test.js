@@ -13,6 +13,7 @@ const contactsData = require('~/test/unit/data/contacts/contacts.json')
 const eventsData = require('~/test/unit/data/events/collection.json')
 
 const adviserFilters = require('~/src/apps/adviser/filters')
+const eventsRepos = require('~/src/apps/events/repos')
 
 const transformed = {
   id: '1',
@@ -21,15 +22,15 @@ const transformed = {
 
 describe('Interaction details middleware', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.saveInteractionStub = this.sandbox.stub()
-    this.fetchInteractionStub = this.sandbox.stub()
-    this.transformInteractionFormBodyToApiRequestStub = this.sandbox.stub()
-    this.transformInteractionResponseToViewRecordStub = this.sandbox.stub()
-    this.getContactsForCompanyStub = this.sandbox.stub()
-    this.getContactStub = this.sandbox.stub()
-    this.getDitCompanyStub = this.sandbox.stub()
-    this.filterActiveAdvisersSpy = this.sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.saveInteractionStub = sandbox.stub()
+    this.fetchInteractionStub = sandbox.stub()
+    this.transformInteractionFormBodyToApiRequestStub = sandbox.stub()
+    this.transformInteractionResponseToViewRecordStub = sandbox.stub()
+    this.getContactsForCompanyStub = sandbox.stub()
+    this.getContactStub = sandbox.stub()
+    this.getDitCompanyStub = sandbox.stub()
+    this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.getActiveEventsSpy = sandbox.spy(eventsRepos, 'getActiveEvents')
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
       '../repos': {
@@ -50,9 +51,6 @@ describe('Interaction details middleware', () => {
         getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
         getContact: this.getContactStub,
       },
-      '../../events/repos': {
-        getActiveEvents: this.sandbox.stub().resolves(eventsData.results),
-      },
       '../../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },
@@ -62,7 +60,7 @@ describe('Interaction details middleware', () => {
       session: {
         token: 'abcd',
       },
-      flash: this.sandbox.spy(),
+      flash: sandbox.spy(),
       body: assign({}, interactionData),
       query: {
         company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
@@ -73,9 +71,9 @@ describe('Interaction details middleware', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         company: {
           id: '1',
@@ -84,7 +82,7 @@ describe('Interaction details middleware', () => {
       },
     }
 
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
 
     this.activeInactiveAdviserData = {
       count: 5,
@@ -96,10 +94,6 @@ describe('Interaction details middleware', () => {
         { id: '5', name: 'Jim Smith', is_active: false },
       ],
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#postDetails', () => {
@@ -141,9 +135,9 @@ describe('Interaction details middleware', () => {
     context('when all fields are valid for updating an interaction found from the top level navigation', () => {
       it('should redirect on success', async () => {
         const res = assign({}, this.res, {
-          breadcrumb: this.sandbox.stub().returnsThis(),
-          render: this.sandbox.spy(),
-          redirect: this.sandbox.spy(),
+          breadcrumb: sandbox.stub().returnsThis(),
+          render: sandbox.spy(),
+          redirect: sandbox.spy(),
           locals: {},
         })
 
@@ -189,7 +183,7 @@ describe('Interaction details middleware', () => {
   describe('#getInteractionDetails', () => {
     context('when provided an interaction with a company associated', () => {
       beforeEach(async () => {
-        this.company = this.sandbox.mock()
+        this.company = sandbox.mock()
         this.interaction = assign({}, interactionData, { company: this.company })
         this.fetchInteractionStub.resolves(this.interaction)
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
@@ -221,7 +215,7 @@ describe('Interaction details middleware', () => {
           },
         })
 
-        this.company = this.sandbox.mock()
+        this.company = sandbox.mock()
         this.getDitCompanyStub.resolves(this.company)
 
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
@@ -237,12 +231,8 @@ describe('Interaction details middleware', () => {
     })
   })
 
-  describe('#getInteractionOOptions', () => {
+  describe('#getInteractionOptions', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
-        .get(`/adviser/?limit=100000&offset=0`)
-        .reply(200, this.activeInactiveAdviserData)
-
       this.res.locals.interaction = assign({}, interactionData, {
         dit_adviser: {
           id: this.activeInactiveAdviserData.results[4].id,
@@ -252,6 +242,10 @@ describe('Interaction details middleware', () => {
 
     context('when interaction', () => {
       beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.activeInactiveAdviserData)
+
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
         set(this.res.locals, 'interaction.dit_adviser', this.currentAdviser)
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
@@ -286,6 +280,12 @@ describe('Interaction details middleware', () => {
 
     context('when service delivery', () => {
       beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .get(`/adviser/?limit=100000&offset=0`)
+          .reply(200, this.activeInactiveAdviserData)
+          .post(`/v3/search/event`)
+          .reply(200, eventsData)
+
         this.req = assign({}, this.req, {
           params: {
             kind: 'service-delivery',
@@ -293,7 +293,10 @@ describe('Interaction details middleware', () => {
         })
 
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
-        this.res.locals.interaction.dit_adviser = this.currentAdviser
+        this.res.locals.interaction = {
+          created_on: '20170-01-01T10:20:30Z',
+          dit_adviser: this.currentAdviser,
+        }
 
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
@@ -315,11 +318,15 @@ describe('Interaction details middleware', () => {
         expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
       })
 
-      it('should set services data on locals', async () => {
+      it('should set services data on locals', () => {
         expect(this.res.locals.services).to.deep.equal(servicesData)
       })
 
-      it('should set events data on locals', async () => {
+      it('should get the active events for the record', () => {
+        expect(this.getActiveEventsSpy).to.be.calledWith(this.req.session.token, this.res.locals.interaction.created_on)
+      })
+
+      it('should set events data on locals', () => {
         expect(this.res.locals.events).to.deep.equal(eventsData.results)
       })
 

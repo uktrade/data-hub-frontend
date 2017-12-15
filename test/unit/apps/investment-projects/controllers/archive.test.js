@@ -1,20 +1,19 @@
 /* eslint camelcase: 0 */
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 
-describe('Investment archive controller', function () {
+describe('Investment archive controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.stub()
+    this.next = sandbox.stub()
     this.token = '1234'
-    this.archiveInvestmentProject = this.sandbox.stub().resolves(investmentData)
-    this.unarchiveInvestmentProject = this.sandbox.stub().resolves(investmentData)
+    this.archiveInvestmentProject = sandbox.stub().resolves(investmentData)
+    this.unarchiveInvestmentProject = sandbox.stub().resolves(investmentData)
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
       '../repos': {
         archiveInvestmentProject: this.archiveInvestmentProject,
         unarchiveInvestmentProject: this.unarchiveInvestmentProject,
       },
     })
-    this.flashStub = this.sandbox.stub()
+    this.flashStub = sandbox.stub()
     this.session = {
       token: this.token,
       user: {
@@ -115,7 +114,7 @@ describe('Investment archive controller', function () {
     it('should pass on the form values and error if validation failed.', (done) => {
       this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
         '../repos': {
-          archiveInvestmentProject: this.sandbox.stub().rejects({
+          archiveInvestmentProject: sandbox.stub().rejects({
             statusCode: 400,
             error: 'Some error',
           }),
@@ -147,7 +146,7 @@ describe('Investment archive controller', function () {
       const error = new Error()
       this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
         '../repos': {
-          archiveInvestmentProject: this.sandbox.stub().rejects(error),
+          archiveInvestmentProject: sandbox.stub().rejects(error),
           unarchiveInvestmentProject: this.unarchiveInvestmentProject,
         },
       })

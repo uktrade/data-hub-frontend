@@ -29,9 +29,8 @@ const contactsMockData = [{
 
 describe('OMIS create confirm controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
-    this.orderSaveStub = this.sandbox.stub()
+    this.nextSpy = sandbox.spy()
+    this.orderSaveStub = sandbox.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
       '../../../../../lib/metadata': {
@@ -46,10 +45,6 @@ describe('OMIS create confirm controller', () => {
     })
 
     this.controller = new this.ControllerClass({ route: '/' })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('getValues()', () => {
@@ -110,14 +105,14 @@ describe('OMIS create confirm controller', () => {
 
   describe('successHandler()', () => {
     beforeEach(() => {
-      this.resetSpy = this.sandbox.spy()
-      this.destroySpy = this.sandbox.spy()
+      this.resetSpy = sandbox.spy()
+      this.destroySpy = sandbox.spy()
       this.reqMock = Object.assign({}, globalReq, {
         session: {
           token: 'token-12345',
         },
         sessionModel: {
-          toJSON: this.sandbox.stub().returns({
+          toJSON: sandbox.stub().returns({
             'csrf-secret': 'secret-key',
             errors: {},
             foo: 'bar',
@@ -168,7 +163,7 @@ describe('OMIS create confirm controller', () => {
 
       it('should save an order', (done) => {
         const resMock = {
-          redirect: this.sandbox.spy(),
+          redirect: sandbox.spy(),
         }
         const nextMock = (error) => {
           try {
