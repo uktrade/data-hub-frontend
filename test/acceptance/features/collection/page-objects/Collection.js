@@ -11,10 +11,6 @@ const getSelectorForMetaListItemValue = (text) => {
 }
 
 module.exports = {
-  elements: {
-    pagination: '.c-pagination',
-    filterTags: '.c-collection__filter-tag',
-  },
   commands: [
     {
       getSelectorForResultsCountHeader (collectionType) {

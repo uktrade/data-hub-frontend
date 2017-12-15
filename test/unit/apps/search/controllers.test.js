@@ -15,10 +15,9 @@ describe('Search Controller #renderSearchResults', () => {
   }
 
   beforeEach(async () => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.spy()
-    this.renderFunction = this.sandbox.spy()
-    this.breadcrumbStub = function () { return this }
+    this.next = sandbox.spy()
+    this.renderFunction = sandbox.spy()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.req = {
       session: { token: 'abcd' },
@@ -32,10 +31,6 @@ describe('Search Controller #renderSearchResults', () => {
       breadcrumb: this.breadcrumbStub,
       render: this.renderFunction,
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   context('for invalid paths', () => {

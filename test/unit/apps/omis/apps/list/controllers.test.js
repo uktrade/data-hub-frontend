@@ -1,7 +1,5 @@
 describe('OMIS list controllers', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-
     this.req = {
       session: {
         token: 'abcd',
@@ -9,11 +7,11 @@ describe('OMIS list controllers', () => {
       query: {},
     }
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
       query: {},
     }
-    this.buildSelectedFiltersSummaryStub = this.sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/omis/apps/list/controllers', {
       '../../../builders': {
@@ -32,10 +30,6 @@ describe('OMIS list controllers', () => {
     })
   })
 
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('renderCollectionList()', () => {
     beforeEach(() => {
       this.controller.renderCollectionList(this.req, this.res)
@@ -46,9 +40,9 @@ describe('OMIS list controllers', () => {
     })
 
     it('should pass the correct data to the view', () => {
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('selectedFilters'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('sortForm'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('filtersFields'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('selectedFilters'))
     })
 
     it('should build filters summary', () => {
@@ -73,9 +67,9 @@ describe('OMIS list controllers', () => {
     })
 
     it('should pass the correct data to the view', () => {
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(this.sandbox.match.any, this.sandbox.match.hasOwn('selectedFilters'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('sortForm'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('filtersFields'))
+      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('selectedFilters'))
     })
 
     it('should build filters summary', () => {

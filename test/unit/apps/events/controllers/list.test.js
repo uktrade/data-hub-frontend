@@ -26,8 +26,7 @@ const countryAndUkRegionMacros = [
 
 describe('Event list controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
     this.reqMock = {
       session: {
         token: 'abcd',
@@ -35,13 +34,13 @@ describe('Event list controller', () => {
       query: {},
     }
     this.resMock = {
-      render: this.sandbox.spy(),
+      render: sandbox.spy(),
       query: {},
       locals: {
         advisers: advisersData,
       },
     }
-    this.eventFiltersFieldsStub = this.sandbox.stub()
+    this.eventFiltersFieldsStub = sandbox.stub()
     this.controller = proxyquire('~/src/apps/events/controllers/list', {
       '../macros': {
         eventFiltersFields: this.eventFiltersFieldsStub,
@@ -65,10 +64,6 @@ describe('Event list controller', () => {
     this.nockScope = nock(config.apiRoot)
       .get(`/adviser/?limit=100000&offset=0`)
       .reply(200, { results: advisers })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#renderEventList', () => {

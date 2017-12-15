@@ -2,8 +2,7 @@ const { assign } = require('lodash')
 
 describe('Create interaction, step 1', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.selectKindFormConfigStub = this.sandbox.spy()
+    this.selectKindFormConfigStub = sandbox.spy()
 
     this.create = proxyquire('~/src/apps/interactions/controllers/create', {
       '../macros': {
@@ -11,7 +10,6 @@ describe('Create interaction, step 1', () => {
       },
     })
 
-    this.sandbox = sinon.sandbox.create()
     this.req = {
       query: {},
       session: {
@@ -21,15 +19,15 @@ describe('Create interaction, step 1', () => {
     }
 
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      redirect: this.sandbox.spy(),
-      render: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      redirect: sandbox.spy(),
+      render: sandbox.spy(),
       locals: {
         returnLink: '/return/',
       },
     }
 
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
   })
 
   describe('#postcreate', () => {

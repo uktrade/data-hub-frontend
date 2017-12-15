@@ -42,6 +42,15 @@ const collectionFiltersFields = flatten([
     options () {
       return metadataRepo.omisMarketOptions.map(transformObjectToOption)
     },
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    label: 'UK region',
+    name: 'uk_region',
+    initialOption: 'All regions',
+    options () {
+      return metadataRepo.regionOptions.map(transformObjectToOption)
+    },
   }],
 ]).map(filter => {
   return assign({}, filter, {

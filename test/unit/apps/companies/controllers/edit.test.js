@@ -3,12 +3,11 @@ const { assign } = require('lodash')
 
 describe('Company export controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.saveCompany = this.sandbox.stub()
-    this.breadcrumbStub = this.sandbox.stub().returnsThis()
-    this.renderSpy = this.sandbox.spy()
-    this.nextSpy = this.sandbox.spy()
-    this.redirectSpy = this.sandbox.spy()
+    this.saveCompany = sandbox.stub()
+    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.renderSpy = sandbox.spy()
+    this.nextSpy = sandbox.spy()
+    this.redirectSpy = sandbox.spy()
 
     const ukOtherCompanyOptions = [
       {
@@ -70,10 +69,6 @@ describe('Company export controller', () => {
 
     this.reqMock = this.buildReq({})
     this.resMock = this.buildRes({})
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('getBusinessTypeLabel()', () => {
@@ -171,7 +166,9 @@ describe('Company export controller', () => {
     it('should treat non-uk company as foreign', () => {
       const reqMock = this.buildReq({ query: { country: 'non-uk' } })
       const resMock = this.buildRes({
-        locals: {},
+        locals: {
+          formData: {},
+        },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
       expect(this.renderSpy.args[0][1].isForeign).to.equal(true)
@@ -182,7 +179,9 @@ describe('Company export controller', () => {
       const resMock = this.buildRes({
         locals: {
           company: { 'uk_based': false },
-          businessType: '9ad14e94-5d95-e211-a939-e4115bead28a',
+          formData: {
+            business_type: '9ad14e94-5d95-e211-a939-e4115bead28a',
+          },
         },
         companiesHouseRecord: { country: 'fr' },
       })
@@ -195,6 +194,7 @@ describe('Company export controller', () => {
       const resMock = this.buildRes({
         locals: {
           company: { 'uk_based': true },
+          formData: {},
         },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
@@ -206,10 +206,39 @@ describe('Company export controller', () => {
       const resMock = this.buildRes({
         locals: {
           companiesHouseCategory: 'limited company',
+          formData: {},
         },
       })
       this.controller.renderForm(reqMock, resMock, this.nextSpy)
       expect(this.renderSpy.args[0][1].businessTypeLabel).to.equal('UK limited company')
+    })
+
+    it('should hide the trading address if there is\'t one', () => {
+      const reqMock = this.buildReq({ query: {} })
+      const resMock = this.buildRes({
+        locals: {
+          companiesHouseCategory: 'limited company',
+          formData: {},
+        },
+      })
+      this.controller.renderForm(reqMock, resMock, this.nextSpy)
+
+      expect(this.renderSpy.args[0][1].showTradingAddress).to.eq(false)
+    })
+
+    it('should show the trading address if there is one', () => {
+      const reqMock = this.buildReq({ query: {} })
+      const resMock = this.buildRes({
+        locals: {
+          companiesHouseCategory: 'limited company',
+          formData: {
+            trading_address_1: 'test',
+          },
+        },
+      })
+      this.controller.renderForm(reqMock, resMock, this.nextSpy)
+
+      expect(this.renderSpy.args[0][1].showTradingAddress).to.eq(true)
     })
   })
 })

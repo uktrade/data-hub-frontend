@@ -5,19 +5,14 @@ const token = 'abcd'
 
 describe('Event repos', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.authorisedRequestStub = this.sandbox.stub().resolves()
-    this.searchSpy = this.sandbox.spy(search)
+    this.authorisedRequestStub = sandbox.stub().resolves()
+    this.searchSpy = sandbox.spy(search)
     this.repos = proxyquire('~/src/apps/events/repos', {
       '../../lib/authorised-request': this.authorisedRequestStub,
       '../search/services': {
         search: this.searchSpy,
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#saveEvent', () => {
@@ -87,19 +82,55 @@ describe('Event repos', () => {
           .reply(200, this.eventCollection)
       })
 
-      context('and no current event', () => {
+      context('and when asked for all active events', () => {
         beforeEach(async () => {
-          this.events = await this.repos.getActiveEvents('1234')
+          const now = new Date()
+          this.clock = sinon.useFakeTimers(now.getTime())
+
+          this.currentFormattedTime = now.toISOString()
+
+          this.events = await this.repos.getActiveEvents(token)
         })
 
-        it('should call search to get the active events', () => {
+        afterEach(() => {
+          this.clock.restore()
+        })
+
+        it('should call search to get all active events today', () => {
           expect(this.searchSpy).to.be.calledWith({
             searchEntity: 'event',
             requestBody: {
               sortby: 'name:asc',
-              disabled_on_exists: false,
+              disabled_on: {
+                exists: false,
+                after: this.currentFormattedTime,
+              },
             },
-            token: '1234',
+            token,
+            limit: 100000,
+            isAggregation: false,
+          })
+        })
+      })
+
+      context('and when asked for all active events at a point in time', () => {
+        beforeEach(async () => {
+          const now = new Date()
+          this.createdOn = now.toISOString()
+          this.events = await this.repos.getActiveEvents(token, this.createdOn)
+        })
+
+        it('should call search to get all active events on the specified date', () => {
+          expect(this.searchSpy).to.be.calledWith({
+            searchEntity: 'event',
+            requestBody: {
+              sortby: 'name:asc',
+              disabled_on: {
+                exists: false,
+                after: this.createdOn,
+              },
+            },
+            token,
             limit: 100000,
             isAggregation: false,
           })

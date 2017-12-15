@@ -5,9 +5,8 @@ const mockInvestmentDetails = {
 
 describe('Investment create controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.stub()
-    this.breadcrumbStub = function () {
+    this.next = sandbox.stub()
+    this.breadcrumbStub = () => {
       return this
     }
 
@@ -23,10 +22,6 @@ describe('Investment create controller', () => {
         ],
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#createGetHandler', () => {

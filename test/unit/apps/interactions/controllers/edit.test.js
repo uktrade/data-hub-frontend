@@ -6,7 +6,6 @@ describe('Interaction edit controller', () => {
   const currentUserTeam = 'team1'
 
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
     this.controller = require('~/src/apps/interactions/controllers/edit')
     this.req = {
       session: {
@@ -26,10 +25,10 @@ describe('Interaction edit controller', () => {
       },
     }
     this.res = {
-      breadcrumb: this.sandbox.stub().returnsThis(),
-      title: this.sandbox.stub().returnsThis(),
-      render: this.sandbox.spy(),
-      redirect: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      title: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
+      redirect: sandbox.spy(),
       locals: {
         entityName: 'company',
         returnLink: 'return',
@@ -38,11 +37,7 @@ describe('Interaction edit controller', () => {
         },
       },
     }
-    this.nextSpy = this.sandbox.spy()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
+    this.nextSpy = sandbox.spy()
   })
 
   describe('#renderEditPage', () => {

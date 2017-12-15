@@ -1,12 +1,12 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const { assign } = require('lodash')
 
-describe('contact form service', function () {
+describe('contact form service', () => {
   let contactFormService
   let postedData
   let throwError
 
-  beforeEach(function () {
+  beforeEach(() => {
     throwError = false
 
     contactFormService = proxyquire('~/src/apps/contacts/services/form', {
@@ -31,7 +31,7 @@ describe('contact form service', function () {
     })
   })
 
-  describe('convert API contact into form format', function () {
+  describe('convert API contact into form format', () => {
     const contactData = {
       id: '50680966-f5e1-e311-8a2b-e4115bead28a',
       name: 'Zac Baman',
@@ -72,7 +72,7 @@ describe('contact form service', function () {
       adviser: null,
     }
 
-    it('should convert a fully populated expanded contact into a flat form format', function () {
+    it('should convert a fully populated expanded contact into a flat form format', () => {
       const contact = assign({}, contactData)
 
       const expected = {
@@ -104,7 +104,7 @@ describe('contact form service', function () {
       expect(actual).to.deep.equal(expected)
     })
 
-    it('should handle blank and null fields', function () {
+    it('should handle blank and null fields', () => {
       const contact = assign({}, contactData, {
         last_name: null,
         job_title: null,
@@ -146,7 +146,7 @@ describe('contact form service', function () {
       expect(actual).to.deep.equal(expected)
     })
 
-    it('should handle a null contact', function () {
+    it('should handle a null contact', () => {
       expect(contactFormService.getContactAsFormData(null)).to.be.null
     })
 
@@ -162,7 +162,7 @@ describe('contact form service', function () {
       })
     })
   })
-  describe('save contact form', function () {
+  describe('save contact form', () => {
     const formData = {
       id: '50680966-f5e1-e311-8a2b-e4115bead28a',
       company: '44ea1e01-f5e1-e311-8a2b-e4115bead28a',
@@ -186,7 +186,7 @@ describe('contact form service', function () {
       notes: 'Some notes',
     }
 
-    it('should accept a fully populated contact and convert it to an api format', function () {
+    it('should accept a fully populated contact and convert it to an api format', () => {
       const expected = {
         id: '50680966-f5e1-e311-8a2b-e4115bead28a',
         company: {
@@ -223,7 +223,7 @@ describe('contact form service', function () {
         })
     })
 
-    it('should return a copy of the saved contact', function () {
+    it('should return a copy of the saved contact', () => {
       delete formData.id
 
       return contactFormService.saveContactForm('1234', formData)
@@ -232,7 +232,7 @@ describe('contact form service', function () {
         })
     })
 
-    it('should throw errors received from the repository if the save fails', function () {
+    it('should throw errors received from the repository if the save fails', () => {
       throwError = true
 
       return contactFormService.saveContactForm('1234', formData)

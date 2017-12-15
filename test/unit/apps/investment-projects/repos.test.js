@@ -1,4 +1,3 @@
-
 const config = require('~/config')
 
 const {
@@ -15,14 +14,6 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
 
 describe('Investment repository', () => {
-  beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
-  })
-
   describe('#getCompanyInvestmentProjects', () => {
     beforeEach(async () => {
       this.nockScope = nock(config.apiRoot)

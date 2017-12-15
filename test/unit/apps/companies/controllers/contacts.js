@@ -2,8 +2,7 @@ const { assign } = require('lodash')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
-    this.sandbox = sinon.sandbox.create()
-    this.next = this.sandbox.spy()
+    this.next = sandbox.spy()
     this.resMock = assign({}, globalRes, {
       locals: {
         company: {
@@ -11,8 +10,8 @@ describe('Company contact list controller', () => {
           name: 'mock company',
         },
       },
-      breadcrumb: function () { return this },
-      render: this.sandbox.spy(),
+      breadcrumb: sandbox.stub().returnsThis(),
+      render: sandbox.spy(),
       query: {},
     })
     this.reqMock = assign({}, globalReq, {
@@ -20,7 +19,7 @@ describe('Company contact list controller', () => {
         token: 'abcd',
       },
     })
-    this.buildSelectedFiltersSummaryStub = this.sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/contacts', {
       '../../builders': {
@@ -33,10 +32,6 @@ describe('Company contact list controller', () => {
         ],
       },
     })
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('#renderContacts', () => {

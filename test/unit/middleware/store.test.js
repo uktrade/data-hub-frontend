@@ -1,15 +1,10 @@
 describe('Store middleware', () => {
   beforeEach(() => {
     this.storeMiddleware = require('~/src/middleware/store')()
-    this.sandbox = sinon.sandbox.create()
-    this.nextSpy = this.sandbox.spy()
+    this.nextSpy = sandbox.spy()
     this.reqMock = {
       session: {},
     }
-  })
-
-  afterEach(() => {
-    this.sandbox.restore()
   })
 
   describe('store middleware sets up correctly', () => {
