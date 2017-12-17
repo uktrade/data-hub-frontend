@@ -8,7 +8,7 @@ const {
   each,
   extend,
   find,
-  findIndex,
+  includes,
 } = require('lodash')
 
 /**
@@ -21,48 +21,42 @@ const {
  * @return {Function}
  */
 function init () {
-  let breadcrumbs = []
+  return function (req, res, next) {
+    let breadcrumbs = []
 
-  function exists (breadcrumb) {
-    return findIndex(breadcrumbs, breadcrumb) !== -1
-  }
-
-  function addBreadcrumbs (name, url) {
-    if (arguments.length === 1) {
-      if (isArray(name)) {
-        each(name, (breadcrumb) => {
-          if (!exists(breadcrumb)) {
-            breadcrumbs.push(breadcrumb)
-          }
-        })
-      } else if (isObject(name)) {
-        if (!exists(name)) {
-          breadcrumbs.push(name)
-        }
-      } else {
-        if (!exists(name)) {
-          breadcrumbs.push({ name: name })
-        }
+    function addBreadcrumb (item) {
+      if (!includes(breadcrumbs, item)) {
+        breadcrumbs.push(item)
       }
-    } else if (arguments.length === 2) {
-      if (!exists(name)) {
-        breadcrumbs.push({
+    }
+
+    function addBreadcrumbs (name, url) {
+      if (arguments.length === 0) {
+        return breadcrumbs
+      }
+
+      if (arguments.length === 1) {
+        if (isArray(name)) {
+          each(name, addBreadcrumb)
+        } else if (isObject(name)) {
+          addBreadcrumb(name)
+        } else {
+          addBreadcrumb({ name })
+        }
+      } else if (arguments.length === 2) {
+        addBreadcrumb({
           name: name,
           url: url,
         })
       }
-    } else {
-      return breadcrumbs
+
+      return this
     }
 
-    return this
-  }
+    function cleanBreadcrumbs () {
+      breadcrumbs = []
+    }
 
-  function cleanBreadcrumbs () {
-    breadcrumbs = []
-  }
-
-  return function (req, res, next) {
     cleanBreadcrumbs()
     res.breadcrumb = addBreadcrumbs
     next()
