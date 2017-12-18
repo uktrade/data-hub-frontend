@@ -71,7 +71,7 @@ class EditPaymentReconciliationController extends EditController {
   }
 
   async successHandler (req, res, next) {
-    const nextUrl = `/omis/${res.locals.order.id}/payment-receipt`
+    const nextUrl = `/omis/reconciliation/${res.locals.order.id}/payment-receipt`
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
 
     // convert pounds to pence
