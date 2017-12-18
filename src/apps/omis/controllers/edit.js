@@ -43,6 +43,8 @@ class EditController extends FormController {
     delete sessionValues.errorValues
     delete sessionValues.errors
 
+    const dateFields = ['delivery_date']
+
     const orderValues = mapValues(req.form.options.fields, (fieldOptions, key) => {
       const newValue = get(res.locals, `order.${key}`)
 
@@ -62,23 +64,16 @@ class EditController extends FormController {
         return flatten([newValue])
       }
 
+      const parsedDate = dateFns.parse(newValue)
+      if (dateFields.includes(key) && dateFns.isValid(parsedDate)) {
+        return dateFns.format(parsedDate, longDateFormat)
+      }
+
       return newValue
     })
 
-    const exemptFields = ['vat_number', 'po_number', 'amount']
     // combine order values and error values
-    let combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
-    // convert dates to default format
-    combinedValues = mapValues(combinedValues, (value, key) => {
-      if (typeof value === 'string' && !exemptFields.includes(key)) {
-        const parsedDate = dateFns.parse(value.toString())
-        if (dateFns.isValid(parsedDate)) {
-          return dateFns.format(parsedDate, longDateFormat)
-        }
-      }
-
-      return value
-    })
+    const combinedValues = Object.assign({}, orderValues, sessionValues, errorValues)
 
     const filtered = pickBy(combinedValues, (value) => {
       return !isUndefined(value) && !isNull(value)
