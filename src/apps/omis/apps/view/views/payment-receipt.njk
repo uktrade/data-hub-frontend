@@ -113,9 +113,15 @@
   {% endfor %}
 
   <ul class="list-spaced u-print-hide">
-    <li>
-      <a href="/omis/{{ order.id }}">Return to order</a>
-    </li>
+    {%- if reconciliationJourney -%}
+      <li>
+        <a href="/omis/reconciliation">Reconcile another order</a>
+      </li>
+    {%- else -%}
+      <li>
+        <a href="/omis/{{ order.id }}">Return to order</a>
+      </li>
+    {%- endif -%}
     <li>
       <button class="u-icon-print u-no-js-hidden js-print-dialog">Print payment receipt</button></li>
     </li>
