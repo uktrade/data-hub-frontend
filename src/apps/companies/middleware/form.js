@@ -24,14 +24,14 @@ function getHeadquarterOptions (token) {
     })
 }
 
-async function getCompanyFormOptions (token, formData, createdOn) {
+async function getCompanyFormOptions (token, createdOn) {
   return {
     headquarters: await getHeadquarterOptions(token),
-    regions: await getOptions(token, 'uk-region', { createdOn, currentValue: formData.uk_region }),
-    sectors: await getOptions(token, 'sector', { createdOn, currentValue: formData.sector }),
-    employees: await getOptions(token, 'employee-range', { createdOn, currentValue: formData.employee_range }),
-    turnovers: await getOptions(token, 'turnover', { createdOn, currentValue: formData.turnover_range }),
-    countries: await getOptions(token, 'country', { createdOn, currentValue: formData.registered_address_country }),
+    regions: await getOptions(token, 'uk-region', { createdOn }),
+    sectors: await getOptions(token, 'sector', { createdOn }),
+    employees: await getOptions(token, 'employee-range', { createdOn }),
+    turnovers: await getOptions(token, 'turnover', { createdOn }),
+    countries: await getOptions(token, 'country', { createdOn }),
   }
 }
 
@@ -53,7 +53,7 @@ async function populateForm (req, res, next) {
 
     res.locals = assign({}, res.locals, {
       formData,
-      options: await getCompanyFormOptions(token, formData, createdOn),
+      options: await getCompanyFormOptions(token, createdOn),
     })
 
     next()
