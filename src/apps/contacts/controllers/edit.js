@@ -1,9 +1,10 @@
+const { get } = require('lodash')
+
 const { containsFormData } = require('../../../lib/controller-utils')
 const contactFormService = require('../services/form')
 const { contactLabels } = require('../labels')
-const metadataRepository = require('../../../lib/metadata')
 const companyRepository = require('../../companies/repos')
-const { transformObjectToOption } = require('../../transformers')
+const { getOptions } = require('../../../lib/options')
 
 /**
  * GET the edit detail screen, used for editing contacts.
@@ -12,6 +13,7 @@ const { transformObjectToOption } = require('../../transformers')
  * @param {Object} res
  * @param {Object} next
  */
+// Todo - rewrite to use form generator
 async function editDetails (req, res, next) {
   try {
     const token = req.session.token
@@ -47,9 +49,8 @@ async function editDetails (req, res, next) {
       res.breadcrumb(`Add contact at ${res.locals.company.name}`)
     }
 
-    // Labels and options needed for the form and error display
     res.locals.contactLabels = contactLabels
-    res.locals.countryOptions = metadataRepository.countryOptions.map(transformObjectToOption)
+    res.locals.countryOptions = await getOptions(token, 'country', { createdOn: get(res.locals, 'contact.created_on') })
 
     res.render('contacts/views/edit')
   } catch (error) {
