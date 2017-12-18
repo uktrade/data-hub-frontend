@@ -2,13 +2,11 @@ const { assign, merge, omit } = require('lodash')
 
 const { buildSelectedFiltersSummary } = require('../../../builders')
 const {
-  collectionFiltersFields,
+  filtersFields,
   collectionSortForm,
-  reconciliationFiltersFields,
-  reconciliationSortForm,
 } = require('./macros')
 
-function renderCollectionList (req, res) {
+function renderList (req, res) {
   const sortForm = merge({}, collectionSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
@@ -16,35 +14,15 @@ function renderCollectionList (req, res) {
     ],
   })
 
-  const selectedFilters = buildSelectedFiltersSummary(collectionFiltersFields, req.query)
+  const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('omis/apps/list/views/list-collection', {
+  res.render('omis/apps/list/views/list', {
     sortForm,
     selectedFilters,
-    filtersFields: collectionFiltersFields,
+    filtersFields,
   })
-}
-
-function renderReconciliationList (req, res) {
-  const sortForm = merge({}, reconciliationSortForm, {
-    hiddenFields: assign({}, omit(req.query, 'sortby')),
-    children: [
-      { value: req.query.sortby },
-    ],
-  })
-
-  const selectedFilters = buildSelectedFiltersSummary(reconciliationFiltersFields, req.query)
-
-  res
-    .breadcrumb('Payment reconciliation')
-    .render('omis/apps/list/views/list-reconciliation', {
-      sortForm,
-      selectedFilters,
-      filtersFields: reconciliationFiltersFields,
-    })
 }
 
 module.exports = {
-  renderCollectionList,
-  renderReconciliationList,
+  renderList,
 }
