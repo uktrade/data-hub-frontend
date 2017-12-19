@@ -9,10 +9,10 @@ Feature: Search
 
     Given I navigate to the event list page
     When I click the "Add event" link
-    And I populate the create event form to search
+    And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I search for the event
+    When I search for the created event
     Then I verify the search tabs are displayed
       | text                |
       | Companies           |
@@ -33,7 +33,7 @@ Feature: Search
 
     Given a company is created
     Then I see the success message
-    When I search for the company
+    When I search for the created company
     Then I verify the search tabs are displayed
       | text                |
       | Companies           |
