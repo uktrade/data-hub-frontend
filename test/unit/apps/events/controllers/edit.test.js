@@ -45,6 +45,13 @@ const metadataMock = {
   ],
 }
 
+function getFormFieldOptions (res, fieldName) {
+  const renderOptions = res.render.firstCall.args[1]
+  const formFields = renderOptions.eventForm.children
+  const field = find(formFields, field => field.name === fieldName)
+  return field.options || field.children[0].options
+}
+
 describe('Event edit controller', () => {
   const currentUserTeam = 'team1'
 
@@ -348,11 +355,4 @@ describe('Event edit controller', () => {
       })
     })
   })
-
-  function getFormFieldOptions (res, fieldName) {
-    const renderOptions = res.render.firstCall.args[1]
-    const formFields = renderOptions.eventForm.children
-    const field = find(formFields, field => field.name === fieldName)
-    return field.options || field.children[0].options
-  }
 })
