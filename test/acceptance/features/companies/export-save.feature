@@ -4,8 +4,6 @@ Feature: Company export save
   @companies-export-save--save
   Scenario: Save company export details
 
-    Given a company is created
-    When I navigate to the company "Export" tab
     And the Exports details are displayed
       | key                          | value                      |
       | Export win category          | None                       |
@@ -17,3 +15,5 @@ Feature: Company export save
       | Export win category          | company.exportWinCategory  |
       | Currently exporting to       | None                       |
       | Future countries of interest | None                       |
+    Given I navigate to company fixture Lambda plc
+    When I click the Export local nav link
