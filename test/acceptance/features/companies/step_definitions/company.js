@@ -10,16 +10,6 @@ const dashboardPage = `${process.env.QA_HOST}/`
 defineSupportCode(({ When, Then }) => {
   const Company = client.page.Company()
   const Search = client.page.Search()
-  const Location = client.page.Location()
-
-  When(/^I navigate to the companies (.+) page$/, async function (pageName) { // TODO please use work in Location (remove this)
-    const tag = `@${pageName}`
-
-    await Location
-      .section.localNav
-      .waitForElementPresent(tag)
-      .click(tag)
-  })
 
   When(/^a "UK private or public limited company" is created$/, async function () {
     await client
