@@ -25,7 +25,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the contacts list by company/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@company')
-      .setValue('@company', getUid(this.state.company.name))
+      .setValue('@company', this.state.company.name)
       .sendKeys('@company', [ client.Keys.ENTER ])
       .wait() // wait for xhr
   })
