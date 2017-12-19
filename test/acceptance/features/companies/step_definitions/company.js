@@ -45,7 +45,7 @@ defineSupportCode(({ When, Then }) => {
       .wait() // wait for backend to sync
   })
 
-  When(/^a new "Foreign company" is created$/, async function () {
+  When(/^a "Foreign company" is created$/, async function () {
     await client
       .url(companySearchPage)
 
