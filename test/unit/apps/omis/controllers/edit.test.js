@@ -201,6 +201,7 @@ describe('OMIS EditController', () => {
             fields: {
               foo: {},
               fizz: {},
+              delivery_date: {},
             },
           },
         },
@@ -315,8 +316,48 @@ describe('OMIS EditController', () => {
       })
     })
 
-    context('when a value contains a date', () => {
+    context('when a field marked as a date field contains a date', () => {
       it('should format it using the config format', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              delivery_date: '2017-01-10',
+            },
+          },
+        }
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({
+            delivery_date: '10 January 2017',
+          })
+          done()
+        }
+
+        this.controller.getValues(this.reqMock, resMock, nextMock)
+      })
+    })
+
+    context('when a field marked as a date field doesn\'t contain a valid date', () => {
+      it('should return the value', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              delivery_date: 'not-a-date',
+            },
+          },
+        }
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({
+            delivery_date: 'not-a-date',
+          })
+          done()
+        }
+
+        this.controller.getValues(this.reqMock, resMock, nextMock)
+      })
+    })
+
+    context('when a field not marked as a date field contains a date', () => {
+      it('should return the value', (done) => {
         const resMock = {
           locals: {
             order: {
@@ -326,27 +367,7 @@ describe('OMIS EditController', () => {
         }
         const nextMock = (e, values) => {
           expect(values).to.deep.equal({
-            foo: '10 January 2017',
-          })
-          done()
-        }
-
-        this.controller.getValues(this.reqMock, resMock, nextMock)
-      })
-    })
-
-    context('when a value doesn\'t contain a date', () => {
-      it('should return the value', (done) => {
-        const resMock = {
-          locals: {
-            order: {
-              foo: 'not-a-date',
-            },
-          },
-        }
-        const nextMock = (e, values) => {
-          expect(values).to.deep.equal({
-            foo: 'not-a-date',
+            foo: '2017-01-10',
           })
           done()
         }
