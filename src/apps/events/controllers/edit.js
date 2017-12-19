@@ -11,7 +11,10 @@ const { transformObjectToOption } = require('../../transformers')
 
 async function getEditOptions (token, createdOn, currentAdviser) {
   const advisers = await getAdvisers(token)
-  const activeAdvisers = filterActiveAdvisers({ advisers: advisers.results, includeAdviser: currentAdviser })
+  const activeAdvisers = filterActiveAdvisers({
+    advisers: advisers.results,
+    includeAdviser: currentAdviser,
+  })
 
   return {
     advisers: activeAdvisers.map(transformObjectToOption),
