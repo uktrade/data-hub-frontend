@@ -8,7 +8,7 @@ Feature: View collection of companies
   @companies-collection--view
   Scenario: View companies collection
 
-    Given a company is created
+    When a "Foreign company" is created
     Then I see the success message
     When I navigate to the Companies collection page
     Then I confirm I am on the Companies page
@@ -26,7 +26,7 @@ Feature: View collection of companies
   @companies-collection--filter
   Scenario: Filter companies list
 
-    Given a company is created
+    When a "UK non-private or non-public limited company" is created
     Then I see the success message
     When I navigate to the Companies collection page
     And I filter the companies list by company
@@ -53,7 +53,7 @@ Feature: View collection of companies
   @companies-collection--sort
   Scenario: Sort companies list
 
-    Given a company is created
+    When a "Foreign company" is created
     Then I see the success message
     When I navigate to the Companies collection page
     When the companies are sorted by Recently updated

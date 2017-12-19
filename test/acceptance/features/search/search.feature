@@ -29,7 +29,7 @@ Feature: Search
   @search--companies
   Scenario: Search companies
 
-    Given a company is created
+    Given a "Foreign company" is created
     Then I see the success message
     When I search for the created company
     Then I verify the search tabs are displayed
