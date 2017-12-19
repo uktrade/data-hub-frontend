@@ -48,11 +48,11 @@ Feature: View Audit history of a contact
     Then a primary contact is added
     When I submit the form
     Then I see the success message
-    When I search for the contact
+    When I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
-    And I search for the contact
+    And I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
@@ -68,12 +68,12 @@ Feature: View Audit history of a contact
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    And I search for the contact
+    And I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I archive this contact record
     And I unarchive this contact record
-    And I search for the contact
+    And I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
     And I navigate to Audit History tab
