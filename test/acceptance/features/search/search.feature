@@ -21,11 +21,9 @@ Feature: Search
       | Interactions        |
       | Investment projects |
       | Orders              |
-    And the Companies search tab is active
-    And there is a results count 0
+    And the Companies search tab has 0 results
     When the Events search tab is clicked
-    Then the Events search tab is active
-    And there is a results count 1
+    Then the Events search tab has 1 results
     And I can view the event in the search results
 
   @search--companies
@@ -42,6 +40,5 @@ Feature: Search
       | Interactions        |
       | Investment projects |
       | Orders              |
-    And the Companies search tab is active
-    And there is a results count 1
+    And the Companies search tab has 1 results
     And I can view the company in the search results

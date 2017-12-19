@@ -44,7 +44,7 @@ defineSupportCode(function ({ Then, When }) {
     }
   })
 
-  Then(/^the (.+) search tab is active/, async (tabText) => {
+  Then(/^the (.+) search tab has ([0-9]+) results/, async (tabText, resultsCount) => {
     const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
 
     await Search.section.tabs
@@ -52,9 +52,7 @@ defineSupportCode(function ({ Then, When }) {
       .waitForElementPresent(searchTabSelector.selector)
       .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
       .useCss()
-  })
 
-  Then(/^there is a results count ([0-9]+)/, async (resultsCount) => {
     await Search
       .assert.visible('@resultsCount')
       .assert.containsText('@resultsCount', resultsCount)
