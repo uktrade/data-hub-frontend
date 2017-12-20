@@ -1,9 +1,17 @@
 const { assign } = require('lodash')
-
 const { globalFields } = require('../../macros')
-const { transformObjectToOption } = require('../../transformers')
 
-const eventFormConfig = ({ eventId, advisers }) => {
+const eventFormConfig = ({
+  eventId,
+  advisers,
+  eventTypes,
+  locationTypes,
+  countries,
+  teams,
+  services,
+  programmes,
+  ukRegions,
+}) => {
   return {
     method: 'post',
     buttonText: 'Save',
@@ -16,7 +24,9 @@ const eventFormConfig = ({ eventId, advisers }) => {
         name: 'name',
         label: 'Event name',
       },
-      globalFields.eventTypes,
+      assign({}, globalFields.eventTypes, {
+        options: eventTypes,
+      }),
       {
         macroName: 'DateFieldset',
         name: 'start_date',
@@ -30,6 +40,7 @@ const eventFormConfig = ({ eventId, advisers }) => {
       assign({}, globalFields.locationTypes, {
         label: 'Event location type',
         optional: true,
+        options: locationTypes,
       }),
       {
         macroName: 'TextField',
@@ -61,12 +72,14 @@ const eventFormConfig = ({ eventId, advisers }) => {
       },
       assign({}, globalFields.countries, {
         name: 'address_country',
+        options: countries,
       }),
       assign({}, globalFields.ukRegions, {
         condition: {
           name: 'address_country',
           value: '80756b9a-5d95-e211-a939-e4115bead28a',
         },
+        options: ukRegions,
       }),
       {
         macroName: 'TextField',
@@ -79,15 +92,18 @@ const eventFormConfig = ({ eventId, advisers }) => {
         name: 'lead_team',
         label: 'Team hosting the event',
         optional: true,
+        options: teams,
       }),
-      globalFields.serviceDeliveryServices,
+      assign({}, globalFields.serviceDeliveryServices, {
+        options: services,
+      }),
       {
         macroName: 'MultipleChoiceField',
         name: 'organiser',
         label: 'Organiser',
         optional: true,
         initialOption: '-- Select organiser --',
-        options: advisers.map(transformObjectToOption),
+        options: advisers,
       },
       {
         macroName: 'MultipleChoiceField',
@@ -119,6 +135,7 @@ const eventFormConfig = ({ eventId, advisers }) => {
             isLabelHidden: true,
             persistsConditionalValue: true,
             optional: true,
+            options: teams,
           }),
         ],
         modifier: 'subfield',
@@ -138,6 +155,7 @@ const eventFormConfig = ({ eventId, advisers }) => {
             label: 'Related programmes',
             isLabelHidden: true,
             optional: true,
+            options: programmes,
           }),
         ],
       },
