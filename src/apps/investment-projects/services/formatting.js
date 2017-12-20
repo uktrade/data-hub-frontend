@@ -140,56 +140,75 @@ function transformInvestmentDataForView (data) {
   })
 }
 
-function transformInvestmentValueForView (data) {
-  if (!isPlainObject(data)) { return }
-
-  function formatBoolean (boolean, { suffix = '', pos = 'Yes', neg = 'No' }) {
+function transformInvestmentValueForView ({
+  client_cannot_provide_total_investment,
+  total_investment,
+  client_cannot_provide_foreign_investment,
+  foreign_equity_investment,
+  number_new_jobs,
+  number_safeguarded_jobs,
+  government_assistance,
+  r_and_d_budget,
+  average_salary,
+  new_tech_to_uk,
+  export_revenue,
+  sector,
+  investor_company,
+  business_activities,
+  non_fdi_r_and_d_budget,
+  id,
+  associated_non_fdi_r_and_d_project,
+}) {
+  function formatBoolean (boolean, { pos, neg }) {
     if (isNull(boolean)) { return null }
-    return (data.government_assistance ? pos : neg) + suffix
+    return boolean ? pos : neg
   }
 
-  const value = {
-    total_investment: data.client_cannot_provide_total_investment
+  const europeanOrGlobalHeadquartersBusinessActivities = business_activities.filter((activity) => {
+    return /^(european|global) headquarters$/i.test(activity.name)
+  })
+
+  return {
+    total_investment: client_cannot_provide_total_investment
       ? 'Client cannot provide this information'
-      : formatCurrency(data.total_investment),
-    foreign_equity_investment: data.client_cannot_provide_foreign_investment
+      : formatCurrency(total_investment),
+    foreign_equity_investment: client_cannot_provide_foreign_investment
       ? 'Client cannot provide this information'
-      : formatCurrency(data.foreign_equity_investment),
-    number_new_jobs: data.number_new_jobs && `${data.number_new_jobs} new jobs`,
-    number_safeguarded_jobs: data.number_safeguarded_jobs && `${data.number_safeguarded_jobs} safeguarded jobs`,
-    government_assistance: formatBoolean(data.government_assistance, { pos: 'Has', suffix: ' government assistance' }),
-    r_and_d_budget: formatBoolean(data.r_and_d_budget, { pos: 'Has', suffix: ' R&D budget' }),
-    average_salary: get(data, 'average_salary.name'),
-    new_tech_to_uk: formatBoolean(data.new_tech_to_uk, {
-      pos: 'Has',
-      suffix: ' new-to-world tech, business model or IP',
+      : formatCurrency(foreign_equity_investment),
+    number_new_jobs: number_new_jobs && `${number_new_jobs} new jobs`,
+    number_safeguarded_jobs: number_safeguarded_jobs && `${number_safeguarded_jobs} safeguarded jobs`,
+    government_assistance: formatBoolean(government_assistance, {
+      pos: 'Has government assistance',
+      neg: 'No government assistance',
     }),
-    export_revenue: formatBoolean(data.export_revenue, {
-      pos: 'Yes, will',
-      neg: 'No, will not',
-      suffix: ' create significant export revenue',
+    r_and_d_budget: formatBoolean(r_and_d_budget, {
+      pos: 'Has R&D budget',
+      neg: 'No R&D budget',
     }),
-    sector_name: get(data, 'sector.name'),
-    account_tier: get(data, 'investor_company.classification.name'),
-    business_activities: data.business_activities.filter((activity) => {
-      return /^(european|global) headquarters$/i.test(activity.name)
-    }).length ? 'Yes' : 'No',
+    new_tech_to_uk: formatBoolean(new_tech_to_uk, {
+      pos: 'Has new-to-world tech, business model or IP',
+      neg: 'No new-to-world tech, business model or IP',
+    }),
+    export_revenue: formatBoolean(export_revenue, {
+      pos: 'Yes, will create significant export revenue',
+      neg: 'No, will not create significant export revenue',
+    }),
+    average_salary: get(average_salary, 'name'),
+    sector_name: get(sector, 'name'),
+    account_tier: get(investor_company, 'classification.name'),
+    business_activities: europeanOrGlobalHeadquartersBusinessActivities.length ? 'Yes' : 'No',
+    associated_non_fdi_r_and_d_project: non_fdi_r_and_d_budget
+      ? transformAssociatedProject({ id, associated_non_fdi_r_and_d_project })
+      : 'Not linked to a non-FDI R&D project',
   }
-
-  if (data.non_fdi_r_and_d_budget) {
-    value.associated_non_fdi_r_and_d_project = transformAssociatedProject(data)
-  } else {
-    value.associated_non_fdi_r_and_d_project = 'Not linked to a non-FDI R&D project'
-  }
-
-  return value
 }
 
-function transformAssociatedProject (data) {
-  const { id } = data
-
-  if (isPlainObject(data.associated_non_fdi_r_and_d_project)) {
-    const { name, project_code } = data.associated_non_fdi_r_and_d_project
+function transformAssociatedProject ({
+  id,
+  associated_non_fdi_r_and_d_project,
+}) {
+  if (isPlainObject(associated_non_fdi_r_and_d_project)) {
+    const { name, project_code } = associated_non_fdi_r_and_d_project
 
     return {
       name,
