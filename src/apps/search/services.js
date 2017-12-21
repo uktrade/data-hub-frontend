@@ -4,51 +4,6 @@ const { assign } = require('lodash')
 const authorisedRequest = require('../../lib/authorised-request')
 const config = require('../../../config')
 
-const entities = [
-  {
-    entity: 'company',
-    path: 'companies',
-    text: 'Companies',
-    noun: 'company',
-    count: 0,
-  },
-  {
-    entity: 'contact',
-    path: 'contacts',
-    text: 'Contacts',
-    noun: 'contact',
-    count: 0,
-  },
-  {
-    entity: 'event',
-    path: 'events',
-    text: 'Events',
-    noun: 'event',
-    count: 0,
-  },
-  {
-    entity: 'interaction',
-    path: 'interactions',
-    text: 'Interactions',
-    noun: 'interaction',
-    count: 0,
-  },
-  {
-    entity: 'investment_project',
-    path: 'investment-projects',
-    text: 'Investment projects',
-    noun: 'investment project',
-    count: 0,
-  },
-  {
-    entity: 'order',
-    path: 'omis',
-    text: 'Orders',
-    noun: 'order',
-    count: 0,
-  },
-]
-
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
   const searchUrl = `${config.apiRoot}/v3/search`
   let options = {
@@ -153,7 +108,6 @@ function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
 }
 
 module.exports = {
-  entities,
   search,
   searchCompanies,
   searchLimitedCompanies,
