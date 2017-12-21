@@ -88,7 +88,11 @@ defineSupportCode(({ Then }) => {
       }
       const rowValueSelector = getDetailsTableRowValue(row.key)
       const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
-      const expectedValue = row.value === 'None' ? 'None' : get(this.state, row.value)
+      let expectedValue = row.value === 'None' ? 'None' : get(this.state, row.value)
+      if (row.key === 'Client contacts') {
+        // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
+        expectedValue = expectedValue.split(',')[0]
+      }
 
       await Details
         .api.useXpath()
