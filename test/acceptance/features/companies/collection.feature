@@ -8,7 +8,7 @@ Feature: View collection of companies
   @companies-collection--view
   Scenario: View companies collection
 
-    Given a company is created
+    When a "Foreign company" is created
     Then I see the success message
     When I navigate to the Companies collection page
     Then I confirm I am on the Companies page
@@ -26,7 +26,7 @@ Feature: View collection of companies
   @companies-collection--filter
   Scenario: Filter companies list
 
-    Given a company is created
+    When a "UK non-private or non-public limited company" is created
     Then I see the success message
     When I navigate to the Companies collection page
     And I filter the companies list by company
@@ -45,7 +45,7 @@ Feature: View collection of companies
     When I filter the companies list by country
     And I filter the companies list by UK region
     Then the companies should be filtered to show badge company country
-    Then the companies should be filtered to show badge company UK region
+    And the companies should be filtered to show badge company UK region
     When I click on the first company collection link
     Then the company details UK region is displayed
 
@@ -53,12 +53,12 @@ Feature: View collection of companies
   @companies-collection--sort
   Scenario: Sort companies list
 
-    Given a company is created
+    When a "Foreign company" is created
     Then I see the success message
     When I navigate to the Companies collection page
-    When the companies are sorted by Recently updated
-    When the companies are sorted by Least recently updated
+    And the companies are sorted by Recently updated
+    And the companies are sorted by Least recently updated
     Then the companies should have been correctly sorted by updated date
     When the companies are sorted by Company name: A-Z
-    When the companies are sorted by Company name: Z-A
+    And the companies are sorted by Company name: Z-A
     Then the companies should have been correctly sorted for text fields
