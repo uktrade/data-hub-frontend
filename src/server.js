@@ -83,11 +83,11 @@ app.use(breadcrumbs.init())
 app.use(breadcrumbs.setHome())
 
 app.use(flash())
-app.use(locals)
 
 app.use(ssoBypass())
 app.use(auth)
 app.use(user)
+app.use(locals)
 app.use(headers)
 app.use(store())
 app.use(csrf())
