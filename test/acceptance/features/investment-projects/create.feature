@@ -22,7 +22,19 @@ Feature: Create a new Investment project
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     Then I see the success message
-    And Investment project summary has all of the entered information
+    And the Investment project summary details are displayed
+      | key                           | value                                         |
+      | Client                        | investmentProject.equitySource.name           |
+      | Type of investment            | investmentProject.type                        |
+      | Primary sector                | investmentProject.primarySector               |
+      | Business activity             | investmentProject.businessActivity            |
+      | Client contacts               | investmentProject.clientContact               |
+      | Project description           | investmentProject.description                 |
+      | Anonymised description        | investmentProject.anonymousDescription        |
+      | Estimated land date           | investmentProject.estimatedLandDate           |
+      | New or existing investor      | investmentProject.investorType                |
+      | Level of involvement          | investmentProject.levelOfInvolvement          |
+      | Specific investment programme | investmentProject.specificInvestmentProgramme |
 
   @investment-projects-create--fdi-different-source-of-equity
   Scenario: Add a Foreign Direct Investment (FDI) Investment project with a separate company as the source of foreign equity
@@ -43,7 +55,19 @@ Feature: Create a new Investment project
     Then I choose the first item in the collection
     When I populate the create Investment Project form
     Then I see the success message
-    And Investment project summary has all of the entered information
+    And the Investment project summary details are displayed
+      | key                           | value                                         |
+      | Client                        | investmentProject.equitySource.name           |
+      | Type of investment            | investmentProject.type                        |
+      | Primary sector                | investmentProject.primarySector               |
+      | Business activity             | investmentProject.businessActivity            |
+      | Client contacts               | investmentProject.clientContact               |
+      | Project description           | investmentProject.description                 |
+      | Anonymised description        | investmentProject.anonymousDescription        |
+      | Estimated land date           | investmentProject.estimatedLandDate           |
+      | New or existing investor      | investmentProject.investorType                |
+      | Level of involvement          | investmentProject.levelOfInvolvement          |
+      | Specific investment programme | investmentProject.specificInvestmentProgramme |
 
   @investment-projects-create--non-fdi
   Scenario: Add a Non Foreign Direct Investment (Non-FDI) Investment project
@@ -63,4 +87,16 @@ Feature: Create a new Investment project
     Then I choose the first item in the collection
     When I populate the create Investment Project form
     Then I see the success message
-    And Investment project summary has all of the entered information
+    And the Investment project summary details are displayed
+      | key                           | value                                         |
+      | Client                        | investmentProject.equitySource.name           |
+      | Type of investment            | investmentProject.type                        |
+      | Primary sector                | investmentProject.primarySector               |
+      | Business activity             | investmentProject.businessActivity            |
+      | Client contacts               | investmentProject.clientContact               |
+      | Project description           | investmentProject.description                 |
+      | Anonymised description        | investmentProject.anonymousDescription        |
+      | Estimated land date           | investmentProject.estimatedLandDate           |
+      | New or existing investor      | investmentProject.investorType                |
+      | Level of involvement          | investmentProject.levelOfInvolvement          |
+      | Specific investment programme | investmentProject.specificInvestmentProgramme |

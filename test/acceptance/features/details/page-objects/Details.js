@@ -27,7 +27,7 @@ module.exports = {
       getSelectorForDetailsTableWithTitle (title) {
         return getSelectorForElementWithText(title, {
           el: '//h2',
-          child: '/../table',
+          child: '/following-sibling::table[1]',
         })
       },
     },
