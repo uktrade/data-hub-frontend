@@ -18,7 +18,7 @@ const LOCAL_NAV = [
     path: 'documents',
     label: 'Documents',
     permissions: [
-      'company.read_contact_documents',
+      'company.read_contact_document',
     ],
   },
 ]
