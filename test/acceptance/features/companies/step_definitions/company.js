@@ -1,4 +1,4 @@
-const { get, set, find, assign } = require('lodash')
+const { get, set } = require('lodash')
 
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
@@ -7,36 +7,9 @@ const { getUid } = require('../../../helpers/uuid')
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
 
-defineSupportCode(({ Given, When, Then }) => {
+defineSupportCode(({ When, Then }) => {
   const Company = client.page.Company()
   const Search = client.page.Search()
-  const Location = client.page.Location()
-
-  Given(/^I navigate to company fixture (.+)$/, async function (companyName) {
-    const companyFixtureDetails = find(this.fixtures.company, ['name', companyName])
-    set(this.state, 'company', assign({}, get(this.state, 'company'), companyFixtureDetails))
-
-    await Search
-      .navigate()
-      .search(companyName)
-      .section.firstCompanySearchResult
-      .waitForElementPresent('@header')
-      .click('@header')
-
-    await Location
-      .section.localHeader
-      .waitForElementPresent('@header')
-      .assert.containsText('@header', companyName)
-  })
-
-  When(/^I navigate to the companies (.+) page$/, async function (pageName) { // TODO please use work in Location (remove this)
-    const tag = `@${pageName}`
-
-    await Location
-      .section.localNav
-      .waitForElementPresent(tag)
-      .click(tag)
-  })
 
   When(/^a "UK private or public limited company" is created$/, async function () {
     await client
@@ -62,7 +35,7 @@ defineSupportCode(({ Given, When, Then }) => {
       .wait() // wait for backend to sync
   })
 
-  When(/^a new "Foreign company" is created$/, async function () {
+  When(/^a "Foreign company" is created$/, async function () {
     await client
       .url(companySearchPage)
 

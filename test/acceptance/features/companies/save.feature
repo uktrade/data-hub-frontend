@@ -44,7 +44,7 @@ Feature: Create a new company
   @companies-save--foreign
   Scenario: Create a foreign company
 
-    When a new "Foreign company" is created
+    When a "Foreign company" is created
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked

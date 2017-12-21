@@ -9,10 +9,10 @@ Feature: Search
 
     Given I navigate to the event list page
     When I click the "Add event" link
-    And I populate the create event form to search
+    And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I search for the event
+    When I search for the created event
     Then I verify the search tabs are displayed
       | text                |
       | Companies           |
@@ -21,19 +21,17 @@ Feature: Search
       | Interactions        |
       | Investment projects |
       | Orders              |
-    And the Companies search tab is active
-    And there is a results count 0
+    And the Companies search tab has 0 results
     When the Events search tab is clicked
-    Then the Events search tab is active
-    And there is a results count 1
+    Then the Events search tab has 1 results
     And I can view the event in the search results
 
   @search--companies
   Scenario: Search companies
 
-    Given a company is created
+    Given a "Foreign company" is created
     Then I see the success message
-    When I search for the company
+    When I search for the created company
     Then I verify the search tabs are displayed
       | text                |
       | Companies           |
@@ -42,6 +40,5 @@ Feature: Search
       | Interactions        |
       | Investment projects |
       | Orders              |
-    And the Companies search tab is active
-    And there is a results count 1
+    And the Companies search tab has 1 results
     And I can view the company in the search results

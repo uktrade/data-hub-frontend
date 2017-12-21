@@ -142,9 +142,10 @@ module.exports = {
 
                 const { address1, town, postcode, registeredAddressCountry } = company
                 callback(assign({}, company, {
-                  header: company.name,
+                  heading: company.name,
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
                   uniqueSearchTerm: getUid(company.name),
+                  country: company.registeredAddressCountry,
                 }))
               })
 
@@ -348,8 +349,9 @@ module.exports = {
                   .click('@saveAndCreateButton')
 
                 callback(assign({}, company, {
-                  header: company.name,
+                  heading: parentCompany.name,
                   primaryAddress: getAddress(parentCompany),
+                  country: parentCompany.country,
                   uniqueSearchTerm: getUid(company.tradingName),
                 }))
               })
