@@ -113,7 +113,7 @@ const interactionFields = {
   },
 }
 
-const interactionFiltersFieldConfig = function (advisers) {
+const interactionFiltersFieldConfig = function (advisers = [], channels = []) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -126,7 +126,7 @@ const interactionFiltersFieldConfig = function (advisers) {
     },
     assign(
       {},
-      interactionFields.communicationChannel,
+      interactionFields.communicationChannel(channels),
       { initialOption: '-- All channels --' }
     ),
     assign(
