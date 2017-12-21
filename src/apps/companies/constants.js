@@ -44,7 +44,7 @@ const LOCAL_NAV = [
     path: 'documents',
     label: 'Documents',
     permissions: [
-      'company.read_company_documents',
+      'company.read_company_document',
     ],
   },
 ]
