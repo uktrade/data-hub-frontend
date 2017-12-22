@@ -22,7 +22,10 @@ function transformApiResponseToSearchCollection (options = {}, ...itemTransforme
 
     return Object.assign({}, collection, {
       highlightTerm: get(options, 'searchTerm'),
-      aggregations: buildSearchAggregation(response.aggregations),
+      aggregations: buildSearchAggregation({
+        aggregations: response.aggregations,
+        userPermissions: get(options, 'userPermissions'),
+      }),
     })
   }
 }

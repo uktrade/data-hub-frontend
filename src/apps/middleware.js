@@ -1,5 +1,7 @@
-const { isEmpty } = require('lodash')
+const { get, isEmpty, assign } = require('lodash')
 const queryString = require('query-string')
+
+const { filterNonPermittedItem } = require('./filters')
 
 function setHomeBreadcrumb (name) {
   return function (req, res, next) {
@@ -15,13 +17,17 @@ function setHomeBreadcrumb (name) {
 
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
-    res.locals.localNavItems = items.map(item => {
-      const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
-      return Object.assign(item, {
-        url,
-        isActive: res.locals.CURRENT_PATH === url,
+    const userPermissions = get(res, 'locals.user.permissions')
+
+    res.locals.localNavItems = items
+      .filter(filterNonPermittedItem(userPermissions))
+      .map((item) => {
+        const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
+        return assign({}, item, {
+          url,
+          isActive: res.locals.CURRENT_PATH === url,
+        })
       })
-    })
     next()
   }
 }
