@@ -3,11 +3,11 @@ const { assign, merge, omit } = require('lodash')
 const { buildSelectedFiltersSummary } = require('../../../builders')
 const {
   filtersFields,
-  collectionSortForm,
+  reconciliationSortForm,
 } = require('./macros')
 
 function renderList (req, res) {
-  const sortForm = merge({}, collectionSortForm, {
+  const sortForm = merge({}, reconciliationSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
       { value: req.query.sortby },
@@ -16,11 +16,12 @@ function renderList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('omis/apps/list/views/list', {
-    sortForm,
-    selectedFilters,
-    filtersFields,
-  })
+  res
+    .render('omis/apps/reconciliation/views/list-reconciliation', {
+      sortForm,
+      selectedFilters,
+      filtersFields,
+    })
 }
 
 module.exports = {
