@@ -4,7 +4,7 @@ const { assign } = require('lodash')
 const config = require('~/config')
 const orderCollectionData = require('~/test/unit/data/omis/collection.json')
 
-describe('OMIS list middleware', () => {
+describe('OMIS reconciliation middleware', () => {
   beforeEach(() => {
     this.next = sandbox.spy()
     this.req = assign({}, globalReq, {
@@ -12,7 +12,7 @@ describe('OMIS list middleware', () => {
     })
     this.res = assign({}, globalRes)
 
-    this.controller = require('~/src/apps/omis/apps/list/middleware')
+    this.controller = require('~/src/apps/omis/apps/reconciliation/middleware')
   })
 
   describe('Results', () => {

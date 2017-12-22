@@ -15,6 +15,11 @@ function setHomeBreadcrumb (name) {
   }
 }
 
+function removeBreadcrumb (req, res, next) {
+  res.removeBreadcrumb()
+  next()
+}
+
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
     const userPermissions = get(res, 'locals.user.permissions')
@@ -47,6 +52,7 @@ function redirectToFirstNavItem (req, res) {
 
 module.exports = {
   setHomeBreadcrumb,
+  removeBreadcrumb,
   setLocalNav,
   redirectToFirstNavItem,
   setDefaultQuery,
