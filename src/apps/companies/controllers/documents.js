@@ -1,8 +1,12 @@
-const { get } = require('lodash')
+const { get, isUndefined } = require('lodash')
 
-async function renderDocuments (req, res, next) {
+function renderDocuments (req, res, next) {
   const { id: companyId, name: companyName } = get(res.locals, 'company')
   const archivedDocumentPath = get(res.locals, 'company.archived_documents_url_path')
+
+  if (isUndefined(archivedDocumentPath)) {
+    return next({ statusCode: 403 })
+  }
 
   return res
     .breadcrumb(companyName, `/companies/${companyId}`)
