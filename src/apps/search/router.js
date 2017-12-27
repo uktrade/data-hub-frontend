@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const queryString = require('query-string')
 
+const { ENTITIES } = require('./constants')
 const { renderSearchResults } = require('./controllers')
 
 function redirectToCompaniesSearch (req, res) {
