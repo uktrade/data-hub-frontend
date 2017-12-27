@@ -1,3 +1,8 @@
+const DEFAULT_COLLECTION_QUERY = {
+  sortby: 'modified_on:desc',
+  archived: false,
+}
+
 const LOCAL_NAV = [
   {
     path: 'details',
@@ -48,11 +53,6 @@ const LOCAL_NAV = [
     ],
   },
 ]
-
-const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:desc',
-  archived: false,
-}
 
 module.exports = {
   LOCAL_NAV,
