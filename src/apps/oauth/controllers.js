@@ -39,6 +39,7 @@ async function callbackOAuth (req, res, next) {
     logger.error('OAuth mismatch')
     logger.error(`sessionOAuthState: ${sessionOAuthState}`)
     logger.error(`stateQueryParam: ${stateQueryParam}`)
+    logger.error(`Host: ${req.hostname}`)
     logger.error(`Original URL: ${req.originalUrl}`)
     return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
   }
@@ -61,6 +62,9 @@ function redirectOAuth (req, res) {
     state: stateId,
     idp: 'cirrus',
   }
+
+  // @TODO remove this once we've diagnosed the cause of the mismatches
+  logger.error(`Host redirected from: ${req.hostname}`)
 
   set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
   return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
