@@ -31,6 +31,18 @@ defineSupportCode(({ Given, When, Then }) => {
       .assert.containsText('@header', fixtureName)
   })
 
+  When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
+    const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)
+
+    await Location
+      .navigate()
+      .section.globalNav
+      .api.useXpath()
+      .waitForElementVisible(globalNavLinkSelector.selector)
+      .click(globalNavLinkSelector.selector)
+      .useCss()
+  })
+
   When(/^I click the (.+) local nav link$/, async (localNavLinkText) => {
     const localNavLinkSelector = Location.section.localNav.getLocalNavLinkSelector(localNavLinkText)
 
