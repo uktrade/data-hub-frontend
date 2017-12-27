@@ -1,7 +1,12 @@
-const { get, isEmpty, assign } = require('lodash')
+const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
 const queryString = require('query-string')
+const { parse } = require('url')
 
 const { filterNonPermittedItem } = require('./filters')
+
+function userHasPermission (routePermissions, userPermissions) {
+  return intersection(routePermissions, userPermissions).length > 0
+}
 
 function setHomeBreadcrumb (name) {
   return function (req, res, next) {
@@ -18,6 +23,27 @@ function setHomeBreadcrumb (name) {
 function removeBreadcrumb (req, res, next) {
   res.removeBreadcrumb()
   next()
+}
+
+function isPermittedRoute (pathname, routes, userPermissions) {
+  const routePermissions = get(routes.find((route) => {
+    return pathname.endsWith(route.path)
+  }), 'permissions')
+
+  return isUndefined(routePermissions) || userHasPermission(routePermissions, userPermissions)
+}
+
+function handleRoutePermissions (routes) {
+  return function handleRestrictedRoute (req, res, next) {
+    const userPermissions = get(res, 'locals.user.permissions')
+    const pathname = parse(req.originalUrl).pathname
+
+    if (!isPermittedRoute(pathname, routes, userPermissions)) {
+      return next({ statusCode: 403 })
+    }
+
+    return next()
+  }
 }
 
 function setLocalNav (items = []) {
@@ -56,4 +82,6 @@ module.exports = {
   setLocalNav,
   redirectToFirstNavItem,
   setDefaultQuery,
+  handleRoutePermissions,
+  isPermittedRoute,
 }
