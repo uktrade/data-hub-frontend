@@ -1,7 +1,5 @@
 const router = require('express').Router()
 
-const { GLOBAL_NAV_ITEMS } = require('../constants')
-
 const { setHomeBreadcrumb, removeBreadcrumb } = require('../middleware')
 const { setOrder, setOrderBreadcrumb } = require('./middleware')
 

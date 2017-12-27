@@ -1,6 +1,5 @@
 const router = require('express').Router()
 
-const { GLOBAL_NAV_ITEMS } = require('../constants')
 const { DEFAULT_COLLECTION_QUERY } = require('./constants')
 
 const { renderEditPage } = require('./controllers/edit')
@@ -15,7 +14,6 @@ const {
 } = require('./middleware/collection')
 
 const { postDetails, getInteractionOptions, getInteractionDetails } = require('./middleware/details')
-
 
 router.param('interactionId', getInteractionDetails)
 
