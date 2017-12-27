@@ -1,5 +1,4 @@
-
-describe('OMIS list controllers', () => {
+describe('OMIS reconciliation controllers', () => {
   beforeEach(() => {
     this.req = {
       session: {
@@ -14,14 +13,14 @@ describe('OMIS list controllers', () => {
     }
     this.buildSelectedFiltersSummaryStub = sandbox.spy()
 
-    this.controller = proxyquire('~/src/apps/omis/apps/list/controllers', {
+    this.controller = proxyquire('~/src/apps/omis/apps/reconciliation/controllers', {
       '../../../builders': {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },
       './macros': {
         filtersFields: [
-          { macroName: 'useful' },
-          { macroName: 'exciting' },
+          { macroName: 'foo' },
+          { macroName: 'bar' },
         ],
       },
     })
@@ -44,8 +43,8 @@ describe('OMIS list controllers', () => {
 
     it('should build filters summary', () => {
       expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'useful' },
-        { macroName: 'exciting' },
+        { macroName: 'foo' },
+        { macroName: 'bar' },
       ], this.req.query)
     })
   })

@@ -27,7 +27,7 @@ function setCompany (req, res, next) {
     return next()
   }
 
-  setCompanyMW(req, res, next, res.locals.order.company.id)
+  setCompanyMW(req, res, next, orderId)
 }
 
 async function setContact (req, res, next) {

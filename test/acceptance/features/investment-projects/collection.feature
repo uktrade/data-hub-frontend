@@ -15,7 +15,19 @@ Feature: View a list of Investment Projects
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     Then I see the success message
-    And Investment project summary has all of the entered information
+    And the Investment project summary details are displayed
+      | key                           | value                                         |
+      | Client                        | investmentProject.equitySource.name           |
+      | Type of investment            | investmentProject.type                        |
+      | Primary sector                | investmentProject.primarySector               |
+      | Business activity             | investmentProject.businessActivity            |
+      | Client contacts               | investmentProject.clientContact               |
+      | Project description           | investmentProject.description                 |
+      | Anonymised description        | investmentProject.anonymousDescription        |
+      | Estimated land date           | investmentProject.estimatedLandDate           |
+      | New or existing investor      | investmentProject.investorType                |
+      | Level of involvement          | investmentProject.levelOfInvolvement          |
+      | Specific investment programme | investmentProject.specificInvestmentProgramme |
     When I navigate to the Investment Projects source of equity investment
     Then I can view the Investment project in the collection
       | text            | expected                            |

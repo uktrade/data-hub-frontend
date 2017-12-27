@@ -2,7 +2,7 @@ const { assign, pick, pickBy } = require('lodash')
 
 const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
-const { transformOrderToListItem } = require('../../transformers')
+const { transformOrderToTableItem } = require('../../transformers')
 
 async function setResults (req, res, next) {
   try {
@@ -15,7 +15,7 @@ async function setResults (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
-        transformOrderToListItem,
+        transformOrderToTableItem,
       ))
 
     next()
@@ -31,7 +31,6 @@ function setRequestBody (req, res, next) {
     'company_name',
     'contact_name',
     'primary_market',
-    'uk_region',
     'reference',
     'total_cost',
     'net_cost',
@@ -49,7 +48,13 @@ function setRequestBody (req, res, next) {
   next()
 }
 
+function setReconciliationJourney (req, res, next) {
+  res.locals.reconciliationJourney = true
+  next()
+}
+
 module.exports = {
   setResults,
   setRequestBody,
+  setReconciliationJourney,
 }
