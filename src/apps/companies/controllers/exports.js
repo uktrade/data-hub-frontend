@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { assign, filter, flatten } = require('lodash')
 
 const metadataRepo = require('../../../lib/metadata')

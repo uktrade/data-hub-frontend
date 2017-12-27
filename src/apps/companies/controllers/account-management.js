@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { get, merge, pickBy } = require('lodash')
 
 const { accountManagementFormConfig } = require('../macros')
