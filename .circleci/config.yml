@@ -10,6 +10,8 @@ jobs:
       - restore_cache:
           name: Restore yarn dependencies cache
           key: yarn-dependency-{{ checksum "yarn.lock" }}
+      - run: yarn cache clean
+      - run: yarn global add greenkeeper-lockfile@1
       - run: yarn install
       - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
@@ -17,6 +19,8 @@ jobs:
           key: yarn-dependency-{{ checksum "yarn.lock" }}
           paths:
             - ~/data-hub-frontend/node_modules
+      - run: greenkeeper-lockfile-update
+      - run: greenkeeper-lockfile-upload
   lint_code:
     docker:
       - image: node:8.5.0
