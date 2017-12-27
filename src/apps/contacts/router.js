@@ -1,7 +1,8 @@
 const router = require('express').Router()
 
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY } = require('./constants')
-const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
+
+const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { getContactsCollection, getRequestBody } = require('./middleware/collection')
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
@@ -27,7 +28,7 @@ router
   .get(editDetails)
   .post(postDetails)
 
-router.use('/:contactId', getCommon, setLocalNav(LOCAL_NAV))
+router.use('/:contactId', handleRoutePermissions(LOCAL_NAV), getCommon, setLocalNav(LOCAL_NAV))
 
 router.get('/:contactId', redirectToFirstNavItem)
 router.get('/:contactId/details', getDetails)

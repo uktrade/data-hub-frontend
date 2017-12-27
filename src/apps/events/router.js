@@ -1,15 +1,13 @@
 const router = require('express').Router()
 
+const { DEFAULT_COLLECTION_QUERY } = require('./constants')
+
 const { setDefaultQuery } = require('../middleware')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderEditPage } = require('./controllers/edit')
 const { postDetails, getEventDetails } = require('./middleware/details')
 const { getRequestBody, getEventsCollection } = require('./middleware/collection')
 const { renderEventList } = require('./controllers/list')
-
-const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:desc',
-}
 
 router.param('id', getEventDetails)
 

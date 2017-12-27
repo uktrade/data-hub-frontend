@@ -212,4 +212,170 @@ describe('Apps middleware', () => {
       expect(this.resMock.redirect).to.not.have.been.called
     })
   })
+
+  describe('handleRoutePermissions()', () => {
+    const mockUrl = '/mock-url'
+
+    beforeEach(() => {
+      this.reqMock = {
+        originalUrl: mockUrl,
+      }
+      this.resMock = {
+        locals: {
+          user: {
+            permissions: [
+              'permission1',
+            ],
+          },
+        },
+      }
+    })
+
+    context('when route is permitted', () => {
+      beforeEach(() => {
+        this.middleware.handleRoutePermissions([
+          {
+            path: mockUrl,
+            permissions: [
+              'permission1',
+            ],
+          },
+        ])(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should call next without error', () => {
+        expect(this.nextSpy).to.be.calledWith()
+      })
+    })
+
+    context('when route is not permitted', () => {
+      beforeEach(() => {
+        this.middleware.handleRoutePermissions([
+          {
+            path: mockUrl,
+            permissions: [
+              'permission2',
+            ],
+          },
+        ])(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should call next with error', () => {
+        expect(this.nextSpy).to.be.calledWith({ statusCode: 403 })
+      })
+    })
+
+    context('when route permissions are empty', () => {
+      beforeEach(() => {
+        this.middleware.handleRoutePermissions([
+          {
+            path: mockUrl,
+            permissions: [],
+          },
+        ])(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next ', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should call next with error', () => {
+        expect(this.nextSpy).to.be.calledWith()
+      })
+    })
+
+    context('when route permissions are undefined', () => {
+      beforeEach(() => {
+        this.middleware.handleRoutePermissions([
+          { path: mockUrl },
+        ])(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should call next with error', () => {
+        expect(this.nextSpy).to.be.calledWith()
+      })
+    })
+  })
+
+  describe('isPermittedRoute()', () => {
+    const mockPathname = 'mock-pathname'
+    const mockPathnameOther = 'mock-pathname-other'
+
+    beforeEach(() => {
+      this.routes = [
+        {
+          path: mockPathname,
+          permissions: [
+            'permission1',
+          ],
+        },
+        {
+          path: 'mock-url-other',
+        },
+      ]
+    })
+
+    context('when matching route is permitted', () => {
+      beforeEach(() => {
+        this.isPermittedRoute = this.middleware.isPermittedRoute(
+          mockPathname,
+          this.routes,
+          [
+            'permission1',
+            'permission2',
+          ]
+        )
+      })
+
+      it('should return true', () => {
+        expect(this.isPermittedRoute).to.be.true
+      })
+    })
+
+    context('when matching route is permitted', () => {
+      beforeEach(() => {
+        this.isPermittedRoute = this.middleware.isPermittedRoute(
+          mockPathname,
+          this.routes,
+          [
+            'permission5',
+            'permission7',
+          ]
+        )
+      })
+
+      it('should return false when matching route is not permitted', () => {
+        expect(this.isPermittedRoute).to.be.false
+      })
+    })
+
+    context('when matching route is permitted', () => {
+      beforeEach(() => {
+        this.isPermittedRoute = this.middleware.isPermittedRoute(
+          mockPathnameOther,
+          this.routes,
+          [
+            'permission5',
+            'permission7',
+          ]
+        )
+      })
+
+      it('should return true when matching route has no permissions', () => {
+        expect(this.isPermittedRoute).to.be.true
+      })
+    })
+  })
 })
