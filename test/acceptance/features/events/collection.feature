@@ -7,8 +7,8 @@ Feature: View a list of events
   @events-collection--add
   Scenario: Add event
 
-    Given I navigate to the event list page
-    When I click the "Add event" link
+    When I click the Events global nav link
+    And I click the "Add event" link
     Then I am taken to the "Add event" page
 
   @events-collection--view
@@ -56,12 +56,12 @@ Feature: View a list of events
   @events-collection--filter
   Scenario: Filter event list
 
-    Given I navigate to the event list page
-    When I click the "Add event" link
+    When I click the Events global nav link
+    And I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I navigate to the event list page
+    When I click the Events global nav link
     And I filter the events list by name
     Then I can view the event
     And I filter the events list by organiser
@@ -76,17 +76,17 @@ Feature: View a list of events
   @events-collection--sort
   Scenario: Sort event list
 
-    Given I navigate to the event list page
-    When I click the "Add event" link
+    When I click the Events global nav link
+    And I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I navigate to the event list page
+    When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
     When I click the save button
     Then I see the success message
-    When I navigate to the event list page
+    When I click the Events global nav link
     And I sort the events list name A-Z
     Then I see the list in A-Z alphabetical order
     And I sort the events list name Z-A
