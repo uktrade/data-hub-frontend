@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV } = require('./constants')
+
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
 const { shared } = require('./middleware')
 const {
@@ -55,22 +57,6 @@ const {
 } = require('./controllers/associated')
 
 const interactionsRouter = require('../interactions/router.sub-app')
-
-const LOCAL_NAV = [
-  { path: 'details', label: 'Project details' },
-  { path: 'team', label: 'Project team' },
-  { path: 'interactions', label: 'Interactions' },
-  { path: 'evaluation', label: 'Evaluations' },
-  { path: 'audit', label: 'Audit history' },
-  { path: 'documents', label: 'Documents' },
-]
-
-const currentYear = (new Date()).getFullYear()
-const DEFAULT_COLLECTION_QUERY = {
-  estimated_land_date_after: `${currentYear}-04-05`,
-  estimated_land_date_before: `${currentYear + 1}-04-06`,
-  sortby: 'estimated_land_date:asc',
-}
 
 router.use('/:investmentId', setLocalNav(LOCAL_NAV))
 

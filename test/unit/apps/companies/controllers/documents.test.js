@@ -23,20 +23,6 @@ describe('Companies documents controller', () => {
   })
 
   describe('#renderDocuments', () => {
-    context('when documents path is undefined', () => {
-      beforeEach(() => {
-        renderDocuments(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.be.calledOnce
-      })
-
-      it('should pass 403 object to next', () => {
-        expect(this.nextSpy).to.be.calledWith({ statusCode: 403 })
-      })
-    })
-
     context('when documents path is an empty string', () => {
       beforeEach(() => {
         set(this.resMock, 'locals.company.archived_documents_url_path', '')

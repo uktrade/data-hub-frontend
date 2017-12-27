@@ -25,7 +25,7 @@ const {
 } = require('./controllers/exports')
 const { renderAccountManagementEditPage } = require('./controllers/account-management')
 
-const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
+const { setDefaultQuery, setLocalNav, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const {
   getInteractionCollection,
   getInteractionsRequestBody,
@@ -79,7 +79,7 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-router.use('/:companyId', setLocalNav(LOCAL_NAV))
+router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setLocalNav(LOCAL_NAV))
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)

@@ -13,27 +13,30 @@
 
 {% block body_main_content %}
   <div class="grid-row dashboard">
-    <div class="column-half">
-      <div class="dashboard-section">
-        <h2 class="dashboard-section-title">My latest interactions</h2>
-        {% if interactions.length %}
-          <ol class="dashboard-list">
-            {% for interaction in interactions %}
-              <li>
-                {% if interaction.company.name %}
-                  <a href="/companies/{{ interaction.company.id }}">{{ interaction.company.name }}</a>
-                  &ndash;
-                {% endif %}
-                <a href="/interactions/{{ interaction.id }}">{{ interaction.subject }}</a>
-              </li>
-            {% endfor %}
-          </ol>
-        {% else %}
-          <p>No interactions have been added.</p>
-        {% endif %}
-        <p><a href="/interactions">See all interactions</a></p>
+    {% if interactionsPermitted %}
+      <div class="column-half">
+        <div class="dashboard-section">
+          <h2 class="dashboard-section-title">My latest interactions</h2>
+          {% if interactions.length %}
+            <ol class="dashboard-list">
+              {% for interaction in interactions %}
+                <li>
+                  {% if interaction.company.name %}
+                    <a href="/companies/{{ interaction.company.id }}">{{ interaction.company.name }}</a>
+                    &ndash;
+                  {% endif %}
+                  <a href="/interactions/{{ interaction.id }}">{{ interaction.subject }}</a>
+                </li>
+              {% endfor %}
+            </ol>
+          {% else %}
+            <p>No interactions have been added.</p>
+          {% endif %}
+          <p><a href="/interactions">See all interactions</a></p>
+        </div>
       </div>
-    </div>
+    {% endif %}
+
 
     <div class="column-half">
       <div class="dashboard-section">
