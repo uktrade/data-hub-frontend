@@ -1,6 +1,5 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { camelCase } = require('lodash')
 
 defineSupportCode(({ When, Then }) => {
   const Dashboard = client.page.Dashboard()
@@ -9,11 +8,6 @@ defineSupportCode(({ When, Then }) => {
     await Dashboard
       .navigate()
       .waitForElementPresent('@term')
-  })
-
-  When(/^the (.+) link in the global nav is clicked$/, async (link) => {
-    await Dashboard.section.globalNav
-      .click(`@${camelCase(link)}`)
   })
 
   Then(/^there should be global nav links$/, async () => {

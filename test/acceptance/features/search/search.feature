@@ -7,8 +7,8 @@ Feature: Search
   @search--events
   Scenario: Search events
 
-    Given I navigate to the event list page
-    When I click the "Add event" link
+    When I click the Events global nav link
+    And I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message

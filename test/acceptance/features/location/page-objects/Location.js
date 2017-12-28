@@ -40,5 +40,20 @@ module.exports = {
         documents: getDetailsTabSelector('Documents'),
       },
     },
+    globalNav: {
+      selector: '.c-global-nav',
+      commands: [
+        {
+          getGlobalNavLinkSelector (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//a',
+                className: 'c-global-nav__link',
+              }
+            )
+          },
+        },
+      ],
+    },
   },
 }
