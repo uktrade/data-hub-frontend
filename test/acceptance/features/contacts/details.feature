@@ -4,7 +4,7 @@ Feature: Contact details
   @contact-details--documents-link
   Scenario: Contact has Documents link
 
-    When browsing to contact fixture Johnny Cakeman
+    When I navigate to contact fixture Johnny Cakeman
     Then there should be a local nav
       | text                        |
       | Details                     |
@@ -17,7 +17,7 @@ Feature: Contact details
   @contact-details--no-documents-link
   Scenario: Contact does not have Documents link
 
-    When browsing to contact fixture Georgina Clark
+    When I navigate to contact fixture Georgina Clark
     Then there should be a local nav
       | text                        |
       | Details                     |
