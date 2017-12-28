@@ -14,6 +14,7 @@ module.exports = {
       selector: '.c-local-header',
       elements: {
         header: '.c-local-header__heading',
+        headerLink: '.c-local-header__heading-before a',
       },
     },
     localNav: {
