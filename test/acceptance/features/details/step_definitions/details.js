@@ -1,8 +1,23 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
-const { get } = require('lodash')
+const { get, includes } = require('lodash')
 
 const { getDetailsTableRowValue } = require('../../../helpers/selectors')
+
+function getExpectedValue (row, state) {
+  if (includes(row.value, '.') && !includes(row.value, ' ')) {
+    const expectedText = get(state, row.value)
+
+    if (row.key === 'Client contacts') {
+      // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
+      return expectedText.split(',')[0]
+    }
+
+    return expectedText
+  }
+
+  return row.value
+}
 
 defineSupportCode(({ Then }) => {
   const Details = client.page.Details()
@@ -86,14 +101,11 @@ defineSupportCode(({ Then }) => {
         // todo: https://uktrade.atlassian.net/browse/DH-1086
         continue
       }
+
       const rowValueSelector = getDetailsTableRowValue(row.key)
       const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
-      let expectedValue = row.value === 'None' ? 'None' : get(this.state, row.value)
-      if (row.key === 'Client contacts') {
-        // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
-        expectedValue = expectedValue.split(',')[0]
-      }
 
+      const expectedValue = getExpectedValue(row, this.state)
       await Details
         .api.useXpath()
         .waitForElementPresent(detailsTableRowValueXPathSelector)
