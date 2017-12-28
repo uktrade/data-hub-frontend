@@ -14,11 +14,6 @@ defineSupportCode(function ({ Given, Then, When }) {
       .wait() // wait for backend to sync
   })
 
-  Given(/^I navigate to the create an event page$/, async () => { // TODO this can be dried up please see Location
-    await Event
-      .navigate()
-  })
-
   When(/^I choose the (.+) country option$/, async (country) => {
     await Event
       .setValue('@addressCountry', '')

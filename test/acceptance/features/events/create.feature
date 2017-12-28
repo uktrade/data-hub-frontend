@@ -7,7 +7,8 @@ Feature: Create an Event in Data hub
   @events-create--fields
   Scenario: Verify event form fields
 
-    Given I navigate to the create an event page
+    When I click the Events global nav link
+    And I click the "Add event" link
     Then I verify the event name field is displayed
     Then I verify the event type field is displayed
     Then I verify the event start date fields are displayed
@@ -32,7 +33,8 @@ Feature: Create an Event in Data hub
   @events-create--toggle-uk-region
   Scenario: Verify event UK region toggling
 
-    Given I navigate to the create an event page
+    When I click the Events global nav link
+    And I click the "Add event" link
     When I choose the United Kingdom country option
     Then I verify the event UK region field is displayed
     Then I choose the Afghanistan country option
@@ -41,7 +43,8 @@ Feature: Create an Event in Data hub
   @events-create--toggle-shared
   Scenario: Verify event shared field toggling
 
-    Given I navigate to the create an event page
+    When I click the Events global nav link
+    And I click the "Add event" link
     When I choose the Yes option
     Then I verify the shared teams field is displayed
     Then I choose the No option
@@ -50,7 +53,8 @@ Feature: Create an Event in Data hub
   @events-create--add-teams
   Scenario: Verify event shared teams field
 
-    Given I navigate to the create an event page
+    When I click the Events global nav link
+    And I click the "Add event" link
     When I choose the Yes option
     And I select shared team 2
     And I add it to the shared teams list
@@ -60,7 +64,8 @@ Feature: Create an Event in Data hub
   @events-create--add-related-programmes
   Scenario: Verify event related programmes field
 
-    Given I navigate to the create an event page
+    When I click the Events global nav link
+    And I click the "Add event" link
     When I select programme 2
     Then I add it to the programmes list
     Then I verify there should be 2 programmes lists
