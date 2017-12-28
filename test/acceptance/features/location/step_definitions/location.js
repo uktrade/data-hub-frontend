@@ -53,6 +53,13 @@ defineSupportCode(({ Given, When, Then }) => {
       .useCss()
   })
 
+  When(/^I click the local header link$/, async () => {
+    await Location
+      .section.localHeader
+      .waitForElementPresent('@headerLink')
+      .click('@headerLink')
+  })
+
   Then(/^I am taken to the "(.+)" page$/, async (text) => {
     await Location
       .section.localHeader
