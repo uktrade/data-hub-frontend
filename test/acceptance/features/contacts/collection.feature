@@ -73,7 +73,7 @@ Feature: View collection of contacts
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
     When I click on the first contact collection link
-    And the contact heading company link is clicked
+    And I click the local header link
     Then the company details UK region is displayed
 
 

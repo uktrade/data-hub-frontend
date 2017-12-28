@@ -41,7 +41,6 @@ module.exports = {
     alternativePhoneNumber: '#field-telephone_alternative',
     alternativeEmail: '#field-email_alternative',
     notes: '#field-notes',
-    headingCompanyLink: '.c-local-header__heading-before a', // TODO move this work to Location feature
   },
 
   commands: [
