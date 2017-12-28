@@ -13,6 +13,7 @@ function renderDetailsPage (req, res, next) {
 
     return res
       .breadcrumb(breadcrumb)
+      .title(interaction.subject)
       .render('interactions/views/details', {
         interactionViewRecord,
       })
