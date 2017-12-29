@@ -65,6 +65,15 @@ function redirectOAuth (req, res) {
 
   // @TODO remove this once we've diagnosed the cause of the mismatches
   logger.error(`Host redirected from: ${req.hostname}`)
+  // As you are here you have not byPassed SSO and if the oAuthDevToken is present then pass it to the code parameter
+  // that is sent to the SSO provider. When using the mock-sso app, the oAuthDevToken is simply passed through the
+  // SSO journey
+  const oAuthDevToken = get(config, 'oauth.devToken')
+
+  if (oAuthDevToken) {
+    set(url, 'code', oAuthDevToken)
+  }
+
 
   set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
   return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
