@@ -11,6 +11,8 @@ const {
   isArray,
   isFunction,
   isPlainObject,
+  isBoolean,
+  isInteger,
   isEmpty,
   isNull,
   isString,
@@ -19,6 +21,7 @@ const {
   reject,
   isNil,
   keys,
+  forEach,
   values,
   flatten,
   map,
@@ -107,23 +110,24 @@ const filters = {
   },
 
   collectionDefault: (collection, defaultValue = 'Not found') => {
-    const isEmptyObjOrArray = (value) => {
-      return ((isPlainObject(value) || isArray(value)) && isEmpty(value))
+    const hasPresentableValue = (element) => {
+      return !isEmpty(element) || isBoolean(element) || isInteger(element)
     }
 
     if (isArray(collection)) {
       return collection.slice().map((element) => {
-        return !element || isEmptyObjOrArray(element) ? defaultValue : element
+        return !hasPresentableValue(element) ? defaultValue : element
       })
     }
     if (isPlainObject(collection)) {
-      const obj = Object.assign({}, collection)
+      const obj = assign({}, collection)
 
-      Object.keys(obj).forEach((key) => {
-        if (!obj[key] || isEmptyObjOrArray(obj[key])) {
+      forEach(keys(obj), (key) => {
+        if (!hasPresentableValue(obj[key])) {
           obj[key] = defaultValue
         }
       })
+
       return obj
     }
   },
