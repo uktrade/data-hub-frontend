@@ -14,6 +14,7 @@ describe('Interaction details controller', () => {
 
     this.res = {
       breadcrumb: sandbox.stub().returnsThis(),
+      title: sandbox.stub().returnsThis(),
       render: sandbox.spy(),
       locals: {
         interaction: interactionData,
@@ -40,6 +41,10 @@ describe('Interaction details controller', () => {
 
     it('should use the interaction details transformer', () => {
       expect(this.transformInteractionResponseToViewRecordStub).to.be.calledWith(this.res.locals.interaction)
+    })
+
+    it('should set the title', () => {
+      expect(this.res.title).to.be.calledWith('Test interactions')
     })
 
     it('should render the interaction details template', () => {

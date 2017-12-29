@@ -4,6 +4,7 @@ const { get, camelCase, isNull, pickBy, keys, assign } = require('lodash')
 
 const { getButtonWithText, getLinkWithText } = require('../../../helpers/selectors')
 const { getDateFor } = require('../../../helpers/date')
+const { appendUid, getUid } = require('../../../helpers/uuid')
 
 module.exports = {
   url: `${process.env.QA_HOST}/events/create`,
@@ -65,7 +66,7 @@ module.exports = {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
         const event = assign({}, {
-          name: faker.company.companyName(),
+          name: appendUid(faker.company.companyName()),
           address_1: faker.address.streetName(),
           address_2: faker.address.secondaryAddress(),
           address_town: faker.address.city(),
@@ -140,6 +141,7 @@ module.exports = {
                 month: get(event, 'end_date_month'),
                 day: get(event, 'end_date_day'),
               }),
+              uniqueSearchTerm: getUid(event.name),
             })
 
             callback(eventWithDates)

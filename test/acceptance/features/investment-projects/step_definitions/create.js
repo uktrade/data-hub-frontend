@@ -66,37 +66,6 @@ defineSupportCode(({ Given, Then, When }) => {
       })
   })
 
-  Then(/^Investment project summary has all of the entered information$/, async function () {
-    const projectDetailsSection = InvestmentProject.section.projectDetails.section.summary
-
-    await projectDetailsSection
-      .waitForElementPresent('@header')
-      .assert.containsText('@header', 'Investment project summary')
-      .assert.visible('@clientLink')
-      .assert.containsText('@clientLink', get(this.state, 'investmentProject.equitySource.name'))
-      .assert.visible('@typeOfInvestment')
-      .assert.containsText('@typeOfInvestment', get(this.state, 'investmentProject.type'))
-      .assert.visible('@primarySector')
-      .assert.containsText('@primarySector', get(this.state, 'investmentProject.primarySector'))
-      .assert.visible('@businessActivity')
-      .assert.containsText('@businessActivity', get(this.state, 'investmentProject.businessActivity'))
-      .assert.visible('@clientContact')
-      // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
-      .assert.containsText('@clientContact', get(this.state, 'investmentProject.clientContact').split(',')[0])
-      .assert.visible('@projectDescription')
-      .assert.containsText('@projectDescription', get(this.state, 'investmentProject.description'))
-      .assert.visible('@anonDescription')
-      .assert.containsText('@anonDescription', get(this.state, 'investmentProject.anonymousDescription'))
-      .assert.visible('@estimatedLandDate')
-      .assert.containsText('@estimatedLandDate', get(this.state, 'investmentProject.estimatedLandDate'))
-      .assert.visible('@levelOfInvolvement')
-      .assert.containsText('@levelOfInvolvement', get(this.state, 'investmentProject.levelOfInvolvement'))
-      .assert.visible('@specificInvestmentProgramme')
-      .assert.containsText('@specificInvestmentProgramme', get(this.state, 'investmentProject.specificInvestmentProgramme'))
-      .assert.visible('@newOrExistingInvestor')
-      .assert.containsText('@newOrExistingInvestor', get(this.state, 'investmentProject.investorType'))
-  })
-
   When(/^I navigate to the Investment Projects source of equity investment$/, async function () {
     const equitySource = get(this.state, 'investmentProject.equitySource.name')
     const projectSummarySection = InvestmentProject.section.projectDetails.section.summary

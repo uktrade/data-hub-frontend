@@ -53,12 +53,17 @@ function init () {
       return this
     }
 
+    function removeBreadcrumb () {
+      breadcrumbs.pop()
+    }
+
     function cleanBreadcrumbs () {
       breadcrumbs = []
     }
 
     cleanBreadcrumbs()
     res.breadcrumb = addBreadcrumbs
+    res.removeBreadcrumb = removeBreadcrumb
     next()
   }
 }

@@ -25,6 +25,8 @@ module.exports = {
       description: 'This is a dummy company for testing',
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
+      currentlyExportingTo: 'France, Germany',
+      futureCountriesOfInterest: 'Yemen',
     },
     foreignOther: {
       pk: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
@@ -37,6 +39,10 @@ module.exports = {
     ukLtd: {
       pk: '0f5216e0-849f-11e6-ae22-56b6b6499611',
       name: 'Venus Ltd',
+      address1: '66 Marcham Road',
+      town: 'Bordley',
+      postcode: 'BD23 8RZ',
+      country: 'United Kingdom',
       primaryAddress: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
       ukRegion: 'North West',
       headquarterType: 'Not a headquarters',

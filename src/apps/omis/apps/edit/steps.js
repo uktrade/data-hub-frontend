@@ -81,7 +81,7 @@ const steps = merge({}, createSteps, {
     controller: EditBillingAddressController,
   },
   '/payment-reconciliation': {
-    heading: 'Payment reconciliation',
+    heading: 'Reconcile a payment',
     fields: [
       'amount',
       'received_on',

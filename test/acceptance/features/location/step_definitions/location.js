@@ -1,30 +1,49 @@
-const { lowerCase, get, camelCase } = require('lodash')
+const { find, assign, set, get, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
-const dashboardPage = `${process.env.QA_HOST}/`
-
-defineSupportCode(({ When, Then }) => {
+defineSupportCode(({ Given, When, Then }) => {
   const Location = client.page.Location()
   const Search = client.page.Search()
 
-  When(/^I navigate to the (.+) "(.+)" tab/, async function (entityName, localNavLinkText) {
-    await client
-      .url(dashboardPage)
+  Given(/^I navigate to (.+) fixture (.+)$/, async function (entityType, fixtureName) {
+    const entityTypeFieldName = camelCase(entityType)
+    const fixtureDetails = find(this.fixtures[entityTypeFieldName], ['name', fixtureName])
+    set(this.state, entityTypeFieldName, assign({}, get(this.state, entityTypeFieldName), fixtureDetails))
 
     await Search
-      .search(get(this.state, `${entityName}.uniqueSearchTerm`))
+      .navigate()
+      .search(fixtureName)
 
-    const searchTabSelector = `@${camelCase(entityName)}`
-
-    await Search.section.tabs
-      .waitForElementVisible(searchTabSelector)
-      .click(searchTabSelector)
+    await Search
+      .section.tabs
+      .waitForElementPresent(`@${entityTypeFieldName}`)
+      .click(`@${entityTypeFieldName}`)
 
     await Search
       .section.firstSearchResult
+      .waitForElementPresent('@header')
       .click('@header')
 
+    await Location
+      .section.localHeader
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', fixtureName)
+  })
+
+  When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
+    const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)
+
+    await Location
+      .navigate()
+      .section.globalNav
+      .api.useXpath()
+      .waitForElementVisible(globalNavLinkSelector.selector)
+      .click(globalNavLinkSelector.selector)
+      .useCss()
+  })
+
+  When(/^I click the (.+) local nav link$/, async (localNavLinkText) => {
     const localNavLinkSelector = Location.section.localNav.getLocalNavLinkSelector(localNavLinkText)
 
     await Location.section.localNav
@@ -34,14 +53,11 @@ defineSupportCode(({ When, Then }) => {
       .useCss()
   })
 
-  Then(/^I click the (.+) local nav link$/, async (navItemText) => {
-    const tag = `@${lowerCase(navItemText)}`
-
+  When(/^I click the local header link$/, async () => {
     await Location
-      .section.localNav
-      .waitForElementPresent(tag)
-      .assert.containsText(tag, navItemText)
-      .click(tag)
+      .section.localHeader
+      .waitForElementPresent('@headerLink')
+      .click('@headerLink')
   })
 
   Then(/^I am taken to the "(.+)" page$/, async (text) => {

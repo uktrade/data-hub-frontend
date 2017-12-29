@@ -7,15 +7,15 @@ Feature: Create New Contact
   @contacts-save--primary
   Scenario: Add a new primary contact
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Lambda plc
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
     And I submit the form
     Then I see the success message
     And I wait and then refresh the page
-    When I navigate to the company "Contacts" tab
+    When I click the Contacts local nav link
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -33,14 +33,14 @@ Feature: Create New Contact
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Lambda plc
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact with new company address is added
     And I submit the form
     Then I see the success message
-    When I navigate to the company "Contacts" tab
+    When I click the Contacts local nav link
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -58,14 +58,14 @@ Feature: Create New Contact
   @contacts-save--non-primary
   Scenario: Add a new non-primary contact
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Lambda plc
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     Then there are contact fields
     When a non-primary contact is added
     And I submit the form
     Then I see the success message
-    When I navigate to the company "Contacts" tab
+    When I click the Contacts local nav link
     Then the contact is displayed on the company contact tab
     When the contact is clicked
     Then the Contact details details are displayed
@@ -83,8 +83,8 @@ Feature: Create New Contact
   @contacts-save--primary-dashboard
   Scenario: New primary contact is visible on the dashboard
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Lambda plc
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
@@ -98,8 +98,8 @@ Feature: Create New Contact
   @contacts-save--mandatory-fields
   Scenario: Contact fields are mandatory
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Lambda plc
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     Then there are contact fields
     When I submit the form

@@ -1,26 +1,22 @@
+const { get } = require('lodash')
+
+const { GLOBAL_NAV_ITEMS } = require('../apps/constants')
 const logger = require('../../config/logger')
 const config = require('../../config')
+const { filterNonPermittedItem } = require('../apps/filters')
 
 let webpackManifest = {}
+
 try {
   webpackManifest = require(`${config.buildDir}/manifest.json`)
 } catch (err) {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }
 
-const globalNavItems = [
-  { path: '/companies', label: 'Companies' },
-  { path: '/contacts', label: 'Contacts' },
-  { path: '/events', label: 'Events' },
-  { path: '/interactions', label: 'Interactions and services' },
-  { path: '/investment-projects', label: 'Investment projects' },
-  { path: '/omis', label: 'Orders (OMIS)' },
-  { path: config.performanceDashboardsUrl, label: 'MI dashboards' },
-]
-
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
   const breadcrumbItems = res.breadcrumb()
+  const userPermissions = get(res, 'locals.user.permissions')
 
   res.locals = Object.assign({}, res.locals, {
     BASE_URL: baseUrl,
@@ -32,14 +28,16 @@ module.exports = function locals (req, res, next) {
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
     QUERY: req.query,
-    GLOBAL_NAV_ITEMS: globalNavItems.map(globalNavItem => {
-      const url = globalNavItem.path
-
-      return Object.assign(globalNavItem, {
-        url,
-        isActive: req.path.startsWith(url),
-      })
-    }),
+    GLOBAL_NAV_ITEMS: GLOBAL_NAV_ITEMS
+      .filter(filterNonPermittedItem(userPermissions))
+      .map(navItem => {
+        const { path: url, label } = navItem
+        return {
+          label,
+          url,
+          isActive: req.path.startsWith(url),
+        }
+      }),
 
     getMessages () {
       return req.flash()

@@ -7,8 +7,8 @@ Feature: View collection of contacts
   @contacts-collection--view
   Scenario: View contact collection
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
@@ -33,8 +33,8 @@ Feature: View collection of contacts
   @contacts-collection--filter
   Scenario: Filter contact list
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
@@ -73,15 +73,17 @@ Feature: View collection of contacts
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
     When I click on the first contact collection link
-    And the contact heading company link is clicked
+    And I click the local header link
     Then the company details UK region is displayed
 
 
   @contacts-collection--sort
   Scenario: Sort contact list
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
+    When a "Foreign company" is created
+    And the company is in the search results
+    When the first search result is clicked
+    When I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

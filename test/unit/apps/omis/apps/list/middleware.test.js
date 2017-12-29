@@ -22,38 +22,14 @@ describe('OMIS list middleware', () => {
         .reply(200, orderCollectionData)
     })
 
-    context('#setCollectionResults', () => {
+    context('#setResults', () => {
       beforeEach(async () => {
         this.req.query = {
           status: 'draft',
           company_name: 'samsung',
           sortby: 'name:asc',
         }
-        await this.controller.setCollectionResults(this.req, this.res, this.next)
-      })
-
-      it('should set results property on locals with pagination', () => {
-        const actual = this.res.locals.results
-        expect(actual).to.have.property('count')
-        expect(actual).to.have.property('items')
-        expect(actual).to.have.property('pagination')
-        expect(actual.count).to.equal(3)
-        expect(this.next).to.have.been.calledOnce
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-    })
-
-    context('#setReconciliationResults', () => {
-      beforeEach(async () => {
-        this.req.query = {
-          status: 'draft',
-          company_name: 'samsung',
-          sortby: 'name:asc',
-        }
-        await this.controller.setCollectionResults(this.req, this.res, this.next)
+        await this.controller.setResults(this.req, this.res, this.next)
       })
 
       it('should set results property on locals with pagination', () => {

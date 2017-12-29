@@ -1,15 +1,18 @@
-const { isArray } = require('lodash')
+const { isArray, assign } = require('lodash')
 
-const { entities } = require('./services')
+const { ENTITIES } = require('./constants')
+const { filterNonPermittedItem } = require('../filters')
 
-function buildSearchAggregation (apiResponseEntities) {
-  if (!isArray(apiResponseEntities)) { return }
+function buildSearchAggregation ({ aggregations, userPermissions, entityDetails = ENTITIES }) {
+  if (!isArray(aggregations)) { return }
 
-  return entities.map((defaultEntity) => {
-    return Object.assign(
+  const userEntities = entityDetails.filter(filterNonPermittedItem(userPermissions))
+
+  return userEntities.map((defaultEntity) => {
+    return assign(
       {},
       defaultEntity,
-      apiResponseEntities.find((apiResponseEntity) => {
+      aggregations.find((apiResponseEntity) => {
         return apiResponseEntity.entity === defaultEntity.entity
       })
     )

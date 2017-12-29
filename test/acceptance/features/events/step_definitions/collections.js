@@ -9,13 +9,6 @@ defineSupportCode(({ Then, When }) => {
   const EventList = client.page.EventList()
   const Event = client.page.Event()
 
-  // TODO feels like this can be DRY'd up (see location)
-  When(/^I navigate to the event list page$/, async () => {
-    await EventList
-      .navigate()
-      .waitForElementPresent('@h1Element')
-  })
-
   When(/^I populate the create event form$/, async function () {
     await Event
       .populateCreateEventForm({}, true, (event) => {
