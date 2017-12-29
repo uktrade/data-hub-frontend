@@ -90,6 +90,7 @@ jobs:
         image: ukti/docker-data-hub-base
         environment:
           - API_ROOT: http://localhost:8000
+          - MOCK_SSO_ROOT: http://localhost:8080
           - QA_HOST: http://localhost:3000
           - QA_SELENIUM_HOST: 127.0.0.1
           - QA_SELENIUM_PORT: 4444
@@ -99,8 +100,13 @@ jobs:
           - TZ: "/usr/share/zoneinfo/Europe/London"
           - LOG_LEVEL: debug
           - &oauth2_dev_token
-            OAUTH2_DEV_TOKEN: topSecretSquirrel
-            ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
+          - OAUTH2_DEV_TOKEN: topSecretSquirrel
+          - OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
+          - OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
+          - OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+          - OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+          - OAUTH2_CLIENT_ID: randomClientId
+          - ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch
@@ -128,9 +134,15 @@ jobs:
           - ES_INDEX: test_index
           - ES5_URL: http://localhost:9200
           - POSTGRES_URL: tcp://postgres:5432
-          - SSO_ENABLED: 'False'
-          - *qa_user_email
-          - *oauth2_dev_token
+          - SSO_ENABLED: 'True'
+          - RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user has been created in backend
+          - RESOURCE_SERVER_AUTH_TOKEN: sso-token
+          - QA_USER_EMAIL: *qa_user_email
+          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
+      - &mock-sso
+        image: ukti/mock-sso
+        environment:
+          - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
     parallelism: 6
     working_directory: ~/data-hub-frontend
     steps:
@@ -138,6 +150,9 @@ jobs:
       - run:
           name: Wait for data hub leeloo
           command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
+      - run:
+          name: Wait for mock sso
+          command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
       - restore_cache:
           name: Restore yarn dependencies cache
           key: yarn-dependency-{{ checksum "package.json" }}
@@ -191,6 +206,7 @@ jobs:
       - *docker_postgres
       - <<: *docker_data_hub_leeloo
         image: ukti/data-hub-leeloo:master
+      - *mock-sso
 
 workflows:
   version: 2
