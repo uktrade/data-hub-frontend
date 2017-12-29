@@ -1,7 +1,6 @@
 # Data Hub frontend
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/uktrade/data-hub-frontend.svg)](https://greenkeeper.io/)
-
 [![CircleCI](https://circleci.com/gh/uktrade/data-hub-frontend.svg?style=svg)](https://circleci.com/gh/uktrade/data-hub-frontend)
 [![Dependency Status](https://gemnasium.com/badges/github.com/uktrade/data-hub-frontend.svg)](https://gemnasium.com/github.com/uktrade/data-hub-frontend)
 
@@ -25,8 +24,13 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Installation](#installation)
     - [Run in production mode](#run-in-production-mode)
     - [Run in development mode](#run-in-development-mode)
-    - [OAuth](#oauth)
+  - [OAuth](#oauth)
     - [Bypassing OAuth in development mode](#bypassing-oauth-in-development-mode)
+    - [Using SSO when developing](#using-sso-when-developing)
+    - [SSO development providers](#sso-development-providers)
+      - [SSO mock](#sso-mock)
+      - [UAT SSO](#uat-sso)
+      - [Local checkout of staff SSO](#local-checkout-of-staff-sso)
   - [Other Scripts](#other-scripts)
 - [Making changes](#making-changes)
 - [Components](#components)
@@ -42,12 +46,12 @@ and be provided with a back end server to provide the API, data storage and sear
       - [Filenames](#filenames)
       - [Feature tags](#feature-tags)
       - [Scenario tags](#scenario-tags)
-
     - [Ignoring features](#ignoring-features)
 - [Continuous Integration](#continuous-integration)
   - [Running CI jobs](#running-ci-jobs)
   - [Base docker image](#base-docker-image)
   - [Data hub backend docker image](#data-hub-backend-docker-image)
+  - [Mock SSO docker build](#mock-sso-docker-build)
   - [Job failure](#job-failure)
 - [Deployment](#deployment)
 
@@ -78,13 +82,14 @@ This file expects the following environment variables:
 | METADATA_TTL | How long to store dropdown data etc for, in seconds. Defaults to 15 minutes |
 | NODE_ENV | Whether to run the app in dev mode. Set to `production` in production, otherwise don't set for dev behaviour |
 | OMIS_ARCHIVED_DOCUMENTS_BASE_URL | The base URL for the OMIS archived document store. Holds archived quotes and deliverables |
-| OAUTH2_TOKEN_FETCH_URL | OAuth fetch token url
-| OAUTH2_USER_PROFILE_URL | OAuth user profile url
-| OAUTH2_AUTH_URL | OAuth auth url
-| OAUTH2_CLIENT_ID | OAuth client id
-| OAUTH2_CLIENT_SECRET | OAuth client secret
-| OAUTH2_REDIRECT_URL | OAuth callback url
-| OAUTH2_DEV_TOKEN | Token used to bypass OAuth for development purposes
+| OAUTH2_TOKEN_FETCH_URL | OAuth fetch token url |
+| OAUTH2_USER_PROFILE_URL | OAuth user profile url |
+| OAUTH2_AUTH_URL | OAuth auth url |
+| OAUTH2_CLIENT_ID | OAuth client id |
+| OAUTH2_CLIENT_SECRET | OAuth client secret |
+| OAUTH2_REDIRECT_URL | OAuth callback url |
+| OAUTH2_BYPASS_SSO | If a developer wishes to bypass OAuth locally then set this to true - defaults to `false` |
+| OAUTH2_DEV_TOKEN | Token used for working with OAuth locally whilst developing |
 | POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
 | PROJECT_PHASE | Which badge to display in header: 'Alpha', 'Beta' or 'Demo' - defaults to 'Beta' @TODO - remove when Demo site is decommissioned|
 | PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
@@ -178,16 +183,46 @@ or Visual Studio Code.
 yarn run develop
 ```
 
-#### OAuth
+### OAuth
 Data hub uses [uktrade/staff-sso](https://github.com/uktrade/staff-sso) for OAuth. Details of the required environment
-variables needed to setup OAuth can be seen in the env section of this README. For further information about how to 
-setup OAuth please speak to the [#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team.
+variables needed to setup OAuth can be seen in the [Environment Variables](#environment-variables) section.
+For further information about how to setup OAuth:
+- Look in confluence for details on setting up SSO for developers. Instructions can be found in
+  `Data Hub team > Technical Documentation > Frontend > SSO for developers`.
 
 #### Bypassing OAuth in development mode
-Developers can bypass SSO functionality by providing a valid `OAUTH2_DEV_TOKEN` environment variable. This Access token
-needs to either by from the OAuth provider or from our Backend. Developers can also tests SSO functionality locally by 
-removing the `OAUTH2_DEV_TOKEN` environment variable. To use OAuth locally you will then need to setup SSO. You can do 
-this by speaking with the [#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team.
+If you wish to completely bypass SSO functionality locally you can by setting the environment variable:
+```
+export OAUTH2_BYPASS_SSO=true
+```
+and providing a valid `OAUTH2_DEV_TOKEN` environment variable. This Access token needs to be valid for the SSO provider
+the application is pointed at.
+
+#### Using SSO when developing
+Developers can also test SSO functionality locally by removing the `OAUTH2_DEV_TOKEN` environment variable and making
+sure that `OAUTH2_BYPASS_SSO` is set to false (it is by default). To use Oauth locally you will then need to set up the 
+correct access and SSO details for the SSO provider you are using.
+
+##### SSO development providers
+
+###### SSO mock
+You could use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) repo. You will need to set up the following 
+environment variables:
+```
+export OAUTH2_DEV_TOKEN=exampleDevToken
+export OAUTH2_TOKEN_FETCH_URL=http://localhost:8080/o/token
+export OAUTH2_AUTH_URL=http://localhost:8080/o/authorize
+```
+data-hub-frontend will then use mock-sso to simply pass your `OAUTH2_DEV_TOKEN` between SSO and the application.
+
+###### UAT SSO
+You could point data-hub-frontend to the UAT SSO environment. If you wish to please speak to the 
+[#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team to set up the correct access and 
+SSO details required.
+
+###### Local checkout of staff SSO
+You could checkout [uktrade/staff-sso](https://github.com/uktrade/staff-sso) locally and point data-hub-frontend
+at that.
 
 ### Other Scripts
 
@@ -397,6 +432,14 @@ The `uktrade/data-hub-leeloo` docker image and tags that is used is automaticall
 
 - `user_acceptance_tests` job uses `ukti/data-hub-leeloo:latest`
 - `user_acceptance_tests_master` job uses `ukti/data-hub-leeloo:master`
+
+### Mock SSO docker build
+The acceptance tests `user_acceptance_tests` job on circleCi uses [uktrade/mock-sso](https://github.com/uktrade/mock-sso)
+to run the application through the SSO workflow. The `uktrade/mock-sso` docker image and tag that is used is
+automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/mock-sso](https://hub.docker.com/r/ukti/mock-ssoo).
+
+- `user_acceptance_tests` job uses `uktrade/mock-sso:latest`
+- `user_acceptance_tests_master` job uses `uktrade/mock-sso:latest`
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:
