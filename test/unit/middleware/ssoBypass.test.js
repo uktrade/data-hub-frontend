@@ -12,23 +12,61 @@ describe('SSO bypass middleware', () => {
     this.nextSpy = sandbox.spy()
   })
 
-  describe('without oauth bypass token', () => {
-    it('should call the next middleware without setting the session token', () => {
-      this.ssoBypassMiddleware()(this.reqMock, {}, this.nextSpy)
+  context('Oauth bypass token set to false', () => {
+    beforeEach(() => {
+      set(this.mockConfig, 'oauth.bypassSSO', false)
+    })
 
-      expect(this.nextSpy.calledOnce).to.be.true
-      expect(this.reqMock.session).to.be.an('object').and.empty
+    context('and without a developer token set', () => {
+      beforeEach(() => {
+        this.ssoBypassMiddleware()(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call the next middleware', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+
+      it('should not set the session token', () => {
+        expect(this.reqMock.session).to.be.an('object').and.empty
+      })
+    })
+
+    context('and with a developer token set', () => {
+      beforeEach(() => {
+        this.mockDevToken = 'mockDevToken'
+        set(this.mockConfig, 'oauth.devToken', this.mockDevToken)
+        this.ssoBypassMiddleware()(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call the next middleware', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+
+      it('should not set the session token', () => {
+        expect(this.reqMock.session).to.be.an('object').and.empty
+      })
     })
   })
 
-  describe('with oauth bypass token', () => {
-    it('should set the session token', () => {
-      const mockToken = 'mockToken'
-      set(this.mockConfig, 'oauth.token', 'mockToken')
-      this.ssoBypassMiddleware()(this.reqMock, {}, this.nextSpy)
+  context('Oauth bypass token set to true', () => {
+    beforeEach(() => {
+      set(this.mockConfig, 'oauth.bypassSSO', true)
+    })
 
-      expect(this.nextSpy.calledOnce).to.be.true
-      expect(this.reqMock.session.token).to.equal(mockToken)
+    context('and with a developer token set', () => {
+      beforeEach(() => {
+        this.mockDevToken = 'mockDevToken'
+        set(this.mockConfig, 'oauth.devToken', this.mockDevToken)
+        this.ssoBypassMiddleware()(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call the next middleware', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+
+      it('should set the session token', () => {
+        expect(this.reqMock.session.token).to.equal(this.mockDevToken)
+      })
     })
   })
 })
