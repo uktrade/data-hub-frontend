@@ -64,6 +64,7 @@ const config = {
     tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
     logoutUrl: process.env.OAUTH2_LOGOUT_URL,
     devToken: process.env.OAUTH2_DEV_TOKEN,
+    bypassSSO: process.env.OAUTH2_BYPASS_SSO || false,
   },
 }
 
