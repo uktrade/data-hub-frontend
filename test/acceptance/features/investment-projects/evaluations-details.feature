@@ -43,6 +43,12 @@ Feature: Investment projects evaluations details
       | Investor retains 10% voting power | No                                             |
       | New jobs                          | 100 new jobs                                   |
       | Safeguarded jobs                  | 200 safeguarded jobs                           |
+    And the Project Landing (Test C) details are displayed
+      | key                               | value                                          |
+      | UK company                        | Not Known                                      |
+      | Companies House Number            | Not Known                                      |
+      | Registered Address                | Not Known                                      |
+      | Land date                         | Not Known                                      |
 
   @investment-projects-evaluations-details--value-no
   Scenario: View investment project evaluations after user selects all no for value details
@@ -84,3 +90,9 @@ Feature: Investment projects evaluations details
       | Investor retains 10% voting power | No                                             |
       | New jobs                          | 0                                              |
       | Safeguarded jobs                  | 0                                              |
+    And the Project Landing (Test C) details are displayed
+      | key                               | value                                          |
+      | UK company                        | Not Known                                      |
+      | Companies House Number            | Not Known                                      |
+      | Registered Address                | Not Known                                      |
+      | Land date                         | Not Known                                      |
