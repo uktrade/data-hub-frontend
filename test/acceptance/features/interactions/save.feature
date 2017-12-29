@@ -7,14 +7,8 @@ Feature: Save a new interaction in Data hub
   @interaction-save--companies-interaction-submit
   Scenario: Companies interaction is saved
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the company "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting interaction
     Then there are interaction fields
@@ -25,14 +19,8 @@ Feature: Save a new interaction in Data hub
   @interaction-save--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    When a primary contact is added
-    When I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the company "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting service delivery
     Then there are service delivery fields
@@ -40,17 +28,11 @@ Feature: Save a new interaction in Data hub
     When a service delivery is added
     Then I see the success message
 
-  @interactions-create--contacts-interaction-submit
+  @interaction-save--contacts-interaction-submit
   Scenario: Interaction fields from contacts
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the contact "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting interaction
     Then there are interaction fields
@@ -58,17 +40,11 @@ Feature: Save a new interaction in Data hub
     When an interaction is added
     Then I see the success message
 
-  @interactions-create--contacts-service-delivery-submit
+  @interaction-save--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the contact "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting service delivery
     Then there are service delivery fields
@@ -76,18 +52,11 @@ Feature: Save a new interaction in Data hub
     When a service delivery is added
     Then I see the success message
 
-  @interactions-create--investment-projects-interaction-submit @ignore
+  @interaction-save--investment-projects-interaction-submit
   Scenario: Interaction fields from investment projects
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    Then a company investment project is created for interactions
-    When I navigate to the investment project "Interactions" tab
+    Given I navigate to investment project fixture New rollercoaster
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     Then there are interaction fields
     And interaction fields are pre-populated

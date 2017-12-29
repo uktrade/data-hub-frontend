@@ -7,14 +7,8 @@ Feature: View collection of contacts
   @interactions-collection--view-interaction
   Scenario: View interaction in interactions and services collection
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    And a primary contact is added
-    When I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the company "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting interaction
     And an interaction is added
@@ -36,14 +30,8 @@ Feature: View collection of contacts
   @interactions-collection--view-service-delivery
   Scenario: View service delivery in interactions and services collection
 
-    Given a company is created
-    When I navigate to the company "Contacts" tab
-    And I click the "Add contact" link
-    And a primary contact is added
-    When I submit the form
-    Then I see the success message
-    Then I wait and then refresh the page
-    When I navigate to the company "Interactions" tab
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
     And I click the "Add interaction" link
     And selecting service delivery
     And a service delivery is added

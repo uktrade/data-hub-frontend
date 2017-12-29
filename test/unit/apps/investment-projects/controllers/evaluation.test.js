@@ -55,7 +55,7 @@ describe('Investment evaluation controller', () => {
       'New-to-world tech': 'Has new-to-world tech, business model or IP',
       'Account tier': undefined,
       'New GHQ/EHQ': 'No',
-      'Export revenue': 'Yes, will create significant export revenue',
+      'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
       'Type of investment': 'Does not apply',
@@ -111,7 +111,7 @@ describe('Investment evaluation controller', () => {
       'New-to-world tech': 'Has new-to-world tech, business model or IP',
       'Account tier': 'Tier A - Strategic Account',
       'New GHQ/EHQ': 'Yes',
-      'Export revenue': 'Yes, will create significant export revenue',
+      'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
       'Type of investment': 'Tom',

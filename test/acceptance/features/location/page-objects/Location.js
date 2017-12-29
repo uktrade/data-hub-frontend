@@ -14,6 +14,7 @@ module.exports = {
       selector: '.c-local-header',
       elements: {
         header: '.c-local-header__heading',
+        headerLink: '.c-local-header__heading-before a',
       },
     },
     localNav: {
@@ -39,6 +40,21 @@ module.exports = {
         auditHistory: getDetailsTabSelector('Audit history'),
         documents: getDetailsTabSelector('Documents'),
       },
+    },
+    globalNav: {
+      selector: '.c-global-nav',
+      commands: [
+        {
+          getGlobalNavLinkSelector (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//a',
+                className: 'c-global-nav__link',
+              }
+            )
+          },
+        },
+      ],
     },
   },
 }

@@ -1,46 +1,18 @@
 /* eslint-disable camelcase */
-const { set } = require('lodash')
-const faker = require('faker')
-
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { getDateFor } = require('../../../helpers/date')
-const { getUid, appendUid } = require('../../../helpers/uuid')
 
 defineSupportCode(function ({ Then, When }) {
-  const Event = client.page.Event()
   const Search = client.page.Search()
   const Dashboard = client.page.Dashboard()
 
-  When(/^I populate the create event form to search$/, async function () {
-    const eventName = appendUid(faker.company.companyName())
-
-    await Event
-      .populateCreateEventForm({ name: eventName }, true, (event) => set(this.state, 'event', event))
-  })
-
-  When(/^I search for the event$/, async function () {
+  When(/^I search for the created (.+)/, async function (entityType) {
     await Dashboard
       .navigate()
 
     await Search
-      .search(getUid(this.state.event.name))
-  })
-
-  When(/^I search for the company/, async function () {
-    await Dashboard
-      .navigate()
-
-    await Search
-      .search(getUid(this.state.company.name))
-  })
-
-  When(/^I search for the contact/, async function () {
-    await Dashboard
-      .navigate()
-
-    await Search
-      .search(getUid(this.state.contact.lastName))
+      .search(this.state[entityType].uniqueSearchTerm)
   })
 
   When(/^the (.+) search tab is clicked/, async (tabText) => {
@@ -72,7 +44,7 @@ defineSupportCode(function ({ Then, When }) {
     }
   })
 
-  Then(/^the (.+) search tab is active/, async (tabText) => {
+  Then(/^the (.+) search tab has ([0-9]+) results/, async (tabText, resultsCount) => {
     const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
 
     await Search.section.tabs
@@ -80,9 +52,7 @@ defineSupportCode(function ({ Then, When }) {
       .waitForElementPresent(searchTabSelector.selector)
       .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
       .useCss()
-  })
 
-  Then(/^there is a results count ([0-9]+)/, async (resultsCount) => {
     await Search
       .assert.visible('@resultsCount')
       .assert.containsText('@resultsCount', resultsCount)

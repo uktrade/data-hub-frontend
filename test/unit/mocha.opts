@@ -1,3 +1,4 @@
+test/unit/global-helpers.js
 --require test/unit/common.js
 --ui bdd
 --recursive

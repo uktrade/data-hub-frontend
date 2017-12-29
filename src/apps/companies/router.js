@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY } = require('./constants')
 const {
   renderAddStepOne,
   postAddStepOne,
@@ -24,7 +25,7 @@ const {
 } = require('./controllers/exports')
 const { renderAccountManagementEditPage } = require('./controllers/account-management')
 
-const { setDefaultQuery, setLocalNav, redirectToFirstNavItem } = require('../middleware')
+const { setDefaultQuery, setLocalNav, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const {
   getInteractionCollection,
   getInteractionsRequestBody,
@@ -39,21 +40,6 @@ const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middl
 const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
 
 const interactionsRouter = require('../interactions/router.sub-app')
-
-const LOCAL_NAV = [
-  { path: 'details', label: 'Details' },
-  { path: 'contacts', label: 'Contacts' },
-  { path: 'interactions', label: 'Interactions' },
-  { path: 'exports', label: 'Export' },
-  { path: 'investments', label: 'Investment' },
-  { path: 'orders', label: 'Orders (OMIS)' },
-  { path: 'audit', label: 'Audit history' },
-  { path: 'documents', label: 'Documents' },
-]
-const DEFAULT_COLLECTION_QUERY = {
-  sortby: 'modified_on:desc',
-  archived: false,
-}
 
 router.param('companyId', getCompany)
 router.param('companyNumber', getCompaniesHouseRecord)
@@ -93,7 +79,7 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-router.use('/:companyId', setLocalNav(LOCAL_NAV))
+router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setLocalNav(LOCAL_NAV))
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)

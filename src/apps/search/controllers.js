@@ -1,6 +1,7 @@
 const { get, find } = require('lodash')
 
-const { entities, search } = require('./services')
+const { ENTITIES } = require('./constants')
+const { search } = require('./services')
 const { transformApiResponseToSearchCollection } = require('./transformers')
 const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
@@ -10,7 +11,7 @@ const { transformOrderToListItem } = require('../omis/transformers')
 const { transformInteractionToListItem } = require('../interactions/transformers')
 
 async function renderSearchResults (req, res) {
-  const entity = find(entities, ['path', req.params.searchPath])
+  const entity = find(ENTITIES, ['path', req.params.searchPath])
 
   if (!entity) {
     return res.render('search/view')
@@ -55,6 +56,7 @@ async function renderSearchResults (req, res) {
       {
         searchTerm,
         query: req.query,
+        userPermissions: get(res, 'locals.user.permissions'),
       },
       ...itemTransformers,
     ))

@@ -1,7 +1,13 @@
 /* eslint handle-callback-err: 0 */
+const nock = require('nock')
+const moment = require('moment')
+
+const config = require('~/config')
 const { render } = require('~/test/unit/nunjucks')
 const { expectField, expectRadioField, expectHiddenField } = require('~/test/unit/form-helpers')
 const contactLabels = require('~/src/apps/contacts/labels')
+
+const yesterday = moment().subtract(1, 'days').toISOString()
 
 describe('Contact controller, edit', () => {
   let contactEditController
@@ -33,19 +39,25 @@ describe('Contact controller, edit', () => {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub,
       },
-      '../../../lib/metadata': {
-        countryOptions: [{
-          id: '986',
-          name: 'United Kingdom',
-        }],
-      },
       '../../companies/repos': {
         getDitCompany: getDitCompanyStub,
       },
     })
   })
 
+  // TODO - re-write to use newer test styles, contexts and
+  // forms generator.
+
   describe('get', () => {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get('/metadata/country/')
+        .reply(200, [
+          { id: '9999', name: 'United Kingdom', disabled_on: null },
+          { id: '8888', name: 'Test', disabled_on: yesterday },
+        ])
+    })
+
     describe('existing contact', () => {
       let req
       let res
@@ -229,12 +241,37 @@ describe('Contact controller, edit', () => {
         contactEditController.editDetails(req, res, next)
       })
     })
-    it('common details', () => {
-      it('should include country options for drop down')
-      it('should include labels')
-      it('should include cross script token')
+
+    describe('common details', () => {
+      beforeEach(async () => {
+        this.req = {
+          query: {
+            company: '1234',
+          },
+          params: {},
+          session: { token: '1234' },
+        }
+
+        this.res = {
+          locals: {},
+          breadcrumb: sandbox.stub().returnsThis(),
+          render: sandbox.stub(),
+        }
+
+        this.next = sandbox.stub()
+
+        await contactEditController.editDetails(this.req, this.res, this.next)
+      })
+
+      it('should include country options for drop down', () => {
+        expect(this.res.locals.countryOptions).to.deep.equal([{
+          label: 'United Kingdom',
+          value: '9999',
+        }])
+      })
     })
   })
+
   describe('render', () => {
     const countryOptions = [{ id: '134', name: 'United Kingdom' }]
     let locals
@@ -317,6 +354,13 @@ describe('Contact controller, edit', () => {
         company: '1234',
       }
       req.body = body
+
+      this.nockScope = nock(config.apiRoot)
+        .get('/metadata/country/')
+        .reply(200, [
+          { id: '9999', name: 'United Kingdom', disabled_on: null },
+          { id: '8888', name: 'Test', disabled_on: yesterday },
+        ])
     })
     it('should save the form data to the back end', function (done) {
       res.redirect = () => {

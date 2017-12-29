@@ -89,6 +89,57 @@ describe('breadcrumbs middleware', () => {
     })
   })
 
+  describe('res.removeBreadcrumb()', () => {
+    describe('when removing last breadcrumb item', () => {
+      beforeEach(() => {
+        this.init({}, this.resMock, this.nextSpy)
+
+        this.resMock.breadcrumb('Item one')
+        this.resMock.breadcrumb('Item two')
+        this.resMock.breadcrumb('Item three')
+
+        this.resMock.removeBreadcrumb()
+      })
+
+      it('should only contain two items', () => {
+        expect(this.resMock.breadcrumb()).to.have.length(2)
+      })
+
+      it('should only contain the correct items', () => {
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          { name: 'Item one' },
+          { name: 'Item two' },
+        ])
+      })
+    })
+
+    describe('when breadcrumb middle breadcrumb items', () => {
+      beforeEach(() => {
+        this.init({}, this.resMock, this.nextSpy)
+
+        this.resMock.breadcrumb('Item one')
+        this.resMock.breadcrumb('Item two')
+        this.resMock.breadcrumb('Item three')
+
+        this.resMock.removeBreadcrumb()
+
+        this.resMock.breadcrumb('Item four')
+      })
+
+      it('should only contain three items', () => {
+        expect(this.resMock.breadcrumb()).to.have.length(3)
+      })
+
+      it('should only contain the correct items', () => {
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          { name: 'Item one' },
+          { name: 'Item two' },
+          { name: 'Item four' },
+        ])
+      })
+    })
+  })
+
   describe('setHome()', () => {
     beforeEach(() => {
       this.init = breadcrumbs.init()

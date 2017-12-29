@@ -1,10 +1,17 @@
-const { assign, filter, flatten, includes } = require('lodash')
+const { assign } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 const metadataRepo = require('../../../../lib/metadata')
 const { transformObjectToOption } = require('../../../transformers')
 
-const filterFields = [
+const filtersFields = [
+  {
+    macroName: 'MultipleChoiceField',
+    label: 'Order status',
+    name: 'status',
+    type: 'radio',
+    options: ORDER_STATES,
+  },
   {
     macroName: 'TextField',
     label: 'Order reference',
@@ -17,18 +24,7 @@ const filterFields = [
     name: 'company_name',
     hint: 'At least three characters',
   },
-]
-
-const collectionFiltersFields = flatten([
-  [{
-    macroName: 'MultipleChoiceField',
-    label: 'Order status',
-    name: 'status',
-    type: 'radio',
-    options: ORDER_STATES,
-  }],
-  filterFields,
-  [{
+  {
     macroName: 'TextField',
     label: 'Contact name',
     name: 'contact_name',
@@ -51,35 +47,8 @@ const collectionFiltersFields = flatten([
     options () {
       return metadataRepo.regionOptions.map(transformObjectToOption)
     },
-  }],
-]).map(filter => {
-  return assign({}, filter, {
-    modifier: ['smaller', 'light'],
-  })
-})
-
-const reconciliationFiltersFields = flatten([
-  [{
-    macroName: 'MultipleChoiceField',
-    label: 'Order status',
-    name: 'status',
-    type: 'radio',
-    options: filter(ORDER_STATES, o => {
-      return !includes(['draft', 'quote_awaiting_acceptance'], o.value)
-    }),
-  }],
-  filterFields,
-  [{
-    macroName: 'TextField',
-    label: 'Net amount',
-    name: 'net_cost',
   },
-  {
-    macroName: 'TextField',
-    label: 'Gross amount',
-    name: 'total_cost',
-  }],
-]).map(filter => {
+].map(filter => {
   return assign({}, filter, {
     modifier: ['smaller', 'light'],
   })
@@ -108,24 +77,7 @@ const collectionSortForm = {
   ],
 }
 
-const reconciliationSortForm = assign({}, collectionSortForm, {
-  children: [
-    {
-      macroName: 'MultipleChoiceField',
-      label: 'Sort by',
-      name: 'sortby',
-      modifier: ['small', 'inline', 'light'],
-      options: [
-        { value: 'payment_due_date:asc', label: 'Earliest payment due date' },
-        { value: 'payment_due_date:desc', label: 'Latest payment due date' },
-      ],
-    },
-  ],
-})
-
 module.exports = {
   collectionSortForm,
-  collectionFiltersFields,
-  reconciliationSortForm,
-  reconciliationFiltersFields,
+  filtersFields,
 }

@@ -1,13 +1,18 @@
+const { get } = require('lodash')
 const router = require('express').Router()
 
 const { editRedirect, editHandler, editLeadAssignee } = require('./controllers')
-const { setCompany, setOrderBreadcrumb } = require('../../middleware')
+const { setCompany } = require('../../middleware')
 
 router.use((req, res, next) => {
-  setCompany(req, res, next, res.locals.order.company.id)
-})
+  const orderId = get(res.locals, 'order.company.id')
 
-router.use(setOrderBreadcrumb)
+  if (!orderId) {
+    return next()
+  }
+
+  setCompany(req, res, next, orderId)
+})
 
 router.get('/', editRedirect)
 router.all('/:step', editHandler)
