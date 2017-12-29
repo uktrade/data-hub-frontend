@@ -62,8 +62,8 @@ const config = {
     clientSecret: process.env.OAUTH2_CLIENT_SECRET,
     redirectUri: process.env.OAUTH2_REDIRECT_URL,
     tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
-    token: process.env.OAUTH2_DEV_TOKEN,
     logoutUrl: process.env.OAUTH2_LOGOUT_URL,
+    devToken: process.env.OAUTH2_DEV_TOKEN,
   },
 }
 
