@@ -5,8 +5,7 @@ const uuid = require('uuid')
 const { get, set } = require('lodash')
 
 const config = require('./../../../config')
-// @TODO remove this once we've diagnosed the cause of the mismatches
-const logger = require('./../../../config/logger')
+const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
 
 function getAccessToken (oauthCode) {
   const options = {
@@ -41,6 +40,7 @@ async function callbackOAuth (req, res, next) {
     logger.error(`stateQueryParam: ${stateQueryParam}`)
     logger.error(`Host: ${req.hostname}`)
     logger.error(`Original URL: ${req.originalUrl}`)
+    // END @TODO
     return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
   }
 
@@ -63,8 +63,8 @@ function redirectOAuth (req, res) {
     idp: 'cirrus',
   }
 
-  // @TODO remove this once we've diagnosed the cause of the mismatches
-  logger.error(`Host redirected from: ${req.hostname}`)
+  logger.error(`Host redirected from: ${req.hostname}`) // @TODO remove this once we've diagnosed the cause of the mismatches
+
   // As you are here you have not byPassed SSO and if the oAuthDevToken is present then pass it to the code parameter
   // that is sent to the SSO provider. When using the mock-sso app, the oAuthDevToken is simply passed through the
   // SSO journey
@@ -73,7 +73,6 @@ function redirectOAuth (req, res) {
   if (oAuthDevToken) {
     set(url, 'code', oAuthDevToken)
   }
-
 
   set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
   return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
