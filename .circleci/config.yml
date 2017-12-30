@@ -89,7 +89,7 @@ jobs:
           path: coverage
   user_acceptance_tests: &user_acceptance_tests
     environment:
-      BASH_ENV: "/usr/local/nvm/nvm.sh"
+      BASH_ENV: "/usr/local/nvm/nvm.sh" # make node, npm and yarn commands available in run command
     docker:
       - &docker_dat_hub_base
         image: ukti/docker-data-hub-base
