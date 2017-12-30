@@ -1,5 +1,10 @@
 ## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
+
 version: 2
+aliases:
+  - &qa_user_email        circleci@datahub.com
+  - &oauth2_dev_token     topSecretSquirrel
+
 jobs:
   lockfile:
      docker:
@@ -94,13 +99,11 @@ jobs:
           - QA_HOST: http://localhost:3000
           - QA_SELENIUM_HOST: 127.0.0.1
           - QA_SELENIUM_PORT: 4444
-          - &qa_user_email
-          - QA_USER_EMAIL: circleci@datahub.com
+          - QA_USER_EMAIL: *qa_user_email
           - REDIS_HOST: localhost
           - TZ: "/usr/share/zoneinfo/Europe/London"
           - LOG_LEVEL: debug
-          - &oauth2_dev_token
-          - OAUTH2_DEV_TOKEN: topSecretSquirrel
+          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
           - OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
           - OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
           - OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
