@@ -1,6 +1,7 @@
 
 const { set } = require('lodash')
 const { assign, merge } = require('lodash')
+const moment = require('moment')
 
 const config = require('~/config')
 const interactionData = require('../../../data/interactions/new-interaction.json')
@@ -9,7 +10,6 @@ const servicesData = [
   { id: '632b8708-28b6-e611-984a-e4115bead28a', name: 'Bank Referral' },
 ]
 const contactsData = require('~/test/unit/data/contacts/contacts.json')
-
 const eventsData = require('~/test/unit/data/events/collection.json')
 
 const adviserFilters = require('~/src/apps/adviser/filters')
@@ -102,17 +102,17 @@ describe('Interaction details middleware', () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
       })
 
-      it('should post to the API', async () => {
+      it('should post to the API', () => {
         expect(this.saveInteractionStub).to.have.been.calledWith(this.req.session.token)
         expect(this.saveInteractionStub).to.have.been.calledOnce
         expect(this.saveInteractionStub.firstCall.args[1]).to.deep.equal(transformed)
       })
 
-      it('should flash a created message', async () => {
+      it('should flash a created message', () => {
         expect(this.req.flash).to.be.calledWith('success', 'Interaction created')
       })
 
-      it('should redirect on success', async () => {
+      it('should redirect on success', () => {
         expect(this.res.redirect).to.be.calledWith('/return/1')
       })
     })
@@ -127,7 +127,7 @@ describe('Interaction details middleware', () => {
         await this.middleware.postDetails(this.req, res, this.nextSpy)
       })
 
-      it('should flash an updated message', async () => {
+      it('should flash an updated message', () => {
         expect(this.req.flash).to.be.calledWith('success', 'Interaction updated')
       })
     })
@@ -153,11 +153,11 @@ describe('Interaction details middleware', () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
       })
 
-      it('should set the errors', async () => {
+      it('should set the errors', () => {
         expect(this.res.locals.form.errors.messages).to.equal('error')
       })
 
-      it('should not call next with errors', async () => {
+      it('should not call next with errors', () => {
         expect(this.nextSpy).have.been.calledWith()
         expect(this.nextSpy).have.been.calledOnce
       })
@@ -169,11 +169,11 @@ describe('Interaction details middleware', () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
       })
 
-      it('should not set form', async () => {
+      it('should not set form', () => {
         expect(this.res.locals.form).to.be.undefined
       })
 
-      it('should call next with errors', async () => {
+      it('should call next with errors', () => {
         expect(this.nextSpy).have.been.calledWith({ statusCode: 500, error: 'error' })
         expect(this.nextSpy).have.been.calledOnce
       })
@@ -189,11 +189,11 @@ describe('Interaction details middleware', () => {
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
       })
 
-      it('should set interaction data on locals', async () => {
+      it('should set interaction data on locals', () => {
         expect(this.res.locals.interaction).to.deep.equal(this.interaction)
       })
 
-      it('should set company to the one associated with the interaction', async () => {
+      it('should set company to the one associated with the interaction', () => {
         expect(this.res.locals.company).to.deep.equal(this.company)
       })
     })
@@ -221,11 +221,11 @@ describe('Interaction details middleware', () => {
         await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
       })
 
-      it('should set interaction data on locals', async () => {
+      it('should set interaction data on locals', () => {
         expect(this.res.locals.interaction).to.deep.equal(this.interaction)
       })
 
-      it('should set company to the one associated with the interaction contact', async () => {
+      it('should set company to the one associated with the interaction contact', () => {
         expect(this.res.locals.company).to.deep.equal(this.company)
       })
     })
@@ -233,6 +233,26 @@ describe('Interaction details middleware', () => {
 
   describe('#getInteractionOptions', () => {
     beforeEach(() => {
+      const yesterday = moment().subtract(1, 'days').toISOString()
+
+      this.metadataMock = {
+        teamOptions: [
+          { id: '1', name: 'te1', disabled_on: null },
+          { id: '2', name: 'te2', disabled_on: yesterday },
+          { id: '3', name: 'te3', disabled_on: null },
+        ],
+        serviceOptions: [
+          { id: '1', name: 'sv1', disabled_on: null },
+          { id: '2', name: 'sv2', disabled_on: yesterday },
+          { id: '3', name: 'sv3', disabled_on: null },
+        ],
+        channelOptions: [
+          { id: '1', name: 'c1', disabled_on: null },
+          { id: '2', name: 'c2', disabled_on: yesterday },
+          { id: '3', name: 'c3', disabled_on: null },
+        ],
+      }
+
       this.res.locals.interaction = assign({}, interactionData, {
         dit_adviser: {
           id: this.activeInactiveAdviserData.results[4].id,
@@ -245,32 +265,90 @@ describe('Interaction details middleware', () => {
         this.nockScope = nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.activeInactiveAdviserData)
+          .get('/metadata/team/')
+          .reply(200, this.metadataMock.teamOptions)
+          .get('/metadata/service/')
+          .reply(200, this.metadataMock.serviceOptions)
+          .get('/metadata/communication-channel/')
+          .reply(200, this.metadataMock.channelOptions)
 
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
         set(this.res.locals, 'interaction.dit_adviser', this.currentAdviser)
+
         await this.middleware.getInteractionOptions(this.req, this.res, this.nextSpy)
       })
 
       it('should set contacts on locals', () => {
-        expect(this.res.locals.contacts).to.deep.equal(contactsData)
+        const expectedContacts = [{
+          label: 'Fred Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a62',
+        }, {
+          label: 'John Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a63',
+        }, {
+          label: 'Jane Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a64',
+        }]
+
+        expect(this.res.locals.options.contacts).to.deep.equal(expectedContacts)
       })
 
-      it('should get active advisers and the current adviser', () => {
-        expect(this.filterActiveAdvisersSpy).to.be.calledOnce
-        expect(this.filterActiveAdvisersSpy).to.be.calledWith({ advisers: this.activeInactiveAdviserData.results, includeAdviser: this.currentAdviser.id })
+      it('should set the active adviser options', () => {
+        const expectedAdvisers = [{
+          label: 'Jeff Smith',
+          value: '1',
+        }, {
+          label: 'John Smith',
+          value: '2',
+        }, {
+          label: 'Zac Smith',
+          value: '3',
+        }, {
+          label: 'Fred Smith',
+          value: '4',
+        }]
+
+        expect(this.res.locals.options.advisers).to.deep.equal(expectedAdvisers)
       })
 
-      it('should set the active advisers on the response object', () => {
-        const expectedAdvisers = this.activeInactiveAdviserData.results.slice(0, 4)
-        expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
+      it('should set service options', () => {
+        const expectedServiceOptions = [{
+          label: 'sv1',
+          value: '1',
+        }, {
+          label: 'sv3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.services).to.deep.equal(expectedServiceOptions)
       })
 
-      it('should set services data on locals', async () => {
-        expect(this.res.locals.services).to.deep.equal(servicesData)
+      it('should set team options', () => {
+        const expectedTeamOptions = [{
+          label: 'te1',
+          value: '1',
+        }, {
+          label: 'te3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.teams).to.deep.equal(expectedTeamOptions)
       })
 
-      it('should not set events data on locals', async () => {
-        expect(this.res.locals.events).to.be.undefined
+      it('should set channel options', () => {
+        const expectedChannelOptions = [{
+          label: 'c1',
+          value: '1',
+        }, {
+          label: 'c3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.channels).to.deep.equal(expectedChannelOptions)
+      })
+
+      it('should not set event options', () => {
+        expect(this.res.locals.options.events).to.be.undefined
       })
 
       it('nock mocked scope has been called', () => {
@@ -283,7 +361,13 @@ describe('Interaction details middleware', () => {
         this.nockScope = nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.activeInactiveAdviserData)
-          .post(`/v3/search/event`)
+          .get('/metadata/team/')
+          .reply(200, this.metadataMock.teamOptions)
+          .get('/metadata/service/')
+          .reply(200, this.metadataMock.serviceOptions)
+          .get('/metadata/communication-channel/')
+          .reply(200, this.metadataMock.channelOptions)
+          .post('/v3/search/event')
           .reply(200, eventsData)
 
         this.req = assign({}, this.req, {
@@ -302,32 +386,86 @@ describe('Interaction details middleware', () => {
       })
 
       it('should set contacts on locals', () => {
-        expect(this.res.locals.contacts).to.deep.equal(contactsData)
+        const expectedContacts = [{
+          label: 'Fred Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a62',
+        }, {
+          label: 'John Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a63',
+        }, {
+          label: 'Jane Smith, Director',
+          value: '12651151-2149-465e-871b-ac45bc568a64',
+        }]
+
+        expect(this.res.locals.options.contacts).to.deep.equal(expectedContacts)
       })
 
-      it('should get active advisers and the current adviser', () => {
-        expect(this.filterActiveAdvisersSpy).to.be.calledOnce
-        expect(this.filterActiveAdvisersSpy).to.be.calledWith({
-          advisers: this.activeInactiveAdviserData.results,
-          includeAdviser: this.currentAdviser.id,
-        })
+      it('should set the active adviser options', () => {
+        const expectedAdvisers = [{
+          label: 'Jeff Smith',
+          value: '1',
+        }, {
+          label: 'John Smith',
+          value: '2',
+        }, {
+          label: 'Zac Smith',
+          value: '3',
+        }, {
+          label: 'Fred Smith',
+          value: '4',
+        }]
+
+        expect(this.res.locals.options.advisers).to.deep.equal(expectedAdvisers)
       })
 
-      it('should set the active advisers on the response object', () => {
-        const expectedAdvisers = this.activeInactiveAdviserData.results.slice(0, 4)
-        expect(this.res.locals.advisers).to.deep.equal(expectedAdvisers)
+      it('should set service options', () => {
+        const expectedServiceOptions = [{
+          label: 'sv1',
+          value: '1',
+        }, {
+          label: 'sv3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.services).to.deep.equal(expectedServiceOptions)
       })
 
-      it('should set services data on locals', () => {
-        expect(this.res.locals.services).to.deep.equal(servicesData)
+      it('should set team options', () => {
+        const expectedTeamOptions = [{
+          label: 'te1',
+          value: '1',
+        }, {
+          label: 'te3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.teams).to.deep.equal(expectedTeamOptions)
       })
 
-      it('should get the active events for the record', () => {
-        expect(this.getActiveEventsSpy).to.be.calledWith(this.req.session.token, this.res.locals.interaction.created_on)
+      it('should set channel options', () => {
+        const expectedChannelOptions = [{
+          label: 'c1',
+          value: '1',
+        }, {
+          label: 'c3',
+          value: '3',
+        }]
+
+        expect(this.res.locals.options.channels).to.deep.equal(expectedChannelOptions)
       })
 
-      it('should set events data on locals', () => {
-        expect(this.res.locals.events).to.deep.equal(eventsData.results)
+      it('should set event options', () => {
+        const expectedEvents = [{
+          value: '31a9f8bd-7796-4af4-8f8c-25450860e2d1',
+          label: 'A United Kingdom Get together',
+        }, {
+          value: '2f4cbd6e-9cc7-4b03-93fe-80a4d8cea4af',
+          label: 'Greatest feast ever',
+        }, {
+          value: '4aa90860-ddb8-4cc0-8d5f-e0c26567abe4',
+          label: 'name',
+        }]
+        expect(this.res.locals.options.events).to.deep.equal(expectedEvents)
       })
 
       it('nock mocked scope has been called', () => {
