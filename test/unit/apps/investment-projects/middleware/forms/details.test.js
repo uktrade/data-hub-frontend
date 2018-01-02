@@ -1,10 +1,64 @@
 const uuid = require('uuid')
 const { assign } = require('lodash')
 const nock = require('nock')
+const moment = require('moment')
 
 const config = require('~/config')
-const metadata = require('~/src/lib/metadata')
 const companyData = require('~/test/unit/data/companies/company.json')
+const yesterday = moment().subtract(1, 'days').toISOString()
+
+const metadataMock = {
+  investmentTypeOptions: [
+    { id: '1', name: 'et1', disabled_on: null },
+    { id: '2', name: 'et2', disabled_on: yesterday },
+    { id: '3', name: 'et3', disabled_on: null },
+  ],
+  referralSourceActivityOptions: [
+    { id: '1', name: 'rs1', disabled_on: null },
+    { id: '2', name: 'rs2', disabled_on: yesterday },
+    { id: '3', name: 'rs3', disabled_on: null },
+  ],
+  fdiTypeOptions: [
+    { id: '1', name: 'f1', disabled_on: null },
+    { id: '2', name: 'f2', disabled_on: yesterday },
+    { id: '3', name: 'f3', disabled_on: null },
+  ],
+  referralSoureMarketingOptions: [
+    { id: '1', name: 'rsm1', disabled_on: null },
+    { id: '2', name: 'rsm2', disabled_on: yesterday },
+    { id: '3', name: 'rsm3', disabled_on: null },
+  ],
+  referralSoureWebsiteOptions: [
+    { id: '1', name: 'rsm1', disabled_on: null },
+    { id: '2', name: 'rsm2', disabled_on: yesterday },
+    { id: '3', name: 'rsm3', disabled_on: null },
+  ],
+  sectorOptions: [
+    { id: '1', name: 's1', disabled_on: null },
+    { id: '2', name: 's2', disabled_on: yesterday },
+    { id: '3', name: 's3', disabled_on: null },
+  ],
+  investmentBusinessActivityOptions: [
+    { id: '1', name: 'iba1', disabled_on: null },
+    { id: '2', name: 'iba2', disabled_on: yesterday },
+    { id: '3', name: 'iba3', disabled_on: null },
+  ],
+  investmentSpecificProgrammeOptions: [
+    { id: '1', name: 'isp1', disabled_on: null },
+    { id: '2', name: 'isp2', disabled_on: yesterday },
+    { id: '3', name: 'isp3', disabled_on: null },
+  ],
+  investmentsInvestorTypeOptions: [
+    { id: '1', name: 'itt1', disabled_on: null },
+    { id: '2', name: 'itt2', disabled_on: yesterday },
+    { id: '3', name: 'itt3', disabled_on: null },
+  ],
+  investmentInvolvementOptions: [
+    { id: '1', name: 'iio1', disabled_on: null },
+    { id: '2', name: 'iio2', disabled_on: yesterday },
+    { id: '3', name: 'iio3', disabled_on: null },
+  ],
+}
 
 describe('investment details middleware', () => {
   beforeEach(() => {
@@ -40,18 +94,6 @@ describe('investment details middleware', () => {
         createInvestmentProject: this.createInvestmentStub,
         getEquityCompanyDetails: this.getEquityCompanyDetailsStub,
       },
-      '../../../../lib/metadata': assign({}, metadata, {
-        investmentTypeOptions: [],
-        referralSourceActivityOptions: [],
-        fdiOptions: [],
-        referralSourceMarketingOptions: [],
-        referralSourceWebsiteOptions: [],
-        sectorOptions: [],
-        businessActivityOptions: [],
-        investmentSpecificProgrammeOptions: [],
-        investmentInvestorTypeOptions: [],
-        investmentInvolvementOptions: [],
-      }),
     })
   })
 
@@ -196,6 +238,26 @@ describe('investment details middleware', () => {
         this.nockScope = nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.advisersData)
+          .get('/metadata/investment-type/')
+          .reply(200, metadataMock.investmentTypeOptions)
+          .get('/metadata/referral-source-activity/')
+          .reply(200, metadataMock.referralSourceActivityOptions)
+          .get('/metadata/fdi-type/')
+          .reply(200, metadataMock.fdiTypeOptions)
+          .get('/metadata/referral-source-marketing/')
+          .reply(200, metadataMock.referralSoureMarketingOptions)
+          .get('/metadata/referral-source-website/')
+          .reply(200, metadataMock.referralSoureWebsiteOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/investment-business-activity/')
+          .reply(200, metadataMock.investmentTypeOptions)
+          .get('/metadata/investment-specific-programme/')
+          .reply(200, metadataMock.investmentSpecificProgrammeOptions)
+          .get('/metadata/investment-investor-type/')
+          .reply(200, metadataMock.investmentsInvestorTypeOptions)
+          .get('/metadata/investment-involvement/')
+          .reply(200, metadataMock.investmentInvolvementOptions)
 
         this.req.params = assign({}, this.req.params, { equityCompanyId: uuid() })
         await this.detailsMiddleware.populateForm(this.req, this.res, this.next)
@@ -237,6 +299,26 @@ describe('investment details middleware', () => {
           .reply(200, companyData)
           .get(`/v3/investment?investor_company_id=${this.req.params.equityCompanyId}&limit=10&offset=0`)
           .reply(200, { count: 0, results: [] })
+          .get('/metadata/investment-type/')
+          .reply(200, metadataMock.investmentTypeOptions)
+          .get('/metadata/referral-source-activity/')
+          .reply(200, metadataMock.referralSourceActivityOptions)
+          .get('/metadata/fdi-type/')
+          .reply(200, metadataMock.fdiTypeOptions)
+          .get('/metadata/referral-source-marketing/')
+          .reply(200, metadataMock.referralSoureMarketingOptions)
+          .get('/metadata/referral-source-website/')
+          .reply(200, metadataMock.referralSoureWebsiteOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/investment-business-activity/')
+          .reply(200, metadataMock.investmentTypeOptions)
+          .get('/metadata/investment-specific-programme/')
+          .reply(200, metadataMock.investmentSpecificProgrammeOptions)
+          .get('/metadata/investment-investor-type/')
+          .reply(200, metadataMock.investmentsInvestorTypeOptions)
+          .get('/metadata/investment-involvement/')
+          .reply(200, metadataMock.investmentInvolvementOptions)
 
         this.res.locals = assign({}, this.res.locals, {
           investmentData: {
