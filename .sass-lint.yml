@@ -2,7 +2,7 @@ options:
   formatter: stylish
   merge-default-rules: true
 files:
-  include: 'stylesheets/**/*.s+(a|c)ss'
+  include: 'assets/stylesheets/**/*.s+(a|c)ss'
 rules:
   class-name-format:
     - 1
