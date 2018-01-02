@@ -1,6 +1,23 @@
 ## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
 version: 2
 jobs:
+  lockfile:
+     docker:
+       - image: node:8.5.0
+     working_directory: ~/data-hub-frontend
+     steps:
+       - checkout
+       - restore_cache:
+           name: Restore yarn dependencies cache
+           key: cache-lockfile-{{ checksum "yarn.lock" }}
+       - run: yarn global add greenkeeper-lockfile@1
+       - run: greenkeeper-lockfile-update
+       - run: greenkeeper-lockfile-upload
+       - save_cache:
+          name: Save yarn dependencies cache
+          key: cache-lockfile-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
   build:
     docker:
       - image: node:8.5.0
@@ -10,8 +27,6 @@ jobs:
       - restore_cache:
           name: Restore yarn dependencies cache
           key: yarn-dependency-{{ checksum "yarn.lock" }}
-      - run: yarn cache clean
-      - run: yarn global add greenkeeper-lockfile@1
       - run: yarn install
       - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
@@ -19,8 +34,6 @@ jobs:
           key: yarn-dependency-{{ checksum "yarn.lock" }}
           paths:
             - ~/data-hub-frontend/node_modules
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
   lint_code:
     docker:
       - image: node:8.5.0
@@ -127,7 +140,7 @@ jobs:
           command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "~/data-hub-frontend/yarn.lock" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}
       - run: yarn build
       - run:
           name: Start data hub frontend
@@ -183,15 +196,22 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - build
+      - lockfile
+      - build:
+          requires:
+            - lockfile
       - lint_code:
           requires:
+            - lockfile
             - build
       - unit_tests:
           requires:
+            - lockfile
             - build
       - user_acceptance_tests:
           requires:
+            - lockfile
+            - build
             - lint_code
             - unit_tests
           filters:
@@ -202,6 +222,8 @@ workflows:
                 - /^release.*/
       - user_acceptance_tests_master:
           requires:
+            - lockfile
+            - build
             - lint_code
             - unit_tests
           filters:
