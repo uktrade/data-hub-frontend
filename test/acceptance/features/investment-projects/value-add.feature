@@ -7,12 +7,19 @@ Feature: Add value to investment project
     Given I navigate to investment project fixture New hotel (commitment to invest)
     When I click the "Add value" link
     Then I am taken to the "New hotel (commitment to invest)" page
-    When I populate the create investment project value form all Yes
-      | key                        | value  |
-      | Number of new jobs         | 100    |
-      | Number of safeguarded jobs | 200    |
-      | Total investment           | 100000 |
-      | Foreign equity investment  | 200000 |
+    When I populate the create investment project value form
+      | key                               | value                                          |
+      | Total investment radio            | Yes                                            |
+      | Total investment                  | 100000                                         |
+      | Foreign equity investment radio   | Yes                                            |
+      | Foreign equity investment         | 200000                                         |
+      | New jobs                          | 100                                            |
+      | Safeguarded jobs                  | 200                                            |
+      | Government assistance radio       | Yes                                            |
+      | R&D budget radio                  | Yes                                            |
+      | Non-FDI R&D project radio         | Yes                                            |
+      | New-to-world tech radio           | Yes                                            |
+      | Export revenue radio              | Yes                                            |
     Then I see the success message
     And the Value details are displayed
       | key                        | value                                           |
@@ -34,10 +41,17 @@ Feature: Add value to investment project
     Given I navigate to investment project fixture New hotel (commitment to invest)
     When I click the "Edit value" link
     Then I am taken to the "New hotel (commitment to invest)" page
-    When I populate the create investment project value form all No
-      | key                        | value  |
-      | Number of new jobs         | 0      |
-      | Number of safeguarded jobs | 0      |
+    When I populate the create investment project value form
+      | key                               | value                                          |
+      | Total investment radio            | No                                             |
+      | Foreign equity investment radio   | No                                             |
+      | New jobs                          | 0                                              |
+      | Safeguarded jobs                  | 0                                              |
+      | Government assistance radio       | No                                             |
+      | R&D budget radio                  | No                                             |
+      | Non-FDI R&D project radio         | No                                             |
+      | New-to-world tech radio           | No                                             |
+      | Export revenue radio              | No                                             |
     Then I see the success message
     And the Value details are displayed
       | key                        | value                                           |

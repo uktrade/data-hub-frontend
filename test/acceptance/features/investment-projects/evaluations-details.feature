@@ -13,12 +13,19 @@ Feature: Investment projects evaluations details
     And I populate the create Investment Project form
     Then I see the success message
     When I click the "Add value" link
-    And I populate the create investment project value form all Yes
+    And I populate the create investment project value form
       | key                               | value                                          |
-      | Number of new jobs                | 100                                            |
-      | Number of safeguarded jobs        | 200                                            |
+      | Total investment radio            | Yes                                            |
       | Total investment                  | 100000                                         |
+      | Foreign equity investment radio   | Yes                                            |
       | Foreign equity investment         | 200000                                         |
+      | New jobs                          | 100                                            |
+      | Safeguarded jobs                  | 200                                            |
+      | Government assistance radio       | Yes                                            |
+      | R&D budget radio                  | Yes                                            |
+      | Non-FDI R&D project radio         | Yes                                            |
+      | New-to-world tech radio           | Yes                                            |
+      | Export revenue radio              | Yes                                            |
     Then I see the success message
     When I click the Evaluations local nav link
     Then the Project value (Test D) details are displayed
@@ -62,10 +69,17 @@ Feature: Investment projects evaluations details
     And I populate the create Investment Project form
     Then I see the success message
     When I click the "Add value" link
-    And I populate the create investment project value form all No
+    And I populate the create investment project value form
       | key                               | value                                          |
-      | Number of new jobs                | 0                                              |
-      | Number of safeguarded jobs        | 0                                              |
+      | Total investment radio            | No                                             |
+      | Foreign equity investment radio   | No                                             |
+      | New jobs                          | 0                                              |
+      | Safeguarded jobs                  | 0                                              |
+      | Government assistance radio       | No                                             |
+      | R&D budget radio                  | No                                             |
+      | Non-FDI R&D project radio         | No                                             |
+      | New-to-world tech radio           | No                                             |
+      | Export revenue radio              | No                                             |
     Then I see the success message
     When I click the Evaluations local nav link
     Then the Project value (Test D) details are displayed
