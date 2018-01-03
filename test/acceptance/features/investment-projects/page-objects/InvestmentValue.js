@@ -1,71 +1,69 @@
+const { keys, endsWith, filter, forEach } = require('lodash')
+
 const { getButtonWithText } = require('../../../helpers/selectors')
 
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    totalInvestmentYes: '[for="field-client_cannot_provide_total_investment-1"]',
-    totalInvestmentNo: '[for="field-client_cannot_provide_total_investment-2"]',
+    totalInvestmentRadioYes: '[for="field-client_cannot_provide_total_investment-1"]',
+    totalInvestmentRadioNo: '[for="field-client_cannot_provide_total_investment-2"]',
     totalInvestment: '#field-total_investment',
-    foreignEquityInvestmentYes: '[for="field-client_cannot_provide_foreign_investment-1"]',
-    foreignEquityInvestmentNo: '[for="field-client_cannot_provide_foreign_investment-2"]',
+    foreignEquityInvestmentRadioYes: '[for="field-client_cannot_provide_foreign_investment-1"]',
+    foreignEquityInvestmentRadioNo: '[for="field-client_cannot_provide_foreign_investment-2"]',
     foreignEquityInvestment: '#field-foreign_equity_investment',
-    numberOfNewJobs: '#field-number_new_jobs',
-    numberOfSafeguardedJobs: '#field-number_safeguarded_jobs',
-    governmentAssistanceYes: '[for="field-government_assistance-1"]',
-    governmentAssistanceNo: '[for="field-government_assistance-2"]',
-    rAndDBudgetYes: '[for="field-r_and_d_budget-1"]',
-    rAndDBudgetNo: '[for="field-r_and_d_budget-2"]',
-    nonFdiRAndDBudgetYes: '[for="field-non_fdi_r_and_d_budget-1"]',
-    nonFdiRAndDBudgetNo: '[for="field-non_fdi_r_and_d_budget-2"]',
-    newTechToUkYes: '[for="field-new_tech_to_uk-1"]',
-    newTechToUkNo: '[for="field-new_tech_to_uk-2"]',
-    exportRevenueYes: '[for="field-export_revenue-1"]',
-    exportRevenueNo: '[for="field-export_revenue-2"]',
+    newJobs: '#field-number_new_jobs',
+    safeguardedJobs: '#field-number_safeguarded_jobs',
+    governmentAssistanceRadioYes: '[for="field-government_assistance-1"]',
+    governmentAssistanceRadioNo: '[for="field-government_assistance-2"]',
+    rDBudgetRadioYes: '[for="field-r_and_d_budget-1"]',
+    rDBudgetRadioNo: '[for="field-r_and_d_budget-2"]',
+    nonFdiRDProjectRadioYes: '[for="field-non_fdi_r_and_d_budget-1"]',
+    nonFdiRDProjectRadioNo: '[for="field-non_fdi_r_and_d_budget-2"]',
+    newToWorldTechRadioYes: '[for="field-new_tech_to_uk-1"]',
+    newToWorldTechRadioNo: '[for="field-new_tech_to_uk-2"]',
+    exportRevenueRadioYes: '[for="field-export_revenue-1"]',
+    exportRevenueRadioNo: '[for="field-export_revenue-2"]',
     saveButton: getButtonWithText('Save'),
   },
   commands: [
     {
-      add (investmentValue = {}, answer, callback) {
-        const investmentValueRadioOptions = {}
+      add (details = {}, callback) {
+        this.waitForElementPresent('@saveButton')
 
-        this
-          .waitForElementPresent('@saveButton')
-          .click(`@totalInvestment${answer}`)
-          .click(`@foreignEquityInvestment${answer}`)
-          .click(`@governmentAssistance${answer}`)
-          .click(`@rAndDBudget${answer}`)
-          .click(`@nonFdiRAndDBudget${answer}`)
-          .click(`@newTechToUk${answer}`)
-          .click(`@exportRevenue${answer}`)
+        const radioOptions = filter(keys(details), (key) => endsWith(key, 'Radio'))
+        forEach(radioOptions, (key) => {
+          this.click(`@${key + details[key]}`)
+        })
+
+        const randomlySetRadioOptions = {}
 
         this
           .api.perform((done) => {
             this.getRadioOption('average_salary', (result) => {
               this.api.useCss().click(result.labelSelector)
-              investmentValueRadioOptions.averageSalary = result
+              randomlySetRadioOptions.averageSalary = result
               done()
             })
           })
           .perform(() => {
-            for (const key in investmentValue) {
-              if (investmentValue[key]) {
-                this.replaceValue(`@${key}`, investmentValue[key])
-              }
-            }
-            for (const key in investmentValueRadioOptions) {
-              this.api.useCss().click(investmentValueRadioOptions[key].labelSelector)
-              investmentValue[key] = investmentValueRadioOptions[key].text
-            }
+            const textFields = filter(keys(details), (key) => !endsWith(key, 'Radio'))
+            forEach(textFields, (key) => {
+              this.replaceValue(`@${key}`, details[key])
+            })
+            forEach(keys(randomlySetRadioOptions), (key) => {
+              this.api.useCss().click(randomlySetRadioOptions[key].labelSelector)
+              details[key] = randomlySetRadioOptions[key].text
+            })
           })
           .perform(() => {
             this
               .waitForElementPresent('@saveButton')
               .click('@saveButton')
 
-            callback(investmentValue)
+            callback(details)
           })
 
-        callback(investmentValue)
+        callback(details)
       },
     },
   ],
