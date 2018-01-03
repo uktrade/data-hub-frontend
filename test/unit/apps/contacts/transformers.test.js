@@ -17,6 +17,10 @@ describe('Contact transformers', () => {
       expect(transformContactToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
     })
 
+    it('should return an object for a partially populated contact', () => {
+      expect(transformContactToListItem({ id: 'abcd', first_name: '', last_name: 'Smith' })).to.be.ok
+    })
+
     it('should return an object with data for active contact list item', () => {
       const actual = transformContactToListItem(contactSearchResult)
 

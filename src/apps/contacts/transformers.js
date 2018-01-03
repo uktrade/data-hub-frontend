@@ -27,7 +27,7 @@ function transformContactToListItem ({
   company_sector,
   primary,
 } = {}) {
-  if (!id || !first_name || !last_name) { return }
+  if (!id || (!first_name && !last_name)) { return }
 
   const metaItems = [
     { key: 'company', value: get(company, 'name') },
