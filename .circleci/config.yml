@@ -9,13 +9,13 @@ jobs:
        - checkout
        - restore_cache:
            name: Restore yarn dependencies cache
-           key: cache-lockfile-{{ checksum "yarn.lock" }}
+           key: cache-lockfile-{{ checksum "package.json" }}
        - run: yarn global add greenkeeper-lockfile@1
        - run: greenkeeper-lockfile-update
        - run: greenkeeper-lockfile-upload
        - save_cache:
           name: Save yarn dependencies cache
-          key: cache-lockfile-{{ checksum "yarn.lock" }}
+          key: cache-lockfile-{{ checksum "package.json" }}
           paths:
             - ~/.cache/yarn
   build:
@@ -26,12 +26,12 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run: yarn install
       - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
           paths:
             - ~/data-hub-frontend/node_modules
   lint_code:
@@ -42,7 +42,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run:
           name: Lint code
           command: |
@@ -64,7 +64,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run:
           name: Run unit tests
           command: |
@@ -140,7 +140,7 @@ jobs:
           command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run: yarn build
       - run:
           name: Start data hub frontend
