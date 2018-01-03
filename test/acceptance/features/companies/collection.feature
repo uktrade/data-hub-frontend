@@ -57,8 +57,9 @@ Feature: View collection of companies
     Then I see the success message
     When I navigate to the Companies collection page
     And the companies are sorted by Recently updated
+    Then the companies should be sorted by Recently updated
     And the companies are sorted by Least recently updated
-    Then the companies should have been correctly sorted by updated date
+    Then the companies should be sorted by Least recently updated
     When the companies are sorted by Company name: A-Z
     And the companies are sorted by Company name: Z-A
     Then the companies should have been correctly sorted for text fields
