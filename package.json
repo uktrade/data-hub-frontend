@@ -47,7 +47,7 @@
     "faker": "^4.1.0",
     "fast-sass-loader": "^1.4.0",
     "file-loader": "^1.1.6",
-    "get-form-data": "^1.2.5",
+    "get-form-data": "^2.0.0",
     "glob": "^7.1.2",
     "govuk-elements-sass": "^2.2.1",
     "govuk_frontend_toolkit": "^5.0.2",
