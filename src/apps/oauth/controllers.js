@@ -55,7 +55,7 @@ async function callbackOAuth (req, res, next) {
 
 function redirectOAuth (req, res) {
   const stateId = uuid()
-  const url = {
+  const urlParams = {
     response_type: 'code',
     client_id: config.oauth.clientId,
     redirect_uri: config.oauth.redirectUri,
@@ -71,11 +71,11 @@ function redirectOAuth (req, res) {
   const oAuthDevToken = get(config, 'oauth.devToken')
 
   if (oAuthDevToken) {
-    set(url, 'code', oAuthDevToken)
+    set(urlParams, 'code', oAuthDevToken)
   }
 
   set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
-  return res.redirect(`${config.oauth.url}?${queryString.stringify(url)}`)
+  return res.redirect(`${config.oauth.url}?${queryString.stringify(urlParams)}`)
 }
 
 function renderHelpPage (req, res, next) {
