@@ -51,6 +51,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await CompanyList
       .section.firstCompanyInList
+      .waitForElementPresent('@header')
       .getText('@header', (result) => {
         set(this.state, 'collection.firstItem.field', result.value)
       })
@@ -65,6 +66,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await CompanyList
       .section.firstCompanyInList
+      .waitForElementPresent('@header')
       .getText('@header', (result) => {
         set(this.state, 'collection.lastItem.field', result.value)
       })
