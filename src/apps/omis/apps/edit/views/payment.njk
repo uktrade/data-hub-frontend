@@ -39,15 +39,6 @@
     company.registered_address_country.name | escape
   ] | removeNilAndEmpty %}
 
-  {% set tradingAddress = [
-    company.trading_address_1 | escape,
-    company.trading_address_2 | escape,
-    company.trading_address_town | escape,
-    company.trading_address_county | escape,
-    company.trading_address_postcode | escape,
-    company.trading_address_country.name | escape
-  ] | removeNilAndEmpty %}
-
   <div class="c-form-group">
     <p class="c-form-group__label">
       <span class="c-form-group__label-text">
@@ -61,9 +52,9 @@
         <br>
         <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Change address</a>
       {% else %}
-        {{ (tradingAddress if tradingAddress|length else registeredAddress) | join('<br>') | safe }}
+        {{ registeredAddress | join('<br>') | safe }}
         {% call Message({ type: 'muted' }) %}
-          The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
+          The company's registered address is currently being used for the invoice.
           <br>
           <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Add a different billing address</a>
         {% endcall %}
