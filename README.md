@@ -96,7 +96,6 @@ This file expects the following environment variables:
 | QA_HOST | URL of the app under test |
 | QA_SELENIUM_HOST | URL of the Selenium server |
 | QA_SELENIUM_PORT | Port to use for the Selenium server |
-| QA_USER_EMAIL | Test user login |
 | REDISTOGO_URL | For use with heroku (deprecated) |
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url - defaults to 'redis'|
 | REDIS_PORT | Redis port, defaults to `6379` |
