@@ -307,6 +307,8 @@ defineSupportCode(({ Given, Then, When }) => {
     client.expect(compareDesc(firstItemField, lastItemField)).to.be.within(0, 1)
   })
 
+  // TODO make this work in the same way as the "companies should be sorted by (Least recently|Recently) updated" step does
+  // TODO or move it into collections
   Then(/^the contacts should have been correctly sorted by creation date$/, async function () {
     const firstItemField = get(this.state, 'collection.firstItem.field')
     const lastItemField = get(this.state, 'collection.lastItem.field')

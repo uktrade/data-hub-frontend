@@ -108,6 +108,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@ukRegionBadge', expectedBadgeText)
   })
 
+  // TODO potentially abstract this out to collections
   Then(/^the companies should be sorted by (Least recently|Recently) updated$/, async function (sortType) {
     const updateValues = {
       firstItem: null,
