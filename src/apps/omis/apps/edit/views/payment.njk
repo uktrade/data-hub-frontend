@@ -1,26 +1,6 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  {% set billingContact = [
-    order.billing_contact_name | escape,
-    order.billing_email | escape,
-    order.billing_phone | escape
-  ] | removeNilAndEmpty %}
-
-  {% if billingContact | length %}
-    <div class="c-form-group">
-      <p class="c-form-group__label">
-        <span class="c-form-group__label-text">
-          Billing contact
-        </span>
-      </p>
-
-      <p>
-        {{ billingContact | join('<br>') | safe }}
-      </p>
-    </div>
-  {% endif %}
-
   {% set billingAddress = [
     order.billing_address_1 | escape,
     order.billing_address_2 | escape,
