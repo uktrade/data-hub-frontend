@@ -1,3 +1,4 @@
+const moment = require('moment')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { get, set } = require('lodash')
@@ -50,6 +51,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await CompanyList
       .section.firstCompanyInList
+      .waitForElementPresent('@header')
       .getText('@header', (result) => {
         set(this.state, 'collection.firstItem.field', result.value)
       })
@@ -64,6 +66,7 @@ defineSupportCode(({ Given, Then, When }) => {
 
     await CompanyList
       .section.firstCompanyInList
+      .waitForElementPresent('@header')
       .getText('@header', (result) => {
         set(this.state, 'collection.lastItem.field', result.value)
       })
@@ -105,14 +108,36 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.containsText('@ukRegionBadge', expectedBadgeText)
   })
 
-  Then(/^the companies should have been correctly sorted by updated date$/, async function () {
-    const firstItemField = get(this.state, 'collection.firstItem.field')
-    const lastItemField = get(this.state, 'collection.lastItem.field')
-    const expectedFirstItemField = get(this.state, 'company.heading')
-    const expectedLastItemField = this.fixtures.company.foreign.name
+  Then(/^the companies should be sorted by (Least recently|Recently) updated$/, async function (sortType) {
+    const updateValues = {
+      firstItem: null,
+      secondItem: null,
+    }
+    const formatDateString = (string) => {
+      return moment(string, 'DD MMM YYYY, h:mma')
+    }
 
-    client.expect(firstItemField).to.equal(expectedFirstItemField)
-    client.expect(lastItemField).to.equal(expectedLastItemField)
+    await CompanyList
+      .section.firstCompanyInList
+      .waitForElementPresent('@header')
+      .getText('@updated', (text) => {
+        set(updateValues, 'firstItem', formatDateString(text.value))
+      })
+
+    await CompanyList
+      .section.secondCompanyInList
+      .waitForElementPresent('@header')
+      .getText('@updated', (text) => {
+        set(updateValues, 'secondItem', formatDateString(text.value))
+      })
+
+    if (sortType === 'Recently') {
+      client.expect(updateValues.firstItem.isAfter(updateValues.secondItem)).to.be.true
+    }
+
+    if (sortType === 'Least recently') {
+      client.expect(updateValues.firstItem.isBefore(updateValues.secondItem)).to.be.true
+    }
   })
 
   Then(/^the companies should have been correctly sorted for text fields$/, async function () {
