@@ -10,15 +10,46 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@term')
   })
 
-  Then(/^there should be global nav links$/, async () => {
-    await Dashboard.section.globalNav
-      .assert.visible('@companies')
-      .assert.visible('@contacts')
-      .assert.visible('@events')
-      .assert.visible('@interactionsAndServices')
-      .assert.visible('@investmentProjects')
-      .assert.visible('@ordersOmis')
-      .assert.visible('@miDashboards')
+  Then(/^there should only be (DIT|LEP|DA) staff global nav links present$/, async (staffType) => {
+    await Dashboard.section.globalHeader
+      .waitForElementPresent('@serviceName')
+
+    if (staffType === 'DIT') {
+      await Dashboard.section.globalNav
+        .assert.visible('@companies')
+        .assert.visible('@contacts')
+        .assert.visible('@events')
+        .assert.visible('@interactionsAndServices')
+        .assert.visible('@investmentProjects')
+        .assert.visible('@ordersOmis')
+        .assert.visible('@miDashboards')
+    }
+
+    if (staffType === 'LEP') {
+      await Dashboard.section.globalNav
+        .assert.visible('@companies')
+        .assert.visible('@contacts')
+        .assert.visible('@investmentProjects')
+        .assert.visible('@miDashboards')
+
+      await Dashboard.section.globalNav
+        .assert.elementNotPresent('@events')
+        .assert.elementNotPresent('@interactionsAndServices')
+        .assert.elementNotPresent('@ordersOmis')
+    }
+
+    if (staffType === 'DA') {
+      await Dashboard.section.globalNav
+        .assert.visible('@companies')
+        .assert.visible('@contacts')
+        .assert.visible('@investmentProjects')
+        .assert.visible('@ordersOmis')
+        .assert.visible('@miDashboards')
+
+      await Dashboard.section.globalNav
+        .assert.elementNotPresent('@events')
+        .assert.elementNotPresent('@interactionsAndServices')
+    }
   })
 
   // TODO make sure support can be accessed form different pages
