@@ -2,13 +2,14 @@
 
 version: 2
 aliases:
+  - &node_version         node:8.5.0
   - &qa_user_email        circleci@datahub.com
   - &oauth2_dev_token     topSecretSquirrel
 
 jobs:
   lockfile:
      docker:
-       - image: node:8.5.0
+       - image: *node_version
      working_directory: ~/data-hub-frontend
      steps:
        - checkout
@@ -25,7 +26,7 @@ jobs:
             - ~/.cache/yarn
   build:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
@@ -41,7 +42,7 @@ jobs:
             - ~/data-hub-frontend/node_modules
   lint_code:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
@@ -61,7 +62,7 @@ jobs:
           path: reports
   unit_tests:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
         environment:
           TZ: "/usr/share/zoneinfo/Europe/London"
     working_directory: ~/data-hub-frontend
