@@ -7,6 +7,7 @@ aliases:
   - &oauth2_dev_token     topSecretSquirrel
 
 jobs:
+  # greenkeeper lockfile job
   lockfile:
      docker:
        - image: *node_version
@@ -24,6 +25,8 @@ jobs:
           key: cache-lockfile-{{ checksum "package.json" }}
           paths:
             - ~/.cache/yarn
+
+  # Save yarn dependencies to cache to be used in later job
   build:
     docker:
       - image: *node_version
@@ -40,6 +43,8 @@ jobs:
           key: yarn-dependency-{{ checksum "package.json" }}
           paths:
             - ~/data-hub-frontend/node_modules
+
+  # Run linting jobs
   lint_code:
     docker:
       - image: *node_version
@@ -60,6 +65,8 @@ jobs:
           path: reports
       - store_artifacts:
           path: reports
+
+  # Run unit tests and store results
   unit_tests:
     docker:
       - image: *node_version
@@ -88,6 +95,8 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
+
+  # Run acceptance tests
   user_acceptance_tests: &user_acceptance_tests
     environment:
       BASH_ENV: "/usr/local/nvm/nvm.sh" # make node, npm and yarn commands available in run command
@@ -201,6 +210,8 @@ jobs:
           path: cucumber
       - store_artifacts:
           path: cucumber
+
+  # Run acceptance tests using master docker version of the backend
   user_acceptance_tests_master:
     <<: *user_acceptance_tests
     docker:
@@ -252,6 +263,7 @@ workflows:
                 - master
                 - /^release.*/
 
+# Webhook for geckoboard heroku app
 notify:
   webhooks:
     - url: https://data-hub-circleci-geckoboard.herokuapp.com/parse-payload
