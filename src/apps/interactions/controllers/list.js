@@ -10,8 +10,9 @@ async function renderInteractionList (req, res, next) {
     const { results: advisers } = await getAdvisers(token)
     const adviserOptions = advisers.map(transformObjectToOption)
     const channelOptions = await getOptions(token, 'communication-channel', { includeDisabled: true })
+    const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
 
-    const filtersFields = interactionFiltersFieldConfig(adviserOptions, channelOptions)
+    const filtersFields = interactionFiltersFieldConfig(adviserOptions, channelOptions, teamOptions)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
     res.render('collection', {
