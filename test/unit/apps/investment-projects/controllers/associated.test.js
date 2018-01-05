@@ -7,7 +7,7 @@ describe('investment associated controller', () => {
     this.updateInvestmentStub = sandbox.stub().resolves(investmentData)
     this.searchStub = sandbox.stub().resolves(investmentCollection)
     this.transformerStub = sandbox.stub()
-    this.transformInvestmentProjectToListItemStub = sandbox.stub()
+    this.transformInvestmentProjectToListItemStub = sandbox.stub().returns({ id: 1 })
     this.transformInvestmentListItemToDisableMetaLinksStub = sandbox.stub().returns({ id: 1 })
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/associated', {
