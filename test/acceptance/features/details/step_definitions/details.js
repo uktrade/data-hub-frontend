@@ -1,12 +1,22 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { get, includes } = require('lodash')
+const { addMinutes, isAfter } = require('date-fns')
+const moment = require('moment')
 
+const { mediumDateTimeFormat } = require('../../../../../config')
 const { getDetailsTableRowValue } = require('../../../helpers/selectors')
 
 const formatters = {
-  formatEuropeanOrGlobalHeadquarters (value) {
-    return /^(european|global) headquarters$/i.test(value) ? 'Yes' : 'No'
+  isEuropeanOrGlobalHeadquartersFormatter (expected, actual) {
+    const formatted = /^(european|global) headquarters$/i.test(expected) ? 'Yes' : 'No'
+    return formatted === actual
+  },
+  isRecentDateFormatter (expected, actual) {
+    const actualDate = moment(actual, mediumDateTimeFormat).toDate()
+    const oneMinuteAgo = addMinutes(actualDate, -1)
+
+    return isAfter(actualDate, oneMinuteAgo)
   },
 }
 
@@ -23,10 +33,6 @@ function getExpectedValue (row, state) {
   }
 
   return row.value
-}
-
-function formatExpectedValue (row, expectedValue) {
-  return row.format ? formatters[row.format](expectedValue) : expectedValue
 }
 
 defineSupportCode(({ Then }) => {
@@ -115,11 +121,15 @@ defineSupportCode(({ Then }) => {
       const rowValueSelector = getDetailsTableRowValue(row.key)
       const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
       const expectedValue = getExpectedValue(row, this.state)
-      const formattedExpectedValue = formatExpectedValue(row, expectedValue)
       await Details
         .api.useXpath()
         .waitForElementPresent(detailsTableRowValueXPathSelector)
-        .assert.containsText(detailsTableRowValueXPathSelector, formattedExpectedValue)
+        .getText(detailsTableRowValueXPathSelector, (actual) => {
+          if (row.formatter) {
+            return client.expect(formatters[row.formatter](expectedValue, actual.value), row.key).to.be.true
+          }
+          client.expect(actual.value, row.key).to.equal(expectedValue)
+        })
         .useCss()
     }
   })

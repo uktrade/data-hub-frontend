@@ -29,17 +29,17 @@ Feature: Investment projects evaluations details
     Then I see the success message
     When I click the Evaluations local nav link
     Then the Project value (Test D) details are displayed
-      | key                               | value                                          | format                             |
-      | Primary sector                    | investmentProject.primarySector                |                                    |
-      | Total investment                  | £100,000                                       |                                    |
-      | New jobs                          | 100 new jobs                                   |                                    |
-      | Average salary of new jobs        | investmentProject.value.averageSalary          |                                    |
-      | R&D budget                        | Has R&D budget                                 |                                    |
-      | Non-FDI R&D project               | Not Known                                      |                                    |
-      | New-to-world tech                 | Has new-to-world tech, business model or IP    |                                    |
-      | Account tier                      | Not Known                                      |                                    |
-      | New GHQ/EHQ                       | investmentProject.businessActivity             | formatEuropeanOrGlobalHeadquarters |
-      | Export revenue                    | Yes, will create significant export revenue    |                                    |
+      | key                               | value                                          | formatter                               |
+      | Primary sector                    | investmentProject.primarySector                |                                         |
+      | Total investment                  | £100,000                                       |                                         |
+      | New jobs                          | 100 new jobs                                   |                                         |
+      | Average salary of new jobs        | investmentProject.value.averageSalary          |                                         |
+      | R&D budget                        | Has R&D budget                                 |                                         |
+      | Non-FDI R&D project               | Not Known                                      |                                         |
+      | New-to-world tech                 | Has new-to-world tech, business model or IP    |                                         |
+      | Account tier                      | Not Known                                      |                                         |
+      | New GHQ/EHQ                       | investmentProject.businessActivity             | isEuropeanOrGlobalHeadquartersFormatter |
+      | Export revenue                    | Yes, will create significant export revenue    |                                         |
     And the FDI (Test A) details are displayed
       | key                               | value                                          |
       | Type of investment                | Does not apply                                 |
@@ -83,17 +83,17 @@ Feature: Investment projects evaluations details
     Then I see the success message
     When I click the Evaluations local nav link
     Then the Project value (Test D) details are displayed
-      | key                               | value                                          | format                             |
-      | Primary sector                    | investmentProject.primarySector                |                                    |
-      | Total investment                  | Client cannot provide this information         |                                    |
-      | New jobs                          | 0                                              |                                    |
-      | Average salary of new jobs        | investmentProject.value.averageSalary          |                                    |
-      | R&D budget                        | No R&D budget                                  |                                    |
-      | Non-FDI R&D project               | Not Known                                      |                                    |
-      | New-to-world tech                 | No new-to-world tech, business model or IP     |                                    |
-      | Account tier                      | Not Known                                      |                                    |
-      | New GHQ/EHQ                       | investmentProject.businessActivity             | formatEuropeanOrGlobalHeadquarters |
-      | Export revenue                    | No, will not create significant export revenue |                                    |
+      | key                               | value                                          | formatter                               |
+      | Primary sector                    | investmentProject.primarySector                |                                         |
+      | Total investment                  | Client cannot provide this information         |                                         |
+      | New jobs                          | 0                                              |                                         |
+      | Average salary of new jobs        | investmentProject.value.averageSalary          |                                         |
+      | R&D budget                        | No R&D budget                                  |                                         |
+      | Non-FDI R&D project               | Not Known                                      |                                         |
+      | New-to-world tech                 | No new-to-world tech, business model or IP     |                                         |
+      | Account tier                      | Not Known                                      |                                         |
+      | New GHQ/EHQ                       | investmentProject.businessActivity             | isEuropeanOrGlobalHeadquartersFormatter |
+      | Export revenue                    | No, will not create significant export revenue |                                         |
     And the FDI (Test A) details are displayed
       | key                               | value                                          |
       | Type of investment                | Does not apply                                 |
