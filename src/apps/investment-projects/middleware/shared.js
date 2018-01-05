@@ -32,12 +32,12 @@ async function getInvestmentDetails (req, res, next) {
     return next()
   }
   try {
-    const investmentProjectStages = metadata.investmentProjectStage
     const investmentData = await getInvestment(req.session.token, investmentId)
     const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
     const ukCompanyId = get(investmentData, 'uk_company.id')
     const clientRelationshipManagerId = get(investmentData, 'client_relationship_manager.id')
     const stageName = investmentData.stage.name
+    const investmentProjectStages = metadata.investmentProjectStage
 
     investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
 
