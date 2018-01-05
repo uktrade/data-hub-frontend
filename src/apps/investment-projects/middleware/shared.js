@@ -1,4 +1,5 @@
 const { get, upperFirst, camelCase } = require('lodash')
+const format = require('date-fns/format')
 
 const metadata = require('../../../lib/metadata')
 const { buildIncompleteFormList, toCompleteStageMessages } = require('../helpers')
@@ -6,6 +7,7 @@ const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
+const { mediumDateTimeFormat } = require('../../../../config')
 
 function getNextStage (currentStage, projectStages) {
   const projectStageIndex = projectStages.findIndex((projectStage) => {
@@ -69,6 +71,10 @@ async function getInvestmentDetails (req, res, next) {
         {
           label: 'Valuation',
           value: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+        },
+        {
+          label: 'Created on',
+          value: format(investmentData.created_on, mediumDateTimeFormat),
         },
       ],
       company: {
