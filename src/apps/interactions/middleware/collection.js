@@ -7,7 +7,7 @@ const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPre
 
 async function getInteractionCollection (req, res, next) {
   try {
-    res.locals.interactions = await search({
+    res.locals.results = await search({
       searchEntity: 'interaction',
       requestBody: req.body,
       token: req.session.token,
