@@ -24,6 +24,10 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Installation](#installation)
     - [Run in production mode](#run-in-production-mode)
     - [Run in development mode](#run-in-development-mode)
+  - [Updating NodeJs](#updating-nodejs)
+    - [Engines package.json](#engines-package-json)
+    - [CircleCi config](#circleci-config)
+    - [Data hub base docker](#data-hub-base-docker)
   - [OAuth](#oauth)
     - [Bypassing OAuth in development mode](#bypassing-oauth-in-development-mode)
     - [Using SSO when developing](#using-sso-when-developing)
@@ -188,6 +192,28 @@ or Visual Studio Code.
 ```
 yarn run develop
 ```
+
+### Updating NodeJs
+When NodeJs is updated it is worth noting it needs to be updated in a few places:
+
+#### Engines package.json
+Engines in `package.json` needs updating:
+```
+  "engines": {
+    "node": "<node_version>"
+  },
+```
+
+#### CircleCi config
+The value used in `.circleci/config.yaml` needs updating:
+```
+  - &node_version   <node_version>
+```
+
+#### Data hub base docker
+The version of the NodeJs docker that is used in our CircleCi Acceptance tests jobs needs to be updated in
+[uktrade/docker-data-hub-base]()https://github.com/uktrade/docker-data-hub-base). You will also need to wait for the 
+[docker automated build](https://hub.docker.com/r/ukti/docker-data-hub-base/builds/) to finish.
 
 ### OAuth
 Data hub uses [uktrade/staff-sso](https://github.com/uktrade/staff-sso) for OAuth. Details of the required environment
