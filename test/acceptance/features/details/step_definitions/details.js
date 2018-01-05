@@ -1,24 +1,9 @@
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 const { get, includes } = require('lodash')
-const { addMinutes, isAfter } = require('date-fns')
-const moment = require('moment')
 
-const { mediumDateTimeFormat } = require('../../../../../config')
 const { getDetailsTableRowValue } = require('../../../helpers/selectors')
-
-const formatters = {
-  isEuropeanOrGlobalHeadquartersFormatter (expected, actual) {
-    const formatted = /^(european|global) headquarters$/i.test(expected) ? 'Yes' : 'No'
-    return formatted === actual
-  },
-  isRecentDateFormatter (expected, actual) {
-    const actualDate = moment(actual, mediumDateTimeFormat).toDate()
-    const oneMinuteAgo = addMinutes(actualDate, -1)
-
-    return isAfter(actualDate, oneMinuteAgo)
-  },
-}
+const formatters = require('../../../helpers/formatters')
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {
