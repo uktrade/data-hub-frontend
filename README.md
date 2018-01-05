@@ -41,14 +41,21 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Testing](#testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
+    - [Running tests with specific user permissions](#running-tests-with-specific-user-permissions)
+      - [Dev api tokens](#dev-api-tokens)
+      - [Dev api tokens](#dev-api-tokens)
+      - [Backend locally with user permission tokens](#backend-locally-with-user-permission-tokens)
+      - [Adding tokens](#adding-tokens)
     - [Naming conventions](#naming-conventions)
       - [Folders](#folders)
       - [Filenames](#filenames)
       - [Feature tags](#feature-tags)
       - [Scenario tags](#scenario-tags)
+      - [Permissions tags](#permissions-tags)
     - [Ignoring features](#ignoring-features)
 - [Continuous Integration](#continuous-integration)
   - [Running CI jobs](#running-ci-jobs)
+  - [Setting up users with different permissions](#setting-up-users-with-different-permissions)
   - [Base docker image](#base-docker-image)
   - [Data hub backend docker image](#data-hub-backend-docker-image)
   - [Mock SSO docker build](#mock-sso-docker-build)
@@ -89,14 +96,13 @@ This file expects the following environment variables:
 | OAUTH2_CLIENT_SECRET | OAuth client secret |
 | OAUTH2_REDIRECT_URL | OAuth callback url |
 | OAUTH2_BYPASS_SSO | If a developer wishes to bypass OAuth locally then set this to true - defaults to `false` |
-| OAUTH2_DEV_TOKEN | Token used for working with OAuth locally whilst developing |
+| OAUTH2_DEV_TOKEN | Token used for working with OAuth locally whilst developing. This token is also used with CircleCi for providing user with different permissions |
 | POSTCODE_KEY | Part of the frontend looks up addresses for postcodes using [getaddress.io](https://getaddress.io/). Obtain a key for the service and set it here |
 | PROJECT_PHASE | Which badge to display in header: 'Alpha', 'Beta' or 'Demo' - defaults to 'Beta' @TODO - remove when Demo site is decommissioned|
 | PROXY | URL of a proxy to use to contact the API through. Useful for debugging |
 | QA_HOST | URL of the app under test |
 | QA_SELENIUM_HOST | URL of the Selenium server |
 | QA_SELENIUM_PORT | Port to use for the Selenium server |
-| QA_USER_EMAIL | Test user login |
 | REDISTOGO_URL | For use with heroku (deprecated) |
 | REDIS_HOST | You need to run redis and provide the host name for it here unless you specify the entire url - defaults to 'redis'|
 | REDIS_PORT | Redis port, defaults to `6379` |
@@ -368,6 +374,23 @@ Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](ht
 #### Running acceptance tests
 For information on [cucumber-js](https://github.com/cucumber/cucumber-js) tags please see the `nightwatch-cucumber` docs [executing-individual-feature-files-or-scenarios](http://mucsi96.github.io/nightwatch-cucumber/#executing-individual-feature-files-or-scenarios)
 
+#### Running tests with specific user permissions
+To run tests against a specific user permissions type: 
+- Change your `OAUTH2_DEV_TOKEN` environment variable to use one of: 
+  - `lepStaffToken`
+  - `daStaffToken`
+  - `ditStaffToken`
+- Use the relevant `yarn` script `yarn circle:acceptance:<staff type>` (see [package.json](/package.json))
+
+##### Dev api tokens
+The above permissions tokens are available on the dev api
+
+##### Backend locally with user permission tokens
+If you are running the api locally please run the [https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens 
+
+##### Adding tokens
+If you need to add a token have a look in confluence on how to do this `Data Hub team > Technical Documentation > Frontend > SSO for developers > Adding an Access token`.
+
 You run acceptance tests via:
 ```
 yarn test:acceptance
@@ -409,6 +432,10 @@ We name features after the folder name and file name. So `/auth/login.feature` w
 ##### Scenario tags
 We name scenarios after the feature name with a double hyphen separating the scenarios tag. So a scenario in the `@auth-login` feature would be `@auth-login--logout`
 
+##### Permissions tags
+To run a scenario against a specific type of user you can use the following tags:
+- `@da` will run the test against a user with `da` permissions
+- `@lep` will run the test against a user with `lep` permissions
 
 #### Ignoring features
 You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
@@ -421,6 +448,14 @@ Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
 - All branches run the `lint_code`, `unit_tests` and `user_acceptance_tests` CI jobs
 - You can skip the `user_acceptance_tests` CI job by using a branch starting with `/^skip-tests.*/`
 - The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo/tree/master) 
+
+### Setting up users with different permissions
+On CircleCi we run Acceptance tests against users with different permissions. We do this via the environment variable `OAUTH2_DEV_TOKEN`. Essentially we have users with different permissions setup in a job via `OAUTH2_DEV_TOKEN` and then we run tests with the specified permissions tag.
+So for setting up a test for a user of type `LEP` you need to:
+- add a token to the backend with a token associated to the permissions type. e.g `lepStaffToken`
+- add this token to the environment variable `OAUTH2_DEV_TOKEN` in the circleCi job
+- write a permission test and specify a tag in the cucumber feature. e.g `@lep`
+- specify which tag to use when running `nightwatch`. e.g `npm run circle:acceptance --  --tag lep`
 
 ### Base docker image
 The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/docker-data-hub-base` as a base for running a selenium server and data hub frontend
