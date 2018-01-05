@@ -193,12 +193,6 @@
     {% set verifiedState = translate('fields.vat_verified.options.unverified') %}
   {% endif %}
 
-  {% set billingContact = [
-    values.billing_contact_name | escape,
-    values.billing_email | escape,
-    values.billing_phone
-  ] | removeNilAndEmpty %}
-
   {% set billingAddress = [
     values.billing_address_1,
     values.billing_address_2,
@@ -217,25 +211,14 @@
     company.registered_address_country.name
   ] | removeNilAndEmpty %}
 
-  {% set tradingAddress = [
-    company.trading_address_1,
-    company.trading_address_2,
-    company.trading_address_town,
-    company.trading_address_county,
-    company.trading_address_postcode,
-    company.trading_address_country.name
-  ] | removeNilAndEmpty %}
-
-  {% set companyAddress = tradingAddress if tradingAddress|length else registeredAddress %}
-
   {% set addressValue %}
     {% if billingAddress | length %}
       {{ billingAddress | join(', ') }}
     {% else %}
-      <p>{{ companyAddress | join(', ') }}</p>
+      <p>{{ registeredAddress | join(', ') }}</p>
 
       {% call Message({ type: 'muted' }) %}
-        The company's {{ 'trading' if tradingAddress|length else 'registered' }} address is currently being used for the invoice.
+        The company’s registered address is currently being used for the invoice.
       {% endcall %}
     {% endif %}
   {% endset %}
@@ -263,9 +246,6 @@
       label: 'Price',
       value: costText if values.total_cost,
       fallbackText: 'Estimated hours and VAT category must be set to calculate price'
-    }, {
-      label: 'Billing contact',
-      value: billingContact | join('<br>') | safe if billingContact|length
     }, {
       label: 'Billing address',
       value: addressValue | safe

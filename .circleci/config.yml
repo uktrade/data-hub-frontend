@@ -1,35 +1,59 @@
 ## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
+
 version: 2
+aliases:
+  - &node_version         node:8.5.0
+  - &qa_user_email        circleci@datahub.com
+  - &oauth2_dev_token     topSecretSquirrel
+
 jobs:
+  # greenkeeper lockfile job
+  lockfile:
+     docker:
+       - image: *node_version
+     working_directory: ~/data-hub-frontend
+     steps:
+       - checkout
+       - restore_cache:
+           name: Restore yarn dependencies cache
+           key: cache-lockfile-{{ checksum "package.json" }}
+       - run: yarn global add greenkeeper-lockfile@1
+       - run: greenkeeper-lockfile-update
+       - run: greenkeeper-lockfile-upload
+       - save_cache:
+          name: Save yarn dependencies cache
+          key: cache-lockfile-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache/yarn
+
+  # Save yarn dependencies to cache to be used in later job
   build:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
-      - run: yarn cache clean
-      - run: yarn global add greenkeeper-lockfile@1
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run: yarn install
       - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
           paths:
             - ~/data-hub-frontend/node_modules
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
+
+  # Run linting jobs
   lint_code:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run:
           name: Lint code
           command: |
@@ -41,9 +65,11 @@ jobs:
           path: reports
       - store_artifacts:
           path: reports
+
+  # Run unit tests and store results
   unit_tests:
     docker:
-      - image: node:8.5.0
+      - image: *node_version
         environment:
           TZ: "/usr/share/zoneinfo/Europe/London"
     working_directory: ~/data-hub-frontend
@@ -51,7 +77,7 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run:
           name: Run unit tests
           command: |
@@ -69,25 +95,31 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
+
+  # Run acceptance tests
   user_acceptance_tests: &user_acceptance_tests
     environment:
-      BASH_ENV: "/usr/local/nvm/nvm.sh"
+      BASH_ENV: "/usr/local/nvm/nvm.sh" # make node, npm and yarn commands available in run command
     docker:
       - &docker_dat_hub_base
         image: ukti/docker-data-hub-base
         environment:
           - API_ROOT: http://localhost:8000
+          - MOCK_SSO_ROOT: http://localhost:8080
           - QA_HOST: http://localhost:3000
           - QA_SELENIUM_HOST: 127.0.0.1
           - QA_SELENIUM_PORT: 4444
-          - &qa_user_email
-          - QA_USER_EMAIL: circleci@datahub.com
+          - QA_USER_EMAIL: *qa_user_email
           - REDIS_HOST: localhost
           - TZ: "/usr/share/zoneinfo/Europe/London"
           - LOG_LEVEL: debug
-          - &oauth2_dev_token
-            OAUTH2_DEV_TOKEN: topSecretSquirrel
-            ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
+          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
+          - OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
+          - OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
+          - OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+          - OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+          - OAUTH2_CLIENT_ID: randomClientId
+          - ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
       - &docker_redis
         image: redis:3.2.10
       - &docker_elasticsearch
@@ -115,9 +147,15 @@ jobs:
           - ES_INDEX: test_index
           - ES5_URL: http://localhost:9200
           - POSTGRES_URL: tcp://postgres:5432
-          - SSO_ENABLED: 'False'
-          - *qa_user_email
-          - *oauth2_dev_token
+          - SSO_ENABLED: 'True'
+          - RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user has been created in backend
+          - RESOURCE_SERVER_AUTH_TOKEN: sso-token
+          - QA_USER_EMAIL: *qa_user_email
+          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
+      - &mock-sso
+        image: ukti/mock-sso
+        environment:
+          - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
     parallelism: 6
     working_directory: ~/data-hub-frontend
     steps:
@@ -125,9 +163,12 @@ jobs:
       - run:
           name: Wait for data hub leeloo
           command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
+      - run:
+          name: Wait for mock sso
+          command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "~/data-hub-frontend/yarn.lock" }}
+          key: yarn-dependency-{{ checksum "package.json" }}
       - run: yarn build
       - run:
           name: Start data hub frontend
@@ -169,6 +210,8 @@ jobs:
           path: cucumber
       - store_artifacts:
           path: cucumber
+
+  # Run acceptance tests using master docker version of the backend
   user_acceptance_tests_master:
     <<: *user_acceptance_tests
     docker:
@@ -178,20 +221,28 @@ jobs:
       - *docker_postgres
       - <<: *docker_data_hub_leeloo
         image: ukti/data-hub-leeloo:master
+      - *mock-sso
 
 workflows:
   version: 2
   datahub:
     jobs:
-      - build
+      - lockfile
+      - build:
+          requires:
+            - lockfile
       - lint_code:
           requires:
+            - lockfile
             - build
       - unit_tests:
           requires:
+            - lockfile
             - build
       - user_acceptance_tests:
           requires:
+            - lockfile
+            - build
             - lint_code
             - unit_tests
           filters:
@@ -202,6 +253,8 @@ workflows:
                 - /^release.*/
       - user_acceptance_tests_master:
           requires:
+            - lockfile
+            - build
             - lint_code
             - unit_tests
           filters:
@@ -210,6 +263,7 @@ workflows:
                 - master
                 - /^release.*/
 
+# Webhook for geckoboard heroku app
 notify:
   webhooks:
     - url: https://data-hub-circleci-geckoboard.herokuapp.com/parse-payload

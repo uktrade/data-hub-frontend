@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { get, merge, pickBy, lowerCase, snakeCase } = require('lodash')
+const { get, merge, pickBy, lowerCase, snakeCase, assign } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
@@ -22,19 +22,15 @@ function renderEditPage (req, res) {
   const interactionForm =
     buildFormWithStateAndErrors(
       formConfigs[req.params.kind](
-        {
+        assign({}, res.locals.options, {
           returnLink: res.locals.returnLink,
-          advisers: res.locals.advisers,
-          contacts: res.locals.contacts,
-          services: res.locals.services,
-          events: res.locals.events,
           hiddenFields: {
             id: get(res.locals, 'interaction.id'),
             company: res.locals.company.id,
             investment_project: get(res.locals, 'investmentData.id'),
             kind: snakeCase(req.params.kind),
           },
-        }),
+        })),
       mergedInteractionData,
       get(res.locals, 'form.errors.messages'),
     )
