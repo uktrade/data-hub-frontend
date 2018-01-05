@@ -15,6 +15,12 @@ Feature: View a list of Investment Projects
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     Then I see the success message
+    And the investment project local header is displayed
+      | key           | value            | formatter              |
+      | Status        | Ongoing - change |                        |
+      | Project code  |                  | isProjectCodeFormatter |
+      | Valuation     | Not yet valued   |                        |
+      | Created on    |                  | isRecentDateFormatter  |
     And the Investment project summary details are displayed
       | key                           | value                                         |
       | Client                        | investmentProject.equitySource.name           |
