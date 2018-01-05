@@ -16,10 +16,11 @@ function renderList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('omis/apps/list/views/list', {
+  res.render('collection', {
     sortForm,
     selectedFilters,
     filtersFields,
+    countLabel: 'order',
   })
 }
 

@@ -60,8 +60,8 @@ describe('interaction collection middleware', () => {
     })
 
     it('should create a collection of interactions', () => {
-      expect(this.res.locals.interactions.count).to.equal(1)
-      expect(this.res.locals.interactions.items[0]).to.deep.equal(this.transformedInteractionWithUrlPrefixStub)
+      expect(this.res.locals.results.count).to.equal(1)
+      expect(this.res.locals.results.items[0]).to.deep.equal(this.transformedInteractionWithUrlPrefixStub)
     })
   })
 

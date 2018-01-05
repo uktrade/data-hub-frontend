@@ -21,10 +21,12 @@ function renderCompanyList (req, res) {
   })
 
   res.render('companies/views/list', {
-    title: 'Companies',
     sortForm,
-    filtersFields: visibleFiltersFields,
     selectedFilters,
+    title: 'Companies',
+    countLabel: 'company',
+    highlightTerm: get(selectedFilters, 'name.valueLabel'),
+    filtersFields: visibleFiltersFields,
   })
 }
 
