@@ -1,33 +1,173 @@
-## TODO discover why the wavy package is causing us problems and why we need to yarn add wavy with a fresh install
-
 version: 2
 aliases:
-  - &node_version         node:8.5.0
-  - &qa_user_email        circleci@datahub.com
-  - &oauth2_dev_token     topSecretSquirrel
+  - &node_version               node:8.5.0
+  - &redis_version              redis:3.2.10
+  - &postgres_version           postgres:9.5
+  - &elasticsearch_version      elasticsearch:5.5
+  - &oauth2_dit_staff_token     ditStaffToken
+  - &oauth2_da_staff_token      daStaffToken
+  - &oauth2_lep_staff_token     lepStaffToken
 
+  # Common steps
+  - &restore_yarn_cache
+    restore_cache:
+      name: Restore yarn dependencies cache
+      key: yarn-dependency-{{ checksum "package.json" }}
+
+  # Configuration shared between user_acceptance* jobs
+  - &at_container_config
+    working_directory: ~/data-hub-frontend
+    environment:
+      BASH_ENV: "/usr/local/nvm/nvm.sh"  # make node, npm and yarn available
+
+  # Common steps for user_acceptance* jobs
+  - &wait_for_backend
+    run:
+      name: Wait for backend
+      command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
+
+  # Wait for mock-sso to report OK
+  - &wait_for_mock_sso
+    run:
+      name: Wait for mock sso
+      command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
+
+  # Start frontend
+  - &start_frontend
+    run:
+      name: Start data hub frontend
+      command: yarn start
+      background: true
+
+  # Wait for frontend to report OK
+  - &wait_for_frontend
+    run:
+      name: Wait for data hub frontend
+      command: dockerize -wait ${QA_HOST}/healthcheck -timeout 60s
+
+  # Create required cucumber directories
+  - &create_cucumber_dirs
+    run:
+      name: Create cucumber directories
+      command: mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
+
+  # Create cucumber reports
+  - &create_at_reports
+    run:
+      name: Create acceptance test reports
+      command: |
+        node ~/data-hub-frontend/.circleci/scripts/cucumber-report.js
+        ~/data-hub-frontend/.circleci/scripts/rename-reports.sh
+        ~/data-hub-frontend/.circleci/scripts/copy-screenshots.sh
+      when: always
+
+  # Store cucumber results in circleCi
+  - &store_test_results
+    store_test_results:
+      path: cucumber
+
+  # Store cucumber artifacts in circleCi
+  - &store_test_artifacts
+    store_artifacts:
+      path: cucumber
+
+  # Data hub base environment variables
+  - &data_hub_base_envs
+    API_ROOT: http://localhost:8000
+    MOCK_SSO_ROOT: http://localhost:8080
+    QA_HOST: http://localhost:3000
+    QA_SELENIUM_HOST: 127.0.0.1
+    QA_SELENIUM_PORT: 4444
+    REDIS_HOST: localhost
+    TZ: "/usr/share/zoneinfo/Europe/London"
+    LOG_LEVEL: debug
+    OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
+    OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
+    OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+    OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+    OAUTH2_CLIENT_ID: randomClientId
+    ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
+    OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
+
+  # Data hub base docker container
+  - &docker_data_hub_base
+    image: ukti/docker-data-hub-base
+    environment:
+      *data_hub_base_envs
+
+  # Data hub redis container
+  - &docker_redis
+    image: *redis_version
+
+  # Data hub backend elasticsearch container
+  - &docker_elasticsearch
+    image: *elasticsearch_version
+
+  # Data hub backend postgres container
+  - &docker_postgres
+    image: *postgres_version
+    name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: datahub
+
+  # Mock SSO container used by Data hub frontend
+  - &docker_mock_sso
+    image: ukti/mock-sso
+    environment:
+      - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
+
+  # Data hub backend
+  - &docker_data_hub_backend
+    image: ukti/data-hub-leeloo
+    command: ./setup-uat.sh
+    environment:
+      AWS_DEFAULT_REGION: eu-west-2
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: bar
+      CDMS_AUTH_URL: http://example.com
+      DATABASE_URL: postgresql://postgres@postgres/datahub
+      DATAHUB_SECRET: secret
+      DEBUG: 'True'
+      DOCUMENTS_BUCKET: baz
+      DJANGO_SECRET_KEY: topSecret
+      DJANGO_SETTINGS_MODULE: config.settings.local
+      ES_INDEX: test_index
+      ES5_URL: http://localhost:9200
+      POSTGRES_URL: tcp://postgres:5432
+      SSO_ENABLED: 'True'
+      RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect  # required but not used as user with token has been created in backend setup script
+      RESOURCE_SERVER_AUTH_TOKEN: sso-token
+
+  # Non master branch Common workflow config
+  - &common_at_workflow_config
+    requires:
+      - lockfile
+      - dependencies
+      - lint_code
+      - unit_tests
+    filters:
+      branches:
+        ignore:
+          - master
+          - /^skip-tests.*/
+          - /^release.*/
+
+  # Master branch common workflow config
+  - &master_common_at_workflow_config
+    requires:
+      - lockfile
+      - dependencies
+      - lint_code
+      - unit_tests
+    filters:
+      branches:
+        only:
+          - master
+          - /^release.*/
 jobs:
   # greenkeeper lockfile job
   lockfile:
-     docker:
-       - image: *node_version
-     working_directory: ~/data-hub-frontend
-     steps:
-       - checkout
-       - restore_cache:
-           name: Restore yarn dependencies cache
-           key: cache-lockfile-{{ checksum "package.json" }}
-       - run: yarn global add greenkeeper-lockfile@1
-       - run: greenkeeper-lockfile-update
-       - run: greenkeeper-lockfile-upload
-       - save_cache:
-          name: Save yarn dependencies cache
-          key: cache-lockfile-{{ checksum "package.json" }}
-          paths:
-            - ~/.cache/yarn
-
-  # Save yarn dependencies to cache to be used in later job
-  build:
     docker:
       - image: *node_version
     working_directory: ~/data-hub-frontend
@@ -35,9 +175,26 @@ jobs:
       - checkout
       - restore_cache:
           name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}
+          key: cache-lockfile-{{ checksum "package.json" }}
+      - run: yarn global add greenkeeper-lockfile@1
+      - run: greenkeeper-lockfile-update
+      - run: greenkeeper-lockfile-upload
+      - save_cache:
+          name: Save yarn dependencies cache
+          key: cache-lockfile-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache/yarn
+
+  # Save yarn dependencies to cache
+  dependencies:
+    docker:
+      - image: *node_version
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - *restore_yarn_cache
       - run: yarn install
-      - run: yarn add wavy # wavy module does not install correctly after a fresh yarn install, this causes Unit tests to fail
+      - run: yarn add wavy  # explicitly install wavy module
       - save_cache:
           name: Save yarn dependencies cache
           key: yarn-dependency-{{ checksum "package.json" }}
@@ -51,9 +208,7 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
-      - restore_cache:
-          name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}
+      - *restore_yarn_cache
       - run:
           name: Lint code
           command: |
@@ -75,9 +230,7 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
-      - restore_cache:
-          name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}
+      - *restore_yarn_cache
       - run:
           name: Run unit tests
           command: |
@@ -96,89 +249,27 @@ jobs:
       - store_artifacts:
           path: coverage
 
-  # Run acceptance tests
-  user_acceptance_tests: &user_acceptance_tests
-    environment:
-      BASH_ENV: "/usr/local/nvm/nvm.sh" # make node, npm and yarn commands available in run command
+  # Run acceptance tests for DIT staff
+  dit_staff_at: &dit_staff_at
+    <<: *at_container_config
     docker:
-      - &docker_dat_hub_base
-        image: ukti/docker-data-hub-base
-        environment:
-          - API_ROOT: http://localhost:8000
-          - MOCK_SSO_ROOT: http://localhost:8080
-          - QA_HOST: http://localhost:3000
-          - QA_SELENIUM_HOST: 127.0.0.1
-          - QA_SELENIUM_PORT: 4444
-          - QA_USER_EMAIL: *qa_user_email
-          - REDIS_HOST: localhost
-          - TZ: "/usr/share/zoneinfo/Europe/London"
-          - LOG_LEVEL: debug
-          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
-          - OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
-          - OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
-          - OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
-          - OAUTH2_CLIENT_SECRET: youAintSeenMyRight
-          - OAUTH2_CLIENT_ID: randomClientId
-          - ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
-      - &docker_redis
-        image: redis:3.2.10
-      - &docker_elasticsearch
-        image: elasticsearch:5.5
-      - &docker_postgres
-        image: postgres:9.5
-        name: postgres
-        restart: always
-        environment:
-          POSTGRES_DB: datahub
-      - &docker_data_hub_leeloo
-        image: ukti/data-hub-leeloo
-        command: ./setup-uat.sh
-        environment:
-          - AWS_DEFAULT_REGION: eu-west-2
-          - AWS_ACCESS_KEY_ID: foo
-          - AWS_SECRET_ACCESS_KEY: bar
-          - CDMS_AUTH_URL: http://example.com
-          - DATABASE_URL: postgresql://postgres@postgres/datahub
-          - DATAHUB_SECRET: secret
-          - DEBUG: True
-          - DOCUMENTS_BUCKET: baz
-          - DJANGO_SECRET_KEY: topSecret
-          - DJANGO_SETTINGS_MODULE: config.settings.local
-          - ES_INDEX: test_index
-          - ES5_URL: http://localhost:9200
-          - POSTGRES_URL: tcp://postgres:5432
-          - SSO_ENABLED: 'True'
-          - RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user has been created in backend
-          - RESOURCE_SERVER_AUTH_TOKEN: sso-token
-          - QA_USER_EMAIL: *qa_user_email
-          - OAUTH2_DEV_TOKEN: *oauth2_dev_token
-      - &mock-sso
-        image: ukti/mock-sso
-        environment:
-          - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
+      - *docker_data_hub_base
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - *docker_data_hub_backend
     parallelism: 6
-    working_directory: ~/data-hub-frontend
     steps:
       - checkout
-      - run:
-          name: Wait for data hub leeloo
-          command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
-      - run:
-          name: Wait for mock sso
-          command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
-      - restore_cache:
-          name: Restore yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}
+      - *wait_for_backend
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
       - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
       - run:
-          name: Start data hub frontend
-          command: yarn start
-          background: true
-      - run:
-          name: Wait for data hub frontend
-          command: dockerize -wait ${QA_HOST}/healthcheck -timeout 60s
-      - run:
-          name: Split tests for parallelisation and then run acceptance tests
+          name: Split tests for parallelisation
           command: |
             # split .features for parallelisation
             FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split)"
@@ -195,76 +286,141 @@ jobs:
             export FEATURES_FOLDER=~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}
             printf "Features folder created - ${FEATURES_FOLDER}\n"
 
-            # run acceptance tests
+            # create cucumber directories
             mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
-            yarn circle:acceptance
-          when: always
-      - run:
-          name: Create acceptance test reports
-          command: |
-            node ~/data-hub-frontend/.circleci/scripts/cucumber-report.js
-            ~/data-hub-frontend/.circleci/scripts/rename-reports.sh
-            ~/data-hub-frontend/.circleci/scripts/copy-screenshots.sh
-          when: always
-      - store_test_results:
-          path: cucumber
-      - store_artifacts:
-          path: cucumber
 
-  # Run acceptance tests using master docker version of the backend
-  user_acceptance_tests_master:
-    <<: *user_acceptance_tests
+            # run acceptance tests
+            yarn circle:acceptance:dit-staff
+          when: always
+      - *create_at_reports
+      - *store_test_results
+      - *store_test_artifacts
+
+  # Run acceptance tests for LEP staff
+  lep_staff_at: &lep_staff_at
+    <<: *at_container_config
     docker:
-      - *docker_dat_hub_base
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_lep_staff_token
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
-      - <<: *docker_data_hub_leeloo
-        image: ukti/data-hub-leeloo:master
-      - *mock-sso
+      - *docker_mock_sso
+      - *docker_data_hub_backend
+    steps:
+      - checkout
+      - *wait_for_backend
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - *create_cucumber_dirs
+      - run:
+          name: Run LEP acceptance tests
+          command: yarn circle:acceptance:lep-staff
+      - *create_at_reports
+      - *store_test_results
+      - *store_test_artifacts
 
+  # Run acceptance tests for DA staff
+  da_staff_at: &da_staff_at
+    <<: *at_container_config
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - *docker_data_hub_backend
+    steps:
+      - checkout
+      - *wait_for_backend
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - *create_cucumber_dirs
+      - run:
+          name: Run LEP acceptance tests
+          command: yarn circle:acceptance:da-staff
+      - *create_at_reports
+      - *store_test_results
+      - *store_test_artifacts
+
+  # Run acceptance tests for DIT staff using the master version of the backend
+  master-dit_staff_at:
+    <<: *dit_staff_at
+    docker:
+      - *docker_data_hub_base
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - <<: *docker_data_hub_backend
+        image: ukti/data-hub-leeloo:master
+
+  # Run acceptance tests for LEP staff using the master version of the backend
+  master-lep_staff_at:
+    <<: *lep_staff_at
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_lep_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - <<: *docker_data_hub_backend
+        image: ukti/data-hub-leeloo:master
+
+  # Run acceptance tests for DA staff using the master version of the backend
+  master-da_staff_at:
+    <<: *da_staff_at
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - <<: *docker_data_hub_backend
+        image: ukti/data-hub-leeloo:master
+
+# CircleCi workflows
 workflows:
   version: 2
   datahub:
     jobs:
       - lockfile
-      - build:
+      - dependencies:
           requires:
             - lockfile
       - lint_code:
           requires:
             - lockfile
-            - build
+            - dependencies
       - unit_tests:
           requires:
             - lockfile
-            - build
-      - user_acceptance_tests:
-          requires:
-            - lockfile
-            - build
-            - lint_code
-            - unit_tests
-          filters:
-            branches:
-              ignore:
-                - master
-                - /^skip-tests.*/
-                - /^release.*/
-      - user_acceptance_tests_master:
-          requires:
-            - lockfile
-            - build
-            - lint_code
-            - unit_tests
-          filters:
-            branches:
-              only:
-                - master
-                - /^release.*/
+            - dependencies
+      - dit_staff_at: *common_at_workflow_config
+      - da_staff_at: *common_at_workflow_config
+      - lep_staff_at: *common_at_workflow_config
+      - master-dit_staff_at: *master_common_at_workflow_config
+      - master-da_staff_at: *master_common_at_workflow_config
+      - master-lep_staff_at: *master_common_at_workflow_config
 
 # Webhook for geckoboard heroku app
 notify:
   webhooks:
     - url: https://data-hub-circleci-geckoboard.herokuapp.com/parse-payload
-
