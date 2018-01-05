@@ -58,7 +58,7 @@ describe('Investment evaluation controller', () => {
       'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
-      'Type of investment': 'Does not apply',
+      'Type of investment': 'FDI, Capital only',
       'Foreign investor': {
         name: 'Omnicorp SDS',
         url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
@@ -114,7 +114,7 @@ describe('Investment evaluation controller', () => {
       'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
-      'Type of investment': 'Tom',
+      'Type of investment': 'FDI, Creation of new site or activity',
       'Foreign investor': {
         name: 'amazing tables Ltd.',
         url: '/companies/6c997f91-a098-e211-a939-e4115bead28a',
