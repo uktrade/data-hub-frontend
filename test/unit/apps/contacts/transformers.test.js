@@ -10,52 +10,115 @@ const {
 
 describe('Contact transformers', () => {
   describe('#transformContactToListItem', () => {
-    it('should return undefined for unqualified result', () => {
-      expect(transformContactToListItem()).to.be.undefined
-      expect(transformContactToListItem({ a: 'b' })).to.be.undefined
-      expect(transformContactToListItem({ id: 'abcd' })).to.be.undefined
-      expect(transformContactToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
-    })
-
-    it('should return an object with data for active contact list item', () => {
-      const actual = transformContactToListItem(contactSearchResult)
-
-      expect(actual).to.have.property('id').a('string')
-      expect(actual).to.have.property('type').a('string')
-      expect(actual).to.have.property('name').a('string')
-      expect(actual).to.have.property('isArchived').a('boolean').to.be.false
-      expect(actual).to.have.property('meta').an('array').to.deep.equal([
-        { label: 'Company', value: 'Fred ltd' },
-        { label: 'Job title', value: 'Director' },
-        { label: 'Sector', value: 'Aerospace' },
-        { label: 'Country', value: 'United Kingdom' },
-        { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
-        { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
-      ])
-    })
-
-    it('should return an object with data for archived contact list item', () => {
-      const archivedContact = Object.assign({}, contactSearchResult, {
-        archived: true,
-        archived_on: '2017-03-14T14:49:17',
-        archived_by: 'Sam Smith',
-        archived_reason: 'Left job',
+    context('when no object is provided as a parameter', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem()
       })
-      const actual = transformContactToListItem(archivedContact)
 
-      expect(actual).to.have.property('id').a('string')
-      expect(actual).to.have.property('type').a('string')
-      expect(actual).to.have.property('name').a('string')
-      expect(actual).to.have.property('isArchived').a('boolean').to.be.true
-      expect(actual).to.have.property('meta').an('array').to.deep.equal([
-        { label: 'Company', value: 'Fred ltd' },
-        { label: 'Job title', value: 'Director' },
-        { label: 'Sector', value: 'Aerospace' },
-        { label: 'Country', value: 'United Kingdom' },
-        { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
-        { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
-        { label: 'Status', type: 'badge', value: 'Archived' },
-      ])
+      it('should return undefined', () => {
+        expect(this.transformedContact).to.be.undefined
+      })
+    })
+
+    context('when a none contact object is provided as a parameter', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem({ a: 'b' })
+      })
+
+      it('should return undefined', () => {
+        expect(this.transformedContact).to.be.undefined
+      })
+    })
+
+    context('when the contact object parameter does not contain an ID', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem({
+          first_name: 'Fred',
+          last_name: 'Smith',
+        })
+      })
+
+      it('should return undefined', () => {
+        expect(this.transformedContact).to.be.undefined
+      })
+    })
+
+    context('when the contact object parameter does not contain a name', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem({ id: '1234' })
+      })
+
+      it('should return undefined', () => {
+        expect(this.transformedContact).to.be.undefined
+      })
+    })
+
+    context('when the contact object parameter contains only a partial name', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem({
+          id: '1234',
+          first_name: 'Fred',
+          last_name: 'Smith',
+        })
+      })
+
+      it('should return undefined', () => {
+        expect(this.transformedContact).to.be.ok
+      })
+    })
+
+    context('when the contact object parameter contains a valid contact', () => {
+      beforeEach(() => {
+        this.transformedContact = transformContactToListItem(contactSearchResult)
+      })
+
+      it('should return a transformed contact list item', () => {
+        expect(this.transformedContact).to.deep.equal({
+          id: '12651151-2149-465e-871b-ac45bc568a62',
+          type: 'contact',
+          name: 'Fred Smith',
+          isArchived: false,
+          meta: [
+            { label: 'Company', value: 'Fred ltd' },
+            { label: 'Job title', value: 'Director' },
+            { label: 'Sector', value: 'Aerospace' },
+            { label: 'Country', value: 'United Kingdom' },
+            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
+            { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
+          ],
+        })
+      })
+    })
+
+    context('when the contact object parameter contains an archived contact', () => {
+      beforeEach(() => {
+        const archivedContact = Object.assign({}, contactSearchResult, {
+          archived: true,
+          archived_on: '2017-03-14T14:49:17',
+          archived_by: 'Sam Smith',
+          archived_reason: 'Left job',
+        })
+
+        this.transformedContact = transformContactToListItem(archivedContact)
+      })
+
+      it('should return a transformed contact list item', () => {
+        expect(this.transformedContact).to.deep.equal({
+          id: '12651151-2149-465e-871b-ac45bc568a62',
+          type: 'contact',
+          name: 'Fred Smith',
+          isArchived: true,
+          meta: [
+            { label: 'Company', value: 'Fred ltd' },
+            { label: 'Job title', value: 'Director' },
+            { label: 'Sector', value: 'Aerospace' },
+            { label: 'Country', value: 'United Kingdom' },
+            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
+            { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
+            { label: 'Status', type: 'badge', value: 'Archived' },
+          ],
+        })
+      })
     })
   })
 
