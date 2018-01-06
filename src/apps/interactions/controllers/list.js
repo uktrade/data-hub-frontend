@@ -14,10 +14,11 @@ async function renderInteractionList (req, res, next) {
     const filtersFields = interactionFiltersFieldConfig(adviserOptions, channelOptions)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-    res.render('interactions/views/list', {
-      title: 'Interactions',
+    res.render('collection', {
       filtersFields,
       selectedFilters,
+      title: 'Interactions',
+      countLabel: 'interaction',
     })
   } catch (error) {
     next(error)

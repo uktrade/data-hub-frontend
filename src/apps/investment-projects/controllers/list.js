@@ -12,11 +12,12 @@ function renderInvestmentList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('investment-projects/views/list', {
-    title: 'Investment Projects',
+  res.render('collection', {
     sortForm,
     filtersFields,
     selectedFilters,
+    title: 'Investment Projects',
+    countLabel: 'project',
   })
 }
 
