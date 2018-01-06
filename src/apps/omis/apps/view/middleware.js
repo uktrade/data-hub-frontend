@@ -84,9 +84,10 @@ async function setQuoteSummary (req, res, next) {
   if (orderStatus === 'quote_awaiting_acceptance') {
     try {
       const quote = await Order.getQuote(req.session.token, orderId)
+      quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
 
       res.locals.quote = assign({}, quote, {
-        expired: new Date(quote.expires_on) < new Date(),
+        expired: quote.expires_on < new Date(),
       })
     } catch (error) {
       logger.error(error)
@@ -108,7 +109,10 @@ async function setQuotePreview (req, res, next) {
   }
 
   try {
-    res.locals.quote = await Order.previewQuote(req.session.token, id)
+    const quote = await Order.previewQuote(req.session.token, id)
+    quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
+
+    res.locals.quote = quote
   } catch (error) {
     if (error.statusCode !== 400) {
       logger.error(error)
@@ -144,9 +148,10 @@ async function setQuote (req, res, next) {
 
   try {
     const quote = await Order.getQuote(req.session.token, res.locals.order.id)
+    quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
 
     res.locals.quote = assign({}, quote, {
-      expired: new Date(quote.expires_on) < new Date(),
+      expired: quote.expires_on < new Date(),
     })
   } catch (error) {
     if (error.statusCode !== 404) {

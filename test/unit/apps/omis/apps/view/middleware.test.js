@@ -336,6 +336,7 @@ describe('OMIS View middleware', () => {
             this.getQuoteStub.resolves({
               id: '12345',
               content: 'Quote content',
+              expires_on: '2017-08-02',
             })
 
             await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
@@ -350,6 +351,7 @@ describe('OMIS View middleware', () => {
             expect(this.resMock.locals.quote).to.deep.equal({
               id: '12345',
               expired: false,
+              expires_on: new Date('2017-08-02T23:59:59'),
               content: 'Quote content',
             })
           })
@@ -374,7 +376,7 @@ describe('OMIS View middleware', () => {
             expect(this.resMock.locals.quote).to.deep.equal({
               id: '12345',
               expired: true,
-              expires_on: '2017-07-10',
+              expires_on: new Date('2017-07-10T23:59:59'),
             })
           })
         })
@@ -433,6 +435,7 @@ describe('OMIS View middleware', () => {
           this.previewQuoteStub.resolves({
             id: '12345',
             content: 'Quote content',
+            expires_on: '2017-07-10',
           })
 
           await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
@@ -443,6 +446,7 @@ describe('OMIS View middleware', () => {
           expect(this.resMock.locals.quote).to.deep.equal({
             id: '12345',
             content: 'Quote content',
+            expires_on: new Date('2017-07-10T23:59:59'),
           })
         })
 
@@ -598,12 +602,20 @@ describe('OMIS View middleware', () => {
     context('when quote does not exist on locals', () => {
       context('when quote resolves', () => {
         beforeEach(async () => {
+          const mockDate = new Date('2017-08-01')
+
+          this.clock = sinon.useFakeTimers(mockDate.getTime())
           this.getQuoteStub.resolves({
             id: '12345',
             content: 'Quote content',
+            expires_on: '2017-08-10',
           })
 
           await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        afterEach(() => {
+          this.clock.restore()
         })
 
         it('should set response as quote property on locals', () => {
@@ -611,6 +623,7 @@ describe('OMIS View middleware', () => {
           expect(this.resMock.locals.quote).to.deep.equal({
             id: '12345',
             expired: false,
+            expires_on: new Date('2017-08-10T23:59:59'),
             content: 'Quote content',
           })
         })
