@@ -185,34 +185,69 @@ describe('Global transformers', () => {
       expect(this.buildPaginationSpy).to.be.called
     })
 
-    it('should return a collection object with items transformed by given transformer with arguments', () => {
-      const itemTransformerInnerSpy = sandbox.spy()
-      const itemTransformerSpy = sandbox.stub().returns(itemTransformerInnerSpy)
-      const itemTransformerOptions = { query: { term: 'bobby' } }
+    context('when an item transformer is specified with arguments', () => {
+      beforeEach(() => {
+        this.itemTransformerInnerSpy = sandbox.spy()
+        this.itemTransformerSpy = sandbox.stub().returns(this.itemTransformerInnerSpy)
+        this.itemTransformerOptions = { query: { term: 'bobby' } }
 
-      const actual = this.transformers.transformApiResponseToCollection(
-        undefined,
-        itemTransformerSpy(itemTransformerOptions)
-      )(this.mockResponse)
+        this.transformers.transformApiResponseToCollection(
+          undefined,
+          this.itemTransformerSpy(this.itemTransformerOptions)
+        )(this.mockResponse)
+      })
 
-      expect(itemTransformerInnerSpy).to.be.calledTwice
-      expect(itemTransformerSpy).to.be.calledWith(itemTransformerOptions)
-      expect(actual).to.have.property('items').to.have.length(2)
+      it('call the item transformer with the arguments', () => {
+        expect(this.itemTransformerSpy).to.be.calledWith(this.itemTransformerOptions)
+      })
     })
 
-    it('should return a collection object with items transformed by multiple transformers', () => {
-      const firstItemTransformerSpy = sandbox.spy()
-      const secondItemTransformerSpy = sandbox.spy()
+    context('when there are multiple item transformers', () => {
+      beforeEach(() => {
+        this.firstItemTransformerStub = sandbox.stub()
+          .onCall(0).returns({ id: '0' })
+          .onCall(1).returns({ id: '1' })
 
-      const actual = this.transformers.transformApiResponseToCollection(
-        undefined,
-        firstItemTransformerSpy,
-        secondItemTransformerSpy
-      )(this.mockResponse)
+        this.secondItemTransformerStub = sandbox.stub()
+          .onCall(0).returns({ id: 'a0' })
+          .onCall(1).returns({ id: 'a1' })
 
-      expect(firstItemTransformerSpy).to.be.calledTwice
-      expect(secondItemTransformerSpy).to.be.calledTwice
-      expect(actual).to.have.property('items').to.have.length(2)
+        this.result = this.transformers.transformApiResponseToCollection(
+          undefined,
+          this.firstItemTransformerStub,
+          this.secondItemTransformerStub
+        )(this.mockResponse)
+      })
+
+      it('should call the first transformer for each item', () => {
+        expect(this.firstItemTransformerStub).to.be.calledTwice
+        expect(this.secondItemTransformerStub).to.be.calledTwice
+      })
+
+      it('should call the second transformer for each item', () => {
+        expect(this.secondItemTransformerStub).to.be.calledTwice
+      })
+
+      it('should pass all the items through', () => {
+        expect(this.result).to.have.property('items').to.have.length(2)
+      })
+    })
+
+    context('when the item transformer fails for an item', () => {
+      beforeEach(() => {
+        const itemTransformerStub = sandbox.stub()
+          .onCall(0).returns(undefined)
+          .onCall(1).returns({ id: '1' })
+
+        this.result = this.transformers.transformApiResponseToCollection(
+          undefined,
+          itemTransformerStub
+        )(this.mockResponse)
+      })
+
+      it('should filter out undefined items', () => {
+        expect(this.result.items).to.deep.equal([{ id: '1' }])
+      })
     })
   })
 })

@@ -56,6 +56,20 @@ function getMetaListItemValueSelector (text) {
 }
 
 /**
+ * Gets XPath selector for getting a meta list item from a specific item in a collection item
+ * @param text
+ * @param [listItem=1]
+ */
+const getListItemMetaElementWithText = (text, listItem = 1) => getSelectorForElementWithText(
+  text,
+  {
+    el: `//article[contains(@class, "c-collection")]//ol[contains(@class,"c-entity-list")]/li[${listItem}]//span`,
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  }
+)
+
+/**
  * Gets XPath selector for an anchor tag containing text
  * @param text
  * @param className
@@ -77,4 +91,5 @@ module.exports = {
   getDetailsTableRowValue,
   getMetaListItemValueSelector,
   getLinkWithText,
+  getListItemMetaElementWithText,
 }

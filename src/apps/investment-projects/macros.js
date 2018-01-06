@@ -1,3 +1,5 @@
+const { assign } = require('lodash')
+
 const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
@@ -86,115 +88,130 @@ const investmentSortForm = {
   ],
 }
 
-const requirementsFormConfig = {
-  buttonText: 'Save',
-  children: [
-    {
-      macroName: 'AddAnother',
-      buttonName: 'add_item',
-      name: 'strategic_drivers',
-      label: requirementsLabels.edit.strategic_drivers,
-      children: [
-        Object.assign({}, globalFields.strategicDrivers, {
-          label: requirementsLabels.edit.strategic_drivers,
-          isLabelHidden: true,
-        }),
-      ],
-    },
-    {
-      macroName: 'TextField',
-      type: 'textarea',
-      name: 'client_requirements',
-      label: requirementsLabels.edit.client_requirements,
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      type: 'radio',
-      modifier: 'inline',
-      name: 'client_considering_other_countries',
-      label: requirementsLabels.edit.client_considering_other_countries,
-      options: [
-        { label: 'Yes', value: 'true' },
-        { label: 'No', value: 'false' },
-      ],
-    },
-    {
-      macroName: 'AddAnother',
-      buttonName: 'add_item',
-      name: 'competitor_countries',
-      label: requirementsLabels.edit.competitor_countries,
-      modifier: 'subfield',
-      condition: {
+const requirementsFormConfig = ({
+  strategicDrivers,
+  countries,
+  ukRegions,
+}) => {
+  const labels = requirementsLabels.edit
+
+  return {
+    buttonText: 'Save',
+    children: [
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'strategic_drivers',
+        label: requirementsLabels.edit.strategic_drivers,
+        children: [
+          assign({}, globalFields.strategicDrivers, {
+            label: labels.strategic_drivers,
+            isLabelHidden: true,
+            options: strategicDrivers,
+          }),
+        ],
+      },
+      {
+        macroName: 'TextField',
+        type: 'textarea',
+        name: 'client_requirements',
+        label: labels.client_requirements,
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        modifier: 'inline',
         name: 'client_considering_other_countries',
-        value: 'true',
+        label: labels.client_considering_other_countries,
+        options: [
+          { label: 'Yes', value: 'true' },
+          { label: 'No', value: 'false' },
+        ],
       },
-      children: [
-        Object.assign({}, globalFields.countries, {
-          name: 'competitor_countries',
-          label: requirementsLabels.edit.competitor_countries,
-          isLabelHidden: true,
-        }),
-      ],
-    },
-    {
-      macroName: 'AddAnother',
-      buttonName: 'add_item',
-      name: 'uk_region_locations',
-      label: requirementsLabels.edit.uk_region_locations,
-      children: [
-        Object.assign({}, globalFields.ukRegions, {
-          label: requirementsLabels.edit.uk_region_locations,
-          isLabelHidden: true,
-          name: 'uk_region_locations',
-        }),
-      ],
-    },
-    {
-      macroName: 'MultipleChoiceField',
-      type: 'radio',
-      modifier: 'inline',
-      name: 'site_decided',
-      label: requirementsLabels.edit.site_decided,
-      options: [
-        { label: 'Yes', value: 'true' },
-        { label: 'No', value: 'false' },
-      ],
-    },
-    {
-      macroName: 'Fieldset',
-      legend: 'Address',
-      condition: {
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'competitor_countries',
+        label: labels.competitor_countries,
+        modifier: 'subfield',
+        condition: {
+          name: 'client_considering_other_countries',
+          value: 'true',
+        },
+        children: [
+          assign({}, globalFields.countries, {
+            name: 'competitor_countries',
+            label: labels.competitor_countries,
+            isLabelHidden: true,
+            options: countries,
+          }),
+        ],
+      },
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'uk_region_locations',
+        label: requirementsLabels.edit.uk_region_locations,
+        children: [
+          assign({}, globalFields.ukRegions, {
+            label: labels.uk_region_locations,
+            isLabelHidden: true,
+            name: 'uk_region_locations',
+            options: ukRegions,
+          }),
+        ],
+      },
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        modifier: 'inline',
         name: 'site_decided',
-        value: 'true',
+        label: labels.site_decided,
+        options: [
+          { label: 'Yes', value: 'true' },
+          { label: 'No', value: 'false' },
+        ],
       },
-      children: [
-        {
-          macroName: 'TextField',
-          name: 'address_1',
-          label: 'Street',
-          modifier: 'compact',
+      {
+        macroName: 'Fieldset',
+        legend: 'Address',
+        condition: {
+          name: 'site_decided',
+          value: 'true',
         },
-        {
-          macroName: 'TextField',
-          name: 'address_2',
-          label: 'Street 2',
-          isLabelHidden: true,
-          modifier: 'compact',
-        },
-        {
-          macroName: 'TextField',
-          name: 'address_town',
-          label: 'Town',
-        },
-        {
-          macroName: 'TextField',
-          name: 'address_postcode',
-          label: 'Postcode',
-          modifier: 'short',
-        },
-      ],
-    },
-  ],
+        children: [
+          {
+            macroName: 'TextField',
+            name: 'address_1',
+            label: 'Street',
+            modifier: 'compact',
+          },
+          {
+            macroName: 'TextField',
+            name: 'address_2',
+            label: 'Street 2',
+            isLabelHidden: true,
+            modifier: 'compact',
+          },
+          {
+            macroName: 'TextField',
+            name: 'address_town',
+            label: 'Town',
+          },
+          {
+            macroName: 'TextField',
+            name: 'address_postcode',
+            label: 'Postcode',
+            modifier: 'short',
+          },
+        ],
+      },
+    ].map(field => {
+      return assign(field, {
+        label: requirementsLabels.edit[field.name],
+      })
+    }),
+  }
 }
 
 const statusFormConfig = {

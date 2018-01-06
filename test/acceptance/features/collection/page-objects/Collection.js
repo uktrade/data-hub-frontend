@@ -1,6 +1,10 @@
 const { lowerCase } = require('lodash')
 
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+  getListItemMetaElementWithText,
+} = require('../../../helpers/selectors')
 
 const getSelectorForMetaListItemValue = (text) => {
   return getSelectorForElementWithText(text, {
@@ -24,14 +28,7 @@ module.exports = {
       },
       getSelectorForMetaListItemValue,
       getSelectorForBadgeWithText (text) {
-        return getSelectorForElementWithText(
-          text,
-          {
-            el: '//article[contains(@class, "c-collection")]//ol[contains(@class,"c-entity-list")]/li[1]//span',
-            className: 'c-meta-list__item-label',
-            child: '/following-sibling::span',
-          },
-        )
+        return getListItemMetaElementWithText(text)
       },
       getButtonSelectorWithText (text) {
         return getButtonWithText(text)

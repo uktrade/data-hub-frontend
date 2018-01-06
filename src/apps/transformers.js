@@ -5,6 +5,8 @@ const {
   snakeCase,
   isPlainObject,
   isFunction,
+  isEmpty,
+  assign,
 } = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
@@ -92,10 +94,12 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
 
     itemTransformers.forEach(transformer => {
       if (!isFunction(transformer)) { return }
-      items = items.map(transformer)
+      items = items
+        .map(transformer)
+        .filter(item => !isEmpty(item))
     })
 
-    return Object.assign({}, {
+    return assign({}, {
       items,
       count: response.count,
       pagination: buildPagination(options.query, response),

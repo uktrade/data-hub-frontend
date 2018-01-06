@@ -76,6 +76,9 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see the name of the person who made the recent contact record changes$/, async function () {
+    await AuditContact
+      .getText('@userName', (result) => set(this.state, 'username', result.value))
+
     await AuditList.section.firstAuditInList
       .assert.containsText('@adviser', this.state.username)
   })
@@ -97,11 +100,17 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see the details who archived the contact$/, async function () {
+    await AuditContact
+      .getText('@userName', (result) => set(this.state, 'username', result.value))
+
     await AuditList.section.firstAuditInList
       .assert.containsText('@adviser', this.state.username)
   })
 
   Then(/^I see the details who unarchived the contact$/, async function () {
+    await AuditContact
+      .getText('@userName', (result) => set(this.state, 'username', result.value))
+
     await AuditList.section.firstAuditInList
       .assert.containsText('@adviser', this.state.username)
   })

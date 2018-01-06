@@ -268,6 +268,7 @@ describe('nunjucks filters', () => {
       g: false,
       h: [],
       i: {},
+      j: 0,
     }
     const mockArrayWithEmpties = Object.values(mockObjectWithEmpties)
 
@@ -279,9 +280,10 @@ describe('nunjucks filters', () => {
         d: 'false',
         e: 'value',
         f: expectedDefault,
-        g: expectedDefault,
+        g: false,
         h: expectedDefault,
         i: expectedDefault,
+        j: 0,
       }
 
       if (isArray) {
