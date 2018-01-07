@@ -61,6 +61,7 @@ module.exports = {
             typeOfInvestment.getListOption('@fdiType', (subType) => {
               typeOfInvestment.setValue('@fdiType', subType)
               set(projectDetails, 'subType', subType)
+              set(projectDetails, 'typeAndSubType', `${projectDetails.type}, ${subType}`)
               callback(projectDetails)
               done()
             })

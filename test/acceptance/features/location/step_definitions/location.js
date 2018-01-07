@@ -1,6 +1,23 @@
-const { find, assign, set, get, camelCase } = require('lodash')
+const { find, assign, set, get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+
+const formatters = require('../../../helpers/formatters')
+
+function getExpectedValue (row, state) {
+  if (includes(row.value, '.') && !includes(row.value, ' ')) {
+    const expectedText = get(state, row.value)
+
+    if (row.key === 'Client contacts') {
+      // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
+      return expectedText.split(',')[0]
+    }
+
+    return expectedText
+  }
+
+  return row.value
+}
 
 defineSupportCode(({ Given, When, Then }) => {
   const Location = client.page.Location()
@@ -78,5 +95,30 @@ defineSupportCode(({ Given, When, Then }) => {
     await client
       .wait()
       .refresh()
+  })
+
+  Then(/^the (.+) local header is displayed$/, async function (entityType, dataTable) {
+    const expectedHeading = get(this.state, `${camelCase(entityType)}.name`)
+    const expectedHeaderMetas = dataTable.hashes()
+
+    await Location
+      .section.localHeader
+      .waitForElementPresent('@header')
+      .assert.containsText('@header', expectedHeading)
+
+    for (const row of expectedHeaderMetas) {
+      const headerMetaValueSelector = Location.section.localHeader.getHeaderMetaValueSelector(row.key).selector
+      const expectedValue = getExpectedValue(row, this.state)
+      await Location.section.localHeader
+        .api.useXpath()
+        .waitForElementPresent(headerMetaValueSelector)
+        .getText(headerMetaValueSelector, (actual) => {
+          if (row.formatter) {
+            return client.expect(formatters[row.formatter](expectedValue, actual.value), row.key).to.be.true
+          }
+          client.expect(actual.value, row.key).to.equal(expectedValue)
+        })
+        .useCss()
+    }
   })
 })

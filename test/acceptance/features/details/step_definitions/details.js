@@ -3,12 +3,7 @@ const { defineSupportCode } = require('cucumber')
 const { get, includes } = require('lodash')
 
 const { getDetailsTableRowValue } = require('../../../helpers/selectors')
-
-const formatters = {
-  formatEuropeanOrGlobalHeadquarters (value) {
-    return /^(european|global) headquarters$/i.test(value) ? 'Yes' : 'No'
-  },
-}
+const formatters = require('../../../helpers/formatters')
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {
@@ -23,10 +18,6 @@ function getExpectedValue (row, state) {
   }
 
   return row.value
-}
-
-function formatExpectedValue (row, expectedValue) {
-  return row.format ? formatters[row.format](expectedValue) : expectedValue
 }
 
 defineSupportCode(({ Then }) => {
@@ -115,11 +106,15 @@ defineSupportCode(({ Then }) => {
       const rowValueSelector = getDetailsTableRowValue(row.key)
       const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
       const expectedValue = getExpectedValue(row, this.state)
-      const formattedExpectedValue = formatExpectedValue(row, expectedValue)
       await Details
         .api.useXpath()
         .waitForElementPresent(detailsTableRowValueXPathSelector)
-        .assert.containsText(detailsTableRowValueXPathSelector, formattedExpectedValue)
+        .getText(detailsTableRowValueXPathSelector, (actual) => {
+          if (row.formatter) {
+            return client.expect(formatters[row.formatter](expectedValue, actual.value), row.key).to.be.true
+          }
+          client.expect(actual.value, row.key).to.equal(expectedValue)
+        })
         .useCss()
     }
   })
