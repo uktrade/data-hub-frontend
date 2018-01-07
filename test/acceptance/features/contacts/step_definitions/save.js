@@ -1,6 +1,7 @@
 const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
+const { getAddress } = require('../../../helpers/address')
 
 defineSupportCode(({ Given, Then, When }) => {
   const Company = client.page.Company()
@@ -12,6 +13,7 @@ defineSupportCode(({ Given, Then, When }) => {
       .createNewContact({}, true, (contact) => {
         set(this.state, 'contact', contact)
         set(this.state, 'contact.type', 'Primary')
+        set(this.state, 'contact.address', getAddress(this.state.company))
       })
   })
 
@@ -26,6 +28,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await Contact
       .createNewContact({}, false, (contact) => {
         set(this.state, 'contact', contact)
+        set(this.state, 'contact.address', getAddress(this.state.company))
       })
   })
 

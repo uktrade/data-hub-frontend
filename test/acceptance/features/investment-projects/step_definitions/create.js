@@ -63,6 +63,8 @@ defineSupportCode(({ Given, Then, When }) => {
           month: this.state.investmentProject.estimatedLandDateMonth,
           day: 1,
         }, 'MMMM YYYY'))
+        const { businessActivity, otherBusinessActivity } = this.state.investmentProject
+        set(this.state, 'investmentProject.businessActivities', `${businessActivity}, ${otherBusinessActivity}`)
       })
   })
 
