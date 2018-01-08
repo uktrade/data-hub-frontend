@@ -5,12 +5,11 @@ const uuid = require('uuid')
 const config = require('~/config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { teamMembersLabels } = require('~/src/apps/investment-projects/labels')
+const teamMembersController = require('~/src/apps/investment-projects/middleware/forms/team-members')
 
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {
-    this.updateInvestmentTeamMembersStub = sandbox.stub().resolves({})
-
-    this.nextSpy = sandbox.spy()
+    this.nextStub = sandbox.stub()
     this.reqMock = {
       session: {
         token: uuid(),
@@ -25,12 +24,6 @@ describe('Investment form middleware - team members', () => {
         investmentData,
       },
     }
-
-    this.controller = proxyquire('~/src/apps/investment-projects/middleware/forms/team-members', {
-      '../../repos': {
-        updateInvestmentTeamMembers: this.updateInvestmentTeamMembersStub,
-      },
-    })
   })
 
   describe('#populateForm', () => {
@@ -58,7 +51,7 @@ describe('Investment form middleware - team members', () => {
           }],
         })
 
-        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
+        await teamMembersController.populateForm(this.reqMock, this.resMock, this.nextStub)
       })
 
       it('should include transformed team members', () => {
@@ -130,7 +123,7 @@ describe('Investment form middleware - team members', () => {
           team_members: [],
         })
 
-        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
+        await teamMembersController.populateForm(this.reqMock, this.resMock, this.nextStub)
       })
 
       it('should include a blank team member with no id', () => {
@@ -171,107 +164,133 @@ describe('Investment form middleware - team members', () => {
   })
 
   describe('#handleFormpost', () => {
-    beforeEach(() => {
-      this.body = {
-        adviser: ['1', '2'],
-        role: ['manager', 'supervisor'],
-      }
-    })
-
-    describe('post with no errors', () => {
-      it('updates the investment data', (done) => {
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
-          },
+    context('when posted with valid data', () => {
+      beforeEach(async () => {
+        this.reqMock = assign({}, this.reqMock, {
           params: {
             investmentId: investmentData.id,
           },
-          body: this.body,
-        }, this.resMock, () => {
-          expect(this.updateInvestmentTeamMembersStub).to.be.calledWith('mock-token', investmentData.id, [{
+          body: {
+            adviser: ['1', '2'],
+            role: ['manager', 'supervisor'],
+          },
+        })
+
+        this.nockScope = nock(config.apiRoot)
+          .put(`/v3/investment/${investmentData.id}/team-member`, [{
             adviser: '1',
             role: 'manager',
           }, {
             adviser: '2',
             role: 'supervisor',
           }])
-          done()
-        })
+          .reply(200, {})
+
+        await teamMembersController.handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('continues onto the next middleware with no errors', (done) => {
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
-          },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, (error) => {
-          expect(error).to.equal(undefined)
-          done()
-        })
+      it('should call the api with the correct parameters', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+
+      it('should continue onto the next middleware with no errors', () => {
+        expect(this.nextStub.callCount).to.eq(1)
+        expect(this.nextStub.firstCall.args.length).to.eq(0)
+      })
+
+      it('should not pass any error or form data to the next middleware', () => {
+        expect(this.resMock.locals).to.not.have.property('form.errors')
       })
     })
 
-    describe('When a form is posted with errors', () => {
-      it('should set form error data for the following controllers if form error', (done) => {
-        this.error = {
-          statusCode: 400,
-          error: {
-            role: ['This field is required'],
-          },
-        }
-        const resMock = assign({}, this.resMock)
+    context('when a form is posted with a missing role', () => {
+      beforeEach(async () => {
+        const error = [
+          {},
+          { role: ['This field may not be blank.'] },
+        ]
 
-        this.updateInvestmentTeamMembersStub.rejects(this.error)
-
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
-          },
+        this.reqMock = assign({}, this.reqMock, {
           params: {
             investmentId: investmentData.id,
           },
           body: {
-            adviser: ['1', '2', '3'],
-            role: ['manager', 'supervisor', ''],
+            adviser: ['1', '2'],
+            role: ['manager', undefined],
           },
-        }, resMock, (error) => {
-          expect(error).to.equal(undefined)
-          expect(resMock.locals.form.state.teamMembers).to.deep.equal([
-            { adviser: '1', role: 'manager' },
-            { adviser: '2', role: 'supervisor' },
-            { adviser: '3', role: '' },
-          ])
-          expect(this.resMock.locals.form.errors.messages).to.deep.equal({
-            'role-2': ['This field is required'],
-          })
-          done()
         })
+
+        this.nockScope = nock(config.apiRoot)
+          .put(`/v3/investment/${investmentData.id}/team-member`, [{
+            adviser: '1',
+            role: 'manager',
+          }, {
+            adviser: '2',
+          }])
+          .reply(400, error)
+
+        await teamMembersController.handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should pass a none form error to next middleware', (done) => {
-        this.error = {
-          statusCode: 500,
+      it('should call the next middleware', () => {
+        expect(this.nextStub.callCount).to.eq(1)
+        expect(this.nextStub.firstCall.args.length).to.eq(0)
+      })
+
+      it('should indicate which field has the error', () => {
+        expect(this.resMock.locals.form.errors.messages['role-1']).to.eq('This field may not be blank.')
+      })
+
+      it('should pass through the form state for re-rendering', () => {
+        expect(this.resMock.locals.form.state.teamMembers).to.deep.equal([
+          { adviser: '1', role: 'manager' },
+          { adviser: '2', role: undefined },
+        ])
+      })
+    })
+
+    context('when a form is posted with a none field error', () => {
+      beforeEach(async () => {
+        const error = {
+          'non_field_errors': ['No data provided'],
         }
 
-        this.updateInvestmentTeamMembersStub.rejects(this.error)
-
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
-          },
+        this.reqMock = assign({}, this.reqMock, {
           params: {
             investmentId: investmentData.id,
           },
-          body: this.body,
-        }, this.resMock, (error) => {
-          expect(error).to.deep.equal(this.error)
-          done()
+          body: {
+            adviser: ['1', '2'],
+            role: ['manager', undefined],
+          },
         })
+
+        this.nockScope = nock(config.apiRoot)
+          .put(`/v3/investment/${investmentData.id}/team-member`, [{
+            adviser: '1',
+            role: 'manager',
+          }, {
+            adviser: '2',
+          }])
+          .reply(400, error)
+
+        await teamMembersController.handleFormPost(this.reqMock, this.resMock, this.nextStub)
+      })
+
+      it('should call the next middleware', () => {
+        expect(this.nextStub.callCount).to.eq(1)
+        expect(this.nextStub.firstCall.args.length).to.eq(0)
+      })
+
+      it('should indicate the generic error', () => {
+        expect(this.resMock.locals.form.errors.messages['non_field_errors']).to.eq('No data provided')
+      })
+
+      it('should pass through the form state for re-rendering', () => {
+        expect(this.resMock.locals.form.state.teamMembers).to.deep.equal([
+          { adviser: '1', role: 'manager' },
+          { adviser: '2', role: undefined },
+        ])
       })
     })
   })
@@ -288,7 +307,7 @@ describe('Investment form middleware - team members', () => {
         role: 'Director',
       }]
 
-      const actual = this.controller.transformDataToTeamMemberArray(body)
+      const actual = teamMembersController.transformDataToTeamMemberArray(body)
 
       expect(actual).to.deep.equal(expected)
     })
@@ -307,7 +326,7 @@ describe('Investment form middleware - team members', () => {
         role: 'Manager',
       }]
 
-      const actual = this.controller.transformDataToTeamMemberArray(body)
+      const actual = teamMembersController.transformDataToTeamMemberArray(body)
 
       expect(actual).to.deep.equal(expected)
     })
@@ -323,7 +342,7 @@ describe('Investment form middleware - team members', () => {
         role: 'manager',
       }]
 
-      const actual = this.controller.transformDataToTeamMemberArray(body)
+      const actual = teamMembersController.transformDataToTeamMemberArray(body)
 
       expect(actual).to.deep.equal(expected)
     })
@@ -336,7 +355,7 @@ describe('Investment form middleware - team members', () => {
 
       const expected = []
 
-      const actual = this.controller.transformDataToTeamMemberArray(body)
+      const actual = teamMembersController.transformDataToTeamMemberArray(body)
 
       expect(actual).to.deep.equal(expected)
     })
@@ -346,9 +365,28 @@ describe('Investment form middleware - team members', () => {
 
       const expected = []
 
-      const actual = this.controller.transformDataToTeamMemberArray(body)
+      const actual = teamMembersController.transformDataToTeamMemberArray(body)
 
       expect(actual).to.deep.equal(expected)
+    })
+  })
+
+  describe('#transformErrorResponseToFormError', () => {
+    context('Called with a missing role', () => {
+      beforeEach(() => {
+        const error = [
+          {},
+          { role: ['This field may not be blank.'] },
+        ]
+
+        this.errorMessages = teamMembersController.transformErrorResponseToFormError(error)
+      })
+
+      it('should convert the error into the correct format for the form', () => {
+        expect(this.errorMessages).to.deep.equal({
+          'role-1': 'This field may not be blank.',
+        })
+      })
     })
   })
 })
