@@ -1,8 +1,7 @@
-const { get, sortBy, pick } = require('lodash')
+const { get, find, map, pick } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
-const { transformObjectToOption, transformIdToObject } = require('../../../../transformers')
 const { Order } = require('../../../models')
 
 class EditSubscribersController extends EditController {
@@ -13,12 +12,13 @@ class EditSubscribersController extends EditController {
       const token = get(req.session, 'token')
       const advisers = await getAdvisers(token)
       const subscribers = await Order.getSubscribers(token, orderId)
-      const options = advisers.results.map(transformObjectToOption)
+      const options = map(advisers.results, 'name')
 
       req.form.options.disableFormAction = !canEditAdvisers
-      req.form.options.fields.subscribers.options = sortBy(options, 'label')
+      req.form.options.fields.subscribers.options = options.sort()
 
       res.locals.order.subscribers = subscribers
+      res.locals.advisers = advisers.results
 
       super.configure(req, res, next)
     } catch (error) {
@@ -28,7 +28,16 @@ class EditSubscribersController extends EditController {
 
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
-    const subscribers = data.subscribers.map(transformIdToObject)
+    // const subscribers = data.subscribers.map(transformIdToObject)
+    const subscribers = data.subscribers.map((name) => {
+      const adviser = find(res.locals.advisers, { name })
+
+      if (!adviser) { return }
+
+      return {
+        id: adviser.id,
+      }
+    })
 
     try {
       await Order.saveSubscribers(req.session.token, res.locals.order.id, subscribers)
