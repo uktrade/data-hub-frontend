@@ -1,8 +1,7 @@
-const { get, pick, sortBy } = require('lodash')
+const { get, find, map, pick } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
-const { transformObjectToOption } = require('../../../../transformers')
 const { Order } = require('../../../models')
 
 class EditAssigneesController extends EditController {
@@ -14,13 +13,14 @@ class EditAssigneesController extends EditController {
       const token = get(req.session, 'token')
       const advisers = await getAdvisers(token)
       const assignees = await Order.getAssignees(token, orderId)
-      const options = advisers.results.map(transformObjectToOption)
+      const options = map(advisers.results, 'name')
 
-      req.form.options.fields.assignees.options = sortBy(options, 'label')
+      req.form.options.fields.assignees.options = options.sort()
       req.form.options.fields.assignees.canRemove = canEditOrder
       req.form.options.disableFormAction = !canEditAdvisers
 
       res.locals.order.assignees = assignees
+      res.locals.advisers = advisers.results
 
       super.configure(req, res, next)
     } catch (error) {
@@ -30,9 +30,13 @@ class EditAssigneesController extends EditController {
 
   async successHandler (req, res, next) {
     const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
-    const assignees = data.assignees.map((id) => {
+    const assignees = data.assignees.map((name) => {
+      const adviser = find(res.locals.advisers, { name })
+
+      if (!adviser) { return }
+
       return {
-        adviser: { id },
+        adviser: { id: adviser.id },
       }
     })
 

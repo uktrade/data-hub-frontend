@@ -14,6 +14,7 @@ module.exports = {
     label: 'fields.primary_market.label',
     validate: 'required',
     initialOption: '-- Select country --',
+    inputClass: 'js-Autocomplete',
     options: [],
   },
   use_sector_from_company: {

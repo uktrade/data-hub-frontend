@@ -44,9 +44,14 @@ class EditController extends FormController {
     delete sessionValues.errors
 
     const dateFields = ['delivery_date']
+    const adviserFields = ['subscribers']
 
     const orderValues = mapValues(req.form.options.fields, (fieldOptions, key) => {
       const newValue = get(res.locals, `order.${key}`)
+
+      if (adviserFields.includes(key)) {
+        return map(newValue, 'name')
+      }
 
       if (isPlainObject(newValue)) {
         return get(newValue, 'id')
@@ -57,7 +62,7 @@ class EditController extends FormController {
       }
 
       if (find(newValue, 'adviser')) {
-        return map(newValue, 'adviser.id')
+        return map(newValue, 'adviser.name')
       }
 
       if (fieldOptions.repeatable) {
