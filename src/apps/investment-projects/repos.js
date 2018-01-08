@@ -68,24 +68,11 @@ function unarchiveInvestmentProject (token, investmentId) {
 }
 
 async function updateInvestmentTeamMembers (token, investmentId, investmentTeamMembers) {
-  // Delete all existing records before saving
-  await authorisedRequest(token, {
+  return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/team-member`,
-    method: 'DELETE',
+    method: 'PUT',
+    body: investmentTeamMembers,
   })
-
-  // Loop through each of the team members, saving it
-  for (const investmentTeamMember of investmentTeamMembers) {
-    await authorisedRequest(token, {
-      url: `${config.apiRoot}/v3/investment/${investmentId}/team-member`,
-      method: 'POST',
-      body: {
-        investment_project: investmentId,
-        adviser: investmentTeamMember.adviser,
-        role: investmentTeamMember.role,
-      },
-    })
-  }
 }
 
 module.exports = {
