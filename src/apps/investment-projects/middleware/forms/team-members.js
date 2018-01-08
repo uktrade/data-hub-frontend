@@ -1,4 +1,5 @@
-const { zipWith, get, isArray, isString, assign } = require('lodash')
+const { zipWith, get, isArray, assign, forOwn, isEmpty } = require('lodash')
+
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateInvestmentTeamMembers } = require('../../repos')
@@ -7,14 +8,12 @@ const { transformObjectToOption } = require('../../../transformers')
 
 // Transform the form posted to an array of objects to save
 // and filter out any blanks
-function transformDataToTeamMemberArray (body) {
-  let teamMembers = []
-  if (isArray(body.adviser)) {
-    teamMembers = zipWith(body.adviser, body.role, (adviser, role) => ({ adviser, role }))
-  } else if (isString(body.adviser)) {
-    teamMembers = [{ adviser: body.adviser, role: body.role }]
-  }
-  return teamMembers.filter(member => member.adviser.length)
+function transformDataToTeamMemberArray ({ adviser, role }) {
+  const advisersArray = isArray(adviser) ? adviser : [adviser]
+  const rolesArray = isArray(role) ? role : [role]
+
+  const teamMembers = zipWith(advisersArray, rolesArray, (adviser, role) => ({ adviser, role }))
+  return teamMembers.filter(member => !isEmpty(member.adviser))
 }
 
 function getTeamMemberItem ({ teamMember, advisers }) {
@@ -53,6 +52,25 @@ async function populateForm (req, res, next) {
   }
 }
 
+function transformErrorResponseToFormError (error) {
+  const messages = {}
+
+  if (isArray(error)) {
+    for (let pos = 0; pos < error.length; pos += 1) {
+      const errorItem = error[pos]
+      forOwn(errorItem, function (value, key) {
+        messages[`${key}-${pos}`] = value[0]
+      })
+    }
+  } else {
+    forOwn(error, function (value, key) {
+      messages[key] = value[0]
+    })
+  }
+
+  return messages
+}
+
 async function handleFormPost (req, res, next) {
   try {
     res.locals.projectId = req.params.investmentId
@@ -62,16 +80,9 @@ async function handleFormPost (req, res, next) {
   } catch (err) {
     if (err.statusCode === 400) {
       const teamMembers = transformDataToTeamMemberArray(req.body)
-      const roleError = get(err, 'error.role')
-      let messages = {}
-      if (roleError) {
-        teamMembers.forEach((item, i) => {
-          if (item.role === '') {
-            messages['role-' + i] = roleError
-          }
-        })
-      }
-      res.locals.form = Object.assign({}, res.locals.form, {
+      const messages = transformErrorResponseToFormError(err.error)
+
+      res.locals.form = assign({}, res.locals.form, {
         errors: { messages },
         state: { teamMembers },
       })
@@ -87,4 +98,5 @@ module.exports = {
   populateForm,
   handleFormPost,
   transformDataToTeamMemberArray,
+  transformErrorResponseToFormError,
 }
