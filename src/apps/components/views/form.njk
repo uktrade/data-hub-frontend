@@ -34,10 +34,9 @@
       name: 'advisers',
       fieldId: 'advisers',
       label: 'Select an adviser',
-      hint: 'Enter a name, email or team name',
-      class: 'js-Autocomplete'
+      hint: 'Enter a name, email or team name'
     }) %}
-      <div class="js-Autocomplete__element"></div>
+      <div class="js-Autocomplete" data-field-id="advisers"></div>
     {% endcall %}
   {% endcall %}
 
@@ -46,28 +45,29 @@
       name: 'advisers-overlay',
       fieldId: 'advisers-overlay',
       label: 'Select an adviser',
-      hint: 'Enter a name, email or team name',
-      class: 'js-Autocomplete',
-      dataAttributes: {
-        'display-menu': 'overlay'
-      }
+      hint: 'Enter a name, email or team name'
     }) %}
-      <div class="js-Autocomplete__element"></div>
+      <div
+        class="js-Autocomplete"
+        data-field-id="advisers-overlay"
+        data-display-menu="overlay"
+        data-default-value="Something"
+      ></div>
     {% endcall %}
   {% endcall %}
 
   {% call Example('Adviser select (show all values)') %}
     {% call FormGroup({
-      name: 'advisers-overlay',
-      fieldId: 'advisers-overlay',
+      name: 'advisers-show-all',
+      fieldId: 'advisers-show-all',
       label: 'Select an adviser',
-      hint: 'Enter a name, email or team name',
-      class: 'js-Autocomplete',
-      dataAttributes: {
-        'show-all-values': true
-      }
+      hint: 'Enter a name, email or team name'
     }) %}
-      <div class="js-Autocomplete__element"></div>
+      <div
+        class="js-Autocomplete"
+        data-field-id="advisers-show-all"
+        data-show-all-values="true"
+      ></div>
     {% endcall %}
   {% endcall %}
 
@@ -97,10 +97,13 @@
           modifier: 'compact',
           isLabelHidden: true,
           hint: 'Enter a name, email or team name',
-          class: 'js-Autocomplete js-AddItems__item',
+          class: 'js-AddItems__item',
           innerHTML: removeButton
         }) %}
-          <div class="js-Autocomplete__element"></div>
+          <div
+            class="js-Autocomplete"
+            data-field-id="advisers-repeatabe-1"
+          ></div>
         {% endcall %}
       {% endcall %}
 

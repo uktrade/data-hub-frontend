@@ -6,6 +6,15 @@
   {{ LocalHeader({ heading: heading }) }}
 {% endblock %}
 
+{% block javascript %}
+  <script>
+    window.DIT = {
+      advisers: {{ ADVISERS | safe }},
+    }
+  </script>
+  {{ super() }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   {% block form %}
     {% call MultiStepForm(options | assign({

@@ -45,43 +45,46 @@ function suggest (query, populateResults) {
 }
 
 const Autocomplete = {
-  defaults: {
-    source: suggest,
-    templates: {
-      inputValue: (suggestion) => {
-        return get(suggestion, 'name')
-      },
-      suggestion: (suggestion, query) => {
-        const html = `
+  defaults: {},
+
+  init (element = document, options) {
+    this.element = element
+    this.settings = assign({}, this.defaults, options)
+
+    if (!this.element.querySelector('.autocomplete__wrapper')) {
+      if (this.element.tagName === 'SELECT') {
+        this.renderProgressive()
+      } else {
+        this.render()
+      }
+    }
+  },
+
+  render () {
+    if (this.settings.id) {
+      accessibleAutocomplete(assign({}, this.settings, {
+        element: this.element,
+        source: suggest,
+        templates: {
+          inputValue: (suggestion) => {
+            return get(suggestion, 'name')
+          },
+          suggestion: (suggestion, query) => {
+            const html = `
           <span class="autocomplete__option-title">${suggestion.name}</span>
           &lt;${suggestion.email}&gt;
           <span class="autocomplete__option-meta">${get(suggestion, 'dit_team.name')}</span>
         `
-        return highlight(html, query)
-      },
-    },
-  },
-
-  init (wrapper = document, options) {
-    this.wrapper = wrapper
-    this.settings = assign({}, this.defaults, options)
-
-    this.cacheEls()
-
-    if (!this.element.querySelector('.autocomplete__wrapper')) {
-      this.render()
+            return highlight(html, query)
+          },
+        },
+      }))
     }
   },
 
-  cacheEls () {
-    this.label = this.wrapper.querySelector('label').getAttribute('for')
-    this.element = this.wrapper.querySelector('.js-Autocomplete__element')
-  },
-
-  render () {
-    accessibleAutocomplete(assign({}, this.settings, {
-      element: this.element,
-      id: this.label,
+  renderProgressive () {
+    accessibleAutocomplete.enhanceSelectElement(assign({}, this.settings, {
+      selectElement: this.element,
     }))
   },
 }
@@ -92,6 +95,8 @@ module.exports = {
 
     elements.forEach(element => {
       const settings = {
+        id: element.getAttribute('data-field-id'),
+        name: element.getAttribute('data-field-name'),
         defaultValue: element.getAttribute('data-default-value'),
         displayMenu: element.getAttribute('data-display-menu'),
         showAllValues: element.hasAttribute('data-show-all-values'),
