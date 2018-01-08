@@ -52,6 +52,25 @@ async function populateForm (req, res, next) {
   }
 }
 
+function transformErrorResponseToFormError (error) {
+  const messages = {}
+
+  if (isArray(error)) {
+    for (let pos = 0; pos < error.length; pos += 1) {
+      const errorItem = error[pos]
+      forOwn(errorItem, function (value, key) {
+        messages[`${key}-${pos}`] = value[0]
+      })
+    }
+  } else {
+    forOwn(error, function (value, key) {
+      messages[key] = value[0]
+    })
+  }
+
+  return messages
+}
+
 async function handleFormPost (req, res, next) {
   try {
     res.locals.projectId = req.params.investmentId
@@ -61,16 +80,9 @@ async function handleFormPost (req, res, next) {
   } catch (err) {
     if (err.statusCode === 400) {
       const teamMembers = transformDataToTeamMemberArray(req.body)
-      const roleError = get(err, 'error.role')
-      let messages = {}
-      if (roleError) {
-        teamMembers.forEach((item, i) => {
-          if (item.role === '') {
-            messages['role-' + i] = roleError
-          }
-        })
-      }
-      res.locals.form = Object.assign({}, res.locals.form, {
+      const messages = transformErrorResponseToFormError(err.error)
+
+      res.locals.form = assign({}, res.locals.form, {
         errors: { messages },
         state: { teamMembers },
       })
@@ -86,4 +98,5 @@ module.exports = {
   populateForm,
   handleFormPost,
   transformDataToTeamMemberArray,
+  transformErrorResponseToFormError,
 }
