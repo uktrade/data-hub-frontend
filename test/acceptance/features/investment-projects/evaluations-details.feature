@@ -42,7 +42,7 @@ Feature: Investment projects evaluations details
       | Export revenue                    | Yes, will create significant export revenue    |                                         |
     And the FDI (Test A) details are displayed
       | key                               | value                                          |
-      | Type of investment                | Does not apply                                 |
+      | Type of investment                | investmentProject.typeAndSubType               |
       | Foreign investor                  | Lambda plc                                     |
       | Foreign country                   | France                                         |
       | UK company                        | Not Known                                      |
@@ -96,7 +96,7 @@ Feature: Investment projects evaluations details
       | Export revenue                    | No, will not create significant export revenue |                                         |
     And the FDI (Test A) details are displayed
       | key                               | value                                          |
-      | Type of investment                | Does not apply                                 |
+      | Type of investment                | investmentProject.typeAndSubType               |
       | Foreign investor                  | Lambda plc                                     |
       | Foreign country                   | France                                         |
       | UK company                        | Not Known                                      |

@@ -3,7 +3,6 @@
 const moment = require('moment')
 const format = require('date-fns/format')
 const { compact, mapValues, get, isPlainObject, isNull } = require('lodash')
-const metadataRepository = require('../../../lib/metadata')
 
 function formatCurrency (number) {
   if (isNull(number)) { return null }
@@ -13,6 +12,14 @@ function formatCurrency (number) {
     currency: 'GBP',
     minimumFractionDigits: 0,
   }).format(number)
+}
+
+function getInvestmentTypeDetails (investment_type, fdi_type) {
+  const types = [
+    investment_type.name,
+    get(fdi_type, 'name'),
+  ]
+  return compact(types).join(', ')
 }
 
 function transformToApi (body) {
@@ -114,14 +121,6 @@ function transformFromApi (body) {
 function transformInvestmentDataForView (data) {
   if (!isPlainObject(data)) { return }
 
-  function getInvestmentTypeDetails () {
-    const types = [
-      data.investment_type.name,
-      get(data, 'fdi_type.name'),
-    ]
-    return compact(types).join(', ')
-  }
-
   const businessActivities = data.business_activities.slice()
   if (data.other_business_activity) {
     businessActivities.push({ name: data.other_business_activity })
@@ -132,7 +131,7 @@ function transformInvestmentDataForView (data) {
       name: data.investor_company.name,
       url: `/companies/${data.investor_company.id}`,
     },
-    investment_type: getInvestmentTypeDetails(),
+    investment_type: getInvestmentTypeDetails(data.investment_type, data.fdi_type),
     sector: get(data, 'sector.name', null),
     business_activities: businessActivities.map(i => i.name).join(', '),
     client_contacts: data.client_contacts.map(i => i.name).join(', '),
@@ -265,39 +264,24 @@ function transformUKCompany (data) {
   }
 }
 
-function transformInvestmentFDIForView (data) {
-  if (!isPlainObject(data)) {
-    return
-  }
-
-  const [
-    { name: commitmentToInvestName },
-    { name: fdiName },
-    { name: nonFdiName },
-  ] = metadataRepository.investmentTypeOptions
-
-  function approvedInvestmentText (investments, defaultText) {
-    return investments.reduce((displayText, investmentDetail) => {
-      return investmentDetail.isApproved ? investmentDetail.displayText : displayText
-    }, defaultText)
-  }
-
+function transformInvestmentFDIForView ({
+  investment_type,
+  fdi_type,
+  investor_company,
+  uk_company,
+}) {
   return {
-    type_of_investment: approvedInvestmentText([
-      { displayText: commitmentToInvestName, isApproved: data.approved_commitment_to_invest },
-      { displayText: fdiName, isApproved: data.approved_fdi },
-      { displayText: nonFdiName, isApproved: data.approved_non_fdi },
-    ], 'Does not apply'),
+    type_of_investment: getInvestmentTypeDetails(investment_type, fdi_type),
     foreign_investor: {
-      name: data.investor_company.name,
-      url: `/companies/${data.investor_company.id}`,
+      name: investor_company.name,
+      url: `/companies/${investor_company.id}`,
     },
-    foreign_country: get(data, 'investor_company.registered_address_country.name'),
-    uk_company: data.uk_company ? {
-      name: data.uk_company.name,
-      url: `/companies/${data.uk_company.id}`,
+    foreign_country: get(investor_company, 'registered_address_country.name'),
+    uk_company: uk_company ? {
+      name: uk_company.name,
+      url: `/companies/${uk_company.id}`,
     } : null,
-    investor_retain_voting_power: data.uk_company ? 'Yes' : 'No',
+    investor_retain_voting_power: uk_company ? 'Yes' : 'No',
   }
 }
 
