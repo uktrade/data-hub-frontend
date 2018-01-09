@@ -28,7 +28,6 @@ const {
   projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
-  teamMembersFormMiddleware,
 } = require('./middleware/forms')
 
 const { renderInvestmentList } = require('./controllers/list')
@@ -36,6 +35,9 @@ const { renderInteractionList } = require('./controllers/interactions')
 
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+
+const { renderTeamEdit } = require('./controllers/team/edit-team-members')
+const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
 
 const {
   renderStatusPage,
@@ -155,16 +157,8 @@ router
 
 router
   .route('/:investmentId/edit-team-members')
-  .get(
-    teamMembersFormMiddleware.populateForm,
-    team.editTeamMembers.getHandler
-  )
-  .post(
-    teamMembersFormMiddleware.populateForm,
-    teamMembersFormMiddleware.handleFormPost,
-    team.editTeamMembers.postHandler,
-    team.editTeamMembers.getHandler
-  )
+  .get(populateTeamEditForm, renderTeamEdit)
+  .post(postTeamEdit, renderTeamEdit)
 
 router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderInteractionList)
 

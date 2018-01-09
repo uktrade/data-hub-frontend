@@ -9,9 +9,9 @@ describe('Investment project, team members, edit controller', () => {
     this.controller = require('~/src/apps/investment-projects/controllers/team/edit-team-members')
   })
 
-  describe('#getHandler', () => {
-    it('should render edit project management view', (done) => {
-      this.controller.getHandler({
+  describe('#renderTeamEdit', () => {
+    it('should render edit team management view', (done) => {
+      this.controller.renderTeamEdit({
         session: {
           token: 'abcd',
         },
@@ -29,57 +29,6 @@ describe('Investment project, team members, edit controller', () => {
           }
         },
       }, this.nextStub)
-    })
-  })
-
-  describe('#postHandler', () => {
-    describe('without errors', () => {
-      it('should redirect to the product team details page', (done) => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-          flash: this.flashStub,
-        }, {
-          locals: {
-            form: {
-              errors: {},
-            },
-            investmentData,
-          },
-          breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
-              expect(this.flashStub).to.calledWith('success', 'Investment details updated')
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
-        }, this.nextStub)
-      })
-    })
-
-    describe('when form errors exist', () => {
-      it('should pass the error onto the edit form', () => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-        }, {
-          locals: {
-            form: {
-              errors: {
-                subject: 'example error',
-              },
-            },
-          },
-          breadcrumb: this.breadcrumbStub,
-        }, this.nextStub)
-
-        expect(this.nextStub).to.be.calledOnce
-      })
     })
   })
 })
