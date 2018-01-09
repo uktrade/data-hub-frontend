@@ -40,6 +40,9 @@ const LOCAL_NAV = [
   {
     path: 'documents',
     label: 'Documents',
+    permissions: [
+      'investment.read_investmentproject_document',
+    ],
   },
 ]
 
