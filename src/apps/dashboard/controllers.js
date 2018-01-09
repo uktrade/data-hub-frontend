@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { GLOBAL_NAV_ITEMS } = require('../constants')
+const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const { fetchHomepageData } = require('./repos')
