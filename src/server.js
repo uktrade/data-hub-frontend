@@ -14,7 +14,6 @@ const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const i18n = require('i18n-future').middleware()
 
-const { GLOBAL_NAV_ITEMS } = require('./apps/constants')
 const title = require('./middleware/title')
 const breadcrumbs = require('./middleware/breadcrumbs')
 const nunjucks = require('../config/nunjucks')
@@ -29,7 +28,6 @@ const errors = require('./middleware/errors')
 const sessionStore = require('./middleware/session-store')
 const ssoBypass = require('./middleware/sso-bypass')
 const logger = require('../config/logger')
-const { handleRoutePermissions } = require('./apps/middleware')
 
 const routers = require('./apps/routers')
 
@@ -97,7 +95,6 @@ app.use(csrfToken())
 
 // routing
 app.use(slashify())
-app.use(handleRoutePermissions(GLOBAL_NAV_ITEMS))
 app.use(routers)
 
 // Raven error handler must come before other error middleware

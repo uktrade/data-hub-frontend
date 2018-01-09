@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY } = require('./constants')
+const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS } = require('./constants')
 const {
   renderAddStepOne,
   postAddStepOne,
@@ -40,6 +40,8 @@ const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middl
 const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
 
 const interactionsRouter = require('../interactions/router.sub-app')
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyNumber', getCompaniesHouseRecord)
