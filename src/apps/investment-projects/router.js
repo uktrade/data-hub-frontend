@@ -1,8 +1,8 @@
 const router = require('express').Router()
 
-const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS } = require('./constants')
 
-const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
+const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
 const {
   getBriefInvestmentSummary,
@@ -59,6 +59,8 @@ const {
 } = require('./controllers/associated')
 
 const interactionsRouter = require('../interactions/router.sub-app')
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.use('/:investmentId', setLocalNav(LOCAL_NAV))
 

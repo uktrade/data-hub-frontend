@@ -1,12 +1,12 @@
 const router = require('express').Router()
 
-const { DEFAULT_COLLECTION_QUERY } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS } = require('./constants')
 
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderInteractionList } = require('./controllers/list')
 
-const { setDefaultQuery } = require('../middleware')
+const { setDefaultQuery, handleRoutePermissions } = require('../middleware')
 const {
   getInteractionCollection,
   getInteractionsRequestBody,
@@ -14,6 +14,8 @@ const {
 } = require('./middleware/collection')
 
 const { postDetails, getInteractionOptions, getInteractionDetails } = require('./middleware/details')
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('interactionId', getInteractionDetails)
 
