@@ -1,24 +1,38 @@
-const { zipWith, get, isArray, isString, assign } = require('lodash')
+const { zipWith, get, assign, forOwn, isEmpty, castArray } = require('lodash')
+
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateInvestmentTeamMembers } = require('../../repos')
 const { teamMembersLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
 
-// Transform the form posted to an array of objects to save
-// and filter out any blanks
-function transformDataToTeamMemberArray (body) {
-  let teamMembers = []
-  if (isArray(body.adviser)) {
-    teamMembers = zipWith(body.adviser, body.role, (adviser, role) => ({ adviser, role }))
-  } else if (isString(body.adviser)) {
-    teamMembers = [{ adviser: body.adviser, role: body.role }]
-  }
-  return teamMembers.filter(member => member.adviser.length)
+function transformFormToTeamMemberArray ({ adviser, role }) {
+  const advisersArray = castArray(adviser)
+  const rolesArray = castArray(role)
+
+  const teamMembers = zipWith(advisersArray, rolesArray, (adviser, role) => ({ adviser, role }))
+  return teamMembers.filter(member => !isEmpty(member.adviser))
 }
 
-function getTeamMemberItem ({ teamMember, advisers }) {
-  const adviser = get(teamMember, 'adviser.id')
+function transformTeamMemberArrayToFields (teamMemberArray, advisers) {
+  return teamMemberArray.map((teamMember) => getTeamMemberField({ teamMember, advisers }))
+}
+
+function transformInvestmentTeamMemberstoTeamMemberArray (investmentData = {}) {
+  const teamMembers = investmentData.team_members || []
+
+  const teamMemberArray = teamMembers.map((teamMember) => {
+    return {
+      adviser: get(teamMember, 'adviser.id'),
+      role: teamMember.role,
+    }
+  })
+
+  return teamMemberArray
+}
+
+function getTeamMemberField ({ teamMember, advisers }) {
+  const adviser = teamMember ? teamMember.adviser : undefined
 
   const options = filterActiveAdvisers({
     advisers,
@@ -32,20 +46,40 @@ function getTeamMemberItem ({ teamMember, advisers }) {
   }
 }
 
-async function populateForm (req, res, next) {
-  try {
-    const investmentData = res.locals.investmentData
-    const advisersResponse = await getAdvisers(req.session.token)
+function makeForm (investmentId, teamMembers) {
+  return {
+    fields: { teamMembers },
+    labels: teamMembersLabels.edit,
+    buttonText: 'Save',
+    returnLink: `/investment-projects/${investmentId}/team`,
+  }
+}
 
-    const teamMembers = investmentData.team_members.map((teamMember) => getTeamMemberItem({ teamMember, advisers: advisersResponse.results }))
-    teamMembers.push(getTeamMemberItem({ advisers: advisersResponse.results }))
+function transformErrorResponseToFormErrors (error) {
+  const messages = {}
 
-    res.locals.form = assign({}, res.locals.form, {
-      labels: teamMembersLabels.edit,
-      fields: { teamMembers },
-      buttonText: 'Save',
-      returnLink: `/investment-projects/${investmentData.id}/team`,
+  castArray(error).forEach((errorItem, index) => {
+    forOwn(errorItem, function (value, key) {
+      messages[`${key}-${index}`] = value[0]
     })
+  })
+
+  return messages
+}
+
+async function populateTeamEditForm (req, res, next) {
+  try {
+    const token = req.session.token
+    const investmentId = req.params.investmentId
+
+    const { results: advisers } = await getAdvisers(token)
+
+    const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(res.locals.investmentData)
+
+    const fields = transformTeamMemberArrayToFields(teamMembers, advisers)
+    fields.push(getTeamMemberField({ advisers }))
+
+    res.locals.form = makeForm(investmentId, fields)
 
     next()
   } catch (error) {
@@ -53,38 +87,38 @@ async function populateForm (req, res, next) {
   }
 }
 
-async function handleFormPost (req, res, next) {
-  try {
-    res.locals.projectId = req.params.investmentId
-    const teamMembers = transformDataToTeamMemberArray(req.body)
-    await updateInvestmentTeamMembers(req.session.token, req.params.investmentId, teamMembers)
-    next()
-  } catch (err) {
-    if (err.statusCode === 400) {
-      const teamMembers = transformDataToTeamMemberArray(req.body)
-      const roleError = get(err, 'error.role')
-      let messages = {}
-      if (roleError) {
-        teamMembers.forEach((item, i) => {
-          if (item.role === '') {
-            messages['role-' + i] = roleError
-          }
-        })
-      }
-      res.locals.form = Object.assign({}, res.locals.form, {
-        errors: { messages },
-        state: { teamMembers },
-      })
+async function postTeamEdit (req, res, next) {
+  const investmentId = req.params.investmentId
+  const token = req.session.token
+  const teamMembersArray = transformFormToTeamMemberArray(req.body)
 
-      next()
+  try {
+    await updateInvestmentTeamMembers(token, investmentId, teamMembersArray)
+    req.flash('success', 'Investment details updated')
+    return res.redirect(`/investment-projects/${investmentId}/team`)
+  } catch (exception) {
+    if (exception.statusCode === 400) {
+      const messages = transformErrorResponseToFormErrors(exception.error)
+
+      res.locals.form = assign({}, res.locals.form, {
+        errors: { messages },
+      })
     } else {
-      next(err)
+      return next(exception)
     }
   }
+
+  const { results: advisers } = await getAdvisers(token)
+  const fields = transformTeamMemberArrayToFields(teamMembersArray, advisers)
+  res.locals.form = assign({}, res.locals.form, makeForm(investmentId, fields))
+
+  next()
 }
 
 module.exports = {
-  populateForm,
-  handleFormPost,
-  transformDataToTeamMemberArray,
+  populateTeamEditForm,
+  postTeamEdit,
+  transformFormToTeamMemberArray,
+  transformTeamMemberArrayToFields,
+  transformErrorResponseToFormErrors,
 }
