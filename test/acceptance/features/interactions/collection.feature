@@ -49,3 +49,18 @@ Feature: View collection of contacts
     And the Service delivery has badges
       | text    | expected                   |
       | Type    | serviceDelivery.type       |
+
+  @interactions-collection--filter
+  Scenario: filter interaction list
+
+  Given I navigate to company fixture Venus Ltd
+  When I click the Interactions local nav link
+  And I click the "Add interaction" link
+  And selecting interaction
+  And an interaction is added
+  Then I see the success message
+  When I navigate to the Interactions and services collection page
+  Then I confirm I am on the Interactions page
+  And the results count header for interactions is present
+  Then I filter the interactions list by service provider
+  Then the interactions should be filtered by service provider
