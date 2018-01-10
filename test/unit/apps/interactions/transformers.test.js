@@ -147,6 +147,13 @@ describe('Interaction transformers', () => {
                 name: 'Test CMU 1',
               },
             },
+            {
+              label: 'Service provider',
+              value: {
+                id: '222',
+                name: 'Team',
+              },
+            },
           ],
         })
       })
@@ -224,6 +231,13 @@ describe('Interaction transformers', () => {
                 first_name: 'Test',
                 last_name: 'CMU 1',
                 name: 'Test CMU 1',
+              },
+            },
+            {
+              label: 'Service provider',
+              value: {
+                id: '222',
+                name: 'Team',
               },
             },
           ],
