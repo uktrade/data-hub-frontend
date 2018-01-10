@@ -23,6 +23,20 @@ Feature: View collection of companies
       | Country            | company.country           |
       | UK region          | company.ukRegion          |
 
+  @companies-collection--view--lep @lep
+  Scenario: View companies collection as LEP
+
+    When I navigate to the Companies collection page
+    Then I confirm I am on the Companies page
+    And the results count header for companies is present
+
+  @companies-collection--view--da @da
+  Scenario: View companies collection as DA
+
+    When I navigate to the Companies collection page
+    Then I confirm I am on the Companies page
+    And the results count header for companies is present
+
   @companies-collection--filter
   Scenario: Filter companies list
 
