@@ -1,4 +1,4 @@
-const { assign, reject, merge } = require('lodash')
+const { assign, flatten, reject, merge } = require('lodash')
 
 const { globalFields } = require('../macros')
 
@@ -49,15 +49,18 @@ const contactFiltersFields = [
   },
   assign({}, globalFields.sectors, {
     name: 'company_sector',
-    initialOption: 'All sectors',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   assign({}, globalFields.countries, {
     name: 'address_country',
-    initialOption: 'All countries',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   assign({}, globalFields.ukRegions, {
     name: 'company_uk_region',
-    initialOption: 'All UK regions',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   {
     macroName: 'MultipleChoiceField',
@@ -68,10 +71,11 @@ const contactFiltersFields = [
       { value: 'false', label: 'Active' },
       { value: 'true', label: 'Inactive' },
     ],
+    modifier: 'option-select',
   },
 ].map(filter => {
   return assign(filter, {
-    modifier: ['smaller', 'light'],
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })
 })
 
