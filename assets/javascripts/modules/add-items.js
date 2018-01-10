@@ -82,6 +82,9 @@ const AddItems = {
 
     this.decorateButtons()
     this.updateButtonState()
+
+    const event = new CustomEvent('AddItems_Render', { 'detail': 'Example of an event' })
+    document.dispatchEvent(event)
   },
 
   decorateButtons () {

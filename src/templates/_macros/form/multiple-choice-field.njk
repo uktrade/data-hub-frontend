@@ -29,8 +29,15 @@
   {% call FormGroup(props | assign({ fieldId: fieldId, caller: caller, children: children, element: element, class: props.groupClass })) %}
     {% if props.type in ['checkbox', 'radio'] %}
       {{ MultipleChoice(props) }}
+    {% elif props.type in ['autocomplete'] %}
+      <div
+        class="js-Autocomplete"
+        data-field-id="{{ fieldId }}"
+        data-field-name="{{ props.name }}"
+        data-default-value="{{ props.value }}"
+      ></div>
     {% else %}
-      {{ SelectBox(props | assign({ class: inputClass })) }}
+      {{ SelectBox(props | assignCopy({ class: props.inputClass })) }}
     {% endif %}
 
     {{ children }}

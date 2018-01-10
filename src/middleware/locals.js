@@ -4,6 +4,7 @@ const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
 const config = require('../../config')
 const { filterNonPermittedItem } = require('../apps/filters')
+const { getAdvisers } = require('../apps/adviser/repos')
 
 let webpackManifest = {}
 
@@ -13,10 +14,19 @@ try {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }
 
-module.exports = function locals (req, res, next) {
+
+module.exports = async function locals(req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
   const breadcrumbItems = res.breadcrumb()
   const userPermissions = get(res, 'locals.user.permissions')
+  let advisers
+
+  try {
+    const response = await getAdvisers(req.session.token)
+    advisers = response.results
+  } catch (error) {
+    advisers = []
+  }
 
   res.locals = Object.assign({}, res.locals, {
     BASE_URL: baseUrl,
@@ -28,6 +38,7 @@ module.exports = function locals (req, res, next) {
     BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
     QUERY: req.query,
+    ADVISERS: JSON.stringify(advisers),
     GLOBAL_NAV_ITEMS: GLOBAL_NAV_ITEMS
       .filter(filterNonPermittedItem(userPermissions))
       .map(navItem => {

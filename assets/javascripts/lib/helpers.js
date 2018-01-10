@@ -149,6 +149,11 @@ function resetFieldValues (element) {
       field.selectedIndex = 0
     })
 
+  Array.from(element.querySelectorAll('[data-default-value]'))
+    .forEach(field => {
+      field.setAttribute('data-default-value', '')
+    })
+
   return element
 }
 
