@@ -40,4 +40,17 @@ module.exports = {
       },
     },
   },
+  commands: [
+    {
+      getGlobalNavItemSelector (text) {
+        return getSelectorForElementWithText(
+          text,
+          {
+            el: '//a',
+            className: 'c-global-nav__link',
+          },
+        )
+      },
+    },
+  ],
 }
