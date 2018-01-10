@@ -13,32 +13,32 @@ const deepMap = (value, host) => {
 }
 
 const urls = {
-  companies: {
+  company: {
     collection: 'companies',
     search: 'search/companies',
     getDetails (id) {
       return `${host}/companies/${id}/details`
     },
   },
-  contacts: {
+  contact: {
     collection: 'contacts',
     getDetails (id) {
       return `${host}/contacts/${id}/details`
     },
   },
-  events: {
+  event: {
     collection: 'events',
     getDetails (id) {
       return `${host}/events/${id}`
     },
   },
-  interactionsAndServices: {
+  interactionsAndService: {
     collection: 'interactions',
     getDetails (id) {
       return `${host}/interactions/${id}`
     },
   },
-  investmentProjects: {
+  investmentProject: {
     collection: 'investment-projects',
     getDetails (id) {
       return `${host}/investment-projects/${id}/details`
