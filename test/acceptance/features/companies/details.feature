@@ -5,17 +5,7 @@ Feature: Company details
   Scenario: Company has CDMS reference
 
     Given I navigate to company fixture Venus Ltd
-    Then there should be a local nav
-      | text                      |
-      | Details                   |
-      | Contacts                  |
-      | Interactions              |
-      | Export                    |
-      | Investment                |
-      | Orders (OMIS)             |
-      | Audit history             |
-      | Documents                 |
-    And the Company summary details are displayed
+    Then the Company summary details are displayed
       | key                       | value                   |
       | Business type             | company.businessType    |
       | Primary address           | company.primaryAddress  |
@@ -33,17 +23,7 @@ Feature: Company details
   Scenario: Company does not have CDMS reference
 
     Given I navigate to company fixture Lambda plc
-    Then there should be a local nav
-      | text                      |
-      | Details                   |
-      | Contacts                  |
-      | Interactions              |
-      | Export                    |
-      | Investment                |
-      | Orders (OMIS)             |
-      | Audit history             |
-      | Documents                 |
-    And the Company summary details are displayed
+    Then the Company summary details are displayed
       | key                       | value                     |
       | Business type             | company.businessType      |
       | Primary address           | company.primaryAddress    |
