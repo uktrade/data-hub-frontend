@@ -70,4 +70,11 @@ module.exports = {
       ],
     },
   },
+  commands: [
+    {
+      getHeading (el, text) {
+        return getSelectorForElementWithText(text, { el })
+      },
+    },
+  ],
 }
