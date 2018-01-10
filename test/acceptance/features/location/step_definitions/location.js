@@ -48,6 +48,10 @@ defineSupportCode(({ Given, When, Then }) => {
       .assert.containsText('@header', fixtureName)
   })
 
+  Given(/^I navigate to ([^\s]+)$/, async function (path) {
+    await client.url(process.env.QA_HOST + path)
+  })
+
   When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
     const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)
 
@@ -120,5 +124,14 @@ defineSupportCode(({ Given, When, Then }) => {
         })
         .useCss()
     }
+  })
+
+  Then(/^I see the ([0-9]+) error page$/, async function (statusCode) {
+    const headingSelector = Location.getHeading('//h3', statusCode).selector
+
+    await Location
+      .api.useXpath()
+      .assert.visible(headingSelector)
+      .useCss()
   })
 })
