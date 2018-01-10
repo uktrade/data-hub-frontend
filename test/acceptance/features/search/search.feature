@@ -71,3 +71,33 @@ Feature: Search
       | Orders              |
     And the Companies search tab has 1 results
     And I can view the company in the search results
+
+  @search--events--lep @lep
+  Scenario: Search events directly as a LEP
+
+    When I navigate directly to /search/events?term=test
+    Then I see the 403 error page
+
+  @search--interactions--lep @lep
+  Scenario: Search interactions directly as a LEP
+
+    When I navigate directly to /search/interactions?term=test
+    Then I see the 403 error page
+
+  @search--omis--lep @lep
+  Scenario: Search orders directly as a LEP
+
+    When I navigate directly to /search/omis?term=lambda
+    Then I see the 403 error page
+
+  @search--events--da @da
+  Scenario: Search events directly as a DA
+
+    When I navigate directly to /search/events?term=test
+    Then I see the 403 error page
+
+  @search--interactions--da @da
+  Scenario: Search interactions directly as a DA
+
+    When I navigate directly to /search/interactions?term=test
+    Then I see the 403 error page
