@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, flatten } = require('lodash')
 
 const { globalFields } = require('../macros')
 const formLabels = require('./labels')
@@ -13,18 +13,21 @@ const companyFiltersFields = [
   },
   Object.assign({}, globalFields.sectors, {
     name: 'sector',
-    initialOption: 'All sectors',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   Object.assign({}, globalFields.countries, {
-    initialOption: 'All countries',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   Object.assign({}, globalFields.ukRegions, {
     name: 'uk_region',
-    initialOption: 'All UK regions',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
 ].map(filter => {
   return Object.assign(filter, {
-    modifier: ['smaller', 'light'],
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })
 })
 
