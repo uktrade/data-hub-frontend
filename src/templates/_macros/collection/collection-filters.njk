@@ -4,12 +4,9 @@
  # Render collection filters form
  # @param {object} props - component props
  # @param {array}  props.filtersFields - an array of filters macro configurations
- # @param {text}   [props.heading=Filter results] - filters heading text
  # @param {object} [props.query] - query object used to include existing state
 #}
 {% macro CollectionFilters(props) %}
-  {% set heading = props.heading | default('Filter results') %}
-
   {% if props.filtersFields | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
@@ -19,10 +16,6 @@
       actionsClass: 'u-js-hidden',
       hiddenFields: props.query | pick(['sortby']) | assign({ custom: true })
     }) %}
-      <header class="u-clearfix">
-        <h2 class="c-collection-filters__heading">{{ heading }}</h2>
-      </header>
-
       {{ renderAsMacro(props.filtersFields) }}
     {% endcall %}
   {% endif %}
