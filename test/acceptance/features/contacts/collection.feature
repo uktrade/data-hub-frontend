@@ -15,7 +15,7 @@ Feature: View collection of contacts
     Then I see the success message
     Then I wait and then refresh the page
     Then I capture the modified on date for the first item
-    When I navigate to the Contacts collection page
+    When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
     And the results count header for contacts is present
     And I can view the Contact in the collection
@@ -33,14 +33,14 @@ Feature: View collection of contacts
   @contacts-collection--view--lep @lep
   Scenario: View contact collection as LEP
 
-    When I navigate to the Contacts collection page
+    When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
     And the results count header for contacts is present
 
   @contacts-collection--view--da @da
   Scenario: View contact collection as DA
 
-    When I navigate to the Contacts collection page
+    When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
     And the results count header for contacts is present
 
@@ -54,7 +54,7 @@ Feature: View collection of contacts
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When I navigate to the Contacts collection page
+    When I navigate to the Contact collection page
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
     When the contact filter is cleared
@@ -103,7 +103,7 @@ Feature: View collection of contacts
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When I navigate to the Contacts collection page
+    When I navigate to the Contact collection page
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest
     Then the contacts should have been correctly sorted by creation date
