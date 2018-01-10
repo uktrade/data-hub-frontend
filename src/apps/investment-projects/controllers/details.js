@@ -10,7 +10,7 @@ const {
   transformInvestmentDataForView,
   transformInvestmentValueForView,
   transformInvestmentRequirementsForView,
-} = require('../services/formatting')
+} = require('../transformers')
 
 function detailsGetHandler (req, res, next) {
   if (get(res, 'locals.investmentData')) {

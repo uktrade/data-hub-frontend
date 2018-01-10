@@ -18,7 +18,7 @@ describe('Investment team details controller', () => {
     this.transformTeamMembersForViewStub = sandbox.stub().returns(this.teamMembersData)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/details', {
-      '../../services/formatting': {
+      '../../transformers': {
         transformProjectManagementForView: this.transformProjectManagementForViewStub,
         transformClientRelationshipManagementForView: this.transformClientRelationshipManagementForViewStub,
         transformTeamMembersForView: this.transformTeamMembersForViewStub,

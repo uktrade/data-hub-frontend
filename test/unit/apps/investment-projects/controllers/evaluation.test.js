@@ -15,7 +15,7 @@ describe('Investment evaluation controller', () => {
     this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/evaluation', {
-      '../services/formatting': proxyquire('~/src/apps/investment-projects/services/formatting', {
+      '../transformers': proxyquire('~/src/apps/investment-projects/transformers', {
         '../../../lib/metadata': mockMetadataRepository,
       }),
     })

@@ -10,7 +10,7 @@ const {
   transformInvestmentValueForView,
   transformInvestmentFDIForView,
   transformInvestmentLandingForView,
-} = require('../services/formatting')
+} = require('../transformers')
 
 function renderEvaluationPage (req, res, next) {
   const transformedValue = transformInvestmentValueForView(res.locals.investmentData)

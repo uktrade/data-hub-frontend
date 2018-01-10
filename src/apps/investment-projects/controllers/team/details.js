@@ -8,7 +8,7 @@ const {
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,
-} = require('../../services/formatting')
+} = require('../../transformers')
 
 function getDetailsHandler (req, res, next) {
   try {
