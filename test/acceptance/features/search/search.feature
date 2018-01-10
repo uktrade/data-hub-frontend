@@ -42,3 +42,32 @@ Feature: Search
       | Orders              |
     And the Companies search tab has 1 results
     And I can view the company in the search results
+
+  @search--companies--lep @lep
+  Scenario: Search companies as a LEP
+
+    Given a "Foreign company" is created
+    Then I see the success message
+    When I search for the created company
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Investment projects |
+    And the Companies search tab has 1 results
+    And I can view the company in the search results
+
+  @search--companies--da @da
+  Scenario: Search companies as a DA
+
+    Given a "Foreign company" is created
+    Then I see the success message
+    When I search for the created company
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Investment projects |
+      | Orders              |
+    And the Companies search tab has 1 results
+    And I can view the company in the search results
