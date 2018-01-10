@@ -14,7 +14,12 @@
   height: $input-size;
 
   &[type="checkbox"] + .c-multiple-choice__label::after {
-    border-width: 0 0 5px 5px;
+    @if round($font-size) < 10 {
+      border-width: 0 0 2px 2px;
+    } @else {
+      border-width: 0 0 5px 5px;
+    }
+
     width: round($input-size / 1.7);
     height: round($input-size / 3);
   }
@@ -81,7 +86,7 @@
   }
 
   &:focus + .c-multiple-choice__label::before {
-    box-shadow: 0 0 0 4px $focus-colour;
+    box-shadow: 0 0 0 3px $focus-colour;
   }
 }
 
@@ -125,12 +130,12 @@
 
 .c-multiple-choice--smaller {
   .c-multiple-choice__input {
-    @include _scale-input(14px);
+    @include _scale-input(9px);
   }
 
   .c-multiple-choice__label {
-    padding-left: round($default-spacing-unit * 3 * (14 / 19));
-    line-height: 16px;
+    padding-left: round($default-spacing-unit * 3 * (10 / 19));
+    line-height: 18px;
   }
 }
 
