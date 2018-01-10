@@ -43,6 +43,31 @@
           placeholder: 'e.g. Hooli',
           modifier: 'small'
         },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'gender-small',
+          label: 'Gender',
+          initialOption: 'Unspecified',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: 'small'
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          name: 'filterBy-small',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          selected: form.state.filterBy,
+          modifier: 'small'
+        },
         assign({}, macros.globalFields.strategicDrivers, {
           name: 'strategicDrivers-small',
           type: 'dropdown',
@@ -53,6 +78,56 @@
           name: 'averageSalary-small',
           initialOption: '-- Select range --',
           modifier: 'small'
+        })
+      ]
+    }) }}
+  {% endcall %}
+
+  {% call Example('Form fields with `smaller` modifier') %}
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-smaller',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          modifier: ['smaller', 'light']
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'gender-smaller',
+          label: 'Gender',
+          initialOption: 'Unspecified',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: ['smaller', 'light']
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          name: 'filterBy-smaller',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          selected: form.state.filterBy,
+          modifier: ['smaller', 'light']
+        },
+        assign({}, macros.globalFields.strategicDrivers, {
+          name: 'strategicDrivers-smaller',
+          type: 'dropdown',
+          modifier: ['smaller', 'light']
+        }),
+        macros.globalFields.averageSalary | assignCopy({
+          type: 'dropdown',
+          name: 'averageSalary-smaller',
+          initialOption: '-- Select range --',
+          modifier: ['smaller', 'light']
         })
       ]
     }) }}
