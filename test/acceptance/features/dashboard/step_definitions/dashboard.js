@@ -10,45 +10,23 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@term')
   })
 
-  Then(/^there should only be (DIT|LEP|DA) staff global nav links present$/, async (staffType) => {
+  Then(/^there should be a global nav$/, async (dataTable) => {
     await Dashboard.section.globalHeader
       .waitForElementPresent('@serviceName')
 
-    if (staffType === 'DIT') {
-      await Dashboard.section.globalNav
-        .assert.visible('@companies')
-        .assert.visible('@contacts')
-        .assert.visible('@events')
-        .assert.visible('@interactionsAndServices')
-        .assert.visible('@investmentProjects')
-        .assert.visible('@ordersOmis')
-        .assert.visible('@miDashboards')
-    }
+    const expectedGlobalNav = dataTable.hashes()
 
-    if (staffType === 'LEP') {
-      await Dashboard.section.globalNav
-        .assert.visible('@companies')
-        .assert.visible('@contacts')
-        .assert.visible('@investmentProjects')
-        .assert.visible('@miDashboards')
+    await Dashboard.api.elements('css selector', '.c-global-nav__link', (result) => {
+      client.expect(result.value.length).to.equal(expectedGlobalNav.length)
+    })
 
-      await Dashboard.section.globalNav
-        .assert.elementNotPresent('@events')
-        .assert.elementNotPresent('@interactionsAndServices')
-        .assert.elementNotPresent('@ordersOmis')
-    }
-
-    if (staffType === 'DA') {
-      await Dashboard.section.globalNav
-        .assert.visible('@companies')
-        .assert.visible('@contacts')
-        .assert.visible('@investmentProjects')
-        .assert.visible('@ordersOmis')
-        .assert.visible('@miDashboards')
-
-      await Dashboard.section.globalNav
-        .assert.elementNotPresent('@events')
-        .assert.elementNotPresent('@interactionsAndServices')
+    for (const row of expectedGlobalNav) {
+      const globalNavItemSelector = Dashboard.getGlobalNavItemSelector(row.text)
+      await Dashboard
+        .api.useXpath()
+        .waitForElementPresent(globalNavItemSelector.selector)
+        .assert.visible(globalNavItemSelector.selector)
+        .useCss()
     }
   })
 
