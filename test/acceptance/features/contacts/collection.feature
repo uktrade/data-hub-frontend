@@ -30,6 +30,20 @@ Feature: View collection of contacts
       | text         | expected           |
       | Contact type | contact.type       |
 
+  @contacts-collection--view--lep @lep
+  Scenario: View contact collection as LEP
+
+    When I navigate to the Contacts collection page
+    Then I confirm I am on the Contacts page
+    And the results count header for contacts is present
+
+  @contacts-collection--view--da @da
+  Scenario: View contact collection as DA
+
+    When I navigate to the Contacts collection page
+    Then I confirm I am on the Contacts page
+    And the results count header for contacts is present
+
   @contacts-collection--filter
   Scenario: Filter contact list
 
