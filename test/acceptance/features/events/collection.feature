@@ -14,12 +14,12 @@ Feature: View a list of events
   @events-collection--view
   Scenario: View event collection
 
-    Given I navigate to the Events collection page
+    Given I navigate to the Event collection page
     When I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I navigate to the Events collection page
+    When I navigate to the Event collection page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -35,12 +35,12 @@ Feature: View a list of events
   @events-collection--view-uk-region
   Scenario: View event uk region
 
-    Given I navigate to the Events collection page
+    Given I navigate to the Event collection page
     When I click the "Add event" link
     And I populate the create event form with United Kingdom and a region
     And I click the save button
     Then I see the success message
-    When I navigate to the Events collection page
+    When I navigate to the Event collection page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |

@@ -13,7 +13,7 @@ Feature: View collection of contacts
     And selecting interaction
     And an interaction is added
     Then I see the success message
-    When I navigate to the Interactions and services collection page
+    When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
     And the results count header for interactions is present
     Then I filter the collections to view the Interaction I have just created
@@ -36,7 +36,7 @@ Feature: View collection of contacts
     And selecting service delivery
     And a service delivery is added
     Then I see the success message
-    When I navigate to the Interactions and services collection page
+    When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
     And the results count header for interactions is present
     Then I filter the collections to view the Service Delivery I have just created
@@ -59,7 +59,7 @@ Feature: View collection of contacts
     And selecting interaction
     And an interaction is added
     Then I see the success message
-    When I navigate to the Interactions and services collection page
+    When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
     And the results count header for interactions is present
     Then I filter the interactions list by service provider
