@@ -99,11 +99,11 @@ Feature: View a list of events
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs
 
-    Given I navigate to /events
+    Given I navigate directly to /events
     Then I see the 403 error page
 
   @events-collection--da @da
   Scenario: Navigate to events shows 403 for DAs
 
-    Given I navigate to /events
+    Given I navigate directly to /events
     Then I see the 403 error page
