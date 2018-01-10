@@ -50,6 +50,7 @@ function transformInteractionToListItem ({
   company,
   date,
   dit_adviser,
+  dit_team,
   communication_channel,
 }) {
   return {
@@ -82,6 +83,10 @@ function transformInteractionToListItem ({
       {
         label: 'Adviser',
         value: dit_adviser,
+      },
+      {
+        label: 'Service provider',
+        value: dit_team,
       },
     ],
   }

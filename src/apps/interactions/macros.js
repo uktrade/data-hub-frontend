@@ -113,7 +113,7 @@ const interactionFields = {
   },
 }
 
-const interactionFiltersFieldConfig = function (advisers = [], channels = []) {
+const interactionFiltersFieldConfig = function (advisers = [], channels = [], teams = []) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -146,6 +146,11 @@ const interactionFiltersFieldConfig = function (advisers = [], channels = []) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
+    assign(
+      {},
+      interactionFields.provider(teams),
+      { initialOption: '-- All providers --' }
+    ),
   ].map(filter => {
     return assign(filter, {
       label: formLabels.filters[filter.name],

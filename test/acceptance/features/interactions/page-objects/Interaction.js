@@ -172,6 +172,7 @@ module.exports = {
         serviceDelivery: 'label[for=field-kind-2]',
         dateFrom: '#field-date_after',
         dateTo: '#field-date_before',
+        serviceProvider: '#field-dit_team',
       },
     },
     details: {
