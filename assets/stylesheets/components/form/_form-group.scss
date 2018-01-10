@@ -139,6 +139,27 @@ fieldset.c-form-group.has-error {
   }
 }
 
+.c-form-group--filter {
+  background: $grey-3;
+  padding: $default-spacing-unit / 2;
+}
+
+.c-form-group--option-select {
+  legend.c-form-group__label {
+    float: left;
+  }
+
+  .c-form-group__inner {
+    background: $white;
+    clear: left;
+    margin: 0 -4px -4px;
+    max-height: 230px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+}
+
 @keyframes targetHighlight {
   0% {
     border-color: $black;

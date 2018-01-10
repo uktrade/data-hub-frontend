@@ -48,7 +48,7 @@
   display: inline-block;
   position: relative;
   margin-top: $default-spacing-unit / 2;
-  padding: 0 ($baseline-grid-unit * 6) 0 ($default-spacing-unit / 2);
+  padding: 0 ($default-spacing-unit / 2);
   background: $grey-4;
   cursor: default;
 }

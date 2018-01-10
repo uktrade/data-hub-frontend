@@ -139,6 +139,40 @@
   }
 }
 
+.c-multiple-choice--filter {
+  border-bottom: 1px solid $grey-2;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  & + & {
+    margin-top: 0;
+  }
+
+  .c-multiple-choice__input {
+    left: 8px;
+    top: 8px;
+
+    + .c-multiple-choice__label {
+      &:after,
+      &:before {
+        margin-left: 8px;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  .c-multiple-choice__label {
+    display: block;
+    padding-left: round($default-spacing-unit * 3 * (10 / 19) + 8);
+
+    &:hover {
+      background-color: $grey-4;
+    }
+  }
+}
+
 .c-multiple-choice--inline {
   width: auto;
   display: inline-block;
