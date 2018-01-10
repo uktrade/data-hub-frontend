@@ -29,9 +29,9 @@
           {% endif %}
         {% endif %}
       </div>
-      {% if props.selectedFilters | length > 1 or props.actionsHTML %}
+      {% if props.selectedFilters | length or props.actionsHTML %}
         <div class="c-collection__header-actions">
-          {% if props.selectedFilters | length > 1 %}
+          {% if props.selectedFilters | length %}
             <a
               href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
               class="c-collection__filter-remove-all js-xhr"
@@ -57,11 +57,6 @@
                   {{ filter.valueLabel }}
                 {%- endif -%}
               </span>
-              <a
-                class="c-collection__filter-remove js-xhr"
-                href="?{{ buildQuery(props.query, { custom: true }, [name]) }}"
-                aria-label="Remove filter"
-              >×</a>
             </span>
           {% endfor %}
         </div>
