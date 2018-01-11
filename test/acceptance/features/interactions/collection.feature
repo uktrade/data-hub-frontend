@@ -68,11 +68,11 @@ Feature: View collection of contacts
   @interactions-collection--lep @lep
   Scenario: Navigate to interactions shows 403 for LEPs
 
-    Given I navigate to /interactions
+    Given I navigate directly to /interactions
     Then I see the 403 error page
 
   @interactions-collection--da @da
   Scenario: Navigate to interactions shows 403 for DAs
 
-    Given I navigate to /interactions
+    Given I navigate directly to /interactions
     Then I see the 403 error page

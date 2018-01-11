@@ -132,4 +132,10 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementVisible('@header')
       .click('@header')
   })
+
+  Then(/^I can view the collection$/, async function () {
+    await Collection.api.elements('css selector', '.c-entity-list__item', (result) => {
+      client.expect(result.value.length).to.be.greaterThan(0)
+    })
+  })
 })
