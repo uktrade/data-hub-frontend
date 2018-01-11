@@ -42,3 +42,62 @@ Feature: Search
       | Orders              |
     And the Companies search tab has 1 results
     And I can view the company in the search results
+
+  @search--companies--lep @lep
+  Scenario: Search companies as a LEP
+
+    Given a "Foreign company" is created
+    Then I see the success message
+    When I search for the created company
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Investment projects |
+    And the Companies search tab has 1 results
+    And I can view the company in the search results
+
+  @search--companies--da @da
+  Scenario: Search companies as a DA
+
+    Given a "Foreign company" is created
+    Then I see the success message
+    When I search for the created company
+    Then I verify the search tabs are displayed
+      | text                |
+      | Companies           |
+      | Contacts            |
+      | Investment projects |
+      | Orders              |
+    And the Companies search tab has 1 results
+    And I can view the company in the search results
+
+  @search--events--lep @lep
+  Scenario: Search events directly as a LEP
+
+    When I navigate directly to /search/events?term=test
+    Then I see the 403 error page
+
+  @search--interactions--lep @lep
+  Scenario: Search interactions directly as a LEP
+
+    When I navigate directly to /search/interactions?term=test
+    Then I see the 403 error page
+
+  @search--omis--lep @lep
+  Scenario: Search orders directly as a LEP
+
+    When I navigate directly to /search/omis?term=lambda
+    Then I see the 403 error page
+
+  @search--events--da @da
+  Scenario: Search events directly as a DA
+
+    When I navigate directly to /search/events?term=test
+    Then I see the 403 error page
+
+  @search--interactions--da @da
+  Scenario: Search interactions directly as a DA
+
+    When I navigate directly to /search/interactions?term=test
+    Then I see the 403 error page
