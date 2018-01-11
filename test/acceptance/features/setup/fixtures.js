@@ -90,5 +90,13 @@ module.exports = {
       pk: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
       name: 'New rollercoaster',
     },
+    newGolfCourse: {
+      pk: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
+      name: 'New golf course (DA)',
+    },
+    newZoo: {
+      pk: 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977',
+      name: 'New zoo (LEP)',
+    },
   },
 }
