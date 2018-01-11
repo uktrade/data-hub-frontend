@@ -13,7 +13,7 @@ const metadataMock = {
     { id: '2', name: 'sr2', disabled_on: yesterday },
     { id: '3', name: 'sr3', disabled_on: null },
   ],
-  fdiTypeOptions: [
+  fdiValueOptions: [
     { id: '1', name: 'f1', disabled_on: null },
     { id: '2', name: 'f2', disabled_on: yesterday },
     { id: '3', name: 'f3', disabled_on: null },
@@ -39,8 +39,8 @@ describe('Investment form middleware - investment value', () => {
       .reply(200, adviserData)
       .get('/metadata/salary-range/')
       .reply(200, metadataMock.salaryRangeOptions)
-      .get('/metadata/fdi-type/')
-      .reply(200, metadataMock.fdiTypeOptions)
+      .get('/metadata/fdi-value/')
+      .reply(200, metadataMock.fdiValueOptions)
   })
 
   describe('#populateForm', () => {
