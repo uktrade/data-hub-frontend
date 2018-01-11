@@ -1,6 +1,6 @@
 const { assign, flatten, get, isEmpty } = require('lodash')
 
-const { transformToApi, transformFromApi } = require('../../services/formatting')
+const { transformToApi, transformFromApi } = require('../../transformers')
 const { isValidGuid } = require('../../../../lib/controller-utils')
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
