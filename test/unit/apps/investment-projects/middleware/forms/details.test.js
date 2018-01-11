@@ -18,7 +18,7 @@ const metadataMock = {
     { id: '2', name: 'rs2', disabled_on: yesterday },
     { id: '3', name: 'rs3', disabled_on: null },
   ],
-  fdiTypeOptions: [
+  fdiValueOptions: [
     { id: '1', name: 'f1', disabled_on: null },
     { id: '2', name: 'f2', disabled_on: yesterday },
     { id: '3', name: 'f3', disabled_on: null },
@@ -243,7 +243,7 @@ describe('investment details middleware', () => {
           .get('/metadata/referral-source-activity/')
           .reply(200, metadataMock.referralSourceActivityOptions)
           .get('/metadata/fdi-type/')
-          .reply(200, metadataMock.fdiTypeOptions)
+          .reply(200, metadataMock.fdiValueOptions)
           .get('/metadata/referral-source-marketing/')
           .reply(200, metadataMock.referralSoureMarketingOptions)
           .get('/metadata/referral-source-website/')
@@ -304,7 +304,7 @@ describe('investment details middleware', () => {
           .get('/metadata/referral-source-activity/')
           .reply(200, metadataMock.referralSourceActivityOptions)
           .get('/metadata/fdi-type/')
-          .reply(200, metadataMock.fdiTypeOptions)
+          .reply(200, metadataMock.fdiValueOptions)
           .get('/metadata/referral-source-marketing/')
           .reply(200, metadataMock.referralSoureMarketingOptions)
           .get('/metadata/referral-source-website/')
