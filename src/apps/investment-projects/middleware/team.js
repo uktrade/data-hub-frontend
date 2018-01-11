@@ -1,4 +1,4 @@
-const { transformBriefInvestmentSummary } = require('../services/formatting')
+const { transformBriefInvestmentSummary } = require('../transformers')
 const { getAdviser } = require('../../adviser/repos')
 
 function getBriefInvestmentSummary (req, res, next) {

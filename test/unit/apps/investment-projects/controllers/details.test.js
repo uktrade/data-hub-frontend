@@ -6,7 +6,7 @@ describe('Investment details controller', () => {
     this.transformInvestmentRequirementsForViewStub = sandbox.stub()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/details', {
-      '../services/formatting': {
+      '../transformers': {
         transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
         transformInvestmentDataForView: sandbox.stub(),
         transformInvestmentValueForView: sandbox.stub(),
