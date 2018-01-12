@@ -143,7 +143,7 @@ describe('Investment evaluation controller', () => {
         'LONDON',
         'E134 1HP',
       ],
-      'Land date': '21st July 2018',
+      'Land date': '21 July 2018',
     }
 
     this.controller.renderEvaluationPage({

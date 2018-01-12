@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { get, isPlainObject } = require('lodash')
-const moment = require('moment')
+
+const { formatLongDate } = require('../../../../common/date')
 
 function transformInvestmentLandingForView (data) {
   if (!isPlainObject(data)) {
@@ -18,7 +19,7 @@ function transformInvestmentLandingForView (data) {
       data.uk_company.registered_address_county,
       data.uk_company.registered_address_postcode,
     ].filter((address) => address) : null,
-    investment_land_date: data.actual_land_date ? moment(data.actual_land_date).format('Do MMMM YYYY') : null,
+    investment_land_date: data.actual_land_date ? formatLongDate(data.actual_land_date) : null,
   }
 }
 
