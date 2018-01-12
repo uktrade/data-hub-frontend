@@ -1,17 +1,19 @@
 const { assign } = require('lodash')
 
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const { transformBriefInvestmentSummary } = require('~/src/apps/investment-projects/transformers/project')
+const {
+  transformBriefInvestmentSummary,
+} = require('~/src/apps/investment-projects/transformers/project')
 
 describe('Investment project transformers', () => {
   describe('#transformBriefInvestmentSummary', () => {
     context('when a project contains data', () => {
       beforeEach(() => {
-        this.investmentSummary = transformBriefInvestmentSummary(investmentData)
+        this.result = transformBriefInvestmentSummary(investmentData)
       })
 
-      it('sound contain the properties required of an investment summary', () => {
-        expect(Object.keys(this.investmentSummary)).to.deep.equal([
+      it('sound contain the properties required of a brief investment summary', () => {
+        expect(Object.keys(this.result)).to.deep.equal([
           'sector',
           'investor_company',
           'website',
@@ -22,25 +24,25 @@ describe('Investment project transformers', () => {
           'total_investment',
         ])
       })
+    })
 
-      it('should provide the investor company as a link', () => {
-        beforeEach(() => {
-          const data = assign({}, investmentData, {
-            investor_company: {
-              id: '1234',
-              name: 'test',
-            },
-          })
-
-          this.investmentSummary = transformBriefInvestmentSummary(data)
-        })
-
-        it('should include the sector name', () => {
-          expect(this.investmentSummary).to.have.deep.property('investment_company', {
+    context('when an investment company is provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          investor_company: {
             id: '1234',
             name: 'test',
-            url: '/companies/1234',
-          })
+            website: 'http://www.test.com',
+          },
+        })
+
+        this.result = transformBriefInvestmentSummary(data)
+      })
+
+      it('should provide the investor company as a link', () => {
+        expect(this.result.investor_company).to.deep.equal({
+          name: 'test',
+          url: '/companies/1234',
         })
       })
     })
@@ -54,11 +56,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include the sector name', () => {
-        expect(this.investmentSummary).to.have.property('sector', 'test')
+        expect(this.result).to.have.property('sector', 'test')
       })
     })
 
@@ -68,11 +70,11 @@ describe('Investment project transformers', () => {
           sector: null,
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include a null sector', () => {
-        expect(this.investmentSummary).to.have.property('sector', null)
+        expect(this.result).to.have.property('sector', null)
       })
     })
 
@@ -86,11 +88,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.deep.property('website', {
+        expect(this.result).to.have.deep.property('website', {
           name: 'http://www.test.com',
           url: 'http://www.test.com',
         })
@@ -107,11 +109,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('website', null)
+      it('should include a null for the website', () => {
+        expect(this.result).to.have.property('website', null)
       })
     })
 
@@ -123,11 +125,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('account_tier', 'None')
+        expect(this.result).to.have.property('account_tier', 'None')
       })
     })
 
@@ -141,11 +143,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('account_tier', 'None')
+      it('should indicate no account tier', () => {
+        expect(this.result).to.have.property('account_tier', 'None')
       })
     })
 
@@ -160,11 +162,11 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('account_tier', 'Test')
+      it('should include the account tier', () => {
+        expect(this.result).to.have.property('account_tier', 'Test')
       })
     })
 
@@ -180,11 +182,11 @@ describe('Investment project transformers', () => {
           }],
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('uk_region_locations', 'Region 1, Region 2')
+      it('should include the uk regions as a string list', () => {
+        expect(this.result).to.have.property('uk_region_locations', 'Region 1, Region 2')
       })
     })
 
@@ -194,11 +196,11 @@ describe('Investment project transformers', () => {
           uk_region_locations: null,
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('uk_region_locations', '')
+      it('should include an empty value for uk regions', () => {
+        expect(this.result).to.have.property('uk_region_locations', '')
       })
     })
 
@@ -214,11 +216,11 @@ describe('Investment project transformers', () => {
           }],
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('competitor_countries', 'Country 1, Country 2')
+      it('should include the competitor countries formatted as a string list', () => {
+        expect(this.result).to.have.property('competitor_countries', 'Country 1, Country 2')
       })
     })
 
@@ -228,53 +230,53 @@ describe('Investment project transformers', () => {
           competitor_countries: null,
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('competitor_countries', '')
+      it('should include am empty competitor countries value', () => {
+        expect(this.result).to.have.property('competitor_countries', '')
       })
     })
 
-    context('when a land date is provided', () => {
+    context('when an estimated land date is provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           estimated_land_date: '2017-01-07',
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('estimated_land_date', 'January 2017')
+      it('should include the estimated land date formatted as Month Year', () => {
+        expect(this.result).to.have.property('estimated_land_date', 'January 2017')
       })
     })
 
-    context('when a land date is not provided', () => {
+    context('when an estimated land date is not provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           estimated_land_date: null,
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('estimated_land_date', null)
+      it('should set the estimated land date as null', () => {
+        expect(this.result).to.have.property('estimated_land_date', null)
       })
     })
 
-    context('when a malformed land date is provided', () => {
+    context('when a malformed estimated land date is provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           estimated_land_date: 'dog',
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('estimated_land_date', null)
+      it('should set estimated land date to null', () => {
+        expect(this.result).to.have.property('estimated_land_date', null)
       })
     })
 
@@ -284,25 +286,25 @@ describe('Investment project transformers', () => {
           total_investment: '100.24',
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('total_investment', '£100.24')
+      it('should include the total investment value', () => {
+        expect(this.result).to.have.property('total_investment', '£100.24')
       })
     })
 
-    context('when a cotal investment is not provided', () => {
+    context('when a total investment is not provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           total_investment: null,
         })
 
-        this.investmentSummary = transformBriefInvestmentSummary(data)
+        this.result = transformBriefInvestmentSummary(data)
       })
 
-      it('should include the website and a link', () => {
-        expect(this.investmentSummary).to.have.property('total_investment', null)
+      it('should set total investment to null', () => {
+        expect(this.result).to.have.property('total_investment', null)
       })
     })
   })
