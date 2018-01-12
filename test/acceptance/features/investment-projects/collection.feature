@@ -36,10 +36,10 @@ Feature: View a list of Investment Projects
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
     When I navigate to the Investment Projects source of equity investment
     Then I can view the Investment project in the collection
-      | text            | expected                            |
-      | Investor        | investmentProject.equitySource.name |
-      | Sector          | investmentProject.primarySector     |
-      | Land date       | investmentProject.estimatedLandDate |
+      | text                | expected                            |
+      | Investor            | investmentProject.equitySource.name |
+      | Sector              | investmentProject.primarySector     |
+      | Estimated land date | investmentProject.estimatedLandDate |
     And the Investment project has badges
       | text            | expected                            |
       | Stage           | investmentProject.stage             |

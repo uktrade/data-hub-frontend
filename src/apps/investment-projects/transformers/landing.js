@@ -19,7 +19,7 @@ function transformInvestmentLandingForView (data) {
       data.uk_company.registered_address_county,
       data.uk_company.registered_address_postcode,
     ].filter((address) => address) : null,
-    investment_land_date: data.actual_land_date ? formatLongDate(data.actual_land_date) : null,
+    actual_land_date: data.actual_land_date ? formatLongDate(data.actual_land_date) : null,
   }
 }
 
