@@ -12,7 +12,7 @@
  #}
 {% macro DateFieldset(props) %}
   {% set fieldId = 'field-' + props.name if props.name %}
-  {% set value = props.value | default('') %}
+  {% set value = props.value | default('', true) %}
 
   {% if value | isPlainObject  %}
     {% set dateObj = props.value %}
