@@ -206,6 +206,24 @@ const requirementsFormConfig = ({
           },
         ],
       },
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'actual_uk_regions',
+        label: requirementsLabels.edit.actual_uk_regions,
+        condition: {
+          name: 'site_decided',
+          value: 'true',
+        },
+        children: [
+          assign({}, globalFields.ukRegions, {
+            label: labels.actual_uk_regions,
+            isLabelHidden: true,
+            name: 'actual_uk_regions',
+            options: ukRegions,
+          }),
+        ],
+      },
     ].map(field => {
       return assign(field, {
         label: requirementsLabels.edit[field.name],
