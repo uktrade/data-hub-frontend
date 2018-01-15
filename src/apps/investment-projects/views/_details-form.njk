@@ -282,6 +282,14 @@
     }
   }) }}
 
+  {{ DateFieldset({
+    name: 'actual_land_date',
+    label: 'Actual land date',
+    hint: 'When activities under the investment project fully commenced',
+    error: form.errors.messages.actual_land_date,
+    value: form.state.actual_land_date
+  }) }}
+
   {{ MultipleChoiceField({
     name: 'investor_type',
     label: 'New or existing investor',

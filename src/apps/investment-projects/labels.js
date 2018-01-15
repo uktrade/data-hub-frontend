@@ -15,6 +15,7 @@ const labels = {
       description: 'Project description',
       anonymous_description: 'Anonymised description',
       estimated_land_date: 'Estimated land date',
+      actual_land_date: 'Actual land date',
       investor_type: 'New or existing investor',
       level_of_involvement: 'Level of involvement',
       specific_programme: 'Specific investment programme',
