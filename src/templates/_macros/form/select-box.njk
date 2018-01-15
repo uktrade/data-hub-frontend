@@ -24,7 +24,11 @@
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
   >
     {% if props.initialOption %}
-      <option value="">{{ props.initialOption }}</option>
+      {% if props.initialOption === true %}
+        <option value=""></option>
+      {% else %}
+        <option value="">{{ props.initialOption }}</option>
+      {% endif %}
     {% endif %}
     {% for option in options %}
       {% set label = option.name or option.label %}

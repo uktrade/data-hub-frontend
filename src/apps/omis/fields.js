@@ -13,7 +13,7 @@ module.exports = {
     fieldType: 'MultipleChoiceField',
     label: 'fields.primary_market.label',
     validate: 'required',
-    initialOption: '-- Select country --',
+    initialOption: true,
     inputClass: 'js-Autocomplete',
     options: [],
   },
