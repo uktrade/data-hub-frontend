@@ -316,6 +316,7 @@ describe('Investment project transformers', () => {
           'level_of_involvement',
           'specific_programme',
           'estimated_land_date',
+          'actual_land_date',
         ])
       })
     })
@@ -668,6 +669,37 @@ describe('Investment project transformers', () => {
 
       it('should set the estimated land date as null', () => {
         expect(this.result).to.have.property('estimated_land_date', null)
+      })
+    })
+
+    context('when an actual land date is provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          actual_land_date: '2017-01-07',
+        })
+
+        this.result = transformInvestmentDataForView(data)
+      })
+
+      it('should include the actual land date as a date property', () => {
+        expect(this.result.actual_land_date).deep.equal({
+          type: 'date',
+          name: '2017-01-07',
+        })
+      })
+    })
+
+    context('when an actual land date is not provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          actual_land_date: null,
+        })
+
+        this.result = transformInvestmentDataForView(data)
+      })
+
+      it('should include the actual land date as a date property with null value', () => {
+        expect(this.result.actual_land_date).to.be.null
       })
     })
   })

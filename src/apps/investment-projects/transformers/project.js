@@ -118,6 +118,7 @@ function transformInvestmentDataForView ({
   level_of_involvement,
   specific_programme,
   estimated_land_date,
+  actual_land_date,
 } = {}) {
   const businessActivities = castArray(business_activities).map(i => i.name)
   if (!isEmpty(other_business_activity)) {
@@ -139,6 +140,10 @@ function transformInvestmentDataForView ({
     level_of_involvement,
     specific_programme,
     estimated_land_date: !isEmpty(estimated_land_date) ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
+    actual_land_date: !isEmpty(actual_land_date) ? {
+      type: 'date',
+      name: actual_land_date,
+    } : null,
   }
 }
 
