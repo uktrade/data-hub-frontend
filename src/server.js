@@ -12,6 +12,7 @@ const churchill = require('churchill')
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
+const minifyHTML = require('express-minify-html')
 const i18n = require('i18n-future').middleware()
 
 const title = require('./middleware/title')
@@ -56,6 +57,19 @@ if (!config.isDev) {
   app.enable('trust proxy')
   app.use(enforce.HTTPS({
     trustProtoHeader: true,
+  }))
+
+  app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+      removeComments: true,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: true,
+      removeEmptyAttributes: true,
+      minifyJS: true,
+    },
   }))
 }
 

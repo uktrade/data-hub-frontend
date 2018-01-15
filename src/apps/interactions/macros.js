@@ -113,7 +113,7 @@ const interactionFields = {
   },
 }
 
-const interactionFiltersFieldConfig = function (advisers = [], channels = [], teams = []) {
+const interactionFiltersFieldConfig = function (advisers = [], channels = [], teams = [], currentUser, currentTeam) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -129,10 +129,23 @@ const interactionFiltersFieldConfig = function (advisers = [], channels = [], te
       type: 'checkbox',
       modifier: 'option-select',
     }),
-    assign({}, interactionFields.adviser(advisers), {
+    // assign({}, interactionFields.adviser(advisers), {
+    //   type: 'checkbox',
+    //   modifier: 'option-select',
+    // }),
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'dit_adviser',
       type: 'checkbox',
       modifier: 'option-select',
-    }),
+      options: [{
+        label: 'My interactions',
+        value: currentUser,
+      }, {
+        label: 'My team’s interactions',
+        value: [currentTeam],
+      }],
+    },
     {
       macroName: 'TextField',
       name: 'date_after',
