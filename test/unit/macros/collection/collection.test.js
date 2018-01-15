@@ -20,23 +20,28 @@ describe('Collection macro', () => {
     expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).equal('10 cats')
   })
 
-  it('should render results summary component with correct count', () => {
-    const component = entitiesMacros.renderToDom('Collection', {
-      count: 2,
-      query: {
-        stage: 's1',
-        type: 't1',
-      },
-      selectedFilters: {
-        stage: { label: 'Stage', valueLabel: 'Initial' },
-        type: { label: 'Type', valueLabel: 'Manual' },
-      },
+  context('when filters are selected', () => {
+    beforeEach(() => {
+      this.component = entitiesMacros.renderToDom('Collection', {
+        count: 2,
+        query: {
+          stage: 's1',
+          type: 't1',
+        },
+        selectedFilters: {
+          stage: { label: 'Stage', valueLabel: 'Initial' },
+          type: { label: 'Type', valueLabel: 'Manual' },
+        },
+      })
     })
 
-    const removeLinks = component.querySelectorAll('.c-collection__filter-remove')
-    expect(removeLinks).to.have.length(2)
-    expect(removeLinks[0].href).to.not.contain('stage=s1')
-    expect(removeLinks[1].href).to.not.contain('type=t1')
-    expect(component.querySelector('.c-collection__filter-remove-all')).to.exist
+    it('should render selected filters', () => {
+      const selectedFilters = this.component.querySelectorAll('.c-collection__filter-tag')
+      expect(selectedFilters).to.have.length(2)
+    })
+
+    it('should render remove filters link', () => {
+      expect(this.component.querySelector('.c-collection__filter-remove-all')).to.exist
+    })
   })
 })
