@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-const { castArray, get, isEmpty, isPlainObject, mapValues } = require('lodash')
+const { assign, castArray, get, isEmpty, isPlainObject, mapValues } = require('lodash')
 const format = require('date-fns/format')
 const moment = require('moment')
 
 const { formatCurrency, getInvestmentTypeDetails } = require('./shared')
+const { transformDateObjectToDateString } = require('../../transformers')
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }
@@ -60,7 +61,9 @@ function transformToApi (body) {
     '01',
   ].join('-')
 
-  return Object.assign({}, body, formatted)
+  formatted['actual_land_date'] = transformDateObjectToDateString('actual_land_date')(body)
+
+  return assign({}, body, formatted)
 }
 
 function transformFromApi (body) {
@@ -98,7 +101,7 @@ function transformFromApi (body) {
     formatted['estimated_land_date_month'] = format(date, 'MM')
   }
 
-  return Object.assign({}, body, formatted)
+  return assign({}, body, formatted)
 }
 
 function transformInvestmentDataForView ({
