@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-const { get, isPlainObject, mapValues } = require('lodash')
+const { assign, castArray, get, isEmpty, isPlainObject, mapValues } = require('lodash')
 const format = require('date-fns/format')
 const moment = require('moment')
 
 const { formatCurrency, getInvestmentTypeDetails } = require('./shared')
+const { transformDateObjectToDateString } = require('../../transformers')
 
 function transformToApi (body) {
   if (!isPlainObject(body)) { return }
@@ -60,7 +61,9 @@ function transformToApi (body) {
     '01',
   ].join('-')
 
-  return Object.assign({}, body, formatted)
+  formatted['actual_land_date'] = transformDateObjectToDateString('actual_land_date')(body)
+
+  return assign({}, body, formatted)
 }
 
 function transformFromApi (body) {
@@ -98,28 +101,50 @@ function transformFromApi (body) {
     formatted['estimated_land_date_month'] = format(date, 'MM')
   }
 
-  return Object.assign({}, body, formatted)
+  return assign({}, body, formatted)
 }
 
-function transformInvestmentDataForView (data) {
-  if (!isPlainObject(data)) { return }
-
-  const businessActivities = data.business_activities.slice()
-  if (data.other_business_activity) {
-    businessActivities.push({ name: data.other_business_activity })
+function transformInvestmentDataForView ({
+  business_activities,
+  other_business_activity,
+  investment_type,
+  fdi_type,
+  sector,
+  client_contacts,
+  description,
+  anonymous_description,
+  investor_company,
+  investor_type,
+  level_of_involvement,
+  specific_programme,
+  estimated_land_date,
+  actual_land_date,
+} = {}) {
+  const businessActivities = castArray(business_activities).map(i => i.name)
+  if (!isEmpty(other_business_activity)) {
+    businessActivities.push(other_business_activity)
   }
 
-  return Object.assign({}, data, {
-    investor_company: {
-      name: data.investor_company.name,
-      url: `/companies/${data.investor_company.id}`,
-    },
-    investment_type: getInvestmentTypeDetails(data.investment_type, data.fdi_type),
-    sector: get(data, 'sector.name', null),
-    business_activities: businessActivities.map(i => i.name).join(', '),
-    client_contacts: data.client_contacts.map(i => i.name).join(', '),
-    estimated_land_date: data.estimated_land_date ? moment(data.estimated_land_date).format('MMMM YYYY') : null,
-  })
+  return {
+    investor_company: isPlainObject(investor_company) ? {
+      name: get(investor_company, 'name'),
+      url: `/companies/${investor_company.id}`,
+    } : null,
+    investment_type: getInvestmentTypeDetails(investment_type, fdi_type),
+    sector,
+    business_activities: businessActivities.join(', '),
+    client_contacts: castArray(client_contacts).map(i => i.name).join(', '),
+    description,
+    anonymous_description,
+    investor_type,
+    level_of_involvement,
+    specific_programme,
+    estimated_land_date: !isEmpty(estimated_land_date) ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
+    actual_land_date: !isEmpty(actual_land_date) ? {
+      type: 'date',
+      name: actual_land_date,
+    } : null,
+  }
 }
 
 function transformBriefInvestmentSummary (data) {
@@ -128,7 +153,6 @@ function transformBriefInvestmentSummary (data) {
   const investorCompany = data.investor_company
   const competitorCountries = data.competitor_countries || []
   const regionLocations = data.uk_region_locations || []
-  const date = moment(data.estimated_land_date, 'YYYY-MM-DD')
 
   return {
     sector: get(data, 'sector.name', null),
@@ -143,7 +167,7 @@ function transformBriefInvestmentSummary (data) {
     account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
-    estimated_land_date: date.isValid() ? date.format('MMMM YYYY') : null,
+    estimated_land_date: !isEmpty(data.estimated_land_date) ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
     total_investment: formatCurrency(data.total_investment),
   }
 }

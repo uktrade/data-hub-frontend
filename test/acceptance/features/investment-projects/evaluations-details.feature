@@ -55,7 +55,7 @@ Feature: Investment projects evaluations details
       | UK company                        | Not Known                                      |
       | Companies House Number            | Not Known                                      |
       | Registered Address                | Not Known                                      |
-      | Actual land date                  | Not Known                                      |
+      | Actual land date                  | investmentProject.actualLandDate               |
 
   @investment-projects-evaluations-details--value-no
   Scenario: View investment project evaluations after user selects all no for value details
@@ -109,4 +109,4 @@ Feature: Investment projects evaluations details
       | UK company                        | Not Known                                      |
       | Companies House Number            | Not Known                                      |
       | Registered Address                | Not Known                                      |
-      | Actual land date                  | Not Known                                      |
+      | Actual land date                  | investmentProject.actualLandDate               |
