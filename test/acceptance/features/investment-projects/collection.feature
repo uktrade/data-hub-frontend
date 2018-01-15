@@ -15,12 +15,18 @@ Feature: View a list of Investment Projects
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     Then I see the success message
+    And the investment project local header is displayed
+      | key           | value            | formatter              |
+      | Status        | Ongoing - change |                        |
+      | Project code  |                  | isProjectCodeFormatter |
+      | Valuation     | Not yet valued   |                        |
+      | Created on    |                  | isRecentDateFormatter  |
     And the Investment project summary details are displayed
       | key                           | value                                         |
       | Client                        | investmentProject.equitySource.name           |
-      | Type of investment            | investmentProject.type                        |
+      | Type of investment            | investmentProject.typeAndSubType              |
       | Primary sector                | investmentProject.primarySector               |
-      | Business activity             | investmentProject.businessActivity            |
+      | Business activity             | investmentProject.businessActivities          |
       | Client contacts               | investmentProject.clientContact               |
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
@@ -30,11 +36,25 @@ Feature: View a list of Investment Projects
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
     When I navigate to the Investment Projects source of equity investment
     Then I can view the Investment project in the collection
-      | text            | expected                            |
-      | Investor        | investmentProject.equitySource.name |
-      | Sector          | investmentProject.primarySector     |
-      | Land date       | investmentProject.estimatedLandDate |
+      | text                | expected                            |
+      | Investor            | investmentProject.equitySource.name |
+      | Sector              | investmentProject.primarySector     |
+      | Estimated land date | investmentProject.estimatedLandDate |
     And the Investment project has badges
       | text            | expected                            |
       | Stage           | investmentProject.stage             |
       | Investment type | investmentProject.type              |
+
+  @investment-projects-collection--view--lep @lep
+  Scenario: View Investment Projects list as LEP
+
+    When I navigate to the Investment project collection page
+    Then I confirm I am on the Investment projects page
+    And the results count header for projects is present
+
+  @investment-projects-collection--view--da @da
+  Scenario: View Investment Projects list as DA
+
+    When I navigate to the Investment project collection page
+    Then I confirm I am on the Investment projects page
+    And the results count header for projects is present

@@ -36,6 +36,9 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   Then(/^I see the name of the person who made the recent company record changes$/, async function () {
+    await AuditContact
+      .getText('@userName', (result) => set(this.state, 'username', result.value))
+
     await AuditList.section.firstAuditInList
       .assert.containsText('@adviser', this.state.username)
   })

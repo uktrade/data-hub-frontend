@@ -15,7 +15,7 @@ describe('Investment evaluation controller', () => {
     this.breadcrumbStub = sandbox.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/evaluation', {
-      '../services/formatting': proxyquire('~/src/apps/investment-projects/services/formatting', {
+      '../transformers': proxyquire('~/src/apps/investment-projects/transformers', {
         '../../../lib/metadata': mockMetadataRepository,
       }),
     })
@@ -58,7 +58,7 @@ describe('Investment evaluation controller', () => {
       'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
-      'Type of investment': 'Does not apply',
+      'Type of investment': 'FDI, Capital only',
       'Foreign investor': {
         name: 'Omnicorp SDS',
         url: '/companies/6c388e5b-a098-e211-a939-e4115bead28a',
@@ -74,7 +74,7 @@ describe('Investment evaluation controller', () => {
       'UK company': null,
       'Companies House Number': undefined,
       'Registered Address': null,
-      'Land date': null,
+      'Actual land date': null,
     }
 
     this.controller.renderEvaluationPage({
@@ -114,7 +114,7 @@ describe('Investment evaluation controller', () => {
       'Export revenue': 'No, will not create significant export revenue',
     }
     const expectFDI = {
-      'Type of investment': 'Tom',
+      'Type of investment': 'FDI, Creation of new site or activity',
       'Foreign investor': {
         name: 'amazing tables Ltd.',
         url: '/companies/6c997f91-a098-e211-a939-e4115bead28a',
@@ -143,7 +143,7 @@ describe('Investment evaluation controller', () => {
         'LONDON',
         'E134 1HP',
       ],
-      'Land date': '21st July 2018',
+      'Actual land date': '21 July 2018',
     }
 
     this.controller.renderEvaluationPage({

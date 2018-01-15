@@ -1,18 +1,35 @@
-const { assign, flatten } = require('lodash')
+const { assign, flatten, get } = require('lodash')
+
 const { updateInvestment } = require('../../repos')
 const { requirementsFormConfig } = require('../../macros')
+const { getOptions } = require('../../../../lib/options')
 const {
   buildFormWithStateAndErrors,
   buildFormWithState,
 } = require('../../../builders')
 
-function populateForm (req, res, next) {
-  const investmentData = res.locals.investmentData
+async function getFormOptions (token, createdOn) {
+  return {
+    strategicDrivers: await getOptions(token, 'investment-strategic-driver', { createdOn }),
+    countries: await getOptions(token, 'country', { createdOn }),
+    ukRegions: await getOptions(token, 'uk-region', { createdOn }),
+  }
+}
 
-  res.locals.requirementsForm = assign(
-    buildFormWithStateAndErrors(requirementsFormConfig, investmentData),
-    { returnLink: `/investment-projects/${investmentData.id}` },
-  )
+async function populateForm (req, res, next) {
+  try {
+    const investmentData = res.locals.investmentData
+
+    const createdOn = get(res.locals.investmentData, 'created_on')
+    res.locals.options = await getFormOptions(req.session.token, createdOn)
+
+    res.locals.requirementsForm = assign({},
+      buildFormWithStateAndErrors(requirementsFormConfig(res.locals.options), investmentData),
+      { returnLink: `/investment-projects/${investmentData.id}` },
+    )
+  } catch (error) {
+    return next(error)
+  }
 
   next()
 }
@@ -34,7 +51,7 @@ function handleFormPost (req, res, next) {
   })
 
   if (req.body.add_item) {
-    res.locals.requirementsForm = buildFormWithState(requirementsFormConfig, formattedBody)
+    res.locals.requirementsForm = buildFormWithState(requirementsFormConfig(res.locals.options), formattedBody)
     return next()
   }
 
@@ -42,7 +59,7 @@ function handleFormPost (req, res, next) {
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig, formattedBody, err.error)
+        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig(res.locals.options), formattedBody, err.error)
 
         next()
       } else {

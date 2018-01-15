@@ -10,7 +10,7 @@ Feature: View collection of companies
 
     When a "Foreign company" is created
     Then I see the success message
-    When I navigate to the Companies collection page
+    When I navigate to the Company collection page
     Then I confirm I am on the Companies page
     And the results count header for companies is present
     And there is an Add company button in the collection header
@@ -23,12 +23,26 @@ Feature: View collection of companies
       | Country            | company.country           |
       | UK region          | company.ukRegion          |
 
+  @companies-collection--view--lep @lep
+  Scenario: View companies collection as LEP
+
+    When I navigate to the Company collection page
+    Then I confirm I am on the Companies page
+    And the results count header for companies is present
+
+  @companies-collection--view--da @da
+  Scenario: View companies collection as DA
+
+    When I navigate to the Company collection page
+    Then I confirm I am on the Companies page
+    And the results count header for companies is present
+
   @companies-collection--filter
   Scenario: Filter companies list
 
     When a "UK non-private or non-public limited company" is created
     Then I see the success message
-    When I navigate to the Companies collection page
+    When I navigate to the Company collection page
     And I filter the companies list by company
     Then the companies should be filtered by company name
     When the company filter is cleared
@@ -55,10 +69,11 @@ Feature: View collection of companies
 
     When a "Foreign company" is created
     Then I see the success message
-    When I navigate to the Companies collection page
+    When I navigate to the Company collection page
     And the companies are sorted by Recently updated
+    Then the companies should be sorted by Recently updated
     And the companies are sorted by Least recently updated
-    Then the companies should have been correctly sorted by updated date
+    Then the companies should be sorted by Least recently updated
     When the companies are sorted by Company name: A-Z
     And the companies are sorted by Company name: Z-A
     Then the companies should have been correctly sorted for text fields

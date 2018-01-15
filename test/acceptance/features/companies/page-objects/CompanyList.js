@@ -1,7 +1,7 @@
 const {
   getSelectorForElementWithText,
   getButtonWithText,
-  getMetaListItemValueSelector,
+  getListItemMetaElementWithText,
 } = require('../../../helpers/selectors')
 
 const getBadgeWithText = (text) => getSelectorForElementWithText(
@@ -12,6 +12,8 @@ const getBadgeWithText = (text) => getSelectorForElementWithText(
     child: '/following-sibling::span',
   },
 )
+const getFirstListItemMetaElementWithText = (text) => getListItemMetaElementWithText(text)
+const getSecondListItemMetaElementWithText = (text) => getListItemMetaElementWithText(text, 2)
 
 module.exports = {
   url: `${process.env.QA_HOST}/companies`,
@@ -27,7 +29,20 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
-        companySector: getMetaListItemValueSelector('Sector'),
+        companySector: getFirstListItemMetaElementWithText('Sector'),
+        updated: getFirstListItemMetaElementWithText('Updated'),
+        countryBadge: getBadgeWithText('Country'),
+        ukRegionBadge: getBadgeWithText('UK region'),
+      },
+    },
+    secondCompanyInList: {
+      selector: '.c-entity-list li:nth-child(2)',
+      elements: {
+        header: {
+          selector: '.c-entity__header a',
+        },
+        companySector: getSecondListItemMetaElementWithText('Sector'),
+        updated: getSecondListItemMetaElementWithText('Updated'),
         countryBadge: getBadgeWithText('Country'),
         ukRegionBadge: getBadgeWithText('UK region'),
       },

@@ -23,6 +23,7 @@ module.exports = {
     globalHeader: {
       selector: '.global-header',
       elements: {
+        serviceName: '.global-header__service-name',
         support: getGlobalHeaderAnchorWithText('Support'),
       },
     },
@@ -39,4 +40,17 @@ module.exports = {
       },
     },
   },
+  commands: [
+    {
+      getGlobalNavItemSelector (text) {
+        return getSelectorForElementWithText(
+          text,
+          {
+            el: '//a',
+            className: 'c-global-nav__link',
+          },
+        )
+      },
+    },
+  ],
 }

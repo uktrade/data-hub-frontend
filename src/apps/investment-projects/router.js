@@ -1,8 +1,8 @@
 const router = require('express').Router()
 
-const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS } = require('./constants')
 
-const { setLocalNav, setDefaultQuery, redirectToFirstNavItem } = require('../middleware')
+const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
 const {
   getBriefInvestmentSummary,
@@ -28,7 +28,6 @@ const {
   projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
-  teamMembersFormMiddleware,
 } = require('./middleware/forms')
 
 const { renderInvestmentList } = require('./controllers/list')
@@ -36,6 +35,9 @@ const { renderInteractionList } = require('./controllers/interactions')
 
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+
+const { renderTeamEdit } = require('./controllers/team/edit-team-members')
+const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
 
 const {
   renderStatusPage,
@@ -57,6 +59,8 @@ const {
 } = require('./controllers/associated')
 
 const interactionsRouter = require('../interactions/router.sub-app')
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.use('/:investmentId', setLocalNav(LOCAL_NAV))
 
@@ -155,16 +159,8 @@ router
 
 router
   .route('/:investmentId/edit-team-members')
-  .get(
-    teamMembersFormMiddleware.populateForm,
-    team.editTeamMembers.getHandler
-  )
-  .post(
-    teamMembersFormMiddleware.populateForm,
-    teamMembersFormMiddleware.handleFormPost,
-    team.editTeamMembers.postHandler,
-    team.editTeamMembers.getHandler
-  )
+  .get(populateTeamEditForm, renderTeamEdit)
+  .post(postTeamEdit, renderTeamEdit)
 
 router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderInteractionList)
 

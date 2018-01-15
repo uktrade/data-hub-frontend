@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { assign } = require('lodash')
+const { assign, set } = require('lodash')
 
 const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
@@ -26,17 +26,20 @@ defineSupportCode(({ When }) => {
 
   When(/^I change start date to decrease year by one$/, async function () {
     const currentDate = new Date()
+    const form = {}
 
-    await Form.getState()
+    await Form.getState((result) => {
+      set(form, 'state', result.value)
+    })
 
     await Event
       .api.perform(() => {
-        const start_date_year = Form.state.start_date_year || format(currentDate, 'YYYY')
+        const start_date_year = form.state.start_date_year || format(currentDate, 'YYYY')
 
         this.state = assign({}, this.state, {
           start_date_year: parseInt(start_date_year, 10) - 1,
-          start_date_month: Form.state.start_date_month || format(currentDate, 'MM'),
-          start_date_day: Form.state.start_date_day || format(currentDate, 'DD'),
+          start_date_month: form.state.start_date_month || format(currentDate, 'MM'),
+          start_date_day: form.state.start_date_day || format(currentDate, 'DD'),
         })
 
         return Event

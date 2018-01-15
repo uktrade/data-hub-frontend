@@ -23,6 +23,7 @@ module.exports = function transformCompanyToListItem ({
   registered_address_1,
   registered_address_2,
   companies_house_data,
+  modified_on,
 } = {}) {
   if (!id) { return }
 
@@ -64,6 +65,12 @@ module.exports = function transformCompanyToListItem ({
       value: get(trading_address_country, 'name') || get(registered_address_country, 'name'),
     })
   }
+
+  meta.push({
+    label: 'Updated',
+    type: 'datetime',
+    value: modified_on,
+  })
 
   if (uk_based) {
     meta.push({

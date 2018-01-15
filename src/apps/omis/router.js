@@ -1,6 +1,8 @@
 const router = require('express').Router()
 
-const { setHomeBreadcrumb, removeBreadcrumb } = require('../middleware')
+const { APP_PERMISSIONS } = require('./constants')
+
+const { setHomeBreadcrumb, removeBreadcrumb, handleRoutePermissions } = require('../middleware')
 const { setOrder, setOrderBreadcrumb } = require('./middleware')
 
 const viewApp = require('./apps/view')
@@ -8,6 +10,8 @@ const editApp = require('./apps/edit')
 const createApp = require('./apps/create')
 const listApp = require('./apps/list')
 const reconciliationApp = require('./apps/reconciliation')
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('orderId', setOrder)
 

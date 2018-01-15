@@ -10,21 +10,26 @@ defineSupportCode(({ When, Then }) => {
       .waitForElementPresent('@term')
   })
 
-  Then(/^there should be global nav links$/, async () => {
-    await Dashboard.section.globalNav
-      .assert.visible('@companies')
-      .assert.visible('@contacts')
-      .assert.visible('@events')
-      .assert.visible('@interactionsAndServices')
-      .assert.visible('@investmentProjects')
-      .assert.visible('@ordersOmis')
-      .assert.visible('@miDashboards')
+  Then(/^there should be a global nav$/, async (dataTable) => {
+    await Dashboard.section.globalHeader
+      .waitForElementPresent('@serviceName')
+
+    const expectedGlobalNav = dataTable.hashes()
+
+    await Dashboard.api.elements('css selector', '.c-global-nav__link', (result) => {
+      client.expect(result.value.length).to.equal(expectedGlobalNav.length)
+    })
+
+    for (const row of expectedGlobalNav) {
+      const globalNavItemSelector = Dashboard.getGlobalNavItemSelector(row.text)
+      await Dashboard
+        .api.useXpath()
+        .waitForElementPresent(globalNavItemSelector.selector)
+        .assert.visible(globalNavItemSelector.selector)
+        .useCss()
+    }
   })
 
-  // TODO make sure support can be accessed form different pages
-  // TODO make sure support form works
-  // TODO potentially send test support request, if we can somehow test it has been received?
-  // TODO maybe even split support out into its own thing
   Then(/^I navigate to the support page$/, async () => {
     await Dashboard.section.globalHeader
       .assert.visible('@support')

@@ -20,11 +20,13 @@ function renderContactList (req, res) {
     return true
   })
 
-  res.render('contacts/views/list', {
-    title: 'Contacts',
+  res.render('collection', {
     sortForm,
-    filtersFields: visibleFiltersFields,
     selectedFilters,
+    title: 'Contacts',
+    countLabel: 'contact',
+    highlightTerm: get(selectedFilters, 'name.valueLabel'),
+    filtersFields: visibleFiltersFields,
   })
 }
 

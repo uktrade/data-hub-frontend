@@ -89,7 +89,6 @@ module.exports = {
             callback(assign({}, contact, {
               acceptsEmailMarketingFromDit: 'Yes',
               primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
-              address: getAddress(contact),
               uniqueSearchTerm: getUid(contact.lastName),
             }))
           })

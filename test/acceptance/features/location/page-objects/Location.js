@@ -12,6 +12,19 @@ module.exports = {
   sections: {
     localHeader: {
       selector: '.c-local-header',
+      commands: [
+        {
+          getHeaderMetaValueSelector (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//span',
+                className: 'c-meta-list__item-label',
+                child: '/following-sibling::span',
+              }
+            )
+          },
+        },
+      ],
       elements: {
         header: '.c-local-header__heading',
         headerLink: '.c-local-header__heading-before a',
@@ -57,4 +70,11 @@ module.exports = {
       ],
     },
   },
+  commands: [
+    {
+      getHeading (el, text) {
+        return getSelectorForElementWithText(text, { el })
+      },
+    },
+  ],
 }

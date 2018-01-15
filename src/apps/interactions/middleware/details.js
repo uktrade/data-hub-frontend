@@ -3,12 +3,13 @@ const { sentence } = require('case')
 
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
-const metaDataRepository = require('../../../lib/metadata')
 const { getContactsForCompany, getContact } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
 const { getDitCompany } = require('../../companies/repos')
+const { transformObjectToOption, transformContactToOption } = require('../../transformers')
+const { getOptions } = require('../../../lib/options')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -66,20 +67,30 @@ async function getInteractionDetails (req, res, next, interactionId) {
 
 async function getInteractionOptions (req, res, next) {
   try {
-    const interaction = res.locals.interaction
     const token = req.session.token
-    const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
-    const company = get(res.locals, 'company.id')
-    const advisers = await getAdvisers(token)
+    const createdOn = get(res.locals, 'interaction.created_on')
 
-    res.locals = assign({}, res.locals, {
-      advisers: filterActiveAdvisers({ advisers: advisers.results, includeAdviser: currentAdviser }),
-      contacts: await getContactsForCompany(token, company),
-      services: await metaDataRepository.getServices(token),
+    const companyId = get(res.locals, 'company.id')
+    const contacts = await getContactsForCompany(token, companyId)
+
+    const advisers = await getAdvisers(token)
+    const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+    const activeAdvisers = filterActiveAdvisers({
+      advisers: advisers.results,
+      includeAdviser: currentAdviser,
     })
 
+    res.locals.options = {
+      advisers: activeAdvisers.map(transformObjectToOption),
+      contacts: contacts.map(transformContactToOption),
+      services: await getOptions(token, 'service', { createdOn }),
+      teams: await getOptions(token, 'team', { createdOn }),
+      channels: await getOptions(token, 'communication-channel', { createdOn }),
+    }
+
     if (req.params.kind === 'service-delivery') {
-      res.locals.events = await getActiveEvents(token, get(interaction, 'created_on'))
+      const activeEvents = await getActiveEvents(token, createdOn)
+      res.locals.options.events = activeEvents.map(transformObjectToOption)
     }
 
     next()
