@@ -1,16 +1,15 @@
 const { assign, flatten, get, isEmpty } = require('lodash')
 
-const { transformToApi, transformFromApi } = require('../../services/formatting')
+const { transformToApi, transformFromApi } = require('../../transformers')
 const { isValidGuid } = require('../../../../lib/controller-utils')
-const metadata = require('../../../../lib/metadata')
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
+const { getOptions } = require('../../../../lib/options')
 const {
   buildMetaDataObj,
   transformObjectToOption,
   transformContactToOption,
 } = require('../../../transformers')
-const { filterDisabledOption } = require('../../../filters')
 const {
   createInvestmentProject,
   getEquityCompanyDetails,
@@ -28,25 +27,28 @@ async function populateForm (req, res, next) {
   try {
     const investmentData = transformFromApi(res.locals.investmentData)
     const createdOn = get(investmentData, 'created_on')
+    const token = req.session.token
 
     const {
       equityCompany,
       equityCompanyInvestment,
-    } = await getEquityCompanyDetails(req.session.token, equityCompanyId)
+    } = await getEquityCompanyDetails(token, equityCompanyId)
 
     const contacts = get(equityCompany, 'contacts', []).map(transformContactToOption)
 
-    const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption).filter((investmentType) => {
-      return equityCompany.uk_based || investmentType.label.toLowerCase().includes('fdi')
+    const activeInvestmentTypes = await getOptions(token, 'investment-type', { createdOn })
+    const investmentTypes = activeInvestmentTypes.filter((investmentType) => {
+      return get(equityCompany, 'uk_based') || investmentType.label.toLowerCase().includes('fdi')
     })
-    const referralSourceActivities = metadata.referralSourceActivityOptions.map(transformObjectToOption)
+
+    const referralSourceActivities = await getOptions(token, 'referral-source-activity', { createdOn })
 
     const state = assign({}, {
       client_contacts: [''],
       business_activities: [''],
     }, investmentData)
 
-    const advisersResponse = await getAdvisers(req.session.token)
+    const advisersResponse = await getAdvisers(token)
 
     const clientRelationshipManagers = filterActiveAdvisers({
       advisers: advisersResponse.results,
@@ -71,30 +73,15 @@ async function populateForm (req, res, next) {
         investmentTypes,
         referralSourceActivities,
         investmentTypesObj: buildMetaDataObj(investmentTypes),
-        fdi: metadata.fdiOptions.map(transformObjectToOption),
+        fdi: await getOptions(token, 'fdi-type', { createdOn }),
         referralSourceActivitiesObj: buildMetaDataObj(referralSourceActivities),
-        referralSourceMarketing: metadata.referralSourceMarketingOptions.map(transformObjectToOption),
-        referralSourceWebsite: metadata.referralSourceWebsiteOptions.map(transformObjectToOption),
-        primarySectors: metadata.sectorOptions.map(transformObjectToOption),
-        businessActivities: metadata.businessActivityOptions.map(transformObjectToOption),
-        investmentSpecificProgramme: metadata.investmentSpecificProgrammeOptions
-          .filter(filterDisabledOption({
-            createdOn,
-            currentValue: state.specific_programme,
-          }))
-          .map(transformObjectToOption),
-        investmentInvestorType: metadata.investmentInvestorTypeOptions
-          .filter(filterDisabledOption({
-            createdOn,
-            currentValue: state.investor_type,
-          }))
-          .map(transformObjectToOption),
-        investmentInvolvement: metadata.investmentInvolvementOptions
-          .filter(filterDisabledOption({
-            createdOn,
-            currentValue: state.level_of_involvement,
-          }))
-          .map(transformObjectToOption),
+        referralSourceMarketing: await getOptions(token, 'referral-source-marketing', { createdOn }),
+        referralSourceWebsite: await getOptions(token, 'referral-source-website', { createdOn }),
+        primarySectors: await getOptions(token, 'sector', { createdOn }),
+        businessActivities: await getOptions(token, 'investment-business-activity', { createdOn }),
+        investmentSpecificProgramme: await getOptions(token, 'investment-specific-programme', { createdOn }),
+        investmentInvestorType: await getOptions(token, 'investment-investor-type', { createdOn }),
+        investmentInvolvement: await getOptions(token, 'investment-involvement', { createdOn }),
       },
     })
 
@@ -117,6 +104,7 @@ async function populateForm (req, res, next) {
 
     next()
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

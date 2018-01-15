@@ -1,17 +1,45 @@
 @dashboard
-Feature: Search
-  As an existing user
-  I would like to search the data hub
-  So search for entities
-
-  @dashboard--global-nav
-  Scenario: Display global nav
-
-    When I navigate to the dashboard
-    Then there should be global nav links
+Feature: Dashboard
 
   @dashboard--support-page
   Scenario: Navigate to the support page
 
     When I navigate to the dashboard
     Then I navigate to the support page
+
+  @dashboard--global-nav
+  Scenario: Display global nav
+
+    When I navigate to the dashboard
+    Then there should be a global nav
+      | text                      |
+      | Companies                 |
+      | Contacts                  |
+      | Events                    |
+      | Interactions and services |
+      | Investment projects       |
+      | Orders (OMIS)             |
+      | MI dashboards             |
+
+  @dashboard--global-nav-lep @lep
+  Scenario: Display global nav for LEP user
+
+    When I navigate to the dashboard
+    Then there should be a global nav
+      | text                      |
+      | Companies                 |
+      | Contacts                  |
+      | Investment projects       |
+      | MI dashboards             |
+
+  @dashboard--global-nav-da @da
+  Scenario: Display global nav for DA user
+
+    When I navigate to the dashboard
+    Then there should be a global nav
+      | text                      |
+      | Companies                 |
+      | Contacts                  |
+      | Investment projects       |
+      | Orders (OMIS)             |
+      | MI dashboards             |

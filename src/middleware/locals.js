@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { GLOBAL_NAV_ITEMS } = require('../apps/constants')
+const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
 const config = require('../../config')
 const { filterNonPermittedItem } = require('../apps/filters')

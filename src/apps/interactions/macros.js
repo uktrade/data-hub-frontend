@@ -1,9 +1,6 @@
 const { assign } = require('lodash')
 
 const formLabels = require('./labels')
-const metaData = require('../../lib/metadata')
-const { transformContactToOption, transformObjectToOption } = require('../transformers')
-
 const currentYear = (new Date()).getFullYear()
 
 const interactionSortForm = {
@@ -66,27 +63,23 @@ const interactionFields = {
       macroName: 'MultipleChoiceField',
       name: 'contact',
       initialOption: '-- Select contact --',
-      options () {
-        return contacts.map(transformContactToOption)
-      },
+      options: contacts,
     }
   },
-  provider: {
-    macroName: 'MultipleChoiceField',
-    name: 'dit_team',
-    initialOption: '-- Select provider --',
-    options () {
-      return metaData.teams.map(transformObjectToOption)
-    },
+  provider (teams) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'dit_team',
+      initialOption: '-- Select provider --',
+      options: teams,
+    }
   },
   service (services) {
     return {
       macroName: 'MultipleChoiceField',
       name: 'service',
       initialOption: '-- Select service --',
-      options () {
-        return services.map(transformObjectToOption)
-      },
+      options: services,
     }
   },
   subject: {
@@ -107,22 +100,20 @@ const interactionFields = {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       initialOption: '-- Select adviser --',
-      options () {
-        return advisers.map(transformContactToOption)
-      },
+      options: advisers,
     }
   },
-  communicationChannel: {
-    macroName: 'MultipleChoiceField',
-    name: 'communication_channel',
-    initialOption: '-- Select communication channel --',
-    options () {
-      return metaData.communicationChannelOptions.map(transformObjectToOption)
-    },
+  communicationChannel (channels) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'communication_channel',
+      initialOption: '-- Select communication channel --',
+      options: channels,
+    }
   },
 }
 
-const interactionFiltersFieldConfig = function (advisers) {
+const interactionFiltersFieldConfig = function (advisers = [], channels = [], teams = []) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -135,7 +126,7 @@ const interactionFiltersFieldConfig = function (advisers) {
     },
     assign(
       {},
-      interactionFields.communicationChannel,
+      interactionFields.communicationChannel(channels),
       { initialOption: '-- All channels --' }
     ),
     assign(
@@ -155,6 +146,11 @@ const interactionFiltersFieldConfig = function (advisers) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
+    assign(
+      {},
+      interactionFields.provider(teams),
+      { initialOption: '-- All providers --' }
+    ),
   ].map(filter => {
     return assign(filter, {
       label: formLabels.filters[filter.name],
@@ -168,6 +164,8 @@ const interactionFormConfig = function ({
   contacts = [],
   advisers = [],
   services = [],
+  teams = [],
+  channels = [],
   hiddenFields,
 }) {
   return {
@@ -177,13 +175,13 @@ const interactionFormConfig = function ({
     hiddenFields,
     children: [
       interactionFields.contact(contacts),
-      interactionFields.provider,
+      interactionFields.provider(teams),
       interactionFields.service(services),
       interactionFields.subject,
       interactionFields.notes,
       interactionFields.date,
       interactionFields.adviser(advisers),
-      interactionFields.communicationChannel,
+      interactionFields.communicationChannel(channels),
     ].map(field => {
       return assign(field, {
         label: formLabels.interaction[field.name],
@@ -197,6 +195,7 @@ const serviceDeliveryFormConfig = function ({
   contacts = [],
   advisers = [],
   services = [],
+  teams = [],
   events = [],
   hiddenFields,
 }) {
@@ -207,7 +206,7 @@ const serviceDeliveryFormConfig = function ({
     hiddenFields,
     children: [
       interactionFields.contact(contacts),
-      interactionFields.provider,
+      interactionFields.provider(teams),
       interactionFields.adviser(advisers),
       // TODO this will be going once interactions are within events
       {
@@ -231,9 +230,7 @@ const serviceDeliveryFormConfig = function ({
         macroName: 'MultipleChoiceField',
         name: 'event',
         initialOption: '-- Select event --',
-        options () {
-          return events.map(transformObjectToOption)
-        },
+        options: events,
         modifier: 'subfield',
         condition: {
           name: 'is_event',

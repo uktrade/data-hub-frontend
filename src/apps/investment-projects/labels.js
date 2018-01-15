@@ -92,7 +92,7 @@ const labels = {
       uk_company: 'UK company',
       company_number: 'Companies House Number',
       registered_address: 'Registered Address',
-      investment_land_date: 'Land date',
+      actual_land_date: 'Actual land date',
     },
   },
   projectManagementLabels: {
@@ -142,7 +142,7 @@ const labels = {
     stage: 'Stage',
     investment_type: 'Investment type',
     investor_company: 'Investor',
-    estimated_land_date: 'Land date',
+    estimated_land_date: 'Estimated land date',
     sector: 'Sector',
   },
 }

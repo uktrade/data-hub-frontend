@@ -30,6 +30,7 @@ const filters = {
   dit_adviser: 'Adviser',
   date_after: 'From',
   date_before: 'To',
+  dit_team: 'Service provider',
 }
 
 module.exports = {

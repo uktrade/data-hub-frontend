@@ -1,3 +1,12 @@
+const GLOBAL_NAV_ITEM = {
+  path: '/omis',
+  label: 'Orders (OMIS)',
+  permissions: [
+    'order.read_order',
+  ],
+  order: 6,
+}
+
 const ORDER_STATES = [
   {
     value: 'draft',
@@ -25,6 +34,10 @@ const ORDER_STATES = [
   },
 ]
 
+const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
+
 module.exports = {
+  GLOBAL_NAV_ITEM,
   ORDER_STATES,
+  APP_PERMISSIONS,
 }

@@ -41,7 +41,7 @@
       {% endset %}
 
       {% set expiryValue %}
-        {{ quote.expires_on | formatDate }} ({{ quote.expires_on | fromNow }})
+        {{ quote.expires_on | formatDateTime }} ({{ quote.expires_on | fromNow }})
       {% endset %}
 
       {% if order.status in ['draft', 'quote_awaiting_acceptance'] %}

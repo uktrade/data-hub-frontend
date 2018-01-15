@@ -1,7 +1,8 @@
-/* eslint camelcase: 0 */
-const { get, isArray, assign, compact, pickBy } = require('lodash')
+/* eslint-disable camelcase */
+const { assign, compact, get, isArray, pickBy } = require('lodash')
 const queryString = require('query-string')
-const labels = require('./labels')
+
+const labels = require('../labels')
 
 function transformInvestmentProjectToListItem ({
   id,

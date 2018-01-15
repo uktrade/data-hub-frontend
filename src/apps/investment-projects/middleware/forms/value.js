@@ -1,20 +1,28 @@
-const { get } = require('lodash')
+const { assign, get, merge } = require('lodash')
 
-const metadataRepo = require('../../../../lib/metadata')
 const { updateInvestment } = require('../../repos')
 const { valueLabels } = require('../../labels')
-const { transformObjectToOption } = require('../../../transformers')
+const { getOptions } = require('../../../../lib/options')
 
-function populateForm (req, res, next) {
-  res.locals.form = get(res, 'locals.form', {})
-  res.locals.form.labels = valueLabels.edit
-  res.locals.form.state = Object.assign({}, res.locals.investmentData, {
-    average_salary: get(res.locals.investmentData, 'average_salary.id'),
-  })
-  res.locals.form.options = {
-    averageSalaryRange: metadataRepo.salaryRangeOptions.map(transformObjectToOption),
-    fdiValue: metadataRepo.fdiValueOptions.map(transformObjectToOption),
+async function populateForm (req, res, next) {
+  const token = req.session.token
+  const investmentData = get(res, 'locals.investmentData', {})
+  const createdOn = investmentData.created_on
+
+  const form = get(res, 'locals.form')
+  const defaults = {
+    labels: valueLabels.edit,
+    state: assign({}, investmentData, {
+      average_salary: get(investmentData, 'average_salary.id'),
+    }),
+    options: {
+      averageSalaryRange: await getOptions(token, 'salary-range', { createdOn }),
+      fdiValue: await getOptions(token, 'fdi-value', { createdOn }),
+    },
   }
+
+  const combined = merge({}, defaults, form)
+  res.locals.form = combined
 
   next()
 }
@@ -22,7 +30,7 @@ function populateForm (req, res, next) {
 function handleFormPost (req, res, next) {
   res.locals.projectId = req.params.investmentId
 
-  const formattedBody = Object.assign({}, req.body, {
+  const formattedBody = assign({}, req.body, {
     average_salary: {
       id: req.body.average_salary,
     },
@@ -34,7 +42,7 @@ function handleFormPost (req, res, next) {
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {
-        res.locals.form = Object.assign(
+        res.locals.form = assign(
           {},
           get(res, 'locals.form', {}),
           {

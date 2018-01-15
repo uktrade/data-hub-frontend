@@ -10,7 +10,7 @@
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
   {{
-    Collection(interactions | assignCopy({
+    Collection(results | assignCopy({
       countLabel: 'interaction',
       summaryActionsHTML: addButton,
       sortForm: assign({}, sortForm, {action: CURRENT_PATH}),

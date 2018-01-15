@@ -10,9 +10,7 @@ function World () {
   this.urls = urls
   this.fixtures = fixtures
   this.resetState = function () {
-    this.state = {
-      username: 'Circle Ci',
-    }
+    this.state = {}
   }
   this.resetState()
 }
