@@ -48,6 +48,9 @@ defineSupportCode(({ Given, Then, When }) => {
       .assert.visible('@referralSourceNo')
       .assert.visible('@estimatedLandDateYear')
       .assert.visible('@estimatedLandDateMonth')
+      .assert.visible('@actualLandDateYear')
+      .assert.visible('@actualLandDateMonth')
+      .assert.visible('@actualLandDateDay')
       .assert.visible('@investorType')
       .assert.visible('@levelOfInvolvement')
       .assert.visible('@specificInvestmentProgramme')
@@ -63,6 +66,13 @@ defineSupportCode(({ Given, Then, When }) => {
           month: this.state.investmentProject.estimatedLandDateMonth,
           day: 1,
         }, 'MMMM YYYY'))
+
+        set(this.state, 'investmentProject.actualLandDate', getDateFor({
+          year: this.state.investmentProject.actualLandDateYear,
+          month: this.state.investmentProject.actualLandDateMonth,
+          day: this.state.investmentProject.actualLandDateDay,
+        }))
+
         const { businessActivity, otherBusinessActivity } = this.state.investmentProject
         set(this.state, 'investmentProject.businessActivities', `${businessActivity}, ${otherBusinessActivity}`)
       })

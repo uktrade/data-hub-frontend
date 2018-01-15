@@ -38,6 +38,7 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
+      | Actual land date              | investmentProject.actualLandDate               |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
@@ -77,6 +78,7 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
+      | Actual land date              | investmentProject.actualLandDate               |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
@@ -115,6 +117,7 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
+      | Actual land date              | investmentProject.actualLandDate               |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
