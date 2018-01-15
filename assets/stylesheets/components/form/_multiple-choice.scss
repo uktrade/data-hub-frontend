@@ -151,21 +151,21 @@
   }
 
   .c-multiple-choice__input {
-    left: 8px;
-    top: 8px;
+    left: $default-spacing-unit / 2;
+    top: $default-spacing-unit / 2;
 
     + .c-multiple-choice__label {
       &:after,
       &:before {
-        margin-left: 8px;
-        margin-top: 8px;
+        margin-left: $default-spacing-unit / 2;
+        margin-top: $default-spacing-unit / 2;
       }
     }
   }
 
   .c-multiple-choice__label {
     display: block;
-    padding-left: round($default-spacing-unit * 3 * (10 / 19) + 8);
+    padding-left: round($default-spacing-unit * 3 * (10 / 19) + ($default-spacing-unit / 2));
 
     &:hover {
       background-color: $grey-4;
