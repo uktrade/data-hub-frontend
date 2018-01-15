@@ -4,6 +4,7 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 const {
   transformBriefInvestmentSummary,
   transformInvestmentDataForView,
+  transformToApi,
 } = require('~/src/apps/investment-projects/transformers/project')
 
 describe('Investment project transformers', () => {
@@ -667,6 +668,47 @@ describe('Investment project transformers', () => {
 
       it('should set the estimated land date as null', () => {
         expect(this.result).to.have.property('estimated_land_date', null)
+      })
+    })
+  })
+
+  describe('#transformToApi', () => {
+    context('when called with an actual land date', () => {
+      beforeEach(() => {
+        this.result = transformToApi({
+          actual_land_date_day: '1',
+          actual_land_date_month: '10',
+          actual_land_date_year: '2016',
+        })
+      })
+
+      it('should convert the field values into a date value', () => {
+        expect(this.result).to.have.property('actual_land_date', '2016-10-1')
+      })
+    })
+
+    context('when called with a partial actual land date', () => {
+      beforeEach(() => {
+        this.result = transformToApi({
+          actual_land_date_day: '1',
+          actual_land_date_year: '2016',
+        })
+      })
+
+      it('should return a malformed date which will be picked up by the API validator', () => {
+        expect(this.result).to.have.property('actual_land_date', '2016--1')
+      })
+    })
+
+    context('when called with no actual land date', () => {
+      beforeEach(() => {
+        this.result = transformToApi({
+          name: 'fred',
+        })
+      })
+
+      it('should set the actual land date value to null', () => {
+        expect(this.result).to.have.property('actual_land_date', null)
       })
     })
   })
