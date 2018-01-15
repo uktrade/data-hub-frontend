@@ -1,6 +1,7 @@
 const { getYear, addYears } = require('date-fns')
 const { set, lowerCase, forEach } = require('lodash')
 const faker = require('faker')
+const { getDaysInMonth } = require('date-fns')
 
 const {
   getButtonWithText,
@@ -79,7 +80,15 @@ module.exports = {
         const nextYear = getYear(addYears(Date.now(), 1))
         const projectForm = this.section.projectForm
         const promises = []
+
+        const actualLandDateYear = faker.random.number({ min: nextYear, max: nextYear + 40 })
+        const actualLandDateMonth = faker.random.number({ min: 1, max: 12 })
+        const actualLandDateDay = faker.random.number({ min: 1, max: getDaysInMonth(new Date(actualLandDateYear, (actualLandDateMonth - 1))) })
+
         const project = {
+          actualLandDateYear,
+          actualLandDateMonth,
+          actualLandDateDay,
           name: faker.company.companyName(),
           description: faker.lorem.sentence(),
           anonymousDescription: faker.lorem.sentence(),
@@ -218,6 +227,9 @@ module.exports = {
         referralSourceActivityWebsite: '#field-referral_source_activity_website',
         estimatedLandDateYear: '#field-estimated_land_date_year',
         estimatedLandDateMonth: '#field-estimated_land_date_month',
+        actualLandDateYear: '#field-actual_land_date_year',
+        actualLandDateMonth: '#field-actual_land_date_month',
+        actualLandDateDay: '#field-actual_land_date_day',
         investorType: '#field-investor_type',
         levelOfInvolvement: '#field-level_of_involvement',
         specificInvestmentProgramme: '#field-specific_programme',
@@ -254,6 +266,7 @@ module.exports = {
             projectDescription: getDetailsTableRowValue('Project description'),
             anonDescription: getDetailsTableRowValue('Anonymised description'),
             estimatedLandDate: getDetailsTableRowValue('Estimated land date'),
+            actualLandDate: getDetailsTableRowValue('Actual land date'),
             newOrExistingInvestor: getDetailsTableRowValue('New or existing investor'),
             levelOfInvolvement: getDetailsTableRowValue('Level of involvement'),
             specificInvestmentProgramme: getDetailsTableRowValue('Specific investment programme'),
