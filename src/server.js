@@ -12,6 +12,7 @@ const churchill = require('churchill')
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
+const minifyHTML = require('express-minify-html')
 const i18n = require('i18n-future').middleware()
 
 const title = require('./middleware/title')
@@ -69,6 +70,20 @@ app.use(i18n)
 
 app.set('view engine', 'njk')
 nunjucks(app, config)
+
+app.use(minifyHTML({
+  override: true,
+  exception_url: false,
+  htmlMinifier: {
+    removeComments: true,
+    collapseInlineTagWhitespace: false,
+    collapseWhitespace: true,
+    collapseBooleanAttributes: true,
+    removeAttributeQuotes: true,
+    removeEmptyAttributes: true,
+    minifyJS: true,
+  },
+}))
 
 // Static files
 app.use(favicon(path.join(config.root, 'public/images', 'favicon.ico')))
