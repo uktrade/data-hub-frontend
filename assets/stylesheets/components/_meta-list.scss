@@ -9,7 +9,7 @@
   display: inline-block;
 
   & + & {
-    margin-left: $baseline-grid-unit;
+    margin-left: $default-spacing-unit / 2;
   }
 }
 

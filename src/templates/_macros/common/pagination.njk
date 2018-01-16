@@ -26,29 +26,29 @@
       class="c-pagination {{ 'c-pagination--pageless' if not showPages }}"
       aria-label="pagination: total {{ pagination.totalPages }} pages"
     >
-      {% if pagination.prev %}
+      {% if pagination.prev -%}
         <a href="{{ pagination.prev }}" class="c-pagination__label c-pagination__label--prev">Previous</a>
-      {% endif %}
-      {% if showPages %}
+      {%- endif %}
+      {% if showPages -%}
         <ul class="c-pagination__list">
-          {% for page in pagination.pages %}
+          {% for page in pagination.pages -%}
             <li class="c-pagination__list-item">
-              {% if page.url %}
+              {% if page.url -%}
                 <a href="{{ page.url }}" class="c-pagination__label {{ 'is-current' if page.label == pagination.currentPage }}">
-                  {{ page.label }}
+                  {{- page.label -}}
                 </a>
-              {% else %}
+              {% else -%}
                 <span class="c-pagination__label c-pagination__label--truncation">
-                  {{ page.label }}
+                  {{- page.label -}}
                 </span>
-              {% endif %}
+              {%- endif %}
             </li>
-          {% endfor %}
+          {%- endfor %}
         </ul>
-      {% endif %}
-      {% if pagination.next %}
+      {%- endif %}
+      {% if pagination.next -%}
         <a href="{{ pagination.next }}" class="c-pagination__label c-pagination__label--next">Next</a>
-      {% endif %}
+      {%- endif %}
     </nav>
   {% endif %}
 {% endmacro %}
