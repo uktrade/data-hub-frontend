@@ -1,4 +1,4 @@
-const { assign, flatten, get } = require('lodash')
+const { assign, castArray, compact, get } = require('lodash')
 
 const { updateInvestment } = require('../../repos')
 const { requirementsFormConfig } = require('../../macros')
@@ -11,6 +11,15 @@ async function getFormOptions (token, createdOn) {
     countries: await getOptions(token, 'country', { createdOn }),
     ukRegions: await getOptions(token, 'uk-region', { createdOn }),
   }
+}
+
+function formatBody (body) {
+  return assign({}, body, {
+    strategic_drivers: compact(castArray(body.strategic_drivers)),
+    competitor_countries: body.client_considering_other_countries === 'true' ? compact(castArray(body.competitor_countries)) : [],
+    uk_region_locations: compact(castArray(body.uk_region_locations)),
+    actual_uk_regions: body.site_decided === 'true' ? compact(castArray(body.actual_uk_regions)) : [],
+  })
 }
 
 async function populateForm (req, res, next) {
@@ -32,25 +41,12 @@ async function populateForm (req, res, next) {
   next()
 }
 
-// Strips out empty entries so they are not posted (which result in errors)
-// and when an error is thrown it doesn't mean yet another is added
-function cleanArray (values) {
-  return flatten([values])
-    .filter(item => item)
-}
-
 async function handleFormPost (req, res, next) {
   try {
     const investmentId = req.params.investmentId
 
-    res.locals.formattedBody = assign({}, req.body, {
-      strategic_drivers: cleanArray(req.body.strategic_drivers),
-      competitor_countries: req.body.client_considering_other_countries === 'true' ? cleanArray(req.body.competitor_countries) : [],
-      uk_region_locations: cleanArray(req.body.uk_region_locations),
-      actual_uk_regions: req.body.site_decided === 'true' ? cleanArray(req.body.actual_uk_regions) : [],
-    })
+    res.locals.formattedBody = formatBody(req.body)
 
-    // if called with the add item instruction, simply re-render the form and it will add extra fields as needed
     if (req.body.add_item) {
       return next()
     }
