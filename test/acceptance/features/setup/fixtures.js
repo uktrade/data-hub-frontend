@@ -84,11 +84,16 @@ module.exports = {
   investmentProject: {
     newHotelCommitmentToInvest: {
       pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+
       name: 'New hotel (commitment to invest)',
     },
     newRollercoaster: {
       pk: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
       name: 'New rollercoaster',
+    },
+    newHotelFdi: {
+      pk: '721e2a04-21c3-4172-a321-4368463a4b2d',
+      name: 'New hotel (FDI)',
     },
     newGolfCourse: {
       pk: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
