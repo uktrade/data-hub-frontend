@@ -1,41 +1,48 @@
 /* eslint-disable camelcase */
-const { assign, get, isPlainObject } = require('lodash')
+const { isPlainObject, map } = require('lodash')
 
-function transformUKCompany (data) {
-  if (isPlainObject(data.uk_company)) {
+function transformUKCompany (investmentId, ukCompany) {
+  if (!isPlainObject(ukCompany)) {
     return {
-      name: data.uk_company.name,
-      actions: [{
-        label: 'Edit company',
-        url: `/investment-projects/${data.id}/edit-ukcompany?term=${encodeURIComponent(data.uk_company.name)}`,
-      }, {
-        label: 'Remove company',
-        url: `/investment-projects/${data.id}/remove-ukcompany`
-        ,
-      }],
+      name: 'Find company',
+      url: `/investment-projects/${investmentId}/edit-ukcompany`,
     }
   }
 
+  const { name } = ukCompany
+
   return {
-    name: 'Find company',
-    url: `/investment-projects/${data.id}/edit-ukcompany`,
+    name,
+    actions: [
+      {
+        label: 'Edit company',
+        url: `/investment-projects/${investmentId}/edit-ukcompany?term=${encodeURIComponent(name)}`,
+      },
+      {
+        label: 'Remove company',
+        url: `/investment-projects/${investmentId}/remove-ukcompany`,
+      },
+    ],
   }
 }
 
-function transformInvestmentRequirementsForView (data) {
-  if (!isPlainObject(data)) { return }
-
-  const strategicDrivers = get(data, 'strategic_drivers', [])
-  const competitorCountries = get(data, 'competitor_countries', [])
-  const regionLocations = get(data, 'uk_region_locations', [])
-  const uk_company = transformUKCompany(data)
-
-  return assign({}, data, {
-    strategic_drivers: strategicDrivers.map(driver => driver.name).join(', '),
-    competitor_countries: competitorCountries.map(country => country.name).join(', '),
-    uk_region_locations: regionLocations.map(region => region.name).join(', '),
-    uk_company,
-  })
+function transformInvestmentRequirementsForView ({
+  actual_uk_regions,
+  client_requirements,
+  competitor_countries,
+  id,
+  strategic_drivers,
+  uk_company,
+  uk_region_locations,
+} = {}) {
+  return {
+    strategic_drivers: map(strategic_drivers, 'name').join(', '),
+    client_requirements,
+    competitor_countries: map(competitor_countries, 'name').join(', '),
+    uk_region_locations: map(uk_region_locations, 'name').join(', '),
+    actual_uk_regions: map(actual_uk_regions, 'name').join(', '),
+    uk_company: transformUKCompany(id, uk_company),
+  }
 }
 
 module.exports = { transformInvestmentRequirementsForView }
