@@ -47,6 +47,7 @@ async function handleFormPost (req, res, next) {
       strategic_drivers: cleanArray(req.body.strategic_drivers),
       competitor_countries: req.body.client_considering_other_countries === 'true' ? cleanArray(req.body.competitor_countries) : [],
       uk_region_locations: cleanArray(req.body.uk_region_locations),
+      actual_uk_regions: req.body.site_decided === 'true' ? cleanArray(req.body.actual_uk_regions) : [],
     })
 
     // if called with the add item instruction, simply re-render the form and it will add extra fields as needed
