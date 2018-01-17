@@ -63,6 +63,15 @@
         error: errors.name
       }) }}
 
+      {% if showCompanyNumber %}
+        {{ TextField({
+          name: 'company_number',
+          label: 'BR Companies House number',
+          value: formData.company_number,
+          error: errors.company_number
+        }) }}
+      {% endif %}
+
       {{ TextField({
         name: 'trading_name',
         label: 'Trading name',
