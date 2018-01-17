@@ -1,244 +1,356 @@
-const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
 const { assign } = require('lodash')
 
-describe('Company export controller', () => {
+const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
+const config = require('~/config')
+
+const metaDataMock = {
+  businessTypeOptions: [
+    {
+      id: '9dd14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Charity',
+    },
+    {
+      id: '9cd14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Government department',
+    },
+    {
+      id: '9bd14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Intermediary',
+    },
+    {
+      id: '8b6eaf7e-03e7-e611-bca1-e4115bead28a',
+      name: 'Limited partnership',
+    },
+    {
+      id: '9ad14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Partnership',
+    },
+    {
+      id: '6f75408b-03e7-e611-bca1-e4115bead28a',
+      name: 'Private limited company',
+    },
+    {
+      id: 'dac8c591-03e7-e611-bca1-e4115bead28a',
+      name: 'Public limited company',
+    },
+    {
+      id: '99d14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Sole Trader',
+    },
+    {
+      id: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98',
+      name: 'UK branch of foreign company (BR)',
+    },
+    {
+      id: '98d14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Company',
+    },
+  ],
+}
+
+describe('Company edit controller', () => {
   beforeEach(() => {
-    this.saveCompany = sandbox.stub()
     this.breadcrumbStub = sandbox.stub().returnsThis()
     this.renderSpy = sandbox.spy()
     this.nextSpy = sandbox.spy()
     this.redirectSpy = sandbox.spy()
 
-    const ukOtherCompanyOptions = [
-      {
-        value: '9dd14e94-5d95-e211-a939-e4115bead28a',
-        label: 'Charity',
+    this.controller = require('~/src/apps/companies/controllers/edit')
+
+    this.reqMock = {
+      session: {
+        token: 'abcd',
       },
-      {
-        value: '9cd14e94-5d95-e211-a939-e4115bead28a',
-        label: 'Government Dept',
+    }
+    this.resMock = {
+      breadcrumb: this.breadcrumbStub,
+      render: this.renderSpy,
+      redirect: this.redirectSpy,
+      locals: {
+        company: companyMock,
       },
-      {
-        value: '9bd14e94-5d95-e211-a939-e4115bead28a',
-        label: 'Intermediary',
-      },
-      {
-        value: '8b6eaf7e-03e7-e611-bca1-e4115bead28a',
-        label: 'Limited partnership',
-      },
-      { value: '9ad14e94-5d95-e211-a939-e4115bead28a',
-        label: 'Partnership',
-      },
-      {
-        value: '6f75408b-03e7-e611-bca1-e4115bead28a',
-        label: 'Private limited company',
-      },
-      {
-        value: 'dac8c591-03e7-e611-bca1-e4115bead28a',
-        label: 'Public limited company',
-      },
-      {
-        value: '99d14e94-5d95-e211-a939-e4115bead28a',
-        label: 'Sole Trader',
-      },
-    ]
-    const foreignOtherCompanyOptions = ukOtherCompanyOptions.concat([{
-      value: '98d14e94-5d95-e211-a939-e4115bead28a',
-      label: 'Company',
-    }])
-
-    this.controller = proxyquire('~/src/apps/companies/controllers/edit', {
-      '../options': {
-        buildUkOtherCompanyOptions: () => ukOtherCompanyOptions,
-        buildForeignOtherCompanyOptions: () => foreignOtherCompanyOptions,
-      },
-    })
-
-    this.buildReq = extra => assign({}, extra)
-    this.buildRes = extra => assign(
-      {
-        breadcrumb: this.breadcrumbStub,
-        render: this.renderSpy,
-        redirect: this.redirectSpy,
-        locals: {
-          company: companyMock,
-        },
-      },
-      extra
-    )
-
-    this.reqMock = this.buildReq({})
-    this.resMock = this.buildRes({})
-  })
-
-  describe('getBusinessTypeLabel()', () => {
-    it('should handle UK limited company', () => {
-      const label = this.controller.getBusinessTypeLabel('limited company', false, null)
-      expect(label).to.equal('UK limited company')
-    })
-
-    it('should handle UK charity', () => {
-      const uuid = '9dd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Charity')
-    })
-
-    it('should handle UK government department', () => {
-      const uuid = '9cd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Government Dept')
-    })
-
-    it('should handle UK Intermediary', () => {
-      const uuid = '9bd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Intermediary')
-    })
-
-    it('should handle UK Limited partnership', () => {
-      const uuid = '8b6eaf7e-03e7-e611-bca1-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Limited partnership')
-    })
-
-    it('should handle UK Partnership', () => {
-      const uuid = '9ad14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Partnership')
-    })
-
-    it('should handle UK Sole trader', () => {
-      const uuid = '99d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, false, uuid)
-      expect(label).to.equal('UK Sole Trader')
-    })
-
-    it('should handle Foreign charity', () => {
-      const uuid = '9dd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Charity')
-    })
-
-    it('should handle Foreign government department', () => {
-      const uuid = '9cd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Government Dept')
-    })
-
-    it('should handle Foreign Intermediary', () => {
-      const uuid = '9bd14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Intermediary')
-    })
-
-    it('should handle Foreign Limited partnership', () => {
-      const uuid = '8b6eaf7e-03e7-e611-bca1-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Limited partnership')
-    })
-
-    it('should handle Foreign Partnership', () => {
-      const uuid = '9ad14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Partnership')
-    })
-
-    it('should handle Foreign Sole trader', () => {
-      const uuid = '99d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Sole Trader')
-    })
-
-    it('should handle Foreign Company', () => {
-      const uuid = '98d14e94-5d95-e211-a939-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal('Foreign Company')
-    })
-
-    it('should handle unrecognised uuids', () => {
-      const uuid = '98d14e94-milk-eggs-beef-e4115bead28a'
-      const label = this.controller.getBusinessTypeLabel(undefined, true, uuid)
-      expect(label).to.equal(undefined)
-    })
+    }
   })
 
   describe('renderForm', () => {
-    it('should treat non-uk company as foreign', () => {
-      const reqMock = this.buildReq({ query: { country: 'non-uk' } })
-      const resMock = this.buildRes({
-        locals: {
-          formData: {},
-        },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
-      expect(this.renderSpy.args[0][1].isForeign).to.equal(true)
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get('/metadata/business-type/')
+        .twice().reply(200, metaDataMock.businessTypeOptions)
     })
 
-    it('should treat uk company based overseas as foreign', () => {
-      const reqMock = this.buildReq({ query: {} })
-      const resMock = this.buildRes({
-        locals: {
-          company: { 'uk_based': false },
-          formData: {
-            business_type: '9ad14e94-5d95-e211-a939-e4115bead28a',
+    context('when adding a UK branch of a foreign company', () => {
+      beforeEach(async () => {
+        const reqMock = assign(this.reqMock, {
+          query: {
+            country: 'uk',
           },
-        },
-        companiesHouseRecord: { country: 'fr' },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
-      expect(this.renderSpy.args[0][1].isForeign).to.equal(true)
-    })
-
-    it('should treat uk company based in the UK is domestic', () => {
-      const reqMock = this.buildReq({ query: {} })
-      const resMock = this.buildRes({
-        locals: {
-          company: { 'uk_based': true },
-          formData: {},
-        },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
-      expect(this.renderSpy.args[0][1].isForeign).to.equal(false)
-    })
-
-    it('should expose businessTypeLabel', () => {
-      const reqMock = this.buildReq({ query: {} })
-      const resMock = this.buildRes({
-        locals: {
-          companiesHouseCategory: 'limited company',
-          formData: {},
-        },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
-      expect(this.renderSpy.args[0][1].businessTypeLabel).to.equal('UK limited company')
-    })
-
-    it('should hide the trading address if there is\'t one', () => {
-      const reqMock = this.buildReq({ query: {} })
-      const resMock = this.buildRes({
-        locals: {
-          companiesHouseCategory: 'limited company',
-          formData: {},
-        },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
-
-      expect(this.renderSpy.args[0][1].showTradingAddress).to.eq(false)
-    })
-
-    it('should show the trading address if there is one', () => {
-      const reqMock = this.buildReq({ query: {} })
-      const resMock = this.buildRes({
-        locals: {
-          companiesHouseCategory: 'limited company',
-          formData: {
-            trading_address_1: 'test',
+        })
+        const resMock = assign(this.resMock, {
+          locals: {
+            formData: {
+              business_type: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98',
+            },
           },
-        },
-      })
-      this.controller.renderForm(reqMock, resMock, this.nextSpy)
+        })
 
-      expect(this.renderSpy.args[0][1].showTradingAddress).to.eq(true)
+        await this.controller.renderForm(reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+      })
+
+      it('should set the add breadcrumb', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+      })
+
+      it('should set heading', () => {
+        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add UK company')
+      })
+
+      it('should set isForeign', () => {
+        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+      })
+
+      it('should set businessTypeLabel', () => {
+        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('UK branch of foreign company (BR)')
+      })
+
+      it('should show the company number field', () => {
+        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.true
+      })
+
+      it('should not show the trading address fields', () => {
+        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when editing a UK branch of a foreign company', () => {
+      beforeEach(async () => {
+        const reqMock = assign(this.reqMock, {
+          query: {
+            country: 'uk',
+          },
+        })
+        const resMock = assign(this.resMock, {
+          locals: {
+            formData: {
+              business_type: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98',
+            },
+            company: {
+              id: 1,
+              name: 'Existing UK branch of foreign company',
+              uk_based: true,
+            },
+          },
+        })
+
+        await this.controller.renderForm(reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+      })
+
+      it('should set the company breadcrumb text', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Existing UK branch of foreign company')
+      })
+
+      it('should set the company breadcrumb link', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[1]).to.equal('/companies/1')
+      })
+
+      it('should set the edit breadcrumb', () => {
+        expect(this.resMock.breadcrumb.getCall(1).args[0]).to.equal('Edit')
+      })
+
+      it('should set heading', () => {
+        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Edit UK company')
+      })
+
+      it('should set isForeign', () => {
+        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+      })
+
+      it('should set businessTypeLabel', () => {
+        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('UK branch of foreign company (BR)')
+      })
+
+      it('should show the company number field', () => {
+        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.true
+      })
+
+      it('should not show the trading address fields', () => {
+        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when adding a UK sole trader', () => {
+      beforeEach(async () => {
+        const reqMock = assign(this.reqMock, {
+          query: {
+            country: 'uk',
+          },
+        })
+        const resMock = assign(this.resMock, {
+          locals: {
+            formData: {
+              business_type: '99d14e94-5d95-e211-a939-e4115bead28a',
+            },
+          },
+        })
+
+        await this.controller.renderForm(reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+      })
+
+      it('should set the add breadcrumb', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+      })
+
+      it('should set heading', () => {
+        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add UK company')
+      })
+
+      it('should set isForeign', () => {
+        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+      })
+
+      it('should set businessTypeLabel', () => {
+        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Sole Trader')
+      })
+
+      it('should not show the company number field', () => {
+        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+      })
+
+      it('should not show the trading address fields', () => {
+        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when adding a foreign sole trader', () => {
+      beforeEach(async () => {
+        const reqMock = assign(this.reqMock, {
+          query: {
+            country: 'non-uk',
+          },
+        })
+        const resMock = assign(this.resMock, {
+          locals: {
+            formData: {
+              business_type: '99d14e94-5d95-e211-a939-e4115bead28a',
+            },
+          },
+        })
+
+        await this.controller.renderForm(reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+      })
+
+      it('should set the add breadcrumb', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+      })
+
+      it('should set heading', () => {
+        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add foreign company')
+      })
+
+      it('should set isForeign', () => {
+        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.true
+      })
+
+      it('should set businessTypeLabel', () => {
+        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Sole Trader')
+      })
+
+      it('should not show the company number field', () => {
+        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+      })
+
+      it('should not show the trading address fields', () => {
+        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+    })
+
+    context('when editing a government department with a trading address', () => {
+      beforeEach(async () => {
+        const reqMock = assign(this.reqMock, {
+          query: {
+            country: 'uk',
+          },
+        })
+        const resMock = assign(this.resMock, {
+          locals: {
+            formData: {
+              business_type: '9cd14e94-5d95-e211-a939-e4115bead28a',
+              trading_address_1: 'address',
+            },
+            company: {
+              id: 1,
+              name: 'Existing government department',
+              uk_based: true,
+            },
+          },
+        })
+
+        await this.controller.renderForm(reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+      })
+
+      it('should set the add breadcrumb', () => {
+        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Existing government department')
+      })
+
+      it('should set heading', () => {
+        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Edit UK company')
+      })
+
+      it('should set isForeign', () => {
+        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+      })
+
+      it('should set businessTypeLabel', () => {
+        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Government department')
+      })
+
+      it('should not show the company number field', () => {
+        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+      })
+
+      it('should not show the trading address fields', () => {
+        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.true
+      })
+
+      it('nock mocked scope has been called', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
     })
   })
 })

@@ -59,3 +59,22 @@ Feature: Create a new company
       | Number of employees   | company.employeeRange            |
       | Annual turnover       | company.turnoverRange            |
       | Country               | company.registeredAddressCountry |
+
+  @companies-save--foreign-uk-branch
+  Scenario: Create a UK branch of a foreign company
+
+    When a "UK branch of a foreign company" is created
+    Then I see the success message
+    And the company is in the search results
+    When the first search result is clicked
+    Then the Company summary details are displayed
+      | key                   | value                            |
+      | Business type         | company.businessType             |
+      | Primary address       | company.primaryAddress           |
+      | UK region             | company.ukRegion                 |
+      | Headquarters          | company.headquarterType          |
+      | Sector                | company.sector                   |
+      | Website               | company.website                  |
+      | Business description  | company.description              |
+      | Number of employees   | company.employeeRange            |
+      | Annual turnover       | company.turnoverRange            |
