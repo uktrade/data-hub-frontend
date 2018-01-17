@@ -31,6 +31,13 @@ function isForeignCompany (req, res) {
   return req.query.country === 'non-uk'
 }
 
+function getHeading (company, isForeign) {
+  const action = company ? 'Edit' : 'Add'
+  const type = isForeign ? 'foreign' : 'UK'
+
+  return `${action} ${type} company`
+}
+
 async function renderForm (req, res) {
   if (res.locals.companiesHouseRecord) {
     res.locals = assign({}, res.locals, {
@@ -58,6 +65,7 @@ async function renderForm (req, res) {
       businessTypeLabel,
       showTradingAddress,
       showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
+      heading: getHeading(res.locals.company, isForeign),
     })
 }
 
