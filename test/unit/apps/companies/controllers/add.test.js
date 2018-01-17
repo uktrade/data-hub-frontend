@@ -1,21 +1,23 @@
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
 const displayHouseCompany = require('~/test/unit/data/companies/display-companies-house')
+const config = require('~/config')
 
 const next = function (error) {
   throw Error(error)
 }
 
-const mockMetadataRepository = {
+const metaDataMock = {
   businessTypeOptions: [
     { name: 'Not Expected', id: '33243434-343656' },
-    { name: 'Charity', id: '1234-5678' },
-    { name: 'Government Dept', id: '3434-343' },
-    { name: 'Intermediary', id: '5656-5656' },
-    { name: 'Limited partnership', id: '7878-7878' },
-    { name: 'Partnership', id: '8989-898-9' },
-    { name: 'Sole Trader', id: '3434-5656' },
-    { name: 'Company', id: '1212-3454567' },
+    { name: 'Charity', id: '9dd14e94-5d95-e211-a939-e4115bead28a' },
+    { name: 'Government Dept', id: '9cd14e94-5d95-e211-a939-e4115bead28a' },
+    { name: 'Intermediary', id: '9bd14e94-5d95-e211-a939-e4115bead28a' },
+    { name: 'Limited partnership', id: '8b6eaf7e-03e7-e611-bca1-e4115bead28a' },
+    { name: 'Partnership', id: '9ad14e94-5d95-e211-a939-e4115bead28a' },
+    { name: 'Sole Trader', id: '99d14e94-5d95-e211-a939-e4115bead28a' },
+    { name: 'UK branch of foreign company (BR)', id: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98' },
+    { name: 'Company', id: '98d14e94-5d95-e211-a939-e4115bead28a' },
     { name: 'Random', id: '34343434-343656' },
   ],
 }
@@ -41,37 +43,40 @@ describe('Company add controller', () => {
       '../services/formatting': {
         getDisplayCH: getDisplayCHStub,
       },
-      '../options': proxyquire('~/src/apps/companies/options.js', {
-        '../../lib/metadata': mockMetadataRepository,
-      }),
     })
   })
 
   describe('Get step 1', () => {
-    it('should return options for company types', function (done) {
+    beforeEach(() => {
+      this.nockScope = nock(config.apiRoot)
+        .get('/metadata/business-type/')
+        .twice().reply(200, metaDataMock.businessTypeOptions)
+    })
+
+    it('should return options for company types', async function () {
       const req = { session: {} }
       const expected = [
-        { label: 'Charity', value: '1234-5678' },
-        { label: 'Government department', value: '3434-343' },
-        { label: 'Intermediary', value: '5656-5656' },
-        { label: 'Limited partnership', value: '7878-7878' },
-        { label: 'Partnership', value: '8989-898-9' },
-        { label: 'Sole trader', value: '3434-5656' },
+        { label: 'Charity', value: '9dd14e94-5d95-e211-a939-e4115bead28a' },
+        { label: 'Government Dept', value: '9cd14e94-5d95-e211-a939-e4115bead28a' },
+        { label: 'Intermediary', value: '9bd14e94-5d95-e211-a939-e4115bead28a' },
+        { label: 'Limited partnership', value: '8b6eaf7e-03e7-e611-bca1-e4115bead28a' },
+        { label: 'Partnership', value: '9ad14e94-5d95-e211-a939-e4115bead28a' },
+        { label: 'Sole Trader', value: '99d14e94-5d95-e211-a939-e4115bead28a' },
+        { label: 'UK branch of foreign company (BR)', value: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98' },
       ]
-      const expectedForeign = [ ...expected, { label: 'Company', value: '1212-3454567' } ]
+      const expectedForeign = [ ...expected, { label: 'Company', value: '98d14e94-5d95-e211-a939-e4115bead28a' } ]
       const res = {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expected)
           expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expectedForeign)
-          done()
         },
       }
 
-      companyAddController.renderAddStepOne(req, res, next)
+      await companyAddController.renderAddStepOne(req, res)
     })
-    it('should return labels for the types and error messages', function (done) {
+    it('should return labels for the types and error messages', function () {
       const req = { session: {} }
       const res = {
         locals: {},
@@ -83,13 +88,12 @@ describe('Company add controller', () => {
             foreign: 'Foreign organisation',
           })
           expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
-          done()
         },
       }
 
-      companyAddController.renderAddStepOne(req, res, next)
+      companyAddController.renderAddStepOne(req, res)
     })
-    it('should pass through the request body to show previosuly selected options', function (done) {
+    it('should pass through the request body to show previosuly selected options', function () {
       const body = { business_type: '1231231231232' }
       const req = { body, session: {} }
       const res = {
@@ -102,11 +106,10 @@ describe('Company add controller', () => {
             foreign: 'Foreign organisation',
           })
           expect(allOptions.company).to.deep.equal(body)
-          done()
         },
       }
 
-      companyAddController.renderAddStepOne(req, res, next)
+      companyAddController.renderAddStepOne(req, res)
     })
   })
   describe('Post step 1', () => {

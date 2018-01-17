@@ -4,9 +4,9 @@ const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require(
 const { isBlank } = require('../../../lib/controller-utils')
 const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
-function renderAddStepOne (req, res) {
-  const ukOtherCompanyOptions = buildUkOtherCompanyOptions()
-  const foreignOtherCompanyOptions = buildForeignOtherCompanyOptions()
+async function renderAddStepOne (req, res) {
+  const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(req.session.token)
+  const foreignOtherCompanyOptions = await buildForeignOtherCompanyOptions(req.session.token)
 
   res.render('companies/views/add-step-1.njk', {
     ukOtherCompanyOptions,
