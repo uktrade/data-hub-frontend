@@ -1,4 +1,4 @@
-const { assign, pick, merge, omit } = require('lodash')
+const { assign, isArray, flatten, pick, mapValues, merge, omit } = require('lodash')
 
 const { interactionSortForm } = require('../macros')
 const { search } = require('../../search/services')
@@ -36,6 +36,17 @@ function getInteractionsRequestBody (req, res, next) {
     'sortby',
     'dit_team',
   ])
+  // const searchBody = mapValues(query, (o) => {
+  //   const split = o.split(',')
+  //
+  //   // if (isArray(o) || isArray(split)) {
+  //   //   return flatten(o.map((i) => {
+  //   //     return i.split(',')
+  //   //   }))
+  //   // }
+  //
+  //   return o
+  // })
 
   if (req.params.contactId) {
     searchBody.contact = req.params.contactId

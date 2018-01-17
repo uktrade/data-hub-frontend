@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, flatten } = require('lodash')
 const { globalFields } = require('../../macros')
 const { collectionFilterLabels } = require('../labels')
 const { transformObjectToOption } = require('../../transformers')
@@ -14,21 +14,25 @@ const eventFiltersFields = ({ advisers }) => {
     },
     assign({}, globalFields.eventTypes, {
       name: 'event_type',
-      initialOption: 'All types',
+      type: 'checkbox',
+      modifier: 'option-select',
     }),
     assign({}, globalFields.countries, {
       name: 'address_country',
-      initialOption: 'All countries',
+      type: 'checkbox',
+      modifier: 'option-select',
     }),
     assign({}, globalFields.ukRegions, {
       name: 'uk_region',
-      initialOption: 'All UK regions',
+      type: 'checkbox',
+      modifier: 'option-select',
     }),
     {
       macroName: 'MultipleChoiceField',
       name: 'organiser',
       label: 'Organiser',
-      initialOption: '-- Select organiser --',
+      type: 'checkbox',
+      modifier: 'option-select',
       options: advisers.map(transformObjectToOption),
     },
     {
@@ -46,7 +50,7 @@ const eventFiltersFields = ({ advisers }) => {
   ].map(filter => {
     return assign(filter, {
       label: collectionFilterLabels.edit[filter.name],
-      modifier: ['smaller', 'light'],
+      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
     })
   })
 }

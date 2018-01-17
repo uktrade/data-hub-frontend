@@ -13,6 +13,7 @@ const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
 const AddItems = require('./modules/add-items')
 const PrintDialog = require('./modules/print-dialog')
+const Autocomplete = require('./modules/autocomplete')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
@@ -27,6 +28,11 @@ AutoSubmit.init()
 XhrLink.init()
 AddItems.init()
 PrintDialog.init()
+Autocomplete.init()
+
+document.addEventListener('AddItems_Render', () => {
+  Autocomplete.init()
+})
 
 // Deprecated
 CompanyAdd.init()

@@ -1,5 +1,14 @@
 {% extends "./_layout.njk" %}
 
+{% block javascript %}
+  <script>
+    window.DIT = {
+      advisers: {{ ADVISERS | safe }},
+    }
+  </script>
+  {{ super() }}
+{% endblock %}
+
 {% block body_main_content %}
   <h2 class="heading-large">Buttons</h2>
 
@@ -16,6 +25,94 @@
   {% call Example('Destructive button') %}
     <button class="button button--destructive">Destructive button</button>
     <button class="button button--destructive" disabled="disabled">Disabled destructive button</button>
+  {% endcall %}
+
+  <h2 class="heading-large">Typeahead</h2>
+
+  {% call Example('Adviser select') %}
+    {% call FormGroup({
+      name: 'advisers',
+      fieldId: 'advisers',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name'
+    }) %}
+      <div class="js-Autocomplete" data-field-id="advisers"></div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Adviser select (overlay)') %}
+    {% call FormGroup({
+      name: 'advisers-overlay',
+      fieldId: 'advisers-overlay',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name'
+    }) %}
+      <div
+        class="js-Autocomplete"
+        data-field-id="advisers-overlay"
+        data-display-menu="overlay"
+        data-default-value="Something"
+      ></div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Adviser select (show all values)') %}
+    {% call FormGroup({
+      name: 'advisers-show-all',
+      fieldId: 'advisers-show-all',
+      label: 'Select an adviser',
+      hint: 'Enter a name, email or team name'
+    }) %}
+      <div
+        class="js-Autocomplete"
+        data-field-id="advisers-show-all"
+        data-show-all-values="true"
+      ></div>
+    {% endcall %}
+  {% endcall %}
+
+  {% call Example('Repeatable adviser select') %}
+    <div
+      class="js-AddItems"
+      data-item-name="adviser"
+      data-can-remove-all
+    >
+      {% call FormGroup({
+        name: 'advisers-repeatable',
+        fieldId: 'advisers-repeatable',
+        element: 'fieldset',
+        label: 'Group of advisers',
+        hint: 'Select multiple'
+      }) %}
+        {% set removeButton %}
+          <button class="button button--link c-form-group__action js-AddItems__remove" name="remove-item">
+            Remove adviser
+          </button>
+        {% endset %}
+
+        {% call FormGroup({
+          name: 'advisers-repeatabe-1',
+          fieldId: 'advisers-repeatabe-1',
+          label: 'Select an adviser',
+          modifier: 'compact',
+          isLabelHidden: true,
+          hint: 'Enter a name, email or team name',
+          class: 'js-AddItems__item',
+          innerHTML: removeButton
+        }) %}
+          <div
+            class="js-Autocomplete"
+            data-field-id="advisers-repeatabe-1"
+          ></div>
+        {% endcall %}
+      {% endcall %}
+
+      <p class="c-form-group c-form-group--compact">
+        <button class="button button--secondary js-AddItems__add" name="add-item">
+          Add adviser
+        </button>
+      </p>
+    </div>
   {% endcall %}
 
   <h2 class="heading-large">Entity search</h2>
@@ -43,6 +140,31 @@
           placeholder: 'e.g. Hooli',
           modifier: 'small'
         },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'gender-small',
+          label: 'Gender',
+          initialOption: 'Unspecified',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: 'small'
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          name: 'filterBy-small',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          selected: form.state.filterBy,
+          modifier: 'small'
+        },
         assign({}, macros.globalFields.strategicDrivers, {
           name: 'strategicDrivers-small',
           type: 'dropdown',
@@ -53,6 +175,56 @@
           name: 'averageSalary-small',
           initialOption: '-- Select range --',
           modifier: 'small'
+        })
+      ]
+    }) }}
+  {% endcall %}
+
+  {% call Example('Form fields with `smaller` modifier') %}
+    {{ Form({
+      children: [
+        {
+          macroName: 'TextField',
+          name: 'name-smaller',
+          label: 'Company name',
+          placeholder: 'e.g. Hooli',
+          modifier: ['smaller', 'light']
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'gender-smaller',
+          label: 'Gender',
+          initialOption: 'Unspecified',
+          options: [
+            { label: 'Male' },
+            { label: 'Female' }
+          ],
+          selected: form.state.gender,
+          modifier: ['smaller', 'light']
+        },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          name: 'filterBy-smaller',
+          label: 'Filter by',
+          options: [
+            { label: 'Quality' },
+            { label: 'Quanitity' }
+          ],
+          selected: form.state.filterBy,
+          modifier: ['smaller', 'light']
+        },
+        assign({}, macros.globalFields.strategicDrivers, {
+          name: 'strategicDrivers-smaller',
+          type: 'dropdown',
+          modifier: ['smaller', 'light']
+        }),
+        macros.globalFields.averageSalary | assignCopy({
+          type: 'dropdown',
+          name: 'averageSalary-smaller',
+          initialOption: '-- Select range --',
+          modifier: ['smaller', 'light']
         })
       ]
     }) }}
