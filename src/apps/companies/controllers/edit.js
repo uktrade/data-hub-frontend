@@ -2,6 +2,7 @@ const { assign, find, get, isEmpty } = require('lodash')
 
 const { transformCompaniesHouseToView } = require('../transformers')
 const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
+const UK_BRANCH_OF_FOREIGN_COMPANY_ID = 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98'
 
 async function getBusinessTypeOption (token, businessTypeId) {
   const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(token)
@@ -56,6 +57,7 @@ async function renderForm (req, res) {
       isForeign,
       businessTypeLabel,
       showTradingAddress,
+      showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
     })
 }
 
