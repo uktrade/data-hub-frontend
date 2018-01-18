@@ -128,8 +128,8 @@ router
 
 router
   .route('/:investmentId/edit-requirements')
-  .get(requirementsFormMiddleware.populateForm, edit.editRequirementsGet)
-  .post(requirementsFormMiddleware.populateForm, requirementsFormMiddleware.handleFormPost, edit.editRequirementsPost)
+  .get(requirementsFormMiddleware.populateForm, edit.renderRequirementsForm)
+  .post(requirementsFormMiddleware.handleFormPost, requirementsFormMiddleware.populateForm, edit.renderRequirementsForm)
 
 router.get('/:investmentId/team', expandTeamMembers, team.details.getDetailsHandler)
 

@@ -53,6 +53,7 @@ const labels = {
       client_requirements: 'Client requirements',
       competitor_countries: 'Competitor countries',
       uk_region_locations: 'Possible UK locations',
+      actual_uk_regions: 'UK regions landed',
       uk_company: 'UK recipient company',
     },
     edit: {
@@ -60,6 +61,7 @@ const labels = {
       client_considering_other_countries: 'Is the client considering other countries?',
       uk_region_locations: 'Possible UK locations for this investment',
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
+      actual_uk_regions: 'UK regions landed',
     },
   },
   evaluationValueLabels: {
