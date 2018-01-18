@@ -62,14 +62,20 @@ describe('Company add controller', () => {
         { label: 'Limited partnership', value: '8b6eaf7e-03e7-e611-bca1-e4115bead28a' },
         { label: 'Partnership', value: '9ad14e94-5d95-e211-a939-e4115bead28a' },
         { label: 'Sole Trader', value: '99d14e94-5d95-e211-a939-e4115bead28a' },
+      ]
+      const expectedUk = [
+        ...expected,
         { label: 'UK branch of foreign company (BR)', value: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98' },
       ]
-      const expectedForeign = [ ...expected, { label: 'Company', value: '98d14e94-5d95-e211-a939-e4115bead28a' } ]
+      const expectedForeign = [
+        ...expected,
+        { label: 'Company', value: '98d14e94-5d95-e211-a939-e4115bead28a' },
+      ]
       const res = {
         locals: {},
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
-          expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expected)
+          expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expectedUk)
           expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expectedForeign)
         },
       }
