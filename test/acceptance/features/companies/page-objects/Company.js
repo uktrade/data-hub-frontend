@@ -185,7 +185,7 @@ module.exports = {
                   companyStep1.businessType = businessType === 'UK branch of foreign company (BR)'
                     ? 'Limited partnership'
                     : businessType
-                  this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
+                  this.setValue(`@otherTypeOfUKOrganisationBusinessType`, companyStep1.businessType)
                   done()
                 })
               })
