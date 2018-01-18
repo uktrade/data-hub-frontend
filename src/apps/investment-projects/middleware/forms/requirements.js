@@ -1,12 +1,9 @@
-const { assign, flatten, get } = require('lodash')
+const { assign, castArray, compact, get } = require('lodash')
 
 const { updateInvestment } = require('../../repos')
 const { requirementsFormConfig } = require('../../macros')
 const { getOptions } = require('../../../../lib/options')
-const {
-  buildFormWithStateAndErrors,
-  buildFormWithState,
-} = require('../../../builders')
+const { buildFormWithStateAndErrors } = require('../../../builders')
 
 async function getFormOptions (token, createdOn) {
   return {
@@ -16,16 +13,26 @@ async function getFormOptions (token, createdOn) {
   }
 }
 
+function formatBody (body) {
+  return assign({}, body, {
+    strategic_drivers: compact(castArray(body.strategic_drivers)),
+    competitor_countries: body.client_considering_other_countries === 'true' ? compact(castArray(body.competitor_countries)) : [],
+    uk_region_locations: compact(castArray(body.uk_region_locations)),
+    actual_uk_regions: body.site_decided === 'true' ? compact(castArray(body.actual_uk_regions)) : [],
+  })
+}
+
 async function populateForm (req, res, next) {
   try {
+    const investmentId = req.params.investmentId
     const investmentData = res.locals.investmentData
-
     const createdOn = get(res.locals.investmentData, 'created_on')
-    res.locals.options = await getFormOptions(req.session.token, createdOn)
+    const options = await getFormOptions(req.session.token, createdOn)
+    const body = res.locals.formattedBody || investmentData
 
     res.locals.requirementsForm = assign({},
-      buildFormWithStateAndErrors(requirementsFormConfig(res.locals.options), investmentData),
-      { returnLink: `/investment-projects/${investmentData.id}` },
+      buildFormWithStateAndErrors(requirementsFormConfig(options), body, res.locals.errors),
+      { returnLink: `/investment-projects/${investmentId}` },
     )
   } catch (error) {
     return next(error)
@@ -34,38 +41,27 @@ async function populateForm (req, res, next) {
   next()
 }
 
-// Strips out empty entries so they are not posted (which result in errors)
-// and when an error is thrown it doesn't mean yet another is added
-function cleanArray (values) {
-  return flatten([values])
-    .filter(item => item)
-}
+async function handleFormPost (req, res, next) {
+  try {
+    const investmentId = req.params.investmentId
 
-function handleFormPost (req, res, next) {
-  res.locals.projectId = req.params.investmentId
+    res.locals.formattedBody = formatBody(req.body)
 
-  const formattedBody = assign({}, req.body, {
-    strategic_drivers: cleanArray(req.body.strategic_drivers),
-    competitor_countries: req.body.client_considering_other_countries === 'true' ? cleanArray(req.body.competitor_countries) : [],
-    uk_region_locations: cleanArray(req.body.uk_region_locations),
-  })
+    if (req.body.add_item) {
+      return next()
+    }
 
-  if (req.body.add_item) {
-    res.locals.requirementsForm = buildFormWithState(requirementsFormConfig(res.locals.options), formattedBody)
-    return next()
+    await updateInvestment(req.session.token, investmentId, res.locals.formattedBody)
+    req.flash('success', 'Investment requirements updated')
+    res.redirect(`/investment-projects/${investmentId}/details`)
+  } catch (err) {
+    if (err.statusCode === 400) {
+      res.locals.errors = err.error
+      next()
+    } else {
+      next(err)
+    }
   }
-
-  updateInvestment(req.session.token, res.locals.projectId, formattedBody)
-    .then(() => next())
-    .catch((err) => {
-      if (err.statusCode === 400) {
-        res.locals.requirementsForm = buildFormWithStateAndErrors(requirementsFormConfig(res.locals.options), formattedBody, err.error)
-
-        next()
-      } else {
-        next(err)
-      }
-    })
 }
 
 module.exports = {

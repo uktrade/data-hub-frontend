@@ -1,5 +1,3 @@
-const { get } = require('lodash')
-
 function editDetailsGet (req, res) {
   res
     .breadcrumb('Edit details')
@@ -12,7 +10,7 @@ function editValueGet (req, res) {
     .render('investment-projects/views/value-edit')
 }
 
-function editRequirementsGet (req, res) {
+function renderRequirementsForm (req, res) {
   res.render('investment-projects/views/requirements-edit')
 }
 
@@ -34,19 +32,10 @@ function editValuePost (req, res) {
   return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
 }
 
-function editRequirementsPost (req, res) {
-  if (get(res.locals, 'requirementsForm.errors')) {
-    return res.render('investment-projects/views/requirements-edit')
-  }
-  req.flash('success', 'Investment requirements updated')
-  return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
-}
-
 module.exports = {
   editDetailsGet,
   editValueGet,
-  editRequirementsGet,
+  renderRequirementsForm,
   editDetailsPost,
   editValuePost,
-  editRequirementsPost,
 }
