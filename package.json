@@ -60,7 +60,7 @@
     "jsdom": "^11.5.1",
     "lodash": "^4.17.4",
     "markdown-it": "^8.4.0",
-    "mocha": "^4.0.1",
+    "mocha": "^5.0.0",
     "mocha-multi": "^1.0.0",
     "moment": "^2.20.1",
     "moment-duration-format": "^2.1.0",
