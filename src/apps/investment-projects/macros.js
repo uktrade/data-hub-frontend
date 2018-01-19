@@ -92,6 +92,7 @@ const requirementsFormConfig = ({
   strategicDrivers,
   countries,
   ukRegions,
+  partners,
 }) => {
   const labels = requirementsLabels.edit
 
@@ -223,6 +224,19 @@ const requirementsFormConfig = ({
             options: ukRegions,
           }),
         ],
+      },
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'delivery_partners',
+        children: [{
+          macroName: 'MultipleChoiceField',
+          name: 'delivery_partners',
+          label: labels.delivery_partners,
+          isLabelHidden: true,
+          options: partners,
+          initialOption: '-- Select a partner --',
+        }],
       },
     ].map(field => {
       return assign(field, {
