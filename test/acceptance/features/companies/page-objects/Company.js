@@ -31,6 +31,7 @@ module.exports = {
     foreignOrganisationOption: 'label[for=field-business_type-3]',
     foreignOrganisationOptionBusinessType: 'select[name="business_type_for_other"]',
     name: '#field-name',
+    companyNumber: '#field-company_number',
     tradingName: '#field-trading_name',
     ukRegion: 'select[name="uk_region"]',
     address1: '#field-registered_address_1',
@@ -181,8 +182,10 @@ module.exports = {
               .click('@otherTypeOfUKOrganisationOption')
               .api.perform((done) => {
                 this.getListOption('@otherTypeOfUKOrganisationBusinessType', (businessType) => {
-                  companyStep1.businessType = businessType
-                  this.setValue(`@otherTypeOfUKOrganisationBusinessType`, businessType)
+                  companyStep1.businessType = businessType === 'UK branch of foreign company (BR)'
+                    ? 'Limited partnership'
+                    : businessType
+                  this.setValue(`@otherTypeOfUKOrganisationBusinessType`, companyStep1.businessType)
                   done()
                 })
               })
@@ -356,6 +359,115 @@ module.exports = {
                 }))
               })
           })
+      },
+
+      createUkBranchOfForeignCompany (details = {}, callback) {
+        const companyStep1 = {}
+        const companyStep2 = assign({}, {
+          name: appendUid(faker.company.companyName()),
+          companyNumber: `BR${faker.random.number({ min: 100000 })}`,
+          website: faker.internet.url(),
+          description: faker.lorem.sentence(),
+        }, details)
+        const companyStep2RadioOptions = {}
+        const postcodeLookup = {
+          postcode: 'companyPostCode',
+          address1: 'companyPostCodeLookupAddress1',
+          address2: 'companyPostCodeLookupAddress2',
+          town: 'companyPostCodeLookupTown',
+          county: 'companyPostCodeLookupCounty',
+        }
+
+        this
+          .click('@addCompanyButton')
+          .waitForElementPresent('@otherTypeOfUKOrganisationBusinessType')
+          .api.perform((done) => {
+            // step 1
+            this
+              .click('@otherTypeOfUKOrganisationOption')
+              .api.perform(() => {
+                this.clickListOption('business_type_uk_other', 'UK branch of foreign company (BR)')
+              })
+
+            // step 2
+            this
+              .waitForElementPresent('@continueButton')
+              .click('@continueButton')
+
+            this.api.page.Location().section.localHeader
+              .waitForElementPresent('@header')
+
+            this
+              .api.perform((done) => {
+                this.getListOption('@ukRegion', (ukRegion) => {
+                  companyStep2.ukRegion = ukRegion
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getListOption('@sector', (sector) => {
+                  companyStep2.sector = sector
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('headquarter_type', (result) => {
+                  companyStep2RadioOptions.headquarterType = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('employee_range', (result) => {
+                  companyStep2RadioOptions.employeeRange = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                this.getRadioOption('turnover_range', (result) => {
+                  companyStep2RadioOptions.turnoverRange = result
+                  done()
+                })
+              })
+              .perform((done) => {
+                for (const key in companyStep2) {
+                  if (companyStep2[key]) {
+                    this.setValue(`@${key}`, companyStep2[key])
+                  }
+                }
+                for (const key in companyStep2RadioOptions) {
+                  this.api.useCss().click(companyStep2RadioOptions[key].labelSelector)
+                  companyStep2[key] = companyStep2RadioOptions[key].text
+                }
+                done()
+              })
+
+            this.api
+              .perform((done) => {
+                this.api
+                  .page.Address()
+                  .getAddressInputValues('GL11 4DH', postcodeLookup, '@companyPostCodeLookupSuggestions', (addressInputValues) => {
+                    const country = 'United Kingdom'
+                    const primaryAddress = getAddress(assign({}, companyStep2, addressInputValues, { country }))
+
+                    this
+                      .waitForElementPresent('@saveAndCreateButton')
+                      .click('@saveAndCreateButton')
+
+                    callback(assign({}, companyStep1, companyStep2, {
+                      addressInputValues,
+                      heading: companyStep2.name,
+                      primaryAddress,
+                      country,
+                      uniqueSearchTerm: getUid(companyStep2.name),
+                    }))
+
+                    done()
+                  })
+              })
+            done()
+          })
+
+        return this
       },
 
       searchForCompanyInCollection (companyName) {
