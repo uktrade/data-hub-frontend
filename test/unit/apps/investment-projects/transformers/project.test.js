@@ -727,7 +727,7 @@ describe('Investment project transformers', () => {
         })
       })
 
-      it('should return a malformed date which will be picked up by the API validator', () => {
+      it('should return a malformed date for incomplete dates', () => {
         expect(this.result).to.have.property('actual_land_date', '2016--1')
       })
     })
@@ -742,6 +742,43 @@ describe('Investment project transformers', () => {
       it('should set the actual land date value to null', () => {
         expect(this.result).to.have.property('actual_land_date', null)
       })
+    })
+  })
+
+  context('when called with an estimated land date', () => {
+    beforeEach(() => {
+      this.result = transformToApi({
+        estimated_land_date_month: '10',
+        estimated_land_date_year: '2016',
+      })
+    })
+
+    it('should convert the field values into a date value', () => {
+      expect(this.result).to.have.property('estimated_land_date', '2016-10-01')
+    })
+  })
+
+  context('when called with a partial estimated land date', () => {
+    beforeEach(() => {
+      this.result = transformToApi({
+        estimated_land_date_year: '2016',
+      })
+    })
+
+    it('should return a malformed date', () => {
+      expect(this.result).to.have.property('estimated_land_date', '2016--01')
+    })
+  })
+
+  context('when called with no estimated land date', () => {
+    beforeEach(() => {
+      this.result = transformToApi({
+        name: 'fred',
+      })
+    })
+
+    it('should set the estimated land date value to null', () => {
+      expect(this.result).to.have.property('estimated_land_date', null)
     })
   })
 })
