@@ -5910,6 +5910,10 @@ lodash.mergewith@^4.0.0, lodash.mergewith@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
 
+lodash.once@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.once/-/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
+
 lodash.pick@^4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
@@ -6320,12 +6324,13 @@ mocha-junit-reporter@^1.12.0:
     mkdirp "~0.5.1"
     xml "^1.0.0"
 
-mocha-multi@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/mocha-multi/-/mocha-multi-0.11.1.tgz#38f94242aff5d5e8313f61afcd0012bb7c478a52"
+mocha-multi@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/mocha-multi/-/mocha-multi-1.0.0.tgz#c314da8b5c8ae982ef6c59012d960f0d53762688"
   dependencies:
     debug "^3.1.0"
     is-string "^1.0.4"
+    lodash.once "^4.1.1"
     mkdirp "^0.5.1"
     object-assign "^4.1.1"
 
@@ -6361,9 +6366,9 @@ mocha@^3.0.0:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-mocha@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-4.0.1.tgz#0aee5a95cf69a4618820f5e51fa31717117daf1b"
+mocha@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-5.0.0.tgz#cccac988b0bc5477119cba0e43de7af6d6ad8f4e"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.11.0"
