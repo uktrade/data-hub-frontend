@@ -17,7 +17,13 @@
 {% set radioOptions = options | concat('Other') | arrayToLabelValues %}
 {% set radioOptionsPrefix = optionsPrefix %}
 
-<form class="archive-form js-archiveForm" method="POST" {% if url %}action="{{ url }}{% endif %}">
+<form
+  class="archive-form js-archiveForm"
+  method="POST"
+  {% if url %}
+    action="{{ url }}"
+  {% endif %}
+>
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
   {{ MultipleChoiceField({
