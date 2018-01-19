@@ -34,6 +34,7 @@ function transformInvestmentRequirementsForView ({
   strategic_drivers,
   uk_company,
   uk_region_locations,
+  delivery_partners,
 } = {}) {
   return {
     strategic_drivers: map(strategic_drivers, 'name').join(', '),
@@ -42,6 +43,7 @@ function transformInvestmentRequirementsForView ({
     uk_region_locations: map(uk_region_locations, 'name').join(', '),
     actual_uk_regions: map(actual_uk_regions, 'name').join(', '),
     uk_company: transformUKCompany(id, uk_company),
+    delivery_partners: map(delivery_partners, 'name').join(', '),
   }
 }
 

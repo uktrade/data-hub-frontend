@@ -23,6 +23,11 @@ const metadataMock = {
     { id: '9999', name: 'United Kingdom', disabled_on: null },
     { id: '8888', name: 'Test', disabled_on: yesterday },
   ],
+  deliveryPartnerOptions: [
+    { id: '1', name: 'dp1', disabled_on: null },
+    { id: '2', name: 'dp2', disabled_on: yesterday },
+    { id: '3', name: 'dp3', disabled_on: null },
+  ],
 }
 
 function getFieldValue (form, name) {
@@ -86,6 +91,8 @@ describe('Investment requirements form middleware', () => {
         .reply(200, metadataMock.countryOptions)
         .get('/metadata/investment-strategic-driver/')
         .reply(200, metadataMock.strategicDriversOptions)
+        .get('/metadata/investment-delivery-partner/')
+        .reply(200, metadataMock.deliveryPartnerOptions)
     })
 
     context('when called without posted data', () => {
@@ -164,6 +171,7 @@ describe('Investment requirements form middleware', () => {
             actual_uk_regions: [],
             competitor_countries: [],
             uk_region_locations: [],
+            delivery_partners: [],
           })
           .reply(200, {})
 
@@ -203,6 +211,7 @@ describe('Investment requirements form middleware', () => {
               '844cd12a-6095-e211-a939-e4115bead28a',
             ],
             client_requirements: 'some requirements',
+            delivery_partners: [],
           })
           .reply(200, {})
 
@@ -249,6 +258,7 @@ describe('Investment requirements form middleware', () => {
               actual_uk_regions: [],
               strategic_drivers: [],
               uk_region_locations: [],
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -290,6 +300,7 @@ describe('Investment requirements form middleware', () => {
                 '844cd12a-6095-e211-a939-e4115bead28a',
               ],
               client_requirements: 'some requirements',
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -335,6 +346,7 @@ describe('Investment requirements form middleware', () => {
               actual_uk_regions: [],
               strategic_drivers: [],
               uk_region_locations: [],
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -374,6 +386,7 @@ describe('Investment requirements form middleware', () => {
               uk_region_locations: [],
               competitor_countries: [],
               client_requirements: 'some requirements',
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -414,6 +427,7 @@ describe('Investment requirements form middleware', () => {
             actual_uk_regions: [],
             strategic_drivers: [],
             competitor_countries: [],
+            delivery_partners: [],
           })
           .reply(200, {})
 
@@ -453,6 +467,7 @@ describe('Investment requirements form middleware', () => {
               '844cd12a-6095-e211-a939-e4115bead28a',
             ],
             client_requirements: 'some requirements',
+            delivery_partners: [],
           })
           .reply(200, {})
 
@@ -493,6 +508,7 @@ describe('Investment requirements form middleware', () => {
               strategic_drivers: [],
               competitor_countries: [],
               uk_region_locations: [],
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -532,6 +548,7 @@ describe('Investment requirements form middleware', () => {
               uk_region_locations: [],
               actual_uk_regions: ['844cd12a-6095-e211-a939-e4115bead28a'],
               client_requirements: 'some requirements',
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -571,6 +588,7 @@ describe('Investment requirements form middleware', () => {
               strategic_drivers: [],
               competitor_countries: [],
               uk_region_locations: [],
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -610,6 +628,7 @@ describe('Investment requirements form middleware', () => {
               uk_region_locations: [],
               actual_uk_regions: [],
               client_requirements: 'some requirements',
+              delivery_partners: [],
             })
             .reply(200, {})
 
@@ -656,6 +675,7 @@ describe('Investment requirements form middleware', () => {
               '844cd12a-6095-e211-a939-e4115bead28b',
             ],
             client_requirements: 'some requirements',
+            delivery_partners: [],
           })
           .reply(400, this.error)
 
@@ -699,6 +719,7 @@ describe('Investment requirements form middleware', () => {
               '844cd12a-6095-e211-a939-e4115bead28b',
             ],
             client_requirements: 'some requirements',
+            delivery_partners: [],
           })
           .reply(400, this.error)
 
@@ -733,11 +754,91 @@ describe('Investment requirements form middleware', () => {
             '844cd12a-6095-e211-a939-e4115bead28b',
           ],
           client_requirements: 'some requirements',
+          delivery_partners: [],
         })
       })
 
       it('should not try and save the record', () => {
         expect(this.nockScope.isDone()).to.be.false
+      })
+    })
+
+    context('when called with multiple partners', () => {
+      beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .patch('/v3/investment/1234', {
+            uk_region_locations: [],
+            client_requirements: 'some requirements',
+            actual_uk_regions: [],
+            strategic_drivers: [],
+            competitor_countries: [],
+            delivery_partners: [
+              '844cd12a-6095-e211-a939-e4115bead28a',
+              '844cd12a-6095-e211-a939-e4115bead28b',
+            ],
+          })
+          .reply(200, {})
+
+        const body = {
+          delivery_partners: [
+            '844cd12a-6095-e211-a939-e4115bead28a',
+            '844cd12a-6095-e211-a939-e4115bead28b',
+          ],
+          client_requirements: 'some requirements',
+        }
+
+        this.reqMock = assign({}, this.reqMock, { body })
+        await handleFormPost(this.reqMock, this.resMock, this.nextStub)
+      })
+
+      it('should call the API with transformed data', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+
+      it('should redirect the user to the details screen', () => {
+        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+      })
+
+      it('should send a flash message to inform the user of the change', () => {
+        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+      })
+    })
+
+    context('when called with a single partner', () => {
+      beforeEach(async () => {
+        this.nockScope = nock(config.apiRoot)
+          .patch('/v3/investment/1234', {
+            actual_uk_regions: [],
+            strategic_drivers: [],
+            competitor_countries: [],
+            uk_region_locations: [],
+            client_requirements: 'some requirements',
+            delivery_partners: [
+              '844cd12a-6095-e211-a939-e4115bead28a',
+            ],
+          })
+          .reply(200, {})
+
+        const body = {
+          delivery_partners: '844cd12a-6095-e211-a939-e4115bead28a',
+          client_requirements: 'some requirements',
+        }
+
+        this.reqMock = assign({}, this.reqMock, { body })
+
+        await handleFormPost(this.reqMock, this.resMock, this.nextStub)
+      })
+
+      it('should call the API with transformed data', () => {
+        expect(this.nockScope.isDone()).to.be.true
+      })
+
+      it('should redirect the user to the details screen', () => {
+        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+      })
+
+      it('should send a flash message to inform the user of the change', () => {
+        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
       })
     })
   })
