@@ -44,6 +44,15 @@ defineSupportCode(({ When, Then }) => {
       .wait() // wait for backend to sync
   })
 
+  When(/^a "UK branch of a foreign company" is created$/, async function () {
+    await client
+      .url(companySearchPage)
+
+    await Company
+      .createUkBranchOfForeignCompany({}, (company) => set(this.state, 'company', company))
+      .wait() // wait for backend to sync
+  })
+
   Then(/^the company is in the search results$/, async function () {
     const companyName = get(this.state, 'company.name', get(this.state, 'company.tradingName'))
 
