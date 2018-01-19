@@ -10,6 +10,7 @@ async function getFormOptions (token, createdOn) {
     strategicDrivers: await getOptions(token, 'investment-strategic-driver', { createdOn }),
     countries: await getOptions(token, 'country', { createdOn }),
     ukRegions: await getOptions(token, 'uk-region', { createdOn }),
+    partners: await getOptions(token, 'investment-delivery-partner', { createdOn }),
   }
 }
 
@@ -19,6 +20,7 @@ function formatBody (body) {
     competitor_countries: body.client_considering_other_countries === 'true' ? compact(castArray(body.competitor_countries)) : [],
     uk_region_locations: compact(castArray(body.uk_region_locations)),
     actual_uk_regions: body.site_decided === 'true' ? compact(castArray(body.actual_uk_regions)) : [],
+    delivery_partners: compact(castArray(body.delivery_partners)),
   })
 }
 
