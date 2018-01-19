@@ -32,6 +32,7 @@ describe('Investment project transformers', () => {
           'uk_region_locations',
           'actual_uk_regions',
           'uk_company',
+          'delivery_partners',
         ])
       })
     })
@@ -291,6 +292,51 @@ describe('Investment project transformers', () => {
           label: 'Remove company',
           url: `/investment-projects/1/remove-ukcompany`,
         })
+      })
+    })
+
+    context('when there are no delivery partners', () => {
+      beforeEach(() => {
+        const data = assign({}, this.investmentData, {
+          delivery_partners: [],
+        })
+
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+      })
+
+      it('should return an empty string for delivery partners', () => {
+        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', '')
+      })
+    })
+
+    context('when there is one delivery partner', () => {
+      beforeEach(() => {
+        const data = assign({}, this.investmentData, {
+          delivery_partners: [{ id: 'dp1', name: 'Delivery partner 1' }],
+        })
+
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+      })
+
+      it('should return the delivery partner', () => {
+        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', 'Delivery partner 1')
+      })
+    })
+
+    context('when there are multiple delivery parnters', () => {
+      beforeEach(() => {
+        const data = assign({}, this.investmentData, {
+          delivery_partners: [
+            { id: 'dp1', name: 'Delivery partner 1' },
+            { id: 'dp2', name: 'Delivery partner 2' },
+          ],
+        })
+
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+      })
+
+      it('should return the delivery partners as a string list', () => {
+        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', 'Delivery partner 1, Delivery partner 2')
       })
     })
   })
