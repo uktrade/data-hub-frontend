@@ -17,7 +17,7 @@
   {% if props.items|length > 1 %}
     <nav class="c-breadcrumb" aria-label="Breadcrumbs">
       <ul class="c-breadcrumb__list" itemscope itemtype="http://schema.org/BreadcrumbList">
-        {% for breadcrumb in props.items %}
+        {% for breadcrumb in props.items -%}
           <li class="c-breadcrumb__list-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
             {% if loop.last %}
               <a href="#main-content" class="c-breadcrumb__link is-active" itemprop="url">
@@ -29,7 +29,7 @@
               </a>
             {% endif %}
           </li>
-        {% endfor %}
+        {%- endfor %}
       </ul>
     </nav>
   {% endif %}

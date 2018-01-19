@@ -39,7 +39,7 @@
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
-          {{ props.label }}
+          {{- props.label -}}
         </span>
       {% endif %}
       {% if props.url and not props.isInert and not props.urlLabel %}
@@ -51,10 +51,10 @@
         </a>
       {% else %}
         <span class="{{ itemValueClass }}">
-          {{ value }}
-          {% if props.url and props.urlLabel %}
-            - <a href="{{ props.url }}">{{ props.urlLabel }}</a>
-          {% endif %}
+          {{- value -}}
+          {% if props.url and props.urlLabel -%}
+          &nbsp;- <a href="{{ props.url }}">{{ props.urlLabel }}</a>
+          {%- endif %}
         </span>
       {% endif %}
     </div>
