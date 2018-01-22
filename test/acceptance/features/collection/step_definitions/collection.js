@@ -30,6 +30,12 @@ defineSupportCode(({ When, Then }) => {
       .useCss()
   })
 
+  When(/^I clear all filters$/, async function () {
+    await Collection.section.collectionHeader
+      .click('@removeAllFiltersLink')
+      .wait() // wait for xhr
+  })
+
   Then(/^I capture the modified on date for the first item$/, async function () {
     await Collection
       .section.firstCollectionItem
