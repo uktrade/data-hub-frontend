@@ -55,11 +55,15 @@ function transformToApi (body) {
     return { id: value }
   })
 
-  formatted['estimated_land_date'] = [
-    body['estimated_land_date_year'],
-    body['estimated_land_date_month'],
-    '01',
-  ].join('-')
+  if (body['estimated_land_date_year'] || body['estimated_land_date_month']) {
+    formatted['estimated_land_date'] = [
+      body['estimated_land_date_year'],
+      body['estimated_land_date_month'],
+      '01',
+    ].join('-')
+  } else {
+    formatted['estimated_land_date'] = null
+  }
 
   formatted['actual_land_date'] = transformDateObjectToDateString('actual_land_date')(body)
 
