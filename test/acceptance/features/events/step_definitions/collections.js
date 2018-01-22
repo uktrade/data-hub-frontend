@@ -66,58 +66,26 @@ defineSupportCode(({ Then, When }) => {
     await EventList.section.firstEventInList
       .waitForElementVisible('@header')
       .assert.containsText('@header', this.state.event.name)
-
-    // clear filter
-    await EventList.section.filterTags
-      .click('@eventName')
-      .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by organiser$/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@organiser')
-      .clickListOption('organiser', this.state.event.organiser)
-      .wait() // wait for xhr
-
-    await EventList.section.firstEventInList
-      .waitForElementVisible('@organiser')
-      .assert.containsText('@organiser', this.state.event.organiser)
-
-    // clear filter
-    await EventList.section.filterTags
-      .click('@organiser')
+      .clickMultipleChoiceOption('organiser', this.state.event.organiser)
       .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by country/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('address_country', this.state.event.address_country)
-      .wait() // wait for xhr
-
-    await EventList.section.firstEventInList
-      .waitForElementVisible('@country')
-      .assert.containsText('@country', this.state.event.address_country)
-
-    // clear filter
-    await EventList.section.filterTags
-      .click('@country')
+      .clickMultipleChoiceOption('address_country', this.state.event.address_country)
       .wait() // wait for xhr
   })
 
   Then(/^I filter the events list by event type/, async function () {
     await EventList.section.filters
       .waitForElementPresent('@eventType')
-      .clickListOption('event_type', this.state.event.event_type)
-      .wait() // wait for xhr
-
-    await EventList.section.firstEventInList
-      .waitForElementVisible('@eventType')
-      .assert.containsText('@eventType', this.state.event.event_type)
-
-    // clear filter
-    await EventList.section.filterTags
-      .click('@eventType')
+      .clickMultipleChoiceOption('event_type', this.state.event.event_type)
       .wait() // wait for xhr
   })
 
@@ -133,15 +101,6 @@ defineSupportCode(({ Then, When }) => {
       .waitForElementPresent('@startDateAfter')
       .setValue('@startDateAfter', startDate)
       .sendKeys('@startDateAfter', [ client.Keys.ENTER ])
-      .wait() // wait for xhr
-
-    await EventList.section.firstEventInList
-      .waitForElementVisible('@eventStart')
-      .assert.containsText('@eventStart', startDate)
-
-    // clear filter
-    await EventList.section.filterTags
-      .click('@fromDate')
       .wait() // wait for xhr
   })
 

@@ -8,7 +8,7 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the interactions list by service provider$/, async function () {
     await InteractionList.section.filters
       .waitForElementPresent('@serviceProvider')
-      .clickListOption('dit_team', this.state.interaction.serviceProvider)
+      .clickMultipleChoiceOption('dit_team', this.state.interaction.serviceProvider)
       .wait() // wait for xhr
   })
 

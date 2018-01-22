@@ -3,12 +3,11 @@ const {
   getMetaListItemValueSelector,
 } = require('../../../helpers/selectors')
 
-const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
+const getFilterTagSelector = (text) => getSelectorForElementWithText(
   text,
   {
     el: '//span',
     className: 'c-collection__filter-label',
-    child: '/following-sibling::a',
   }
 )
 
@@ -21,12 +20,12 @@ module.exports = {
     filterTags: {
       selector: '.c-collection__filter-summary',
       elements: {
-        kind: getFilterTagRemoveBtnSelector('Kind'),
-        communicationChannel: getFilterTagRemoveBtnSelector('Communication channel'),
-        adviser: getFilterTagRemoveBtnSelector('Adviser'),
-        from: getFilterTagRemoveBtnSelector('From'),
-        to: getFilterTagRemoveBtnSelector('To'),
-        seviceProvider: getFilterTagRemoveBtnSelector('Service provider'),
+        kind: getFilterTagSelector('Kind'),
+        communicationChannel: getFilterTagSelector('Communication channel'),
+        adviser: getFilterTagSelector('Adviser'),
+        dateFrom: getFilterTagSelector('From'),
+        dateTo: getFilterTagSelector('To'),
+        seviceProvider: getFilterTagSelector('Service provider'),
       },
     },
     firstInteractionInList: {
@@ -48,13 +47,13 @@ module.exports = {
     filters: {
       selector: '.c-collection-filters',
       elements: {
-        kindInteraction: '#field-kind-1',
-        kindServiceDelivery: '#field-kind-2',
-        communicationChannel: '#field-communication_channel',
-        adviser: '#field-dit_adviser',
-        from: '#field-date_after',
-        to: 'label[for=field-date_before]',
-        serviceProvider: 'label[for=field-dit_team]',
+        interaction: 'label[for=field-kind-1]',
+        serviceDelivery: 'label[for=field-kind-2]',
+        communicationChannel: '[name="communication_channel"]',
+        adviser: '[name="dit_adviser"]',
+        dateFrom: '#field-date_after',
+        dateTo: '#field-date_before',
+        serviceProvider: '[name="dit_team"]',
       },
     },
     collectionHeader: {
