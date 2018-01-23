@@ -48,6 +48,7 @@ module.exports = {
       elements: {
         paginationSummary: '.c-collection__pagination-summary',
         resultCount: '.c-collection__result-count',
+        removeAllFiltersLink: '.c-collection__filter-remove-all',
       },
     },
     firstCollectionItem: {

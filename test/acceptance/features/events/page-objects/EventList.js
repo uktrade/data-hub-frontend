@@ -62,21 +62,11 @@ module.exports = {
     filters: {
       selector: '.c-collection-filters',
       elements: {
-        nameInput: {
-          selector: '#field-name',
-        },
-        organiser: {
-          selector: 'select[name="organiser"]',
-        },
-        country: {
-          selector: 'select[name="address_country"]',
-        },
-        eventType: {
-          selector: 'select[name="event_type"]',
-        },
-        startDateAfter: {
-          selector: '#field-start_date_after',
-        },
+        nameInput: '#field-name',
+        organiser: '[name="organiser"]',
+        country: '[name="address_country"]',
+        eventType: '[name="event_type"]',
+        startDateAfter: '#field-start_date_after',
       },
     },
   },

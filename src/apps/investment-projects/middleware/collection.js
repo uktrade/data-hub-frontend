@@ -4,7 +4,6 @@ const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformInvestmentProjectToListItem,
-  transformInvestmentListItemToHaveMetaLinks,
 } = require('../transformers')
 
 async function getInvestmentProjectsCollection (req, res, next) {
@@ -19,7 +18,6 @@ async function getInvestmentProjectsCollection (req, res, next) {
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
         transformInvestmentProjectToListItem,
-        transformInvestmentListItemToHaveMetaLinks(req.query),
       ))
 
     next()
