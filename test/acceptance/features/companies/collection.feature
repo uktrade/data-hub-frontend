@@ -45,15 +45,15 @@ Feature: View collection of companies
     When I navigate to the Company collection page
     And I filter the companies list by company
     Then the companies should be filtered by company name
-    When the company filter is cleared
+    When I clear all filters
     And I filter the companies list by sector
     Then the companies should be filtered by company sector
-    When the sector filter is cleared
+    When I clear all filters
     Then there are no filters selected
     And the result count should be reset
     When I filter the companies list by country
     Then the companies should be filtered to show badge company country
-    When the country filter is cleared
+    When I clear all filters
     Then there are no filters selected
     And the result count should be reset
     When I filter the companies list by country

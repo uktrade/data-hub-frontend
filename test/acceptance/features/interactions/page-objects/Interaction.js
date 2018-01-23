@@ -165,16 +165,6 @@ module.exports = {
     },
   ],
   sections: {
-    filters: {
-      selector: '.c-collection-filters',
-      elements: {
-        interaction: 'label[for=field-kind-1]',
-        serviceDelivery: 'label[for=field-kind-2]',
-        dateFrom: '#field-date_after',
-        dateTo: '#field-date_before',
-        serviceProvider: '#field-dit_team',
-      },
-    },
     details: {
       selector: '.table--key-value',
       elements: {

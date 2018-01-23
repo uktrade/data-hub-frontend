@@ -57,29 +57,25 @@ Feature: View collection of contacts
     When I navigate to the Contact collection page
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
-    When the contact filter is cleared
-    And the status filter is cleared
+    When I clear all filters
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset
     When I filter the contacts list by company
     Then the contacts should be filtered by company name
-    When the company filter is cleared
-    And the status filter is cleared
+    When I clear all filters
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset
     When I filter the contacts list by sector
     Then the contacts should be filtered by company sector
-    When the sector filter is cleared
-    And the status filter is cleared
+    When I clear all filters
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset
     When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
-    When the country filter is cleared
-    And the status filter is cleared
+    When I clear all filters
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset

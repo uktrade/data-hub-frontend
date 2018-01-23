@@ -33,28 +33,28 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the contacts list by sector$/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@sector')
-      .clickListOption('company_sector', this.state.company.sector)
+      .clickMultipleChoiceOption('company_sector', this.state.company.sector)
       .wait() // wait for xhr
   })
 
   When(/^I filter the contacts list by country$/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('address_country', this.state.company.country)
+      .clickMultipleChoiceOption('address_country', this.state.company.country)
       .wait() // wait for xhr
   })
 
   When(/^I filter the contacts list by UK region/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@ukRegion')
-      .clickListOption('company_uk_region', this.state.company.ukRegion)
+      .clickMultipleChoiceOption('company_uk_region', this.state.company.ukRegion)
       .wait() // wait for xhr
   })
 
   When(/^I filter the contacts list by inactive status/, async function () {
     await ContactList.section.filters
       .waitForElementPresent('@inactive')
-      .clic('@inactive')
+      .click('@inactive')
       .wait() // wait for xhr
   })
 
@@ -62,12 +62,6 @@ defineSupportCode(({ Given, Then, When }) => {
     await ContactList.section.filters
       .waitForElementPresent('@active')
       .click('@active')
-      .wait() // wait for xhr
-  })
-
-  When(/^the (.+) filter is cleared$/, async function (filterName) {
-    await ContactList.section.filterTags
-      .click(`@${filterName}`)
       .wait() // wait for xhr
   })
 
