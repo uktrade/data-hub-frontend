@@ -1,22 +1,13 @@
-const FormController = require('~/src/apps/omis/controllers/form')
+const { assign } = require('lodash')
 
-const Controller = proxyquire('~/src/apps/omis/apps/create/controllers/market', {
-  '../../../../../lib/metadata': {
-    omisMarketOptions: [{
-      id: '1',
-      name: 'One',
-      disabled_on: null,
-    }, {
-      id: '2',
-      name: 'Two',
-      disabled_on: '2010-01-01T00:00:00',
-    }, {
-      id: '3',
-      name: 'Three',
-      disabled_on: null,
-    }],
-  },
-})
+const { apiRoot } = require('~/config')
+const FormController = require('~/src/apps/omis/controllers/form')
+const Controller = require('~/src/apps/omis/apps/create/controllers/market')
+
+const marketOptionsMock = [
+  { id: '9999', name: 'United Kingdom' },
+  { id: '8888', name: 'Germany' },
+]
 
 describe('OMIS create market controller', () => {
   beforeEach(() => {
@@ -25,34 +16,57 @@ describe('OMIS create market controller', () => {
   })
 
   describe('configure()', () => {
-    beforeEach(() => {
-      this.reqMock = Object.assign({}, globalReq, {
-        form: {
-          options: {
-            fields: {
-              primary_market: {},
+    context('when getOptions returns 200', () => {
+      beforeEach(async () => {
+        nock(apiRoot)
+          .get('/metadata/omis-market/')
+          .reply(200, marketOptionsMock)
+
+        this.reqMock = assign({}, globalReq, {
+          form: {
+            options: {
+              fields: {
+                primary_market: {},
+              },
             },
           },
-        },
+        })
+
+        sandbox.spy(FormController.prototype, 'configure')
+        await this.controller.configure(this.reqMock, globalRes, this.nextSpy)
       })
 
-      sandbox.spy(FormController.prototype, 'configure')
+      it('should set list of markets dynamically', () => {
+        expect(this.reqMock.form.options.fields.primary_market.options).to.deep.equal([
+          { value: '8888', label: 'Germany' },
+          { value: '9999', label: 'United Kingdom' },
+        ])
+      })
+
+      it('should call parent configure method', () => {
+        expect(FormController.prototype.configure).to.be.calledOnce
+        expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+      })
     })
 
-    it('should set the list of markets', () => {
-      this.controller.configure(this.reqMock, globalRes, this.nextSpy)
+    context('when getOptions returns an error', () => {
+      beforeEach(async () => {
+        this.errorMessageMock = 'ERROR_REASON'
 
-      expect(this.reqMock.form.options.fields.primary_market.options).to.deep.equal([
-        {
-          value: '1',
-          label: 'One',
-        },
-        {
-          value: '3',
-          label: 'Three',
-        },
-      ])
-      expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+        nock(apiRoot)
+          .get('/metadata/omis-market/')
+          .replyWithError(this.errorMessageMock)
+
+        await this.controller.configure(globalReq, globalRes, this.nextSpy)
+      })
+
+      it('should call next with the error', () => {
+        const errorArgument = this.nextSpy.args[0][0]
+
+        expect(this.nextSpy).to.be.calledOnce
+        expect(errorArgument instanceof Error).to.be.true
+        expect(errorArgument.message).to.equal(`Error: ${this.errorMessageMock}`)
+      })
     })
   })
 })
