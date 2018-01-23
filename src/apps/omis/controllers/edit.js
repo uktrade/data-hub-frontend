@@ -65,7 +65,7 @@ class EditController extends FormController {
       }
 
       const parsedDate = dateFns.parse(newValue)
-      if (dateFields.includes(key) && dateFns.isValid(parsedDate)) {
+      if (dateFields.includes(key) && newValue && dateFns.isValid(parsedDate)) {
         return dateFns.format(parsedDate, longDateFormat)
       }
 
