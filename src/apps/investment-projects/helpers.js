@@ -1,48 +1,32 @@
-const { get, indexOf, forEach, uniq } = require('lodash')
+const { assign, map, sortBy, compact } = require('lodash')
 
 const config = require('../../../config')
+const labels = require('./labels')
+const logger = require('../../../config/logger')
 
-const formFields = {
-  value: [
-    'total_investment',
-    'government_assistance',
-    'number_new_jobs',
-    'number_safeguarded_jobs',
-    'r_and_d_budget',
-    'non_fdi_r_and_d_budget',
-    'new_tech_to_uk',
-    'export_revenue',
-    'client_cannot_provide_total_investment',
-    'client_cannot_provide_foreign_investment',
-    'fdi_value',
-  ],
-  requirements: [
-    'strategic_drivers',
-    'client_considering_other_countries',
-    'uk_region_locations',
-    'site_decided',
-    'client_requirements',
-    'address_1',
-    'address_town',
-    'address_postcode',
-  ],
-  projectManagement: [
-    'project_manager',
-    'project_assurance_adviser',
-  ],
-  associatedNonFdiRandDProject: [
-    'associated_non_fdi_r_and_d_project',
-  ],
-}
+const allLabels = assign(
+  {},
+  labels.detailsLabels.view,
+  labels.valueLabels.view,
+  labels.valueLabels.edit,
+  labels.requirementsLabels.view,
+  labels.requirementsLabels.edit,
+  labels.projectManagementLabels.edit,
+  labels.projectManagementLabels.edit,
+)
 
 const linkDetails = {
+  projectSummary: {
+    url: 'edit-details',
+    text: 'Investment project summary form',
+  },
   requirements: {
     url: 'edit-requirements',
     text: 'Requirements and location form',
   },
   value: {
     url: 'edit-value',
-    text: 'Value',
+    text: 'Value form',
   },
   projectManagement: {
     url: 'edit-project-management',
@@ -52,6 +36,32 @@ const linkDetails = {
     url: 'edit-associated',
     text: 'Associated project Non-FDI R&D project form',
   },
+}
+
+const formFieldLinks = {
+  actual_land_date: linkDetails.projectSummary,
+  total_investment: linkDetails.value,
+  government_assistance: linkDetails.value,
+  number_new_jobs: linkDetails.value,
+  number_safeguarded_jobs: linkDetails.value,
+  r_and_d_budget: linkDetails.value,
+  non_fdi_r_and_d_budget: linkDetails.value,
+  new_tech_to_uk: linkDetails.value,
+  export_revenue: linkDetails.value,
+  client_cannot_provide_total_investment: linkDetails.value,
+  client_cannot_provide_foreign_investment: linkDetails.value,
+  actual_uk_regions: linkDetails.requirements,
+  strategic_drivers: linkDetails.requirements,
+  client_considering_other_countries: linkDetails.requirements,
+  uk_region_locations: linkDetails.requirements,
+  site_decided: linkDetails.requirements,
+  client_requirements: linkDetails.requirements,
+  address_1: linkDetails.requirements,
+  address_town: linkDetails.requirements,
+  address_postcode: linkDetails.requirements,
+  project_manager: linkDetails.projectManagement,
+  project_assurance_adviser: linkDetails.projectManagement,
+  associated_non_fdi_r_and_d_project: linkDetails.associatedNonFdiRandDProject,
 }
 
 const toCompleteStageMessages = {
@@ -67,28 +77,19 @@ const toCompleteStageMessages = {
   ],
 }
 
-function buildFormLinks (forms, links) {
-  const formLinks = []
+function buildIncompleteFormList (incompleteFields = []) {
+  const formList = map(incompleteFields, (incompleteField) => {
+    const formFieldLink = formFieldLinks[incompleteField]
+    if (formFieldLink) {
+      return assign({}, formFieldLink, {
+        text: `${allLabels[incompleteField]} in ${formFieldLink.text}`,
+      })
+    }
 
-  forEach(forms, (formName) => {
-    formLinks.push(get(links, formName))
+    logger.error(`Could not find form field link for ${incompleteField}`)
   })
 
-  return formLinks
-}
-
-function buildIncompleteFormList (incompleteFields = [], formContents = formFields, links = linkDetails) {
-  let forms = []
-
-  forEach(incompleteFields, (incompleteField) => {
-    forEach(formContents, (formFields, key) => {
-      if (indexOf(formFields, incompleteField) !== -1) {
-        forms.push(key)
-      }
-    })
-  })
-
-  return buildFormLinks(uniq(forms), links)
+  return sortBy(compact(formList), 'url')
 }
 
 module.exports = {

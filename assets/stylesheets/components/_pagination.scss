@@ -10,6 +10,7 @@
   .c-pagination__label--next {
     float: left;
     font-size: 24px;
+    margin: 0;
   }
 
   .c-pagination__label--next {
@@ -29,6 +30,10 @@
 
 .c-pagination__list-item {
   display: inline-block;
+
+  & + & {
+    margin-left: $baseline-grid-unit * 1.5;
+  }
 }
 
 .c-pagination__label {
@@ -52,6 +57,14 @@
     color: $text-colour;
     text-decoration: none;
   }
+}
+
+.c-pagination__label--prev {
+  margin-right: $baseline-grid-unit * 1.5;
+}
+
+.c-pagination__label--next {
+  margin-left: $baseline-grid-unit * 1.5;
 }
 
 .c-pagination__label--truncation {
