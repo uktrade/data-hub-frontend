@@ -132,7 +132,7 @@ webpackConfigs.prod = merge.smart(common, {
       sourceMap: true,
       dead_code: true,
     }),
-    new ExtractTextPlugin('css/[name].[chunkhash:8].css'),
+    new ExtractTextPlugin('css/[name].[contenthash:8].css'),
   ],
 })
 
