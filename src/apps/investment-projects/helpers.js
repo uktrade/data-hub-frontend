@@ -51,6 +51,7 @@ const formFieldLinks = {
   client_cannot_provide_total_investment: linkDetails.value,
   client_cannot_provide_foreign_investment: linkDetails.value,
   actual_uk_regions: linkDetails.requirements,
+  delivery_partners: linkDetails.requirements,
   strategic_drivers: linkDetails.requirements,
   client_considering_other_countries: linkDetails.requirements,
   uk_region_locations: linkDetails.requirements,
