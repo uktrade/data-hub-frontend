@@ -10,7 +10,7 @@
   {% block form %}
     {% call MultiStepForm(options | assign({
       buttonText: options.buttonText or 'Continue',
-      returnLink: options.backLink or backLink,
+      returnLink: backLink,
       errors: errors
     })) %}
 
