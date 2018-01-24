@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, flatten } = require('lodash')
 
 const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
@@ -10,6 +10,7 @@ const investmentFiltersFields = [
     macroName: 'MultipleChoiceField',
     name: 'stage',
     type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadata.investmentStageOptions.map(transformObjectToOption)
     },
@@ -18,12 +19,14 @@ const investmentFiltersFields = [
     macroName: 'MultipleChoiceField',
     name: 'investment_type',
     type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadata.investmentTypeOptions.map(transformObjectToOption)
     },
   },
   Object.assign({}, globalFields.sectors, {
-    initialOption: '-- All sectors --',
+    type: 'checkbox',
+    modifier: 'option-select',
   }),
   {
     macroName: 'TextField',
@@ -41,12 +44,14 @@ const investmentFiltersFields = [
     macroName: 'MultipleChoiceField',
     name: 'status',
     type: 'checkbox',
+    modifier: 'option-select',
     options: metadata.investmentStatusOptions,
   },
   {
     macroName: 'MultipleChoiceField',
     name: 'uk_region_location',
-    initialOption: '-- Select region --',
+    type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadata.regionOptions.map(transformObjectToOption)
     },
@@ -54,7 +59,8 @@ const investmentFiltersFields = [
   {
     macroName: 'MultipleChoiceField',
     name: 'investor_company_country',
-    initialOption: '-- Select country --',
+    type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadata.countryOptions.map(transformObjectToOption)
     },
@@ -62,7 +68,7 @@ const investmentFiltersFields = [
 ].map(filter => {
   return Object.assign(filter, {
     label: collectionFilterLabels.edit[filter.name],
-    modifier: ['smaller', 'light'],
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })
 })
 
@@ -92,6 +98,7 @@ const requirementsFormConfig = ({
   strategicDrivers,
   countries,
   ukRegions,
+  partners,
 }) => {
   const labels = requirementsLabels.edit
 
@@ -223,6 +230,19 @@ const requirementsFormConfig = ({
             options: ukRegions,
           }),
         ],
+      },
+      {
+        macroName: 'AddAnother',
+        buttonName: 'add_item',
+        name: 'delivery_partners',
+        children: [{
+          macroName: 'MultipleChoiceField',
+          name: 'delivery_partners',
+          label: labels.delivery_partners,
+          isLabelHidden: true,
+          options: partners,
+          initialOption: '-- Select a partner --',
+        }],
       },
     ].map(field => {
       return assign(field, {

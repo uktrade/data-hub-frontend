@@ -7,7 +7,7 @@
   background: url("../../images/separator.png") left center no-repeat;
   background-size: 6px 11px;
   display: inline-block;
-  margin: 0 0 0 $default-spacing-unit / 2;
+  margin: 0 0 0 ($default-spacing-unit - 6);
   padding: 0 0 0 $default-spacing-unit;
 
   @include device-pixel-ratio(2) {

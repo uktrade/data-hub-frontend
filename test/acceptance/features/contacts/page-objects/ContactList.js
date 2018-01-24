@@ -47,9 +47,9 @@ module.exports = {
       elements: {
         contact: '#field-name',
         company: '#field-company_name',
-        sector: '#field-company_sector',
-        country: '#field-address_country',
-        ukRegion: '#field-company_uk_region',
+        sector: '[name="company_sector"]',
+        country: '[name="address_country"]',
+        ukRegion: '[name="company_uk_region"]',
         active: 'label[for=field-archived-1]',
         inactive: 'label[for=field-archived-2]',
       },

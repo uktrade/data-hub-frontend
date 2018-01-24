@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, flatten } = require('lodash')
 
 const formLabels = require('./labels')
 const currentYear = (new Date()).getFullYear()
@@ -123,17 +123,16 @@ const interactionFiltersFieldConfig = function (advisers = [], channels = [], te
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
       ],
+      modifier: 'option-select',
     },
-    assign(
-      {},
-      interactionFields.communicationChannel(channels),
-      { initialOption: '-- All channels --' }
-    ),
-    assign(
-      {},
-      interactionFields.adviser(advisers),
-      { initialOption: '-- All advisers --' }
-    ),
+    assign({}, interactionFields.communicationChannel(channels), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
+    assign({}, interactionFields.adviser(advisers), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
     {
       macroName: 'TextField',
       name: 'date_after',
@@ -146,15 +145,14 @@ const interactionFiltersFieldConfig = function (advisers = [], channels = [], te
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign(
-      {},
-      interactionFields.provider(teams),
-      { initialOption: '-- All providers --' }
-    ),
+    assign({}, interactionFields.provider(teams), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
   ].map(filter => {
     return assign(filter, {
       label: formLabels.filters[filter.name],
-      modifier: ['smaller', 'light'],
+      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
     })
   })
 }

@@ -6,6 +6,7 @@ const { getDateFor } = require('../../../helpers/date')
 
 defineSupportCode(({ Given, When, Then }) => {
   const Interaction = client.page.Interaction()
+  const InteractionList = client.page.InteractionList()
 
   Given(/^a company investment project is created for interactions$/, async function () {
   })
@@ -127,8 +128,10 @@ defineSupportCode(({ Given, When, Then }) => {
    * result of the Collection.
    */
   Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
-    const filtersSection = Interaction.section.filters
+    const filtersSection = InteractionList.section.filters
+    const filterTagsSection = InteractionList.section.filterTags
     const interactionType = camelCase(typeOfInteraction)
+    const waitForTimeout = 15000
     const date = getDateFor({
       year: get(this.state, `${interactionType}.dateOfInteractionYear`),
       month: get(this.state, `${interactionType}.dateOfInteractionMonth`),
@@ -138,20 +141,36 @@ defineSupportCode(({ Given, When, Then }) => {
     await filtersSection
       .waitForElementPresent(`@${interactionType}`)
       .click(`@${interactionType}`)
-      .wait() // wait for xhr
-      .clickListOption('dit_adviser', get(this.state, `${interactionType}.ditAdviser`))
-      .wait() // wait for xhr
+
+    await filterTagsSection
+      .waitForElementPresent('@kind', waitForTimeout)
+
+    await filtersSection
+      .clickMultipleChoiceOption('dit_adviser', get(this.state, `${interactionType}.ditAdviser`))
+
+    await filterTagsSection
+      .waitForElementPresent('@adviser', waitForTimeout)
+
+    await filtersSection
       .setValue('@dateFrom', date)
       .sendKeys('@dateFrom', [ client.Keys.ENTER ])
-      .wait() // wait for xhr
+
+    await filterTagsSection
+      .waitForElementPresent('@dateFrom', waitForTimeout)
+
+    await filtersSection
       .setValue('@dateTo', date)
       .sendKeys('@dateTo', [ client.Keys.ENTER ])
-      .wait() // wait for xhr
+
+    await filterTagsSection
+      .waitForElementPresent('@dateTo', waitForTimeout)
 
     if (interactionType === 'interaction') {
       await filtersSection
-        .clickListOption('communication_channel', get(this.state, 'interaction.communicationChannel'))
-        .wait() // wait for xhr
+        .clickMultipleChoiceOption('communication_channel', get(this.state, 'interaction.communicationChannel'))
+
+      await filterTagsSection
+        .waitForElementPresent('@communicationChannel', waitForTimeout)
     }
   })
 })

@@ -1,6 +1,5 @@
-/* eslint-disable camelcase */
-const { assign, compact, get, isArray, pickBy } = require('lodash')
-const queryString = require('query-string')
+/* eslint camelcase: 0 */
+const { isArray, assign, compact, pickBy } = require('lodash')
 
 const labels = require('../labels')
 
@@ -36,31 +35,6 @@ function transformInvestmentProjectToListItem ({
   }
 }
 
-function transformInvestmentListItemToHaveMetaLinks (query = {}) {
-  return function transformListItem (item) {
-    if (!isArray(item.meta)) { return item }
-
-    item.meta.forEach(metaItem => {
-      const name = metaItem.name
-      const itemQuery = Object.assign(
-        {},
-        query,
-        {
-          custom: true,
-          [name]: get(metaItem, 'value.id', metaItem.value),
-        },
-      )
-
-      if (!metaItem.isInert) {
-        metaItem.url = `?${queryString.stringify(itemQuery)}`
-        metaItem.isSelected = !!query[name]
-      }
-    })
-
-    return item
-  }
-}
-
 function transformInvestmentListItemToDisableMetaLinks (item) {
   if (!isArray(item.meta)) { return item }
 
@@ -73,6 +47,5 @@ function transformInvestmentListItemToDisableMetaLinks (item) {
 
 module.exports = {
   transformInvestmentProjectToListItem,
-  transformInvestmentListItemToHaveMetaLinks,
   transformInvestmentListItemToDisableMetaLinks,
 }

@@ -51,9 +51,9 @@ module.exports = {
       selector: '.c-collection-filters',
       elements: {
         company: '#field-name',
-        sector: '#field-sector',
-        country: '#field-country',
-        ukRegion: '#field-uk_region',
+        sector: '[name="sector"]',
+        country: '[name="country"]',
+        ukRegion: '[name="uk_region"]',
       },
     },
     collectionHeader: {
