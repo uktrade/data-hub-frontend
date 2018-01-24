@@ -39,7 +39,7 @@ describe('buildIncompleteFormList', () => {
       const expected = [
         {
           url: 'edit-details',
-          text: 'Actual land date in Investment project summary form',
+          text: 'Actual land date',
         },
       ]
 
@@ -72,7 +72,7 @@ describe('buildIncompleteFormList', () => {
       const expected = [
         {
           url: 'edit-details',
-          text: 'Actual land date in Investment project summary form',
+          text: 'Actual land date',
         },
       ]
 
@@ -105,15 +105,15 @@ describe('buildIncompleteFormList', () => {
       const expected = [
         {
           url: 'edit-details',
-          text: 'Actual land date in Investment project summary form',
+          text: 'Actual land date',
         },
         {
           url: 'edit-value',
-          text: 'Number of new jobs in Value form',
+          text: 'Number of new jobs',
         },
         {
           url: 'edit-value',
-          text: 'Number of safeguarded jobs in Value form',
+          text: 'Number of safeguarded jobs',
         },
       ]
 
