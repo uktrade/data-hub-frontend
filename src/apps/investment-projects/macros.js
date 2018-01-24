@@ -41,6 +41,18 @@ const investmentFiltersFields = [
     placeholder: 'e.g. 2019-05-09',
   },
   {
+    macroName: 'TextField',
+    name: 'actual_land_date_before',
+    hint: 'YYYY-MM-DD',
+    placeholder: 'e.g. 2018-07-18',
+  },
+  {
+    macroName: 'TextField',
+    name: 'actual_land_date_after',
+    hint: 'YYYY-MM-DD',
+    placeholder: 'e.g. 2019-05-09',
+  },
+  {
     macroName: 'MultipleChoiceField',
     name: 'status',
     type: 'checkbox',
