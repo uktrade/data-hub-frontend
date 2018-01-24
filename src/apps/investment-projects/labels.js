@@ -64,6 +64,10 @@ const labels = {
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
       actual_uk_regions: 'UK regions landed',
       delivery_partners: 'Delivery partners',
+      address_1: 'Street',
+      address_2: 'Street 2',
+      address_town: 'Town',
+      address_postcode: 'Postcode',
     },
   },
   evaluationValueLabels: {
