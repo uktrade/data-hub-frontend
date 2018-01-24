@@ -1,4 +1,4 @@
-const { assign, map, sortBy, compact } = require('lodash')
+const { assign, map, sortBy, compact, get } = require('lodash')
 
 const config = require('../../../config')
 const labels = require('./labels')
@@ -79,14 +79,22 @@ const toCompleteStageMessages = {
 
 function buildIncompleteFormList (incompleteFields = []) {
   const formList = map(incompleteFields, (incompleteField) => {
-    const formFieldLink = formFieldLinks[incompleteField]
-    if (formFieldLink) {
-      return assign({}, formFieldLink, {
-        text: `${allLabels[incompleteField]} in ${formFieldLink.text}`,
-      })
+    const incompleteFieldLabel = get(allLabels, incompleteField)
+    const incompleteFieldFormLink = get(formFieldLinks, incompleteField)
+
+    if (!incompleteFieldLabel) {
+      logger.error(`Could not find label for incomplete field ${incompleteField}`)
+      return
     }
 
-    logger.error(`Could not find form field link for ${incompleteField}`)
+    if (!incompleteFieldFormLink) {
+      logger.error(`Could not find form link for incomplete field ${incompleteField}`)
+      return
+    }
+
+    return assign({}, incompleteFieldFormLink, {
+      text: `${incompleteFieldLabel} in ${incompleteFieldFormLink.text}`,
+    })
   })
 
   return sortBy(compact(formList), 'url')
