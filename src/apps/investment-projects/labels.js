@@ -55,6 +55,7 @@ const labels = {
       uk_region_locations: 'Possible UK locations',
       actual_uk_regions: 'UK regions landed',
       uk_company: 'UK recipient company',
+      delivery_partners: 'Delivery partners',
     },
     edit: {
       strategic_drivers: 'Strategic drivers behind this investment',
@@ -62,6 +63,7 @@ const labels = {
       uk_region_locations: 'Possible UK locations for this investment',
       site_decided: 'Has the UK location (site address) for this investment been decided yet?',
       actual_uk_regions: 'UK regions landed',
+      delivery_partners: 'Delivery partners',
     },
   },
   evaluationValueLabels: {

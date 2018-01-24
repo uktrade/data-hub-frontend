@@ -55,6 +55,12 @@ async function getInvestmentDetails (req, res, next) {
     res.locals.equityCompany = investmentData.investor_company
     res.locals.investmentProjectStages = investmentProjectStages.map((stage) => stage.name)
 
+    const incompleteFields = buildIncompleteFormList(get(investmentData, 'incomplete_fields', []))
+    const isCurrentStageComplete = investmentData.team_complete &&
+      investmentData.requirements_complete &&
+      investmentData.value_complete &&
+      !incompleteFields.length
+
     res.locals.investmentStatus = {
       id: investmentData.id,
       meta: [
@@ -82,9 +88,9 @@ async function getInvestmentDetails (req, res, next) {
         url: `/companies/${get(investmentData, 'investor_company.id')}`,
       },
       currentStage: {
+        incompleteFields,
         name: stageName,
-        isComplete: investmentData.team_complete && investmentData.requirements_complete && investmentData.value_complete,
-        incompleteFields: buildIncompleteFormList(get(investmentData, 'incomplete_fields', [])),
+        isComplete: isCurrentStageComplete,
         messages: get(toCompleteStageMessages, camelCase(stageName), []),
       },
       nextStage: getNextStage(stageName, investmentProjectStages),

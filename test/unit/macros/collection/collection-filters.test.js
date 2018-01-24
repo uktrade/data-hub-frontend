@@ -58,16 +58,6 @@ describe('CollectionFilters macro', () => {
       expect(rendererFilter2Options[0].value).to.equal('r')
     })
 
-    it('should render results filters component with custom heading', () => {
-      const component = entitiesMacros.renderToDom('CollectionFilters', {
-        heading: 'Pick one',
-        filtersFields: [
-          this.filter1,
-        ],
-      })
-      expect(component.querySelector('.c-collection-filters__heading').textContent.trim()).to.equal('Pick one')
-    })
-
     it('should render collection filters form with custom fields', () => {
       const component = entitiesMacros.renderToDom('CollectionFilters', {
         query: {

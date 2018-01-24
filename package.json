@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -41,6 +41,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "express": "^4.16.2",
+    "express-minify-html": "^0.12.0",
     "express-session": "^1.15.6",
     "express-sslify": "^1.2.0",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -118,7 +119,7 @@
     "circle:acceptance:dit-staff": "npm run circle:acceptance --  --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "npm run circle:acceptance --  --tag da --skiptags ignore",
     "circle:acceptance:lep-staff": "npm run circle:acceptance --  --tag lep --skiptags ignore",
-    "heroku-postbuild": "npm rebuild && npm run build",
+    "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
   },
   "pre-commit": "lint-staged",

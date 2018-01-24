@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, flatten } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 const metadataRepo = require('../../../../lib/metadata')
@@ -9,32 +9,31 @@ const filtersFields = [
     macroName: 'MultipleChoiceField',
     label: 'Order status',
     name: 'status',
-    type: 'radio',
+    type: 'checkbox',
+    modifier: 'option-select',
     options: ORDER_STATES,
   },
   {
     macroName: 'TextField',
     label: 'Order reference',
     name: 'reference',
-    hint: 'At least three characters',
   },
   {
     macroName: 'TextField',
     label: 'Company name',
     name: 'company_name',
-    hint: 'At least three characters',
   },
   {
     macroName: 'TextField',
     label: 'Contact name',
     name: 'contact_name',
-    hint: 'At least three characters',
   },
   {
     macroName: 'MultipleChoiceField',
     label: 'Market (country)',
     name: 'primary_market',
-    initialOption: 'All countries',
+    type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadataRepo.omisMarketOptions.map(transformObjectToOption)
     },
@@ -43,14 +42,15 @@ const filtersFields = [
     macroName: 'MultipleChoiceField',
     label: 'UK region',
     name: 'uk_region',
-    initialOption: 'All regions',
+    type: 'checkbox',
+    modifier: 'option-select',
     options () {
       return metadataRepo.regionOptions.map(transformObjectToOption)
     },
   },
 ].map(filter => {
   return assign({}, filter, {
-    modifier: ['smaller', 'light'],
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })
 })
 

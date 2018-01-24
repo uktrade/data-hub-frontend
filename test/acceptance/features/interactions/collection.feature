@@ -1,5 +1,5 @@
 @interactions-collection @collection
-Feature: View collection of contacts
+Feature: View collection of interactions
   As an existing user
   I would like to view all the interactions in one place
   And be able to read the interaction details as expected

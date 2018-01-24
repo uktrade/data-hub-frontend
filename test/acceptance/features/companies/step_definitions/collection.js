@@ -24,21 +24,21 @@ defineSupportCode(({ Given, Then, When }) => {
   When(/^I filter the companies list by sector$/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@sector')
-      .clickListOption('sector', this.state.company.sector)
+      .clickMultipleChoiceOption('sector', this.state.company.sector)
       .wait() // wait for xhr
   })
 
   When(/^I filter the companies list by country$/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@country')
-      .clickListOption('country', this.state.company.country)
+      .clickMultipleChoiceOption('country', this.state.company.country)
       .wait() // wait for xhr
   })
 
   When(/^I filter the companies list by UK region/, async function () {
     await CompanyList.section.filters
       .waitForElementPresent('@ukRegion')
-      .clickListOption('uk_region', this.state.company.ukRegion)
+      .clickMultipleChoiceOption('uk_region', this.state.company.ukRegion)
       .wait() // wait for xhr
   })
 
