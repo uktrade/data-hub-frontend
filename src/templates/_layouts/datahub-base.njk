@@ -11,7 +11,7 @@
   {% extends "./dit-base.njk" %}
 {% endif %}
 
-{% set pageTitle = [getPageTitle(), 'DIT Data Hub'] | flatten | join(' - ') %}
+{% set pageTitle = [getPageTitle() if getPageTitle, 'DIT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
 
 {% block head %}
   {{ super() }}
@@ -52,7 +52,7 @@
   {{ super() }}
 
   {% block local_header %}
-    {% set pageTitle = getPageTitle() %}
+    {% set pageTitle = getPageTitle() if getPageTitle %}
     {% set heading = heading or pageTitle[0] %}
     {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
   {% endblock %}
