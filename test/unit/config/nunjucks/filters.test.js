@@ -193,6 +193,54 @@ describe('nunjucks filters', () => {
     })
   })
 
+  describe('#singularise', () => {
+    context('when the count is > 1', () => {
+      beforeEach(() => {
+        this.singular = filters.singularise('Companies', 10)
+      })
+
+      it('should return the original word', () => {
+        expect(this.singular).to.equal('Companies')
+      })
+    })
+
+    context('when the count is 1', () => {
+      beforeEach(() => {
+        this.count = 1
+      })
+
+      context('and a singular word is provided', () => {
+        beforeEach(() => {
+          this.singular = filters.singularise('Companies', this.count, 'Ducks')
+        })
+
+        it('should use the word provided', () => {
+          expect(this.singular).to.equal('Ducks')
+        })
+      })
+
+      context('and the word ends in ies', () => {
+        beforeEach(() => {
+          this.singular = filters.singularise('Companies', this.count)
+        })
+
+        it('should strip the ies and replace it with y', () => {
+          expect(this.singular).to.equal('Company')
+        })
+      })
+
+      context('and the word ends just in s', () => {
+        beforeEach(() => {
+          this.singular = filters.singularise('Contacts', this.count)
+        })
+
+        it('should strip the s at the end', () => {
+          expect(this.singular).to.equal('Contact')
+        })
+      })
+    })
+  })
+
   describe('#formatNumber', () => {
     it('should correctly format number for "en-GB" locale', () => {
       const formattedNumber = filters.formatNumber(12345678.1)

@@ -55,6 +55,20 @@ function pluralise (string, count, pluralisedWord) {
   return string
 }
 
+function singularise (string, count, singularisedWord) {
+  if (parseInt(count, 10) === 1) {
+    if (singularisedWord) {
+      return singularisedWord
+    } else if (string.endsWith('ies')) {
+      return string.substr(0, string.length - 3) + 'y'
+    } else {
+      return string.substr(0, string.length - 1)
+    }
+  }
+
+  return string
+}
+
 const filters = {
   lowerCase,
   kebabCase,
@@ -75,6 +89,7 @@ const filters = {
   isPlainObject,
   isString,
   pluralise,
+  singularise,
   sentenceCase: Case.sentence,
 
   encodeQueryString (value) {
