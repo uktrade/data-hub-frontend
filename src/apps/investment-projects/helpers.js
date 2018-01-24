@@ -1,4 +1,4 @@
-const { assign, map, sortBy, compact } = require('lodash')
+const { assign, map, sortBy, compact, get } = require('lodash')
 
 const config = require('../../../config')
 const labels = require('./labels')
@@ -15,53 +15,39 @@ const allLabels = assign(
   labels.projectManagementLabels.edit,
 )
 
-const linkDetails = {
-  projectSummary: {
-    url: 'edit-details',
-    text: 'Investment project summary form',
-  },
-  requirements: {
-    url: 'edit-requirements',
-    text: 'Requirements and location form',
-  },
-  value: {
-    url: 'edit-value',
-    text: 'Value form',
-  },
-  projectManagement: {
-    url: 'edit-project-management',
-    text: 'Assign project management form',
-  },
-  associatedNonFdiRandDProject: {
-    url: 'edit-associated',
-    text: 'Associated project Non-FDI R&D project form',
-  },
+const formLinks = {
+  projectSummary: 'edit-details',
+  requirements: 'edit-requirements',
+  value: 'edit-value',
+  projectManagement: 'edit-project-management',
+  associatedNonFdiRandDProject: 'edit-associated',
 }
 
 const formFieldLinks = {
-  actual_land_date: linkDetails.projectSummary,
-  total_investment: linkDetails.value,
-  government_assistance: linkDetails.value,
-  number_new_jobs: linkDetails.value,
-  number_safeguarded_jobs: linkDetails.value,
-  r_and_d_budget: linkDetails.value,
-  non_fdi_r_and_d_budget: linkDetails.value,
-  new_tech_to_uk: linkDetails.value,
-  export_revenue: linkDetails.value,
-  client_cannot_provide_total_investment: linkDetails.value,
-  client_cannot_provide_foreign_investment: linkDetails.value,
-  actual_uk_regions: linkDetails.requirements,
-  strategic_drivers: linkDetails.requirements,
-  client_considering_other_countries: linkDetails.requirements,
-  uk_region_locations: linkDetails.requirements,
-  site_decided: linkDetails.requirements,
-  client_requirements: linkDetails.requirements,
-  address_1: linkDetails.requirements,
-  address_town: linkDetails.requirements,
-  address_postcode: linkDetails.requirements,
-  project_manager: linkDetails.projectManagement,
-  project_assurance_adviser: linkDetails.projectManagement,
-  associated_non_fdi_r_and_d_project: linkDetails.associatedNonFdiRandDProject,
+  actual_land_date: formLinks.projectSummary,
+  total_investment: formLinks.value,
+  government_assistance: formLinks.value,
+  number_new_jobs: formLinks.value,
+  number_safeguarded_jobs: formLinks.value,
+  r_and_d_budget: formLinks.value,
+  non_fdi_r_and_d_budget: formLinks.value,
+  new_tech_to_uk: formLinks.value,
+  export_revenue: formLinks.value,
+  client_cannot_provide_total_investment: formLinks.value,
+  client_cannot_provide_foreign_investment: formLinks.value,
+  actual_uk_regions: formLinks.requirements,
+  delivery_partners: formLinks.requirements,
+  strategic_drivers: formLinks.requirements,
+  client_considering_other_countries: formLinks.requirements,
+  uk_region_locations: formLinks.requirements,
+  site_decided: formLinks.requirements,
+  client_requirements: formLinks.requirements,
+  address_1: formLinks.requirements,
+  address_town: formLinks.requirements,
+  address_postcode: formLinks.requirements,
+  project_manager: formLinks.projectManagement,
+  project_assurance_adviser: formLinks.projectManagement,
+  associated_non_fdi_r_and_d_project: formLinks.associatedNonFdiRandDProject,
 }
 
 const toCompleteStageMessages = {
@@ -79,14 +65,20 @@ const toCompleteStageMessages = {
 
 function buildIncompleteFormList (incompleteFields = []) {
   const formList = map(incompleteFields, (incompleteField) => {
-    const formFieldLink = formFieldLinks[incompleteField]
-    if (formFieldLink) {
-      return assign({}, formFieldLink, {
-        text: `${allLabels[incompleteField]} in ${formFieldLink.text}`,
-      })
+    const incompleteFieldLabel = get(allLabels, incompleteField)
+    const incompleteFieldFormLink = get(formFieldLinks, incompleteField)
+
+    if (!incompleteFieldLabel) {
+      logger.error(`Could not find label for incomplete field ${incompleteField}`)
+      return
     }
 
-    logger.error(`Could not find form field link for ${incompleteField}`)
+    if (!incompleteFieldFormLink) {
+      logger.error(`Could not find form link for incomplete field ${incompleteField}`)
+      return
+    }
+
+    return assign({}, { url: incompleteFieldFormLink }, { text: incompleteFieldLabel })
   })
 
   return sortBy(compact(formList), 'url')
