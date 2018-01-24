@@ -1,6 +1,6 @@
-const { merge } = require('lodash')
+const { cloneDeep, mapValues, merge, omit } = require('lodash')
 
-const createSteps = require('../create/steps')
+const createJourney = require('../create/steps')
 const EditAssigneesController = require('./controllers/assignees')
 const EditAssigneeTimeController = require('./controllers/assignee-time')
 const EditClientDetailsController = require('./controllers/client-details')
@@ -11,6 +11,10 @@ const EditBillingAddressController = require('./controllers/billing-address')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
 const CancelOrderController = require('./controllers/cancel-order')
+
+const createSteps = mapValues(cloneDeep(createJourney), (step) => {
+  return omit(step, ['next', 'backLink'])
+})
 
 const steps = merge({}, createSteps, {
   '/client-details': {

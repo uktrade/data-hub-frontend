@@ -25,6 +25,7 @@ function editHandler (req, res, next) {
     route: '/edit',
     template: '_layouts/form-wizard-step',
     next: nextUrl,
+    backLink: nextUrl,
     controller: EditController,
     translate: i18n.translate.bind(i18n),
     successMessage: 'Order updated',
@@ -34,7 +35,6 @@ function editHandler (req, res, next) {
       result[field] = fields[field] || {}
       return result
     }, {}),
-    backLink: nextUrl,
   }
   const options = Object.assign(defaults, step, overrides)
   const ControllerClass = options.controller
