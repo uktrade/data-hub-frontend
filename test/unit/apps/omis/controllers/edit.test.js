@@ -356,6 +356,24 @@ describe('OMIS EditController', () => {
       })
     })
 
+    context('when a field marked as a date field is null', () => {
+      it('should not format field as a date', (done) => {
+        const resMock = {
+          locals: {
+            order: {
+              delivery_date: null,
+            },
+          },
+        }
+        const nextMock = (e, values) => {
+          expect(values).to.deep.equal({})
+          done()
+        }
+
+        this.controller.getValues(this.reqMock, resMock, nextMock)
+      })
+    })
+
     context('when a field not marked as a date field contains a date', () => {
       it('should return the value', (done) => {
         const resMock = {
