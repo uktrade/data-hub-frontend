@@ -12,6 +12,7 @@ const i18n = i18nFuture({
 function editHandler (req, res, next) {
   const step = steps[`/${req.params.step}`]
   const order = res.locals.order
+  const nextUrl = req.query.returnUrl || `/omis/${order.id}/work-order`
 
   if (!step || !order) { return next() }
 
@@ -23,6 +24,7 @@ function editHandler (req, res, next) {
     name: 'edit',
     route: '/edit',
     template: '_layouts/form-wizard-step',
+    next: nextUrl,
     controller: EditController,
     translate: i18n.translate.bind(i18n),
     successMessage: 'Order updated',
@@ -32,7 +34,7 @@ function editHandler (req, res, next) {
       result[field] = fields[field] || {}
       return result
     }, {}),
-    backLink: path.resolve(req.baseUrl, '..'),
+    backLink: nextUrl,
   }
   const options = Object.assign(defaults, step, overrides)
   const ControllerClass = options.controller
