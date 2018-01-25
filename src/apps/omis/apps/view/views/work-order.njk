@@ -240,7 +240,7 @@
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
-      url: 'edit/payment' if order.canEditOrder
+      url: 'edit/payment' if order.canEditOrder or order.canEditInvoiceDetails
     }],
     items: [{
       label: 'Price',
