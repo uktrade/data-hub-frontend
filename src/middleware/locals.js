@@ -3,6 +3,7 @@ const { get } = require('lodash')
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
 const config = require('../../config')
+const { version } = require('../../package.json')
 const { filterNonPermittedItem } = require('../apps/filters')
 
 let webpackManifest = {}
@@ -19,6 +20,7 @@ module.exports = function locals (req, res, next) {
   const userPermissions = get(res, 'locals.user.permissions')
 
   res.locals = Object.assign({}, res.locals, {
+    APP_VERSION: version,
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.path,
     ORIGINAL_URL: baseUrl + req.originalUrl,
