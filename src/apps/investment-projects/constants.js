@@ -1,7 +1,5 @@
 const { concat } = require('lodash')
 
-const currentYear = (new Date()).getFullYear()
-
 const GLOBAL_NAV_ITEM = {
   path: '/investment-projects',
   label: 'Investment projects',
@@ -47,8 +45,6 @@ const LOCAL_NAV = [
 ]
 
 const DEFAULT_COLLECTION_QUERY = {
-  estimated_land_date_after: `${currentYear}-04-05`,
-  estimated_land_date_before: `${currentYear + 1}-04-06`,
   sortby: 'estimated_land_date:asc',
 }
 
