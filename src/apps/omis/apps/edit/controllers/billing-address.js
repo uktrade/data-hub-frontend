@@ -14,6 +14,23 @@ class EditBillingAddressController extends EditController {
 
     super.configure(req, res, next)
   }
+
+  successHandler (req, res) {
+    const newBillingCountry = get(req, 'form.values.billing_address_country')
+    const oldBillingCountry = get(res.locals, 'order.billing_address_country.id')
+    const hasBillingCountryChanged = newBillingCountry !== oldBillingCountry
+
+    if (newBillingCountry && oldBillingCountry && hasBillingCountryChanged) {
+      req.hasChanged = true
+      req.form.options.successMessage = null
+    }
+
+    super.successHandler(req, res)
+  }
+
+  nextCondition (req, res, condition) {
+    return req.hasChanged
+  }
 }
 
 module.exports = EditBillingAddressController

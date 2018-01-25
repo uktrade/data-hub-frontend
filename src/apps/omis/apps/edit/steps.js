@@ -9,6 +9,7 @@ const EditQuoteDetailsController = require('./controllers/quote-details')
 const EditInternalDetailsController = require('./controllers/internal-details')
 const EditInvoiceDetailsController = require('./controllers/invoice-details')
 const EditBillingAddressController = require('./controllers/billing-address')
+const EditVatStatusController = require('./controllers/vat-status')
 const EditPaymentReconciliationController = require('./controllers/payment-reconciliation')
 const CompleteOrderController = require('./controllers/complete-order')
 const CancelOrderController = require('./controllers/cancel-order')
@@ -84,7 +85,27 @@ const steps = merge({}, createSteps, {
       'billing_address_postcode',
       'billing_address_country',
     ],
+    next: [
+      { fn: 'nextCondition', next: 'vat-status' },
+      'payment',
+    ],
+    successMessage: 'Billing address updated',
     controller: EditBillingAddressController,
+  },
+  '/vat-status': {
+    heading: 'Confirm VAT status',
+    fields: [
+      'vat_status',
+      'vat_number',
+      'vat_verified',
+    ],
+    templatePath: 'omis/apps/edit/views',
+    template: 'vat-status.njk',
+    buttonText: 'Confirm VAT status',
+    backLink: null,
+    next: 'payment',
+    successMessage: 'Billing address and VAT status updated',
+    controller: EditVatStatusController,
   },
   '/payment-reconciliation': {
     heading: 'Reconcile a payment',
