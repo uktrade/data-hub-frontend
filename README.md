@@ -25,6 +25,7 @@ and be provided with a back end server to provide the API, data storage and sear
     - [Run in production mode](#run-in-production-mode)
     - [Run in development mode](#run-in-development-mode)
   - [Updating NodeJs](#updating-nodejs)
+    - [Cloud foundry build pack](#cloud-foundry-build-pack)
     - [Engines package.json](#engines-package-json)
     - [CircleCi config](#circleci-config)
     - [Data hub base docker](#data-hub-base-docker)
@@ -196,6 +197,10 @@ yarn run develop
 ### Updating NodeJs
 When NodeJs is updated it is worth noting it needs to be updated in a few places:
 
+#### Cloud foundry build pack
+Please update the build pack in `manifest.yml` to use the required [cloud foundry build pack release](https://github.com/cloudfoundry/nodejs-buildpack/releases).
+Once this is done you can then choses the node version for the next steps.
+
 #### Engines package.json
 Engines in `package.json` needs updating:
 ```
@@ -212,7 +217,7 @@ The value used in `.circleci/config.yaml` needs updating:
 
 #### Data hub base docker
 The version of the NodeJs docker that is used in our CircleCi Acceptance tests jobs needs to be updated in
-[uktrade/docker-data-hub-base]()https://github.com/uktrade/docker-data-hub-base). You will also need to wait for the 
+[uktrade/docker-data-hub-base](https://github.com/uktrade/docker-data-hub-base). You will also need to wait for the
 [docker automated build](https://hub.docker.com/r/ukti/docker-data-hub-base/builds/) to finish.
 
 ### OAuth
