@@ -141,58 +141,6 @@ describe('nunjucks filters', () => {
     })
   })
 
-  describe('#pluralise', () => {
-    it('should return pluralised string when count is 0', () => {
-      const singularString = 'result'
-
-      const pluralisedString = filters.pluralise(singularString, 0)
-
-      expect(pluralisedString).to.equal(`${singularString}s`)
-    })
-
-    it('should return singular string string when count is 1', () => {
-      const singularString = 'result'
-
-      const pluralisedString = filters.pluralise(singularString, 1)
-
-      expect(pluralisedString).to.equal(singularString)
-    })
-
-    it('should return pluralised custom string when count is 0', () => {
-      const singularString = 'company'
-      const customPluralisedString = 'companies'
-
-      const pluralisedString = filters.pluralise(singularString, 0, customPluralisedString)
-
-      expect(pluralisedString).to.equal(customPluralisedString)
-    })
-
-    it('should return a correctly pluralised string  using the (general) English rule CONSONANT + Y = CONSONANT + IES', () => {
-      const singularString = 'company'
-      const pluralString = 'companies'
-      const pluralisedString = filters.pluralise(singularString, 0)
-
-      expect(pluralisedString).to.equal(pluralString)
-    })
-
-    it('should NOT convert a word ending VOWEL + Y to VOWEL + IES', () => {
-      const singularString = 'sunday'
-      const pluralString = 'sundays'
-      const pluralisedString = filters.pluralise(singularString, 0)
-
-      expect(pluralisedString).to.equal(pluralString)
-    })
-
-    it('should return singular custom string when count is 1', () => {
-      const singularString = 'company'
-      const customPluralisedString = 'companies'
-
-      const pluralisedString = filters.pluralise(singularString, 1, customPluralisedString)
-
-      expect(pluralisedString).to.equal(singularString)
-    })
-  })
-
   describe('#formatNumber', () => {
     it('should correctly format number for "en-GB" locale', () => {
       const formattedNumber = filters.formatNumber(12345678.1)
