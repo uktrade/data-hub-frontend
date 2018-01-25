@@ -25,6 +25,7 @@ function editHandler (req, res, next) {
     template: '_layouts/form-wizard-step',
     controller: EditController,
     translate: i18n.translate.bind(i18n),
+    successMessage: 'Order updated',
   }
   const overrides = {
     fields: reduce(step.fields, (result, field) => {

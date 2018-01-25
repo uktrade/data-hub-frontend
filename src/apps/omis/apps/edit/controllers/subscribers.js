@@ -1,4 +1,4 @@
-const { get, sortBy, pick } = require('lodash')
+const { get, sortBy } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
@@ -26,21 +26,13 @@ class EditSubscribersController extends EditController {
     }
   }
 
-  async successHandler (req, res, next) {
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
+  async saveValues (req, res, next) {
+    const data = req.form.values
     const subscribers = data.subscribers.map(transformIdToObject)
 
     try {
       await Order.saveSubscribers(req.session.token, res.locals.order.id, subscribers)
-      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
-
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', 'Order updated')
-      res.redirect(nextUrl)
+      next()
     } catch (error) {
       next(error)
     }

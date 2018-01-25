@@ -1,4 +1,4 @@
-const { assign, get, pick } = require('lodash')
+const { assign, get } = require('lodash')
 const numeral = require('numeral')
 const chrono = require('chrono-node')
 const dateFns = require('date-fns')
@@ -11,10 +11,11 @@ class EditPaymentReconciliationController extends EditController {
   async configure (req, res, next) {
     const orderStatus = get(res.locals, 'order.status')
 
-    req.form.options.disableFormAction = false
     req.form.options = assign({}, req.form.options, {
-      buttonText: 'Reconcile payment',
       disableFormAction: false,
+      buttonText: 'Reconcile payment',
+      successMessage: `Payment for ${res.locals.order.reference} reconciled`,
+      next: `/omis/reconciliation/${res.locals.order.id}/payment-receipt`,
     })
 
     if (orderStatus !== 'quote_accepted') {
@@ -70,9 +71,8 @@ class EditPaymentReconciliationController extends EditController {
     })
   }
 
-  async successHandler (req, res, next) {
-    const nextUrl = `/omis/reconciliation/${res.locals.order.id}/payment-receipt`
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
+  async saveValues (req, res, next) {
+    const data = req.form.values
 
     // convert pounds to pence
     data.amount = parseInt(numeral(data.amount).value() * 100)
@@ -82,18 +82,11 @@ class EditPaymentReconciliationController extends EditController {
       // API accepts an array of payment objects
       // This solution sends the only payment captured in an array to solve this
       await Order.savePayments(req.session.token, res.locals.order.id, [data])
-
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', `Payment for ${res.locals.order.reference} reconciled`)
-      res.redirect(nextUrl)
+      next()
     } catch (err) {
       if (err.statusCode === 409) {
         req.flash('error', err.error.detail)
-        return res.redirect(nextUrl)
+        return res.redirect(req.form.options.next)
       }
 
       next(err)
