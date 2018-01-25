@@ -99,9 +99,10 @@ function transformFromApi (body) {
     return get(body, `${key}.id`)
   })
 
-  const date = new Date(body['estimated_land_date'])
-  if (date) {
-    formatted['estimated_land_date_year'] = date.getFullYear()
+  const estimatedLandDate = body.estimated_land_date
+  if (!isEmpty(estimatedLandDate)) {
+    const date = new Date(estimatedLandDate)
+    formatted['estimated_land_date_year'] = date.getFullYear().toString()
     formatted['estimated_land_date_month'] = format(date, 'MM')
   }
 
