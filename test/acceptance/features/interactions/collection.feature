@@ -15,7 +15,7 @@ Feature: View collection of interactions
     Then I see the success message
     When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
-    And the results count header for interactions is present
+    And the results count header for interaction is present
     Then I filter the collections to view the Interaction I have just created
     And I can view the Interaction in the collection
       | text    | expected               |
@@ -38,7 +38,7 @@ Feature: View collection of interactions
     Then I see the success message
     When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
-    And the results count header for interactions is present
+    And the results count header for interaction is present
     Then I filter the collections to view the Service Delivery I have just created
     And I can view the Service delivery in the collection
       | text    | expected                   |
@@ -61,7 +61,7 @@ Feature: View collection of interactions
     Then I see the success message
     When I navigate to the Interactions and service collection page
     Then I confirm I am on the Interactions page
-    And the results count header for interactions is present
+    And the results count header for interaction is present
     Then I filter the interactions list by service provider
     Then the interactions should be filtered by service provider
 

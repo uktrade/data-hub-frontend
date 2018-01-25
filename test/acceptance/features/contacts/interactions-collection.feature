@@ -6,7 +6,7 @@ Feature: View collection of interactions for a contact
 
     Given I navigate to contact fixture Dean Cox
     When I click the Interactions local nav link
-    Then the results count header for interactions is present
+    Then the results count header for interaction is present
     And I can view the collection
 
   @contacts-interactions-collection--filter # TODO

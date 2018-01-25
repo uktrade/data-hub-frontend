@@ -6,7 +6,7 @@ Feature: View collection of interactions for an investment project
 
     Given I navigate to investment project fixture New hotel (FDI)
     When I click the Interactions local nav link
-    Then the results count header for interactions is present
+    Then the results count header for interaction is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--lep @lep
@@ -14,7 +14,7 @@ Feature: View collection of interactions for an investment project
 
     Given I navigate to investment project fixture New zoo (LEP)
     When I click the Interactions local nav link
-    Then the results count header for interactions is present
+    Then the results count header for interaction is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--da @da
@@ -22,7 +22,7 @@ Feature: View collection of interactions for an investment project
 
     Given I navigate to investment project fixture New golf course (DA)
     When I click the Interactions local nav link
-    Then the results count header for interactions is present
+    Then the results count header for interaction is present
     And I can view the collection
 
   @investment-projects-interactions-collection--filter # TODO

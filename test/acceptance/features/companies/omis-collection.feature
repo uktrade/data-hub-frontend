@@ -6,14 +6,14 @@ Feature: View collection of orders for a company
 
     Given I navigate to company fixture Lambda plc
     When I click the Orders (OMIS) local nav link
-    Then the results count header for orders is present
+    Then the results count header for order is present
 
   @companies-omis-collection--view--da
   Scenario: View companies OMIS collection as DA
 
     Given I navigate to company fixture Lambda plc
     When I click the Orders (OMIS) local nav link
-    Then the results count header for orders is present
+    Then the results count header for orde is present
 
   @companies-omis-collection--filter # TODO
 
