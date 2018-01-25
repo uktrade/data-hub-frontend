@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -56,7 +56,7 @@
     "hmpo-form-wizard": "^8.5.0",
     "html5shiv": "^3.7.3",
     "i18n-future": "^1.1.0",
-    "image-webpack-loader": "^3.4.2",
+    "image-webpack-loader": "^4.0.0",
     "istanbul": "^0.4.5",
     "jsdom": "^11.5.1",
     "lodash": "^4.17.4",
@@ -136,14 +136,14 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "8.5.0"
+    "node": "8.9.4"
   },
   "devDependencies": {
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
-    "chromedriver": "^2.34.0",
+    "chromedriver": "^2.35.0",
     "codeclimate-test-reporter": "^0.5.0",
-    "cucumber": "^3.2.0",
+    "cucumber": "^4.0.0",
     "cucumber-html-reporter": "^3.0.4",
     "eslint-plugin-mocha": "^4.11.0",
     "html": "^1.0.0",
@@ -151,7 +151,7 @@
     "lint-staged": "^6.0.0",
     "mocha-circleci-reporter": "0.0.2",
     "nightwatch": "^0.9.19",
-    "nightwatch-cucumber": "^8.2.12",
+    "nightwatch-cucumber": "^9.0.0",
     "pre-commit": "^1.2.2",
     "selenium-server": "^3.8.1",
     "shortid": "^2.2.8"

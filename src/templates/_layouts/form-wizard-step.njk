@@ -1,7 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% block local_header %}
-  {% set pageTitle = getPageTitle() %}
+  {% set pageTitle = getPageTitle() if getPageTitle %}
   {% set heading = heading or pageTitle[0] %}
   {{ LocalHeader({ heading: heading }) }}
 {% endblock %}
