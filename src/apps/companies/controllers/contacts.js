@@ -1,11 +1,13 @@
-const { merge, omit, assign, reject, get } = require('lodash')
+const { merge, omit, assign, filter } = require('lodash')
 
 const { contactFiltersFields, companyContactSortForm } = require('../../contacts/macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 
-function renderContacts (req, res, next) {
+function renderContacts (req, res) {
   const { id: companyId, name: companyName } = res.locals.company
-  const companyContactFiltersFields = reject(contactFiltersFields, ['name', 'company_name'])
+  const filtersFields = filter(contactFiltersFields, (field) => {
+    return ['name', 'archived'].includes(field.name)
+  })
 
   const sortForm = merge({}, companyContactSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
@@ -14,23 +16,13 @@ function renderContacts (req, res, next) {
     ],
   })
 
-  const selectedFilters = buildSelectedFiltersSummary(companyContactFiltersFields, req.query)
-  const isUKSelected = get(selectedFilters, 'address_country.valueLabel') === 'United Kingdom'
-
-  const visibleFiltersFields = companyContactFiltersFields.filter(field => {
-    if (field.name === 'company_uk_region') {
-      return isUKSelected
-    }
-    return true
-  })
-
   res
     .breadcrumb(companyName, `/companies/${companyId}`)
     .breadcrumb('Contacts')
     .render('companies/views/contacts', {
       sortForm,
-      selectedFilters,
-      filtersFields: visibleFiltersFields,
+      filtersFields,
+      selectedFilters: buildSelectedFiltersSummary(filtersFields, req.query),
       addContactUrl: `/contacts/create?company=${companyId}`,
     })
 }
