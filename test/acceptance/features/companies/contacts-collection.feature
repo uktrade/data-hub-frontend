@@ -48,18 +48,6 @@ Feature: View collection of contacts for a company
     Then there are no filters selected
     Then I filter the contacts list by active status
     And the result count should be reset
-    When I filter the contacts list by sector
-    Then the contacts should be filtered by company sector
-    When I clear all filters
-    Then there are no filters selected
-    Then I filter the contacts list by active status
-    And the result count should be reset
-    When I filter the contacts list by country
-    Then the contacts should be filtered to show badge company country
-    When I clear all filters
-    Then there are no filters selected
-    Then I filter the contacts list by active status
-    And the result count should be reset
 
 
   @companies-contact-collection--sort
