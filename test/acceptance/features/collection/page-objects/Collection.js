@@ -1,5 +1,3 @@
-const { lowerCase } = require('lodash')
-
 const {
   getSelectorForElementWithText,
   getButtonWithText,
@@ -17,15 +15,6 @@ const getSelectorForMetaListItemValue = (text) => {
 module.exports = {
   commands: [
     {
-      getSelectorForResultsCountHeader (collectionType) {
-        return getSelectorForElementWithText(
-          lowerCase(collectionType),
-          {
-            el: '//div',
-            className: 'c-collection__header-intro',
-          }
-        )
-      },
       getSelectorForMetaListItemValue,
       getSelectorForBadgeWithText (text) {
         return getListItemMetaElementWithText(text)
@@ -46,6 +35,7 @@ module.exports = {
     collectionHeader: {
       selector: '.c-collection__header',
       elements: {
+        intro: '.c-collection__header-intro',
         paginationSummary: '.c-collection__pagination-summary',
         resultCount: '.c-collection__result-count',
         removeAllFiltersLink: '.c-collection__filter-remove-all',

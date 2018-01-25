@@ -12,7 +12,7 @@ Feature: View collection of companies
     Then I see the success message
     When I navigate to the Company collection page
     Then I confirm I am on the Companies page
-    And the results count header for companies is present
+    And the results summary for a company collection is present
     And there is an Add company button in the collection header
     And I can view the Company in the collection
       | text               | expected                  |
@@ -28,14 +28,14 @@ Feature: View collection of companies
 
     When I navigate to the Company collection page
     Then I confirm I am on the Companies page
-    And the results count header for companies is present
+    And the results summary for a company collection is present
 
   @companies-collection--view--da @da
   Scenario: View companies collection as DA
 
     When I navigate to the Company collection page
     Then I confirm I am on the Companies page
-    And the results count header for companies is present
+    And the results summary for a company collection is present
 
   @companies-collection--filter
   Scenario: Filter companies list

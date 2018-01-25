@@ -6,7 +6,7 @@ Feature: View collection of interactions for a company
 
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
-    Then the results count header for interactions is present
+    And the results summary for a interaction collection is present
     And I can view the collection
 
   @companies-interactions-collection--filter # TODO
