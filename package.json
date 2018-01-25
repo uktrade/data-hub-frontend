@@ -143,7 +143,7 @@
     "chai-subset": "^1.6.0",
     "chromedriver": "^2.34.0",
     "codeclimate-test-reporter": "^0.5.0",
-    "cucumber": "^3.2.0",
+    "cucumber": "^4.0.0",
     "cucumber-html-reporter": "^3.0.4",
     "eslint-plugin-mocha": "^4.11.0",
     "html": "^1.0.0",
@@ -151,7 +151,7 @@
     "lint-staged": "^6.0.0",
     "mocha-circleci-reporter": "0.0.2",
     "nightwatch": "^0.9.19",
-    "nightwatch-cucumber": "^8.2.12",
+    "nightwatch-cucumber": "^9.0.0",
     "pre-commit": "^1.2.2",
     "selenium-server": "^3.8.1",
     "shortid": "^2.2.8"
