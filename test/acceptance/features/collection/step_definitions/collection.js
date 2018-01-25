@@ -3,7 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 const { getButtonWithText } = require('../../../helpers/selectors')
-const { singularise } = require('../../../../../config/nunjucks/filters')
+const { singularise } = require('../../../../../src/lib/plural')
 
 defineSupportCode(({ When, Then }) => {
   const Collection = client.page.Collection()
