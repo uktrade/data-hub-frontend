@@ -3,6 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 const { getButtonWithText } = require('../../../helpers/selectors')
+const { pluralise } = require('../../../../../config/nunjucks/filters')
 
 defineSupportCode(({ When, Then }) => {
   const Collection = client.page.Collection()
@@ -46,19 +47,22 @@ defineSupportCode(({ When, Then }) => {
   })
 
   Then(/^the results count header for (.+) is present$/, async function (collectionType) {
-    const resultsCountHeaderSelector = Collection
-      .getSelectorForResultsCountHeader(collectionType)
-
     await Collection
       .captureResultCount((count) => {
         set(this.state, 'collection.resultCount', count)
       })
 
+    const count = get(this.state, 'collection.resultCount')
+    const collectionTypeTitle = pluralise(collectionType, count)
+
+    const resultsCountHeaderSelector = Collection
+      .getSelectorForResultsCountHeader(collectionTypeTitle)
+
     await Collection
       .api.useXpath()
       .assert.visible(resultsCountHeaderSelector.selector)
-      .assert.containsText(resultsCountHeaderSelector.selector, collectionType)
-      .assert.containsText(resultsCountHeaderSelector.selector, get(this.state, 'collection.resultCount'))
+      .assert.containsText(resultsCountHeaderSelector.selector, collectionTypeTitle)
+      .assert.containsText(resultsCountHeaderSelector.selector, count)
       .useCss()
   })
 
