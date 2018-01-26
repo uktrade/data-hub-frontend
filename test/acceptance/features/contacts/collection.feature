@@ -17,7 +17,7 @@ Feature: View collection of contacts
     Then I capture the modified on date for the first item
     When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
     And I can view the Contact in the collection
       | text         | expected           |
       | Job title    | contact.jobTitle   |
@@ -35,14 +35,14 @@ Feature: View collection of contacts
 
     When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
 
   @contacts-collection--view--da @da
   Scenario: View contact collection as DA
 
     When I navigate to the Contact collection page
     Then I confirm I am on the Contacts page
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
 
   @contacts-collection--filter
   Scenario: Filter contact list

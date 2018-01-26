@@ -3,6 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { defineSupportCode } = require('cucumber')
 
 const { getButtonWithText } = require('../../../helpers/selectors')
+const { pluralise } = require('../../../../../config/nunjucks/filters')
 
 defineSupportCode(({ When, Then }) => {
   const Collection = client.page.Collection()
@@ -45,21 +46,18 @@ defineSupportCode(({ When, Then }) => {
       })
   })
 
-  Then(/^the results count header for (.+) is present$/, async function (collectionType) {
-    const resultsCountHeaderSelector = Collection
-      .getSelectorForResultsCountHeader(collectionType)
+  Then(/^the results summary for a (.+) collection is present$/, async function (collectionType) {
+    await Collection.captureResultCount((count) => {
+      set(this.state, 'collection.resultCount', count)
+    })
+
+    const resultCount = get(this.state, 'collection.resultCount')
+    const collectionTypeTitle = pluralise(collectionType, resultCount)
 
     await Collection
-      .captureResultCount((count) => {
-        set(this.state, 'collection.resultCount', count)
-      })
-
-    await Collection
-      .api.useXpath()
-      .assert.visible(resultsCountHeaderSelector.selector)
-      .assert.containsText(resultsCountHeaderSelector.selector, collectionType)
-      .assert.containsText(resultsCountHeaderSelector.selector, get(this.state, 'collection.resultCount'))
-      .useCss()
+      .section.collectionHeader
+      .assert.visible('@intro')
+      .assert.containsText('@intro', `${resultCount} ${collectionTypeTitle}`)
   })
 
   Then(/^there is an (.+) button in the collection header$/, async function (buttonText) {
