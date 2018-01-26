@@ -20,16 +20,6 @@ Feature: View Audit history of a Company
     And I navigate to Audit History tab
     Then I see the date time stamp when the recent company record changed
 
-  @audit-company--count @ignore
-# TODO this work is using fixtures that have changed therefore its asupmtions are wrong
-# TODO redo this work to either create a new company or record the changes in Audit before changes are made and compare
-  Scenario: View the number of changes occurred on a company record
-
-    Given I Amend 2 records of an existing company record
-    When I search for this company record
-    And I navigate to Audit History tab
-    Then I see the total number of changes occurred recently on this company record
-
   @audit-company--field-names
   Scenario: View changed field names of a company record
 

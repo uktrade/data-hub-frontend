@@ -81,20 +81,6 @@ Feature: Edit an Event in Data hub
     And I submit the form
     Then details view data for "Lead team" should contain "CBBC London"
 
-  ## TODO for the moment turn this off as we have data on CircleCi that we don't have locally
-  @events-edit--organiser @ignore
-  Scenario: Edit event organiser
-
-    Given I navigate to event details page
-    When I click on edit event button
-    And I change form dropdown "organiser" to "Adrian Hockney"
-    And I submit the form
-    Then details view data for "Organiser" should contain "Adrian Hockney"
-    When I click on edit event button
-    And I change form dropdown "organiser" to "Akhilesh Mahurkar"
-    And I submit the form
-    Then details view data for "Organiser" should contain "Akhilesh Mahurkar"
-
   @events-edit--shared-teams
   Scenario: Edit event shared teams
 
