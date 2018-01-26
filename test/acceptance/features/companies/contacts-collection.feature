@@ -17,7 +17,7 @@ Feature: View collection of contacts for a company
     Then I wait and then refresh the page
     And I confirm I am on the Lambda plc page
     Then I capture the modified on date for the first item
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
     And I can view the Contact in the collection
       | text         | expected           |
       | Sector       | company.sector     |
@@ -39,23 +39,11 @@ Feature: View collection of contacts for a company
     Then I see the success message
     Then I wait and then refresh the page
     Then I confirm I am on the Lambda plc page
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
     When I clear all filters
     Then there are no filters selected
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
-    When I clear all filters
-    Then there are no filters selected
-    Then I filter the contacts list by active status
-    And the result count should be reset
-    When I filter the contacts list by sector
-    Then the contacts should be filtered by company sector
-    When I clear all filters
-    Then there are no filters selected
-    Then I filter the contacts list by active status
-    And the result count should be reset
-    When I filter the contacts list by country
-    Then the contacts should be filtered to show badge company country
     When I clear all filters
     Then there are no filters selected
     Then I filter the contacts list by active status
@@ -73,7 +61,7 @@ Feature: View collection of contacts for a company
     Then I see the success message
     Then I wait and then refresh the page
     Then I confirm I am on the Lambda plc page
-    And the results count header for contacts is present
+    And the results summary for a contact collection is present
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest
     Then the contacts should have been correctly sorted by creation date

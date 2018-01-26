@@ -272,6 +272,12 @@ module.exports = {
             specificInvestmentProgramme: getDetailsTableRowValue('Specific investment programme'),
           },
         },
+        archive: {
+          selector: '.column-three-quarters',
+          elements: {
+            archiveButton: getButtonWithText('Archive'),
+          },
+        },
       },
     },
   },

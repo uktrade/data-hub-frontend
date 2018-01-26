@@ -51,11 +51,11 @@ Feature: View a list of Investment Projects
 
     When I navigate to the Investment project collection page
     Then I confirm I am on the Investment projects page
-    And the results count header for projects is present
+    And the results summary for a project collection is present
 
   @investment-projects-collection--view--da @da
   Scenario: View Investment Projects list as DA
 
     When I navigate to the Investment project collection page
     Then I confirm I am on the Investment projects page
-    And the results count header for projects is present
+    And the results summary for a project collection is present
