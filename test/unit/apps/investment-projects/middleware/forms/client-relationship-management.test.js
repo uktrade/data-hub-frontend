@@ -24,7 +24,7 @@ describe('Investment form middleware - client relationship management', () => {
         },
       })
 
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/adviser/?limit=100000&offset=0`)
         .reply(200, {
           count: 5,
@@ -149,10 +149,6 @@ describe('Investment form middleware - client relationship management', () => {
         ]
 
         expect(this.resMock.locals.form.options.accountManagers).to.deep.equal(expectedOptions)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

@@ -84,7 +84,7 @@ describe('Investment requirements form middleware', () => {
     beforeEach(() => {
       this.resMock.locals = assign({}, this.reqMock.locals, { investmentData })
 
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/metadata/uk-region/')
         .reply(200, metadataMock.regionOptions)
         .get('/metadata/country/')
@@ -98,10 +98,6 @@ describe('Investment requirements form middleware', () => {
     context('when called without posted data', () => {
       beforeEach(async () => {
         await populateForm(this.reqMock, this.resMock, this.nextStub)
-      })
-
-      it('should get options', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
 
       it('should build the form with the investment data', () => {
@@ -124,10 +120,6 @@ describe('Investment requirements form middleware', () => {
         })
 
         await populateForm(this.reqMock, this.resMock, this.nextStub)
-      })
-
-      it('should get the options', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
 
       it('should build the form with the posted data', () => {
@@ -161,7 +153,7 @@ describe('Investment requirements form middleware', () => {
   describe('#handleFormPost', () => {
     context('when called with multiple strategic drivers', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             strategic_drivers: [
               '844cd12a-6095-e211-a939-e4115bead28a',
@@ -187,10 +179,6 @@ describe('Investment requirements form middleware', () => {
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-
       it('should redirect the user to the details screen', () => {
         expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
       })
@@ -202,7 +190,7 @@ describe('Investment requirements form middleware', () => {
 
     context('when called with a single strategic driver', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             actual_uk_regions: [],
             competitor_countries: [],
@@ -225,10 +213,6 @@ describe('Investment requirements form middleware', () => {
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-
       it('should redirect the user to the details screen', () => {
         expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
       })
@@ -247,7 +231,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with multiple competitor countries', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               client_considering_other_countries: 'true',
               competitor_countries: [
@@ -275,10 +259,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -290,7 +270,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with a single competitor country', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               client_considering_other_countries: 'true',
               actual_uk_regions: [],
@@ -315,10 +295,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -338,7 +314,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with multiple competitor countries', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               client_considering_other_countries: 'false',
               competitor_countries: [],
@@ -363,10 +339,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -378,7 +350,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with a single competitor country', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               client_considering_other_countries: 'false',
               actual_uk_regions: [],
@@ -401,10 +373,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -417,7 +385,7 @@ describe('Investment requirements form middleware', () => {
 
     context('when called with multiple uk regions', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             uk_region_locations: [
               '844cd12a-6095-e211-a939-e4115bead28a',
@@ -443,10 +411,6 @@ describe('Investment requirements form middleware', () => {
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-
       it('should redirect the user to the details screen', () => {
         expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
       })
@@ -458,7 +422,7 @@ describe('Investment requirements form middleware', () => {
 
     context('when called with a single uk region', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             actual_uk_regions: [],
             strategic_drivers: [],
@@ -481,10 +445,6 @@ describe('Investment requirements form middleware', () => {
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-
       it('should redirect the user to the details screen', () => {
         expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
       })
@@ -497,7 +457,7 @@ describe('Investment requirements form middleware', () => {
     context('when uk location has been decided', () => {
       context('when called with multiple actual landed regions', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               site_decided: 'true',
               actual_uk_regions: [
@@ -525,10 +485,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -540,7 +496,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with a single actual landed region', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               site_decided: 'true',
               strategic_drivers: [],
@@ -563,10 +519,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -580,7 +532,7 @@ describe('Investment requirements form middleware', () => {
     context('when uk location has not been decided', () => {
       context('when called with multiple actual landed regions', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               site_decided: 'false',
               actual_uk_regions: [],
@@ -605,10 +557,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -620,7 +568,7 @@ describe('Investment requirements form middleware', () => {
 
       context('when called with a single actual landed region', () => {
         beforeEach(async () => {
-          this.nockScope = nock(config.apiRoot)
+          nock(config.apiRoot)
             .patch('/v3/investment/1234', {
               site_decided: 'false',
               strategic_drivers: [],
@@ -643,10 +591,6 @@ describe('Investment requirements form middleware', () => {
           await handleFormPost(this.reqMock, this.resMock, this.nextStub)
         })
 
-        it('should call the API with transformed data', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
-
         it('should redirect the user to the details screen', () => {
           expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
         })
@@ -664,7 +608,7 @@ describe('Investment requirements form middleware', () => {
           { client_requirements: ['This field may not be blank.'] },
         ]
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             site_decided: 'true',
             strategic_drivers: [],
@@ -709,7 +653,7 @@ describe('Investment requirements form middleware', () => {
           { client_requirements: ['This field may not be blank.'] },
         ]
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             strategic_drivers: [],
             competitor_countries: [],
@@ -757,15 +701,11 @@ describe('Investment requirements form middleware', () => {
           delivery_partners: [],
         })
       })
-
-      it('should not try and save the record', () => {
-        expect(this.nockScope.isDone()).to.be.false
-      })
     })
 
     context('when called with multiple partners', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             uk_region_locations: [],
             client_requirements: 'some requirements',
@@ -791,10 +731,6 @@ describe('Investment requirements form middleware', () => {
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
       })
 
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
-
       it('should redirect the user to the details screen', () => {
         expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
       })
@@ -806,7 +742,7 @@ describe('Investment requirements form middleware', () => {
 
     context('when called with a single partner', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             actual_uk_regions: [],
             strategic_drivers: [],
@@ -827,10 +763,6 @@ describe('Investment requirements form middleware', () => {
         this.reqMock = assign({}, this.reqMock, { body })
 
         await handleFormPost(this.reqMock, this.resMock, this.nextStub)
-      })
-
-      it('should call the API with transformed data', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
 
       it('should redirect the user to the details screen', () => {

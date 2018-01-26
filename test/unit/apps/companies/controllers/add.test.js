@@ -48,7 +48,7 @@ describe('Company add controller', () => {
 
   describe('Get step 1', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/metadata/business-type/')
         .twice().reply(200, metaDataMock.businessTypeOptions)
     })

@@ -72,7 +72,7 @@ describe('Companies form middleware', () => {
   describe('#populateForm()', () => {
     beforeEach(() => {
       metadata.businessTypeOptions = metadataMock.businessTypeOptions
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/metadata/uk-region/')
         .reply(200, metadataMock.regionOptions)
         .get('/metadata/headquarter-type/')
@@ -241,7 +241,7 @@ describe('Companies form middleware', () => {
 
     context('when saving a new company works', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/company')
           .reply(200, companyRecord)
 
@@ -271,7 +271,7 @@ describe('Companies form middleware', () => {
 
     context('when saving a new company fails validation', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/company')
           .reply(500, {
             errors: 'error',
@@ -295,7 +295,7 @@ describe('Companies form middleware', () => {
 
     context('when saving an existing company works', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch(`/v3/company/${companyRecord.id}`)
           .reply(200, companyRecord)
 
@@ -326,7 +326,7 @@ describe('Companies form middleware', () => {
 
     context('when saving an existing company fails', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .patch(`/v3/company/${companyRecord.id}`)
           .reply(500, {
             errors: 'error',
@@ -351,7 +351,7 @@ describe('Companies form middleware', () => {
 
     context('when saving a uk company with just a registered address', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/company')
           .reply(200, companyRecord)
           .get('/metadata/country/')
@@ -380,7 +380,7 @@ describe('Companies form middleware', () => {
 
     context('when saving a uk company with a trading and registered address', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/company')
           .reply(200, companyRecord)
           .get('/metadata/country/')
@@ -412,7 +412,7 @@ describe('Companies form middleware', () => {
 
     context('when the user indicates the company is not a headquarters', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/company')
           .reply(200, companyRecord)
 
