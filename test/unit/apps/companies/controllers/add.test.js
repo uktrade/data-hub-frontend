@@ -1,3 +1,5 @@
+const { sortBy } = require('lodash')
+
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
 const displayHouseCompany = require('~/test/unit/data/companies/display-companies-house')
@@ -76,7 +78,7 @@ describe('Company add controller', () => {
         render: function (template, options) {
           const allOptions = mergeLocals(res, options)
           expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expectedUk)
-          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(expectedForeign)
+          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(sortBy(expectedForeign, 'label'))
         },
       }
 
