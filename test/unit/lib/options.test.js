@@ -1,4 +1,3 @@
-const nock = require('nock')
 const moment = require('moment')
 
 const config = require('~/config')

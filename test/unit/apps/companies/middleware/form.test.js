@@ -1,4 +1,3 @@
-const nock = require('nock')
 const { assign } = require('lodash')
 const moment = require('moment')
 

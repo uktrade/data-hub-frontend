@@ -1,5 +1,4 @@
 /* eslint handle-callback-err: 0 */
-const nock = require('nock')
 const moment = require('moment')
 
 const config = require('~/config')

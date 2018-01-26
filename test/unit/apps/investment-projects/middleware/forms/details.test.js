@@ -1,6 +1,5 @@
 const uuid = require('uuid')
 const { assign } = require('lodash')
-const nock = require('nock')
 const moment = require('moment')
 
 const config = require('~/config')
