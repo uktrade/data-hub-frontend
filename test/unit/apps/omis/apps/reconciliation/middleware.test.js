@@ -17,7 +17,7 @@ describe('OMIS reconciliation middleware', () => {
 
   describe('Results', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .post(`/v3/search/order`)
         .reply(200, orderCollectionData)
     })
@@ -39,10 +39,6 @@ describe('OMIS reconciliation middleware', () => {
         expect(actual).to.have.property('pagination')
         expect(actual.count).to.equal(3)
         expect(this.next).to.have.been.calledOnce
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

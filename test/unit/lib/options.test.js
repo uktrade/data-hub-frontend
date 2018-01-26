@@ -15,7 +15,7 @@ const regionOptions = [
 
 describe('#options', () => {
   beforeEach(() => {
-    this.nockScope = nock(config.apiRoot)
+    nock(config.apiRoot)
       .get('/metadata/uk-region/')
       .reply(200, regionOptions)
   })

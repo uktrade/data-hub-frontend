@@ -29,7 +29,7 @@ describe('Investment form middleware - team members', () => {
 
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/adviser/?limit=100000&offset=0`)
         .reply(200, {
           count: 5,
@@ -112,10 +112,6 @@ describe('Investment form middleware - team members', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
         expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
 
     context('when the investment project contains no team member data', () => {
@@ -157,10 +153,6 @@ describe('Investment form middleware - team members', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
         expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
   })
 
@@ -177,7 +169,7 @@ describe('Investment form middleware - team members', () => {
           },
         })
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .put(`/v3/investment/${investmentData.id}/team-member`, [{
             adviser: '1',
             role: 'manager',
@@ -188,10 +180,6 @@ describe('Investment form middleware - team members', () => {
           .reply(200, {})
 
         await teamMembersController.postTeamEdit(this.reqMock, this.resMock, this.nextStub)
-      })
-
-      it('should call the api with the correct parameters', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
 
       it('should redirect back to the details page', () => {
@@ -224,7 +212,7 @@ describe('Investment form middleware - team members', () => {
           },
         })
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, {
             count: 5,
@@ -296,7 +284,7 @@ describe('Investment form middleware - team members', () => {
           },
         })
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, {
             count: 5,
