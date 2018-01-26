@@ -10,7 +10,7 @@ defineSupportCode(({ Given, Then, When }) => {
   const ContactList = client.page.ContactList()
   const AuditContact = client.page.AuditContact()
   const AuditList = client.page.AuditList()
-  const InvestmentStage = client.page.InvestmentStage()
+  const InvestmentProject = client.page.InvestmentProject()
 
   Given(/^I archive an existing contact record$/, async function () {
     await Company
@@ -21,7 +21,7 @@ defineSupportCode(({ Given, Then, When }) => {
     await AuditList.section.lastContactInList
       .getText('@header', (result) => set(this.state, 'contactName', result.value))
       .click('@header')
-    await InvestmentStage
+    await InvestmentProject.section.projectDetails.section.archive
       .click('@archiveButton')
     await AuditContact
       .click('@archiveReason')
@@ -59,7 +59,7 @@ defineSupportCode(({ Given, Then, When }) => {
   })
 
   When(/^I archive this contact record$/, async function () {
-    await InvestmentStage
+    await InvestmentProject.section.projectDetails.section.archive
       .click('@archiveButton')
     await AuditContact
       .click('@archiveReason')
