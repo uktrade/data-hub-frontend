@@ -1,6 +1,5 @@
 const uuid = require('uuid')
 const { assign } = require('lodash')
-const nock = require('nock')
 const moment = require('moment')
 
 const config = require('~/config')
@@ -235,7 +234,7 @@ describe('investment details middleware', () => {
 
     context('when adding a new project', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.advisersData)
           .get('/metadata/investment-type/')
@@ -281,10 +280,6 @@ describe('investment details middleware', () => {
         ]
 
         expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
 
@@ -357,10 +352,6 @@ describe('investment details middleware', () => {
         ]
 
         expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

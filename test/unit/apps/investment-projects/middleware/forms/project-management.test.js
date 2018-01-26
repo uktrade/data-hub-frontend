@@ -1,4 +1,3 @@
-const nock = require('nock')
 const { assign } = require('lodash')
 
 const config = require('~/config')
@@ -20,7 +19,7 @@ describe('Investment form middleware - project magement', () => {
 
       this.controller = require('~/src/apps/investment-projects/middleware/forms/project-management')
 
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/adviser/?limit=100000&offset=0`)
         .reply(200, {
           count: 5,
@@ -102,10 +101,6 @@ describe('Investment form middleware - project magement', () => {
         ]
 
         expect(this.resMock.locals.form.options.projectAssuranceAdvisers).to.deep.equal(expectedOptions)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

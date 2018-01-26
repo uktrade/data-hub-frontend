@@ -14,7 +14,7 @@ describe('Investment projects collection middleware', () => {
 
   describe('#getInvestmentProjectsCollection', () => {
     beforeEach(async () => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .post(`/v3/search/investment_project`)
         .reply(200, investmentCollectioData)
       this.req.query = {
@@ -32,10 +32,6 @@ describe('Investment projects collection middleware', () => {
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
       expect(this.next).to.have.been.calledOnce
-    })
-
-    it('nock mocked scope has been called', () => {
-      expect(this.nockScope.isDone()).to.be.true
     })
   })
 

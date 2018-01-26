@@ -157,10 +157,6 @@ describe('OAuth controller', () => {
         it('token should match expected value', () => {
           expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
         })
-
-        it('nock mocked scope has been called', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
       })
 
       context('when there is an error query param', () => {
@@ -214,10 +210,6 @@ describe('OAuth controller', () => {
           expect(this.resMock.redirect.args[0][0]).to.equal('/')
           expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
         })
-
-        it('nock mocked scope has been called', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
       })
 
       context('redirect to returnTo', () => {
@@ -238,10 +230,6 @@ describe('OAuth controller', () => {
           expect(this.resMock.redirect.args[0][0]).to.equal(returnToUrl)
           expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
         })
-
-        it('nock mocked scope has been called', () => {
-          expect(this.nockScope.isDone()).to.be.true
-        })
       })
 
       context('redirect to returnTo', () => {
@@ -259,10 +247,6 @@ describe('OAuth controller', () => {
           expect(this.nextSpy).to.have.been.calledOnce
           expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${returnedError}`)
           expect(this.reqMock.session.token).to.be.undefined
-        })
-
-        it('nock mocked scope has been called', () => {
-          expect(this.nockScope.isDone()).to.be.true
         })
       })
     })
