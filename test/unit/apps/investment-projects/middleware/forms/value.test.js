@@ -34,7 +34,7 @@ describe('Investment form middleware - investment value', () => {
       locals: {},
     }
 
-    this.nockScope = nock(config.apiRoot)
+    nock(config.apiRoot)
       .get(`/adviser/?limit=100000&offset=0`)
       .reply(200, adviserData)
       .get('/metadata/salary-range/')

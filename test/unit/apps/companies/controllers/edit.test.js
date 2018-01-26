@@ -74,7 +74,7 @@ describe('Company edit controller', () => {
 
   describe('renderForm', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/metadata/business-type/')
         .twice().reply(200, metaDataMock.businessTypeOptions)
     })
@@ -123,10 +123,6 @@ describe('Company edit controller', () => {
 
       it('should not show the trading address fields', () => {
         expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
 
@@ -188,10 +184,6 @@ describe('Company edit controller', () => {
       it('should not show the trading address fields', () => {
         expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
 
     context('when adding a UK sole trader', () => {
@@ -239,10 +231,6 @@ describe('Company edit controller', () => {
       it('should not show the trading address fields', () => {
         expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
 
     context('when adding a foreign sole trader', () => {
@@ -289,10 +277,6 @@ describe('Company edit controller', () => {
 
       it('should not show the trading address fields', () => {
         expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
 
@@ -346,10 +330,6 @@ describe('Company edit controller', () => {
 
       it('should not show the trading address fields', () => {
         expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.true
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

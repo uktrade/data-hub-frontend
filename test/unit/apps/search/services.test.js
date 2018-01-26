@@ -10,7 +10,7 @@ describe('Search service', () => {
     const mockResponse = { message: 'mock response' }
 
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/v3/search`)
         .query({
           term: searchTerm,
@@ -33,7 +33,6 @@ describe('Search service', () => {
       })
 
       expect(actual).to.deep.equal(expectedResponse)
-      expect(this.nockScope.isDone()).to.be.true
     })
   })
 })

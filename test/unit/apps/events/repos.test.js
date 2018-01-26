@@ -77,7 +77,7 @@ describe('Event repos', () => {
           }],
         }
 
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .post('/v3/search/event')
           .reply(200, this.eventCollection)
       })
@@ -134,10 +134,6 @@ describe('Event repos', () => {
             limit: 100000,
             isAggregation: false,
           })
-        })
-
-        it('nock mocked scope has been called', () => {
-          expect(this.nockScope.isDone()).to.be.true
         })
       })
     })

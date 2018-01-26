@@ -7,7 +7,7 @@ describe('Adviser repository', () => {
   describe('getAdvisers', () => {
     context('when an adviser without a name is encountered', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, badAdviserData)
         this.advisers = await repos.getAdvisers(123)
@@ -26,15 +26,11 @@ describe('Adviser repository', () => {
 
         expect(this.advisers).to.deep.equal(expected)
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
 
     context('when all advisers have names', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, adviserData)
         this.advisers = await repos.getAdvisers(123)
@@ -42,10 +38,6 @@ describe('Adviser repository', () => {
 
       it('will not filter out any advisers', () => {
         expect(this.advisers).to.deep.equal(adviserData)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

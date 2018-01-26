@@ -57,7 +57,7 @@ describe('Companies account management middleware', () => {
 
   describe('#populateAccountManagementForm', () => {
     beforeEach(async () => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, this.activeInactiveAdviserData)
 
@@ -75,10 +75,6 @@ describe('Companies account management middleware', () => {
     it('should set the active advisers', () => {
       const expectedAdvisers = filter(this.activeInactiveAdviserData.results, 'is_active')
       expect(this.resMock.locals.advisers).to.deep.equal(expectedAdvisers)
-    })
-
-    it('nock mocked scope has been called', () => {
-      expect(this.nockScope.isDone()).to.be.true
     })
   })
 
