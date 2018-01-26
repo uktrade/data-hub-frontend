@@ -5,6 +5,7 @@ const {
   transformBriefInvestmentSummary,
   transformInvestmentDataForView,
   transformToApi,
+  transformFromApi,
 } = require('~/src/apps/investment-projects/transformers/project')
 
 describe('Investment project transformers', () => {
@@ -779,6 +780,38 @@ describe('Investment project transformers', () => {
 
     it('should set the estimated land date value to null', () => {
       expect(this.result).to.have.property('estimated_land_date', null)
+    })
+  })
+
+  describe('#transformFromApi', () => {
+    context('when an estimated land date is provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          estimated_land_date: '2017-12-15T14:25:38.989026Z',
+        })
+
+        this.result = transformFromApi(data)
+      })
+
+      it('should create a split date for month and year', () => {
+        expect(this.result).to.have.property('estimated_land_date_year', '2017')
+        expect(this.result).to.have.property('estimated_land_date_month', '12')
+      })
+    })
+
+    context('when an estimated land date is not provided', () => {
+      beforeEach(() => {
+        const data = assign({}, investmentData, {
+          estimated_land_date: null,
+        })
+
+        this.result = transformFromApi(data)
+      })
+
+      it('should not create a split date for month and year', () => {
+        expect(this.result).to.not.have.property('estimated_land_date_year')
+        expect(this.result).to.not.have.property('estimated_land_date_month')
+      })
     })
   })
 })
