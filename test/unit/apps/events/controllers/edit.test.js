@@ -265,8 +265,8 @@ describe('Event edit controller', () => {
       it('should get all active country type options when the event was created', () => {
         const options = getFormFieldOptions(this.res, 'address_country')
         expect(options).to.deep.equal([
-          { label: 'United Kingdom', value: '9999' },
           { label: 'Test', value: '8888' },
+          { label: 'United Kingdom', value: '9999' },
         ])
       })
 

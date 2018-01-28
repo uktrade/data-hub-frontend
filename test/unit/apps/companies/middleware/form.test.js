@@ -211,8 +211,8 @@ describe('Companies form middleware', () => {
 
       it('should include the active country options for use in the form and the current option', () => {
         expect(this.resMock.locals.options.countries).to.deep.equal([
-          { value: '9999', label: 'United Kingdom' },
           { value: '8888', label: 'Test' },
+          { value: '9999', label: 'United Kingdom' },
         ])
       })
     })
