@@ -1,15 +1,16 @@
-const { filter } = require('lodash')
-
-const metadataRepo = require('../../../../../lib/metadata')
+const { getOptions } = require('../../../../../lib/options')
 const { FormController } = require('../../../controllers')
-const { transformObjectToOption } = require('../../../../transformers')
 
 class MarketController extends FormController {
-  configure (req, res, next) {
-    const filterMarkets = filter(metadataRepo.omisMarketOptions, market => !market.disabled_on)
+  async configure (req, res, next) {
+    try {
+      const markets = await getOptions(req.session.token, 'omis-market')
 
-    req.form.options.fields.primary_market.options = filterMarkets.map(transformObjectToOption)
-    super.configure(req, res, next)
+      req.form.options.fields.primary_market.options = markets
+      super.configure(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
