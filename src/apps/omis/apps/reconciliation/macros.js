@@ -1,4 +1,4 @@
-const { assign, filter, includes } = require('lodash')
+const { assign, filter, flatten, includes } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 const { collectionSortForm } = require('../list/macros')
@@ -8,7 +8,8 @@ const filtersFields = [
     macroName: 'MultipleChoiceField',
     label: 'Order status',
     name: 'status',
-    type: 'radio',
+    type: 'checkbox',
+    modifier: 'option-select',
     options: filter(ORDER_STATES, o => {
       return !includes(['draft', 'quote_awaiting_acceptance'], o.value)
     }),
@@ -17,13 +18,11 @@ const filtersFields = [
     macroName: 'TextField',
     label: 'Order reference',
     name: 'reference',
-    hint: 'At least three characters',
   },
   {
     macroName: 'TextField',
     label: 'Company name',
     name: 'company_name',
-    hint: 'At least three characters',
   },
   {
     macroName: 'TextField',
@@ -37,7 +36,7 @@ const filtersFields = [
   },
 ].map(filter => {
   return assign({}, filter, {
-    modifier: ['smaller', 'light'],
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })
 })
 

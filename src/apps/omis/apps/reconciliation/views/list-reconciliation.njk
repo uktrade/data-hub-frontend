@@ -1,16 +1,6 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "collection.njk" %}
 
-{% block main_grid_left_column %}
-  {{
-    CollectionFilters({
-      query: QUERY,
-      filtersFields: filtersFields,
-      action: CURRENT_PATH
-    })
-  }}
-{% endblock %}
-
-{% block main_grid_right_column %}
+{% block collection_results %}
   {% call Collection(results | assign({
     countLabel: 'order',
     sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
@@ -23,8 +13,16 @@
           <th>Reference</th>
           <th>Payment due date</th>
           <th>Company name</th>
-          <th align="right">Amount (ex. VAT)</th>
-          <th align="right">Amount (inc. VAT)</th>
+          <th align="right">
+            Amount
+            <br>
+            (ex.&nbsp;VAT)
+          </th>
+          <th align="right">
+            Amount
+            <br>
+            (inc.&nbsp;VAT)
+          </th>
         </tr>
       </thead>
       <tbody>
