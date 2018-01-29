@@ -14,6 +14,7 @@ const sessionStore = session({
   secret: config.session.secret,
   resave: true,
   saveUninitialized: false,
+  unset: 'destroy',
 })
 
 module.exports = sessionStore
