@@ -158,6 +158,7 @@
     "selenium-server": "^3.8.1",
     "shortid": "^2.2.8",
     "vue-loader": "^13.7.0",
+    "vue-multiselect": "^2.0.8",
     "vue-template-compiler": "^2.5.13"
   },
   "greenkeeper": {
