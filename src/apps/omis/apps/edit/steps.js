@@ -97,6 +97,7 @@ const steps = merge({}, createSteps, {
     ],
     templatePath: 'omis/apps/edit/views',
     template: 'complete-order.njk',
+    successMessage: 'Order completed',
     controller: CompleteOrderController,
   },
   '/cancel-order': {
@@ -104,6 +105,7 @@ const steps = merge({}, createSteps, {
     fields: [
       'cancellation_reason',
     ],
+    successMessage: 'Order cancelled',
     controller: CancelOrderController,
   },
 })

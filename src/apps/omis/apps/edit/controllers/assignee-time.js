@@ -1,4 +1,4 @@
-const { filter, flatten, get, pick } = require('lodash')
+const { filter, flatten, get } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
@@ -23,8 +23,8 @@ class EditAssigneeTimeController extends EditController {
     next()
   }
 
-  async successHandler (req, res, next) {
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
+  async saveValues (req, res, next) {
+    const data = req.form.values
     const timeValues = flatten([data.assignee_time])
     const assignees = timeValues.map((value, index) => {
       return {
@@ -37,15 +37,7 @@ class EditAssigneeTimeController extends EditController {
 
     try {
       await Order.saveAssignees(req.session.token, res.locals.order.id, filter(assignees))
-      const nextUrl = req.form.options.next || `/omis/${res.locals.order.id}`
-
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', 'Order updated')
-      res.redirect(nextUrl)
+      next()
     } catch (error) {
       next(error)
     }
