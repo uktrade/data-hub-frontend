@@ -233,14 +233,14 @@
     {% endif %}
 
     {% if values.discount_value %}
-    (includes a net discount of {{ values.discount_value | formatCurrency }})
+      (includes a net discount of {{ values.discount_value | formatCurrency }})
     {% endif %}
   {% endset %}
 
   {{ AnswersSummary({
     heading: 'Invoice details',
     actions: [{
-      url: 'edit/payment' if order.canEditOrder or order.canEditInvoiceDetails
+      url: 'edit/invoice-details' if order.canEditOrder or order.canEditInvoiceDetails
     }],
     items: [{
       label: 'Price',
