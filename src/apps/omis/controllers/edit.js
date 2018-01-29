@@ -2,6 +2,7 @@ const {
   find,
   flatten,
   get,
+  isEmpty,
   isNull,
   isPlainObject,
   isUndefined,
@@ -33,7 +34,9 @@ class EditController extends FormController {
     req.sessionModel.reset()
     req.sessionModel.destroy()
 
-    req.flash('success', req.form.options.successMessage)
+    if (!isEmpty(req.form.options.successMessage)) {
+      req.flash('success', req.form.options.successMessage)
+    }
     res.redirect(this.getNextStep(req, res))
   }
 
