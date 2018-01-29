@@ -66,6 +66,10 @@ const config = {
     devToken: process.env.OAUTH2_DEV_TOKEN,
     bypassSSO: process.env.OAUTH2_BYPASS_SSO || false,
   },
+  basicAuth: {
+    user: process.env.BASIC_AUTH_USER,
+    password: process.env.BASIC_AUTH_PASSWORD,
+  },
 }
 
 module.exports = config
