@@ -11,8 +11,8 @@ const companyFiltersFields = [
   },
   {
     macroName: 'SmartMultipleChoice',
-    name: 'country',
-    entity: 'country',
+    name: 'dit_adviser',
+    entity: 'adviser',
   },
 ].map(filter => {
   return assign(filter, {

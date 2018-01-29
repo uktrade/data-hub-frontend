@@ -77,6 +77,7 @@ const exportDetailsLabels = {
 const companyFilterLabels = {
   name: 'Name',
   country: 'Countries',
+  dit_adviser: 'Adviser',
 }
 
 module.exports = {
