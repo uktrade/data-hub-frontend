@@ -9,11 +9,6 @@ class FormController extends Controller {
       res.breadcrumb(heading)
     }
 
-    if (req.query.returnUrl) {
-      req.form.options.backLink = req.query.returnUrl
-      req.form.options.next = req.query.returnUrl
-    }
-
     next()
   }
 

@@ -23,7 +23,7 @@
     <p class="c-local-header__action">
       {% if order.status == 'draft' %}
         <a href="quote" class="button">Preview quote</a>
-      {% else %}
+      {% elif order.status not in ['cancelled']  %}
         <a href="quote">View quote</a>
       {% endif %}
     </p>

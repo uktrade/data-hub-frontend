@@ -45,7 +45,7 @@ describe('Search Controller #renderSearchResults', () => {
 
   context('for investment projects', () => {
     beforeEach(async () => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/v3/search`)
         .query(Object.assign({}, searchQuery, { entity: 'investment_project' }))
         .reply(200, investmentResponse)
@@ -67,15 +67,11 @@ describe('Search Controller #renderSearchResults', () => {
     it('should transform investment projects data', () => {
       expect(this.renderFunction.getCall(0).args[1].results.items[0].type).to.equal('investment-project')
     })
-
-    it('nock mocked scope has been called', () => {
-      expect(this.nockScope.isDone()).to.be.true
-    })
   })
 
   context('for contacts', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/v3/search`)
         .query(Object.assign({}, searchQuery, { entity: 'contact' }))
         .reply(200, contactResponse)
@@ -107,7 +103,7 @@ describe('Search Controller #renderSearchResults', () => {
 
   context('for companies', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/v3/search`)
         .query(Object.assign({}, searchQuery, { entity: 'company' }))
         .reply(200, companyResponse)
@@ -139,7 +135,7 @@ describe('Search Controller #renderSearchResults', () => {
 
   context('investment projects', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get(`/v3/search`)
         .query(Object.assign({}, searchQuery, { entity: 'event' }))
         .reply(200, eventResponse)

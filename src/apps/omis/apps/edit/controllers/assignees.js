@@ -1,4 +1,4 @@
-const { get, pick, sortBy } = require('lodash')
+const { get, sortBy } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
@@ -28,8 +28,8 @@ class EditAssigneesController extends EditController {
     }
   }
 
-  async successHandler (req, res, next) {
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
+  async saveValues (req, res, next) {
+    const data = req.form.values
     const assignees = data.assignees.map((id) => {
       return {
         adviser: { id },
@@ -40,7 +40,6 @@ class EditAssigneesController extends EditController {
       const orderId = get(res.locals, 'order.id')
       const canEditOrder = get(res.locals, 'order.canEditOrder')
       const token = get(req.session, 'token')
-      const nextUrl = get(req, 'form.options.next') || `/omis/${orderId}`
 
       if (canEditOrder) {
         await Order.forceSaveAssignees(token, orderId, assignees)
@@ -48,13 +47,7 @@ class EditAssigneesController extends EditController {
         await Order.saveAssignees(token, orderId, assignees)
       }
 
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', 'Order updated')
-      res.redirect(nextUrl)
+      next()
     } catch (error) {
       next(error)
     }
