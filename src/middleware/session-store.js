@@ -5,16 +5,16 @@ const config = require('../../config')
 
 const sessionStore = session({
   store: redisStore,
-  proxy: !config.isDev,
+  proxy: config.isProd,
   cookie: {
-    secure: !config.isDev,
+    secure: config.isProd,
     maxAge: config.session.ttl,
   },
   rolling: true,
-  key: 'datahub.sid',
   secret: config.session.secret,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  unset: 'destroy',
 })
 
 module.exports = sessionStore
