@@ -17,23 +17,24 @@ const FormController = require('./form')
 const { Order } = require('../models')
 
 class EditController extends FormController {
-  async successHandler (req, res, next) {
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
-
+  async saveValues (req, res, next) {
     try {
-      const order = await Order.update(req.session.token, res.locals.order.id, data)
-      const nextUrl = req.form.options.next || `/omis/${order.id}`
+      await Order.update(req.session.token, res.locals.order.id, req.form.values)
 
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', 'Order updated')
-      res.redirect(nextUrl)
+      next()
     } catch (error) {
       next(error)
     }
+  }
+
+  successHandler (req, res) {
+    req.journeyModel.reset()
+    req.journeyModel.destroy()
+    req.sessionModel.reset()
+    req.sessionModel.destroy()
+
+    req.flash('success', req.form.options.successMessage)
+    res.redirect(this.getNextStep(req, res))
   }
 
   getValues (req, res, next) {

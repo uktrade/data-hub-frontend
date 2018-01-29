@@ -1,3 +1,5 @@
+const FormController = require('~/src/apps/omis/controllers/form')
+
 const updateMockData = {
   id: 'order-1234567890',
 }
@@ -18,33 +20,77 @@ describe('OMIS EditController', () => {
     this.controller = new this.ControllerClass({ route: '/' })
   })
 
+  describe('saveValues()', () => {
+    beforeEach(() => {
+      this.reqMock = {
+        session: {
+          token: 'sessionToken',
+        },
+        form: {
+          values: {
+            foo: 'bar',
+            fizz: 'buzz',
+          },
+        },
+      }
+      this.resMock = {
+        locals: {
+          order: { id: updateMockData.id },
+        },
+      }
+    })
+
+    context('when order save is successful', () => {
+      beforeEach(async () => {
+        this.orderUpdateStub.resolves(updateMockData)
+
+        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call save method on order model', () => {
+        expect(this.orderUpdateStub).to.have.been.calledWith('sessionToken', updateMockData.id, {
+          foo: 'bar',
+          fizz: 'buzz',
+        })
+      })
+
+      it('should call next with no arguments', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when order save fails', () => {
+      beforeEach(async () => {
+        this.errorMock = new Error('Save Error')
+        this.orderUpdateStub.rejects(this.errorMock)
+
+        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next with the error', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
+      })
+    })
+  })
+
   describe('successHandler()', () => {
     beforeEach(() => {
       this.resetSpy = sandbox.spy()
       this.destroySpy = sandbox.spy()
       this.flashSpy = sandbox.spy()
+      this.redirectSpy = sandbox.spy()
+      this.successMessageMock = 'Successfully handled'
+      this.nextMock = '/next-step/'
 
-      this.reqMock = Object.assign({}, globalReq, {
+      this.reqMock = {
         form: {
           options: {
-            fields: {
-              foo: {},
-              fizz: {},
-            },
+            successMessage: this.successMessageMock,
           },
-        },
-        session: {
-          token: 'token-12345',
         },
         sessionModel: {
-          toJSON: () => {
-            return {
-              'csrf-secret': 'secret-key',
-              errors: {},
-              foo: 'bar',
-              fizz: 'buzz',
-            }
-          },
           reset: this.resetSpy,
           destroy: this.destroySpy,
         },
@@ -53,143 +99,36 @@ describe('OMIS EditController', () => {
           destroy: this.destroySpy,
         },
         flash: this.flashSpy,
-      })
-      this.resMock = Object.assign({}, globalRes, {
+      }
+      this.resMock = {
+        redirect: this.redirectSpy,
         locals: {
-          order: {
-            id: updateMockData.id,
-          },
+          order: { id: updateMockData.id },
         },
-      })
+      }
+
+      sandbox.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
+      this.controller.successHandler(this.reqMock, this.resMock)
     })
 
-    context('when order save is succesfully', () => {
-      beforeEach(() => {
-        this.orderUpdateStub.resolves(updateMockData)
-      })
-
-      it('should call update method with correct values', (done) => {
-        const resMock = Object.assign({}, this.resMock, {
-          redirect: (url) => {
-            try {
-              expect(this.orderUpdateStub).to.have.been.calledWith('token-12345', 'order-1234567890', {
-                foo: 'bar',
-                fizz: 'buzz',
-              })
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        })
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
-
-      it('should reset the models', (done) => {
-        const resMock = Object.assign({}, this.resMock, {
-          redirect: () => {
-            try {
-              expect(this.resetSpy).to.have.been.calledTwice
-              expect(this.destroySpy).to.have.been.calledTwice
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        })
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
-
-      it('should set a flash message', (done) => {
-        const resMock = Object.assign({}, this.resMock, {
-          redirect: () => {
-            try {
-              expect(this.flashSpy).to.have.been.calledOnce
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        })
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
-
-      it('should redirect back to the order', (done) => {
-        const resMock = Object.assign({}, this.resMock, {
-          redirect: (url) => {
-            try {
-              expect(url).to.equal(`/omis/${updateMockData.id}`)
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        })
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
-
-      context('when next is set', () => {
-        it('should redirect back to returnUrl', (done) => {
-          const reqMock = Object.assign({}, this.reqMock)
-          const resMock = Object.assign({}, this.resMock, {
-            redirect: (url) => {
-              try {
-                expect(url).to.equal('/custom-return-url')
-                done()
-              } catch (error) {
-                done(error)
-              }
-            },
-          })
-
-          reqMock.form.options.next = '/custom-return-url'
-
-          this.controller.successHandler(reqMock, resMock, this.nextSpy)
-        })
-      })
-
-      it('should not call the next method', (done) => {
-        const resMock = Object.assign({}, this.resMock, {
-          redirect: () => {
-            try {
-              expect(this.nextSpy).not.to.have.been.called
-              done()
-            } catch (error) {
-              done(error)
-            }
-          },
-        })
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
+    it('should reset the models', () => {
+      expect(this.resetSpy).to.have.been.calledTwice
+      expect(this.destroySpy).to.have.been.calledTwice
     })
 
-    context('when order save fails', () => {
-      beforeEach(() => {
-        this.orderUpdateStub.rejects(new Error())
-      })
+    it('should set a flash message', () => {
+      expect(this.flashSpy).to.have.been.calledOnce
+      expect(this.flashSpy).to.have.been.calledWith('success', this.successMessageMock)
+    })
 
-      it('should save an order', (done) => {
-        const resMock = {
-          redirect: sandbox.spy(),
-        }
-        const nextMock = (error) => {
-          try {
-            expect(error).to.be.an('error')
-            expect(resMock.redirect).to.not.have.been.called
-            expect(this.resetSpy).to.not.have.been.called
-            done()
-          } catch (error) {
-            done(error)
-          }
-        }
+    it('should get the next value', () => {
+      expect(FormController.prototype.getNextStep).to.have.been.calledOnce
+      expect(FormController.prototype.getNextStep).to.have.been.calledWith(this.reqMock, this.resMock)
+    })
 
-        this.controller.successHandler(this.reqMock, resMock, nextMock)
-      })
+    it('should redirect with getNextStep value', () => {
+      expect(this.resMock.redirect).to.have.been.calledOnce
+      expect(this.resMock.redirect).to.have.been.calledWith(this.nextMock)
     })
   })
 
