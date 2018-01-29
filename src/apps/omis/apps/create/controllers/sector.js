@@ -1,13 +1,18 @@
 const { get } = require('lodash')
 
-const metadataRepo = require('../../../../../lib/metadata')
+const { getOptions } = require('../../../../../lib/options')
 const { FormController } = require('../../../controllers')
-const { transformObjectToOption } = require('../../../../transformers')
 
 class SectorController extends FormController {
-  configure (req, res, next) {
-    req.form.options.fields.sector.options = metadataRepo.sectorOptions.map(transformObjectToOption)
-    super.configure(req, res, next)
+  async configure (req, res, next) {
+    try {
+      const sectors = await getOptions(req.session.token, 'sector')
+
+      req.form.options.fields.sector.options = sectors
+      super.configure(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
 
   saveValues (req, res, next) {

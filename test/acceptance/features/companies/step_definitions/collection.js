@@ -133,11 +133,11 @@ defineSupportCode(({ Given, Then, When }) => {
       })
 
     if (sortType === 'Recently') {
-      client.expect(updateValues.firstItem.isAfter(updateValues.secondItem)).to.be.true
+      client.expect(updateValues.firstItem.isSameOrAfter(updateValues.secondItem)).to.be.true
     }
 
     if (sortType === 'Least recently') {
-      client.expect(updateValues.firstItem.isBefore(updateValues.secondItem)).to.be.true
+      client.expect(updateValues.firstItem.isSameOrBefore(updateValues.secondItem)).to.be.true
     }
   })
 

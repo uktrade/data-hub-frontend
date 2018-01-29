@@ -1,3 +1,5 @@
+const { sortBy } = require('lodash')
+
 const config = require('../../config')
 const authorisedRequest = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../apps/filters')
@@ -11,7 +13,7 @@ async function getOptions (token, key, { createdOn, currentValue, includeDisable
     options = options.filter(filterDisabledOption({ currentValue, createdOn }))
   }
 
-  return options.map(transformObjectToOption)
+  return sortBy(options.map(transformObjectToOption), 'label')
 }
 
 module.exports = {

@@ -155,45 +155,20 @@ describe('OMIS edit subscribers controller', () => {
     })
   })
 
-  describe('successHandler()', () => {
+  describe('saveValues()', () => {
     beforeEach(() => {
-      this.resetSpy = sandbox.spy()
-      this.destroySpy = sandbox.spy()
-      this.flashSpy = sandbox.spy()
-      this.redirectSpy = sandbox.spy()
-
       this.reqMock = Object.assign({}, globalReq, {
         form: {
-          options: {
-            fields: {
-              assignees: {},
-              fizz: {},
-            },
+          values: {
+            assignees: [
+              '33736be0-3e6b-4d4e-9fa8-32f23d0ba55e',
+              '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
+            ],
           },
         },
         session: {
           token: tokenMock,
         },
-        sessionModel: {
-          toJSON: () => {
-            return {
-              'csrf-secret': 'secret-key',
-              errors: {},
-              assignees: [
-                '33736be0-3e6b-4d4e-9fa8-32f23d0ba55e',
-                '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
-              ],
-              fizz: 'buzz',
-            }
-          },
-          reset: this.resetSpy,
-          destroy: this.destroySpy,
-        },
-        journeyModel: {
-          reset: this.resetSpy,
-          destroy: this.destroySpy,
-        },
-        flash: this.flashSpy,
       })
 
       this.resMock = Object.assign({}, globalRes, {
@@ -206,15 +181,16 @@ describe('OMIS edit subscribers controller', () => {
       })
     })
 
-    context('when an async call rejects', () => {
+    context('when save fails', () => {
       beforeEach(async () => {
         this.error = new Error('Async error')
         this.saveAssigneesStub.rejects(this.error)
 
-        await this.controller.successHandler(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should call next with an error', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
         expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
     })
@@ -223,12 +199,14 @@ describe('OMIS edit subscribers controller', () => {
       beforeEach(async () => {
         this.resMock.locals.order.canEditOrder = true
 
-        await this.controller.successHandler(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should force save assignees', () => {
+      it('should not call save assignees method', () => {
         expect(this.saveAssigneesStub).not.to.have.been.called
+      })
 
+      it('should call force save assignees method', () => {
         expect(this.forceSaveAssigneesStub).to.have.been.calledOnce
         expect(this.forceSaveAssigneesStub).to.have.been.calledWith(tokenMock, orderMock.id, [{
           adviser: {
@@ -240,32 +218,20 @@ describe('OMIS edit subscribers controller', () => {
           },
         }])
       })
-
-      it('should reset the models', () => {
-        expect(this.resetSpy).to.have.been.calledTwice
-        expect(this.destroySpy).to.have.been.calledTwice
-      })
-
-      it('should set a flash message', () => {
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
-
-      it('should redirect back to the order', () => {
-        expect(this.redirectSpy).to.have.been.calledOnce
-        expect(this.redirectSpy).to.have.been.calledWith(`/omis/${orderMock.id}`)
-      })
     })
 
     context('when order is editable', () => {
       beforeEach(async () => {
         this.resMock.locals.order.canEditOrder = false
 
-        await this.controller.successHandler(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should not force save assignees', () => {
+      it('should not call force save method', () => {
         expect(this.forceSaveAssigneesStub).not.to.have.been.called
+      })
 
+      it('should call save assignees method', () => {
         expect(this.saveAssigneesStub).to.have.been.calledOnce
         expect(this.saveAssigneesStub).to.have.been.calledWith(tokenMock, orderMock.id, [{
           adviser: {
@@ -276,17 +242,6 @@ describe('OMIS edit subscribers controller', () => {
             id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
           },
         }])
-      })
-    })
-
-    context('when next is set', () => {
-      it('should redirect back to returnUrl', async () => {
-        this.reqMock.form.options.next = '/custom-return-url'
-
-        await this.controller.successHandler(this.reqMock, this.resMock, this.nextSpy)
-
-        expect(this.redirectSpy).to.have.been.calledOnce
-        expect(this.redirectSpy).to.have.been.calledWith('/custom-return-url')
       })
     })
   })

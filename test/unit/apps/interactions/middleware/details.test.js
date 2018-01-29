@@ -262,7 +262,7 @@ describe('Interaction details middleware', () => {
 
     context('when interaction', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.activeInactiveAdviserData)
           .get('/metadata/team/')
@@ -350,15 +350,11 @@ describe('Interaction details middleware', () => {
       it('should not set event options', () => {
         expect(this.res.locals.options.events).to.be.undefined
       })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
-      })
     })
 
     context('when service delivery', () => {
       beforeEach(async () => {
-        this.nockScope = nock(config.apiRoot)
+        nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.activeInactiveAdviserData)
           .get('/metadata/team/')
@@ -466,10 +462,6 @@ describe('Interaction details middleware', () => {
           label: 'name',
         }]
         expect(this.res.locals.options.events).to.deep.equal(expectedEvents)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })

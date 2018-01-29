@@ -1,4 +1,4 @@
-const { get, filter, merge, pick } = require('lodash')
+const { get, filter, merge } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { transformObjectToOption } = require('../../../../transformers')
@@ -32,22 +32,14 @@ class CancelOrderController extends EditController {
     super.configure(req, res, next)
   }
 
-  async successHandler (req, res, next) {
+  async saveValues (req, res, next) {
     const token = req.session.token
     const orderId = get(res.locals, 'order.id')
-    const data = pick(req.sessionModel.toJSON(), Object.keys(req.form.options.fields))
+    const data = req.form.values
 
     try {
       await Order.cancel(token, orderId, data)
-      const nextUrl = req.form.options.next || `/omis/${orderId}`
-
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      req.flash('success', 'Order cancelled')
-      res.redirect(nextUrl)
+      next()
     } catch (error) {
       next(error)
     }

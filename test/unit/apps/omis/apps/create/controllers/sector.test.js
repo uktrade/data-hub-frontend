@@ -1,21 +1,13 @@
+const { assign } = require('lodash')
+
+const { apiRoot } = require('~/config')
 const FormController = require('~/src/apps/omis/controllers/form')
+const Controller = require('~/src/apps/omis/apps/create/controllers/sector')
 
-const sectorOptionsMock = [{
-  id: '1',
-  name: 'Sector one',
-}, {
-  id: '2',
-  name: 'Sector two',
-}, {
-  id: '3',
-  name: 'Sector three',
-}]
-
-const Controller = proxyquire('~/src/apps/omis/apps/create/controllers/sector', {
-  '../../../../../lib/metadata': {
-    sectorOptions: sectorOptionsMock,
-  },
-})
+const sectorOptionsMock = [
+  { id: '9999', name: 'ICT' },
+  { id: '8888', name: 'Farming' },
+]
 
 describe('OMIS create sector controller', () => {
   beforeEach(() => {
@@ -24,49 +16,68 @@ describe('OMIS create sector controller', () => {
   })
 
   describe('configure()', () => {
-    beforeEach(() => {
-      this.reqMock = Object.assign({}, globalReq, {
-        form: {
-          options: {
-            fields: {
-              sector: {},
+    context('when getOptions returns 200', () => {
+      beforeEach(async () => {
+        nock(apiRoot)
+          .get('/metadata/sector/')
+          .reply(200, sectorOptionsMock)
+
+        this.reqMock = assign({}, globalReq, {
+          form: {
+            options: {
+              fields: {
+                sector: {},
+              },
             },
           },
-        },
+        })
+
+        sandbox.spy(FormController.prototype, 'configure')
+        await this.controller.configure(this.reqMock, globalRes, this.nextSpy)
       })
 
-      sandbox.spy(FormController.prototype, 'configure')
+      it('should set list of markets dynamically', () => {
+        expect(this.reqMock.form.options.fields.sector.options).to.deep.equal([
+          { value: '8888', label: 'Farming' },
+          { value: '9999', label: 'ICT' },
+        ])
+      })
+
+      it('should call parent configure method', () => {
+        expect(FormController.prototype.configure).to.be.calledOnce
+        expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+      })
     })
 
-    it('should set the list of markets', () => {
-      this.controller.configure(this.reqMock, globalRes, this.nextSpy)
+    context('when getOptions returns an error', () => {
+      beforeEach(async () => {
+        this.errorMessageMock = 'ERROR_REASON'
 
-      expect(this.reqMock.form.options.fields.sector.options).to.deep.equal([
-        {
-          value: '1',
-          label: 'Sector one',
-        },
-        {
-          value: '2',
-          label: 'Sector two',
-        },
-        {
-          value: '3',
-          label: 'Sector three',
-        },
-      ])
-      expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+        nock(apiRoot)
+          .get('/metadata/sector/')
+          .replyWithError(this.errorMessageMock)
+
+        await this.controller.configure(globalReq, globalRes, this.nextSpy)
+      })
+
+      it('should call next with the error', () => {
+        const errorArgument = this.nextSpy.args[0][0]
+
+        expect(this.nextSpy).to.be.calledOnce
+        expect(errorArgument instanceof Error).to.be.true
+        expect(errorArgument.message).to.equal(`Error: ${this.errorMessageMock}`)
+      })
     })
   })
 
   describe('saveValues()', () => {
     beforeEach(() => {
-      this.reqMock = Object.assign({}, globalReq, {
+      this.reqMock = assign({}, globalReq, {
         form: {
           values: {},
         },
       })
-      this.resMock = Object.assign({}, globalRes, {
+      this.resMock = assign({}, globalRes, {
         locals: {
           company: {
             sector: {

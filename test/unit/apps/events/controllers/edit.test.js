@@ -99,7 +99,7 @@ describe('Event edit controller', () => {
 
   describe('#renderEditPage', () => {
     beforeEach(() => {
-      this.nockScope = nock(config.apiRoot)
+      nock(config.apiRoot)
         .get('/adviser/')
         .query({ limit: 100000, offset: 0 })
         .reply(200, this.activeInactiveAdviserData)
@@ -140,10 +140,6 @@ describe('Event edit controller', () => {
         const actual = find(eventForm.children, { name: 'lead_team' }).value
 
         expect(actual).to.equal(currentUserTeam)
-      })
-
-      it('nock mocked scope has been called', () => {
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
 
@@ -246,7 +242,6 @@ describe('Event edit controller', () => {
       it('should add a breadcrumb', () => {
         expect(this.res.breadcrumb.firstCall).to.be.calledWith('name', '/events/123')
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Edit event')
-        expect(this.nockScope.isDone()).to.be.true
       })
 
       it('should get all active event type options when the event was created', () => {
@@ -270,8 +265,8 @@ describe('Event edit controller', () => {
       it('should get all active country type options when the event was created', () => {
         const options = getFormFieldOptions(this.res, 'address_country')
         expect(options).to.deep.equal([
-          { label: 'United Kingdom', value: '9999' },
           { label: 'Test', value: '8888' },
+          { label: 'United Kingdom', value: '9999' },
         ])
       })
 
@@ -351,7 +346,6 @@ describe('Event edit controller', () => {
         }
 
         expect(actualErrors).to.deep.equal(expectedErrors)
-        expect(this.nockScope.isDone()).to.be.true
       })
     })
   })
