@@ -63,7 +63,7 @@ const steps = merge({}, createSteps, {
     ],
     controller: EditInternalDetailsController,
   },
-  '/payment': {
+  '/invoice-details': {
     heading: 'Edit invoice details',
     fields: [
       'vat_status',
@@ -72,7 +72,7 @@ const steps = merge({}, createSteps, {
       'po_number',
     ],
     templatePath: 'omis/apps/edit/views',
-    template: 'payment.njk',
+    template: 'invoice-details.njk',
     controller: EditInvoiceDetailsController,
   },
   '/billing-address': {
@@ -87,7 +87,7 @@ const steps = merge({}, createSteps, {
     ],
     next: [
       { fn: 'nextCondition', next: 'vat-status' },
-      'payment',
+      'invoice-details',
     ],
     successMessage: 'Billing address updated',
     controller: EditBillingAddressController,
@@ -103,7 +103,7 @@ const steps = merge({}, createSteps, {
     template: 'vat-status.njk',
     buttonText: 'Confirm VAT status',
     backLink: null,
-    next: 'payment',
+    next: 'invoice-details',
     successMessage: 'Billing address and VAT status updated',
     controller: EditVatStatusController,
   },
