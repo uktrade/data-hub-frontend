@@ -5,9 +5,9 @@ const config = require('../../config')
 
 const sessionStore = session({
   store: redisStore,
-  proxy: !config.isDev,
+  proxy: config.isProd,
   cookie: {
-    secure: !config.isDev,
+    secure: config.isProd,
     maxAge: config.session.ttl,
   },
   rolling: true,
