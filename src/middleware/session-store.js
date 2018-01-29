@@ -13,7 +13,7 @@ const sessionStore = session({
   rolling: true,
   secret: config.session.secret,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
 })
 
 module.exports = sessionStore
