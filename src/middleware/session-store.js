@@ -11,7 +11,6 @@ const sessionStore = session({
     maxAge: config.session.ttl,
   },
   rolling: true,
-  key: 'datahub.sid',
   secret: config.session.secret,
   resave: true,
   saveUninitialized: true,
