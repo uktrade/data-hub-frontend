@@ -34,7 +34,7 @@
       {% set metaItemValue = props.value.name | default(props.value) %}
     {% endif %}
 
-    {% set value = metaItemValue | highlight(props.highlightTerm, true) %}
+    {% set value = metaItemValue | escape | highlight(props.highlightTerm, true) %}
 
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
