@@ -87,6 +87,8 @@ This file expects the following environment variables:
 | API_ROOT | The url for a back end server instance for the service |
 | ARCHIVED_DOCUMENTS_BASE_URL | The url for the archived documents store |
 | ASSETS_HOST | Optional host for assets CDN, defaults to app’s host |
+| BASIC_AUTH_USER | Optional. If running a server with OAUTH2_BYPASS_SSO=true then this can be used in conjunction with a password to setup basic HTTP auth to protect the server |
+| BASIC_AUTH_PASSWORD |  Used in conjunction with BASIC_AUTH_USER to setup security for the server |
 | CI | Set to true for UAT testing, otherwise ignore |
 | FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
 | GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with Google Tag Manager to track usage |
@@ -256,6 +258,9 @@ data-hub-frontend will then use mock-sso to simply pass your `OAUTH2_DEV_TOKEN` 
 You could point data-hub-frontend to the UAT SSO environment. If you wish to please speak to the 
 [#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team to set up the correct access and 
 SSO details required.
+
+### HTTP Basic Auth
+When running with `OAUTH2_BYPASS_SSO` the frontend can be user/password protected by setting `BASIC_AUTH_USER` and `BASIC_AUTH_PASSWORD`
 
 ###### Local checkout of staff SSO
 You could checkout [uktrade/staff-sso](https://github.com/uktrade/staff-sso) locally and point data-hub-frontend

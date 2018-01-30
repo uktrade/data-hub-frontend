@@ -29,6 +29,7 @@ const errors = require('./middleware/errors')
 const sessionStore = require('./middleware/session-store')
 const ssoBypass = require('./middleware/sso-bypass')
 const logger = require('../config/logger')
+const basicAuth = require('./middleware/basic-auth')
 
 const routers = require('./apps/routers')
 
@@ -100,6 +101,7 @@ app.use(breadcrumbs.setHome())
 app.use(flash())
 
 app.use(ssoBypass())
+app.use(basicAuth)
 app.use(auth)
 app.use(user)
 app.use(locals)
