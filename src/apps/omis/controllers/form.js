@@ -38,26 +38,19 @@ class FormController extends Controller {
         req.form.values[key].splice(index, 1)
       }
 
-      return this.saveValues(req, res, () => {
+      return super.saveValues(req, res, () => {
         res.redirect(req.baseUrl + req.path)
       })
     }
 
+    const fields = req.form.options.fields
+    forEach(fields, (options, key) => {
+      if (options.repeatable) {
+        req.form.values[key] = filter(flatten([req.form.values[key]]))
+      }
+    })
+
     next()
-  }
-
-  saveValues (req, res, next) {
-    if (!req.body['add-item'] && !req.body['remove-item']) {
-      const fields = req.form.options.fields
-
-      forEach(fields, (options, key) => {
-        if (options.repeatable) {
-          req.form.values[key] = filter(flatten([req.form.values[key]]))
-        }
-      })
-    }
-
-    super.saveValues(req, res, next)
   }
 
   errorHandler (err, req, res, next) {
