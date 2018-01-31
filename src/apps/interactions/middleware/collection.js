@@ -1,6 +1,6 @@
 const { assign, pick, merge, omit } = require('lodash')
 
-const { interactionSortForm } = require('../macros')
+const { collectionSortForm } = require('../macros')
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
@@ -51,7 +51,7 @@ function getInteractionsRequestBody (req, res, next) {
 }
 
 function getInteractionSortForm (req, res, next) {
-  res.locals.sortForm = merge({}, interactionSortForm, {
+  res.locals.sortForm = merge({}, collectionSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
       { value: req.query.sortby },

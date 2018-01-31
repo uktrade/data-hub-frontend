@@ -135,20 +135,6 @@ describe('OMIS FormController', () => {
     })
 
     context('when form submission is a save', () => {
-      it('should call next()', () => {
-        const saveValuesSpy = sandbox.spy()
-        FormController.prototype.saveValues = saveValuesSpy
-
-        this.controller.process(this.reqMock, this.resMock, this.nextSpy)
-
-        expect(this.nextSpy).to.have.been.calledOnce
-        expect(saveValuesSpy).not.to.have.been.called
-      })
-    })
-  })
-
-  describe('saveValues()', () => {
-    context('when form submission is a save', () => {
       beforeEach(() => {
         this.saveValuesSpy = sandbox.spy()
         this.reqMock = Object.assign({}, globalReq, {
@@ -168,19 +154,31 @@ describe('OMIS FormController', () => {
         FormController.prototype.saveValues = this.saveValuesSpy
       })
 
+      it('should not call parent saveValues()', () => {
+        this.controller.process(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.saveValuesSpy).not.to.have.been.called
+      })
+
+      it('should call next()', () => {
+        this.controller.process(this.reqMock, this.resMock, this.nextSpy)
+
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+
       context('when a repeatable field is not an array', () => {
         beforeEach(() => {
           this.reqMock.form.values.repeatableField = ''
         })
 
         it('should convert it to an array', () => {
-          this.controller.saveValues(this.reqMock, globalRes, this.nextSpy)
+          this.controller.process(this.reqMock, globalRes, this.nextSpy)
 
           expect(this.reqMock.form.values).to.deep.equal({
             nonRepeatableField: 'foo',
             repeatableField: [],
           })
-          expect(this.saveValuesSpy).to.have.been.calledOnce
         })
       })
 
@@ -190,13 +188,12 @@ describe('OMIS FormController', () => {
         })
 
         it('should filter falseys out', () => {
-          this.controller.saveValues(this.reqMock, globalRes, this.nextSpy)
+          this.controller.process(this.reqMock, globalRes, this.nextSpy)
 
           expect(this.reqMock.form.values).to.deep.equal({
             nonRepeatableField: 'foo',
             repeatableField: ['foo', 'bar'],
           })
-          expect(this.saveValuesSpy).to.have.been.calledOnce
         })
       })
     })
