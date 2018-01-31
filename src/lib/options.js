@@ -5,7 +5,7 @@ const authorisedRequest = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../apps/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false } = {}) {
+async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true } = {}) {
   const url = `${config.apiRoot}/metadata/${key}/`
   let options = await authorisedRequest(token, url)
 
@@ -13,7 +13,9 @@ async function getOptions (token, key, { createdOn, currentValue, includeDisable
     options = options.filter(filterDisabledOption({ currentValue, createdOn }))
   }
 
-  return sortBy(options.map(transformObjectToOption), 'label')
+  const mappedOptions = options.map(transformObjectToOption)
+
+  return sorted ? sortBy(mappedOptions, 'label') : mappedOptions
 }
 
 module.exports = {
