@@ -2,11 +2,11 @@ const { assign } = require('lodash')
 
 describe('Create interaction, step 1', () => {
   beforeEach(() => {
-    this.selectKindFormConfigStub = sandbox.spy()
+    this.kindFormStub = sandbox.spy()
 
     this.create = proxyquire('~/src/apps/interactions/controllers/create', {
       '../macros': {
-        selectKindFormConfig: this.selectKindFormConfigStub,
+        kindForm: this.kindFormStub,
       },
     })
 
@@ -104,7 +104,7 @@ describe('Create interaction, step 1', () => {
       })
 
       it('should generate a form with no errors', () => {
-        expect(this.selectKindFormConfigStub).to.be.calledWith({ errors: [] })
+        expect(this.kindFormStub).to.be.calledWith({ errors: [] })
       })
 
       it('render the correct template', () => {
@@ -119,7 +119,7 @@ describe('Create interaction, step 1', () => {
       })
 
       it('should generate a form with no errors', () => {
-        expect(this.selectKindFormConfigStub).to.be.calledWith({ errors: this.res.locals.errors })
+        expect(this.kindFormStub).to.be.calledWith({ errors: this.res.locals.errors })
       })
     })
   })

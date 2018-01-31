@@ -108,27 +108,43 @@ describe('OMIS EditController', () => {
       }
 
       sandbox.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
-      this.controller.successHandler(this.reqMock, this.resMock)
     })
 
-    it('should reset the models', () => {
-      expect(this.resetSpy).to.have.been.calledTwice
-      expect(this.destroySpy).to.have.been.calledTwice
+    context('when a success message exists', () => {
+      beforeEach(() => {
+        this.controller.successHandler(this.reqMock, this.resMock)
+      })
+
+      it('should reset the models', () => {
+        expect(this.resetSpy).to.have.been.calledTwice
+        expect(this.destroySpy).to.have.been.calledTwice
+      })
+
+      it('should set a flash message', () => {
+        expect(this.flashSpy).to.have.been.calledOnce
+        expect(this.flashSpy).to.have.been.calledWith('success', this.successMessageMock)
+      })
+
+      it('should get the next value', () => {
+        expect(FormController.prototype.getNextStep).to.have.been.calledOnce
+        expect(FormController.prototype.getNextStep).to.have.been.calledWith(this.reqMock, this.resMock)
+      })
+
+      it('should redirect with getNextStep value', () => {
+        expect(this.resMock.redirect).to.have.been.calledOnce
+        expect(this.resMock.redirect).to.have.been.calledWith(this.nextMock)
+      })
     })
 
-    it('should set a flash message', () => {
-      expect(this.flashSpy).to.have.been.calledOnce
-      expect(this.flashSpy).to.have.been.calledWith('success', this.successMessageMock)
-    })
+    context('when a success message doesn\'t exist', () => {
+      beforeEach(() => {
+        this.reqMock.form.options.successMessage = null
+        this.controller.successHandler(this.reqMock, this.resMock)
+      })
 
-    it('should get the next value', () => {
-      expect(FormController.prototype.getNextStep).to.have.been.calledOnce
-      expect(FormController.prototype.getNextStep).to.have.been.calledWith(this.reqMock, this.resMock)
-    })
-
-    it('should redirect with getNextStep value', () => {
-      expect(this.resMock.redirect).to.have.been.calledOnce
-      expect(this.resMock.redirect).to.have.been.calledWith(this.nextMock)
+      it('should not set a flash message', () => {
+        expect(this.flashSpy).not.to.have.been.called
+      })
     })
   })
 
