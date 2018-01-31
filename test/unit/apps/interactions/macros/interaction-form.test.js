@@ -13,7 +13,7 @@ function getFormFieldOptions (form, fieldName) {
 }
 
 describe('Interaction macros', () => {
-  describe('#interactionFormConfig', () => {
+  describe('#interactionForm', () => {
     context('when called with interaction options', () => {
       beforeEach(() => {
         this.formParams = {
@@ -26,7 +26,7 @@ describe('Interaction macros', () => {
           hiddenFields: [],
         }
 
-        this.form = macros.interactionFormConfig(this.formParams)
+        this.form = macros.interactionForm(this.formParams)
       })
 
       it('should return object with specified returnLink present', () => {
@@ -64,7 +64,7 @@ describe('Interaction macros', () => {
     })
   })
 
-  describe('#serviceDeliveryFormConfig', () => {
+  describe('#serviceDeliveryForm', () => {
     context('when called with service delivery options', () => {
       beforeEach(() => {
         this.formParams = {
@@ -77,7 +77,7 @@ describe('Interaction macros', () => {
           hiddenFields: [],
         }
 
-        this.form = macros.serviceDeliveryFormConfig(this.formParams)
+        this.form = macros.serviceDeliveryForm(this.formParams)
       })
 
       it('should return object with specified returnLink present', () => {
