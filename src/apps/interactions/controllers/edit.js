@@ -3,11 +3,11 @@ const { get, merge, pickBy, lowerCase, snakeCase, assign } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
-const { interactionFormConfig, serviceDeliveryFormConfig } = require('../macros')
+const { interactionForm, serviceDeliveryForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const formConfigs = {
-  'interaction': interactionFormConfig,
-  'service-delivery': serviceDeliveryFormConfig,
+  'interaction': interactionForm,
+  'service-delivery': serviceDeliveryForm,
 }
 
 function renderEditPage (req, res) {
