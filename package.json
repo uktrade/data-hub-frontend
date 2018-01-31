@@ -94,6 +94,7 @@
     "style-loader": "^0.20.1",
     "uglify": "^0.1.5",
     "uuid": "^3.1.0",
+    "vue": "^2.5.13",
     "wavy": "^1.0.4",
     "webpack": "^3.10.0",
     "webpack-assets-manifest": "^1.0.0",
@@ -155,7 +156,10 @@
     "nightwatch-cucumber": "^9.0.0",
     "pre-commit": "^1.2.2",
     "selenium-server": "^3.8.1",
-    "shortid": "^2.2.8"
+    "shortid": "^2.2.8",
+    "vue-loader": "^13.7.0",
+    "vue-multiselect": "^2.0.8",
+    "vue-template-compiler": "^2.5.13"
   },
   "greenkeeper": {
     "ignore": [
