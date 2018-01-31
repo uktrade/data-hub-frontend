@@ -146,12 +146,6 @@ defineSupportCode(({ Given, When, Then }) => {
       .waitForElementPresent('@kind', waitForTimeout)
 
     await filtersSection
-      .clickMultipleChoiceOption('dit_adviser', get(this.state, `${interactionType}.ditAdviser`))
-
-    await filterTagsSection
-      .waitForElementPresent('@adviser', waitForTimeout)
-
-    await filtersSection
       .setValue('@dateFrom', date)
       .sendKeys('@dateFrom', [ client.Keys.ENTER ])
 

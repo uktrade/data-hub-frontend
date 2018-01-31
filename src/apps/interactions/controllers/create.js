@@ -1,5 +1,5 @@
 const { kebabCase } = require('lodash')
-const { selectKindFormConfig } = require('../macros')
+const { kindForm } = require('../macros')
 
 function postCreate (req, res, next) {
   const kind = req.body.kind || null
@@ -16,7 +16,7 @@ function postCreate (req, res, next) {
 }
 
 function renderCreate (req, res) {
-  const selectKindForm = selectKindFormConfig({
+  const selectKindForm = kindForm({
     errors: res.locals.errors || [],
   })
 
