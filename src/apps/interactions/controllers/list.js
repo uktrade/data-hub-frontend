@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { interactionFiltersFieldConfig } = require('../macros')
+const { collectionFilterFields } = require('../macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 
@@ -11,7 +11,7 @@ async function renderInteractionList (req, res, next) {
     const channels = await getOptions(token, 'communication-channel', { includeDisabled: true })
     const teams = await getOptions(token, 'team', { includeDisabled: true })
 
-    const filtersFields = interactionFiltersFieldConfig({
+    const filtersFields = collectionFilterFields({
       teams,
       channels,
       currentAdviserId,
