@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 const { set, get, assign } = require('lodash')
 
-const Company = client.page.Company()
+const Company = client.page.companies.Company()
 
 When(/^the Account management details are updated$/, async function () {
   await Company

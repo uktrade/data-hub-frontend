@@ -4,7 +4,7 @@ const { When } = require('cucumber')
 
 const { getDateFor } = require('../../../helpers/date')
 
-const InvestmentProject = client.page.InvestmentProject()
+const InvestmentProject = client.page.investments.Project()
 const Location = client.page.Location()
 
 When(/^I select (.+) as the Investment project type$/, async function (investmentType) {

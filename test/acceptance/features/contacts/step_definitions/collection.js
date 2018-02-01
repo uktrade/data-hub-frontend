@@ -5,8 +5,8 @@ const { compareDesc } = require('date-fns')
 
 const { getUid } = require('../../../helpers/uuid')
 
-const Contact = client.page.Contact()
-const ContactList = client.page.ContactList()
+const Contact = client.page.contacts.Contact()
+const ContactList = client.page.contacts.List()
 
 When(/^I click on the first contact collection link$/, async function () {
   await Contact

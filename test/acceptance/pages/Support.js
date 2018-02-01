@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 const faker = require('faker')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
+const { getButtonWithText } = require('../helpers/selectors')
 
 module.exports = {
   elements: {

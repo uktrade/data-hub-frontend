@@ -9,7 +9,7 @@ const {
   camelCase,
 } = require('lodash')
 
-const InvestmentValue = client.page.InvestmentValue()
+const InvestmentValue = client.page.investments.Value()
 
 When(/^I populate the create investment project value form$/, async function (dataTable) {
   const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))

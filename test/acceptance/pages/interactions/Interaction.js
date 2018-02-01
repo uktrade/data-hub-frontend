@@ -5,8 +5,8 @@ const {
   getSelectorForElementWithText,
   getButtonWithText,
   getLinkWithText,
-} = require('../../../helpers/selectors')
-const { generateFutureDate } = require('../../../helpers/date')
+} = require('../../helpers/selectors')
+const { generateFutureDate } = require('../../helpers/date')
 
 const getRadioButtonWithText = (text) =>
   getSelectorForElementWithText(

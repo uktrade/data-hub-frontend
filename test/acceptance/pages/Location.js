@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText } = require('../helpers/selectors')
 
 const getDetailsTabSelector = (text) => getSelectorForElementWithText(text,
   {

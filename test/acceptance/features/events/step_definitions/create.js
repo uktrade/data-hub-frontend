@@ -2,7 +2,7 @@ const { set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 
-const Event = client.page.Event()
+const Event = client.page.events.Event()
 
 Given(/^I create an event$/, async function () {
   await Event

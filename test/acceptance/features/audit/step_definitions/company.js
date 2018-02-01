@@ -5,11 +5,11 @@ const { Given, Then, When } = require('cucumber')
 const { set } = require('lodash')
 
 const Message = client.page.Message()
-const Company = client.page.Company()
-const Contact = client.page.Contact()
-const AuditContact = client.page.AuditContact()
-const AuditCompany = client.page.AuditCompany()
-const AuditList = client.page.AuditList()
+const Company = client.page.companies.Company()
+const Contact = client.page.contacts.Contact()
+const AuditContact = client.page.audit.Contact()
+const AuditCompany = client.page.audit.Company()
+const AuditList = client.page.audit.List()
 
 Given(/^I Amend (.*) records of an existing company record$/, async function (number) {
   await Company
