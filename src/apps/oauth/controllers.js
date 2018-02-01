@@ -1,4 +1,3 @@
-const request = require('request-promise')
 const queryString = require('query-string')
 const uuid = require('uuid')
 
@@ -6,23 +5,7 @@ const { get, set } = require('lodash')
 
 const config = require('./../../../config')
 const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
-
-function getAccessToken (oauthCode) {
-  const options = {
-    method: 'POST',
-    url: config.oauth.tokenFetchUrl,
-    formData: {
-      code: oauthCode,
-      grant_type: 'authorization_code',
-      client_id: config.oauth.clientId,
-      client_secret: config.oauth.clientSecret,
-      redirect_uri: config.oauth.redirectUri,
-    },
-    json: true,
-  }
-
-  return request(options)
-}
+const { getAccessToken } = require('./services')
 
 async function callbackOAuth (req, res, next) {
   const errorQueryParam = get(req.query, 'error')
