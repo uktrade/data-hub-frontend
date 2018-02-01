@@ -1,8 +1,7 @@
 require('dotenv').config()
 const seleniumServer = require('selenium-server')
 const chromeDriver = require('chromedriver')
-const glob = require('glob')
-const { join } = require('path')
+const path = require('path')
 
 require('nightwatch-cucumber')({
   cucumberArgs: [
@@ -14,9 +13,9 @@ require('nightwatch-cucumber')({
 })
 
 module.exports = {
-  custom_commands_path: 'test/acceptance/commands',
-  page_objects_path: glob.sync(join(__dirname, 'features/**/page-objects')),
-  globals_path: 'test/acceptance/global.nightwatch.js',
+  custom_commands_path: path.resolve(__dirname, 'commands'),
+  page_objects_path: path.resolve(__dirname, 'pages'),
+  globals_path: path.resolve(__dirname, 'global.nightwatch.js'),
   selenium: {
     start_process: true,
     server_path: seleniumServer.path,
@@ -39,7 +38,7 @@ module.exports = {
       screenshots: {
         enabled: true,
         on_failure: true,
-        path: 'test/acceptance/screenshots',
+        path: path.resolve(__dirname, 'screenshots'),
       },
       desiredCapabilities: {
         browserName: 'chrome',

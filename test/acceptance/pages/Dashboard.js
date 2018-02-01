@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText, getLinkWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getLinkWithText } = require('../helpers/selectors')
 
 const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'c-global-nav__link')
 const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'proposition-menu__link')

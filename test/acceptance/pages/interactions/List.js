@@ -1,7 +1,7 @@
 const {
   getSelectorForElementWithText,
   getMetaListItemValueSelector,
-} = require('../../../helpers/selectors')
+} = require('../../helpers/selectors')
 
 const getFilterTagSelector = (text) => getSelectorForElementWithText(
   text,

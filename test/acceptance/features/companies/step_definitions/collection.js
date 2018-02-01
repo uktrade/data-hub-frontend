@@ -3,7 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { get, set } = require('lodash')
 
-const CompanyList = client.page.CompanyList()
+const CompanyList = client.page.companies.List()
 
 When(/^I click on the first company collection link$/, async function () {
   await CompanyList
