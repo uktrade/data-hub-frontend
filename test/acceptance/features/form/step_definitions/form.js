@@ -1,5 +1,5 @@
 const { client } = require('nightwatch-cucumber')
-const { defineSupportCode } = require('cucumber')
+const { Then, When } = require('cucumber')
 const faker = require('faker')
 const { snakeCase } = require('lodash')
 
@@ -36,53 +36,51 @@ const getSelectorsForElement = (type, name) => {
   }
 }
 
-defineSupportCode(({ When, Then }) => {
-  const Form = client.page.Form()
+const Form = client.page.Form()
 
-  When(/^I change form text field "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
-    const fieldSelector = `[name="${fieldName}"]`
+When(/^I change form text field "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
+  const fieldSelector = `[name="${fieldName}"]`
 
-    this.state[fieldName] = getValue(fieldValue)
+  this.state[fieldName] = getValue(fieldValue)
 
-    await Form
-      .replaceValue(fieldSelector, this.state[fieldName])
-  })
+  await Form
+    .replaceValue(fieldSelector, this.state[fieldName])
+})
 
-  When(/^I change form dropdown "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
-    this.state[fieldName] = getValue(fieldValue)
+When(/^I change form dropdown "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
+  this.state[fieldName] = getValue(fieldValue)
 
-    await Form
-      .clickListOption(fieldName, this.state[fieldName])
-  })
+  await Form
+    .clickListOption(fieldName, this.state[fieldName])
+})
 
-  When(/^I select "(.+)" for boolean option "(.+)"$/, async (label, fieldName) => {
-    const fieldSelector = `//label[contains(., "${label}") and contains(@for, "field-${fieldName}")]`
+When(/^I select "(.+)" for boolean option "(.+)"$/, async (label, fieldName) => {
+  const fieldSelector = `//label[contains(., "${label}") and contains(@for, "field-${fieldName}")]`
 
-    await Form
-      .api.useXpath()
-      .click(fieldSelector)
-      .useCss()
-  })
+  await Form
+    .api.useXpath()
+    .click(fieldSelector)
+    .useCss()
+})
 
-  When(/^I submit (.+) form$/, async (selector) => {
-    selector = selector === 'the' ? 'form' : selector
+When(/^I submit (.+) form$/, async (selector) => {
+  selector = selector === 'the' ? 'form' : selector
 
-    await Form
-      .submitForm(selector)
-  })
+  await Form
+    .submitForm(selector)
+})
 
-  Then(/^I see form error summary$/, async () => {
-    await Form
-      .assert.visible('@errorSummary')
-  })
+Then(/^I see form error summary$/, async () => {
+  await Form
+    .assert.visible('@errorSummary')
+})
 
-  Then(/^there are form fields$/, async function (dataTable) {
-    for (const row of dataTable.hashes()) {
-      const selectors = getSelectorsForElement(row.type, row.name)
-      await client
-        .waitForElementPresent(selectors.element)
-        .assert.visible(selectors.label)
-        .assert.visible(selectors.element)
-    }
-  })
+Then(/^there are form fields$/, async function (dataTable) {
+  for (const row of dataTable.hashes()) {
+    const selectors = getSelectorsForElement(row.type, row.name)
+    await client
+      .waitForElementPresent(selectors.element)
+      .assert.visible(selectors.label)
+      .assert.visible(selectors.element)
+  }
 })
