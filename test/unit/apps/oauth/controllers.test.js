@@ -5,10 +5,25 @@ describe('OAuth controller', () => {
   beforeEach(() => {
     this.mockUuid = sandbox.stub().returns(this.mockUUIDvalue)
     this.mockConfig = {}
-    this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
+    this.services = proxyquire.noCallThru().load('~/src/apps/oauth/services', {
+      './../../../config': this.mockConfig,
+    })
+    this.getAccessTokenSpy = sandbox.spy(this.services, 'getAccessToken')
+    this.controller = proxyquire('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
+      './services': {
+        getAccessToken: this.getAccessTokenSpy,
+      },
     })
+    this.mockOauthAccessToken = 'mockAccessToken'
+    this.mockAuthCode = 'mock-auth-code'
+    this.mockFetchUrl = {
+      host: 'http://mock-oauth-host',
+      path: '/example-fetch-token-url',
+    }
+    this.mockStateId = 'mock-state-id'
+
     this.resMock = assign({}, globalRes, {
       redirect: sandbox.spy(),
       render: sandbox.spy(),
@@ -18,12 +33,20 @@ describe('OAuth controller', () => {
       session: {},
     })
     this.nextSpy = sandbox.spy()
+
+    set(this.mockConfig, 'oauth', {
+      tokenFetchUrl: this.mockFetchUrl.host + this.mockFetchUrl.path,
+      clientSecret: 'mock-client-secret',
+      redirectUri: '/mock/callback/url',
+      clientId: 'mockClientId',
+    })
   })
 
   describe('#redirectOAuth', () => {
+    this.mockUUIDvalue = 'mock-uuid-1234'
+
     context('without oauth.devToken', () => {
       beforeEach(() => {
-        this.mockUUIDvalue = 'mock-uuid-1234'
         this.mockOauthConfig = {
           clientId: 'mockClientId',
           redirectUri: 'mockRedirectUri',
@@ -56,14 +79,8 @@ describe('OAuth controller', () => {
 
     context('with oauth.devToken', () => {
       beforeEach(() => {
-        this.mockUUIDvalue = 'mock-uuid-1234'
         this.mockDevToken = 'robo-cat-developer'
-        this.mockOauthConfig = {
-          clientId: 'mockClientId',
-          redirectUri: 'mockRedirectUri',
-          url: 'mockOauthUrl',
-          devToken: this.mockDevToken,
-        }
+        this.mockOauthConfig.devToken = this.mockDevToken
         this.expectedOauthRedirectUrl = queryString.stringify({
           response_type: 'code',
           client_id: this.mockOauthConfig.clientId,
@@ -93,10 +110,6 @@ describe('OAuth controller', () => {
 
   describe('#callbackOAuth', () => {
     context('with the state query param in the url', () => {
-      beforeEach(() => {
-        this.mockStateId = 'mock-state-id'
-      })
-
       context('and a state mismatch', () => {
         beforeEach(() => {
           set(this.reqMock, 'query.state', this.mockStateId)
@@ -116,34 +129,33 @@ describe('OAuth controller', () => {
         it('should have expected error message', () => {
           expect(this.nextSpy.args[0][0].message).to.have.string('There has been an OAuth stateId mismatch')
         })
+
+        it('token should be undefined', () => {
+          expect(this.reqMock.session.token).to.be.undefined
+        })
       })
 
       context('and state values match', () => {
         beforeEach(async () => {
-          this.mockOauthAccessToken = 'mockAccessToken'
-          this.mockAuthCode = 'mock-auth-code'
-          this.mockFetchUrl = {
-            host: 'http://mock-oauth-host',
-            path: '/example-fetch-token-url',
-          }
-
-          set(this.mockConfig, 'oauth', {
-            tokenFetchUrl: this.mockFetchUrl.host + this.mockFetchUrl.path,
-            clientSecret: 'mock-client-secret',
-            redirectUri: '/mock/callback/url',
-            clientId: 'mockClientId',
-          })
           set(this.reqMock, 'query', {
-            state: this.mockState,
+            state: this.mockStateId,
             code: this.mockAuthCode,
           })
-          set(this.reqMock, 'session.oauth.state', this.mockState)
+          set(this.reqMock, 'session.oauth.state', this.mockStateId)
 
-          this.nockScope = nock(this.mockFetchUrl.host)
+          nock(this.mockFetchUrl.host)
             .post(this.mockFetchUrl.path)
             .reply(200, { access_token: this.mockOauthAccessToken })
 
           await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should call getAccessToken', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledOnce
+        })
+
+        it('should call getAccessToken with arguments', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledWith(this.mockAuthCode)
         })
 
         it('should redirect', () => {
@@ -151,7 +163,7 @@ describe('OAuth controller', () => {
         })
 
         it('should redirect to expected location', () => {
-          expect(this.resMock.redirect.args[0][0]).to.equal('/')
+          expect(this.resMock.redirect).to.have.been.calledWith('/')
         })
 
         it('token should match expected value', () => {
@@ -161,91 +173,113 @@ describe('OAuth controller', () => {
 
       context('when there is an error query param', () => {
         it('should show help page', () => {
-          const helpPageTitle = 'You don\'t have permission to access this service'
-          const mockError = 'invalid_scope'
+          this.helpPageTitle = 'You don\'t have permission to access this service'
+          this.mockError = 'invalid_scope'
 
-          set(this.reqMock, 'query.error', mockError)
+          set(this.reqMock, 'query.error', this.mockError)
           this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
 
           expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
-            heading: helpPageTitle,
+            heading: this.helpPageTitle,
           }))
+
+          it('token should be undefined', () => {
+            expect(this.reqMock.session.token).to.be.undefined
+          })
         })
       })
     })
 
     describe('#getAccessToken', () => {
-      const mockOauthAccessToken = 'mockAccessToken'
-      const mockState = 'mock-state-id'
-      const mockAuthCode = 'mock-auth-code'
-      const mockFetchUrl = {
-        host: 'http://mock-oauth-host',
-        path: '/example-fetch-token-url',
-      }
-
       beforeEach(() => {
-        set(this.mockConfig, 'oauth', {
-          tokenFetchUrl: mockFetchUrl.host + mockFetchUrl.path,
-          clientSecret: 'mock-client-secret',
-          redirectUri: '/mock/callback/url',
-          clientId: 'mockClientId',
-        })
         set(this.reqMock, 'query', {
-          state: mockState,
-          code: mockAuthCode,
+          state: this.mockStateId,
+          code: this.mockAuthCode,
         })
-        set(this.reqMock, 'session.oauth.state', mockState)
+        set(this.reqMock, 'session.oauth.state', this.mockStateId)
       })
 
       context('redirect to root', () => {
         beforeEach(async () => {
-          this.nockScope = nock(mockFetchUrl.host)
-            .post(mockFetchUrl.path)
-            .reply(200, { access_token: mockOauthAccessToken })
+          nock(this.mockFetchUrl.host)
+            .post(this.mockFetchUrl.path)
+            .reply(200, { access_token: this.mockOauthAccessToken })
+
           await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
         })
 
-        it('should show redirect to root page url', () => {
+        it('should call getAccessToken', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledOnce
+        })
+
+        it('should call getAccessToken with arguments', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledWith(this.mockAuthCode)
+        })
+
+        it('should call redirect', () => {
           expect(this.resMock.redirect).to.have.been.calledOnce
-          expect(this.resMock.redirect.args[0][0]).to.equal('/')
-          expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+        })
+
+        it('should redirect to expected location', () => {
+          expect(this.resMock.redirect).to.have.been.calledWith('/')
+        })
+
+        it('token should match expected value', () => {
+          expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
         })
       })
 
       context('redirect to returnTo', () => {
-        const returnToUrl = 'return/to/url'
+        this.returnToUrl = 'return/to/url'
 
         beforeEach(async () => {
-          set(this.reqMock, 'session.returnTo', returnToUrl)
+          set(this.reqMock, 'session.returnTo', this.returnToUrl)
 
-          this.nockScope = nock(mockFetchUrl.host)
-            .post(mockFetchUrl.path)
-            .reply(200, { access_token: mockOauthAccessToken })
+          nock(this.mockFetchUrl.host)
+            .post(this.mockFetchUrl.path)
+            .reply(200, { access_token: this.mockOauthAccessToken })
 
           await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
         })
 
-        it('should show redirect to returnTo url', () => {
+        it('should call getAccessToken', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledOnce
+        })
+
+        it('should call getAccessToken with arguments', () => {
+          expect(this.getAccessTokenSpy).to.have.been.calledWith(this.mockAuthCode)
+        })
+
+        it('should call redirect', () => {
           expect(this.resMock.redirect).to.have.been.calledOnce
-          expect(this.resMock.redirect.args[0][0]).to.equal(returnToUrl)
-          expect(this.reqMock.session.token).to.equal(mockOauthAccessToken)
+        })
+
+        it('should redirect to expected location', () => {
+          expect(this.resMock.redirect).to.have.been.calledWith(this.returnToUrl)
+        })
+
+        it('token should match expected value', () => {
+          expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
         })
       })
 
-      context('redirect to returnTo', () => {
-        const returnedError = 'terrible things happen in the upside down'
+      context('handle error', () => {
+        this.returnedError = 'terrible things happen in the upside down'
 
         beforeEach(async () => {
-          this.nockScope = nock(mockFetchUrl.host)
-            .post(mockFetchUrl.path)
-            .replyWithError(returnedError)
+          nock(this.mockFetchUrl.host)
+            .post(this.mockFetchUrl.path)
+            .replyWithError(this.returnedError)
 
           await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
         })
 
-        it('should handle error as expected', async () => {
+        it('should handle error as expected', () => {
           expect(this.nextSpy).to.have.been.calledOnce
-          expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${returnedError}`)
+          expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${this.returnedError}`)
+        })
+
+        it('token should be undefined', () => {
           expect(this.reqMock.session.token).to.be.undefined
         })
       })
