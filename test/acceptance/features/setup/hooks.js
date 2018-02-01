@@ -1,7 +1,5 @@
-const { defineSupportCode } = require('cucumber')
+const { Before } = require('cucumber')
 
-defineSupportCode(({ Before }) => {
-  Before(function () {
-    this.resetState()
-  })
+Before(function () {
+  this.resetState()
 })

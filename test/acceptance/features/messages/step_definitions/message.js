@@ -1,11 +1,9 @@
 const { client } = require('nightwatch-cucumber')
-const { defineSupportCode } = require('cucumber')
+const { Then } = require('cucumber')
 
-defineSupportCode(({ Then }) => {
-  const Message = client.page.Message()
+const Message = client.page.Message()
 
-  Then(/^I see the (success|error) message$/, async (messageType) => {
-    await Message
-      .verifyMessage(messageType)
-  })
+Then(/^I see the (success|error) message$/, async (messageType) => {
+  await Message
+    .verifyMessage(messageType)
 })
