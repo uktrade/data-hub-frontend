@@ -13,7 +13,7 @@ Feature: View collection of interactions
     And I select interaction
     And an interaction is added
     Then I see the success message
-    When I navigate to the Interactions and service collection page
+    When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Interaction I have just created
@@ -36,7 +36,7 @@ Feature: View collection of interactions
     And I select service delivery
     And a service delivery is added
     Then I see the success message
-    When I navigate to the Interactions and service collection page
+    When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Service Delivery I have just created
@@ -59,7 +59,7 @@ Feature: View collection of interactions
     And I select interaction
     And an interaction is added
     Then I see the success message
-    When I navigate to the Interactions and service collection page
+    When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the interactions list by service provider
@@ -68,11 +68,11 @@ Feature: View collection of interactions
   @interactions-collection--lep @lep
   Scenario: Navigate to interactions shows 403 for LEPs
 
-    Given I navigate directly to /interactions
+    When I navigate to the `interactions.List` page
     Then I see the 403 error page
 
   @interactions-collection--da @da
   Scenario: Navigate to interactions shows 403 for DAs
 
-    Given I navigate directly to /interactions
+    When I navigate to the `interactions.List` page
     Then I see the 403 error page

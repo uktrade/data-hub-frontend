@@ -10,7 +10,7 @@ Feature: View collection of companies
 
     When a "Foreign company" is created
     Then I see the success message
-    When I navigate to the Company collection page
+    When I navigate to the `companies.List` page
     Then I confirm I am on the Companies page
     And the results summary for a company collection is present
     And there is an Add company button in the collection header
@@ -26,14 +26,14 @@ Feature: View collection of companies
   @companies-collection--view--lep @lep
   Scenario: View companies collection as LEP
 
-    When I navigate to the Company collection page
+    When I navigate to the `companies.List` page
     Then I confirm I am on the Companies page
     And the results summary for a company collection is present
 
   @companies-collection--view--da @da
   Scenario: View companies collection as DA
 
-    When I navigate to the Company collection page
+    When I navigate to the `companies.List` page
     Then I confirm I am on the Companies page
     And the results summary for a company collection is present
 
@@ -42,7 +42,8 @@ Feature: View collection of companies
 
     When a "UK non-private or non-public limited company" is created
     Then I see the success message
-    When I navigate to the Company collection page
+    When I navigate to the `companies.List` page
+    And I store the result count in state
     And I filter the companies list by company
     Then the companies should be filtered by company name
     When I clear all filters
@@ -69,7 +70,7 @@ Feature: View collection of companies
 
     When a "Foreign company" is created
     Then I see the success message
-    When I navigate to the Company collection page
+    When I navigate to the `companies.List` page
     And the companies are sorted by Recently updated
     Then the companies should be sorted by Recently updated
     And the companies are sorted by Least recently updated
