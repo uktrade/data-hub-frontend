@@ -2,8 +2,8 @@ const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 const { get, includes } = require('lodash')
 
-const { getDetailsTableRowValue } = require('../../../helpers/selectors')
-const formatters = require('../../../helpers/formatters')
+const { getDetailsTableRowValue } = require('../../helpers/selectors')
+const formatters = require('../../helpers/formatters')
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {

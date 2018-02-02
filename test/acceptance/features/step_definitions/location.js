@@ -2,7 +2,7 @@ const { find, assign, set, get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 
-const formatters = require('../../../helpers/formatters')
+const formatters = require('../../helpers/formatters')
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {

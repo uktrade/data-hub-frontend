@@ -2,8 +2,8 @@ const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
-const { pluralise } = require('../../../../../config/nunjucks/filters')
+const { getButtonWithText } = require('../../helpers/selectors')
+const { pluralise } = require('../../../../config/nunjucks/filters')
 
 const Collection = client.page.Collection()
 
