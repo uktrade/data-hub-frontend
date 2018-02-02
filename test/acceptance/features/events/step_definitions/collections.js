@@ -5,8 +5,8 @@ const { Then, When } = require('cucumber')
 
 const { getDateFor } = require('../../../helpers/date')
 
-const EventList = client.page.EventList()
-const Event = client.page.Event()
+const EventList = client.page.events.List()
+const Event = client.page.events.Event()
 
 When(/^I populate the create event form$/, async function () {
   await Event

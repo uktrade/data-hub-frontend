@@ -2,7 +2,7 @@ const {
   getSelectorForElementWithText,
   getButtonWithText,
   getListItemMetaElementWithText,
-} = require('../../../helpers/selectors')
+} = require('../helpers/selectors')
 
 const getSelectorForMetaListItemValue = (text) => {
   return getSelectorForElementWithText(text, {

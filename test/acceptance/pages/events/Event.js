@@ -2,9 +2,9 @@ const faker = require('faker')
 const { addWeeks, format } = require('date-fns')
 const { get, camelCase, isNull, pickBy, keys, assign } = require('lodash')
 
-const { getButtonWithText, getLinkWithText } = require('../../../helpers/selectors')
-const { getDateFor } = require('../../../helpers/date')
-const { appendUid, getUid } = require('../../../helpers/uuid')
+const { getButtonWithText, getLinkWithText } = require('../../helpers/selectors')
+const { getDateFor } = require('../../helpers/date')
+const { appendUid, getUid } = require('../../helpers/uuid')
 
 module.exports = {
   url: `${process.env.QA_HOST}/events/create`,

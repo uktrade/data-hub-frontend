@@ -2,7 +2,7 @@ const {
   getSelectorForElementWithText,
   getButtonWithText,
   getListItemMetaElementWithText,
-} = require('../../../helpers/selectors')
+} = require('../../helpers/selectors')
 
 const getBadgeWithText = (text) => getSelectorForElementWithText(
   text,

@@ -4,8 +4,8 @@ const { get, set, camelCase } = require('lodash')
 
 const { getDateFor } = require('../../../helpers/date')
 
-const Interaction = client.page.Interaction()
-const InteractionList = client.page.InteractionList()
+const Interaction = client.page.interactions.Interaction()
+const InteractionList = client.page.interactions.List()
 
 Given(/^a company investment project is created for interactions$/, async function () {
 })

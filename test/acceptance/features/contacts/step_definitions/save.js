@@ -3,8 +3,8 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { getAddress } = require('../../../helpers/address')
 
-const Company = client.page.Company()
-const Contact = client.page.Contact()
+const Company = client.page.companies.Company()
+const Contact = client.page.contacts.Contact()
 const Dashboard = client.page.Dashboard()
 
 When(/^a primary contact is added$/, async function () {

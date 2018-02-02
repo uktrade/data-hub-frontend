@@ -1,6 +1,6 @@
 const { keys, endsWith, filter, forEach } = require('lodash')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
+const { getButtonWithText } = require('../../helpers/selectors')
 
 module.exports = {
   url: process.env.QA_HOST,

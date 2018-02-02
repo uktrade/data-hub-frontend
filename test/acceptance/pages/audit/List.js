@@ -1,4 +1,4 @@
-const { getMetaListItemValueSelector } = require('../../../helpers/selectors')
+const { getMetaListItemValueSelector } = require('../../helpers/selectors')
 
 module.exports = {
   sections: {

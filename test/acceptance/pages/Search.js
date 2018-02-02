@@ -1,4 +1,4 @@
-const { getSelectorForElementWithText, getButtonWithText } = require('../../../helpers/selectors')
+const { getSelectorForElementWithText, getButtonWithText } = require('../helpers/selectors')
 
 const getSearchResultsTabSelector = (text) =>
   getSelectorForElementWithText(
