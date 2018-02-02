@@ -29,8 +29,8 @@ async function getCompanyFormOptions (token, createdOn) {
     headquarters: await getHeadquarterOptions(token),
     regions: await getOptions(token, 'uk-region', { createdOn }),
     sectors: await getOptions(token, 'sector', { createdOn }),
-    employees: await getOptions(token, 'employee-range', { createdOn }),
-    turnovers: await getOptions(token, 'turnover', { createdOn }),
+    employees: await getOptions(token, 'employee-range', { createdOn, sorted: false }),
+    turnovers: await getOptions(token, 'turnover', { createdOn, sorted: false }),
     countries: await getOptions(token, 'country', { createdOn }),
   }
 }
