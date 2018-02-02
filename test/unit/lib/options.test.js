@@ -9,8 +9,8 @@ const { getOptions } = require('~/src/lib/options')
 
 const regionOptions = [
   { id: '1', name: 'r1', disabled_on: null },
-  { id: '2', name: 'r2', disabled_on: yesterday },
   { id: '3', name: 'r3', disabled_on: null },
+  { id: '2', name: 'r2', disabled_on: yesterday },
 ]
 
 describe('#options', () => {
@@ -71,6 +71,20 @@ describe('#options', () => {
         { label: 'r1', value: '1' },
         { label: 'r2', value: '2' },
         { label: 'r3', value: '3' },
+      ])
+    })
+  })
+
+  context('when the options are to not be sorted', () => {
+    beforeEach(async () => {
+      this.options = await getOptions('1234', 'uk-region', { includeDisabled: true, sorted: false })
+    })
+
+    it('should not sort the options', () => {
+      expect(this.options).to.deep.equal([
+        { label: 'r1', value: '1' },
+        { label: 'r3', value: '3' },
+        { label: 'r2', value: '2' },
       ])
     })
   })
