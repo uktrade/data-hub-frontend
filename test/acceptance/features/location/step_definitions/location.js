@@ -47,10 +47,6 @@ Given(/^I navigate to (.+) fixture (.+)$/, async function (entityType, fixtureNa
     .assert.containsText('@header', fixtureName)
 })
 
-Given(/^I navigate directly to ([^\s]+)$/, async function (path) {
-  await client.url(process.env.QA_HOST + path)
-})
-
 Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (path, entityType, fixtureName) {
   const entityTypeFieldName = camelCase(entityType)
   const fixtureDetails = find(this.fixtures[entityTypeFieldName], ['name', fixtureName])
