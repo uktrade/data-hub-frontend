@@ -1,7 +1,7 @@
 const faker = require('faker')
 const { merge } = require('lodash')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
+const { getButtonWithText } = require('../../helpers/selectors')
 
 module.exports = {
   url: process.env.QA_HOST,

@@ -7,12 +7,12 @@ const {
   getButtonWithText,
   getSelectorForElementWithText,
   getDetailsTableRowValue,
-} = require('../../../helpers/selectors')
+} = require('../../helpers/selectors')
 const {
   storeSelectValue,
   storeSelectSubFieldValues,
   storeRadioSubFieldValues,
-} = require('../../../helpers/state')
+} = require('../../helpers/state')
 
 const getHeaderSelector = (text) => getSelectorForElementWithText(text, {
   el: '//h2',

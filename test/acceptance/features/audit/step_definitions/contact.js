@@ -4,12 +4,12 @@ const { Given, Then, When } = require('cucumber')
 const { merge, set } = require('lodash')
 
 const Message = client.page.Message()
-const Company = client.page.Company()
-const Contact = client.page.Contact()
-const ContactList = client.page.ContactList()
-const AuditContact = client.page.AuditContact()
-const AuditList = client.page.AuditList()
-const InvestmentProject = client.page.InvestmentProject()
+const Company = client.page.companies.Company()
+const Contact = client.page.contacts.Contact()
+const ContactList = client.page.contacts.List()
+const AuditContact = client.page.audit.Contact()
+const AuditList = client.page.audit.List()
+const InvestmentProject = client.page.investments.Project()
 
 Given(/^I archive an existing contact record$/, async function () {
   await Company

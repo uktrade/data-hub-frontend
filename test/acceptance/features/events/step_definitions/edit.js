@@ -6,8 +6,8 @@ const { When } = require('cucumber')
 const { format } = require('date-fns')
 
 const Form = client.page.Form()
-const Event = client.page.Event()
-const EventList = client.page.EventList()
+const Event = client.page.events.Event()
+const EventList = client.page.events.List()
 
 // TODO feels like this can be DRY'd up (see location)
 When(/^I navigate to event details page$/, async () => {

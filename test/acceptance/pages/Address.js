@@ -1,6 +1,6 @@
 const { forEach, set, pick, get, assign } = require('lodash')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
+const { getButtonWithText } = require('../helpers/selectors')
 
 module.exports = {
   elements: {

@@ -6,9 +6,9 @@ const {
   getButtonWithText,
   getDetailsTableRowValue,
   getSelectorForElementWithText,
-} = require('../../../helpers/selectors')
-const { appendUid, getUid } = require('../../../helpers/uuid')
-const { getAddress } = require('../../../helpers/address')
+} = require('../../helpers/selectors')
+const { appendUid, getUid } = require('../../helpers/uuid')
+const { getAddress } = require('../../helpers/address')
 
 const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
   return getSelectorForElementWithText(sectionTitle, {

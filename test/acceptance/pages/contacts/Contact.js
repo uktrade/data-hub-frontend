@@ -5,9 +5,9 @@ const {
   getSelectorForElementWithText,
   getDetailsTableRowValue,
   getMetaListItemValueSelector,
-} = require('../../../helpers/selectors')
-const { appendUid, getUid } = require('../../../helpers/uuid')
-const { getAddress } = require('../../../helpers/address')
+} = require('../../helpers/selectors')
+const { appendUid, getUid } = require('../../helpers/uuid')
+const { getAddress } = require('../../helpers/address')
 
 const getCheckBoxLabel = (text) => getSelectorForElementWithText(
   text,
