@@ -9,7 +9,8 @@ Feature: Edit an Event in Data hub
   @events-edit--name
   Scenario: Edit event name
 
-    Given I navigate to event details page
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
     And I click on edit event button
     When I change form text field "name" to random words
     And I submit the form
@@ -18,12 +19,13 @@ Feature: Edit an Event in Data hub
   @events-edit--type
   Scenario: Edit event type
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form dropdown "event_type" to "Seminar"
     And I submit the form
     Then details view data for "Type of event" should contain "Seminar"
-    When I click on edit event button
+    And I click on edit event button
     And I change form dropdown "event_type" to Exhibition
     And I submit the form
     Then details view data for "Type of event" should contain "Exhibition"
@@ -31,8 +33,9 @@ Feature: Edit an Event in Data hub
   @events-edit--dates
   Scenario: Edit event dates
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     When I change start date to decrease year by one
     And I submit the form
     Then details view data for "Event start date" should contain what I entered for "start_date_year" field
@@ -40,12 +43,13 @@ Feature: Edit an Event in Data hub
   @events-edit--location-type
   Scenario: Edit event location type
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form dropdown "location_type" to "HQ"
     And I submit the form
     Then details view data for "Event location type" should contain "HQ"
-    When I click on edit event button
+    And I click on edit event button
     And I change form dropdown "location_type" to "Post"
     And I submit the form
     Then details view data for "Event location type" should contain "Post"
@@ -53,8 +57,9 @@ Feature: Edit an Event in Data hub
   @events-edit--address
   Scenario: Edit event address
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form text field "address_1" to a random street address
     And I submit the form
     Then details view data for "Address" should contain what I entered for "address_1" field
@@ -62,8 +67,9 @@ Feature: Edit an Event in Data hub
   @events-edit--notes
   Scenario: Edit event notes
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form text field "notes" to a random paragraph
     And I submit the form
     Then details view data for "Notes" should contain what I entered for "notes" field
@@ -71,12 +77,13 @@ Feature: Edit an Event in Data hub
   @events-edit--team-hosting
   Scenario: Edit event team hosting
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form dropdown "lead_team" to "CBBC Leeds"
     And I submit the form
     Then details view data for "Lead team" should contain "CBBC Leeds"
-    When I click on edit event button
+    And I click on edit event button
     And I change form dropdown "lead_team" to "CBBC London"
     And I submit the form
     Then details view data for "Lead team" should contain "CBBC London"
@@ -84,13 +91,14 @@ Feature: Edit an Event in Data hub
   @events-edit--shared-teams
   Scenario: Edit event shared teams
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I select "Yes" for boolean option "event_shared"
     And I change form dropdown "teams" to "BPI"
     And I submit the form
     Then details view data for "Other teams" should contain "BPI"
-    When I click on edit event button
+    And I click on edit event button
     When I select "Yes" for boolean option "event_shared"
     And I change form dropdown "teams" to "Intellect"
     And I submit the form
@@ -99,12 +107,13 @@ Feature: Edit an Event in Data hub
   @events-edit--related-programmes
   Scenario: Edit event related programmes
 
-    Given I navigate to event details page
-    When I click on edit event button
+    When I navigate to the `events.List` page
+    And I choose the first item in the collection
+    And I click on edit event button
     And I change form dropdown "related_programmes" to "Grown in Britain"
     And I submit the form
     Then details view data for "Related programmes" should contain "Grown in Britain"
-    When I click on edit event button
+    And I click on edit event button
     And I change form dropdown "related_programmes" to "GREAT Branded"
     And I submit the form
     Then details view data for "Related programmes" should contain "GREAT Branded"
