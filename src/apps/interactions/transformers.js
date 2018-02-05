@@ -9,14 +9,14 @@ function transformInteractionResponseToForm ({
   id,
   contact,
   dit_team,
+  dit_adviser,
+  event,
   service,
   subject,
   notes,
   date,
-  dit_adviser,
   company,
   communication_channel,
-  event,
 } = {}) {
   if (!id) return null
 
@@ -26,6 +26,9 @@ function transformInteractionResponseToForm ({
     id: id,
     contact: get(contact, 'id'),
     dit_team: get(dit_team, 'id'),
+    dit_adviser: get(dit_adviser, 'id'),
+    is_event: isNil(event) ? 'false' : 'true',
+    event: get(event, 'id'),
     service: get(service, 'id'),
     subject: subject,
     notes: notes,
@@ -34,11 +37,8 @@ function transformInteractionResponseToForm ({
       month: isValidDate ? format(date, 'MM') : '',
       year: isValidDate ? format(date, 'YYYY') : '',
     },
-    dit_adviser: get(dit_adviser, 'id'),
     company: get(company, 'id'),
     communication_channel: get(communication_channel, 'id'),
-    is_event: isNil(event) ? 'false' : 'true',
-    event: get(event, 'id'),
   }
 }
 
