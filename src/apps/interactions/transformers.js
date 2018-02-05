@@ -12,6 +12,7 @@ function transformInteractionResponseToForm ({
   dit_adviser,
   event,
   service,
+  service_delivery_status,
   subject,
   notes,
   date,
@@ -30,6 +31,7 @@ function transformInteractionResponseToForm ({
     is_event: isNil(event) ? 'false' : 'true',
     event: get(event, 'id'),
     service: get(service, 'id'),
+    service_delivery_status: get(service_delivery_status, 'id', null),
     subject: subject,
     notes: notes,
     date: {
