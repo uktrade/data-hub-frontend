@@ -112,6 +112,7 @@ describe('OMIS middleware', () => {
           canEditOrder: true,
           canEditAdvisers: true,
           canEditInvoiceDetails: true,
+          canEditContactDetails: true,
         })
         expect(this.resMock.locals).to.have.property('order')
         expect(this.resMock.locals.order).to.deep.equal(order)
@@ -140,6 +141,10 @@ describe('OMIS middleware', () => {
         it('should be able to edit advisers', () => {
           expect(this.resMock.locals.order.canEditAdvisers).to.equal(true)
         })
+
+        it('should not be able to edit contact details', () => {
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(true)
+        })
       })
 
       context('when order is in quote awaiting acceptance', () => {
@@ -162,6 +167,10 @@ describe('OMIS middleware', () => {
 
         it('should be able to edit invoice details', () => {
           expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(true)
+        })
+
+        it('should be able to edit contact details', () => {
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(true)
         })
       })
 
@@ -186,6 +195,10 @@ describe('OMIS middleware', () => {
         it('should not be able to edit invoice details', () => {
           expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(false)
         })
+
+        it('should not be able to edit contact details', () => {
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(false)
+        })
       })
 
       context('when order is cancelled', () => {
@@ -208,6 +221,10 @@ describe('OMIS middleware', () => {
 
         it('should not be able to edit invoice details', () => {
           expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(false)
+        })
+
+        it('should not be able to edit contact details', () => {
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(false)
         })
       })
     })
