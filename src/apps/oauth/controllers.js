@@ -7,12 +7,12 @@ const { get, set } = require('lodash')
 const config = require('./../../../config')
 const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
 
-function getAccessToken (oauthCode) {
+function getAccessToken (code) {
   const options = {
     method: 'POST',
     url: config.oauth.tokenFetchUrl,
     formData: {
-      code: oauthCode,
+      code,
       grant_type: 'authorization_code',
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
