@@ -74,7 +74,7 @@
     "nunjucks": "^3.0.1",
     "nunjucks-markdown": "^2.0.1",
     "nyc": "^11.4.1",
-    "postcss-cli": "^4.1.1",
+    "postcss-cli": "^5.0.0",
     "postcss-loader": "^2.0.9",
     "proxyquire": "^1.8.0",
     "query-string": "^5.0.1",
