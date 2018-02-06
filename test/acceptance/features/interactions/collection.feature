@@ -10,7 +10,7 @@ Feature: View collection of interactions
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
     And I click the "Add interaction" link
-    And selecting interaction
+    And I select interaction
     And an interaction is added
     Then I see the success message
     When I navigate to the Interactions and service collection page
@@ -33,7 +33,7 @@ Feature: View collection of interactions
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
     And I click the "Add interaction" link
-    And selecting service delivery
+    And I select service delivery
     And a service delivery is added
     Then I see the success message
     When I navigate to the Interactions and service collection page
@@ -56,7 +56,7 @@ Feature: View collection of interactions
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
     And I click the "Add interaction" link
-    And selecting interaction
+    And I select interaction
     And an interaction is added
     Then I see the success message
     When I navigate to the Interactions and service collection page
