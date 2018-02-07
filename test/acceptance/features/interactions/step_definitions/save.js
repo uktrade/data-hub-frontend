@@ -1,14 +1,11 @@
 const { client } = require('nightwatch-cucumber')
-const { Given, Then, When } = require('cucumber')
+const { Then, When } = require('cucumber')
 const { get, set, camelCase } = require('lodash')
 
 const { getDateFor } = require('../../../helpers/date')
 
 const Interaction = client.page.interactions.Interaction()
 const InteractionList = client.page.interactions.List()
-
-Given(/^a company investment project is created for interactions$/, async function () {
-})
 
 When(/^an interaction is added$/, async function () {
   await Interaction
@@ -38,14 +35,14 @@ When(/^a service delivery is added$/, async function () {
     .wait() // wait for backend to sync
 })
 
-When(/^selecting interaction$/, async function () {
+When(/^I select interaction$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
     .click('@aStandardInteraction')
     .click('@continueButton')
 })
 
-When(/^selecting service delivery$/, async function () {
+When(/^I select service delivery$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
     .click('@aServiceThatYouHaveProvided')
@@ -69,17 +66,18 @@ Then(/^there are interaction fields$/, async function () {
     .waitForElementVisible('@contact')
     .assert.visible('@contact')
     .assert.visible('@serviceProvider')
+    .assert.visible('@ditAdviser')
+    .assert.elementNotPresent('@eventYes')
+    .assert.elementNotPresent('@eventNo')
+    .assert.elementNotPresent('@event')
     .assert.visible('@service')
+    .assert.elementNotPresent('@status')
     .assert.visible('@subject')
     .assert.visible('@notes')
     .assert.visible('@dateOfInteractionYear')
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
-    .assert.visible('@ditAdviser')
     .assert.visible('@communicationChannel')
-    .assert.elementNotPresent('@eventYes')
-    .assert.elementNotPresent('@eventNo')
-    .assert.elementNotPresent('@event')
 })
 
 Then(/^there are service delivery fields$/, async function () {
@@ -87,17 +85,18 @@ Then(/^there are service delivery fields$/, async function () {
     .waitForElementVisible('@contact')
     .assert.visible('@contact')
     .assert.visible('@serviceProvider')
+    .assert.visible('@ditAdviser')
+    .assert.visible('@eventYes')
+    .assert.visible('@eventNo')
+    .assert.elementPresent('@event')
     .assert.visible('@service')
+    .assert.visible('@status')
     .assert.visible('@subject')
     .assert.visible('@notes')
     .assert.visible('@dateOfInteractionYear')
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
-    .assert.visible('@ditAdviser')
     .assert.elementNotPresent('@communicationChannel')
-    .assert.visible('@eventYes')
-    .assert.visible('@eventNo')
-    .assert.elementPresent('@event')
 })
 
 Then(/^interaction fields are pre-populated$/, async function () {

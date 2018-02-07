@@ -32,6 +32,7 @@ module.exports = {
     contact: '#field-contact',
     serviceProvider: '#field-dit_team',
     service: '#field-service',
+    status: '#group-field-service_delivery_status',
     ditAdviser: '#field-dit_adviser',
     communicationChannel: '#field-communication_channel',
     eventYes: 'label[for=field-is_event-1]',
@@ -108,6 +109,7 @@ module.exports = {
           dateOfInteractionMonth: futureDate.month,
           dateOfInteractionDay: futureDate.day,
         }, details)
+        const serviceDeliveryRadioButtons = {}
 
         this
           .waitForElementPresent('@eventYes')
@@ -140,6 +142,12 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                this.getRadioOption('service_delivery_status', (result) => {
+                  serviceDeliveryRadioButtons.status = result
+                  done()
+                })
+              })
+              .perform((done) => {
                 this.getListOption('@ditAdviser', (ditAdviser) => {
                   serviceDelivery.ditAdviser = ditAdviser
                   done()
@@ -152,6 +160,11 @@ module.exports = {
                     this.setValue(`@${key}`, serviceDelivery[key])
                   }
                 }
+                for (const key in serviceDeliveryRadioButtons) {
+                  this.api.useCss().click(serviceDeliveryRadioButtons[key].labelSelector)
+                  serviceDelivery[key] = serviceDeliveryRadioButtons[key].text
+                }
+
                 serviceDelivery.heading = serviceDelivery.subject
                 done()
               })

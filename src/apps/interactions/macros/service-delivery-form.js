@@ -1,6 +1,7 @@
 const { assign } = require('lodash')
 
 const labels = require('../labels')
+const hints = require('../hints')
 const {
   contact,
   provider,
@@ -16,6 +17,7 @@ module.exports = function ({
   contacts = [],
   advisers = [],
   services = [],
+  statuses = [],
   teams = [],
   events = [],
   hiddenFields,
@@ -59,12 +61,20 @@ module.exports = function ({
         },
       },
       service(services),
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        name: 'service_delivery_status',
+        options: statuses,
+        optional: true,
+      },
       subject,
       notes,
       date,
     ].map(field => {
       return assign(field, {
         label: labels.serviceDelivery[field.name],
+        hint: hints.serviceDelivery[field.name],
       })
     }),
   }
