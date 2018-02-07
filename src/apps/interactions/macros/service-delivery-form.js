@@ -1,6 +1,7 @@
 const { assign } = require('lodash')
 
 const labels = require('../labels')
+const hints = require('../hints')
 const {
   contact,
   provider,
@@ -73,6 +74,7 @@ module.exports = function ({
     ].map(field => {
       return assign(field, {
         label: labels.serviceDelivery[field.name],
+        hint: hints.serviceDelivery[field.name],
       })
     }),
   }
