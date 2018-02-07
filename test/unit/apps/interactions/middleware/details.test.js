@@ -251,6 +251,11 @@ describe('Interaction details middleware', () => {
           { id: '2', name: 'c2', disabled_on: yesterday },
           { id: '3', name: 'c3', disabled_on: null },
         ],
+        serviceDeliveryOptions: [
+          { id: '1', name: 'sds1', disabled_on: null },
+          { id: '2', name: 'sds2', disabled_on: yesterday },
+          { id: '3', name: 'sds3', disabled_on: null },
+        ],
       }
 
       this.res.locals.interaction = assign({}, interactionData, {
@@ -271,6 +276,8 @@ describe('Interaction details middleware', () => {
           .reply(200, this.metadataMock.serviceOptions)
           .get('/metadata/communication-channel/')
           .reply(200, this.metadataMock.channelOptions)
+          .get('/metadata/service-delivery-status/')
+          .reply(200, this.metadataMock.serviceDeliveryOptions)
 
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
         set(this.res.locals, 'interaction.dit_adviser', this.currentAdviser)
@@ -363,6 +370,8 @@ describe('Interaction details middleware', () => {
           .reply(200, this.metadataMock.serviceOptions)
           .get('/metadata/communication-channel/')
           .reply(200, this.metadataMock.channelOptions)
+          .get('/metadata/service-delivery-status/')
+          .reply(200, this.metadataMock.serviceDeliveryOptions)
           .post('/v3/search/event')
           .reply(200, eventsData)
 
