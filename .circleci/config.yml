@@ -176,9 +176,21 @@ jobs:
       - restore_cache:
           name: Restore yarn dependencies cache
           key: cache-lockfile-{{ checksum "package.json" }}
-      - run: yarn global add greenkeeper-lockfile@1
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
+      - run:
+          name: Greenkeeper lockfile
+          command: |
+            # If the branch is a greenkeeper branch set env to empty string so lock file is updated
+            # The following issue has more information around why this is needed https://github.com/greenkeeperio/greenkeeper-lockfile/issues/58
+            if [[ $CIRCLE_BRANCH == greenkeeper* ]];
+            then
+              CI_PULL_REQUEST=""
+            fi
+
+            # Install and run greenkeeper lockfile
+            yarn global add greenkeeper-lockfile@1
+            greenkeeper-lockfile-update
+            greenkeeper-lockfile-upload
+          when: always
       - save_cache:
           name: Save yarn dependencies cache
           key: cache-lockfile-{{ checksum "package.json" }}
