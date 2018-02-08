@@ -84,6 +84,7 @@ async function getInteractionOptions (req, res, next) {
       advisers: activeAdvisers.map(transformObjectToOption),
       contacts: contacts.map(transformContactToOption),
       services: await getOptions(token, 'service', { createdOn }),
+      statuses: await getOptions(token, 'service-delivery-status', { createdOn, sorted: false }),
       teams: await getOptions(token, 'team', { createdOn }),
       channels: await getOptions(token, 'communication-channel', { createdOn }),
     }
