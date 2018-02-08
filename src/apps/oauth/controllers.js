@@ -4,6 +4,7 @@ const uuid = require('uuid')
 
 const { get, set } = require('lodash')
 
+const { saveSession } = require('./../../lib/session-helper')
 const config = require('./../../../config')
 const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
 
@@ -53,7 +54,7 @@ async function callbackOAuth (req, res, next) {
   }
 }
 
-function redirectOAuth (req, res) {
+async function redirectOAuth (req, res, next) {
   const stateId = uuid()
   const urlParams = {
     response_type: 'code',
@@ -74,8 +75,14 @@ function redirectOAuth (req, res) {
     set(urlParams, 'code', oAuthDevToken)
   }
 
-  set(req.session, 'oauth.state', stateId) // used to check the callback received contains matching state param
-  return res.redirect(`${config.oauth.url}?${queryString.stringify(urlParams)}`)
+  try {
+    // used to check the callback received contains matching state param
+    set(req.session, 'oauth.state', stateId)
+    await saveSession(req.session)
+    res.redirect(`${config.oauth.url}?${queryString.stringify(urlParams)}`)
+  } catch (error) {
+    next(error)
+  }
 }
 
 function renderHelpPage (req, res, next) {
