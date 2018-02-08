@@ -21,4 +21,11 @@
       If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
     {% endcall %}
   {% endcall %}
+
+  {% if order.canEditContactDetails %}
+    {% call Message({ type: 'info', element: 'div' }) %}
+      <p>Changing the contact will change who notifications are sent to.</p>
+      <p>It will not change the contact details on the quote.</p>
+    {% endcall %}
+  {% endif %}
 {% endblock %}

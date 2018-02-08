@@ -13,6 +13,10 @@ class EditClientDetailsController extends EditController {
       contacts.push(...sortBy(companyContacts, 'label'))
     }
 
+    if (req.form.options.disableFormAction) {
+      req.form.options.disableFormAction = !get(res.locals, 'order.canEditContactDetails')
+    }
+
     req.form.options.fields.contact.options = contacts
     super.configure(req, res, next)
   }
