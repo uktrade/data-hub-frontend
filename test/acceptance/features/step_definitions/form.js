@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const faker = require('faker')
-const { snakeCase } = require('lodash')
+const { snakeCase, set } = require('lodash')
 
 const getValue = (value) => {
   switch (value) {
@@ -52,6 +52,13 @@ When(/^I change form dropdown "(.+)" to (.+)$/, async function (fieldName, field
 
   await Form
     .clickListOption(fieldName, this.state[fieldName])
+})
+
+When(/^I change "(.+)" radio button option to "(.+)"$/, async function (fieldName, fieldValue) {
+  set(this.state, fieldName, fieldValue)
+
+  await Form
+    .clickRadioOption(fieldName, fieldValue)
 })
 
 When(/^I select "(.+)" for boolean option "(.+)"$/, async (label, fieldName) => {
