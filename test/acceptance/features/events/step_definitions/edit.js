@@ -7,16 +7,6 @@ const { format } = require('date-fns')
 
 const Form = client.page.Form()
 const Event = client.page.events.Event()
-const EventList = client.page.events.List()
-
-// TODO feels like this can be DRY'd up (see location)
-When(/^I navigate to event details page$/, async () => {
-  await EventList
-    .navigate()
-    .section.firstEventInList
-    .waitForElementPresent('@header')
-    .click('@header')
-})
 
 When(/^I click on edit event button$/, async () => {
   await Event

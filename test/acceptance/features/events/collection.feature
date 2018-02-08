@@ -14,12 +14,12 @@ Feature: View a list of events
   @events-collection--view
   Scenario: View event collection
 
-    Given I navigate to the Event collection page
-    When I click the "Add event" link
+    When I navigate to the `events.List` page
+    And I click the "Add event" link
     And I populate the create event form
     And I click the save button
     Then I see the success message
-    When I navigate to the Event collection page
+    When I navigate to the `events.List` page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -35,12 +35,12 @@ Feature: View a list of events
   @events-collection--view-uk-region
   Scenario: View event uk region
 
-    Given I navigate to the Event collection page
-    When I click the "Add event" link
+    When I navigate to the `events.List` page
+    And I click the "Add event" link
     And I populate the create event form with United Kingdom and a region
     And I click the save button
     Then I see the success message
-    When I navigate to the Event collection page
+    When I navigate to the `events.List` page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -99,11 +99,11 @@ Feature: View a list of events
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs
 
-    Given I navigate directly to /events
+    When I navigate to the `events.List` page
     Then I see the 403 error page
 
   @events-collection--da @da
   Scenario: Navigate to events shows 403 for DAs
 
-    Given I navigate directly to /events
+    When I navigate to the `events.List` page
     Then I see the 403 error page
