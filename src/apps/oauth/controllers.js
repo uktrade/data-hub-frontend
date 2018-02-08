@@ -1,11 +1,11 @@
 const request = require('request-promise')
 const queryString = require('query-string')
 const uuid = require('uuid')
-
-const { get, set } = require('lodash')
+const { get, set, isUndefined } = require('lodash')
 
 const config = require('./../../../config')
 const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
+const { reloadSession } = require('./../../lib/session-helper')
 
 function getAccessToken (code) {
   const options = {
@@ -27,10 +27,21 @@ function getAccessToken (code) {
 async function callbackOAuth (req, res, next) {
   const errorQueryParam = get(req.query, 'error')
   const stateQueryParam = get(req.query, 'state')
-  const sessionOAuthState = get(req.session, 'oauth.state')
+  let sessionOAuthState = get(req.session, 'oauth.state')
 
   if (errorQueryParam) {
     return renderHelpPage(req, res, next)
+  }
+
+  logger.error('session:', req.session) // @TODO remove this once we've diagnosed the cause of the mismatches
+
+  if (isUndefined(sessionOAuthState)) { // an instance is not in sync with the Redis session store
+    try {
+      await reloadSession(req)
+      sessionOAuthState = get(req.session, 'oauth.state')
+    } catch (error) {
+      return next(error)
+    }
   }
 
   if (sessionOAuthState !== stateQueryParam) {

@@ -1,13 +1,19 @@
 const queryString = require('query-string')
 const { assign, set } = require('lodash')
 
+const sessionHelper = require('~/src/lib/session-helper')
+
 describe('OAuth controller', () => {
   beforeEach(() => {
     this.mockUuid = sandbox.stub().returns(this.mockUUIDvalue)
     this.mockConfig = {}
+    this.reloadSessionStub = sandbox.stub(sessionHelper, 'reloadSession')
     this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
+      './../../lib/session-helper': {
+        reloadSession: this.reloadSessionStub,
+      },
     })
     this.mockOauthAccessToken = 'mockAccessToken'
     this.mockAuthCode = 'mock-auth-code'
@@ -105,6 +111,65 @@ describe('OAuth controller', () => {
 
   describe('#callbackOAuth', () => {
     context('with the state query param in the url', () => {
+      context('an "undefined" oauth state in the session', () => {
+        beforeEach(() => {
+          set(this.reqMock, 'query', {
+            state: this.mockStateId,
+            code: this.mockAuthCode,
+          })
+          set(this.reqMock, 'session.oauth.state', undefined)
+
+          nock(this.mockFetchUrl.host)
+            .post(this.mockFetchUrl.path)
+            .reply(200, { access_token: this.mockOauthAccessToken })
+        })
+
+        context('reload session resolves', () => {
+          beforeEach(async () => {
+            this.reloadSessionStub.resolves().callsFake(() => {
+              set(this.reqMock, 'session.oauth.state', this.mockStateId)
+            })
+
+            await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          })
+
+          it('should call reloadSession', () => {
+            expect(this.reloadSessionStub).to.have.been.calledOnce
+          })
+
+          it('should complete the callbackOAuth call', () => {
+            expect(this.resMock.redirect).to.have.been.calledOnce
+            expect(this.resMock.redirect).to.have.been.calledWith('/')
+          })
+
+          it('token should match expected value', () => {
+            expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
+          })
+        })
+
+        context('reload session rejects', () => {
+          beforeEach(async () => {
+            this.returnedError = 'oh no!'
+            this.reloadSessionStub.rejects(this.returnedError)
+
+            await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          })
+
+          it('should call reloadSession', () => {
+            expect(this.reloadSessionStub).to.have.been.calledOnce
+          })
+
+          it('should handle error as expected', () => {
+            expect(this.nextSpy).to.have.been.calledOnce
+            expect(this.nextSpy.args[0][0].name).to.equal(this.returnedError)
+          })
+
+          it('token should be undefined', () => {
+            expect(this.reqMock.session.token).to.be.undefined
+          })
+        })
+      })
+
       context('and a state mismatch', () => {
         beforeEach(() => {
           set(this.reqMock, 'query.state', this.mockStateId)
