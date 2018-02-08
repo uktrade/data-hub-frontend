@@ -5,17 +5,10 @@ const {
   getMetaListItemValueSelector,
   getButtonWithText,
   getDetailsTableRowValue,
-  getSelectorForElementWithText,
+  getSelectorForDetailsSectionEditButton,
 } = require('../../helpers/selectors')
 const { appendUid, getUid } = require('../../helpers/uuid')
 const { getAddress } = require('../../helpers/address')
-
-const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
-  return getSelectorForElementWithText(sectionTitle, {
-    el: '//h2',
-    child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
-  })
-}
 
 module.exports = {
   url: process.env.QA_HOST,
