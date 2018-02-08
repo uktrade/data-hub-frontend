@@ -21,7 +21,7 @@ module.exports = function transformCompanyToForm (body) {
     registered_address_country: String,
     trading_address_country: String,
     business_type: String,
-    headquarter_type: String,
+    headquarter_type: Object,
     uk_region: String,
     sector: String,
     employee_range: String,
@@ -29,6 +29,9 @@ module.exports = function transformCompanyToForm (body) {
   }
 
   const formatted = mapValues(schema, (type, key) => {
+    if (type === Object) {
+      return get(body, key)
+    }
     return get(body, `${key}.id`)
   })
 
