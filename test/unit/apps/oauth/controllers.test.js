@@ -73,7 +73,7 @@ describe('OAuth controller', () => {
         })
 
         it('should call saveSessionStub with expected argument', () => {
-          expect(this.saveSessionStub).to.be.calledWith(this.reqMock)
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
         })
 
         it('should redirect', () => {
@@ -101,7 +101,7 @@ describe('OAuth controller', () => {
         })
 
         it('should call saveSessionStub with expected argument', () => {
-          expect(this.saveSessionStub).to.be.calledWith(this.reqMock)
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
         })
 
         it('should handle error as expected', () => {
