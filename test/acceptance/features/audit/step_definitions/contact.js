@@ -52,7 +52,7 @@ When(/^I search for this Contact record$/, async function () {
     .getText('@userName', (result) => set(this.state, 'username', result.value))
 })
 
-When(/^I navigate to Audit History tab$/, async function () {
+When(/^I click the Audit History tab$/, async function () {
   await AuditContact
     .click('@auditHistoryTab')
 })

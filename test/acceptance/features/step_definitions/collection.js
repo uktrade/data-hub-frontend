@@ -2,17 +2,12 @@ const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 
-const { getButtonWithText } = require('../../../helpers/selectors')
-const { pluralise } = require('../../../../../config/nunjucks/filters')
+const { getButtonWithText } = require('../../helpers/selectors')
+const { pluralise } = require('../../../../config/nunjucks/filters')
 
 const Collection = client.page.Collection()
 
-When(/^I navigate to the (.+) collection page$/, async function (collectionType) {
-  const url = this.urls[camelCase(collectionType)].collection
-
-  await client
-    .url(url)
-
+When('I store the result count in state', async function () {
   await Collection
     .captureResultCount((count) => {
       set(this.state, 'collection.resultCount', count)

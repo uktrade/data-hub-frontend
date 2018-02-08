@@ -4,6 +4,7 @@ const faker = require('faker')
 const { getButtonWithText } = require('../helpers/selectors')
 
 module.exports = {
+  url: `${process.env.QA_HOST}/support`,
   elements: {
     flashMessage: '.c-message-list li:first-child',
   },

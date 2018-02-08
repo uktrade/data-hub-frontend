@@ -2,7 +2,7 @@ const { find, assign, set, get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 
-const formatters = require('../../../helpers/formatters')
+const formatters = require('../../helpers/formatters')
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {
@@ -45,10 +45,6 @@ Given(/^I navigate to (.+) fixture (.+)$/, async function (entityType, fixtureNa
     .section.localHeader
     .waitForElementPresent('@header')
     .assert.containsText('@header', fixtureName)
-})
-
-Given(/^I navigate directly to ([^\s]+)$/, async function (path) {
-  await client.url(process.env.QA_HOST + path)
 })
 
 Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (path, entityType, fixtureName) {
