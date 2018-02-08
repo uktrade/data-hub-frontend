@@ -27,6 +27,7 @@ describe('Interaction transformers', () => {
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
+          service_delivery_status: null,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -41,10 +42,14 @@ describe('Interaction transformers', () => {
 
     context('when the source is a service delivery and an event has been selected', () => {
       beforeEach(() => {
-        const interaction = assign({}, mockInteraction, {
+        const serviceDelivery = assign({}, mockInteraction, {
           event: { id: '1' },
+          service_delivery_status: {
+            name: 'Offered',
+            id: '45329c18-6095-e211-a939-e4115bead28a',
+          },
         })
-        this.transformed = transformInteractionResponseToForm(interaction)
+        this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
 
       it('should transform data from interaction response to list item', () => {
@@ -53,6 +58,7 @@ describe('Interaction transformers', () => {
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
+          service_delivery_status: '45329c18-6095-e211-a939-e4115bead28a',
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -65,10 +71,11 @@ describe('Interaction transformers', () => {
       })
     })
 
-    context('when the source is a service delivery and an event has been unselected', () => {
+    context('when the source is a service delivery and optional fields have been unselected', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, {
           event: null,
+          service_delivery_status: null,
         })
         this.transformed = transformInteractionResponseToForm(interaction)
       })
@@ -79,6 +86,7 @@ describe('Interaction transformers', () => {
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
+          service_delivery_status: null,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },

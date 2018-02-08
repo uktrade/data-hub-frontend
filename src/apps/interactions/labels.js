@@ -18,6 +18,7 @@ const serviceDelivery = {
   date: 'Date of service delivery',
   dit_adviser: 'DIT adviser',
   service: 'Service',
+  service_delivery_status: 'Trade Access Program (TAP) status',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',

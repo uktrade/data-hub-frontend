@@ -91,7 +91,7 @@ Feature: Create New Contact
     And I submit the form
     Then I see the success message
     And I wait and then refresh the page
-    When I navigate to the dashboard
+    When I navigate to the `Dashboard` page
     Then the contact is displayed on the dashboard
 
 

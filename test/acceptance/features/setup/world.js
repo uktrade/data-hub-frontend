@@ -1,6 +1,6 @@
 const fixtures = require('./fixtures')
 const urls = require('./urls')
-const { defineSupportCode } = require('cucumber')
+const { setWorldConstructor } = require('cucumber')
 
 /**
  * setup state object to be used across UAT tests
@@ -15,6 +15,4 @@ function World () {
   this.resetState()
 }
 
-defineSupportCode(({ setWorldConstructor }) => {
-  setWorldConstructor(World)
-})
+setWorldConstructor(World)

@@ -1,19 +1,23 @@
-const resMock = {}
+const { assign } = require('lodash')
 
 describe('Auth middleware', () => {
   beforeEach(() => {
     this.authMiddleware = require('~/src/middleware/auth')
     this.nextSpy = sandbox.spy()
+    this.reqMock = assign({}, globalReq, {
+      session: {},
+    })
+    this.resMock = assign({}, globalRes)
   })
 
   describe('authenticated/allowed requests', () => {
     describe('when request contains an allowed url', () => {
       it('call the next middleware', () => {
-        const reqMock = {
+        this.reqMock = assign({}, this.reqMock, {
           url: '/oauth/callback',
-        }
+        })
 
-        this.authMiddleware(reqMock, resMock, this.nextSpy)
+        this.authMiddleware(this.reqMock, this.resMock, this.nextSpy)
 
         expect(this.nextSpy.calledOnce).to.be.true
       })
@@ -22,14 +26,14 @@ describe('Auth middleware', () => {
 
   describe('when session token is set', () => {
     it('call the next middleware', () => {
-      const reqMock = {
+      this.reqMock = assign({}, this.reqMock, {
         url: '',
         session: {
           token: 'abcd',
         },
-      }
+      })
 
-      this.authMiddleware(reqMock, resMock, this.nextSpy)
+      this.authMiddleware(this.reqMock, this.resMock, this.nextSpy)
 
       expect(this.nextSpy.calledOnce).to.be.true
     })
@@ -37,21 +41,21 @@ describe('Auth middleware', () => {
 
   describe('unauthenticated requests', () => {
     it('should set the requested url on the session and redirect', () => {
-      const reqMock = {
+      this.reqMock = assign({}, this.reqMock, {
         url: '/protected-url',
         originalUrl: '/protected-url',
         session: {},
-      }
-      const resMock = {
+      })
+      this.resMock = assign({}, this.resMock, {
         redirect: sandbox.stub(),
-      }
+      })
 
-      this.authMiddleware(reqMock, resMock, this.nextSpy)
+      this.authMiddleware(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(reqMock.session).to.have.property('returnTo')
-      expect(reqMock.session.returnTo).to.equal('/protected-url')
+      expect(this.reqMock.session).to.have.property('returnTo')
+      expect(this.reqMock.session.returnTo).to.equal('/protected-url')
       expect(this.nextSpy).not.to.be.called
-      expect(resMock.redirect).to.be.calledWith('/oauth')
+      expect(this.resMock.redirect).to.be.calledWith('/oauth')
     })
   })
 })

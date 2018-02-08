@@ -16,11 +16,13 @@ async function setCompany (req, res, next, companyId) {
 async function setOrder (req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
+    const activeOrder = !(['cancelled', 'complete'].includes(order.status))
 
     res.locals.order = assign({}, order, {
       canEditOrder: order.status === 'draft',
-      canEditAdvisers: !['cancelled', 'complete'].includes(order.status),
-      canEditInvoiceDetails: !['cancelled', 'complete'].includes(order.status),
+      canEditAdvisers: activeOrder,
+      canEditInvoiceDetails: activeOrder,
+      canEditContactDetails: activeOrder,
     })
 
     const currencyFields = [
