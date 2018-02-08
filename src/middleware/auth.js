@@ -1,5 +1,5 @@
 module.exports = function auth (req, res, next) {
-  const passThrough = /^\/(support|healthcheck|oauth|oauth\/callback)\b/.test(req.url) || req.session.token
+  const passThrough = req.session.token || /^\/(support|healthcheck|oauth|oauth\/callback)\b/.test(req.url)
 
   if (passThrough) {
     return next()
