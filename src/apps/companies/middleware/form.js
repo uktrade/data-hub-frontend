@@ -48,10 +48,6 @@ async function populateForm (req, res, next) {
       formData.business_type = req.query.business_type
     }
 
-    if (!get(formData.headquarter_type)) {
-      formData.headquarter_type = 'not_headquarters'
-    }
-
     res.locals = assign({}, res.locals, {
       formData,
       options,
