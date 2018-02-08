@@ -41,5 +41,7 @@ module.exports = function transformCompanyToForm (body) {
     formatted.business_type = get(businessType, 'id')
   }
 
+  formatted.headquarter_type = get(formatted, 'headquarter_type.id', 'not_headquarters')
+
   return assign({}, body, formatted)
 }
