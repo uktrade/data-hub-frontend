@@ -70,6 +70,8 @@ function redirectOAuth (req, res) {
   // SSO journey
   const oAuthDevToken = get(config, 'oauth.devToken')
 
+  // When using Mock SSO https://github.com/uktrade/mock-sso
+  // and when the OAUTH_DEV_TOKEN env is set, then pass this token through the SSO process on the `code` param
   if (oAuthDevToken) {
     set(urlParams, 'code', oAuthDevToken)
   }
