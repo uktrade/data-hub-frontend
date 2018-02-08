@@ -5,9 +5,13 @@ describe('OAuth controller', () => {
   beforeEach(() => {
     this.mockUuid = sandbox.stub().returns(this.mockUUIDvalue)
     this.mockConfig = {}
+    this.saveSessionStub = sandbox.stub()
     this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
+      './../../lib/session-helper': {
+        saveSession: this.saveSessionStub,
+      },
     })
     this.mockOauthAccessToken = 'mockAccessToken'
     this.mockAuthCode = 'mock-auth-code'
@@ -56,24 +60,63 @@ describe('OAuth controller', () => {
         })
 
         set(this.mockConfig, 'oauth', this.mockOauthConfig)
-        this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should redirect', () => {
-        expect(this.resMock.redirect).to.have.been.calledOnce
+      context('with a successful session save', () => {
+        beforeEach(async () => {
+          this.saveSessionStub.resolves()
+          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should call saveSessionStub', () => {
+          expect(this.saveSessionStub).to.have.been.calledOnce
+        })
+
+        it('should call saveSessionStub with expected argument', () => {
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
+        })
+
+        it('should redirect', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+        })
+
+        it('should redirect to the correct Oauth url', () => {
+          expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+        })
+
+        it('session should hold correct UUID', () => {
+          expect(this.reqMock.session.oauth.state).to.equal(this.mockUUIDvalue)
+        })
       })
 
-      it('should redirect to the correct Oauth url', () => {
-        expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
-      })
+      context('with a rejected session save', () => {
+        beforeEach(async () => {
+          this.returnedError = 'oh no!'
+          this.saveSessionStub.rejects(this.returnedError)
+          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
 
-      it('session should hold correct UUID', () => {
-        expect(this.reqMock.session.oauth.state).to.equal(this.mockUUIDvalue)
+        it('should call saveSessionStub', () => {
+          expect(this.saveSessionStub).to.have.been.calledOnce
+        })
+
+        it('should call saveSessionStub with expected argument', () => {
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
+        })
+
+        it('should handle error as expected', () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy.args[0][0].name).to.equal(this.returnedError)
+        })
+
+        it('token should be undefined', () => {
+          expect(this.reqMock.session.token).to.be.undefined
+        })
       })
     })
 
     context('with oauth.devToken', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         this.mockDevToken = 'robo-cat-developer'
         this.mockOauthConfig.devToken = this.mockDevToken
         this.expectedOauthRedirectUrl = queryString.stringify({
@@ -86,7 +129,7 @@ describe('OAuth controller', () => {
         })
 
         set(this.mockConfig, 'oauth', this.mockOauthConfig)
-        this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should redirect', () => {
