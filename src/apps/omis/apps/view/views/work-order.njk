@@ -54,7 +54,7 @@
   {{ AnswersSummary({
     heading: 'Client contact details',
     actions: [{
-      url: 'edit/client-details' if order.canEditOrder
+      url: 'edit/client-details' if order.canEditOrder or order.canEditContactDetails
     }],
     items: [{
       label: 'Name',
