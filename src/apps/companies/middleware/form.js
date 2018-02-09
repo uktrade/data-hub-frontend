@@ -39,6 +39,7 @@ async function populateForm (req, res, next) {
   try {
     const token = req.session.token
     const createdOn = get(res.locals, 'company.created_on')
+    const options = await getCompanyFormOptions(token, createdOn)
 
     const defaultCompanyData = transformCompanyToForm(res.locals.companiesHouseRecord || res.locals.company)
     const formData = assign({}, defaultCompanyData, req.body)
@@ -47,13 +48,9 @@ async function populateForm (req, res, next) {
       formData.business_type = req.query.business_type
     }
 
-    if (!get(formData.headquarter_type)) {
-      formData.headquarter_type = 'not_headquarters'
-    }
-
     res.locals = assign({}, res.locals, {
       formData,
-      options: await getCompanyFormOptions(token, createdOn),
+      options,
     })
 
     next()
