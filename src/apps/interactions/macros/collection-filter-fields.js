@@ -9,22 +9,17 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
   return [
     {
       macroName: 'MultipleChoiceField',
-      name: 'kind',
-      type: 'checkbox',
-      options: [
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-      ],
-      modifier: 'option-select',
-    },
-    {
-      macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
       modifier: 'option-select',
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
+    },
+    {
+      macroName: 'SmartMultipleChoice',
+      name: 'dit_adviser',
+      entity: 'adviser',
     },
     assign({}, communicationChannel(channels), {
       type: 'checkbox',
