@@ -12,8 +12,9 @@ const AutoSubmit = {
 
   handleFormSubmit (evt) {
     const targetForm = evt.target.closest('form')
+    const target = evt.target
 
-    if (!targetForm) { return }
+    if (!targetForm || (target.tagName && target.tagName === 'input' && !target.name)) { return }
 
     const shouldSubmit = targetForm.classList.contains(this.selector.substring(1))
 
