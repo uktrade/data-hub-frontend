@@ -16,6 +16,7 @@ const common = {
     app: [
       './assets/javascripts/vendor/details.polyfill.js',
       './assets/javascripts/app.js',
+      './assets/javascripts/appvue.js',
     ],
   },
   output: {
@@ -29,6 +30,15 @@ const common = {
         loader: 'babel-loader',
         query: {
           cacheDirectory: './babel_cache',
+        },
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+          },
+          // other vue-loader options go here
         },
       },
       {
@@ -83,6 +93,10 @@ const common = {
       'node_modules',
       path.resolve(__dirname, 'src'),
     ],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+    },
+    extensions: ['*', '.js', '.vue', '.json'],
   },
   plugins: [
     new WebpackAssetsManifest(),
