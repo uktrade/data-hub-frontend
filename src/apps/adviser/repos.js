@@ -42,9 +42,6 @@ async function adviserSearch (token, term) {
     }
     return adviser.first_name.toLowerCase().startsWith(parts[0]) && adviser.last_name.toLowerCase().startsWith(parts[1])
   })
-    .map((adviser) => {
-      return { id: adviser.id, name: `${adviser.first_name} ${adviser.last_name}` }
-    })
     .sort((a, b) => {
       if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
       if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
