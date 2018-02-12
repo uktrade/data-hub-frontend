@@ -142,12 +142,6 @@ module.exports = {
                 })
               })
               .perform((done) => {
-                this.getRadioOption('service_delivery_status', (result) => {
-                  serviceDeliveryRadioButtons.status = result
-                  done()
-                })
-              })
-              .perform((done) => {
                 this.getListOption('@ditAdviser', (ditAdviser) => {
                   serviceDelivery.ditAdviser = ditAdviser
                   done()
