@@ -10,17 +10,21 @@ const FACET_FIELDS = {
   'interaction': ['dit_adviser', 'dit_team'],
   'investment_project': ['stage', 'investment_type', 'sector', 'status', 'uk_region_locations', 'investor_company_country'],
 }
-async function facets ({ token, searchTerm, searchEntity, requestBody }) {
-  const response = await facetSearch({
-    token,
-    searchTerm,
-    searchEntity,
-    requestBody,
-    limit: 10000,
-    isAggregation: false,
-  })
 
-  const results = response.results
+async function facets ({ token, searchTerm, searchEntity, requestBody, results }) {
+  if (!results) {
+    const response = await facetSearch({
+      token,
+      searchTerm,
+      searchEntity,
+      requestBody,
+      limit: 10000,
+      isAggregation: false,
+    })
+
+    results = response.results
+  }
+
   const fields = FACET_FIELDS[searchEntity]
   const facets = calculateFacets(results, fields)
 
