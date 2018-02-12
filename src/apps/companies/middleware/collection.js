@@ -1,6 +1,6 @@
-const { pick, pickBy, assign } = require('lodash')
+const { get, isEmpty, pick, pickBy, assign } = require('lodash')
 
-const { search, searchLimitedCompanies } = require('../../search/services')
+const { search, searchLimitedCompanies, facets } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformCompanyToListItem,
@@ -9,10 +9,16 @@ const {
 
 async function getCompanyCollection (req, res, next) {
   try {
+    const searchTerm = get(req.query, 'name')
+    const token = req.session.token
+    const searchEntity = 'company'
+    const requestBody = req.body
+
     res.locals.results = await search({
-      searchEntity: 'company',
-      requestBody: req.body,
-      token: req.session.token,
+      token,
+      searchTerm,
+      searchEntity,
+      requestBody,
       page: req.query.page,
       isAggregation: false,
     })
@@ -20,6 +26,14 @@ async function getCompanyCollection (req, res, next) {
         { query: req.query },
         transformCompanyToListItem,
       ))
+
+    if (!isEmpty(searchTerm)) {
+      res.locals.facets = await facets({
+        token,
+        searchTerm,
+        searchEntity,
+      })
+    }
 
     next()
   } catch (error) {
