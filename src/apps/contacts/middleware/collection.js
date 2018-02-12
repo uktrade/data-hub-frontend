@@ -1,16 +1,23 @@
-const { pick, mapValues, isArray, pickBy, get } = require('lodash')
+const { pick, mapValues, isArray, pickBy, get, isEmpty } = require('lodash')
 
-const { search } = require('../../search/services')
+const { search, facets } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformContactToListItem } = require('../transformers')
 const removeArray = require('../../../lib/remove-array')
 
 async function getContactsCollection (req, res, next) {
   try {
+    const token = req.session.token
+    const searchEntity = 'contact'
+    const requestBody = req.body
+
+    const name = get(req.query, 'name')
+    const companyName = get(req.query, 'company_name')
+
     res.locals.results = await search({
-      searchEntity: 'contact',
-      requestBody: req.body,
-      token: req.session.token,
+      token,
+      searchEntity,
+      requestBody,
       page: req.query.page,
       isAggregation: false,
     })
@@ -18,6 +25,17 @@ async function getContactsCollection (req, res, next) {
         { query: req.query },
         transformContactToListItem,
       ))
+
+    if (!isEmpty(name) || !isEmpty(companyName)) {
+      res.locals.facets = await facets({
+        token,
+        searchEntity,
+        requestBody: {
+          name,
+          company_name: companyName,
+        },
+      })
+    }
 
     next()
   } catch (error) {

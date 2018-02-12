@@ -5,7 +5,7 @@ const config = require('../../../../config')
 
 const FACET_FIELDS = {
   'company': ['sector', 'registered_address_country', 'uk_region'],
-  'contact': ['company_sector', 'address_country', 'created_by'],
+  'contact': ['company_sector', 'address_country'],
   'event': ['event_type', 'address_country', 'uk_region', 'organiser'],
   'interaction': ['kind', 'communication_channel', 'dit_adviser', 'dit_team'],
   'investment_project': ['stage', 'investment_type', 'sector', 'status', 'uk_region_locations', 'investor_company_country'],

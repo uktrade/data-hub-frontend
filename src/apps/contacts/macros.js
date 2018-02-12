@@ -1,4 +1,5 @@
-const { assign, flatten, reject, merge } = require('lodash')
+/* eslint camelcase: 0 */
+const { assign, flatten, reject, merge, get } = require('lodash')
 
 const { globalFields } = require('../macros')
 
@@ -34,50 +35,59 @@ const contactSortOptions = [
   { value: 'company_sector.name:desc', label: 'Sector: Z-A' },
 ]
 
-const contactFiltersFields = [
-  {
-    macroName: 'TextField',
-    label: 'Contact name',
-    name: 'name',
-    hint: 'At least three characters',
-  },
-  {
-    macroName: 'TextField',
-    label: 'Company name',
-    name: 'company_name',
-    hint: 'At least three characters',
-  },
-  assign({}, globalFields.sectors, {
-    name: 'company_sector',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  assign({}, globalFields.countries, {
-    name: 'address_country',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  assign({}, globalFields.ukRegions, {
-    name: 'company_uk_region',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'archived',
-    type: 'checkbox',
-    label: 'Status',
-    options: [
-      { value: 'false', label: 'Active' },
-      { value: 'true', label: 'Inactive' },
-    ],
-    modifier: 'option-select',
-  },
-].map(filter => {
-  return assign(filter, {
-    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-  })
-})
+const contactFiltersFields = function ({
+  company_sector,
+  address_country,
+  active,
+} = {}) {
+  return [
+    {
+      macroName: 'TextField',
+      label: 'Contact name',
+      name: 'name',
+      hint: 'At least three characters',
+    },
+    {
+      macroName: 'TextField',
+      label: 'Company name',
+      name: 'company_name',
+      hint: 'At least three characters',
+    },
+    assign({}, globalFields.sectors, {
+      name: 'company_sector',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: company_sector,
+    }),
+    assign({}, globalFields.countries, {
+      name: 'address_country',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: address_country,
+    }),
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'archived',
+      type: 'checkbox',
+      label: 'Status',
+      options: active,
+      modifier: 'option-select',
+    }]
+    .map(filter => {
+      return assign(filter, {
+        modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+      })
+    })
+    .filter(filter => {
+      if (filter.macroName === 'MultipleChoiceField' &&
+          filter.name !== 'created_by' &&
+          get(filter, 'options', []).length < 2
+      ) {
+        return false
+      }
+      return true
+    })
+}
 
 const contactSortForm = merge({}, sortFormBase, {
   children: [
