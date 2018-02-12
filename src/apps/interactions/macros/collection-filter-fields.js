@@ -1,35 +1,50 @@
-const { assign, flatten } = require('lodash')
+/* eslint camelcase: 0 */
+const { assign, flatten, get } = require('lodash')
 
 const labels = require('../labels')
-const { communicationChannel, provider } = require('./fields')
+const { provider } = require('./fields')
 
 const currentYear = (new Date()).getFullYear()
 
-module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
+function getAdviserOptions (currentAdviserId, adviserFacets) {
+  let myCount = 0
+
+  const adviserOptions = (adviserFacets || []).filter((item) => {
+    if (item.value === currentAdviserId) {
+      myCount = item.count
+      return false
+    }
+
+    return true
+  })
+
+  if (adviserOptions.length === 0) {
+    adviserOptions.push({
+      value: currentAdviserId,
+      label: 'My interactions',
+    })
+  } else if (myCount > 0) {
+    adviserOptions.unshift({
+      value: currentAdviserId,
+      label: 'My interactions',
+      count: myCount,
+    })
+  }
+
+  return adviserOptions
+}
+
+module.exports = function ({ currentAdviserId, dit_team, dit_adviser } = {}) {
+  const adviserOptions = getAdviserOptions(currentAdviserId, dit_adviser)
+
   return [
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'kind',
-      type: 'checkbox',
-      options: [
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-      ],
-      modifier: 'option-select',
-    },
     {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
       modifier: 'option-select',
-      options: [
-        { value: currentAdviserId, label: 'My interactions' },
-      ],
+      options: adviserOptions,
     },
-    assign({}, communicationChannel(channels), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
     {
       macroName: 'TextField',
       name: 'date_after',
@@ -42,14 +57,21 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign({}, provider(teams), {
+    assign({}, provider(dit_team), {
       type: 'checkbox',
       modifier: 'option-select',
     }),
-  ].map(filter => {
-    return assign(filter, {
-      label: labels.filters[filter.name],
-      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+  ]
+    .filter(filter => {
+      if (filter.name !== 'dit_adviser' && filter.macroName === 'MultipleChoiceField' && get(filter, 'options', []).length < 2) {
+        return false
+      }
+      return true
     })
-  })
+    .map(filter => {
+      return assign(filter, {
+        label: labels.filters[filter.name],
+        modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+      })
+    })
 }
