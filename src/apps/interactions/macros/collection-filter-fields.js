@@ -10,7 +10,7 @@ module.exports = function ({ currentAdviserId, teams = [] }) {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
-      modifier: 'option-select',
+      modifier: ['option-select', 'hide-legend'],
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
