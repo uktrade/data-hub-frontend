@@ -1,15 +1,18 @@
-const { omit, merge } = require('lodash')
+const { omit, merge, assign } = require('lodash')
 const { buildSelectedFiltersSummary } = require('../../builders')
-const { investmentFiltersFields: filtersFields, investmentSortForm } = require('../macros')
+const { investmentFiltersFields, investmentSortForm } = require('../macros')
 
 function renderInvestmentList (req, res) {
+  const currentAdviserId = req.session.user.id
+
   const sortForm = merge({}, investmentSortForm, {
-    hiddenFields: Object.assign({}, omit(req.query, 'sortby')),
+    hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
       { value: req.query.sortby },
     ],
   })
 
+  const filtersFields = investmentFiltersFields({ currentAdviserId })
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
   res.render('collection', {
