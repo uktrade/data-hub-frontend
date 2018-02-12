@@ -5,84 +5,100 @@ const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
 
-const investmentFiltersFields = [
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'stage',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadata.investmentStageOptions.map(transformObjectToOption)
+const investmentFiltersFields = function ({ currentAdviserId }) {
+  return [
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'client_relationship_manager',
+      type: 'checkbox',
+      modifier: ['option-select', 'hide-legend'],
+      options: [
+        { value: currentAdviserId, label: 'My investment projects' },
+      ],
     },
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'investment_type',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadata.investmentTypeOptions.map(transformObjectToOption)
+    {
+      macroName: 'SmartMultipleChoice',
+      name: 'client_relationship_manager',
+      entity: 'adviser',
     },
-  },
-  Object.assign({}, globalFields.sectors, {
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  {
-    macroName: 'TextField',
-    name: 'estimated_land_date_before',
-    hint: 'YYYY-MM-DD',
-    placeholder: 'e.g. 2018-07-18',
-  },
-  {
-    macroName: 'TextField',
-    name: 'estimated_land_date_after',
-    hint: 'YYYY-MM-DD',
-    placeholder: 'e.g. 2019-05-09',
-  },
-  {
-    macroName: 'TextField',
-    name: 'actual_land_date_before',
-    hint: 'YYYY-MM-DD',
-    placeholder: 'e.g. 2018-07-18',
-  },
-  {
-    macroName: 'TextField',
-    name: 'actual_land_date_after',
-    hint: 'YYYY-MM-DD',
-    placeholder: 'e.g. 2019-05-09',
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'status',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options: metadata.investmentStatusOptions,
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'uk_region_location',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadata.regionOptions.map(transformObjectToOption)
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'stage',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.investmentStageOptions.map(transformObjectToOption)
+      },
     },
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'investor_company_country',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadata.countryOptions.map(transformObjectToOption)
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'investment_type',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.investmentTypeOptions.map(transformObjectToOption)
+      },
     },
-  },
-].map(filter => {
-  return Object.assign(filter, {
-    label: collectionFilterLabels.edit[filter.name],
-    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+    Object.assign({}, globalFields.sectors, {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
+    {
+      macroName: 'TextField',
+      name: 'estimated_land_date_before',
+      hint: 'YYYY-MM-DD',
+      placeholder: 'e.g. 2018-07-18',
+    },
+    {
+      macroName: 'TextField',
+      name: 'estimated_land_date_after',
+      hint: 'YYYY-MM-DD',
+      placeholder: 'e.g. 2019-05-09',
+    },
+    {
+      macroName: 'TextField',
+      name: 'actual_land_date_before',
+      hint: 'YYYY-MM-DD',
+      placeholder: 'e.g. 2018-07-18',
+    },
+    {
+      macroName: 'TextField',
+      name: 'actual_land_date_after',
+      hint: 'YYYY-MM-DD',
+      placeholder: 'e.g. 2019-05-09',
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'status',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: metadata.investmentStatusOptions,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'uk_region_location',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.regionOptions.map(transformObjectToOption)
+      },
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'investor_company_country',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.countryOptions.map(transformObjectToOption)
+      },
+    },
+  ].map(filter => {
+    return assign(filter, {
+      label: collectionFilterLabels.edit[filter.name],
+      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+    })
   })
-})
+}
 
 const investmentSortForm = {
   method: 'get',
