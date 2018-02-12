@@ -55,3 +55,7 @@ fieldset.c-form-fieldset--subfield {
     }
   }
 }
+
+fieldset.c-form-group--hide-legend > .c-form-group__label {
+  display: none;
+}
