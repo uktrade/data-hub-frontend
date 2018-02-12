@@ -10,65 +10,69 @@ const { transformInvestmentProjectToListItem } = require('../investment-projects
 const { transformOrderToListItem } = require('../omis/transformers')
 const { transformInteractionToListItem } = require('../interactions/transformers')
 
-async function renderSearchResults (req, res) {
-  const entity = find(ENTITIES, ['path', req.params.searchPath])
+async function renderSearchResults (req, res, next) {
+  try {
+    const entity = find(ENTITIES, ['path', req.params.searchPath])
 
-  if (!entity) {
-    return res.render('search/view')
-  }
+    if (!entity) {
+      return res.render('search/view')
+    }
 
-  const actionButton = { text: null, url: null }
-  const searchTerm = get(req, 'query.term', '').trim()
-  const searchEntity = entity.entity
-  const itemTransformers = []
+    const actionButton = { text: null, url: null }
+    const searchTerm = get(req, 'query.term', '').trim()
+    const searchEntity = entity.entity
+    const itemTransformers = []
 
-  if (searchEntity === 'investment_project') {
-    itemTransformers.push(transformInvestmentProjectToListItem)
-  }
-  if (searchEntity === 'contact') {
-    itemTransformers.push(transformContactToListItem)
-  }
-  if (searchEntity === 'event') {
-    itemTransformers.push(transformEventToListItem)
-  }
-  if (searchEntity === 'order') {
-    itemTransformers.push(transformOrderToListItem)
-  }
+    if (searchEntity === 'investment_project') {
+      itemTransformers.push(transformInvestmentProjectToListItem)
+    }
+    if (searchEntity === 'contact') {
+      itemTransformers.push(transformContactToListItem)
+    }
+    if (searchEntity === 'event') {
+      itemTransformers.push(transformEventToListItem)
+    }
+    if (searchEntity === 'order') {
+      itemTransformers.push(transformOrderToListItem)
+    }
 
-  if (searchEntity === 'company') {
-    itemTransformers.push(transformCompanyToListItem)
-    actionButton.text = 'Add company'
-    actionButton.url = '/companies/add-step-1'
-  }
+    if (searchEntity === 'company') {
+      itemTransformers.push(transformCompanyToListItem)
+      actionButton.text = 'Add company'
+      actionButton.url = '/companies/add-step-1'
+    }
 
-  if (searchEntity === 'interaction') {
-    itemTransformers.push(transformInteractionToListItem)
-  }
+    if (searchEntity === 'interaction') {
+      itemTransformers.push(transformInteractionToListItem)
+    }
 
-  const results = await search({
-    searchTerm,
-    searchEntity,
-    requestBody: req.body,
-    token: req.session.token,
-    page: req.query.page,
-  })
-    .then(transformApiResponseToSearchCollection(
-      {
-        searchTerm,
-        query: req.query,
-        userPermissions: get(res, 'locals.user.permissions'),
-      },
-      ...itemTransformers,
-    ))
-
-  res
-    .breadcrumb(entity.text)
-    .render('search/view', {
-      actionButton,
-      searchEntity,
+    const results = await search({
       searchTerm,
-      results,
+      searchEntity,
+      requestBody: req.body,
+      token: req.session.token,
+      page: req.query.page,
     })
+      .then(transformApiResponseToSearchCollection(
+        {
+          searchTerm,
+          query: req.query,
+          userPermissions: get(res, 'locals.user.permissions'),
+        },
+        ...itemTransformers,
+      ))
+
+    res
+      .breadcrumb(entity.text)
+      .render('search/view', {
+        actionButton,
+        searchEntity,
+        searchTerm,
+        results,
+      })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
