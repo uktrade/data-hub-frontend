@@ -478,6 +478,10 @@ describe('Interaction transformers', () => {
             name: 'Event title',
           },
           kind: 'service_delivery',
+          service_delivery_status: {
+            name: 'Offered',
+            id: '45329c18-6095-e211-a939-e4115bead28a',
+          },
         })
 
         delete serviceDelivery.communication_channel
@@ -502,6 +506,10 @@ describe('Interaction transformers', () => {
           'Service': {
             id: '1231231231312',
             name: 'Test service',
+          },
+          'Service status': {
+            id: '45329c18-6095-e211-a939-e4115bead28a',
+            name: 'Offered',
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
@@ -533,11 +541,12 @@ describe('Interaction transformers', () => {
       })
     })
 
-    context('when provided with a service delivery with no event', () => {
+    context('when provided with a service delivery with optional fields not set', () => {
       beforeEach(() => {
         const serviceDelivery = assign({}, mockInteraction, {
           event: null,
           kind: 'service_delivery',
+          service_delivery_status: null,
         })
 
         delete serviceDelivery.communication_channel

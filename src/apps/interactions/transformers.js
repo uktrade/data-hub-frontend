@@ -122,6 +122,7 @@ function transformInteractionResponseToViewRecord ({
   date,
   dit_adviser,
   service,
+  service_delivery_status,
   dit_team,
   contact,
   investment_project,
@@ -136,6 +137,7 @@ function transformInteractionResponseToViewRecord ({
     contact: transformEntityLink(contact, 'contacts'),
     dit_team,
     service,
+    service_delivery_status,
     subject,
     notes,
     date: {
