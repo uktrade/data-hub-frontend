@@ -105,7 +105,39 @@ function transformContactToView ({
   return pickBy(getDataLabels(viewRecord, contactDetailsLabels))
 }
 
+function transformContactToDashItem (data) {
+  const {
+    id,
+    first_name,
+    last_name,
+    job_title,
+    company_uk_region,
+    company,
+  } = data
+
+  if (!id || (!first_name && !last_name)) { return }
+
+  const metaItems = [
+    { key: 'company', value: get(company, 'name') },
+    { key: 'job_title', value: job_title },
+    { key: 'company_uk_region', value: company_uk_region },
+  ].map(({ key, value, type, badgeModifier }) => {
+    if (!value) return
+    return assign({}, pickBy({ value, type, badgeModifier }), {
+      label: contactMetaItemLabels[key],
+    })
+  })
+
+  return {
+    id,
+    type: 'contact',
+    name: `${first_name} ${last_name}`.trim(),
+    meta: compact(metaItems),
+  }
+}
+
 module.exports = {
   transformContactToListItem,
   transformContactToView,
+  transformContactToDashItem,
 }

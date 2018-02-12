@@ -185,10 +185,51 @@ function transformInteractionListItemToHaveUrlPrefix (urlPrefix) {
   }
 }
 
+function transformInteractionToDashItem ({
+  id,
+  subject,
+  kind,
+  contact,
+  company,
+  date,
+  dit_team,
+  communication_channel,
+}) {
+  return {
+    id,
+    type: 'interaction',
+    name: subject || 'No subject',
+    meta: [
+      {
+        label: 'Contact',
+        value: contact,
+      },
+      {
+        label: 'Date',
+        value: date,
+        type: 'date',
+      },
+      {
+        label: 'Company',
+        value: company,
+      },
+      {
+        label: 'Channel',
+        value: communication_channel,
+      },
+      {
+        label: 'Service provider',
+        value: dit_team,
+      },
+    ],
+  }
+}
+
 module.exports = {
   transformInteractionResponseToForm,
   transformInteractionToListItem,
   transformInteractionFormBodyToApiRequest,
   transformInteractionResponseToViewRecord,
   transformInteractionListItemToHaveUrlPrefix,
+  transformInteractionToDashItem,
 }
