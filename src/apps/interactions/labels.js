@@ -8,6 +8,8 @@ const interaction = {
   service: 'Service',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
+  investment_project: 'Investment project',
+  documents: 'Documents',
 }
 
 const serviceDelivery = {
@@ -23,6 +25,8 @@ const serviceDelivery = {
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',
   event: 'Event',
+  investment_project: 'Investment project',
+  documents: 'Documents',
 }
 
 const filters = {
