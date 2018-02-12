@@ -61,13 +61,6 @@ module.exports = function ({
         },
       },
       service(services),
-      {
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        name: 'service_delivery_status',
-        options: statuses,
-        optional: true,
-      },
       subject,
       notes,
       date,
