@@ -73,9 +73,9 @@ class EditPaymentReconciliationController extends EditController {
 
   async saveValues (req, res, next) {
     const data = req.form.values
+    const penceAmount = Math.round(numeral(data.amount).value() * 100)
 
-    // convert pounds to pence
-    data.amount = parseInt(numeral(data.amount).value() * 100)
+    data.amount = penceAmount
 
     try {
       // TODO: Support adding of multiple payments
