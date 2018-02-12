@@ -15,6 +15,7 @@ const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
   transformInvestmentListItemToDisableMetaLinks,
+  transformInvestmentProjectToDashItem,
 } = require('./collection')
 
 const {
@@ -38,4 +39,5 @@ module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToHaveMetaLinks,
   transformInvestmentListItemToDisableMetaLinks,
+  transformInvestmentProjectToDashItem,
 }
