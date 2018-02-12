@@ -94,7 +94,7 @@
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
-          <span class="c-multiple-choice__label-text">{{ option.label }}</span>
+          <span class="c-multiple-choice__label-text">{{ option.label }}{% if option.count %} ({{ option.count }}){% endif %}</span>
           {% if option.hint %}
             <span class="c-multiple-choice__hint">{{ option.hint }}</span>
           {% endif %}
