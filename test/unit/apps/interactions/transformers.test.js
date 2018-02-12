@@ -292,7 +292,7 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
-          'Interaction date': {
+          'Date of interaction': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -332,7 +332,6 @@ describe('Interaction transformers', () => {
             url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a',
             name: 'Samsung',
           },
-          'Contact': null,
           'Service provider': {
             id: '222',
             name: 'Team',
@@ -349,7 +348,7 @@ describe('Interaction transformers', () => {
             name: 'View files and documents',
             url: 'http://base/documents/123',
           },
-          'Interaction date': {
+          'Date of interaction': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -379,7 +378,6 @@ describe('Interaction transformers', () => {
 
       it('should transform to display format', () => {
         expect(this.transformed).to.deep.equal({
-          'Company': null,
           'Contact': {
             url: '/contacts/b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
             name: 'Jackson Whitfield',
@@ -394,7 +392,7 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
-          'Interaction date': {
+          'Date of interaction': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -454,7 +452,7 @@ describe('Interaction transformers', () => {
             name: 'View files and documents',
             url: 'http://base/documents/123',
           },
-          'Interaction date': {
+          'Date of interaction': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -464,7 +462,6 @@ describe('Interaction transformers', () => {
             last_name: 'CMU 1',
             name: 'Test CMU 1',
           },
-          'Investment project': null,
           'Communication channel': {
             id: '72c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Telephone',
@@ -508,7 +505,7 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
-          'Interaction date': {
+          'Date of service delivery': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -568,7 +565,7 @@ describe('Interaction transformers', () => {
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
-          'Interaction date': {
+          'Date of service delivery': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
@@ -622,7 +619,7 @@ describe('Interaction transformers', () => {
           'Documents': {
             name: 'There are no files or documents',
           },
-          'Interaction date': {
+          'Date of interaction': {
             type: 'date',
             name: '2017-05-31T00:00:00',
           },
