@@ -110,9 +110,9 @@ Then(/^the (.+) details are displayed$/, async function (detailsTableTitle, data
       .waitForElementPresent(detailsTableRowValueXPathSelector)
       .getText(detailsTableRowValueXPathSelector, (actual) => {
         if (row.formatter) {
-          return client.expect(formatters[row.formatter](expectedValue, actual.value), row.key).to.be.true
+          return client.expect(formatters[row.formatter](expectedValue, actual.value)).to.be.true
         }
-        client.expect(actual.value, row.key).to.equal(expectedValue)
+        client.expect(actual.value).to.equal(expectedValue)
       })
       .useCss()
   }

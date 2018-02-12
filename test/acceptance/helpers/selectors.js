@@ -85,6 +85,19 @@ function getLinkWithText (text, className) {
   )
 }
 
+/**
+ * Gets XPath selector for an anchor tag following a specified section
+ * @param sectionTitle
+ * @param buttonText
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
+  return getSelectorForElementWithText(sectionTitle, {
+    el: '//h2',
+    child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
+  })
+}
+
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
@@ -92,4 +105,5 @@ module.exports = {
   getMetaListItemValueSelector,
   getLinkWithText,
   getListItemMetaElementWithText,
+  getSelectorForDetailsSectionEditButton,
 }
