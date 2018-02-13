@@ -43,6 +43,8 @@
             {% elif data | isPlainObject %}
               {% if data.type == "date" %}
                 {{ data.name | formatDate }}
+              {% elif data.type == "currency" %}
+                {{ data.name | formatCurrency }}
               {% else %}
                 {{ data.name }}
               {% endif %}

@@ -22,17 +22,17 @@ Feature: Add value to investment project
       | Export revenue radio              | Yes                                            |
     Then I see the success message
     And the Value details are displayed
-      | key                        | value                                           |
-      | Total investment           | £100,000                                        |
-      | Foreign equity investment  | £200,000                                        |
-      | Government assistance      | Has government assistance                       |
-      | New jobs                   | 100 new jobs                                    |
-      | Average salary of new jobs | investmentProject.value.averageSalary           |
-      | Safeguarded jobs           | 200 safeguarded jobs                            |
-      | R&D budget                 | Has R&D budget                                  |
-      | Non-FDI R&D project        | Find project                                    |
-      | New-to-world tech          | Has new-to-world tech, business model or IP     |
-      | Export revenue             | Yes, will create significant export revenue     |
+      | key                        | value                                            |
+      | Total investment           | £100,000.00                                      |
+      | Foreign equity investment  | £200,000.00                                      |
+      | Government assistance      | Has government assistance                        |
+      | New jobs                   | 100 new jobs                                     |
+      | Average salary of new jobs | investmentProject.value.averageSalary            |
+      | Safeguarded jobs           | 200 safeguarded jobs                             |
+      | R&D budget                 | Has R&D budget                                   |
+      | Non-FDI R&D project        | Find project                                     |
+      | New-to-world tech          | Has new-to-world tech, business model or IP      |
+      | Export revenue             | Yes, will create significant export revenue      |
 
 
   @investment-projects-value-add--all-no

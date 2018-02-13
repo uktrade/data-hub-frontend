@@ -1,6 +1,6 @@
 const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
-const { get, includes } = require('lodash')
+const { get, includes, startsWith } = require('lodash')
 
 const { getDetailsTableRowValue } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
@@ -8,7 +8,7 @@ const formatters = require('../../helpers/formatters')
 const Details = client.page.Details()
 
 function getExpectedValue (row, state) {
-  if (includes(row.value, '.') && !includes(row.value, ' ')) {
+  if (includes(row.value, '.') && !includes(row.value, ' ') && !startsWith(row.value, '£')) {
     const expectedText = get(state, row.value)
 
     if (row.key === 'Client contacts') {
