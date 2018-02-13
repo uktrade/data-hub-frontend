@@ -12,6 +12,7 @@ Feature: Interactions details
       | Service provider         | interaction.serviceProvider   |
       | Service                  | interaction.service           |
       | Service status           | interaction.tapStatus         |
+      | Grant offered            | interaction.grantOffered      |
       | Subject                  | interaction.subject           |
       | Notes                    | interaction.notes             |
       | Date of service delivery | interaction.date              |

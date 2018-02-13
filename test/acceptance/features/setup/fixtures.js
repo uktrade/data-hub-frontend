@@ -97,6 +97,7 @@ module.exports = {
       serviceProvider: 'Marketing - Marketing Team',
       service: 'Tradeshow Access Programme (TAP)',
       tapStatus: 'Offered',
+      grantOffered: '£2,500.00',
       subject: 'TAP grant',
       name: 'TAP grant',
       notes: 'This is a dummy service delivery for testing',

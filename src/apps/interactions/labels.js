@@ -21,6 +21,7 @@ const serviceDelivery = {
   dit_adviser: 'DIT adviser',
   service: 'Service',
   service_delivery_status: 'Service status',
+  grant_amount_offered: 'Grant offered',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',
