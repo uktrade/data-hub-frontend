@@ -39,6 +39,7 @@ const metadataMock = {
   ],
   countryOptions: [
     { id: '9999', name: 'United Kingdom', disabled_on: null },
+    { id: '7777', name: 'France', disabled_on: null },
     { id: '8888', name: 'Test', disabled_on: yesterday },
   ],
   businessTypeOptions: [
@@ -126,8 +127,10 @@ describe('Companies form middleware', () => {
         ])
       })
 
-      it('should include the active country options for use in the form', () => {
-        expect(this.resMock.locals.options.countries).to.deep.equal([{ value: '9999', label: 'United Kingdom' }])
+      it('should include the active foreign country options for use in the form', () => {
+        expect(this.resMock.locals.options.foreignCountries).to.deep.equal([
+          { value: '7777', label: 'France' },
+        ])
       })
 
       it('should include headquarter options that have had label substituted and an option for not a headquarters', () => {
@@ -209,10 +212,10 @@ describe('Companies form middleware', () => {
         ])
       })
 
-      it('should include the active country options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.countries).to.deep.equal([
+      it('should include the active foreign country options for use in the form and the current option', () => {
+        expect(this.resMock.locals.options.foreignCountries).to.deep.equal([
+          { value: '7777', label: 'France' },
           { value: '8888', label: 'Test' },
-          { value: '9999', label: 'United Kingdom' },
         ])
       })
     })

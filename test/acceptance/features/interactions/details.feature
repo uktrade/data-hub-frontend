@@ -1,16 +1,37 @@
-@interactions-details  @details
-Feature: Interaction details
+@interactions-details @details
+Feature: Interactions details
 
-  @interactions-details--documents-link
-  Scenario: Interaction has Documents link
+  @interactions-details--status
+  Scenario: Interaction does not have a status
 
-    When I navigate to interaction fixture Attended gamma event
-    Then there should not be a local nav
-    And details view data for "Documents" should contain "View files and documents (will open another website)"
+    Given I navigate to interaction fixture TAP grant
+    Then the details are displayed
+      | key                      | value                         |
+      | Company                  | interaction.company           |
+      | Contact                  | interaction.contact           |
+      | Service provider         | interaction.serviceProvider   |
+      | Service                  | interaction.service           |
+      | Service status           | interaction.tapStatus         |
+      | Subject                  | interaction.subject           |
+      | Notes                    | interaction.notes             |
+      | Date of service delivery | interaction.date              |
+      | DIT adviser              | interaction.ditAdviser        |
+      | Event                    | interaction.event             |
+      | Documents                | interaction.documents         |
 
-  @interactions-details--no-documents-link
-  Scenario: Interaction does not have Documents link
+  @interactions-details--no-status
+  Scenario: Interaction does not have a status
 
-    When I navigate to interaction fixture Provided funding information
-    Then there should not be a local nav
-    And details view data for "Documents" should contain "There are no files or documents"
+    Given I navigate to interaction fixture Attended gamma event
+    Then the details are displayed
+      | key                      | value                         |
+      | Company                  | interaction.company           |
+      | Contact                  | interaction.contact           |
+      | Service provider         | interaction.serviceProvider   |
+      | Service                  | interaction.service           |
+      | Subject                  | interaction.subject           |
+      | Notes                    | interaction.notes             |
+      | Date of service delivery | interaction.date              |
+      | DIT adviser              | interaction.ditAdviser        |
+      | Event                    | interaction.event             |
+      | Documents                | interaction.documents         |
