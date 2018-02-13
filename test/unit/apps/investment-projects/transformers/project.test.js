@@ -279,7 +279,10 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the total investment value', () => {
-        expect(this.result).to.have.property('total_investment', '£100.24')
+        expect(this.result.total_investment).to.deep.equal({
+          type: 'currency',
+          name: '100.24',
+        })
       })
     })
 
@@ -293,7 +296,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should set total investment to null', () => {
-        expect(this.result).to.have.property('total_investment', null)
+        expect(this.result.total_investment).to.be.null
       })
     })
   })

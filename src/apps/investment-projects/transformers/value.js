@@ -1,14 +1,19 @@
 /* eslint-disable camelcase */
 const { get, isPlainObject, isNull } = require('lodash')
 
-function formatCurrency (number) {
-  if (isNull(number)) { return null }
+function transformInvestmentAmount (clientCannotProvideInvestment, investmentAmount) {
+  if (clientCannotProvideInvestment) {
+    return 'Client cannot provide this information'
+  }
 
-  return new Intl.NumberFormat('en-GB', {
-    style: 'currency',
-    currency: 'GBP',
-    minimumFractionDigits: 0,
-  }).format(number)
+  if (!investmentAmount) {
+    return null
+  }
+
+  return {
+    type: 'currency',
+    name: investmentAmount,
+  }
 }
 
 function transformInvestmentValueForView ({
@@ -40,12 +45,8 @@ function transformInvestmentValueForView ({
   })
 
   return {
-    total_investment: client_cannot_provide_total_investment
-      ? 'Client cannot provide this information'
-      : formatCurrency(total_investment),
-    foreign_equity_investment: client_cannot_provide_foreign_investment
-      ? 'Client cannot provide this information'
-      : formatCurrency(foreign_equity_investment),
+    total_investment: transformInvestmentAmount(client_cannot_provide_total_investment, total_investment),
+    foreign_equity_investment: transformInvestmentAmount(client_cannot_provide_foreign_investment, foreign_equity_investment),
     number_new_jobs: number_new_jobs && `${number_new_jobs} new jobs`,
     number_safeguarded_jobs: number_safeguarded_jobs && `${number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(government_assistance, {

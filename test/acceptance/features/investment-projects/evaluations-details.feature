@@ -31,7 +31,7 @@ Feature: Investment projects evaluations details
     Then the Project value (Test D) details are displayed
       | key                               | value                                          | formatter                               |
       | Primary sector                    | investmentProject.primarySector                |                                         |
-      | Total investment                  | £100,000                                       |                                         |
+      | Total investment                  | £100,000.00                                    |                                         |
       | New jobs                          | 100 new jobs                                   |                                         |
       | Average salary of new jobs        | investmentProject.value.averageSalary          |                                         |
       | R&D budget                        | Has R&D budget                                 |                                         |
@@ -46,7 +46,7 @@ Feature: Investment projects evaluations details
       | Foreign investor                  | Lambda plc                                     |
       | Foreign country                   | France                                         |
       | UK company                        | Not Known                                      |
-      | Foreign equity investment         | £200,000                                       |
+      | Foreign equity investment         | £200,000.00                                    |
       | Investor retains 10% voting power | No                                             |
       | New jobs                          | 100 new jobs                                   |
       | Safeguarded jobs                  | 200 safeguarded jobs                           |
