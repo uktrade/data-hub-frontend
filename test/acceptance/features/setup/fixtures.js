@@ -90,7 +90,7 @@ module.exports = {
       pk: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
       subject: 'Provided funding information',
     },
-    tapStatus: {
+    tapGrant: {
       pk: 'aa350238-5d84-4bed-be68-b08dea7ea6d5',
       company: 'Venus Ltd',
       contact: 'Dean Cox',
