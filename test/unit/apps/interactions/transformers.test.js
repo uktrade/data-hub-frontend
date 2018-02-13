@@ -482,6 +482,7 @@ describe('Interaction transformers', () => {
             name: 'Offered',
             id: '45329c18-6095-e211-a939-e4115bead28a',
           },
+          grant_amount_offered: '1000.00',
         })
 
         delete serviceDelivery.communication_channel
@@ -510,6 +511,10 @@ describe('Interaction transformers', () => {
           'Service status': {
             id: '45329c18-6095-e211-a939-e4115bead28a',
             name: 'Offered',
+          },
+          'Grant offered': {
+            name: '1000.00',
+            type: 'currency',
           },
           'Subject': 'Test interactions',
           'Notes': 'lorem ipsum',
@@ -547,6 +552,7 @@ describe('Interaction transformers', () => {
           event: null,
           kind: 'service_delivery',
           service_delivery_status: null,
+          grant_amount_offered: null,
         })
 
         delete serviceDelivery.communication_channel
