@@ -1,4 +1,4 @@
-const { assign, find, get } = require('lodash')
+const { assign, find, get, filter } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
 const { hqLabels } = require('../labels')
@@ -25,13 +25,15 @@ function getHeadquarterOptions (token) {
 }
 
 async function getCompanyFormOptions (token, createdOn) {
+  const countries = await getOptions(token, 'country', { createdOn })
+  const foreignCountries = filter(countries, (country) => { return country.label !== 'United Kingdom' })
   return {
+    foreignCountries,
     headquarters: await getHeadquarterOptions(token),
     regions: await getOptions(token, 'uk-region', { createdOn }),
     sectors: await getOptions(token, 'sector', { createdOn }),
     employees: await getOptions(token, 'employee-range', { createdOn, sorted: false }),
     turnovers: await getOptions(token, 'turnover', { createdOn, sorted: false }),
-    countries: await getOptions(token, 'country', { createdOn }),
   }
 }
 

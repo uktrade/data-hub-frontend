@@ -6,11 +6,12 @@
  * @param child
  * @returns {{selector: string, locateStrategy: string}}
  */
-function getSelectorForElementWithText (text, { el = '//*', className, child } = {}) {
+function getSelectorForElementWithText (text, { el = '//*', className, child, hasExactText = false } = {}) {
   const classNameContains = className ? ` and contains(@class, "${className}")` : ''
+  const textMatch = hasExactText ? `./text()="${text}"` : `contains(.,"${text}")`
 
   return {
-    selector: `${el}[contains(.,"${text}")${classNameContains}]${child || ''}`,
+    selector: `${el}[${textMatch}${classNameContains}]${child || ''}`,
     locateStrategy: 'xpath',
   }
 }
@@ -35,6 +36,7 @@ function getDetailsTableRowValue (text) {
     {
       el: '//th',
       child: '/following-sibling::td',
+      hasExactText: true,
     }
   )
 }

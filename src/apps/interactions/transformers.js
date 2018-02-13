@@ -1,9 +1,30 @@
 /* eslint-disable camelcase */
-const { get, assign, isNil } = require('lodash')
+const { get, assign, isNil, mapKeys, pickBy, camelCase } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../../config')
+const labels = require('./labels')
+
+const transformEntityLink = (entity, entityPath, noLinkText = null) => {
+  return entity ? {
+    url: `/${entityPath}/${entity.id}`,
+    name: entity.name,
+  } : noLinkText
+}
+
+const transformDocumentsLink = (archived_documents_url_path) => {
+  if (archived_documents_url_path) {
+    return {
+      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+      name: 'View files and documents',
+      hint: '(will open another website)',
+      hintId: 'external-link-label',
+    }
+  }
+
+  return { name: 'There are no files or documents' }
+}
 
 function transformInteractionResponseToForm ({
   id,
@@ -101,6 +122,7 @@ function transformInteractionResponseToViewRecord ({
   date,
   dit_adviser,
   service,
+  service_delivery_status,
   dit_team,
   contact,
   investment_project,
@@ -109,63 +131,29 @@ function transformInteractionResponseToViewRecord ({
   kind,
   archived_documents_url_path,
 }) {
-  const contactLink = contact ? {
-    url: `/contacts/${contact.id}`,
-    name: contact.name,
-  } : null
-
-  const companyLink = company ? {
-    url: `/companies/${company.id}`,
-    name: company.name,
-  } : null
-
-  const investmentProjectLink = investment_project ? {
-    url: `/investment-projects/${investment_project.id}`,
-    name: investment_project.name,
-  } : null
-
-  let documentsLink = {
-    name: 'There are no files or documents',
-  }
-
-  if (archived_documents_url_path) {
-    documentsLink = {
-      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
-      name: 'View files and documents',
-      hint: '(will open another website)',
-      hintId: 'external-link-label',
-    }
-  }
-
-  const viewRecord = {
-    'Company': companyLink,
-    'Contact': contactLink,
-    'Service provider': dit_team,
-    'Service': service,
-    'Subject': subject,
-    'Notes': notes,
-    'Interaction date': {
+  const defaultEventText = kind === 'service_delivery' ? 'No' : null
+  const transformed = {
+    company: transformEntityLink(company, 'companies'),
+    contact: transformEntityLink(contact, 'contacts'),
+    dit_team,
+    service,
+    service_delivery_status,
+    subject,
+    notes,
+    date: {
       type: 'date',
       name: date,
     },
-    'DIT adviser': dit_adviser,
-    'Investment project': investmentProjectLink,
+    dit_adviser,
+    investment_project: transformEntityLink(investment_project, 'investment-projects'),
+    event: transformEntityLink(event, 'events', defaultEventText),
+    communication_channel: communication_channel,
+    documents: transformDocumentsLink(archived_documents_url_path),
   }
 
-  if (kind === 'service_delivery') {
-    viewRecord['Event'] = event ? {
-      url: `/events/${event.id}`,
-      name: event.name,
-    } : 'No'
-  } else {
-    viewRecord['Communication channel'] = communication_channel
-  }
-
-  if (documentsLink) {
-    viewRecord['Documents'] = documentsLink
-  }
-
-  return viewRecord
+  return pickBy(mapKeys(transformed, (value, key) => {
+    return labels[camelCase(kind)][key]
+  }))
 }
 
 function transformInteractionFormBodyToApiRequest (props) {

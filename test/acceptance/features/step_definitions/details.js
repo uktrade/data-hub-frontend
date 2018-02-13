@@ -5,6 +5,8 @@ const { get, includes } = require('lodash')
 const { getDetailsTableRowValue } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
+const Details = client.page.Details()
+
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {
     const expectedText = get(state, row.value)
@@ -20,7 +22,38 @@ function getExpectedValue (row, state) {
   return row.value
 }
 
-const Details = client.page.Details()
+const assertDetailsTableRowCount = async function (detailsTableSelector, expectedDetails) {
+  await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
+    client.expect(result.value.length, 'Table row count').to.equal(expectedDetails.length)
+  })
+}
+
+const assertDetailsTableContent = async function (detailsTableSelector, expectedDetails) {
+  for (const row of expectedDetails) {
+    if (row.key === 'Business type') {
+      // todo: case issues
+      continue
+    }
+    if (row.key === 'Sector') {
+      // todo: https://uktrade.atlassian.net/browse/DH-1086
+      continue
+    }
+
+    const rowValueSelector = getDetailsTableRowValue(row.key)
+    const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
+    const expectedValue = getExpectedValue(row, this.state)
+    await Details
+      .api.useXpath()
+      .waitForElementPresent(detailsTableRowValueXPathSelector)
+      .getText(detailsTableRowValueXPathSelector, (actual) => {
+        if (row.formatter) {
+          return client.expect(formatters[row.formatter](expectedValue, actual.value)).to.be.true
+        }
+        client.expect(actual.value).to.equal(expectedValue)
+      })
+      .useCss()
+  }
+}
 
 Then(/^details heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
   await Details
@@ -86,34 +119,16 @@ Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink
 
 Then(/^the (.+) details are displayed$/, async function (detailsTableTitle, dataTable) {
   const expectedDetails = dataTable.hashes()
-  const detailsTableSelector = Details.getSelectorForDetailsTableWithTitle(detailsTableTitle)
+  const detailsTableSelector = Details.getSelectorForDetailsTable(detailsTableTitle)
 
-  await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
-    client.expect(result.value.length).to.equal(expectedDetails.length)
-  })
+  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
+  await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
+})
 
-  for (const row of expectedDetails) {
-    if (row.key === 'Business type') {
-      // todo: case issues
-      continue
-    }
-    if (row.key === 'Sector') {
-      // todo: https://uktrade.atlassian.net/browse/DH-1086
-      continue
-    }
+Then(/^the details are displayed$/, async function (dataTable) {
+  const expectedDetails = dataTable.hashes()
+  const detailsTableSelector = Details.getSelectorForDetailsTable()
 
-    const rowValueSelector = getDetailsTableRowValue(row.key)
-    const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
-    const expectedValue = getExpectedValue(row, this.state)
-    await Details
-      .api.useXpath()
-      .waitForElementPresent(detailsTableRowValueXPathSelector)
-      .getText(detailsTableRowValueXPathSelector, (actual) => {
-        if (row.formatter) {
-          return client.expect(formatters[row.formatter](expectedValue, actual.value)).to.be.true
-        }
-        client.expect(actual.value).to.equal(expectedValue)
-      })
-      .useCss()
-  }
+  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
+  await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
 })

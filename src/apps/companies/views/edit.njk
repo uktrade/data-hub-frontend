@@ -153,7 +153,7 @@
             name: 'registered_address_country',
             label: 'Country',
             initialOption: '-- Select country --',
-            options: options.countries,
+            options: options.foreignCountries,
             value: formData.registered_address_country,
             error: errors.registered_address_country
           }) }}
@@ -241,7 +241,7 @@
             label: 'Country',
             disabled: true if not isForeign else false,
             initialOption: '-- Select country --',
-            options: options.countries,
+            options: options.foreignCountries,
             value: formData.trading_address_country,
             error: errors.trading_address_country
           }) }}
