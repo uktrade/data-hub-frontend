@@ -1,5 +1,8 @@
 {
   "fields": {
+    "company": {
+      "label": "Company that will pay for the order"
+    },
     "contact": {
       "label": "Contact responsible for the order"
     },
