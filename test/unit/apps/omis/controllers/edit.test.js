@@ -81,14 +81,11 @@ describe('OMIS EditController', () => {
       this.destroySpy = sandbox.spy()
       this.flashSpy = sandbox.spy()
       this.redirectSpy = sandbox.spy()
-      this.successMessageMock = 'Successfully handled'
       this.nextMock = '/next-step/'
 
       this.reqMock = {
         form: {
-          options: {
-            successMessage: this.successMessageMock,
-          },
+          options: {},
         },
         sessionModel: {
           reset: this.resetSpy,
@@ -102,15 +99,12 @@ describe('OMIS EditController', () => {
       }
       this.resMock = {
         redirect: this.redirectSpy,
-        locals: {
-          order: { id: updateMockData.id },
-        },
       }
 
       sandbox.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
     })
 
-    context('when a success message exists', () => {
+    context('when a success message doesn\'t exist', () => {
       beforeEach(() => {
         this.controller.successHandler(this.reqMock, this.resMock)
       })
@@ -120,9 +114,8 @@ describe('OMIS EditController', () => {
         expect(this.destroySpy).to.have.been.calledTwice
       })
 
-      it('should set a flash message', () => {
-        expect(this.flashSpy).to.have.been.calledOnce
-        expect(this.flashSpy).to.have.been.calledWith('success', this.successMessageMock)
+      it('should not set a flash message', () => {
+        expect(this.flashSpy).not.to.have.been.called
       })
 
       it('should get the next value', () => {
@@ -136,14 +129,15 @@ describe('OMIS EditController', () => {
       })
     })
 
-    context('when a success message doesn\'t exist', () => {
+    context('when a success message exists', () => {
       beforeEach(() => {
-        this.reqMock.form.options.successMessage = null
+        this.reqMock.form.options.successMessage = 'Successfully handled'
         this.controller.successHandler(this.reqMock, this.resMock)
       })
 
-      it('should not set a flash message', () => {
-        expect(this.flashSpy).not.to.have.been.called
+      it('should set a flash message', () => {
+        expect(this.flashSpy).to.have.been.calledOnce
+        expect(this.flashSpy).to.have.been.calledWith('success', 'Successfully handled')
       })
     })
   })
