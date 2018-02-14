@@ -2,7 +2,7 @@
 
 .c-entity__title {
   @include bold-font(20);
-  margin: 0;
+  margin-bottom: 0;
 
   a {
     text-decoration: none;
@@ -11,20 +11,36 @@
       text-decoration: underline;
     }
   }
+}
 
-  @include media(tablet) {
-    max-width: 80%;
-  }
+.c-entity__subtitle {
+  @include core-font(14);
+  color: $grey-1;
+}
+
+.c-entity__badges {
+  @include core-font(14);
+}
+
+.c-entity__content {
+  @include core-font(16);
+  margin-top: $default-spacing-unit;
 }
 
 @include media(tablet) {
-  .c-entity__header,
-  .c-entity__content {
+  .c-entity__header {
     @include clearfix;
   }
 
-  .c-entity__title {
+  .c-entity__title,
+  .c-entity__subtitle {
     float: left;
+    max-width: 80%;
+  }
+
+  .c-entity__subtitle {
+    clear: both;
+    margin-bottom: 0;
   }
 
   .c-entity__badges {
@@ -32,28 +48,15 @@
   }
 }
 
-.c-entity__code,
-.c-entity__content,
-.c-entity__badges {
-  @include core-font(14);
-}
-
-.c-entity__badges {
-  margin: 20 - 14px 0;
-}
-
-.c-entity__code {
-  color: $grey-1;
-}
-
 // modifiers
 
 .c-entity--block-link {
-  margin-top: -$default-spacing-unit;
-  margin-bottom: -$default-spacing-unit;
-  padding: $default-spacing-unit;
   border: 2px solid $grey-2;
   display: block;
+  padding: $default-spacing-unit;
+  margin-top: -$default-spacing-unit;
+  margin-bottom: -$default-spacing-unit;
+  text-decoration: none;
 
   &:focus,
   &:hover {
