@@ -24,8 +24,64 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
+      | key             | value                                    |
     Then I see the success message
 
+  @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
+  Scenario: Companies service delivery is saved
+
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select service delivery
+    Then there are service delivery fields
+    And interaction fields are pre-populated
+    When a service delivery is added
+      | key             | value                                    |
+      | Service         | Trade - Tradeshow Access Programme (TAP) |
+      | Service status  | Offered                                  |
+      | Grant offered   | 100000                                   |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | serviceDelivery.contact           |
+      | Service provider         | serviceDelivery.serviceProvider   |
+      | Service                  | serviceDelivery.service           |
+      | Service status           | serviceDelivery.serviceStatus     |
+      | Grant offered            | £100,000.00                       |
+      | Subject                  | serviceDelivery.subject           |
+      | Notes                    | serviceDelivery.notes             |
+      | Date of service delivery | serviceDelivery.date              |
+      | DIT adviser              | serviceDelivery.ditAdviser        |
+      | Event                    | serviceDelivery.event             |
+      | Documents                | There are no files or documents   |
+
+  @interaction-add--companies-service-delivery-tap-service-optional-empty-submit
+  Scenario: Companies service delivery is saved
+
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select service delivery
+    Then there are service delivery fields
+    And interaction fields are pre-populated
+    When a service delivery is added
+      | key             | value                                    |
+      | Service         | Trade - Tradeshow Access Programme (TAP) |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | serviceDelivery.contact           |
+      | Service provider         | serviceDelivery.serviceProvider   |
+      | Service                  | serviceDelivery.service           |
+      | Subject                  | serviceDelivery.subject           |
+      | Notes                    | serviceDelivery.notes             |
+      | Date of service delivery | serviceDelivery.date              |
+      | DIT adviser              | serviceDelivery.ditAdviser        |
+      | Event                    | serviceDelivery.event             |
+      | Documents                | There are no files or documents   |
 
   @interaction-add--contacts-interaction-submit
   Scenario: Interaction fields from contacts
@@ -50,6 +106,7 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
+      | key             | value                                    |
     Then I see the success message
 
 
