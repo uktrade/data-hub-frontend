@@ -40,7 +40,7 @@ describe('Interaction transformers', () => {
       })
     })
 
-    context('when the source is a service delivery and an event has been selected', () => {
+    context('when the source is a service delivery and optional fields have been selected', () => {
       beforeEach(() => {
         const serviceDelivery = assign({}, mockInteraction, {
           event: { id: '1' },
