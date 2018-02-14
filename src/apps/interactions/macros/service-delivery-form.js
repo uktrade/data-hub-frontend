@@ -16,6 +16,7 @@ module.exports = function ({
   contacts = [],
   advisers = [],
   services = [],
+  tapServices = [],
   statuses = [],
   teams = [],
   events = [],
