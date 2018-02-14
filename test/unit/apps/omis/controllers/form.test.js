@@ -9,7 +9,7 @@ describe('OMIS FormController', () => {
     this.controller = new Controller({ route: '/' })
   })
 
-  describe('configure()', () => {
+  describe('render()', () => {
     beforeEach(() => {
       this.breadcrumbSpy = sandbox.spy()
       this.reqMock = Object.assign({}, globalReq, {
@@ -24,7 +24,7 @@ describe('OMIS FormController', () => {
 
     context('when a step heading doesn\'t exists', () => {
       it('should not set a breadcrumb item', () => {
-        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+        this.controller.render(this.reqMock, this.resMock, this.nextSpy)
 
         expect(this.breadcrumbSpy).not.to.have.been.called
         expect(this.nextSpy).to.have.been.calledWith()
@@ -34,7 +34,7 @@ describe('OMIS FormController', () => {
     context('when a step heading exists', () => {
       it('should set append a breadcrumb item', () => {
         this.reqMock.form.options.heading = 'Step heading'
-        this.controller.configure(this.reqMock, this.resMock, this.nextSpy)
+        this.controller.render(this.reqMock, this.resMock, this.nextSpy)
 
         expect(this.breadcrumbSpy).to.have.been.calledWith('Step heading')
         expect(this.nextSpy).to.have.been.calledWith()
