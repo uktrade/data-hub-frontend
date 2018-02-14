@@ -77,3 +77,17 @@ Feature: Add a new interaction in Data hub
     Then the interaction events is displayed
     When the interaction events No option is chosen
     Then the interaction events is not displayed
+
+
+  @interactions-add--service-toggle
+  Scenario: Toggle service delivery service fields
+
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select service delivery
+    Then there are service delivery fields
+    When I change form dropdown "service" to Tradeshow Access Programme (TAP)
+    Then the service fields are visible
+    When I change form dropdown "service" to Trade - Enquiry
+    Then the service fields are hidden
