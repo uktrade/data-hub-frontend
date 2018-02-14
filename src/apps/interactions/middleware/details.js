@@ -1,4 +1,4 @@
-const { assign, get } = require('lodash')
+const { assign, get, filter, includes, map } = require('lodash')
 const { sentence } = require('case')
 
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
@@ -80,13 +80,23 @@ async function getInteractionOptions (req, res, next) {
       includeAdviser: currentAdviser,
     })
 
+    const services = await getOptions(token, 'service', { createdOn })
     res.locals.options = {
+      services,
       advisers: activeAdvisers.map(transformObjectToOption),
       contacts: contacts.map(transformContactToOption),
-      services: await getOptions(token, 'service', { createdOn }),
       statuses: await getOptions(token, 'service-delivery-status', { createdOn, sorted: false }),
       teams: await getOptions(token, 'team', { createdOn }),
       channels: await getOptions(token, 'communication-channel', { createdOn }),
+    }
+
+    const tapServices = map(filter(services, (service) => {
+      return includes(service.label, '(TAP)')
+    }), (tapService) => {
+      return tapService.value
+    })
+    res.locals.conditions = {
+      tapServices,
     }
 
     if (req.params.kind === 'service-delivery') {
