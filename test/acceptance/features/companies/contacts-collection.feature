@@ -19,14 +19,17 @@ Feature: View collection of contacts for a company
     Then I capture the modified on date for the first item
     And the results summary for a contact collection is present
     And I can view the Contact in the collection
-      | text         | expected           |
-      | Sector       | company.sector     |
-      | Updated      | collection.updated |
-      | Country      | company.country    |
-      | UK region    | company.ukRegion   |
+      | text          | expected           |
+      | Job title     | contact.jobTitle   |
+      | Sector        | company.sector     |
+      | Country       | company.country    |
+      | UK region     | company.ukRegion   |
+      | Telephone     | contact.telephone  |
+      | Email address | contact.email      |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
+    And the Contact displays the modified time
 
   @companies-contact-collection--filter
   Scenario: Filter companies contact list
