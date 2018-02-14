@@ -109,7 +109,6 @@ module.exports = {
           dateOfInteractionMonth: futureDate.month,
           dateOfInteractionDay: futureDate.day,
         }, details)
-        const serviceDeliveryRadioButtons = {}
 
         this
           .waitForElementPresent('@eventYes')
@@ -156,10 +155,6 @@ module.exports = {
                   if (serviceDelivery[key]) {
                     this.replaceValue(`@${key}`, serviceDelivery[key])
                   }
-                }
-                for (const key in serviceDeliveryRadioButtons) {
-                  this.api.useCss().click(serviceDeliveryRadioButtons[key].labelSelector)
-                  serviceDelivery[key] = serviceDeliveryRadioButtons[key].text
                 }
 
                 serviceDelivery.heading = serviceDelivery.subject
