@@ -45,7 +45,7 @@ module.exports = {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: '.c-entity__title',
-        updatedOn: getSelectorForMetaListItemValue('Updated on'),
+        subHeader: '.c-entity__subtitle',
       },
     },
     filters: {

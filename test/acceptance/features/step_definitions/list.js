@@ -1,9 +1,11 @@
 const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
+const moment = require('moment')
 
 const { getButtonWithText } = require('../../helpers/selectors')
 const { pluralise } = require('../../../../config/nunjucks/filters')
+const { mediumDateTimeFormat } = require('../../../../config')
 
 const Collection = client.page.Collection()
 
@@ -34,9 +36,10 @@ When(/^I clear all filters$/, async function () {
 Then(/^I capture the modified on date for the first item$/, async function () {
   await Collection
     .section.firstCollectionItem
-    .waitForElementPresent('@updatedOn')
-    .getText('@updatedOn', (updatedOn) => {
-      set(this.state, 'collection.updated', updatedOn.value)
+    .waitForElementPresent('@subHeader')
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), mediumDateTimeFormat)
+      set(this.state, 'collection.updated', date)
     })
 })
 
@@ -87,6 +90,19 @@ Then(/^I can view the (.+) in the collection$/, async function (entityType, data
         .useCss()
     }
   }
+})
+
+Then(/^the (.+) displays the modified time$/, async function (entityType) {
+  await Collection
+    .section.firstCollectionItem
+    .waitForElementPresent('@subHeader')
+    .getText('@subHeader', (result) => {
+      // Check it contains 'Updated on and a valid date in the expected format'
+      client.expect(result.value).to.contain('Updated on')
+
+      const date = moment(result.value.substr(11), mediumDateTimeFormat)
+      client.expect(date.isValid()).to.be.true
+    })
 })
 
 Then(/^the (.+) has badges$/, async function (entityType, dataTable) {
