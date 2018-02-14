@@ -1,0 +1,17 @@
+{% extends "_layouts/form-wizard-step.njk" %}
+
+{% block fields %}
+  {% call Message({ type: 'muted' }) %}
+    {{ company.name }}
+    <br>
+    {{ [
+      company.registered_address_1,
+      company.registered_address_2,
+      company.registered_address_county,
+      company.registered_address_town,
+      company.registered_address_postcode
+    ] | removeNilAndEmpty | join(', ') }}
+    <br>
+    <a href="?search=true">Change company</a>
+  {% endcall %}
+{% endblock %}
