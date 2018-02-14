@@ -137,6 +137,10 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                if (serviceDelivery.service) {
+                  return done()
+                }
+
                 this.getListOption('@service', (service) => {
                   serviceDelivery.service = service
                   done()
