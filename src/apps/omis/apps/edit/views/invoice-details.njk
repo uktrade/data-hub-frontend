@@ -34,7 +34,7 @@
       {% else %}
         {{ registeredAddress | join('<br>') | safe }}
         {% call Message({ type: 'muted' }) %}
-          The company's registered address is currently being used for the invoice.
+          The company’s registered address is currently being used for the invoice.
           <br>
           <a href="billing-address?returnUrl={{ CURRENT_PATH }}">Add a different billing address</a>
         {% endcall %}
