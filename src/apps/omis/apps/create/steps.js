@@ -1,5 +1,5 @@
 const {
-  ClientDetailsController,
+  ContactController,
   MarketController,
   SectorController,
   ConfirmController,
@@ -12,15 +12,15 @@ module.exports = {
     skip: true,
     next: 'client-details',
   },
-  '/client-details': {
+  '/contact': {
     heading: 'Choose the contact at the client company',
     backLink: null,
     editable: true,
     next: 'market',
     fields: ['company', 'contact'],
-    controller: ClientDetailsController,
+    controller: ContactController,
     templatePath: 'omis/apps/create/views',
-    template: 'client-details',
+    template: 'contact',
   },
   '/market': {
     heading: 'Market (country) of interest',
