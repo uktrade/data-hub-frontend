@@ -45,16 +45,16 @@ function transformInteractionResponseToForm ({
   const isValidDate = isValid(new Date(date))
 
   return {
-    id: id,
+    id,
+    subject,
+    notes,
     contact: get(contact, 'id'),
     dit_team: get(dit_team, 'id'),
     dit_adviser: get(dit_adviser, 'id'),
     is_event: isNil(event) ? 'false' : 'true',
     event: get(event, 'id'),
     service: get(service, 'id'),
-    service_delivery_status: get(service_delivery_status, 'id', null),
-    subject: subject,
-    notes: notes,
+    service_delivery_status: get(service_delivery_status, 'id'),
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
