@@ -12,7 +12,18 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When an interaction is added
     Then I see the success message
-
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | interaction.contact               |
+      | Service provider         | interaction.serviceProvider       |
+      | Service                  | interaction.service               |
+      | Subject                  | interaction.subject               |
+      | Notes                    | interaction.notes                 |
+      | Date of interaction      | interaction.date                  |
+      | DIT adviser              | interaction.ditAdviser            |
+      | Communication channel    | interaction.communicationChannel  |
+      | Documents                | There are no files or documents   |
 
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
@@ -26,6 +37,18 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key             | value                                    |
     Then I see the success message
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | serviceDelivery.contact           |
+      | Service provider         | serviceDelivery.serviceProvider   |
+      | Service                  | serviceDelivery.service           |
+      | Subject                  | serviceDelivery.subject           |
+      | Notes                    | serviceDelivery.notes             |
+      | Date of service delivery | serviceDelivery.date              |
+      | DIT adviser              | serviceDelivery.ditAdviser        |
+      | Event                    | serviceDelivery.event             |
+      | Documents                | There are no files or documents   |
 
   @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
   Scenario: Companies service delivery is saved
@@ -94,7 +117,18 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When an interaction is added
     Then I see the success message
-
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | interaction.contact               |
+      | Service provider         | interaction.serviceProvider       |
+      | Service                  | interaction.service               |
+      | Subject                  | interaction.subject               |
+      | Notes                    | interaction.notes                 |
+      | Date of interaction      | interaction.date                  |
+      | DIT adviser              | interaction.ditAdviser            |
+      | Communication channel    | interaction.communicationChannel  |
+      | Documents                | There are no files or documents   |
 
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
@@ -108,7 +142,18 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key             | value                                    |
     Then I see the success message
-
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | serviceDelivery.contact           |
+      | Service provider         | serviceDelivery.serviceProvider   |
+      | Service                  | serviceDelivery.service           |
+      | Subject                  | serviceDelivery.subject           |
+      | Notes                    | serviceDelivery.notes             |
+      | Date of service delivery | serviceDelivery.date              |
+      | DIT adviser              | serviceDelivery.ditAdviser        |
+      | Event                    | serviceDelivery.event             |
+      | Documents                | There are no files or documents   |
 
   @interaction-add--investment-projects-interaction-submit
   Scenario: Interaction fields from investment projects
@@ -120,7 +165,19 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When an interaction is added
     Then I see the success message
-
+    And the details are displayed
+      | key                      | value                             |
+      | Company                  | Venus Ltd                         |
+      | Contact                  | interaction.contact               |
+      | Service provider         | interaction.serviceProvider       |
+      | Service                  | interaction.service               |
+      | Subject                  | interaction.subject               |
+      | Notes                    | interaction.notes                 |
+      | Date of interaction      | interaction.date                  |
+      | DIT adviser              | interaction.ditAdviser            |
+      | Investment project       | New rollercoaster                 |
+      | Communication channel    | interaction.communicationChannel  |
+      | Documents                | There are no files or documents   |
 
   @interactions-add--events-toggle
   Scenario: Toggle service delivery event association
