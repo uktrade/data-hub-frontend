@@ -103,21 +103,78 @@ describe('OMIS create confirm controller', () => {
     })
   })
 
-  describe('successHandler()', () => {
+  describe('saveValues()', () => {
     beforeEach(() => {
-      this.resetSpy = sandbox.spy()
-      this.destroySpy = sandbox.spy()
+      this.sessionSetSpy = sandbox.spy()
       this.reqMock = Object.assign({}, globalReq, {
         session: {
           token: 'token-12345',
         },
         sessionModel: {
+          set: this.sessionSetSpy,
           toJSON: sandbox.stub().returns({
             'csrf-secret': 'secret-key',
             errors: {},
             foo: 'bar',
             fizz: 'buzz',
           }),
+        },
+      })
+    })
+
+    describe('when the order save was successful', () => {
+      beforeEach(async () => {
+        this.orderSaveStub.resolves(saveMockData)
+        await this.controller.saveValues(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call save method on order model', () => {
+        expect(this.orderSaveStub).to.have.been.calledWith('token-12345', {
+          foo: 'bar',
+          fizz: 'buzz',
+        })
+      })
+
+      it('should call next with no arguments', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+
+      it('should call next with no arguments', () => {
+        expect(this.sessionSetSpy).to.have.been.calledOnce
+        expect(this.sessionSetSpy).to.have.been.calledWith('order-id', '1234567890')
+      })
+    })
+
+    describe('when the order save was successful', () => {
+      beforeEach(async () => {
+        this.errorMock = new Error('Save Error')
+        this.orderSaveStub.rejects(this.errorMock = new Error('Save Error'))
+
+        await this.controller.saveValues(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call next with the error', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
+      })
+    })
+  })
+
+  describe('successHandler()', () => {
+    beforeEach(() => {
+      this.getStub = sandbox.stub().returns(saveMockData.id)
+      this.resetSpy = sandbox.spy()
+      this.destroySpy = sandbox.spy()
+      this.flashSpy = sandbox.spy()
+      this.redirectSpy = sandbox.spy()
+
+      this.reqMock = {
+        form: {
+          options: {},
+        },
+        sessionModel: {
+          get: this.getStub,
           reset: this.resetSpy,
           destroy: this.destroySpy,
         },
@@ -125,58 +182,42 @@ describe('OMIS create confirm controller', () => {
           reset: this.resetSpy,
           destroy: this.destroySpy,
         },
+        flash: this.flashSpy,
+      }
+      this.resMock = {
+        redirect: this.redirectSpy,
+      }
+    })
+
+    context('when a success message doesn\'t exist', () => {
+      beforeEach(() => {
+        this.controller.successHandler(this.reqMock, this.resMock)
+      })
+
+      it('should reset the models', () => {
+        expect(this.resetSpy).to.have.been.calledTwice
+        expect(this.destroySpy).to.have.been.calledTwice
+      })
+
+      it('should not set a flash message', () => {
+        expect(this.flashSpy).not.to.have.been.called
+      })
+
+      it('should redirect with to the order', () => {
+        expect(this.resMock.redirect).to.have.been.calledOnce
+        expect(this.resMock.redirect).to.have.been.calledWith(`/omis/${saveMockData.id}`)
       })
     })
 
-    describe('when the order save was successful', () => {
+    context('when a success message exists', () => {
       beforeEach(() => {
-        this.orderSaveStub.resolves(saveMockData)
+        this.reqMock.form.options.successMessage = 'Successfully handled'
+        this.controller.successHandler(this.reqMock, this.resMock)
       })
 
-      it('should save an order', (done) => {
-        const resMock = {
-          redirect: (url) => {
-            try {
-              expect(this.orderSaveStub).to.have.been.calledWith('token-12345', {
-                foo: 'bar',
-                fizz: 'buzz',
-              })
-              expect(this.resetSpy).to.have.been.calledTwice
-              expect(this.destroySpy).to.have.been.calledTwice
-              expect(this.nextSpy).not.to.have.been.called
-              expect(url).to.equal(`/omis/${saveMockData.id}`)
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
-        }
-
-        this.controller.successHandler(this.reqMock, resMock, this.nextSpy)
-      })
-    })
-
-    describe('when the order save was successful', () => {
-      beforeEach(() => {
-        this.orderSaveStub.rejects(new Error())
-      })
-
-      it('should save an order', (done) => {
-        const resMock = {
-          redirect: sandbox.spy(),
-        }
-        const nextMock = (error) => {
-          try {
-            expect(error).to.be.an('error')
-            expect(resMock.redirect).to.not.have.been.called
-            expect(this.resetSpy).to.not.have.been.called
-            done()
-          } catch (e) {
-            done(e)
-          }
-        }
-
-        this.controller.successHandler(this.reqMock, resMock, nextMock)
+      it('should set a flash message', () => {
+        expect(this.flashSpy).to.have.been.calledOnce
+        expect(this.flashSpy).to.have.been.calledWith('success', 'Successfully handled')
       })
     })
   })
