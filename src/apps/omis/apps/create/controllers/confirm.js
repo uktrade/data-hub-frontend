@@ -1,10 +1,10 @@
 const { assign, find, get, isEmpty, unset } = require('lodash')
 
 const metadataRepo = require('../../../../../lib/metadata')
-const { FormController } = require('../../../controllers')
+const { CreateController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
-class ConfirmController extends FormController {
+class ConfirmController extends CreateController {
   getValues (req, res, next) {
     super.getValues(req, res, (err, values) => {
       const company = get(res.locals, 'company')
