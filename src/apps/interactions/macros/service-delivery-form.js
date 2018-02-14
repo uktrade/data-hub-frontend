@@ -1,4 +1,4 @@
-const { assign, join } = require('lodash')
+const { assign } = require('lodash')
 
 const labels = require('../labels')
 const {
@@ -66,6 +66,16 @@ module.exports = function ({
         name: 'service_delivery_status',
         initialOption: '-- Select service status --',
         options: statuses,
+        optional: true,
+        modifier: ['subfield', 'medium'],
+        condition: {
+          name: 'service',
+          value: tapServices.join('||'),
+        },
+      },
+      {
+        macroName: 'TextField',
+        name: 'grant_amount_offered',
         optional: true,
         modifier: ['subfield', 'medium'],
         condition: {
