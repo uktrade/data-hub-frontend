@@ -1,9 +1,9 @@
 const { get } = require('lodash')
 
 const { getOptions } = require('../../../../../lib/options')
-const { FormController } = require('../../../controllers')
+const { CreateController } = require('../../../controllers')
 
-class SectorController extends FormController {
+class SectorController extends CreateController {
   async configure (req, res, next) {
     try {
       const sectors = await getOptions(req.session.token, 'sector')
