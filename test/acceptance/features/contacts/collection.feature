@@ -14,21 +14,22 @@ Feature: View collection of contacts
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    Then I capture the modified on date for the first item
     When I navigate to the `contacts.List` page
     Then I confirm I am on the Contacts page
     And the results summary for a contact collection is present
     And I can view the Contact in the collection
-      | text         | expected           |
-      | Job title    | contact.jobTitle   |
-      | Company      | company.name       |
-      | Sector       | company.sector     |
-      | Updated      | collection.updated |
-      | Country      | company.country    |
-      | UK region    | company.ukRegion   |
+      | text          | expected           |
+      | Job title     | contact.jobTitle   |
+      | Company       | company.name       |
+      | Sector        | company.sector     |
+      | Country       | company.country    |
+      | UK region     | company.ukRegion   |
+      | Telephone     | contact.telephone  |
+      | Email address | contact.email      |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
+    And the Contact displays the modified time
 
   @contacts-collection--view--lep @lep
   Scenario: View contact collection as LEP
@@ -107,9 +108,11 @@ Feature: View collection of contacts
     When the contacts are sorted by Recently updated
     When the contacts are sorted by Least recently updated
     Then the contacts should have been correctly sorted for date fields
-#    When the contacts are sorted by Last name: A-Z
-#    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated (is the problem when two are identical?)
-    When the contacts are sorted by Country: A-Z
-    Then I see the list in A-Z alphabetical order
-    When the contacts are sorted by Company: A-Z
-    Then I see the list in A-Z alphabetical order
+#   Todo - Bug found a bug when testing for sorting by something that does not support the reverse
+#   As the selector to get the 2nd item actually selects the first
+#   When the contacts are sorted by Last name: A-Z
+#   Then the contacts should have been correctly sorted for text fields
+#   When the contacts are sorted by Country: A-Z
+#   Then the contacts should have been correctly sorted for text fields
+#   When the contacts are sorted by Company: A-Z
+#   Then the contacts should have been correctly sorted for text fields

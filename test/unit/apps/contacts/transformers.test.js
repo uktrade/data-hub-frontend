@@ -75,6 +75,11 @@ describe('Contact transformers', () => {
       it('should return a transformed contact list item', () => {
         expect(this.transformedContact).to.deep.equal({
           id: '12651151-2149-465e-871b-ac45bc568a62',
+          subTitle: {
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-02-14T14:49:17',
+          },
           type: 'contact',
           name: 'Fred Smith',
           isArchived: false,
@@ -83,7 +88,8 @@ describe('Contact transformers', () => {
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
-            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
+            { label: 'Telephone', value: '(+44) 07814 333 777' },
+            { label: 'Email address', value: 'fred@test.com' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
           ],
         })
@@ -105,6 +111,11 @@ describe('Contact transformers', () => {
       it('should return a transformed contact list item', () => {
         expect(this.transformedContact).to.deep.equal({
           id: '12651151-2149-465e-871b-ac45bc568a62',
+          subTitle: {
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-02-14T14:49:17',
+          },
           type: 'contact',
           name: 'Fred Smith',
           isArchived: true,
@@ -113,7 +124,8 @@ describe('Contact transformers', () => {
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
-            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
+            { label: 'Telephone', value: '(+44) 07814 333 777' },
+            { label: 'Email address', value: 'fred@test.com' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
             { label: 'Status', type: 'badge', value: 'Archived' },
           ],
