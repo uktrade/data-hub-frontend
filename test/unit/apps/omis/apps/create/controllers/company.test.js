@@ -27,8 +27,82 @@ describe('OMIS create company controller', () => {
       expect(CreateController.prototype.middlewareLocals).to.have.been.calledOnce
     })
 
+    it('should call set template method', () => {
+      expect(this.controller.use).to.have.been.calledWith(this.controller.setTemplate)
+    })
+
     it('should call set results method', () => {
       expect(this.controller.use).to.have.been.calledWith(this.controller.setResults)
+    })
+  })
+
+  describe('setTemplate()', () => {
+    beforeEach(() => {
+      this.reqMock = {
+        query: {},
+        form: {
+          options: {
+            templatePath: '/template-path/',
+            template: 'default-template',
+          },
+        },
+        sessionModel: {
+          get: sandbox.stub(),
+        },
+      }
+    })
+
+    context('when company exists', () => {
+      beforeEach(() => {
+        this.reqMock.sessionModel.get.returns('company-id')
+      })
+
+      context('when search query exists', () => {
+        beforeEach(() => {
+          this.reqMock.query.search = 'searchQuery'
+          this.controller.setTemplate(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should use default template', () => {
+          expect(this.reqMock.form.options.template).to.equal('default-template')
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+
+      context('when no search query exists', () => {
+        beforeEach(() => {
+          this.controller.setTemplate(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should set edit template', () => {
+          expect(this.reqMock.form.options.template).to.equal('/template-path/company--edit')
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy).to.have.been.calledWith()
+        })
+      })
+    })
+
+    context('when no company exists', () => {
+      beforeEach(() => {
+        this.reqMock.query.search = 'searchQuery'
+        this.controller.setTemplate(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should use default template', () => {
+        expect(this.reqMock.form.options.template).to.equal('default-template')
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
     })
   })
 
