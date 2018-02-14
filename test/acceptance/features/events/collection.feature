@@ -23,8 +23,7 @@ Feature: View a list of events
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
-      | Begins          | event.startDate       |
-      | Ends            | event.endDate         |
+      | Event date      | event.startDate       |
       | Organiser       | event.organiser       |
       | Lead team       | event.lead_team       |
     And the Event has badges
@@ -44,8 +43,7 @@ Feature: View a list of events
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
-      | Begins          | event.startDate       |
-      | Ends            | event.endDate         |
+      | Event date      | event.startDate       |
       | Organiser       | event.organiser       |
       | Lead team       | event.lead_team       |
     And the Event has badges
@@ -90,9 +88,9 @@ Feature: View a list of events
     When I sort the events list name A-Z
     Then I see the list in A-Z alphabetical order
     When I sort the events list by recently updated
-    Then I see the list in descending recently updated order
+    Then the events should be sorted by recently updated
     When I sort the events list by least recently updated
-    Then I see the list in ascending recently updated order
+    Then the events should be sorted by least recently updated
 
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs

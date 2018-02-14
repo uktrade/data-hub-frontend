@@ -62,21 +62,16 @@ Then(/^I can view the event in the search results/, async function () {
     start_date_year,
     start_date_month,
     start_date_day,
-    end_date_year,
-    end_date_month,
-    end_date_day,
   } = this.state.event
 
   const expectedStartDate = getDateFor({ year: start_date_year, month: start_date_month, day: start_date_day })
-  const expectedEndDate = getDateFor({ year: end_date_year, month: end_date_month, day: end_date_day })
 
   await Search.section.firstEventSearchResult
     .waitForElementPresent('@header')
     .assert.containsText('@header', this.state.event.name)
     .assert.containsText('@eventType', this.state.event.event_type)
     .assert.containsText('@country', this.state.event.address_country)
-    .assert.containsText('@eventStart', expectedStartDate)
-    .assert.containsText('@eventEnd', expectedEndDate)
+    .assert.containsText('@eventDate', expectedStartDate)
     .assert.containsText('@organiser', this.state.event.organiser)
     .assert.containsText('@leadTeam', this.state.event.lead_team)
 })

@@ -43,6 +43,14 @@ describe('Event transformers', () => {
         expect(event.name).to.equal(mockEvent.name)
       })
 
+      it('should return a sub-title property', () => {
+        expect(event).to.have.deep.property('subTitle', {
+          value: '2017-09-19T15:20:26.834094',
+          type: 'datetime',
+          label: 'Updated on',
+        })
+      })
+
       it('should return expected type property', () => {
         expect(event).to.have.property('type').a('string')
         expect(event.type).to.equal('event')
@@ -51,9 +59,7 @@ describe('Event transformers', () => {
       it('should return expected meta property', () => {
         expect(event).to.have.property('meta').an('array').to.deep.equal([
           { label: 'Type', value: 'Outward mission' },
-          { label: 'Updated', type: 'datetime', value: '2017-09-19T15:20:26.834094' },
-          { label: 'Begins', type: 'date', value: '2017-11-10' },
-          { label: 'Ends', type: 'date', value: '2017-11-11' },
+          { label: 'Event date', type: 'date', value: '2017-11-10' },
           { label: 'Organiser', value: 'Jeff Smith' },
           { label: 'Country', type: 'badge', value: 'United Kingdom' },
           { label: 'Lead team', value: 'Association of Dogs' },

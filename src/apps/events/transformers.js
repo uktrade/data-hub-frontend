@@ -12,46 +12,32 @@ function transformEventToListItem ({
   name,
   event_type,
   address_country,
-  created_on,
-  modified_on,
   start_date,
-  end_date,
-  location_type,
-  address_1,
-  address_2,
-  address_town,
-  address_county,
-  address_postcode,
-  notes,
   organiser,
   lead_team,
   uk_region,
+  modified_on,
 }) {
   if (!id || !name) { return }
 
   const item = {
     id,
-    type: 'event',
     name,
+    type: 'event',
+    subTitle: {
+      type: 'datetime',
+      value: modified_on,
+      label: 'Updated on',
+    },
     meta: [
       {
         label: 'Type',
         value: get(event_type, 'name'),
       },
       {
-        label: 'Updated',
-        type: 'datetime',
-        value: modified_on,
-      },
-      {
-        label: 'Begins',
+        label: 'Event date',
         type: 'date',
         value: start_date,
-      },
-      {
-        label: 'Ends',
-        type: 'date',
-        value: end_date || start_date,
       },
     ],
   }

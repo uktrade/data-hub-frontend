@@ -1,7 +1,7 @@
-const { compareAsc, compareDesc } = require('date-fns')
 const { get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
+const moment = require('moment')
 
 const { getDateFor } = require('../../../helpers/date')
 
@@ -38,19 +38,13 @@ Then(/^I can view the event$/, async function () {
     month: get(this.state, 'event.start_date_month'),
     day: get(this.state, 'event.start_date_day'),
   })
-  const endDate = getDateFor({
-    year: get(this.state, 'event.end_date_year'),
-    month: get(this.state, 'event.end_date_month'),
-    day: get(this.state, 'event.end_date_day'),
-  })
 
   await EventList.section.firstEventInList
     .waitForElementPresent('@header')
     .assert.containsText('@header', this.state.event.name)
     .assert.containsText('@eventType', this.state.event.event_type)
     .assert.containsText('@country', this.state.event.address_country)
-    .assert.containsText('@eventStart', startDate)
-    .assert.containsText('@eventEnd', endDate)
+    .assert.containsText('@eventDate', startDate)
     .assert.containsText('@organiser', this.state.event.organiser)
     .assert.containsText('@leadTeam', this.state.event.lead_team)
 })
@@ -121,50 +115,39 @@ When(/^I sort the events list name A-Z$/, async function () {
     })
 })
 
-When(/^I sort the events list by recently updated$/, async function () {
+When(/^I sort the events list by (least recently|recently) updated$/, async function (sortType) {
+  const order = (sortType === 'recently') ? 'modified_on:desc' : 'modified_on:asc'
+
   await EventList
-    .click('select[name="sortby"] option[value="modified_on:desc"]')
+    .click(`select[name="sortby"] option[value="${order}"]`)
     .wait() // wait for xhr
-
-  await EventList.section.firstEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.firstItem.updated ', dateString.value)
-    })
-
-  await EventList.section.secondEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.secondItem.updated', dateString.value)
-    })
 })
 
-Then(/^I see the list in descending recently updated order$/, async function () {
-  client.expect(
-    compareDesc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
-  ).to.be.within(0, 1)
-})
+Then(/^the events should be sorted by (least recently|recently) updated$/, async function (sortType) {
+  const updateValues = {
+    firstItem: null,
+    secondItem: null,
+  }
 
-When(/^I sort the events list by least recently updated$/, async function () {
   await EventList
-    .click('select[name="sortby"] option[value="modified_on:asc"]')
-    .wait() // wait for xhr
-
-  await EventList.section.firstEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.firstItem.updated', dateString.value)
+    .section.firstEventInList
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(updateValues, 'firstItem', date)
     })
 
-  await EventList.section.secondEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.secondItem.updated', dateString.value)
+  await EventList
+    .section.secondEventInList
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(updateValues, 'secondItem', date)
     })
-})
 
-Then(/^I see the list in ascending recently updated order$/, async function () {
-  client.expect(
-    compareAsc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
-  ).to.be.within(0, 1)
+  if (sortType === 'recently') {
+    client.expect(updateValues.firstItem.isSameOrAfter(updateValues.secondItem)).to.be.true
+  }
+
+  if (sortType === 'least recently') {
+    client.expect(updateValues.firstItem.isSameOrBefore(updateValues.secondItem)).to.be.true
+  }
 })
