@@ -16,6 +16,7 @@ class CreateController extends FormController {
   middlewareChecks () {
     super.middlewareChecks()
 
+    this.use(this.checkSkipCompany)
     this.use(this.checkSaveCompany)
   }
 
@@ -23,6 +24,14 @@ class CreateController extends FormController {
     super.middlewareLocals()
 
     this.use(this.setCompany)
+  }
+
+  checkSkipCompany (req, res, next) {
+    if (req.query['skip-company']) {
+      req.sessionModel.set('skip-company', true)
+    }
+
+    next()
   }
 
   checkSaveCompany (req, res, next) {
