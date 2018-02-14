@@ -88,8 +88,7 @@ module.exports = {
           .perform((done) => {
             for (const key in interaction) {
               if (interaction[key]) {
-                this.clearValue(`@${key}`)
-                this.setValue(`@${key}`, interaction[key])
+                this.replaceValue(`@${key}`, interaction[key])
               }
             }
             interaction.heading = interaction.subject
@@ -155,8 +154,7 @@ module.exports = {
               .perform((done) => {
                 for (const key in serviceDelivery) {
                   if (serviceDelivery[key]) {
-                    this.clearValue(`@${key}`)
-                    this.setValue(`@${key}`, serviceDelivery[key])
+                    this.replaceValue(`@${key}`, serviceDelivery[key])
                   }
                 }
                 for (const key in serviceDeliveryRadioButtons) {
