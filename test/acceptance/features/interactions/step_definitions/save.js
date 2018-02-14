@@ -117,6 +117,20 @@ Then(/^the interaction events is not displayed$/, async function () {
     .assert.hidden('@event')
 })
 
+Then(/^the service fields are visible$/, async function () {
+  await Interaction
+    .waitForElementVisible('@serviceStatus')
+    .assert.visible('@serviceStatus')
+    .assert.visible('@grantOffered')
+})
+
+Then(/^the service fields are hidden/, async function () {
+  await Interaction
+    .waitForElementNotVisible('@serviceStatus')
+    .assert.hidden('@serviceStatus')
+    .assert.hidden('@grantOffered')
+})
+
 /**
  * The filtering available for Interactions and Service Delivery is particularly hard to pin down a specific
  * Interaction or Service Delivery. This is by design. The filtering here combined with random dates for creation
