@@ -28,6 +28,7 @@ describe('Interaction transformers', () => {
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
           service_delivery_status: undefined,
+          grant_amount_offered: undefined,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -48,6 +49,7 @@ describe('Interaction transformers', () => {
             name: 'Offered',
             id: '45329c18-6095-e211-a939-e4115bead28a',
           },
+          grant_amount_offered: '1000.00',
         })
         this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
@@ -59,6 +61,7 @@ describe('Interaction transformers', () => {
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
           service_delivery_status: '45329c18-6095-e211-a939-e4115bead28a',
+          grant_amount_offered: '1000.00',
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -76,6 +79,7 @@ describe('Interaction transformers', () => {
         const interaction = assign({}, mockInteraction, {
           event: null,
           service_delivery_status: null,
+          grant_amount_offered: null,
         })
         this.transformed = transformInteractionResponseToForm(interaction)
       })
@@ -87,6 +91,7 @@ describe('Interaction transformers', () => {
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
           service_delivery_status: undefined,
+          grant_amount_offered: null,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
