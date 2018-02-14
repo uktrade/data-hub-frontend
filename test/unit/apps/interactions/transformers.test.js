@@ -260,14 +260,35 @@ describe('Interaction transformers', () => {
   })
 
   describe('#transformInteractionFormBodyToApiRequest', () => {
-    it('should set the date', () => {
-      const actual = transformInteractionFormBodyToApiRequest({
-        date_year: '2018',
-        date_month: '01',
-        date_day: '02',
+    context('when all fields are populated', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          date_year: '2018',
+          date_month: '01',
+          date_day: '02',
+          grant_amount_offered: '1000',
+        })
       })
 
-      expect(actual.date).to.equal('2018-01-02')
+      it('should set the date', () => {
+        expect(this.transformed.date).to.equal('2018-01-02')
+      })
+
+      it('should set the grant amount offered', () => {
+        expect(this.transformed.grant_amount_offered).to.equal('1000')
+      })
+    })
+
+    context('when the grant amount offered is not set', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          grant_amount_offered: '',
+        })
+      })
+
+      it('should set the grant amount offered to null', () => {
+        expect(this.transformed.grant_amount_offered).to.be.null
+      })
     })
   })
 
