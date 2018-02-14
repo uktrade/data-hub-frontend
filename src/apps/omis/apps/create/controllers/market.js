@@ -1,7 +1,7 @@
 const { getOptions } = require('../../../../../lib/options')
-const { FormController } = require('../../../controllers')
+const { CreateController } = require('../../../controllers')
 
-class MarketController extends FormController {
+class MarketController extends CreateController {
   async configure (req, res, next) {
     try {
       const markets = await getOptions(req.session.token, 'omis-market')

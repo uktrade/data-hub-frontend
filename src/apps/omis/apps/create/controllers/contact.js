@@ -1,9 +1,9 @@
 const { get, sortBy } = require('lodash')
 
-const { FormController } = require('../../../controllers')
+const { CreateController } = require('../../../controllers')
 const { transformContactToOption } = require('../../../../transformers')
 
-class ContactController extends FormController {
+class ContactController extends CreateController {
   configure (req, res, next) {
     const company = get(res.locals, 'company')
     let contacts = []
