@@ -3,10 +3,37 @@ const logger = require('../../../../config/logger')
 const { getDitCompany } = require('../../companies/repos')
 
 class CreateController extends FormController {
+  process (req, res, next) {
+    const companyId = req.query.company || req.sessionModel.get('company')
+
+    if (companyId) {
+      req.form.values.company = companyId
+    }
+
+    super.process(req, res, next)
+  }
+
+  middlewareChecks () {
+    super.middlewareChecks()
+
+    this.use(this.checkSaveCompany)
+  }
+
   middlewareLocals () {
     super.middlewareLocals()
 
     this.use(this.setCompany)
+  }
+
+  checkSaveCompany (req, res, next) {
+    if (req.query.company) {
+      if (typeof this.post === 'function') {
+        return this.post(req, res, next)
+      }
+      return this.successHandler(req, res, next)
+    }
+
+    next()
   }
 
   async setCompany (req, res, next) {

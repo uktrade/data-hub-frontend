@@ -21,6 +21,66 @@ describe('OMIS CreateController', () => {
     this.controller = new this.ControllerClass({ route: '/' })
   })
 
+  describe('process()', () => {
+    beforeEach(() => {
+      sandbox.stub(FormController.prototype, 'process')
+
+      this.reqMock = {
+        query: {},
+        form: {
+          values: {},
+        },
+        sessionModel: {
+          get: () => false,
+        },
+      }
+    })
+
+    context('when company exists in query', () => {
+      beforeEach(() => {
+        this.reqMock.query.company = companyMock.id
+        this.controller.process(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call parent method', () => {
+        expect(FormController.prototype.process).to.have.been.calledOnce
+        expect(FormController.prototype.process).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should set company to form value', () => {
+        expect(this.reqMock.form.values).to.have.been.property('company')
+        expect(this.reqMock.form.values.company).to.equal(companyMock.id)
+      })
+    })
+
+    context('when company exists in session', () => {
+      beforeEach(() => {
+        this.reqMock.sessionModel.get = () => companyMock.id
+        this.controller.process(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should call parent method', () => {
+        expect(FormController.prototype.process).to.have.been.calledOnce
+        expect(FormController.prototype.process).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should set company to form value', () => {
+        expect(this.reqMock.form.values).to.have.been.property('company')
+        expect(this.reqMock.form.values.company).to.equal(companyMock.id)
+      })
+    })
+
+    context('when company doesn\'t exist', () => {
+      beforeEach(() => {
+        this.controller.process(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should set company to form value', () => {
+        expect(this.reqMock.form.values).not.to.have.been.property('company')
+      })
+    })
+  })
+
   describe('middlewareLocals()', () => {
     beforeEach(() => {
       sandbox.stub(FormController.prototype, 'middlewareLocals')
@@ -35,6 +95,95 @@ describe('OMIS CreateController', () => {
 
     it('should call set company method', () => {
       expect(this.controller.use).to.have.been.calledWith(this.controller.setCompany)
+    })
+  })
+
+  describe('middlewareChecks()', () => {
+    beforeEach(() => {
+      sandbox.stub(FormController.prototype, 'middlewareChecks')
+      sandbox.stub(this.controller, 'use')
+
+      this.controller.middlewareChecks()
+    })
+
+    it('should call parent method', () => {
+      expect(FormController.prototype.middlewareChecks).to.have.been.calledOnce
+    })
+
+    it('should call save company check method', () => {
+      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSaveCompany)
+    })
+  })
+
+  describe('checkSaveCompany()', () => {
+    beforeEach(() => {
+      sandbox.stub(FormController.prototype, 'process')
+      sandbox.stub(this.controller, 'post')
+      sandbox.stub(this.controller, 'successHandler')
+
+      this.reqMock = {
+        query: {},
+      }
+    })
+
+    context('when company exists in query', () => {
+      beforeEach(() => {
+        this.reqMock.query.company = companyMock.id
+      })
+
+      context('when post is a function', () => {
+        beforeEach(() => {
+          this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should call post method', () => {
+          expect(this.controller.post).to.have.been.calledOnce
+          expect(this.controller.post).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should not call successHandler method', () => {
+          expect(this.controller.successHandler).not.to.have.been.called
+        })
+
+        it('should not call next', () => {
+          expect(this.nextSpy).not.to.have.been.called
+        })
+      })
+
+      context('when post is not a function', () => {
+        beforeEach(() => {
+          this.controller.post = null
+          this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should call successHandler method', () => {
+          expect(this.controller.successHandler).to.have.been.calledOnce
+          expect(this.controller.successHandler).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        })
+
+        it('should not call next', () => {
+          expect(this.nextSpy).not.to.have.been.called
+        })
+      })
+    })
+
+    context('when company doesn\'t exist in query', () => {
+      beforeEach(() => {
+        this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should not call post method', () => {
+        expect(this.controller.post).not.to.have.been.called
+      })
+
+      it('should not call successHandler method', () => {
+        expect(this.controller.successHandler).not.to.have.been.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
     })
   })
 
