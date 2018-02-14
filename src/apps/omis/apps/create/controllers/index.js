@@ -1,10 +1,10 @@
-const ClientDetailsController = require('./client-details')
+const ContactController = require('./contact')
 const MarketController = require('./market')
 const SectorController = require('./sector')
 const ConfirmController = require('./confirm')
 
 module.exports = {
-  ClientDetailsController,
+  ContactController,
   MarketController,
   SectorController,
   ConfirmController,
