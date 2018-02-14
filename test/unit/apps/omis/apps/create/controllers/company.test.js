@@ -1,4 +1,5 @@
 const CreateController = require('~/src/apps/omis/controllers/create')
+const companyMock = require('~/test/unit/data/company.json')
 const searchMock = require('~/test/unit/data/search/company.json')
 
 describe('OMIS create company controller', () => {
@@ -13,6 +14,23 @@ describe('OMIS create company controller', () => {
     })
 
     this.controller = new this.ControllerClass({ route: '/' })
+  })
+
+  describe('middlewareChecks()', () => {
+    beforeEach(() => {
+      sandbox.stub(CreateController.prototype, 'middlewareChecks')
+      sandbox.stub(this.controller, 'use')
+
+      this.controller.middlewareChecks()
+    })
+
+    it('should call parent method', () => {
+      expect(CreateController.prototype.middlewareChecks).to.have.been.calledOnce
+    })
+
+    it('should call check skip company method', () => {
+      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSkipCompany)
+    })
   })
 
   describe('middlewareLocals()', () => {
@@ -33,6 +51,72 @@ describe('OMIS create company controller', () => {
 
     it('should call set results method', () => {
       expect(this.controller.use).to.have.been.calledWith(this.controller.setResults)
+    })
+  })
+
+  describe('checkSkipCompany()', () => {
+    beforeEach(() => {
+      this.reqMock = {
+        sessionModel: {
+          get: sandbox.stub(),
+          unset: sandbox.stub(),
+        },
+      }
+
+      sandbox.stub(this.controller, 'post')
+      sandbox.stub(this.controller, 'successHandler')
+    })
+
+    it('should check session for skip company value', () => {
+      this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
+
+      expect(this.reqMock.sessionModel.get).to.have.been.calledOnce
+      expect(this.reqMock.sessionModel.get).to.have.been.calledWith('skip-company')
+    })
+
+    context('when company exists in session', () => {
+      beforeEach(() => {
+        this.reqMock.sessionModel.get.returns(companyMock.id)
+        this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should unset skip session variable', () => {
+        expect(this.reqMock.sessionModel.unset).to.have.been.calledOnce
+        expect(this.reqMock.sessionModel.unset).to.have.been.calledWith('skip-company')
+      })
+
+      it('should call post method', () => {
+        expect(this.controller.post).to.have.been.calledOnce
+        expect(this.controller.post).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
+    context('when company doesn\'t exist in session', () => {
+      beforeEach(() => {
+        this.reqMock.sessionModel.get.returns(false)
+        this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should not call session unset', () => {
+        expect(this.reqMock.sessionModel.unset).not.to.have.been.called
+      })
+
+      it('should not call post method', () => {
+        expect(this.controller.post).not.to.have.been.called
+      })
+
+      it('should not call successHandler method', () => {
+        expect(this.controller.successHandler).not.to.have.been.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
     })
   })
 

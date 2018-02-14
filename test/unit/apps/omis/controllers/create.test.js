@@ -113,11 +113,14 @@ describe('OMIS CreateController', () => {
     it('should call save company check method', () => {
       expect(this.controller.use).to.have.been.calledWith(this.controller.checkSaveCompany)
     })
+
+    it('should call skip company check method', () => {
+      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSkipCompany)
+    })
   })
 
   describe('checkSaveCompany()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'process')
       sandbox.stub(this.controller, 'post')
       sandbox.stub(this.controller, 'successHandler')
 
@@ -178,6 +181,54 @@ describe('OMIS CreateController', () => {
 
       it('should not call successHandler method', () => {
         expect(this.controller.successHandler).not.to.have.been.called
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+  })
+
+  describe('checkSkipCompany', () => {
+    beforeEach(() => {
+      sandbox.stub(FormController.prototype, 'process')
+      sandbox.stub(this.controller, 'post')
+      sandbox.stub(this.controller, 'successHandler')
+
+      this.setSpy = sandbox.spy()
+      this.reqMock = {
+        query: {},
+        sessionModel: {
+          set: this.setSpy,
+        },
+      }
+    })
+
+    context('when query contains skip company', () => {
+      beforeEach(() => {
+        this.reqMock.query['skip-company'] = true
+        this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should set value on session model', () => {
+        expect(this.setSpy).to.have.been.calledOnce
+        expect(this.setSpy).to.have.been.calledWith('skip-company', true)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.nextSpy).to.have.been.calledWith()
+      })
+    })
+
+    context('when query doesn\'t contain skip company', () => {
+      beforeEach(() => {
+        this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
+      })
+
+      it('should not set value on session model', () => {
+        expect(this.setSpy).not.to.have.been.called
       })
 
       it('should call next', () => {

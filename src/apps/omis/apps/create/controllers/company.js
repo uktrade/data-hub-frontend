@@ -13,11 +13,28 @@ function transformListItemForOrderSource (item) {
 }
 
 class CompanyController extends CreateController {
+  middlewareChecks () {
+    super.middlewareChecks()
+
+    this.use(this.checkSkipCompany)
+  }
+
   middlewareLocals () {
     super.middlewareLocals()
 
     this.use(this.setTemplate)
     this.use(this.setResults)
+  }
+
+  checkSkipCompany (req, res, next) {
+    const skip = req.sessionModel.get('skip-company')
+
+    if (skip) {
+      req.sessionModel.unset('skip-company')
+      return this.post(req, res, next)
+    }
+
+    next()
   }
 
   setTemplate (req, res, next) {
