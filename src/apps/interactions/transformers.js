@@ -123,6 +123,7 @@ function transformInteractionResponseToViewRecord ({
   dit_adviser,
   service,
   service_delivery_status,
+  grant_amount_offered,
   dit_team,
   contact,
   investment_project,
@@ -138,6 +139,10 @@ function transformInteractionResponseToViewRecord ({
     dit_team,
     service,
     service_delivery_status,
+    grant_amount_offered: grant_amount_offered ? {
+      type: 'currency',
+      name: grant_amount_offered,
+    } : null,
     subject,
     notes,
     date: {
