@@ -1,27 +1,34 @@
 {% extends "_layouts/datahub-base.njk" %}
 
 {% block body_main_content %}
-  <div class="grid-row">
-    <div class="column-one-third">
-      {% block collection_filters %}
-        {{ CollectionFilters({
-          query: QUERY,
-          filtersFields: filtersFields,
-          action: CURRENT_PATH
-        }) }}
-      {% endblock %}
-    </div>
+  {% if not IS_XHR %}
+    <div class="grid-row">
+      <div class="column-one-third">
+        {% block collection_filters %}
+          {{ CollectionFilters({
+            query: QUERY,
+            filtersFields: filtersFields,
+            action: CURRENT_PATH
+          }) }}
+        {% endblock %}
+      </div>
 
-    <article class="column-two-thirds">
+      <article class="column-two-thirds">
+  {% endif %}
       {% block collection_results %}
-        {{ Collection(results | assign({
-          countLabel: countLabel,
-          sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-          selectedFilters: selectedFilters,
-          highlightTerm: highlightTerm,
-          query: QUERY
-        })) }}
+        <div id="xhr-outlet">
+
+          {{ Collection(results | assign({
+            countLabel: countLabel,
+            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
+            selectedFilters: selectedFilters,
+            highlightTerm: highlightTerm,
+            query: QUERY
+          })) }}
+        </div>
       {% endblock %}
+  {% if not IS_XHR %}
     </article>
+  {% endif %}
   </div>
 {% endblock %}

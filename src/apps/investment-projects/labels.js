@@ -136,6 +136,7 @@ const labels = {
       status: 'Status',
       uk_region_location: 'UK Region',
       investor_company_country: 'Country of origin',
+      client_relationship_manager: 'Adviser',
     },
   },
   clientRelationshipManagementLabels: {

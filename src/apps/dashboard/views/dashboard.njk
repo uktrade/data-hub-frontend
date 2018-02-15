@@ -1,5 +1,7 @@
 {% extends "_layouts/datahub-base.njk" %}
 
+{% from '../../../templates/_macros/entity/entity.njk' import Entity %}
+
 {% block local_header %}
   {% call LocalHeader({ modifier: 'dark-banner' }) %}
     {{ EntitySearchForm({
@@ -12,50 +14,53 @@
 {% endblock %}
 
 {% block body_main_content %}
-  <div class="grid-row dashboard">
-    {% if interactionsPermitted %}
-      <div class="column-half">
-        <div class="dashboard-section">
-          <h2 class="dashboard-section-title">My latest interactions</h2>
-          {% if interactions.length %}
-            <ol class="dashboard-list">
-              {% for interaction in interactions %}
-                <li>
-                  {% if interaction.company.name %}
-                    <a href="/companies/{{ interaction.company.id }}">{{ interaction.company.name }}</a>
-                    &ndash;
-                  {% endif %}
-                  <a href="/interactions/{{ interaction.id }}">{{ interaction.subject }}</a>
-                </li>
-              {% endfor %}
-            </ol>
-          {% else %}
-            <p>No interactions have been added.</p>
-          {% endif %}
-          <p><a href="/interactions">See all interactions</a></p>
-        </div>
-      </div>
-    {% endif %}
-
-
+  {% if interactionsPermitted %}
     <div class="column-half">
       <div class="dashboard-section">
-        <h2 class="dashboard-section-title">My latest contacts</h2>
-
-        {% if contacts.length %}
-          <ol class="dashboard-list">
-            {% for contact in contacts %}
-              <li>
-                <a href="/contacts/{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</a> from <a href="/companies/{{ contact.company.id }}">{{ contact.company.name }}</a>
-              </li>
+        <h2 class="dashboard-section-title">My interactions</h2>
+        {% if interactions | length %}
+          <ol class="c-entity-list">
+            {% for item in interactions %}
+              <li class="c-entity-list__item">{{ Entity(item) }}</li>
             {% endfor %}
           </ol>
         {% else %}
-          <p>No contacts have been added.</p>
+          <p>No interactions have been added.</p>
         {% endif %}
-
-        <p><a href="/contacts">See all contacts</a></p>
+        <p class="dashboard-footer"><a href="/interactions/?dit_adviser={{user.id}}">See my interactions</a></p>
       </div>
     </div>
+  {% endif %}
+
+  <div class="column-half">
+    <div class="dashboard-section">
+      <h2 class="dashboard-section-title">My contacts</h2>
+
+      {% if contacts.length %}
+        <ol class="c-entity-list">
+          {% for item in contacts %}
+            <li class="c-entity-list__item">{{ Entity(item) }}</li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p>No contacts have been added.</p>
+      {% endif %}
+
+      <p class="dashboard-footer"><a href="/contacts/?created_by={{user.id}}">See my contacts</a></p>
+    </div>
   </div>
+
+  <div class="column-half">
+      <div class="dashboard-section">
+        <h2 class="dashboard-section-title">My projects</h2>
+        {% if myProjects.items | length %}
+          <ol class="c-entity-list">
+            {% for item in myProjects.items %}
+              <li class="c-entity-list__item">{{ Entity(item) }}</li>
+            {% endfor %}
+          </ol>
+        {% endif %}
+        <p class="dashboard-footer"><a href="/investment-projects?client_relationship_manager={{user.id}}">See my projects</a></p>
+      </div>
+    </div>
 {% endblock %}
