@@ -27,7 +27,8 @@ describe('Interaction transformers', () => {
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
-          service_delivery_status: null,
+          service_delivery_status: undefined,
+          grant_amount_offered: undefined,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -40,7 +41,7 @@ describe('Interaction transformers', () => {
       })
     })
 
-    context('when the source is a service delivery and an event has been selected', () => {
+    context('when the source is a service delivery and optional fields have been selected', () => {
       beforeEach(() => {
         const serviceDelivery = assign({}, mockInteraction, {
           event: { id: '1' },
@@ -48,6 +49,7 @@ describe('Interaction transformers', () => {
             name: 'Offered',
             id: '45329c18-6095-e211-a939-e4115bead28a',
           },
+          grant_amount_offered: '1000.00',
         })
         this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
@@ -59,6 +61,7 @@ describe('Interaction transformers', () => {
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
           service_delivery_status: '45329c18-6095-e211-a939-e4115bead28a',
+          grant_amount_offered: '1000.00',
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -76,6 +79,7 @@ describe('Interaction transformers', () => {
         const interaction = assign({}, mockInteraction, {
           event: null,
           service_delivery_status: null,
+          grant_amount_offered: null,
         })
         this.transformed = transformInteractionResponseToForm(interaction)
       })
@@ -86,7 +90,8 @@ describe('Interaction transformers', () => {
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
           dit_adviser: '8036f207-ae3e-e611-8d53-e4115bed50dc',
           service: '1231231231312',
-          service_delivery_status: null,
+          service_delivery_status: undefined,
+          grant_amount_offered: null,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -255,14 +260,35 @@ describe('Interaction transformers', () => {
   })
 
   describe('#transformInteractionFormBodyToApiRequest', () => {
-    it('should set the date', () => {
-      const actual = transformInteractionFormBodyToApiRequest({
-        date_year: '2018',
-        date_month: '01',
-        date_day: '02',
+    context('when all fields are populated', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          date_year: '2018',
+          date_month: '01',
+          date_day: '02',
+          grant_amount_offered: '1000',
+        })
       })
 
-      expect(actual.date).to.equal('2018-01-02')
+      it('should set the date', () => {
+        expect(this.transformed.date).to.equal('2018-01-02')
+      })
+
+      it('should set the grant amount offered', () => {
+        expect(this.transformed.grant_amount_offered).to.equal('1000')
+      })
+    })
+
+    context('when the grant amount offered is not set', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          grant_amount_offered: '',
+        })
+      })
+
+      it('should set the grant amount offered to null', () => {
+        expect(this.transformed.grant_amount_offered).to.be.null
+      })
     })
   })
 
