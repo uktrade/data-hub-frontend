@@ -13,6 +13,9 @@ const getSelectorForMetaListItemValue = (text) => {
 }
 
 module.exports = {
+  elements: {
+    collection: '.c-collection',
+  },
   commands: [
     {
       getSelectorForMetaListItemValue,

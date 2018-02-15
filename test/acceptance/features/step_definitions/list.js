@@ -125,9 +125,8 @@ Then(/^I choose the first item in the collection$/, async function () {
 })
 
 Then(/^I can view the collection$/, async function () {
-  await Collection.api.elements('css selector', '.c-entity-list__item', (result) => {
-    client.expect(result.value.length).to.be.greaterThan(0)
-  })
+  await Collection
+    .assert.visible('@collection')
 })
 
 Then(/^I see the list in A-Z alphabetical order$/, async function () {
