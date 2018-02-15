@@ -245,6 +245,7 @@ describe('Interaction details middleware', () => {
           { id: '1', name: 'sv1', disabled_on: null },
           { id: '2', name: 'sv2', disabled_on: yesterday },
           { id: '3', name: 'sv3', disabled_on: null },
+          { id: '4', name: 'sv4 (TAP)', disabled_on: null },
         ],
         channelOptions: [
           { id: '1', name: 'c1', disabled_on: null },
@@ -325,6 +326,9 @@ describe('Interaction details middleware', () => {
         }, {
           label: 'sv3',
           value: '3',
+        }, {
+          label: 'sv4 (TAP)',
+          value: '4',
         }]
 
         expect(this.res.locals.options.services).to.deep.equal(expectedServiceOptions)
@@ -356,6 +360,12 @@ describe('Interaction details middleware', () => {
 
       it('should not set event options', () => {
         expect(this.res.locals.options.events).to.be.undefined
+      })
+
+      it('should set TAP service conditions', () => {
+        const expectedTapServiceConditions = [ '4' ]
+
+        expect(this.res.locals.conditions.tapServices).to.deep.equal(expectedTapServiceConditions)
       })
     })
 
@@ -430,6 +440,9 @@ describe('Interaction details middleware', () => {
         }, {
           label: 'sv3',
           value: '3',
+        }, {
+          label: 'sv4 (TAP)',
+          value: '4',
         }]
 
         expect(this.res.locals.options.services).to.deep.equal(expectedServiceOptions)
@@ -471,6 +484,12 @@ describe('Interaction details middleware', () => {
           label: 'name',
         }]
         expect(this.res.locals.options.events).to.deep.equal(expectedEvents)
+      })
+
+      it('should set TAP service conditions', () => {
+        const expectedTapServiceConditions = [ '4' ]
+
+        expect(this.res.locals.conditions.tapServices).to.deep.equal(expectedTapServiceConditions)
       })
     })
   })

@@ -35,6 +35,7 @@ Feature: View collection of interactions
     And I click the "Add interaction" link
     And I select service delivery
     And a service delivery is added
+      | key             | value                                    |
     Then I see the success message
     When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page

@@ -32,7 +32,8 @@ module.exports = {
     contact: '#field-contact',
     serviceProvider: '#field-dit_team',
     service: '#field-service',
-    status: '#group-field-service_delivery_status',
+    serviceStatus: '#field-service_delivery_status',
+    grantOffered: '#field-grant_amount_offered',
     ditAdviser: '#field-dit_adviser',
     communicationChannel: '#field-communication_channel',
     eventYes: 'label[for=field-is_event-1]',
@@ -87,8 +88,7 @@ module.exports = {
           .perform((done) => {
             for (const key in interaction) {
               if (interaction[key]) {
-                this.clearValue(`@${key}`)
-                this.setValue(`@${key}`, interaction[key])
+                this.replaceValue(`@${key}`, interaction[key])
               }
             }
             interaction.heading = interaction.subject
@@ -109,7 +109,6 @@ module.exports = {
           dateOfInteractionMonth: futureDate.month,
           dateOfInteractionDay: futureDate.day,
         }, details)
-        const serviceDeliveryRadioButtons = {}
 
         this
           .waitForElementPresent('@eventYes')
@@ -136,6 +135,10 @@ module.exports = {
                 })
               })
               .perform((done) => {
+                if (serviceDelivery.service) {
+                  return done()
+                }
+
                 this.getListOption('@service', (service) => {
                   serviceDelivery.service = service
                   done()
@@ -150,13 +153,8 @@ module.exports = {
               .perform((done) => {
                 for (const key in serviceDelivery) {
                   if (serviceDelivery[key]) {
-                    this.clearValue(`@${key}`)
-                    this.setValue(`@${key}`, serviceDelivery[key])
+                    this.replaceValue(`@${key}`, serviceDelivery[key])
                   }
-                }
-                for (const key in serviceDeliveryRadioButtons) {
-                  this.api.useCss().click(serviceDeliveryRadioButtons[key].labelSelector)
-                  serviceDelivery[key] = serviceDeliveryRadioButtons[key].text
                 }
 
                 serviceDelivery.heading = serviceDelivery.subject
