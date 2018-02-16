@@ -1,37 +1,23 @@
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
-const { get, set, camelCase, fromPairs, map } = require('lodash')
+const { get, set, camelCase, fromPairs, map, capitalize } = require('lodash')
 
 const { getDateFor } = require('../../../helpers/date')
 
 const Interaction = client.page.interactions.Interaction()
 const InteractionList = client.page.interactions.List()
 
-When(/^an interaction is added$/, async function () {
+When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind, dataTable) {
+  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
   await Interaction
-    .createInteraction({}, (interaction) => {
+    .createInteraction(details, kind === 'service delivery', (interaction) => {
       set(this.state, 'interaction', interaction)
       set(this.state, 'interaction.date', getDateFor({
         year: get(this.state, 'interaction.dateOfInteractionYear'),
         month: get(this.state, 'interaction.dateOfInteractionMonth'),
         day: get(this.state, 'interaction.dateOfInteractionDay'),
       }))
-      set(this.state, 'interaction.type', 'Interaction')
-    })
-    .wait() // wait for backend to sync
-})
-
-When(/^a service delivery is added$/, async function (dataTable) {
-  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
-  await Interaction
-    .createServiceDelivery(details, (serviceDelivery) => {
-      set(this.state, 'serviceDelivery', serviceDelivery)
-      set(this.state, 'serviceDelivery.date', getDateFor({
-        year: get(this.state, 'serviceDelivery.dateOfInteractionYear'),
-        month: get(this.state, 'serviceDelivery.dateOfInteractionMonth'),
-        day: get(this.state, 'serviceDelivery.dateOfInteractionDay'),
-      }))
-      set(this.state, 'serviceDelivery.type', 'Service delivery')
+      set(this.state, 'interaction.type', capitalize(kind))
     })
     .wait() // wait for backend to sync
 })
@@ -159,12 +145,12 @@ Then(/^the net receipt field is hidden/, async function () {
 Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
   const filtersSection = InteractionList.section.filters
   const filterTagsSection = InteractionList.section.filterTags
-  const interactionType = camelCase(typeOfInteraction)
   const waitForTimeout = 15000
+  const interactionType = camelCase(typeOfInteraction)
   const date = getDateFor({
-    year: get(this.state, `${interactionType}.dateOfInteractionYear`),
-    month: get(this.state, `${interactionType}.dateOfInteractionMonth`),
-    day: get(this.state, `${interactionType}.dateOfInteractionDay`),
+    year: get(this.state, 'interaction.dateOfInteractionYear'),
+    month: get(this.state, 'interaction.dateOfInteractionMonth'),
+    day: get(this.state, 'interaction.dateOfInteractionDay'),
   }, 'YYYY-M-D')
 
   await filtersSection
