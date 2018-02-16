@@ -24,7 +24,14 @@ module.exports = {
           },
         )
       },
-      getSelectorForDetailsTableWithTitle (title) {
+      getSelectorForDetailsTable (title) {
+        if (!title) {
+          return {
+            selector: '//table[contains(@class, "table--key-value")][1]',
+            locateStrategy: 'xpath',
+          }
+        }
+
         return getSelectorForElementWithText(title, {
           el: '//h2',
           child: '/following-sibling::table[1]',
