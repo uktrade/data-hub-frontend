@@ -11,13 +11,14 @@ Feature: View collection of interactions
     When I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select interaction
-    And an interaction is added
+    When an interaction is added
+      | key      | value                 |
     Then I see the success message
     When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Interaction I have just created
-    And I can view the Interaction in the collection
+    And I can view the interaction in the collection
       | text    | expected               |
       | Contact | contact.heading        |
       | Company | company.name           |
@@ -35,21 +36,21 @@ Feature: View collection of interactions
     And I click the "Add interaction" link
     And I select service delivery
     And a service delivery is added
-      | key             | value                                    |
+      | key             | value          |
     Then I see the success message
     When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Service Delivery I have just created
-    And I can view the Service delivery in the collection
-      | text    | expected                   |
-      | Contact | contact.heading            |
-      | Company | company.name               |
-      | Date    | serviceDelivery.date       |
-      | Adviser | serviceDelivery.ditAdviser |
-    And the Service delivery has badges
-      | text    | expected                   |
-      | Type    | serviceDelivery.type       |
+    And I can view the interaction in the collection
+      | text    | expected               |
+      | Contact | contact.heading        |
+      | Company | company.name           |
+      | Date    | interaction.date       |
+      | Adviser | interaction.ditAdviser |
+    And the Interaction has badges
+      | text    | expected               |
+      | Type    | interaction.type       |
 
   @interactions-collection--filter
   Scenario: filter interaction list
@@ -59,6 +60,7 @@ Feature: View collection of interactions
     And I click the "Add interaction" link
     And I select interaction
     And an interaction is added
+      | key             | value          |
     Then I see the success message
     When I navigate to the `interactions.List` page
     Then I confirm I am on the Interactions page
