@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { get, isUndefined, isNull } = require('lodash')
 
 const { getCompanyAddress } = require('./shared')
 
@@ -24,18 +24,12 @@ module.exports = function transformCompanyToListItem ({
   registered_address_2,
   companies_house_data,
   modified_on,
+  turnover_range,
 } = {}) {
   if (!id) { return }
 
-  const meta = []
-
-  if (trading_name) {
-    meta.push({
-      label: 'Trading name',
-      value: trading_name,
-    })
-  }
-
+  const defaultValue = 'n/a'
+  const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
   const address = getCompanyAddress({
     trading_address_country,
     trading_address_county,
@@ -50,13 +44,21 @@ module.exports = function transformCompanyToListItem ({
     registered_address_1,
     registered_address_2,
   })
-
-  if (sector) {
-    meta.push({
+  const meta = [
+    {
+      label: 'Trading name',
+      value: trading_name,
+    },
+    address,
+    {
       label: 'Sector',
       value: get(sector, 'name'),
-    })
-  }
+    },
+    {
+      label: 'Turnover',
+      value: turnover_range,
+    },
+  ]
 
   if (trading_address_country || registered_address_country) {
     meta.push({
@@ -66,12 +68,6 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  meta.push({
-    label: 'Updated',
-    type: 'datetime',
-    value: modified_on,
-  })
-
   if (uk_based) {
     meta.push({
       label: 'UK region',
@@ -80,15 +76,23 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  meta.push(address)
-
-  const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
+  const metaData = meta.map((metaData) => {
+    if (isUndefined(metaData.value) || isNull(metaData.value) || metaData.value === '') {
+      metaData.value = defaultValue
+    }
+    return metaData
+  })
 
   return {
     id,
     name,
     url,
-    meta,
+    updated: {
+      label: 'Updated',
+      type: 'datetime',
+      value: modified_on,
+    },
+    meta: metaData,
     type: 'company',
   }
 }

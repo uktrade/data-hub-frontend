@@ -17,6 +17,10 @@
   }
 }
 
+.c-entity__updated {
+  margin-bottom: $default-spacing-unit;
+}
+
 @include media(tablet) {
   .c-entity__header,
   .c-entity__content {

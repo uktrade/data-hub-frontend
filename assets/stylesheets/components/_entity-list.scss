@@ -3,7 +3,7 @@
 @import "../tools/functions/typography";
 
 .c-entity-list__item {
-  padding: $default-spacing-unit 0;
+  padding: $default-spacing-unit/2 0 $default-spacing-unit;
 
   & + & {
     border-top: 1px solid $grey-2;
