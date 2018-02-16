@@ -3,6 +3,18 @@
 {% block fields %}
   {% if assignees.length %}
 
+    <p>Send completed work described in the quote directly to the client by email.</p>
+
+    <p>Complete the order after all work and reports have been delivered to the client.</p>
+
+    <h2 class="heading-medium">Recording actual hours worked on the order</h2>
+
+    <p>This information will not be used to analyse individual performance.</p>
+
+    <p>The actual hours worked can be different to those in the original estimate.</p>
+
+    <p>This information won't be shared with the client, and won't change how much the client has to paid for the work.</p>
+
     {% set key = 'assignee_actual_time' %}
     {% set defaultProps = options.fields[key] %}
 
