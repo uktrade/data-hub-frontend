@@ -61,28 +61,6 @@ module.exports = function ({
         },
       },
       service(services),
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'service_delivery_status',
-        initialOption: '-- Select service status --',
-        options: statuses,
-        optional: true,
-        modifier: ['subfield', 'medium'],
-        condition: {
-          name: 'service',
-          value: tapServices.join('||'),
-        },
-      },
-      {
-        macroName: 'TextField',
-        name: 'grant_amount_offered',
-        optional: true,
-        modifier: ['subfield', 'medium'],
-        condition: {
-          name: 'service',
-          value: tapServices.join('||'),
-        },
-      },
       subject,
       notes,
       date,
