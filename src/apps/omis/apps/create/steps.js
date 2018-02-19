@@ -10,7 +10,7 @@ module.exports = {
     entryPoint: true,
     resetJourney: true,
     skip: true,
-    next: 'client-details',
+    next: 'contact',
   },
   '/contact': {
     heading: 'Choose the contact at the client company',
