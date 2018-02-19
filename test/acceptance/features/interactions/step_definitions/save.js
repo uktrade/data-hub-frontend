@@ -133,7 +133,7 @@ Then(/^the service fields are visible$/, async function () {
 
 Then(/^the service fields are hidden/, async function () {
   await Interaction
-    .waitForElementNotVisible('@serviceStatus')
+    .waitForElementPresent('@serviceStatus')
     .assert.hidden('@serviceStatus')
     .assert.hidden('@grantOffered')
 })
