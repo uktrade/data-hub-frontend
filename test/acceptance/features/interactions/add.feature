@@ -62,6 +62,8 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key             | value                                    |
       | Service         | Trade - Tradeshow Access Programme (TAP) |
+      | Service status  | Offered                                  |
+      | Grant offered   | 100000                                   |
     Then I see the success message
     And the details are displayed
       | key                      | value                             |
@@ -69,6 +71,8 @@ Feature: Add a new interaction in Data hub
       | Contact                  | serviceDelivery.contact           |
       | Service provider         | serviceDelivery.serviceProvider   |
       | Service                  | serviceDelivery.service           |
+      | Service status           | serviceDelivery.serviceStatus     |
+      | Grant offered            | £100,000.00                       |
       | Subject                  | serviceDelivery.subject           |
       | Notes                    | serviceDelivery.notes             |
       | Date of service delivery | serviceDelivery.date              |
@@ -187,3 +191,17 @@ Feature: Add a new interaction in Data hub
     Then the interaction events is displayed
     When the interaction events No option is chosen
     Then the interaction events is not displayed
+
+
+  @interactions-add--service-toggle
+  Scenario: Toggle service delivery service fields
+
+    Given I navigate to company fixture Venus Ltd
+    When I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select service delivery
+    Then there are service delivery fields
+    When I change form dropdown "service" to Tradeshow Access Programme (TAP)
+    Then the service fields are visible
+    When I change form dropdown "service" to Trade - Enquiry
+    Then the service fields are hidden
