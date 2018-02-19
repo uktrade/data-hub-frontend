@@ -84,6 +84,16 @@ module.exports = function ({
           value: tapServices.join('||'),
         },
       },
+      {
+        macroName: 'TextField',
+        name: 'net_company_receipt',
+        optional: true,
+        modifier: ['subfield', 'medium'],
+        condition: {
+          name: 'service_delivery_status',
+          value: successfulServiceStatuses.join('||'),
+        },
+      },
       subject,
       notes,
       date,
