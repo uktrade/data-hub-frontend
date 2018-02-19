@@ -22,7 +22,7 @@
     {% endcall %}
   {% endcall %}
 
-  {% if order.canEditContactDetails %}
+  {% if order.canEditContactDetails and order.status !== 'draft' %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>Changing the contact will change who notifications are sent to.</p>
       <p>It will not change the contact details on the quote.</p>
