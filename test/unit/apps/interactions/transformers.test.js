@@ -29,6 +29,7 @@ describe('Interaction transformers', () => {
           service: '1231231231312',
           service_delivery_status: undefined,
           grant_amount_offered: undefined,
+          net_company_receipt: undefined,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -50,6 +51,7 @@ describe('Interaction transformers', () => {
             id: '45329c18-6095-e211-a939-e4115bead28a',
           },
           grant_amount_offered: '1000.00',
+          net_company_receipt: '500.00',
         })
         this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
@@ -62,6 +64,7 @@ describe('Interaction transformers', () => {
           service: '1231231231312',
           service_delivery_status: '45329c18-6095-e211-a939-e4115bead28a',
           grant_amount_offered: '1000.00',
+          net_company_receipt: '500.00',
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
@@ -80,6 +83,7 @@ describe('Interaction transformers', () => {
           event: null,
           service_delivery_status: null,
           grant_amount_offered: null,
+          net_company_receipt: null,
         })
         this.transformed = transformInteractionResponseToForm(interaction)
       })
@@ -92,6 +96,7 @@ describe('Interaction transformers', () => {
           service: '1231231231312',
           service_delivery_status: undefined,
           grant_amount_offered: null,
+          net_company_receipt: null,
           dit_team: '222',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           date: { day: '31', month: '05', year: '2017' },
