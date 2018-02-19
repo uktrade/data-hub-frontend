@@ -34,6 +34,7 @@ module.exports = {
     service: '#field-service',
     serviceStatus: '#field-service_delivery_status',
     grantOffered: '#field-grant_amount_offered',
+    netReceipt: '#field-net_company_receipt',
     ditAdviser: '#field-dit_adviser',
     communicationChannel: '#field-communication_channel',
     eventYes: 'label[for=field-is_event-1]',

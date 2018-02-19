@@ -35,6 +35,7 @@ function transformInteractionResponseToForm ({
   service,
   service_delivery_status,
   grant_amount_offered,
+  net_company_receipt,
   subject,
   notes,
   date,
@@ -50,6 +51,7 @@ function transformInteractionResponseToForm ({
     subject,
     notes,
     grant_amount_offered,
+    net_company_receipt,
     contact: get(contact, 'id'),
     dit_team: get(dit_team, 'id'),
     dit_adviser: get(dit_adviser, 'id'),
@@ -126,6 +128,7 @@ function transformInteractionResponseToViewRecord ({
   service,
   service_delivery_status,
   grant_amount_offered,
+  net_company_receipt,
   dit_team,
   contact,
   investment_project,
@@ -144,6 +147,10 @@ function transformInteractionResponseToViewRecord ({
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,
+    } : null,
+    net_company_receipt: net_company_receipt ? {
+      type: 'currency',
+      name: net_company_receipt,
     } : null,
     subject,
     notes,
@@ -167,6 +174,7 @@ function transformInteractionFormBodyToApiRequest (props) {
   return assign({}, props, {
     date: transformDateObjectToDateString('date')(props),
     grant_amount_offered: props.grant_amount_offered || null,
+    net_company_receipt: props.net_company_receipt || null,
   })
 }
 
