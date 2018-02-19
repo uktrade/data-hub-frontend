@@ -2,9 +2,9 @@ const { merge } = require('lodash')
 
 const globalFields = require('../../fields')
 const {
-  arrayRequired,
-  isDuration,
-  validEUVatNumber,
+  arrayrequired,
+  duration,
+  euvatnumber,
 } = require('../../validators')
 
 const editFields = merge({}, globalFields, {
@@ -75,13 +75,13 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     label: 'fields.assignee_time.label',
     modifier: ['shorter', 'soft'],
-    validate: [isDuration],
+    validate: [duration],
   },
   assignee_actual_time: {
     fieldType: 'TextField',
     label: 'fields.assignee_actual_time.label',
     modifier: ['shorter', 'soft'],
-    validate: [arrayRequired, isDuration],
+    validate: [arrayrequired, duration],
   },
   vat_status: {
     fieldType: 'MultipleChoiceField',
@@ -110,7 +110,7 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     label: 'fields.vat_number.label',
     modifier: ['subfield', 'medium'],
-    validate: [validEUVatNumber],
+    validate: [euvatnumber],
     condition: {
       name: 'vat_status',
       value: 'eu',
