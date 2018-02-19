@@ -128,6 +128,7 @@ function transformInteractionResponseToViewRecord ({
   service,
   service_delivery_status,
   grant_amount_offered,
+  net_company_receipt,
   dit_team,
   contact,
   investment_project,
@@ -146,6 +147,10 @@ function transformInteractionResponseToViewRecord ({
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,
+    } : null,
+    net_company_receipt: net_company_receipt ? {
+      type: 'currency',
+      name: net_company_receipt,
     } : null,
     subject,
     notes,

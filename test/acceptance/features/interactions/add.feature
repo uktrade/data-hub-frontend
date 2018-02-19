@@ -64,6 +64,7 @@ Feature: Add a new interaction in Data hub
       | Service         | Trade - Tradeshow Access Programme (TAP) |
       | Service status  | Offered                                  |
       | Grant offered   | 100000                                   |
+      | Net receipt     | 50000                                    |
     Then I see the success message
     And the details are displayed
       | key                      | value                             |
@@ -73,6 +74,7 @@ Feature: Add a new interaction in Data hub
       | Service                  | serviceDelivery.service           |
       | Service status           | serviceDelivery.serviceStatus     |
       | Grant offered            | £100,000.00                       |
+      | Net receipt              | £50,000.00                        |
       | Subject                  | serviceDelivery.subject           |
       | Notes                    | serviceDelivery.notes             |
       | Date of service delivery | serviceDelivery.date              |

@@ -524,6 +524,7 @@ describe('Interaction transformers', () => {
             id: '45329c18-6095-e211-a939-e4115bead28a',
           },
           grant_amount_offered: '1000.00',
+          net_company_receipt: '500.00',
         })
 
         delete serviceDelivery.communication_channel
@@ -555,6 +556,10 @@ describe('Interaction transformers', () => {
           },
           'Grant offered': {
             name: '1000.00',
+            type: 'currency',
+          },
+          'Net receipt': {
+            name: '500.00',
             type: 'currency',
           },
           'Subject': 'Test interactions',
@@ -594,6 +599,7 @@ describe('Interaction transformers', () => {
           kind: 'service_delivery',
           service_delivery_status: null,
           grant_amount_offered: null,
+          net_company_receipt: null,
         })
 
         delete serviceDelivery.communication_channel
