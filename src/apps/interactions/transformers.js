@@ -169,6 +169,7 @@ function transformInteractionFormBodyToApiRequest (props) {
   return assign({}, props, {
     date: transformDateObjectToDateString('date')(props),
     grant_amount_offered: props.grant_amount_offered || null,
+    net_company_receipt: props.net_company_receipt || null,
   })
 }
 

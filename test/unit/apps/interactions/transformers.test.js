@@ -272,6 +272,7 @@ describe('Interaction transformers', () => {
           date_month: '01',
           date_day: '02',
           grant_amount_offered: '1000',
+          net_company_receipt: '500',
         })
       })
 
@@ -282,17 +283,26 @@ describe('Interaction transformers', () => {
       it('should set the grant amount offered', () => {
         expect(this.transformed.grant_amount_offered).to.equal('1000')
       })
+
+      it('should set the net company receipt', () => {
+        expect(this.transformed.net_company_receipt).to.equal('500')
+      })
     })
 
-    context('when the grant amount offered is not set', () => {
+    context('when the optional fields have not been entered', () => {
       beforeEach(() => {
         this.transformed = transformInteractionFormBodyToApiRequest({
           grant_amount_offered: '',
+          net_company_receipt: '',
         })
       })
 
       it('should set the grant amount offered to null', () => {
         expect(this.transformed.grant_amount_offered).to.be.null
+      })
+
+      it('should set the net company receipt to null', () => {
+        expect(this.transformed.net_company_receipt).to.be.null
       })
     })
   })
