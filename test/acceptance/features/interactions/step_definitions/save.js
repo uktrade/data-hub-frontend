@@ -72,6 +72,9 @@ Then(/^there are interaction fields$/, async function () {
     .assert.elementNotPresent('@eventNo')
     .assert.elementNotPresent('@event')
     .assert.visible('@service')
+    .assert.elementNotPresent('@serviceStatus')
+    .assert.elementNotPresent('@grantOffered')
+    .assert.elementNotPresent('@netReceipt')
     .assert.visible('@subject')
     .assert.visible('@notes')
     .assert.visible('@dateOfInteractionYear')
@@ -90,6 +93,9 @@ Then(/^there are service delivery fields$/, async function () {
     .assert.visible('@eventNo')
     .assert.elementPresent('@event')
     .assert.visible('@service')
+    .assert.hidden('@serviceStatus')
+    .assert.hidden('@grantOffered')
+    .assert.hidden('@netReceipt')
     .assert.visible('@subject')
     .assert.visible('@notes')
     .assert.visible('@dateOfInteractionYear')
@@ -127,9 +133,21 @@ Then(/^the service fields are visible$/, async function () {
 
 Then(/^the service fields are hidden/, async function () {
   await Interaction
-    .waitForElementNotVisible('@serviceStatus')
+    .waitForElementPresent('@serviceStatus')
     .assert.hidden('@serviceStatus')
     .assert.hidden('@grantOffered')
+})
+
+Then(/^the net receipt field is visible$/, async function () {
+  await Interaction
+    .waitForElementVisible('@netReceipt')
+    .assert.visible('@netReceipt')
+})
+
+Then(/^the net receipt field is hidden/, async function () {
+  await Interaction
+    .waitForElementPresent('@netReceipt')
+    .assert.hidden('@netReceipt')
 })
 
 /**
