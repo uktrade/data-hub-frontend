@@ -74,17 +74,42 @@ module.exports = {
   interaction: {
     attendedGammaEvent: {
       pk: 'ec4a46ef-6e50-4a5c-bba0-e311f0471312',
+      company: 'Venus Ltd',
+      contact: 'Johnny Cakeman',
+      serviceProvider: 'CBBC North EAST',
+      service: 'Events - UK Based',
       subject: 'Attended gamma event',
+      name: 'Attended gamma event',
+      notes: 'This is a dummy service delivery for testing',
+      date: '5 September 2017',
+      ditAdviser: 'Puck Head',
+      event: 'Grand exhibition',
+      documents: 'View files and documents (will open another website)',
     },
     grandExhibition: {
       pk: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
       subject: 'Provided funding information',
     },
+    tapGrant: {
+      pk: 'aa350238-5d84-4bed-be68-b08dea7ea6d5',
+      company: 'Venus Ltd',
+      contact: 'Dean Cox',
+      serviceProvider: 'Marketing - Marketing Team',
+      service: 'Tradeshow Access Programme (TAP)',
+      serviceStatus: 'Offered',
+      grantOffered: '£2,500.00',
+      subject: 'TAP grant',
+      name: 'TAP grant',
+      notes: 'This is a dummy service delivery for testing',
+      date: '15 September 2017',
+      ditAdviser: 'John Rogers',
+      event: 'No',
+      documents: 'There are no files or documents',
+    },
   },
   investmentProject: {
     newHotelCommitmentToInvest: {
       pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
-
       name: 'New hotel (commitment to invest)',
     },
     newRollercoaster: {

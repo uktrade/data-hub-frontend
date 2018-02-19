@@ -22,7 +22,7 @@ function renderEditPage (req, res) {
   const interactionForm =
     buildFormWithStateAndErrors(
       formConfigs[req.params.kind](
-        assign({}, res.locals.options, {
+        assign({}, res.locals.options, res.locals.conditions, {
           returnLink: res.locals.returnLink,
           hiddenFields: {
             id: get(res.locals, 'interaction.id'),

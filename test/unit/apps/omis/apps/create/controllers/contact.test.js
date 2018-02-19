@@ -1,6 +1,6 @@
 const FormController = require('~/src/apps/omis/controllers/form')
 
-const Controller = require('~/src/apps/omis/apps/create/controllers/client-details')
+const Controller = require('~/src/apps/omis/apps/create/controllers/contact')
 
 const contactsMockData = [{
   id: '1',

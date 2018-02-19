@@ -92,8 +92,87 @@ describe('Investment project transformers', () => {
 
       it('should correctly format the value view', () => {
         const expectedInvestmentValue = {
-          total_investment: '£100,000',
-          foreign_equity_investment: '£200,000',
+          total_investment: {
+            type: 'currency',
+            name: 100000,
+          },
+          foreign_equity_investment: {
+            type: 'currency',
+            name: 200000,
+          },
+          number_new_jobs: '100 new jobs',
+          number_safeguarded_jobs: '200 safeguarded jobs',
+          government_assistance: 'Has government assistance',
+          r_and_d_budget: 'Has R&D budget',
+          average_salary: '£30,000 – £34,000',
+          new_tech_to_uk: 'Has new-to-world tech, business model or IP',
+          export_revenue: 'Yes, will create significant export revenue',
+          sector_name: 'Renewable Energy : Wind : Renewable energy: Wind: Onshore',
+          account_tier: 'New hotel (Non-FDI)',
+          business_activities: 'Yes',
+          associated_non_fdi_r_and_d_project: {
+            name: 'Freds',
+            actions: [
+              {
+                label: 'Edit project',
+                url: '/investment-projects/1/edit-associated?term=DHP-00000460',
+              },
+              {
+                label: 'Remove association',
+                url: '/investment-projects/1/remove-associated',
+              },
+            ],
+          },
+        }
+
+        expect(this.actualInvestmentValue).to.deep.equal(expectedInvestmentValue)
+      })
+    })
+
+    context('when all fields are set but the client has not supplied investment information', () => {
+      beforeEach(() => {
+        this.actualInvestmentValue = transformInvestmentValueForView({
+          client_cannot_provide_total_investment: false,
+          total_investment: null,
+          client_cannot_provide_foreign_investment: false,
+          foreign_equity_investment: null,
+          number_new_jobs: 100,
+          number_safeguarded_jobs: 200,
+          government_assistance: true,
+          r_and_d_budget: true,
+          average_salary: {
+            name: '£30,000 – £34,000',
+          },
+          new_tech_to_uk: true,
+          export_revenue: true,
+          sector: {
+            name: 'Renewable Energy : Wind : Renewable energy: Wind: Onshore',
+          },
+          investor_company: {
+            name: 'Venus Ltd',
+            classification: {
+              name: 'New hotel (Non-FDI)',
+            },
+          },
+          business_activities: [
+            {
+              name: 'European headquarters',
+            },
+          ],
+          non_fdi_r_and_d_budget: true,
+          id: 1,
+          associated_non_fdi_r_and_d_project: {
+            name: 'Freds',
+            id: 'ac035522-ad0b-4eeb-87f4-0ce964e4b999',
+            project_code: 'DHP-00000460',
+          },
+        })
+      })
+
+      it('should correctly format the value view', () => {
+        const expectedInvestmentValue = {
+          total_investment: null,
+          foreign_equity_investment: null,
           number_new_jobs: '100 new jobs',
           number_safeguarded_jobs: '200 safeguarded jobs',
           government_assistance: 'Has government assistance',
