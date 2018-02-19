@@ -1,5 +1,7 @@
-const { get, filter, flatten, forEach, last, mapValues } = require('lodash')
+const { get, filter, flatten, forEach, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
+
+const logger = require('../../../../config/logger')
 
 class FormController extends Controller {
   render (req, res, next) {
@@ -54,13 +56,9 @@ class FormController extends Controller {
   }
 
   errorHandler (err, req, res, next) {
-    if (get(err, 'code') === 'MISSING_PREREQ') {
-      const lastStep = last(req.journeyModel.get('history'))
-
-      if (!lastStep) {
-        return res.redirect(req.baseUrl)
-      }
-      return res.redirect(lastStep.path)
+    if (err.redirect) {
+      logger.error(err)
+      return res.redirect(err.redirect)
     }
 
     if (get(err, 'code') === 'SESSION_TIMEOUT') {
