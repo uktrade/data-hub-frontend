@@ -367,6 +367,15 @@ describe('Interaction details middleware', () => {
 
         expect(this.res.locals.conditions.tapServices).to.deep.equal(expectedTapServiceConditions)
       })
+
+      it('should set successful service status conditions', () => {
+        const expectedSuccessfulServiceStatusConditions = [
+          '45329c18-6095-e211-a939-e4115bead28a',
+          '47329c18-6095-e211-a939-e4115bead28a',
+        ]
+
+        expect(this.res.locals.conditions.successfulServiceStatuses).to.deep.equal(expectedSuccessfulServiceStatusConditions)
+      })
     })
 
     context('when service delivery', () => {
