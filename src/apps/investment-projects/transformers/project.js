@@ -3,7 +3,7 @@ const { assign, castArray, get, isEmpty, isPlainObject, mapValues } = require('l
 const format = require('date-fns/format')
 const moment = require('moment')
 
-const { formatCurrency, getInvestmentTypeDetails } = require('./shared')
+const { getInvestmentTypeDetails } = require('./shared')
 const { transformDateObjectToDateString } = require('../../transformers')
 
 function transformToApi (body) {
@@ -173,7 +173,10 @@ function transformBriefInvestmentSummary (data) {
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
     estimated_land_date: !isEmpty(data.estimated_land_date) ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
-    total_investment: formatCurrency(data.total_investment),
+    total_investment: data.total_investment ? {
+      type: 'currency',
+      name: data.total_investment,
+    } : null,
   }
 }
 

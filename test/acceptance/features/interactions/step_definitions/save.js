@@ -1,6 +1,6 @@
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
-const { get, set, camelCase } = require('lodash')
+const { get, set, camelCase, fromPairs, map } = require('lodash')
 
 const { getDateFor } = require('../../../helpers/date')
 
@@ -21,9 +21,10 @@ When(/^an interaction is added$/, async function () {
     .wait() // wait for backend to sync
 })
 
-When(/^a service delivery is added$/, async function () {
+When(/^a service delivery is added$/, async function (dataTable) {
+  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
   await Interaction
-    .createServiceDelivery({}, (serviceDelivery) => {
+    .createServiceDelivery(details, (serviceDelivery) => {
       set(this.state, 'serviceDelivery', serviceDelivery)
       set(this.state, 'serviceDelivery.date', getDateFor({
         year: get(this.state, 'serviceDelivery.dateOfInteractionYear'),
@@ -115,6 +116,20 @@ Then(/^the interaction events is displayed$/, async function () {
 Then(/^the interaction events is not displayed$/, async function () {
   await Interaction
     .assert.hidden('@event')
+})
+
+Then(/^the service fields are visible$/, async function () {
+  await Interaction
+    .waitForElementVisible('@serviceStatus')
+    .assert.visible('@serviceStatus')
+    .assert.visible('@grantOffered')
+})
+
+Then(/^the service fields are hidden/, async function () {
+  await Interaction
+    .waitForElementNotVisible('@serviceStatus')
+    .assert.hidden('@serviceStatus')
+    .assert.hidden('@grantOffered')
 })
 
 /**

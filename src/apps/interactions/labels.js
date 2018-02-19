@@ -8,6 +8,8 @@ const interaction = {
   service: 'Service',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
+  investment_project: 'Investment project',
+  documents: 'Documents',
 }
 
 const serviceDelivery = {
@@ -18,11 +20,14 @@ const serviceDelivery = {
   date: 'Date of service delivery',
   dit_adviser: 'DIT adviser',
   service: 'Service',
-  service_delivery_status: 'Trade Access Program (TAP) status',
+  service_delivery_status: 'Service status',
+  grant_amount_offered: 'Grant offered',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',
   event: 'Event',
+  investment_project: 'Investment project',
+  documents: 'Documents',
 }
 
 const filters = {

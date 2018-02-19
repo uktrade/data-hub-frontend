@@ -47,7 +47,10 @@ describe('Investment evaluation controller', () => {
   it('should return evaluation details with correct investment data', (done) => {
     const expectedValue = {
       'Primary sector': 'Aerospace : Manufacturing and Assembly : Space Technology',
-      'Total investment': '£100,000',
+      'Total investment': {
+        type: 'currency',
+        name: '100000',
+      },
       'New jobs': '10 new jobs',
       'Average salary of new jobs': undefined,
       'R&D budget': 'Has R&D budget',
@@ -65,7 +68,10 @@ describe('Investment evaluation controller', () => {
       },
       'Foreign country': 'Korea (South)',
       'UK company': null,
-      'Foreign equity investment': '£50,000',
+      'Foreign equity investment': {
+        type: 'currency',
+        name: '50000',
+      },
       'Investor retains 10% voting power': 'No',
       'New jobs': '10 new jobs',
       'Safeguarded jobs': '5 safeguarded jobs',
@@ -103,7 +109,10 @@ describe('Investment evaluation controller', () => {
   it('should return evaluation details with correct investment data with UK company', (done) => {
     const expectedValue = {
       'Primary sector': 'Automotive : Motorsport',
-      'Total investment': '£40,000,000,000',
+      'Total investment': {
+        type: 'currency',
+        name: '40000000000',
+      },
       'New jobs': '456 new jobs',
       'Average salary of new jobs': '£25,000 – £29,000',
       'R&D budget': 'Has R&D budget',
@@ -124,7 +133,10 @@ describe('Investment evaluation controller', () => {
         name: 'AITCH (Bananas are us) LIMITED',
         url: '/companies/f91c0685-e2ac-41e7-8500-cdd0ad747a97',
       },
-      'Foreign equity investment': '£400,000',
+      'Foreign equity investment': {
+        type: 'currency',
+        name: '400000',
+      },
       'Investor retains 10% voting power': 'Yes',
       'New jobs': '456 new jobs',
       'Safeguarded jobs': '10 safeguarded jobs',

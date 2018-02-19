@@ -1,10 +1,10 @@
-const { assign, find, get, unset } = require('lodash')
+const { assign, find, get, isEmpty, unset } = require('lodash')
 
 const metadataRepo = require('../../../../../lib/metadata')
-const { FormController } = require('../../../controllers')
+const { CreateController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
-class ConfirmController extends FormController {
+class ConfirmController extends CreateController {
   getValues (req, res, next) {
     super.getValues(req, res, (err, values) => {
       const company = get(res.locals, 'company')
@@ -19,7 +19,7 @@ class ConfirmController extends FormController {
     })
   }
 
-  async successHandler (req, res, next) {
+  async saveValues (req, res, next) {
     const data = req.sessionModel.toJSON()
 
     // clean un-needed properties
@@ -28,16 +28,26 @@ class ConfirmController extends FormController {
 
     try {
       const order = await Order.save(req.session.token, data)
+      req.sessionModel.set('order-id', order.id)
 
-      req.journeyModel.reset()
-      req.journeyModel.destroy()
-      req.sessionModel.reset()
-      req.sessionModel.destroy()
-
-      res.redirect(`/omis/${order.id}`)
+      next()
     } catch (error) {
       next(error)
     }
+  }
+
+  successHandler (req, res) {
+    const orderId = req.sessionModel.get('order-id')
+
+    req.journeyModel.reset()
+    req.journeyModel.destroy()
+    req.sessionModel.reset()
+    req.sessionModel.destroy()
+
+    if (!isEmpty(req.form.options.successMessage)) {
+      req.flash('success', req.form.options.successMessage)
+    }
+    res.redirect(`/omis/${orderId}`)
   }
 }
 
