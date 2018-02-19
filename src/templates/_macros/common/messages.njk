@@ -13,6 +13,11 @@
         {{ caller() }}
       {% else %}
         {{ props.text }}
+        <div class="c-message__actions">
+          {% if props.text == "You've removed the link to a subsidiary" or props.text == "You've removed the link to Global HQ" %}
+            <a class="c-message__close" href="{{ props.undoUrl }}">Undo?</a>
+          {% endif %}
+        </div>
       {% endif %}
     </{{ element }}>
   {% endif %}
@@ -33,7 +38,8 @@
           {{ Message({
             text: text,
             type: type,
-            element: 'li'
+            element: 'li',
+            undoUrl: props.undoUrl
           }) }}
         {% endfor %}
       {% endfor %}

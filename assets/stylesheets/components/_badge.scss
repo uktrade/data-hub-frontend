@@ -50,4 +50,5 @@
 
 .c-badge--secondary {
   @include _style-badge($purple);
+  //border-color: $purple;
 }

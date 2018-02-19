@@ -54,9 +54,27 @@ function setLocalNav (items = []) {
       .filter(filterNonPermittedItem(userPermissions))
       .map((item) => {
         const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
+        let activeChild = false
+
+        if (item.children) {
+          item.children = item.children.map((childItem) => {
+            const childItemUrl = `${req.baseUrl}/${item.path}/${childItem.path}`
+            const isActive = res.locals.CURRENT_PATH.startsWith(childItemUrl)
+
+            if (isActive) {
+              activeChild = true
+            }
+
+            return assign({}, childItem, {
+              isActive,
+              url: childItemUrl,
+            })
+          })
+        }
+
         return assign({}, item, {
           url,
-          isActive: res.locals.CURRENT_PATH === url,
+          isActive: activeChild || res.locals.CURRENT_PATH === url,
         })
       })
     next()

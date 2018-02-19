@@ -32,3 +32,8 @@
     margin-top: $default-spacing-unit / 2;
   }
 }
+
+.c-entity-list__controls {
+  padding-top: $default-spacing-unit;
+  @include core-font(14);
+}

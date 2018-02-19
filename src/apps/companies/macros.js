@@ -1,37 +1,10 @@
-const { assign, flatten } = require('lodash')
+const { assign, flatten, merge } = require('lodash')
 
 const { globalFields } = require('../macros')
 const formLabels = require('./labels')
 const { transformObjectToOption } = require('../transformers')
 
-const companyFiltersFields = [
-  {
-    macroName: 'TextField',
-    label: 'Company name',
-    name: 'name',
-    hint: 'At least three characters',
-  },
-  Object.assign({}, globalFields.sectors, {
-    name: 'sector',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  Object.assign({}, globalFields.countries, {
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  Object.assign({}, globalFields.ukRegions, {
-    name: 'uk_region',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-].map(filter => {
-  return Object.assign(filter, {
-    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-  })
-})
-
-const companySortForm = {
+const companySortFormBase = {
   method: 'get',
   class: 'c-collection__sort-form js-AutoSubmit',
   hideFormActions: true,
@@ -42,6 +15,13 @@ const companySortForm = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+    },
+  ],
+}
+
+const companySortForm = merge({}, companySortFormBase, {
+  children: [
+    {
       options: [
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
@@ -50,7 +30,67 @@ const companySortForm = {
       ],
     },
   ],
-}
+})
+
+const companySubsidiarySortForm = merge({}, companySortFormBase, {
+  children: [
+    {
+      options: [
+        { value: 'modified_on:desc', label: 'Recently updated' },
+        { value: 'modified_on:asc', label: 'Least recently updated' },
+        { value: 'name:asc', label: 'Subsidiary name: A-Z' },
+        { value: 'name:desc', label: 'Subsidiary name: Z-A' },
+      ],
+    },
+  ],
+})
+
+const companyFiltersFields = [
+  {
+    macroName: 'TextField',
+    label: 'Company name',
+    name: 'name',
+    hint: 'At least three characters',
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'company_type',
+    type: 'checkbox',
+    label: 'Type',
+    options: [
+      { value: 'ghq', label: 'Global HQ' },
+    ],
+    modifier: 'option-select',
+  },
+  assign({}, globalFields.sectors, {
+    name: 'sector',
+    type: 'checkbox',
+    modifier: 'option-select',
+  }),
+  assign({}, globalFields.countries, {
+    type: 'checkbox',
+    modifier: 'option-select',
+  }),
+  assign({}, globalFields.ukRegions, {
+    name: 'uk_region',
+    type: 'checkbox',
+    modifier: 'option-select',
+  }),
+].map((filter) => {
+  return assign(filter, {
+    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+  })
+})
+
+const companySubsidiaryFiltersFields = [
+  // {
+  //   macroName: 'TextField',
+  //   label: 'Subsidiary name',
+  //   name: 'name',
+  //   hint: 'At least three characters',
+  //   modifier: ['smaller', 'light', 'filter'],
+  // },
+]
 
 const accountManagementFormConfig = function ({
   returnLink,
@@ -81,5 +121,7 @@ const accountManagementFormConfig = function ({
 module.exports = {
   companySortForm,
   companyFiltersFields,
+  companySubsidiarySortForm,
+  companySubsidiaryFiltersFields,
   accountManagementFormConfig,
 }

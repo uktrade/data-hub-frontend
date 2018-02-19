@@ -6,6 +6,7 @@
 
   a {
     text-decoration: none;
+    padding-right: $default-spacing-unit/2;
 
     &:hover {
       text-decoration: underline;
@@ -15,6 +16,10 @@
   @include media(tablet) {
     max-width: 80%;
   }
+}
+
+.c-entity__header {
+  padding-bottom: $default-spacing-unit/2;
 }
 
 @include media(tablet) {
