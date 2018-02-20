@@ -6,6 +6,7 @@ const { getOptionsHandler } = require('~/src/apps/api/controllers/options')
 describe('options API controller', () => {
   beforeEach(() => {
     this.reqMock = {
+      query: {},
       session: {
         token: '1234',
       },
