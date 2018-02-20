@@ -1,5 +1,7 @@
-const { lookupAddress } = require('./services')
-const metadata = require('../../lib/metadata')
+const { assign } = require('lodash')
+
+const { lookupAddress } = require('../services')
+const metadata = require('../../../lib/metadata')
 
 async function postcodeLookupHandler (req, res) {
   try {
@@ -9,7 +11,7 @@ async function postcodeLookupHandler (req, res) {
       country => country.name.toLowerCase() === 'united kingdom'
     ).id
     const augmentedAddresses = addresses.map(address => {
-      return Object.assign({}, address, { country: unitedKingdomCountryId })
+      return assign({}, address, { country: unitedKingdomCountryId })
     })
 
     res.json(augmentedAddresses)
