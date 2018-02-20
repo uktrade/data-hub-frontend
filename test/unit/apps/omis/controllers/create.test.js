@@ -81,6 +81,23 @@ describe('OMIS CreateController', () => {
     })
   })
 
+  describe('middlewareActions()', () => {
+    beforeEach(() => {
+      sandbox.stub(FormController.prototype, 'middlewareActions')
+      sandbox.stub(this.controller, 'use')
+
+      this.controller.middlewareActions()
+    })
+
+    it('should call parent method', () => {
+      expect(FormController.prototype.middlewareActions).to.have.been.calledOnce
+    })
+
+    it('should call save company method', () => {
+      expect(this.controller.use).to.have.been.calledWith(this.controller.saveCompany)
+    })
+  })
+
   describe('middlewareLocals()', () => {
     beforeEach(() => {
       sandbox.stub(FormController.prototype, 'middlewareLocals')
@@ -110,19 +127,14 @@ describe('OMIS CreateController', () => {
       expect(FormController.prototype.middlewareChecks).to.have.been.calledOnce
     })
 
-    it('should call save company check method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSaveCompany)
-    })
-
     it('should call skip company check method', () => {
       expect(this.controller.use).to.have.been.calledWith(this.controller.checkSkipCompany)
     })
   })
 
-  describe('checkSaveCompany()', () => {
+  describe('saveCompany()', () => {
     beforeEach(() => {
-      sandbox.stub(this.controller, 'post')
-      sandbox.stub(this.controller, 'successHandler')
+      sandbox.stub(this.controller, '_configure')
 
       this.reqMock = {
         query: {},
@@ -132,55 +144,31 @@ describe('OMIS CreateController', () => {
     context('when company exists in query', () => {
       beforeEach(() => {
         this.reqMock.query.company = companyMock.id
+        this.controller.saveCompany(this.reqMock, {}, this.nextSpy)
       })
 
-      context('when post is a function', () => {
-        beforeEach(() => {
-          this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
-        })
-
-        it('should call post method', () => {
-          expect(this.controller.post).to.have.been.calledOnce
-          expect(this.controller.post).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
-        })
-
-        it('should not call successHandler method', () => {
-          expect(this.controller.successHandler).not.to.have.been.called
-        })
-
-        it('should not call next', () => {
-          expect(this.nextSpy).not.to.have.been.called
-        })
+      it('should make sure request is a post', () => {
+        expect(this.reqMock).to.have.property('method')
+        expect(this.reqMock.method).to.equal('POST')
       })
 
-      context('when post is not a function', () => {
-        beforeEach(() => {
-          this.controller.post = null
-          this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
-        })
+      it('should call form wizard configure method', () => {
+        expect(this.controller._configure).to.have.been.calledOnce
+        expect(this.controller._configure).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+      })
 
-        it('should call successHandler method', () => {
-          expect(this.controller.successHandler).to.have.been.calledOnce
-          expect(this.controller.successHandler).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
-        })
-
-        it('should not call next', () => {
-          expect(this.nextSpy).not.to.have.been.called
-        })
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
       })
     })
 
     context('when company doesn\'t exist in query', () => {
       beforeEach(() => {
-        this.controller.checkSaveCompany(this.reqMock, {}, this.nextSpy)
+        this.controller.saveCompany(this.reqMock, {}, this.nextSpy)
       })
 
-      it('should not call post method', () => {
-        expect(this.controller.post).not.to.have.been.called
-      })
-
-      it('should not call successHandler method', () => {
-        expect(this.controller.successHandler).not.to.have.been.called
+      it('should not call form wizard configure method', () => {
+        expect(this.controller._configure).not.to.have.been.called
       })
 
       it('should call next', () => {

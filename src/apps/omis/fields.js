@@ -1,7 +1,8 @@
 module.exports = {
   company: {
-    validate: 'required',
     label: 'fields.company.label',
+    validate: 'required',
+    invalidates: ['contact', 'use_sector_from_company', 'sector'],
   },
   contact: {
     fieldType: 'MultipleChoiceField',
