@@ -1,8 +1,6 @@
 const { get, filter, flatten, forEach, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
 
-const logger = require('../../../../config/logger')
-
 class FormController extends Controller {
   render (req, res, next) {
     const heading = req.form.options.heading
@@ -57,7 +55,6 @@ class FormController extends Controller {
 
   errorHandler (err, req, res, next) {
     if (err.redirect) {
-      logger.error(err)
       return res.redirect(err.redirect)
     }
 
