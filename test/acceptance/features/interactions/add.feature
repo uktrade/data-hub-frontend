@@ -62,7 +62,7 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key             | value                                    |
       | Service         | Trade - Tradeshow Access Programme (TAP) |
-      | Service status  | Offered                                  |
+      | Service status  | Completed                                |
       | Grant offered   | 100000                                   |
       | Net receipt     | 50000                                    |
     Then I see the success message
@@ -205,11 +205,9 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     When I change form dropdown "service" to Tradeshow Access Programme (TAP)
     Then the service fields are visible
-    When I change form dropdown "service_delivery_status" to Offered
+    When I change form dropdown "service_delivery_status" to Completed
     Then the net receipt field is visible
     When I change form dropdown "service_delivery_status" to Current
     Then the net receipt field is hidden
-    When I change form dropdown "service_delivery_status" to Completed
-    Then the net receipt field is visible
     When I change form dropdown "service" to Trade - Enquiry
     Then the service fields are hidden

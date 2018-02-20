@@ -370,7 +370,6 @@ describe('Interaction details middleware', () => {
 
       it('should set successful service status conditions', () => {
         const expectedSuccessfulServiceStatusConditions = [
-          '45329c18-6095-e211-a939-e4115bead28a',
           '47329c18-6095-e211-a939-e4115bead28a',
         ]
 
