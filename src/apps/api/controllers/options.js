@@ -4,6 +4,10 @@ async function getOptionsHandler (req, res, next) {
   const token = req.session.token
   const key = req.params.entity
 
+  if (key === 'adviser') {
+    return next()
+  }
+
   try {
     const options = await getOptions(token, key, {
       includeDisabled: true,
