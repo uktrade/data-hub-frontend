@@ -121,18 +121,6 @@ When(/^I sort the events list name A-Z$/, async function () {
     })
 })
 
-Then(/^I see the list in A-Z alphabetical order$/, async function () {
-  client.expect(
-    this.state.list.firstItem.heading.toLowerCase() < this.state.list.secondItem.heading.toLowerCase()
-  ).to.be.true
-})
-
-Then(/^I see the list in Z-A alphabetical order$/, async function () {
-  client.expect(
-    this.state.list.firstItem.heading.toLowerCase() > this.state.list.secondItem.heading.toLowerCase()
-  ).to.be.true
-})
-
 When(/^I sort the events list by recently updated$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="modified_on:desc"]')
@@ -141,7 +129,7 @@ When(/^I sort the events list by recently updated$/, async function () {
   await EventList.section.firstEventInList
     .waitForElementVisible('@updated')
     .getText('@updated', (dateString) => {
-      set(this.state, 'firstItem.updated ', dateString.value)
+      set(this.state, 'list.firstItem.updated ', dateString.value)
     })
 
   await EventList.section.secondEventInList
