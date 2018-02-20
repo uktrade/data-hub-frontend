@@ -18,6 +18,11 @@ const LOCAL_NAV = [
   {
     path: 'details',
     label: 'Details',
+    children: [
+      {
+        path: 'global-headquarters/add',
+      },
+    ],
   },
   {
     path: 'contacts',
@@ -31,6 +36,15 @@ const LOCAL_NAV = [
     label: 'Interactions',
     permissions: [
       'interaction.read_all_interaction',
+    ],
+  },
+  {
+    path: 'subsidiaries',
+    label: 'Subsidiaries',
+    children: [
+      {
+        path: 'add',
+      },
     ],
   },
   {

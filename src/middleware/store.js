@@ -5,7 +5,11 @@ const { get } = require('lodash')
  */
 module.exports = () => {
   return function store (req, res, next) {
+    // setup demo session store for subsidiaries
+    req.session.subsidiaries = req.session.subsidiaries || []
     req.session.store = req.session.store || {}
+
+    console.log(req.session.subsidiaries, '---------- subsidiaries store ----------')
 
     req.store = (key, item) => {
       req.session.store[key] = item

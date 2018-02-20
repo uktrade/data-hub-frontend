@@ -27,6 +27,15 @@
               >
                 {{- data.name -}}
               </a>
+
+              {% if data.actions %}
+                <span class="table__actions">
+                  {% for item in data.actions %}
+                    <a class="table__action" href="{{ item.url }}">{{ item.label }}</a>
+                  {% endfor %}
+                </span>
+              {% endif %}
+
               {% if data.hint %}
                 <span
                   {% if data.hintId %}id="{{ data.hintId }}"{% endif %}

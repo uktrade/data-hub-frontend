@@ -19,7 +19,7 @@
 {% macro MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
   {% set isLabelHidden = props.isLabelHidden | default(false) %}
-  {% set itemValueClass = 'c-badge ' + badgeModifier if props.type === 'badge' else 'c-meta-list__item-value'%}
+  {% set itemValueClass = 'c-badge ' + badgeModifier if (props.type === 'badge' or props.type === 'title-badge') else 'c-meta-list__item-value'%}
 
   {% if props.value %}
     {% if props.type === 'date' %}
@@ -38,13 +38,13 @@
 
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
-        <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
+        <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' or props.type === 'title-badge' }}">
           {{- props.label -}}
         </span>
       {% endif %}
       {% if props.url and not props.isInert and not props.urlLabel %}
         <a
-          class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
+          class="{{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
           {{- value -}}

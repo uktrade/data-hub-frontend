@@ -1,4 +1,4 @@
-const { assign, find, get, filter } = require('lodash')
+const { assign, find, get, findIndex, filter } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
 const { hqLabels } = require('../labels')
@@ -65,6 +65,23 @@ async function handleFormPost (req, res, next) {
   try {
     const token = req.session.token
     const countryQueryParam = get(req.query, 'country')
+
+    // update info stored in the session
+    const headQuarterOptions = await getOptions(token, 'headquarter-type')
+    const parentCompany = res.locals.company
+    let companySubsidiarySessionStoreIndex = findIndex(req.session.subsidiaries, (company) => {
+      return company.id === parentCompany.id
+    })
+
+    if (companySubsidiarySessionStoreIndex >= 0) {
+      const headQuarterType = find(headQuarterOptions, ['value', req.body.headquarter_type])
+
+      req.session.subsidiaries[companySubsidiarySessionStoreIndex].name = req.body.name
+      req.session.subsidiaries[companySubsidiarySessionStoreIndex].headquarter_type = {
+        id: headQuarterType.value,
+        name: headQuarterType.label,
+      }
+    }
 
     if (get(req.body, 'headquarter_type') === 'not_headquarters') {
       req.body.headquarter_type = ''

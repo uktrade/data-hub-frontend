@@ -73,17 +73,15 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   .c-badge {
-    @include core-font(24);
     padding: $baseline-grid-unit ($baseline-grid-unit * 2);
-    background-color: $white;
-    color: $fuschia;
-    border-color: $fuschia;
+    color: $black;
   }
 }
 
 .c-local-header__heading-before {
   @include core-font(20);
   color: $grey-1;
+  margin-bottom: $default-spacing-unit/2;
 }
 
 .c-local-header__heading {

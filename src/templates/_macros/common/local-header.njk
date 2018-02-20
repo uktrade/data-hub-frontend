@@ -23,7 +23,10 @@
         {{ Breadcrumbs({ items: breadcrumbs }) }}
 
         {% if messages|length %}
-          {{ MessageList({ items: messages }) }}
+          {{ MessageList({
+            items: messages,
+            undoUrl: undoUrl
+          }) }}
         {% endif %}
 
         <div class="grid-row">

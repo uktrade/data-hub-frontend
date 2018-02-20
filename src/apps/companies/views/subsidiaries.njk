@@ -1,0 +1,25 @@
+{% extends "./_layout-view.njk" %}
+
+{% block main_grid_right_column %}
+  {% set linkSubsidiaryButton %}
+    <a id="add-contact-link" href="{{addSubsidiaryUrl}}">Link a subsidiary</a>
+  {% endset %}
+
+  <h2 class="heading-medium">Subsidiaries</h2>
+  {{ CollectionFilters({
+      query: QUERY,
+      filtersFields: filtersFields,
+      action: CURRENT_PATH
+  }) }}
+
+  {{ Collection(results | assign({
+      countLabel: countLabel,
+      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+      selectedFilters: selectedFilters,
+      query: QUERY,
+      action: CURRENT_PATH,
+      summaryActionsHTML: linkSubsidiaryButton,
+      parentCompanyId: company.id
+  })) }}
+
+{% endblock %}

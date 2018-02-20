@@ -4,7 +4,7 @@ const { get, pickBy } = require('lodash')
 const { getFormattedAddress } = require('../../../lib/address')
 const { getPrimarySectorName } = require('../../../../common/transform-sectors')
 const { getDataLabels } = require('../../../lib/controller-utils')
-const { companyDetailsLabels, hqLabels } = require('../labels')
+const { companyDetailsLabels } = require('../labels')
 
 module.exports = function transformCompanyToView ({
   uk_based,
@@ -16,6 +16,7 @@ module.exports = function transformCompanyToView ({
   turnover_range,
   account_manager,
   headquarter_type,
+  headquarters,
   trading_name,
   vat_number,
   reference_code,
@@ -48,7 +49,8 @@ module.exports = function transformCompanyToView ({
     employee_range: get(employee_range, 'name'),
     turnover_range: get(turnover_range, 'name'),
     account_manager: get(account_manager, 'name'),
-    headquarter_type: hqLabels[get(headquarter_type, 'name')] || 'Not a headquarters',
+    headquarter_type: companyDetailsLabels[get(headquarter_type, 'name')] || 'Not a Headquarters',
+    ghq: headquarters,
     registered_address: getFormattedAddress({
       address_1: registered_address_1,
       address_2: registered_address_2,

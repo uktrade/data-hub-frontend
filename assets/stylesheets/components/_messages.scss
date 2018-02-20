@@ -34,21 +34,28 @@
   }
 }
 
-.c-message__close {
-  @include bold-font(16);
+.c-message__actions {
   display: table;
-  line-height: 32px;
-  text-decoration: none;
 
   @include media(tablet) {
     position: absolute;
-    line-height: 32px;
     top: $default-spacing-unit;
     right: $default-spacing-unit;
   }
+}
+
+.c-message__close {
+  @include bold-font(16);
+  display: table-cell;
+  line-height: 32px;
+  text-decoration: none;
 
   &:hover {
     text-decoration: underline;
+  }
+
+  * + & {
+    padding-left: $default-spacing-unit;
   }
 }
 

@@ -24,6 +24,7 @@ const Messages = {
 
   appendClose (element) {
     if (element.className.indexOf('error') === -1) {
+      const actionsElem = element.querySelector('.c-message__actions')
       let link = document.createElement('a')
 
       link.innerHTML = 'Dismiss'
@@ -34,7 +35,7 @@ const Messages = {
         this.removeElement(element)
       }
 
-      element.appendChild(link)
+      actionsElem.appendChild(link)
     }
   },
 

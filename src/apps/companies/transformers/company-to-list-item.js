@@ -1,7 +1,8 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
+const { get, upperCase, isUndefined } = require('lodash')
 
 const { getCompanyAddress } = require('./shared')
+const { hqLabels } = require('../labels')
 
 module.exports = function transformCompanyToListItem ({
   id,
@@ -24,6 +25,8 @@ module.exports = function transformCompanyToListItem ({
   registered_address_2,
   companies_house_data,
   modified_on,
+  headquarter_type,
+  headquarters,
 } = {}) {
   if (!id) { return }
 
@@ -51,6 +54,12 @@ module.exports = function transformCompanyToListItem ({
     registered_address_2,
   })
 
+  meta.push({
+    label: 'Updated',
+    type: 'datetime',
+    value: modified_on,
+  })
+
   if (sector) {
     meta.push({
       label: 'Sector',
@@ -66,17 +75,30 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  meta.push({
-    label: 'Updated',
-    type: 'datetime',
-    value: modified_on,
-  })
-
   if (uk_based) {
     meta.push({
       label: 'UK region',
       type: 'badge',
       value: get(uk_region, 'name'),
+    })
+  }
+
+  if (headquarter_type) {
+    if (headquarter_type.name === 'ghq') {
+      meta.push({
+        label: 'Headquarter',
+        type: 'badge',
+        value: 'GLOBAL HQ',
+        badgeModifier: 'secondary',
+      })
+    }
+  }
+
+  if (!isUndefined(headquarters)) {
+    meta.push({
+      label: hqLabels[get(headquarters, 'headquarter_type.name')],
+      value: get(headquarters, 'name'),
+      url: `/companies/${get(headquarters, 'id')}`,
     })
   }
 
@@ -90,5 +112,6 @@ module.exports = function transformCompanyToListItem ({
     url,
     meta,
     type: 'company',
+    contentMetaModifier: 'stacked',
   }
 }

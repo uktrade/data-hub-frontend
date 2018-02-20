@@ -8,6 +8,10 @@ const companyDetailsLabels = {
   headquarters: 'Headquarters',
   sector: 'Sector',
   website: 'Website',
+  headquarter_type: 'Headquarter type',
+  ehq: 'European HQ',
+  ghq: 'Global HQ',
+  ukhq: 'UK HQ',
   description: 'Business description',
   employee_range: 'Number of employees',
   turnover_range: 'Annual turnover',
@@ -26,7 +30,6 @@ const companyDetailsLabels = {
   country: 'Country',
   business_type_for_other: 'Type of organisation',
   business_type_uk_other: 'Type of organisation',
-  headquarter_type: 'Headquarters',
   archived: 'Archived status',
   archived_on: 'Archive date',
   archived_reason: 'Archived reason',
@@ -59,9 +62,9 @@ const companyTypeOptions = {
 }
 
 const hqLabels = {
-  'ehq': 'European headquarters (EHQ)',
-  'ghq': 'Global headquarters (GHQ)',
-  'ukhq': 'UK headquarters (UK HQ)',
+  'ehq': 'European HQ',
+  'ghq': 'Global HQ',
+  'ukhq': 'UK HQ',
 }
 const accountManagementDisplayLabels = {
   one_list_tier: 'One List tier',
