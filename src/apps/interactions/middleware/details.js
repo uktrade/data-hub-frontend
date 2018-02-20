@@ -11,7 +11,6 @@ const { getDitCompany } = require('../../companies/repos')
 const { transformObjectToOption, transformContactToOption } = require('../../transformers')
 const { getOptions } = require('../../../lib/options')
 
-const SERVICE_DELIVERY_STATUS_OFFERED = '45329c18-6095-e211-a939-e4115bead28a'
 const SERVICE_DELIVERY_STATUS_COMPLETED = '47329c18-6095-e211-a939-e4115bead28a'
 
 async function postDetails (req, res, next) {
@@ -99,7 +98,6 @@ async function getInteractionOptions (req, res, next) {
       return tapService.value
     })
     const successfulServiceStatuses = [
-      SERVICE_DELIVERY_STATUS_OFFERED,
       SERVICE_DELIVERY_STATUS_COMPLETED,
     ]
     res.locals.conditions = {
