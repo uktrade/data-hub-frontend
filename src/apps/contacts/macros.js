@@ -22,16 +22,9 @@ const contactSortOptions = [
   { value: 'created_on:asc', label: 'Oldest' },
   { value: 'modified_on:desc', label: 'Recently updated' },
   { value: 'modified_on:asc', label: 'Least recently updated' },
-  { value: 'first_name:asc', label: 'First name: A-Z' },
-  { value: 'first_name:desc', label: 'First name: Z-A' },
   { value: 'last_name:asc', label: 'Last name: A-Z' },
-  { value: 'last_name:desc', label: 'Last name: Z-A' },
   { value: 'address_country.name:asc', label: 'Country: A-Z' },
-  { value: 'address_country.name:desc', label: 'Country: Z-A' },
   { value: 'company.name:asc', label: 'Company: A-Z' },
-  { value: 'company.name:desc', label: 'Company: Z-A' },
-  { value: 'company_sector.name:asc', label: 'Sector: A-Z' },
-  { value: 'company_sector.name:desc', label: 'Sector: Z-A' },
 ]
 
 const contactFiltersFields = [
