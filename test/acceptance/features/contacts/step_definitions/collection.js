@@ -116,37 +116,13 @@ When(/^the contacts are sorted by (Least recently updated)$/, async function (so
   await ContactList
     .section.firstContactInList
     .getText('@updated', (result) => {
-      set(this.state, 'collection.lastItem.field', result.value)
+      set(this.state, 'list.lastItem.field', result.value)
     })
-})
-
-When(/^the contacts are sorted by (First name: A-Z)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
 
   await ContactList
-    .section.firstContactInList
-    .getText('@header', (result) => {
-      const name = result.value.split(' ')[0]
-      set(this.state, 'collection.firstItem.field', name.toLowerCase())
-    })
-})
-
-When(/^the contacts are sorted by (First name: Z-A)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@header', (result) => {
-      const name = result.value.split(' ')[0]
-      set(this.state, 'collection.lastItem.field', name.toLowerCase())
+    .section.secondContactInList
+    .getText('@updated', (result) => {
+      set(this.state, 'list.secondItem.field', result.value)
     })
 })
 
@@ -161,7 +137,14 @@ When(/^the contacts are sorted by (Last name: A-Z)$/, async function (sortOption
     .section.firstContactInList
     .getText('@header', (result) => {
       const name = result.value.split(' ')[0]
-      set(this.state, 'collection.firstItem.field', name.toLowerCase())
+      set(this.state, 'list.firstItem.field', name)
+    })
+
+  await ContactList
+    .section.secondContactInList
+    .getText('@header', (result) => {
+      const name = result.value.split(' ')[0]
+      set(this.state, 'list.secondItem.field', name)
     })
 })
 
@@ -176,7 +159,14 @@ When(/^the contacts are sorted by (Last name: Z-A)$/, async function (sortOption
     .section.firstContactInList
     .getText('@header', (result) => {
       const name = result.value.split(' ')[0]
-      set(this.state, 'collection.lastItem.field', name.toLowerCase())
+      set(this.state, 'list.firstItem.field', name)
+    })
+
+  await ContactList
+    .section.secondContactInList
+    .getText('@header', (result) => {
+      const name = result.value.split(' ')[0]
+      set(this.state, 'list.secondItem.field', name)
     })
 })
 
@@ -190,21 +180,13 @@ When(/^the contacts are sorted by (Country: A-Z)$/, async function (sortOption) 
   await ContactList
     .section.firstContactInList
     .getText('@countryBadge', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
+      set(this.state, 'list.firstItem.field', result.value)
     })
-})
-
-When(/^the contacts are sorted by (Country: Z-A)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
 
   await ContactList
-    .section.firstContactInList
+    .section.secondContactInList
     .getText('@countryBadge', (result) => {
-      set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
+      set(this.state, 'list.secondItem.field', result.value)
     })
 })
 
@@ -218,49 +200,13 @@ When(/^the contacts are sorted by (Company: A-Z)$/, async function (sortOption) 
   await ContactList
     .section.firstContactInList
     .getText('@companyName', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
+      set(this.state, 'collection.firstItem.field', result.value)
     })
-})
-
-When(/^the contacts are sorted by (Company: Z-A)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
 
   await ContactList
-    .section.firstContactInList
+    .section.secondContactInList
     .getText('@companyName', (result) => {
-      set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
-    })
-})
-
-When(/^the contacts are sorted by (Sector: A-Z)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@companySector', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value.toLowerCase())
-    })
-})
-
-When(/^the contacts are sorted by (Sector: Z-A)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@companySector', (result) => {
-      set(this.state, 'collection.lastItem.field', result.value.toLowerCase())
+      set(this.state, 'collection.secondItem.field', result.value)
     })
 })
 
