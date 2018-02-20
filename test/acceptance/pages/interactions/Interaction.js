@@ -1,5 +1,5 @@
 const faker = require('faker')
-const { assign } = require('lodash')
+const { assign, forEach, keys } = require('lodash')
 
 const {
   getSelectorForElementWithText,
@@ -7,6 +7,7 @@ const {
   getLinkWithText,
 } = require('../../helpers/selectors')
 const { generateFutureDate } = require('../../helpers/date')
+const { appendUid } = require('../../helpers/uuid')
 
 const getRadioButtonWithText = (text) =>
   getSelectorForElementWithText(
@@ -43,10 +44,10 @@ module.exports = {
   },
   commands: [
     {
-      createInteraction (details = {}, callback) { // TODO feels that some duplication between this and createServiceDelivery can be DRY'd up
+      createInteraction (details = {}, isServiceDelivery, callback) {
         const futureDate = generateFutureDate()
         const interaction = assign({}, {
-          subject: faker.lorem.word(),
+          subject: appendUid(faker.lorem.word()),
           notes: faker.lorem.sentence(),
           dateOfInteractionYear: futureDate.year,
           dateOfInteractionMonth: futureDate.month,
@@ -55,8 +56,7 @@ module.exports = {
 
         this
           .waitForElementVisible('@saveButton')
-          .api
-          .perform((done) => {
+          .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
               done()
@@ -69,6 +69,10 @@ module.exports = {
             })
           })
           .perform((done) => {
+            if (interaction.service) {
+              return done()
+            }
+
             this.getListOption('@service', (service) => {
               interaction.service = service
               done()
@@ -81,91 +85,35 @@ module.exports = {
             })
           })
           .perform((done) => {
+            if (!isServiceDelivery) {
+              return done()
+            }
+
+            this.click('@eventYes')
+              .getListOption('@event', (event) => {
+                interaction.event = event
+                done()
+              })
+          })
+          .perform((done) => {
+            if (isServiceDelivery) {
+              return done()
+            }
+
             this.getListOption('@communicationChannel', (communicationChannel) => {
               interaction.communicationChannel = communicationChannel
               done()
             })
           })
-          .perform((done) => {
-            for (const key in interaction) {
-              if (interaction[key]) {
-                this.replaceValue(`@${key}`, interaction[key])
-              }
-            }
+          .perform(() => {
+            forEach(keys(interaction), (key) => {
+              this.replaceValue(`@${key}`, interaction[key])
+            })
             interaction.heading = interaction.subject
-            done()
           })
 
         return this.click('@saveButton', () => {
           callback(interaction)
-        })
-      },
-
-      createServiceDelivery (details = {}, callback) {
-        const futureDate = generateFutureDate()
-        const serviceDelivery = assign({}, {
-          subject: faker.lorem.word(),
-          notes: faker.lorem.sentence(),
-          dateOfInteractionYear: futureDate.year,
-          dateOfInteractionMonth: futureDate.month,
-          dateOfInteractionDay: futureDate.day,
-        }, details)
-
-        this
-          .waitForElementPresent('@eventYes')
-          .click('@eventYes')
-          .api.perform(async (done) => {
-            this
-              .api
-              .perform((done) => {
-                this.getListOption('@contact', (contact) => {
-                  serviceDelivery.contact = contact
-                  done()
-                })
-              })
-              .perform((done) => {
-                this.getListOption('@serviceProvider', (serviceProvider) => {
-                  serviceDelivery.serviceProvider = serviceProvider
-                  done()
-                })
-              })
-              .perform((done) => {
-                this.getListOption('@event', (event) => {
-                  serviceDelivery.event = event
-                  done()
-                })
-              })
-              .perform((done) => {
-                if (serviceDelivery.service) {
-                  return done()
-                }
-
-                this.getListOption('@service', (service) => {
-                  serviceDelivery.service = service
-                  done()
-                })
-              })
-              .perform((done) => {
-                this.getListOption('@ditAdviser', (ditAdviser) => {
-                  serviceDelivery.ditAdviser = ditAdviser
-                  done()
-                })
-              })
-              .perform((done) => {
-                for (const key in serviceDelivery) {
-                  if (serviceDelivery[key]) {
-                    this.replaceValue(`@${key}`, serviceDelivery[key])
-                  }
-                }
-
-                serviceDelivery.heading = serviceDelivery.subject
-                done()
-              })
-            done()
-          })
-
-        return this.click('@saveButton', () => {
-          callback(serviceDelivery)
         })
       },
     },

@@ -11,19 +11,20 @@ Feature: Add a new interaction in Data hub
     Then there are interaction fields
     And interaction fields are pre-populated
     When an interaction is added
+      | key                      | value                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | interaction.contact               |
-      | Service provider         | interaction.serviceProvider       |
-      | Service                  | interaction.service               |
-      | Subject                  | interaction.subject               |
-      | Notes                    | interaction.notes                 |
-      | Date of interaction      | interaction.date                  |
-      | DIT adviser              | interaction.ditAdviser            |
-      | Communication channel    | interaction.communicationChannel  |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
@@ -35,20 +36,20 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
-      | key             | value                                    |
+      | key                      | value                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | serviceDelivery.contact           |
-      | Service provider         | serviceDelivery.serviceProvider   |
-      | Service                  | serviceDelivery.service           |
-      | Subject                  | serviceDelivery.subject           |
-      | Notes                    | serviceDelivery.notes             |
-      | Date of service delivery | serviceDelivery.date              |
-      | DIT adviser              | serviceDelivery.ditAdviser        |
-      | Event                    | serviceDelivery.event             |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of service delivery | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Event                    | interaction.event                        |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are specified
@@ -60,27 +61,27 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
-      | key             | value                                    |
-      | Service         | Trade - Tradeshow Access Programme (TAP) |
-      | Service status  | Completed                                |
-      | Grant offered   | 100000                                   |
-      | Net receipt     | 50000                                    |
+      | key                      | value                                    |
+      | Service                  | Trade - Tradeshow Access Programme (TAP) |
+      | Service status           | Completed                                |
+      | Grant offered            | 100000                                   |
+      | Net receipt              | 50000                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | serviceDelivery.contact           |
-      | Service provider         | serviceDelivery.serviceProvider   |
-      | Service                  | serviceDelivery.service           |
-      | Service status           | serviceDelivery.serviceStatus     |
-      | Grant offered            | £100,000.00                       |
-      | Net receipt              | £50,000.00                        |
-      | Subject                  | serviceDelivery.subject           |
-      | Notes                    | serviceDelivery.notes             |
-      | Date of service delivery | serviceDelivery.date              |
-      | DIT adviser              | serviceDelivery.ditAdviser        |
-      | Event                    | serviceDelivery.event             |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Service status           | interaction.serviceStatus                |
+      | Grant offered            | £100,000.00                              |
+      | Net receipt              | £50,000.00                               |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of service delivery | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Event                    | interaction.event                        |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--companies-service-delivery-tap-service-optional-empty-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are not specified
@@ -92,21 +93,21 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
-      | key             | value                                    |
-      | Service         | Trade - Tradeshow Access Programme (TAP) |
+      | key                      | value                                    |
+      | Service                  | Trade - Tradeshow Access Programme (TAP) |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | serviceDelivery.contact           |
-      | Service provider         | serviceDelivery.serviceProvider   |
-      | Service                  | serviceDelivery.service           |
-      | Subject                  | serviceDelivery.subject           |
-      | Notes                    | serviceDelivery.notes             |
-      | Date of service delivery | serviceDelivery.date              |
-      | DIT adviser              | serviceDelivery.ditAdviser        |
-      | Event                    | serviceDelivery.event             |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of service delivery | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Event                    | interaction.event                        |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--contacts-interaction-submit
   Scenario: Interaction fields from contacts
@@ -118,19 +119,20 @@ Feature: Add a new interaction in Data hub
     Then there are interaction fields
     And interaction fields are pre-populated
     When an interaction is added
+      | key                      | value                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | interaction.contact               |
-      | Service provider         | interaction.serviceProvider       |
-      | Service                  | interaction.service               |
-      | Subject                  | interaction.subject               |
-      | Notes                    | interaction.notes                 |
-      | Date of interaction      | interaction.date                  |
-      | DIT adviser              | interaction.ditAdviser            |
-      | Communication channel    | interaction.communicationChannel  |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
@@ -142,20 +144,20 @@ Feature: Add a new interaction in Data hub
     Then there are service delivery fields
     And interaction fields are pre-populated
     When a service delivery is added
-      | key             | value                                    |
+      | key                      | value                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | serviceDelivery.contact           |
-      | Service provider         | serviceDelivery.serviceProvider   |
-      | Service                  | serviceDelivery.service           |
-      | Subject                  | serviceDelivery.subject           |
-      | Notes                    | serviceDelivery.notes             |
-      | Date of service delivery | serviceDelivery.date              |
-      | DIT adviser              | serviceDelivery.ditAdviser        |
-      | Event                    | serviceDelivery.event             |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of service delivery | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Event                    | interaction.event                        |
+      | Documents                | There are no files or documents          |
 
   @interaction-add--investment-projects-interaction-submit
   Scenario: Interaction fields from investment projects
@@ -166,20 +168,21 @@ Feature: Add a new interaction in Data hub
     Then there are interaction fields
     And interaction fields are pre-populated
     When an interaction is added
+      | key                      | value                                    |
     Then I see the success message
     And the details are displayed
-      | key                      | value                             |
-      | Company                  | Venus Ltd                         |
-      | Contact                  | interaction.contact               |
-      | Service provider         | interaction.serviceProvider       |
-      | Service                  | interaction.service               |
-      | Subject                  | interaction.subject               |
-      | Notes                    | interaction.notes                 |
-      | Date of interaction      | interaction.date                  |
-      | DIT adviser              | interaction.ditAdviser            |
-      | Investment project       | New rollercoaster                 |
-      | Communication channel    | interaction.communicationChannel  |
-      | Documents                | There are no files or documents   |
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Investment project       | New rollercoaster                        |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
 
   @interactions-add--events-toggle
   Scenario: Toggle service delivery event association
