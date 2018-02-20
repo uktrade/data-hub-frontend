@@ -103,7 +103,7 @@ Then(/^I filter the events list by start date/, async function () {
     .wait() // wait for xhr
 })
 
-Then(/^I sort the events list name A-Z$/, async function () {
+When(/^I sort the events list name A-Z$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="name:asc"]')
     .wait()// wait for xhr
@@ -133,7 +133,7 @@ Then(/^I see the list in Z-A alphabetical order$/, async function () {
   ).to.be.true
 })
 
-Then(/^I sort the events list by recently updated$/, async function () {
+When(/^I sort the events list by recently updated$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="modified_on:desc"]')
     .wait() // wait for xhr
@@ -157,7 +157,7 @@ Then(/^I see the list in descending recently updated order$/, async function () 
   ).to.be.within(0, 1)
 })
 
-Then(/^I sort the events list by least recently updated$/, async function () {
+When(/^I sort the events list by least recently updated$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="modified_on:asc"]')
     .wait() // wait for xhr
