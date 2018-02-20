@@ -89,8 +89,6 @@ Feature: View a list of events
     When I click the Events global nav link
     And I sort the events list name A-Z
     Then I see the list in A-Z alphabetical order
-    And I sort the events list name Z-A
-    Then I see the list in Z-A alphabetical order
     And I sort the events list by recently updated
     Then I see the list in descending recently updated order
     And I sort the events list by least recently updated

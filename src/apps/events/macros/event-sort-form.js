@@ -11,7 +11,6 @@ const eventSortForm = {
       modifier: ['small', 'inline', 'light'],
       options: [
         { value: 'name:asc', label: 'Event name: A-Z' },
-        { value: 'name:desc', label: 'Event name: Z-A' },
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
         { value: 'start_date:asc', label: 'Earliest start date' },
