@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "autoprefixer": "^8.0.0",
-    "axios": "^0.17.1",
+    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "babel-loader": "^7.1.2",
