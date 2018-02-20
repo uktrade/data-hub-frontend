@@ -1,15 +1,5 @@
 const { lookupAddress } = require('./services')
 const metadata = require('../../lib/metadata')
-const { adviserSearch } = require('../adviser/repos')
-
-async function adviserSearchHandler (req, res, next) {
-  try {
-    const advisers = await adviserSearch(req.session.token, req.params.term)
-    res.json(advisers)
-  } catch (error) {
-    next(error)
-  }
-}
 
 async function postcodeLookupHandler (req, res) {
   try {
@@ -29,6 +19,5 @@ async function postcodeLookupHandler (req, res) {
 }
 
 module.exports = {
-  adviserSearchHandler,
   postcodeLookupHandler,
 }
