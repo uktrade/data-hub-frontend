@@ -51,7 +51,7 @@ Feature: Add a new interaction in Data hub
       | Documents                | There are no files or documents   |
 
   @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
-  Scenario: Companies service delivery is saved
+  Scenario: Companies service delivery is saved and TAP service optional fields are specified
 
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
@@ -83,7 +83,7 @@ Feature: Add a new interaction in Data hub
       | Documents                | There are no files or documents   |
 
   @interaction-add--companies-service-delivery-tap-service-optional-empty-submit
-  Scenario: Companies service delivery is saved
+  Scenario: Companies service delivery is saved and TAP service optional fields are not specified
 
     Given I navigate to company fixture Venus Ltd
     When I click the Interactions local nav link
