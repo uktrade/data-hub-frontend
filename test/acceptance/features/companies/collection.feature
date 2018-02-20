@@ -76,5 +76,4 @@ Feature: View collection of companies
     And the companies are sorted by Least recently updated
     Then the companies should be sorted by Least recently updated
     When the companies are sorted by Company name: A-Z
-    And the companies are sorted by Company name: Z-A
-    Then the companies should have been correctly sorted for text fields
+    Then I see the list in A-Z alphabetical order

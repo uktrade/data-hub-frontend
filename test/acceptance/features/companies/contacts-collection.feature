@@ -68,9 +68,7 @@ Feature: View collection of contacts for a company
     When the contacts are sorted by Recently updated
     When the contacts are sorted by Least recently updated
     Then the contacts should have been correctly sorted for date fields
-    When the contacts are sorted by First name: A-Z
-    When the contacts are sorted by First name: Z-A
+    When the contacts are sorted by Last name: A-Z
     Then the contacts should have been correctly sorted for text fields
     When the contacts are sorted by Country: A-Z
-    When the contacts are sorted by Country: Z-A
     Then the contacts should have been correctly sorted for text fields

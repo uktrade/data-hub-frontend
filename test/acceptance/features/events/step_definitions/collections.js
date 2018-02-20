@@ -103,7 +103,7 @@ Then(/^I filter the events list by start date/, async function () {
     .wait() // wait for xhr
 })
 
-Then(/^I sort the events list name A-Z$/, async function () {
+When(/^I sort the events list name A-Z$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="name:asc"]')
     .wait()// wait for xhr
@@ -111,47 +111,17 @@ Then(/^I sort the events list name A-Z$/, async function () {
   await EventList.section.firstEventInList
     .waitForElementVisible('@header')
     .getText('@header', (text) => {
-      set(this.state, 'list.firstItem.heading', text.value)
+      set(this.state, 'list.firstItem.field', text.value)
     })
 
   await EventList.section.secondEventInList
     .waitForElementVisible('@header')
     .getText('@header', (text) => {
-      set(this.state, 'list.secondItem.heading', text.value)
+      set(this.state, 'list.secondItem.field', text.value)
     })
 })
 
-Then(/^I see the list in A-Z alphabetical order$/, async function () {
-  client.expect(
-    this.state.list.firstItem.heading.toLowerCase() < this.state.list.secondItem.heading.toLowerCase()
-  ).to.be.true
-})
-
-Then(/^I sort the events list name Z-A$/, async function () {
-  await EventList
-    .click('select[name="sortby"] option[value="name:desc"]')
-    .wait() // wait for xhr
-
-  await EventList.section.firstEventInList
-    .waitForElementVisible('@header')
-    .getText('@header', (text) => {
-      set(this.state, 'list.firstItem.heading', text.value)
-    })
-
-  await EventList.section.secondEventInList
-    .waitForElementVisible('@header')
-    .getText('@header', (text) => {
-      set(this.state, 'list.secondItem.heading', text.value)
-    })
-})
-
-Then(/^I see the list in Z-A alphabetical order$/, async function () {
-  client.expect(
-    this.state.list.firstItem.heading.toLowerCase() > this.state.list.secondItem.heading.toLowerCase()
-  ).to.be.true
-})
-
-Then(/^I sort the events list by recently updated$/, async function () {
+When(/^I sort the events list by recently updated$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="modified_on:desc"]')
     .wait() // wait for xhr
@@ -159,7 +129,7 @@ Then(/^I sort the events list by recently updated$/, async function () {
   await EventList.section.firstEventInList
     .waitForElementVisible('@updated')
     .getText('@updated', (dateString) => {
-      set(this.state, 'firstItem.updated ', dateString.value)
+      set(this.state, 'list.firstItem.updated ', dateString.value)
     })
 
   await EventList.section.secondEventInList
@@ -175,7 +145,7 @@ Then(/^I see the list in descending recently updated order$/, async function () 
   ).to.be.within(0, 1)
 })
 
-Then(/^I sort the events list by least recently updated$/, async function () {
+When(/^I sort the events list by least recently updated$/, async function () {
   await EventList
     .click('select[name="sortby"] option[value="modified_on:asc"]')
     .wait() // wait for xhr
