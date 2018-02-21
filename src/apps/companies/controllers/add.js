@@ -4,17 +4,21 @@ const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require(
 const { isBlank } = require('../../../lib/controller-utils')
 const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
-async function renderAddStepOne (req, res) {
-  const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(req.session.token)
-  const foreignOtherCompanyOptions = await buildForeignOtherCompanyOptions(req.session.token)
+async function renderAddStepOne (req, res, next) {
+  try {
+    const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(req.session.token)
+    const foreignOtherCompanyOptions = await buildForeignOtherCompanyOptions(req.session.token)
 
-  res.render('companies/views/add-step-1.njk', {
-    ukOtherCompanyOptions,
-    foreignOtherCompanyOptions,
-    company: req.body,
-    companyTypeOptions,
-    companyDetailsLabels,
-  })
+    res.render('companies/views/add-step-1.njk', {
+      ukOtherCompanyOptions,
+      foreignOtherCompanyOptions,
+      company: req.body,
+      companyTypeOptions,
+      companyDetailsLabels,
+    })
+  } catch (error) {
+    next(error)
+  }
 }
 
 function postAddStepOne (req, res, next) {
