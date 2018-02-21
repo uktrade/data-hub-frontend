@@ -1,0 +1,23 @@
+{% extends "./_layout.njk" %}
+
+{% block body_main_content %}
+  {% call Example('Meta list') %}
+    {{ MetaList({
+      items: meta
+    }) }}
+  {% endcall %}
+
+  {% call Example('Meta list with `inline` modifier') %}
+    {{ MetaList({
+      items: meta,
+      itemModifier: 'stacked'
+    }) }}
+  {% endcall %}
+
+  {% call Example('Meta list with `stacked` modifier') %}
+    {{ MetaList({
+      items: meta,
+      modifier: 'stacked'
+    }) }}
+  {% endcall %}
+{% endblock %}

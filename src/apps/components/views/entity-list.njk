@@ -12,4 +12,17 @@
       {% endfor %}
     </ul>
   {% endcall %}
+
+  <hr/>
+
+  {% call Example('`entity-list` of `Entity` items with `block-links` modifer') %}
+    {{
+      Collection(investmentProjects | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'Investments',
+        listModifier: 'block-links',
+        query: QUERY
+      }))
+    }}
+  {% endcall %}
 {% endblock %}

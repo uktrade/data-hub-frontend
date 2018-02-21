@@ -137,6 +137,24 @@ function renderHiddenText (req, res) {
     .render('components/views/hidden-text')
 }
 
+function renderMetaList (req, res) {
+  return res
+    .breadcrumb('Meta list')
+    .render('components/views/metalist', {
+      meta: [
+        {
+          label: 'Status',
+          value: 'Ongoing',
+          url: '/investment-projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/status',
+          urlLabel: 'change',
+        },
+        { label: 'Project code', value: 'DHP-00000009' },
+        { label: 'Valuation', value: 'Not yet valued' },
+        { label: 'Created on', value: '5 Jan 2016, 3:00pm' },
+      ],
+    })
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -148,4 +166,5 @@ module.exports = {
   renderCollection,
   renderKeyValueTables,
   renderHiddenText,
+  renderMetaList,
 }
