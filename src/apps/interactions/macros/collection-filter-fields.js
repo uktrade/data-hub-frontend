@@ -1,35 +1,25 @@
 const { assign, flatten } = require('lodash')
 
 const labels = require('../labels')
-const { communicationChannel, provider } = require('./fields')
-
 const currentYear = (new Date()).getFullYear()
+const { provider } = require('./fields')
 
-module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
+module.exports = function ({ currentAdviserId, teams = [] }) {
   return [
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'kind',
-      type: 'checkbox',
-      options: [
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-      ],
-      modifier: 'option-select',
-    },
     {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
-      modifier: 'option-select',
+      modifier: ['option-select', 'hide-legend'],
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
     },
-    assign({}, communicationChannel(channels), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+    {
+      macroName: 'SmartMultipleChoice',
+      name: 'dit_adviser',
+      entity: 'adviser',
+    },
     {
       macroName: 'TextField',
       name: 'date_after',
@@ -42,7 +32,7 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign({}, provider(teams), {
+    assign({}, provider(teams.slice(1, 5)), {
       type: 'checkbox',
       modifier: 'option-select',
     }),

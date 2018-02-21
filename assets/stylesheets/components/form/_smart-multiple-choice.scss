@@ -1,0 +1,37 @@
+.multiselect__content {
+  width: 100%;
+}
+
+.multiselect__tags {
+  border: 1px solid $grey-1;
+  border-radius: 0;
+}
+
+.multiselect__input:focus,
+.multiselect__single:focus {
+  box-shadow: none;
+}
+
+.multiselect--active {
+  box-shadow: 0 0 0 3px $yellow;
+}
+
+.multiselect__option {
+  width: 100%;
+  overflow: hidden;
+}
+
+.multiselect__option--highlight,
+.multiselect__option--highlight::after,
+.multiselect__tag {
+  background: $govuk-blue;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+  background: $yellow;
+
+  &::after {
+    color: $red;
+  }
+}
