@@ -45,7 +45,7 @@ module.exports = {
     addAnotherSharedTeam: 'input[name="add_team"]',
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
-    editButton: getButtonWithText('Edit Event'),
+    editButton: getButtonWithText('Edit event'),
     saveButton: getButtonWithText('Save'),
   },
   commands: [

@@ -15,15 +15,15 @@
   {% endif %}
 
   {% if company.id %}
-    <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit</a></p>
+    <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
   {% else %}
-    <p><a href="/companies/add/{{company.company_number}}" class="button">Add</a></p>
+    <p><a href="/companies/add/{{company.company_number}}" class="button">Add company</a></p>
   {% endif %}
 
   <div class="section">
     <h2 class="heading-medium">Account management</h2>
     {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
-    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button--secondary">Edit</a></p>
+    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button--secondary">Edit account management</a></p>
   </div>
 
   {% if company.id and not company.archived %}
