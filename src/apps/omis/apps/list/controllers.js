@@ -16,7 +16,7 @@ function renderList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('collection', {
+  res.render('omis/apps/list/views/list', {
     sortForm,
     selectedFilters,
     filtersFields,

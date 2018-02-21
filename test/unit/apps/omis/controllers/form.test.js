@@ -1,16 +1,11 @@
 const FormController = require('hmpo-form-wizard').Controller
 
+const Controller = require('~/src/apps/omis/controllers/form')
+
 describe('OMIS FormController', () => {
   beforeEach(() => {
     this.nextSpy = sandbox.stub()
     this.redirectSpy = sandbox.spy()
-    this.errorLoggerSpy = sandbox.spy()
-
-    const Controller = proxyquire('~/src/apps/omis/controllers/form', {
-      '../../../../config/logger': {
-        error: this.errorLoggerSpy,
-      },
-    })
 
     this.controller = new Controller({ route: '/' })
   })
@@ -309,10 +304,6 @@ describe('OMIS FormController', () => {
         this.errorMock.redirect = '/error-redirect-path/'
 
         this.controller.errorHandler(this.errorMock, globalReq, this.resMock, this.nextSpy)
-      })
-
-      it('log an error', () => {
-        expect(this.errorLoggerSpy).to.be.calledWith(this.errorMock)
       })
 
       it('redirect to specificed value', () => {
