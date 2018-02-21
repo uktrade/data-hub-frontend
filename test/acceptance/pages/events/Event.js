@@ -46,7 +46,7 @@ module.exports = {
     relatedProgrammes: '#field-related_programmes',
     addAnotherProgramme: 'input[name="add_related_programme"]',
     editButton: getButtonWithText('Edit event'),
-    saveButton: getButtonWithText('Save'),
+    saveButton: getButtonWithText('Add event'),
   },
   commands: [
     {
