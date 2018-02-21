@@ -51,10 +51,7 @@ async function renderEditPage (req, res, next) {
       .breadcrumb(eventName, `/events/${eventId}`)
       .breadcrumb(`${eventId ? 'Edit' : 'Add'} event`)
       .render('events/views/edit', {
-        eventForm: assign(eventForm, {
-          returnLink: `/events/${eventId}`,
-          returnText: 'Cancel',
-        }),
+        eventForm,
       })
   } catch (error) {
     next(error)

@@ -9,7 +9,8 @@
 
 {% block main_grid_right_column %}
   {% call Form({
-    buttonText: 'Update',
+    buttonText: 'Save and return',
+    returnText: 'Return without saving',
     returnLink: '/companies/' + company.id + '/exports',
     hiddenFields: {
       id: company.id
