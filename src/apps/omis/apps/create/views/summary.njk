@@ -14,12 +14,12 @@
     {{ values.company.name | escape }}
     <br>
     {{ [
-      values.company.registered_address_1 | escape,
-      values.company.registered_address_2 | escape,
-      values.company.registered_address_county | escape,
-      values.company.registered_address_town | escape,
-      values.company.registered_address_postcode | escape
-    ] | removeNilAndEmpty | join(", ") }}
+      values.company.registered_address_1,
+      values.company.registered_address_2,
+      values.company.registered_address_county,
+      values.company.registered_address_town,
+      values.company.registered_address_postcode
+    ] | removeNilAndEmpty | join(", ") | escape }}
   {% endset %}
 
   {% call MultiStepForm({
