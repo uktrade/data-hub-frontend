@@ -29,65 +29,92 @@ describe('OMIS list transformers', () => {
 
     context('when given a qualified result', () => {
       context('without delivery date', () => {
-        it('should return a transformed object', () => {
-          const actual = this.transformers.transformOrderToListItem(simpleOrder)
+        beforeEach(() => {
+          this.actual = this.transformers.transformOrderToListItem(simpleOrder)
+        })
 
-          expect(actual).to.have.property('id').a('string')
-          expect(actual).to.have.property('name').a('string')
-          expect(actual).to.have.property('type', 'order')
-          expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
+        it('should return a transformed object', () => {
+          expect(this.actual).to.have.property('id').a('string')
+          expect(this.actual).to.have.property('name').a('string')
+          expect(this.actual).to.have.property('type', 'order')
+          expect(this.actual).to.have.property('urlPrefix', 'omis/')
+          expect(this.actual).to.have.property('meta').an('array').to.deep.equal([
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
           ])
+        })
+
+        it('should set the updated date time as a sub heading', () => {
+          expect(this.actual.subTitle).to.deep.equal({
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+          })
         })
       })
 
       context('without a valid status', () => {
-        it('should set Status to undefined', () => {
+        beforeEach(() => {
           const order = assign({}, simpleOrder, {
             status: 'dummy',
           })
-          const actual = this.transformers.transformOrderToListItem(order)
+          this.actual = this.transformers.transformOrderToListItem(order)
+        })
 
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
+        it('should set Status to undefined', () => {
+          expect(this.actual).to.have.property('meta').an('array').to.deep.equal([
             { label: 'Status', type: 'badge', value: undefined },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
           ])
+        })
+
+        it('should set the updated date time as a sub heading', () => {
+          expect(this.actual.subTitle).to.deep.equal({
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+          })
         })
       })
 
       context('with delivery date', () => {
-        it('should return a transformed object', () => {
+        beforeEach(() => {
           const order = assign({}, simpleOrder, {
             delivery_date: '2018-10-16T14:18:28.328729',
           })
-          const actual = this.transformers.transformOrderToListItem(order)
+          this.actual = this.transformers.transformOrderToListItem(order)
+        })
 
-          expect(actual).to.have.property('id').a('string')
-          expect(actual).to.have.property('name').a('string')
-          expect(actual).to.have.property('type', 'order')
-          expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
+        it('should return a transformed object', () => {
+          expect(this.actual).to.have.property('id').a('string')
+          expect(this.actual).to.have.property('name').a('string')
+          expect(this.actual).to.have.property('type', 'order')
+          expect(this.actual).to.have.property('urlPrefix', 'omis/')
+          expect(this.actual).to.have.property('meta').an('array').to.deep.equal([
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
             { label: 'Delivery date', type: 'date', value: '2018-10-16T14:18:28.328729' },
           ])
+        })
+
+        it('should set the updated date time as a sub heading', () => {
+          expect(this.actual.subTitle).to.deep.equal({
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+          })
         })
       })
     })
