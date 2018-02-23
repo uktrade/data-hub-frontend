@@ -124,7 +124,7 @@ router
 router
   .route('/:investmentId/edit-value')
   .get(valueFormMiddleware.populateForm, edit.editValueGet)
-  .post(valueFormMiddleware.populateForm, valueFormMiddleware.handleFormPost, edit.editValuePost)
+  .post(valueFormMiddleware.populateForm, valueFormMiddleware.handleFormPost, edit.renderValueForm)
 
 router
   .route('/:investmentId/edit-requirements')

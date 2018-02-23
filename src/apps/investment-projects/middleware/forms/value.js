@@ -2,6 +2,7 @@ const { assign, get, merge } = require('lodash')
 
 const { updateInvestment } = require('../../repos')
 const { valueLabels } = require('../../labels')
+const { transformInvestmentValueFormBodyToApiRequest } = require('../../transformers/value')
 const { getOptions } = require('../../../../lib/options')
 
 async function populateForm (req, res, next) {
@@ -27,46 +28,35 @@ async function populateForm (req, res, next) {
   next()
 }
 
-function handleFormPost (req, res, next) {
-  res.locals.projectId = req.params.investmentId
+async function handleFormPost (req, res, next) {
+  const investmentId = req.params.investmentId
+  const formattedBody = transformInvestmentValueFormBodyToApiRequest(req.body)
 
-  const formattedBody = assign({}, req.body, {
-    average_salary: {
-      id: req.body.average_salary,
-    },
-    total_investment: req.body.client_cannot_provide_total_investment === 'true' ? null : req.body.total_investment,
-    foreign_equity_investment: req.body.client_cannot_provide_foreign_investment === 'true' ? null : req.body.foreign_equity_investment,
-  })
-
-  updateInvestment(req.session.token, res.locals.projectId, formattedBody)
-    .then(() => next())
-    .catch((err) => {
-      if (err.statusCode === 400) {
-        res.locals.form = assign(
-          {},
-          get(res, 'locals.form', {}),
-          {
-            state: req.body,
-            errors: {
-              messages: err.error,
-            },
-          },
-        )
-
-        if (!req.body.client_cannot_provide_total_investment) {
-          delete res.locals.form.errors.messages.total_investment
-          res.locals.form.errors.messages.client_cannot_provide_total_investment = ['This field is required']
-        }
-        if (!req.body.client_cannot_provide_foreign_investment) {
-          delete res.locals.form.errors.messages.foreign_equity_investment
-          res.locals.form.errors.messages.client_cannot_provide_foreign_investment = ['This field is required']
-        }
-
-        next()
-      } else {
-        next(err)
+  try {
+    await updateInvestment(req.session.token, investmentId, formattedBody)
+    req.flash('success', 'Investment value updated')
+    res.redirect(`/investment-projects/${investmentId}/details`)
+  } catch (err) {
+    if (err.statusCode === 400) {
+      res.locals.form.state = req.body
+      res.locals.errors = {
+        messages: err.error,
       }
-    })
+
+      if (!req.body.client_cannot_provide_total_investment) {
+        delete res.locals.errors.messages.total_investment
+        res.locals.errors.messages.client_cannot_provide_total_investment = ['This field is required']
+      }
+      if (!req.body.client_cannot_provide_foreign_investment) {
+        delete res.locals.errors.messages.foreign_equity_investment
+        res.locals.errors.messages.client_cannot_provide_foreign_investment = ['This field is required']
+      }
+
+      next()
+    } else {
+      next(err)
+    }
+  }
 }
 
 module.exports = {
