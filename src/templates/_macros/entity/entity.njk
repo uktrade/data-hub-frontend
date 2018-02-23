@@ -19,7 +19,7 @@
     {% set urlPrefix = props.urlPrefix or props.type | pluralise + '/' %}
     {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
-    {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
+    {% set contentMetaModifier = props.contentMetaModifier %}
     {% set metaItems = props.meta | reject(['type', 'badge']) %}
     {% set highlightedName = props.name | escape | highlight(props.highlightTerm) %}
     {% set containerElement = 'a' if props.isBlockLink else 'div' %}
@@ -46,7 +46,8 @@
             {{
               MetaList({
                 items: metaBadges,
-                highlightTerm: props.highlightTerm
+                highlightTerm: props.highlightTerm,
+                modifier: ['inline', 'condensed']
               })
             }}
           </div>
