@@ -84,18 +84,16 @@
   }
 
   @include media(tablet) {
-    .c-meta-list__item {
-      max-width: 50%;
-    }
-
     .c-meta-list__item:nth-child(odd) {
       float: left;
       clear: both;
+      max-width: 50%;
     }
 
     .c-meta-list__item:nth-child(even) {
       float: right;
       text-align: right;
+      max-width: 50%;
     }
   }
 }
