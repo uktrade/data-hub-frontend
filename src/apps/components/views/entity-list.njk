@@ -4,12 +4,25 @@
 
 {% block body_main_content %}
   {% call Example('`entity-list` of `Entity` items') %}
-    <ul class="c-entity-list">
-      {% for project in investmentProjects.items %}
-        <li class="c-entity-list__item">
-          {{ Entity(project) }}
-        </li>
-      {% endfor %}
-    </ul>
+    {{
+      Collection(investmentProjects | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'Investments',
+        query: QUERY
+      }))
+    }}
+  {% endcall %}
+
+  <hr/>
+
+  {% call Example('`entity-list` of `Entity` items with `block-links` modifer') %}
+    {{
+      Collection(investmentProjects | assign({
+        highlightTerm: searchTerm,
+        countLabel: 'Investments',
+        listModifier: 'block-links',
+        query: QUERY
+      }))
+    }}
   {% endcall %}
 {% endblock %}

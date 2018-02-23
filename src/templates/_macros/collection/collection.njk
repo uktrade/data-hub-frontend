@@ -30,7 +30,11 @@
         <ol class="c-entity-list {{ listModifier }}">
           {% for item in props.items %}
             <li class="c-entity-list__item">
-              {{ Entity(item | assign({ highlightTerm: props.highlightTerm, isBlockLink: hasBlockLinks })) }}
+              {{ Entity(item | assign({
+                highlightTerm: props.highlightTerm,
+                isBlockLink: hasBlockLinks,
+                contentMetaModifier: 'split'
+              })) }}
             </li>
           {% endfor %}
         </ol>
