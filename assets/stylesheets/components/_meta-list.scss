@@ -1,15 +1,9 @@
 @import "../settings";
 @import "../tools";
 
-.c-meta-list {
-  display: table;
-}
-
 .c-meta-list__item {
-  display: inline-block;
-
   & + & {
-    margin-left: $default-spacing-unit / 2;
+    margin-top: $default-spacing-unit / 4;
   }
 }
 
@@ -20,7 +14,6 @@
 
 .c-meta-list__item-value {
   color: $text-colour;
-  display: inline-block;
   word-break: break-all;
 
   &:link,
@@ -40,13 +33,31 @@
 // Modifiers
 
 .c-meta-list--inline {
+  display: inline-block;
+  margin-top: -($default-spacing-unit / 2);
+
   .c-meta-list__item-label {
     display: inline-block;
   }
 
   .c-meta-list__item {
-    margin-top: $baseline-grid-unit;
-    margin-right: $default-spacing-unit;
+    display: inline-block;
+    margin-right: $default-spacing-unit * 2;
+    margin-top: $default-spacing-unit / 2;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.c-meta-list--condensed {
+  &.c-meta-list--inline .c-meta-list__item {
+    margin-right: $default-spacing-unit / 4;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 
@@ -54,18 +65,7 @@
   display: block;
 
   & + & {
-    margin-left: 0;
     margin-top: $default-spacing-unit / 2;
-  }
-
-  @include media(tablet) {
-    display: inline-block;
-    vertical-align: top;
-
-    & + & {
-      margin-left: $default-spacing-unit * 2;
-      margin-top: 0;
-    }
   }
 
   .c-meta-list__item-label {
@@ -75,36 +75,28 @@
 
 .c-meta-list--split {
   @include clearfix;
+  margin-top: -($default-spacing-unit / 4);
   width: 100%;
 
   .c-meta-list__item {
     display: block;
-    margin-left: 0;
+    margin-top: $default-spacing-unit / 4;
   }
 
   @include media(tablet) {
+    .c-meta-list__item {
+      max-width: 50%;
+    }
+
     .c-meta-list__item:nth-child(odd) {
       float: left;
       clear: both;
-      max-width: 50%;
     }
 
     .c-meta-list__item:nth-child(even) {
       float: right;
-      margin-right: 0;
+      text-align: right;
     }
   }
 }
 
-.c-meta-list--stacked {
-  display: block;
-
-  .c-meta-list__item {
-    display: block;
-  }
-
-  .c-meta-list__item + .c-meta-list__item {
-    margin-left: 0;
-    margin-top: $default-spacing-unit / 2;
-  }
-}
