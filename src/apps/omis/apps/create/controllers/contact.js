@@ -4,23 +4,32 @@ const { CreateController } = require('../../../controllers')
 const { transformContactToOption } = require('../../../../transformers')
 
 class ContactController extends CreateController {
-  configure (req, res, next) {
+  middlewareLocals () {
+    super.middlewareLocals()
+
+    this.use(this.setHeading)
+    this.use(this.setContacts)
+  }
+
+  setHeading (req, res, next) {
     const company = get(res.locals, 'company')
-    let contacts = []
 
     if (company) {
       const companyName = company.trading_name || company.name
-      contacts = company.contacts.map(transformContactToOption)
-      contacts = sortBy(contacts, 'label')
       req.form.options.heading = req.form.options.heading.replace('the client company', companyName)
     }
 
-    req.form.options.fields.contact.options = contacts
-    super.configure(req, res, next)
+    next()
   }
 
-  process (req, res, next) {
-    req.form.values.company = res.locals.company.id
+  setContacts (req, res, next) {
+    const company = get(res.locals, 'company')
+
+    if (company) {
+      const contacts = sortBy(company.contacts.map(transformContactToOption), 'label')
+      req.form.options.fields.contact.options = contacts
+    }
+
     next()
   }
 }

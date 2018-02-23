@@ -8,7 +8,6 @@ const i18n = i18nFuture({
 })
 const steps = require('./steps')
 const fields = require('../../fields')
-const { setCompany } = require('../../middleware')
 const { CreateController } = require('../../controllers')
 
 const config = {
@@ -19,8 +18,6 @@ const config = {
   translate: i18n.translate.bind(i18n),
 }
 
-router.param('companyId', setCompany)
-
-router.use('/:companyId?', wizard(steps, fields, config))
+router.use(wizard(steps, fields, config))
 
 module.exports = router

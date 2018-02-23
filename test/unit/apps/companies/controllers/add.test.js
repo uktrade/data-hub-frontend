@@ -35,6 +35,8 @@ describe('Company add controller', () => {
     getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
+    this.nextStub = sandbox.stub()
+
     companyAddController = proxyquire('~/src/apps/companies/controllers/add', {
       '../../search/services': {
         searchLimitedCompanies: searchLimitedCompaniesStub,
@@ -82,9 +84,9 @@ describe('Company add controller', () => {
         },
       }
 
-      await companyAddController.renderAddStepOne(req, res)
+      await companyAddController.renderAddStepOne(req, res, this.nextStub)
     })
-    it('should return labels for the types and error messages', function () {
+    it('should return labels for the types and error messages', async function () {
       const req = { session: {} }
       const res = {
         locals: {},
@@ -99,9 +101,9 @@ describe('Company add controller', () => {
         },
       }
 
-      companyAddController.renderAddStepOne(req, res)
+      await companyAddController.renderAddStepOne(req, res, this.nextStub)
     })
-    it('should pass through the request body to show previosuly selected options', function () {
+    it('should pass through the request body to show previosuly selected options', async function () {
       const body = { business_type: '1231231231232' }
       const req = { body, session: {} }
       const res = {
@@ -117,7 +119,7 @@ describe('Company add controller', () => {
         },
       }
 
-      companyAddController.renderAddStepOne(req, res)
+      await companyAddController.renderAddStepOne(req, res, this.nextStub)
     })
   })
   describe('Post step 1', () => {

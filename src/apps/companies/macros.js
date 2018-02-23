@@ -46,7 +46,6 @@ const companySortForm = {
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
         { value: 'name:asc', label: 'Company name: A-Z' },
-        { value: 'name:desc', label: 'Company name: Z-A' },
       ],
     },
   ],

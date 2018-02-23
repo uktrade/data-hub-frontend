@@ -136,3 +136,17 @@ Then(/^I can view the collection$/, async function () {
     client.expect(result.value.length).to.be.greaterThan(0)
   })
 })
+
+Then(/^I see the list in A-Z alphabetical order$/, async function () {
+  const firstFieldIsLessThanSecondField = this.state.list.firstItem.field.toLowerCase() < this.state.list.secondItem.field.toLowerCase()
+  const bothFieldsAreTheSame = this.state.list.firstItem.field === this.state.list.secondItem.field
+
+  client.expect(firstFieldIsLessThanSecondField || bothFieldsAreTheSame).to.be.true
+})
+
+Then(/^I see the list in Z-A alphabetical order$/, async function () {
+  const firstFieldIsGreaterThanSecondField = this.state.list.firstItem.field.toLowerCase() > this.state.list.secondItem.field.toLowerCase()
+  const bothFieldsAreTheSame = this.state.list.firstItem.field === this.state.list.secondItem.field
+
+  client.expect(firstFieldIsGreaterThanSecondField || bothFieldsAreTheSame).to.be.true
+})

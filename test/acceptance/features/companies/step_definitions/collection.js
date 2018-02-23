@@ -52,11 +52,18 @@ When(/^the companies are sorted by (Company name: A-Z|Recently updated)$/, async
     .section.firstCompanyInList
     .waitForElementPresent('@header')
     .getText('@header', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value)
+      set(this.state, 'list.firstItem.field', result.value)
+    })
+
+  await CompanyList
+    .section.secondCompanyInList
+    .waitForElementPresent('@header')
+    .getText('@header', (result) => {
+      set(this.state, 'list.secondItem.field', result.value)
     })
 })
 
-When(/^the companies are sorted by (Company name: Z-A|Least recently updated)$/, async function (sortOption) {
+When(/^the companies are sorted by (Least recently updated)$/, async function (sortOption) {
   await CompanyList
     .section.collectionHeader
     .waitForElementVisible('@sortBy')
@@ -67,7 +74,7 @@ When(/^the companies are sorted by (Company name: Z-A|Least recently updated)$/,
     .section.firstCompanyInList
     .waitForElementPresent('@header')
     .getText('@header', (result) => {
-      set(this.state, 'collection.lastItem.field', result.value)
+      set(this.state, 'list.lastItem.field', result.value)
     })
 })
 
@@ -138,11 +145,4 @@ Then(/^the companies should be sorted by (Least recently|Recently) updated$/, as
   if (sortType === 'Least recently') {
     client.expect(updateValues.firstItem.isSameOrBefore(updateValues.secondItem)).to.be.true
   }
-})
-
-Then(/^the companies should have been correctly sorted for text fields$/, async function () {
-  const firstItemField = get(this.state, 'collection.firstItem.field')
-  const lastItemField = get(this.state, 'collection.lastItem.field')
-
-  return client.expect(firstItemField < lastItemField).to.be.true
 })
