@@ -67,19 +67,6 @@ describe('Entity macro', () => {
       expect(component.querySelector('.c-entity__title a')).to.have.property('href', '/horses/12345')
     })
 
-    it('should use a default modifier of inline split it no modifier specified', () => {
-      const component = entitiesMacros.renderToDom('Entity', {
-        id: '12345',
-        name: 'Horse',
-        type: 'animal',
-        meta: [
-          { label: 'Colour', value: 'brown', type: 'badge' },
-          { label: 'DOB', value: '2015-11-10', type: 'date', name: 'date_of_birth' },
-        ],
-      })
-      expect(component.querySelector('.c-meta-list.c-meta-list--split.c-meta-list--inline')).to.exist
-    })
-
     it('should use a content meta modifier if specified', () => {
       const component = entitiesMacros.renderToDom('Entity', {
         id: '12345',
