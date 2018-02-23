@@ -6,7 +6,7 @@
 
   {% call Form({
     buttonText: 'Save',
-    errors: form.errors
+    errors: errors
   }) %}
 
     {{ MultipleChoiceField({
@@ -15,7 +15,7 @@
         modifier: 'inline',
         label: form.labels.client_cannot_provide_total_investment,
         value: form.state.client_cannot_provide_total_investment,
-        error: form.errors.messages.client_cannot_provide_total_investment,
+        error: errors.messages.client_cannot_provide_total_investment,
         options: [
           { label: 'Yes', value: 'false' },
           { label: 'No', value: 'true' }
@@ -27,7 +27,7 @@
       name: 'total_investment',
       label: form.labels.total_investment,
       value: form.state.total_investment,
-      error: form.errors.messages.total_investment,
+      error: errors.messages.total_investment,
       modifier: 'subfield',
       condition: {
         name: 'client_cannot_provide_total_investment',
@@ -41,7 +41,7 @@
         modifier: 'inline',
         label: form.labels.client_cannot_provide_foreign_investment,
         value: form.state.client_cannot_provide_foreign_investment,
-        error: form.errors.messages.client_cannot_provide_foreign_investment,
+        error: errors.messages.client_cannot_provide_foreign_investment,
         options: [
           { label: 'Yes', value: 'false' },
           { label: 'No', value: 'true' }
@@ -53,7 +53,7 @@
       name: 'foreign_equity_investment',
       label: form.labels.foreign_equity_investment,
       value: form.state.foreign_equity_investment,
-      error: form.errors.messages.foreign_equity_investment,
+      error: errors.messages.foreign_equity_investment,
       modifier: 'subfield',
       condition: {
         name: 'client_cannot_provide_foreign_investment',
@@ -65,7 +65,7 @@
       name: 'number_new_jobs',
       label: form.labels.number_new_jobs,
       value: form.state.number_new_jobs,
-      error: form.errors.messages.number_new_jobs
+      error: errors.messages.number_new_jobs
     }) }}
 
     {{ MultipleChoiceField({
@@ -73,7 +73,7 @@
       type: 'radio',
       label: form.labels.average_salary,
       value: form.state.average_salary,
-      error: form.errors.messages.average_salary,
+      error: errors.messages.average_salary,
       options: form.options.averageSalaryRange
     }) }}
 
@@ -81,7 +81,7 @@
       name: 'number_safeguarded_jobs',
       label: form.labels.number_safeguarded_jobs,
       value: form.state.number_safeguarded_jobs,
-      error: form.errors.messages.number_safeguarded_jobs
+      error: errors.messages.number_safeguarded_jobs
     }) }}
 
     {% if investmentData.investment_type.name == 'FDI' %}
@@ -89,7 +89,7 @@
         name: 'fdi_value',
         label: form.labels.fdi_value,
         value: form.state.fdi_value,
-        error: form.errors.messages.fdi_value,
+        error: errors.messages.fdi_value,
         initialOption: '-- Select a project value --',
         options: form.options.fdiValue
       }) }}
@@ -101,7 +101,7 @@
       modifier: 'inline',
       label: form.labels.government_assistance,
       value: form.state.government_assistance,
-      error: form.errors.messages.government_assistance,
+      error: errors.messages.government_assistance,
       options: [
         { label: 'Yes', value: 'true' },
         { label: 'No', value: 'false' }
@@ -114,7 +114,7 @@
       modifier: 'inline',
       label: form.labels.r_and_d_budget,
       value: form.state.r_and_d_budget,
-      error: form.errors.messages.r_and_d_budget,
+      error: errors.messages.r_and_d_budget,
       options: [
         { label: 'Yes', value: 'true' },
         { label: 'No', value: 'false' }
@@ -127,7 +127,7 @@
       modifier: 'inline',
       label: form.labels.non_fdi_r_and_d_budget,
       value: form.state.non_fdi_r_and_d_budget,
-      error: form.errors.messages.non_fdi_r_and_d_budget,
+      error: errors.messages.non_fdi_r_and_d_budget,
       options: [
         { label: 'Yes', value: 'true' },
         { label: 'No', value: 'false' }
@@ -140,7 +140,7 @@
       modifier: 'inline',
       label: form.labels.new_tech_to_uk,
       value: form.state.new_tech_to_uk,
-      error: form.errors.messages.new_tech_to_uk,
+      error: errors.messages.new_tech_to_uk,
       options: [
         { label: 'Yes', value: 'true' },
         { label: 'No', value: 'false' }
@@ -153,7 +153,7 @@
       modifier: 'inline',
       label: form.labels.export_revenue,
       value: form.state.export_revenue,
-      error: form.errors.messages.export_revenue,
+      error: errors.messages.export_revenue,
       options: [
         { label: 'Yes', value: 'true' },
         { label: 'No', value: 'false' }

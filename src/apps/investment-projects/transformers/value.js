@@ -75,6 +75,20 @@ function transformInvestmentValueForView ({
   }
 }
 
+function transformInvestmentValueFormBodyToApiRequest (props) {
+  const newProps = {
+    average_salary: {
+      id: props.average_salary,
+    },
+    total_investment: props.client_cannot_provide_total_investment === 'true' ? null : props.total_investment,
+    foreign_equity_investment: props.client_cannot_provide_foreign_investment === 'true' ? null : props.foreign_equity_investment,
+  }
+  return {
+    ...props,
+    ...newProps,
+  }
+}
+
 function transformAssociatedProject ({
   id,
   associated_non_fdi_r_and_d_project,
@@ -100,4 +114,7 @@ function transformAssociatedProject ({
   }
 }
 
-module.exports = { transformInvestmentValueForView }
+module.exports = {
+  transformInvestmentValueForView,
+  transformInvestmentValueFormBodyToApiRequest,
+}

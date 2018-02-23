@@ -22,14 +22,8 @@ function editDetailsPost (req, res, next) {
   return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
 }
 
-function editValuePost (req, res) {
-  if (res.locals.form.errors) {
-    return res
-      .breadcrumb('Edit value')
-      .render('investment-projects/views/value-edit')
-  }
-  req.flash('success', 'Investment value updated')
-  return res.redirect(`/investment-projects/${res.locals.projectId}/details`)
+function renderValueForm (req, res) {
+  return res.render('investment-projects/views/value-edit')
 }
 
 module.exports = {
@@ -37,5 +31,5 @@ module.exports = {
   editValueGet,
   renderRequirementsForm,
   editDetailsPost,
-  editValuePost,
+  renderValueForm,
 }

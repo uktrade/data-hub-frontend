@@ -28,10 +28,15 @@ describe('Investment form middleware - investment value', () => {
       session: {
         token: '1234',
       },
+      params: {
+        investmentId: '1234',
+      },
+      flash: sandbox.stub(),
     }
 
     this.resMock = {
       locals: {},
+      redirect: sandbox.stub(),
     }
 
     nock(config.apiRoot)
@@ -175,6 +180,117 @@ describe('Investment form middleware - investment value', () => {
         ]
 
         expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(expectedOptions)
+      })
+    })
+  })
+  describe('#handleFormPost', () => {
+    beforeEach(() => {
+      this.resMock.locals.form = {
+        labels: {},
+        state: {},
+        options: {},
+      }
+    })
+    context('when called with a complete form', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .patch('/v3/investment/1234', {
+            client_cannot_provide_total_investment: 'false',
+            total_investment: '10000',
+            client_cannot_provide_foreign_investment: 'false',
+            foreign_equity_investment: '5000',
+            number_new_jobs: '10',
+            average_salary: {
+              id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+            },
+            number_safeguarded_jobs: '100',
+            fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+            government_assistance: 'false',
+            r_and_d_budget: 'false',
+            non_fdi_r_and_d_budget: 'false',
+            new_tech_to_uk: 'false',
+            export_revenue: 'false',
+          })
+          .reply(200, {})
+
+        this.reqMock.body = {
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        }
+        await controller.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('redirects to the details screen', () => {
+        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+      })
+
+      it('sends a flash message to inform the user of the change', () => {
+        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment value updated')
+      })
+    })
+    context('when called with invalid input', () => {
+      beforeEach(async () => {
+        this.error = {
+          total_investment: ['This field may not be null.'],
+        }
+
+        nock(config.apiRoot)
+          .patch('/v3/investment/1234', {
+            client_cannot_provide_total_investment: 'false',
+            total_investment: '',
+            client_cannot_provide_foreign_investment: 'false',
+            foreign_equity_investment: '5000',
+            number_new_jobs: '10',
+            average_salary: {
+              id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+            },
+            number_safeguarded_jobs: '100',
+            fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+            government_assistance: 'false',
+            r_and_d_budget: 'false',
+            non_fdi_r_and_d_budget: 'false',
+            new_tech_to_uk: 'false',
+            export_revenue: 'false',
+          })
+          .reply(400, this.error)
+
+        this.reqMock.body = {
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '',
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        }
+        await controller.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('passes the request to the next middleware', () => {
+        expect(this.nextSpy).to.be.called
+      })
+
+      it('copies the errors to the response object', () => {
+        expect(this.resMock.locals.errors).to.deep.equal({
+          messages: this.error,
+        })
       })
     })
   })
