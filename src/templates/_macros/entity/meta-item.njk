@@ -15,6 +15,7 @@
  # @param {string} [props.isLabelHidden=false] - whether the label should be visually hidden
  # @param {string} [props.badgeModifier] - modifier for badge
  # @param {string} [props.highlightTerm] - text to use to apply highlight filter
+ # @param {string|array} [props.modifier] - Modifier for the outer class (e.g. 'stacked')
  #}
 {% macro MetaItem (props) %}
   {% set badgeModifier = props.badgeModifier | concat('') | reverse | join(' c-badge--') if props.badgeModifier %}
@@ -35,7 +36,6 @@
     {% endif %}
 
     {% set value = metaItemValue | escape | highlight(props.highlightTerm, true) %}
-
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
