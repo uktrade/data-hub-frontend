@@ -54,6 +54,14 @@ describe('transformCompanyToListItem', () => {
     it('should return a url to view the company', () => {
       expect(this.listItem).to.have.property('url', '/companies/dcdabbc9-1781-e411-8955-e4115bead28a')
     })
+
+    it('should return a modifed on property', () => {
+      expect(this.listItem).to.have.deep.property('subTitle', {
+        value: '2017-05-13T15:58:46.421721',
+        type: 'datetime',
+        label: 'Updated on',
+      })
+    })
   })
 
   context('when the company is based in the uk', () => {

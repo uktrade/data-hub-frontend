@@ -35,10 +35,12 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
+        subHeader: {
+          selector: '.c-entity__subtitle',
+        },
 
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
-        updated: getMetaListItemValueSelector('Updated on'),
         countryBadge: getMetaListItemValueSelector('Country'),
       },
     },

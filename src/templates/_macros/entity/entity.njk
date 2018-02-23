@@ -4,6 +4,7 @@
  # Render entity component
  # @param {object} props
  # @param {string} props.name - entity name
+ # @params{string|object} props.subTitle - Sub-title below the main link/title
  # @param {string} props.type - entity type (e.g. 'date' to format dates)
  # @param {string} [props.id] - entity id, used to create a link to the entity if provided
  # @param {string} [props.url] - entity URL, defaults to props.urlPrefix + props.id
@@ -19,7 +20,7 @@
     {% set urlPrefix = props.urlPrefix or props.type | pluralise + '/' %}
     {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
-    {% set contentMetaModifier = props.contentMetaModifier| default(['inline', 'split']) %}
+    {% set contentMetaModifier = props.contentMetaModifier %}
     {% set metaItems = props.meta | reject(['type', 'badge']) %}
     {% set highlightedName = props.name | escape | highlight(props.highlightTerm) %}
     {% set containerElement = 'a' if props.isBlockLink else 'div' %}
@@ -28,11 +29,19 @@
       class="c-entity c-entity--{{ props.type }} {{ 'c-entity--block-link' if props.isBlockLink }}"
       {% if props.isBlockLink %}href="{{ url }}"{% endif %}
     >
-      {% if props.code %}
-        <div class="c-entity__code">{{ props.code | highlight(props.highlightTerm, true) }}</div>
-      {% endif %}
-
       <div class="c-entity__header">
+        {% if metaBadges | length %}
+          <div class="c-entity__badges">
+            {{
+              MetaList({
+                items: metaBadges,
+                highlightTerm: props.highlightTerm,
+                modifier: "inline"
+              })
+            }}
+          </div>
+        {% endif %}
+
         <h3 class="c-entity__title">
           {% if props.id and not props.isBlockLink %}
             <a href="{{ url }}">{{ highlightedName }}</a>
@@ -41,15 +50,8 @@
           {% endif %}
         </h3>
 
-        {% if metaBadges | length %}
-          <div class="c-entity__badges">
-            {{
-              MetaList({
-                items: metaBadges,
-                highlightTerm: props.highlightTerm
-              })
-            }}
-          </div>
+        {% if props.subTitle %}
+          {{ SubTitle(props.subTitle) }}
         {% endif %}
       </div>
 
@@ -66,4 +68,25 @@
       {% endif %}
     </{{ containerElement }}>
   {% endif %}
+{% endmacro %}
+
+{% macro SubTitle (props) %}
+  <h4 class="c-entity__subtitle">
+    {% if props.value %}
+      {% if props.type === 'date' %}
+        {% set value = props.value | formatDate %}
+      {% elif props.type === 'dateMonthYear' %}
+        {% set value = props.value | formatDate('MMMM YYYY') %}
+      {% elif props.type === 'datetime' %}
+        {% set value = props.value | formatDateTime %}
+      {% elif props.type === 'fromNow' %}
+        {% set value = FromNow({ datetime: props.value }) %}
+      {% else %}
+        {% set value = props.value %}
+      {% endif %}
+      {{ props.label }} {{ value }}
+    {% else %}
+      {{ props }}
+    {% endif %}
+  </h4>
 {% endmacro %}

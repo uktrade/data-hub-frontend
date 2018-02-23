@@ -39,14 +39,15 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
+        subHeader: {
+          selector: '.c-entity__subtitle',
+        },
         eventType: getMetaListItemValueSelector('Type'),
         country: getMetaListItemValueSelector('Country'),
         ukRegion: getMetaListItemValueSelector('Region'),
-        eventStart: getMetaListItemValueSelector('Begins'),
-        eventEnd: getMetaListItemValueSelector('Ends'),
+        eventDate: getMetaListItemValueSelector('Event date'),
         organiser: getMetaListItemValueSelector('Organiser'),
         leadTeam: getMetaListItemValueSelector('Lead team'),
-        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     secondEventInList: {
@@ -55,8 +56,10 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
-        eventStart: getMetaListItemValueSelector('Begins'),
-        updated: getMetaListItemValueSelector('Updated'),
+        subHeader: {
+          selector: '.c-entity__subtitle',
+        },
+        eventDate: getMetaListItemValueSelector('Event date'),
       },
     },
     filters: {

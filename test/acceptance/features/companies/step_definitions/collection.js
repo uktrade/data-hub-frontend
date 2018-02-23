@@ -120,22 +120,21 @@ Then(/^the companies should be sorted by (Least recently|Recently) updated$/, as
     firstItem: null,
     secondItem: null,
   }
-  const formatDateString = (string) => {
-    return moment(string, 'DD MMM YYYY, h:mma')
-  }
 
   await CompanyList
     .section.firstCompanyInList
-    .waitForElementPresent('@header')
-    .getText('@updated', (text) => {
-      set(updateValues, 'firstItem', formatDateString(text.value))
+    .waitForElementPresent('@subHeader')
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(updateValues, 'firstItem', date)
     })
 
   await CompanyList
     .section.secondCompanyInList
-    .waitForElementPresent('@header')
-    .getText('@updated', (text) => {
-      set(updateValues, 'secondItem', formatDateString(text.value))
+    .waitForElementPresent('@subHeader')
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(updateValues, 'secondItem', date)
     })
 
   if (sortType === 'Recently') {

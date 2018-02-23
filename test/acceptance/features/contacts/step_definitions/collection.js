@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { get, set, camelCase } = require('lodash')
-const { compareDesc } = require('date-fns')
+const moment = require('moment')
 
 const { getUid } = require('../../../helpers/uuid')
 
@@ -101,8 +101,9 @@ When(/^the contacts are sorted by (Recently updated)$/, async function (sortOpti
 
   await ContactList
     .section.firstContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value)
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(this.state, 'collection.firstItem.field', date)
     })
 })
 
@@ -115,14 +116,9 @@ When(/^the contacts are sorted by (Least recently updated)$/, async function (so
 
   await ContactList
     .section.firstContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'list.lastItem.field', result.value)
-    })
-
-  await ContactList
-    .section.secondContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'list.secondItem.field', result.value)
+    .getText('@subHeader', (result) => {
+      const date = moment(result.value.substr(11), 'D MMM YYYY, h:mma')
+      set(this.state, 'collection.lastItem.field', date)
     })
 })
 
@@ -137,36 +133,14 @@ When(/^the contacts are sorted by (Last name: A-Z)$/, async function (sortOption
     .section.firstContactInList
     .getText('@header', (result) => {
       const name = result.value.split(' ')[0]
-      set(this.state, 'list.firstItem.field', name)
+      set(this.state, 'collection.firstItem.field', name)
     })
 
   await ContactList
     .section.secondContactInList
     .getText('@header', (result) => {
       const name = result.value.split(' ')[0]
-      set(this.state, 'list.secondItem.field', name)
-    })
-})
-
-When(/^the contacts are sorted by (Last name: Z-A)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@header', (result) => {
-      const name = result.value.split(' ')[0]
-      set(this.state, 'list.firstItem.field', name)
-    })
-
-  await ContactList
-    .section.secondContactInList
-    .getText('@header', (result) => {
-      const name = result.value.split(' ')[0]
-      set(this.state, 'list.secondItem.field', name)
+      set(this.state, 'collection.secondItemField.field', name)
     })
 })
 
@@ -180,13 +154,13 @@ When(/^the contacts are sorted by (Country: A-Z)$/, async function (sortOption) 
   await ContactList
     .section.firstContactInList
     .getText('@countryBadge', (result) => {
-      set(this.state, 'list.firstItem.field', result.value)
+      set(this.state, 'collection.firstItem.field', result.value)
     })
 
   await ContactList
     .section.secondContactInList
     .getText('@countryBadge', (result) => {
-      set(this.state, 'list.secondItem.field', result.value)
+      set(this.state, 'collection.secondItem.field', result.value)
     })
 })
 
@@ -243,7 +217,7 @@ Then(/^the contacts should have been correctly sorted for date fields$/, async f
   const firstItemField = get(this.state, `collection.firstItem.field`)
   const lastItemField = get(this.state, `collection.lastItem.field`)
 
-  client.expect(compareDesc(firstItemField, lastItemField)).to.be.within(0, 1)
+  client.expect(lastItemField.isBefore(firstItemField)).to.be.true
 })
 
 // TODO make this work in the same way as the "companies should be sorted by (Least recently|Recently) updated" step does
@@ -260,7 +234,7 @@ Then(/^the contacts should have been correctly sorted by creation date$/, async 
 
 Then(/^the contacts should have been correctly sorted for text fields$/, async function () {
   const firstItemField = get(this.state, 'collection.firstItem.field')
-  const lastItemField = get(this.state, 'collection.lastItem.field')
+  const secondItemField = get(this.state, 'collection.secondItem.field')
 
-  return client.expect(firstItemField < lastItemField).to.be.true
+  return client.expect(firstItemField < secondItemField).to.be.true
 })

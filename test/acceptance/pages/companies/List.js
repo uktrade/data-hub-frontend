@@ -29,8 +29,10 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
+        subHeader: {
+          selector: '.c-entity__subtitle',
+        },
         companySector: getFirstListItemMetaElementWithText('Sector'),
-        updated: getFirstListItemMetaElementWithText('Updated'),
         countryBadge: getBadgeWithText('Country'),
         ukRegionBadge: getBadgeWithText('UK region'),
       },
@@ -41,8 +43,10 @@ module.exports = {
         header: {
           selector: '.c-entity__header a',
         },
+        subHeader: {
+          selector: '.c-entity__subtitle',
+        },
         companySector: getSecondListItemMetaElementWithText('Sector'),
-        updated: getSecondListItemMetaElementWithText('Updated'),
         countryBadge: getBadgeWithText('Country'),
         ukRegionBadge: getBadgeWithText('UK region'),
       },

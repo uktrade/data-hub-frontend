@@ -155,6 +155,7 @@ const labels = {
     investor_company: 'Investor',
     estimated_land_date: 'Estimated land date',
     sector: 'Sector',
+    project_code: 'Project code',
   },
 }
 

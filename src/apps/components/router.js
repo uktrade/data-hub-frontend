@@ -11,6 +11,7 @@ const {
   renderCollection,
   renderKeyValueTables,
   renderHiddenText,
+  renderMetaList,
 } = require('./controllers')
 
 const { renderFormElements } = require('./form/controllers')
@@ -30,6 +31,7 @@ router
   .get('/progress', renderProgress)
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)
+  .get('/meta-list', renderMetaList)
   .all('/form', renderFormElements)
 
 module.exports = router

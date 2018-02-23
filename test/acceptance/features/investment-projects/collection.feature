@@ -41,6 +41,7 @@ Feature: View a list of Investment Projects
       | Investor            | investmentProject.equitySource.name |
       | Sector              | investmentProject.primarySector     |
       | Estimated land date | investmentProject.estimatedLandDate |
+      | Project code        | investmentProject.project_code      |
     And the Investment project has badges
       | text            | expected                            |
       | Stage           | investmentProject.stage             |
