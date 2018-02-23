@@ -42,6 +42,19 @@ module.exports = {
         countryBadge: getMetaListItemValueSelector('Country'),
       },
     },
+    secondContactInList: {
+      selector: '.c-entity-list li:nth-child(2)',
+      elements: {
+        header: {
+          selector: '.c-entity__header a',
+        },
+
+        companyName: getMetaListItemValueSelector('Company'),
+        companySector: getMetaListItemValueSelector('Sector'),
+        updated: getMetaListItemValueSelector('Updated on'),
+        countryBadge: getMetaListItemValueSelector('Country'),
+      },
+    },
     filters: {
       selector: '.c-collection-filters',
       elements: {

@@ -1,19 +1,6 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  <h2 class="heading-small">Company</h2>
-  <div>
-    {{ company.name }}
-    <br>
-    {{ [
-      company.registered_address_1,
-      company.registered_address_2,
-      company.registered_address_county,
-      company.registered_address_town,
-      company.registered_address_postcode
-    ] | removeNilAndEmpty | join(", ") }}
-  </div>
-
   {{ super() }}
 
   {% call HiddenContent({ summary: 'Contact you are looking for is not listed' }) %}
@@ -22,7 +9,7 @@
     {% endcall %}
   {% endcall %}
 
-  {% if order.canEditContactDetails %}
+  {% if order.canEditContactDetails and order.status !== 'draft' %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>Changing the contact will change who notifications are sent to.</p>
       <p>It will not change the contact details on the quote.</p>

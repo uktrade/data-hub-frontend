@@ -107,18 +107,9 @@ Feature: View collection of contacts
     When the contacts are sorted by Recently updated
     When the contacts are sorted by Least recently updated
     Then the contacts should have been correctly sorted for date fields
-    When the contacts are sorted by First name: A-Z
-    When the contacts are sorted by First name: Z-A
-    Then the contacts should have been correctly sorted for text fields
 #    When the contacts are sorted by Last name: A-Z
-#    When the contacts are sorted by Last name: Z-A
 #    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated (is the problem when two are identical?)
     When the contacts are sorted by Country: A-Z
-    When the contacts are sorted by Country: Z-A
-    Then the contacts should have been correctly sorted for text fields
+    Then I see the list in A-Z alphabetical order
     When the contacts are sorted by Company: A-Z
-    When the contacts are sorted by Company: Z-A
-    Then the contacts should have been correctly sorted for text fields
-    When the contacts are sorted by Sector: A-Z
-    When the contacts are sorted by Sector: Z-A
-    Then the contacts should have been correctly sorted for text fields
+    Then I see the list in A-Z alphabetical order

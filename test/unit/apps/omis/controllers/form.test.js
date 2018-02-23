@@ -6,6 +6,7 @@ describe('OMIS FormController', () => {
   beforeEach(() => {
     this.nextSpy = sandbox.stub()
     this.redirectSpy = sandbox.spy()
+
     this.controller = new Controller({ route: '/' })
   })
 
@@ -282,7 +283,7 @@ describe('OMIS FormController', () => {
       FormController.prototype.errorHandler = this.errorHandlerSpy
     })
 
-    describe('when it doesn\'t return missing prereq error', () => {
+    context('when it doesn\'t return missing prereq error', () => {
       beforeEach(() => {
         this.errorMock = new Error()
         this.errorMock.code = 'OTHER_ERROR'
@@ -296,48 +297,25 @@ describe('OMIS FormController', () => {
       })
     })
 
-    describe('when it returns missing prereq error', () => {
+    context('when a redirect property is set', () => {
       beforeEach(() => {
-        this.getStub = sandbox.stub()
         this.errorMock = new Error()
         this.errorMock.code = 'MISSING_PREREQ'
-        this.reqMock = Object.assign({}, globalReq, {
-          journeyModel: {
-            get: this.getStub,
-          },
-          baseUrl: '/journey-base-url',
-        })
+        this.errorMock.redirect = '/error-redirect-path/'
+
+        this.controller.errorHandler(this.errorMock, globalReq, this.resMock, this.nextSpy)
       })
 
-      describe('when last step is not defined', () => {
-        it('should redirect to the create first step', () => {
-          this.getStub.returns([])
-          this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.redirectSpy).to.be.calledWith('/journey-base-url')
-          expect(this.errorHandlerSpy).not.to.be.called
-        })
+      it('redirect to specificed value', () => {
+        expect(this.redirectSpy).to.be.calledWith(this.errorMock.redirect)
       })
 
-      describe('when last step is defined', () => {
-        it('should redirect to the create first step', () => {
-          const historyMock = [{
-            path: 'first-item',
-          }, {
-            path: 'last-item',
-          }]
-
-          this.getStub.returns(historyMock)
-
-          this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.redirectSpy).to.be.calledWith('last-item')
-          expect(this.errorHandlerSpy).not.to.be.called
-        })
+      it('should not call error handler', () => {
+        expect(this.errorHandlerSpy).not.to.be.called
       })
     })
 
-    describe('when it returns session timeout error', () => {
+    context('when it returns session timeout error', () => {
       beforeEach(() => {
         this.errorMock = new Error()
         this.errorMock.code = 'SESSION_TIMEOUT'
