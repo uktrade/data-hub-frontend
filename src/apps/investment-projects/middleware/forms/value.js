@@ -42,16 +42,6 @@ async function handleFormPost (req, res, next) {
       res.locals.errors = {
         messages: err.error,
       }
-
-      if (!req.body.client_cannot_provide_total_investment) {
-        delete res.locals.errors.messages.total_investment
-        res.locals.errors.messages.client_cannot_provide_total_investment = ['This field is required']
-      }
-      if (!req.body.client_cannot_provide_foreign_investment) {
-        delete res.locals.errors.messages.foreign_equity_investment
-        res.locals.errors.messages.client_cannot_provide_foreign_investment = ['This field is required']
-      }
-
       next()
     } else {
       next(err)

@@ -200,9 +200,7 @@ describe('Investment form middleware - investment value', () => {
             client_cannot_provide_foreign_investment: 'false',
             foreign_equity_investment: '5000',
             number_new_jobs: '10',
-            average_salary: {
-              id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
-            },
+            average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
             number_safeguarded_jobs: '100',
             fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
             government_assistance: 'false',
@@ -248,13 +246,11 @@ describe('Investment form middleware - investment value', () => {
         nock(config.apiRoot)
           .patch('/v3/investment/1234', {
             client_cannot_provide_total_investment: 'false',
-            total_investment: '',
+            total_investment: null,
             client_cannot_provide_foreign_investment: 'false',
             foreign_equity_investment: '5000',
             number_new_jobs: '10',
-            average_salary: {
-              id: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
-            },
+            average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
             number_safeguarded_jobs: '100',
             fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
             government_assistance: 'false',

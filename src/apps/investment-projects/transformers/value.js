@@ -76,16 +76,22 @@ function transformInvestmentValueForView ({
 }
 
 function transformInvestmentValueFormBodyToApiRequest (props) {
-  const newProps = {
-    average_salary: {
-      id: props.average_salary,
-    },
-    total_investment: props.client_cannot_provide_total_investment === 'true' ? null : props.total_investment,
-    foreign_equity_investment: props.client_cannot_provide_foreign_investment === 'true' ? null : props.foreign_equity_investment,
-  }
+  const totalInvestment = props.client_cannot_provide_total_investment === 'true'
+    ? null
+    : props.total_investment || null
+
+  const foreignEquityInvestment = props.client_cannot_provide_foreign_investment === 'true'
+    ? null
+    : props.foreign_equity_investment || null
+
   return {
     ...props,
-    ...newProps,
+    ...{
+      total_investment: totalInvestment,
+      foreign_equity_investment: foreignEquityInvestment,
+      number_new_jobs: props.number_new_jobs || null,
+      number_safeguarded_jobs: props.number_safeguarded_jobs || null,
+    },
   }
 }
 
