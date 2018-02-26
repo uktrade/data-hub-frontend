@@ -91,21 +91,17 @@ function transformInteractionToListItem ({
         value: (kind === 'interaction') ? 'Interaction' : 'Service delivery',
       },
       {
-        label: 'Contact',
-        value: contact,
-      },
-      {
         label: 'Date',
         value: date,
         type: 'date',
       },
       {
-        label: 'Company',
-        value: company,
+        label: 'Contact',
+        value: contact,
       },
       {
-        label: 'Channel',
-        value: communication_channel,
+        label: 'Company',
+        value: company,
       },
       {
         label: 'Adviser',

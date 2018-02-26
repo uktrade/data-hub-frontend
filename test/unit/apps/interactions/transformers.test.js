@@ -129,6 +129,11 @@ describe('Interaction transformers', () => {
               value: 'Interaction',
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Contact',
               value: {
                 id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -138,22 +143,10 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
-            },
-            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
                 name: 'Samsung',
-              },
-            },
-            {
-              label: 'Channel',
-              value: {
-                id: '72c226d7-5d95-e211-a939-e4115bead28a',
-                name: 'Telephone',
               },
             },
             {
@@ -215,6 +208,11 @@ describe('Interaction transformers', () => {
               value: 'Service delivery',
             },
             {
+              label: 'Date',
+              type: 'date',
+              value: '2017-05-31T00:00:00',
+            },
+            {
               label: 'Contact',
               value: {
                 id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -224,22 +222,10 @@ describe('Interaction transformers', () => {
               },
             },
             {
-              label: 'Date',
-              type: 'date',
-              value: '2017-05-31T00:00:00',
-            },
-            {
               label: 'Company',
               value: {
                 id: 'dcdabbc9-1781-e411-8955-e4115bead28a',
                 name: 'Samsung',
-              },
-            },
-            {
-              label: 'Channel',
-              value: {
-                id: '72c226d7-5d95-e211-a939-e4115bead28a',
-                name: 'Telephone',
               },
             },
             {
