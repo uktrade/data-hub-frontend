@@ -14,7 +14,9 @@ const eventFormConfig = ({
 }) => {
   return {
     method: 'post',
-    buttonText: 'Save',
+    buttonText: eventId ? 'Save and return' : 'Add event',
+    returnText: eventId ? 'Return without saving' : 'Cancel',
+    returnLink: eventId ? `/events/${eventId}` : '/events',
     hiddenFields: {
       id: eventId,
     },

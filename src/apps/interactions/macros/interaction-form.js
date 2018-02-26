@@ -14,6 +14,8 @@ const {
 
 module.exports = function ({
   returnLink,
+  returnText,
+  buttonText,
   contacts = [],
   advisers = [],
   services = [],
@@ -23,8 +25,8 @@ module.exports = function ({
 }) {
   return {
     returnLink,
-    buttonText: 'Save',
-    returnText: 'Cancel',
+    returnText,
+    buttonText,
     hiddenFields,
     children: [
       contact(contacts),

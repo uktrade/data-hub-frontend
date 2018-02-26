@@ -17,7 +17,7 @@ module.exports = {
     searchForm: '.c-entity-search__button',
     addCompanyButton: getButtonWithText('Add company'),
     continueButton: getButtonWithText('Continue'),
-    saveAndCreateButton: getButtonWithText('Save and create'),
+    saveAndCreateButton: getButtonWithText('Add company'),
     ukPrivateOrPublicLimitedCompanyOption: 'label[for=field-business_type-1]',
     otherTypeOfUKOrganisationOption: 'label[for=field-business_type-2]',
     otherTypeOfUKOrganisationBusinessType: 'select[name="business_type_uk_other"]',
@@ -586,7 +586,7 @@ module.exports = {
       selector: 'form',
       elements: {
         exportWinCategory: '#field-export_experience_category',
-        saveButton: getButtonWithText('Update'),
+        saveButton: getButtonWithText('Save'),
       },
     },
   },
