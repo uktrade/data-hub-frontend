@@ -13,6 +13,12 @@ function getContactAddress (address_same_as_company, contactAddressFields, compa
   return getFormattedAddress(company, 'trading') || getFormattedAddress(company, 'registered')
 }
 
+function getTelephoneNumber (telephone_countrycode, telephone_number) {
+  return telephone_countrycode
+    ? `(${telephone_countrycode}) ${telephone_number}`
+    : telephone_number
+}
+
 function transformContactToListItem ({
   id,
   first_name,
@@ -26,8 +32,13 @@ function transformContactToListItem ({
   archived_on,
   company_sector,
   primary,
+  telephone_countrycode,
+  telephone_number,
+  email,
 } = {}) {
   if (!id || (!first_name && !last_name)) { return }
+
+  const telephoneNumber = getTelephoneNumber(telephone_countrycode, telephone_number)
 
   const metaItems = [
     { key: 'company', value: get(company, 'name') },
@@ -35,6 +46,8 @@ function transformContactToListItem ({
     { key: 'company_sector', value: get(company_sector, 'name') },
     { key: 'address_country', value: get(address_country, 'name') },
     { key: 'company_uk_region', value: company_uk_region },
+    { key: 'telephone', value: telephoneNumber },
+    { key: 'email', value: email },
     { key: 'contact_type', value: (primary ? 'Primary' : null), type: 'badge', badgeModifier: 'secondary' },
     { key: 'archived_on', value: (archived_on ? 'Archived' : null), type: 'badge' },
   ].map(({ key, value, type, badgeModifier }) => {
@@ -83,10 +96,7 @@ function transformContactToView ({
   notes,
   address_same_as_company,
 }, company) {
-  const telephoneNumber =
-    telephone_countrycode
-      ? `(${telephone_countrycode}) ${telephone_number}`
-      : telephone_number
+  const telephoneNumber = getTelephoneNumber(telephone_countrycode, telephone_number)
 
   const viewRecord = {
     job_title,

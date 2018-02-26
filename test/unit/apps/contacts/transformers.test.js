@@ -88,6 +88,8 @@ describe('Contact transformers', () => {
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
+            { label: 'Phone number', value: '(+44) 07814 333 777' },
+            { label: 'Email', value: 'fred@test.com' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
           ],
         })
@@ -122,6 +124,8 @@ describe('Contact transformers', () => {
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
+            { label: 'Phone number', value: '(+44) 07814 333 777' },
+            { label: 'Email', value: 'fred@test.com' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
             { label: 'Status', type: 'badge', value: 'Archived' },
           ],
