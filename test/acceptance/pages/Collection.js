@@ -46,6 +46,7 @@ module.exports = {
       elements: {
         header: '.c-entity__title',
         updatedOn: getSelectorForMetaListItemValue('Updated on'),
+        link: '.c-entity--block-link, .c-entity__link',
       },
     },
     filters: {

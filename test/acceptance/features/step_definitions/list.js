@@ -127,8 +127,8 @@ Then(/^the result count should be reset$/, async function () {
 Then(/^I choose the first item in the collection$/, async function () {
   await Collection
     .section.firstCollectionItem
-    .waitForElementVisible('@header')
-    .click('@header')
+    .waitForElementVisible('@link')
+    .click('@link')
 })
 
 Then(/^I can view the collection$/, async function () {
