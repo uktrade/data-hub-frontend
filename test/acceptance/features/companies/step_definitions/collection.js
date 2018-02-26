@@ -1,4 +1,3 @@
-const moment = require('moment')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { get, set } = require('lodash')
@@ -41,11 +40,11 @@ When(/^I filter the companies list by UK region/, async function () {
     .wait() // wait for xhr
 })
 
-When(/^the companies are sorted by (Company name: A-Z|Recently updated)$/, async function (sortOption) {
+When(/^the companies are sorted by Company name: A-Z$/, async function () {
   await CompanyList
     .section.collectionHeader
     .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
+    .clickListOption('sortby', 'Company name: A-Z')
     .wait() // wait for xhr
 
   await CompanyList
@@ -60,21 +59,6 @@ When(/^the companies are sorted by (Company name: A-Z|Recently updated)$/, async
     .waitForElementPresent('@header')
     .getText('@header', (result) => {
       set(this.state, 'list.secondItem.field', result.value)
-    })
-})
-
-When(/^the companies are sorted by (Least recently updated)$/, async function (sortOption) {
-  await CompanyList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await CompanyList
-    .section.firstCompanyInList
-    .waitForElementPresent('@header')
-    .getText('@header', (result) => {
-      set(this.state, 'list.lastItem.field', result.value)
     })
 })
 
@@ -112,37 +96,4 @@ Then(/^the companies should be filtered to show badge company UK region/, async 
     .section.firstCompanyInList
     .waitForElementVisible('@ukRegionBadge')
     .assert.containsText('@ukRegionBadge', expectedBadgeText)
-})
-
-// TODO potentially abstract this out to collections
-Then(/^the companies should be sorted by (Least recently|Recently) updated$/, async function (sortType) {
-  const updateValues = {
-    firstItem: null,
-    secondItem: null,
-  }
-  const formatDateString = (string) => {
-    return moment(string, 'DD MMM YYYY, h:mma')
-  }
-
-  await CompanyList
-    .section.firstCompanyInList
-    .waitForElementPresent('@header')
-    .getText('@updated', (text) => {
-      set(updateValues, 'firstItem', formatDateString(text.value))
-    })
-
-  await CompanyList
-    .section.secondCompanyInList
-    .waitForElementPresent('@header')
-    .getText('@updated', (text) => {
-      set(updateValues, 'secondItem', formatDateString(text.value))
-    })
-
-  if (sortType === 'Recently') {
-    client.expect(updateValues.firstItem.isSameOrAfter(updateValues.secondItem)).to.be.true
-  }
-
-  if (sortType === 'Least recently') {
-    client.expect(updateValues.firstItem.isSameOrBefore(updateValues.secondItem)).to.be.true
-  }
 })
