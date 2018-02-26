@@ -77,13 +77,17 @@ describe('Contact transformers', () => {
           id: '12651151-2149-465e-871b-ac45bc568a62',
           type: 'contact',
           name: 'Fred Smith',
+          subTitle: {
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-02-14T14:49:17',
+          },
           isArchived: false,
           meta: [
             { label: 'Company', value: 'Fred ltd' },
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
-            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
           ],
         })
@@ -107,13 +111,17 @@ describe('Contact transformers', () => {
           id: '12651151-2149-465e-871b-ac45bc568a62',
           type: 'contact',
           name: 'Fred Smith',
+          subTitle: {
+            label: 'Updated on',
+            type: 'datetime',
+            value: '2017-02-14T14:49:17',
+          },
           isArchived: true,
           meta: [
             { label: 'Company', value: 'Fred ltd' },
             { label: 'Job title', value: 'Director' },
             { label: 'Sector', value: 'Aerospace' },
             { label: 'Country', value: 'United Kingdom' },
-            { label: 'Updated on', type: 'datetime', value: '2017-02-14T14:49:17' },
             { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
             { label: 'Status', type: 'badge', value: 'Archived' },
           ],
