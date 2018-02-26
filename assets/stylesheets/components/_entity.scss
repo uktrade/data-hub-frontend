@@ -55,11 +55,16 @@
   padding: $default-spacing-unit;
   border: 2px solid $grey-2;
   display: block;
+  text-decoration: none;
 
   &:focus,
   &:hover {
     background-color: $grey-4;
     border-color: $link-hover-colour;
     color: $link-hover-colour;
+  }
+
+  .c-entity__title {
+    text-decoration: underline;
   }
 }
