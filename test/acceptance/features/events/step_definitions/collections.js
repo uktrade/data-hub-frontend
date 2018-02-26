@@ -1,4 +1,3 @@
-const { compareAsc, compareDesc } = require('date-fns')
 const { get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
@@ -119,52 +118,4 @@ When(/^I sort the events list name A-Z$/, async function () {
     .getText('@header', (text) => {
       set(this.state, 'list.secondItem.field', text.value)
     })
-})
-
-When(/^I sort the events list by recently updated$/, async function () {
-  await EventList
-    .click('select[name="sortby"] option[value="modified_on:desc"]')
-    .wait() // wait for xhr
-
-  await EventList.section.firstEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.firstItem.updated ', dateString.value)
-    })
-
-  await EventList.section.secondEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.secondItem.updated', dateString.value)
-    })
-})
-
-Then(/^I see the list in descending recently updated order$/, async function () {
-  client.expect(
-    compareDesc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
-  ).to.be.within(0, 1)
-})
-
-When(/^I sort the events list by least recently updated$/, async function () {
-  await EventList
-    .click('select[name="sortby"] option[value="modified_on:asc"]')
-    .wait() // wait for xhr
-
-  await EventList.section.firstEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.firstItem.updated', dateString.value)
-    })
-
-  await EventList.section.secondEventInList
-    .waitForElementVisible('@updated')
-    .getText('@updated', (dateString) => {
-      set(this.state, 'list.secondItem.updated', dateString.value)
-    })
-})
-
-Then(/^I see the list in ascending recently updated order$/, async function () {
-  client.expect(
-    compareAsc(this.state.list.firstItem.updated, this.state.list.secondItem.updated)
-  ).to.be.within(0, 1)
 })
