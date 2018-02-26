@@ -1,15 +1,22 @@
-const { pick, pickBy, assign } = require('lodash')
+const { pick, pickBy, assign, keys, get } = require('lodash')
 
-const { search } = require('../../search/services')
+const { search, facets } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformEventToListItem } = require('../transformers')
 
 async function getEventsCollection (req, res, next) {
   try {
+    const searchTerm = get(req.query, 'term')
+    const token = req.session.token
+    const searchEntity = 'event'
+    const requestBody = req.body
+    const currentAdviserId = req.session.user.id
+
     res.locals.results = await search({
-      searchEntity: 'event',
-      requestBody: req.body,
-      token: req.session.token,
+      searchTerm,
+      token,
+      searchEntity,
+      requestBody,
       page: req.query.page,
       isAggregation: false,
     })
@@ -18,6 +25,19 @@ async function getEventsCollection (req, res, next) {
         transformEventToListItem,
       ))
 
+    const facetBody = pick(requestBody, ['name', 'start_date_after', 'start_date_before', 'organiser'])
+    if (keys(facetBody).length > 0) {
+      if (facetBody.organiser && facetBody.organiser !== currentAdviserId) {
+        delete facetBody.organiser
+      }
+
+      res.locals.facets = await facets({
+        searchTerm,
+        token,
+        searchEntity,
+        requestBody: facetBody,
+      })
+    }
     next()
   } catch (error) {
     next(error)

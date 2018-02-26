@@ -1,35 +1,54 @@
-const { assign, flatten } = require('lodash')
+/* eslint camelcase: 0 */
+const { assign, flatten, get } = require('lodash')
 
 const { globalFields } = require('../macros')
 const formLabels = require('./labels')
 const { transformObjectToOption } = require('../transformers')
 
-const companyFiltersFields = [
-  {
-    macroName: 'TextField',
-    label: 'Company name',
-    name: 'name',
-    hint: 'At least three characters',
-  },
-  Object.assign({}, globalFields.sectors, {
-    name: 'sector',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  Object.assign({}, globalFields.countries, {
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-  Object.assign({}, globalFields.ukRegions, {
-    name: 'uk_region',
-    type: 'checkbox',
-    modifier: 'option-select',
-  }),
-].map(filter => {
-  return Object.assign(filter, {
-    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-  })
-})
+const companyFiltersFields = function ({
+  sector,
+  registered_address_country,
+  uk_region,
+} = {}) {
+  return [
+    {
+      macroName: 'TextField',
+      label: 'Company name',
+      name: 'name',
+      hint: 'At least three characters',
+    },
+    assign({}, globalFields.sectors, {
+      name: 'sector',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: sector,
+    }),
+    assign({}, globalFields.countries, {
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: registered_address_country,
+    }),
+    assign({}, globalFields.ukRegions, {
+      name: 'uk_region',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: uk_region,
+    })]
+    .map(filter => {
+      return assign(filter, {
+        modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+      })
+    })
+    .filter(filter => {
+      if (filter.macroName === 'MultipleChoiceField' &&
+          filter.name !== 'created_by' &&
+          get(filter, 'options', []).length < 2
+      ) {
+        return false
+      }
+      return true
+    })
+}
 
 const companySortForm = {
   method: 'get',
