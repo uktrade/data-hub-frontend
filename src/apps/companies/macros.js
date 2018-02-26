@@ -57,8 +57,8 @@ const accountManagementFormConfig = function ({
 }) {
   return {
     returnLink,
-    buttonText: 'Save',
-    returnText: 'Cancel',
+    buttonText: 'Save and return',
+    returnText: 'Return without saving',
     children: [
       {
         macroName: 'MultipleChoiceField',

@@ -26,9 +26,9 @@
   {% endif %}
 
   {% call Form({
-    buttonText: 'Save' if company.id else 'Save and create',
-    returnLink: '/companies/' + company.id if company.id,
-    returnText: 'Return without saving' if company.id,
+    buttonText: 'Save and return' if company.id else 'Add company',
+    returnLink: '/companies/' + company.id if company.id else '/companies/add-step-1',
+    returnText: 'Return without saving' if company.id else 'Back',
     errors: {
       messages: errors
     },
