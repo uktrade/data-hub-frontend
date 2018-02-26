@@ -39,13 +39,22 @@ module.exports = {
         paginationSummary: '.c-collection__pagination-summary',
         resultCount: '.c-collection__result-count',
         removeAllFiltersLink: '.c-collection__filter-remove-all',
+        sortBy: '#field-sortby',
       },
     },
     firstCollectionItem: {
       selector: '.c-collection > .c-entity-list li:first-child',
       elements: {
         header: '.c-entity__title',
-        updatedOn: getSelectorForMetaListItemValue('Updated on'),
+        updatedOn: '.c-entity__subtitle',
+        link: '.c-entity--block-link, .c-entity__link',
+      },
+    },
+    lastCollectionItem: {
+      selector: '.c-collection > .c-entity-list li:last-child',
+      elements: {
+        header: '.c-entity__title',
+        updatedOn: '.c-entity__subtitle',
         link: '.c-entity--block-link, .c-entity__link',
       },
     },
