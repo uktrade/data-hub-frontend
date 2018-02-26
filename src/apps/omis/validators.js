@@ -6,9 +6,7 @@ const validators = {
     const regex = /^\d*$/
 
     if (!isArray(value)) {
-      if (!value) { return true }
-
-      return !!value.match(regex)
+      return Controller.validators.regex(value, regex)
     }
 
     const invalidItems = value.filter(item => {
