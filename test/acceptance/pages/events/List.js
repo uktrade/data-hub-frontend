@@ -46,7 +46,6 @@ module.exports = {
         eventEnd: getMetaListItemValueSelector('Ends'),
         organiser: getMetaListItemValueSelector('Organiser'),
         leadTeam: getMetaListItemValueSelector('Lead team'),
-        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     secondEventInList: {
@@ -56,7 +55,6 @@ module.exports = {
           selector: '.c-entity__header a',
         },
         eventStart: getMetaListItemValueSelector('Begins'),
-        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     filters: {

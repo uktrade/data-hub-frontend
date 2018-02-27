@@ -566,7 +566,6 @@ module.exports = {
         header: {
           selector: 'a',
         },
-        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     companyDetails: {

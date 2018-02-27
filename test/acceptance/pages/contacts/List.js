@@ -38,7 +38,6 @@ module.exports = {
 
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
-        updated: getMetaListItemValueSelector('Updated on'),
         countryBadge: getMetaListItemValueSelector('Country'),
       },
     },
@@ -51,7 +50,6 @@ module.exports = {
 
         companyName: getMetaListItemValueSelector('Company'),
         companySector: getMetaListItemValueSelector('Sector'),
-        updated: getMetaListItemValueSelector('Updated on'),
         countryBadge: getMetaListItemValueSelector('Country'),
       },
     },
