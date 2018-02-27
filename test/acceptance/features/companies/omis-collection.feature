@@ -4,15 +4,15 @@ Feature: View collection of orders for a company
   @companies-omis-collection--view
   Scenario: View companies OMIS collection
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Orders (OMIS) local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Orders (OMIS) local nav link
     And the results summary for a order collection is present
 
   @companies-omis-collection--view--da
   Scenario: View companies OMIS collection as DA
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Orders (OMIS) local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Orders (OMIS) local nav link
     And the results summary for a order collection is present
 
   @companies-omis-collection--filter # TODO

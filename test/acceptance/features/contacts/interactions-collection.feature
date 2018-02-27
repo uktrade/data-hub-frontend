@@ -4,7 +4,7 @@ Feature: View collection of interactions for a contact
   @contacts-interactions-collection--view
   Scenario: View contacts interaction collection
 
-    Given I navigate to contact fixture Dean Cox
+    When I navigate to the `contacts.Fixture` page using `contact` `Dean Cox` fixture
     When I click the Interactions local nav link
     And the results summary for a interaction collection is present
     And I can view the collection
