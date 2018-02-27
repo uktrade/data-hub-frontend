@@ -24,6 +24,8 @@ Feature: View collection of contacts
       | Sector       | company.sector     |
       | Country      | company.country    |
       | UK region    | company.ukRegion   |
+      | Phone number | contact.telephone |
+      | Email        | contact.email     |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
