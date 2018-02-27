@@ -18,7 +18,9 @@
 
 {% block main_grid_right_column %}
   {% call Form({
-    buttonText: 'Save',
+    buttonText: 'Save and return' if contact.id else 'Add contact',
+    returnLink: '/contacts/' + contact.id if contact.id else '/companies/' + formData.company + '/contacts',
+    returnText: 'Return without saving' if contact.id else 'Cancel',
     errors: errors,
     hiddenFields: {
       company: formData.company,

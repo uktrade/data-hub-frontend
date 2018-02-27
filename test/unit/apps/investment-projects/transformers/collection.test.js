@@ -14,7 +14,7 @@ describe('Investment project transformers', () => {
       expect(firstItem.id).to.a('string')
       expect(firstItem.name).to.a('string')
       expect(firstItem.type).to.a('string')
-      expect(firstItem.code).to.a('string')
+      expect(firstItem.subTitle).to.a('string')
       expect(firstItem.meta).to.an('array').that.have.length(5)
 
       expect(firstItem.meta[0].label).to.be.a('string')

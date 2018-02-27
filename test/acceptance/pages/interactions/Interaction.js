@@ -24,7 +24,7 @@ module.exports = {
     aStandardInteraction: getRadioButtonWithText('A standard interaction'),
     aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
     continueButton: getButtonWithText('Continue'),
-    saveButton: getButtonWithText('Save'),
+    saveButton: getButtonWithText('Add'),
     subject: '#field-subject',
     notes: '#field-notes',
     dateOfInteractionYear: '#field-date_year',

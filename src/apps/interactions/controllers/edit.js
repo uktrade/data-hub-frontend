@@ -19,13 +19,16 @@ function renderEditPage (req, res) {
     dit_team: get(req, 'session.user.dit_team.id'),
   }
   const mergedInteractionData = pickBy(merge({}, interactionDefaults, interactionData, res.locals.requestBody))
+  const interactionId = get(res.locals, 'interaction.id')
   const interactionForm =
     buildFormWithStateAndErrors(
       formConfigs[req.params.kind](
         assign({}, res.locals.options, res.locals.conditions, {
-          returnLink: res.locals.returnLink,
+          returnLink: interactionId ? `/interactions/${interactionId}` : res.locals.returnLink,
+          returnText: interactionId ? 'Return without saving' : 'Cancel',
+          buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
           hiddenFields: {
-            id: get(res.locals, 'interaction.id'),
+            id: interactionId,
             company: res.locals.company.id,
             investment_project: get(res.locals, 'investmentData.id'),
             kind: snakeCase(req.params.kind),

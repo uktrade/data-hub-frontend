@@ -15,6 +15,7 @@ const sessionStore = session({
   resave: true,
   saveUninitialized: false,
   unset: 'destroy',
+  key: 'datahub.sid',
 })
 
 module.exports = sessionStore

@@ -66,12 +66,6 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  meta.push({
-    label: 'Updated',
-    type: 'datetime',
-    value: modified_on,
-  })
-
   if (uk_based) {
     meta.push({
       label: 'UK region',
@@ -89,6 +83,11 @@ module.exports = function transformCompanyToListItem ({
     name,
     url,
     meta,
+    subTitle: {
+      type: 'datetime',
+      value: modified_on,
+      label: 'Updated on',
+    },
     type: 'company',
   }
 }
