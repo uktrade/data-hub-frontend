@@ -65,3 +65,17 @@ Feature: Add value to investment project
       | Non-FDI R&D project        | Not linked to a non-FDI R&D project             |
       | New-to-world tech          | No new-to-world tech, business model or IP      |
       | Export revenue             | No, will not create significant export revenue  |
+
+
+  @investment-projects-value-add--blank
+  Scenario: Save a blank value form in the prospect stage
+
+    Given I navigate to company fixture Lambda plc
+    And I click the Investment local nav link
+    And I click the "Add investment project" link
+    And I select FDI as the Investment project type
+    And I choose Yes for "Will this company be the source of foreign equity investment?"
+    And I populate the create Investment Project form
+    When I click the "Add value" link
+    And I click the "Save" link
+    Then I see the success message

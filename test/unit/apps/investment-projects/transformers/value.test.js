@@ -2,7 +2,10 @@ const { assign } = require('lodash')
 
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 
-const { transformInvestmentValueForView } = require('~/src/apps/investment-projects/transformers/value')
+const {
+  transformInvestmentValueForView,
+  transformInvestmentValueFormBodyToApiRequest,
+} = require('~/src/apps/investment-projects/transformers/value')
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentValueForView', () => {
@@ -260,6 +263,148 @@ describe('Investment project transformers', () => {
         expect(this.transformedInvestmentValues.r_and_d_budget).to.equal('No R&D budget')
         expect(this.transformedInvestmentValues.new_tech_to_uk).to.equal('No new-to-world tech, business model or IP')
         expect(this.transformedInvestmentValues.export_revenue).to.equal('No, will not create significant export revenue')
+      })
+    })
+  })
+
+  describe('#transformInvestmentValueFormBodyToApiRequest', () => {
+    context('when all fields have been filled in', () => {
+      beforeEach(() => {
+        const formData = {
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        }
+        this.transformedData = transformInvestmentValueFormBodyToApiRequest(formData)
+      })
+
+      it('transforms and returns the entire object', () => {
+        expect(this.transformedData).to.deep.equal({
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        })
+      })
+    })
+
+    context('when the client cannot provide the total investment value', () => {
+      beforeEach(() => {
+        const formData = {
+          client_cannot_provide_total_investment: 'true',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        }
+        this.transformedData = transformInvestmentValueFormBodyToApiRequest(formData)
+      })
+
+      it('sets the total investment value to null', () => {
+        expect(this.transformedData).to.deep.equal({
+          client_cannot_provide_total_investment: 'true',
+          total_investment: null,
+          client_cannot_provide_foreign_investment: 'false',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        })
+      })
+    })
+
+    context('when the client cannot provide the foreign equity investment value', () => {
+      beforeEach(() => {
+        const formData = {
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'true',
+          foreign_equity_investment: '5000',
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        }
+        this.transformedData = transformInvestmentValueFormBodyToApiRequest(formData)
+      })
+
+      it('sets the foreign total investment value to null', () => {
+        expect(this.transformedData).to.deep.equal({
+          client_cannot_provide_total_investment: 'false',
+          total_investment: '10000',
+          client_cannot_provide_foreign_investment: 'true',
+          foreign_equity_investment: null,
+          number_new_jobs: '10',
+          average_salary: '2943bf3d-32dd-43be-8ad4-969b006dee7b',
+          number_safeguarded_jobs: '100',
+          fdi_value: '38e36c77-61ad-4186-a7a8-ac6a1a1104c6',
+          government_assistance: 'false',
+          r_and_d_budget: 'false',
+          non_fdi_r_and_d_budget: 'false',
+          new_tech_to_uk: 'false',
+          export_revenue: 'false',
+        })
+      })
+    })
+
+    context('when no fields are filled in', () => {
+      beforeEach(() => {
+        const formData = {
+          total_investment: '',
+          foreign_equity_investment: '',
+          number_new_jobs: '',
+          number_safeguarded_jobs: '',
+          fdi_value: '',
+        }
+        this.transformedData = transformInvestmentValueFormBodyToApiRequest(formData)
+      })
+
+      it('sets numerical fields to null', () => {
+        expect(this.transformedData).to.deep.equal({
+          total_investment: null,
+          foreign_equity_investment: null,
+          number_new_jobs: null,
+          number_safeguarded_jobs: null,
+          fdi_value: '',
+        })
       })
     })
   })
