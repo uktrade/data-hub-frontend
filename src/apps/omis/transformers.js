@@ -24,6 +24,11 @@ function transformOrderToListItem ({
     type: 'order',
     urlPrefix: 'omis/',
     name: reference,
+    subTitle: {
+      type: 'datetime',
+      value: modified_on,
+      label: 'Updated on',
+    },
     meta: [
       {
         label: 'Status',
@@ -47,11 +52,6 @@ function transformOrderToListItem ({
       {
         label: 'Contact',
         value: get(contact, 'name'),
-      },
-      {
-        label: 'Updated',
-        type: 'datetime',
-        value: modified_on,
       },
       {
         label: 'UK region',

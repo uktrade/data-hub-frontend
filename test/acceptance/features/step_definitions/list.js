@@ -1,9 +1,11 @@
 const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
+const moment = require('moment')
 
 const { getButtonWithText } = require('../../helpers/selectors')
 const { pluralise } = require('../../../../config/nunjucks/filters')
+const { mediumDateTimeFormat } = require('../../../../config')
 
 const Collection = client.page.Collection()
 
@@ -29,15 +31,6 @@ When(/^I clear all filters$/, async function () {
   await Collection.section.collectionHeader
     .click('@removeAllFiltersLink')
     .wait() // wait for xhr
-})
-
-Then(/^I capture the modified on date for the first item$/, async function () {
-  await Collection
-    .section.firstCollectionItem
-    .waitForElementPresent('@updatedOn')
-    .getText('@updatedOn', (updatedOn) => {
-      set(this.state, 'collection.updated', updatedOn.value)
-    })
 })
 
 Then(/^the results summary for a (.+) collection is present$/, async function (collectionType) {
@@ -149,4 +142,36 @@ Then(/^I see the list in Z-A alphabetical order$/, async function () {
   const bothFieldsAreTheSame = this.state.list.firstItem.field === this.state.list.secondItem.field
 
   client.expect(firstFieldIsGreaterThanSecondField || bothFieldsAreTheSame).to.be.true
+})
+
+When(/^the results are sorted by (Least recently updated|Recently updated)$/, async function (sortOption) {
+  await Collection
+    .section.collectionHeader
+    .waitForElementVisible('@sortBy')
+    .clickListOption('sortby', sortOption)
+    .wait() // wait for xhr
+})
+
+Then(/^the results should be sorted by (Least recently updated|Recently updated)$/, async function (sortType) {
+  const updateValues = {}
+
+  await Collection
+    .section.firstCollectionItem
+    .waitForElementPresent('@header')
+    .getText('@updatedOn', (text) => {
+      updateValues.firstItem = moment(text.value, mediumDateTimeFormat)
+    })
+
+  await Collection
+    .section.lastCollectionItem
+    .waitForElementPresent('@header')
+    .getText('@updatedOn', (text) => {
+      updateValues.lastItem = moment(text.value, mediumDateTimeFormat)
+    })
+
+  if (sortType === 'Recently updated') {
+    client.expect(updateValues.firstItem.isSameOrAfter(updateValues.lastItem)).to.be.true
+  } else {
+    client.expect(updateValues.firstItem.isSameOrBefore(updateValues.lastItem)).to.be.true
+  }
 })

@@ -89,10 +89,10 @@ Feature: View a list of events
     When I click the Events global nav link
     When I sort the events list name A-Z
     Then I see the list in A-Z alphabetical order
-    When I sort the events list by recently updated
-    Then I see the list in descending recently updated order
-    When I sort the events list by least recently updated
-    Then I see the list in ascending recently updated order
+    And the results are sorted by Recently updated
+    Then the results should be sorted by Recently updated
+    And the results are sorted by Least recently updated
+    Then the results should be sorted by Least recently updated
 
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs

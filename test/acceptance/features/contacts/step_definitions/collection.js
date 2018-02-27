@@ -92,40 +92,6 @@ When(/^the contacts are sorted by (Oldest)$/, async function (sortOption) {
     })
 })
 
-When(/^the contacts are sorted by (Recently updated)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'collection.firstItem.field', result.value)
-    })
-})
-
-When(/^the contacts are sorted by (Least recently updated)$/, async function (sortOption) {
-  await ContactList
-    .section.collectionHeader
-    .waitForElementVisible('@sortBy')
-    .clickListOption('sortby', sortOption)
-    .wait() // wait for xhr
-
-  await ContactList
-    .section.firstContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'list.lastItem.field', result.value)
-    })
-
-  await ContactList
-    .section.secondContactInList
-    .getText('@updated', (result) => {
-      set(this.state, 'list.secondItem.field', result.value)
-    })
-})
-
 When(/^the contacts are sorted by (Last name: A-Z)$/, async function (sortOption) {
   await ContactList
     .section.collectionHeader

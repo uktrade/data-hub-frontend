@@ -36,13 +36,17 @@ describe('OMIS list transformers', () => {
           expect(actual).to.have.property('name').a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
+          expect(actual).to.have.property('subTitle').to.deep.equal({
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+            label: 'Updated on',
+          })
           expect(actual).to.have.property('meta').an('array').to.deep.equal([
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
           ])
         })
@@ -61,7 +65,6 @@ describe('OMIS list transformers', () => {
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
           ])
         })
@@ -78,13 +81,17 @@ describe('OMIS list transformers', () => {
           expect(actual).to.have.property('name').a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
+          expect(actual).to.have.property('subTitle').to.deep.equal({
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+            label: 'Updated on',
+          })
           expect(actual).to.have.property('meta').an('array').to.deep.equal([
             { label: 'Status', type: 'badge', value: 'Draft' },
             { label: 'Market', type: 'badge', value: 'France' },
             { label: 'Company', value: 'Venus Ltd' },
             { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
             { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'Updated', type: 'datetime', value: '2017-08-16T14:18:28.328729' },
             { label: 'UK region', value: 'London' },
             { label: 'Delivery date', type: 'date', value: '2018-10-16T14:18:28.328729' },
           ])

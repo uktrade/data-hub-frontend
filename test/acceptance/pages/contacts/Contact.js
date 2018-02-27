@@ -160,7 +160,6 @@ module.exports = {
         },
         company: getMetaListItemValueSelector('Company'),
         sector: getMetaListItemValueSelector('Sector'),
-        updated: getMetaListItemValueSelector('Updated'),
       },
     },
     contactDetails: {
