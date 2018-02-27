@@ -5,24 +5,6 @@ const standardMacros = [
   { macroName: 'useful' },
   { macroName: 'exciting' },
 ]
-const countryAndUkRegionMacros = [
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'address_country',
-    options: [
-      { value: 'non-uk', label: 'Albania' },
-      { value: 'uk', label: 'United Kingdom' },
-    ],
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'uk_region',
-    options: [
-      { value: '1', label: 'England' },
-      { value: '2', label: 'Scotland' },
-    ],
-  },
-]
 
 describe('Event list controller', () => {
   beforeEach(() => {
@@ -77,48 +59,6 @@ describe('Event list controller', () => {
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('filtersFields'))
       expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
-    })
-  })
-
-  describe('Uk region conditional field', () => {
-    beforeEach(() => {
-      this.eventFiltersFieldsStub.returns(countryAndUkRegionMacros)
-    })
-
-    it('should render collection without region if non-UK country is selected', async () => {
-      this.reqMock.query = { address_country: 'non-uk' }
-      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
-      expect(this.resMock.render).to.have.been.calledWith(
-        'events/views/list',
-        sinon.match.hasOwn(
-          'filtersFields',
-          sinon.match(fields => fields.length === 1 && fields[0].name === 'address_country')
-        )
-      )
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
-    })
-
-    it('should render collection with region if UK is selected', async () => {
-      this.reqMock.query = { address_country: 'uk' }
-      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
-      expect(this.resMock.render).to.have.been.calledWith(
-        'events/views/list',
-        sinon.match.hasOwn(
-          'filtersFields',
-          sinon.match(fields => fields.length === 2 && fields[1].name === 'uk_region')
-        )
-      )
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
-    })
-
-    it('nock mocked scope has been called', async () => {
-      await this.controller.renderEventList(this.reqMock, this.resMock, this.nextSpy)
     })
   })
 })
