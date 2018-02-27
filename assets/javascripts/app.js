@@ -13,6 +13,7 @@ const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
 const AddItems = require('./modules/add-items')
 const PrintDialog = require('./modules/print-dialog')
+const FilterSort = require('./modules/filter-sort.js')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
@@ -27,6 +28,7 @@ AutoSubmit.init()
 XhrLink.init()
 AddItems.init()
 PrintDialog.init()
+FilterSort.init()
 
 // Deprecated
 CompanyAdd.init()
