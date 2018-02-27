@@ -48,10 +48,13 @@ async function callbackOAuth (req, res, next) {
   if (isUndefined(stateQueryParam)) {
     return next({ statusCode: 403 })
   }
+
+  // Error query param present
   if (errorQueryParam) {
     return renderHelpPage(req, res, next)
   }
 
+  // Session state does not match query param state
   if (sessionOAuthState !== stateQueryParam) {
     return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
   }
