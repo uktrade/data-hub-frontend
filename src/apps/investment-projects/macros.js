@@ -86,7 +86,7 @@ const investmentFiltersFields = [
 
 const investmentSortForm = {
   method: 'get',
-  class: 'c-collection__sort-form js-AutoSubmit',
+  class: 'c-collection__sort-form js-AutoSubmit js-FilterSort',
   hideFormActions: true,
   hiddenFields: { custom: true },
   children: [
