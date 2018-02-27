@@ -146,6 +146,34 @@ describe('OAuth controller', () => {
     })
   })
 
+  describe('#handleMissingState', () => {
+    context('with state in the session', () => {
+      beforeEach(() => {
+        set(this.reqMock, 'session.oauth.state', 'example-session-state')
+        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+    })
+
+    context('without state in the session', () => {
+      beforeEach(() => {
+        set(this.reqMock, 'session.oauth.state', undefined)
+        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should redirect', () => {
+        expect(this.resMock.redirect).to.have.been.calledOnce
+      })
+
+      it('should redirect to expected location', () => {
+        expect(this.resMock.redirect).to.have.been.calledWith('/oauth')
+      })
+    })
+  })
+
   describe('#callbackOAuth', () => {
     context('with the state query param in the url', () => {
       context('and a state mismatch', () => {

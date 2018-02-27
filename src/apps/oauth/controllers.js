@@ -2,7 +2,7 @@ const request = require('request-promise')
 const queryString = require('query-string')
 const uuid = require('uuid')
 
-const { get, set } = require('lodash')
+const { get, set, isUndefined } = require('lodash')
 
 const { saveSession } = require('./../../lib/session-helper')
 const config = require('./../../../config')
@@ -23,6 +23,16 @@ function getAccessToken (code) {
   }
 
   return request(options)
+}
+
+function handleMissingState (req, res, next) {
+  const sessionOAuthState = get(req.session, 'oauth.state')
+
+  if (isUndefined(sessionOAuthState)) {
+    return res.redirect('/oauth')
+  }
+
+  next()
 }
 
 async function callbackOAuth (req, res, next) {
@@ -105,4 +115,5 @@ module.exports = {
   redirectOAuth,
   renderHelpPage,
   signOutOAuth,
+  handleMissingState,
 }
