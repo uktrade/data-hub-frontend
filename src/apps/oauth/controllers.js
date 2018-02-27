@@ -6,7 +6,6 @@ const { get, set, isUndefined } = require('lodash')
 
 const { saveSession } = require('./../../lib/session-helper')
 const config = require('./../../../config')
-const logger = require('./../../../config/logger') // @TODO remove this once we've diagnosed the cause of the mismatches
 
 function getAccessToken (code) {
   const options = {
@@ -54,13 +53,6 @@ async function callbackOAuth (req, res, next) {
   }
 
   if (sessionOAuthState !== stateQueryParam) {
-    // @TODO remove this once we've diagnosed the cause of the mismatches
-    logger.error('OAuth mismatch')
-    logger.error(`sessionOAuthState: ${sessionOAuthState}`)
-    logger.error(`stateQueryParam: ${stateQueryParam}`)
-    logger.error(`Host: ${req.hostname}`)
-    logger.error(`Original URL: ${req.originalUrl}`)
-    // END @TODO
     return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
   }
 
@@ -82,8 +74,6 @@ async function redirectOAuth (req, res, next) {
     state: stateId,
     idp: 'cirrus',
   }
-
-  logger.error(`Host redirected from: ${req.hostname}`) // @TODO remove this once we've diagnosed the cause of the mismatches
 
   // As you are here you have not byPassed SSO and if the oAuthDevToken is present then pass it to the code parameter
   // that is sent to the SSO provider. When using the mock-sso app, the oAuthDevToken is simply passed through the
