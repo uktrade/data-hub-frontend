@@ -89,6 +89,42 @@ describe('OAuth controller', () => {
         })
       })
 
+      context('with a state already in the session', () => {
+        beforeEach(async () => {
+          const urlParts = queryString.parse(this.expectedOauthRedirectUrl)
+          this.mockSessionStoredUUIDvalue = 'mock-uuid-1234-3465745'
+          this.expectedOauthRedirectUrl = queryString.stringify({
+            ...urlParts,
+            ...{ state: this.mockSessionStoredUUIDvalue },
+          })
+
+          set(this.reqMock, 'session.oauth.state', this.mockSessionStoredUUIDvalue)
+
+          this.saveSessionStub.resolves()
+          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should call saveSessionStub', () => {
+          expect(this.saveSessionStub).to.have.been.calledOnce
+        })
+
+        it('should call saveSessionStub with expected argument', () => {
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
+        })
+
+        it('should redirect', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+        })
+
+        it('should redirect to the correct Oauth url', () => {
+          expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+        })
+
+        it('session should hold correct UUID', () => {
+          expect(this.reqMock.session.oauth.state).to.equal(this.mockSessionStoredUUIDvalue)
+        })
+      })
+
       context('with a rejected session save', () => {
         beforeEach(async () => {
           this.returnedError = 'oh no!'

@@ -74,7 +74,7 @@ async function callbackOAuth (req, res, next) {
 }
 
 async function redirectOAuth (req, res, next) {
-  const stateId = uuid()
+  const stateId = get(req.session, 'oauth.state', uuid())
   const urlParams = {
     response_type: 'code',
     client_id: config.oauth.clientId,
