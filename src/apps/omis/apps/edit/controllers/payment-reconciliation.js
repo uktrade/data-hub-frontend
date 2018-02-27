@@ -44,7 +44,7 @@ class EditPaymentReconciliationController extends EditController {
     const totalCost = res.locals.order.total_cost
 
     if (submittedAmount < totalCost) {
-      const error = { key: 'amount', type: 'isGreaterThanAmount' }
+      const error = { key: 'amount', type: 'greaterthanamount' }
       const errors = {
         amount: new this.Error('amount', error, req, res),
       }

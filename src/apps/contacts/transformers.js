@@ -35,7 +35,6 @@ function transformContactToListItem ({
     { key: 'company_sector', value: get(company_sector, 'name') },
     { key: 'address_country', value: get(address_country, 'name') },
     { key: 'company_uk_region', value: company_uk_region },
-    { key: 'modified_on', value: modified_on, type: 'datetime' },
     { key: 'contact_type', value: (primary ? 'Primary' : null), type: 'badge', badgeModifier: 'secondary' },
     { key: 'archived_on', value: (archived_on ? 'Archived' : null), type: 'badge' },
   ].map(({ key, value, type, badgeModifier }) => {
@@ -47,6 +46,11 @@ function transformContactToListItem ({
 
   return {
     id,
+    subTitle: {
+      type: 'datetime',
+      value: modified_on,
+      label: 'Updated on',
+    },
     type: 'contact',
     name: `${first_name} ${last_name}`.trim(),
     isArchived: archived,

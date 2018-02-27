@@ -6,7 +6,7 @@ const { getButtonWithText } = require('../../helpers/selectors')
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    editContactDetailsButton: getButtonWithText('Edit contact details'),
+    editContactDetailsButton: getButtonWithText('Edit contact'),
     saveButton: getButtonWithText('Save'),
     auditHistoryTab: 'a[href*="/audit"]',
     telephone: '#field-telephone_number',

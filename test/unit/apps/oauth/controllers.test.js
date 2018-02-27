@@ -89,6 +89,42 @@ describe('OAuth controller', () => {
         })
       })
 
+      context('with a state already in the session', () => {
+        beforeEach(async () => {
+          const urlParts = queryString.parse(this.expectedOauthRedirectUrl)
+          this.mockSessionStoredUUIDvalue = 'mock-uuid-1234-3465745'
+          this.expectedOauthRedirectUrl = queryString.stringify({
+            ...urlParts,
+            ...{ state: this.mockSessionStoredUUIDvalue },
+          })
+
+          set(this.reqMock, 'session.oauth.state', this.mockSessionStoredUUIDvalue)
+
+          this.saveSessionStub.resolves()
+          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should call saveSessionStub', () => {
+          expect(this.saveSessionStub).to.have.been.calledOnce
+        })
+
+        it('should call saveSessionStub with expected argument', () => {
+          expect(this.saveSessionStub).to.be.calledWith(this.reqMock.session)
+        })
+
+        it('should redirect', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+        })
+
+        it('should redirect to the correct Oauth url', () => {
+          expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+        })
+
+        it('session should hold correct UUID', () => {
+          expect(this.reqMock.session.oauth.state).to.equal(this.mockSessionStoredUUIDvalue)
+        })
+      })
+
       context('with a rejected session save', () => {
         beforeEach(async () => {
           this.returnedError = 'oh no!'
@@ -146,8 +182,58 @@ describe('OAuth controller', () => {
     })
   })
 
+  describe('#handleMissingState', () => {
+    context('with state in the session', () => {
+      beforeEach(() => {
+        set(this.reqMock, 'session.oauth.state', 'example-session-state')
+        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+    })
+
+    context('without state in the session', () => {
+      beforeEach(() => {
+        set(this.reqMock, 'session.oauth.state', undefined)
+        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should redirect', () => {
+        expect(this.resMock.redirect).to.have.been.calledOnce
+      })
+
+      it('should redirect to expected location', () => {
+        expect(this.resMock.redirect).to.have.been.calledWith('/oauth')
+      })
+    })
+  })
+
   describe('#callbackOAuth', () => {
     context('with the state query param in the url', () => {
+      context('and user has a token', () => {
+        beforeEach(async () => {
+          this.mockOauthAccessToken = 'example-already-oauth-token'
+          set(this.reqMock, 'query.state', this.mockStateId)
+          set(this.reqMock, 'session.token', this.mockOauthAccessToken)
+
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should redirect', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+        })
+
+        it('should redirect to expected location', () => {
+          expect(this.resMock.redirect).to.have.been.calledWith('/')
+        })
+
+        it('token should match expected value', () => {
+          expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
+        })
+      })
+
       context('and a state mismatch', () => {
         beforeEach(() => {
           set(this.reqMock, 'query.state', this.mockStateId)
@@ -216,6 +302,25 @@ describe('OAuth controller', () => {
           it('token should be undefined', () => {
             expect(this.reqMock.session.token).to.be.undefined
           })
+        })
+      })
+    })
+
+    context('without the state query param in the url', () => {
+      context('and user has no token', () => {
+        beforeEach(async () => {
+          set(this.reqMock, 'session.token', undefined)
+          set(this.reqMock, 'query.state', undefined)
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should handle error as expected', () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy.args[0][0].statusCode).to.equal(403)
+        })
+
+        it('token should be undefined', () => {
+          expect(this.reqMock.session.token).to.be.undefined
         })
       })
     })

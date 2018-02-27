@@ -14,7 +14,6 @@ Feature: View collection of contacts
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    Then I capture the modified on date for the first item
     When I navigate to the `contacts.List` page
     Then I confirm I am on the Contacts page
     And the results summary for a contact collection is present
@@ -23,7 +22,6 @@ Feature: View collection of contacts
       | Job title    | contact.jobTitle   |
       | Company      | company.name       |
       | Sector       | company.sector     |
-      | Updated      | collection.updated |
       | Country      | company.country    |
       | UK region    | company.ukRegion   |
     And the Contact has badges
@@ -104,11 +102,12 @@ Feature: View collection of contacts
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest
     Then the contacts should have been correctly sorted by creation date
-    When the contacts are sorted by Recently updated
-    When the contacts are sorted by Least recently updated
-    Then the contacts should have been correctly sorted for date fields
+    And the results are sorted by Recently updated
+    Then the results should be sorted by Recently updated
+    And the results are sorted by Least recently updated
+    Then the results should be sorted by Least recently updated
 #    When the contacts are sorted by Last name: A-Z
-#    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated (is the problem when two are identical?)
+#    Then the contacts should have been correctly sorted for text fields TODO: potential bug being investigated (contacts dont appear to sort correctly)
     When the contacts are sorted by Country: A-Z
     Then I see the list in A-Z alphabetical order
     When the contacts are sorted by Company: A-Z

@@ -33,15 +33,15 @@ function transformEventToListItem ({
     id,
     type: 'event',
     name,
+    subTitle: {
+      type: 'datetime',
+      value: modified_on,
+      label: 'Updated on',
+    },
     meta: [
       {
         label: 'Type',
         value: get(event_type, 'name'),
-      },
-      {
-        label: 'Updated',
-        type: 'datetime',
-        value: modified_on,
       },
       {
         label: 'Begins',

@@ -66,6 +66,7 @@
         { label: 'Market (country)', value: order.primary_market },
         { label: 'UK region', value: order.uk_region }
       ],
+      modifier: 'inline',
       itemModifier: 'stacked'
     }) }}
 
@@ -75,6 +76,7 @@
         { label: 'Updated on', value: order.modified_on, type: 'datetime' },
         { label: 'Status', value: statusText | safe }
       ],
+      modifier: 'inline',
       itemModifier: 'stacked'
     }) }}
 

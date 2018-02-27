@@ -30,7 +30,7 @@ function transformInvestmentProjectToListItem ({
     id,
     name,
     type: 'investment-project',
-    code: project_code,
+    subTitle: project_code,
     meta: compact(metaItems),
   }
 }
