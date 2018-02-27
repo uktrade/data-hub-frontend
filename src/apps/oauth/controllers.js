@@ -44,6 +44,11 @@ async function callbackOAuth (req, res, next) {
   if (get(req.session, 'token')) {
     return res.redirect('/')
   }
+
+  // No state query param
+  if (isUndefined(stateQueryParam)) {
+    return next({ statusCode: 403 })
+  }
   if (errorQueryParam) {
     return renderHelpPage(req, res, next)
   }

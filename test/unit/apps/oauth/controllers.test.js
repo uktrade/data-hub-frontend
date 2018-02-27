@@ -270,6 +270,25 @@ describe('OAuth controller', () => {
       })
     })
 
+    context('without the state query param in the url', () => {
+      context('and user has no token', () => {
+        beforeEach(async () => {
+          set(this.reqMock, 'session.token', undefined)
+          set(this.reqMock, 'query.state', undefined)
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should handle error as expected', () => {
+          expect(this.nextSpy).to.have.been.calledOnce
+          expect(this.nextSpy.args[0][0].statusCode).to.equal(403)
+        })
+
+        it('token should be undefined', () => {
+          expect(this.reqMock.session.token).to.be.undefined
+        })
+      })
+    })
+
     describe('#getAccessToken', () => {
       beforeEach(() => {
         this.reqMock.query = {
