@@ -12,16 +12,18 @@
       {% endblock %}
     </div>
 
-    <article class="column-two-thirds">
-      {% block collection_results %}
-        {{ Collection(results | assign({
-          countLabel: countLabel,
-          sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-          selectedFilters: selectedFilters,
-          highlightTerm: highlightTerm,
-          query: QUERY
-        })) }}
-      {% endblock %}
-    </article>
+    {% block xhr_content %}
+      <article class="column-two-thirds" id="xhr-outlet">
+        {% block collection_results %}
+          {{ Collection(results | assign({
+            countLabel: countLabel,
+            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
+            selectedFilters: selectedFilters,
+            highlightTerm: highlightTerm,
+            query: QUERY
+          })) }}
+        {% endblock %}
+      </article>
+    {% endblock %}
   </div>
 {% endblock %}
