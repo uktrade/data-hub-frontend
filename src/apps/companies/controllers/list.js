@@ -1,32 +1,24 @@
 const { get, omit, merge } = require('lodash')
-const { companyFiltersFields, companySortForm } = require('../macros')
+const { companyFiltersFields: filtersFields, companySortForm } = require('../macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderCompanyList (req, res) {
   const sortForm = merge({}, companySortForm, {
-    hiddenFields: Object.assign({}, omit(req.query, 'sortby')),
+    hiddenFields: omit(req.query, 'sortby'),
     children: [
       { value: req.query.sortby },
     ],
   })
 
-  const selectedFilters = buildSelectedFiltersSummary(companyFiltersFields, req.query)
-  const isUKSelected = get(selectedFilters, 'country.valueLabel') === 'United Kingdom'
-
-  const visibleFiltersFields = companyFiltersFields.filter(field => {
-    if (field.name === 'uk_region') {
-      return isUKSelected
-    }
-    return true
-  })
+  const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
   res.render('companies/views/list', {
     sortForm,
+    filtersFields,
     selectedFilters,
     title: 'Companies',
     countLabel: 'company',
     highlightTerm: get(selectedFilters, 'name.valueLabel'),
-    filtersFields: visibleFiltersFields,
   })
 }
 
