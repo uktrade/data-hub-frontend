@@ -4,15 +4,15 @@ Feature: Investment project documents
   @investment-projects-documents--document-link
   Scenario: Investment project has documents
 
-    Given I navigate to investment project fixture New hotel (commitment to invest)
-    When I click the Documents local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New hotel (commitment to invest)` fixture
+    And I click the Documents local nav link
     Then view should contain the Documents link
 
   @investment-projects-documents--no-document-link
   Scenario: Investment project does not have documents
 
-    Given I navigate to investment project fixture New rollercoaster
-    When I click the Documents local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New rollercoaster` fixture
+    And I click the Documents local nav link
     Then view should not contain the Documents link
 
   @investment-projects-documents--lep @lep

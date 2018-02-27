@@ -7,8 +7,8 @@ Feature: View Audit history of a contact
   @audit-contact--fields
   Scenario: View name of the person who made contact record changes
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
@@ -26,8 +26,8 @@ Feature: View Audit history of a contact
   @audit-contact--count
   Scenario: View the number of changes occurred on a contact record
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     Then a primary contact is added
     When I submit the form
@@ -42,8 +42,8 @@ Feature: View Audit history of a contact
   @audit-contact--archived
   Scenario: View audit log for Archived contact
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     Then a primary contact is added
     When I submit the form
@@ -61,8 +61,8 @@ Feature: View Audit history of a contact
   @audit-contact--unarchived
   Scenario: View audit log for UnArchived contact
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Contacts local nav link
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

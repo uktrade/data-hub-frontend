@@ -4,8 +4,8 @@ Feature: View collection of interactions for a company
   @companies-interactions-collection--view
   Scenario: View companies interaction collection
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And the results summary for a interaction collection is present
     And I can view the collection
 
