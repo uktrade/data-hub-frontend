@@ -176,6 +176,28 @@ describe('OAuth controller', () => {
 
   describe('#callbackOAuth', () => {
     context('with the state query param in the url', () => {
+      context('and user has a token', () => {
+        beforeEach(async () => {
+          this.mockOauthAccessToken = 'example-already-oauth-token'
+          set(this.reqMock, 'query.state', this.mockStateId)
+          set(this.reqMock, 'session.token', this.mockOauthAccessToken)
+
+          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should redirect', () => {
+          expect(this.resMock.redirect).to.have.been.calledOnce
+        })
+
+        it('should redirect to expected location', () => {
+          expect(this.resMock.redirect).to.have.been.calledWith('/')
+        })
+
+        it('token should match expected value', () => {
+          expect(this.reqMock.session.token).to.equal(this.mockOauthAccessToken)
+        })
+      })
+
       context('and a state mismatch', () => {
         beforeEach(() => {
           set(this.reqMock, 'query.state', this.mockStateId)

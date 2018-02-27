@@ -40,6 +40,10 @@ async function callbackOAuth (req, res, next) {
   const stateQueryParam = get(req.query, 'state')
   const sessionOAuthState = get(req.session, 'oauth.state')
 
+  // Already been through OAuth
+  if (get(req.session, 'token')) {
+    return res.redirect('/')
+  }
   if (errorQueryParam) {
     return renderHelpPage(req, res, next)
   }
