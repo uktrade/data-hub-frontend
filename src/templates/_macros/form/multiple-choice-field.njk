@@ -30,7 +30,7 @@
     {% if props.type in ['checkbox', 'radio'] %}
       {{ MultipleChoice(props) }}
     {% else %}
-      {{ SelectBox(props | assign({ class: inputClass })) }}
+      {{ SelectBox(props | assignCopy({ class: props.inputClass })) }}
     {% endif %}
 
     {{ children }}
