@@ -1,7 +1,7 @@
 const { assign, flatten } = require('lodash')
 
 const { globalFields } = require('../macros')
-const formLabels = require('./labels')
+const { accountManagementDisplayLabels, hqLabels } = require('./labels')
 const { transformObjectToOption } = require('../transformers')
 
 const companyFiltersFields = [
@@ -10,6 +10,18 @@ const companyFiltersFields = [
     label: 'Company name',
     name: 'name',
     hint: 'At least three characters',
+  },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'headquarter_type',
+    type: 'checkbox',
+    label: 'Type',
+    options: [
+      { value: '43281c5e-92a4-4794-867b-b4d5f801e6f3', label: hqLabels.ghq },
+      { value: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', label: hqLabels.ehq },
+      { value: '3e6debb4-1596-40c5-aa25-f00da0e05af9', label: hqLabels.ukhq },
+    ],
+    modifier: 'option-select',
   },
   Object.assign({}, globalFields.sectors, {
     name: 'sector',
@@ -75,7 +87,7 @@ const accountManagementFormConfig = function ({
       },
     ].map(field => {
       return assign(field, {
-        label: formLabels.accountManagementDisplayLabels[field.name],
+        label: accountManagementDisplayLabels[field.name],
       })
     }),
   }
