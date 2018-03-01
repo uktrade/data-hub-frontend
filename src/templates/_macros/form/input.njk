@@ -9,6 +9,7 @@
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
+ # @param {object} [props.data] - data attributes to add to control
  #}
 {% macro Input(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
@@ -22,5 +23,8 @@
     class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% for key, value in props.data %}
+      data-{{ key }}="{{ value | escape }}"
+    {% endfor %}
   >
 {% endmacro %}
