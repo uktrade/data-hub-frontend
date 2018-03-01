@@ -95,6 +95,10 @@ const investmentSortForm = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+      inputClass: 'js-MirrorValue',
+      inputData: {
+        'target-selector': '.c-collection-filters input[name="sortby"]',
+      },
       options: [
         { value: 'estimated_land_date:asc', label: 'Earliest land date' },
         { value: 'estimated_land_date:desc', label: 'Latest land date' },
