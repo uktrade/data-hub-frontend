@@ -95,7 +95,7 @@ describe('MetaList macro', () => {
           }],
       })
 
-      expect(component.querySelector('a.c-meta-list__item-value.js-xhr')).to.exist
+      expect(component.querySelector('a.c-meta-list__item-value')).to.exist
     })
 
     it('should render metadata item inert', () => {
