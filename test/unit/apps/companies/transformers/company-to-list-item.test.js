@@ -174,4 +174,70 @@ describe('transformCompanyToListItem', () => {
       }])
     })
   })
+
+  context('headquarter information', () => {
+    context('contains the headquarter information', () => {
+      beforeEach(() => {
+        this.listItem = transformCompanyToListItem(companyData)
+      })
+
+      it('should not include the headquarter info in the result', () => {
+        expect(this.listItem.meta).to.containSubset([{
+          label: 'Headquarter type',
+          type: 'badge',
+          value: 'European HQ',
+        }])
+      })
+    })
+
+    context('should not contain the headquarter information', () => {
+      beforeEach(() => {
+        this.listItem = transformCompanyToListItem({
+          ...companyData,
+          headquarter_type: null,
+        })
+      })
+
+      it('should not include the headquarter info in the result', () => {
+        expect(this.listItem.meta).to.not.containSubset([{
+          label: 'Headquarter type',
+          type: 'badge',
+          value: 'European HQ',
+        }])
+      })
+    })
+  })
+
+  context('global headquarters information', () => {
+    context('contains the global headquarters information', () => {
+      beforeEach(() => {
+        this.listItem = transformCompanyToListItem(companyData)
+      })
+
+      it('should not include the headquarter info in the result', () => {
+        expect(this.listItem.meta).to.containSubset([{
+          label: 'Global HQ',
+          value: 'Mars Exports Ltd',
+          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+        }])
+      })
+    })
+
+    context('should not contain the headquarter information', () => {
+      beforeEach(() => {
+        this.listItem = transformCompanyToListItem({
+          ...companyData,
+          global_headquarters: null,
+        })
+      })
+
+      it('should not include the headquarter info in the result', () => {
+        expect(this.listItem.meta).to.not.containSubset([{
+          label: 'Global HQ',
+          value: 'Mars Exports Ltd',
+          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+        }])
+      })
+    })
+  })
 })
