@@ -13,6 +13,7 @@ const AutoSubmit = require('./modules/auto-submit')
 const XhrLink = require('./modules/xhr-link')
 const AddItems = require('./modules/add-items')
 const PrintDialog = require('./modules/print-dialog')
+const MirrorValue = require('./modules/mirror-value.js')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
@@ -27,6 +28,7 @@ AutoSubmit.init()
 XhrLink.init()
 AddItems.init()
 PrintDialog.init()
+MirrorValue.init()
 
 // Deprecated
 CompanyAdd.init()
