@@ -44,7 +44,7 @@
       {% endif %}
       {% if props.url and not props.isInert and not props.urlLabel %}
         <a
-          class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
+          class="{{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
           {{- value -}}
