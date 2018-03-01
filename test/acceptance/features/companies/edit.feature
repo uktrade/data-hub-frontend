@@ -11,24 +11,24 @@ Feature: Company details
     When I change "headquarter_type" radio button option to "Not a headquarters"
     And I submit the form
     Then I see the success message
-    And details view data for "Headquarters" should contain "Not a headquarters"
+    And details view data for "Headquarter type" should contain "Not a headquarters"
 
     When I click the Company summary edit button
-    When I change "headquarter_type" radio button option to "European headquarters (EHQ)"
+    When I change "headquarter_type" radio button option to "European HQ"
     And I submit the form
     Then I see the success message
-    And details view data for "Headquarters" should contain "European headquarters (EHQ)"
+    And details view data for "Headquarter type" should contain "European HQ"
 
     When I click the Company summary edit button
-    When I change "headquarter_type" radio button option to "UK headquarters (UK HQ)"
+    When I change "headquarter_type" radio button option to "UK HQ"
     And I submit the form
     Then I see the success message
-    And details view data for "Headquarters" should contain "UK headquarters (UK HQ)"
+    And details view data for "Headquarter type" should contain "UK HQ"
 
     When I click the Company summary edit button
-    When I change "headquarter_type" radio button option to "Global headquarters (GHQ)"
+    When I change "headquarter_type" radio button option to "Global HQ"
     And I submit the form
     Then I see the success message
-    And details view data for "Headquarters" should contain "Global headquarters (GHQ)"
+    And details view data for "Headquarter type" should contain "Global HQ"
 
   # TODO add more editing and viewing in details work
