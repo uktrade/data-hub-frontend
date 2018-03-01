@@ -91,21 +91,23 @@ const filters = {
     return value.split(separator)
   },
 
-  highlight (string, searchTerm, shouldMatchFullWord = false) {
-    if (!isString(string) || !isString(searchTerm) || !searchTerm.trim()) {
-      return string
+  highlight (searchResultText, searchTerm, matchFullWord = false) {
+    if (!isString(searchResultText) || !isString(searchTerm) || !searchTerm.trim()) {
+      return searchResultText
     }
 
     try {
       // Remove regex characters from the search term
       // as they wont be in the result and will cause an error in the regular expression
-      const cleanTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '') // $& means the whole matched string
+      const cleanedSearchTerm = searchTerm.replace(/[.*+?^${}()<&|[\]\\]/g, '')
+      const searchPattern = matchFullWord
+        ? new RegExp(`\\b(${cleanedSearchTerm})\\b`, 'gi')
+        : new RegExp(`(${cleanedSearchTerm})`, 'gi')
 
-      const regEx = new RegExp(`(${cleanTerm})${shouldMatchFullWord ? '\\b' : ''}`, 'gi')
-      const result = string.replace(regEx, '<span class="u-highlight">$1</span>')
+      const result = searchResultText.replace(searchPattern, '<span class="u-highlight">$1</span>')
       return new nunjucks.runtime.SafeString(result)
     } catch (error) {
-      return string
+      return searchResultText
     }
   },
 

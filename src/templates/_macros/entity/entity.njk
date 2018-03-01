@@ -21,7 +21,7 @@
     {% set url = props.url | default('/' + urlPrefix + props.id) %}
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set metaItems = props.meta | reject(['type', 'badge']) %}
-    {% set highlightedName = props.name | escape | highlight(props.highlightTerm) %}
+    {% set highlightedName = props.name | highlight(props.highlightTerm) %}
     {% set containerElement = 'a' if props.isBlockLink else 'div' %}
 
     <{{ containerElement }}
