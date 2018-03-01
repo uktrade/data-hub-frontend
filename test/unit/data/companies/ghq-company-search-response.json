@@ -1,0 +1,157 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "business_type": {
+        "id": "98d14e94-5d95-e211-a939-e4115bead28a",
+        "name": "Company"
+      },
+      "employee_range": {
+        "id": "41afd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "500+"
+      },
+      "headquarter_type": {
+        "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3",
+        "name": "ghq"
+      },
+      "registered_address_country": {
+        "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United States"
+      },
+      "sector": {
+        "id": "355f977b-8ac3-e211-a646-e4115bead28a",
+        "name": "Retail"
+      },
+      "turnover_range": {
+        "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£33.5M+"
+      },
+      "contacts": [
+        {
+          "id": "7d43f9a2-868f-4d85-8e5f-631e5a8c9a3b",
+          "first_name": "Mark",
+          "last_name": "Halomi",
+          "name": "Mark Halomi"
+        },
+        {
+          "id": "6791d583-7a52-418f-a0d3-d8d527f20d43",
+          "first_name": "Benjamina",
+          "last_name": "Clarksoon",
+          "name": "Benjamina Clarksoon"
+        }
+      ],
+      "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
+      "uk_based": false,
+      "export_to_countries": [
+        {
+          "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "France"
+        },
+        {
+          "id": "83756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "Germany"
+        }
+      ],
+      "future_interest_countries": [
+        {
+          "id": "37afd8d0-5d95-e211-a939-e4115bead28a",
+          "name": "Yemen"
+        }
+      ],
+      "trading_name": "",
+      "created_on": "2017-10-16T11:00:00+00:00",
+      "modified_on": "2018-02-28T12:18:19.456245+00:00",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "name": "Mars Exports Ltd",
+      "registered_address_1": "12 First Street",
+      "registered_address_2": "",
+      "registered_address_town": "New York",
+      "registered_address_county": "",
+      "registered_address_postcode": "765413",
+      "reference_code": "",
+      "company_number": null,
+      "vat_number": "",
+      "account_manager": null,
+      "description": "This is a dummy company for testing",
+      "website": "",
+      "uk_region": null,
+      "trading_address_1": "",
+      "trading_address_2": "",
+      "trading_address_town": "",
+      "trading_address_county": "",
+      "trading_address_country": null,
+      "trading_address_postcode": "",
+      "classification": null,
+      "parent": null,
+      "global_headquarters": null,
+      "one_list_account_owner": null,
+      "export_experience_category": null
+    },
+    {
+      "business_type": {
+        "id": "99d14e94-5d95-e211-a939-e4115bead28a",
+        "name": "Sole Trader"
+      },
+      "employee_range": {
+        "id": "3eafd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "10 to 49"
+      },
+      "headquarter_type": {
+        "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3",
+        "name": "ghq"
+      },
+      "registered_address_country": {
+        "id": "7f756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "Montenegro"
+      },
+      "sector": {
+        "id": "64535406-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Tobacco Products"
+      },
+      "turnover_range": {
+        "id": "774cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£0 to £1.34M"
+      },
+      "contacts": [],
+      "id": "cf8d6dd0-1d26-450f-931a-f2de21146549",
+      "uk_based": false,
+      "export_to_countries": [],
+      "future_interest_countries": [],
+      "trading_name": "",
+      "created_on": "2018-02-28T15:14:56.924561+00:00",
+      "modified_on": "2018-02-28T15:14:56.924599+00:00",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "name": "Cole, Stoltenberg and Russel",
+      "registered_address_1": "Hermann Mills",
+      "registered_address_2": "",
+      "registered_address_town": "Bartonchester",
+      "registered_address_county": "",
+      "registered_address_postcode": "88381",
+      "reference_code": "",
+      "company_number": null,
+      "vat_number": "",
+      "account_manager": null,
+      "description": "Sequi aut animi voluptatem unde explicabo nostrum quod magnam.",
+      "website": "http://sallie.com",
+      "uk_region": null,
+      "trading_address_1": "",
+      "trading_address_2": "",
+      "trading_address_town": "",
+      "trading_address_county": "",
+      "trading_address_country": null,
+      "trading_address_postcode": "",
+      "classification": null,
+      "parent": null,
+      "global_headquarters": null,
+      "one_list_account_owner": null,
+      "export_experience_category": null
+    }
+  ],
+  "page": 1
+}
