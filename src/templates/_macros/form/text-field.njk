@@ -15,6 +15,7 @@
  # @param {string} [props.error] - Field error
  # @param {string, array} [props.modifier] - Field modifier
  # @param {boolean} [props.optional] - Marks field as optional
+ # @param {object} [props.inputData] - Data attributes to add to input control
  #
  # @param {function} [props.caller] - Optional inner contents
  #}
@@ -23,9 +24,9 @@
 
   {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, class: props.groupClass })) %}
     {% if props.type === 'textarea' %}
-      {{ TextArea(props | assignCopy({ class: props.inputClass })) }}
+      {{ TextArea(props | assignCopy({ class: props.inputClass, data: props.inputData })) }}
     {% else %}
-      {{ Input(props | assignCopy({ class: props.inputClass })) }}
+      {{ Input(props | assignCopy({ class: props.inputClass, data: props.inputData })) }}
     {% endif %}
   {% endcall %}
 {% endmacro %}
