@@ -4,8 +4,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-interaction-submit
   Scenario: Companies interaction is saved
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select interaction
     Then there are interaction fields
@@ -29,8 +29,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -54,8 +54,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are specified
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -86,8 +86,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-service-delivery-tap-service-optional-empty-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are not specified
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -112,8 +112,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--contacts-interaction-submit
   Scenario: Interaction fields from contacts
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select interaction
     Then there are interaction fields
@@ -137,8 +137,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -162,8 +162,8 @@ Feature: Add a new interaction in Data hub
   @interaction-add--investment-projects-interaction-submit
   Scenario: Interaction fields from investment projects
 
-    Given I navigate to investment project fixture New rollercoaster
-    When I click the Interactions local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New rollercoaster` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     Then there are interaction fields
     And interaction fields are pre-populated
@@ -187,8 +187,8 @@ Feature: Add a new interaction in Data hub
   @interactions-add--events-toggle
   Scenario: Toggle service delivery event association
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -201,8 +201,8 @@ Feature: Add a new interaction in Data hub
   @interactions-add--service-toggle
   Scenario: Toggle service delivery service fields
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields

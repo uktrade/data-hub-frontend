@@ -4,8 +4,8 @@ Feature: Add value to investment project
   @investment-projects-value-add--all-yes
   Scenario: Select Yes for all answers
 
-    Given I navigate to investment project fixture New hotel (commitment to invest)
-    When I click the "Add value" link
+    When I navigate to the `investments.Fixture` page using `investment project` `New hotel (commitment to invest)` fixture
+    And I click the "Add value" link
     Then I am taken to the "New hotel (commitment to invest)" page
     When I populate the create investment project value form
       | key                               | value                                          |
@@ -38,8 +38,8 @@ Feature: Add value to investment project
   @investment-projects-value-add--all-no
   Scenario: Select No for all answers
 
-    Given I navigate to investment project fixture New hotel (commitment to invest)
-    When I click the "Edit value" link
+    When I navigate to the `investments.Fixture` page using `investment project` `New hotel (commitment to invest)` fixture
+    And I click the "Edit value" link
     Then I am taken to the "New hotel (commitment to invest)" page
     When I populate the create investment project value form
       | key                               | value                                          |
@@ -70,8 +70,8 @@ Feature: Add value to investment project
   @investment-projects-value-add--blank
   Scenario: Save a blank value form in the prospect stage
 
-    Given I navigate to company fixture Lambda plc
-    And I click the Investment local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    Then I click the Investment local nav link
     And I click the "Add investment project" link
     And I select FDI as the Investment project type
     And I choose Yes for "Will this company be the source of foreign equity investment?"

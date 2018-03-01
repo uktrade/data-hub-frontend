@@ -4,8 +4,8 @@ Feature: Company export save
   @companies-export-save--save
   Scenario: Save company export details
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Export local nav link
+    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
+    And I click the Export local nav link
     Then the Exports details are displayed
       | key                          | value                             |
       | Export win category          | None                              |

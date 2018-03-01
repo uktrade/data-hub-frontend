@@ -4,24 +4,24 @@ Feature: View collection of interactions for an investment project
   @investment-projects-interactions-collection--view
   Scenario: View investment projects interaction collection
 
-    Given I navigate to investment project fixture New hotel (FDI)
-    When I click the Interactions local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New hotel (FDI)` fixture
+    And I click the Interactions local nav link
     And the results summary for a interaction collection is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--lep @lep
   Scenario: View investment projects interaction collection
 
-    Given I navigate to investment project fixture New zoo (LEP)
-    When I click the Interactions local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New zoo (LEP)` fixture
+    And I click the Interactions local nav link
     And the results summary for a interaction collection is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--da @da
   Scenario: View investment projects interaction collection
 
-    Given I navigate to investment project fixture New golf course (DA)
-    When I click the Interactions local nav link
+    When I navigate to the `investments.Fixture` page using `investment project` `New golf course (DA)` fixture
+    And I click the Interactions local nav link
     And the results summary for a interaction collection is present
     And I can view the collection
 

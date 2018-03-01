@@ -1,4 +1,4 @@
-const { find, assign, set, get, camelCase, includes } = require('lodash')
+const { find, get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 
@@ -20,32 +20,6 @@ function getExpectedValue (row, state) {
 }
 
 const Location = client.page.Location()
-const Search = client.page.Search()
-
-Given(/^I navigate to (.+) fixture (.+)$/, async function (entityType, fixtureName) {
-  const entityTypeFieldName = camelCase(entityType)
-  const fixtureDetails = find(this.fixtures[entityTypeFieldName], ['name', fixtureName])
-  set(this.state, entityTypeFieldName, assign({}, get(this.state, entityTypeFieldName), fixtureDetails))
-
-  await Search
-    .navigate()
-    .search(fixtureName)
-
-  await Search
-    .section.tabs
-    .waitForElementPresent(`@${entityTypeFieldName}`)
-    .click(`@${entityTypeFieldName}`)
-
-  await Search
-    .section.firstSearchResult
-    .waitForElementPresent('@header')
-    .click('@header')
-
-  await Location
-    .section.localHeader
-    .waitForElementPresent('@header')
-    .assert.containsText('@header', fixtureName)
-})
 
 Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (path, entityType, fixtureName) {
   const entityTypeFieldName = camelCase(entityType)
