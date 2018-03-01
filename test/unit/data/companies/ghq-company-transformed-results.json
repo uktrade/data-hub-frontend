@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
+      "name": "Mars Exports Ltd",
+      "url": "/companies/mock-parent-company-id/hierarchies/ghq/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd/add",
+      "meta": [
+        {
+          "label": "Sector",
+          "value": "Retail"
+        },
+        {
+          "label": "Country",
+          "type": "badge",
+          "value": "United States"
+        },
+        {
+          "label": "Headquarter type",
+          "type": "badge",
+          "value": "Global HQ"
+        },
+        {
+          "label": "Primary address",
+          "value": "12 First Street, New York, 765413, United States"
+        }
+      ],
+      "subTitle": {
+        "type": "datetime",
+        "value": "2018-02-28T12:18:19.456245+00:00",
+        "label": "Updated on"
+      },
+      "type": "company"
+    },
+    {
+      "id": "cf8d6dd0-1d26-450f-931a-f2de21146549",
+      "name": "Cole, Stoltenberg and Russel",
+      "url": "/companies/mock-parent-company-id/hierarchies/ghq/cf8d6dd0-1d26-450f-931a-f2de21146549/add",
+      "meta": [
+        {
+          "label": "Sector",
+          "value": "Food and Drink : Tobacco Products"
+        },
+        {
+          "label": "Country",
+          "type": "badge",
+          "value": "Montenegro"
+        },
+        {
+          "label": "Headquarter type",
+          "type": "badge",
+          "value": "Global HQ"
+        },
+        {
+          "label": "Primary address",
+          "value": "Hermann Mills, Bartonchester, 88381, Montenegro"
+        }
+      ],
+      "subTitle": {
+        "type": "datetime",
+        "value": "2018-02-28T15:14:56.924599+00:00",
+        "label": "Updated on"
+      },
+      "type": "company"
+    }
+  ],
+  "count": 2
+}
