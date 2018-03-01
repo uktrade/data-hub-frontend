@@ -44,6 +44,7 @@ const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/fo
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
 const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
+const { setGlobalHQ, removeGlobalHQ } = require('./middleware/hierarchies')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
@@ -93,6 +94,9 @@ router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
+router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
+router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
+
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
