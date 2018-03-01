@@ -119,4 +119,5 @@ module.exports = {
   getRequestBody,
   getCompanyCollection,
   getLimitedCompaniesCollection,
+  getGlobalHQCompaniesCollection,
 }

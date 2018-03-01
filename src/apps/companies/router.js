@@ -17,6 +17,7 @@ const { renderInteractions } = require('./controllers/interactions')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const { renderDocuments } = require('./controllers/documents')
+const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const {
   renderExports,
   populateExportForm,
@@ -32,7 +33,12 @@ const {
   getInteractionSortForm,
 } = require('../interactions/middleware/collection')
 
-const { getRequestBody, getCompanyCollection, getLimitedCompaniesCollection } = require('./middleware/collection')
+const {
+  getRequestBody,
+  getCompanyCollection,
+  getLimitedCompaniesCollection,
+  getGlobalHQCompaniesCollection,
+} = require('./middleware/collection')
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
@@ -85,6 +91,8 @@ router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setLocalNav(LOCAL_N
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
+
+router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
