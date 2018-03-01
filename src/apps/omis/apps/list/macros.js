@@ -65,6 +65,10 @@ const collectionSortForm = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+      inputClass: 'js-MirrorValue',
+      inputData: {
+        'target-selector': '.c-collection-filters input[name="sortby"]',
+      },
       options: [
         { value: 'created_on:desc', label: 'Newest' },
         { value: 'created_on:asc', label: 'Oldest' },
