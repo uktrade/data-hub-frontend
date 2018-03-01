@@ -157,4 +157,41 @@ describe('MultipleChoice component', () => {
       })
     })
   })
+
+  context('multiple choice select with data attribute', () => {
+    beforeEach(() => {
+      const props = {
+        ...minimumProps,
+        type: 'select',
+        inputData: {
+          att1: 'att1-value',
+        },
+      }
+
+      this.component = macros.renderToDom('MultipleChoiceField', props)
+    })
+
+    it('should attach data attributes to the select control', () => {
+      expect(this.component.querySelector('select[data-att1="att1-value"]')).to.not.be.null
+    })
+  })
+
+  context('multiple choice select with data attributes', () => {
+    beforeEach(() => {
+      const props = {
+        ...minimumProps,
+        type: 'select',
+        inputData: {
+          att1: 'att1-value',
+          att2: 'att2-value',
+        },
+      }
+
+      this.component = macros.renderToDom('MultipleChoiceField', props)
+    })
+
+    it('should attach data attributes to the select control', () => {
+      expect(this.component.querySelector('select[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+    })
+  })
 })

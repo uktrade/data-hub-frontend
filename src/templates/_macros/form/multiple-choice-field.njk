@@ -16,6 +16,7 @@
  # @param {string} [props.error] - Field error
  # @param {string} [props.groupClass] - Group class name
  # @param {string} [props.inputClass] - Input class name
+ # @param {object} [props.inputData] - Data attributes to add to input control
  # @param {boolean} [props.optional] - Marks field as optional
  # @param {array}  [props.children] - an array of inner macro configurations
  #
@@ -30,7 +31,7 @@
     {% if props.type in ['checkbox', 'radio'] %}
       {{ MultipleChoice(props) }}
     {% else %}
-      {{ SelectBox(props | assignCopy({ class: props.inputClass })) }}
+      {{ SelectBox(props | assignCopy({ class: props.inputClass, data: props.inputData })) }}
     {% endif %}
 
     {{ children }}
