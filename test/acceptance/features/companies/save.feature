@@ -16,7 +16,7 @@ Feature: Create a new company
       | Business type             | company.businessType    |
       | Primary address           | company.primaryAddress  |
       | UK region                 | company.ukRegion        |
-      | Headquarters              | company.headquarterType |
+      | Headquarter type          | company.headquarterType |
       | Sector                    | company.sector          |
       | Website                   | company.website         |
       | Business description      | company.description     |
@@ -39,7 +39,7 @@ Feature: Create a new company
       | Business type             | company.businessType    |
       | Primary address           | company.primaryAddress  |
       | UK region                 | company.ukRegion        |
-      | Headquarters              | company.headquarterType |
+      | Headquarter type          | company.headquarterType |
       | Sector                    | company.sector          |
       | Website                   | company.website         |
       | Business description      | company.description     |
@@ -61,7 +61,7 @@ Feature: Create a new company
       | key                       | value                            |
       | Business type             | company.businessType             |
       | Primary address           | company.primaryAddress           |
-      | Headquarters              | company.headquarterType          |
+      | Headquarter type          | company.headquarterType          |
       | Sector                    | company.sector                   |
       | Website                   | company.website                  |
       | Business description      | company.description              |
