@@ -4,7 +4,7 @@ Feature: Investment projects local nav
   @investment-projects-local-nav
   Scenario: Investment projects local nav as DIT staff
 
-    When I navigate to investment project fixture New hotel (commitment to invest)
+    When I navigate to the `investments.Fixture` page using `investment project` `New hotel (commitment to invest)` fixture
     Then there should be a local nav
       | text                      |
       | Project details           |
@@ -17,7 +17,7 @@ Feature: Investment projects local nav
   @investment-projects-local-nav--lep @lep
   Scenario: Investment projects local nav as LEP
 
-    When I navigate to investment project fixture New zoo (LEP)
+    When I navigate to the `investments.Fixture` page using `investment project` `New zoo (LEP)` fixture
     Then there should be a local nav
       | text                      |
       | Project details           |
@@ -29,7 +29,7 @@ Feature: Investment projects local nav
   @investment-projects-local-nav--da @da
   Scenario: Investment projects local nav as DA
 
-    When I navigate to investment project fixture New golf course (DA)
+    When I navigate to the `investments.Fixture` page using `investment project` `New golf course (DA)` fixture
     Then there should be a local nav
       | text                      |
       | Project details           |

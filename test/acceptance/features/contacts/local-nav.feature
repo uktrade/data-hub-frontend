@@ -4,7 +4,7 @@ Feature: Contact local nav
   @contact-local-nav
   Scenario: Contact local nav as DIT staff
 
-    When I navigate to contact fixture Johnny Cakeman
+    When I navigate to the `contacts.Fixture` page using `contact` `Johnny Cakeman` fixture
     Then there should be a local nav
       | text                        |
       | Details                     |
@@ -15,7 +15,7 @@ Feature: Contact local nav
   @contact-local-nav--lep @lep
   Scenario: Contact local nav as LEP
 
-    When I navigate to contact fixture Johnny Cakeman
+    When I navigate to the `contacts.Fixture` page using `contact` `Johnny Cakeman` fixture
     Then there should be a local nav
       | text                        |
       | Details                     |
@@ -24,7 +24,7 @@ Feature: Contact local nav
   @contact-local-nav--da @da
   Scenario: Contact local nav as DA
 
-    When I navigate to contact fixture Johnny Cakeman
+    When I navigate to the `contacts.Fixture` page using `contact` `Johnny Cakeman` fixture
     Then there should be a local nav
       | text                        |
       | Details                     |
