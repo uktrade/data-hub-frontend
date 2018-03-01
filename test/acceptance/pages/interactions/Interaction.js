@@ -23,6 +23,7 @@ module.exports = {
   elements: {
     aStandardInteraction: getRadioButtonWithText('A standard interaction'),
     aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
+    aPolicyFeedback: getRadioButtonWithText('Policy feedback'),
     continueButton: getButtonWithText('Continue'),
     saveButton: getButtonWithText('Add'),
     subject: '#field-subject',

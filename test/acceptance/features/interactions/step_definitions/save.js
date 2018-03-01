@@ -7,7 +7,7 @@ const { getDateFor } = require('../../../helpers/date')
 const Interaction = client.page.interactions.Interaction()
 const InteractionList = client.page.interactions.List()
 
-When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind, dataTable) {
+When(/^[an]{1,2} (interaction|service delivery|policy feedback) is added$/, async function (kind, dataTable) {
   const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
   await Interaction
     .createInteraction(details, kind === 'service delivery', (interaction) => {
@@ -26,6 +26,13 @@ When(/^I select interaction$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
     .click('@aStandardInteraction')
+    .click('@continueButton')
+})
+
+When(/^I select policy feedback$/, async function () {
+  await Interaction
+    .waitForElementVisible('@continueButton')
+    .click('@aPolicyFeedback')
     .click('@continueButton')
 })
 
@@ -48,7 +55,7 @@ When(/^the interaction events No option is chosen$/, async function () {
     .click('@eventNo')
 })
 
-Then(/^there are interaction fields$/, async function () {
+Then(/^there are (interaction|policy feedback) fields$/, async function (kind) {
   await Interaction
     .waitForElementVisible('@contact')
     .assert.visible('@contact')
@@ -90,7 +97,7 @@ Then(/^there are service delivery fields$/, async function () {
     .assert.elementNotPresent('@communicationChannel')
 })
 
-Then(/^interaction fields are pre-populated$/, async function () {
+Then(/^(interaction|policy feedback) fields are pre-populated$/, async function (kind) {
   const assertIsSet = (result) => client.expect(result.value.length).to.be.greaterThan(0)
   // TODO test user does not have a DIT team
   // await Interaction.getValue('@serviceProvider', assertIsSet)
@@ -137,9 +144,9 @@ Then(/^the net receipt field is hidden/, async function () {
 })
 
 /**
- * The filtering available for Interactions and Service Delivery is particularly hard to pin down a specific
- * Interaction or Service Delivery. This is by design. The filtering here combined with random dates for creation
- * of an Interaction or Service Delivery should mean we always find what we are looking for in the first
+ * The filtering available for Interactions, Service Delivery or Policy feedback is particularly hard to pin down a specific
+ * Interaction, Service Delivery or Policy feedback - this is by design. The filtering here combined with random dates for creation
+ * of an Interaction, Service Delivery or Polcy feedback should mean we always find what we are looking for in the first
  * result of the Collection.
  */
 Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
