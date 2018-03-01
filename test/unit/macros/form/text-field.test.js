@@ -109,4 +109,72 @@ describe('TextField component', () => {
       expect(component.querySelector('.c-form-group__error-message').textContent.trim()).to.equal('Field has error')
     })
   })
+
+  context('texfield has a single data attributes', () => {
+    beforeEach(() => {
+      this.component = macros.renderToDom('TextField', {
+        name: 'description',
+        label: 'Description',
+        inputData: {
+          test: 'text-value',
+        },
+      })
+    })
+
+    it('should add the data attribute to the input control', () => {
+      expect(this.component.querySelector('input[data-test="text-value"]')).to.not.be.null
+    })
+  })
+
+  context('texfield has a multiple data attributes', () => {
+    beforeEach(() => {
+      this.component = macros.renderToDom('TextField', {
+        name: 'description',
+        label: 'Description',
+        inputData: {
+          att1: 'att1-value',
+          att2: 'att2-value',
+        },
+      })
+    })
+
+    it('should add the data attributes to the input control', () => {
+      expect(this.component.querySelector('input[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+    })
+  })
+
+  context('textarea has a single data attributes', () => {
+    beforeEach(() => {
+      this.component = macros.renderToDom('TextField', {
+        type: 'textarea',
+        name: 'description',
+        label: 'Description',
+        inputData: {
+          test: 'text-value',
+        },
+      })
+    })
+
+    it('should add the data attribute to the input control', () => {
+      expect(this.component.querySelector('textarea[data-test="text-value"]')).to.not.be.null
+    })
+  })
+
+  context('texfield has a multiple data attributes', () => {
+    beforeEach(() => {
+      this.component = macros.renderToDom('TextField', {
+        type: 'textarea',
+        name: 'description',
+        label: 'Description',
+        inputData: {
+          att1: 'att1-value',
+          att2: 'att2-value',
+        },
+      })
+    })
+
+    it('should add the data attributes to the input control', () => {
+      expect(this.component.querySelector('textarea[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+    })
+  })
 })

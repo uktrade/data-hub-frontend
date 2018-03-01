@@ -4,6 +4,7 @@
  # @param {string} props.name - Field name
  # @param {string} props.fieldId - Field id
  # @param {string} [props.class] - Field class name
+ # @param {object} [props.data] - data attributes to add to control
  # @param {array, function} [props.options] - Field options (either an array of objects or function returning and array of objects)
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
@@ -22,6 +23,9 @@
     class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.persistsConditionalValue %}data-persist-values="true"{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% for key, value in props.data %}
+      data-{{ key }}="{{ value | escape }}"
+    {% endfor %}
   >
     {% if props.initialOption %}
       <option value="">{{ props.initialOption }}</option>

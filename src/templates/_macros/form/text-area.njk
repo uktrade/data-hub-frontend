@@ -8,6 +8,7 @@
  # @param {string} [props.placeholder] - Field placeholder
  # @param {string, array} [props.modifier] - form-control modifier
  # @param {string} [props.error] - Mark form-control with error
+ # @param {object} [props.data] - data attributes to add to control
  #}
 {% macro TextArea(props) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
@@ -20,5 +21,8 @@
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
     {% if props.autofocus %}autofocus{% endif %}
     rows="8"
+    {% for key, value in props.data %}
+      data-{{ key }}="{{ value | escape }}"
+    {% endfor %}
   >{{ props.value }}</textarea>
 {% endmacro %}
