@@ -1,8 +1,4 @@
-const router = require('express').Router()
-const { adviserSearchHandler, postcodeLookupHandler } = require('./controllers')
-
-router.get('/adviserlookup/:term', adviserSearchHandler)
-router.get('/postcodelookup/:postcode', postcodeLookupHandler)
+const router = require('./router')
 
 module.exports = {
   mountpath: '/api',

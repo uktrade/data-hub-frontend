@@ -88,4 +88,16 @@ describe('#options', () => {
       ])
     })
   })
+
+  context('when a search term is provided', () => {
+    beforeEach(async () => {
+      this.options = await getOptions('1234', 'uk-region', { term: 'r1', includeDisabled: true })
+    })
+
+    it('should only return the option that starts with the term', () => {
+      expect(this.options).to.deep.equal([
+        { label: 'r1', value: '1' },
+      ])
+    })
+  })
 })

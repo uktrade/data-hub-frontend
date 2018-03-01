@@ -1,15 +1,7 @@
-const { lookupAddress } = require('./services')
-const metadata = require('../../lib/metadata')
-const { adviserSearch } = require('../adviser/repos')
+const { assign } = require('lodash')
 
-async function adviserSearchHandler (req, res, next) {
-  try {
-    const advisers = await adviserSearch(req.session.token, req.params.term)
-    res.json(advisers)
-  } catch (error) {
-    next(error)
-  }
-}
+const { lookupAddress } = require('../services')
+const metadata = require('../../../lib/metadata')
 
 async function postcodeLookupHandler (req, res) {
   try {
@@ -19,7 +11,7 @@ async function postcodeLookupHandler (req, res) {
       country => country.name.toLowerCase() === 'united kingdom'
     ).id
     const augmentedAddresses = addresses.map(address => {
-      return Object.assign({}, address, { country: unitedKingdomCountryId })
+      return assign({}, address, { country: unitedKingdomCountryId })
     })
 
     res.json(augmentedAddresses)
@@ -29,6 +21,5 @@ async function postcodeLookupHandler (req, res) {
 }
 
 module.exports = {
-  adviserSearchHandler,
   postcodeLookupHandler,
 }
