@@ -24,7 +24,7 @@ aliases:
   - &wait_for_backend
     run:
       name: Wait for backend
-      command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
+      command: dockerize -wait ${API_ROOT}/admin/ -timeout 300s
 
   # Wait for mock-sso to report OK
   - &wait_for_mock_sso
