@@ -72,7 +72,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
     @include core-font(16);
   }
 
-  .c-badge {
+  .c-badge--secondary {
     @include core-font(24);
     padding: $baseline-grid-unit ($baseline-grid-unit * 2);
     background-color: $white;
