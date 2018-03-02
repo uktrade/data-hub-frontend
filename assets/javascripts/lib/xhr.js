@@ -32,7 +32,7 @@ const XHR = {
     if (params) {
       const url = `?${queryString.stringify(params)}`
       try {
-        history.push(url, { data: res.data })
+        history.replace(url, { data: res.data })
       } catch (err) {
         // state was too large for browser to handle. Do full page load.
         window.location.assign(url)
@@ -48,6 +48,11 @@ const XHR = {
 
     if (showLoader) {
       outlet.classList.add('u-loading')
+    }
+
+    if (params) {
+      const url = `?${queryString.stringify(params)}`
+      history.push(url)
     }
 
     return axios
