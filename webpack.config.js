@@ -75,6 +75,7 @@ const common = {
                 sourceMap: true, // required for resolve-url-loader
                 includePaths: [
                   path.resolve(__dirname, 'node_modules/govuk_frontend_toolkit/stylesheets'),
+                  path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
                 ],
               },
             },
