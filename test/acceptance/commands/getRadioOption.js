@@ -8,7 +8,7 @@ exports.command = function getRadioOption (name, callback) {
 
   return this.elements('css selector', selector, (result) => {
     if (result.value.length) {
-      const random = Math.floor(Math.random() * (result.value.length - 1))
+      const random = Math.floor(Math.random() * result.value.length)
 
       this.elementIdAttribute(result.value[random].ELEMENT, 'textContent', function (textContent) {
         if (typeof callback === 'function') {
