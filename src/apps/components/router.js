@@ -14,6 +14,7 @@ const {
   renderMetaList,
 } = require('./controllers')
 
+const { adviserLookup } = require('./middleware')
 const { renderFormElements } = require('./form/controllers')
 
 const {
@@ -32,6 +33,6 @@ router
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)
   .get('/meta-list', renderMetaList)
-  .all('/form', renderFormElements)
+  .all('/form', adviserLookup, renderFormElements)
 
 module.exports = router

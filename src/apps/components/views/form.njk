@@ -317,4 +317,27 @@
     {% endcall %}
   {% endcall %}
 
+  {% call Example('Typeahead') %}
+    <form class="js-vue-wrapper">
+      <typeahead
+        entity="adviser"
+        name="adviser"
+        label="Adviser"
+        value="{{ advisers | dump }}">
+      </typeahead>
+    </form>
+
+    <hr>
+
+    {% block xhr_content %}
+      <div id="xhr-outlet">
+        <h2>Advisers selected</h2>
+        <ul>
+          {% for adviser in advisers %}
+            <li>{{ adviser.label }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endblock %}
+  {% endcall %}
 {% endblock %}
