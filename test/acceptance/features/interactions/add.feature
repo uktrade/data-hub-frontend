@@ -26,6 +26,31 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
+  @interaction-add--companies-policy-feedback-submit
+  Scenario: Companies policy feedback is saved
+
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select policy feedback
+    Then there are policy feedback fields
+    And policy feedback fields are pre-populated
+    When a policy feedback is added
+      | key                      | value                                    |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
+
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
@@ -119,6 +144,31 @@ Feature: Add a new interaction in Data hub
     Then there are interaction fields
     And interaction fields are pre-populated
     When an interaction is added
+      | key                      | value                                    |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
+
+  @interaction-add--contacts-policy-feedback-submit
+  Scenario: Policy feedback fields from contacts
+
+    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
+    And I click the Interactions local nav link
+    And I click the "Add interaction" link
+    And I select policy feedback
+    Then there are interaction fields
+    And interaction fields are pre-populated
+    When a policy feedback is added
       | key                      | value                                    |
     Then I see the success message
     And the details are displayed
