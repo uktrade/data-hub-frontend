@@ -37,7 +37,7 @@ module.exports = {
 
         const randomlySetRadioOptions = {}
 
-        this
+        return this
           .api.perform((done) => {
             this.getRadioOption('average_salary', (result) => {
               this.api.useCss().click(result.labelSelector)
@@ -62,8 +62,6 @@ module.exports = {
 
             callback(details)
           })
-
-        callback(details)
       },
     },
   ],

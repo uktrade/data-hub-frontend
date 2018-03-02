@@ -490,7 +490,7 @@ module.exports = {
           .waitForElementPresent('@accountManagementEditButton')
           .click('@accountManagementEditButton')
 
-        this
+        return this
           .section.accountManagementForm
           .waitForElementPresent('@oneListAccountOwner')
           .api.perform((done) => {
