@@ -3,7 +3,7 @@ const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 const { merge, set } = require('lodash')
 
-const { company: companyFixtures } = require('../../setup/fixtures')
+const { company: companyFixtures } = require('../../../fixtures')
 
 const Message = client.page.Message()
 const Company = client.page.companies.Company()

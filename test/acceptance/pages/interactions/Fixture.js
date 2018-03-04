@@ -1,6 +1,6 @@
 const { find } = require('lodash')
 
-const { interaction } = require('../../features/setup/fixtures')
+const { interaction } = require('../../fixtures')
 
 module.exports = {
   url: function interactionFixtureUrl (interactionName) {

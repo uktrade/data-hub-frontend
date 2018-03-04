@@ -3,7 +3,7 @@ const { Then, When } = require('cucumber')
 const { get, set, camelCase } = require('lodash')
 const { compareDesc } = require('date-fns')
 
-const { contact: contactFixtures } = require('../../setup/fixtures')
+const { contact: contactFixtures } = require('../../../fixtures')
 const { getUid } = require('../../../helpers/uuid')
 
 const Contact = client.page.contacts.Contact()

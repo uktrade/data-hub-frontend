@@ -1,6 +1,6 @@
 const { find } = require('lodash')
 
-const { contact } = require('../../features/setup/fixtures')
+const { contact } = require('../../fixtures')
 
 module.exports = {
   url: function contactFixtureUrl (contactName) {

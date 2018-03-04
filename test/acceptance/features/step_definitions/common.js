@@ -2,7 +2,7 @@ const { assign, camelCase, find, get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 
-const fixtures = require('../../features/setup/fixtures')
+const fixtures = require('../../fixtures')
 
 When(/^I (?:navigate|go|open|visit).*? `(.+)` page$/, async function (pageName) {
   try {

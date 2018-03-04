@@ -2,7 +2,7 @@ const { get, set, lowerCase, assign, find } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 
-const { company: companyFixtures } = require('../../setup/fixtures')
+const { company: companyFixtures } = require('../../../fixtures')
 const { getDateFor } = require('../../../helpers/date')
 
 const InvestmentProject = client.page.investments.Project()
