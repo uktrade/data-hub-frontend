@@ -2,6 +2,7 @@ const { get, set, lowerCase, assign, find } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 
+const { company: companyFixtures } = require('../../setup/fixtures')
 const { getDateFor } = require('../../../helpers/date')
 
 const InvestmentProject = client.page.investments.Project()
@@ -106,7 +107,7 @@ When(/^I navigate to the Investment Projects source of equity investment$/, asyn
 })
 
 When(/^I search for the foreign source of equity (.+)$/, async function (companyName) {
-  const sourceOfForeignEquity = find(this.fixtures.company, ['name', companyName])
+  const sourceOfForeignEquity = find(companyFixtures, { name: companyName })
 
   await InvestmentProject
     .searchForEquitySourceCompany(sourceOfForeignEquity.name)
