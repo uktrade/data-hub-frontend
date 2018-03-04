@@ -1,4 +1,3 @@
-const urls = require('./urls')
 const { setWorldConstructor } = require('cucumber')
 
 /**
@@ -6,7 +5,6 @@ const { setWorldConstructor } = require('cucumber')
  * @constructor
  */
 function World () {
-  this.urls = urls
   this.resetState = function () {
     this.state = {}
   }
