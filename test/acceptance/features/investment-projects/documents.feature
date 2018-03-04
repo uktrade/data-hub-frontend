@@ -18,11 +18,11 @@ Feature: Investment project documents
   @investment-projects-documents--lep @lep
   Scenario: Navigate to documents as LEP
 
-    When I navigate directly to /documents of investment project fixture New zoo (LEP)
+    When I navigate to the `investments.Documents` page using `investment project` `New zoo (LEP)` fixture
     Then I see the 403 error page
 
   @investment-projects-documents--da @da
   Scenario: Navigate to documents as DA
 
-    When I navigate directly to /documents of investment project fixture New golf course (DA)
+    When I navigate to the `investments.Documents` page using `investment project` `New golf course (DA)` fixture
     Then I see the 403 error page

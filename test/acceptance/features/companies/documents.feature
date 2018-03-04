@@ -18,11 +18,11 @@ Feature: Company documents
   @companies-documents--lep @lep
   Scenario: Navigate to documents as LEP
 
-    When I navigate directly to /documents of company fixture Lambda plc
+    When I navigate to the `companies.Documents` page using `company` `Lambda plc` fixture
     Then I see the 403 error page
 
   @companies-documents--da @da
   Scenario: Navigate to documents as DA
 
-    When I navigate directly to /documents of company fixture Lambda plc
+    When I navigate to the `companies.Documents` page using `company` `Lambda plc` fixture
     Then I see the 403 error page
