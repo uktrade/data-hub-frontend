@@ -18,7 +18,7 @@ Feature: View Audit history of a contact
     And the contact has 1 fields edited for audit
     Then I see the success message
     When I search for this Contact record
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the name of the person who made the recent contact record changes
     And I see the date time stamp when the recent contact record changed
     And I see the field names that were recently changed
@@ -36,7 +36,7 @@ Feature: View Audit history of a contact
     And the contact has 2 fields edited for audit
     Then I see the success message
     When I search for this Contact record
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the total number of changes occurred recently on this contact record
 
   @audit-contact--archived
@@ -55,7 +55,7 @@ Feature: View Audit history of a contact
     And I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the details who archived the contact
 
   @audit-contact--unarchived
@@ -76,5 +76,5 @@ Feature: View Audit history of a contact
     And I search for the created contact
     And the Contacts search tab is clicked
     And I click on the first contact collection link
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the details who unarchived the contact
