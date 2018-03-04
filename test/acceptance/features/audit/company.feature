@@ -9,7 +9,7 @@ Feature: View Audit history of a Company
 
     Given I Amend 1 records of an existing company record
     When I search for this company record
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the name of the person who made the recent company record changes
 
   @audit-company--timestamp
@@ -17,7 +17,7 @@ Feature: View Audit history of a Company
 
     Given I Amend 1 records of an existing company record
     When I search for this company record
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the date time stamp when the recent company record changed
 
   @audit-company--field-names
@@ -25,5 +25,5 @@ Feature: View Audit history of a Company
 
     Given I Amend 1 records of an existing company record
     When I search for this company record
-    And I click the Audit History tab
+    And I click the "Audit history" link
     Then I see the field names that were recently changed on this company record
