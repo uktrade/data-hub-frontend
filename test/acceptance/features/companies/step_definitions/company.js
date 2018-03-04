@@ -2,7 +2,9 @@ const { get, set } = require('lodash')
 
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
+
 const { getUid } = require('../../../helpers/uuid')
+const { company: companyFixtures } = require('../../setup/fixtures')
 
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`
@@ -16,7 +18,7 @@ When(/^a "UK private or public limited company" is created$/, async function () 
 
   await Company
     .createUkPrivateOrPublicLimitedCompany(
-      get(this.fixtures, 'company.companiesHouse'),
+      companyFixtures.companiesHouse,
       {},
       (company) => set(this.state, 'company', company),
     )
