@@ -24,3 +24,10 @@ When(/^I (?:navigate|go|open|visit).*? `(.+)` page using `(.+)` `(.+)` fixture$/
 
   await Page.navigate(Page.url(fixtureName))
 })
+
+When('I click the {string} link', async function (linkText) {
+  await client
+    .useXpath()
+    .click(`//a[text()='${linkText}']`)
+    .useCss()
+})
