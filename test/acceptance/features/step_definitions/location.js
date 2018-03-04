@@ -26,7 +26,7 @@ Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (
   const entityTypeFieldName = camelCase(entityType)
   const fixtureDetails = find(fixtures[entityTypeFieldName], { name: fixtureName })
   const collection = this.urls[entityTypeFieldName].collection
-  const url = `${collection}/${fixtureDetails.pk}${path}`
+  const url = `${collection}/${fixtureDetails.id}${path}`
 
   await client.url(url)
 })
