@@ -6,7 +6,7 @@ const { Then, When } = require('cucumber')
 const { getUid } = require('../../../helpers/uuid')
 const { company: companyFixtures } = require('../../../fixtures')
 
-const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
+const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out in the url property/function of page objects
 const dashboardPage = `${process.env.QA_HOST}/`
 
 const Company = client.page.companies.Company()
