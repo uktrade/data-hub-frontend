@@ -1,6 +1,6 @@
 const { find } = require('lodash')
 
-const { event } = require('../../features/setup/fixtures')
+const { event } = require('../../fixtures')
 
 module.exports = {
   url: function eventFixtureUrl (eventName) {

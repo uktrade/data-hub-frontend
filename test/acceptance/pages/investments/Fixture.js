@@ -1,6 +1,6 @@
 const { find } = require('lodash')
 
-const { investmentProject } = require('../../features/setup/fixtures')
+const { investmentProject } = require('../../fixtures')
 
 module.exports = {
   url: function projectFixtureUrl (projectName) {

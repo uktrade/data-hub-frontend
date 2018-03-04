@@ -4,7 +4,7 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 
 const { getUid } = require('../../../helpers/uuid')
-const { company: companyFixtures } = require('../../setup/fixtures')
+const { company: companyFixtures } = require('../../../fixtures')
 
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out into a url world object
 const dashboardPage = `${process.env.QA_HOST}/`

@@ -2,7 +2,7 @@ const { find, get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 
-const fixtures = require('../setup/fixtures')
+const fixtures = require('../../fixtures')
 const formatters = require('../../helpers/formatters')
 
 function getExpectedValue (row, state) {
