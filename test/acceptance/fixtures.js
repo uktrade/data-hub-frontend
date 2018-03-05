@@ -12,7 +12,7 @@ module.exports = {
       country: 'United Kingdom',
     },
     foreign: {
-      pk: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
+      id: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
       name: 'Lambda plc',
       address1: '12 St George\'s Road',
       town: 'Paris',
@@ -29,7 +29,7 @@ module.exports = {
       futureCountriesOfInterest: 'Yemen',
     },
     foreignOther: {
-      pk: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+      id: 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
       name: 'Mars Exports Ltd',
       address1: '12 First Street',
       town: 'New York',
@@ -37,7 +37,7 @@ module.exports = {
       country: 'United States',
     },
     ukLtd: {
-      pk: '0f5216e0-849f-11e6-ae22-56b6b6499611',
+      id: '0f5216e0-849f-11e6-ae22-56b6b6499611',
       name: 'Venus Ltd',
       address1: '66 Marcham Road',
       town: 'Bordley',
@@ -53,27 +53,27 @@ module.exports = {
   },
   contact: {
     georginaClark: {
-      pk: '048f2edc-e7ed-4881-b1cc-29142a80238a',
+      id: '048f2edc-e7ed-4881-b1cc-29142a80238a',
       name: 'Georgina Clark',
     },
     johnnyCakeman: {
-      pk: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
+      id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
       name: 'Johnny Cakeman',
     },
   },
   event: {
     oneDayExhibition: {
-      pk: 'b93d4273-36fe-4008-ac40-fbc197910791',
+      id: 'b93d4273-36fe-4008-ac40-fbc197910791',
       name: 'One-day exhibition',
     },
     grandExhibition: {
-      pk: 'bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
+      id: 'bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
       name: 'Grand exhibition',
     },
   },
   interaction: {
     attendedGammaEvent: {
-      pk: 'ec4a46ef-6e50-4a5c-bba0-e311f0471312',
+      id: 'ec4a46ef-6e50-4a5c-bba0-e311f0471312',
       company: 'Venus Ltd',
       contact: 'Johnny Cakeman',
       serviceProvider: 'CBBC North EAST',
@@ -87,11 +87,11 @@ module.exports = {
       documents: 'View files and documents (will open another website)',
     },
     grandExhibition: {
-      pk: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
+      id: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
       subject: 'Provided funding information',
     },
     tapGrant: {
-      pk: 'aa350238-5d84-4bed-be68-b08dea7ea6d5',
+      id: 'aa350238-5d84-4bed-be68-b08dea7ea6d5',
       company: 'Venus Ltd',
       contact: 'Dean Cox',
       serviceProvider: 'Marketing - Marketing Team',
@@ -109,23 +109,23 @@ module.exports = {
   },
   investmentProject: {
     newHotelCommitmentToInvest: {
-      pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+      id: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
       name: 'New hotel (commitment to invest)',
     },
     newRollercoaster: {
-      pk: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
+      id: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
       name: 'New rollercoaster',
     },
     newHotelFdi: {
-      pk: '721e2a04-21c3-4172-a321-4368463a4b2d',
+      id: '721e2a04-21c3-4172-a321-4368463a4b2d',
       name: 'New hotel (FDI)',
     },
     newGolfCourse: {
-      pk: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
+      id: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
       name: 'New golf course (DA)',
     },
     newZoo: {
-      pk: 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977',
+      id: 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977',
       name: 'New zoo (LEP)',
     },
   },

@@ -3,6 +3,8 @@ const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 const { merge, set } = require('lodash')
 
+const { company: companyFixtures } = require('../../../fixtures')
+
 const Message = client.page.Message()
 const Company = client.page.companies.Company()
 const Contact = client.page.contacts.Contact()
@@ -14,7 +16,7 @@ const InvestmentProject = client.page.investments.Project()
 Given(/^I archive an existing contact record$/, async function () {
   await Company
     .navigate()
-    .findCompany(this.fixtures.company.foreign.name)
+    .findCompany(companyFixtures.foreign.name)
   await ContactList
     .click('@contactsTab')
   await AuditList.section.lastContactInList
