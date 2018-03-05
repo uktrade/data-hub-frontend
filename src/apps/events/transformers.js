@@ -155,12 +155,12 @@ function transformEventResponseToViewRecord ({
     'Service': service,
   })
 
-  viewRecord['Documents'] = {
+  viewRecord.Documents = {
     name: 'There are no files or documents',
   }
 
   if (archived_documents_url_path) {
-    viewRecord['Documents'] = {
+    viewRecord.Documents = {
       url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
       name: 'View files and documents',
       hint: '(will open another website)',

@@ -49,15 +49,15 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the headquarters', () => {
-      expect(this.viewRecord['Headquarters']).to.equal('European headquarters (EHQ)')
+      expect(this.viewRecord.Headquarters).to.equal('European headquarters (EHQ)')
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
 
     it('should convert website to link', () => {
-      expect(this.viewRecord['Website']).to.deep.equal({
+      expect(this.viewRecord.Website).to.deep.equal({
         name: 'http://www.test.com',
         url: 'http://www.test.com',
       })
@@ -103,7 +103,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
   })
 
@@ -157,11 +157,11 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the country', () => {
-      expect(this.viewRecord['Country']).to.equal('France')
+      expect(this.viewRecord.Country).to.equal('France')
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
   })
 })
