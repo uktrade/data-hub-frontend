@@ -3,6 +3,7 @@ const { Then, When } = require('cucumber')
 const { get, set, camelCase } = require('lodash')
 const { compareDesc } = require('date-fns')
 
+const { contact: contactFixtures } = require('../../../fixtures')
 const { getUid } = require('../../../helpers/uuid')
 
 const Contact = client.page.contacts.Contact()
@@ -218,7 +219,7 @@ Then(/^the contacts should have been correctly sorted by creation date$/, async 
   const firstItemField = get(this.state, 'collection.firstItem.field')
   const lastItemField = get(this.state, 'collection.lastItem.field')
   const expectedFirstItemField = get(this.state, 'contact.heading')
-  const expectedLastItemField = this.fixtures.contact.georginaClark.name
+  const expectedLastItemField = contactFixtures.georginaClark.name
 
   client.expect(firstItemField).to.equal(expectedFirstItemField)
   client.expect(lastItemField).to.equal(expectedLastItemField)
