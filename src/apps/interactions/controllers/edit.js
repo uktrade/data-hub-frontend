@@ -3,11 +3,12 @@ const { get, merge, pickBy, lowerCase, snakeCase, assign } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
-const { interactionForm, serviceDeliveryForm } = require('../macros')
+const { interactionForm, serviceDeliveryForm, policyFeedbackForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const formConfigs = {
   'interaction': interactionForm,
   'service-delivery': serviceDeliveryForm,
+  'policy-feedback': policyFeedbackForm,
 }
 
 function renderEditPage (req, res) {
@@ -39,10 +40,12 @@ function renderEditPage (req, res) {
     )
 
   const forEntityName = res.locals.entityName ? ` for ${res.locals.entityName}` : ''
+  const kindName = lowerCase(req.params.kind)
+  const actionName = (interactionData ? 'Edit' : 'Add')
 
   res
-    .breadcrumb(`${interactionData ? 'Edit' : 'Add'} ${lowerCase(req.params.kind)}`)
-    .title(`${interactionData ? 'Edit' : 'Add'} ${lowerCase(req.params.kind) + forEntityName}`)
+    .breadcrumb(`${actionName} ${kindName}`)
+    .title(`${actionName} ${kindName + forEntityName}`)
     .render('interactions/views/edit', {
       interactionForm,
     })

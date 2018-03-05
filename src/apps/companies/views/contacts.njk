@@ -12,13 +12,16 @@
       filtersFields: filtersFields,
       action: CURRENT_PATH
   }) }}
-
-  {{ Collection(contactResults | assign({
-      countLabel: 'contact',
-      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-      selectedFilters: selectedFilters,
-      query: QUERY,
-      action: CURRENT_PATH,
-      summaryActionsHTML: addProjectButton
-  })) }}
+  {% block xhr_content %}
+    <article id="xhr-outlet">
+      {{ Collection(contactResults | assign({
+          countLabel: 'contact',
+          sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+          selectedFilters: selectedFilters,
+          query: QUERY,
+          action: CURRENT_PATH,
+          summaryActionsHTML: addProjectButton
+      })) }}
+    </article>
+  {% endblock %}
 {% endblock %}

@@ -42,6 +42,10 @@ const companySortForm = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+      inputClass: 'js-MirrorValue',
+      inputData: {
+        'target-selector': '.c-collection-filters input[name="sortby"]',
+      },
       options: [
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
