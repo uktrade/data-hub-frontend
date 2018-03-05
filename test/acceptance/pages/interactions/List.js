@@ -49,6 +49,7 @@ module.exports = {
       elements: {
         interaction: 'label[for=field-kind-1]',
         serviceDelivery: 'label[for=field-kind-2]',
+        policyFeedback: 'label[for=field-kind-3]',
         communicationChannel: '[name="communication_channel"]',
         adviser: '[name="dit_adviser"]',
         dateFrom: '#field-date_after',
