@@ -61,8 +61,8 @@ async function getHandler (req, res, next) {
 }
 
 function postHandler (req, res, next) {
-  const isEquitySource = req.body['is_equity_source']
-  const clientCompanyId = req.body['company_id']
+  const isEquitySource = req.body.is_equity_source
+  const clientCompanyId = req.body.company_id
 
   if (isEquitySource === 'true') {
     return res.redirect(`/investment-projects/create/project/${clientCompanyId}`)
