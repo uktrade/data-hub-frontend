@@ -55,17 +55,17 @@ function transformToApi (body) {
     return { id: value }
   })
 
-  if (body['estimated_land_date_year'] || body['estimated_land_date_month']) {
-    formatted['estimated_land_date'] = [
-      body['estimated_land_date_year'],
-      body['estimated_land_date_month'],
+  if (body.estimated_land_date_year || body.estimated_land_date_month) {
+    formatted.estimated_land_date = [
+      body.estimated_land_date_year,
+      body.estimated_land_date_month,
       '01',
     ].join('-')
   } else {
-    formatted['estimated_land_date'] = null
+    formatted.estimated_land_date = null
   }
 
-  formatted['actual_land_date'] = transformDateObjectToDateString('actual_land_date')(body)
+  formatted.actual_land_date = transformDateObjectToDateString('actual_land_date')(body)
 
   return assign({}, body, formatted)
 }
@@ -102,8 +102,8 @@ function transformFromApi (body) {
   const estimatedLandDate = body.estimated_land_date
   if (!isEmpty(estimatedLandDate)) {
     const date = new Date(estimatedLandDate)
-    formatted['estimated_land_date_year'] = date.getFullYear().toString()
-    formatted['estimated_land_date_month'] = format(date, 'MM')
+    formatted.estimated_land_date_year = date.getFullYear().toString()
+    formatted.estimated_land_date_month = format(date, 'MM')
   }
 
   return assign({}, body, formatted)
