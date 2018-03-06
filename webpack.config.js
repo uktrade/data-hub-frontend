@@ -108,6 +108,8 @@ const common = {
 webpackConfigs.develop = merge.smart(common, {
   output: {
     filename: 'js/[name].js',
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
   plugins: [
     new ExtractTextPlugin('css/[name].css'),
