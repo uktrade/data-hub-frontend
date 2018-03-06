@@ -3,9 +3,7 @@ Feature: Company export save
 
   @companies-export-save--save
   Scenario: Save company export details
-
     When I navigate to the `companies.Exports` page using `company` `Lambda plc` fixture
-    And I click the "Export" link
     Then the Exports details are displayed
       | key                          | value                             |
       | Export win category          | None                              |
