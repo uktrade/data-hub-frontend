@@ -17,7 +17,7 @@ Feature: View a list of events
     When I navigate to the `events.List` page
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I navigate to the `events.List` page
     Then I can view the Event in the collection
@@ -38,7 +38,7 @@ Feature: View a list of events
     When I navigate to the `events.List` page
     And I click the "Add event" link
     And I populate the create event form with United Kingdom and a region
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I navigate to the `events.List` page
     Then I can view the Event in the collection
@@ -59,7 +59,7 @@ Feature: View a list of events
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     And I filter the events list by name
@@ -79,12 +79,12 @@ Feature: View a list of events
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    When I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     When I sort the events list name A-Z

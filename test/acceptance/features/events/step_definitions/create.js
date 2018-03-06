@@ -202,13 +202,6 @@ Then(/^I verify the event name has an error message$/, async () => {
     .assert.visible('@eventNameError')
 })
 
-Then(/^I click the save button$/, async () => {
-  await Event
-    .waitForElementPresent('@saveButton')
-    .click('@saveButton')
-    .wait() // wait for backend to sync
-})
-
 Then(/^the event fields have error messages$/, async () => {
   await Event
     .assert.visible('@nameError')
