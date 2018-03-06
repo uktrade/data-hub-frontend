@@ -77,5 +77,5 @@ Feature: Add value to investment project
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     When I click the "Add value" link
-    And I click the "Save" link
+    And I submit the form
     Then I see the success message

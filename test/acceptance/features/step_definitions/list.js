@@ -3,7 +3,6 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const moment = require('moment')
 
-const { getButtonWithText } = require('../../helpers/selectors')
 const { pluralise } = require('../../../../config/nunjucks/filters')
 const { mediumDateTimeFormat } = require('../../../../config')
 
@@ -14,17 +13,6 @@ When('I store the result count in state', async function () {
     .captureResultCount((count) => {
       set(this.state, 'collection.resultCount', count)
     })
-})
-
-When(/^I click the "(.+)" link$/, async (linkTextContent) => {
-  const { selector: addLink } = getButtonWithText(linkTextContent)
-
-  await Collection
-    .api.useXpath()
-    .waitForElementVisible(addLink)
-    .assert.containsText(addLink, linkTextContent)
-    .click(addLink)
-    .useCss()
 })
 
 When(/^I clear all filters$/, async function () {
