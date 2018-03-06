@@ -7,8 +7,7 @@ Feature: View a list of Investment Projects
   @investment-projects-collection--view
   Scenario: View Investment Projects list
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Investment local nav link
+    When I navigate to the `companies.Investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
