@@ -16,11 +16,11 @@ Feature: View collection of interactions for a company
   @companies-interactions-collection--lep @lep
   Scenario: Navigate to interactions as LEP
 
-    When I navigate directly to /interactions of company fixture Lambda plc
+    When I navigate to the `companies.Interactions` page using `company` `Lambda plc` fixture
     Then I see the 403 error page
 
   @companies-interactions-collection--da @da
   Scenario: Navigate to interactions as DA
 
-    When I navigate directly to /interactions of company fixture Lambda plc
+    When I navigate to the `companies.Interactions` page using `company` `Lambda plc` fixture
     Then I see the 403 error page

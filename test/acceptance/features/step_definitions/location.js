@@ -1,8 +1,7 @@
-const { find, get, camelCase, includes } = require('lodash')
+const { get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
-const { Given, Then, When } = require('cucumber')
+const { Then, When } = require('cucumber')
 
-const fixtures = require('../../fixtures')
 const formatters = require('../../helpers/formatters')
 
 function getExpectedValue (row, state) {
@@ -21,15 +20,6 @@ function getExpectedValue (row, state) {
 }
 
 const Location = client.page.Location()
-
-Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (path, entityType, fixtureName) {
-  const entityTypeFieldName = camelCase(entityType)
-  const fixtureDetails = find(fixtures[entityTypeFieldName], { name: fixtureName })
-  const collection = this.urls[entityTypeFieldName].collection
-  const url = `${collection}/${fixtureDetails.id}${path}`
-
-  await client.url(url)
-})
 
 When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
   const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)
