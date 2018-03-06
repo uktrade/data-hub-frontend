@@ -4,14 +4,16 @@ Feature: Company export save
   @companies-export-save--save
   Scenario: Save company export details
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Export local nav link
+    When I navigate to the `companies.Exports` page using `company` `Lambda plc` fixture
+    And I click the "Export" link
     Then the Exports details are displayed
       | key                          | value                             |
       | Export win category          | None                              |
       | Currently exporting to       | company.currentlyExportingTo      |
       | Future countries of interest | company.futureCountriesOfInterest |
-    When the Exports details are updated
+    When I click the "Edit export markets" link
+    And I update the company Exports details
+    And I submit the form
     Then the Exports details are displayed
       | key                          | value                             |
       | Export win category          | company.exportWinCategory         |
