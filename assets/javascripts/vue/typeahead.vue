@@ -90,7 +90,7 @@
     },
     data () {
       return {
-        selectedOptions: JSON.parse(this.value),
+        selectedOptions: this.value ? JSON.parse(this.value) : [],
         options: [],
         isLoading: false,
         id: uuid()
