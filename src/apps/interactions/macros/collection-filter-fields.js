@@ -14,7 +14,7 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       options: [
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
-        { value: 'policy_feedback', label: 'Policy feedback' },
+        // { value: 'policy_feedback', label: 'Policy feedback' },
       ],
       modifier: 'option-select',
     },
