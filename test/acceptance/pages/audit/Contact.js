@@ -8,7 +8,6 @@ module.exports = {
   elements: {
     editContactDetailsButton: getButtonWithText('Edit contact'),
     saveButton: getButtonWithText('Save'),
-    auditHistoryTab: 'a[href*="/audit"]',
     telephone: '#field-telephone_number',
     telephoneCountryCode: '#field-telephone_countrycode',
     archiveReason: 'label[for=field-archived_reason-1]',
