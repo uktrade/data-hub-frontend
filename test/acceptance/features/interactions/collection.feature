@@ -7,8 +7,7 @@ Feature: View collection of interactions
   @interactions-collection--view-interaction
   Scenario: View interaction in interactions and services collection
 
-    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-    And I click the Interactions local nav link
+    When I navigate to the `companies.Interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     When an interaction is added
@@ -31,8 +30,7 @@ Feature: View collection of interactions
 #  @interactions-collection--view-policy-feedback
 #  Scenario: View policy feedback in interactions and services collection
 #
-#    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-#    And I click the Interactions local nav link
+#    When I navigate to the `companies.Interactions` page using `company` `Venus Ltd` fixture
 #    And I click the "Add interaction" link
 #    And I select policy feedback
 #    When a policy feedback is added
@@ -55,8 +53,7 @@ Feature: View collection of interactions
   @interactions-collection--view-service-delivery
   Scenario: View service delivery in interactions and services collection
 
-    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-    And I click the Interactions local nav link
+    When I navigate to the `companies.Interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     And a service delivery is added
@@ -79,8 +76,7 @@ Feature: View collection of interactions
   @interactions-collection--filter
   Scenario: filter interaction list
 
-    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-    And I click the Interactions local nav link
+    When I navigate to the `companies.Interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     And an interaction is added
