@@ -22,5 +22,5 @@ Feature: View collection of orders for a company
   @companies-omis-collection--lep @lep
   Scenario: Navigate to OMIS as LEP
 
-    When I navigate directly to /orders of company fixture Lambda plc
+    When I navigate to the `companies.Orders` page using `company` `Lambda plc` fixture
     Then I see the 403 error page
