@@ -10,7 +10,7 @@ Feature: Search
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I search for the created event
     Then I verify the search tabs are displayed
