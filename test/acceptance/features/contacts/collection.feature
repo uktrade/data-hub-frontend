@@ -7,8 +7,7 @@ Feature: View collection of contacts
   @contacts-collection--view
   Scenario: View contact collection
 
-    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Venus Ltd` fixture
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
@@ -47,8 +46,7 @@ Feature: View collection of contacts
   @contacts-collection--filter
   Scenario: Filter contact list
 
-    When I navigate to the `companies.Fixture` page using `company` `Venus Ltd` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Venus Ltd` fixture
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

@@ -7,8 +7,7 @@ Feature: Create New Contact
   @contacts-save--primary
   Scenario: Add a new primary contact
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
@@ -33,8 +32,7 @@ Feature: Create New Contact
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact with new company address is added
@@ -58,8 +56,7 @@ Feature: Create New Contact
   @contacts-save--non-primary
   Scenario: Add a new non-primary contact
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a non-primary contact is added
@@ -83,8 +80,7 @@ Feature: Create New Contact
   @contacts-save--primary-dashboard
   Scenario: New primary contact is visible on the dashboard
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
@@ -98,8 +94,7 @@ Feature: Create New Contact
   @contacts-save--mandatory-fields
   Scenario: Contact fields are mandatory
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    And I click the Contacts local nav link
+    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When I submit the form
