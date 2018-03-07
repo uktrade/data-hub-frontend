@@ -1,6 +1,6 @@
 const { assign, camelCase, find, get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
-const { When } = require('cucumber')
+const { When, Then } = require('cucumber')
 
 const fixtures = require('../../fixtures')
 
@@ -55,5 +55,19 @@ When(/^I select a value for `(.+)` on the `(.+)` page$/, async function (element
       })
   } catch (error) {
     throw new Error(`The page object '${pageName}' does not exist`)
+  }
+})
+
+Then(/^I am on the `(.+)` page$/, async function (pageName) {
+  try {
+    const page = get(client.page, pageName)()
+
+    if (page.props.urlMatch) {
+      await client.assert.urlMatch(page.props.urlMatch)
+    } else {
+      await client.assert.urlContains(page.url)
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 })
