@@ -70,8 +70,7 @@ Feature: Add value to investment project
   @investment-projects-value-add--blank
   Scenario: Save a blank value form in the prospect stage
 
-    When I navigate to the `companies.Fixture` page using `company` `Lambda plc` fixture
-    Then I click the Investment local nav link
+    When I navigate to the `companies.Investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     And I select FDI as the Investment project type
     And I choose Yes for "Will this company be the source of foreign equity investment?"
