@@ -66,6 +66,7 @@
     "mocha-multi": "^1.0.0",
     "moment": "^2.20.1",
     "moment-duration-format": "^2.1.0",
+    "nightwatch-custom-commands-assertions": "^1.1.0",
     "nock": "^9.1.5",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.3",
