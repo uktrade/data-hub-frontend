@@ -13,7 +13,13 @@ require('nightwatch-cucumber')({
 })
 
 module.exports = {
-  custom_commands_path: path.resolve(__dirname, 'commands'),
+  custom_commands_path: [
+    'node_modules/nightwatch-custom-commands-assertions/js/commands',
+    path.resolve(__dirname, 'commands'),
+  ],
+  custom_assertions_path: [
+    'node_modules/nightwatch-custom-commands-assertions/js/assertions',
+  ],
   page_objects_path: path.resolve(__dirname, 'pages'),
   globals_path: path.resolve(__dirname, 'global.nightwatch.js'),
   selenium: {
