@@ -71,3 +71,23 @@ Then(/^I am on the `(.+)` page$/, async function (pageName) {
     throw new Error(error)
   }
 })
+
+Then(/^I should see the correct text on the `(.+)` page$/, async function (pageName, data) {
+  try {
+    for (const row of data.hashes()) {
+      const elementPath = row.elementPath.split('.')
+      const elementName = elementPath.pop()
+      const section = elementPath.join('.section.')
+      const expectedText = get(this.state, row.expectedText) || row.expectedText
+      let page = get(client.page, `${pageName}`)()
+
+      if (section) {
+        page = get(page, `section.${section}`)
+      }
+
+      await page.assert.containsText(`@${elementName}`, expectedText)
+    }
+  } catch (error) {
+    throw new Error(error)
+  }
+})
