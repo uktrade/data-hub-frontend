@@ -15,6 +15,16 @@ Feature: Create new order using company ID
       | market.market   | omis.create.market.marketField   |
       | sector.sector   | omis.create.sector.sectorField   |
 
+  Scenario: Save draft order
+    When I submit the form
+    Then I am on the `omis.order` page
+    And I should see the correct text on the `omis.order` page
+      | elementPath            | expectedText                     |
+      | contact.name           | omis.create.contact.contactField |
+      | internal.sector        | omis.create.sector.sectorField   |
+      | header.status          | Draft                            |
+      | header.metadata.market | omis.create.market.marketField   |
+
   Scenario: Edit steps from summary
     When I click `editContactLink` on the `omis.create.summary` page
     Then I am on the `omis.create.contact` page
