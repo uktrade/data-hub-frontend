@@ -44,3 +44,16 @@ When(/^I click `(.+)` on the `(.+)` page$/, async function (elementName, pageNam
     throw new Error(`The page object '${pageName}' does not exist`)
   }
 })
+
+When(/^I select a value for `(.+)` on the `(.+)` page$/, async function (elementName, pageName) {
+  try {
+    const page = get(client.page, pageName)()
+    await page
+      .getListOption(`@${elementName}`, (item) => {
+        page.setValue(`@${elementName}`, item)
+        set(this.state, `${pageName}[${elementName}]`, item)
+      })
+  } catch (error) {
+    throw new Error(`The page object '${pageName}' does not exist`)
+  }
+})
