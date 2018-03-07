@@ -35,3 +35,12 @@ When('I click the {string} link', async function (linkText) {
     .click(`//a[text()='${linkText}']`)
     .useCss()
 })
+
+When(/^I click `(.+)` on the `(.+)` page$/, async function (elementName, pageName) {
+  try {
+    const page = get(client.page, pageName)()
+    await page.click(`@${elementName}`)
+  } catch (error) {
+    throw new Error(`The page object '${pageName}' does not exist`)
+  }
+})
