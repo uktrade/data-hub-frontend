@@ -2,6 +2,9 @@
 
 {% set contactName %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+  {%- if values.contact.job_title -%}
+    , {{ values.contact.job_title }}
+  {%- endif -%}
 {% endset %}
 
 {% set contactEmail %}
