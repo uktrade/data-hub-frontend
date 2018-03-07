@@ -129,4 +129,10 @@ module.exports = {
       name: 'New zoo (LEP)',
     },
   },
+  order: {
+    // TODO: Populate with UUIDs when fixtures have been added to the API
+    draft: {
+      id: '',
+    },
+  },
 }
