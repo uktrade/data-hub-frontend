@@ -3,9 +3,9 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { getAddress } = require('../../../helpers/address')
 
-const Company = client.page.companies.Company()
-const Contact = client.page.contacts.Contact()
-const Dashboard = client.page.Dashboard()
+const Company = client.page.companies.company()
+const Contact = client.page.contacts.contact()
+const Dashboard = client.page.dashboard()
 
 When(/^a primary contact is added$/, async function () {
   await Contact

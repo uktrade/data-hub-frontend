@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { get, set } = require('lodash')
 
-const Support = client.page.Support()
+const Support = client.page.support()
 
 When(/^the support Send button is clicked$/, async function () {
   await Support.section.form

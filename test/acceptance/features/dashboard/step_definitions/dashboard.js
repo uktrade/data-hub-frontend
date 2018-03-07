@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 
-const Dashboard = client.page.Dashboard()
+const Dashboard = client.page.dashboard()
 
 Then(/^there should be a global nav$/, async (dataTable) => {
   await Dashboard.section.globalHeader

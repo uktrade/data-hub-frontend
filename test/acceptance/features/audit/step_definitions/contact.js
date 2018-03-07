@@ -5,13 +5,13 @@ const { merge, set } = require('lodash')
 
 const { company: companyFixtures } = require('../../../fixtures')
 
-const Message = client.page.Message()
-const Company = client.page.companies.Company()
-const Contact = client.page.contacts.Contact()
-const ContactList = client.page.contacts.List()
-const AuditContact = client.page.audit.Contact()
-const AuditList = client.page.audit.List()
-const InvestmentProject = client.page.investments.Project()
+const Message = client.page.message()
+const Company = client.page.companies.company()
+const Contact = client.page.contacts.contact()
+const ContactList = client.page.contacts.list()
+const AuditContact = client.page.audit.contact()
+const AuditList = client.page.audit.list()
+const InvestmentProject = client.page.investments.project()
 
 Given(/^I archive an existing contact record$/, async function () {
   await Company

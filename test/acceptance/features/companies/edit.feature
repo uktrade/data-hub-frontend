@@ -4,7 +4,7 @@ Feature: Company details
   @companies-edit--headquarters
   Scenario: Update company headquarters
 
-    When I navigate to the `companies.List` page
+    When I navigate to the `companies.list` page
     And I choose the first item in the collection
 
     When I click the Company summary edit button

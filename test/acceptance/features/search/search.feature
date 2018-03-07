@@ -75,29 +75,29 @@ Feature: Search
   @search--events--lep @lep
   Scenario: Search events directly as a LEP
 
-    When I navigate to the `search.Events` page
+    When I navigate to the `search.events` page
     Then I see the 403 error page
 
   @search--interactions--lep @lep
   Scenario: Search interactions directly as a LEP
 
-    When I navigate to the `search.Interactions` page
+    When I navigate to the `search.interactions` page
     Then I see the 403 error page
 
   @search--omis--lep @lep
   Scenario: Search orders directly as a LEP
 
-    When I navigate to the `search.Omis` page
+    When I navigate to the `search.omis` page
     Then I see the 403 error page
 
   @search--events--da @da
   Scenario: Search events directly as a DA
 
-    When I navigate to the `search.Events` page
+    When I navigate to the `search.events` page
     Then I see the 403 error page
 
   @search--interactions--da @da
   Scenario: Search interactions directly as a DA
 
-    When I navigate to the `search.Interactions` page
+    When I navigate to the `search.interactions` page
     Then I see the 403 error page
