@@ -1836,7 +1836,7 @@ colors@1.0.3, colors@1.0.x:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.0.3.tgz#0433f44d809680fdeb60ed260f1b0c262e82a40b"
 
-colors@^1.1.2, colors@~1.1.2:
+colors@^1.0.3, colors@^1.1.2, colors@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
 
@@ -2793,6 +2793,14 @@ easy-extender@2.3.2:
   resolved "https://registry.yarnpkg.com/easy-extender/-/easy-extender-2.3.2.tgz#3d3248febe2b159607316d8f9cf491c16648221d"
   dependencies:
     lodash "^3.10.1"
+
+easyimage@^1.2.2:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/easyimage/-/easyimage-1.4.0.tgz#0d136885b8610ee20d56092596035e16ee6ae88d"
+  dependencies:
+    colors "^1.0.3"
+    mkdirp "^0.5.0"
+    q "^1.0.1"
 
 eazy-logger@3.0.2:
   version "3.0.2"
@@ -6893,6 +6901,12 @@ nightwatch-cucumber@^9.0.0:
     pify "^3.0.0"
     tmp "^0.0.33"
 
+nightwatch-custom-commands-assertions@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nightwatch-custom-commands-assertions/-/nightwatch-custom-commands-assertions-1.1.0.tgz#d3c2112416547ebd23b6332525e141bd227aba3a"
+  dependencies:
+    easyimage "^1.2.2"
+
 nightwatch@^0.9.19:
   version "0.9.19"
   resolved "https://registry.yarnpkg.com/nightwatch/-/nightwatch-0.9.19.tgz#4bd9757273d30b845f04847a98b71be9bb7c4b3b"
@@ -8122,6 +8136,10 @@ punycode@^2.1.0:
 q@1.4.1, q@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
+
+q@^1.0.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 
 qs@6.2.1:
   version "6.2.1"
