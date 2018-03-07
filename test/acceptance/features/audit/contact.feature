@@ -5,7 +5,7 @@ Feature: View Audit history of a contact
   So that I can cross-check the validity and accuracy of a given contact record
 
   Scenario: View name of the person who made contact record changes
-    When I navigate to the `companies.Contacts` page using `company` `Lambda plc` fixture
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form

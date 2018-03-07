@@ -9,8 +9,8 @@ const { company: companyFixtures } = require('../../../fixtures')
 const companySearchPage = `${process.env.QA_HOST}/search/companies` // TODO move these urls out in the url property/function of page objects
 const dashboardPage = `${process.env.QA_HOST}/`
 
-const Company = client.page.companies.Company()
-const Search = client.page.Search()
+const Company = client.page.companies.company()
+const Search = client.page.search.search()
 
 When(/^a "UK private or public limited company" is created$/, async function () {
   await client

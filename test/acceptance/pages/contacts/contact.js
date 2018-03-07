@@ -117,7 +117,7 @@ module.exports = {
           postcode: 'postCode',
         }
 
-        this.api.page.Location().section.localHeader
+        this.api.page.location().section.localHeader
           .waitForElementPresent('@header')
 
         // setup form to use the postCode lookup functionality
@@ -136,7 +136,7 @@ module.exports = {
         return this.api
           .perform((done) => {
             this.api
-              .page.Address()
+              .page.address()
               .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
                 callback(assign({}, {
                   acceptsEmailMarketingFromDit: 'No',

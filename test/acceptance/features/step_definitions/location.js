@@ -19,7 +19,7 @@ function getExpectedValue (row, state) {
   return row.value
 }
 
-const Location = client.page.Location()
+const Location = client.page.location()
 
 When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
   const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)

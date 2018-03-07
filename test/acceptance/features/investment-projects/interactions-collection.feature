@@ -4,21 +4,21 @@ Feature: View collection of interactions for an investment project
   @investment-projects-interactions-collection--view
   Scenario: View investment projects interaction collection
 
-    When I navigate to the `investments.Interactions` page using `investment project` `New hotel (FDI)` fixture
+    When I navigate to the `investments.interactions` page using `investment project` `New hotel (FDI)` fixture
     And the results summary for a interaction collection is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--lep @lep
   Scenario: View investment projects interaction collection
 
-    When I navigate to the `investments.Interactions` page using `investment project` `New zoo (LEP)` fixture
+    When I navigate to the `investments.interactions` page using `investment project` `New zoo (LEP)` fixture
     And the results summary for a interaction collection is present
     And I can view the collection
 
   @investment-projects-interactions-collection--view--da @da
   Scenario: View investment projects interaction collection
 
-    When I navigate to the `investments.Interactions` page using `investment project` `New golf course (DA)` fixture
+    When I navigate to the `investments.interactions` page using `investment project` `New golf course (DA)` fixture
     And the results summary for a interaction collection is present
     And I can view the collection
 
@@ -29,11 +29,11 @@ Feature: View collection of interactions for an investment project
   @investment-projects-interactions-collection--lep @lep
   Scenario: Navigate to interactions of a different investment project as LEP
 
-    When I navigate to the `investments.Interactions` page using `investment project` `New golf course (DA)` fixture
+    When I navigate to the `investments.interactions` page using `investment project` `New golf course (DA)` fixture
     Then I see the 403 error page
 
   @investment-projects-interactions-collection--da @da
   Scenario: Navigate to interactions of a different investment project as DA
 
-    When I navigate to the `investments.Interactions` page using `investment project` `New zoo (LEP)` fixture
+    When I navigate to the `investments.interactions` page using `investment project` `New zoo (LEP)` fixture
     Then I see the 403 error page

@@ -36,7 +36,7 @@ const getSelectorsForElement = (type, name) => {
   }
 }
 
-const Form = client.page.Form()
+const Form = client.page.form()
 
 When(/^I change form text field "(.+)" to (.+)$/, async function (fieldName, fieldValue) {
   const fieldSelector = `[name="${fieldName}"]`
