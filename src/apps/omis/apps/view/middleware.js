@@ -236,8 +236,9 @@ function setQuoteForm (req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
   const orderStatus = get(res.locals, 'order.status')
+  const sendDestination = get(res.locals, 'order.contact.email') || 'client'
   const form = {
-    buttonText: 'Send quote to client',
+    buttonText: `Send quote to ${sendDestination}`,
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }

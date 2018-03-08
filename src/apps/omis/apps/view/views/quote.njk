@@ -106,7 +106,11 @@
       <h2 class="heading-medium">What happens next</h2>
 
       <ul class="list-disc">
-        <li>An email with a link to this quote will be sent to the client for acceptance</li>
+        <li>
+          An email with a link to this quote will be sent to
+          {{ order.contact.email | default('the client') }}
+          for acceptance
+        </li>
       </ul>
     {% endif %}
 
