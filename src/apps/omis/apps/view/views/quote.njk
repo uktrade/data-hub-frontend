@@ -74,12 +74,12 @@
       {% if quote.content %}
         {% call Example(tabTitle = '') %}
           <div class="l-markdown">
-  {# Ugly indentation is so that markdown spacing is handled correctly #}
-  {% markdown %}{{ quote.content | safe }}{% endmarkdown %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.content | safe }}{% endmarkdown %}
 
             {% call HiddenContent({ summary: 'View full terms and conditions' }) %}
-  {# Ugly indentation is so that markdown spacing is handled correctly #}
-  {% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
             {% endcall %}
           </div>
         {% endcall %}
@@ -114,7 +114,7 @@
       </ul>
     {% endif %}
 
-    {{ Form(quoteForm) }}
-
   {% endif %}
+
+  {{ Form(quoteForm) }}
 {% endblock %}
