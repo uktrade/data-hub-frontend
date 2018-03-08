@@ -134,6 +134,8 @@ async function setQuotePreview (req, res, next) {
       }
     })
 
+    delete quoteErrors['/vat-status']
+
     res.locals.missingLeadAssignee = error.error.hasOwnProperty('assignee_lead')
     res.locals.incompleteFields = pickBy(quoteErrors)
   }
