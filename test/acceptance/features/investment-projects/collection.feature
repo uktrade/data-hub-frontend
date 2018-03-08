@@ -7,7 +7,7 @@ Feature: View a list of Investment Projects
   @investment-projects-collection--view
   Scenario: View Investment Projects list
 
-    When I navigate to the `companies.Investments` page using `company` `Lambda plc` fixture
+    When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -48,13 +48,13 @@ Feature: View a list of Investment Projects
   @investment-projects-collection--view--lep @lep
   Scenario: View Investment Projects list as LEP
 
-    When I navigate to the `investments.List` page
+    When I navigate to the `investments.list` page
     Then I confirm I am on the Investment projects page
     And the results summary for a project collection is present
 
   @investment-projects-collection--view--da @da
   Scenario: View Investment Projects list as DA
 
-    When I navigate to the `investments.List` page
+    When I navigate to the `investments.list` page
     Then I confirm I am on the Investment projects page
     And the results summary for a project collection is present

@@ -3,8 +3,8 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { getDateFor } = require('../../../helpers/date')
 
-const Search = client.page.Search()
-const Dashboard = client.page.Dashboard()
+const Search = client.page.search.search()
+const Dashboard = client.page.dashboard()
 
 When(/^I search for the created (.+)/, async function (entityType) {
   await Dashboard

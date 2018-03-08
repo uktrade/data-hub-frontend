@@ -6,7 +6,7 @@ const moment = require('moment')
 const { pluralise } = require('../../../../config/nunjucks/filters')
 const { mediumDateTimeFormat } = require('../../../../config')
 
-const Collection = client.page.Collection()
+const Collection = client.page.collection()
 
 When('I store the result count in state', async function () {
   await Collection

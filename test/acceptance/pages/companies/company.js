@@ -83,7 +83,7 @@ module.exports = {
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
 
-            this.api.page.Location().section.localHeader
+            this.api.page.location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -187,7 +187,7 @@ module.exports = {
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
 
-            this.api.page.Location().section.localHeader
+            this.api.page.location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -237,7 +237,7 @@ module.exports = {
             this.api
               .perform((done) => {
                 this.api
-                  .page.Address()
+                  .page.address()
                   .getAddressInputValues('GL11 4DH', postcodeLookup, '@companyPostCodeLookupSuggestions', (addressInputValues) => {
                     const country = 'United Kingdom'
                     const primaryAddress = getAddress(assign({}, companyStep2, addressInputValues, { country }))
@@ -293,7 +293,7 @@ module.exports = {
               .click('@header')
 
             // step 4
-            this.api.page.Location().section.localHeader
+            this.api.page.location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -386,7 +386,7 @@ module.exports = {
               .waitForElementPresent('@continueButton')
               .click('@continueButton')
 
-            this.api.page.Location().section.localHeader
+            this.api.page.location().section.localHeader
               .waitForElementPresent('@header')
 
             this
@@ -436,7 +436,7 @@ module.exports = {
             this.api
               .perform((done) => {
                 this.api
-                  .page.Address()
+                  .page.address()
                   .getAddressInputValues('GL11 4DH', postcodeLookup, '@companyPostCodeLookupSuggestions', (addressInputValues) => {
                     const country = 'United Kingdom'
                     const primaryAddress = getAddress(assign({}, companyStep2, addressInputValues, { country }))

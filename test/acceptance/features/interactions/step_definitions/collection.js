@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const { get } = require('lodash')
 
-const InteractionList = client.page.interactions.List()
+const InteractionList = client.page.interactions.list()
 
 When(/^I filter the interactions list by service provider$/, async function () {
   await InteractionList.section.filters

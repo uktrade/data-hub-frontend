@@ -5,8 +5,8 @@ const { When } = require('cucumber')
 const { company: companyFixtures } = require('../../../fixtures')
 const { getDateFor } = require('../../../helpers/date')
 
-const InvestmentProject = client.page.investments.Project()
-const Location = client.page.Location()
+const InvestmentProject = client.page.investments.project()
+const Location = client.page.location()
 
 When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
   if (lowerCase(investmentType) === 'fdi') {

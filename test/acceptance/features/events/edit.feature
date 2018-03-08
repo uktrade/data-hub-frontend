@@ -9,7 +9,7 @@ Feature: Edit an Event in Data hub
   @events-edit--name
   Scenario: Edit event name
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     When I change form text field "name" to random words
@@ -19,7 +19,7 @@ Feature: Edit an Event in Data hub
   @events-edit--type
   Scenario: Edit event type
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form dropdown "event_type" to "Seminar"
@@ -33,7 +33,7 @@ Feature: Edit an Event in Data hub
   @events-edit--dates
   Scenario: Edit event dates
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     When I change start date to decrease year by one
@@ -43,7 +43,7 @@ Feature: Edit an Event in Data hub
   @events-edit--location-type
   Scenario: Edit event location type
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form dropdown "location_type" to "HQ"
@@ -57,7 +57,7 @@ Feature: Edit an Event in Data hub
   @events-edit--address
   Scenario: Edit event address
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form text field "address_1" to a random street address
@@ -67,7 +67,7 @@ Feature: Edit an Event in Data hub
   @events-edit--notes
   Scenario: Edit event notes
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form text field "notes" to a random paragraph
@@ -77,7 +77,7 @@ Feature: Edit an Event in Data hub
   @events-edit--team-hosting
   Scenario: Edit event team hosting
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form dropdown "lead_team" to "CBBC Leeds"
@@ -91,7 +91,7 @@ Feature: Edit an Event in Data hub
   @events-edit--shared-teams
   Scenario: Edit event shared teams
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I select "Yes" for boolean option "event_shared"
@@ -107,7 +107,7 @@ Feature: Edit an Event in Data hub
   @events-edit--related-programmes
   Scenario: Edit event related programmes
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I choose the first item in the collection
     And I click the "Edit event" link
     And I change form dropdown "related_programmes" to "Grown in Britain"
