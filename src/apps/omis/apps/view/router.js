@@ -41,7 +41,7 @@ router.get('/work-order', setContact, setAssignees, setSubscribers, renderWorkOr
 router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
-  .get(setQuotePreview, setQuote, setQuoteForm, renderQuote)
+  .get(setContact, setQuotePreview, setQuote, setQuoteForm, renderQuote)
   .post(generateQuote)
 
 router.post('/quote/cancel', cancelQuote)
