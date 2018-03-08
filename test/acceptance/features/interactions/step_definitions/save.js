@@ -4,8 +4,8 @@ const { get, set, camelCase, fromPairs, map, capitalize } = require('lodash')
 
 const { getDateFor } = require('../../../helpers/date')
 
-const Interaction = client.page.interactions.Interaction()
-const InteractionList = client.page.interactions.List()
+const Interaction = client.page.interactions.interaction()
+const InteractionList = client.page.interactions.list()
 
 When(/^[an]{1,2} (interaction|service delivery|policy feedback) is added$/, async function (kind, dataTable) {
   const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))

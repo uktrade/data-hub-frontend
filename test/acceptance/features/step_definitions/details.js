@@ -5,7 +5,7 @@ const { get, includes, startsWith } = require('lodash')
 const { getDetailsTableRowValue } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
-const Details = client.page.Details()
+const Details = client.page.details()
 
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ') && !startsWith(row.value, '£')) {

@@ -4,7 +4,7 @@ Feature: Investment projects evaluations details
   @investment-projects-evaluations-details--value-yes
   Scenario: View investment project evaluations after user selects all yes for value details
 
-    When I navigate to the `companies.Investments` page using `company` `Lambda plc` fixture
+    When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
@@ -59,7 +59,7 @@ Feature: Investment projects evaluations details
   @investment-projects-evaluations-details--value-no
   Scenario: View investment project evaluations after user selects all no for value details
 
-    When I navigate to the `companies.Investments` page using `company` `Lambda plc` fixture
+    When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
     When I select FDI as the Investment project type
