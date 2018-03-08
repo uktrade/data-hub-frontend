@@ -129,7 +129,7 @@
     "before": "must be in the past",
     "duration": "must be a whole number, for example 1",
     "greaterthanamount": "must be equal to or larger than the invoice amount",
-    "euvatnumber": "must be a valid EU VAT number including the country code, for example ATU12345678 for Austria",
+    "euvatnumber": "must be a valid EU VAT number starting with the country code, for example IT12345678901 for Italy where \"IT\" is the country code",
     "default": "is required"
   },
   "status": {
