@@ -126,27 +126,42 @@
       <span class="c-form-group__error-message">{{ form.errors.messages.client_contacts }}</span>
     {% endif %}
 
-    <div class="js-AddItems"
-      data-item-selector=".c-form-group"
-      data-add-button-selector=".js-AddItems__add">
+    {% if form.state.company_contacts.length > 0 or (not form.state.company_contacts and form.errors.messages.client_contacts) %}
+      <div class="js-AddItems"
+           data-item-selector=".c-form-group"
+           data-add-button-selector=".js-AddItems__add">
+        {% for client_contact in form.state.client_contacts %}
+            {{ MultipleChoiceField({
+                name: 'client_contacts',
+                label: 'Client contact',
+                isLabelHidden: true,
+                initialOption: '-- Pick a contact --',
+                options: form.options.contacts,
+                error: form.errors.messages.client_contacts,
+                value: client_contact
+            }) }}
+        {% endfor %}
 
-      {% for client_contact in form.state.client_contacts %}
-        {{ MultipleChoiceField({
-          name: 'client_contacts',
-          label: 'Client contact',
-          isLabelHidden: true,
-          initialOption: '-- Pick a contact --',
-          options: form.options.contacts,
-          error: form.errors.messages.client_contacts,
-          value: client_contact
-        }) }}
-      {% endfor %}
+        <p class="c-form-fieldset__add-another">
+          <button class="button button--secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
+        </p>
+      </div>
+
+    {% else %}
+      <h2>Pisica</h2>
+      <h3>{{ form.state.company_contacts.length > 0  }}</h3>
+      <h3>{{ not form.errors.messages.client_contacts  }}</h3>
+      <h3>{{ form.state.company_contacts.length > 0 and not form.errors.messages.client_contacts  }}</h3>
+      <h3>{{ form.hiddenFields.investor_company }}</h3>
+
+      <p>This company has no contacts, please create a business contact</p>
+      <a class="button button--secondary" href="/contacts/create?company={{ form.hiddenFields.investor_company }}">Add Contact</a>
+      <a class="button button--secondary" href="{{ form.options.returnLink }}">Return Link</a>
+    {% endif %}
+
+    {{ form | log | safe }}
 
 
-      <p class="c-form-fieldset__add-another">
-        <button class="button button--secondary js-AddItems__add" type="submit" name="add-item" value="client_contacts" data-persist-values="true">Add another contact</button>
-      </p>
-    </div>
   {% endcall %}
 
 {% if not investmentData.id %}
