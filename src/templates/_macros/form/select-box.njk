@@ -13,14 +13,13 @@
  # @param {string} [props.persistsConditionalValue] - Whether the values should persist when collapsed
  #}
 {% macro SelectBox(props) %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-control--') if props.modifier %}
   {% set options = props.options() if props.options | isFunction else props.options %}
   {% set fieldValue = props.value.id or props.value %}
 
   <select
     id="{{ props.fieldId }}"
     name="{{ props.name }}"
-    class="c-form-control {{ modifier }} {{ 'has-error' if props.error }} {{ props.class }}"
+    class="{{ 'c-form-control' | applyClassModifiers(props.modifier) }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.persistsConditionalValue %}data-persist-values="true"{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
     {% for key, value in props.data %}
