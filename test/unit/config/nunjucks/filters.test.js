@@ -133,6 +133,17 @@ describe('nunjucks filters', () => {
         expect(this.highlightedString.val).to.equal('<span class="u-highlight">Here is an example phrase</span>')
       })
     })
+
+    context('when search result contains hazardous characters', () => {
+      beforeEach(() => {
+        this.mockString = 'Here is <>an example phrase'
+        this.highlightedString = filters.highlight(this.mockString, 'example')
+      })
+
+      it('should escape the characters and transform them into character entity references', () => {
+        expect(this.highlightedString.val).to.equal('Here is &lt;&gt;an <span class="u-highlight">example</span> phrase')
+      })
+    })
   })
 
   describe('#removeNilAndEmpty', () => {
