@@ -12,14 +12,12 @@
  # @callback {function} caller - Inner contents
 #}
 {% macro Fieldset(props) %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   <fieldset
     class="
-      c-form-fieldset
+      {{ 'c-form-fieldset' | applyClassModifiers(props.modifier) }}
       {{ props.class if props.class }}
-      {{ modifier }}
       {{ 'js-ConditionalSubfield' if props.condition }}
     "
     {% if props.condition %}
