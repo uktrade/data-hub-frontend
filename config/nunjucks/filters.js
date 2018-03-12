@@ -8,6 +8,7 @@ const queryString = require('query-string')
 const {
   assign,
   concat,
+  escape,
   isArray,
   isFunction,
   isPlainObject,
@@ -104,7 +105,7 @@ const filters = {
         ? new RegExp(`\\b(${cleanedSearchTerm})\\b`, 'gi')
         : new RegExp(`(${cleanedSearchTerm})`, 'gi')
 
-      const result = searchResultText.replace(searchPattern, '<span class="u-highlight">$1</span>')
+      const result = escape(searchResultText).replace(searchPattern, '<span class="u-highlight">$1</span>')
       return new nunjucks.runtime.SafeString(result)
     } catch (error) {
       return searchResultText
