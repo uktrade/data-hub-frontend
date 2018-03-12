@@ -66,6 +66,14 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Mock SSO docker build](#mock-sso-docker-build)
   - [Job failure](#job-failure)
 - [Deployment](#deployment)
+- [Git Usage](#git-usage)
+  - [GitFlow](#gitflow)
+  - [Jira integration](#jira-integration)
+  - [Commit message](#commit-message)
+  - [Rebasing](#rebasing)
+  - [Fixup](#fixup)
+  - [Naming Commits and PRs](#naming-commits-and-prs)
+  - [Cheat-sheet](#cheat-sheet)
 
 
 ## Getting started
@@ -529,3 +537,196 @@ from this heroku instance.
 
 Deployments to staging and production are done manually through Jenkins and are
 deployed from the `master` branch.
+
+## Git usage
+
+### GitFlow
+
+We follow GitFlow as a model. See [the original post for details](http://nvie.com/posts/a-successful-git-branching-model/)
+but basically:
+
+1. When working on a feature start a feature branch by branching off of `develop`
+2. Prefix your branch name with `feature/`, `bugfix/` or `documentation/` and also with the id of the Jira ticket `DH-1234` as described [below](#jira-integration) 
+3. Add your commits to that using the adequate [commit messages](#commit-message)
+4. When you think it's finished raise a pull request against develop
+5. When that's approved do the rebase shuffle described [below](#rebasing-and-merging) and merge it
+6. Releases are normally created simply by merging develop into master as PR, although there is always the option of creating a release branch as GitFlow describes
+
+### Jira Integration
+As per official [Atlassian Support documentation](https://confluence.atlassian.com/adminjiracloud/connect-jira-cloud-to-github-814188429.html) When your GitHub account is linked to Jira Software, your team gets to see their branches, commit messages and pull requests right in the context of the Jira Software issues they're working on.
+
+In order to keep Jira in sync with GitHub, you will need to add the Jira Id as a prefix to your branch name,
+`bugfix/DH-5678-my-branch-with-goodies`,
+ and you can also track commits by including the Ticket Id in your commit message  
+
+```
+DH-5678 Very important fixes for the really big issue
+that regresses every time another important fix is added somewhere else.
+Fixed it by using a houndstooth pattern for the FooBar class
+```
+
+Jira Id's in commit messages come in handy especially when debugging legacy functionality,
+as it links the developer with the specific story, bug, and epic, making it much easier for you and your team to access 
+more detailed information that can't be condensed in a commit message (e.g. acceptance criteria, user stories, responsible 
+stake holder contact details, etc). 
+
+### Rebasing
+
+We use a process of squashing commits and rebasing on top of the current head of develop.
+The goal is that all commits neatly describe what they do and there's no visual noise.
+
+Consider a series of commits that look like this:
+
+```
+Really big important feature
+Oops, typo stopped build working
+Ah. Typo was actually intentional, restoring it
+Fix for a thing I forgot about
+Another really big and important feature
+```
+Someone trying to figure out what your changes do will quickly become baffled by changes
+in commits with not particularly helpful titles. The ideal would be something like this:
+
+```
+Adds really big important feature
+Adds another really big and important feature
+```
+
+ ## Fixup
+So how do you deal with typos and minor tweaks? Enter our friend [fixup](https://git-scm.com/docs/git-commit#git-commit---fixupltcommitgt).
+If you add a commit that modifies a previous commit you write `git commit --fixup <hash>` where hash is the
+identifier of the commit you want to modify.
+
+If you look at your git log  it will look something like this
+
+```
+Adds a really big important feature
+!fixup Adds a really big important feature
+```
+
+You can add as many fixups as you want. They don't even need to be for the immediately
+preceding commit.
+
+```
+Adds a really big important feature
+!fixup Adds a really big important feature
+Adds a different feature that is related to the PR
+```
+
+When you create a PR run this command and git will magically squash the
+fixups into their original commits ```git rebase -i —autosquash <hash>```
+- **very important**: the hash reference here has to be the commit immediately
+_before_ the commit you want to have fixups merged into. Things like ```HEAD^10```
+should work as well.
+
+If you've been pushing to the github remote while working on your changes
+you'll almost definitely need to add the ```--force``` option to ```git push```
+to get the new history into Github.
+
+So what happens if you try to merge a PR with fixups in? You can't! One of our
+developers wrote a very useful little service that inspects PRs and blocks
+ones with unsquashed fixups.
+
+Once a PR has been approved, all its tests are green, and all fixups have been squashed
+you merge onto the _head_ of develop. Steps:
+
+1. Check out develop
+2. ```git pull```
+3. Check out your branch
+4. ```git rebase develop```
+5. Now push and merge your PR
+
+### Naming commits and PRs
+
+Commit titles should be succinct and say what that particular commit is
+trying to do. Like so:
+
+```
+Adds a polka dot style for buttons
+Refactors tests into separate module
+Deletes duplicate and unused code
+```
+That kind of forces the idea that commits should be atomic (and fixup, as
+described above helps this process). You can put extra detail in the body
+of the message.
+
+We try to use the rules described in [this article](https://web-design-weekly.com/2013/09/01/a-better-git-commit/)
+but the tl;dr is: titles less than 50 characters, bodies wrapped at 72.
+
+PRs **must** contain the Jira ticket reference as the first part of the title
+of the PR if it's in any way related to a story.
+The reason for this is twofold: one is that we have integration
+between Github and Jira, so you can track the actual software changes
+from inside Jira, which is nice; secondly, it makes creating release notes
+that are consumed by the project management side of the team way easier.
+
+So a PR would look something like this:
+
+**Title**: DH-1234 Polka dot styling for buttons
+**Body**: this PR introduces a new style for buttons in the product.
+The style is applicable by adding a class of ```.polkadot``` to
+any element that needs it.
+
+Obviously if a change isn't related to a ticket, such as someone doing a dependency update chore,
+then this isn't necessary.
+
+### Cheat sheet
+
+#### GitFlow
+##### Branching
+```
+# 1st make sure you're on the develop branch
+git checkout develop
+
+# then create a new branch
+git checkout -b feature/DH-1234-descriptive-branch-title-goes-here
+```
+##### Committing
+Avoid using the `-m` commit flag 
+~~git commit -m "A blurry commit message"~~ and use `git commit` with no flags.
+
+Your commit should look something like this:
+```
+Clearly explain in one line what the commit is about
+
+Describe the problem the commit solves. Justify why you chose
+the particular solution. Reference the issue number if not
+addressed in the title.
+```
+
+##### Rebasing
+```
+git rebase -i origin/develop
+```
+
+Vim will then open and you will need to update it as follow:
+```
+pick 1abcdefg A random Git commit message
+squash 2gfabc1 Another useful git message
+squash 3abcabc Yet again some important information
+  
+# Rebase ...
+~                                            
+```  
+
+exit and save with `:wq!` or exit without sawing using `:q!` 
+hit return, and follow the instructions,
+and finally `git push origin feature/DH-4321-the-branch-you-are-on --force` 
+
+##### Fixup
+
+```
+# major code changes
+$ (dev) git add featureA
+$ (dev) git commit -m "Feature A is done"
+[dev fb2f677] Feature A is done
+
+# small code tweaks
+$ (dev) git commit --fixup fb2f677
+[dev c5069d5] fixup! Feature A is done
+ac5db87 Previous commit
+
+$ (dev) git rebase -i --autosquash ac5db87
+```
+
+
