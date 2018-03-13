@@ -6,7 +6,7 @@
     <multiselect
       label="label"
       open-direction="bottom"
-      placeholder="Type to search"
+      placeholder="Starts with"
       track-by="value"
       v-model="selectedOptions"
       :clear-on-select="true"
@@ -20,9 +20,8 @@
       :show-no-results="false"
       :showLabels="false"
       :searchable="true"
-      @search-change="asyncFind"
       :id="id"
-      :value="term">
+      @search-change="asyncFind">
       <template slot="clear" slot-scope="props">
         <div class="multiselect__clear" v-if="selectedOptions.length" @mousedown.prevent.stop="clearAll(props.search)"></div>
       </template>
@@ -38,6 +37,7 @@
         </div>
       </template>
     </multiselect>
+    <input type="hidden" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
   </div>
 </template>
 
@@ -84,9 +84,6 @@
         type: Boolean,
         default: true,
       },
-      term: {
-        type: String,
-      }
     },
     data () {
       return {
@@ -105,6 +102,7 @@
         if (!form) { return }
 
         const query = pickBy(getFormData(form))
+        delete query[this.id]
         query[this.name] = newOptions.map(option => option.value)
 
         XHR.request(form.action, query)
