@@ -101,6 +101,11 @@ describe('Typeahead', () => {
       it('should show the adviser name in the tag', () => {
         expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones')
       })
+
+      it('should render the selected options as hidden fields', () => {
+        const element = component.find('input[type="hidden"][name="adviser"]').element
+        expect(element.value).to.equal('1234')
+      })
     })
   })
 
@@ -213,6 +218,7 @@ describe('Typeahead', () => {
         name: 'adviser',
         entity: 'adviser',
         autoSubmit: true,
+        id: 'xyz',
       }
     })
 
@@ -229,6 +235,7 @@ describe('Typeahead', () => {
             <form id="form" action="/search">
               <h1>Form</h1>
               <input name="country" value="9999">
+              <input name="xyz" value="zzz">
             </form>
             <div id="xhr-target">Some stuff</div>
           </div>`
