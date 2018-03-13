@@ -54,11 +54,11 @@
  #}
 {% macro MultipleChoice(props) %}
   {% if props.type in ['checkbox', 'radio'] %}
-    {% set modifier = props.modifier | concat('') | reverse | join(' c-multiple-choice--') if props.modifier %}
+    {% set componentClassNames = 'c-multiple-choice' | applyClassModifiers(props.modifier) %}
     {% set options = props.options() if props.options | isFunction else props.options %}
 
     {% if props.type == 'radio' and props.initialOption %}
-      <div class="c-multiple-choice {{ modifier }}">
+      <div class="{{ componentClassNames }}">
         <input
           class="c-multiple-choice__input"
           type="{{ props.type }}"
@@ -84,7 +84,7 @@
         {% endif %}
       {% endif %}
 
-      <div class="c-multiple-choice {{ modifier }}">
+      <div class="{{ componentClassNames }}">
         <input
           class="c-multiple-choice__input"
           type="{{ props.type }}"

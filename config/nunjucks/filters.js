@@ -204,7 +204,7 @@ const filters = {
   applyClassModifiers (className, modifier) {
     if (!isString(className) || !(isString(modifier) || isArray(modifier))) { return className }
 
-    const classModifier = flatten([modifier]).map(mod => `${className}--${mod}`).join(' ')
+    const classModifier = flatten([modifier]).filter(isNotEmpty).map(mod => `${className}--${mod}`).join(' ')
 
     return `${className} ${classModifier}`.trim()
   },

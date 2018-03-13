@@ -27,19 +27,15 @@
   {% set labelElement = 'legend' if isFieldset else 'label' %}
   {% set labelClassName = className + '__label' if className === 'c-form-group' else className + '__legend' %}
   {% set isLegend = 'legend' if isFieldset %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-form-group--') if props.modifier %}
-  {% set fieldsetModifier = props.modifier | concat('') | reverse | join(' c-form-fieldset--') if props.modifier %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   {% if props.label and props.name -%}
     <{{ groupElement }}
       id="group-{{ props.fieldId }}"
       class="
-        {{ className }}
+        {{ className | applyClassModifiers(props.modifier) }}
         {{ 'has-error' if props.error and not isLabelHidden }}
         {{ 'js-ConditionalSubfield' if isConditional }}
-        {{ modifier }}
-        {{ fieldsetModifier }}
         {{ props.class if props.class }}
       "
       {% if isConditional %}
