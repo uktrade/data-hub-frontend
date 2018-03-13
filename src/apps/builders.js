@@ -1,4 +1,5 @@
-const { assign, at, keyBy, pick, pickBy, isArray, isFunction, isEmpty, isString, map } = require('lodash')
+const { assign, at, castArray, get, has, keyBy, pick, pickBy, isArray, isFunction, isEmpty, isString, map } = require('lodash')
+const { getOptions } = require('../lib/options')
 
 function getDeepObjectValuesForKey (object, keyName, values = []) {
   if (isArray(object)) {
@@ -92,23 +93,58 @@ function buildSelectedFiltersSummary (fields, query = {}) {
       field.value = query[field.name]
       return field
     })
-    .filter(field => field.value)
-    .reduce((fieldsObj, field) => {
-      fieldsObj[field.name] = {
-        label: field.label,
-        valueLabel: field.value,
-      }
+    .filter(field => field.value || get(field, 'selectedOptions', []).length > 0)
+    .reduce(buildSelectedFiltersSummaryReducer, {})
+}
 
-      const fieldValues = isString(field.value) ? field.value.split(',') : field.value
-      const fieldOptions = isFunction(field.options) ? field.options() : field.options
+function buildSelectedFiltersSummaryReducer (fieldsObj, field) {
+  if (!isEmpty(field.selectedOptions)) {
+    fieldsObj[field.name] = getFieldWithSelectedOptions(field)
+    return fieldsObj
+  }
 
-      if (fieldOptions) {
-        const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(x => x)
-        fieldsObj[field.name].valueLabel = selectedValues.map(x => x.label).join(', ')
-      }
+  fieldsObj[field.name] = {
+    label: field.label,
+    valueLabel: field.value,
+  }
 
-      return fieldsObj
-    }, {})
+  const fieldValues = isString(field.value) ? field.value.split(',') : field.value
+  const fieldOptions = isFunction(field.options) ? field.options() : field.options
+
+  if (fieldOptions) {
+    const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(x => x)
+    fieldsObj[field.name].valueLabel = selectedValues.map(x => x.label).join(', ')
+  }
+
+  return fieldsObj
+}
+
+function getFieldWithSelectedOptions (field) {
+  const values = field.selectedOptions.map(x => x.label).join(', ')
+
+  return {
+    label: field.label,
+    valueLabel: values,
+  }
+}
+
+async function buildFieldsWithSelectedEntities (token, fields = [], query = {}) {
+  const fieldsArray = castArray(fields)
+  const processedFields = []
+
+  for (let childIndex = 0; childIndex < fieldsArray.length; childIndex += 1) {
+    const child = fieldsArray[childIndex]
+    const newChild = assign({}, child)
+
+    if (child.entity && has(query, child.name)) {
+      const id = castArray(get(query, child.name))
+      newChild.selectedOptions = await getOptions(token, child.entity, { id })
+    }
+
+    processedFields.push(newChild)
+  }
+
+  return processedFields
 }
 
 module.exports = {
@@ -118,4 +154,5 @@ module.exports = {
   buildFormWithState,
   buildFormWithStateAndErrors,
   buildSelectedFiltersSummary,
+  buildFieldsWithSelectedEntities,
 }
