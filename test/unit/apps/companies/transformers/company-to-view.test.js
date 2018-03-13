@@ -18,13 +18,14 @@ describe('transformCompanyToView', () => {
         'Trading name',
         'Trading address',
         'UK region',
-        'Headquarters',
+        'Headquarter type',
         'Sector',
         'Website',
         'Business description',
         'Account manager',
         'VAT number',
         'CDMS reference',
+        'Global HQ',
       ])
     })
 
@@ -49,7 +50,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the headquarters', () => {
-      expect(this.viewRecord.Headquarters).to.equal('European headquarters (EHQ)')
+      expect(this.viewRecord['Headquarter type']).to.equal('European HQ')
     })
 
     it('should supply sector', () => {
@@ -90,7 +91,8 @@ describe('transformCompanyToView', () => {
         'Primary address',
         'UK region',
         'Sector',
-        'Headquarters',
+        'Headquarter type',
+        'Global HQ',
       ])
     })
 
@@ -118,13 +120,14 @@ describe('transformCompanyToView', () => {
         'Trading name',
         'Trading address',
         'UK region',
-        'Headquarters',
+        'Headquarter type',
         'Sector',
         'Website',
         'Business description',
         'Account manager',
         'VAT number',
         'CDMS reference',
+        'Global HQ',
       ])
     })
   })
@@ -148,7 +151,8 @@ describe('transformCompanyToView', () => {
         'Primary address',
         'Country',
         'Sector',
-        'Headquarters',
+        'Headquarter type',
+        'Global HQ',
       ])
     })
 

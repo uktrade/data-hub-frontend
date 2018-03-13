@@ -53,6 +53,7 @@ module.exports = {
       },
 
       createForeignCompany (details = {}, callback) {
+        const companyStep1 = {}
         const company = assign({}, {
           name: appendUid(faker.company.companyName()),
           address1: faker.address.streetName(),
@@ -74,6 +75,7 @@ module.exports = {
               .api.perform((done) => {
                 this.getListOption('@foreignOrganisationOptionBusinessType', (businessType) => {
                   this.setValue(`@foreignOrganisationOptionBusinessType`, businessType)
+                  companyStep1.businessType = businessType
                   done()
                 })
               })
@@ -139,6 +141,8 @@ module.exports = {
                   primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
                   uniqueSearchTerm: getUid(company.name),
                   country: company.registeredAddressCountry,
+                  globalHeadquarters: companyRadioButtons.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
+                  businessType: companyStep1.businessType,
                 }))
               })
 
@@ -252,6 +256,8 @@ module.exports = {
                       primaryAddress,
                       country,
                       uniqueSearchTerm: getUid(companyStep2.name),
+                      globalHeadquarters: companyStep2RadioOptions.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
+                      businessType: companyStep1.businessType,
                     }))
 
                     done()
@@ -348,6 +354,7 @@ module.exports = {
                   primaryAddress: getAddress(parentCompany),
                   country: parentCompany.country,
                   uniqueSearchTerm: getUid(company.tradingName),
+                  globalHeadquarters: companyRadioButtons.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
                 }))
               })
           })
@@ -378,7 +385,10 @@ module.exports = {
             this
               .click('@otherTypeOfUKOrganisationOption')
               .api.perform(() => {
-                this.clickListOption('business_type_uk_other', 'UK branch of foreign company (BR)')
+                const ukBranch = 'UK branch of foreign company (BR)'
+                this.clickListOption('business_type_uk_other', ukBranch)
+
+                companyStep1.businessType = ukBranch
               })
 
             // step 2
@@ -451,6 +461,8 @@ module.exports = {
                       primaryAddress,
                       country,
                       uniqueSearchTerm: getUid(companyStep2.name),
+                      globalHeadquarters: companyStep2RadioOptions.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
+                      businessType: companyStep1.businessType,
                     }))
 
                     done()
@@ -478,7 +490,7 @@ module.exports = {
           .waitForElementPresent('@accountManagementEditButton')
           .click('@accountManagementEditButton')
 
-        this
+        return this
           .section.accountManagementForm
           .waitForElementPresent('@oneListAccountOwner')
           .api.perform((done) => {
