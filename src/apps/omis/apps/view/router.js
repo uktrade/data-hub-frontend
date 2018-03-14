@@ -42,7 +42,7 @@ router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')
   .get(setContact, setQuotePreview, setQuote, setQuoteForm, renderQuote)
-  .post(generateQuote)
+  .post(setContact, generateQuote)
 
 router.post('/quote/cancel', cancelQuote)
 

@@ -188,11 +188,12 @@ async function setPayments (req, res, next) {
 
 async function generateQuote (req, res, next) {
   const orderId = get(res.locals, 'order.id')
+  const clientEmail = get(res.locals, 'order.contact.email') || 'client'
 
   try {
     await Order.createQuote(req.session.token, orderId)
 
-    req.flash('success', 'Quote has been sent to client.')
+    req.flash('success', `Quote sent ${clientEmail}`)
     res.redirect(`/omis/${orderId}`)
   } catch (error) {
     const errorCode = error.statusCode
