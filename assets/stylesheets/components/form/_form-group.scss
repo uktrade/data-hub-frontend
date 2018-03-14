@@ -164,6 +164,16 @@ fieldset.c-form-group.c-form-group--subfield {
   padding: $default-spacing-unit / 2;
 }
 
+.c-form-group--filter.c-form-group--hide-label {
+  padding-top: ($default-spacing-unit / 2) - 3;
+}
+
+.c-form-group--hide-label {
+  .c-form-group__label {
+    display: none;
+  }
+}
+
 .c-form-group--option-select {
   legend.c-form-group__label {
     float: left;
