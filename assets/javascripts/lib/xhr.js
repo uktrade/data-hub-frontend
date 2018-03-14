@@ -1,6 +1,8 @@
 const axios = require('axios')
 const createHistory = require('history').createBrowserHistory
 const queryString = require('query-string')
+const uniqWith = require('lodash/uniqWith')
+const isEqual = require('lodash/isEqual')
 
 const history = createHistory()
 
@@ -46,20 +48,22 @@ const XHR = {
     const outlet = this.getOutlet()
     if (!outlet) { return }
 
+    const uniqueParams = uniqWith(params, isEqual)
+
     if (showLoader) {
       outlet.classList.add('u-loading')
     }
 
     if (params) {
-      const url = `?${queryString.stringify(params)}`
-      history.push(url)
+      const historyUrl = `?${queryString.stringify(uniqueParams)}`
+      history.push(historyUrl)
     }
 
     return axios
-      .get(`${url}?${queryString.stringify(params)}`, {
+      .get(`${url}?${queryString.stringify(uniqueParams)}`, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
       })
-      .then(res => this.updateOutlet(res, params))
+      .then(res => this.updateOutlet(res, uniqueParams))
   },
 }
 
