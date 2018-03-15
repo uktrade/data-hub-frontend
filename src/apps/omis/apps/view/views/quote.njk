@@ -103,15 +103,16 @@
         text: 'Quotes should be reviewed by a manager before being sent.'
       }) }}
 
-      <h2 class="heading-medium">What happens next</h2>
-
-      <ul class="list-disc">
-        <li>
-          An email with a link to this quote will be sent to
-          {{ order.contact.email | default('the client') }}
-          for acceptance
-        </li>
-      </ul>
+      {% if order.contact.email %}
+        {% call Message({ type: 'muted', element: 'div' }) %}
+          <span class="font-xsmall">
+            An email with a link to this quote will be sent to:
+          </span>
+          <span class="u-block font-medium">
+            {{ order.contact.email }}
+          </span>
+        {% endcall %}
+      {% endif %}
     {% endif %}
 
   {% endif %}
