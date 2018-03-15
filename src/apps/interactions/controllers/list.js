@@ -1,7 +1,7 @@
 const { get } = require('lodash')
 
 const { collectionFilterFields } = require('../macros')
-const { buildSelectedFiltersSummary } = require('../../builders')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 
 async function renderInteractionList (req, res, next) {
@@ -16,11 +16,13 @@ async function renderInteractionList (req, res, next) {
       channels,
       currentAdviserId,
     })
-    const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
+
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
+    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
 
     res.render('collection', {
-      filtersFields,
       selectedFilters,
+      filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Interactions',
       countLabel: 'interaction',
     })

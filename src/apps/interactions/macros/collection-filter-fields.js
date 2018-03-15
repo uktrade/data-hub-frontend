@@ -22,10 +22,15 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
-      modifier: 'option-select',
+      modifier: ['option-select', 'hide-label'],
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
+    },
+    {
+      macroName: 'Typeahead',
+      name: 'dit_adviser',
+      entity: 'adviser',
     },
     assign({}, communicationChannel(channels), {
       type: 'checkbox',
