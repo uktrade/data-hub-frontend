@@ -9,12 +9,18 @@
   <p>
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
-  {{
-    Collection(results | assignCopy({
-      countLabel: 'interaction',
-      summaryActionsHTML: addButton,
-      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-      query: QUERY
-    }))
-  }}
+
+  {% block xhr_content %}
+    <article id="xhr-outlet">
+      {{
+        Collection(results | assignCopy({
+          countLabel: 'interaction',
+          summaryActionsHTML: addButton,
+          sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+          query: QUERY
+        }))
+      }}
+    </article>
+  {% endblock %}
+
 {% endblock %}
