@@ -1,5 +1,7 @@
 const rewire = require('rewire')
+
 const builders = require('~/src/apps/builders')
+const config = require('~/config')
 
 describe('Global builders', () => {
   describe('#getDeepObjectValuesForKey', () => {
@@ -387,6 +389,120 @@ describe('Global builders', () => {
       const actual = builders.buildSelectedFiltersSummary(this.fields, query)
 
       expect(actual.stage.valueLabel).to.equals('B, C')
+    })
+
+    context('when a filter has selected options', () => {
+      beforeEach(() => {
+        const fields = [{
+          macroName: 'typeahead',
+          name: 'adviser',
+          label: 'Adviser',
+          entity: 'adviser',
+          selectedOptions: [
+            { value: '1', label: 'Adviser 1' },
+            { value: '2', label: 'Adviser 2' },
+          ],
+        }]
+
+        const query = {
+          adviser: ['1', '2'],
+        }
+
+        this.summary = builders.buildSelectedFiltersSummary(fields, query)
+      })
+
+      it('transforms the summary to display selected options', () => {
+        expect(this.summary.adviser.valueLabel).to.equal('Adviser 1, Adviser 2')
+      })
+
+      it('transforms the summary to display the correct label for selected options', () => {
+        expect(this.summary.adviser.label).to.equal('Adviser')
+      })
+    })
+  })
+
+  describe('#buildFieldsWithSelectedEntities', () => {
+    beforeEach(() => {
+      this.fred = { name: 'Fred Smith', id: '1234' }
+      this.wilma = { name: 'Wilma Brown', id: '4321' }
+
+      nock(config.apiRoot)
+        .get('/adviser/1234/')
+        .reply(200, this.fred)
+        .get('/adviser/4321/')
+        .reply(200, this.wilma)
+
+      this.fields = [{
+        macroName: 'Typeahead',
+        name: 'dit_adviser',
+        entity: 'adviser',
+      }, {
+        macroName: 'TextField',
+        name: 'date_after',
+        hint: 'YYYY-MM-DD',
+        placeholder: `e.g. 2018-07-18`,
+      }]
+    })
+
+    context('when the user has passed in some previous selections', () => {
+      beforeEach(async () => {
+        const query = {
+          dit_adviser: ['1234', '4321'],
+        }
+
+        this.result = await builders.buildFieldsWithSelectedEntities('1234', this.fields, query)
+      })
+
+      it('should put the selection option data into the field', () => {
+        expect(this.result[0].selectedOptions).to.deep.equal([{
+          value: '1234',
+          label: 'Fred Smith',
+        }, {
+          value: '4321',
+          label: 'Wilma Brown',
+        }])
+      })
+
+      it('should return other fields, untouched', () => {
+        expect(this.result[1]).to.deep.equal(this.fields[1])
+      })
+    })
+
+    context('when the user has passed in one previous selection', () => {
+      beforeEach(async () => {
+        const query = {
+          dit_adviser: '1234',
+        }
+
+        this.result = await builders.buildFieldsWithSelectedEntities('1234', this.fields, query)
+      })
+
+      it('should put the option into the field', () => {
+        expect(this.result[0].selectedOptions).to.deep.equal([{
+          value: '1234',
+          label: 'Fred Smith',
+        }])
+      })
+
+      it('should return other fields, untouched', () => {
+        expect(this.result[1]).to.deep.equal(this.fields[1])
+      })
+    })
+
+    context('when the user has not passed a previous selection', () => {
+      beforeEach(async () => {
+        const query = {}
+
+        this.result = await builders.buildFieldsWithSelectedEntities('1234', this.fields, query)
+      })
+
+      it('should leave the entity field untouched', () => {
+        expect(this.result[0]).to.deep.equal(this.fields[0])
+      })
+
+      it('should return other fields, untouched', () => {
+        expect(this.result[1]).to.deep.equal(this.fields[1])
+      })
     })
   })
 })
