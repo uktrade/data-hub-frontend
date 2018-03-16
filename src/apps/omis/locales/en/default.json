@@ -11,7 +11,7 @@
     },
     "subscribers": {
       "legend": "Advisers",
-      "hint": "Who need to be kept informed about this order, for example international trade advisers or language advisers",
+      "hint": "People who need to be kept informed about this order, for example, international trade advisers or language advisors.",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
