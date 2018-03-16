@@ -24,7 +24,7 @@ module.exports = {
     template: 'company--search',
   },
   '/contact': {
-    heading: 'Choose the contact at the client company',
+    heading: 'Choose the contact at the company',
     editable: true,
     next: 'market',
     fields: ['contact'],

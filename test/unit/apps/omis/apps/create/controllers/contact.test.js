@@ -12,7 +12,7 @@ const contactsMockData = [{
   last_name: 'George',
 }]
 
-describe('OMIS create client details controller', () => {
+describe('OMIS create contact controller', () => {
   beforeEach(() => {
     this.nextSpy = sandbox.spy()
     this.controller = new Controller({ route: '/' })
@@ -44,7 +44,7 @@ describe('OMIS create client details controller', () => {
       this.reqMock = {
         form: {
           options: {
-            heading: 'Client contact for the client company',
+            heading: 'Client contact for the company',
           },
         },
       }
@@ -74,7 +74,7 @@ describe('OMIS create client details controller', () => {
       })
 
       it('should use default heading', () => {
-        expect(this.reqMock.form.options.heading).to.equal('Client contact for the client company')
+        expect(this.reqMock.form.options.heading).to.equal('Client contact for the company')
       })
 
       it('should call next', () => {
