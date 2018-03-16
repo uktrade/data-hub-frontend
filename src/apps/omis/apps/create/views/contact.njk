@@ -3,7 +3,7 @@
 {% block fields %}
   {{ super() }}
 
-  {% call HiddenContent({ summary: 'Contact you are looking for is not listed' }) %}
+  {% call HiddenContent({ summary: 'Is the contact you are looking for not listed?' }) %}
     {% call Message({ type: 'muted' }) %}
       If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
     {% endcall %}
