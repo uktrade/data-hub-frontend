@@ -20,7 +20,7 @@ const createSteps = mapValues(cloneDeep(createJourney), (step) => {
 
 const steps = merge({}, createSteps, {
   '/contact': {
-    heading: 'Edit client details',
+    heading: 'Edit contact',
     controller: EditContactController,
   },
   '/subscribers': {

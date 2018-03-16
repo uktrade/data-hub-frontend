@@ -16,7 +16,7 @@ class ContactController extends CreateController {
 
     if (company) {
       const companyName = company.trading_name || company.name
-      req.form.options.heading = req.form.options.heading.replace('the client company', companyName)
+      req.form.options.heading = req.form.options.heading.replace('the company', companyName)
     }
 
     next()
