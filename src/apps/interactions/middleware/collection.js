@@ -1,4 +1,4 @@
-const { assign, pick, merge, omit } = require('lodash')
+const { assign, merge, pick, pickBy, omit } = require('lodash')
 
 const { collectionSortForm } = require('../macros')
 const { search } = require('../../search/services')
@@ -45,7 +45,7 @@ function getInteractionsRequestBody (req, res, next) {
     searchBody.company = req.params.companyId
   }
 
-  req.body = assign({}, req.body, searchBody)
+  req.body = assign({}, req.body, pickBy(searchBody))
 
   next()
 }

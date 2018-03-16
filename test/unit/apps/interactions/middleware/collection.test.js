@@ -129,6 +129,27 @@ describe('interaction collection middleware', () => {
         expect(this.req.body).to.not.have.property('fruit')
       })
     })
+
+    context('when called clear filters', () => {
+      beforeEach(() => {
+        this.req.query = assign({}, this.req.query, {
+          sortby: 'date:desc',
+          date_after: '',
+          date_before: '',
+        })
+
+        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
+      })
+
+      it('should put the default criteria in the request body', () => {
+        expect(this.req.body.sortby).to.equal(this.req.query.sortby)
+      })
+
+      it('should not include empty parameters', () => {
+        expect(this.req.body).to.not.have.property('date_after')
+        expect(this.req.body).to.not.have.property('date_before')
+      })
+    })
   })
 
   describe('#getInteractionSortForm', () => {
