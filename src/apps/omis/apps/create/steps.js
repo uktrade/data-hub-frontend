@@ -33,7 +33,7 @@ module.exports = {
     template: 'contact',
   },
   '/market': {
-    heading: 'Market (country) of interest',
+    heading: 'Choose the country (market) of interest',
     editable: true,
     next: 'sector',
     fields: ['primary_market'],

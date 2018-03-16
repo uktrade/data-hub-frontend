@@ -7,7 +7,7 @@
       "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Choose the market (country) where the service is required"
+      "label": "Country where the service is required"
     },
     "subscribers": {
       "legend": "Advisers",
