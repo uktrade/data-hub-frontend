@@ -30,6 +30,10 @@ class ContactController extends CreateController {
       req.form.options.fields.contact.options = contacts
     }
 
+    if (req.form.options.fields.contact.options.length < 1) {
+      req.form.options.disableFormAction = true
+    }
+
     next()
   }
 }
