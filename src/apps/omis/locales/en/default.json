@@ -28,7 +28,7 @@
       "label": "Sector"
     },
     "delivery_date": {
-      "label": "Delivery date of first activity",
+      "label": "Delivery date of work",
       "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
