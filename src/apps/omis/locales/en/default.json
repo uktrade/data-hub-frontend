@@ -7,11 +7,11 @@
       "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Choose the market (country) where the service is required"
+      "label": "Country where the service is required"
     },
     "subscribers": {
       "legend": "Advisers",
-      "hint": "Who need to be kept informed about this order, for example international trade advisers or language advisers",
+      "hint": "People who need to be kept informed about this order, for example, international trade advisers or language advisors.",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
@@ -28,7 +28,7 @@
       "label": "Sector"
     },
     "delivery_date": {
-      "label": "Delivery date of first activity",
+      "label": "Delivery date of work",
       "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
