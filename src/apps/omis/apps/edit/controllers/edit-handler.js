@@ -28,7 +28,7 @@ function editHandler (req, res, next) {
     backLink: nextUrl,
     controller: EditController,
     translate: i18n.translate.bind(i18n),
-    successMessage: 'Order updated',
+    successMessage: 'Changes saved',
   }
   const overrides = {
     fields: reduce(step.fields, (result, field) => {

@@ -89,7 +89,7 @@ const steps = merge({}, createSteps, {
       { fn: 'nextCondition', next: 'vat-status' },
       'invoice-details',
     ],
-    successMessage: 'Billing address updated',
+    successMessage: 'Billing address saved',
     controller: EditBillingAddressController,
   },
   '/vat-status': {
@@ -104,7 +104,7 @@ const steps = merge({}, createSteps, {
     buttonText: 'Confirm VAT status',
     backLink: null,
     next: 'invoice-details',
-    successMessage: 'Billing address and VAT status updated',
+    successMessage: 'Billing address and VAT status saved',
     controller: EditVatStatusController,
   },
   '/payment-reconciliation': {
