@@ -1073,7 +1073,7 @@ describe('OMIS View middleware', () => {
         const nextSpy = () => {
           try {
             expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
+            expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
             expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
             done()
@@ -1102,7 +1102,7 @@ describe('OMIS View middleware', () => {
             const nextSpy = () => {
               try {
                 expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
+                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
                 expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
                 done()
