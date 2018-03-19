@@ -52,7 +52,7 @@
       "label": "Estimated hours"
     },
     "assignee_actual_time": {
-      "label": "Hours spent"
+      "label": "Actual hours worked"
     },
     "vat_status": {
       "label": "VAT category",

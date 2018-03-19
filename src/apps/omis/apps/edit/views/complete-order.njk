@@ -7,14 +7,6 @@
 
     <p>Complete the order after all work and reports have been delivered to the client.</p>
 
-    <h2 class="heading-medium">Recording actual hours worked on the order</h2>
-
-    <p>This information will not be used to analyse individual performance.</p>
-
-    <p>The actual hours worked can be different to those in the original estimate.</p>
-
-    <p>This information won’t be shared with the client, and won’t change how much the client has to pay for the work.</p>
-
     {% set key = 'assignee_actual_time' %}
     {% set defaultProps = options.fields[key] %}
 
@@ -23,7 +15,7 @@
         <tr>
           <th></th>
           <th class="c-answers-summary__content">Original estimate</th>
-          <th class="c-answers-summary__control">Hours spent</th>
+          <th class="c-answers-summary__control">Actual hours worked</th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +42,14 @@
         {% endfor %}
       </tbody>
     </table>
+
+    {% call HiddenContent({ summary: 'Why do I need to provide hours worked?' }) %}
+      <p>This information will not be used to analyse individual performance.</p>
+
+      <p>The actual hours worked can be different to those in the original estimate.</p>
+
+      <p>This information won’t be shared with the client, and won’t change how much the client has to pay for the work.</p>
+    {% endcall %}
 
   {% endif %}
 {% endblock %}
