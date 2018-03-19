@@ -52,7 +52,7 @@
 .c-entity--block-link {
   margin-top: -$default-spacing-unit;
   margin-bottom: -$default-spacing-unit;
-  padding: $default-spacing-unit;
+  padding: ($baseline-grid-unit * 3) $default-spacing-unit;
   border: 2px solid $grey-2;
   display: block;
   text-decoration: none;
@@ -64,7 +64,7 @@
     color: $link-hover-colour;
   }
 
-  .c-entity__title {
-    text-decoration: underline;
+  .c-entity__badges {
+    color: $black;
   }
 }
