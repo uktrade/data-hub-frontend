@@ -41,6 +41,7 @@ const ClearInputs = {
     if (targetForm) {
       const formControls = getFormControls(targetForm)
       clearValues(formControls)
+      targetForm.querySelectorAll('.js-clear-typeahead-filter').forEach(input => input.remove())
       targetForm.submit()
     }
   },

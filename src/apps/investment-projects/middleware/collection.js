@@ -28,6 +28,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
 
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
+    'adviser',
     'stage',
     'sector',
     'investment_type',

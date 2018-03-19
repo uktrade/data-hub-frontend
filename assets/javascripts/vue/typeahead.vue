@@ -37,7 +37,7 @@
         </div>
       </template>
     </multiselect>
-    <input type="hidden" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
+    <input type="hidden" class="js-clear-typeahead-filter" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
   </div>
 </template>
 
