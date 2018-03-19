@@ -251,7 +251,7 @@ function setQuoteForm (req, res, next) {
 
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
-    form.buttonText = 'Cancel quote'
+    form.buttonText = 'Withdraw quote'
     form.buttonModifiers = 'button--destructive'
     res.locals.destructive = true
 
