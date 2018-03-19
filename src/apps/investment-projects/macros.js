@@ -7,6 +7,11 @@ const { collectionFilterLabels, requirementsLabels } = require('./labels')
 
 const investmentFiltersFields = [
   {
+    macroName: 'Typeahead',
+    name: 'adviser',
+    entity: 'adviser',
+  },
+  {
     macroName: 'MultipleChoiceField',
     name: 'stage',
     type: 'checkbox',
