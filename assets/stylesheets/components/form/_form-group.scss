@@ -18,10 +18,10 @@
 .c-form-group__label {
   display: table;
   line-height: 1.1;
-  margin-bottom: 10px;
 
-  * + * {
-    margin-top: $default-spacing-unit / 2;
+  > * {
+    display: inline-block;
+    margin-bottom: $baseline-grid-unit * 2.5;
   }
 }
 
