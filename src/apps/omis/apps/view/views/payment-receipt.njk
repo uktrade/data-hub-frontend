@@ -27,7 +27,7 @@
         items: [
           { label: 'For the attention of', value: billingAddress | safe },
           { label: 'Purchase order (PO) number', value: invoice.po_number },
-          { label: 'Receipt date', value: invoice.created_on, type: 'datetime' }
+          { label: 'Receipt date', value: order.paid_on, type: 'date' }
         ],
         modifier: 'stacked',
         itemModifier: 'stacked'
