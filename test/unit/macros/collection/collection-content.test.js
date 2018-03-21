@@ -3,7 +3,7 @@ const entitiesMacros = getMacros('collection')
 
 describe('Collection macro', () => {
   it('should render results summary component', () => {
-    const component = entitiesMacros.renderToDom('Collection')
+    const component = entitiesMacros.renderToDom('CollectionContent')
 
     expect(component.tagName).to.equal('ARTICLE')
     expect(component.className).to.equal('c-collection')
@@ -12,7 +12,7 @@ describe('Collection macro', () => {
   })
 
   it('should render results summary component with correct count', () => {
-    const component = entitiesMacros.renderToDom('Collection', {
+    const component = entitiesMacros.renderToDom('CollectionContent', {
       count: 10,
       countLabel: 'cat',
     })
@@ -22,7 +22,7 @@ describe('Collection macro', () => {
 
   context('when filters are selected', () => {
     beforeEach(() => {
-      this.component = entitiesMacros.renderToDom('Collection', {
+      this.component = entitiesMacros.renderToDom('CollectionContent', {
         count: 2,
         query: {
           stage: 's1',

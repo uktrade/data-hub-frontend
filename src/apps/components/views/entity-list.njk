@@ -5,7 +5,7 @@
 {% block body_main_content %}
   {% call Example('`entity-list` of `Entity` items') %}
     {{
-      Collection(investmentProjects | assign({
+      CollectionContent(investmentProjects | assign({
         highlightTerm: searchTerm,
         countLabel: 'Investments',
         query: QUERY
@@ -17,7 +17,7 @@
 
   {% call Example('`entity-list` of `Entity` items with `block-links` modifer') %}
     {{
-      Collection(investmentProjects | assign({
+      CollectionContent(investmentProjects | assign({
         highlightTerm: searchTerm,
         countLabel: 'Investments',
         listModifier: 'block-links',

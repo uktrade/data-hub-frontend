@@ -14,7 +14,7 @@
   }) }}
 
   {% if searchResult %}
-    {{ Collection(searchResult | assignCopy({
+    {{ CollectionContent(searchResult | assignCopy({
       highlightTerm: QUERY.term,
       countLabel: 'company',
       listModifier: 'block-links',

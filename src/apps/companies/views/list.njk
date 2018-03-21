@@ -1,11 +1,11 @@
-{% extends "collection.njk" %}
+{% extends "_layouts/collection.njk" %}
 
 {% block collection_results %}
   {% set summaryActionsHTML %}
     <a id="add-contact-link" class="button button--secondary" href="/companies/add-step-1">Add company</a>
   {% endset %}
 
-  {{ Collection(results | assign({
+  {{ CollectionContent(results | assign({
     countLabel: countLabel,
     sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
     selectedFilters: selectedFilters,
