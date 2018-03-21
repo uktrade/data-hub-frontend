@@ -1,6 +1,6 @@
 const CONSTANTS = {
   selectors: {
-    button: 'button[type="submit"]',
+    button: 'js-prevent-multiple-submits',
     form: 'form',
   },
   types: {
@@ -19,16 +19,16 @@ const PreventMultipleSubmits = {
   counter: 0,
 
   init () {
-    if (document.querySelectorAll(CONSTANTS.selectors.button).length) {
+    if (document.querySelectorAll(`.${CONSTANTS.selectors.button}`).length) {
       this.bindEvents()
     }
   },
 
   handleFormSubmit (event) {
-    const targetForm = event.target.closest(CONSTANTS.selectors.form)
+    const target = event.target
+    const targetForm = target.closest(CONSTANTS.selectors.form)
     if (!targetForm ||
-      event.target.type !== CONSTANTS.types.submit ||
-      targetForm.classList.contains('js-AutoSubmit')) { return }
+      !target.classList.contains(CONSTANTS.selectors.button)) { return }
 
     if (this.counter >= 1) {
       event.target.setAttribute(CONSTANTS.attributes.disabled, true)
