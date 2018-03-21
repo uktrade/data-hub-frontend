@@ -81,7 +81,7 @@
     "postcss-cli": "^5.0.0",
     "postcss-loader": "^2.0.9",
     "proxyquire": "^2.0.0",
-    "query-string": "^5.0.1",
+    "query-string": "^6.0.0",
     "raven": "^2.3.0",
     "redis": "^2.8.0",
     "reqres": "^2.1.0",
@@ -92,7 +92,7 @@
     "sass-lint": "^1.12.1",
     "serve-favicon": "^2.4.5",
     "sinon": "^4.1.3",
-    "sinon-chai": "^2.14.0",
+    "sinon-chai": "^3.0.0",
     "slashify": "^1.0.0",
     "sniffr": "^1.1.4",
     "style-loader": "^0.20.1",
@@ -171,7 +171,9 @@
     "ignore": [
       "govuk-elements-sass",
       "govuk_frontend_toolkit",
-      "hmpo-form-wizard"
+      "hmpo-form-wizard",
+      "webpack",
+      "webpack-assets-manifest"
     ]
   },
   "sasslintConfig": ".sass-lint.yml"
