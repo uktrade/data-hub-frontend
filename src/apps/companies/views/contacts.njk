@@ -14,7 +14,7 @@
   }) }}
   {% block xhr_content %}
     <article id="xhr-outlet">
-      {{ Collection(contactResults | assign({
+      {{ CollectionContent(contactResults | assign({
           countLabel: 'contact',
           sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
           selectedFilters: selectedFilters,

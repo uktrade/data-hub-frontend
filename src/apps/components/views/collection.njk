@@ -85,7 +85,7 @@
 
   {% call Example('Collection') %}
     {{
-      Collection(results | assign({
+      CollectionContent(results | assign({
         filters: form.data.filters,
         sort: form.data.sort
       }))

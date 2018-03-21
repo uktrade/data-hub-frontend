@@ -1,5 +1,5 @@
 {% from '../common.njk' import Pagination %}
-{% from '../entity.njk' import Entity %}
+{% from '../entity/entity-list.njk' import EntityList %}
 {% from './collection-header.njk' import CollectionHeader %}
 
 {##
@@ -16,10 +16,7 @@
  #
  # @param {function} props.caller - Inner contents
 #}
-{% macro Collection(props) %}
-  {% set hasBlockLinks = 'block-links' in [props.listModifier] | flatten %}
-  {% set listModifier = props.listModifier | concat('') | reverse | join(' c-entity-list--') if props.listModifier %}
-
+{% macro CollectionContent(props) %}
   <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ CollectionHeader(props | assign({ actionsHTML: props.summaryActionsHTML })) }}
 
@@ -27,16 +24,7 @@
       {% if caller %}
         {{ caller() }}
       {% else %}
-        <ol class="c-entity-list {{ listModifier }}">
-          {% for item in props.items %}
-            <li class="c-entity-list__item">
-              {{ Entity(item | assign({
-                highlightTerm: props.highlightTerm,
-                isBlockLink: hasBlockLinks
-              })) }}
-            </li>
-          {% endfor %}
-        </ol>
+        {{ EntityList(props) }}
       {% endif %}
     {% endif %}
 
