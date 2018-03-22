@@ -55,10 +55,11 @@ describe('Event list controller', () => {
     })
 
     it('should render collection page as expected', () => {
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('title'))
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('sortForm'))
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('filtersFields'))
-      expect(this.resMock.render).to.have.been.calledWith('events/views/list', sinon.match.hasOwn('selectedFilters'))
+      expect(this.resMock.render).to.have.been.calledWith('_layouts/collection', sinon.match.hasOwn('title'))
+      expect(this.resMock.render).to.have.been.calledWith('_layouts/collection', sinon.match.hasOwn('sortForm'))
+      expect(this.resMock.render).to.have.been.calledWith('_layouts/collection', sinon.match.hasOwn('filtersFields'))
+      expect(this.resMock.render).to.have.been.calledWith('_layouts/collection', sinon.match.hasOwn('selectedFilters'))
+      expect(this.resMock.render).to.have.been.calledWith('_layouts/collection', sinon.match.hasOwn('actionButtons'))
     })
   })
 })
