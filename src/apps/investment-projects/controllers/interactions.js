@@ -22,6 +22,10 @@ async function renderInteractionList (req, res, next) {
       .breadcrumb('Interactions')
       .render('investment-projects/views/interactions', {
         interactions,
+        actionButtons: [{
+          label: 'Add interaction',
+          url: `/investment-projects/${investmentId}/interactions/create/interaction`,
+        }],
       })
   } catch (error) {
     next(error)

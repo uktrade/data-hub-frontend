@@ -1,9 +1,5 @@
 {% extends "./_layout.njk" %}
 
-{% set addButton %}
-  <a href="/investment-projects/{{ investmentData.id }}/interactions/create/interaction" class="button button--secondary">Add interaction</a>
-{% endset %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Investment Interactions</h2>
   <p>
@@ -13,7 +9,7 @@
   {{
     CollectionContent(interactions | assignCopy({
       countLabel: 'interaction',
-      summaryActionsHTML: addButton
+      actionButtons: actionButtons
     }))
   }}
 {% endblock %}
