@@ -41,6 +41,10 @@ const ClearInputs = {
     if (targetForm) {
       const formControls = getFormControls(targetForm)
       clearValues(formControls)
+
+      Array.from(targetForm.querySelectorAll('.js-ClearInputs--removable-field'))
+        .forEach(input => input.parentNode.removeChild(input))
+
       targetForm.submit()
     }
   },
