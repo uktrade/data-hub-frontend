@@ -17,7 +17,7 @@ async function renderSearchResults (req, res) {
     return res.render('search/view')
   }
 
-  const actionButton = { text: null, url: null }
+  const actionButtons = []
   const searchTerm = get(req, 'query.term', '').trim()
   const searchEntity = entity.entity
   const itemTransformers = []
@@ -30,15 +30,25 @@ async function renderSearchResults (req, res) {
   }
   if (searchEntity === 'event') {
     itemTransformers.push(transformEventToListItem)
+    actionButtons.push({
+      label: 'Add event',
+      url: '/events/create',
+    })
   }
   if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
+    actionButtons({
+      label: 'Add order',
+      url: '/omis/create',
+    })
   }
 
   if (searchEntity === 'company') {
     itemTransformers.push(transformCompanyToListItem)
-    actionButton.text = 'Add company'
-    actionButton.url = '/companies/add-step-1'
+    actionButtons.push({
+      label: 'Add company',
+      url: '/companies/add-step-1',
+    })
   }
 
   if (searchEntity === 'interaction') {
@@ -64,7 +74,7 @@ async function renderSearchResults (req, res) {
   res
     .breadcrumb(entity.text)
     .render('search/view', {
-      actionButton,
+      actionButtons,
       searchEntity,
       searchTerm,
       results,
