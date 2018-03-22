@@ -7,6 +7,7 @@ const numeral = require('numeral')
 const queryString = require('query-string')
 const {
   assign,
+  castArray,
   concat,
   escape,
   isArray,
@@ -60,6 +61,7 @@ const filters = {
   lowerCase,
   kebabCase,
   assign,
+  castArray,
   concat,
   filter,
   reject,
