@@ -1,9 +1,5 @@
 {% extends "./_layout-view.njk" %}
 
-{% set addButton %}
-  <a class="button button--secondary" href="/omis/create?company={{ company.id }}&skip-company=true">Add order</a>
-{% endset %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Orders (OMIS)</h2>
 
@@ -12,7 +8,7 @@
       sort: sort,
       countLabel: 'order',
       query: QUERY,
-      summaryActionsHTML: addButton
+      actionButtons: actionButtons
     }))
   }}
 {% endblock %}
