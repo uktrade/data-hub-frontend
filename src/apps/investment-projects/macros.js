@@ -116,6 +116,7 @@ const investmentSortForm = {
         'target-selector': '.c-collection-filters input[name="sortby"]',
       },
       options: [
+        { value: 'created_on:desc', label: 'Most recently created' },
         { value: 'estimated_land_date:asc', label: 'Earliest land date' },
         { value: 'estimated_land_date:desc', label: 'Latest land date' },
         { value: 'name:asc', label: 'Project name' },
