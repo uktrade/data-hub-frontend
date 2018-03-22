@@ -37,7 +37,7 @@
         </div>
       </template>
     </multiselect>
-    <input type="hidden" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
+    <input type="hidden" class="js-ClearInputs--removable-field" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
   </div>
 </template>
 
