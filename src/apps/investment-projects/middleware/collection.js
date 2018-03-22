@@ -28,8 +28,12 @@ async function getInvestmentProjectsCollection (req, res, next) {
 
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
-    'stage',
+    'status',
+    'adviser',
     'sector',
+    'investor_company_country',
+    'uk_region_location',
+    'stage',
     'investment_type',
     'investor_company',
     'estimated_land_date_before',
@@ -37,9 +41,6 @@ function getRequestBody (req, res, next) {
     'actual_land_date_before',
     'actual_land_date_after',
     'client_relationship_manager',
-    'status',
-    'uk_region_location',
-    'investor_company_country',
   ])
 
   const selectedSortBy = req.query.sortby ? {

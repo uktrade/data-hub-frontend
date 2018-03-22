@@ -125,6 +125,7 @@ const labels = {
   },
   collectionFilterLabels: {
     edit: {
+      adviser: 'Adviser',
       stage: 'Stage',
       investment_type: 'Type of investment',
       sector: 'Sector',
