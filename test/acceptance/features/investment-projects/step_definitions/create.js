@@ -49,6 +49,10 @@ When(/^I populate the create Investment Project form$/, async function () {
     .assert.visible('@projectArrivedInTriageOnDay')
     .assert.visible('@projectArrivedInTriageOnMonth')
     .assert.visible('@projectArrivedInTriageOnYear')
+    .assert.visible('@proposalDeadlineDay')
+    .assert.visible('@proposalDeadlineMonth')
+    .assert.visible('@proposalDeadlineYear')
+    .assert.visible('@estimatedLandDateYear')
     .assert.visible('@estimatedLandDateYear')
     .assert.visible('@estimatedLandDateMonth')
     .assert.visible('@actualLandDateYear')
@@ -64,6 +68,13 @@ When(/^I populate the create Investment Project form$/, async function () {
     .populateForm((investmentProject) => {
       set(this.state, 'investmentProject', assign({}, get(this.state, 'investmentProject'), investmentProject))
       set(this.state, 'investmentProject.heading', investmentProject.name)
+
+      set(this.state, 'investmentProject.proposalDeadline', getDateFor({
+        year: this.state.investmentProject.proposalDeadlineYear,
+        month: this.state.investmentProject.proposalDeadlineMonth,
+        day: this.state.investmentProject.proposalDeadlineDay,
+      }))
+
       set(this.state, 'investmentProject.estimatedLandDate', getDateFor({
         year: this.state.investmentProject.estimatedLandDateYear,
         month: this.state.investmentProject.estimatedLandDateMonth,

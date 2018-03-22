@@ -15,7 +15,7 @@ describe('Investment project transformers', () => {
         this.result = transformBriefInvestmentSummary(investmentData)
       })
 
-      it('sound contain the properties required of a brief investment summary', () => {
+      it('should contain the properties required of a brief investment summary', () => {
         expect(Object.keys(this.result)).to.deep.equal([
           'sector',
           'investor_company',
@@ -23,6 +23,7 @@ describe('Investment project transformers', () => {
           'account_tier',
           'uk_region_locations',
           'competitor_countries',
+          'proposal_deadline',
           'estimated_land_date',
           'total_investment',
         ])
@@ -319,6 +320,7 @@ describe('Investment project transformers', () => {
           'investor_type',
           'level_of_involvement',
           'specific_programme',
+          'proposal_deadline',
           'estimated_land_date',
           'actual_land_date',
         ])
