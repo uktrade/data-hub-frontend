@@ -23,7 +23,10 @@ function renderContacts (req, res) {
       sortForm,
       filtersFields,
       selectedFilters: buildSelectedFiltersSummary(filtersFields, req.query),
-      addContactUrl: `/contacts/create?company=${companyId}`,
+      actionButtons: [{
+        label: 'Add contact',
+        url: `/contacts/create?company=${companyId}`,
+      }],
     })
 }
 

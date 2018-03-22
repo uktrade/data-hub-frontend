@@ -1,10 +1,6 @@
 {% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
-  {% set addProjectButton %}
-    <a id="add-contact-link" class="button button--secondary" href="{{addContactUrl}}">Add contact</a>
-  {% endset %}
-
   <h2 class="heading-medium">Contacts</h2>
 
   {{ CollectionFilters({
@@ -20,7 +16,7 @@
           selectedFilters: selectedFilters,
           query: QUERY,
           action: CURRENT_PATH,
-          summaryActionsHTML: addProjectButton
+          actionButtons: actionButtons
       })) }}
     </article>
   {% endblock %}
