@@ -7,6 +7,14 @@ const currentYear = (new Date()).getFullYear()
 
 module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
   return [
+    assign({}, provider(teams), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
+    assign({}, communicationChannel(channels), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
     {
       macroName: 'MultipleChoiceField',
       name: 'kind',
@@ -32,10 +40,6 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       name: 'dit_adviser',
       entity: 'adviser',
     },
-    assign({}, communicationChannel(channels), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
     {
       macroName: 'TextField',
       name: 'date_after',
@@ -48,10 +52,6 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign({}, provider(teams), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
   ].map(filter => {
     return assign(filter, {
       label: labels.filters[filter.name],
