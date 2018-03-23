@@ -6,12 +6,6 @@ const { transformObjectToOption } = require('../transformers')
 
 const companyFiltersFields = [
   {
-    macroName: 'TextField',
-    label: 'Company name',
-    name: 'name',
-    hint: 'At least three characters',
-  },
-  {
     macroName: 'MultipleChoiceField',
     name: 'headquarter_type',
     type: 'checkbox',
@@ -22,6 +16,12 @@ const companyFiltersFields = [
       { value: '3e6debb4-1596-40c5-aa25-f00da0e05af9', label: hqLabels.ukhq },
     ],
     modifier: 'option-select',
+  },
+  {
+    macroName: 'TextField',
+    label: 'Company name',
+    name: 'name',
+    hint: 'At least three characters',
   },
   Object.assign({}, globalFields.sectors, {
     name: 'sector',
