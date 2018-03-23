@@ -1,9 +1,5 @@
 {% extends "./_layout.njk" %}
 
-{% set addButton %}
-  <a class="button button--secondary" href="/contacts/{{ contact.id }}/interactions/create">Add interaction</a>
-{% endset %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Contact interactions</h2>
   <p>
@@ -13,9 +9,9 @@
   {% block xhr_content %}
     <article id="xhr-outlet">
       {{
-        Collection(results | assignCopy({
+        CollectionContent(results | assignCopy({
           countLabel: 'interaction',
-          summaryActionsHTML: addButton,
+          actionButtons: actionButtons,
           sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
           query: QUERY
         }))

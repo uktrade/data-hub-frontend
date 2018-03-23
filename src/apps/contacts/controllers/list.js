@@ -12,7 +12,7 @@ function renderContactList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('collection', {
+  res.render('_layouts/collection', {
     sortForm,
     filtersFields,
     selectedFilters,
