@@ -20,7 +20,7 @@ async function renderInteractionList (req, res, next) {
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
     const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
 
-    res.render('collection', {
+    res.render('_layouts/collection', {
       selectedFilters,
       filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Interactions',

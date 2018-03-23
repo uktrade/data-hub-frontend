@@ -73,10 +73,15 @@ describe('Company investments controller', () => {
         expect(this.renderSpy).to.have.been.calledOnce
       })
 
-      it('should send the correct template data', () => {
-        expect(this.renderSpy.args[0][1]).to.deep.equal({
-          results: ordersMock.results,
-        })
+      it('should send results to the template', () => {
+        expect(this.renderSpy.args[0][1].results).to.deep.equal(ordersMock.results)
+      })
+
+      it('should send an add button to the template', () => {
+        expect(this.renderSpy.args[0][1].actionButtons).to.deep.equal([{
+          label: 'Add order',
+          url: `/omis/create?company=dcdabbc9-1781-e411-8955-e4115bead28a&skip-company=true`,
+        }])
       })
     })
 

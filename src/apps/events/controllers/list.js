@@ -16,13 +16,17 @@ async function renderEventList (req, res, next) {
       ],
     })
 
-    res.render('events/views/list', {
+    res.render('_layouts/collection', {
       sortForm,
       filtersFields,
       selectedFilters,
       title: 'Events',
       countLabel: 'event',
       highlightTerm: get(selectedFilters, 'name.valueLabel'),
+      actionButtons: [{
+        label: 'Add event',
+        url: '/events/create',
+      }],
     })
   } catch (error) {
     next(error)

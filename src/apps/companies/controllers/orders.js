@@ -27,6 +27,10 @@ async function renderOrders (req, res, next) {
       .breadcrumb('Orders (OMIS)')
       .render('companies/views/orders', {
         results,
+        actionButtons: [{
+          label: 'Add order',
+          url: `/omis/create?company=${id}&skip-company=true`,
+        }],
       })
   } catch (error) {
     next(error)

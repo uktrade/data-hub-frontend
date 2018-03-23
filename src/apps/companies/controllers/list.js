@@ -12,13 +12,17 @@ function renderCompanyList (req, res) {
 
   const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
-  res.render('companies/views/list', {
+  res.render('_layouts/collection', {
     sortForm,
     filtersFields,
     selectedFilters,
     title: 'Companies',
     countLabel: 'company',
     highlightTerm: get(selectedFilters, 'name.valueLabel'),
+    actionButtons: [{
+      label: 'Add company',
+      url: '/companies/add-step-1',
+    }],
   })
 }
 

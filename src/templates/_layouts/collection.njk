@@ -15,11 +15,12 @@
     {% block xhr_content %}
       <article class="column-two-thirds" id="xhr-outlet">
         {% block collection_results %}
-          {{ Collection(results | assign({
+          {{ CollectionContent(results | assign({
             countLabel: countLabel,
             sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
             selectedFilters: selectedFilters,
             highlightTerm: highlightTerm,
+            actionButtons: actionButtons,
             query: QUERY
           })) }}
         {% endblock %}
