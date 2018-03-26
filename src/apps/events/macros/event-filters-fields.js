@@ -1,9 +1,8 @@
 const { assign, flatten } = require('lodash')
 const { globalFields } = require('../../macros')
 const { collectionFilterLabels } = require('../labels')
-const { transformObjectToOption } = require('../../transformers')
-
 const currentYear = (new Date()).getFullYear()
+const { transformObjectToOption } = require('../../transformers')
 
 const eventFiltersFields = ({ advisers }) => {
   return [
@@ -11,6 +10,12 @@ const eventFiltersFields = ({ advisers }) => {
       macroName: 'TextField',
       name: 'name',
       hint: 'At least three characters',
+    },
+    {
+      macroName: 'Typeahead',
+      name: 'organiser',
+      entity: 'adviser',
+      options: advisers.map(transformObjectToOption),
     },
     assign({}, globalFields.eventTypes, {
       name: 'event_type',
@@ -27,14 +32,6 @@ const eventFiltersFields = ({ advisers }) => {
       type: 'checkbox',
       modifier: 'option-select',
     }),
-    {
-      macroName: 'MultipleChoiceField',
-      name: 'organiser',
-      label: 'Organiser',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options: advisers.map(transformObjectToOption),
-    },
     {
       macroName: 'TextField',
       name: 'start_date_after',

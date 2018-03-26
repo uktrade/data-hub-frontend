@@ -64,8 +64,6 @@ Feature: View a list of events
     When I click the Events global nav link
     And I filter the events list by name
     Then I can view the event
-    And I filter the events list by organiser
-    Then I can view the event
     And I filter the events list by event type
     Then I can view the event
     And I filter the events list by country
