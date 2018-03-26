@@ -279,6 +279,14 @@
   }) }}
 
   {{ DateFieldset({
+    name: 'proposal_deadline',
+    label: 'Proposal Deadline',
+    hint: 'The investment proposal must be delivered to the investor by this date',
+    error: form.errors.messages.proposal_deadline,
+    value: form.state.proposal_deadline
+  }) }}
+
+  {{ DateFieldset({
     name: 'estimated_land_date',
     label: 'Estimated land date',
     hint: 'When activities planned under the investment project will have fully commenced',

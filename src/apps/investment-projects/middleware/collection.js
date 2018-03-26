@@ -36,6 +36,8 @@ function getRequestBody (req, res, next) {
     'stage',
     'investment_type',
     'investor_company',
+    'proposal_deadline_before',
+    'proposal_deadline_after',
     'estimated_land_date_before',
     'estimated_land_date_after',
     'actual_land_date_before',
