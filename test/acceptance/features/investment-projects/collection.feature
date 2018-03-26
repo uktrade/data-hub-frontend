@@ -30,7 +30,8 @@ Feature: View a list of Investment Projects
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
-      | Actual land date              | investmentProject.actualLandDate               |
+      | Proposal deadline             | investmentProject.proposalDeadline            |
+      | Actual land date              | investmentProject.actualLandDate              |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
       | Specific investment programme | investmentProject.specificInvestmentProgramme |

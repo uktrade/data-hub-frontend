@@ -14,6 +14,7 @@ const labels = {
       client_contacts: 'Client contacts',
       description: 'Project description',
       anonymous_description: 'Anonymised description',
+      proposal_deadline: 'Proposal deadline',
       estimated_land_date: 'Estimated land date',
       actual_land_date: 'Actual land date',
       investor_type: 'New or existing investor',
