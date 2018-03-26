@@ -65,8 +65,11 @@ const AddItems = {
   cacheEls () {
     const lastItem = this.wrapper.querySelector(this.settings.itemSelector)
 
-    this.itemContainer = lastItem.parentNode
-    this.template = lastItem.cloneNode(true)
+    if (lastItem) {
+      this.itemContainer = lastItem.parentNode
+      this.template = lastItem.cloneNode(true)
+    }
+
     this.addButton = this.wrapper.querySelector(this.settings.addButtonSelector)
   },
 

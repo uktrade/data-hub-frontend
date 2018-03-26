@@ -26,8 +26,13 @@ async function populateForm (req, res, next) {
 
   try {
     const investmentData = transformFromApi(res.locals.investmentData)
+    const equityCompanyData = transformFromApi(res.locals.equityCompany)
     const createdOn = get(investmentData, 'created_on')
     const token = req.session.token
+
+    if (investmentData && (investmentData.client_contacts !== undefined && investmentData.client_contacts.length === 0)) {
+      investmentData.client_contacts = ['']
+    }
 
     const {
       equityCompany,
@@ -46,6 +51,13 @@ async function populateForm (req, res, next) {
     const state = assign({}, {
       client_contacts: [''],
       business_activities: [''],
+      company_contacts: () => {
+        if (equityCompanyData && equityCompanyData.contacts) {
+          return equityCompanyData.contacts
+        } else {
+          return []
+        }
+      },
     }, investmentData)
 
     const advisersResponse = await getAdvisers(token)
