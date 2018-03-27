@@ -4,7 +4,7 @@ Feature: Support
   @support--form
   Scenario: Load support form
 
-    When I navigate to the `Support` page
+    When I navigate to the `support` page
     Then there are form fields
       | name          | type        | label                   |
       | Title         | Text        | Title                   |
@@ -16,7 +16,7 @@ Feature: Support
   @support--validation
   Scenario: Empty form should show validation errors
 
-    When I navigate to the `Support` page
+    When I navigate to the `support` page
     And the support Send button is clicked
     Then the support fields have error messages
     And I see form error summary

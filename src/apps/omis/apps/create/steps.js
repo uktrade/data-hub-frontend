@@ -24,7 +24,7 @@ module.exports = {
     template: 'company--search',
   },
   '/contact': {
-    heading: 'Choose the contact at the client company',
+    heading: 'Choose the contact at the company',
     editable: true,
     next: 'market',
     fields: ['contact'],
@@ -33,7 +33,7 @@ module.exports = {
     template: 'contact',
   },
   '/market': {
-    heading: 'Market (country) of interest',
+    heading: 'Choose the country (market) of interest',
     editable: true,
     next: 'sector',
     fields: ['primary_market'],

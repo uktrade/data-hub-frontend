@@ -3,28 +3,16 @@ const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
 const moment = require('moment')
 
-const { getButtonWithText } = require('../../helpers/selectors')
 const { pluralise } = require('../../../../config/nunjucks/filters')
 const { mediumDateTimeFormat } = require('../../../../config')
 
-const Collection = client.page.Collection()
+const Collection = client.page.collection()
 
 When('I store the result count in state', async function () {
   await Collection
     .captureResultCount((count) => {
       set(this.state, 'collection.resultCount', count)
     })
-})
-
-When(/^I click the "(.+)" link$/, async (linkTextContent) => {
-  const { selector: addLink } = getButtonWithText(linkTextContent)
-
-  await Collection
-    .api.useXpath()
-    .waitForElementVisible(addLink)
-    .assert.containsText(addLink, linkTextContent)
-    .click(addLink)
-    .useCss()
 })
 
 When(/^I clear all filters$/, async function () {
@@ -125,9 +113,8 @@ Then(/^I choose the first item in the collection$/, async function () {
 })
 
 Then(/^I can view the collection$/, async function () {
-  await Collection.api.elements('css selector', '.c-entity-list__item', (result) => {
-    client.expect(result.value.length).to.be.greaterThan(0)
-  })
+  await Collection
+    .assert.visible('@collection')
 })
 
 Then(/^I see the list in A-Z alphabetical order$/, async function () {

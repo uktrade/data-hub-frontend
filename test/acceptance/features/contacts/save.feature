@@ -7,8 +7,7 @@ Feature: Create New Contact
   @contacts-save--primary
   Scenario: Add a new primary contact
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
@@ -33,8 +32,7 @@ Feature: Create New Contact
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact with new company address is added
@@ -58,8 +56,7 @@ Feature: Create New Contact
   @contacts-save--non-primary
   Scenario: Add a new non-primary contact
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a non-primary contact is added
@@ -83,23 +80,21 @@ Feature: Create New Contact
   @contacts-save--primary-dashboard
   Scenario: New primary contact is visible on the dashboard
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
     And I submit the form
     Then I see the success message
     And I wait and then refresh the page
-    When I navigate to the `Dashboard` page
+    When I navigate to the `dashboard` page
     Then the contact is displayed on the dashboard
 
 
   @contacts-save--mandatory-fields
   Scenario: Contact fields are mandatory
 
-    Given I navigate to company fixture Lambda plc
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When I submit the form

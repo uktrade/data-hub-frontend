@@ -7,6 +7,10 @@ const standardFormConfig = {
       name: 'name',
       label: 'Company name',
       placeholder: 'e.g. Hooli',
+      inputData: {
+        att1: 'att1-value',
+        att2: 'att2-value',
+      },
     },
     {
       macroName: 'TextField',
@@ -17,7 +21,7 @@ const standardFormConfig = {
       hint: 'A few words about yourself',
       optional: true,
     },
-    globalFields.countries,
+    { ...globalFields.countries, inputData: { att1: 'test' } },
     globalFields.sectors,
     globalFields.strategicDrivers,
     globalFields.averageSalary,

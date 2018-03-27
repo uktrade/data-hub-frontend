@@ -27,7 +27,7 @@
         items: [
           { label: 'For the attention of', value: billingAddress | safe },
           { label: 'Purchase order (PO) number', value: invoice.po_number },
-          { label: 'Receipt date', value: invoice.created_on, type: 'datetime' }
+          { label: 'Receipt date', value: order.paid_on, type: 'date' }
         ],
         modifier: 'stacked',
         itemModifier: 'stacked'
@@ -95,10 +95,17 @@
     </tfoot>
   </table>
 
-  <h2 class="heading-medium">Payment details ({{ payments.length }} {{ ' payment' | pluralise(payments.length) }})</h2>
+  <h2 class="heading-medium">
+      Payment details
+      {% if payments.length > 1 %}
+        ({{ payments.length }} payments)
+      {% endif %}
+    </h2>
 
   {% for payment in payments %}
-    <h3 class="heading-small">Payment {{ loop.index }}</h3>
+    {% if payments.length > 1 %}
+      <h3 class="heading-small">Payment {{ loop.index }}</h3>
+    {% endif %}
 
     {{ MetaList({
       items: [

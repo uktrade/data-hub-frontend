@@ -2,7 +2,6 @@ const { sortBy } = require('lodash')
 
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
-const displayHouseCompany = require('~/test/unit/data/companies/display-companies-house')
 const config = require('~/config')
 
 const next = function (error) {
@@ -26,13 +25,11 @@ const metaDataMock = {
 
 describe('Company add controller', () => {
   let searchLimitedCompaniesStub
-  let getDisplayCHStub
   let getCHCompanyStub
   let companyAddController
 
   beforeEach(() => {
     searchLimitedCompaniesStub = sinon.stub().resolves(companiesHouseAndLtdCompanies)
-    getDisplayCHStub = sinon.stub().resolves(displayHouseCompany)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
     this.nextStub = sandbox.stub()
@@ -43,9 +40,6 @@ describe('Company add controller', () => {
       },
       '../repos': {
         getCHCompany: getCHCompanyStub,
-      },
-      '../services/formatting': {
-        getDisplayCH: getDisplayCHStub,
       },
     })
   })

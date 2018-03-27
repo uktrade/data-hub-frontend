@@ -16,7 +16,7 @@ class ContactController extends CreateController {
 
     if (company) {
       const companyName = company.trading_name || company.name
-      req.form.options.heading = req.form.options.heading.replace('the client company', companyName)
+      req.form.options.heading = req.form.options.heading.replace('the company', companyName)
     }
 
     next()
@@ -28,6 +28,10 @@ class ContactController extends CreateController {
     if (company) {
       const contacts = sortBy(company.contacts.map(transformContactToOption), 'label')
       req.form.options.fields.contact.options = contacts
+    }
+
+    if (req.form.options.fields.contact.options.length < 1) {
+      req.form.options.disableFormAction = true
     }
 
     next()

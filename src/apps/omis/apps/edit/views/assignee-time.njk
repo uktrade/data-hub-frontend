@@ -3,8 +3,8 @@
 {% block fields %}
   {% if not assignees.length %}
 
-    {% call Message({ type: 'info', element: 'div' }) %}
-      <p>Advisers in the market must be added before hours can be estimated.</p>
+    {% call Message({ type: 'error', element: 'div' }) %}
+      <p>To add estimated hours you must add advisers in the market.</p>
 
       <p>
         <a href="assignees?returnUrl=/omis/{{ order.id }}/edit/assignee-time">Add advisers</a>

@@ -29,29 +29,3 @@
   margin-top: $default-spacing-unit;
   margin-bottom: 0;
 }
-
-// Modifiers
-fieldset.c-form-fieldset--subfield {
-  border-left: 0;
-  padding-left: $default-spacing-unit * 2;
-  position: relative;
-
-  &::before {
-    position: absolute;
-    left: $default-spacing-unit;
-    top: 0;
-    bottom: 0;
-    border-left: 5px solid $grey-2;
-    margin-left: -$default-spacing-unit;
-    content: "";
-  }
-
-  &.has-error {
-    border-left: 0;
-    padding-left: $default-spacing-unit * 2;
-
-    &::before {
-      border-left-color: $error-colour;
-    }
-  }
-}

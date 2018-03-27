@@ -5,13 +5,8 @@ const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 const { format } = require('date-fns')
 
-const Form = client.page.Form()
-const Event = client.page.events.Event()
-
-When(/^I click on edit event button$/, async () => {
-  await Event
-    .click('@editButton')
-})
+const Form = client.page.form()
+const Event = client.page.events.event()
 
 When(/^I change start date to decrease year by one$/, async function () {
   const currentDate = new Date()

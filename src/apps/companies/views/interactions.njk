@@ -1,9 +1,5 @@
 {% extends "./_layout-view.njk" %}
 
-{% set addButton %}
-  <a class="button button--secondary" href="/companies/{{ company.id }}/interactions/create">Add interaction</a>
-{% endset %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Company interactions</h2>
 
@@ -12,14 +8,18 @@
       An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
     </p>
 
-    {{
-      Collection(results | assignCopy({
-        countLabel: 'interaction',
-        summaryActionsHTML: addButton,
-        sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-        query: QUERY
-      }))
-    }}
+    {% block xhr_content %}
+      <article id="xhr-outlet">
+        {{
+          CollectionContent(results | assignCopy({
+            countLabel: 'interaction',
+            sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+            actionButtons: actionButtons,
+            query: QUERY
+          }))
+        }}
+      </article>
+    {% endblock %}
   {% else %}
     {% call Message({ type: 'info' }) %}
       You currently have no contacts for this company. To add an interaction you must first <a href="/contacts/create?company={{company.id}}">add a contact</a>.

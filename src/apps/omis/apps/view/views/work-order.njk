@@ -2,6 +2,9 @@
 
 {% set contactName %}
   <a href="/contacts/{{ values.contact.id }}">{{ values.contact.name }}</a>
+  {%- if values.contact.job_title -%}
+    , {{ values.contact.job_title }}
+  {%- endif -%}
 {% endset %}
 
 {% set contactEmail %}
@@ -40,19 +43,27 @@
   {% if order.status === 'quote_awaiting_acceptance' %}
     {% call Message({ type: 'info', element: 'div' }) %}
       <p>You cannot edit the order once a quote has been sent.</p>
-      <p><a href="quote">Cancel the quote</a> to edit the order.</p>
+      <p><a href="quote">Withdraw the quote</a> to edit the order.</p>
     {% endcall %}
   {% endif %}
 
   {% if order.status === 'cancelled' %}
     {% call Message({ type: 'info', element: 'div' }) %}
-      <p>Order cancelled on {{ order.cancelled_on | formatDateTime }} by {{ order.cancelled_by.name }}.</p>
-      <p>It was cancelled because {{ order.cancellation_reason.name | lower }}.</p>
+      <p>
+        Order cancelled on {{ order.cancelled_on | formatDateTime }}
+        {%- if order.cancelled_b.name %}
+          by {{ order.cancelled_by.name }}
+        {% endif -%}
+        .
+      </p>
+      {% if order.cancellation_reason.name %}
+        <p>It was cancelled because {{ order.cancellation_reason.name | lower }}.</p>
+      {% endif %}
     {% endcall %}
   {% endif %}
 
   {{ AnswersSummary({
-    heading: 'Client contact details',
+    heading: 'Contact',
     actions: [{
       url: 'edit/contact' if order.canEditOrder or order.canEditContactDetails
     }],

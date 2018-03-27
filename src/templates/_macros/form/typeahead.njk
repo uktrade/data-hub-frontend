@@ -1,0 +1,8 @@
+{% macro Typeahead(props) %}
+  <typeahead
+    entity="{{ props.entity }}"
+    name="{{ props.name }}"
+    label="{{ props.label }}"
+    value="{{ props.selectedOptions | dump }}"
+  ></typeahead>
+{% endmacro %}

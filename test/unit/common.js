@@ -23,3 +23,16 @@ chai.config.truncateThreshold = 0
 
 process.setMaxListeners(0)
 process.stdout.setMaxListeners(0)
+
+require('jsdom-global')()
+
+// Patch lack of support for closest in jsdom
+window.Element.prototype.closest = function (selector) {
+  let el = this
+  while (el) {
+    if (el.matches(selector)) {
+      return el
+    }
+    el = el.parentElement
+  }
+}

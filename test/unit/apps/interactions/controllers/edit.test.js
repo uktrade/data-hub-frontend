@@ -145,6 +145,24 @@ describe('Interaction edit controller', () => {
       })
     })
 
+    context('when adding a policy feedback', () => {
+      beforeEach(async () => {
+        const req = merge({}, this.req, {
+          params: {
+            kind: 'policy-feedback',
+          },
+        })
+        await this.controller.renderEditPage(req, this.res, this.nextSpy)
+      })
+      it('should add a breadcrumb', () => {
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add policy feedback')
+      })
+
+      it('should add a title', () => {
+        expect(this.res.title.firstCall).to.be.calledWith('Add policy feedback for company')
+      })
+    })
+
     context('when adding a service delivery', () => {
       beforeEach(async () => {
         const req = merge({}, this.req, {
@@ -175,6 +193,26 @@ describe('Interaction edit controller', () => {
 
       it('should add a title', async () => {
         expect(this.res.title.firstCall).to.be.calledWith('Edit interaction for company')
+      })
+    })
+
+    context('when editing a policy feedback', () => {
+      beforeEach(async () => {
+        this.res.locals.interaction = assign({}, interactionData, { id: '1' })
+        const req = merge({}, this.req, {
+          params: {
+            kind: 'policy-feedback',
+          },
+        })
+        await this.controller.renderEditPage(req, this.res, this.nextSpy)
+      })
+
+      it('should add a breadcrumb', () => {
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit policy feedback')
+      })
+
+      it('should add a title', () => {
+        expect(this.res.title.firstCall).to.be.calledWith('Edit policy feedback for company')
       })
     })
 

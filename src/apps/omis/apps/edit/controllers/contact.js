@@ -3,7 +3,7 @@ const { get, sortBy } = require('lodash')
 const { EditController } = require('../../../controllers')
 const { transformContactToOption } = require('../../../../transformers')
 
-class EditClientDetailsController extends EditController {
+class EditContactController extends EditController {
   configure (req, res, next) {
     const company = get(res.locals, 'company')
     const contacts = []
@@ -27,4 +27,4 @@ class EditClientDetailsController extends EditController {
   }
 }
 
-module.exports = EditClientDetailsController
+module.exports = EditContactController

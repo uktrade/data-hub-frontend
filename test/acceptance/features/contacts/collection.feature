@@ -7,14 +7,13 @@ Feature: View collection of contacts
   @contacts-collection--view
   Scenario: View contact collection
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Venus Ltd` fixture
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When I navigate to the `contacts.List` page
+    When I navigate to the `contacts.list` page
     Then I confirm I am on the Contacts page
     And the results summary for a contact collection is present
     And I can view the Contact in the collection
@@ -24,6 +23,8 @@ Feature: View collection of contacts
       | Sector       | company.sector     |
       | Country      | company.country    |
       | UK region    | company.ukRegion   |
+      | Phone number | contact.telephone |
+      | Email        | contact.email     |
     And the Contact has badges
       | text         | expected           |
       | Contact type | contact.type       |
@@ -31,28 +32,27 @@ Feature: View collection of contacts
   @contacts-collection--view--lep @lep
   Scenario: View contact collection as LEP
 
-    When I navigate to the `contacts.List` page
+    When I navigate to the `contacts.list` page
     Then I confirm I am on the Contacts page
     And the results summary for a contact collection is present
 
   @contacts-collection--view--da @da
   Scenario: View contact collection as DA
 
-    When I navigate to the `contacts.List` page
+    When I navigate to the `contacts.list` page
     Then I confirm I am on the Contacts page
     And the results summary for a contact collection is present
 
   @contacts-collection--filter
   Scenario: Filter contact list
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Contacts local nav link
+    When I navigate to the `companies.contacts` page using `company` `Venus Ltd` fixture
     And I click the "Add contact" link
     And a primary contact is added
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When I navigate to the `contacts.List` page
+    When I navigate to the `contacts.list` page
     And I store the result count in state
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
@@ -98,7 +98,7 @@ Feature: View collection of contacts
     When I submit the form
     Then I see the success message
     Then I wait and then refresh the page
-    When I navigate to the `contacts.List` page
+    When I navigate to the `contacts.list` page
     When the contacts are sorted by Newest
     When the contacts are sorted by Oldest
     Then the contacts should have been correctly sorted by creation date

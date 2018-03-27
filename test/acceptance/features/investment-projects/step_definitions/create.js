@@ -2,10 +2,11 @@ const { get, set, lowerCase, assign, find } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { When } = require('cucumber')
 
+const { company: companyFixtures } = require('../../../fixtures')
 const { getDateFor } = require('../../../helpers/date')
 
-const InvestmentProject = client.page.investments.Project()
-const Location = client.page.Location()
+const InvestmentProject = client.page.investments.project()
+const Location = client.page.location()
 
 When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
   if (lowerCase(investmentType) === 'fdi') {
@@ -45,6 +46,13 @@ When(/^I populate the create Investment Project form$/, async function () {
     .assert.visible('@clientRelationshipManagerNo')
     .assert.visible('@referralSourceYes')
     .assert.visible('@referralSourceNo')
+    .assert.visible('@projectArrivedInTriageOnDay')
+    .assert.visible('@projectArrivedInTriageOnMonth')
+    .assert.visible('@projectArrivedInTriageOnYear')
+    .assert.visible('@proposalDeadlineDay')
+    .assert.visible('@proposalDeadlineMonth')
+    .assert.visible('@proposalDeadlineYear')
+    .assert.visible('@estimatedLandDateYear')
     .assert.visible('@estimatedLandDateYear')
     .assert.visible('@estimatedLandDateMonth')
     .assert.visible('@actualLandDateYear')
@@ -60,6 +68,13 @@ When(/^I populate the create Investment Project form$/, async function () {
     .populateForm((investmentProject) => {
       set(this.state, 'investmentProject', assign({}, get(this.state, 'investmentProject'), investmentProject))
       set(this.state, 'investmentProject.heading', investmentProject.name)
+
+      set(this.state, 'investmentProject.proposalDeadline', getDateFor({
+        year: this.state.investmentProject.proposalDeadlineYear,
+        month: this.state.investmentProject.proposalDeadlineMonth,
+        day: this.state.investmentProject.proposalDeadlineDay,
+      }))
+
       set(this.state, 'investmentProject.estimatedLandDate', getDateFor({
         year: this.state.investmentProject.estimatedLandDateYear,
         month: this.state.investmentProject.estimatedLandDateMonth,
@@ -106,7 +121,7 @@ When(/^I navigate to the Investment Projects source of equity investment$/, asyn
 })
 
 When(/^I search for the foreign source of equity (.+)$/, async function (companyName) {
-  const sourceOfForeignEquity = find(this.fixtures.company, ['name', companyName])
+  const sourceOfForeignEquity = find(companyFixtures, { name: companyName })
 
   await InvestmentProject
     .searchForEquitySourceCompany(sourceOfForeignEquity.name)

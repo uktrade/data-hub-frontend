@@ -1,13 +1,19 @@
 {% extends "_layouts/form-wizard-step.njk" %}
 
 {% block fields %}
-  {{ super() }}
-
-  {% call HiddenContent({ summary: 'Contact you are looking for is not listed' }) %}
+  {% if not options.fields.contact.options | length %}
     {% call Message({ type: 'muted' }) %}
-      If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
+      This company currently has no contacts. You can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
     {% endcall %}
-  {% endcall %}
+  {% else %}
+    {{ super() }}
+
+    {% call HiddenContent({ summary: 'Is the contact you are looking for not listed?' }) %}
+      {% call Message({ type: 'muted' }) %}
+        If the contact you are looking for is not listed you can <a href="/contacts/create?company={{ company.id }}">add a new contact</a>.
+      {% endcall %}
+    {% endcall %}
+  {% endif %}
 
   {% if order.canEditContactDetails and order.status !== 'draft' %}
     {% call Message({ type: 'info', element: 'div' }) %}

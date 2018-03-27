@@ -17,8 +17,8 @@ function transformInvestmentProjectToListItem ({
     { key: 'stage', value: stage, type: 'badge' },
     { key: 'investment_type', value: investment_type, type: 'badge', badgeModifier: 'secondary' },
     { key: 'investor_company', value: investor_company },
-    { key: 'estimated_land_date', value: estimated_land_date, type: 'dateMonthYear', isInert: true },
     { key: 'sector', value: sector },
+    { key: 'estimated_land_date', value: estimated_land_date, type: 'dateMonthYear', isInert: true },
   ].map(({ key, value, type, badgeModifier, isInert }) => {
     if (!value) return
     return assign({}, pickBy({ value, type, badgeModifier, isInert }), {
@@ -30,7 +30,10 @@ function transformInvestmentProjectToListItem ({
     id,
     name,
     type: 'investment-project',
-    subTitle: project_code,
+    subTitle: {
+      label: 'Project code',
+      value: project_code,
+    },
     meta: compact(metaItems),
   }
 }

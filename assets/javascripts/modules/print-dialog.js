@@ -8,7 +8,7 @@ const PrintDialog = {
   contentLoaded () {
     const printLinks = document.querySelectorAll(this.selector)
 
-    printLinks.forEach((link) => {
+    Array.from(printLinks).forEach((link) => {
       link.addEventListener('click', this.handleClick.bind(this))
     })
   },

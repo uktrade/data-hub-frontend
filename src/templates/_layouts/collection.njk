@@ -1,0 +1,30 @@
+{% extends "_layouts/datahub-base.njk" %}
+
+{% block body_main_content %}
+  <div class="grid-row">
+    <div class="column-one-third">
+      {% block collection_filters %}
+        {{ CollectionFilters({
+          query: QUERY,
+          filtersFields: filtersFields,
+          action: CURRENT_PATH
+        }) }}
+      {% endblock %}
+    </div>
+
+    {% block xhr_content %}
+      <article class="column-two-thirds" id="xhr-outlet">
+        {% block collection_results %}
+          {{ CollectionContent(results | assign({
+            countLabel: countLabel,
+            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
+            selectedFilters: selectedFilters,
+            highlightTerm: highlightTerm,
+            actionButtons: actionButtons,
+            query: QUERY
+          })) }}
+        {% endblock %}
+      </article>
+    {% endblock %}
+  </div>
+{% endblock %}

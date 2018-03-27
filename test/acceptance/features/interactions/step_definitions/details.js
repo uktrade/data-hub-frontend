@@ -1,7 +1,7 @@
 const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 
-const Interaction = client.page.interactions.Interaction()
+const Interaction = client.page.interactions.interaction()
 
 Then(/^the interaction details Documents link is displayed$/, async function () {
   await Interaction

@@ -1,10 +1,6 @@
 {% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
-  {% set addProjectButton %}
-    <a id="add-contact-link" class="button button--secondary" href="{{addContactUrl}}">Add contact</a>
-  {% endset %}
-
   <h2 class="heading-medium">Contacts</h2>
 
   {{ CollectionFilters({
@@ -12,13 +8,16 @@
       filtersFields: filtersFields,
       action: CURRENT_PATH
   }) }}
-
-  {{ Collection(contactResults | assign({
-      countLabel: 'contact',
-      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-      selectedFilters: selectedFilters,
-      query: QUERY,
-      action: CURRENT_PATH,
-      summaryActionsHTML: addProjectButton
-  })) }}
+  {% block xhr_content %}
+    <article id="xhr-outlet">
+      {{ CollectionContent(contactResults | assign({
+          countLabel: 'contact',
+          sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+          selectedFilters: selectedFilters,
+          query: QUERY,
+          action: CURRENT_PATH,
+          actionButtons: actionButtons
+      })) }}
+    </article>
+  {% endblock %}
 {% endblock %}
