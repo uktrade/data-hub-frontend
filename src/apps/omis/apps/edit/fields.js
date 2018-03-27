@@ -202,6 +202,16 @@ const editFields = merge({}, globalFields, {
     options: [],
     validate: ['required'],
   },
+  verify_work_sent: {
+    fieldType: 'MultipleChoiceField',
+    label: 'fields.verify_work_sent.label',
+    type: 'checkbox',
+    options: [{
+      value: 'true',
+      label: 'I have completed the work and sent this to the contact',
+    }],
+    validate: ['required'],
+  },
 })
 
 module.exports = editFields
