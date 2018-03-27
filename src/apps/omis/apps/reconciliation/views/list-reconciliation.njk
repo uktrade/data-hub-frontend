@@ -1,7 +1,7 @@
-{% extends "collection.njk" %}
+{% extends "_layouts/collection.njk" %}
 
 {% block collection_results %}
-  {% call Collection(results | assign({
+  {% call CollectionContent(results | assign({
     countLabel: 'order',
     sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
     selectedFilters: selectedFilters,

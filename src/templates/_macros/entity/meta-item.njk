@@ -34,8 +34,8 @@
     {% else %}
       {% set metaItemValue = props.value.name | default(props.value) %}
     {% endif %}
+    {% set value = metaItemValue | highlight(props.highlightTerm, true) %}
 
-    {% set value = metaItemValue | escape | highlight(props.highlightTerm, true) %}
     <div class="{{ 'c-meta-list__item' | applyClassModifiers(props.modifier) }}">
       {% if props.label %}
         <span class="c-meta-list__item-label {{ 'u-visually-hidden' if isLabelHidden or props.type === 'badge' }}">
@@ -44,7 +44,7 @@
       {% endif %}
       {% if props.url and not props.isInert and not props.urlLabel %}
         <a
-          class="js-xhr {{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
+          class="{{ itemValueClass }} {{ 'is-selected' if props.isSelected }}"
           href="{{ props.url }}"
         >
           {{- value -}}

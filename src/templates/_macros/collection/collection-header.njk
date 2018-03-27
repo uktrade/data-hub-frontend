@@ -9,13 +9,13 @@
  # @param {object}   [props.selectedFilters] - an object containing selected filters
  # @param {object}   [props.sortForm] - object containing sorting form
  # @param {string}   [props.highlightTerm] - text to highlight
- # @param {string}   [props.actionsHTML] - HTML content for actions block (safe to render HTML)
+ # @param {object,array}   [props.actionButtons] - An object or array of objects with a label and url to generate an action button
 #}
 {% macro CollectionHeader(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
-  {% set el = props.el | default('div') %}
   {% set count = props.count | default('0') %}
   {% set countLabel = props.countLabel | default('result') %}
+  {% set actionButtons = props.actionButtons | default([]) | castArray %}
 
   <header class="c-collection__header">
     <div class="c-collection__header-row">
@@ -29,23 +29,27 @@
           {% endif %}
         {% endif %}
       </div>
-      {% if props.selectedFilters | length or props.actionsHTML %}
+
+      {% if props.selectedFilters | length or actionButtons.length %}
         <div class="c-collection__header-actions">
           {% if props.selectedFilters | length %}
             <a
               href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
-              class="c-collection__filter-remove-all js-xhr"
+              class="c-collection__filter-remove-all js-xhr js-ClearInputs"
+              data-target-selector=".c-collection-filters"
               aria-label="Reset filter results"
             >
               Remove all filters
             </a>
           {% endif %}
 
-          {{ props.actionsHTML | safe }}
+          {% for actionButton in actionButtons %}
+            <a class="button button--secondary" href="{{ actionButton.url }}">{{ actionButton.label }}</a>
+          {% endfor %}
         </div>
       {% endif %}
 
-      {% if props.selectedFilters | length %}
+      {% if props.selectedFilters %}
         <div class="c-collection__filter-summary">
           {% for name, filter in props.selectedFilters %}
             <span class="c-collection__filter-tag">

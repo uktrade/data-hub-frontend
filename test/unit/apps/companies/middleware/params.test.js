@@ -42,6 +42,16 @@ describe('Companies form middleware', () => {
       it('should have a null companies house category', () => {
         expect(this.resMock.locals).to.have.property('companiesHouseCategory', undefined)
       })
+
+      it('should have a ehq metaItems', () => {
+        expect(this.resMock.locals).to.have.deep.property('metaItems', [
+          {
+            type: 'badge',
+            label: 'Headquarter type',
+            value: 'European HQ',
+          },
+        ])
+      })
     })
 
     context('when the API returns a company with companies house data', () => {
@@ -60,6 +70,16 @@ describe('Companies form middleware', () => {
 
       it('should have a null companies house category', () => {
         expect(this.resMock.locals).to.have.property('companiesHouseCategory', 'Private Limited Company')
+      })
+
+      it('should have a ehq metaItems', () => {
+        expect(this.resMock.locals).to.have.deep.property('metaItems', [
+          {
+            type: 'badge',
+            label: 'Headquarter type',
+            value: 'European HQ',
+          },
+        ])
       })
     })
   })

@@ -6,27 +6,71 @@ const {
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentProjectToListItem', () => {
-    it('should transform investment project items into investment project entity list items', () => {
-      const actual = investmentProjectsData.results.map(transformInvestmentProjectToListItem)
-      const firstItem = actual[0]
+    context('when transforming a fully populated project', () => {
+      beforeEach(() => {
+        this.rawItem = investmentProjectsData.results[0]
+        const transformed = investmentProjectsData.results.map(transformInvestmentProjectToListItem)
+        this.transformedItem = transformed[0]
+      })
 
-      expect(actual).to.have.length(3)
-      expect(firstItem.id).to.a('string')
-      expect(firstItem.name).to.a('string')
-      expect(firstItem.type).to.a('string')
-      expect(firstItem.subTitle).to.a('string')
-      expect(firstItem.meta).to.an('array').that.have.length(5)
+      it('should provide the id', () => {
+        expect(this.transformedItem.id).to.equal(this.rawItem.id)
+      })
 
-      expect(firstItem.meta[0].label).to.be.a('string')
-      expect(firstItem.meta[0].type).to.be.a('string')
-      expect(firstItem.meta[0].value).to.be.an('object')
+      it('should provide the name', () => {
+        expect(this.transformedItem.name).to.equal(this.rawItem.name)
+      })
 
-      expect(firstItem.meta[1].label).to.be.a('string')
-      expect(firstItem.meta[1].value).to.be.an('object')
-      expect(firstItem.meta[1].badgeModifier).to.equal('secondary')
+      it('should provide the type', () => {
+        expect(this.transformedItem.type).to.equal('investment-project')
+      })
 
-      expect(firstItem.meta[3].isInert).to.be.true
-      expect(firstItem.meta[3].type).to.equal('dateMonthYear')
+      it('should list the stage as a badge', () => {
+        expect(this.transformedItem.meta[0]).to.deep.equal({
+          label: 'Stage',
+          type: 'badge',
+          value: this.rawItem.stage,
+        })
+      })
+
+      it('should list the invstment type as a badge', () => {
+        expect(this.transformedItem.meta[1]).to.deep.equal({
+          label: 'Investment type',
+          type: 'badge',
+          badgeModifier: 'secondary',
+          value: this.rawItem.investment_type,
+        })
+      })
+
+      it('should list the investor company', () => {
+        expect(this.transformedItem.meta[2]).to.deep.equal({
+          label: 'Investor',
+          value: this.rawItem.investor_company,
+        })
+      })
+
+      it('should list the sector', () => {
+        expect(this.transformedItem.meta[3]).to.deep.equal({
+          label: 'Sector',
+          value: this.rawItem.sector,
+        })
+      })
+
+      it('should list the esimated land date as date', () => {
+        expect(this.transformedItem.meta[4]).to.deep.equal({
+          label: 'Estimated land date',
+          type: 'dateMonthYear',
+          value: this.rawItem.estimated_land_date,
+          isInert: true,
+        })
+      })
+
+      it('should list the project code', () => {
+        expect(this.transformedItem.subTitle).to.deep.equal({
+          label: 'Project code',
+          value: this.rawItem.project_code,
+        })
+      })
     })
   })
 

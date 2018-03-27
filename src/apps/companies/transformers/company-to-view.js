@@ -1,12 +1,33 @@
 /* eslint-disable camelcase */
-const { get, pickBy } = require('lodash')
+const { get, pickBy, isNull } = require('lodash')
 
 const { getFormattedAddress } = require('../../../lib/address')
 const { getPrimarySectorName } = require('../../../../common/transform-sectors')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { companyDetailsLabels, hqLabels } = require('../labels')
 
+const setGlobalHQLink = ({ companyId, ghqDetail }) => {
+  const linkTheGlobalHQ = {
+    url: `/companies/${companyId}/hierarchies/ghq/search`,
+    name: 'Link the Global HQ',
+  }
+
+  const linkToTheGlobalHQ = {
+    url: `/companies/${get(ghqDetail, 'id')}`,
+    name: get(ghqDetail, 'name'),
+    actions: [
+      {
+        url: `/companies/${companyId}/hierarchies/ghq/remove`,
+        label: 'Remove link',
+      },
+    ],
+  }
+
+  return isNull(ghqDetail) ? linkTheGlobalHQ : linkToTheGlobalHQ
+}
+
 module.exports = function transformCompanyToView ({
+  id,
   uk_based,
   uk_region,
   sector,
@@ -33,6 +54,7 @@ module.exports = function transformCompanyToView ({
   trading_address_country,
   companies_house_data,
   business_type,
+  global_headquarters,
 }) {
   const viewRecord = {
     trading_name,
@@ -67,6 +89,13 @@ module.exports = function transformCompanyToView ({
       address_country: trading_address_country,
     }),
     business_type: !companies_house_data ? get(business_type, 'name') : null,
+  }
+
+  if (get(headquarter_type, 'name') !== 'ghq') {
+    viewRecord.global_headquarters = setGlobalHQLink({
+      companyId: id,
+      ghqDetail: global_headquarters,
+    })
   }
 
   return pickBy(getDataLabels(viewRecord, companyDetailsLabels))

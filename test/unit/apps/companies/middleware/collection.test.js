@@ -1,6 +1,14 @@
+const { pickBy } = require('lodash')
+
 const config = require('~/config')
-const { getRequestBody, getCompanyCollection } = require('~/src/apps/companies/middleware/collection')
 const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
+const ghqCompanySearchResponse = require('~/test/unit/data/companies/ghq-company-search-response.json')
+const ghqCompanyTransformedResults = require('~/test/unit/data/companies/ghq-company-transformed-results.json')
+const {
+  getRequestBody,
+  getCompanyCollection,
+  getGlobalHQCompaniesCollection,
+} = require('~/src/apps/companies/middleware/collection')
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
@@ -12,11 +20,12 @@ describe('Company collection middleware', () => {
         { id: '333', name: 'C' },
       ],
     }
-    this.next = sandbox.spy()
-    this.req = Object.assign({}, globalReq, {
+    this.nextSpy = sandbox.spy()
+    this.reqMock = {
+      ...globalReq,
       session: { token: 'abcd' },
-    })
-    this.res = {
+    }
+    this.resMock = {
       locals: {},
     }
   })
@@ -27,60 +36,60 @@ describe('Company collection middleware', () => {
         .post(`/v3/search/company`)
         .reply(200, this.mockCompanyResults)
 
-      this.req.query = {
+      this.reqMock.query = {
         stage: 'i1',
         sector: 's1',
         sortby: 'name:asc',
       }
-      await getCompanyCollection(this.req, this.res, this.next)
+      await getCompanyCollection(this.reqMock, this.resMock, this.nextSpy)
     })
 
     it('should set results property on locals with pagination', () => {
-      const actual = this.res.locals.results
+      const actual = this.resMock.locals.results
       expect(actual).to.have.property('count')
       expect(actual).to.have.property('items').to.have.length(3)
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
-      expect(this.next).to.have.been.calledOnce
+      expect(this.nextSpy).to.have.been.calledOnce
     })
   })
 
   describe('#getRequestBody', () => {
     it('should not set req.body for empty query', () => {
-      getRequestBody(this.req, this.res, this.next)
+      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.req.body).to.be.an('object').and.empty
-      expect(this.next).to.have.been.calledOnce
+      expect(this.reqMock.body).to.be.an('object').and.empty
+      expect(this.nextSpy).to.have.been.calledOnce
     })
 
     it('should set req.body for valid query items', () => {
-      this.req.query = {
+      this.reqMock.query = {
         sector: 'space',
         uk_region: 'london',
         sortby: 'name:asc',
         random: 'query',
       }
 
-      getRequestBody(this.req, this.res, this.next)
+      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.req.body).to.deep.equal({
+      expect(this.reqMock.body).to.deep.equal({
         sector: 'space',
         uk_region: 'london',
         sortby: 'name:asc',
       })
-      expect(this.next).to.have.been.calledOnce
+      expect(this.nextSpy).to.have.been.calledOnce
     })
 
     it('should not set req.body invalid items', async () => {
-      this.req.query = {
+      this.reqMock.query = {
         random: 'query',
         some: 'more',
       }
 
-      getRequestBody(this.req, this.res, this.next)
+      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
 
-      expect(this.req.body).to.be.an('object').and.empty
-      expect(this.next).to.have.been.calledOnce
+      expect(this.reqMock.body).to.be.an('object').and.empty
+      expect(this.nextSpy).to.have.been.calledOnce
     })
   })
 
@@ -103,14 +112,14 @@ describe('Company collection middleware', () => {
           },
         })
 
-        this.req = Object.assign({}, this.req, {
+        this.reqMock = Object.assign({}, this.reqMock, {
           query: {
             term: 'fred',
             page: '2',
           },
         })
 
-        await collectionMiddleware.getLimitedCompaniesCollection(this.req, this.res, this.next)
+        await collectionMiddleware.getLimitedCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should search for companies house results', () => {
@@ -126,11 +135,79 @@ describe('Company collection middleware', () => {
       })
 
       it('should include results', () => {
-        expect(this.res.locals).to.have.property('results')
+        expect(this.resMock.locals).to.have.property('results')
       })
 
       it('should adjust the url in the search results to point to the add company screen', () => {
-        expect(this.res.locals.results.items[0].url).to.equal('/companies/add/1234')
+        expect(this.resMock.locals.results.items[0].url).to.equal('/companies/add/1234')
+      })
+    })
+  })
+
+  describe('#getGlobalHQCompaniesCollection', () => {
+    beforeEach(async () => {
+      this.resMock.locals.company = { id: 'mock-parent-company-id' }
+    })
+
+    context('no searchTerm', () => {
+      beforeEach(async () => {
+        this.reqMock.query = {}
+        await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+
+      it('results should be undefined', () => {
+        expect(this.resMock.locals.results).to.be.undefined
+      })
+    })
+
+    context('with searchTerm', () => {
+      context('with 200 response', () => {
+        beforeEach(async () => {
+          this.reqMock.query.term = 'mock-search-term'
+
+          nock(config.apiRoot)
+            .post('/v3/search/company')
+            .reply(200, ghqCompanySearchResponse)
+
+          await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('results should be as expected', () => {
+          expect(pickBy(this.resMock.locals.results)).to.deep.equal(ghqCompanyTransformedResults)
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy.calledOnce).to.be.true
+        })
+      })
+
+      context('with error response', () => {
+        beforeEach(async () => {
+          this.reqMock.query.term = 'mock-search-term'
+          this.errorMsg = 'oh no!'
+
+          nock(config.apiRoot)
+            .post('/v3/search/company')
+            .replyWithError(this.errorMsg)
+
+          await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+        })
+
+        it('should call next', () => {
+          expect(this.nextSpy.calledOnce).to.be.true
+        })
+
+        it('should have expected error message', () => {
+          expect(this.nextSpy.args[0][0].message).to.have.string(`Error: ${this.errorMsg}`)
+        })
+
+        it('results should be undefined', () => {
+          expect(this.resMock.locals.results).to.be.undefined
+        })
       })
     })
   })

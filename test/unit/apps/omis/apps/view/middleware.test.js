@@ -80,6 +80,18 @@ describe('OMIS View middleware', () => {
             'description',
           ],
         },
+        '/four': {
+          heading: 'Step four',
+          fields: [
+            'description',
+          ],
+        },
+        '/vat-status': {
+          heading: 'VAT status step',
+          fields: [
+            'description',
+          ],
+        },
         '@noCallThru': true,
       },
     })
@@ -487,10 +499,31 @@ describe('OMIS View middleware', () => {
           this.previewQuoteStub.rejects(error)
         })
 
-        it('should set errors on locals', async () => {
+        it('should include incomplete fields object', async () => {
           await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
 
           expect(this.resMock.locals).to.have.property('incompleteFields')
+        })
+
+        it('should contain the correct error step', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.incompleteFields).to.have.ordered.keys([
+            '/one',
+            '/three',
+            '/four',
+          ])
+        })
+
+        it('should not contain the vat status step', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
+          expect(this.resMock.locals.incompleteFields).not.to.have.property('/vat-status')
+        })
+
+        it('should contain correct object structure', async () => {
+          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+
           expect(this.resMock.locals.incompleteFields).to.deep.equal({
             '/one': {
               heading: 'Step one',
@@ -500,6 +533,12 @@ describe('OMIS View middleware', () => {
             },
             '/three': {
               heading: 'Step three',
+              errors: [
+                'description',
+              ],
+            },
+            '/four': {
+              heading: 'Step four',
               errors: [
                 'description',
               ],
@@ -1034,7 +1073,7 @@ describe('OMIS View middleware', () => {
         const nextSpy = () => {
           try {
             expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
+            expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
             expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
             done()
@@ -1063,7 +1102,7 @@ describe('OMIS View middleware', () => {
             const nextSpy = () => {
               try {
                 expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Cancel quote')
+                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
                 expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'button--destructive')
 
                 done()

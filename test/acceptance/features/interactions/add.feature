@@ -4,8 +4,7 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-interaction-submit
   Scenario: Companies interaction is saved
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     Then there are interaction fields
@@ -26,11 +25,34 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
+#  @interaction-add--companies-policy-feedback-submit
+#  Scenario: Companies policy feedback is saved
+#
+#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+#    And I click the "Add interaction" link
+#    And I select policy feedback
+#    Then there are policy feedback fields
+#    And policy feedback fields are pre-populated
+#    When a policy feedback is added
+#      | key                      | value                                    |
+#    Then I see the success message
+#    And the details are displayed
+#      | key                      | value                                    |
+#      | Company                  | Venus Ltd                                |
+#      | Contact                  | interaction.contact                      |
+#      | Service provider         | interaction.serviceProvider              |
+#      | Service                  | interaction.service                      |
+#      | Subject                  | interaction.subject                      |
+#      | Notes                    | interaction.notes                        |
+#      | Date of interaction      | interaction.date                         |
+#      | DIT adviser              | interaction.ditAdviser                   |
+#      | Communication channel    | interaction.communicationChannel         |
+#      | Documents                | There are no files or documents          |
+
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -54,8 +76,7 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-service-delivery-tap-service-optional-complete-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are specified
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -86,8 +107,7 @@ Feature: Add a new interaction in Data hub
   @interaction-add--companies-service-delivery-tap-service-optional-empty-submit
   Scenario: Companies service delivery is saved and TAP service optional fields are not specified
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -112,8 +132,7 @@ Feature: Add a new interaction in Data hub
   @interaction-add--contacts-interaction-submit
   Scenario: Interaction fields from contacts
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     Then there are interaction fields
@@ -134,11 +153,34 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
+#  @interaction-add--contacts-policy-feedback-submit
+#  Scenario: Policy feedback fields from contacts
+#
+#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+#    And I click the "Add interaction" link
+#    And I select policy feedback
+#    Then there are interaction fields
+#    And interaction fields are pre-populated
+#    When a policy feedback is added
+#      | key                      | value                                    |
+#    Then I see the success message
+#    And the details are displayed
+#      | key                      | value                                    |
+#      | Company                  | Venus Ltd                                |
+#      | Contact                  | interaction.contact                      |
+#      | Service provider         | interaction.serviceProvider              |
+#      | Service                  | interaction.service                      |
+#      | Subject                  | interaction.subject                      |
+#      | Notes                    | interaction.notes                        |
+#      | Date of interaction      | interaction.date                         |
+#      | DIT adviser              | interaction.ditAdviser                   |
+#      | Communication channel    | interaction.communicationChannel         |
+#      | Documents                | There are no files or documents          |
+
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -162,8 +204,7 @@ Feature: Add a new interaction in Data hub
   @interaction-add--investment-projects-interaction-submit
   Scenario: Interaction fields from investment projects
 
-    Given I navigate to investment project fixture New rollercoaster
-    When I click the Interactions local nav link
+    When I navigate to the `investments.interactions` page using `investment project` `New rollercoaster` fixture
     And I click the "Add interaction" link
     Then there are interaction fields
     And interaction fields are pre-populated
@@ -187,8 +228,7 @@ Feature: Add a new interaction in Data hub
   @interactions-add--events-toggle
   Scenario: Toggle service delivery event association
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields
@@ -201,8 +241,7 @@ Feature: Add a new interaction in Data hub
   @interactions-add--service-toggle
   Scenario: Toggle service delivery service fields
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     Then there are service delivery fields

@@ -4,12 +4,12 @@ const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 const { set } = require('lodash')
 
-const Message = client.page.Message()
-const Company = client.page.companies.Company()
-const Contact = client.page.contacts.Contact()
-const AuditContact = client.page.audit.Contact()
-const AuditCompany = client.page.audit.Company()
-const AuditList = client.page.audit.List()
+const Message = client.page.message()
+const Company = client.page.companies.company()
+const Contact = client.page.contacts.contact()
+const AuditContact = client.page.audit.contact()
+const AuditCompany = client.page.audit.company()
+const AuditList = client.page.audit.list()
 
 Given(/^I Amend (.*) records of an existing company record$/, async function (number) {
   await Company

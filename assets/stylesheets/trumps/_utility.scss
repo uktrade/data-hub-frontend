@@ -46,6 +46,10 @@
   max-width: 50%;
 }
 
+.u-block {
+  display: block;
+}
+
 .u-loading {
   &::before {
     animation: growRight 3s;

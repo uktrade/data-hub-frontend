@@ -7,6 +7,14 @@ const currentYear = (new Date()).getFullYear()
 
 module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
   return [
+    assign({}, provider(teams), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
+    assign({}, communicationChannel(channels), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
     {
       macroName: 'MultipleChoiceField',
       name: 'kind',
@@ -14,6 +22,7 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       options: [
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
+        // { value: 'policy_feedback', label: 'Policy feedback' },
       ],
       modifier: 'option-select',
     },
@@ -21,15 +30,16 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       macroName: 'MultipleChoiceField',
       name: 'dit_adviser',
       type: 'checkbox',
-      modifier: 'option-select',
+      modifier: ['option-select', 'hide-label'],
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
     },
-    assign({}, communicationChannel(channels), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+    {
+      macroName: 'Typeahead',
+      name: 'dit_adviser',
+      entity: 'adviser',
+    },
     {
       macroName: 'TextField',
       name: 'date_after',
@@ -42,10 +52,6 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign({}, provider(teams), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
   ].map(filter => {
     return assign(filter, {
       label: labels.filters[filter.name],

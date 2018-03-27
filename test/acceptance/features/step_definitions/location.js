@@ -1,6 +1,6 @@
-const { find, assign, set, get, camelCase, includes } = require('lodash')
+const { get, camelCase, includes } = require('lodash')
 const { client } = require('nightwatch-cucumber')
-const { Given, Then, When } = require('cucumber')
+const { Then, When } = require('cucumber')
 
 const formatters = require('../../helpers/formatters')
 
@@ -19,42 +19,7 @@ function getExpectedValue (row, state) {
   return row.value
 }
 
-const Location = client.page.Location()
-const Search = client.page.Search()
-
-Given(/^I navigate to (.+) fixture (.+)$/, async function (entityType, fixtureName) {
-  const entityTypeFieldName = camelCase(entityType)
-  const fixtureDetails = find(this.fixtures[entityTypeFieldName], ['name', fixtureName])
-  set(this.state, entityTypeFieldName, assign({}, get(this.state, entityTypeFieldName), fixtureDetails))
-
-  await Search
-    .navigate()
-    .search(fixtureName)
-
-  await Search
-    .section.tabs
-    .waitForElementPresent(`@${entityTypeFieldName}`)
-    .click(`@${entityTypeFieldName}`)
-
-  await Search
-    .section.firstSearchResult
-    .waitForElementPresent('@header')
-    .click('@header')
-
-  await Location
-    .section.localHeader
-    .waitForElementPresent('@header')
-    .assert.containsText('@header', fixtureName)
-})
-
-Given(/^I navigate directly to ([^\s]+) of (.+) fixture (.+)$/, async function (path, entityType, fixtureName) {
-  const entityTypeFieldName = camelCase(entityType)
-  const fixtureDetails = find(this.fixtures[entityTypeFieldName], ['name', fixtureName])
-  const collection = this.urls[entityTypeFieldName].collection
-  const url = `${collection}/${fixtureDetails.pk}${path}`
-
-  await client.url(url)
-})
+const Location = client.page.location()
 
 When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
   const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)

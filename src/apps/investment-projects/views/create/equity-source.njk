@@ -45,7 +45,7 @@
 
     {% if searchResult %}
       {{
-        Collection(searchResult | assign({
+        CollectionContent(searchResult | assign({
           highlightTerm: searchTerm,
           countLabel: 'company',
           listModifier: 'block-links',

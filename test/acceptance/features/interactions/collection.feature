@@ -7,14 +7,13 @@ Feature: View collection of interactions
   @interactions-collection--view-interaction
   Scenario: View interaction in interactions and services collection
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     When an interaction is added
       | key      | value                 |
     Then I see the success message
-    When I navigate to the `interactions.List` page
+    When I navigate to the `interactions.list` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Interaction I have just created
@@ -28,17 +27,39 @@ Feature: View collection of interactions
       | text    | expected               |
       | Type    | interaction.type       |
 
+#  @interactions-collection--view-policy-feedback
+#  Scenario: View policy feedback in interactions and services collection
+#
+#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+#    And I click the "Add interaction" link
+#    And I select policy feedback
+#    When a policy feedback is added
+#      | key      | value                 |
+#    Then I see the success message
+#    When I navigate to the `interactions.list` page
+#    Then I confirm I am on the Interactions page
+#    And the results summary for a interaction collection is present
+#    Then I filter the collections to view the policy feedback I have just created
+#    And I can view the interaction in the collection
+#      | text    | expected               |
+#      | Contact | contact.heading        |
+#      | Company | company.name           |
+#      | Date    | interaction.date       |
+#      | Adviser | interaction.ditAdviser |
+#    And the Interaction has badges
+#      | text    | expected               |
+#      | Type    | interaction.type       |
+
   @interactions-collection--view-service-delivery
   Scenario: View service delivery in interactions and services collection
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select service delivery
     And a service delivery is added
       | key             | value          |
     Then I see the success message
-    When I navigate to the `interactions.List` page
+    When I navigate to the `interactions.list` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the collections to view the Service Delivery I have just created
@@ -55,14 +76,13 @@ Feature: View collection of interactions
   @interactions-collection--filter
   Scenario: filter interaction list
 
-    Given I navigate to company fixture Venus Ltd
-    When I click the Interactions local nav link
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
     And I select interaction
     And an interaction is added
       | key             | value          |
     Then I see the success message
-    When I navigate to the `interactions.List` page
+    When I navigate to the `interactions.list` page
     Then I confirm I am on the Interactions page
     And the results summary for a interaction collection is present
     Then I filter the interactions list by service provider
@@ -71,11 +91,11 @@ Feature: View collection of interactions
   @interactions-collection--lep @lep
   Scenario: Navigate to interactions shows 403 for LEPs
 
-    When I navigate to the `interactions.List` page
+    When I navigate to the `interactions.list` page
     Then I see the 403 error page
 
   @interactions-collection--da @da
   Scenario: Navigate to interactions shows 403 for DAs
 
-    When I navigate to the `interactions.List` page
+    When I navigate to the `interactions.list` page
     Then I see the 403 error page

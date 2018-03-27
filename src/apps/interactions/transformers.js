@@ -5,6 +5,7 @@ const { format, isValid } = require('date-fns')
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../../config')
 const labels = require('./labels')
+const { INTERACTION_NAMES } = require('./constants')
 
 const transformEntityLink = (entity, entityPath, noLinkText = null) => {
   return entity ? {
@@ -88,11 +89,7 @@ function transformInteractionToListItem ({
       {
         label: 'Type',
         type: 'badge',
-        value: (kind === 'interaction') ? 'Interaction' : 'Service delivery',
-      },
-      {
-        label: 'Contact',
-        value: contact,
+        value: INTERACTION_NAMES[kind],
       },
       {
         label: 'Date',
@@ -100,12 +97,12 @@ function transformInteractionToListItem ({
         type: 'date',
       },
       {
-        label: 'Company',
-        value: company,
+        label: 'Contact',
+        value: contact,
       },
       {
-        label: 'Channel',
-        value: communication_channel,
+        label: 'Company',
+        value: company,
       },
       {
         label: 'Adviser',
@@ -138,6 +135,7 @@ function transformInteractionResponseToViewRecord ({
   archived_documents_url_path,
 }) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
+  const kindLabels = labels[camelCase(kind)]
   const transformed = {
     company: transformEntityLink(company, 'companies'),
     contact: transformEntityLink(contact, 'contacts'),
@@ -166,7 +164,7 @@ function transformInteractionResponseToViewRecord ({
   }
 
   return pickBy(mapKeys(transformed, (value, key) => {
-    return labels[camelCase(kind)][key]
+    return kindLabels[key]
   }))
 }
 

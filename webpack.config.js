@@ -16,6 +16,7 @@ const common = {
     app: [
       './assets/javascripts/vendor/details.polyfill.js',
       './assets/javascripts/app.js',
+      './assets/javascripts/app-vue.js',
     ],
   },
   output: {
@@ -30,6 +31,10 @@ const common = {
         query: {
           cacheDirectory: './babel_cache',
         },
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
@@ -70,6 +75,7 @@ const common = {
                 sourceMap: true, // required for resolve-url-loader
                 includePaths: [
                   path.resolve(__dirname, 'node_modules/govuk_frontend_toolkit/stylesheets'),
+                  path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
                 ],
               },
             },
@@ -83,15 +89,27 @@ const common = {
       'node_modules',
       path.resolve(__dirname, 'src'),
     ],
+    alias: {
+      'vue$': 'vue/dist/vue.common.js',
+    },
+    extensions: ['*', '.js', '.vue', '.json'],
   },
   plugins: [
     new WebpackAssetsManifest(),
   ],
+  node: {
+    fs: 'empty',
+    module: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  },
 }
 
 webpackConfigs.develop = merge.smart(common, {
   output: {
     filename: 'js/[name].js',
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
   plugins: [
     new ExtractTextPlugin('css/[name].css'),

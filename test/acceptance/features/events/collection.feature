@@ -14,12 +14,12 @@ Feature: View a list of events
   @events-collection--view
   Scenario: View event collection
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -35,12 +35,12 @@ Feature: View a list of events
   @events-collection--view-uk-region
   Scenario: View event uk region
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     And I click the "Add event" link
     And I populate the create event form with United Kingdom and a region
-    And I click the save button
+    And I submit the form
     Then I see the success message
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -59,12 +59,10 @@ Feature: View a list of events
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     And I filter the events list by name
-    Then I can view the event
-    And I filter the events list by organiser
     Then I can view the event
     And I filter the events list by event type
     Then I can view the event
@@ -79,12 +77,12 @@ Feature: View a list of events
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    When I click the save button
+    And I submit the form
     Then I see the success message
     When I click the Events global nav link
     When I sort the events list name A-Z
@@ -97,11 +95,11 @@ Feature: View a list of events
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     Then I see the 403 error page
 
   @events-collection--da @da
   Scenario: Navigate to events shows 403 for DAs
 
-    When I navigate to the `events.List` page
+    When I navigate to the `events.list` page
     Then I see the 403 error page

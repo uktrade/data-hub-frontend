@@ -1,20 +1,22 @@
 {% extends "./_layout.njk" %}
 
-{% set addButton %}
-  <a class="button button--secondary" href="/contacts/{{ contact.id }}/interactions/create">Add interaction</a>
-{% endset %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Contact interactions</h2>
   <p>
     An interaction could be a meeting, call, email or another activity where you have been in touch with a contact.
   </p>
-  {{
-    Collection(results | assignCopy({
-      countLabel: 'interaction',
-      summaryActionsHTML: addButton,
-      sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
-      query: QUERY
-    }))
-  }}
+
+  {% block xhr_content %}
+    <article id="xhr-outlet">
+      {{
+        CollectionContent(results | assignCopy({
+          countLabel: 'interaction',
+          actionButtons: actionButtons,
+          sortForm: assign({}, sortForm, {action: CURRENT_PATH}),
+          query: QUERY
+        }))
+      }}
+    </article>
+  {% endblock %}
+
 {% endblock %}

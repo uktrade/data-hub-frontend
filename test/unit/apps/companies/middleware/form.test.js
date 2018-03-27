@@ -136,8 +136,8 @@ describe('Companies form middleware', () => {
       it('should include headquarter options that have had label substituted and an option for not a headquarters', () => {
         expect(this.resMock.locals.options.headquarters).to.deep.equal([
           { value: 'not_headquarters', label: 'Not a headquarters' },
-          { value: '1', label: 'European headquarters (EHQ)' },
-          { value: '3', label: 'UK headquarters (UK HQ)' },
+          { value: '1', label: 'European HQ' },
+          { value: '3', label: 'UK HQ' },
         ])
       })
     })

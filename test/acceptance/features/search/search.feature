@@ -10,7 +10,7 @@ Feature: Search
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form
-    And I click the save button
+    And I submit the form
     Then I see the success message
     When I search for the created event
     Then I verify the search tabs are displayed
@@ -75,29 +75,29 @@ Feature: Search
   @search--events--lep @lep
   Scenario: Search events directly as a LEP
 
-    When I navigate to the `search.Events` page
+    When I navigate to the `search.events` page
     Then I see the 403 error page
 
   @search--interactions--lep @lep
   Scenario: Search interactions directly as a LEP
 
-    When I navigate to the `search.Interactions` page
+    When I navigate to the `search.interactions` page
     Then I see the 403 error page
 
   @search--omis--lep @lep
   Scenario: Search orders directly as a LEP
 
-    When I navigate to the `search.Omis` page
+    When I navigate to the `search.omis` page
     Then I see the 403 error page
 
   @search--events--da @da
   Scenario: Search events directly as a DA
 
-    When I navigate to the `search.Events` page
+    When I navigate to the `search.events` page
     Then I see the 403 error page
 
   @search--interactions--da @da
   Scenario: Search interactions directly as a DA
 
-    When I navigate to the `search.Interactions` page
+    When I navigate to the `search.interactions` page
     Then I see the 403 error page

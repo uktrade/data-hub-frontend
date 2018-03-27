@@ -93,6 +93,57 @@ describe('nunjucks filters', () => {
         expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
       })
     })
+
+    context('when search term starts with &', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '&exam')
+      })
+
+      it('should ignore the & in the term', () => {
+        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+      })
+    })
+
+    context('when search term starts with <', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, '<exam')
+      })
+
+      it('should ignore the < in the term', () => {
+        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+      })
+    })
+
+    context('when search term is only one word', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, ' example ')
+      })
+
+      it('should highlight only a word', () => {
+        expect(this.highlightedString.val).to.equal('Here is an<span class="u-highlight"> example </span>phrase')
+      })
+    })
+
+    context('when search term is a text', () => {
+      beforeEach(() => {
+        this.highlightedString = filters.highlight(this.mockString, 'Here is an example phrase')
+      })
+
+      it('should highlight matched text', () => {
+        expect(this.highlightedString.val).to.equal('<span class="u-highlight">Here is an example phrase</span>')
+      })
+    })
+
+    context('when search result contains hazardous characters', () => {
+      beforeEach(() => {
+        this.mockString = 'Here is <>an example phrase'
+        this.highlightedString = filters.highlight(this.mockString, 'example')
+      })
+
+      it('should escape the characters and transform them into character entity references', () => {
+        expect(this.highlightedString.val).to.equal('Here is &lt;&gt;an <span class="u-highlight">example</span> phrase')
+      })
+    })
   })
 
   describe('#removeNilAndEmpty', () => {

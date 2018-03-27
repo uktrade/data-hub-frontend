@@ -1,16 +1,7 @@
 @import "../tools/mixins/layout";
 
 .l-container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: $default-spacing-unit;
-  padding-right: $default-spacing-unit;
-  max-width: $site-width;
-
-  @include media($min-width: $site-width) {
-    padding-left: 0;
-    padding-right: 0;
-  }
+  @include site-width-container;
 }
 
 .column-two-quarters,

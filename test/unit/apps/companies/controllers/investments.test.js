@@ -28,6 +28,9 @@ describe('Company investments controller', () => {
       session: {
         token: tokenMock,
       },
+      params: {
+        companyId: '1234',
+      },
     }
     this.resMock = {
       breadcrumb: this.breadcrumbStub,
@@ -68,6 +71,10 @@ describe('Company investments controller', () => {
       it('should send the correct template data', () => {
         expect(this.renderSpy.args[0][1]).to.deep.equal({
           results: investmentsMock.results,
+          actionButtons: [{
+            label: 'Add investment project',
+            url: '/investment-projects/create/1234',
+          }],
         })
       })
     })

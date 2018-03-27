@@ -23,10 +23,9 @@
   {% set inputPlaceholder = props.inputPlaceholder | default(props.inputLabel) -%}
   {% set isLabelHidden = props.isLabelHidden | default(true) %}
   {% set entityType = props.entityType | default('company') %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-entity-search--') if props.modifier %}
 
   {% call Form(props | assign({
-    class: 'c-entity-search ' + modifier,
+    class: 'c-entity-search' | applyClassModifiers(props.modifier),
     role: 'search',
     method: method,
     hideFormActions: true,
