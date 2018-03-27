@@ -121,6 +121,7 @@ const steps = merge({}, createSteps, {
     heading: 'Complete order',
     fields: [
       'assignee_actual_time',
+      'verify_work_sent',
     ],
     templatePath: 'omis/apps/edit/views',
     template: 'complete-order.njk',
