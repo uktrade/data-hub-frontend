@@ -64,7 +64,7 @@ describe('Company collection middleware', () => {
 
     it('should set req.body for valid query items', () => {
       this.reqMock.query = {
-        sector: 'space',
+        sector_descends: 'space',
         uk_region: 'london',
         sortby: 'name:asc',
         random: 'query',
@@ -73,7 +73,7 @@ describe('Company collection middleware', () => {
       getRequestBody(this.reqMock, this.resMock, this.nextSpy)
 
       expect(this.reqMock.body).to.deep.equal({
-        sector: 'space',
+        sector_descends: 'space',
         uk_region: 'london',
         sortby: 'name:asc',
       })

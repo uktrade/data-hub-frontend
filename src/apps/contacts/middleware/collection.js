@@ -30,7 +30,7 @@ function getRequestBody (req, res, next) {
     'archived',
     'name',
     'company_name',
-    'company_sector',
+    'company_sector_descends',
     'address_country',
     'company_uk_region',
   ]), 'archived')

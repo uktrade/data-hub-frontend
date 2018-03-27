@@ -5,12 +5,12 @@ const authorisedRequest = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../apps/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id } = {}) {
+async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '' } = {}) {
   if (id) {
     return getOptionsForId(token, key, id)
   }
 
-  const url = `${config.apiRoot}/metadata/${key}/`
+  const url = `${config.apiRoot}/metadata/${key}/${queryString}`
   let options = await authorisedRequest(token, url)
 
   if (!includeDisabled) {

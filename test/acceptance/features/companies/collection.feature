@@ -16,7 +16,7 @@ Feature: View collection of companies
     And there is an Add company button in the collection header
     And I can view the Company in the collection
       | text               | expected                  |
-      | Sector             | company.sector            |
+      | Sector             | company.sector_descends   |
       | Primary address    | company.primaryAddress    |
     And the Company has badges
       | text               | expected                  |
@@ -46,9 +46,6 @@ Feature: View collection of companies
     And I store the result count in state
     And I filter the companies list by company
     Then the companies should be filtered by company name
-    When I clear all filters
-    And I filter the companies list by sector
-    Then the companies should be filtered by company sector
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset

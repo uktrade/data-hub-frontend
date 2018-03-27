@@ -129,6 +129,7 @@ const labels = {
       adviser: 'Adviser',
       stage: 'Stage',
       investment_type: 'Type of investment',
+      sector_descends: 'Sector',
       sector: 'Sector',
       total_investment: 'Investment value',
       estimated_land_date_before: 'Estimated land date before',
