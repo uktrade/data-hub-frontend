@@ -180,12 +180,4 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
 
   await filterTagsSection
     .waitForElementPresent('@dateTo', waitForTimeout)
-
-  if (interactionType === 'interaction') {
-    await filtersSection
-      .clickMultipleChoiceOption('communication_channel', get(this.state, 'interaction.communicationChannel'))
-
-    await filterTagsSection
-      .waitForElementPresent('@communicationChannel', waitForTimeout)
-  }
 })

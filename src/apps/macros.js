@@ -34,7 +34,7 @@ const globalFields = {
 
   sectors: {
     macroName: 'MultipleChoiceField',
-    name: 'sector',
+    name: 'sector_descends',
     label: 'Sectors',
     initialOption: '-- Select sector --',
     options () {
