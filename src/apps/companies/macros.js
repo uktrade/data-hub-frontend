@@ -1,10 +1,22 @@
 const { assign, flatten } = require('lodash')
 
 const { globalFields } = require('../macros')
-const formLabels = require('./labels')
+const { accountManagementDisplayLabels, hqLabels } = require('./labels')
 const { transformObjectToOption } = require('../transformers')
 
 const companyFiltersFields = [
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'headquarter_type',
+    type: 'checkbox',
+    label: 'Type',
+    options: [
+      { value: '43281c5e-92a4-4794-867b-b4d5f801e6f3', label: hqLabels.ghq },
+      { value: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', label: hqLabels.ehq },
+      { value: '3e6debb4-1596-40c5-aa25-f00da0e05af9', label: hqLabels.ukhq },
+    ],
+    modifier: 'option-select',
+  },
   {
     macroName: 'TextField',
     label: 'Company name',
@@ -42,6 +54,10 @@ const companySortForm = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+      inputClass: 'js-MirrorValue',
+      inputData: {
+        'target-selector': '.c-collection-filters input[name="sortby"]',
+      },
       options: [
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
@@ -71,7 +87,7 @@ const accountManagementFormConfig = function ({
       },
     ].map(field => {
       return assign(field, {
-        label: formLabels.accountManagementDisplayLabels[field.name],
+        label: accountManagementDisplayLabels[field.name],
       })
     }),
   }

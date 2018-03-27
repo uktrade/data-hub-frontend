@@ -74,12 +74,12 @@
       {% if quote.content %}
         {% call Example(tabTitle = '') %}
           <div class="l-markdown">
-  {# Ugly indentation is so that markdown spacing is handled correctly #}
-  {% markdown %}{{ quote.content | safe }}{% endmarkdown %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.content | safe }}{% endmarkdown %}
 
             {% call HiddenContent({ summary: 'View full terms and conditions' }) %}
-  {# Ugly indentation is so that markdown spacing is handled correctly #}
-  {% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
+{# Ugly indentation is so that markdown spacing is handled correctly #}
+{% markdown %}{{ quote.terms_and_conditions | safe }}{% endmarkdown %}
             {% endcall %}
           </div>
         {% endcall %}
@@ -90,7 +90,7 @@
           type: 'error',
           element: 'div'
         }) %}
-          <p>The client will no longer be able to accept the quote once it has been cancelled.</p>
+          <p>The client will no longer be able to accept the quote once it has been withdrawn.</p>
           <p>They will be notified by email.</p>
         {% endcall %}
       {% endif %}
@@ -103,14 +103,19 @@
         text: 'Quotes should be reviewed by a manager before being sent.'
       }) }}
 
-      <h2 class="heading-medium">What happens next</h2>
-
-      <ul class="list-disc">
-        <li>An email with a link to this quote will be sent to the client for acceptance</li>
-      </ul>
+      {% if order.contact.email %}
+        {% call Message({ type: 'muted', element: 'div' }) %}
+          <span class="font-xsmall">
+            An email with a link to this quote will be sent to:
+          </span>
+          <span class="u-block font-medium">
+            {{ order.contact.email }}
+          </span>
+        {% endcall %}
+      {% endif %}
     {% endif %}
 
-    {{ Form(quoteForm) }}
-
   {% endif %}
+
+  {{ Form(quoteForm) }}
 {% endblock %}

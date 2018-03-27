@@ -19,6 +19,10 @@ async function renderInvestments (req, res, next) {
       .breadcrumb('Investment')
       .render('companies/views/investments', {
         results,
+        actionButtons: [{
+          label: 'Add investment project',
+          url: `/investment-projects/create/${req.params.companyId}`,
+        }],
       })
   } catch (error) {
     next(error)

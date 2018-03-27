@@ -1,0 +1,17 @@
+{% from './entity.njk' import Entity %}
+
+{% macro EntityList(props) %}
+  {% set hasBlockLinks = 'block-links' in [props.listModifier] | flatten %}
+  {% set listModifier = props.listModifier | concat('') | reverse | join(' c-entity-list--') if props.listModifier %}
+
+  <ol class="c-entity-list {{ listModifier }}">
+    {% for item in props.items %}
+      <li class="c-entity-list__item">
+        {{ Entity(item | assign({
+          highlightTerm: props.highlightTerm,
+          isBlockLink: hasBlockLinks
+        })) }}
+      </li>
+    {% endfor %}
+  </ol>
+{% endmacro %}

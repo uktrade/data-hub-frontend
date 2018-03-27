@@ -42,7 +42,7 @@ describe('Company contact list controller', () => {
       expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
       expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
       expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
-      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('addContactUrl'))
+      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
       expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
         { macroName: 'foo', name: 'name' },
         { macroName: 'bar', name: 'archived' },
@@ -57,9 +57,13 @@ describe('Company contact list controller', () => {
       expect(this.resMock.render.args[0][0]).to.equal('companies/views/contacts')
     })
 
-    it('should set the correct add url', () => {
-      expect(this.resMock.render.args[0][1]).to.have.property('addContactUrl')
-      expect(this.resMock.render.args[0][1].addContactUrl).to.equal(`/contacts/create?company=${companyMock.id}`)
+    it('should set the correct add button', () => {
+      const props = this.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.deep.equal([{
+        label: 'Add contact',
+        url: `/contacts/create?company=${companyMock.id}`,
+      }])
     })
   })
 })

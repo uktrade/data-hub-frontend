@@ -134,6 +134,8 @@ async function setQuotePreview (req, res, next) {
       }
     })
 
+    delete quoteErrors['/vat-status']
+
     res.locals.missingLeadAssignee = error.error.hasOwnProperty('assignee_lead')
     res.locals.incompleteFields = pickBy(quoteErrors)
   }
@@ -186,11 +188,12 @@ async function setPayments (req, res, next) {
 
 async function generateQuote (req, res, next) {
   const orderId = get(res.locals, 'order.id')
+  const clientEmail = get(res.locals, 'order.contact.email') || 'client'
 
   try {
     await Order.createQuote(req.session.token, orderId)
 
-    req.flash('success', 'Quote has been sent to client.')
+    req.flash('success', `Quote sent ${clientEmail}`)
     res.redirect(`/omis/${orderId}`)
   } catch (error) {
     const errorCode = error.statusCode
@@ -237,7 +240,7 @@ function setQuoteForm (req, res, next) {
   const orderId = get(res.locals, 'order.id')
   const orderStatus = get(res.locals, 'order.status')
   const form = {
-    buttonText: 'Send quote to client',
+    buttonText: `Send quote to client`,
     returnText: 'Return to order',
     returnLink: `/omis/${orderId}`,
   }
@@ -248,7 +251,7 @@ function setQuoteForm (req, res, next) {
 
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
-    form.buttonText = 'Cancel quote'
+    form.buttonText = 'Withdraw quote'
     form.buttonModifiers = 'button--destructive'
     res.locals.destructive = true
 

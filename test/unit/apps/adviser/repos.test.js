@@ -41,4 +41,78 @@ describe('Adviser repository', () => {
       })
     })
   })
+
+  describe('adviserSearch', () => {
+    beforeEach(() => {
+      this.bertSmith = {
+        id: '1',
+        name: 'Bert Smith',
+        is_active: false,
+        last_login: null,
+        first_name: 'Bert',
+        last_name: 'Smith',
+        email: 'bert.smith@mockexample.com',
+        contact_email: '',
+        telephone_number: '',
+        dit_team: {
+          id: 't1',
+          name: 'Team E',
+          role: 'r1',
+          uk_region: null,
+          country: 'c1',
+        },
+      }
+
+      this.albertAsmee = {
+        id: '2',
+        name: 'Albert Asmee',
+        is_active: false,
+        last_login: null,
+        first_name: 'Albert',
+        last_name: 'Asmee',
+        email: 'albert.asmee@mockexample.com',
+        contact_email: '',
+        telephone_number: '',
+        dit_team: {
+          id: 't1',
+          name: 'Team E',
+          role: 'r1',
+          uk_region: null,
+          country: 'c1',
+        },
+      }
+    })
+
+    context('when searching for a single name', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get('/adviser/?first_name__icontains=be')
+          .reply(200, {
+            results: [this.bertSmith, this.albertAsmee],
+          })
+
+        this.advisers = await repos.adviserSearch('1234', 'be')
+      })
+
+      it('should return the result that starts with be', () => {
+        expect(this.advisers).to.deep.equal([this.bertSmith])
+      })
+    })
+
+    context('when searching for a full name', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get('/adviser/?first_name__icontains=be&last_name__icontains=sm')
+          .reply(200, {
+            results: [this.bertSmith, this.albertAsmee],
+          })
+
+        this.advisers = await repos.adviserSearch('1234', 'be sm')
+      })
+
+      it('should return the result that starts with be and sm', () => {
+        expect(this.advisers).to.deep.equal([this.bertSmith])
+      })
+    })
+  })
 })

@@ -18,13 +18,14 @@ describe('transformCompanyToView', () => {
         'Trading name',
         'Trading address',
         'UK region',
-        'Headquarters',
+        'Headquarter type',
         'Sector',
         'Website',
         'Business description',
         'Account manager',
         'VAT number',
         'CDMS reference',
+        'Global HQ',
       ])
     })
 
@@ -49,15 +50,15 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the headquarters', () => {
-      expect(this.viewRecord['Headquarters']).to.equal('European headquarters (EHQ)')
+      expect(this.viewRecord['Headquarter type']).to.equal('European HQ')
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
 
     it('should convert website to link', () => {
-      expect(this.viewRecord['Website']).to.deep.equal({
+      expect(this.viewRecord.Website).to.deep.equal({
         name: 'http://www.test.com',
         url: 'http://www.test.com',
       })
@@ -90,7 +91,8 @@ describe('transformCompanyToView', () => {
         'Primary address',
         'UK region',
         'Sector',
-        'Headquarters',
+        'Headquarter type',
+        'Global HQ',
       ])
     })
 
@@ -103,7 +105,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
   })
 
@@ -118,13 +120,14 @@ describe('transformCompanyToView', () => {
         'Trading name',
         'Trading address',
         'UK region',
-        'Headquarters',
+        'Headquarter type',
         'Sector',
         'Website',
         'Business description',
         'Account manager',
         'VAT number',
         'CDMS reference',
+        'Global HQ',
       ])
     })
   })
@@ -148,7 +151,8 @@ describe('transformCompanyToView', () => {
         'Primary address',
         'Country',
         'Sector',
-        'Headquarters',
+        'Headquarter type',
+        'Global HQ',
       ])
     })
 
@@ -157,11 +161,11 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the country', () => {
-      expect(this.viewRecord['Country']).to.equal('France')
+      expect(this.viewRecord.Country).to.equal('France')
     })
 
     it('should supply sector', () => {
-      expect(this.viewRecord['Sector']).to.equal('Aerospace')
+      expect(this.viewRecord.Sector).to.equal('Aerospace')
     })
   })
 })

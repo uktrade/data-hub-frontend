@@ -14,15 +14,9 @@
 {% endblock %}
 
 {% block main_grid_right_column %}
-  {% set summaryAction %}
-    {% if actionButton.url %}
-      <a id="add-contact-link" class="button button--secondary" href="{{ actionButton.url }}">{{ actionButton.text }}</a>
-    {% endif %}
-  {% endset %}
-
   {{
-    Collection(results | assign({
-      summaryActionsHTML: summaryAction
+    CollectionContent(results | assign({
+      actionButtons: actionButtons
     }))
   }}
 {% endblock %}

@@ -7,11 +7,11 @@
       "label": "Contact responsible for the order"
     },
     "primary_market": {
-      "label": "Choose the market (country) where the service is required"
+      "label": "Country where the service is required"
     },
     "subscribers": {
       "legend": "Advisers",
-      "hint": "Who need to be kept informed about this order, for example international trade advisers or language advisers",
+      "hint": "People who need to be kept informed about this order, for example, international trade advisers or language advisors.",
       "addButtonText": "Add another adviser",
       "label": "Adviser"
     },
@@ -28,7 +28,7 @@
       "label": "Sector"
     },
     "delivery_date": {
-      "label": "Delivery date of first activity",
+      "label": "Delivery date of work",
       "hint": "For example 28/10/2018 or 28 October 2018"
     },
     "contacts_not_to_approach": {
@@ -52,7 +52,7 @@
       "label": "Estimated hours"
     },
     "assignee_actual_time": {
-      "label": "Hours spent"
+      "label": "Actual hours worked"
     },
     "vat_status": {
       "label": "VAT category",
@@ -105,6 +105,9 @@
     },
     "cancellation_reason": {
       "label": "Reason for cancelling"
+    },
+    "verify_work_sent": {
+      "label": "Work has been sent to the contact"
     }
   },
   "errors": {
@@ -127,10 +130,13 @@
     "date": "must be a valid date",
     "after": "must be in the future",
     "before": "must be in the past",
-    "duration": "must be a whole number, for example 1",
+    "duration": "must be a whole number, for example 5",
     "greaterthanamount": "must be equal to or larger than the invoice amount",
-    "euvatnumber": "must be a valid EU VAT number including the country code, for example ATU12345678 for Austria",
-    "default": "is required"
+    "euvatnumber": "must be a valid EU VAT number starting with the country code, for example IT12345678901 for Italy where \"IT\" is the country code",
+    "default": "is required",
+    "verify_work_sent": {
+      "required": "must be verified"
+    }
   },
   "status": {
     "draft": "Draft",

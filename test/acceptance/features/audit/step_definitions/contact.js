@@ -3,18 +3,20 @@ const { client } = require('nightwatch-cucumber')
 const { Given, Then, When } = require('cucumber')
 const { merge, set } = require('lodash')
 
-const Message = client.page.Message()
-const Company = client.page.companies.Company()
-const Contact = client.page.contacts.Contact()
-const ContactList = client.page.contacts.List()
-const AuditContact = client.page.audit.Contact()
-const AuditList = client.page.audit.List()
-const InvestmentProject = client.page.investments.Project()
+const { company: companyFixtures } = require('../../../fixtures')
+
+const Message = client.page.message()
+const Company = client.page.companies.company()
+const Contact = client.page.contacts.contact()
+const ContactList = client.page.contacts.list()
+const AuditContact = client.page.audit.contact()
+const AuditList = client.page.audit.list()
+const InvestmentProject = client.page.investments.project()
 
 Given(/^I archive an existing contact record$/, async function () {
   await Company
     .navigate()
-    .findCompany(this.fixtures.company.foreign.name)
+    .findCompany(companyFixtures.foreign.name)
   await ContactList
     .click('@contactsTab')
   await AuditList.section.lastContactInList
@@ -50,11 +52,6 @@ When(/^I search for this Contact record$/, async function () {
     .click('@firstCompanyFromList')
   await AuditContact
     .getText('@userName', (result) => set(this.state, 'username', result.value))
-})
-
-When(/^I click the Audit History tab$/, async function () {
-  await AuditContact
-    .click('@auditHistoryTab')
 })
 
 When(/^I archive this contact record$/, async function () {

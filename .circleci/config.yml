@@ -24,7 +24,7 @@ aliases:
   - &wait_for_backend
     run:
       name: Wait for backend
-      command: dockerize -wait ${API_ROOT}/admin/ -timeout 240s
+      command: dockerize -wait ${API_ROOT}/admin/ -timeout 300s
 
   # Wait for mock-sso to report OK
   - &wait_for_mock_sso
@@ -146,6 +146,7 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
+      - vue_tests
     filters:
       branches:
         ignore:
@@ -160,6 +161,7 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
+      - vue_tests
     filters:
       branches:
         only:
@@ -260,6 +262,30 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
+
+  # Run vue unit tests and store results
+  vue_tests:
+    docker:
+      - image: *node_version
+        environment:
+          TZ: "/usr/share/zoneinfo/Europe/London"
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - *restore_yarn_cache
+      - run:
+          name: Run vue tests
+          command: |
+            mkdir junit
+            yarn build
+            yarn circle:vue
+          environment:
+            MOCHA_FILE: junit/test-results.xml
+          when: always
+      - store_test_results:
+          path: junit
+      - store_artifacts:
+          path: junit
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
@@ -422,6 +448,10 @@ workflows:
             - lockfile
             - dependencies
       - unit_tests:
+          requires:
+            - lockfile
+            - dependencies
+      - vue_tests:
           requires:
             - lockfile
             - dependencies

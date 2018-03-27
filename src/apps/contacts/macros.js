@@ -13,6 +13,10 @@ const sortFormBase = {
       label: 'Sort by',
       name: 'sortby',
       modifier: ['small', 'inline', 'light'],
+      inputClass: 'js-MirrorValue',
+      inputData: {
+        'target-selector': '.c-collection-filters input[name="sortby"]',
+      },
     },
   ],
 }
@@ -40,6 +44,17 @@ const contactFiltersFields = [
     name: 'company_name',
     hint: 'At least three characters',
   },
+  {
+    macroName: 'MultipleChoiceField',
+    name: 'archived',
+    type: 'checkbox',
+    label: 'Status',
+    options: [
+      { value: 'false', label: 'Active' },
+      { value: 'true', label: 'Inactive' },
+    ],
+    modifier: 'option-select',
+  },
   assign({}, globalFields.sectors, {
     name: 'company_sector',
     type: 'checkbox',
@@ -55,17 +70,7 @@ const contactFiltersFields = [
     type: 'checkbox',
     modifier: 'option-select',
   }),
-  {
-    macroName: 'MultipleChoiceField',
-    name: 'archived',
-    type: 'checkbox',
-    label: 'Status',
-    options: [
-      { value: 'false', label: 'Active' },
-      { value: 'true', label: 'Inactive' },
-    ],
-    modifier: 'option-select',
-  },
+
 ].map(filter => {
   return assign(filter, {
     modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),

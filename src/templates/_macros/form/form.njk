@@ -59,7 +59,7 @@
     {% if not hideFormActions %}
       <div class="c-form-actions {{ props.actionsClass }}">
         {% if not props.hidePrimaryFormAction %}
-          <button class="button {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+          <button class="button js-prevent-multiple-submits {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
         {% endif %}
         {% if props.returnLink %}
           <a href="{{ props.returnLink }}">{{ returnText }}</a>

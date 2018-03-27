@@ -1,5 +1,9 @@
+const investmentsListData = require('~/test/unit/data/investment/investment-data.json')
+const { transformInvestmentProjectToListItem } = require('~/src/apps/investment-projects/transformers')
+
 describe('Investment list controller', () => {
   beforeEach(() => {
+    this.transformedInvestmentProjects = {}
     this.next = sandbox.spy()
     this.req = {
       session: {
@@ -12,32 +16,42 @@ describe('Investment list controller', () => {
       query: {},
     }
 
+    this.getInvestmentsStub = sandbox.stub().resolves(investmentsListData)
+    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformedInvestmentProjects)
+
     this.buildSelectedFiltersSummaryStub = sandbox.spy()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
       '../../builders': {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },
-      '../macros': {
-        investmentFiltersFields: [
-          { macroName: 'useful' },
-          { macroName: 'exciting' },
-        ],
-      },
     })
+
+    this.next = sandbox.spy()
   })
 
   describe('#renderInvestmentList', () => {
-    it('should render collection page with locals', () => {
-      this.controller.renderInvestmentList(this.req, this.res, this.next)
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('title'))
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('selectedFilters'))
-      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'useful' },
-        { macroName: 'exciting' },
-      ], this.req.query)
+    context('when there are investments to render', () => {
+      beforeEach(async () => {
+        await this.controller.renderInvestmentList(this.req, this.res, this.next)
+      })
+
+      it('should render collection page with locals', () => {
+        this.controller.renderInvestmentList(this.req, this.res, this.next)
+
+        it('should get interactions from the repository', () => {
+          expect(this.getInvestmentsStub).to.be.calledWith('abcd')
+        })
+
+        it('should call the transformer to convert investment project for display', () => {
+          expect(this.transformApiResponseToCollectionStub).to.be.calledWith({ entityType: 'interaction' }, transformInvestmentProjectToListItem)
+        })
+
+        it('should return investment projects', () => {
+          const renderOptions = this.res.render.firstCall.args[1]
+          expect(renderOptions).to.have.property('investment-projects')
+        })
+      })
     })
   })
 })

@@ -13,8 +13,15 @@ const GLOBAL_NAV_ITEM = {
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
 
+const INTERACTION_NAMES = {
+  policy_feedback: 'Policy feedback',
+  interaction: 'Interaction',
+  service_delivery: 'Service delivery',
+}
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
+  INTERACTION_NAMES,
 }

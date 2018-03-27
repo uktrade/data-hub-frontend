@@ -219,7 +219,14 @@
     "name": "Yorkshire and The Humber"
   },
   "trading_address_country": null,
-  "headquarter_type": null,
+  "headquarter_type": {
+    "id": "eb59eaeb-eeb8-4f54-9506-a5e08773046b",
+    "name": "ehq"
+  },
+  "global_headquarters": {
+    "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
+    "name": "Mars Exports Ltd"
+  },
   "classification": null,
   "parent": null,
   "one_list_account_owner": null
