@@ -37,7 +37,7 @@ async function renderSearchResults (req, res) {
   }
   if (searchEntity === 'order') {
     itemTransformers.push(transformOrderToListItem)
-    actionButtons({
+    actionButtons.push({
       label: 'Add order',
       url: '/omis/create',
     })
