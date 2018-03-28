@@ -13,10 +13,6 @@ Feature: Create New Contact
     When a primary contact is added
     And I submit the form
     Then I see the success message
-    And I wait and then refresh the page
-    When I click the Contacts local nav link
-    Then the contact is displayed on the company contact tab
-    When the contact is clicked
     Then the Contact details details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
@@ -38,9 +34,6 @@ Feature: Create New Contact
     When a primary contact with new company address is added
     And I submit the form
     Then I see the success message
-    When I click the Contacts local nav link
-    Then the contact is displayed on the company contact tab
-    When the contact is clicked
     Then the Contact details details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
@@ -62,9 +55,6 @@ Feature: Create New Contact
     When a non-primary contact is added
     And I submit the form
     Then I see the success message
-    When I click the Contacts local nav link
-    Then the contact is displayed on the company contact tab
-    When the contact is clicked
     Then the Contact details details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
