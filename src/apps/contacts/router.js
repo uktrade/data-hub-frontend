@@ -26,7 +26,7 @@ router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCo
 router
   .route('/create')
   .get(editDetails)
-  .post(postDetails)
+  .post(postDetails, editDetails)
 
 router.use('/:contactId', handleRoutePermissions(LOCAL_NAV), getCommon, setLocalNav(LOCAL_NAV))
 
@@ -36,7 +36,7 @@ router.get('/:contactId/details', getDetails)
 router
   .route('/:contactId/edit')
   .get(editDetails)
-  .post(postDetails)
+  .post(postDetails, editDetails)
 
 router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)

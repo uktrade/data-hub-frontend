@@ -151,7 +151,7 @@ describe('Companies form middleware', () => {
       it('should pre-populate the form with companies house values', () => {
         const formData = this.resMock.locals.formData
         expect(formData).to.have.property('name', 'Mercury Trading Ltd')
-        expect(formData).to.have.property('business_type', '33333')
+        expect(formData).to.have.property('business_type', '6f75408b-03e7-e611-bca1-e4115bead28a')
         expect(formData).to.have.property('company_number', '99919')
         expect(formData).to.have.property('registered_address_1', '64 Ermin Street')
         expect(formData).to.have.property('registered_address_town', 'Y Ffor')
