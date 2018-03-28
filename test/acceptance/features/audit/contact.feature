@@ -10,11 +10,8 @@ Feature: View Audit history of a contact
     And a primary contact is added
     When I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
-    When I click the Contacts local nav link
     And the contact has 2 fields edited for audit
     Then I see the success message
-    When I search for this Contact record
     And I click the "Audit history" link
     Then I see the name of the person who made the recent contact record changes
     And I see the date time stamp when the recent contact record changed

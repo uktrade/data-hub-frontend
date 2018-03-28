@@ -32,10 +32,6 @@ Given(/^I archive an existing contact record$/, async function () {
 })
 
 When(/^the contact has ([0-9]) fields edited for audit$/, async function (count) {
-  await Contact
-    .getText('@firstCompanyFromList', (result) => set(this.state, 'contactName', result.value))
-    .click('@firstCompanyFromList')
-
   await AuditContact
     .editContactDetails({}, count, (contact) => {
       set(this.state, 'contact', merge({}, this.state.contact, contact))
