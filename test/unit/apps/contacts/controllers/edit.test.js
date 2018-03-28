@@ -369,22 +369,24 @@ describe('Contact controller, edit', () => {
 
       contactEditController.postDetails(req, res, next)
     })
-    it('should redirect the user to the company contact list if added a new contact', function (done) {
+    it('should redirect the user to the contact details', function (done) {
       delete body.id
       res.redirect = function (url) {
-        expect(url).to.equal(`/companies/${company.id}/contacts`)
+        expect(url).to.equal(`/contacts/${company.id}/details`)
         done()
       }
       contactEditController.postDetails(req, res, next)
     })
     it('should redirect the user to the contact detail screen if editing an existing contact', function (done) {
       res.redirect = function (url) {
-        expect(url).to.equal('/contacts/1234')
+        expect(url).to.equal('/contacts/1234/details')
         done()
       }
       contactEditController.postDetails(req, res, next)
     })
-    it('should re-render the edit page with the original form data on validation errors', function (done) {
+    it('should re-render the edit page with the original form data on validation errors', async function () {
+      const next = sandbox.stub()
+
       saveContactFormStub = sinon.stub().rejects({
         error: { name: ['test'] },
       })
@@ -405,16 +407,10 @@ describe('Contact controller, edit', () => {
         },
       })
 
-      res.render = function (template) {
-        try {
-          expect(template).to.equal('contacts/views/edit')
-          expect(res.locals).to.have.property('errors')
-          done()
-        } catch (e) {
-          done(e)
-        }
-      }
-      contactEditController.postDetails(req, res, next)
+      await contactEditController.postDetails(req, res, next)
+
+      expect(res.locals).to.have.property('errors')
+      expect(next).to.be.called
     })
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
