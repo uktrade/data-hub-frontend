@@ -70,14 +70,15 @@ function postDetails (req, res, next) {
     // Try and save the form data, if it fails
     // then attach the errors to the response and re-render edit
     try {
-      await contactFormService.saveContactForm(req.session.token, req.body)
+      const newContact = await contactFormService.saveContactForm(req.session.token, req.body)
+
       if (req.body.id) {
         req.flash('success', 'Contact record updated')
-        res.redirect(`/contacts/${req.body.id}`)
       } else {
         req.flash('success', 'Added new contact')
-        res.redirect(`/companies/${req.body.company}/contacts`)
       }
+
+      res.redirect(`/contacts/${newContact.id}/details`)
     } catch (errors) {
       if (errors.error) {
         if (errors.error.errors) {
@@ -89,7 +90,8 @@ function postDetails (req, res, next) {
             messages: errors.error,
           }
         }
-        editDetails(req, res, next)
+
+        next()
       } else {
         next(errors)
       }
