@@ -65,36 +65,36 @@ async function editDetails (req, res, next) {
  * @param {Object} res
  * @param {Object} next
  */
-function postDetails (req, res, next) {
-  return new Promise(async (resolve, reject) => {
-    // Try and save the form data, if it fails
-    // then attach the errors to the response and re-render edit
-    try {
-      await contactFormService.saveContactForm(req.session.token, req.body)
-      if (req.body.id) {
-        req.flash('success', 'Contact record updated')
-        res.redirect(`/contacts/${req.body.id}`)
-      } else {
-        req.flash('success', 'Added new contact')
-        res.redirect(`/companies/${req.body.company}/contacts`)
-      }
-    } catch (errors) {
-      if (errors.error) {
-        if (errors.error.errors) {
-          res.locals.errors = {
-            messages: errors.error.errors,
-          }
-        } else {
-          res.locals.errors = {
-            messages: errors.error,
-          }
-        }
-        editDetails(req, res, next)
-      } else {
-        next(errors)
-      }
+async function postDetails (req, res, next) {
+  // Try and save the form data, if it fails
+  // then attach the errors to the response and re-render edit
+  try {
+    const newContact = await contactFormService.saveContactForm(req.session.token, req.body)
+
+    if (req.body.id) {
+      req.flash('success', 'Contact record updated')
+    } else {
+      req.flash('success', 'Added new contact')
     }
-  })
+
+    res.redirect(`/contacts/${newContact.id}/details`)
+  } catch (errors) {
+    if (errors.error) {
+      if (errors.error.errors) {
+        res.locals.errors = {
+          messages: errors.error.errors,
+        }
+      } else {
+        res.locals.errors = {
+          messages: errors.error,
+        }
+      }
+
+      return next()
+    }
+
+    next(errors)
+  }
 }
 
 module.exports = {

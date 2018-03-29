@@ -8,13 +8,12 @@ Feature: View collection of contacts for a company
   @companies-contact-collection--view
   Scenario: View companies contact collection
     When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
+    And the results summary for a contact collection is present
     And I click the "Add contact" link
     And a primary contact is added
     And I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
-    And I confirm I am on the Lambda plc page
-    And the results summary for a contact collection is present
+    Then I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I can view the Contact in the collection
       | text         | expected                |
       | Sector       | company.sector          |
@@ -31,7 +30,7 @@ Feature: View collection of contacts for a company
     And a primary contact with new company address is added
     When I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
+    Then I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     Then I confirm I am on the Lambda plc page
     And the results summary for a contact collection is present
 
@@ -42,7 +41,7 @@ Feature: View collection of contacts for a company
     And a primary contact is added
     When I submit the form
     Then I see the success message
-    Then I wait and then refresh the page
+    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     Then I confirm I am on the Lambda plc page
     And the results summary for a contact collection is present
     When the contacts are sorted by Newest
