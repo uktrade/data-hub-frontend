@@ -1,0 +1,12 @@
+{% extends "./_layout-view.njk" %}
+
+{% block main_grid_right_column %}
+  {{
+    CollectionContent(companies | assign({
+      highlightTerm: searchTerm,
+      countLabel: 'subsidiary',
+      query: QUERY,
+      actionButtons: actionButtons
+    }))
+  }}
+{% endblock %}
