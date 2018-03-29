@@ -1,6 +1,7 @@
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformCompanyToSubsidiaryListItem } = require('../transformers')
+const { companyDetailsLabels } = require('../labels')
 
 async function renderSubsidiaries (req, res, next) {
   const token = req.session.token
@@ -26,11 +27,11 @@ async function renderSubsidiaries (req, res, next) {
 
   res
     .breadcrumb(companyName, `/companies/${companyId}`)
-    .breadcrumb('Subsidiaries')
+    .breadcrumb(companyDetailsLabels.subsidiaries)
     .render('companies/views/subsidiaries.njk', {
       companies,
       actionButtons: [{
-        label: 'Link a subsidiary',
+        label: companyDetailsLabels.link_a_subsidiary,
         url: `/companies/${companyId}/subsidiaries/link`,
       }],
     })
