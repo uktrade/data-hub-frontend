@@ -1,7 +1,7 @@
 const { pick, pickBy, assign } = require('lodash')
 
 const removeArray = require('../../../lib/remove-array')
-const { search, searchLimitedCompanies } = require('../../search/services')
+const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformCompanyToListItem,
@@ -69,16 +69,14 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
   }
 
   try {
-    res.locals.results = await search({
+    res.locals.results = await searchCompanies({
+      token: req.session.token,
       searchTerm,
-      searchEntity: 'company',
+      page: req.query.page,
       requestBody: {
         ...req.body,
         headquarter_type: globalHQId,
       },
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
