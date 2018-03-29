@@ -8,6 +8,7 @@ Feature: Companies local nav
     Then there should be a local nav
       | text                      |
       | Details                   |
+      | Subsidiaries              |
       | Contacts                  |
       | Interactions              |
       | Export                    |
@@ -23,6 +24,7 @@ Feature: Companies local nav
     Then there should be a local nav
       | text                      |
       | Details                   |
+      | Subsidiaries              |
       | Contacts                  |
       | Export                    |
       | Investment                |
@@ -35,6 +37,7 @@ Feature: Companies local nav
     Then there should be a local nav
       | text                      |
       | Details                   |
+      | Subsidiaries              |
       | Contacts                  |
       | Export                    |
       | Investment                |
