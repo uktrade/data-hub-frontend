@@ -1,7 +1,7 @@
 const { pick, pickBy, assign } = require('lodash')
 
 const removeArray = require('../../../lib/remove-array')
-const { search, searchLimitedCompanies } = require('../../search/services')
+const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformCompanyToListItem,
@@ -69,12 +69,46 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
   }
 
   try {
+    res.locals.results = await searchCompanies({
+      token: req.session.token,
+      searchTerm,
+      page: req.query.page,
+      requestBody: {
+        ...req.body,
+        headquarter_type: globalHQId,
+      },
+    })
+      .then(transformApiResponseToSearchCollection(
+        { query: req.query },
+        transformCompanyToListItem,
+        (item) => {
+          return {
+            ...item,
+            url: `/companies/${companyId}/hierarchies/ghq/${item.id}/add`,
+          }
+        }
+      ))
+
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function getSubsidiaryCompaniesCollection (req, res, next) {
+  const searchTerm = res.locals.searchTerm = req.query.term
+  const { id: companyId } = res.locals.company
+
+  if (!searchTerm) {
+    return next()
+  }
+
+  try {
     res.locals.results = await search({
       searchTerm,
       searchEntity: 'company',
       requestBody: {
         ...req.body,
-        headquarter_type: globalHQId,
       },
       token: req.session.token,
       page: req.query.page,
@@ -86,7 +120,7 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
         (item) => {
           return {
             ...item,
-            url: `/companies/${companyId}/hierarchies/ghq/${item.id}/add`,
+            url: `/companies/${item.id}/hierarchies/subsidiaries/${companyId}/add`,
           }
         }
       ))
@@ -120,4 +154,5 @@ module.exports = {
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
+  getSubsidiaryCompaniesCollection,
 }
