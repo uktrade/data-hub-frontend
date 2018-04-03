@@ -20,7 +20,7 @@ Feature: View collection of contacts
       | text         | expected           |
       | Job title    | contact.jobTitle   |
       | Company      | company.name       |
-      | Sector       | company.sector     |
+      | Sector       | company.sector_descends    |
       | Country      | company.country    |
       | UK region    | company.ukRegion   |
       | Phone number | contact.telephone |
@@ -66,8 +66,6 @@ Feature: View collection of contacts
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset
-    When I filter the contacts list by sector
-    Then the contacts should be filtered by company sector
     When I clear all filters
     Then there are no filters selected
     When I filter the contacts list by active status

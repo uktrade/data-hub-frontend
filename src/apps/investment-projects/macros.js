@@ -4,8 +4,10 @@ const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
+const FILTER_CONSTANTS = require('../../lib/filter-constants')
+const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function ({ currentAdviserId }) {
+const investmentFiltersFields = function ({ currentAdviserId, sectorOptions }) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -20,7 +22,7 @@ const investmentFiltersFields = function ({ currentAdviserId }) {
       type: 'checkbox',
       modifier: ['option-select', 'hide-label'],
       options: [
-        { value: currentAdviserId, label: 'My interactions' },
+        { value: currentAdviserId, label: 'My Projects' },
       ],
     },
     {
@@ -28,10 +30,13 @@ const investmentFiltersFields = function ({ currentAdviserId }) {
       name: 'adviser',
       entity: 'adviser',
     },
-    Object.assign({}, globalFields.sectors, {
+    {
+      macroName: 'MultipleChoiceField',
       type: 'checkbox',
+      name: PRIMARY_SECTOR_NAME,
       modifier: 'option-select',
-    }),
+      options: sectorOptions,
+    },
     {
       macroName: 'MultipleChoiceField',
       name: 'investor_company_country',
