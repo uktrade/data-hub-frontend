@@ -134,7 +134,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = removeArray(pick(req.query, [
     'name',
-    'sector',
+    'sector_descends',
     'country',
     'uk_region',
     'headquarter_type',

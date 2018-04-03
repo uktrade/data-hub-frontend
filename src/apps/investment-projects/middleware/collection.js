@@ -30,7 +30,7 @@ function getRequestBody (req, res, next) {
   const selectedFiltersQuery = pick(req.query, [
     'status',
     'adviser',
-    'sector',
+    'sector_descends',
     'investor_company_country',
     'uk_region_location',
     'stage',
