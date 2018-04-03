@@ -95,6 +95,42 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
   }
 }
 
+async function getSubsidiaryCompaniesCollection (req, res, next) {
+  const searchTerm = res.locals.searchTerm = req.query.term
+  const { id: companyId } = res.locals.company
+
+  if (!searchTerm) {
+    return next()
+  }
+
+  try {
+    res.locals.results = await search({
+      searchTerm,
+      searchEntity: 'company',
+      requestBody: {
+        ...req.body,
+      },
+      token: req.session.token,
+      page: req.query.page,
+      isAggregation: false,
+    })
+      .then(transformApiResponseToSearchCollection(
+        { query: req.query },
+        transformCompanyToListItem,
+        (item) => {
+          return {
+            ...item,
+            url: `/companies/${item.id}/hierarchies/subsidiaries/${companyId}/add`,
+          }
+        }
+      ))
+
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 function getRequestBody (req, res, next) {
   const selectedFiltersQuery = removeArray(pick(req.query, [
     'name',
@@ -118,4 +154,5 @@ module.exports = {
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
+  getSubsidiaryCompaniesCollection,
 }

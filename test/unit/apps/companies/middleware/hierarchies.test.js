@@ -41,7 +41,7 @@ describe('Company hierarchies middleware', () => {
 
       it('should call flash', () => {
         expect(this.reqMock.flash).to.have.been.calledOnce
-        expect(this.reqMock.flash).to.be.calledWith('success', 'You’ve linked the Global HQ')
+        expect(this.reqMock.flash).to.be.calledWith('success', 'You’ve linked the Global Headquarters')
       })
     })
 
@@ -103,7 +103,7 @@ describe('Company hierarchies middleware', () => {
 
       it('should call flash', () => {
         expect(this.reqMock.flash).to.have.been.calledOnce
-        expect(this.reqMock.flash).to.be.calledWith('success', 'You’ve removed the link to Global HQ')
+        expect(this.reqMock.flash).to.be.calledWith('success', 'You’ve removed the link to Global Headquarters')
       })
     })
 
