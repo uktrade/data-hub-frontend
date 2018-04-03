@@ -18,6 +18,9 @@ const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
+const { renderSubsidiaries } = require('./controllers/subsidiaries')
+const { renderLinkSubsidiary } = require('./controllers/subsidiaryLink')
+
 const {
   renderExports,
   populateExportForm,
@@ -26,7 +29,7 @@ const {
 } = require('./controllers/exports')
 const { renderAccountManagementEditPage } = require('./controllers/account-management')
 
-const { setDefaultQuery, setLocalNav, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
+const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const {
   getInteractionCollection,
   getInteractionsRequestBody,
@@ -38,13 +41,16 @@ const {
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
+  getSubsidiaryCompaniesCollection,
 } = require('./middleware/collection')
+
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
 const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
-const { setGlobalHQ, removeGlobalHQ } = require('./middleware/hierarchies')
+const { setGlobalHQ, removeGlobalHQ, setSubsidiary, removeSubsidiary } = require('./middleware/hierarchies')
+const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
@@ -88,7 +94,7 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setLocalNav(LOCAL_NAV))
+router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
@@ -96,6 +102,10 @@ router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
+
+router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
+router.get('/:parentCompanyId/hierarchies/subsidiaries/:companyId/add', setSubsidiary)
+router.get('/:parentCompanyId/hierarchies/subsidiaries/remove', removeSubsidiary)
 
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
@@ -112,6 +122,8 @@ router.get('/:companyId/interactions',
   renderInteractions
 )
 router.get('/:companyId/exports', renderExports)
+router.get('/:companyId/subsidiaries', renderSubsidiaries)
+router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
 router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)

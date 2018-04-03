@@ -32,16 +32,17 @@ function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregat
 }
 
 // TODO the search endpoints need aligning see Jira DH-293 for details
-function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10 }) {
+function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10, requestBody = {} }) {
   const queryParams = {
     offset: (page * limit) - limit,
     limit,
   }
-  const body = {
+  const body = assign({}, requestBody, {
     original_query: searchTerm,
     uk_based: isUkBased,
     isAggregation: false,
-  }
+  })
+
   const options = {
     url: `${config.apiRoot}/v3/search/company?${queryString.stringify(queryParams)}`,
     method: 'POST',
