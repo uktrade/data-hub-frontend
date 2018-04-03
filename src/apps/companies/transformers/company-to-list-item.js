@@ -97,6 +97,14 @@ module.exports = function transformCompanyToListItem ({
 
   meta.push(address)
 
+  if (global_headquarters) {
+    meta.push({
+      label: '',
+      value: 'Remove subsidiary',
+      url: `/companies/${id}/hierarchies/ghq/remove`,
+    })
+  }
+
   const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
 
   return {

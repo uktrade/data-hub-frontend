@@ -5,6 +5,7 @@ const transformCompanyToForm = require('./company-to-form')
 const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
 const transformCompanyToView = require('./company-to-view')
+const transformCompanyToSubsidiaryListItem = require('./company-to-subsidary-list-item')
 
 module.exports = {
   transformCompaniesHouseToListItem,
@@ -14,4 +15,5 @@ module.exports = {
   transformCompanyToListItem,
   transformCompanyToOneListView,
   transformCompanyToView,
+  transformCompanyToSubsidiaryListItem,
 }

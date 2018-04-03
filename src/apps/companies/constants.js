@@ -20,6 +20,10 @@ const LOCAL_NAV = [
     label: 'Details',
   },
   {
+    path: 'subsidiaries',
+    label: 'Subsidiaries',
+  },
+  {
     path: 'contacts',
     label: 'Contacts',
     permissions: [
