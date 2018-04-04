@@ -11,11 +11,32 @@ const {
 const { isValid, format, parse } = require('date-fns')
 
 const { buildPagination } = require('../lib/pagination')
+const { hqLabels } = require('./companies/labels')
 
 function transformObjectToOption ({ id, name }) {
   return {
     value: id,
     label: name,
+  }
+}
+
+function transformHQCodeToLabelledOption ({ id, name }) {
+  switch (name) {
+    case 'ehq':
+      return {
+        value: id,
+        label: hqLabels.ehq,
+      }
+    case 'ghq':
+      return {
+        value: id,
+        label: hqLabels.ghq,
+      }
+    case 'ukhq':
+      return {
+        value: id,
+        label: hqLabels.ukhq,
+      }
   }
 }
 
@@ -109,6 +130,7 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
 
 module.exports = {
   buildMetaDataObj,
+  transformHQCodeToLabelledOption,
   transformObjectToOption,
   transformStringToOption,
   transformContactToOption,

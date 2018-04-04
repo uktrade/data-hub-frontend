@@ -1,6 +1,5 @@
 const { pick, pickBy, assign } = require('lodash')
 
-const removeArray = require('../../../lib/remove-array')
 const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
@@ -132,13 +131,13 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
 }
 
 function getRequestBody (req, res, next) {
-  const selectedFiltersQuery = removeArray(pick(req.query, [
+  const selectedFiltersQuery = pick(req.query, [
     'name',
     'sector_descends',
     'country',
     'uk_region',
     'headquarter_type',
-  ]), 'headquarter_type')
+  ])
 
   const selectedSortBy = req.query.sortby ? {
     sortby: req.query.sortby,

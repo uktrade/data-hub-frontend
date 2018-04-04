@@ -1,25 +1,18 @@
 const { assign, flatten } = require('lodash')
 
 const { globalFields } = require('../macros')
-const { accountManagementDisplayLabels, hqLabels } = require('./labels')
+const { accountManagementDisplayLabels } = require('./labels')
 const { transformObjectToOption } = require('../transformers')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
 const companyFiltersFields = function ({ sectorOptions }) {
   return [
-    {
-      macroName: 'MultipleChoiceField',
+    Object.assign({}, globalFields.headquarter_type, {
       name: 'headquarter_type',
       type: 'checkbox',
-      label: 'HQ Type',
-      options: [
-        { value: '43281c5e-92a4-4794-867b-b4d5f801e6f3', label: hqLabels.ghq },
-        { value: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b', label: hqLabels.ehq },
-        { value: '3e6debb4-1596-40c5-aa25-f00da0e05af9', label: hqLabels.ukhq },
-      ],
       modifier: 'option-select',
-    },
+    }),
     {
       macroName: 'TextField',
       label: 'Company name',
