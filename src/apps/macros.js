@@ -1,5 +1,5 @@
 const metadata = require('../lib/metadata')
-const { transformObjectToOption, transformStringToOption } = require('./transformers')
+const { transformObjectToOption, transformStringToOption, transformHQCodeToLabelledOption } = require('./transformers')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -29,6 +29,16 @@ const globalFields = {
     initialOption: '-- Select region --',
     options () {
       return metadata.regionOptions.map(transformObjectToOption)
+    },
+  },
+
+  headquarter_type: {
+    macroName: 'MultipleChoiceField',
+    name: 'headquarter_type',
+    type: 'checkbox',
+    label: 'Type',
+    options () {
+      return metadata.headquarterOptions.map(transformHQCodeToLabelledOption)
     },
   },
 
