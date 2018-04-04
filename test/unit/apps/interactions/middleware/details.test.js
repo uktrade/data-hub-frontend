@@ -293,9 +293,6 @@ describe('Interaction details middleware', () => {
         }, {
           label: 'John Smith, Director',
           value: '12651151-2149-465e-871b-ac45bc568a63',
-        }, {
-          label: 'Jane Smith, Director',
-          value: '12651151-2149-465e-871b-ac45bc568a64',
         }]
 
         expect(this.res.locals.options.contacts).to.deep.equal(expectedContacts)
@@ -415,9 +412,6 @@ describe('Interaction details middleware', () => {
         }, {
           label: 'John Smith, Director',
           value: '12651151-2149-465e-871b-ac45bc568a63',
-        }, {
-          label: 'Jane Smith, Director',
-          value: '12651151-2149-465e-871b-ac45bc568a64',
         }]
 
         expect(this.res.locals.options.contacts).to.deep.equal(expectedContacts)
