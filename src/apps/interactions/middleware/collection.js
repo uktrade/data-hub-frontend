@@ -29,6 +29,7 @@ async function getInteractionCollection (req, res, next) {
 function getInteractionsRequestBody (req, res, next) {
   const searchBody = pick(req.query, [
     'kind',
+    'sector_descends',
     'communication_channel',
     'dit_adviser',
     'date_after',

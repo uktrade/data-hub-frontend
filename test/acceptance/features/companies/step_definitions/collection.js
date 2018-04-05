@@ -19,7 +19,7 @@ When(/^I filter the companies list by company/, async function () {
     .wait() // wait for xhr
 })
 
-When(/^I filter the companies list by sector$/, async function () {
+When(/^I filter the companies list by sector_descends$/, async function () {
   await CompanyList.section.filters
     .waitForElementPresent('@sector')
     .clickMultipleChoiceOption('sector', this.state.company.sector)

@@ -15,13 +15,13 @@ Feature: View collection of contacts for a company
     Then I see the success message
     Then I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I can view the Contact in the collection
-      | text         | expected           |
-      | Sector       | company.sector     |
-      | Country      | company.country    |
-      | UK region    | company.ukRegion   |
+      | text         | expected                |
+      | Sector       | company.sector          |
+      | Country      | company.country         |
+      | UK region    | company.ukRegion        |
     And the Contact has badges
-      | text         | expected           |
-      | Contact type | contact.type       |
+      | text         | expected                |
+      | Contact type | contact.type            |
 
   @companies-contact-collection--filter
   Scenario: Filter companies contact list
@@ -33,15 +33,6 @@ Feature: View collection of contacts for a company
     Then I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     Then I confirm I am on the Lambda plc page
     And the results summary for a contact collection is present
-    When I clear all filters
-    Then there are no filters selected
-    And I filter the contacts list by contact
-    Then the contacts should be filtered by contact name
-    When I clear all filters
-    Then there are no filters selected
-    Then I filter the contacts list by active status
-    And the result count should be reset
-
 
   @companies-contact-collection--sort
   Scenario: Sort companies contact list

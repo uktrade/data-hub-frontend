@@ -1,6 +1,5 @@
 const { pick, pickBy, assign } = require('lodash')
 
-const removeArray = require('../../../lib/remove-array')
 const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
@@ -95,14 +94,50 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
   }
 }
 
+async function getSubsidiaryCompaniesCollection (req, res, next) {
+  const searchTerm = res.locals.searchTerm = req.query.term
+  const { id: companyId } = res.locals.company
+
+  if (!searchTerm) {
+    return next()
+  }
+
+  try {
+    res.locals.results = await search({
+      searchTerm,
+      searchEntity: 'company',
+      requestBody: {
+        ...req.body,
+      },
+      token: req.session.token,
+      page: req.query.page,
+      isAggregation: false,
+    })
+      .then(transformApiResponseToSearchCollection(
+        { query: req.query },
+        transformCompanyToListItem,
+        (item) => {
+          return {
+            ...item,
+            url: `/companies/${item.id}/hierarchies/subsidiaries/${companyId}/add`,
+          }
+        }
+      ))
+
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
 function getRequestBody (req, res, next) {
-  const selectedFiltersQuery = removeArray(pick(req.query, [
+  const selectedFiltersQuery = pick(req.query, [
     'name',
-    'sector',
+    'sector_descends',
     'country',
     'uk_region',
     'headquarter_type',
-  ]), 'headquarter_type')
+  ])
 
   const selectedSortBy = req.query.sortby ? {
     sortby: req.query.sortby,
@@ -118,4 +153,5 @@ module.exports = {
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
+  getSubsidiaryCompaniesCollection,
 }

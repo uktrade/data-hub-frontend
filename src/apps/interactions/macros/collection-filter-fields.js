@@ -1,20 +1,14 @@
 const { assign, flatten } = require('lodash')
 
 const labels = require('../labels')
-const { communicationChannel, provider } = require('./fields')
+const { provider } = require('./fields')
+const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
 
 const currentYear = (new Date()).getFullYear()
 
-module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
+module.exports = function ({ currentAdviserId, channels = [], teams = [], sectorOptions }) {
   return [
-    assign({}, provider(teams), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
-    assign({}, communicationChannel(channels), {
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
     {
       macroName: 'MultipleChoiceField',
       name: 'kind',
@@ -51,6 +45,17 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [] }) {
       name: 'date_before',
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
+    },
+    assign({}, provider(teams), {
+      type: 'checkbox',
+      modifier: 'option-select',
+    }),
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: PRIMARY_SECTOR_NAME,
+      modifier: 'option-select',
+      options: sectorOptions,
     },
   ].map(filter => {
     return assign(filter, {

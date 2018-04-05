@@ -46,7 +46,7 @@ describe('Investment projects collection middleware', () => {
     it('should set req.body for valid query items', async () => {
       this.req.query = {
         stage: 'i1',
-        sector: 's1',
+        sector_descends: 's1',
         sortby: 'name:asc',
         random: 'query',
       }
@@ -55,7 +55,7 @@ describe('Investment projects collection middleware', () => {
 
       expect(this.req.body).to.deep.equal({
         stage: 'i1',
-        sector: 's1',
+        sector_descends: 's1',
         sortby: 'name:asc',
       })
       expect(this.next).to.have.been.calledOnce
