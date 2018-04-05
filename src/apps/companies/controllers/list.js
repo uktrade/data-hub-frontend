@@ -29,7 +29,7 @@ async function renderCompanyList (req, res, next) {
 
     res.render('_layouts/collection', {
       sortForm,
-      filtersFields,
+      filtersFields: filtersFieldsWithSelectedOptions,
       selectedFilters,
       title: 'Companies',
       countLabel: 'company',
