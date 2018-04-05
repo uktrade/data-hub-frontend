@@ -27,29 +27,6 @@ Feature: View collection of interactions
       | text    | expected               |
       | Type    | interaction.type       |
 
-#  @interactions-collection--view-policy-feedback
-#  Scenario: View policy feedback in interactions and services collection
-#
-#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
-#    And I click the "Add interaction" link
-#    And I select policy feedback
-#    When a policy feedback is added
-#      | key      | value                 |
-#    Then I see the success message
-#    When I navigate to the `interactions.list` page
-#    Then I confirm I am on the Interactions page
-#    And the results summary for a interaction collection is present
-#    Then I filter the collections to view the policy feedback I have just created
-#    And I can view the interaction in the collection
-#      | text    | expected               |
-#      | Contact | contact.heading        |
-#      | Company | company.name           |
-#      | Date    | interaction.date       |
-#      | Adviser | interaction.ditAdviser |
-#    And the Interaction has badges
-#      | text    | expected               |
-#      | Type    | interaction.type       |
-
   @interactions-collection--view-service-delivery
   Scenario: View service delivery in interactions and services collection
 

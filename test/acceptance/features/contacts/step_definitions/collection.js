@@ -30,13 +30,6 @@ When(/^I filter the contacts list by company/, async function () {
     .wait() // wait for xhr
 })
 
-When(/^I filter the contacts list by sector$/, async function () {
-  await ContactList.section.filters
-    .waitForElementPresent('@sector')
-    .clickMultipleChoiceOption('company_sector', this.state.company.sector)
-    .wait() // wait for xhr
-})
-
 When(/^I filter the contacts list by country$/, async function () {
   await ContactList.section.filters
     .waitForElementPresent('@country')

@@ -19,7 +19,7 @@ Feature: Create a new company
       | UK region                 | company.ukRegion           |
       | Headquarter type          | company.headquarterType    |
       | Global HQ                 | company.globalHeadquarters |
-      | Sector                    | company.sector             |
+      | Sector                    | company.sector    |
       | Website                   | company.website            |
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
@@ -43,7 +43,7 @@ Feature: Create a new company
       | UK region                 | company.ukRegion           |
       | Headquarter type          | company.headquarterType    |
       | Global HQ                 | company.globalHeadquarters |
-      | Sector                    | company.sector             |
+      | Sector                    | company.sector    |
       | Website                   | company.website            |
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
@@ -66,7 +66,7 @@ Feature: Create a new company
       | Primary address           | company.primaryAddress           |
       | Headquarter type          | company.headquarterType          |
       | Global HQ                 | company.globalHeadquarters       |
-      | Sector                    | company.sector                   |
+      | Sector                    | company.sector          |
       | Website                   | company.website                  |
       | Business description      | company.description              |
       | Number of employees       | company.employeeRange            |
@@ -91,7 +91,7 @@ Feature: Create a new company
       | UK region                 | company.ukRegion           |
       | Headquarter type          | company.headquarterType    |
       | Global HQ                 | company.globalHeadquarters |
-      | Sector                    | company.sector             |
+      | Sector                    | company.sector    |
       | Website                   | company.website            |
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
