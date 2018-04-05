@@ -103,15 +103,13 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
   }
 
   try {
-    res.locals.results = await search({
+    res.locals.results = await searchCompanies({
+      token: req.session.token,
       searchTerm,
-      searchEntity: 'company',
+      page: req.query.page,
       requestBody: {
         ...req.body,
       },
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
