@@ -30,8 +30,8 @@ async function renderContactList (req, res, next) {
 
     res.render('_layouts/collection', {
       sortForm,
-      filtersFields,
       selectedFilters,
+      filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Contacts',
       countLabel: 'contact',
       highlightTerm: get(selectedFilters, 'name.valueLabel'),
