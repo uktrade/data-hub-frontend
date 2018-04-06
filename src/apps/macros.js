@@ -1,3 +1,4 @@
+const { sortBy } = require('lodash')
 const metadata = require('../lib/metadata')
 const { transformObjectToOption, transformStringToOption, transformHQCodeToLabelledOption } = require('./transformers')
 
@@ -38,7 +39,7 @@ const globalFields = {
     type: 'checkbox',
     label: 'Type',
     options () {
-      return metadata.headquarterOptions.map(transformHQCodeToLabelledOption)
+      return sortBy(metadata.headquarterOptions.map(transformHQCodeToLabelledOption), ['order', 'label', 'value'])
     },
   },
 
