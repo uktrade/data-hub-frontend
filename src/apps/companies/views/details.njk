@@ -1,7 +1,13 @@
 {% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Company summary</h2>
+  <h2 class="heading-medium">
+    {% if company.headquarter_type.name === 'ghq' %}
+      Global headquarters summary
+    {% else %}
+      Company summary
+    {% endif %}
+  </h2>
 
   {% if chDetails %}
     {% call Message({ type: 'muted', element: 'div' }) %}
