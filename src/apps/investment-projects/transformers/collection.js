@@ -9,6 +9,7 @@ function transformInvestmentProjectToListItem ({
   project_code,
   stage,
   investment_type,
+  status,
   investor_company,
   estimated_land_date,
   sector,
@@ -16,6 +17,7 @@ function transformInvestmentProjectToListItem ({
   const metaItems = [
     { key: 'stage', value: stage, type: 'badge' },
     { key: 'investment_type', value: investment_type, type: 'badge', badgeModifier: 'secondary' },
+    { key: 'status', value: status, type: 'badge', badgeModifier: 'secondary' },
     { key: 'investor_company', value: investor_company },
     { key: 'sector', value: sector },
     { key: 'estimated_land_date', value: estimated_land_date, type: 'dateMonthYear', isInert: true },
