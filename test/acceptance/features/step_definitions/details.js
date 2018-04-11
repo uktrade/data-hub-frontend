@@ -32,10 +32,12 @@ const removeFalsey = (details, state) => {
   })
 }
 
-const assertDetailsTableRowCount = async function (detailsTableSelector, expectedDetails) {
-  await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
-    client.expect(result.value.length, 'Table row count').to.equal(expectedDetails.length)
-  })
+const AssertDetailsTableRowCount = function () {
+  return async function (detailsTableSelector, expectedDetails) {
+    await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
+      client.expect(result.value.length, 'Table row count').to.equal(expectedDetails.length)
+    })
+  }
 }
 
 const assertDetailsTableContent = async function (detailsTableSelector, expectedDetails) {
@@ -130,15 +132,17 @@ Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink
 Then(/^the (.+) details are displayed$/, async function (detailsTableTitle, dataTable) {
   const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
   const detailsTableSelector = Details.getSelectorForDetailsTable(detailsTableTitle)
+  const assertDetailsTableRowCount = new AssertDetailsTableRowCount(detailsTableSelector, expectedDetails)
 
-  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
+  await assertDetailsTableRowCount
   await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
 })
 
 Then(/^the details are displayed$/, async function (dataTable) {
   const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
   const detailsTableSelector = Details.getSelectorForDetailsTable()
+  const assertDetailsTableRowCount = new AssertDetailsTableRowCount(detailsTableSelector, expectedDetails)
 
-  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
+  await assertDetailsTableRowCount
   await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
 })

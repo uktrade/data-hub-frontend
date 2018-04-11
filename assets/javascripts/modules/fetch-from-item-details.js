@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 const CONSTANTS = {
   events: {
     change: 'change',
@@ -29,7 +31,23 @@ const FetchFormItemDetails = {
   },
 
   handleFormItemChange (event) {
+    const target = event.target
 
+    Array.from(this.root).forEach(
+      (item) => {
+        if (target.id === item.dataset.target) {
+          const path = `/api/options/${this.entity}?term=${target.options[target.selectedIndex].value}`
+          axios.get(path)
+            .then((response) => {
+              const data = response.data
+              this.buildItemDetailsView(item, data)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        }
+      }
+    )
   },
 
   bindEvents () {
