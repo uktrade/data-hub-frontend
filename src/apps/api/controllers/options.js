@@ -4,7 +4,8 @@ async function getOptionsHandler (req, res, next) {
   const token = req.session.token
   const key = req.params.entity
 
-  if (key === 'adviser') {
+  if (key === 'adviser' ||
+    key === 'event') {
     return next()
   }
 
