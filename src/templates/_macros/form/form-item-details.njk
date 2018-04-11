@@ -1,0 +1,13 @@
+{% from "./form.njk" import Form with context %}
+
+{##
+# Render form group with form item details
+ # @param {object} props - An object containing field properties
+ # @param {string} props.target - form item name we're displaying the details of
+#}
+{% macro FormItemDetails(props) %}
+  {% set target = props.target or 'target' %}
+
+  <div class="js-FormItemDetails" data-target="field-{{ target }}">
+  </div>
+{% endmacro %}
