@@ -41,6 +41,7 @@ const serviceDelivery = {
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',
   event: 'Event',
+  event_details: 'Event Details',
   investment_project: 'Investment project',
   documents: 'Documents',
 }

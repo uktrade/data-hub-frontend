@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, get, reject, castArray, compact, uniq } = require('lodash')
+const { assign, filter, get, reject, castArray, compact, uniq } = require('lodash')
 
 const { getFormattedAddress } = require('../../lib/address')
 const { transformDateObjectToDateString } = require('../transformers')
@@ -194,9 +194,61 @@ function transformEventFormBodyToApiRequest (props) {
   })
 }
 
+/*
+Service
+Team hosting the event
+Organiser
+Event shared with
+Related programmes
+*/
+
+function transformEventToOption ({
+  id,
+  name,
+  service,
+  lead_team,
+  organiser,
+  related_programmes,
+  teams,
+} = {}) {
+  const teams_shared_with = filter(teams, team => team.id !== lead_team.id)
+  return {
+    id,
+    name,
+    details: [
+      {
+        key: 'service',
+        value: service,
+        label: 'Service',
+      },
+      {
+        key: 'lead_team',
+        value: lead_team,
+        label: 'Team hosting the event',
+      },
+      {
+        key: 'organiser',
+        value: organiser,
+        label: 'Organiser',
+      },
+      {
+        key: 'related_programmes',
+        value: related_programmes,
+        label: 'Related programmes',
+      },
+      {
+        key: 'teams_shared_with',
+        value: teams_shared_with,
+        label: 'Event shared with',
+      },
+    ],
+  }
+}
+
 module.exports = {
   transformEventToListItem,
   transformEventResponseToViewRecord,
   transformEventResponseToFormBody,
   transformEventFormBodyToApiRequest,
+  transformEventToOption,
 }
