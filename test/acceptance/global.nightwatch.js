@@ -1,6 +1,6 @@
 module.exports = {
-  waitForConditionPollInterval: 1000,
-  waitForConditionTimeout: 6000,
-  pauseDuration: 5000,
-  retryAssertionTimeout: 2500,
+  waitForConditionPollInterval: 2000,
+  waitForConditionTimeout: 12000,
+  pauseDuration: 7500,
+  retryAssertionTimeout: 5000,
 }
