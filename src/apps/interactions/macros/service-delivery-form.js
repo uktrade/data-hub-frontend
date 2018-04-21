@@ -34,35 +34,6 @@ module.exports = function ({
       contact(contacts),
       provider(teams),
       adviser(advisers),
-      // TODO this will be going once interactions are within events
-      {
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        name: 'is_event',
-        optional: true,
-        modifier: 'inline',
-        options: [
-          {
-            label: 'Yes',
-            value: 'true',
-          },
-          {
-            label: 'No',
-            value: 'false',
-          },
-        ],
-      },
-      {
-        macroName: 'MultipleChoiceField',
-        name: 'event',
-        initialOption: '-- Select event --',
-        options: events,
-        modifier: 'subfield',
-        condition: {
-          name: 'is_event',
-          value: 'true',
-        },
-      },
       service(services),
       {
         macroName: 'MultipleChoiceField',
