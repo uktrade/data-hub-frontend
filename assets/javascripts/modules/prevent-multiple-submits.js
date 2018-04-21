@@ -25,6 +25,7 @@ const PreventMultipleSubmits = {
   },
 
   handleFormSubmit (event) {
+    event.preventDefault()
     const target = event.target
     const targetForm = target.closest(CONSTANTS.selectors.form)
     if (!targetForm ||
@@ -32,7 +33,6 @@ const PreventMultipleSubmits = {
 
     if (this.counter >= 1) {
       event.target.setAttribute(CONSTANTS.attributes.disabled, true)
-      event.preventDefault()
     } else {
       this.counter += 1
       targetForm.submit()
