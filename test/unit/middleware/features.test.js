@@ -21,18 +21,98 @@ describe('feature flag middleware', () => {
         error: this.loggerStub,
       },
     })
+
+    this.featuresData = [{
+      code: 'cfe1',
+      is_active: true,
+    }, {
+      code: 'tea1',
+      is_active: false,
+    }]
   })
 
-  context('When there are feature flags', () => {
+  context('when the user is not logged in', () => {
     beforeEach(async () => {
-      this.featuresData = [{
-        code: 'cfe1',
-        is_active: true,
-      }, {
-        code: 'tea1',
-        is_active: false,
-      }]
+      delete this.reqMock.session.token
 
+      nock(config.apiRoot)
+        .get('/v3/feature-flag')
+        .reply(200, this.featuresData)
+
+      await this.features(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not call the backend to get features', () => {
+      expect(nock.isDone()).to.be.false
+    })
+
+    it('should not report an error', () => {
+      expect(this.loggerStub).to.not.be.called
+    })
+  })
+
+  context('when a call is made to the support page', () => {
+    beforeEach(async () => {
+      this.reqMock.url = '/support'
+
+      nock(config.apiRoot)
+        .get('/v3/feature-flag')
+        .reply(200, this.featuresData)
+
+      await this.features(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not call the backend to get features', () => {
+      expect(nock.isDone()).to.be.false
+    })
+
+    it('should not report an error', () => {
+      expect(this.loggerStub).to.not.be.called
+    })
+  })
+
+  context('when a call is made to the healthcheck page', () => {
+    beforeEach(async () => {
+      this.reqMock.url = '/healthcheck'
+
+      nock(config.apiRoot)
+        .get('/v3/feature-flag')
+        .reply(200, this.featuresData)
+
+      await this.features(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not call the backend to get features', () => {
+      expect(nock.isDone()).to.be.false
+    })
+
+    it('should not report an error', () => {
+      expect(this.loggerStub).to.not.be.called
+    })
+  })
+
+  context('when a call is made to the oauth page', () => {
+    beforeEach(async () => {
+      this.reqMock.url = '/oauth'
+
+      nock(config.apiRoot)
+        .get('/v3/feature-flag')
+        .reply(200, this.featuresData)
+
+      await this.features(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not call the backend to get features', () => {
+      expect(nock.isDone()).to.be.false
+    })
+
+    it('should not report an error', () => {
+      expect(this.loggerStub).to.not.be.called
+    })
+  })
+
+  context('when there are feature flags', () => {
+    beforeEach(async () => {
       nock(config.apiRoot)
         .get('/v3/feature-flag')
         .reply(200, this.featuresData)
