@@ -102,19 +102,19 @@ module.exports = {
                 })
               })
               .perform((done) => {
-                this.getRadioOption('headquarter_type', (result) => {
+                this.getRadioOption({ name: 'headquarter_type', option: 'Not a headquarters' }, (result) => {
                   companyRadioButtons.headquarterType = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('employee_range', (result) => {
+                this.getRadioOption({ name: 'employee_range' }, (result) => {
                   companyRadioButtons.employeeRange = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('turnover_range', (result) => {
+                this.getRadioOption({ name: 'turnover_range' }, (result) => {
                   companyRadioButtons.turnoverRange = result
                   done()
                 })
@@ -208,19 +208,19 @@ module.exports = {
                 })
               })
               .perform((done) => {
-                this.getRadioOption('headquarter_type', (result) => {
+                this.getRadioOption({ name: 'headquarter_type', option: 'Not a headquarters' }, (result) => {
                   companyStep2RadioOptions.headquarterType = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('employee_range', (result) => {
+                this.getRadioOption({ name: 'employee_range' }, (result) => {
                   companyStep2RadioOptions.employeeRange = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('turnover_range', (result) => {
+                this.getRadioOption({ name: 'turnover_range' }, (result) => {
                   companyStep2RadioOptions.turnoverRange = result
                   done()
                 })
@@ -316,19 +316,19 @@ module.exports = {
                 })
               })
               .perform((done) => {
-                this.getRadioOption('headquarter_type', (result) => {
+                this.getRadioOption({ name: 'headquarter_type', option: 'Not a headquarters' }, (result) => {
                   companyRadioButtons.headquarterType = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('employee_range', (result) => {
+                this.getRadioOption({ name: 'employee_range' }, (result) => {
                   companyRadioButtons.employeeRange = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('turnover_range', (result) => {
+                this.getRadioOption({ name: 'turnover_range' }, (result) => {
                   companyRadioButtons.turnoverRange = result
                   done()
                 })
@@ -413,19 +413,19 @@ module.exports = {
                 })
               })
               .perform((done) => {
-                this.getRadioOption('headquarter_type', (result) => {
+                this.getRadioOption({ name: 'headquarter_type', option: 'Not a headquarters' }, (result) => {
                   companyStep2RadioOptions.headquarterType = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('employee_range', (result) => {
+                this.getRadioOption({ name: 'employee_range' }, (result) => {
                   companyStep2RadioOptions.employeeRange = result
                   done()
                 })
               })
               .perform((done) => {
-                this.getRadioOption('turnover_range', (result) => {
+                this.getRadioOption({ name: 'turnover_range' }, (result) => {
                   companyStep2RadioOptions.turnoverRange = result
                   done()
                 })

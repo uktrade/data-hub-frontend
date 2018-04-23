@@ -22,7 +22,7 @@ module.exports = {
         return this.section.form
           .waitForElementPresent('@sendButton')
           .api.perform((done) => {
-            this.getRadioOption('feedback_type', (result) => {
+            this.getRadioOption({ name: 'feedback_type' }, (result) => {
               supportRequestRadioOptions.employeeRange = result
               done()
             })

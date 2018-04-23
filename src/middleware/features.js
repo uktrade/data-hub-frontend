@@ -19,6 +19,13 @@ function parseFeatureData (featureData = []) {
 module.exports = async function features (req, res, next) {
   try {
     const token = req.session.token
+    const passThrough = !token || /^\/(support|healthcheck|oauth)\b/.test(req.url)
+
+    if (passThrough) {
+      res.locals.features = {}
+      return next()
+    }
+
     const featureData = await authorisedRequest(token, flagUrl)
     res.locals.features = parseFeatureData(featureData)
   } catch (error) {
