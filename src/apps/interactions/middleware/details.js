@@ -105,7 +105,7 @@ async function getInteractionOptions (req, res, next) {
       successfulServiceStatuses,
     }
 
-    if (req.params.kind === 'service-delivery') {
+    if (req.params.kind === 'event-interaction') {
       const activeEvents = await getActiveEvents(token, createdOn)
       res.locals.options.events = activeEvents.map(transformObjectToOption)
     }

@@ -3,10 +3,11 @@ const { get, merge, pickBy, lowerCase, snakeCase, assign } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
-const { interactionForm, serviceDeliveryForm, policyFeedbackForm } = require('../macros')
+const { eventInteractionForm, interactionForm, serviceDeliveryForm, policyFeedbackForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const formConfigs = {
   'interaction': interactionForm,
+  'event-interaction': eventInteractionForm,
   'service-delivery': serviceDeliveryForm,
   'policy-feedback': policyFeedbackForm,
 }

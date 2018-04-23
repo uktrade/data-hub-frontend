@@ -38,6 +38,23 @@ module.exports = function ({
       service(services),
       {
         macroName: 'MultipleChoiceField',
+        name: 'event',
+        initialOption: '-- Select event --',
+        options: events,
+      },
+      /**
+       * `FormItemDetails` fetches an item details through an individual async api call.
+       * `target` param must be identical with the `name` param of the form item we're requesting the details for.
+       */
+      {
+        macroName: 'FormItemDetails',
+        name: 'event_details',
+        label: 'Event Details',
+        options: eventDetails,
+        target: 'event',
+      },
+      {
+        macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',
         initialOption: '-- Select service status --',
         options: statuses,
