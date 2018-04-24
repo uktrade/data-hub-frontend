@@ -107,7 +107,6 @@ aliases:
   - &docker_postgres
     image: *postgres_version
     name: postgres
-    restart: always
     environment:
       POSTGRES_DB: datahub
 
