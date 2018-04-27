@@ -88,7 +88,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "resolve-url-loader": "^2.2.1",
-    "rewire": "^3.0.2",
+    "rewire": "^4.0.1",
     "sass-lint": "^1.12.1",
     "serve-favicon": "^2.4.5",
     "sinon": "^4.1.3",
