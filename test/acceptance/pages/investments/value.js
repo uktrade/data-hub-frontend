@@ -39,7 +39,7 @@ module.exports = {
 
         return this
           .api.perform((done) => {
-            this.getRadioOption('average_salary', (result) => {
+            this.getRadioOption({ name: 'average_salary' }, (result) => {
               this.api.useCss().click(result.labelSelector)
               randomlySetRadioOptions.averageSalary = result
               done()
