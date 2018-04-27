@@ -23,6 +23,7 @@ module.exports = function ({
   statuses = [],
   teams = [],
   events = [],
+  eventDetails = [],
   hiddenFields,
 }) {
   return {
@@ -62,6 +63,17 @@ module.exports = function ({
           name: 'is_event',
           value: 'true',
         },
+      },
+      /**
+       * `FormItemDetails` fetches an item details through an individual async api call.
+       * `target` param must be identical with the `name` param of the form item we're requesting the details for.
+       */
+      {
+        macroName: 'FormItemDetails',
+        name: 'event_details',
+        label: 'Event Details',
+        options: eventDetails,
+        target: 'event',
       },
       service(services),
       {

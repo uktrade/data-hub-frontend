@@ -34,6 +34,7 @@ const removeFalsey = (details, state) => {
 
 const assertDetailsTableRowCount = async function (detailsTableSelector, expectedDetails) {
   await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
+    console.log('>>>>>>>>>>>>>>>>>>>>>> ', result)
     client.expect(result.value.length, 'Table row count').to.equal(expectedDetails.length)
   })
 }
