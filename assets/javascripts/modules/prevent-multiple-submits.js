@@ -30,9 +30,10 @@ const PreventMultipleSubmits = {
     if (!targetForm ||
       !target.classList.contains(CONSTANTS.selectors.button)) { return }
 
+    event.preventDefault()
+
     if (this.counter >= 1) {
       event.target.setAttribute(CONSTANTS.attributes.disabled, true)
-      event.preventDefault()
     } else {
       this.counter += 1
       targetForm.submit()
