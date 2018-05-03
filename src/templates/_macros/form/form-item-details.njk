@@ -1,0 +1,10 @@
+{##
+# Render form group with form item details
+ # @param {object} props - An object containing field properties
+ # @param {string} props.target - form item name we're displaying the details of
+#}
+{% macro FormItemDetails(props) %}
+  <div class="js-FormItemDetails" data-target="field-{{ props.target }}">
+
+  </div>
+{% endmacro %}

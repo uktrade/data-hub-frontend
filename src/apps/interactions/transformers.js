@@ -32,6 +32,8 @@ function transformInteractionResponseToForm ({
   contact,
   dit_team,
   dit_adviser,
+  kind,
+  is_event,
   event,
   service,
   service_delivery_status,
@@ -47,6 +49,8 @@ function transformInteractionResponseToForm ({
 
   const isValidDate = isValid(new Date(date))
 
+  console.log('>>>>>>>>>>>>>>>>>>> ', is_event)
+
   return {
     id,
     subject,
@@ -56,10 +60,12 @@ function transformInteractionResponseToForm ({
     contact: get(contact, 'id'),
     dit_team: get(dit_team, 'id'),
     dit_adviser: get(dit_adviser, 'id'),
-    is_event: isNil(event) ? 'false' : 'true',
+    // is_event: isNil(event) ? 'false' : 'true',
+    is_event,
     event: get(event, 'id'),
     service: get(service, 'id'),
     service_delivery_status: get(service_delivery_status, 'id'),
+    kind,
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
@@ -168,8 +174,19 @@ function transformInteractionResponseToViewRecord ({
   }))
 }
 
+function getKind (props) {
+  if (props.kind === 'event_interaction') {
+    return 'service_delivery'
+  } else {
+    return props.kind
+  }
+}
+
 function transformInteractionFormBodyToApiRequest (props) {
+  const kind = getKind(props)
+
   return assign({}, props, {
+    kind,
     date: transformDateObjectToDateString('date')(props),
     grant_amount_offered: props.grant_amount_offered || null,
     net_company_receipt: props.net_company_receipt || null,

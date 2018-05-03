@@ -18,13 +18,16 @@ module.exports = function ({
         }, {
           value: 'service_delivery',
           label: 'A service that you have provided',
-          hint: 'For example, account management, a significant assist or an event',
-        },
-        /*, {
+          hint: 'For example, account management or a significant assist',
+        }, {
+          value: 'event_interaction',
+          label: 'Record an invitation or attendance for an event',
+          hint: 'For example, to record who came to an event',
+        }, {
           value: 'policy_feedback',
           label: 'Policy feedback',
           hint: 'For example, when a company wants to give UK government policy feedback',
-        } */
+        },
         ],
       },
     ],

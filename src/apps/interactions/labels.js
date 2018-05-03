@@ -40,6 +40,7 @@ const serviceDelivery = {
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
   is_event: 'Is this an event?',
+  lorem_ipsum: 'Lorem Ipsum',
   event: 'Event',
   investment_project: 'Investment project',
   documents: 'Documents',

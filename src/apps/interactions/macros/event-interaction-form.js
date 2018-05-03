@@ -23,18 +23,41 @@ module.exports = function ({
   statuses = [],
   teams = [],
   events = [],
+  eventDetails = [],
   hiddenFields,
 }) {
   return {
     returnLink,
     returnText,
     buttonText,
-    hiddenFields: assign(hiddenFields, { is_event: false }),
+    hiddenFields: assign(hiddenFields, { is_event: true }),
     children: [
-      adviser(advisers),
-      provider(teams),
-      service(services),
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'event',
+        initialOption: '-- Select event --',
+        options: events,
+      },
+      /**
+       * `FormItemDetails` fetches an item details through an individual async api call.
+       * `target` param must be identical with the `name` param of the form item we're requesting the details for.
+       */
+      {
+        macroName: 'FormItemDetails',
+        name: 'event_details',
+        label: 'Event Details',
+        options: eventDetails,
+        target: 'event',
+      },
       contact(contacts),
+
+      /**
+       * Populate the commented fields below (provider, adviser, service) with the values from the event async response
+       */
+      // provider(teams),
+      // adviser(advisers),
+      // service(services),
+
       {
         macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',
