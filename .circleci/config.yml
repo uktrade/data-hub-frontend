@@ -1,6 +1,6 @@
 version: 2
 aliases:
-  - &node_version               node:8.9.4
+  - &node_version               node:8.11.1
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:9.5
   - &elasticsearch_version      elasticsearch:5.5
@@ -107,7 +107,6 @@ aliases:
   - &docker_postgres
     image: *postgres_version
     name: postgres
-    restart: always
     environment:
       POSTGRES_DB: datahub
 
