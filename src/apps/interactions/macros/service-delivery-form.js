@@ -23,19 +23,18 @@ module.exports = function ({
   statuses = [],
   teams = [],
   events = [],
-  eventDetails = [],
   hiddenFields,
 }) {
   return {
     returnLink,
     returnText,
     buttonText,
-    hiddenFields,
+    hiddenFields: assign(hiddenFields, { is_event: false }),
     children: [
-      contact(contacts),
-      provider(teams),
       adviser(advisers),
+      provider(teams),
       service(services),
+      contact(contacts),
       {
         macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',

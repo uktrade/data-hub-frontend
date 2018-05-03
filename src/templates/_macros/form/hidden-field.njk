@@ -11,6 +11,7 @@
   {% set fieldId = 'field-' + props.name if props.name %}
   {{ Input(props | assign({
     type: 'hidden',
+    value: props.value,
     fieldId: fieldId
   })) }}
 {% endmacro %}

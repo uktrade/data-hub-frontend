@@ -30,12 +30,8 @@ module.exports = function ({
     returnLink,
     returnText,
     buttonText,
-    hiddenFields,
+    hiddenFields: assign(hiddenFields, { is_event: true }),
     children: [
-      contact(contacts),
-      provider(teams),
-      adviser(advisers),
-      service(services),
       {
         macroName: 'MultipleChoiceField',
         name: 'event',
@@ -53,6 +49,15 @@ module.exports = function ({
         options: eventDetails,
         target: 'event',
       },
+      contact(contacts),
+
+      /**
+       * Populate the commented fields below (provider, adviser, service) with the values from the event async response
+       */
+      // provider(teams),
+      // adviser(advisers),
+      // service(services),
+
       {
         macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',
