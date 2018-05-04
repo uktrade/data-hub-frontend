@@ -13,6 +13,36 @@ const regionOptions = [
   { id: '2', name: 'r2', disabled_on: yesterday },
 ]
 
+const serviceOptions = [
+  {
+    id: '1',
+    name: 'Advice',
+    disabled_on: null,
+    contexts: [
+      'service_delivery',
+      'investment_project_interaction',
+      'interaction',
+      'event',
+    ],
+  },
+  {
+    id: '2',
+    name: 'Sales',
+    disabled_on: '2017-06-27T13:43:29.000001Z',
+    contexts: [
+      'service_delivery',
+      'investment_project_interaction',
+      'interaction',
+      'event',
+    ],
+  }, {
+    id: '3',
+    name: 'Policy feedback',
+    disabled_on: null,
+    contexts: ['policy_feedback'],
+  },
+]
+
 describe('#options', () => {
   beforeEach(() => {
     nock(config.apiRoot)
@@ -98,6 +128,35 @@ describe('#options', () => {
       expect(this.options).to.deep.equal([
         { label: 'r1', value: '1' },
       ])
+    })
+  })
+
+  context('when a context is provided', () => {
+    context('when there is no context in the response', () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', { context: 'interaction' })
+      })
+
+      it('should return active options', () => {
+        expect(this.options).to.deep.equal([
+          { label: 'r1', value: '1' },
+          { label: 'r3', value: '3' },
+        ])
+      })
+    })
+
+    context('when there is a context in the options response', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get('/metadata/service/')
+          .reply(200, serviceOptions)
+
+        this.options = await getOptions('1234', 'service', { context: 'interaction' })
+      })
+
+      it('should return options in that context', () => {
+        expect(this.options).to.deep.equal([{ label: 'Advice', value: '1' }])
+      })
     })
   })
 })
