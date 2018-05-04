@@ -13,7 +13,7 @@ const {
   getInteractionSortForm,
 } = require('./middleware/collection')
 
-const { postDetails, getInteractionOptions, getInteractionDetails } = require('./middleware/details')
+const { postDetails, getInteractionDetails } = require('./middleware/details')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -29,15 +29,8 @@ router.get('/',
 
 router
   .route('/:interactionId/:kind/edit')
-  .post(
-    getInteractionOptions,
-    postDetails,
-    renderEditPage,
-  )
-  .get(
-    getInteractionOptions,
-    renderEditPage,
-  )
+  .post(postDetails, renderEditPage)
+  .get(renderEditPage)
 
 router.get('/:interactionId', renderDetailsPage)
 
