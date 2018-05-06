@@ -83,7 +83,7 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When a service delivery is added
       | key                      | value                                    |
-      | Service                  | Trade - Tradeshow Access Programme (TAP) |
+      | Service                  | Tradeshow Access Programme (TAP)         |
       | Service status           | Completed                                |
       | Grant offered            | 100000                                   |
       | Net receipt              | 50000                                    |
@@ -114,7 +114,7 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When a service delivery is added
       | key                      | value                                    |
-      | Service                  | Trade - Tradeshow Access Programme (TAP) |
+      | Service                  | Tradeshow Access Programme (TAP)         |
     Then I see the success message
     And the details are displayed
       | key                      | value                                    |
@@ -251,5 +251,5 @@ Feature: Add a new interaction in Data hub
     Then the net receipt field is visible
     When I change form dropdown "service_delivery_status" to Current
     Then the net receipt field is hidden
-    When I change form dropdown "service" to Trade - Enquiry
+    When I change form dropdown "service" to Bank Referral
     Then the service fields are hidden
