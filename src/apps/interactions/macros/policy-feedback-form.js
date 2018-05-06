@@ -3,33 +3,39 @@ const { assign } = require('lodash')
 const labels = require('../labels')
 const {
   contact,
-  communicationChannel,
   provider,
-  service,
+  policyIssueType,
+  policyArea,
   subject,
   notes,
   date,
   adviser,
+  communicationChannel,
 } = require('./fields')
 
 module.exports = function ({
   returnLink,
+  returnText,
+  buttonText,
   contacts = [],
   advisers = [],
   services = [],
+  types = [],
+  areas = [],
   teams = [],
   channels = [],
   hiddenFields,
 }) {
   return {
     returnLink,
-    buttonText: 'Add feedback',
-    returnText: 'Cancel',
+    returnText,
+    buttonText,
     hiddenFields,
     children: [
       contact(contacts),
       provider(teams),
-      service(services),
+      policyIssueType(types),
+      policyArea(areas),
       subject,
       notes,
       date,

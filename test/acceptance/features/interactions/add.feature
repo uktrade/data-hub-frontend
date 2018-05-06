@@ -25,29 +25,31 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-#  @interaction-add--companies-policy-feedback-submit
-#  Scenario: Companies policy feedback is saved
-#
-#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
-#    And I click the "Add interaction" link
-#    And I select policy feedback
-#    Then there are policy feedback fields
-#    And policy feedback fields are pre-populated
-#    When a policy feedback is added
-#      | key                      | value                                    |
-#    Then I see the success message
-#    And the details are displayed
-#      | key                      | value                                    |
-#      | Company                  | Venus Ltd                                |
-#      | Contact                  | interaction.contact                      |
-#      | Service provider         | interaction.serviceProvider              |
-#      | Service                  | interaction.service                      |
-#      | Subject                  | interaction.subject                      |
-#      | Notes                    | interaction.notes                        |
-#      | Date of interaction      | interaction.date                         |
-#      | DIT adviser              | interaction.ditAdviser                   |
-#      | Communication channel    | interaction.communicationChannel         |
-#      | Documents                | There are no files or documents          |
+  @interaction-add--companies-policy-feedback-submit
+  Scenario: Companies policy feedback is saved
+
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+    And I click the "Add interaction" link
+    And I select policy feedback
+    Then there are policy feedback fields
+    And policy feedback fields are pre-populated
+    When a policy feedback is added
+      | key                      | value                                    |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | Policy feedback                          |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
+      | Policy issue type        | interaction.policyIssueType              |
+      | Policy area              | interaction.policyArea                   |
 
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
@@ -83,7 +85,7 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When a service delivery is added
       | key                      | value                                    |
-      | Service                  | Trade - Tradeshow Access Programme (TAP) |
+      | Service                  | Tradeshow Access Programme (TAP)         |
       | Service status           | Completed                                |
       | Grant offered            | 100000                                   |
       | Net receipt              | 50000                                    |
@@ -114,7 +116,7 @@ Feature: Add a new interaction in Data hub
     And interaction fields are pre-populated
     When a service delivery is added
       | key                      | value                                    |
-      | Service                  | Trade - Tradeshow Access Programme (TAP) |
+      | Service                  | Tradeshow Access Programme (TAP)         |
     Then I see the success message
     And the details are displayed
       | key                      | value                                    |
@@ -153,29 +155,31 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-#  @interaction-add--contacts-policy-feedback-submit
-#  Scenario: Policy feedback fields from contacts
-#
-#    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
-#    And I click the "Add interaction" link
-#    And I select policy feedback
-#    Then there are interaction fields
-#    And interaction fields are pre-populated
-#    When a policy feedback is added
-#      | key                      | value                                    |
-#    Then I see the success message
-#    And the details are displayed
-#      | key                      | value                                    |
-#      | Company                  | Venus Ltd                                |
-#      | Contact                  | interaction.contact                      |
-#      | Service provider         | interaction.serviceProvider              |
-#      | Service                  | interaction.service                      |
-#      | Subject                  | interaction.subject                      |
-#      | Notes                    | interaction.notes                        |
-#      | Date of interaction      | interaction.date                         |
-#      | DIT adviser              | interaction.ditAdviser                   |
-#      | Communication channel    | interaction.communicationChannel         |
-#      | Documents                | There are no files or documents          |
+  @interaction-add--contacts-policy-feedback-submit
+  Scenario: Policy feedback fields from contacts
+
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+    And I click the "Add interaction" link
+    And I select policy feedback
+    Then there are policy feedback fields
+    And policy feedback fields are pre-populated
+    When a policy feedback is added
+      | key                      | value                                    |
+    Then I see the success message
+    And the details are displayed
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | Policy feedback                          |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of interaction      | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Communication channel    | interaction.communicationChannel         |
+      | Documents                | There are no files or documents          |
+      | Policy issue type        | interaction.policyIssueType              |
+      | Policy area              | interaction.policyArea                   |
 
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
@@ -251,5 +255,5 @@ Feature: Add a new interaction in Data hub
     Then the net receipt field is visible
     When I change form dropdown "service_delivery_status" to Current
     Then the net receipt field is hidden
-    When I change form dropdown "service" to Trade - Enquiry
+    When I change form dropdown "service" to Bank Referral
     Then the service fields are hidden

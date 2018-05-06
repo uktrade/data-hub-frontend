@@ -5,7 +5,7 @@ const authorisedRequest = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../apps/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '' } = {}) {
+async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '', context } = {}) {
   if (id) {
     return getOptionsForId(token, key, id)
   }
@@ -21,6 +21,12 @@ async function getOptions (token, key, { createdOn, currentValue, includeDisable
     const lowercaseTerm = term.toLowerCase()
     options = options.filter((option) => {
       return option.name.toLowerCase().startsWith(lowercaseTerm)
+    })
+  }
+
+  if (context) {
+    options = options.filter((option) => {
+      return !option.contexts || option.contexts.includes(context)
     })
   }
 

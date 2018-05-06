@@ -21,7 +21,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(mockInteraction)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -38,6 +38,8 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
         })
       })
     })
@@ -56,7 +58,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -73,6 +75,8 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
         })
       })
     })
@@ -88,7 +92,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(interaction)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -105,6 +109,8 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
         })
       })
     })
