@@ -28,6 +28,14 @@ const LOCAL_NAV = [
     ],
   },
   {
+    path: 'propositions',
+    label: 'Propositions',
+    permissions: [
+      'proposition.read_associated_investmentproject_propositions',
+      'proposition.read_all_proposition',
+    ],
+  },
+  {
     path: 'evaluation',
     label: 'Evaluations',
   },

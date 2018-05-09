@@ -9,6 +9,7 @@ const { transformEventToListItem } = require('../events/transformers')
 const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
 const { transformInteractionToListItem } = require('../interactions/transformers')
+const { transformPropositionsToListItem } = require('../propositions/transformers')
 
 async function renderSearchResults (req, res) {
   const entity = find(ENTITIES, ['path', req.params.searchPath])
@@ -53,6 +54,10 @@ async function renderSearchResults (req, res) {
 
   if (searchEntity === 'interaction') {
     itemTransformers.push(transformInteractionToListItem)
+  }
+
+  if (searchEntity === 'proposition') {
+    itemTransformers.push(transformPropositionsToListItem)
   }
 
   const results = await search({

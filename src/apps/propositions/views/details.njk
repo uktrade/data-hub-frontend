@@ -1,0 +1,8 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_right_column %}
+   {% component 'key-value-table', variant='striped', items=propositionViewRecord %}
+  <a class="button button--secondary" href="{{proposition.id}}/{{ proposition.kind | kebabCase }}/edit">
+    Edit {{ proposition.kind | lowerCase }}
+  </a>
+{% endblock %}
