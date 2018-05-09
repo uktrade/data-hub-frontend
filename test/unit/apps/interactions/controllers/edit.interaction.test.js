@@ -362,7 +362,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=interaction')
+        .get('/metadata/service/?contexts__has_any=investment_project_interaction')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -559,7 +559,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=interaction')
+        .get('/metadata/service/?contexts__has_any=investment_project_interaction')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -588,9 +588,6 @@ describe('Interaction edit controller (Interactions)', () => {
         company: {
           id: '1',
           name: 'Fred ltd.',
-        },
-        investmentData: {
-          id: '3',
         },
         interaction: interactionData,
         form: {
