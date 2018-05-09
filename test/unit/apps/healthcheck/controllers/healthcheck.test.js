@@ -9,19 +9,19 @@ describe('Health check controller', () => {
           },
         },
       ]
-      this.logger = sandbox.stub().returns({ error: sandbox.spy() })
+      this.logger = sinon.stub().returns({ error: sinon.spy() })
       this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
       this.req = {}
       this.res = {
-        set: sandbox.spy(),
-        status: sandbox.stub().returns({
-          send: sandbox.spy(),
+        set: sinon.spy(),
+        status: sinon.stub().returns({
+          send: sinon.spy(),
         }),
       }
-      this.next = sandbox.spy()
+      this.next = sinon.spy()
     })
 
     it('should set cache control', async () => {
@@ -63,19 +63,19 @@ describe('Health check controller', () => {
           },
         },
       ]
-      this.logger = { error: sandbox.spy() }
+      this.logger = { error: sinon.spy() }
       this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
       this.req = {}
       this.res = {
-        set: sandbox.spy(),
-        status: sandbox.stub().returns({
-          send: sandbox.spy(),
+        set: sinon.spy(),
+        status: sinon.stub().returns({
+          send: sinon.spy(),
         }),
       }
-      this.next = sandbox.spy()
+      this.next = sinon.spy()
     })
 
     it('should set cache control', async () => {
@@ -120,19 +120,19 @@ describe('Health check controller', () => {
           },
         },
       ]
-      this.logger = sandbox.stub().returns({ error: sandbox.spy() })
+      this.logger = sinon.stub().returns({ error: sinon.spy() })
       this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
       this.req = {}
       this.res = {
-        set: sandbox.spy(),
-        status: sandbox.stub().returns({
-          send: sandbox.spy(),
+        set: sinon.spy(),
+        status: sinon.stub().returns({
+          send: sinon.spy(),
         }),
       }
-      this.next = sandbox.spy()
+      this.next = sinon.spy()
     })
 
     it('should set content type and cache control', async () => {
@@ -177,19 +177,19 @@ describe('Health check controller', () => {
           },
         },
       ]
-      this.logger = { error: sandbox.spy() }
+      this.logger = { error: sinon.spy() }
       this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
       this.req = {}
       this.res = {
-        set: sandbox.spy(),
-        status: sandbox.stub().returns({
-          send: sandbox.spy(),
+        set: sinon.spy(),
+        status: sinon.stub().returns({
+          send: sinon.spy(),
         }),
       }
-      this.next = sandbox.spy()
+      this.next = sinon.spy()
     })
 
     it('should set content type and cache control', async () => {

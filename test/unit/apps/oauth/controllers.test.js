@@ -3,9 +3,9 @@ const { assign, set } = require('lodash')
 
 describe('OAuth controller', () => {
   beforeEach(() => {
-    this.mockUuid = sandbox.stub().returns(this.mockUUIDvalue)
+    this.mockUuid = sinon.stub().returns(this.mockUUIDvalue)
     this.mockConfig = {}
-    this.saveSessionStub = sandbox.stub()
+    this.saveSessionStub = sinon.stub()
     this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
@@ -22,14 +22,14 @@ describe('OAuth controller', () => {
     this.mockStateId = 'mock-state-id'
 
     this.resMock = assign({}, globalRes, {
-      redirect: sandbox.spy(),
-      render: sandbox.spy(),
-      clearCookie: sandbox.spy(),
+      redirect: sinon.spy(),
+      render: sinon.spy(),
+      clearCookie: sinon.spy(),
     })
     this.reqMock = assign({}, globalReq, {
       session: {},
     })
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
 
     this.mockConfig.oauth = {
       tokenFetchUrl: this.mockFetchUrl.host + this.mockFetchUrl.path,

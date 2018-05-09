@@ -2,10 +2,10 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment project, client relationship management, edit controller', () => {
   beforeEach(() => {
-    this.nextStub = sandbox.stub()
-    this.flashStub = sandbox.stub()
-    this.getDataLabelsStub = sandbox.stub()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.nextStub = sinon.stub()
+    this.flashStub = sinon.stub()
+    this.getDataLabelsStub = sinon.stub()
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/edit-client-relationship-management', {
       '../../../../lib/controller-utils': {

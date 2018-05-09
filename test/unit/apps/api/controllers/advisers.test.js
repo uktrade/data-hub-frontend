@@ -31,10 +31,10 @@ describe('Adviser options API controller', () => {
     }
 
     this.resMock = {
-      json: sandbox.spy(),
+      json: sinon.spy(),
     }
 
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   context('when called with a name for an adviser', () => {

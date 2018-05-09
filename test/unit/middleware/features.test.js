@@ -12,9 +12,9 @@ describe('feature flag middleware', () => {
       locals: {},
     }
 
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
 
-    this.loggerStub = sandbox.stub()
+    this.loggerStub = sinon.stub()
 
     this.features = proxyquire('~/src/middleware/features', {
       '../../config/logger': {

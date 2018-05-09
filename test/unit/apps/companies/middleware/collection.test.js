@@ -20,7 +20,7 @@ describe('Company collection middleware', () => {
         { id: '333', name: 'C' },
       ],
     }
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.reqMock = {
       ...globalReq,
       session: { token: 'abcd' },
@@ -96,8 +96,8 @@ describe('Company collection middleware', () => {
   describe('#getLimitedCompaniesCollection', () => {
     context('when search returns results', () => {
       beforeEach(async () => {
-        this.searchStub = sandbox.stub().resolves(companiesHouseSearchResults)
-        this.transformerStub = sandbox.stub().returns({
+        this.searchStub = sinon.stub().resolves(companiesHouseSearchResults)
+        this.transformerStub = sinon.stub().returns({
           id: '1234',
           name: 'Freds',
           meta: [],

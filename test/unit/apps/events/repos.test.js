@@ -5,8 +5,8 @@ const token = 'abcd'
 
 describe('Event repos', () => {
   beforeEach(() => {
-    this.authorisedRequestStub = sandbox.stub().resolves()
-    this.searchSpy = sandbox.spy(search)
+    this.authorisedRequestStub = sinon.stub().resolves()
+    this.searchSpy = sinon.spy(search)
     this.repos = proxyquire('~/src/apps/events/repos', {
       '../../lib/authorised-request': this.authorisedRequestStub,
       '../search/services': {

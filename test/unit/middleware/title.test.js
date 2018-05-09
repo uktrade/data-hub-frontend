@@ -5,7 +5,7 @@ describe('title middleware', () => {
 
   describe('set title', () => {
     it('should set title to the string passed', () => {
-      const nextSpy = sandbox.spy()
+      const nextSpy = sinon.spy()
       const resMock = { locals: {} }
       const testTitle = 'Test title'
 

@@ -3,12 +3,12 @@ const eventCollectionData = require('~/test/unit/data/events/collection.json')
 
 describe('Event collection middleware', () => {
   beforeEach(() => {
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
     this.req = assign({}, globalReq, {
       session: { token: 'abcd' },
     })
     this.res = assign({}, globalRes)
-    this.searchStub = sandbox.stub()
+    this.searchStub = sinon.stub()
 
     this.controller = proxyquire('~/src/apps/events/middleware/collection', {
       '../../search/services': {

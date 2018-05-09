@@ -56,7 +56,7 @@ describe('Event edit controller', () => {
   const currentUserTeam = 'team1'
 
   beforeEach(() => {
-    this.filterActiveAdvisersSpy = sandbox.spy(adviserFilters, 'filterActiveAdvisers')
+    this.filterActiveAdvisersSpy = sinon.spy(adviserFilters, 'filterActiveAdvisers')
 
     this.controller = proxyquire('~/src/apps/events/controllers/edit', {
       '../../adviser/filters': {
@@ -77,13 +77,13 @@ describe('Event edit controller', () => {
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
-      redirect: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.spy(),
+      redirect: sinon.spy(),
       locals: { },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
 
     this.activeInactiveAdviserData = {
       count: 5,

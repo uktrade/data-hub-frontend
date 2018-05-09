@@ -24,14 +24,14 @@ describe('Interaction edit controller (Interactions)', () => {
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      title: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
-      redirect: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      title: sinon.stub().returnsThis(),
+      render: sinon.spy(),
+      redirect: sinon.spy(),
       locals: {},
     }
 
-    this.nextStub = sandbox.stub()
+    this.nextStub = sinon.stub()
 
     const yesterday = moment().subtract(1, 'days').toISOString()
 

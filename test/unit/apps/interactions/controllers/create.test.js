@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 
 describe('Create interaction, step 1', () => {
   beforeEach(() => {
-    this.kindFormStub = sandbox.spy()
+    this.kindFormStub = sinon.spy()
 
     this.create = proxyquire('~/src/apps/interactions/controllers/create', {
       '../macros': {
@@ -19,15 +19,15 @@ describe('Create interaction, step 1', () => {
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      redirect: sandbox.spy(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      redirect: sinon.spy(),
+      render: sinon.spy(),
       locals: {
         returnLink: '/return/',
       },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#postcreate', () => {

@@ -3,7 +3,7 @@ const { getMacros } = require('~/test/unit/macro-helper')
 describe('LocalHeader macro', () => {
   beforeEach(() => {
     this.commonMacros = getMacros('common', {
-      getMessages: sandbox.stub(),
+      getMessages: sinon.stub(),
     })
   })
 
