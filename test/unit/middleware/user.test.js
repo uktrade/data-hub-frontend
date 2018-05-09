@@ -8,8 +8,8 @@ const user = {
 
 describe('user middleware', () => {
   beforeEach(() => {
-    this.authorisedRequestStub = sandbox.stub()
-    this.nextSpy = sandbox.spy()
+    this.authorisedRequestStub = sinon.stub()
+    this.nextSpy = sinon.spy()
 
     this.userMiddleware = proxyquire('~/src/middleware/user', {
       '../../config': {

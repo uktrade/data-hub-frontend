@@ -5,8 +5,8 @@ describe('CRSF token', () => {
 
   describe('set a CSRF token', () => {
     it('should set the csrf token on response locals object', () => {
-      const csrfSpy = sandbox.spy()
-      const nextSpy = sandbox.spy()
+      const csrfSpy = sinon.spy()
+      const nextSpy = sinon.spy()
       const reqMock = { csrfToken: csrfSpy }
       const resMock = { locals: {} }
 

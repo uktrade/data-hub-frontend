@@ -2,7 +2,7 @@ const { merge, find } = require('lodash')
 
 describe('investment status controller', () => {
   beforeEach(() => {
-    this.updateInvestmentStub = sandbox.stub().resolves()
+    this.updateInvestmentStub = sinon.stub().resolves()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/status', {
       '../repos': {
@@ -18,14 +18,14 @@ describe('investment status controller', () => {
       params: {
         investmentId: '111',
       },
-      flash: sandbox.spy(),
+      flash: sinon.spy(),
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      title: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
-      redirect: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      title: sinon.stub().returnsThis(),
+      render: sinon.spy(),
+      redirect: sinon.spy(),
       locals: {
         investmentData: {
           id: '111',
@@ -34,7 +34,7 @@ describe('investment status controller', () => {
       },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#renderStatusPage', () => {
@@ -149,7 +149,7 @@ describe('investment status controller', () => {
 
     context('when a post causes form errors', () => {
       beforeEach(async () => {
-        this.error = sandbox.stub()
+        this.error = sinon.stub()
 
         this.updateInvestmentStub.rejects({
           statusCode: 400,
@@ -170,7 +170,7 @@ describe('investment status controller', () => {
 
     context('when a post causes an unknown error', () => {
       beforeEach(async () => {
-        this.error = sandbox.stub()
+        this.error = sinon.stub()
 
         this.updateInvestmentStub.rejects(this.error)
 

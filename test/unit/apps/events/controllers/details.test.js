@@ -18,8 +18,8 @@ describe('Event details controller', () => {
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.spy(),
       locals: {
         event: {
           name: 'Dance',
@@ -27,7 +27,7 @@ describe('Event details controller', () => {
       },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#renderDetailsPage', async () => {

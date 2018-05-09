@@ -8,7 +8,7 @@ const teamMembersController = require('~/src/apps/investment-projects/middleware
 
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {
-    this.nextStub = sandbox.stub()
+    this.nextStub = sinon.stub()
     this.reqMock = {
       session: {
         token: uuid(),
@@ -16,14 +16,14 @@ describe('Investment form middleware - team members', () => {
       params: {
         investmentId: investmentData.id,
       },
-      flash: sandbox.stub(),
+      flash: sinon.stub(),
     }
 
     this.resMock = {
       locals: {
         investmentData,
       },
-      redirect: sandbox.stub(),
+      redirect: sinon.stub(),
     }
   })
 

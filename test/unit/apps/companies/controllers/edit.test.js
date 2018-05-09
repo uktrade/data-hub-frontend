@@ -50,10 +50,10 @@ const metaDataMock = {
 
 describe('Company edit controller', () => {
   beforeEach(() => {
-    this.breadcrumbStub = sandbox.stub().returnsThis()
-    this.renderSpy = sandbox.spy()
-    this.nextSpy = sandbox.spy()
-    this.redirectSpy = sandbox.spy()
+    this.breadcrumbStub = sinon.stub().returnsThis()
+    this.renderSpy = sinon.spy()
+    this.nextSpy = sinon.spy()
+    this.redirectSpy = sinon.spy()
 
     this.controller = require('~/src/apps/companies/controllers/edit')
 

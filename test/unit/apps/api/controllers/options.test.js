@@ -16,10 +16,10 @@ describe('options API controller', () => {
     }
 
     this.resMock = {
-      json: sandbox.spy(),
+      json: sinon.spy(),
     }
 
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
 
     const regions = [{
       id: '1',
