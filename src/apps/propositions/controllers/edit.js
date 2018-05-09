@@ -1,14 +1,12 @@
 /* eslint camelcase: 0 */
-const { get, merge, pickBy, lowerCase, snakeCase, assign } = require('lodash')
+const { get, merge, pickBy, lowerCase, assign } = require('lodash')
 
 const { transformPropositionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
-const { propositionForm, serviceDeliveryForm, policyFeedbackForm } = require('../macros')
+const { propositionForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const formConfigs = {
   'proposition': propositionForm,
-  'service-delivery': serviceDeliveryForm,
-  'policy-feedback': policyFeedbackForm,
 }
 
 function renderEditPage (req, res) {
@@ -30,9 +28,9 @@ function renderEditPage (req, res) {
           buttonText: propositionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
           hiddenFields: {
             id: propositionId,
-            company: res.locals.company.id,
+            // company: res.locals.company.id,
             investment_project: get(res.locals, 'investmentData.id'),
-            kind: snakeCase(req.params.kind),
+            // kind: snakeCase(req.params.kind),
           },
         })),
       mergedPropositionData,

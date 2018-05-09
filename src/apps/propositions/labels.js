@@ -1,13 +1,10 @@
 const proposition = {
   company: 'Company',
-  subject: 'Subject',
-  notes: 'Notes',
+  name: 'Proposition Name',
+  scope: 'Scope',
   contact: 'Contact',
-  date: 'Date of proposition',
+  deadline: 'Proposition Deadline',
   dit_adviser: 'DIT adviser',
-  service: 'Service',
-  dit_team: 'Service provider',
-  communication_channel: 'Communication channel',
   investment_project: 'Investment project',
   documents: 'Documents',
 }

@@ -3,7 +3,6 @@ const { get, assign, isNil, mapKeys, pickBy, camelCase } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
-const config = require('../../../config')
 const labels = require('./labels')
 const { PROPOSITION_NAMES } = require('./constants')
 
@@ -14,77 +13,57 @@ const transformEntityLink = (entity, entityPath, noLinkText = null) => {
   } : noLinkText
 }
 
-const transformDocumentsLink = (archived_documents_url_path) => {
-  if (archived_documents_url_path) {
-    return {
-      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
-      name: 'View files and documents',
-      hint: '(will open another website)',
-      hintId: 'external-link-label',
-    }
-  }
-
-  return { name: 'There are no files or documents' }
-}
-
+// const transformDocumentsLink = (archived_documents_url_path) => {
+//   if (archived_documents_url_path) {
+//     return {
+//       url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+//       name: 'View files and documents',
+//       hint: '(will open another website)',
+//       hintId: 'external-link-label',
+//     }
+//   }
+//
+//   return { name: 'There are no files or documents' }
+// }
 function transformPropositionResponseToForm ({
   id,
-  contact,
-  dit_team,
-  dit_adviser,
-  event,
-  service,
-  service_delivery_status,
-  grant_amount_offered,
-  net_company_receipt,
-  subject,
-  notes,
-  date,
-  company,
-  communication_channel,
+  adviser,
+  name,
+  scope,
+  deadline,
+  investment_project,
 } = {}) {
   if (!id) return null
 
-  const isValidDate = isValid(new Date(date))
+  const isValidDate = isValid(new Date(deadline))
 
   return {
     id,
-    subject,
-    notes,
-    grant_amount_offered,
-    net_company_receipt,
-    contact: get(contact, 'id'),
-    dit_team: get(dit_team, 'id'),
-    dit_adviser: get(dit_adviser, 'id'),
-    is_event: isNil(event) ? 'false' : 'true',
-    event: get(event, 'id'),
-    service: get(service, 'id'),
-    service_delivery_status: get(service_delivery_status, 'id'),
-    date: {
-      day: isValidDate ? format(date, 'DD') : '',
-      month: isValidDate ? format(date, 'MM') : '',
-      year: isValidDate ? format(date, 'YYYY') : '',
+    name,
+    scope,
+    adviser: get(adviser, 'id'),
+    deadline: {
+      day: isValidDate ? format(deadline, 'DD') : '',
+      month: isValidDate ? format(deadline, 'MM') : '',
+      year: isValidDate ? format(deadline, 'YYYY') : '',
     },
-    company: get(company, 'id'),
-    communication_channel: get(communication_channel, 'id'),
+    investment_project: get(investment_project, 'id'),
   }
 }
 
 function transformPropositionToListItem ({
   id,
-  subject,
+  name,
+  scope,
   kind,
-  contact,
-  company,
-  date,
-  dit_adviser,
-  dit_team,
-  communication_channel,
+  deadline,
+  adviser,
 }) {
   return {
     id,
     type: 'proposition',
-    name: subject || 'No subject',
+    name: name || 'No subject',
+    scope: scope || 'No scope',
     meta: [
       {
         label: 'Type',
@@ -92,25 +71,13 @@ function transformPropositionToListItem ({
         value: PROPOSITION_NAMES[kind],
       },
       {
-        label: 'Date',
-        value: date,
+        label: 'Deadline',
+        value: deadline,
         type: 'date',
       },
       {
-        label: 'Contact',
-        value: contact,
-      },
-      {
-        label: 'Company',
-        value: company,
-      },
-      {
         label: 'Adviser',
-        value: dit_adviser,
-      },
-      {
-        label: 'Service provider',
-        value: dit_team,
+        value: adviser,
       },
     ],
   }
@@ -118,10 +85,10 @@ function transformPropositionToListItem ({
 
 function transformPropositionResponseToViewRecord ({
   company,
-  subject,
-  notes,
-  date,
-  dit_adviser,
+  name,
+  scope,
+  deadline,
+  adviser,
   service,
   service_delivery_status,
   grant_amount_offered,
@@ -132,35 +99,17 @@ function transformPropositionResponseToViewRecord ({
   communication_channel,
   event,
   kind,
-  archived_documents_url_path,
 }) {
-  const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
   const transformed = {
-    company: transformEntityLink(company, 'companies'),
-    contact: transformEntityLink(contact, 'contacts'),
-    dit_team,
-    service,
-    service_delivery_status,
-    grant_amount_offered: grant_amount_offered ? {
-      type: 'currency',
-      name: grant_amount_offered,
-    } : null,
-    net_company_receipt: net_company_receipt ? {
-      type: 'currency',
-      name: net_company_receipt,
-    } : null,
-    subject,
-    notes,
-    date: {
+    name,
+    scope,
+    deadline: {
       type: 'date',
-      name: date,
+      name: deadline,
     },
-    dit_adviser,
+    adviser,
     investment_project: transformEntityLink(investment_project, 'investment-projects'),
-    event: transformEntityLink(event, 'events', defaultEventText),
-    communication_channel: communication_channel,
-    documents: transformDocumentsLink(archived_documents_url_path),
   }
 
   return pickBy(mapKeys(transformed, (value, key) => {
@@ -170,9 +119,7 @@ function transformPropositionResponseToViewRecord ({
 
 function transformPropositionFormBodyToApiRequest (props) {
   return assign({}, props, {
-    date: transformDateObjectToDateString('date')(props),
-    grant_amount_offered: props.grant_amount_offered || null,
-    net_company_receipt: props.net_company_receipt || null,
+    deadline: transformDateObjectToDateString('deadline')(props),
   })
 }
 

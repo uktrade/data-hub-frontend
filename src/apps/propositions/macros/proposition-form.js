@@ -2,13 +2,9 @@ const { assign } = require('lodash')
 
 const labels = require('../labels')
 const {
-  contact,
-  communicationChannel,
-  provider,
-  service,
-  subject,
-  notes,
-  date,
+  name,
+  scope,
+  deadline,
   adviser,
 } = require('./fields')
 
@@ -16,11 +12,7 @@ module.exports = function ({
   returnLink,
   returnText,
   buttonText,
-  contacts = [],
   advisers = [],
-  services = [],
-  teams = [],
-  channels = [],
   hiddenFields,
 }) {
   return {
@@ -29,14 +21,10 @@ module.exports = function ({
     buttonText,
     hiddenFields,
     children: [
-      contact(contacts),
-      provider(teams),
-      service(services),
-      subject,
-      notes,
-      date,
+      name,
+      scope,
       adviser(advisers),
-      communicationChannel(channels),
+      deadline,
     ].map(field => {
       return assign(field, {
         label: labels.proposition[field.name],

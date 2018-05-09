@@ -175,7 +175,7 @@ router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.ha
 
 router.use('/:investmentId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
-// router.use('/:investmentId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions, propositionsRouter)
+router.use('/:investmentId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions, propositionsRouter)
 
 router
   .route('/:investmentId/status')

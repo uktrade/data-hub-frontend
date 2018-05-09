@@ -22,8 +22,6 @@ async function getPropositionCollection (req, res, next) {
 }
 
 function setPropositionsReturnUrl (req, res, next) {
-
-
   console.log('>>>>>>>>>>>>>>> <<<<<<<<<<<<<<<<<<<<<')
   res.locals.returnLink = `/investment-projects/${req.params.investmentId}/propositions/`
   next()

@@ -1,40 +1,15 @@
 module.exports = {
-  contact (contacts) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'contact',
-      initialOption: '-- Select contact --',
-      options: contacts,
-    }
-  },
-  provider (teams) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'dit_team',
-      initialOption: '-- Select provider --',
-      options: teams,
-    }
-  },
-  service (services) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'service',
-      initialOption: '-- Select service --',
-      options: services,
-    }
-  },
-  subject: {
+  name: {
     macroName: 'TextField',
-    name: 'subject',
+    name: 'name',
   },
-  notes: {
+  scope: {
     macroName: 'TextField',
-    type: 'textarea',
-    name: 'notes',
+    name: 'scope',
   },
-  date: {
+  deadline: {
     macroName: 'DateFieldset',
-    name: 'date',
+    name: 'deadline',
   },
   adviser (advisers) {
     return {
@@ -42,14 +17,6 @@ module.exports = {
       name: 'dit_adviser',
       initialOption: '-- Select adviser --',
       options: advisers,
-    }
-  },
-  communicationChannel (channels) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'communication_channel',
-      initialOption: '-- Select communication channel --',
-      options: channels,
     }
   },
 }
