@@ -4,7 +4,7 @@ const { transformInvestmentProjectToListItem } = require('~/src/apps/investment-
 describe('Investment list controller', () => {
   beforeEach(() => {
     this.transformedInvestmentProjects = {}
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
     this.req = {
       session: {
         token: 'abcd',
@@ -12,14 +12,14 @@ describe('Investment list controller', () => {
       query: {},
     }
     this.res = {
-      render: sandbox.spy(),
+      render: sinon.spy(),
       query: {},
     }
 
-    this.getInvestmentsStub = sandbox.stub().resolves(investmentsListData)
-    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformedInvestmentProjects)
+    this.getInvestmentsStub = sinon.stub().resolves(investmentsListData)
+    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformedInvestmentProjects)
 
-    this.buildSelectedFiltersSummaryStub = sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
       '../../builders': {
@@ -27,7 +27,7 @@ describe('Investment list controller', () => {
       },
     })
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#renderInvestmentList', () => {

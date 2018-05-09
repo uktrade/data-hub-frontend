@@ -13,7 +13,7 @@ describe('Companies interactions middleware', () => {
         },
       },
     }
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#setInteractionsReturnUrl', () => {

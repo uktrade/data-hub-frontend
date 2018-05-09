@@ -50,10 +50,10 @@ const metadataMock = {
 
 describe('Companies form middleware', () => {
   beforeEach(() => {
-    this.flashSpy = sandbox.spy()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
-    this.redirectSpy = sandbox.spy()
-    this.nextSpy = sandbox.spy()
+    this.flashSpy = sinon.spy()
+    this.breadcrumbStub = sinon.stub().returnsThis()
+    this.redirectSpy = sinon.spy()
+    this.nextSpy = sinon.spy()
 
     this.reqMock = {
       query: {},
@@ -239,7 +239,7 @@ describe('Companies form middleware', () => {
 
   describe('handleFormPost()', () => {
     beforeEach(() => {
-      this.saveCompanyFormSpy = sandbox.spy(formService, 'saveCompanyForm')
+      this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
     })
 
     context('when saving a new company works', () => {

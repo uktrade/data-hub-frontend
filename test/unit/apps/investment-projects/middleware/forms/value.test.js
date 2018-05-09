@@ -22,7 +22,7 @@ const metadataMock = {
 
 describe('Investment form middleware - investment value', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
 
     this.reqMock = {
       session: {
@@ -31,12 +31,12 @@ describe('Investment form middleware - investment value', () => {
       params: {
         investmentId: '1234',
       },
-      flash: sandbox.stub(),
+      flash: sinon.stub(),
     }
 
     this.resMock = {
       locals: {},
-      redirect: sandbox.stub(),
+      redirect: sinon.stub(),
     }
 
     nock(config.apiRoot)

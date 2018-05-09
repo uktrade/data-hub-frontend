@@ -1,8 +1,8 @@
 describe('Search transformers', () => {
   beforeEach(() => {
-    this.transformApiResponseToCollectionInnerStub = sandbox.stub().returns()
-    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
-    this.buildSearchAggregationStub = sandbox.stub()
+    this.transformApiResponseToCollectionInnerStub = sinon.stub().returns()
+    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.buildSearchAggregationStub = sinon.stub()
 
     this.responseMock = {
       aggregations: {},
@@ -55,8 +55,8 @@ describe('Search transformers', () => {
     })
 
     it('should call transformApiResponseToCollection transformer with given transformers', () => {
-      const firstItemTransformerSpy = sandbox.spy()
-      const secondItemTransformerSpy = sandbox.spy()
+      const firstItemTransformerSpy = sinon.spy()
+      const secondItemTransformerSpy = sinon.spy()
 
       this.transformers.transformApiResponseToSearchCollection(
         undefined,

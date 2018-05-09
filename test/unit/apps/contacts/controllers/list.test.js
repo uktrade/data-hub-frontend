@@ -4,7 +4,7 @@ const { transformContactToListItem } = require('~/src/apps/contacts/transformers
 describe('Contact list controller', () => {
   beforeEach(() => {
     this.transformedContacts = {}
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
     this.req = {
       session: {
         token: 'abcd',
@@ -12,14 +12,14 @@ describe('Contact list controller', () => {
       query: {},
     }
     this.res = {
-      render: sandbox.spy(),
+      render: sinon.spy(),
       query: {},
     }
 
-    this.getContactsStub = sandbox.stub().resolves(contactsListData)
-    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformContactToListItem)
+    this.getContactsStub = sinon.stub().resolves(contactsListData)
+    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformContactToListItem)
 
-    this.buildSelectedFiltersSummaryStub = sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/contacts/controllers/list', {
       '../../builders': {
@@ -27,7 +27,7 @@ describe('Contact list controller', () => {
       },
     })
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#renderContactList', () => {

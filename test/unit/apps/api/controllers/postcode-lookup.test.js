@@ -2,11 +2,11 @@ describe('postcodeLookupHandler', () => {
   beforeEach(() => {
     this.req = { params: { postcode: 'dn21 6fg' } }
     this.resMock = {
-      send: sandbox.spy(),
-      json: sandbox.spy(),
-      status: sandbox.stub().returnsThis(),
+      send: sinon.spy(),
+      json: sinon.spy(),
+      status: sinon.stub().returnsThis(),
     }
-    this.lookupAddressStub = sandbox.stub().resolves([
+    this.lookupAddressStub = sinon.stub().resolves([
       { country: 'united kingdom' },
     ])
     this.controller = proxyquire('~/src/apps/api/controllers/postcode-lookup', {
@@ -35,7 +35,7 @@ describe('postcodeLookupHandler', () => {
     beforeEach(async () => {
       this.statusCode = 400
       this.message = 'error'
-      this.lookupAddressStub = sandbox.stub().throws({
+      this.lookupAddressStub = sinon.stub().throws({
         statusCode: this.statusCode, message: this.message,
       })
       await this.controller.postcodeLookupHandler(this.req, this.resMock)

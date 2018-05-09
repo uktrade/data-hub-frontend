@@ -4,13 +4,13 @@ const { contactAuditLabels } = require('~/src/apps/contacts/labels')
 describe('Contact audit controller', () => {
   beforeEach(() => {
     this.transformed = {}
-    this.getContactAuditLogStub = sandbox.stub().resolves(auditLog)
-    this.transformApiResponseToCollectionInnerStub = sandbox.stub().returns()
-    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformApiResponseToCollectionInnerStub)
-    this.generatedTransformer = sandbox.stub()
-    this.transformAuditLogToListItemStub = sandbox.stub().returns(this.generatedTransformer)
+    this.getContactAuditLogStub = sinon.stub().resolves(auditLog)
+    this.transformApiResponseToCollectionInnerStub = sinon.stub().returns()
+    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.generatedTransformer = sinon.stub()
+    this.transformAuditLogToListItemStub = sinon.stub().returns(this.generatedTransformer)
 
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/contacts/controllers/audit', {
       '../repos': {

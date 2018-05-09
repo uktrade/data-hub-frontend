@@ -4,15 +4,15 @@ const Controller = require('~/src/apps/omis/controllers/form')
 
 describe('OMIS FormController', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.stub()
-    this.redirectSpy = sandbox.spy()
+    this.nextSpy = sinon.stub()
+    this.redirectSpy = sinon.spy()
 
     this.controller = new Controller({ route: '/' })
   })
 
   describe('render()', () => {
     beforeEach(() => {
-      this.breadcrumbSpy = sandbox.spy()
+      this.breadcrumbSpy = sinon.spy()
       this.reqMock = Object.assign({}, globalReq, {
         form: {
           options: {},
@@ -137,7 +137,7 @@ describe('OMIS FormController', () => {
 
     context('when form submission is a save', () => {
       beforeEach(() => {
-        this.saveValuesSpy = sandbox.spy()
+        this.saveValuesSpy = sinon.spy()
         this.reqMock = Object.assign({}, globalReq, {
           form: {
             values: {
@@ -202,7 +202,7 @@ describe('OMIS FormController', () => {
 
   describe('getErrors()', () => {
     beforeEach(() => {
-      this.getErrorsStub = sandbox.stub()
+      this.getErrorsStub = sinon.stub()
 
       FormController.prototype.getErrors = this.getErrorsStub
     })
@@ -271,9 +271,9 @@ describe('OMIS FormController', () => {
 
   describe('errorHandler()', () => {
     beforeEach(() => {
-      this.errorHandlerSpy = sandbox.spy()
-      this.breadcrumbSpy = sandbox.stub().returnsThis()
-      this.renderSpy = sandbox.spy()
+      this.errorHandlerSpy = sinon.spy()
+      this.breadcrumbSpy = sinon.stub().returnsThis()
+      this.renderSpy = sinon.spy()
       this.resMock = Object.assign({}, globalRes, {
         redirect: this.redirectSpy,
         breadcrumb: this.breadcrumbSpy,
