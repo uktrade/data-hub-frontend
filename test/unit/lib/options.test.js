@@ -13,6 +13,31 @@ const regionOptions = [
   { id: '2', name: 'r2', disabled_on: yesterday },
 ]
 
+const serviceOptions = [
+  {
+    id: '1',
+    name: 'Advice',
+    disabled_on: null,
+    contexts: [
+      'service_delivery',
+      'investment_project_interaction',
+      'interaction',
+      'event',
+    ],
+  },
+  {
+    id: '2',
+    name: 'Sales',
+    disabled_on: '2017-06-27T13:43:29.000001Z',
+    contexts: [
+      'service_delivery',
+      'investment_project_interaction',
+      'interaction',
+      'event',
+    ],
+  },
+]
+
 describe('#options', () => {
   beforeEach(() => {
     nock(config.apiRoot)
@@ -98,6 +123,24 @@ describe('#options', () => {
       expect(this.options).to.deep.equal([
         { label: 'r1', value: '1' },
       ])
+    })
+  })
+
+  context('when a context is provided', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .get('/metadata/service/?contexts__has_any=interaction')
+        .reply(200, serviceOptions)
+    })
+
+    context('when there is a context in the options response', () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'service', { context: 'interaction' })
+      })
+
+      it('should return options in that context', () => {
+        expect(this.options).to.deep.equal([{ label: 'Advice', value: '1' }])
+      })
     })
   })
 })
