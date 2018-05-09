@@ -5,7 +5,7 @@ const mockInvestmentDetails = {
 
 describe('Investment create controller', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
+    this.next = sinon.stub()
     this.breadcrumbStub = () => {
       return this
     }

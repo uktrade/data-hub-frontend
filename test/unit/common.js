@@ -17,7 +17,6 @@ global.rootPath = `${process.cwd()}`
 global.rootPath = `${process.cwd()}`
 global.globalReq = reqres.req()
 global.globalRes = reqres.res()
-global.sandbox = null
 
 chai.config.truncateThreshold = 0
 

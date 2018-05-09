@@ -15,8 +15,8 @@ describe('Companies details controller', () => {
 
     this.res = {
       locals: {},
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.stub(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.stub(),
     }
   })
 

@@ -2,7 +2,7 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment team middleware', () => {
   beforeEach(() => {
-    this.transformBriefInvestmentSummaryStub = sandbox.stub()
+    this.transformBriefInvestmentSummaryStub = sinon.stub()
     this.investmentData = Object.assign({}, investmentData, {
       team_members: [{
         adviser: {
@@ -24,8 +24,8 @@ describe('Investment team middleware', () => {
       },
     }
 
-    this.getAdviserStub = sandbox.stub().resolves(this.adviser)
-    this.nextSpy = sandbox.spy()
+    this.getAdviserStub = sinon.stub().resolves(this.adviser)
+    this.nextSpy = sinon.spy()
     this.reqMock = {}
     this.resMock = {
       locals: {

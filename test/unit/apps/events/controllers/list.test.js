@@ -8,7 +8,7 @@ const standardMacros = [
 
 describe('Event list controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.reqMock = {
       session: {
         token: 'abcd',
@@ -16,13 +16,13 @@ describe('Event list controller', () => {
       query: {},
     }
     this.resMock = {
-      render: sandbox.spy(),
+      render: sinon.spy(),
       query: {},
       locals: {
         advisers: advisersData,
       },
     }
-    this.eventFiltersFieldsStub = sandbox.stub()
+    this.eventFiltersFieldsStub = sinon.stub()
     this.controller = proxyquire('~/src/apps/events/controllers/list', {
       '../macros': {
         eventFiltersFields: this.eventFiltersFieldsStub,

@@ -7,10 +7,10 @@ describe('Companies documents controller', () => {
   const companyName = 'mock-name'
 
   beforeEach(() => {
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.breadcrumbStub = sinon.stub().returnsThis()
     this.resMock = assign({}, globalRes, {
       breadcrumb: this.breadcrumbStub,
-      render: sandbox.spy(),
+      render: sinon.spy(),
       locals: {
         company: {
           id: companyId,
@@ -19,7 +19,7 @@ describe('Companies documents controller', () => {
       },
     })
     this.reqMock = assign({}, globalReq)
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#renderDocuments', () => {

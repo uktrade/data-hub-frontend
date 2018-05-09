@@ -8,11 +8,11 @@ describe('OMIS list controllers', () => {
       query: {},
     }
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.spy(),
       query: {},
     }
-    this.buildSelectedFiltersSummaryStub = sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/omis/apps/list/controllers', {
       '../../../builders': {
@@ -37,9 +37,9 @@ describe('OMIS list controllers', () => {
     })
 
     it('should pass the correct data to the view', () => {
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(sandbox.match.any, sandbox.match.hasOwn('selectedFilters'))
+      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
+      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
+      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
     })
 
     it('should build filters summary', () => {

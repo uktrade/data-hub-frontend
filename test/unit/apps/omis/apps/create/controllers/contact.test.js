@@ -14,14 +14,14 @@ const contactsMockData = [{
 
 describe('OMIS create contact controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.controller = new Controller({ route: '/' })
   })
 
   describe('middlewareLocals()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'middlewareLocals')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(FormController.prototype, 'middlewareLocals')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareLocals()
     })

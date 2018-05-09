@@ -1,8 +1,4 @@
-beforeEach(() => {
-  sandbox = sinon.sandbox.create()
-})
-
 afterEach(() => {
-  sandbox.restore()
+  sinon.restore()
   nock.cleanAll()
 })

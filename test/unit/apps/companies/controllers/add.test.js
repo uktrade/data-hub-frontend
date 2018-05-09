@@ -32,7 +32,7 @@ describe('Company add controller', () => {
     searchLimitedCompaniesStub = sinon.stub().resolves(companiesHouseAndLtdCompanies)
     getCHCompanyStub = sinon.stub().resolves(companiesHouseCompany)
 
-    this.nextStub = sandbox.stub()
+    this.nextStub = sinon.stub()
 
     companyAddController = proxyquire('~/src/apps/companies/controllers/add', {
       '../../search/services': {
