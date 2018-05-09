@@ -514,9 +514,6 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        investmentData: {
-          id: '3',
-        },
         interaction: serviceDeliveryData,
         form: {
           errors: {
