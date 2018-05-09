@@ -56,7 +56,7 @@ async function getServiceOptions (req, res, createdOn) {
 }
 
 function getContextForInteraction (req, res) {
-  if (get(req, 'params.investmentId') || get(res.locals, 'interaction.investment_project.id')) {
+  if (get(res, 'locals.investmentData.id') || get(res.locals, 'interaction.investment_project.id')) {
     return 'investment_project_interaction'
   }
 
