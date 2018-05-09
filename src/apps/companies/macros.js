@@ -17,7 +17,6 @@ const companyFiltersFields = function ({ sectorOptions }) {
       macroName: 'TextField',
       label: 'Company name',
       name: 'name',
-      hint: 'At least three characters',
     },
     {
       macroName: 'MultipleChoiceField',
