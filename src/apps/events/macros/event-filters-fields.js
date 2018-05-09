@@ -9,7 +9,6 @@ const eventFiltersFields = ({ advisers }) => {
     {
       macroName: 'TextField',
       name: 'name',
-      hint: 'At least three characters',
     },
     {
       macroName: 'Typeahead',
