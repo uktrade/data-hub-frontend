@@ -81,7 +81,7 @@
     "postcss-cli": "^5.0.0",
     "postcss-loader": "^2.1.5",
     "proxyquire": "^2.0.0",
-    "query-string": "^6.1.0",
+    "qs": "^6.5.2",
     "raven": "^2.6.0",
     "redis": "^2.8.0",
     "reqres": "^2.1.0",

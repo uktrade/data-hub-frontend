@@ -5,7 +5,7 @@ describe('Pagination', () => {
     const query = { term: 'samsung' }
 
     it('should return a query string for query object', () => {
-      expect(getPageLink(1, query)).to.equal('?page=1&term=samsung')
+      expect(getPageLink(1, query)).to.equal('?term=samsung&page=1')
     })
   })
 
@@ -23,10 +23,10 @@ describe('Pagination', () => {
         totalPages: 2,
         currentPage: 1,
         prev: null,
-        next: '?page=2&term=samsung',
+        next: '?term=samsung&page=2',
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
-          { label: 2, url: '?page=2&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
         ],
       }
       expect(actual).to.deep.equal(expected)
@@ -37,11 +37,11 @@ describe('Pagination', () => {
       const expected = {
         totalPages: 2,
         currentPage: 2,
-        prev: '?page=1&term=samsung',
+        prev: '?term=samsung&page=1',
         next: null,
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
-          { label: 2, url: '?page=2&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
         ],
       }
       expect(actual).to.deep.equal(expected)
@@ -53,12 +53,12 @@ describe('Pagination', () => {
         totalPages: 5,
         currentPage: 1,
         prev: null,
-        next: '?page=2&term=samsung',
+        next: '?term=samsung&page=2',
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
-          { label: 2, url: '?page=2&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
           { label: '…' },
-          { label: 5, url: '?page=5&term=samsung' },
+          { label: 5, url: '?term=samsung&page=5' },
         ],
       }
       expect(actual).to.deep.equal(expected)
@@ -70,13 +70,13 @@ describe('Pagination', () => {
         totalPages: 5,
         currentPage: 1,
         prev: null,
-        next: '?page=2&term=samsung',
+        next: '?term=samsung&page=2',
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
-          { label: 2, url: '?page=2&term=samsung' },
-          { label: 3, url: '?page=3&term=samsung' },
-          { label: 4, url: '?page=4&term=samsung' },
-          { label: 5, url: '?page=5&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: 3, url: '?term=samsung&page=3' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
         ],
       }
       expect(actual).to.deep.equal(expected)
@@ -87,13 +87,13 @@ describe('Pagination', () => {
       const expected = {
         totalPages: 5,
         currentPage: 4,
-        prev: '?page=3&term=samsung',
-        next: '?page=5&term=samsung',
+        prev: '?term=samsung&page=3',
+        next: '?term=samsung&page=5',
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
           { label: '…' },
-          { label: 4, url: '?page=4&term=samsung' },
-          { label: 5, url: '?page=5&term=samsung' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
         ],
       }
       expect(actual).to.deep.equal(expected)
@@ -104,16 +104,16 @@ describe('Pagination', () => {
       const expected = {
         totalPages: 7,
         currentPage: 4,
-        prev: '?page=3&term=samsung',
-        next: '?page=5&term=samsung',
+        prev: '?term=samsung&page=3',
+        next: '?term=samsung&page=5',
         pages: [
-          { label: 1, url: '?page=1&term=samsung' },
-          { label: 2, url: '?page=2&term=samsung' },
-          { label: 3, url: '?page=3&term=samsung' },
-          { label: 4, url: '?page=4&term=samsung' },
-          { label: 5, url: '?page=5&term=samsung' },
-          { label: 6, url: '?page=6&term=samsung' },
-          { label: 7, url: '?page=7&term=samsung' },
+          { label: 1, url: '?term=samsung&page=1' },
+          { label: 2, url: '?term=samsung&page=2' },
+          { label: 3, url: '?term=samsung&page=3' },
+          { label: 4, url: '?term=samsung&page=4' },
+          { label: 5, url: '?term=samsung&page=5' },
+          { label: 6, url: '?term=samsung&page=6' },
+          { label: 7, url: '?term=samsung&page=7' },
         ],
       }
       expect(actual).to.deep.equal(expected)
