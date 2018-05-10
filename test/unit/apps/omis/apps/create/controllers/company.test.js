@@ -4,8 +4,8 @@ const searchMock = require('~/test/unit/data/search/company.json')
 
 describe('OMIS create company controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
-    this.searchCompaniesStub = sandbox.stub()
+    this.nextSpy = sinon.spy()
+    this.searchCompaniesStub = sinon.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/company', {
       '../../../../search/services': {
@@ -18,8 +18,8 @@ describe('OMIS create company controller', () => {
 
   describe('middlewareChecks()', () => {
     beforeEach(() => {
-      sandbox.stub(CreateController.prototype, 'middlewareChecks')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(CreateController.prototype, 'middlewareChecks')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareChecks()
     })
@@ -35,8 +35,8 @@ describe('OMIS create company controller', () => {
 
   describe('middlewareLocals()', () => {
     beforeEach(() => {
-      sandbox.stub(CreateController.prototype, 'middlewareLocals')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(CreateController.prototype, 'middlewareLocals')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareLocals()
     })
@@ -58,13 +58,13 @@ describe('OMIS create company controller', () => {
     beforeEach(() => {
       this.reqMock = {
         sessionModel: {
-          get: sandbox.stub(),
-          unset: sandbox.stub(),
+          get: sinon.stub(),
+          unset: sinon.stub(),
         },
       }
 
-      sandbox.stub(this.controller, 'post')
-      sandbox.stub(this.controller, 'successHandler')
+      sinon.stub(this.controller, 'post')
+      sinon.stub(this.controller, 'successHandler')
     })
 
     it('should check session for skip company value', () => {
@@ -131,7 +131,7 @@ describe('OMIS create company controller', () => {
           },
         },
         sessionModel: {
-          get: sandbox.stub(),
+          get: sinon.stub(),
         },
       }
     })
@@ -204,7 +204,7 @@ describe('OMIS create company controller', () => {
           },
         },
         sessionModel: {
-          get: sandbox.stub(),
+          get: sinon.stub(),
         },
       }
       this.resMock = {

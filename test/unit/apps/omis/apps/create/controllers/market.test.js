@@ -11,7 +11,7 @@ const marketOptionsMock = [
 
 describe('OMIS create market controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -32,7 +32,7 @@ describe('OMIS create market controller', () => {
           },
         })
 
-        sandbox.spy(FormController.prototype, 'configure')
+        sinon.spy(FormController.prototype, 'configure')
         await this.controller.configure(this.reqMock, globalRes, this.nextSpy)
       })
 
