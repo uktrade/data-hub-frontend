@@ -1,5 +1,5 @@
 const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
-const queryString = require('query-string')
+const queryString = require('qs')
 const { parse } = require('url')
 
 const { filterNonPermittedItem } = require('./filters')

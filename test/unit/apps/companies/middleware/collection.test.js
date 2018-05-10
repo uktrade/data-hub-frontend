@@ -170,7 +170,7 @@ describe('Company collection middleware', () => {
           this.reqMock.query.term = 'mock-search-term'
 
           nock(config.apiRoot)
-            .post('/v3/search/company?limit=10&offset=0')
+            .post('/v3/search/company?offset=0&limit=10')
             .reply(200, ghqCompanySearchResponse)
 
           await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
@@ -191,7 +191,7 @@ describe('Company collection middleware', () => {
           this.errorMsg = 'oh no!'
 
           nock(config.apiRoot)
-            .post('/v3/search/company?limit=10&offset=0')
+            .post('/v3/search/company?offset=0&limit=10')
             .replyWithError(this.errorMsg)
 
           await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
