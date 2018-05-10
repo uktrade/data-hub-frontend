@@ -9,7 +9,7 @@ describe('SSO bypass middleware', () => {
     this.reqMock = assign({}, globalReq, {
       session: {},
     })
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   context('Oauth bypass token set to false', () => {

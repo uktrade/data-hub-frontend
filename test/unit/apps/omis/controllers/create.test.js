@@ -5,9 +5,9 @@ const companyMock = require('~/test/unit/data/company.json')
 
 describe('OMIS CreateController', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
-    this.errorSpy = sandbox.spy()
-    this.getDitCompanyStub = sandbox.stub().resolves(companyMock)
+    this.nextSpy = sinon.spy()
+    this.errorSpy = sinon.spy()
+    this.getDitCompanyStub = sinon.stub().resolves(companyMock)
 
     this.ControllerClass = proxyquire('~/src/apps/omis/controllers/create', {
       '../../companies/repos': {
@@ -23,7 +23,7 @@ describe('OMIS CreateController', () => {
 
   describe('process()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'process')
+      sinon.stub(FormController.prototype, 'process')
 
       this.reqMock = {
         query: {},
@@ -83,8 +83,8 @@ describe('OMIS CreateController', () => {
 
   describe('middlewareActions()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'middlewareActions')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(FormController.prototype, 'middlewareActions')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareActions()
     })
@@ -100,8 +100,8 @@ describe('OMIS CreateController', () => {
 
   describe('middlewareLocals()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'middlewareLocals')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(FormController.prototype, 'middlewareLocals')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareLocals()
     })
@@ -117,8 +117,8 @@ describe('OMIS CreateController', () => {
 
   describe('middlewareChecks()', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'middlewareChecks')
-      sandbox.stub(this.controller, 'use')
+      sinon.stub(FormController.prototype, 'middlewareChecks')
+      sinon.stub(this.controller, 'use')
 
       this.controller.middlewareChecks()
     })
@@ -134,7 +134,7 @@ describe('OMIS CreateController', () => {
 
   describe('saveCompany()', () => {
     beforeEach(() => {
-      sandbox.stub(this.controller, '_configure')
+      sinon.stub(this.controller, '_configure')
 
       this.reqMock = {
         query: {},
@@ -180,11 +180,11 @@ describe('OMIS CreateController', () => {
 
   describe('checkSkipCompany', () => {
     beforeEach(() => {
-      sandbox.stub(FormController.prototype, 'process')
-      sandbox.stub(this.controller, 'post')
-      sandbox.stub(this.controller, 'successHandler')
+      sinon.stub(FormController.prototype, 'process')
+      sinon.stub(this.controller, 'post')
+      sinon.stub(this.controller, 'successHandler')
 
-      this.setSpy = sandbox.spy()
+      this.setSpy = sinon.spy()
       this.reqMock = {
         query: {},
         sessionModel: {

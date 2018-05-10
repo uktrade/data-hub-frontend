@@ -29,8 +29,8 @@ const contactsMockData = [{
 
 describe('OMIS create confirm controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
-    this.orderSaveStub = sandbox.stub()
+    this.nextSpy = sinon.spy()
+    this.orderSaveStub = sinon.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
       '../../../../../lib/metadata': {
@@ -105,14 +105,14 @@ describe('OMIS create confirm controller', () => {
 
   describe('saveValues()', () => {
     beforeEach(() => {
-      this.sessionSetSpy = sandbox.spy()
+      this.sessionSetSpy = sinon.spy()
       this.reqMock = Object.assign({}, globalReq, {
         session: {
           token: 'token-12345',
         },
         sessionModel: {
           set: this.sessionSetSpy,
-          toJSON: sandbox.stub().returns({
+          toJSON: sinon.stub().returns({
             'csrf-secret': 'secret-key',
             errors: {},
             foo: 'bar',
@@ -163,11 +163,11 @@ describe('OMIS create confirm controller', () => {
 
   describe('successHandler()', () => {
     beforeEach(() => {
-      this.getStub = sandbox.stub().returns(saveMockData.id)
-      this.resetSpy = sandbox.spy()
-      this.destroySpy = sandbox.spy()
-      this.flashSpy = sandbox.spy()
-      this.redirectSpy = sandbox.spy()
+      this.getStub = sinon.stub().returns(saveMockData.id)
+      this.resetSpy = sinon.spy()
+      this.destroySpy = sinon.spy()
+      this.flashSpy = sinon.spy()
+      this.redirectSpy = sinon.spy()
 
       this.reqMock = {
         form: {

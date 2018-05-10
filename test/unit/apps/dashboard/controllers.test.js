@@ -8,13 +8,13 @@ describe('dashboard controller', () => {
 
     this.resMock = {
       locals: {},
-      render: sandbox.spy(),
-      title: sandbox.stub().returnsThis(),
+      render: sinon.spy(),
+      title: sinon.stub().returnsThis(),
     }
 
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
 
-    this.fetchHomepageDataStub = sandbox.stub()
+    this.fetchHomepageDataStub = sinon.stub()
 
     this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
       './repos': {

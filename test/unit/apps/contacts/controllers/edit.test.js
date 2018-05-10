@@ -253,11 +253,11 @@ describe('Contact controller, edit', () => {
 
         this.res = {
           locals: {},
-          breadcrumb: sandbox.stub().returnsThis(),
-          render: sandbox.stub(),
+          breadcrumb: sinon.stub().returnsThis(),
+          render: sinon.stub(),
         }
 
-        this.next = sandbox.stub()
+        this.next = sinon.stub()
 
         await contactEditController.editDetails(this.req, this.res, this.next)
       })
@@ -385,7 +385,7 @@ describe('Contact controller, edit', () => {
       contactEditController.postDetails(req, res, next)
     })
     it('should re-render the edit page with the original form data on validation errors', async function () {
-      const next = sandbox.stub()
+      const next = sinon.stub()
 
       saveContactFormStub = sinon.stub().rejects({
         error: { name: ['test'] },

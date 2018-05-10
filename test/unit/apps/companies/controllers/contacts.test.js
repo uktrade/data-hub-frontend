@@ -8,8 +8,8 @@ describe('Company contact list controller', () => {
       locals: {
         company: companyMock,
       },
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.spy(),
       query: {},
     })
     this.reqMock = assign({}, globalReq, {
@@ -17,7 +17,7 @@ describe('Company contact list controller', () => {
         token: 'abcd',
       },
     })
-    this.buildSelectedFiltersSummaryStub = sandbox.spy()
+    this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/contacts', {
       '../../builders': {

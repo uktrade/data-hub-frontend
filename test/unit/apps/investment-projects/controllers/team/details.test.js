@@ -6,16 +6,16 @@ const {
 
 describe('Investment team details controller', () => {
   beforeEach(() => {
-    this.nextStub = sandbox.stub()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
-    this.reqStub = sandbox.stub()
-    this.nextStub = sandbox.stub()
+    this.nextStub = sinon.stub()
+    this.breadcrumbStub = sinon.stub().returnsThis()
+    this.reqStub = sinon.stub()
+    this.nextStub = sinon.stub()
     this.clientRelationshipManagementData = { name: 'fred' }
     this.teamMembersData = { adviser: 'Fred' }
     this.projectManagementData = [{ name: 'fred' }]
-    this.transformProjectManagementForViewStub = sandbox.stub().returns(this.projectManagementData)
-    this.transformClientRelationshipManagementForViewStub = sandbox.stub().returns(this.clientRelationshipManagementData)
-    this.transformTeamMembersForViewStub = sandbox.stub().returns(this.teamMembersData)
+    this.transformProjectManagementForViewStub = sinon.stub().returns(this.projectManagementData)
+    this.transformClientRelationshipManagementForViewStub = sinon.stub().returns(this.clientRelationshipManagementData)
+    this.transformTeamMembersForViewStub = sinon.stub().returns(this.teamMembersData)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/team/details', {
       '../../transformers': {

@@ -59,13 +59,13 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
 const createMiddleware = (investmentData, adviserData, companyData) => {
   return proxyquire('~/src/apps/investment-projects/middleware/shared', {
     '../repos': {
-      getInvestment: sandbox.stub().resolves(investmentData),
+      getInvestment: sinon.stub().resolves(investmentData),
     },
     '../../adviser/repos': {
-      getAdviser: sandbox.stub().resolves(adviserData),
+      getAdviser: sinon.stub().resolves(adviserData),
     },
     '../../companies/repos': {
-      getDitCompany: sandbox.stub().resolves(companyData),
+      getDitCompany: sinon.stub().resolves(companyData),
     },
     '../../../lib/metadata': {
       investmentProjectStage: investmentProjectStages,
@@ -86,11 +86,11 @@ describe('Investment shared middleware', () => {
       }
 
       this.resMock = {
-        breadcrumb: sandbox.stub().returnsThis(),
+        breadcrumb: sinon.stub().returnsThis(),
         locals: {},
       }
 
-      this.nextSpy = sandbox.spy()
+      this.nextSpy = sinon.spy()
     })
 
     context('when all fields are populated', () => {
@@ -254,13 +254,13 @@ describe('Investment shared middleware', () => {
 
         const middleware = proxyquire('~/src/apps/investment-projects/middleware/shared', {
           '../repos': {
-            getInvestment: sandbox.stub().throws(this.error),
+            getInvestment: sinon.stub().throws(this.error),
           },
           '../../adviser/repos': {
-            getAdviser: sandbox.stub().throws(this.error),
+            getAdviser: sinon.stub().throws(this.error),
           },
           '../../companies/repos': {
-            getDitCompany: sandbox.stub().throws(this.error),
+            getDitCompany: sinon.stub().throws(this.error),
           },
         })
 

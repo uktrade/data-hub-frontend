@@ -5,8 +5,8 @@ describe('Investment Interactions controller', () => {
   beforeEach(() => {
     this.transformedInteractions = {}
 
-    this.getInteractionsForInvestmentStub = sandbox.stub().resolves(interactionsListData)
-    this.transformApiResponseToCollectionStub = sandbox.stub().returns(this.transformedInteractions)
+    this.getInteractionsForInvestmentStub = sinon.stub().resolves(interactionsListData)
+    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformedInteractions)
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/interactions', {
       '../../interactions/repos': {
@@ -28,12 +28,12 @@ describe('Investment Interactions controller', () => {
     }
 
     this.resMock = {
-      breadcrumb: sandbox.stub().returnsThis(),
+      breadcrumb: sinon.stub().returnsThis(),
       locals: {},
-      render: sandbox.spy(),
+      render: sinon.spy(),
     }
 
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#renderInteractionList', () => {

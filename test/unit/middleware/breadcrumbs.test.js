@@ -2,7 +2,7 @@ const breadcrumbs = require('~/src/middleware/breadcrumbs')
 
 describe('breadcrumbs middleware', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.resMock = {}
   })
 
@@ -143,7 +143,7 @@ describe('breadcrumbs middleware', () => {
   describe('setHome()', () => {
     beforeEach(() => {
       this.init = breadcrumbs.init()
-      this.init({}, this.resMock, sandbox.spy())
+      this.init({}, this.resMock, sinon.spy())
 
       this.setHome = breadcrumbs.setHome
     })

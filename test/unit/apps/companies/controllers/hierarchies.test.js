@@ -5,11 +5,11 @@ describe('Companies hierarchies controller', () => {
   const companyName = 'mock-name'
 
   beforeEach(() => {
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.breadcrumbStub = sinon.stub().returnsThis()
     this.resMock = {
       ...globalRes,
       breadcrumb: this.breadcrumbStub,
-      render: sandbox.spy(),
+      render: sinon.spy(),
       locals: {
         company: {
           id: companyId,
@@ -20,7 +20,7 @@ describe('Companies hierarchies controller', () => {
     this.reqMock = {
       ...globalReq,
     }
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#renderAddGlobalHQ', () => {
