@@ -1,4 +1,13 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-class-properties"]
+  "presets": [
+    [
+      "env",
+      {
+        "useBuiltIns": "usage",
+        "targets": {
+          "browsers": ["last 2 versions", "ie >= 8"]
+        }
+      }
+    ]
+  ]
 }
