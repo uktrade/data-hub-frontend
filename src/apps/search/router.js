@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const queryString = require('query-string')
+const queryString = require('qs')
 
 const { ENTITIES } = require('./constants')
 const { handleRoutePermissions } = require('../middleware')

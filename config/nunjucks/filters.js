@@ -4,7 +4,7 @@ require('moment-duration-format')
 const dateFns = require('date-fns')
 const Case = require('case')
 const numeral = require('numeral')
-const queryString = require('query-string')
+const queryString = require('qs')
 const {
   assign,
   castArray,

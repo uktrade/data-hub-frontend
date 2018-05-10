@@ -1,6 +1,6 @@
 const axios = require('axios')
 const createHistory = require('history').createBrowserHistory
-const queryString = require('query-string')
+const queryString = require('qs')
 
 const history = createHistory()
 

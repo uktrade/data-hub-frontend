@@ -1,4 +1,4 @@
-const queryString = require('query-string')
+const queryString = require('qs')
 const { assign, set } = require('lodash')
 
 describe('OAuth controller', () => {

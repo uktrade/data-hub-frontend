@@ -1,4 +1,4 @@
-const queryString = require('query-string')
+const queryString = require('qs')
 const { assign } = require('lodash')
 
 const authorisedRequest = require('../../lib/authorised-request')
