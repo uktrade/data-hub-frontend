@@ -1,6 +1,6 @@
 const nunjucks = require('nunjucks')
 const { assign, omit, isFunction, isArray, map } = require('lodash')
-const queryString = require('query-string')
+const queryString = require('qs')
 const config = require('../../config')
 
 module.exports = {

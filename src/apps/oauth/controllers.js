@@ -1,5 +1,5 @@
 const request = require('request-promise')
-const queryString = require('query-string')
+const queryString = require('qs')
 const uuid = require('uuid')
 
 const { get, set, isUndefined } = require('lodash')
