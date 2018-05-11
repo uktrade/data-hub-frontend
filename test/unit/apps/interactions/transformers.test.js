@@ -1,5 +1,6 @@
 const { assign } = require('lodash')
 const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
+const policyFeedbackData = require('~/test/unit/data/interactions/policy-feedback.json')
 const archivedDocumentsBaseUrl = 'http://base'
 
 const {
@@ -743,6 +744,60 @@ describe('Interaction transformers', () => {
           'Communication channel': {
             id: '72c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Telephone',
+          },
+        })
+      })
+    })
+
+    context('when provided with a policy feedback', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(policyFeedbackData)
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          'Company': {
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+            name: 'Venus Ltd',
+          },
+          'Contact': {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky',
+          },
+          'Service provider': {
+            id: '16362a92-9698-e211-a939-e4115bead28a',
+            name: 'UKTI Chief Executive\'s Office',
+          },
+          'Service': {
+            id: 'PF1',
+            name: 'Policy Feedback',
+          },
+          'Subject': 'ad',
+          'Notes': 'Labore culpa quas cupiditate voluptatibus magni.',
+          'Date of interaction': {
+            type: 'date',
+            name: '2058-11-25',
+          },
+          'DIT adviser': {
+            id: '537df876-5062-e311-8255-e4115bead28a',
+            first_name: 'Priyanka',
+            last_name: 'Karunan',
+            name: 'Priyanka Karunan',
+          },
+          'Communication channel': {
+            id: '70c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Email/Website',
+          },
+          'Documents': {
+            name: 'There are no files or documents',
+          },
+          'Policy area': {
+            name: 'p a 1',
+            id: 'pa1',
+          },
+          'Policy issue type': {
+            name: 'p i t 1',
+            id: 'pit1',
           },
         })
       })
