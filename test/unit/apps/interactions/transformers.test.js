@@ -22,7 +22,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(mockInteraction)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -39,6 +39,8 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
         })
       })
     })
@@ -57,7 +59,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(serviceDelivery)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -74,6 +76,8 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
         })
       })
     })
@@ -89,7 +93,7 @@ describe('Interaction transformers', () => {
         this.transformed = transformInteractionResponseToForm(interaction)
       })
 
-      it('should transform data from interaction response to list item', () => {
+      it('should transform data from interaction response to form', () => {
         expect(this.transformed).to.deep.equal({
           company: 'dcdabbc9-1781-e411-8955-e4115bead28a',
           contact: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -106,6 +110,36 @@ describe('Interaction transformers', () => {
           id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
           notes: 'lorem ipsum',
           subject: 'Test interactions',
+          policy_area: undefined,
+          policy_issue_type: undefined,
+        })
+      })
+    })
+
+    context('when the source is a policy feedback', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToForm(policyFeedbackData)
+      })
+
+      it('should transform data from policy feedback response to form', () => {
+        expect(this.transformed).to.deep.equal({
+          company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
+          contact: '7701587b-e88f-4f39-874f-0bd06321f7df',
+          dit_adviser: '537df876-5062-e311-8255-e4115bead28a',
+          service: 'PF1',
+          service_delivery_status: undefined,
+          grant_amount_offered: null,
+          net_company_receipt: null,
+          dit_team: '16362a92-9698-e211-a939-e4115bead28a',
+          communication_channel: '70c226d7-5d95-e211-a939-e4115bead28a',
+          date: { day: '25', month: '11', year: '2058' },
+          is_event: 'false',
+          event: undefined,
+          id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+          notes: 'Labore culpa quas cupiditate voluptatibus magni.',
+          subject: 'ad',
+          policy_area: 'pa1',
+          policy_issue_type: 'pit1',
         })
       })
     })
@@ -349,6 +383,88 @@ describe('Interaction transformers', () => {
 
       it('should set the net company receipt to null', () => {
         expect(this.transformed.net_company_receipt).to.be.null
+      })
+    })
+
+    context('when posting a new policy feedback', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          company: '0000',
+          kind: 'policy_feedback',
+          service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
+          contact: '1111',
+          dit_team: '2222',
+          policy_issue_type: '3333',
+          policy_area: '4444',
+          subject: 'sub',
+          notes: 'some notes',
+          date_year: '2018',
+          date_month: '01',
+          date_day: '02',
+          dit_adviser: '5555',
+          communication_channel: '6666',
+        })
+      })
+
+      it('should transform the form into the correct API format', () => {
+        expect(this.transformed).to.deep.equal({
+          company: '0000',
+          kind: 'policy_feedback',
+          service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
+          contact: '1111',
+          dit_team: '2222',
+          policy_issue_type: '3333',
+          policy_area: '4444',
+          subject: 'sub',
+          notes: 'some notes',
+          date: '2018-01-02',
+          dit_adviser: '5555',
+          communication_channel: '6666',
+          grant_amount_offered: null,
+          net_company_receipt: null,
+        })
+      })
+    })
+
+    context('when posting a policy feedback edit', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest({
+          id: '101010',
+          company: '0000',
+          kind: 'policy_feedback',
+          service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
+          contact: '1111',
+          dit_team: '2222',
+          policy_issue_type: '3333',
+          policy_area: '4444',
+          subject: 'sub',
+          notes: 'some notes',
+          date_year: '2018',
+          date_month: '01',
+          date_day: '02',
+          dit_adviser: '5555',
+          communication_channel: '6666',
+        })
+      })
+
+      it('should transform the form into the correct API format', () => {
+        expect(this.transformed).to.deep.equal({
+          id: '101010',
+          company: '0000',
+          kind: 'policy_feedback',
+          service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
+          contact: '1111',
+          dit_team: '2222',
+          policy_issue_type: '3333',
+          policy_area: '4444',
+          subject: 'sub',
+          notes: 'some notes',
+          date: '2018-01-02',
+          dit_adviser: '5555',
+          communication_channel: '6666',
+          grant_amount_offered: null,
+          net_company_receipt: null,
+        })
       })
     })
   })
