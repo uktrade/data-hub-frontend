@@ -4,7 +4,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/propositions',
-  label: 'Propositions and services',
+  label: 'Propositions',
   permissions: [
     'proposition.read_all_proposition',
   ],
@@ -13,15 +13,17 @@ const GLOBAL_NAV_ITEM = {
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
 
-const PROPOSITION_NAMES = {
-  policy_feedback: 'Policy feedback',
-  proposition: 'Proposition',
-  service_delivery: 'Service delivery',
+const PROPOSITION_STATE = {
+  ongoing: 'Ongoing',
+  abandoned: 'Abandoned',
+  complete: 'Completed',
+  late: 'Late',
 }
+
 
 module.exports = {
   GLOBAL_NAV_ITEM,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
-  PROPOSITION_NAMES,
+  PROPOSITION_STATE,
 }

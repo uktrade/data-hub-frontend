@@ -14,7 +14,7 @@ module.exports = {
   adviser (advisers) {
     return {
       macroName: 'MultipleChoiceField',
-      name: 'dit_adviser',
+      name: 'adviser',
       initialOption: '-- Select adviser --',
       options: advisers,
     }

@@ -13,7 +13,7 @@ function renderDetailsPage (req, res, next) {
 
     return res
       .breadcrumb(breadcrumb)
-      .title(proposition.subject)
+      .title(proposition.name)
       .render('propositions/views/details', {
         propositionViewRecord,
       })

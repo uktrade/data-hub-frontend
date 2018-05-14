@@ -22,7 +22,7 @@ async function renderPropositionList (req, res, next) {
 
     return res
       .breadcrumb('Propositions')
-      .render('investment-projects/views/interactions', {
+      .render('investment-projects/views/propositions', {
         propositions,
         actionButtons: [{
           label: 'Add proposition',

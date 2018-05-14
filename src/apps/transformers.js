@@ -106,12 +106,14 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
    * @param {object} response - API response object
    * @returns {function}
    */
+
   return function transformResponseToCollection (response) {
     if (!isPlainObject(response)) { return }
 
     let items = response.results || response.items
 
     if (!items) { return }
+    console.log(']]]]]]]]]]]]]]]]] 1 [[[[[[[[[[[[[[[[[[[[ ', items)
 
     itemTransformers.forEach(transformer => {
       if (!isFunction(transformer)) { return }
@@ -119,6 +121,7 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
         .map(transformer)
         .filter(item => !isEmpty(item))
     })
+  console.log(']]]]]]]]]]]]]]]]] 2 [[[[[[[[[[[[[[[[[[[[ ', items)
 
     return assign({}, {
       items,

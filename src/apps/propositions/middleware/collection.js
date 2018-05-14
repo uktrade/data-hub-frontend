@@ -6,6 +6,8 @@ const { transformApiResponseToSearchCollection } = require('../../search/transfo
 const { transformPropositionToListItem, transformPropositionListItemToHaveUrlPrefix } = require('../transformers')
 
 async function getPropositionCollection (req, res, next) {
+  console.log('!!!!! transformApiResponseToCollection !!!!!!')
+
   try {
     res.locals.results = await search({
       searchEntity: 'proposition',
@@ -27,11 +29,13 @@ async function getPropositionCollection (req, res, next) {
 }
 
 function getPropositionsRequestBody (req, res, next) {
+
+  console.log('>>>>>>>>>>>>>> transformApiResponseToCollection <<<<<<<<<<<<<<<<<')
   const searchBody = pick(req.query, [
     'kind',
     'sector_descends',
     'communication_channel',
-    'dit_adviser',
+    'adviser',
     'date_after',
     'date_before',
     'sortby',
@@ -52,6 +56,9 @@ function getPropositionsRequestBody (req, res, next) {
 }
 
 function getPropositionSortForm (req, res, next) {
+
+  console.log('!!!!! getPropositionSortForm !!!!!!')
+
   res.locals.sortForm = merge({}, collectionSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [

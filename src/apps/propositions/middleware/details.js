@@ -48,18 +48,18 @@ async function getPropositionDetails (req, res, next, propositionId) {
     // Get the company associated with the proposition. This can be in the proposition
     // record, or in the case of editing investment propositions it is the company
     // associated with the proposition contact.
-    if (proposition.company) {
-      res.locals.company = proposition.company
-      return next()
-    }
+    // if (proposition.company) {
+    //   res.locals.company = proposition.company
+    //   return next()
+    // }
 
-    const contactId = get(proposition, 'contact.id')
-    if (!contactId) {
-      return next(new Error('An proposition must have a company or contact associated with it'))
-    }
-
-    const contact = await getContact(token, contactId)
-    res.locals.company = await getDitCompany(token, contact.company.id)
+    // const contactId = get(proposition, 'contact.id')
+    // if (!contactId) {
+    //   return next(new Error('An proposition must have a company or contact associated with it'))
+    // }
+    //
+    // const contact = await getContact(token, contactId)
+    // res.locals.company = await getDitCompany(token, contact.company.id)
 
     next()
   } catch (err) {
@@ -68,6 +68,9 @@ async function getPropositionDetails (req, res, next, propositionId) {
 }
 
 async function getPropositionOptions (req, res, next) {
+
+  console.log('>>>>>>>>>>>>>> getPropositionOptions <<<<<<<<<<<<<<<<<')
+
   try {
     const token = req.session.token
     const createdOn = get(res.locals, 'proposition.created_on')
@@ -76,7 +79,7 @@ async function getPropositionOptions (req, res, next) {
     const contacts = await getContactsForCompany(token, companyId)
 
     const advisers = await getAdvisers(token)
-    const currentAdviser = get(res.locals, 'proposition.dit_adviser.id')
+    const currentAdviser = get(res.locals, 'proposition.adviser.id')
     const activeAdvisers = filterActiveAdvisers({
       advisers: advisers.results,
       includeAdviser: currentAdviser,

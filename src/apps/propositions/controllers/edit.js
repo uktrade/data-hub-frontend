@@ -12,7 +12,7 @@ const formConfigs = {
 function renderEditPage (req, res) {
   const propositionData = transformPropositionResponseToForm(res.locals.proposition)
   const propositionDefaults = {
-    dit_adviser: req.session.user,
+    adviser: req.session.user,
     date: transformDateStringToDateObject(new Date()),
     contact: get(res.locals, 'contact.id'),
     dit_team: get(req, 'session.user.dit_team.id'),

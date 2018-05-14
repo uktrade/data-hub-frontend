@@ -22,7 +22,7 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [], sector
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'dit_adviser',
+      name: 'adviser',
       type: 'checkbox',
       modifier: ['option-select', 'hide-label'],
       options: [
@@ -31,7 +31,7 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [], sector
     },
     {
       macroName: 'Typeahead',
-      name: 'dit_adviser',
+      name: 'adviser',
       entity: 'adviser',
     },
     {

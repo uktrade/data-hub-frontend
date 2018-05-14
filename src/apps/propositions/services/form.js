@@ -17,7 +17,7 @@ function getPropositionAsFormData (proposition) {
     subject: proposition.subject || null,
     notes: proposition.notes || null,
     date: proposition.date || null,
-    dit_adviser: getPropertyId(proposition, 'dit_adviser'),
+    adviser: getPropertyId(proposition, 'adviser'),
     service: getPropertyId(proposition, 'service'),
     dit_team: getPropertyId(proposition, 'dit_team'),
   }

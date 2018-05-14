@@ -19,7 +19,6 @@
 {% macro CollectionContent(props) %}
   <article class="c-collection" {% if props.id %}id="{{ props.id }}"{% endif %}>
     {{ CollectionHeader(props) }}
-
     {% if props.items | length %}
       {% if caller %}
         {{ caller() }}

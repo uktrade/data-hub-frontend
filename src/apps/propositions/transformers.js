@@ -1,17 +1,17 @@
 /* eslint-disable camelcase */
-const { get, assign, isNil, mapKeys, pickBy, camelCase } = require('lodash')
+const { get, assign, mapKeys, pickBy} = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 const labels = require('./labels')
-const { PROPOSITION_NAMES } = require('./constants')
+const { PROPOSITION_STATE } = require('./constants')
 
-const transformEntityLink = (entity, entityPath, noLinkText = null) => {
-  return entity ? {
-    url: `/${entityPath}/${entity.id}`,
-    name: entity.name,
-  } : noLinkText
-}
+// const transformEntityLink = (entity, entityPath, noLinkText = null) => {
+//   return entity ? {
+//     url: `/${entityPath}/${entity.id}`,
+//     name: entity.name,
+//   } : noLinkText
+// }
 
 // const transformDocumentsLink = (archived_documents_url_path) => {
 //   if (archived_documents_url_path) {
@@ -57,7 +57,9 @@ function transformPropositionToListItem ({
   scope,
   kind,
   deadline,
+  created_on,
   adviser,
+  status,
 }) {
   return {
     id,
@@ -68,11 +70,16 @@ function transformPropositionToListItem ({
       {
         label: 'Type',
         type: 'badge',
-        value: PROPOSITION_NAMES[kind],
+        value: PROPOSITION_STATE[status],
       },
       {
         label: 'Deadline',
         value: deadline,
+        type: 'date',
+      },
+      {
+        label: 'Created On',
+        value: created_on,
         type: 'date',
       },
       {
@@ -84,36 +91,29 @@ function transformPropositionToListItem ({
 }
 
 function transformPropositionResponseToViewRecord ({
-  company,
-  name,
   scope,
+  status,
+  created_on,
   deadline,
   adviser,
-  service,
-  service_delivery_status,
-  grant_amount_offered,
-  net_company_receipt,
-  dit_team,
-  contact,
-  investment_project,
-  communication_channel,
-  event,
-  kind,
 }) {
-  const kindLabels = labels[camelCase(kind)]
+  const detailLabels = labels.proposition
   const transformed = {
-    name,
     scope,
+    status,
+    created_on: {
+      type: 'date',
+      name: created_on,
+    },
     deadline: {
       type: 'date',
       name: deadline,
     },
     adviser,
-    investment_project: transformEntityLink(investment_project, 'investment-projects'),
   }
 
   return pickBy(mapKeys(transformed, (value, key) => {
-    return kindLabels[key]
+    return detailLabels[key]
   }))
 }
 

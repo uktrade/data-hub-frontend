@@ -3,6 +3,7 @@ const { transformApiResponseToSearchCollection } = require('../search/transforme
 const { transformPropositionToListItem } = require('./transformers')
 
 async function getPropositionsCollection (req, res, next) {
+  console.log('||||||||||||| getPropositionsCollection ||||||||||||||')
   try {
     res.locals.results = await search({
       searchEntity: 'proposition',
