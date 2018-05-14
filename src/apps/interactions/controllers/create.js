@@ -1,4 +1,4 @@
-const { kebabCase } = require('lodash')
+const { get, kebabCase } = require('lodash')
 const { kindForm } = require('../macros')
 
 function postCreate (req, res, next) {
@@ -18,6 +18,7 @@ function postCreate (req, res, next) {
 function renderCreate (req, res) {
   const selectKindForm = kindForm({
     errors: res.locals.errors || [],
+    permissions: get(req, 'session.user.permissions'),
   })
 
   res
