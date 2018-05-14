@@ -1,6 +1,6 @@
 describe('Global transformers', () => {
   beforeEach(() => {
-    this.buildPaginationSpy = sandbox.spy()
+    this.buildPaginationSpy = sinon.spy()
 
     this.transformers = proxyquire('~/src/apps/transformers', {
       '../lib/pagination': {
@@ -187,8 +187,8 @@ describe('Global transformers', () => {
 
     context('when an item transformer is specified with arguments', () => {
       beforeEach(() => {
-        this.itemTransformerInnerSpy = sandbox.spy()
-        this.itemTransformerSpy = sandbox.stub().returns(this.itemTransformerInnerSpy)
+        this.itemTransformerInnerSpy = sinon.spy()
+        this.itemTransformerSpy = sinon.stub().returns(this.itemTransformerInnerSpy)
         this.itemTransformerOptions = { query: { term: 'bobby' } }
 
         this.transformers.transformApiResponseToCollection(
@@ -204,11 +204,11 @@ describe('Global transformers', () => {
 
     context('when there are multiple item transformers', () => {
       beforeEach(() => {
-        this.firstItemTransformerStub = sandbox.stub()
+        this.firstItemTransformerStub = sinon.stub()
           .onCall(0).returns({ id: '0' })
           .onCall(1).returns({ id: '1' })
 
-        this.secondItemTransformerStub = sandbox.stub()
+        this.secondItemTransformerStub = sinon.stub()
           .onCall(0).returns({ id: 'a0' })
           .onCall(1).returns({ id: 'a1' })
 
@@ -235,7 +235,7 @@ describe('Global transformers', () => {
 
     context('when the item transformer fails for an item', () => {
       beforeEach(() => {
-        const itemTransformerStub = sandbox.stub()
+        const itemTransformerStub = sinon.stub()
           .onCall(0).returns(undefined)
           .onCall(1).returns({ id: '1' })
 

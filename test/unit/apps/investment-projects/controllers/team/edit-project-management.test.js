@@ -4,10 +4,10 @@ const { briefInvestmentSummaryLabels } = require('~/src/apps/investment-projects
 
 describe('Investment project, project management team, edit controller', () => {
   beforeEach(() => {
-    this.nextStub = sandbox.stub()
-    this.flashStub = sandbox.stub()
-    this.getDataLabelsStub = sandbox.stub()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.nextStub = sinon.stub()
+    this.flashStub = sinon.stub()
+    this.getDataLabelsStub = sinon.stub()
+    this.breadcrumbStub = sinon.stub().returnsThis()
     this.reqMock = assign({}, globalReq, {
       session: {
         token: '1234',
@@ -15,8 +15,8 @@ describe('Investment project, project management team, edit controller', () => {
       flash: this.flashStub,
     })
     this.resMock = assign({}, globalRes, {
-      redirect: sandbox.spy(),
-      render: sandbox.spy(),
+      redirect: sinon.spy(),
+      render: sinon.spy(),
       breadcrumb: this.breadcrumbStub,
     })
 

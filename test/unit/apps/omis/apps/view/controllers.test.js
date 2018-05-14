@@ -15,7 +15,7 @@ const transformerStub = (item) => {
 
 describe('OMIS View controllers', () => {
   beforeEach(() => {
-    this.transformSubscriberToViewStub = sandbox.stub().returns(transformerStub)
+    this.transformSubscriberToViewStub = sinon.stub().returns(transformerStub)
 
     this.controllers = proxyquire('~/src/apps/omis/apps/view/controllers', {
       '../../transformers': {
@@ -26,8 +26,8 @@ describe('OMIS View controllers', () => {
 
   describe('renderWorkOrder()', () => {
     beforeEach(() => {
-      this.breadcrumbSpy = sandbox.stub().returnsThis()
-      this.renderSpy = sandbox.spy()
+      this.breadcrumbSpy = sinon.stub().returnsThis()
+      this.renderSpy = sinon.spy()
 
       this.resMock = {
         breadcrumb: this.breadcrumbSpy,
@@ -77,8 +77,8 @@ describe('OMIS View controllers', () => {
 
   describe('renderQuote()', () => {
     beforeEach(() => {
-      this.breadcrumbSpy = sandbox.stub().returnsThis()
-      this.renderSpy = sandbox.spy()
+      this.breadcrumbSpy = sinon.stub().returnsThis()
+      this.renderSpy = sinon.spy()
 
       this.resMock = {
         breadcrumb: this.breadcrumbSpy,
@@ -99,9 +99,9 @@ describe('OMIS View controllers', () => {
 
   describe('renderPaymentReceipt()', () => {
     beforeEach(() => {
-      this.breadcrumbSpy = sandbox.stub().returnsThis()
-      this.renderSpy = sandbox.spy()
-      this.redirectSpy = sandbox.spy()
+      this.breadcrumbSpy = sinon.stub().returnsThis()
+      this.renderSpy = sinon.spy()
+      this.redirectSpy = sinon.spy()
 
       this.resMock = {
         breadcrumb: this.breadcrumbSpy,

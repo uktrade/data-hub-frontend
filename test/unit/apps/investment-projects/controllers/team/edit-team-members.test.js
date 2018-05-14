@@ -2,9 +2,9 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment project, team members, edit controller', () => {
   beforeEach(() => {
-    this.nextStub = sandbox.stub()
-    this.flashStub = sandbox.stub()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.nextStub = sinon.stub()
+    this.flashStub = sinon.stub()
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = require('~/src/apps/investment-projects/controllers/team/edit-team-members')
   })

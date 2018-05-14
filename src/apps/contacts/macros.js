@@ -39,13 +39,11 @@ const contactFiltersFields = function ({ sectorOptions }) {
       macroName: 'TextField',
       label: 'Contact name',
       name: 'name',
-      hint: 'At least three characters',
     },
     {
       macroName: 'TextField',
       label: 'Company name',
       name: 'company_name',
-      hint: 'At least three characters',
     },
     {
       macroName: 'MultipleChoiceField',

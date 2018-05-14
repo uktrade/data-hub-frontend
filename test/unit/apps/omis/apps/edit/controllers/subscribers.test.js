@@ -8,10 +8,10 @@ const tokenMock = '12345abcde'
 
 describe('OMIS edit subscribers controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
-    this.getAdvisersStub = sandbox.stub().resolves(advisersMock)
-    this.getSubscribersStub = sandbox.stub().resolves(subscribersMock)
-    this.saveSubscribersStub = sandbox.stub().resolves(subscribersMock)
+    this.nextSpy = sinon.spy()
+    this.getAdvisersStub = sinon.stub().resolves(advisersMock)
+    this.getSubscribersStub = sinon.stub().resolves(subscribersMock)
+    this.saveSubscribersStub = sinon.stub().resolves(subscribersMock)
 
     const Controller = proxyquire('~/src/apps/omis/apps/edit/controllers/subscribers', {
       '../../../../adviser/repos': {
@@ -48,7 +48,7 @@ describe('OMIS edit subscribers controller', () => {
         },
       })
 
-      sandbox.spy(FormController.prototype, 'configure')
+      sinon.spy(FormController.prototype, 'configure')
     })
 
     context('when async calls resolve', () => {

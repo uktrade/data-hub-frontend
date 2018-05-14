@@ -13,19 +13,19 @@ describe('Interaction details controller', () => {
     }
 
     this.res = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      title: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      title: sinon.stub().returnsThis(),
+      render: sinon.spy(),
       locals: {
         interaction: interactionData,
       },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
 
     this.transformedInteractionDataMock = {}
 
-    this.transformInteractionResponseToViewRecordStub = sandbox.stub().returns(this.transformedInteractionDataMock)
+    this.transformInteractionResponseToViewRecordStub = sinon.stub().returns(this.transformedInteractionDataMock)
 
     this.controller = proxyquire('~/src/apps/interactions/controllers/details', {
       '../transformers': {

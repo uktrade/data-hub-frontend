@@ -4,10 +4,10 @@ const sessionHelper = require('~/src/lib/session-helper')
 
 describe('#saveSession', () => {
   beforeEach(() => {
-    this.saveSession = sandbox.spy(sessionHelper, 'saveSession')
+    this.saveSession = sinon.spy(sessionHelper, 'saveSession')
     this.reqMock = assign({}, globalReq, {
       session: {
-        save: sandbox.stub(),
+        save: sinon.stub(),
       },
     })
   })

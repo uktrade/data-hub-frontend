@@ -3,17 +3,17 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment archive controller', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
+    this.next = sinon.stub()
     this.token = '1234'
-    this.archiveInvestmentProject = sandbox.stub().resolves(investmentData)
-    this.unarchiveInvestmentProject = sandbox.stub().resolves(investmentData)
+    this.archiveInvestmentProject = sinon.stub().resolves(investmentData)
+    this.unarchiveInvestmentProject = sinon.stub().resolves(investmentData)
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
       '../repos': {
         archiveInvestmentProject: this.archiveInvestmentProject,
         unarchiveInvestmentProject: this.unarchiveInvestmentProject,
       },
     })
-    this.flashStub = sandbox.stub()
+    this.flashStub = sinon.stub()
     this.session = {
       token: this.token,
       user: {
@@ -114,7 +114,7 @@ describe('Investment archive controller', () => {
     it('should pass on the form values and error if validation failed.', (done) => {
       this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
         '../repos': {
-          archiveInvestmentProject: sandbox.stub().rejects({
+          archiveInvestmentProject: sinon.stub().rejects({
             statusCode: 400,
             error: 'Some error',
           }),
@@ -146,7 +146,7 @@ describe('Investment archive controller', () => {
       const error = new Error()
       this.controller = proxyquire('~/src/apps/investment-projects/controllers/archive', {
         '../repos': {
-          archiveInvestmentProject: sandbox.stub().rejects(error),
+          archiveInvestmentProject: sinon.stub().rejects(error),
           unarchiveInvestmentProject: this.unarchiveInvestmentProject,
         },
       })
