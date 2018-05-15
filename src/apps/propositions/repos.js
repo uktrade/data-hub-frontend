@@ -1,16 +1,16 @@
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
 
-function fetchProposition (token, propositionId) {
+function fetchProposition (token, propositionId, investmentId) {
   console.log('>>>>>>>>>>>>>>>>> fetchProposition <<<<<<<<<<<<<<<<<<<')
-
-  return authorisedRequest(token, `${config.apiRoot}/v3/proposition/${propositionId}`)
+const investment_project = '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}`)
   // return authorisedRequest(token, 'http://localhost:57342/proposition-mock')
 }
 
 function saveProposition (token, proposition) {
   const options = {
-    url: `${config.apiRoot}/v3/proposition`,
+    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition`,
     method: 'POST',
     body: proposition,
   }
@@ -35,7 +35,8 @@ function getPropositionsForInvestment (token, investmentId, page) {
   const limit = 10
   const offset = limit * (page - 1)
   console.log('>>>>>>>>>>>>>>>>> !!! <<<<<<<<<<<<<<<<<<<')
-  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?investment_project_id=${investmentId}&limit=${limit}&offset=${offset}`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition?&limit=${limit}&offset=${offset}`)
+  // return authorisedRequest(token, `${config.apiRoot}/v3/propositions?investment_project_id=${investmentId}&limit=${limit}&offset=${offset}`)
   // return authorisedRequest(token, 'http://localhost:57342/propositions-collection-mock')
 }
 

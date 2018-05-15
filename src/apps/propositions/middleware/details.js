@@ -4,6 +4,7 @@ const { sentence } = require('case')
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const { fetchProposition, saveProposition } = require('../repos')
 const { getContactsForCompany, getContact } = require('../../contacts/repos')
+const { getInvestment } = require('../../investment-projects/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
@@ -43,7 +44,10 @@ async function postDetails (req, res, next) {
 async function getPropositionDetails (req, res, next, propositionId) {
   try {
     const token = req.session.token
-    const proposition = res.locals.proposition = await fetchProposition(token, propositionId)
+    const investmentId = get(res.locals, 'investmentData.id')
+    // console.log('============== getPropositionDetails ================ ', investmentId)
+    // const investment_project = contact = await getInvestment(token, investmentId)
+    const proposition = res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
 
     // Get the company associated with the proposition. This can be in the proposition
     // record, or in the case of editing investment propositions it is the company
