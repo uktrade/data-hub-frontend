@@ -9,7 +9,19 @@ function setCompaniesLocalNav (req, res, next) {
   if (!company) { next() }
 
   const headquarterType = get(company, 'headquarter_type.name')
-  const navItems = !headquarterType ? LOCAL_NAV.filter(navItem => navItem.path !== 'subsidiaries') : LOCAL_NAV
+  const companyNumber = get(company, 'company_number')
+
+  const navItems = LOCAL_NAV.filter((navItem) => {
+    if (
+      (!headquarterType && navItem.path === 'subsidiaries') ||
+      (!companyNumber && navItem.path === 'timeline')
+    ) {
+      return false
+    }
+
+    return true
+  })
+
   setLocalNav(navItems)(req, res, next)
 }
 
