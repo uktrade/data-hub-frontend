@@ -6,6 +6,9 @@ const { getPropertyId, nullEmptyFields } = require('../../../lib/property-helper
  * @param {Object} proposition An proposition in API format
  * @returns {Object} A flattened copy of the proposition form in a format to use in a form
  */
+
+// TODO(jf): adapt this for propositions
+
 function getPropositionAsFormData (proposition) {
   if (!proposition) return null
 

@@ -1,3 +1,5 @@
+// TODO (jf): update sorting functionality
+
 module.exports = {
   method: 'get',
   class: 'c-collection__sort-form js-AutoSubmit',

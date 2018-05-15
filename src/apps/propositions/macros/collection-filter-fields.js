@@ -1,3 +1,5 @@
+// TODO(jf): check if this file is redundant
+
 const { assign, flatten } = require('lodash')
 
 const labels = require('../labels')

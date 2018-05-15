@@ -8,6 +8,9 @@ const proposition = {
   investment_project: 'Investment project',
   documents: 'Documents',
 }
+
+
+
 //
 // const policyFeedback = {
 //   company: 'Company',
