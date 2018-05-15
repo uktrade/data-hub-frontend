@@ -76,13 +76,19 @@ function updateCompany (token, companyId, body) {
 function getCompanyAuditLog (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/company/${companyId}/audit?limit=${limit}&offset=${offset}`)
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company/${companyId}/audit`,
+    qs: { limit, offset },
+  })
 }
 
 function getCompanyTimeline (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/company/${companyId}/timeline?limit=${limit}&offset=${offset}`)
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company/${companyId}/timeline`,
+    qs: { limit, offset },
+  })
 }
 
 module.exports = {
