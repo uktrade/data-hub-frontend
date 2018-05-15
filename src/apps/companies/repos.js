@@ -79,6 +79,12 @@ function getCompanyAuditLog (token, companyId, page = 1) {
   return authorisedRequest(token, `${config.apiRoot}/v3/company/${companyId}/audit?limit=${limit}&offset=${offset}`)
 }
 
+function getCompanyTimeline (token, companyId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, `${config.apiRoot}/v3/company/${companyId}/timeline?limit=${limit}&offset=${offset}`)
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -87,4 +93,5 @@ module.exports = {
   unarchiveCompany,
   updateCompany,
   getCompanyAuditLog,
+  getCompanyTimeline,
 }
