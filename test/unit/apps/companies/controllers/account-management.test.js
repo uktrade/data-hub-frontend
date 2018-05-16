@@ -8,10 +8,10 @@ describe('Companies account management controller', () => {
       body: {},
     }
     this.resMock = {
-      breadcrumb: sandbox.stub().returnsThis(),
-      title: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
-      redirect: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      title: sinon.stub().returnsThis(),
+      render: sinon.spy(),
+      redirect: sinon.spy(),
       locals: {
         entityName: 'company',
         returnLink: 'return',
@@ -22,7 +22,7 @@ describe('Companies account management controller', () => {
         advisers: [],
       },
     }
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#renderAccountManagementEditPage', () => {

@@ -13,11 +13,11 @@ const companyMock = {
 
 describe('Company controller, archive', () => {
   beforeEach(() => {
-    this.archiveCompanyStub = sandbox.stub()
-    this.unarchiveCompanyStub = sandbox.stub()
-    this.errorLoggerSpy = sandbox.spy()
-    this.redirectSpy = sandbox.spy()
-    this.flashSpy = sandbox.spy()
+    this.archiveCompanyStub = sinon.stub()
+    this.unarchiveCompanyStub = sinon.stub()
+    this.errorLoggerSpy = sinon.spy()
+    this.redirectSpy = sinon.spy()
+    this.flashSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/archive', {
       '../repos': {

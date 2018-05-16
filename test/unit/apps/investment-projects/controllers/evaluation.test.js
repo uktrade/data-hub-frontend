@@ -11,8 +11,8 @@ const mockMetadataRepository = {
 
 describe('Investment evaluation controller', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.next = sinon.stub()
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/evaluation', {
       '../transformers': proxyquire('~/src/apps/investment-projects/transformers', {

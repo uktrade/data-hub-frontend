@@ -8,12 +8,10 @@ const { highlight } = require('../../assets/javascripts/vue/filters')
 const XHR = require('../../assets/javascripts/lib/xhr')
 
 describe('Typeahead', () => {
-  let sandbox
   let defaultProps
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create()
-    XHR.request = sandbox.stub().resolves()
+    XHR.request = sinon.stub().resolves()
 
     defaultProps = {
       name: 'adviser',
@@ -25,7 +23,7 @@ describe('Typeahead', () => {
   })
 
   afterEach(() => {
-    sandbox.restore()
+    sinon.restore()
   })
 
   describe('template', () => {

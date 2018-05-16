@@ -18,23 +18,23 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#getInteractionCollection', () => {
     beforeEach(async () => {
-      this.transformApiResponseToSearchCollectionStub = sandbox.stub()
+      this.transformApiResponseToSearchCollectionStub = sinon.stub()
 
-      this.searchStub = sandbox.stub().resolves({
+      this.searchStub = sinon.stub().resolves({
         count: 1,
         results: [{ id: '1' }],
       })
 
       this.transformedInteractionStub = { id: '1234' }
       this.transformedInteractionWithUrlPrefixStub = assign({}, this.transformedInteractionStub, { urlPrefix: 'return' })
-      this.transformInteractionToListItemStub = sandbox.stub().returns(this.transformedInteractionStub)
+      this.transformInteractionToListItemStub = sinon.stub().returns(this.transformedInteractionStub)
       this.transformInteractionListItemToHaveUrlPrefixStub =
-        sandbox.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
+        sinon.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
 
       this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
         '../../search/services': {

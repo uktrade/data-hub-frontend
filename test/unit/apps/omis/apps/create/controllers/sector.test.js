@@ -11,7 +11,7 @@ const sectorOptionsMock = [
 
 describe('OMIS create sector controller', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
     this.controller = new Controller({ route: '/' })
   })
 
@@ -32,7 +32,7 @@ describe('OMIS create sector controller', () => {
           },
         })
 
-        sandbox.spy(FormController.prototype, 'configure')
+        sinon.spy(FormController.prototype, 'configure')
         await this.controller.configure(this.reqMock, globalRes, this.nextSpy)
       })
 
@@ -88,7 +88,7 @@ describe('OMIS create sector controller', () => {
         },
       })
 
-      sandbox.stub(FormController.prototype, 'saveValues')
+      sinon.stub(FormController.prototype, 'saveValues')
     })
 
     context('when using company\'s sector', () => {

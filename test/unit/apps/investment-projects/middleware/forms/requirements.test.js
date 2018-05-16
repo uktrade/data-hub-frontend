@@ -69,15 +69,15 @@ describe('Investment requirements form middleware', () => {
         investmentId: '1234',
       },
       query: {},
-      flash: sandbox.stub(),
+      flash: sinon.stub(),
     }
 
     this.resMock = {
       locals: {},
-      redirect: sandbox.stub(),
+      redirect: sinon.stub(),
     }
 
-    this.nextStub = sandbox.stub()
+    this.nextStub = sinon.stub()
   })
 
   describe('#populateForm', () => {

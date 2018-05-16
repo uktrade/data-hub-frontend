@@ -61,11 +61,11 @@ const metadataMock = {
 
 describe('investment details middleware', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
+    this.next = sinon.stub()
 
-    this.updateInvestmentStub = sandbox.stub().resolves({ id: '999' })
-    this.createInvestmentStub = sandbox.stub().resolves({ id: '888' })
-    this.getEquityCompanyDetailsStub = sandbox.stub().resolves(companyData)
+    this.updateInvestmentStub = sinon.stub().resolves({ id: '999' })
+    this.createInvestmentStub = sinon.stub().resolves({ id: '888' })
+    this.getEquityCompanyDetailsStub = sinon.stub().resolves(companyData)
 
     this.req = {
       session: {
@@ -84,7 +84,7 @@ describe('investment details middleware', () => {
       locals: {
         form: {},
       },
-      redirect: sandbox.stub(),
+      redirect: sinon.stub(),
     }
 
     this.detailsMiddleware = proxyquire('~/src/apps/investment-projects/middleware/forms/details', {

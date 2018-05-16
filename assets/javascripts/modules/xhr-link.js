@@ -1,4 +1,4 @@
-const queryString = require('query-string')
+const queryString = require('qs')
 const XHR = require('../lib/xhr')
 
 const XhrLink = {

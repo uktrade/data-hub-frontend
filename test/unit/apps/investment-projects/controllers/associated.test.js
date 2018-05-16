@@ -4,11 +4,11 @@ const investmentData = { investor_company: { name: 'company' } }
 
 describe('investment associated controller', () => {
   beforeEach(() => {
-    this.updateInvestmentStub = sandbox.stub().resolves(investmentData)
-    this.searchStub = sandbox.stub().resolves(investmentCollection)
-    this.transformerStub = sandbox.stub()
-    this.transformInvestmentProjectToListItemStub = sandbox.stub().returns({ id: 1 })
-    this.transformInvestmentListItemToDisableMetaLinksStub = sandbox.stub().returns({ id: 1 })
+    this.updateInvestmentStub = sinon.stub().resolves(investmentData)
+    this.searchStub = sinon.stub().resolves(investmentCollection)
+    this.transformerStub = sinon.stub()
+    this.transformInvestmentProjectToListItemStub = sinon.stub().returns({ id: 1 })
+    this.transformInvestmentListItemToDisableMetaLinksStub = sinon.stub().returns({ id: 1 })
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/associated', {
       '../repos': {
@@ -46,7 +46,7 @@ describe('investment associated controller', () => {
       session: {
         token: 'abcd',
       },
-      flash: sandbox.spy(),
+      flash: sinon.spy(),
     }
     this.res = {
       locals: {
@@ -54,11 +54,11 @@ describe('investment associated controller', () => {
           name: 'investment',
         },
       },
-      render: sandbox.spy(),
-      breadcrumb: sandbox.stub().returnsThis(),
-      redirect: sandbox.spy(),
+      render: sinon.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      redirect: sinon.spy(),
     }
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#selectAssociatedInvestmentProject', () => {
@@ -87,7 +87,7 @@ describe('investment associated controller', () => {
       context('server returns an error', () => {
         beforeEach(async () => {
           this.req.query.project = '1234'
-          this.error = sandbox.stub()
+          this.error = sinon.stub()
 
           this.updateInvestmentStub.rejects(this.error)
 
@@ -169,7 +169,7 @@ describe('investment associated controller', () => {
 
       context('and search throw an error', () => {
         beforeEach(async () => {
-          this.error = sandbox.stub()
+          this.error = sinon.stub()
           this.searchStub.rejects(this.error)
           await this.controller.searchForAssociatedInvestmentProject(this.req, this.res, this.next)
         })
@@ -222,7 +222,7 @@ describe('investment associated controller', () => {
 
     context('when there is an error removing the association from the investment', () => {
       beforeEach(async () => {
-        this.error = sandbox.stub()
+        this.error = sinon.stub()
 
         this.updateInvestmentStub.rejects(this.error)
         await this.controller.removeAssociatedInvestmentProject(this.req, this.res, this.next)
