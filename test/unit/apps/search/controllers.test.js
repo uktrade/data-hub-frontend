@@ -15,9 +15,9 @@ describe('Search Controller #renderSearchResults', () => {
   }
 
   beforeEach(async () => {
-    this.next = sandbox.spy()
-    this.renderFunction = sandbox.spy()
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.next = sinon.spy()
+    this.renderFunction = sinon.spy()
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.req = {
       session: { token: 'abcd' },

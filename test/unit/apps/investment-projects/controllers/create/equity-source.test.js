@@ -20,11 +20,11 @@ const searchResults = {
 
 describe('Investment start controller', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
-    this.getCompanyInvestmentProjects = sandbox.stub().resolves(investmentProjects)
-    this.searchForeignCompanies = sandbox.stub().resolves(searchResults)
-    this.buildPagination = sandbox.stub().returns(null)
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.next = sinon.stub()
+    this.getCompanyInvestmentProjects = sinon.stub().resolves(investmentProjects)
+    this.searchForeignCompanies = sinon.stub().resolves(searchResults)
+    this.buildPagination = sinon.stub().returns(null)
+    this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/create/equity-source', {
       '../../repos': {

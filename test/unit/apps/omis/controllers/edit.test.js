@@ -6,8 +6,8 @@ const updateMockData = {
 
 describe('OMIS EditController', () => {
   beforeEach(() => {
-    this.nextSpy = sandbox.stub()
-    this.orderUpdateStub = sandbox.stub()
+    this.nextSpy = sinon.stub()
+    this.orderUpdateStub = sinon.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/controllers/edit', {
       '../models': {
@@ -77,10 +77,10 @@ describe('OMIS EditController', () => {
 
   describe('successHandler()', () => {
     beforeEach(() => {
-      this.resetSpy = sandbox.spy()
-      this.destroySpy = sandbox.spy()
-      this.flashSpy = sandbox.spy()
-      this.redirectSpy = sandbox.spy()
+      this.resetSpy = sinon.spy()
+      this.destroySpy = sinon.spy()
+      this.flashSpy = sinon.spy()
+      this.redirectSpy = sinon.spy()
       this.nextMock = '/next-step/'
 
       this.reqMock = {
@@ -101,7 +101,7 @@ describe('OMIS EditController', () => {
         redirect: this.redirectSpy,
       }
 
-      sandbox.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
+      sinon.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
     })
 
     context('when a success message doesn\'t exist', () => {

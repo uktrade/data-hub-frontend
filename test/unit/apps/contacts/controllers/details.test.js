@@ -4,10 +4,10 @@ const contact = require('~/test/unit/data/contacts/contact.json')
 
 describe('Contact controller', () => {
   beforeEach(() => {
-    this.getContactStub = sandbox.stub().resolves(contact)
-    this.getDitCompanyStub = sandbox.stub().resolves(contact.company)
+    this.getContactStub = sinon.stub().resolves(contact)
+    this.getDitCompanyStub = sinon.stub().resolves(contact.company)
 
-    this.transformerStub = sandbox.stub()
+    this.transformerStub = sinon.stub()
 
     this.contactController = proxyquire('~/src/apps/contacts/controllers/details', {
       '../repos': {
@@ -32,11 +32,11 @@ describe('Contact controller', () => {
 
     this.res = {
       locals: {},
-      breadcrumb: sandbox.stub().returnsThis(),
-      render: sandbox.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
+      render: sinon.spy(),
     }
 
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
   })
 
   describe('#getCommon', () => {

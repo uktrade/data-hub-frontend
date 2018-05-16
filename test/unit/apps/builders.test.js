@@ -279,8 +279,8 @@ describe('Global builders', () => {
   describe('#buildFormWithStateAndErrors', () => {
     beforeEach(() => {
       this.builders = rewire('~/src/apps/builders')
-      this.buildFormWithStateSpy = sandbox.stub()
-      this.buildFormWithErrorsSpy = sandbox.stub()
+      this.buildFormWithStateSpy = sinon.stub()
+      this.buildFormWithErrorsSpy = sinon.stub()
       this.builders.__set__('buildFormWithState', this.buildFormWithStateSpy)
       this.builders.__set__('buildFormWithErrors', this.buildFormWithErrorsSpy)
     })
@@ -302,7 +302,7 @@ describe('Global builders', () => {
       this.builders.buildFormWithStateAndErrors(formObject, requestBody, errorsObject)
 
       expect(this.buildFormWithStateSpy).to.be.calledWith(formObject, requestBody)
-      expect(this.buildFormWithErrorsSpy).to.be.calledWith(sandbox.match.any, errorsObject)
+      expect(this.buildFormWithErrorsSpy).to.be.calledWith(sinon.match.any, errorsObject)
     })
   })
 
@@ -314,7 +314,7 @@ describe('Global builders', () => {
           name: 'stage',
           label: 'State',
           type: 'checkbox',
-          options: sandbox.stub().returns([
+          options: sinon.stub().returns([
             { value: 'a', label: 'A' },
             { value: 'b', label: 'B' },
             { value: 'c', label: 'C' },

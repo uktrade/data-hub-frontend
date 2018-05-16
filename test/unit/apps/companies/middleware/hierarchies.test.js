@@ -1,6 +1,6 @@
 describe('Company hierarchies middleware', () => {
   beforeEach(() => {
-    this.mockUpdateCompany = sandbox.stub()
+    this.mockUpdateCompany = sinon.stub()
     this.controller = proxyquire('~/src/apps/companies/middleware/hierarchies', {
       '../repos': {
         updateCompany: this.mockUpdateCompany,
@@ -8,15 +8,15 @@ describe('Company hierarchies middleware', () => {
     })
     this.resMock = {
       ...globalRes,
-      redirect: sandbox.spy(),
+      redirect: sinon.spy(),
     }
     this.reqMock = {
       ...globalReq,
       session: {},
       params: {},
-      flash: sandbox.spy(),
+      flash: sinon.spy(),
     }
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#setGlobalHQ', () => {

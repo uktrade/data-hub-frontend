@@ -31,11 +31,11 @@ class LookupAddress {
   }
 
   addEvents () {
-    this.postcodeLookupButton.addEventListener('click', this.pressLookupButton, true)
-    this.addressSuggestionsDropdown.addEventListener('change', this.selectAddressSuggestion, true)
+    this.postcodeLookupButton.addEventListener('click', this.pressLookupButton.bind(this), true)
+    this.addressSuggestionsDropdown.addEventListener('change', this.selectAddressSuggestion.bind(this), true)
   }
 
-  pressLookupButton = (event) => {
+  pressLookupButton (event) {
     const postcode = this.postcodeLookupField.value
     axios.get(`/api/postcodelookup/${postcode}`)
       .then((response) => {
@@ -49,7 +49,7 @@ class LookupAddress {
       })
   }
 
-  selectAddressSuggestion = (event) => {
+  selectAddressSuggestion (event) {
     if (event.target.value === '') {
       return
     }

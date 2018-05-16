@@ -6,7 +6,7 @@ const orderCollectionData = require('~/test/unit/data/omis/collection.json')
 
 describe('OMIS list middleware', () => {
   beforeEach(() => {
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
     this.req = assign({}, globalReq, {
       session: { token: 'abcd' },
     })

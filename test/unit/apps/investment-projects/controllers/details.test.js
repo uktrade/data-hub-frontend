@@ -2,14 +2,14 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 
 describe('Investment details controller', () => {
   beforeEach(() => {
-    this.next = sandbox.stub()
-    this.transformInvestmentRequirementsForViewStub = sandbox.stub()
+    this.next = sinon.stub()
+    this.transformInvestmentRequirementsForViewStub = sinon.stub()
 
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/details', {
       '../transformers': {
         transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
-        transformInvestmentDataForView: sandbox.stub(),
-        transformInvestmentValueForView: sandbox.stub(),
+        transformInvestmentDataForView: sinon.stub(),
+        transformInvestmentValueForView: sinon.stub(),
       },
     })
   })
@@ -53,7 +53,7 @@ describe('Investment details controller', () => {
           locals: {
             investmentData,
           },
-          render: sandbox.stub(),
+          render: sinon.stub(),
         }
 
         this.controller.detailsGetHandler(this.req, this.res, this.next)
@@ -87,7 +87,7 @@ describe('Investment details controller', () => {
           locals: {
             investmentData,
           },
-          render: sandbox.stub(),
+          render: sinon.stub(),
         }
 
         this.controller.detailsGetHandler(this.req, this.res, this.next)
@@ -123,7 +123,7 @@ describe('Investment details controller', () => {
           locals: {
             investmentData,
           },
-          render: sandbox.stub(),
+          render: sinon.stub(),
         }
 
         this.controller.detailsGetHandler(this.req, this.res, this.next)

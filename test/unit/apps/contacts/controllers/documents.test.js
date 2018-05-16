@@ -4,13 +4,13 @@ const { renderDocuments } = require('~/src/apps/contacts/controllers/documents')
 
 describe('Contacts documents controller', () => {
   beforeEach(() => {
-    this.breadcrumbStub = sandbox.stub().returnsThis()
+    this.breadcrumbStub = sinon.stub().returnsThis()
     this.resMock = assign({}, globalRes, {
       breadcrumb: this.breadcrumbStub,
-      render: sandbox.spy(),
+      render: sinon.spy(),
     })
     this.reqMock = assign({}, globalReq)
-    this.nextSpy = sandbox.spy()
+    this.nextSpy = sinon.spy()
   })
 
   describe('#renderDocuments', () => {

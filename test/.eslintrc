@@ -9,8 +9,7 @@
     "nock": true,
     "rootPath": true,
     "globalReq": true,
-    "globalRes": true,
-    "sandbox": true
+    "globalRes": true
   },
   "rules": {
     "no-unused-expressions": 0

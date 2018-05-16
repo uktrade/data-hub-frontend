@@ -4,7 +4,7 @@ const investmentCollectioData = require('~/test/unit/data/investment/collection.
 
 describe('Investment projects collection middleware', () => {
   beforeEach(() => {
-    this.next = sandbox.spy()
+    this.next = sinon.spy()
     this.req = Object.assign({}, globalReq, {
       session: { token: 'abcd' },
     })
