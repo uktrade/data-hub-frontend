@@ -3,12 +3,10 @@ const { sentence } = require('case')
 
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const { fetchProposition, saveProposition } = require('../repos')
-const { getContactsForCompany, getContact } = require('../../contacts/repos')
-const { getInvestment } = require('../../investment-projects/repos')
+const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
-const { getDitCompany } = require('../../companies/repos')
 const { transformObjectToOption, transformContactToOption } = require('../../transformers')
 const { getOptions } = require('../../../lib/options')
 
@@ -18,15 +16,15 @@ async function postDetails (req, res, next) {
   res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
 
   try {
-    const result = await saveProposition(req.session.token, res.locals.requestBody)
+    await saveProposition(req.session.token, res.locals.requestBody)
 
     req.flash('success', `${sentence(req.params.kind)} ${res.locals.proposition ? 'updated' : 'created'}`)
 
     if (res.locals.returnLink) {
-      return res.redirect(res.locals.returnLink + result.id)
+      return res.redirect(res.locals.returnLink)
     }
 
-    return res.redirect(`/propositions/${result.id}`)
+    return res.redirect(`/propositions`)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
@@ -45,25 +43,7 @@ async function getPropositionDetails (req, res, next, propositionId) {
   try {
     const token = req.session.token
     const investmentId = get(res.locals, 'investmentData.id')
-    // console.log('============== getPropositionDetails ================ ', investmentId)
-    // const investment_project = contact = await getInvestment(token, investmentId)
-    const proposition = res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
-
-    // Get the company associated with the proposition. This can be in the proposition
-    // record, or in the case of editing investment propositions it is the company
-    // associated with the proposition contact.
-    // if (proposition.company) {
-    //   res.locals.company = proposition.company
-    //   return next()
-    // }
-
-    // const contactId = get(proposition, 'contact.id')
-    // if (!contactId) {
-    //   return next(new Error('An proposition must have a company or contact associated with it'))
-    // }
-    //
-    // const contact = await getContact(token, contactId)
-    // res.locals.company = await getDitCompany(token, contact.company.id)
+    res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
 
     next()
   } catch (err) {
@@ -83,7 +63,7 @@ async function getPropositionOptions (req, res, next) {
     const contacts = await getContactsForCompany(token, companyId)
 
     const advisers = await getAdvisers(token)
-    const currentAdviser = get(res.locals, 'proposition.adviser.id')
+    const currentAdviser = get(res.locals, 'proposition.assigned_to.id')
     const activeAdvisers = filterActiveAdvisers({
       advisers: advisers.results,
       includeAdviser: currentAdviser,

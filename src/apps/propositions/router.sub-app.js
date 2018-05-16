@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
+const { postAbandon, renderAbandon } = require('./controllers/abandon')
 const { postCreate, renderCreate } = require('./controllers/create')
 
 const { postDetails, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
@@ -18,6 +19,27 @@ router
     renderCreate,
   )
 
+router
+  .route('/propositions/:propositionId/abandon')
+  .post(
+    postAbandon,
+    renderAbandon,
+  )
+  .get(
+    renderAbandon,
+  )
+
+// router
+//   .route('/propositions/:propositionId/complete')
+//   .post(
+//     postCreate,
+//     renderCreate,
+//   )
+//   .get(
+//     renderCreate,
+//   )
+
+// TODO (jf): find out what kind is, and if it's actually needed here
 router.route([
   '/propositions/create/:kind',
   '/propositions/:propositionId/:kind/edit',

@@ -9,6 +9,7 @@ const QUERY_STRING = FILTER_CONSTANTS.PROPOSITIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.PROPOSITIONS.SECTOR.NAME
 
 async function renderPropositionList (req, res, next) {
+  console.log('!!!!!! when it should be here !!!!!!')
 
   console.log('HHHHHHHHH HHHHHHH')
   try {

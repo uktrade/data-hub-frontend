@@ -7,7 +7,7 @@ const { transformApiResponseToCollection } = require('../../transformers')
 
 async function renderPropositionList (req, res, next) {
 
-  console.log('}}}}}}}}}}}} {{{{{{{{{{{{{{{{')
+  console.log('}}}}}}}}}}}} investment propositions {{{{{{{{{{{{{{{{')
   try {
     const token = req.session.token
     const page = req.query.page || '1'

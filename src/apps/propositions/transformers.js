@@ -6,28 +6,10 @@ const { transformDateObjectToDateString } = require('../transformers')
 const labels = require('./labels')
 const { PROPOSITION_STATE } = require('./constants')
 
-// const transformEntityLink = (entity, entityPath, noLinkText = null) => {
-//   return entity ? {
-//     url: `/${entityPath}/${entity.id}`,
-//     name: entity.name,
-//   } : noLinkText
-// }
-
-// const transformDocumentsLink = (archived_documents_url_path) => {
-//   if (archived_documents_url_path) {
-//     return {
-//       url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
-//       name: 'View files and documents',
-//       hint: '(will open another website)',
-//       hintId: 'external-link-label',
-//     }
-//   }
-//
-//   return { name: 'There are no files or documents' }
-// }
 function transformPropositionResponseToForm ({
   id,
   adviser,
+  assigned_to,
   name,
   scope,
   deadline,
@@ -42,6 +24,7 @@ function transformPropositionResponseToForm ({
     name,
     scope,
     adviser: get(adviser, 'id'),
+    assigned_to: get(assigned_to, 'id'),
     deadline: {
       day: isValidDate ? format(deadline, 'DD') : '',
       month: isValidDate ? format(deadline, 'MM') : '',
@@ -59,6 +42,7 @@ function transformPropositionToListItem ({
   deadline,
   created_on,
   adviser,
+  assigned_to,
   status,
 }) {
   return {
@@ -85,6 +69,10 @@ function transformPropositionToListItem ({
       {
         label: 'Adviser',
         value: adviser,
+      },,
+      {
+        label: 'Asigned to',
+        value: assigned_to,
       },
     ],
   }
@@ -94,8 +82,11 @@ function transformPropositionResponseToViewRecord ({
   scope,
   status,
   created_on,
+  modified_on,
   deadline,
   adviser,
+  assigned_to,
+  reason_abandoned,
 }) {
   const detailLabels = labels.proposition
   const transformed = {
@@ -105,11 +96,17 @@ function transformPropositionResponseToViewRecord ({
       type: 'date',
       name: created_on,
     },
+    modified_on: {
+      type: 'date',
+      name: modified_on,
+    },
     deadline: {
       type: 'date',
       name: deadline,
     },
     adviser,
+    assigned_to,
+    reason_abandoned,
   }
 
   return pickBy(mapKeys(transformed, (value, key) => {

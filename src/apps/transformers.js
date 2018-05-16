@@ -113,7 +113,6 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
     let items = response.results || response.items
 
     if (!items) { return }
-    console.log(']]]]]]]]]]]]]]]]] 1 [[[[[[[[[[[[[[[[[[[[ ', items)
 
     itemTransformers.forEach(transformer => {
       if (!isFunction(transformer)) { return }
@@ -121,7 +120,6 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
         .map(transformer)
         .filter(item => !isEmpty(item))
     })
-  console.log(']]]]]]]]]]]]]]]]] 2 [[[[[[[[[[[[[[[[[[[[ ', items)
 
     return assign({}, {
       items,
