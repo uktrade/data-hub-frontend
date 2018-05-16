@@ -4,6 +4,7 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 const config = require('./config')
 
@@ -28,7 +29,7 @@ const common = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
+        options: {
           cacheDirectory: './babel_cache',
         },
       },
@@ -96,6 +97,7 @@ const common = {
   },
   plugins: [
     new WebpackAssetsManifest(),
+    new VueLoaderPlugin(),
   ],
   node: {
     fs: 'empty',
