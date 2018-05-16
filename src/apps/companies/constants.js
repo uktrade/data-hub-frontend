@@ -61,6 +61,13 @@ const LOCAL_NAV = [
     label: 'Audit history',
   },
   {
+    path: 'timeline',
+    label: 'Timeline',
+    permissions: [
+      'company.read_company_timeline',
+    ],
+  },
+  {
     path: 'documents',
     label: 'Documents',
     permissions: [
