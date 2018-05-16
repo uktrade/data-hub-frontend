@@ -54,7 +54,7 @@ describe('Company timeline controller', () => {
               meta: [
                 {
                   label: 'Source',
-                  value: 'Companies House',
+                  value: 'Companies House (Companies)',
                 },
                 {
                   label: 'Description',
@@ -68,7 +68,7 @@ describe('Company timeline controller', () => {
               meta: [
                 {
                   label: 'Source',
-                  value: 'Companies House',
+                  value: 'Companies House (Companies)',
                 },
                 {
                   label: 'Description',
@@ -83,7 +83,7 @@ describe('Company timeline controller', () => {
               meta: [
                 {
                   label: 'Source',
-                  value: 'Companies House',
+                  value: 'Companies House (Companies)',
                 },
                 {
                   label: 'Description',
@@ -98,7 +98,7 @@ describe('Company timeline controller', () => {
               meta: [
                 {
                   label: 'Source',
-                  value: 'Companies House',
+                  value: 'Companies House (Companies)',
                 },
                 {
                   label: 'Description',
@@ -113,7 +113,7 @@ describe('Company timeline controller', () => {
               meta: [
                 {
                   label: 'Source',
-                  value: 'Companies House',
+                  value: 'Companies House (Companies)',
                 },
                 {
                   label: 'Description',
