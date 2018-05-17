@@ -15,7 +15,7 @@ async function renderInteractionList (req, res, next) {
     const currentAdviserId = get(req.session, 'user.id')
     const channels = await getOptions(token, 'communication-channel', { includeDisabled: true })
     const teams = await getOptions(token, 'team', { includeDisabled: true })
-
+    const permissions = get(req.session, 'user.permissions')
     const sectorOptions = await getOptions(token, SECTOR, { queryString })
 
     const filtersFields = collectionFilterFields({
@@ -23,6 +23,7 @@ async function renderInteractionList (req, res, next) {
       channels,
       currentAdviserId,
       sectorOptions,
+      permissions,
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)

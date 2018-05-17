@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, assign, isNil, mapKeys, pickBy, camelCase } = require('lodash')
+const { get, assign, isNil, omit, pickBy, camelCase } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -38,6 +38,8 @@ function transformInteractionResponseToForm ({
   grant_amount_offered,
   net_company_receipt,
   subject,
+  policy_area,
+  policy_issue_type,
   notes,
   date,
   company,
@@ -60,6 +62,8 @@ function transformInteractionResponseToForm ({
     event: get(event, 'id'),
     service: get(service, 'id'),
     service_delivery_status: get(service_delivery_status, 'id'),
+    policy_area: get(policy_area, 'id'),
+    policy_issue_type: get(policy_issue_type, 'id'),
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
@@ -128,6 +132,8 @@ function transformInteractionResponseToViewRecord ({
   net_company_receipt,
   dit_team,
   contact,
+  policy_issue_type,
+  policy_area,
   investment_project,
   communication_channel,
   event,
@@ -142,6 +148,8 @@ function transformInteractionResponseToViewRecord ({
     dit_team,
     service,
     service_delivery_status,
+    policy_issue_type,
+    policy_area,
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,
@@ -163,17 +171,24 @@ function transformInteractionResponseToViewRecord ({
     documents: transformDocumentsLink(archived_documents_url_path),
   }
 
-  return pickBy(mapKeys(transformed, (value, key) => {
-    return kindLabels[key]
-  }))
+  const result = {}
+  Object.keys(transformed).forEach((key) => {
+    const label = kindLabels[key]
+    if (label) {
+      result[label] = transformed[key]
+    }
+  })
+
+  return pickBy(result)
 }
 
 function transformInteractionFormBodyToApiRequest (props) {
-  return assign({}, props, {
+  return omit({
+    ...props,
     date: transformDateObjectToDateString('date')(props),
     grant_amount_offered: props.grant_amount_offered || null,
     net_company_receipt: props.net_company_receipt || null,
-  })
+  }, ['date_day', 'date_month', 'date_year'])
 }
 
 function transformInteractionListItemToHaveUrlPrefix (urlPrefix) {
