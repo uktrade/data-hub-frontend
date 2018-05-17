@@ -25,7 +25,7 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-  @interaction-add--companies-policy-feedback-submit
+  @interaction-add--companies-policy-feedback-submit @policy
   Scenario: Companies policy feedback is saved
 
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
@@ -155,7 +155,7 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-  @interaction-add--contacts-policy-feedback-submit
+  @interaction-add--contacts-policy-feedback-submit @policy
   Scenario: Policy feedback fields from contacts
 
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
