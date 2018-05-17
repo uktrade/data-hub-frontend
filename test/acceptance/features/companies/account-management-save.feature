@@ -1,4 +1,5 @@
-@companies-account-management-save
+# disabled as the one list fields are temporarly locked down until we decide what to do with them
+@companies-account-management-save @ignore
 Feature: Save account management details for a company
 
   @companies-account-management-save--update
@@ -8,9 +9,9 @@ Feature: Save account management details for a company
     Then the Account management details are displayed
       | key                       | value                   |
       | One List tier             | None                    |
-      | One List account manager  | None                    |
+      | Account manager           | None                    |
     When the Account management details are updated
     Then the Account management details are displayed
       | key                       | value                       |
       | One List tier             | None                        |
-      | One List account manager  | company.oneListAccountOwner |
+      | Account manager           | company.oneListAccountOwner |
