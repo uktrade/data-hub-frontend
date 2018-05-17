@@ -2,10 +2,11 @@ const router = require('express').Router()
 
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
-const { postAbandon, renderAbandon } = require('./controllers/abandon')
+const { renderAbandon } = require('./controllers/abandon')
 const { postCreate, renderCreate } = require('./controllers/create')
 
 const { postDetails, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
+const { postAbandon } = require('./middleware/abandon')
 
 router.param('propositionId', getPropositionDetails)
 

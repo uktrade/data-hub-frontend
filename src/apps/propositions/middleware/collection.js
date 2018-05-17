@@ -56,7 +56,7 @@ function getPropositionsRequestBody (req, res, next) {
 }
 
 function getPropositionSortForm (req, res, next) {
-
+// TODO(jf): here you have the collection sorting mechanism
   console.log('!!!!! getPropositionSortForm !!!!!!')
 
   res.locals.sortForm = merge({}, collectionSortForm, {

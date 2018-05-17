@@ -14,8 +14,8 @@ function renderEditPage (req, res) {
   const propositionDefaults = {
     adviser: req.session.user,
     date: transformDateStringToDateObject(new Date()),
-    contact: get(res.locals, 'contact.id'),
-    dit_team: get(req, 'session.user.dit_team.id'),
+    // contact: get(res.locals, 'contact.id'),
+    // dit_team: get(req, 'session.user.dit_team.id'),
   }
   const mergedPropositionData = pickBy(merge({}, propositionDefaults, propositionData, res.locals.requestBody))
   const propositionId = get(res.locals, 'proposition.id')

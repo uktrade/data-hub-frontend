@@ -3,9 +3,7 @@ const authorisedRequest = require('../../lib/authorised-request')
 
 function fetchProposition (token, propositionId, investmentId) {
   console.log('>>>>>>>>>>>>>>>>> fetchProposition <<<<<<<<<<<<<<<<<<<')
-const investment_project = '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}`)
-  // return authorisedRequest(token, 'http://localhost:57342/proposition-mock')
 }
 
 function saveProposition (token, proposition) {
@@ -18,6 +16,16 @@ function saveProposition (token, proposition) {
   if (proposition.id) {
     options.url = `${options.url}/${proposition.id}`
     options.method = 'PATCH'
+  }
+
+  return authorisedRequest(token, options)
+}
+
+function abandonProposition (token, proposition) {
+  const options = {
+    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/abandon`,
+    method: 'POST',
+    body: proposition,
   }
 
   return authorisedRequest(token, options)
@@ -41,6 +49,7 @@ function getPropositionsForInvestment (token, investmentId, page) {
 }
 
 module.exports = {
+  abandonProposition,
   saveProposition,
   fetchProposition,
   getPropositionsForInvestment,

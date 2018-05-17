@@ -35,19 +35,19 @@ function renderCreate (req, res) {
     })
 }
 
-function renderAbandon (req, res) {
-  const { proposition } = res.locals
-  const selectAbandonForm = abandonForm({
-    errors: res.locals.errors || [],
-  })
-
-  res
-    .breadcrumb('Abandon Proposition')
-    .title(proposition.name)
-    .render('propositions/views/abandon.njk', {
-      selectAbandonForm,
-    })
-}
+// function renderAbandon (req, res) {
+//   const { proposition } = res.locals
+//   const selectAbandonForm = abandonForm({
+//     errors: res.locals.errors || [],
+//   })
+//
+//   res
+//     .breadcrumb('Abandon Proposition')
+//     .title(proposition.name)
+//     .render('propositions/views/abandon.njk', {
+//       selectAbandonForm,
+//     })
+// }
 
 function renderComplete (req, res) {
   const { proposition } = res.locals
@@ -64,7 +64,7 @@ function renderComplete (req, res) {
 }
 
 module.exports = {
-  renderAbandon,
+  // renderAbandon,
   renderCreate,
   postCreate,
 }

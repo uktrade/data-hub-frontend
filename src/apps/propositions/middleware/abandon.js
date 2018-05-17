@@ -2,7 +2,7 @@ const { assign, get, filter, includes, map } = require('lodash')
 const { sentence } = require('case')
 
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
-const { fetchProposition, saveProposition } = require('../repos')
+const { abandonProposition, fetchProposition, saveProposition } = require('../repos')
 const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
@@ -12,13 +12,14 @@ const { getOptions } = require('../../../lib/options')
 
 const SERVICE_DELIVERY_STATUS_COMPLETED = '47329c18-6095-e211-a939-e4115bead28a'
 
-async function postDetails (req, res, next) {
+async function postAbandon (req, res, next) {
   res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
 
   try {
-    await saveProposition(req.session.token, res.locals.requestBody)
+    await abandonProposition(req.session.token, res.locals.requestBody)
 
-    req.flash('success', `${sentence(req.params.kind)} ${res.locals.proposition ? 'updated' : 'created'}`)
+    // TODO (jf): check this success message
+    req.flash('success', `${sentence(req.params.kind)} ${res.locals.proposition ? 'Proposition abandoned' : 'created'}`)
 
     if (res.locals.returnLink) {
       return res.redirect(res.locals.returnLink)
@@ -104,7 +105,8 @@ async function getPropositionOptions (req, res, next) {
 }
 
 module.exports = {
+  postAbandon,
   getPropositionDetails,
-  postDetails,
+  // postDetails,
   getPropositionOptions,
 }

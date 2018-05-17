@@ -1,24 +1,29 @@
+/* eslint camelcase: 0 */
+const { assign, get } = require('lodash')
+
+const { buildFormWithStateAndErrors } = require('../../builders')
 const { abandonForm } = require('../macros')
 
-function postAbandon (req, res, next) {
-  const kind = req.body.kind || null
-
-  if (!kind) {
-    res.locals.errors = {
-      messages: {
-        kind: ['Text area cannot be empty'],
-      },
-    }
-    return next()
-  }
-  return res.redirect(`${res.locals.returnLink}`)
-}
-
 function renderAbandon (req, res) {
-  const { proposition } = res.locals
-  const selectAbandonForm = abandonForm({
-    errors: res.locals.errors || [],
-  })
+  console.log('~~~~~~~~~~~~ renderAbandon ~~~~~~~~~~~ ', res.locals.returnLink )
+
+  // const token = req.session.token
+  // const investmentId = get(res.locals, 'investmentData.id')
+
+  const proposition = get(res.locals, 'proposition')
+  const propositionId = get(res.locals, 'proposition.id')
+  const investment_project = get(res.locals, 'investmentData.id')
+
+  const selectAbandonForm = buildFormWithStateAndErrors(abandonForm(
+    assign({}, res.locals.options, res.locals.conditions, {
+      hiddenFields: {
+        id: propositionId,
+        investment_project,
+      },
+    })),
+  proposition,
+  get(res.locals, 'form.errors.messages'),
+  )
 
   res
     .breadcrumb('Abandon Proposition')
@@ -30,5 +35,5 @@ function renderAbandon (req, res) {
 
 module.exports = {
   renderAbandon,
-  postAbandon,
+  // postAbandon,
 }

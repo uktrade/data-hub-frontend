@@ -2,12 +2,12 @@ module.exports = {
   abandon: {
     macroName: 'TextField',
     type: 'textarea',
-    name: 'abandon',
+    name: 'details',
   },
   adviser (advisers) {
     return {
       macroName: 'MultipleChoiceField',
-      name: 'assigned_to',
+      name: 'adviser',
       initialOption: '-- Select adviser --',
       options: advisers,
     }

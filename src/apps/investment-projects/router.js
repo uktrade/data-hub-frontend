@@ -36,7 +36,8 @@ const { renderPropositionList } = require('./controllers/propositions')
 
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
-const { setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions } = require('./middleware/propositions')
+const { setPropositionsReturnUrl } = require('./middleware/propositions')
+// const { setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions } = require('./middleware/propositions')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
@@ -175,7 +176,8 @@ router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.ha
 
 router.use('/:investmentId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
 
-router.use('/:investmentId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions, propositionsRouter)
+// router.use('/:investmentId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions, propositionsRouter)
+router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
 
 router
   .route('/:investmentId/status')

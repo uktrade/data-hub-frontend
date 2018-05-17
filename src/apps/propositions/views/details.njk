@@ -2,7 +2,6 @@
 
 {% block main_grid_right_column %}
   {% component 'key-value-table', variant='striped', items=propositionViewRecord %}
-  {{ proposition | log | safe }}
 
   {%  if proposition.status === 'ongoing' or  proposition.status === 'late' %}
       <a class="button button--secondary" href="{{proposition.id}}/abandon">

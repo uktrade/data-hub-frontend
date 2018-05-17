@@ -7,7 +7,6 @@ const { transformPropositionResponseToViewRecord } = require('../transformers')
 
 function renderDetailsPage (req, res, next) {
 
-  console.log('???????? is it here ????????')
   try {
     const { proposition } = res.locals
     const breadcrumb = capitalize(lowerCase(proposition.kind))

@@ -9,12 +9,13 @@ module.exports = function ({
   returnLink,
   returnText,
   buttonText,
+  buttonModifiers,
   hiddenFields,
 }) {
   return {
     returnLink,
     returnText,
-    buttonText,
+    buttonText: 'Abandon proposition',
     hiddenFields,
     children: [
       abandon,
@@ -23,5 +24,6 @@ module.exports = function ({
         label: labels.proposition[field.name],
       })
     }),
+    buttonModifiers: 'button--destructive',
   }
 }

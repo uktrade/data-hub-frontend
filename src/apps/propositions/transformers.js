@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { get, assign, mapKeys, pickBy} = require('lodash')
+const { assign, capitalize, get, mapKeys, pickBy } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -9,7 +9,6 @@ const { PROPOSITION_STATE } = require('./constants')
 function transformPropositionResponseToForm ({
   id,
   adviser,
-  assigned_to,
   name,
   scope,
   deadline,
@@ -24,7 +23,6 @@ function transformPropositionResponseToForm ({
     name,
     scope,
     adviser: get(adviser, 'id'),
-    assigned_to: get(assigned_to, 'id'),
     deadline: {
       day: isValidDate ? format(deadline, 'DD') : '',
       month: isValidDate ? format(deadline, 'MM') : '',
@@ -42,7 +40,6 @@ function transformPropositionToListItem ({
   deadline,
   created_on,
   adviser,
-  assigned_to,
   status,
 }) {
   return {
@@ -69,10 +66,6 @@ function transformPropositionToListItem ({
       {
         label: 'Adviser',
         value: adviser,
-      },,
-      {
-        label: 'Asigned to',
-        value: assigned_to,
       },
     ],
   }
@@ -85,13 +78,12 @@ function transformPropositionResponseToViewRecord ({
   modified_on,
   deadline,
   adviser,
-  assigned_to,
-  reason_abandoned,
+  details,
 }) {
   const detailLabels = labels.proposition
   const transformed = {
-    scope,
-    status,
+    scope: capitalize(scope),
+    status: capitalize(status),
     created_on: {
       type: 'date',
       name: created_on,
@@ -105,8 +97,7 @@ function transformPropositionResponseToViewRecord ({
       name: deadline,
     },
     adviser,
-    assigned_to,
-    reason_abandoned,
+    details,
   }
 
   return pickBy(mapKeys(transformed, (value, key) => {
