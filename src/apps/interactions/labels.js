@@ -20,9 +20,10 @@ const policyFeedback = {
   date: 'Date of interaction',
   dit_adviser: 'DIT adviser',
   service: 'Service',
+  policy_issue_type: 'Policy issue type',
+  policy_area: 'Policy area',
   dit_team: 'Service provider',
   communication_channel: 'Communication channel',
-  investment_project: 'Investment project',
   documents: 'Documents',
 }
 

@@ -13,6 +13,12 @@ const GLOBAL_NAV_ITEM = {
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
 
+const POLICY_FEEDBACK_PERMISSIONS = {
+  read: 'interaction.read_policy_feedback_interaction',
+  edit: 'interaction.change_policy_feedback_interaction',
+  create: 'interaction.add_policy_feedback_interaction',
+}
+
 const INTERACTION_NAMES = {
   policy_feedback: 'Policy feedback',
   interaction: 'Interaction',
@@ -27,4 +33,5 @@ module.exports = {
   APP_PERMISSIONS,
   INTERACTION_NAMES,
   SERVICE_DELIVERY_STATUS_COMPLETED,
+  POLICY_FEEDBACK_PERMISSIONS,
 }
