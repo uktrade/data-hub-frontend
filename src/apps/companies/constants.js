@@ -38,10 +38,6 @@ const LOCAL_NAV = [
     ],
   },
   {
-    path: 'exports',
-    label: 'Export',
-  },
-  {
     path: 'investments',
     label: 'Investment',
     permissions: [
@@ -50,15 +46,15 @@ const LOCAL_NAV = [
     ],
   },
   {
+    path: 'exports',
+    label: 'Export',
+  },
+  {
     path: 'orders',
     label: 'Orders (OMIS)',
     permissions: [
       'order.read_order',
     ],
-  },
-  {
-    path: 'audit',
-    label: 'Audit history',
   },
   {
     path: 'timeline',
@@ -73,6 +69,10 @@ const LOCAL_NAV = [
     permissions: [
       'company.read_company_document',
     ],
+  },
+  {
+    path: 'audit',
+    label: 'Audit history',
   },
 ]
 
