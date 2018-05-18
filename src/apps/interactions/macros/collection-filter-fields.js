@@ -4,19 +4,23 @@ const labels = require('../labels')
 const { provider } = require('./fields')
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
+const { POLICY_FEEDBACK_PERMISSIONS } = require('../constants')
 
 const currentYear = (new Date()).getFullYear()
 
-module.exports = function ({ currentAdviserId, channels = [], teams = [], sectorOptions }) {
+module.exports = function ({ currentAdviserId, channels = [], teams = [], sectorOptions, permissions }) {
   return [
     {
       macroName: 'MultipleChoiceField',
       name: 'kind',
       type: 'checkbox',
-      options: [
+      options: permissions.includes(POLICY_FEEDBACK_PERMISSIONS.read) ? [
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
-        // { value: 'policy_feedback', label: 'Policy feedback' },
+        { value: 'policy_feedback', label: 'Policy feedback' },
+      ] : [
+        { value: 'interaction', label: 'Interaction' },
+        { value: 'service_delivery', label: 'Service delivery' },
       ],
       modifier: 'option-select',
     },
