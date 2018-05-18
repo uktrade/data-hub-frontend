@@ -10,16 +10,25 @@ const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
 const { renderInteractions } = require('./controllers/interactions')
+// const { renderPropositions } = require('./controllers/propositions')
 const { getAudit } = require('./controllers/audit')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+// const { setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithProposition } = require('./middleware/propositions')
 const {
   getInteractionCollection,
   getInteractionsRequestBody,
   getInteractionSortForm,
 } = require('../interactions/middleware/collection')
 
+// const {
+//   getPropositionCollection,
+//   getPropositionsRequestBody,
+//   getPropositionSortForm,
+// } = require('../propositions/middleware/collection')
+
 const interactionsRouter = require('../interactions/router.sub-app')
+// const propositionsRouter = require('../propositions/router.sub-app')
 
 router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getContactsCollection, renderContactList)
 
@@ -49,10 +58,19 @@ router.get('/:contactId/interactions',
   renderInteractions
 )
 
+// router.get('/:contactId/propositions',
+//   setPropositionsReturnUrl,
+//   getPropositionsRequestBody,
+//   getPropositionCollection,
+//   getPropositionSortForm,
+//   renderPropositions
+// )
+
 router.get('/:contactId/audit', getAudit)
 
 router.get('/:contactId/documents', renderDocuments)
 
 router.use('/:contactId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+// router.use('/:contactId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithProposition, propositionsRouter)
 
 module.exports = router

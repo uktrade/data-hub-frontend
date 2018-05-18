@@ -106,6 +106,7 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
    * @param {object} response - API response object
    * @returns {function}
    */
+
   return function transformResponseToCollection (response) {
     if (!isPlainObject(response)) { return }
 

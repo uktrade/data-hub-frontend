@@ -50,6 +50,16 @@ const ENTITIES = [
       'investment.read_all_investmentproject',
     ],
   },
+  // {
+  //   entity: 'proposition',
+  //   path: 'propositions',
+  //   text: 'Propositions',
+  //   noun: 'proposition',
+  //   count: 0,
+  //   permissions: [
+  //     'proposition.read_all_proposition',
+  //   ],
+  // },
   {
     entity: 'order',
     path: 'omis',

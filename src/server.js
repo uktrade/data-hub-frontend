@@ -125,6 +125,7 @@ app.use(errors.notFound)
 app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
+
   if (errors) {
     logger.log('error', 'Unable to load all metadataRepository, cannot start app')
 

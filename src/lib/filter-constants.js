@@ -35,6 +35,15 @@ const FILTER_CONSTANTS = {
       },
     },
   },
+  PROPOSITIONS: {
+    SECTOR: {
+      NAME: 'sector',
+      PRIMARY: {
+        NAME: 'sector_descends',
+        QUERY_STRING: '?level__lte=0',
+      },
+    },
+  },
 }
 
 module.exports = FILTER_CONSTANTS

@@ -8,6 +8,7 @@ const subApps = fs.readdirSync(__dirname)
 
 const APP_GLOBAL_NAV_ITEMS = compact(subApps.map(subAppDir => {
   const constantsPath = path.join(__dirname, subAppDir, 'constants.js')
+
   if (!fs.existsSync(constantsPath)) {
     return null
   }

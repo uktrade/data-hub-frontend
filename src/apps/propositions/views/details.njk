@@ -1,0 +1,14 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block main_grid_right_column %}
+  {% component 'key-value-table', variant='striped', items=propositionViewRecord %}
+
+  {%  if proposition.status === 'ongoing' or  proposition.status === 'late' %}
+      <a class="button button--secondary" href="{{proposition.id}}/abandon">
+        Abandon
+      </a>
+      <a class="button" href="{{proposition.id}}/complete">
+        Complete
+      </a>
+  {%  endif %}
+{% endblock %}

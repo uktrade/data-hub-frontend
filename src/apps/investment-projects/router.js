@@ -32,9 +32,12 @@ const {
 
 const { renderInvestmentList } = require('./controllers/list')
 const { renderInteractionList } = require('./controllers/interactions')
+const { renderPropositionList } = require('./controllers/propositions')
 
 const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+const { setPropositionsReturnUrl } = require('./middleware/propositions')
+// const { setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions } = require('./middleware/propositions')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
@@ -59,6 +62,7 @@ const {
 } = require('./controllers/associated')
 
 const interactionsRouter = require('../interactions/router.sub-app')
+const propositionsRouter = require('../propositions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -164,11 +168,16 @@ router
 
 router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderInteractionList)
 
+router.get('/:investmentId/propositions', setPropositionsReturnUrl, renderPropositionList)
+
 router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
 
 router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
 router.use('/:investmentId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+
+// router.use('/:investmentId', setPropositionsReturnUrl, setPropositionsEntityName, setCompanyDetailsWithPropositions, propositionsRouter)
+router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
 
 router
   .route('/:investmentId/status')
