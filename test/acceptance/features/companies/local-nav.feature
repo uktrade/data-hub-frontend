@@ -1,7 +1,7 @@
 @companies-local-nav  @details
 Feature: Companies local nav
 
-  @companies-local-nav
+  @companies-local-nav--staff
   Scenario: Companies local nav as DIT staff
 
     When I navigate to the `companies.fixture` page using `company` `Venus Ltd` fixture
@@ -10,11 +10,11 @@ Feature: Companies local nav
       | Details                   |
       | Contacts                  |
       | Interactions              |
-      | Export                    |
       | Investment                |
+      | Export                    |
       | Orders (OMIS)             |
-      | Audit history             |
       | Documents                 |
+      | Audit history             |
 
   @companies-local-nav--lep @lep
   Scenario: Companies local nav as LEP
@@ -24,8 +24,8 @@ Feature: Companies local nav
       | text                      |
       | Details                   |
       | Contacts                  |
-      | Export                    |
       | Investment                |
+      | Export                    |
       | Audit history             |
 
   @companies-local-nav--da @da
@@ -36,7 +36,7 @@ Feature: Companies local nav
       | text                      |
       | Details                   |
       | Contacts                  |
-      | Export                    |
       | Investment                |
+      | Export                    |
       | Orders (OMIS)             |
       | Audit history             |

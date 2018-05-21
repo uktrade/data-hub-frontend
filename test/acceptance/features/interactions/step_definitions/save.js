@@ -7,7 +7,7 @@ const { getDateFor } = require('../../../helpers/date')
 const Interaction = client.page.interactions.interaction()
 const InteractionList = client.page.interactions.list()
 
-When(/^[an]{1,2} (interaction|service delivery|policy feedback) is added$/, async function (kind, dataTable) {
+When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind, dataTable) {
   const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
   await Interaction
     .createInteraction(details, kind === 'service delivery', (interaction) => {
@@ -18,6 +18,21 @@ When(/^[an]{1,2} (interaction|service delivery|policy feedback) is added$/, asyn
         day: get(this.state, 'interaction.dateOfInteractionDay'),
       }))
       set(this.state, 'interaction.type', capitalize(kind))
+    })
+    .wait() // wait for backend to sync
+})
+
+When(/^a policy feedback is added$/, async function (dataTable) {
+  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
+  await Interaction
+    .createPolicyFeedback(details, (interaction) => {
+      set(this.state, 'interaction', interaction)
+      set(this.state, 'interaction.date', getDateFor({
+        year: get(this.state, 'interaction.dateOfInteractionYear'),
+        month: get(this.state, 'interaction.dateOfInteractionMonth'),
+        day: get(this.state, 'interaction.dateOfInteractionDay'),
+      }))
+      set(this.state, 'interaction.type', 'Policy feedback')
     })
     .wait() // wait for backend to sync
 })
@@ -55,7 +70,7 @@ When(/^the interaction events No option is chosen$/, async function () {
     .click('@eventNo')
 })
 
-Then(/^there are (interaction|policy feedback) fields$/, async function (kind) {
+Then(/^there are interaction fields$/, async function () {
   await Interaction
     .waitForElementVisible('@contact')
     .assert.visible('@contact')
@@ -74,6 +89,8 @@ Then(/^there are (interaction|policy feedback) fields$/, async function (kind) {
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
     .assert.visible('@communicationChannel')
+    .assert.elementNotPresent('@policyIssueType')
+    .assert.elementNotPresent('@policyArea')
 })
 
 Then(/^there are service delivery fields$/, async function () {
@@ -95,6 +112,30 @@ Then(/^there are service delivery fields$/, async function () {
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
     .assert.elementNotPresent('@communicationChannel')
+    .assert.elementNotPresent('@policyIssueType')
+    .assert.elementNotPresent('@policyArea')
+})
+
+Then(/^there are policy feedback fields$/, async function () {
+  await Interaction
+    .waitForElementVisible('@contact')
+    .assert.visible('@contact')
+    .assert.visible('@serviceProvider')
+    .assert.visible('@policyIssueType')
+    .assert.visible('@policyArea')
+    .assert.visible('@subject')
+    .assert.visible('@notes')
+    .assert.visible('@dateOfInteractionYear')
+    .assert.visible('@dateOfInteractionMonth')
+    .assert.visible('@dateOfInteractionDay')
+    .assert.visible('@ditAdviser')
+    .assert.visible('@communicationChannel')
+    .assert.elementNotPresent('@eventYes')
+    .assert.elementNotPresent('@eventNo')
+    .assert.elementNotPresent('@event')
+    .assert.elementNotPresent('@serviceStatus')
+    .assert.elementNotPresent('@grantOffered')
+    .assert.elementNotPresent('@netReceipt')
 })
 
 Then(/^(interaction|policy feedback) fields are pre-populated$/, async function (kind) {
