@@ -32,13 +32,33 @@ describe('Companies local navigation', () => {
     })
   })
 
-  context('when company is a headquarters', () => {
+  context('when company is a European headquarters', () => {
     beforeEach(() => {
       this.res.locals.company = {
         id: '1234',
         headquarter_type: {
           id: '2222',
-          name: 'Global HQ',
+          name: 'ehq',
+        },
+        company_number: null,
+      }
+
+      setCompaniesLocalNav(this.req, this.res, this.next)
+    })
+
+    it('should not have a subsidiaries menu option', () => {
+      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'subsidiaries')
+      expect(menuItem).to.be.undefined
+    })
+  })
+
+  context('when company is a global headquarters', () => {
+    beforeEach(() => {
+      this.res.locals.company = {
+        id: '1234',
+        headquarter_type: {
+          id: '2222',
+          name: 'ghq',
         },
         company_number: null,
       }
