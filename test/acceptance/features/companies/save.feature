@@ -24,10 +24,10 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Account management details are displayed
+    And the Global account management details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | One List account manager  | None                       |
+      | Account manager           | None                       |
 
   @companies-save--uk-non-private-or-non-public-ltd-company
   Scenario: Create a UK non-private or non-public limited company
@@ -48,10 +48,10 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Account management details are displayed
+    And the Global account management details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | One List account manager  | None                       |
+      | Account manager           | None                       |
 
   @companies-save--foreign
   Scenario: Create a foreign company
@@ -72,10 +72,10 @@ Feature: Create a new company
       | Number of employees       | company.employeeRange            |
       | Annual turnover           | company.turnoverRange            |
       | Country                   | company.registeredAddressCountry |
-    And the Account management details are displayed
+    And the Global account management details are displayed
       | key                       | value                            |
       | One List tier             | None                             |
-      | One List account manager  | None                             |
+      | Account manager           | None                             |
 
   @companies-save--foreign-uk-branch
   Scenario: Create a UK branch of a foreign company
@@ -96,7 +96,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Account management details are displayed
+    And the Global account management details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | One List account manager  | None                       |
+      | Account manager           | None                       |

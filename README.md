@@ -416,6 +416,7 @@ To run tests against a specific user permissions type:
   - `lepStaffToken`
   - `daStaffToken`
   - `ditStaffToken`
+  - `policyFeedbackStaffToken`
 - Use the relevant `yarn` script `yarn circle:acceptance:<staff type>` (see [package.json](/package.json))
 
 ##### Dev api tokens
