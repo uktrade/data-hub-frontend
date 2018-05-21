@@ -27,9 +27,14 @@
   {% endif %}
 
   <div class="section">
-    <h2 class="heading-medium">Account management</h2>
+    <h2 class="heading-medium">Global account management</h2>
     {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
-    <p><a href="/companies/{{company.id}}/account-management/edit" class="button button--secondary">Edit account management</a></p>
+
+    {% call HiddenContent({ summary: 'Need to edit the account management information?' }) %}
+      {% call Message({ type: 'muted' }) %}
+        If you need to change the One List tier or account manager for this company, please <a href="{{ feedbackLink }}">contact the support team</a>.
+      {% endcall %}
+    {% endcall %}
   </div>
 
   {% if company.id and not company.archived %}
