@@ -13,6 +13,7 @@ const { renderDetails } = require('./controllers/details')
 const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
+const { renderTimeline } = require('./controllers/timeline')
 const { renderInteractions } = require('./controllers/interactions')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
@@ -27,7 +28,6 @@ const {
   renderExportEdit,
   handleEditFormPost,
 } = require('./controllers/exports')
-const { renderAccountManagementEditPage } = require('./controllers/account-management')
 
 const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const {
@@ -48,7 +48,6 @@ const { setCompanyContactRequestBody, getCompanyContactCollection } = require('.
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
-const { populateAccountManagementForm, postAccountManagementDetails } = require('./middleware/account-management')
 const { setGlobalHQ, removeGlobalHQ, setSubsidiary, removeSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
@@ -85,11 +84,6 @@ router
   .route('/:companyId/edit')
   .get(setIsEditMode, populateForm, renderForm)
   .post(handleFormPost, setIsEditMode, populateForm, renderForm)
-
-router
-  .route('/:companyId/account-management/edit')
-  .get(populateAccountManagementForm, renderAccountManagementEditPage)
-  .post(populateAccountManagementForm, postAccountManagementDetails, renderAccountManagementEditPage)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
@@ -128,6 +122,7 @@ router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
+router.get('/:companyId/timeline', renderTimeline)
 
 router.use('/:companyId', setInteractionsReturnUrl, setInteractionsEntityName, interactionsRouter)
 

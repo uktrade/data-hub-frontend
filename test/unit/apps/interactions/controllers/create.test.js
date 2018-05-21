@@ -14,6 +14,9 @@ describe('Create interaction, step 1', () => {
       query: {},
       session: {
         token: '4321',
+        user: {
+          permissions: ['interaction.add_policy_feedback_interaction'],
+        },
       },
       body: {},
     }
@@ -104,7 +107,10 @@ describe('Create interaction, step 1', () => {
       })
 
       it('should generate a form with no errors', () => {
-        expect(this.kindFormStub).to.be.calledWith({ errors: [] })
+        expect(this.kindFormStub).to.be.calledWith({
+          errors: [],
+          permissions: ['interaction.add_policy_feedback_interaction'],
+        })
       })
 
       it('render the correct template', () => {
@@ -119,7 +125,10 @@ describe('Create interaction, step 1', () => {
       })
 
       it('should generate a form with no errors', () => {
-        expect(this.kindFormStub).to.be.calledWith({ errors: this.res.locals.errors })
+        expect(this.kindFormStub).to.be.calledWith({
+          errors: this.res.locals.errors,
+          permissions: ['interaction.add_policy_feedback_interaction'],
+        })
       })
     })
   })

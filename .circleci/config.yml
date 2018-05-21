@@ -7,6 +7,7 @@ aliases:
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
+  - &oauth2_policy_staff_token  policyFeedbackStaffToken
 
   # Common steps
   - &restore_yarn_cache
@@ -391,6 +392,35 @@ jobs:
       - *store_test_results
       - *store_test_artifacts
 
+  # Run acceptance tests for policy feedback staff
+  policy_staff_at: &policy_staff_at
+    <<: *at_container_config
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_policy_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - *docker_data_hub_backend
+    steps:
+      - checkout
+      - *wait_for_backend
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - *create_cucumber_dirs
+      - run:
+          name: Run policy feedback acceptance tests
+          command: yarn circle:acceptance:policy-staff
+      - *create_at_reports
+      - *store_test_results
+      - *store_test_artifacts
+
   # Run acceptance tests for DIT staff using the master version of the backend
   master-dit_staff_at:
     <<: *dit_staff_at
@@ -433,6 +463,21 @@ jobs:
       - <<: *docker_data_hub_backend
         image: ukti/data-hub-leeloo:master
 
+  # Run acceptance tests for Policy staff using the master version of the backend
+  master-policy_staff_at:
+    <<: *policy_staff_at
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_policy_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mock_sso
+      - <<: *docker_data_hub_backend
+        image: ukti/data-hub-leeloo:master
+
 # CircleCi workflows
 workflows:
   version: 2
@@ -457,9 +502,11 @@ workflows:
       - dit_staff_at: *common_at_workflow_config
       - da_staff_at: *common_at_workflow_config
       - lep_staff_at: *common_at_workflow_config
+      - policy_staff_at: *common_at_workflow_config
       - master-dit_staff_at: *master_common_at_workflow_config
       - master-da_staff_at: *master_common_at_workflow_config
       - master-lep_staff_at: *master_common_at_workflow_config
+      - master-policy_staff_at: *master_common_at_workflow_config
 
 # Webhook for geckoboard heroku app
 notify:
