@@ -64,28 +64,8 @@ async function addSubsidiary (req, res, next) {
   return res.redirect(`/companies/${companyId}/subsidiaries`)
 }
 
-async function removeSubsidiary (req, res, next) {
-  const token = req.session.token
-  const parentCompanyId = req.params.parentCompanyId
-  const body = { global_headquarters: null }
-
-  try {
-    const response = await updateCompany(token, parentCompanyId, body)
-
-    req.flash('success', 'You’ve removed the link to the Subsidiary')
-    return res.redirect(`/companies/${response.id}/details`)
-  } catch (error) {
-    if (error.statusCode === 400) {
-      req.flash('error', transformErrorMessage(error.error))
-      return res.redirect(`/companies/${parentCompanyId}/details`)
-    }
-    next(error)
-  }
-}
-
 module.exports = {
   setGlobalHQ,
   removeGlobalHQ,
   addSubsidiary,
-  removeSubsidiary,
 }
