@@ -48,7 +48,7 @@ const { setCompanyContactRequestBody, getCompanyContactCollection } = require('.
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
-const { setGlobalHQ, removeGlobalHQ, setSubsidiary, removeSubsidiary } = require('./middleware/hierarchies')
+const { setGlobalHQ, removeGlobalHQ, addSubsidiary, removeSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const interactionsRouter = require('../interactions/router.sub-app')
@@ -98,7 +98,7 @@ router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
-router.get('/:parentCompanyId/hierarchies/subsidiaries/:companyId/add', setSubsidiary)
+router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
 router.get('/:parentCompanyId/hierarchies/subsidiaries/remove', removeSubsidiary)
 
 router.get('/:companyId/contacts',

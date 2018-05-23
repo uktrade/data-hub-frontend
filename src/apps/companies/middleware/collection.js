@@ -117,7 +117,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
         (item) => {
           return {
             ...item,
-            url: `/companies/${item.id}/hierarchies/subsidiaries/${companyId}/add`,
+            url: `/companies/${companyId}/hierarchies/subsidiaries/${item.id}/add`,
           }
         }
       ))
