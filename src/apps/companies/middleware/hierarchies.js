@@ -45,48 +45,27 @@ async function removeGlobalHQ (req, res, next) {
   }
 }
 
-async function setSubsidiary (req, res, next) {
+async function addSubsidiary (req, res, next) {
   const token = req.session.token
-  const companyId = req.params.companyId
-  const parentCompanyId = req.params.parentCompanyId
+  const { companyId, subsidiaryCompanyId } = req.params
   const body = { global_headquarters: companyId }
 
   try {
-    const response = await updateCompany(token, parentCompanyId, body)
-
+    await updateCompany(token, subsidiaryCompanyId, body)
     req.flash('success', 'You’ve linked the Subsidiary')
-    return res.redirect(`/companies/${response.id}/details`)
   } catch (error) {
-    if (error.statusCode === 400) {
-      req.flash('error', transformErrorMessage(error.error))
-      return res.redirect(`/companies/${parentCompanyId}/details`)
+    if (error.statusCode !== 400) {
+      return next(error)
     }
-    next(error)
+
+    req.flash('error', transformErrorMessage(error.error))
   }
-}
 
-async function removeSubsidiary (req, res, next) {
-  const token = req.session.token
-  const parentCompanyId = req.params.parentCompanyId
-  const body = { global_headquarters: null }
-
-  try {
-    const response = await updateCompany(token, parentCompanyId, body)
-
-    req.flash('success', 'You’ve removed the link to the Subsidiary')
-    return res.redirect(`/companies/${response.id}/details`)
-  } catch (error) {
-    if (error.statusCode === 400) {
-      req.flash('error', transformErrorMessage(error.error))
-      return res.redirect(`/companies/${parentCompanyId}/details`)
-    }
-    next(error)
-  }
+  return res.redirect(`/companies/${companyId}/subsidiaries`)
 }
 
 module.exports = {
   setGlobalHQ,
   removeGlobalHQ,
-  setSubsidiary,
-  removeSubsidiary,
+  addSubsidiary,
 }
