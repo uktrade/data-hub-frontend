@@ -13,7 +13,6 @@ const { renderDetails } = require('./controllers/details')
 const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
-const { renderTimeline } = require('./controllers/timeline')
 const { renderInteractions } = require('./controllers/interactions')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
@@ -48,7 +47,7 @@ const { setCompanyContactRequestBody, getCompanyContactCollection } = require('.
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
-const { setGlobalHQ, removeGlobalHQ, setSubsidiary, removeSubsidiary } = require('./middleware/hierarchies')
+const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const interactionsRouter = require('../interactions/router.sub-app')
@@ -98,8 +97,7 @@ router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
-router.get('/:parentCompanyId/hierarchies/subsidiaries/:companyId/add', setSubsidiary)
-router.get('/:parentCompanyId/hierarchies/subsidiaries/remove', removeSubsidiary)
+router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
 
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
@@ -122,7 +120,6 @@ router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
-router.get('/:companyId/timeline', renderTimeline)
 
 router.use('/:companyId', setInteractionsReturnUrl, setInteractionsEntityName, interactionsRouter)
 

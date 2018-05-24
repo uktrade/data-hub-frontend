@@ -4,7 +4,7 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const config = require('./config')
 

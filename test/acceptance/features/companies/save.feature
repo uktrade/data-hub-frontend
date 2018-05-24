@@ -24,7 +24,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global account management details are displayed
+    And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Account manager           | None                       |
@@ -48,7 +48,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global account management details are displayed
+    And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Account manager           | None                       |
@@ -72,7 +72,7 @@ Feature: Create a new company
       | Number of employees       | company.employeeRange            |
       | Annual turnover           | company.turnoverRange            |
       | Country                   | company.registeredAddressCountry |
-    And the Global account management details are displayed
+    And the Global Account Manager – One List details are displayed
       | key                       | value                            |
       | One List tier             | None                             |
       | Account manager           | None                             |
@@ -96,7 +96,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global account management details are displayed
+    And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Account manager           | None                       |
