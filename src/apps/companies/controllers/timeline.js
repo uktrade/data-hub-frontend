@@ -10,7 +10,7 @@ async function renderTimeline (req, res, next) {
   try {
     const timeline = await getCompanyTimeline(token, id, page)
       .then(transformApiResponseToCollection(
-        { entityType: 'timeline' },
+        { query: req.query },
         transformTimelineToListItem
       ))
 

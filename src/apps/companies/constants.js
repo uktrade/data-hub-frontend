@@ -57,13 +57,6 @@ const LOCAL_NAV = [
     ],
   },
   {
-    path: 'timeline',
-    label: 'Timeline',
-    permissions: [
-      'company.read_company_timeline',
-    ],
-  },
-  {
     path: 'documents',
     label: 'Documents',
     permissions: [

@@ -2,6 +2,7 @@
 const config = require('~/config')
 const companyData = require('~/test/unit/data/companies/companies-house-company.json')
 const timelineData = require('~/test/unit/data/companies/timeline.json')
+const timelineDataPage2 = require('~/test/unit/data/companies/timeline2.json')
 const tokenMock = '12345abcde'
 
 const controller = require('~/src/apps/companies/controllers/timeline')
@@ -147,13 +148,19 @@ describe('Company timeline controller', () => {
 
         nock(config.apiRoot)
           .get('/v3/company/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/timeline?limit=10&offset=10')
-          .reply(200, timelineData)
+          .reply(200, timelineDataPage2)
 
         await controller.renderTimeline(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should call timeline with correct arguments', () => {
         expect(nock.isDone()).to.be.true
+      })
+
+      it('shold include pagination data in the response', () => {
+        const data = this.resMock.render.firstCall.args[1]
+        expect(data.timeline.pagination.currentPage).to.eq(2)
+        expect(data.timeline.pagination.totalPages).to.eq(6)
       })
     })
   })
