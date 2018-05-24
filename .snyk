@@ -1,0 +1,31 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.12.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - browser-sync > connect > debug:
+        patched: '2018-05-24T13:58:15.813Z'
+    - browser-sync > serve-index > debug:
+        patched: '2018-05-24T13:58:15.813Z'
+    - browser-sync > localtunnel > debug:
+        patched: '2018-05-24T13:58:15.813Z'
+    - browser-sync > connect > finalhandler > debug:
+        patched: '2018-05-24T13:58:15.813Z'
+  'npm:minimatch:20160620':
+    - uglify > grunt > minimatch:
+        patched: '2018-05-24T13:58:15.813Z'
+    - uglify > grunt > glob > minimatch:
+        patched: '2018-05-24T13:58:15.813Z'
+    - uglify > grunt > findup-sync > glob > minimatch:
+        patched: '2018-05-24T13:58:15.813Z'
+  'npm:ms:20170412':
+    - browser-sync > connect > debug > ms:
+        patched: '2018-05-24T13:58:15.813Z'
+    - browser-sync > connect > finalhandler > debug > ms:
+        patched: '2018-05-24T13:58:15.813Z'
+    - browser-sync > serve-index > debug > ms:
+        patched: '2018-05-24T13:58:15.813Z'
+  'npm:uglify-js:20151024':
+    - uglify > grunt-contrib-uglify > uglify-js:
+        patched: '2018-05-24T13:58:15.813Z'
