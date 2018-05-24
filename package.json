@@ -104,7 +104,8 @@
     "webpack": "^3.12.0",
     "webpack-assets-manifest": "^1.0.0",
     "webpack-merge": "^4.1.1",
-    "winston": "^2.4.2"
+    "winston": "^2.4.2",
+    "snyk": "^1.80.1"
   },
   "scripts": {
     "clean": "del .build",
@@ -130,7 +131,9 @@
     "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
     "circle:acceptance:policy-staff": "yarn circle:acceptance --tag policy --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
@@ -175,5 +178,6 @@
       "webpack-assets-manifest"
     ]
   },
-  "sasslintConfig": ".sass-lint.yml"
+  "sasslintConfig": ".sass-lint.yml",
+  "snyk": true
 }
