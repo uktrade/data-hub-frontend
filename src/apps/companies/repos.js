@@ -1,6 +1,7 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
+const { search } = require('../search/services')
 
 // Get a company and then pad out the interactions with related data
 function getDitCompany (token, id) {
@@ -91,6 +92,16 @@ function getCompanyTimeline (token, companyId, page = 1) {
   })
 }
 
+function getCompanySubsidiaries (token, companyId, page = 1) {
+  return search({
+    token,
+    page,
+    searchEntity: 'company',
+    requestBody: { global_headquarters: companyId },
+    isAggregation: false,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -100,4 +111,5 @@ module.exports = {
   updateCompany,
   getCompanyAuditLog,
   getCompanyTimeline,
+  getCompanySubsidiaries,
 }

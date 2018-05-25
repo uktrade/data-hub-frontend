@@ -1,6 +1,6 @@
-const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformCompanyToSubsidiaryListItem } = require('../transformers')
+const { getCompanySubsidiaries } = require('../repos')
 const { companyDetailsLabels } = require('../labels')
 
 async function renderSubsidiaries (req, res, next) {
@@ -13,13 +13,7 @@ async function renderSubsidiaries (req, res, next) {
     name: companyName,
   } = res.locals.company
 
-  const companies = await search({
-    token,
-    page,
-    searchEntity: 'company',
-    requestBody: { global_headquarters: companyId },
-    isAggregation: false,
-  })
+  const companies = await getCompanySubsidiaries(token, companyId, page)
     .then(transformApiResponseToSearchCollection(
       { query },
       transformCompanyToSubsidiaryListItem,
