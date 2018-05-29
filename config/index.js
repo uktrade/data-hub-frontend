@@ -70,6 +70,9 @@ const config = {
     user: process.env.BASIC_AUTH_USER,
     password: process.env.BASIC_AUTH_PASSWORD,
   },
+  oneList: {
+    email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
+  },
 }
 
 module.exports = config
