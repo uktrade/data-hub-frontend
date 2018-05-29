@@ -91,6 +91,20 @@ function getCompanyTimeline (token, companyId, page = 1) {
   })
 }
 
+function getCompanySubsidiaries (token, companyId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company`,
+    qs: {
+      limit,
+      offset,
+      sortby: 'name',
+      global_headquarters_id: companyId,
+    },
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -100,4 +114,5 @@ module.exports = {
   updateCompany,
   getCompanyAuditLog,
   getCompanyTimeline,
+  getCompanySubsidiaries,
 }
