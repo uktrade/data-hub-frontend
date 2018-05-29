@@ -1,0 +1,111 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+      {
+          "id": "0f5216e0-849f-11e6-ae22-56b6b6499611",
+          "reference_code": "ORG-10096257",
+          "name": "Venus Ltd",
+          "trading_name": null,
+          "uk_based": true,
+          "company_number": null,
+          "vat_number": "",
+          "registered_address_1": "66 Marcham Road",
+          "registered_address_2": null,
+          "registered_address_town": "Bordley",
+          "registered_address_county": null,
+          "registered_address_postcode": "BD23 8RZ",
+          "registered_address_country": {
+              "name": "United Kingdom",
+              "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+          },
+          "created_on": "2016-06-15T10:00:00Z",
+          "modified_on": "2018-05-29T13:15:47.200952Z",
+          "archived": false,
+          "archived_documents_url_path": "/documents/123",
+          "archived_on": null,
+          "archived_reason": null,
+          "archived_by": null,
+          "description": "This is a dummy company for testing",
+          "website": null,
+          "trading_address_1": null,
+          "trading_address_2": null,
+          "trading_address_town": null,
+          "trading_address_county": null,
+          "trading_address_postcode": null,
+          "trading_address_country": null,
+          "account_manager": null,
+          "business_type": {
+              "name": "Company",
+              "id": "98d14e94-5d95-e211-a939-e4115bead28a"
+          },
+          "classification": null,
+          "companies_house_data": null,
+          "contacts": [
+              {
+                  "id": "9b1138ab-ec7b-497f-b8c3-27fed21694ef",
+                  "title": null,
+                  "first_name": "Johnny",
+                  "last_name": "Cakeman",
+                  "name": "Johnny Cakeman",
+                  "job_title": null,
+                  "company": {
+                      "name": "Venus Ltd",
+                      "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+                  },
+                  "adviser": null,
+                  "primary": false,
+                  "telephone_countrycode": "44",
+                  "telephone_number": "67890123432",
+                  "email": "johnny@cakeman.com",
+                  "address_same_as_company": false,
+                  "address_1": "82 Ramsgate Rd",
+                  "address_2": null,
+                  "address_town": "Willington",
+                  "address_county": null,
+                  "address_country": {
+                      "name": "United Kingdom",
+                      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+                  },
+                  "address_postcode": "NE28 5JB",
+                  "telephone_alternative": null,
+                  "email_alternative": null,
+                  "notes": "This is a dummy contact for testing",
+                  "contactable_by_dit": false,
+                  "contactable_by_uk_dit_partners": false,
+                  "contactable_by_overseas_dit_partners": false,
+                  "accepts_dit_email_marketing": false,
+                  "contactable_by_email": false,
+                  "contactable_by_phone": true,
+                  "archived": false,
+                  "archived_documents_url_path": "/documents/123",
+                  "archived_on": null,
+                  "archived_reason": null,
+                  "archived_by": null,
+                  "created_on": "2017-02-28T15:00:00Z",
+                  "modified_on": "2017-06-05T00:00:00Z"
+              }
+          ],
+          "employee_range": null,
+          "export_to_countries": [],
+          "future_interest_countries": [],
+          "headquarter_type": null,
+          "one_list_account_owner": null,
+          "global_headquarters": {
+              "name": "Mercury Ltd",
+              "id": "a73efeba-8499-11e6-ae22-56b6b6499611"
+          },
+          "sector": {
+              "name": "Retail",
+              "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+          },
+          "turnover_range": null,
+          "uk_region": {
+              "name": "North West",
+              "id": "824cd12a-6095-e211-a939-e4115bead28a"
+          },
+          "export_experience_category": null
+      }
+  ]
+}
