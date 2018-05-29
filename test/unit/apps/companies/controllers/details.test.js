@@ -1,4 +1,5 @@
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
+const config = require('~/config')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const { renderDetails } = require('~/src/apps/companies/controllers/details')
 
@@ -46,6 +47,11 @@ describe('Companies details controller', () => {
         const options = this.res.render.firstCall.args[1]
         expect(options.accountManagementDetails).to.not.be.null
       })
+
+      it('should include a link to the One List support email', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.oneListEmail).to.equal(config.oneList.email)
+      })
     })
 
     context('when the company has no companies house data', () => {
@@ -72,6 +78,11 @@ describe('Companies details controller', () => {
       it('should include one list information', () => {
         const options = this.res.render.firstCall.args[1]
         expect(options.accountManagementDetails).to.not.be.null
+      })
+
+      it('should include a link to the One List support email', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.oneListEmail).to.equal(config.oneList.email)
       })
     })
   })

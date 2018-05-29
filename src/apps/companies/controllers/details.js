@@ -1,3 +1,4 @@
+const config = require('../../../../config')
 const {
   transformCompanyToView,
   transformCompaniesHouseToView,
@@ -13,6 +14,7 @@ function renderDetails (req, res) {
       companyDetails: transformCompanyToView(company),
       accountManagementDetails: transformCompanyToOneListView(company),
       chDetails: company.companies_house_data ? transformCompaniesHouseToView(company.companies_house_data) : null,
+      oneListEmail: config.oneList.email,
     })
 }
 
