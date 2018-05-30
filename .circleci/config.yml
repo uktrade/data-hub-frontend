@@ -142,7 +142,6 @@ aliases:
   # Non master branch Common workflow config
   - &common_at_workflow_config
     requires:
-      - lockfile
       - dependencies
       - lint_code
       - unit_tests
@@ -157,7 +156,6 @@ aliases:
   # Master branch common workflow config
   - &master_common_at_workflow_config
     requires:
-      - lockfile
       - dependencies
       - lint_code
       - unit_tests
@@ -168,37 +166,6 @@ aliases:
           - master
           - /^release.*/
 jobs:
-  # greenkeeper lockfile job
-  lockfile:
-    docker:
-      - image: *node_version
-    working_directory: ~/data-hub-frontend
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore yarn dependencies cache
-          key: cache-lockfile-{{ checksum "package.json" }}
-      - run:
-          name: Greenkeeper lockfile
-          command: |
-            # If the branch is a greenkeeper branch set env to empty string so lock file is updated
-            # The following issue has more information around why this is needed https://github.com/greenkeeperio/greenkeeper-lockfile/issues/58
-            if [[ $CIRCLE_BRANCH == greenkeeper* ]];
-            then
-              CI_PULL_REQUEST=""
-            fi
-
-            # Install and run greenkeeper lockfile
-            yarn global add greenkeeper-lockfile@1
-            greenkeeper-lockfile-update
-            greenkeeper-lockfile-upload
-          when: always
-      - save_cache:
-          name: Save yarn dependencies cache
-          key: cache-lockfile-{{ checksum "package.json" }}
-          paths:
-            - ~/.cache/yarn
-
   # Save yarn dependencies to cache
   dependencies:
     docker:
@@ -206,8 +173,7 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --production=false
       - run: yarn add wavy  # explicitly install wavy module
       - save_cache:
           name: Save yarn dependencies cache
@@ -483,21 +449,15 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - lockfile
       - dependencies:
-          requires:
-            - lockfile
       - lint_code:
           requires:
-            - lockfile
             - dependencies
       - unit_tests:
           requires:
-            - lockfile
             - dependencies
       - vue_tests:
           requires:
-            - lockfile
             - dependencies
       - dit_staff_at: *common_at_workflow_config
       - da_staff_at: *common_at_workflow_config
