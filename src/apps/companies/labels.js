@@ -69,7 +69,7 @@ const hqLabels = {
 
 const accountManagementDisplayLabels = {
   one_list_tier: 'One List tier',
-  one_list_account_owner: 'Account manager',
+  one_list_account_owner: 'Global account manager',
 }
 
 const exportDetailsLabels = {
