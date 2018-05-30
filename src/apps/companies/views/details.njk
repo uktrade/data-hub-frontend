@@ -30,9 +30,11 @@
     <h2 class="heading-medium">Global Account Manager – One List</h2>
     {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
 
-    {% call HiddenContent({ summary: 'Need to edit the account management information?' }) %}
+    {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
       {% call Message({ type: 'muted' }) %}
-        If you need to change the One List tier or One List account manager for this company, please <a href="{{ feedbackLink }}">contact the support team</a>.
+        If you need to change the One List tier or Global account manager for this company,
+        please click <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">here</a>
+        or email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
       {% endcall %}
     {% endcall %}
   </div>
