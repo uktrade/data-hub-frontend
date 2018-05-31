@@ -27,7 +27,7 @@ Feature: Create a new company
     And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | Account manager           | None                       |
+      | Global account manager    | None                       |
 
   @companies-save--uk-non-private-or-non-public-ltd-company
   Scenario: Create a UK non-private or non-public limited company
@@ -51,7 +51,7 @@ Feature: Create a new company
     And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | Account manager           | None                       |
+      | Global account manager    | None                       |
 
   @companies-save--foreign
   Scenario: Create a foreign company
@@ -75,7 +75,7 @@ Feature: Create a new company
     And the Global Account Manager – One List details are displayed
       | key                       | value                            |
       | One List tier             | None                             |
-      | Account manager           | None                             |
+      | Global account manager    | None                             |
 
   @companies-save--foreign-uk-branch
   Scenario: Create a UK branch of a foreign company
@@ -99,4 +99,4 @@ Feature: Create a new company
     And the Global Account Manager – One List details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
-      | Account manager           | None                       |
+      | Global account manager    | None                       |
