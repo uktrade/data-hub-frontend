@@ -36,6 +36,9 @@ const sourceLabels = {
   'zendesk.organizations': 'Zendesk (Organizations)',
   'zendesk.users': 'Zendesk (Users)',
   'zendesk.tickets': 'Zendesk (Tickets)',
+  'zendesk.tickets.contact_dit_form': 'Zendesk (Tickets)',
+  'zendesk.tickets.iigb': 'Zendesk (Tickets)',
+  'zendesk.tickets.soo': 'Zendesk (Tickets)',
 }
 
 module.exports = { listLabels, sourceLabels }
