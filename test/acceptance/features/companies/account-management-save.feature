@@ -9,9 +9,9 @@ Feature: Save account management details for a company
     Then the Account management details are displayed
       | key                       | value                   |
       | One List tier             | None                    |
-      | Account manager           | None                    |
+      | Global account manager    | None                    |
     When the Account management details are updated
     Then the Account management details are displayed
       | key                       | value                       |
       | One List tier             | None                        |
-      | Account manager           | company.oneListAccountOwner |
+      | Global account manager    | company.oneListAccountOwner |
