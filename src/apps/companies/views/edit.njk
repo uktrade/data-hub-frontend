@@ -260,23 +260,55 @@
       }) }}
     {% endif %}
 
-    {{ MultipleChoiceField({
-      type: 'radio',
-      name: 'headquarter_type',
-      label: 'Headquarter type',
-      options: options.headquarters,
-      value: formData.headquarter_type,
-      error: errors.headquarter_type
-    }) }}
+    {% if isOnOneList %}
+      <fieldset id="group-field-headquarter_type" class="c-form-group">
+        <legend class="c-form-group__label">
+          <span class="c-form-group__label-text">Headquarter type</span>
+        </legend>
 
-    {{ MultipleChoiceField({
-      name: 'sector',
-      label: 'Sector',
-      initialOption: '-- Select sector --',
-      options: options.sectors,
-      value: formData.sector,
-      error: errors.sector
-    }) }}
+        <p>{{companyDetails['Headquarter type']}}</p>
+
+        {% call HiddenContent({ summary: 'Need to edit the headquarter type?' }) %}
+          {% call Message({ type: 'muted' }) %}
+            If you need to change the headquarter type for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
+          {% endcall %}
+        {% endcall %}
+      </fieldset>
+    {% else %}
+      {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'headquarter_type',
+        label: 'Headquarter type',
+        options: options.headquarters,
+        value: formData.headquarter_type,
+        error: errors.headquarter_type
+      }) }}
+    {% endif %}
+
+    {% if isOnOneList %}
+      <fieldset id="group-field-sector" class="c-form-group">
+        <legend class="c-form-group__label">
+          <span class="c-form-group__label-text">Sector</span>
+        </legend>
+
+        <p>{{companyDetails['Sector']}}</p>
+
+        {% call HiddenContent({ summary: 'Need to edit the sector?' }) %}
+          {% call Message({ type: 'muted' }) %}
+            If you need to change the sector for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
+          {% endcall %}
+        {% endcall %}
+      </fieldset>
+    {% else %}
+      {{ MultipleChoiceField({
+        name: 'sector',
+        label: 'Sector',
+        initialOption: '-- Select sector --',
+        options: options.sectors,
+        value: formData.sector,
+        error: errors.sector
+      }) }}
+    {% endif %}
 
     {{ TextField({
       name: 'website',

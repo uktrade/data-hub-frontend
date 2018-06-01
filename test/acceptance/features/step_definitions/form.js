@@ -91,3 +91,10 @@ Then(/^there are form fields$/, async function (dataTable) {
       .assert.visible(selectors.element)
   }
 })
+
+Then(/^I can(not)? see the field "(.+)"$/, async function (negate, fieldName) {
+  const fieldSelector = `[name="${fieldName}"]`
+  const expectation = negate ? 'elementNotPresent' : 'elementPresent'
+
+  await client.assert[expectation](fieldSelector)
+})

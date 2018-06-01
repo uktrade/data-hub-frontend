@@ -70,6 +70,15 @@ describe('Company edit controller', () => {
         company: companyMock,
       },
     }
+    this.getCalledRenderLocals = () => {
+      return this.resMock.render.firstCall.args[1]
+    }
+    this.getCalledRenderView = () => {
+      return this.resMock.render.firstCall.args[0]
+    }
+    this.getCalledBreadcrumb = (call = 0) => {
+      return this.resMock.breadcrumb.getCall(call)
+    }
   })
 
   describe('renderForm', () => {
@@ -98,31 +107,43 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
       })
 
       it('should set heading', () => {
-        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add UK company')
       })
 
       it('should set isForeign', () => {
-        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+        expect(this.getCalledRenderLocals().isForeign).to.be.false
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.false
+      })
+
+      it('should not include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.deep.equal({})
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
 
       it('should set businessTypeLabel', () => {
-        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('UK branch of foreign company (BR)')
+        expect(this.getCalledRenderLocals().businessTypeLabel).to.equal('UK branch of foreign company (BR)')
       })
 
       it('should show the company number field', () => {
-        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.true
+        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.true
       })
 
       it('should not show the trading address fields', () => {
-        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
       })
     })
 
@@ -150,39 +171,51 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
       })
 
       it('should set the company breadcrumb text', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Existing UK branch of foreign company')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Existing UK branch of foreign company')
       })
 
       it('should set the company breadcrumb link', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[1]).to.equal('/companies/1')
+        expect(this.getCalledBreadcrumb().args[1]).to.equal('/companies/1')
       })
 
       it('should set the edit breadcrumb', () => {
-        expect(this.resMock.breadcrumb.getCall(1).args[0]).to.equal('Edit')
+        expect(this.getCalledBreadcrumb(1).args[0]).to.equal('Edit')
       })
 
       it('should set heading', () => {
-        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Edit UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit UK company')
       })
 
       it('should set isForeign', () => {
-        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+        expect(this.getCalledRenderLocals().isForeign).to.be.false
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.false
+      })
+
+      it('should include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.not.be.null
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
 
       it('should set businessTypeLabel', () => {
-        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('UK branch of foreign company (BR)')
+        expect(this.getCalledRenderLocals().businessTypeLabel).to.equal('UK branch of foreign company (BR)')
       })
 
       it('should show the company number field', () => {
-        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.true
+        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.true
       })
 
       it('should not show the trading address fields', () => {
-        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
       })
     })
 
@@ -205,31 +238,43 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
       })
 
       it('should set heading', () => {
-        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add UK company')
       })
 
       it('should set isForeign', () => {
-        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+        expect(this.getCalledRenderLocals().isForeign).to.be.false
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.false
+      })
+
+      it('should not include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.deep.equal({})
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
 
       it('should set businessTypeLabel', () => {
-        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Sole Trader')
+        expect(this.getCalledRenderLocals().businessTypeLabel).to.equal('Sole Trader')
       })
 
       it('should not show the company number field', () => {
-        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
       })
 
       it('should not show the trading address fields', () => {
-        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
       })
     })
 
@@ -252,31 +297,43 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
       })
 
       it('should set heading', () => {
-        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Add foreign company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add foreign company')
       })
 
       it('should set isForeign', () => {
-        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.true
+        expect(this.getCalledRenderLocals().isForeign).to.be.true
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.false
+      })
+
+      it('should not include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.deep.equal({})
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
 
       it('should set businessTypeLabel', () => {
-        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Sole Trader')
+        expect(this.getCalledRenderLocals().businessTypeLabel).to.equal('Sole Trader')
       })
 
       it('should not show the company number field', () => {
-        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
       })
 
       it('should not show the trading address fields', () => {
-        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.false
+        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
       })
     })
 
@@ -305,31 +362,86 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.resMock.render.getCall(0).args[0]).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.resMock.breadcrumb.getCall(0).args[0]).to.equal('Existing government department')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Existing government department')
       })
 
       it('should set heading', () => {
-        expect(this.resMock.render.getCall(0).args[1].heading).to.equal('Edit UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit UK company')
       })
 
       it('should set isForeign', () => {
-        expect(this.resMock.render.getCall(0).args[1].isForeign).to.be.false
+        expect(this.getCalledRenderLocals().isForeign).to.be.false
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.false
+      })
+
+      it('should include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.not.be.null
       })
 
       it('should set businessTypeLabel', () => {
-        expect(this.resMock.render.getCall(0).args[1].businessTypeLabel).to.equal('Government department')
+        expect(this.getCalledRenderLocals().businessTypeLabel).to.equal('Government department')
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
 
       it('should not show the company number field', () => {
-        expect(this.resMock.render.getCall(0).args[1].showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
       })
 
       it('should not show the trading address fields', () => {
-        expect(this.resMock.render.getCall(0).args[1].showTradingAddress).to.be.true
+        expect(this.getCalledRenderLocals().showTradingAddress).to.be.true
+      })
+    })
+
+    context('when editing a company on the One List', () => {
+      beforeEach(async () => {
+        const resMock = assign(this.resMock, {
+          locals: {
+            company: {
+              id: 1,
+              name: 'One List Company',
+              classification: {
+                id: '4321',
+                name: 'The classification',
+              },
+            },
+          },
+        })
+
+        await this.controller.renderForm(this.reqMock, resMock, this.nextSpy)
+      })
+
+      it('should render the edit page', () => {
+        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+      })
+
+      it('should set the add breadcrumb', () => {
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('One List Company')
+      })
+
+      it('should set heading', () => {
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit foreign company')
+      })
+
+      it('should set isOnOneList', () => {
+        expect(this.getCalledRenderLocals().isOnOneList).to.be.true
+      })
+
+      it('should include company details', () => {
+        expect(this.getCalledRenderLocals().companyDetails).to.not.be.null
+      })
+
+      it('should include a link to the One List support email', () => {
+        expect(this.getCalledRenderLocals().oneListEmail).to.equal(config.oneList.email)
       })
     })
   })
