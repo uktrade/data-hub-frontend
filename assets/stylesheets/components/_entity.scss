@@ -32,6 +32,10 @@
   }
 }
 
+.c-entity__cta-list {
+  text-align: right;
+}
+
 @include media(tablet) {
   .c-entity__header {
     @include clearfix;
