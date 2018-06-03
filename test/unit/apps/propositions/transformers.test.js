@@ -37,24 +37,24 @@ describe('Proposition transformers', () => {
 
       it('should transform data from proposition response to list item', () => {
         expect(this.transformed).to.deep.equal({
-            id: '7d68565a-fc0e-422c-8ce3-df92cd40a64a',
-            type: 'proposition',
-            name: 'Game-changing Proposition',
-            scope: 'scope 0',
-            meta:
-              [ { label: 'Type', type: 'badge', value: 'Ongoing' },
-                { label: 'Deadline', value: '2018-05-20', type: 'date' },
-                { label: 'Created On', value: '2018-05-09', type: 'date' },
-                { label: 'Adviser',
-                  value: {
-                    first_name: 'Joseph',
-                    id: '14d9f881-4df4-421b-8181-874f9dc83b76',
-                    last_name: 'Wright of Derby ',
-                    name: 'Joseph Wright of Derby',
-                  },
+          id: '7d68565a-fc0e-422c-8ce3-df92cd40a64a',
+          type: 'proposition',
+          name: 'Game-changing Proposition',
+          scope: 'scope 0',
+          meta:
+            [ { label: 'Type', type: 'badge', value: 'Ongoing' },
+              { label: 'Deadline', value: '2018-05-20', type: 'date' },
+              { label: 'Created On', value: '2018-05-09', type: 'date' },
+              { label: 'Adviser',
+                value: {
+                  first_name: 'Joseph',
+                  id: '14d9f881-4df4-421b-8181-874f9dc83b76',
+                  last_name: 'Wright of Derby ',
+                  name: 'Joseph Wright of Derby',
                 },
-              ],
-          },
+              },
+            ],
+        },
         )
       })
     })

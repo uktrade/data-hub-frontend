@@ -111,6 +111,34 @@ module.exports = {
     newHotelCommitmentToInvest: {
       id: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
       name: 'New hotel (commitment to invest)',
+
+      proposition: {
+        id: '7d68565a-fc0e-422c-8ce3-df92cd40a64a',
+        investment_project: {
+          name: 'investment project example',
+          project_code: 'DHP-00000001',
+          id: '65e77d82-8ebb-4ee7-b6ac-8c5945c512db',
+        },
+        adviser: {
+          first_name: 'Joseph',
+          last_name: 'Wright of Derby ',
+          name: 'Joseph Wright of Derby',
+          id: '14d9f881-4df4-421b-8181-874f9dc83b76',
+        },
+        deadline: '2018-05-20',
+        status: 'ongoing',
+        name: 'Game-changing Proposition',
+        scope: 'scope 0',
+        reason_abandoned: 'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
+        modified_on: '2018-05-03T09:49:03.038168Z',
+        modified_by: {
+          first_name: 'Francisco',
+          last_name: 'Goya',
+          name: 'Francisco Goya',
+          id: '67ac0071-5d7b-4fc7-a437-929d18e2e82a',
+        },
+        created_on: '2018-05-09',
+      },
     },
     newRollercoaster: {
       id: '0e686ea4-b8a2-4337-aec4-114d92ad4588',
@@ -129,6 +157,36 @@ module.exports = {
       name: 'New zoo (LEP)',
     },
   },
+  proposition: {
+    gameChangingProposition: {
+      id: '7d68565a-fc0e-422c-8ce3-df92cd40a64a',
+      investment_project: {
+        name: 'investment project example',
+        project_code: 'DHP-00000001',
+        id: '65e77d82-8ebb-4ee7-b6ac-8c5945c512db',
+      },
+      adviser: {
+        first_name: 'Joseph',
+        last_name: 'Wright of Derby ',
+        name: 'Joseph Wright of Derby',
+        id: '14d9f881-4df4-421b-8181-874f9dc83b76',
+      },
+      deadline: '2018-05-20',
+      status: 'ongoing',
+      name: 'Game-changing Proposition',
+      scope: 'scope 0',
+      reason_abandoned: 'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
+      modified_on: '2018-05-03T09:49:03.038168Z',
+      modified_by: {
+        first_name: 'Francisco',
+        last_name: 'Goya',
+        name: 'Francisco Goya',
+        id: '67ac0071-5d7b-4fc7-a437-929d18e2e82a',
+      },
+      created_on: '2018-05-09',
+    },
+  },
+
   order: {
     // TODO: Populate with UUIDs when fixtures have been added to the API
     draft: {
