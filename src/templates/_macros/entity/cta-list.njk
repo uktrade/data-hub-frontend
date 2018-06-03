@@ -1,0 +1,18 @@
+{##
+ # Render cta list
+ # @param {object} props
+ # @param {array}  props.items - cta items
+ # @param {string, array} [props.modifier] - cta-list container modifier (e.g. inline)
+ # @param {string, array} [props.url] - cta item url
+ #}
+
+{% macro CtaList (props) %}
+  {% if props.items | length %}
+    {% if props.items[0].value === 'Ongoing' or props.items[0].value === 'Late' %}
+      <div class="{{ 'c-entity__cta-list' | applyClassModifiers(props.modifier) }}">
+        <a href="{{ props.url }}/abandon" class="button button--secondary">Abandon</a>
+        <a href="{{ props.url }}/complete" class="button">Complete</a>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endmacro %}
