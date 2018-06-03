@@ -20,9 +20,7 @@ module.exports = function ({
       complete,
     ].map(field => {
       return assign(field, {
-        label: (function () {
-          return labels.completeProposition[field.name]
-        })(),
+        label: labels.completeProposition[field.name],
       })
     }),
   }

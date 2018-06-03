@@ -11,6 +11,7 @@ Feature: Investment projects local nav
       | Project team              |
       | Interactions              |
       | Evaluations               |
+      | Propositions              |
       | Audit history             |
       | Documents                 |
 
@@ -25,6 +26,7 @@ Feature: Investment projects local nav
       | Interactions              |
       | Evaluations               |
       | Audit history             |
+
 
   @investment-projects-local-nav--da @da
   Scenario: Investment projects local nav as DA
