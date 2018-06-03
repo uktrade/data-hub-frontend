@@ -48,6 +48,7 @@ module.exports = {
         details: getDetailsTabSelector('Details'),
         contacts: getDetailsTabSelector('Contacts'),
         interactions: getDetailsTabSelector('Interactions'),
+        propositions: getDetailsTabSelector('Propositions'),
         export: getDetailsTabSelector('Export'),
         investment: getDetailsTabSelector('Investment'),
         auditHistory: getDetailsTabSelector('Audit history'),

@@ -4,9 +4,8 @@ const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const { abandonProposition, fetchProposition } = require('../repos')
 
 async function postAbandon (req, res, next) {
-  res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
-
   try {
+    res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
     await abandonProposition(req.session.token, res.locals.requestBody)
 
     req.flash('success', 'Proposition abandoned')
