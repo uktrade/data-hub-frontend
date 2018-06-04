@@ -37,7 +37,5 @@ Feature: Investment projects local nav
       | Project details           |
       | Project team              |
       | Interactions              |
-      | Propositions              |
       | Evaluations               |
       | Audit history             |
-      | Documents                 |
