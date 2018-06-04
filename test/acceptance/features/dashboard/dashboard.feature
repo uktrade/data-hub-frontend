@@ -34,10 +34,6 @@ Feature: Dashboard
       | text                      |
       | Companies                 |
       | Contacts                  |
-      | Events                    |
-      | Interactions and services |
       | Investment projects       |
       | Orders (OMIS)             |
       | MI dashboards             |
-
-
