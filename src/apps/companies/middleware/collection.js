@@ -7,6 +7,13 @@ const {
   transformCompaniesHouseToListItem,
 } = require('../transformers')
 
+const globalHQId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
+const nonGLobalHQId = [
+  null,
+  '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+  'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+]
+
 async function getCompanyCollection (req, res, next) {
   try {
     res.locals.results = await search({
@@ -60,7 +67,6 @@ async function getLimitedCompaniesCollection (req, res, next) {
 
 async function getGlobalHQCompaniesCollection (req, res, next) {
   const searchTerm = res.locals.searchTerm = req.query.term
-  const globalHQId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
   const { id: companyId } = res.locals.company
 
   if (!searchTerm) {
@@ -109,6 +115,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
       page: req.query.page,
       requestBody: {
         ...req.body,
+        headquarter_type: nonGLobalHQId,
       },
     })
       .then(transformApiResponseToSearchCollection(
