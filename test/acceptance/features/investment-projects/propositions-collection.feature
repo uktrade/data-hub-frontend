@@ -11,13 +11,13 @@ Feature: View collection of propositions for an investment project
   Scenario: View investment projects proposition collection
 
     When I navigate to the `investments.propositions` page using `investment project` `New zoo (LEP)` fixture
-    And I can view the collection
+    Then I see the 403 error page
 
   @investment-projects-propositions-collection--view--da @da
   Scenario: View investment projects proposition collection
 
     When I navigate to the `investments.propositions` page using `investment project` `New golf course (DA)` fixture
-    And I can view the collection
+    Then I see the 403 error page
 
   @investment-projects-propositions-collection--lep @lep
   Scenario: Navigate to propositions of a different investment project as LEP
