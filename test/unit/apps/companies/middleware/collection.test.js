@@ -14,6 +14,20 @@ const {
   getSubsidiaryCompaniesCollection,
 } = require('~/src/apps/companies/middleware/collection')
 
+const headquarterTypes = [{
+  id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+  name: 'ukhq',
+  disabled_on: null,
+}, {
+  id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+  name: 'ehq',
+  disabled_on: null,
+}, {
+  id: '43281c5e-92a4-4794-867b-b4d5f801e6f3',
+  name: 'ghq',
+  disabled_on: null,
+}]
+
 describe('Company collection middleware', () => {
   beforeEach(() => {
     this.mockCompanyResults = {
@@ -174,6 +188,8 @@ describe('Company collection middleware', () => {
           this.reqMock.query.term = 'mock-search-term'
 
           nock(config.apiRoot)
+            .get('/metadata/headquarter-type/')
+            .reply(200, headquarterTypes)
             .post('/v3/search/company?offset=0&limit=10')
             .reply(200, ghqCompanySearchResponse)
 
@@ -195,6 +211,8 @@ describe('Company collection middleware', () => {
           this.errorMsg = 'oh no!'
 
           nock(config.apiRoot)
+            .get('/metadata/headquarter-type/')
+            .reply(200, headquarterTypes)
             .post('/v3/search/company?offset=0&limit=10')
             .replyWithError(this.errorMsg)
 
@@ -245,11 +263,13 @@ describe('Company collection middleware', () => {
       context('a couple of results', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
+            .get('/metadata/headquarter-type/')
+            .reply(200, headquarterTypes)
             .post('/v3/search/company?offset=0&limit=10', {
               headquarter_type: [
-                null,
-                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+                null,
               ],
               original_query: 'mock-search-term',
               isAggregation: false,
@@ -288,11 +308,13 @@ describe('Company collection middleware', () => {
       context('more than 10 results', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
+            .get('/metadata/headquarter-type/')
+            .reply(200, headquarterTypes)
             .post('/v3/search/company?offset=0&limit=10', {
               headquarter_type: [
-                null,
-                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+                null,
               ],
               original_query: 'mock-search-term',
               isAggregation: false,
@@ -320,11 +342,13 @@ describe('Company collection middleware', () => {
           this.errorMsg = 'oh no!'
 
           nock(config.apiRoot)
+            .get('/metadata/headquarter-type/')
+            .reply(200, headquarterTypes)
             .post('/v3/search/company?offset=0&limit=10', {
               headquarter_type: [
-                null,
-                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+                '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+                null,
               ],
               original_query: 'mock-search-term',
               isAggregation: false,
