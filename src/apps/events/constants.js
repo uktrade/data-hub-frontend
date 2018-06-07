@@ -21,6 +21,13 @@ const LOCAL_NAV = [
       'event.read_event',
     ],
   },
+  {
+    path: 'attendees',
+    label: 'Attendees',
+    permissions: [
+      'event.read_event',
+    ],
+  },
 ]
 
 module.exports = {
