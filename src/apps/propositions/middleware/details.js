@@ -19,16 +19,16 @@ async function postDetails (req, res, next) {
     }
 
     return res.redirect(`/propositions`)
-  } catch (err) {
-    if (err.statusCode === 400) {
+  } catch (error) {
+    if (error.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
-        errors: {
-          messages: err.error,
+        errorors: {
+          messages: error.error,
         },
       })
       next()
     } else {
-      next(err)
+      next(error)
     }
   }
 }
@@ -40,8 +40,8 @@ async function getPropositionDetails (req, res, next, propositionId) {
     res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
 
     next()
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 }
 
@@ -60,8 +60,8 @@ async function getPropositionOptions (req, res, next) {
     }
 
     next()
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 }
 
