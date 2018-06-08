@@ -22,7 +22,7 @@ async function postDetails (req, res, next) {
   } catch (error) {
     if (error.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
-        errorors: {
+        errors: {
           messages: error.error,
         },
       })
