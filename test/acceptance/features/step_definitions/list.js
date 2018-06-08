@@ -21,7 +21,7 @@ When(/^I clear all filters$/, async function () {
     .wait() // wait for xhr
 })
 
-Then(/^the results summary for a (.+) collection is present$/, async function (collectionType) {
+Then(/^the results summary for (?:a|an).*? (.+) collection is present$/, async function (collectionType) {
   await Collection.captureResultCount((count) => {
     set(this.state, 'collection.resultCount', count)
   })
