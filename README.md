@@ -1,6 +1,5 @@
 # Data Hub frontend
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/uktrade/data-hub-frontend.svg)](https://greenkeeper.io/)
 [![CircleCI](https://circleci.com/gh/uktrade/data-hub-frontend.svg?style=svg)](https://circleci.com/gh/uktrade/data-hub-frontend)
 [![Known Vulnerabilities](https://snyk.io/test/github/uktrade/data-hub-frontend/badge.svg)](https://snyk.io/test/github/uktrade/data-hub-frontend) 
 
