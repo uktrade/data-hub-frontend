@@ -3,6 +3,7 @@ const interaction = {
   subject: 'Subject',
   notes: 'Notes',
   contact: 'Contact',
+  created_on: 'Created on',
   date: 'Date of interaction',
   dit_adviser: 'DIT adviser',
   service: 'Service',

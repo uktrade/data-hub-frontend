@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
-const { get, assign, isNil, omit, pickBy, camelCase } = require('lodash')
+const { assign, camelCase, get, isNil, omit, pickBy, some } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../../config')
 const labels = require('./labels')
-const { INTERACTION_NAMES } = require('./constants')
+const { INTERACTION_NAMES, IST_ONLY_SERVICES } = require('./constants')
 
 const transformEntityLink = (entity, entityPath, noLinkText = null) => {
   return entity ? {
@@ -25,6 +25,15 @@ const transformDocumentsLink = (archived_documents_url_path) => {
   }
 
   return { name: 'There are no files or documents' }
+}
+
+const transformCreatedOnDate = (service, name) => {
+  if (some(IST_ONLY_SERVICES, { id: service.id })) {
+    return {
+      type: 'date',
+      name,
+    }
+  }
 }
 
 function transformInteractionResponseToForm ({
@@ -124,6 +133,7 @@ function transformInteractionResponseToViewRecord ({
   company,
   subject,
   notes,
+  created_on,
   date,
   dit_adviser,
   service,
@@ -160,6 +170,7 @@ function transformInteractionResponseToViewRecord ({
     } : null,
     subject,
     notes,
+    created_on: transformCreatedOnDate(service, created_on),
     date: {
       type: 'date',
       name: date,

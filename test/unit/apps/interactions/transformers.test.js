@@ -814,6 +814,123 @@ describe('Interaction transformers', () => {
       })
     })
 
+    context('when provided with an IST only specific service ', () => {
+      beforeEach(() => {
+        const istService = assign({}, mockInteraction, {
+          service: {
+            name: 'Investment - IST Aftercare (IST use only)',
+            id: 'bd3d1be3-f9f7-e511-888e-e4115bead28a',
+          },
+        })
+
+        this.transformed = transformInteractionResponseToViewRecord(istService)
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          'Company': {
+            url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a',
+            name: 'Samsung',
+          },
+          'Contact': {
+            url: '/contacts/b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            name: 'Jackson Whitfield',
+          },
+          'Service provider': {
+            id: '222',
+            name: 'Team',
+          },
+          'Service': {
+            id: 'bd3d1be3-f9f7-e511-888e-e4115bead28a',
+            name: 'Investment - IST Aftercare (IST use only)',
+          },
+          'Created on': {
+            type: 'date',
+            name: '2017-05-31T13:06:45.049191',
+          },
+          'Communication channel': {
+            id: '72c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Telephone',
+          },
+          'Subject': 'Test interactions',
+          'Notes': 'lorem ipsum',
+          'Date of interaction': {
+            type: 'date',
+            name: '2017-05-31T00:00:00',
+          },
+          'DIT adviser': {
+            id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+            first_name: 'Test',
+            last_name: 'CMU 1',
+            name: 'Test CMU 1',
+          },
+          'Investment project': {
+            url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
+        })
+      })
+    })
+
+    context('when provided with a non IST specific service ', () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(mockInteraction)
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          'Company': {
+            url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a',
+            name: 'Samsung',
+          },
+          'Contact': {
+            url: '/contacts/b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            name: 'Jackson Whitfield',
+          },
+          'Service provider': {
+            id: '222',
+            name: 'Team',
+          },
+          'Service': {
+            id: '1231231231312',
+            name: 'Test service',
+          },
+          'Communication channel': {
+            id: '72c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Telephone',
+          },
+          'Subject': 'Test interactions',
+          'Notes': 'lorem ipsum',
+          'Date of interaction': {
+            type: 'date',
+            name: '2017-05-31T00:00:00',
+          },
+          'DIT adviser': {
+            id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+            first_name: 'Test',
+            last_name: 'CMU 1',
+            name: 'Test CMU 1',
+          },
+          'Investment project': {
+            url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+          'Documents': {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
+        })
+      })
+    })
+
     context('when there is not an archived documents URL path', () => {
       beforeEach(() => {
         const interaction = assign({}, mockInteraction, { archived_documents_url_path: '' })
