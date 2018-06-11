@@ -1,5 +1,3 @@
-const { assign } = require('lodash')
-
 const transformInteractionToListItem = require('~/src/apps/interactions/transformers/interaction-to-list-item')
 const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
 
@@ -65,7 +63,10 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with an empty subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: '' }))
+      this.transformed = transformInteractionToListItem({
+        ...mockInteraction,
+        subject: '',
+      })
     })
 
     it('should transform data from interaction response to list item', () => {
@@ -75,7 +76,10 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with a null subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem(assign({}, mockInteraction, { subject: null }))
+      this.transformed = transformInteractionToListItem({
+        ...mockInteraction,
+        subject: null,
+      })
     })
 
     it('should transform data from interaction response to list item', () => {
@@ -85,8 +89,10 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is a policy feedback', () => {
     beforeEach(() => {
-      const policyFeedback = assign({}, mockInteraction, { kind: 'policy_feedback' })
-      this.transformed = transformInteractionToListItem(policyFeedback)
+      this.transformed = transformInteractionToListItem({
+        ...mockInteraction,
+        kind: 'policy_feedback',
+      })
     })
 
     it('should transform data from policy feedback response to list item', () => {
@@ -144,8 +150,10 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is a service delivery', () => {
     beforeEach(() => {
-      const serviceDelivery = assign({}, mockInteraction, { kind: 'service_delivery' })
-      this.transformed = transformInteractionToListItem(serviceDelivery)
+      this.transformed = transformInteractionToListItem({
+        ...mockInteraction,
+        kind: 'service_delivery',
+      })
     })
 
     it('should transform data from interaction response to list item', () => {
