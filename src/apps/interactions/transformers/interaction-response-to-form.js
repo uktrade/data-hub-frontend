@@ -13,7 +13,7 @@ function transformInteractionResponseToForm ({
   grant_amount_offered,
   net_company_receipt,
   subject,
-  policy_area,
+  policy_areas,
   policy_issue_type,
   notes,
   date,
@@ -23,6 +23,7 @@ function transformInteractionResponseToForm ({
   if (!id) return null
 
   const isValidDate = isValid(new Date(date))
+  const displayPolicyAreas = (policy_areas || []).map(policy_area => policy_area.id)
 
   return {
     id,
@@ -37,7 +38,7 @@ function transformInteractionResponseToForm ({
     event: get(event, 'id'),
     service: get(service, 'id'),
     service_delivery_status: get(service_delivery_status, 'id'),
-    policy_area: get(policy_area, 'id'),
+    policy_areas: displayPolicyAreas,
     policy_issue_type: get(policy_issue_type, 'id'),
     date: {
       day: isValidDate ? format(date, 'DD') : '',

@@ -205,12 +205,15 @@ describe('Interaction edit controller (Policy feedback)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fieldNames = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type']))
+      const fieldNames = this.interactionForm.children.map(field => pick(field, [
+        'name', 'label', 'macroName', 'type',
+      ]))
+
       expect(fieldNames).to.deep.equal([
         { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField' },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField' },
         { name: 'policy_issue_type', label: 'Policy issue type', macroName: 'MultipleChoiceField' },
-        { name: 'policy_area', label: 'Policy area', macroName: 'MultipleChoiceField' },
+        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother' },
         { name: 'subject', label: 'Subject', macroName: 'TextField' },
         { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea' },
         { name: 'date', label: 'Date of interaction', macroName: 'DateFieldset' },
@@ -257,14 +260,6 @@ describe('Interaction edit controller (Policy feedback)', () => {
       expect(policyIssueTypeField.options).to.deep.equal([
         { value: '1', label: 'pt1' },
         { value: '3', label: 'pt3' },
-      ])
-    })
-
-    it('should provide a list of policy areas', () => {
-      const policyAreaField = find(this.interactionForm.children, ({ name }) => name === 'policy_area')
-      expect(policyAreaField.options).to.deep.equal([
-        { value: '1', label: 'pa1' },
-        { value: '3', label: 'pa3' },
       ])
     })
 
@@ -418,12 +413,41 @@ describe('Interaction edit controller (Policy feedback)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fieldNames = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
+      const fieldNames = this.interactionForm.children.map(field => pick(field, [
+        'name', 'label', 'macroName', 'type', 'value', 'buttonName', 'children',
+      ]))
+
       expect(fieldNames).to.deep.equal([
         { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField', value: '7701587b-e88f-4f39-874f-0bd06321f7df' },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '16362a92-9698-e211-a939-e4115bead28a' },
         { name: 'policy_issue_type', label: 'Policy issue type', macroName: 'MultipleChoiceField', value: 'pit1' },
-        { name: 'policy_area', label: 'Policy area', macroName: 'MultipleChoiceField', value: 'pa1' },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          buttonName: 'add_item',
+          value: ['pa1'],
+          children: [{
+            error: null,
+            name: 'policy_areas',
+            label: 'Policy area',
+            macroName: 'MultipleChoiceField',
+            value: ['pa1'],
+            initialOption: '-- Select policy area --',
+            optional: false,
+            isLabelHidden: true,
+            options: [{
+              label: 'pa1',
+              value: '1',
+            }, {
+              label: 'pa2',
+              value: '2',
+            }, {
+              label: 'pa3',
+              value: '3',
+            }],
+          }],
+        },
         { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'ad' },
         { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'Labore culpa quas cupiditate voluptatibus magni.' },
         {
@@ -549,12 +573,41 @@ describe('Interaction edit controller (Policy feedback)', () => {
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fieldNames = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
+      const fieldNames = this.interactionForm.children.map(field => pick(field, [
+        'name', 'label', 'macroName', 'type', 'value', 'buttonName', 'children',
+      ]))
+
       expect(fieldNames).to.deep.equal([
         { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField', value: '7701587b-e88f-4f39-874f-0bd06321f7df' },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '16362a92-9698-e211-a939-e4115bead28a' },
         { name: 'policy_issue_type', label: 'Policy issue type', macroName: 'MultipleChoiceField', value: 'pit1' },
-        { name: 'policy_area', label: 'Policy area', macroName: 'MultipleChoiceField', value: 'pa1' },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          buttonName: 'add_item',
+          value: ['pa1'],
+          children: [{
+            error: undefined,
+            name: 'policy_areas',
+            label: 'Policy area',
+            isLabelHidden: true,
+            macroName: 'MultipleChoiceField',
+            value: ['pa1'],
+            initialOption: '-- Select policy area --',
+            optional: false,
+            options: [{
+              label: 'pa1',
+              value: '1',
+            }, {
+              label: 'pa2',
+              value: '2',
+            }, {
+              label: 'pa3',
+              value: '3',
+            }],
+          }],
+        },
         { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'a' },
         { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'Labore culpa quas cupiditate voluptatibus magni.' },
         {
