@@ -37,7 +37,7 @@ function transformInteractionResponseToViewRecord ({
   dit_team,
   contact,
   policy_issue_type,
-  policy_area,
+  policy_areas,
   investment_project,
   communication_channel,
   event,
@@ -46,6 +46,10 @@ function transformInteractionResponseToViewRecord ({
 }) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
+  const displayPolicyAreas = (policy_areas || [])
+    .map(policy_area => policy_area.name)
+    .join(', ')
+
   const transformed = {
     company: transformEntityLink(company, 'companies'),
     contact: transformEntityLink(contact, 'contacts'),
@@ -53,7 +57,7 @@ function transformInteractionResponseToViewRecord ({
     service,
     service_delivery_status,
     policy_issue_type,
-    policy_area,
+    policy_areas: displayPolicyAreas,
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,
