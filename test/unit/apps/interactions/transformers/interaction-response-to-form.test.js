@@ -25,7 +25,7 @@ describe('#transformInteractionResponseToForm', () => {
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
-        policy_area: undefined,
+        policy_areas: [],
         policy_issue_type: undefined,
       })
     })
@@ -63,7 +63,7 @@ describe('#transformInteractionResponseToForm', () => {
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
-        policy_area: undefined,
+        policy_areas: [],
         policy_issue_type: undefined,
       })
     })
@@ -98,7 +98,7 @@ describe('#transformInteractionResponseToForm', () => {
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
-        policy_area: undefined,
+        policy_areas: [],
         policy_issue_type: undefined,
       })
     })
@@ -126,7 +126,7 @@ describe('#transformInteractionResponseToForm', () => {
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
-        policy_area: 'pa1',
+        policy_areas: ['pa1'],
         policy_issue_type: 'pit1',
       })
     })
