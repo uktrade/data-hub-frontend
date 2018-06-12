@@ -1,11 +1,29 @@
 const { pick, pickBy, assign } = require('lodash')
 
+const { getOptions } = require('../../../lib/options')
 const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const {
   transformCompanyToListItem,
   transformCompaniesHouseToListItem,
 } = require('../transformers')
+
+async function getNonGlobalHQs (token) {
+  const headerquarterTypes = await getOptions(token, 'headquarter-type')
+  const filtered = headerquarterTypes.filter(hqType => !hqType.disabled && hqType.label !== 'ghq')
+  return [
+    ...filtered,
+    {
+      value: null,
+      name: 'Not a hq',
+    },
+  ]
+}
+
+async function getGlobalHQ (token) {
+  const headerquarterTypes = await getOptions(token, 'headquarter-type')
+  return headerquarterTypes.find(hqType => hqType.label === 'ghq')
+}
 
 async function getCompanyCollection (req, res, next) {
   try {
@@ -60,21 +78,23 @@ async function getLimitedCompaniesCollection (req, res, next) {
 
 async function getGlobalHQCompaniesCollection (req, res, next) {
   const searchTerm = res.locals.searchTerm = req.query.term
-  const globalHQId = '43281c5e-92a4-4794-867b-b4d5f801e6f3'
   const { id: companyId } = res.locals.company
+  const { token } = req.session
 
   if (!searchTerm) {
     return next()
   }
 
   try {
+    const globalHQ = await getGlobalHQ(token)
+
     res.locals.results = await searchCompanies({
       token: req.session.token,
       searchTerm,
       page: req.query.page,
       requestBody: {
         ...req.body,
-        headquarter_type: globalHQId,
+        headquarter_type: globalHQ.value,
       },
     })
       .then(transformApiResponseToSearchCollection(
@@ -97,18 +117,22 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
 async function getSubsidiaryCompaniesCollection (req, res, next) {
   const searchTerm = res.locals.searchTerm = req.query.term
   const { id: companyId } = res.locals.company
+  const { token } = req.session
 
   if (!searchTerm) {
     return next()
   }
 
   try {
+    const nonGlobalHQs = await getNonGlobalHQs(token)
+
     res.locals.results = await searchCompanies({
       token: req.session.token,
       searchTerm,
       page: req.query.page,
       requestBody: {
         ...req.body,
+        headquarter_type: nonGlobalHQs.map(hqType => hqType.value),
       },
     })
       .then(transformApiResponseToSearchCollection(

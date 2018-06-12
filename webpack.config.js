@@ -1,14 +1,11 @@
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const config = require('./config')
-
-const webpackConfigs = {}
 
 const common = {
   devtool: 'source-map',
@@ -107,60 +104,9 @@ const common = {
   },
 }
 
-webpackConfigs.develop = merge.smart(common, {
-  output: {
-    filename: 'js/[name].js',
-    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
-  },
-  plugins: [
-    new ExtractTextPlugin('css/[name].css'),
-    new BrowserSyncPlugin({
-      port: 3001,
-      proxy: `http://localhost:${config.port}`,
-      open: false,
-      files: [
-        '.build/css/*.css',
-        '.build/js/*.js',
-        '.build/images/*',
-        'src/**/*.njk',
-      ],
-    }, {
-      reload: false,
-    }),
-  ],
-})
-
-webpackConfigs.prod = merge.smart(common, {
-  devtool: false,
-  output: {
-    filename: 'js/[name].[chunkhash:8].js',
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-      },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      output: {
-        comments: false,
-      },
-      sourceMap: true,
-      dead_code: true,
-    }),
-    new ExtractTextPlugin('css/[name].[contenthash:8].css'),
-  ],
-})
-
-webpackConfigs.docker = merge.smart(webpackConfigs.develop, {
-  watchOptions: {
-    poll: 1000,
-  },
-})
-
 const webpackEnv = process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
-module.exports = webpackConfigs[webpackEnv]
+
+const envConfig = require(`./webpack.config.${webpackEnv}`)
+const webpackConfig = merge.smart(common, envConfig)
+
+module.exports = webpackConfig
