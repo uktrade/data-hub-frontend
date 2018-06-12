@@ -1,0 +1,62 @@
+{
+  "items": [
+    {
+      "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
+      "name": "Mars Exports Ltd",
+      "url": "\/companies\/mock-parent-company-id\/hierarchies\/subsidiaries\/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd\/add",
+      "meta": [
+        {
+          "label": "Sector",
+          "value": "Retail"
+        },
+        {
+          "label": "Country",
+          "type": "badge",
+          "value": "United States"
+        },
+        {
+          "label": "Primary address",
+          "value": "12 First Street, New York, 765413, United States"
+        }
+      ],
+      "subTitle": {
+        "type": "datetime",
+        "value": "2017-11-16T11:00:00+00:00",
+        "label": "Updated on"
+      },
+      "type": "company"
+    },
+    {
+      "id": "731bdcc1-f685-4c8e-bd66-b356b2c16995",
+      "name": "Mars Components Ltd",
+      "url": "\/companies\/mock-parent-company-id\/hierarchies\/subsidiaries\/731bdcc1-f685-4c8e-bd66-b356b2c16995\/add",
+      "meta": [
+        {
+          "label": "Sector",
+          "value": "Retail"
+        },
+        {
+          "label": "Country",
+          "type": "badge",
+          "value": "United Kingdom"
+        },
+        {
+          "label": "UK region",
+          "type": "badge",
+          "value": "North West"
+        },
+        {
+          "label": "Primary address",
+          "value": "12 Alpha Street, Volcanus, NE28 5AQ, United Kingdom"
+        }
+      ],
+      "subTitle": {
+        "type": "datetime",
+        "value": "2017-10-16T11:00:00+00:00",
+        "label": "Updated on"
+      },
+      "type": "company"
+    }
+  ],
+  "count": 2
+}

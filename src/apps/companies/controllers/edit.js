@@ -1,6 +1,11 @@
 const { assign, find, get, isEmpty } = require('lodash')
 
-const { transformCompaniesHouseToView } = require('../transformers')
+const config = require('../../../../config')
+const {
+  transformCompanyToView,
+  transformCompaniesHouseToView,
+} = require('../transformers')
+
 const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
 const UK_BRANCH_OF_FOREIGN_COMPANY_ID = 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98'
 
@@ -31,6 +36,10 @@ function isForeignCompany (req, res) {
   return req.query.country === 'non-uk'
 }
 
+function isOnOneList (req, res) {
+  return !isEmpty(get(res.locals, 'company.classification'))
+}
+
 function getHeading (company, isForeign) {
   const action = company ? 'Edit' : 'Add'
   const type = isForeign ? 'foreign' : 'UK'
@@ -38,35 +47,42 @@ function getHeading (company, isForeign) {
   return `${action} ${type} company`
 }
 
-async function renderForm (req, res) {
-  if (res.locals.companiesHouseRecord) {
-    res.locals = assign({}, res.locals, {
-      isCompaniesHouse: true,
-      chDetails: transformCompaniesHouseToView(res.locals.companiesHouseRecord),
-    })
+async function renderForm (req, res, next) {
+  try {
+    if (res.locals.companiesHouseRecord) {
+      res.locals = assign({}, res.locals, {
+        isCompaniesHouse: true,
+        chDetails: transformCompaniesHouseToView(res.locals.companiesHouseRecord),
+      })
+    }
+
+    const businessType = get(res.locals, 'formData.business_type')
+    const businessTypeLabel = await getBusinessTypeLabel(
+      req.session.token, res.locals.companiesHouseCategory, businessType
+    )
+    const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
+
+    if (res.locals.company) {
+      res.breadcrumb(get(res.locals, 'company.name'), `/companies/${get(res.locals, 'company.id')}`)
+    }
+
+    const isForeign = isForeignCompany(req, res)
+
+    res
+      .breadcrumb(res.locals.company ? 'Edit' : 'Add')
+      .render('companies/views/edit', {
+        isForeign,
+        isOnOneList: isOnOneList(req, res),
+        companyDetails: res.locals.company ? transformCompanyToView(res.locals.company) : {},
+        businessTypeLabel,
+        showTradingAddress,
+        showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
+        heading: getHeading(res.locals.company, isForeign),
+        oneListEmail: config.oneList.email,
+      })
+  } catch (error) {
+    next(error)
   }
-
-  const businessType = get(res.locals, 'formData.business_type')
-  const businessTypeLabel = await getBusinessTypeLabel(
-    req.session.token, res.locals.companiesHouseCategory, businessType
-  )
-  const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
-
-  if (res.locals.company) {
-    res.breadcrumb(get(res.locals, 'company.name'), `/companies/${get(res.locals, 'company.id')}`)
-  }
-
-  const isForeign = isForeignCompany(req, res)
-
-  res
-    .breadcrumb(res.locals.company ? 'Edit' : 'Add')
-    .render('companies/views/edit', {
-      isForeign,
-      businessTypeLabel,
-      showTradingAddress,
-      showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
-      heading: getHeading(res.locals.company, isForeign),
-    })
 }
 
 module.exports = {
