@@ -29,6 +29,10 @@ async function renderAttendees (req, res, next) {
         attendees: {
           ...attendees,
           countLabel: 'attendee',
+          actionButtons: [{
+            label: 'Add attendee',
+            url: `/events/${eventId}/attendees/find-new`,
+          }],
         },
       })
   } catch (error) {
