@@ -8,7 +8,7 @@ const { renderEditPage } = require('./controllers/edit')
 const { postDetails, getEventDetails } = require('./middleware/details')
 const { getRequestBody, getEventsCollection } = require('./middleware/collection')
 const { renderEventList } = require('./controllers/list')
-const { renderAttendees } = require('./controllers/attendees')
+const attendeesRouter = require('./attendees/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -33,6 +33,7 @@ router.route('/:eventId/edit')
 
 router.get('/:eventId', redirectToFirstNavItem)
 router.get('/:eventId/details', renderDetailsPage)
-router.get('/:eventId/attendees', renderAttendees)
+
+router.use('/:eventId/attendees', attendeesRouter)
 
 module.exports = router

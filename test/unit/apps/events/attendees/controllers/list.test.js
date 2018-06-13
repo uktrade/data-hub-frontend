@@ -1,14 +1,12 @@
 const config = require('~/config')
 const attendeesData = require('~/test/unit/data/interactions/attendees.json')
 
-const { renderAttendees } = require('~/src/apps/events/controllers/attendees')
+const { renderAttendees } = require('~/src/apps/events/attendees/controllers/list')
 
 describe('event attendees', () => {
   beforeEach(() => {
     this.req = {
-      params: {
-        eventId: '1234',
-      },
+      params: {},
       query: {},
       session: {
         token: '4321',
@@ -20,6 +18,7 @@ describe('event attendees', () => {
       render: sinon.spy(),
       locals: {
         event: {
+          id: '1234',
           name: 'Dance',
         },
       },
@@ -43,7 +42,7 @@ describe('event attendees', () => {
 
     it('should render the attendees layout', () => {
       const template = this.res.render.firstCall.args[0]
-      expect(template).to.equal('events/views/attendees')
+      expect(template).to.equal('events/attendees/views/list')
     })
 
     it('should fetch attendees from the API', () => {
