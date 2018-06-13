@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, camelCase, get, isNil, omit, pickBy, some } = require('lodash')
+const { assign, camelCase, compact, get, isNil, omit, pickBy, some } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -209,10 +209,42 @@ function transformInteractionListItemToHaveUrlPrefix (urlPrefix) {
   }
 }
 
+function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, id }) {
+  if (!contact || !company) { return }
+
+  const { attendeeLabels } = labels
+
+  const {
+    id: contactId,
+    name,
+    job_title,
+  } = contact
+
+  const metaItems = [
+    { key: 'company', value: company.name, url: `/companies/${company.id}` },
+    { key: 'job_title', value: job_title },
+    { key: 'attended_date', value: date, type: 'date' },
+    { key: 'service_delivery', value: 'View service delivery', url: `/interactions/${id}` },
+  ]
+    .filter(({ value }) => value)
+    .map(({ key, value, type, url }) => ({
+      ...pickBy({ value, type, url }),
+      label: attendeeLabels[key],
+    }))
+
+  return {
+    id: contactId,
+    type: 'contact',
+    name,
+    meta: compact(metaItems),
+  }
+}
+
 module.exports = {
   transformInteractionResponseToForm,
   transformInteractionToListItem,
   transformInteractionFormBodyToApiRequest,
   transformInteractionResponseToViewRecord,
   transformInteractionListItemToHaveUrlPrefix,
+  transformServiceDeliveryToAttendeeListItem,
 }
