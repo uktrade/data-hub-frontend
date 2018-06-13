@@ -1,12 +1,10 @@
 /* eslint-disable camelcase */
 const { compact, pickBy } = require('lodash')
 
-const labels = require('../labels')
+const { attendeeLabels } = require('./labels')
 
 function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, id }) {
   if (!contact || !company) { return }
-
-  const { attendeeLabels } = labels
 
   const {
     id: contactId,
@@ -34,4 +32,4 @@ function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, i
   }
 }
 
-module.exports = transformServiceDeliveryToAttendeeListItem
+module.exports = { transformServiceDeliveryToAttendeeListItem }

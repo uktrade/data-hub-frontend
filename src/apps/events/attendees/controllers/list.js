@@ -1,12 +1,17 @@
 const { get } = require('lodash')
 
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../transformers')
 const { fetchEventAttendees } = require('../repos')
-const { transformServiceDeliveryToAttendeeListItem } = require('../../interactions/transformers')
+const { transformServiceDeliveryToAttendeeListItem } = require('../transformers')
 
 async function renderAttendees (req, res, next) {
   try {
-    const eventId = req.params.eventId
+    const eventId = get(res.locals, 'event.id')
+
+    if (!eventId) {
+      return next()
+    }
+
     const name = get(res.locals, 'event.name')
     const query = req.query
     const page = query.page || 1
@@ -20,7 +25,7 @@ async function renderAttendees (req, res, next) {
 
     res
       .breadcrumb(name)
-      .render('events/views/attendees', {
+      .render('events/attendees/views/list', {
         attendees: {
           ...attendees,
           countLabel: 'attendee',
