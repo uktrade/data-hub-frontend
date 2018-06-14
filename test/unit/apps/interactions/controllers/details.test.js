@@ -69,7 +69,7 @@ describe('Interaction details controller', () => {
 
     context('When the user views a service delivery', () => {
       beforeEach(() => {
-        this.res.locals.interaction = assign(interactionData, { kind: 'service_delivery' })
+        this.res.locals.interaction = assign({}, interactionData, { kind: 'service_delivery' })
         this.controller.renderDetailsPage(this.reqS, this.res, this.next)
       })
 
