@@ -31,12 +31,20 @@ module.exports = {
       options: types,
     }
   },
-  policyArea (areas) {
+  policyAreas (areas) {
     return {
-      macroName: 'MultipleChoiceField',
-      name: 'policy_area',
-      initialOption: '-- Select policy area --',
-      options: areas,
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      name: 'policy_areas',
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'policy_areas',
+        label: 'Policy area',
+        initialOption: '-- Select policy area --',
+        options: areas,
+        optional: false,
+        isLabelHidden: true,
+      }],
     }
   },
   subject: {

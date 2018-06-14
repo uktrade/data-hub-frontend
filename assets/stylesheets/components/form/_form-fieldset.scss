@@ -29,3 +29,7 @@
   margin-top: $default-spacing-unit;
   margin-bottom: 0;
 }
+
+.c-form-fieldset > .c-form-group__error-message {
+  margin-bottom: $baseline-grid-unit * 2.5;
+}
