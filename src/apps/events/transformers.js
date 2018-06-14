@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
-const { assign, get, reject, castArray, compact, uniq } = require('lodash')
+const { assign, get, reject, uniq } = require('lodash')
 
+const castCompactArray = require('../../lib/cast-compact-array')
 const { getFormattedAddress } = require('../../lib/address')
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../../config')
-
-const castToArrayAndRemoveEmpty = (value) => compact(castArray(value))
 
 function transformEventToListItem ({
   id,
@@ -182,8 +181,8 @@ function transformEventResponseToFormBody (props = {}) {
 }
 
 function transformEventFormBodyToApiRequest (props) {
-  const teamsArray = castToArrayAndRemoveEmpty(props.teams)
-  const related_programmes = castToArrayAndRemoveEmpty(props.related_programmes)
+  const teamsArray = castCompactArray(props.teams)
+  const related_programmes = castCompactArray(props.related_programmes)
   const teams = props.lead_team ? teamsArray.concat(props.lead_team) : teamsArray
 
   return assign({}, props, {

@@ -1,9 +1,10 @@
-const { castArray, compact, omit } = require('lodash')
+const { omit } = require('lodash')
 
+const castCompactArray = require('../../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../../transformers')
 
 function transformInteractionFormBodyToApiRequest (props) {
-  const policyAreasArray = compact(castArray(props.policy_areas))
+  const policyAreasArray = castCompactArray(props.policy_areas)
 
   return omit({
     ...props,
