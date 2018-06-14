@@ -29,7 +29,7 @@ module.exports = {
     jobTitle: '#field-job_title',
     primaryContactYes: '[for="field-primary-1"]',
     primaryContactNo: '[for="field-primary-2"]',
-    primaryContactError: '#group-field-primary legend span:nth-child(2)',
+    primaryContactError: '#group-field-primary > .c-form-group__error-message',
     telephoneCountryCode: '#field-telephone_countrycode',
     telephoneCountryCodeError: 'label[for=field-telephone_countrycode] span:nth-child(2)',
     telephoneNumber: '#field-telephone_number',
