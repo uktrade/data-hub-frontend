@@ -1,5 +1,6 @@
-const { assign, castArray, compact, get } = require('lodash')
+const { assign, get } = require('lodash')
 
+const castCompactArray = require('../../../../lib/cast-compact-array')
 const { updateInvestment } = require('../../repos')
 const { requirementsFormConfig } = require('../../macros')
 const { getOptions } = require('../../../../lib/options')
@@ -16,11 +17,11 @@ async function getFormOptions (token, createdOn) {
 
 function formatBody (body) {
   return assign({}, body, {
-    strategic_drivers: compact(castArray(body.strategic_drivers)),
-    competitor_countries: body.client_considering_other_countries === 'true' ? compact(castArray(body.competitor_countries)) : [],
-    uk_region_locations: compact(castArray(body.uk_region_locations)),
-    actual_uk_regions: body.site_decided === 'true' ? compact(castArray(body.actual_uk_regions)) : [],
-    delivery_partners: compact(castArray(body.delivery_partners)),
+    strategic_drivers: castCompactArray(body.strategic_drivers),
+    competitor_countries: body.client_considering_other_countries === 'true' ? castCompactArray(body.competitor_countries) : [],
+    uk_region_locations: castCompactArray(body.uk_region_locations),
+    actual_uk_regions: body.site_decided === 'true' ? castCompactArray(body.actual_uk_regions) : [],
+    delivery_partners: castCompactArray(body.delivery_partners),
   })
 }
 

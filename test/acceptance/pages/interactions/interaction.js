@@ -44,7 +44,7 @@ module.exports = {
     eventNo: 'label[for=field-is_event-2]',
     event: '#field-event',
     policyIssueType: '#field-policy_issue_type',
-    policyArea: '#field-policy_area',
+    policyArea: '#field-policy_areas',
   },
   commands: [
     {
