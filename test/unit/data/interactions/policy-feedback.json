@@ -51,10 +51,10 @@
   "subject": "ad",
   "notes": "Labore culpa quas cupiditate voluptatibus magni.",
   "archived_documents_url_path": "",
-  "policy_area": {
+  "policy_areas": [{
     "name": "p a 1",
     "id": "pa1"
-  },
+  }],
   "policy_issue_type": {
     "name": "p i t 1",
     "id": "pit1"
