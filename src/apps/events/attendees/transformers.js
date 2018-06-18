@@ -16,7 +16,7 @@ function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, i
     { key: 'company', value: company.name, url: `/companies/${company.id}` },
     { key: 'job_title', value: job_title },
     { key: 'attended_date', value: date, type: 'date' },
-    { key: 'service_delivery', value: 'View service delivery', url: `/interactions/${id}` },
+    { key: 'service_delivery', value: 'View or edit service delivery', url: `/interactions/${id}` },
   ]
     .filter(({ value }) => value)
     .map(({ key, value, type, url }) => ({

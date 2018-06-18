@@ -81,7 +81,7 @@ describe('#transformEventToAttendeeListItem', () => {
       it('should return a transformed attendee with a link to the associated service delivery', () => {
         expect(this.transformedAttendee.meta).to.include.deep({
           label: 'Service delivery',
-          value: 'View service delivery',
+          value: 'View or edit service delivery',
           url: '/interactions/1234',
         })
       })
