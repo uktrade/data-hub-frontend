@@ -29,11 +29,12 @@ When(/^I (?:navigate|go|open|visit).*? `(.+)` page using `(.+)` `(.+)` fixture$/
   }
 })
 
-When('I click the {string} link', async function (linkText) {
+When(/^I click the "([^"]*)?" (link|button)$/, async function (linkText, type) {
   await client
     .useXpath()
     .click(`//a[text()='${linkText}']`)
     .useCss()
+    .wait()
 })
 
 When(/^I click `(.+)` on the `(.+)` page$/, async function (elementName, pageName) {
