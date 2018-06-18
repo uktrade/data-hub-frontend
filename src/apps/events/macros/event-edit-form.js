@@ -93,7 +93,7 @@ const eventFormConfig = ({
       assign({}, globalFields.teams, {
         name: 'lead_team',
         label: 'Team hosting the event',
-        optional: true,
+        optional: false,
         options: teams,
       }),
       assign({}, globalFields.serviceDeliveryServices, {
