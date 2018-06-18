@@ -25,7 +25,7 @@
     {% set containerElement = 'a' if props.isBlockLink else 'div' %}
 
     <{{ containerElement }}
-      class="c-entity c-entity--{{ props.type }} {{ 'c-entity--block-link' if props.isBlockLink }}"
+      class="c-entity c-entity--{{ props.type }} {{ 'c-entity__link c-entity--block-link' if props.isBlockLink }}"
       {% if props.isBlockLink %}href="{{ url }}"{% endif %}
     >
       <div class="c-entity__header">
