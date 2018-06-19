@@ -12,12 +12,10 @@ async function renderFindAttendee (req, res, next) {
       throw new Error('Missing event')
     }
 
-    const name = event.name
-
     res
-      .breadcrumb(name, `/events/${event.id}/attendees`)
+      .breadcrumb(event.name, `/events/${event.id}/attendees`)
       .breadcrumb('Add attendee')
-      .title(name)
+      .title(event.name)
       .render('events/attendees/views/find')
   } catch (error) {
     next(error)
@@ -26,9 +24,9 @@ async function renderFindAttendee (req, res, next) {
 
 async function findAttendee (req, res, next) {
   try {
-    const eventId = get(res.locals, 'event.id')
+    const event = res.locals.event
 
-    if (!eventId) {
+    if (!event) {
       throw new Error('No event supplied')
     }
 
@@ -51,7 +49,7 @@ async function findAttendee (req, res, next) {
         (contact) => {
           return {
             ...contact,
-            url: `/events/${eventId}/attendees/create/${contact.id}`,
+            url: `/events/${event.id}/attendees/create/${contact.id}`,
           }
         }
       ))
