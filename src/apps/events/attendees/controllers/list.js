@@ -1,23 +1,21 @@
-const { get } = require('lodash')
-
 const { transformApiResponseToCollection } = require('../../../transformers')
 const { fetchEventAttendees } = require('../repos')
 const { transformServiceDeliveryToAttendeeListItem } = require('../transformers')
 
 async function renderAttendees (req, res, next) {
   try {
-    const eventId = get(res.locals, 'event.id')
+    const event = res.locals.event
 
-    if (!eventId) {
-      return next()
+    if (!event) {
+      throw new Error('Missing event')
     }
 
-    const name = get(res.locals, 'event.name')
+    const name = event.name
     const query = req.query
     const page = query.page || 1
     const token = req.session.token
 
-    const attendees = await fetchEventAttendees(token, eventId, page)
+    const attendees = await fetchEventAttendees(token, event.id, page)
       .then(transformApiResponseToCollection(
         { query },
         transformServiceDeliveryToAttendeeListItem
@@ -31,7 +29,7 @@ async function renderAttendees (req, res, next) {
           countLabel: 'attendee',
           actionButtons: [{
             label: 'Add attendee',
-            url: `/events/${eventId}/attendees/find-new`,
+            url: `/events/${event.id}/attendees/find-new`,
           }],
         },
       })

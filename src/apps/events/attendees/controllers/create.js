@@ -1,10 +1,11 @@
+const { get } = require('lodash')
+
 const { saveInteraction } = require('../../../interactions/repos')
 const { getContact } = require('../../../contacts/repos')
 
 async function createAttendee (req, res, next) {
   try {
-    const adviser = req.session.user
-    const token = req.session.token
+    const { user: adviser, token } = req.session
     const contactId = req.params.contactId
     const event = res.locals.event
 
@@ -15,15 +16,15 @@ async function createAttendee (req, res, next) {
     const contact = await getContact(token, contactId)
 
     const serviceDelivery = {
-      contact: contactId,
-      company: contact.company.id,
+      contact: contact.id,
+      company: get(contact, 'company.id'),
       date: event.start_date,
       dit_adviser: adviser.id,
-      dit_team: event.lead_team.id,
+      dit_team: get(event, 'lead_team.id'),
       event: event.id,
       is_event: true,
       kind: 'service_delivery',
-      service: event.service.id,
+      service: get(event, 'service.id'),
       subject: `Attended ${event.name}`,
     }
 
