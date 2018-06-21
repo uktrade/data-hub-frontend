@@ -14,6 +14,7 @@ function transformOrderToListItem ({
   delivery_date,
   modified_on,
   created_on,
+  sector,
 } = {}) {
   if (!id || !reference) { return }
 
@@ -56,6 +57,10 @@ function transformOrderToListItem ({
       {
         label: 'UK region',
         value: uk_region,
+      },
+      {
+        label: 'Sector',
+        value: sector,
       },
     ],
   }
