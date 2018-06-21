@@ -27,14 +27,15 @@ const LOCAL_NAV = [
       'interaction.read_all_interaction',
     ],
   },
-  {
-    path: 'propositions',
-    label: 'Propositions',
-    permissions: [
-      'proposition.read_associated_investmentproject_propositions',
-      'proposition.read_all_proposition',
-    ],
-  },
+  // TODO: DHI-9 uncomment this once contractuals around SPI are solved
+  // {
+  //   path: 'propositions',
+  //   label: 'Propositions',
+  //   permissions: [
+  //     'proposition.read_associated_investmentproject_propositions',
+  //     'proposition.read_all_proposition',
+  //   ],
+  // },
   {
     path: 'evaluation',
     label: 'Evaluations',
