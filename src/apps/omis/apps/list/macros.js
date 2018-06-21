@@ -1,58 +1,63 @@
-const { assign, flatten } = require('lodash')
+const { flatten } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
-const metadataRepo = require('../../../../lib/metadata')
-const { transformObjectToOption } = require('../../../transformers')
 
-const filtersFields = [
-  {
-    macroName: 'MultipleChoiceField',
-    label: 'Order status',
-    name: 'status',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options: ORDER_STATES,
-  },
-  {
-    macroName: 'TextField',
-    label: 'Order reference',
-    name: 'reference',
-  },
-  {
-    macroName: 'TextField',
-    label: 'Company name',
-    name: 'company_name',
-  },
-  {
-    macroName: 'TextField',
-    label: 'Contact name',
-    name: 'contact_name',
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    label: 'Market (country)',
-    name: 'primary_market',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadataRepo.omisMarketOptions.map(transformObjectToOption)
+const omisFiltersFields = function ({ omisMarketOptions, regionOptions, sectorOptions }) {
+  return [
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'Order status',
+      name: 'status',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: ORDER_STATES,
     },
-  },
-  {
-    macroName: 'MultipleChoiceField',
-    label: 'UK region',
-    name: 'uk_region',
-    type: 'checkbox',
-    modifier: 'option-select',
-    options () {
-      return metadataRepo.regionOptions.map(transformObjectToOption)
+    {
+      macroName: 'TextField',
+      label: 'Order reference',
+      name: 'reference',
     },
-  },
-].map(filter => {
-  return assign({}, filter, {
-    modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+    {
+      macroName: 'TextField',
+      label: 'Company name',
+      name: 'company_name',
+    },
+    {
+      macroName: 'TextField',
+      label: 'Contact name',
+      name: 'contact_name',
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'Market (country)',
+      name: 'primary_market',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: omisMarketOptions,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'UK region',
+      name: 'uk_region',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: regionOptions,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      label: 'Sector',
+      name: 'sector_descends',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: sectorOptions,
+    },
+  ].map(filter => {
+    return {
+      ...filter,
+      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+    }
   })
-})
+}
 
 const collectionSortForm = {
   method: 'get',
@@ -83,5 +88,5 @@ const collectionSortForm = {
 
 module.exports = {
   collectionSortForm,
-  filtersFields,
+  omisFiltersFields,
 }
