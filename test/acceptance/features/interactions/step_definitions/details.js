@@ -14,3 +14,12 @@ Then(/^the interaction details Documents link is not displayed$/, async function
     .section.details
     .assert.elementNotPresent('@documentsLink')
 })
+
+Then('I see the service delivery details', async function () {
+  const button = Interaction.getButtonSelectorWithText('Edit service delivery')
+
+  await Interaction
+    .api.useXpath()
+    .assert.visible(button.selector)
+    .useCss()
+})
