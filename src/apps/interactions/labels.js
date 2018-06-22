@@ -3,6 +3,7 @@ const interaction = {
   subject: 'Subject',
   notes: 'Notes',
   contact: 'Contact',
+  created_on: 'Created on',
   date: 'Date of interaction',
   dit_adviser: 'DIT adviser',
   service: 'Service',
@@ -56,15 +57,7 @@ const filters = {
   sector_descends: 'Sector',
 }
 
-const attendeeLabels = {
-  company: 'Company',
-  job_title: 'Job title',
-  attended_date: 'Date attended',
-  service_delivery: 'Service delivery',
-}
-
 module.exports = {
-  attendeeLabels,
   interaction,
   serviceDelivery,
   policyFeedback,

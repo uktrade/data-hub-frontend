@@ -9,6 +9,15 @@ const getSearchResultsTabSelector = (text) =>
     }
   )
 
+const getSelectorForResultWithText = (text) =>
+  getSelectorForElementWithText(
+    text,
+    {
+      el: '//a',
+      className: 'c-entity__link',
+    }
+  )
+
 const getSearchResultSelector = (text) =>
   getSelectorForElementWithText(
     text,
@@ -34,7 +43,7 @@ module.exports = {
           .waitForElementPresent('@term')
           .setValue('@term', term)
           .sendKeys('@term', [ this.api.Keys.ENTER ])
-          .waitForElementVisible('@addCompanyButton') // wait for xhr
+          .waitForElementVisible('@resultsCount') // wait for xhr
       },
     },
   ],
@@ -84,9 +93,20 @@ module.exports = {
       selector: '.c-entity-list li:first-child',
       elements: {
         header: {
-          selector: '.c-entity__header a',
+          selector: '.c-entity__header .c-entity__title',
+        },
+        resultLink: {
+          selector: '.c-entity__header .c-entity__link',
         },
       },
+    },
+    results: {
+      selector: '.c-entity-list',
+      commands: [
+        {
+          getSelectorForResultWithText,
+        },
+      ],
     },
   },
 }

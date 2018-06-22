@@ -27,8 +27,8 @@ When(/^the (.+) search tab is clicked/, async (tabText) => {
 When(/^the first search result is clicked/, async () => {
   await Search
     .section.firstSearchResult
-    .waitForElementVisible('@header')
-    .click('@header')
+    .waitForElementVisible('@resultLink')
+    .click('@resultLink')
 })
 
 Then(/^I verify the search tabs are displayed$/, async (expectedSearchTabs) => {
@@ -93,4 +93,33 @@ Then(/^I can view the company in the search results/, async function () {
     .assert.containsText('@header', name)
     .assert.containsText('@sector', sector)
     .assert.containsText('@registeredAddress', primaryAddress)
+})
+
+Then(/^I see (a|the) search box$/, async (messageType) => {
+  await Search.waitForElementPresent('@term')
+})
+
+When('I search for {string}', async function (term) {
+  try {
+    await Search.search(term)
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+
+Then(/^I see "([^"]*)?" in the (search results|collection)$/, async function (term, type) {
+  await Search.section.firstSearchResult
+    .waitForElementPresent('@header')
+    .assert.containsText('@header', term)
+})
+
+When(/^I select "([^"]*)?" in the (search results|collection)$/, async function (title, type) {
+  const result = Search.section.results.getSelectorForResultWithText(title)
+
+  await Search.section.results
+    .api.useXpath()
+    .waitForElementVisible(result.selector)
+    .click(result.selector)
+    .useCss()
+    .wait()
 })
