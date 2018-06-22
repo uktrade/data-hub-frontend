@@ -60,6 +60,11 @@ Feature: View collection of contacts
     Then there are no filters selected
     When I filter the contacts list by active status
     Then the result count should be reset
+    When I clear all filters
+    Then there are no filters selected
+    When I filter the contacts list by inactive status
+    Then the result count should be less
+    When I clear all filters
     When I filter the contacts list by company
     Then the contacts should be filtered by company name
     When I clear all filters
