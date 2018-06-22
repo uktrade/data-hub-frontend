@@ -1,4 +1,5 @@
-
+const config = require('~/config')
+const controller = require('~/src/apps/omis/apps/list/controllers')
 describe('OMIS list controllers', () => {
   beforeEach(() => {
     this.req = {
@@ -7,46 +8,54 @@ describe('OMIS list controllers', () => {
       },
       query: {},
     }
+
     this.res = {
       breadcrumb: sinon.stub().returnsThis(),
       render: sinon.spy(),
       query: {},
     }
-    this.buildSelectedFiltersSummaryStub = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/omis/apps/list/controllers', {
-      '../../../builders': {
-        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
-      },
-      './macros': {
-        filtersFields: [
-          { macroName: 'useful' },
-          { macroName: 'exciting' },
-        ],
-      },
-    })
+    this.nextSpy = sinon.spy()
+
+    const metaMock = [
+      { id: '1', name: 'm1', disabled_on: null },
+      { id: '2', name: 'm2', disabled_on: null },
+      { id: '3', name: 'm3', disabled_on: null },
+    ]
+
+    nock(config.apiRoot)
+      .get('/metadata/sector/?level__lte=0')
+      .reply(200, metaMock)
+      .get('/metadata/omis-market/')
+      .reply(200, metaMock)
+      .get('/metadata/uk-region/')
+      .reply(200, metaMock)
   })
 
   describe('renderList()', () => {
-    beforeEach(() => {
-      this.controller.renderList(this.req, this.res)
+    beforeEach(async () => {
+      await controller.renderList(this.req, this.res, this.nextSpy)
+      this.renderOptions = this.res.render.firstCall.args[1]
     })
 
     it('should call render method', () => {
       expect(this.res.render).to.have.been.calledOnce
     })
 
-    it('should pass the correct data to the view', () => {
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
+    it('should lookup options for the form', () => {
+      expect(nock.isDone()).to.be.true
     })
 
-    it('should build filters summary', () => {
-      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'useful' },
-        { macroName: 'exciting' },
-      ], this.req.query)
+    it('should pass a sortform the view', () => {
+      expect(this.renderOptions).to.have.property('sortForm')
+    })
+
+    it('should pass a filter form to the view', () => {
+      expect(this.renderOptions).to.have.property('filtersFields')
+    })
+
+    it('should pass a summary of selected filters to the view', () => {
+      expect(this.renderOptions).to.have.property('selectedFilters')
     })
   })
 })

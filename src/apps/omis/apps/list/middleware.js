@@ -1,4 +1,4 @@
-const { assign, pick, pickBy } = require('lodash')
+const { pick, pickBy } = require('lodash')
 
 const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
@@ -35,9 +35,14 @@ function setRequestBody (req, res, next) {
     'reference',
     'total_cost',
     'net_cost',
+    'sector_descends',
   ])
 
-  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+  req.body = pickBy({
+    ...req.body,
+    ...selectedSortBy,
+    ...pickBy(selectedFiltersQuery),
+  })
 
   const currencyFields = ['total_cost', 'net_cost']
   currencyFields.forEach((field) => {
