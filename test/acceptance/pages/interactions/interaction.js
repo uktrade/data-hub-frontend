@@ -48,6 +48,9 @@ module.exports = {
   },
   commands: [
     {
+      getButtonSelectorWithText (text) {
+        return getButtonWithText(text)
+      },
       createInteraction (details = {}, isServiceDelivery, callback) {
         const futureDate = generateFutureDate()
         const interaction = assign({}, {

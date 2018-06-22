@@ -14,7 +14,7 @@ function handleFormPost (req, res, next, projectId = req.params.investmentId) {
     .catch((err) => {
       if (err.statusCode === 400) {
         logger.error(err)
-        req.flash('error', 'Something has gone wrong')
+        req.flash('error', err.error.stage ? err.error.stage.toString() : 'Something has gone wrong')
         return res.redirect(`/investment-projects/${res.locals.investmentData.id}/details`)
       }
       next(err)
