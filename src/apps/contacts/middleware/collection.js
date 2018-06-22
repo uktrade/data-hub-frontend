@@ -39,7 +39,11 @@ function getRequestBody (req, res, next) {
     ? { sortby: req.query.sortby }
     : null
 
-  req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+  req.body = {
+    ...req.body,
+    ...selectedSortBy,
+    ...pickBy(selectedFiltersQuery),
+  }
 
   next()
 }
