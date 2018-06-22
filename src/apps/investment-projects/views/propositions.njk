@@ -1,0 +1,15 @@
+{% extends "./_layout.njk" %}
+
+{% block main_grid_right_column %}
+  <h2 class="heading-medium">Investment Propositions</h2>
+  <p>
+    You can record and manage propositions requested by investors and view the details of previous and current propositions
+  </p>
+
+  {{
+  CollectionContent(propositions | assignCopy({
+    countLabel: 'proposition',
+    actionButtons: actionButtons
+  }))
+  }}
+{% endblock %}
