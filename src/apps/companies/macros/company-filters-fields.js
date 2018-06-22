@@ -18,6 +18,17 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'MultipleChoiceField',
+      name: 'archived',
+      type: 'checkbox',
+      label: 'Status',
+      options: [
+        { value: 'false', label: 'Active' },
+        { value: 'true', label: 'Inactive' },
+      ],
+      modifier: 'option-select',
+    },
+    {
+      macroName: 'MultipleChoiceField',
       name: PRIMARY_SECTOR_NAME,
       type: 'checkbox',
       modifier: 'option-select',
