@@ -56,7 +56,7 @@ const XHR = {
     }
 
     return axios
-      .get(`${url}?${queryString.stringify(params)}`, {
+      .get(`${url}?${queryString.stringify(params, { arrayFormat: 'repeat' })}`, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' },
       })
       .then(res => this.updateOutlet(res, params))
