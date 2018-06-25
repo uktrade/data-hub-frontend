@@ -1,6 +1,9 @@
 const router = require('express').Router()
 
-const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS } = require('./constants')
+const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+
+const { getRequestBody } = require('../../middleware/collection')
+
 const {
   renderAddStepOne,
   postAddStepOne,
@@ -37,7 +40,6 @@ const {
 } = require('../interactions/middleware/collection')
 
 const {
-  getRequestBody,
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
@@ -58,7 +60,7 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.param('companyId', getCompany)
 router.param('companyNumber', getCompaniesHouseRecord)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getCompanyCollection, renderCompanyList)
+router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody(QUERY_FIELDS), getCompanyCollection, renderCompanyList)
 
 router
   .route('/add-step-1')
