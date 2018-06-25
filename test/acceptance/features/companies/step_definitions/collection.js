@@ -40,6 +40,20 @@ When(/^I filter the companies list by UK region/, async function () {
     .wait() // wait for xhr
 })
 
+When(/^I filter the companies list by inactive status/, async function () {
+  await CompanyList.section.filters
+    .waitForElementPresent('@inactive')
+    .click('@inactive')
+    .wait() // wait for xhr
+})
+
+When(/^I filter the companies list by active status/, async function () {
+  await CompanyList.section.filters
+    .waitForElementPresent('@active')
+    .click('@active')
+    .wait() // wait for xhr
+})
+
 When(/^the companies are sorted by Company name: A-Z$/, async function () {
   await CompanyList
     .section.collectionHeader
