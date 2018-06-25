@@ -1,4 +1,4 @@
-const { pick, mapValues, isArray, pickBy, get } = require('lodash')
+const { pick, pickBy } = require('lodash')
 
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
@@ -35,15 +35,15 @@ function getRequestBody (req, res, next) {
     'company_uk_region',
   ]), 'archived')
 
-  mapValues(get(selectedFiltersQuery, 'archived'), (value) => {
-    return isArray(value) ? null : value
-  })
-
   const selectedSortBy = req.query.sortby
     ? { sortby: req.query.sortby }
     : null
 
-  req.body = Object.assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
+  req.body = {
+    ...req.body,
+    ...selectedSortBy,
+    ...pickBy(selectedFiltersQuery),
+  }
 
   next()
 }
