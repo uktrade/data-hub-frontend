@@ -85,10 +85,6 @@ module.exports = {
         const projectArrivedInTriageOnMonth = faker.random.number({ min: 1, max: 12 })
         const projectArrivedInTriageOnDay = faker.random.number({ min: 1, max: getDaysInMonth(new Date(projectArrivedInTriageOnYear, (projectArrivedInTriageOnMonth - 1))) })
 
-        const proposalDeadlineYear = faker.random.number({ min: nextYear, max: nextYear + 40 })
-        const proposalDeadlineMonth = faker.random.number({ min: 1, max: 12 })
-        const proposalDeadlineDay = faker.random.number({ min: 1, max: getDaysInMonth(new Date(proposalDeadlineYear, (proposalDeadlineMonth - 1))) })
-
         const actualLandDateYear = faker.random.number({ min: nextYear, max: nextYear + 40 })
         const actualLandDateMonth = faker.random.number({ min: 1, max: 12 })
         const actualLandDateDay = faker.random.number({ min: 1, max: getDaysInMonth(new Date(actualLandDateYear, (actualLandDateMonth - 1))) })
@@ -97,9 +93,6 @@ module.exports = {
           projectArrivedInTriageOnYear,
           projectArrivedInTriageOnMonth,
           projectArrivedInTriageOnDay,
-          proposalDeadlineYear,
-          proposalDeadlineMonth,
-          proposalDeadlineDay,
           actualLandDateYear,
           actualLandDateMonth,
           actualLandDateDay,
@@ -244,9 +237,6 @@ module.exports = {
         projectArrivedInTriageOnYear: '#field-project_arrived_in_triage_on_year',
         projectArrivedInTriageOnMonth: '#field-project_arrived_in_triage_on_month',
         projectArrivedInTriageOnDay: '#field-project_arrived_in_triage_on_day',
-        proposalDeadlineYear: '#field-proposal_deadline_year',
-        proposalDeadlineMonth: '#field-proposal_deadline_month',
-        proposalDeadlineDay: '#field-proposal_deadline_day',
         actualLandDateYear: '#field-actual_land_date_year',
         actualLandDateMonth: '#field-actual_land_date_month',
         actualLandDateDay: '#field-actual_land_date_day',
@@ -285,7 +275,6 @@ module.exports = {
             clientContact: getDetailsTableRowValue('Client contacts'),
             projectDescription: getDetailsTableRowValue('Project description'),
             anonDescription: getDetailsTableRowValue('Anonymised description'),
-            proposalDeadline: getDetailsTableRowValue('Proposal Deadline'),
             estimatedLandDate: getDetailsTableRowValue('Estimated land date'),
             actualLandDate: getDetailsTableRowValue('Actual land date'),
             newOrExistingInvestor: getDetailsTableRowValue('New or existing investor'),

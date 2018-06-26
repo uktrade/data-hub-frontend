@@ -56,7 +56,6 @@ function transformToApi (body) {
   })
 
   formatted.project_arrived_in_triage_on = transformDateObjectToDateString('project_arrived_in_triage_on')(body)
-  formatted.proposal_deadline = transformDateObjectToDateString('proposal_deadline')(body)
 
   if (body.estimated_land_date_year || body.estimated_land_date_month) {
     formatted.estimated_land_date = [
@@ -124,7 +123,6 @@ function transformInvestmentDataForView ({
   investor_type,
   level_of_involvement,
   specific_programme,
-  proposal_deadline,
   estimated_land_date,
   actual_land_date,
 } = {}) {
@@ -147,10 +145,6 @@ function transformInvestmentDataForView ({
     investor_type,
     level_of_involvement,
     specific_programme,
-    proposal_deadline: !isEmpty(proposal_deadline) ? {
-      type: 'date',
-      name: proposal_deadline,
-    } : null,
     estimated_land_date: !isEmpty(estimated_land_date) ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
     actual_land_date: !isEmpty(actual_land_date) ? {
       type: 'date',
@@ -179,7 +173,6 @@ function transformBriefInvestmentSummary (data) {
     account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
-    proposal_deadline: !isEmpty(data.proposal_deadline) ? moment(data.proposal_deadline, 'YYYY-MM-DD').format('MMMM YYYY') : null,
     estimated_land_date: !isEmpty(data.estimated_land_date) ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
     total_investment: data.total_investment ? {
       type: 'currency',
