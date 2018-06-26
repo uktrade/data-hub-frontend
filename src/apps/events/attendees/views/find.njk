@@ -29,7 +29,6 @@
     {% endif %}
 
     {{ CollectionContent(contacts) }}
-    {{ Pagination(contacts.pagination) }}
   {% else %}
     {{ Message({
       type: "muted",
