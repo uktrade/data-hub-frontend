@@ -55,8 +55,6 @@ function transformToApi (body) {
     return { id: value }
   })
 
-  formatted.project_arrived_in_triage_on = transformDateObjectToDateString('project_arrived_in_triage_on')(body)
-
   if (body.estimated_land_date_year || body.estimated_land_date_month) {
     formatted.estimated_land_date = [
       body.estimated_land_date_year,
