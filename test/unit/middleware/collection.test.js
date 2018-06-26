@@ -1,20 +1,11 @@
-describe('Contact collection middleware', () => {
+describe('Collection middleware', () => {
   beforeEach(() => {
-    this.middleware = require('~/src/apps/contacts/middleware/collection')
+    this.middleware = require('~/src/middleware/collection')
     this.req = {
       body: '',
       query: {
-        name: 'contact name',
+        name: 'name',
         company_name: 'company name',
-        company_sector_descends: [
-          '9b38cecc-5f95-e211-a939-e4115bead28a',
-        ],
-        address_country: [
-          'af959812-6095-e211-a939-e4115bead28a',
-        ],
-        company_uk_region: [
-          '934cd12a-6095-e211-a939-e4115bead28a',
-        ],
       },
     }
     this.res = {}
@@ -22,6 +13,29 @@ describe('Contact collection middleware', () => {
   })
 
   describe('#getRequestBody', () => {
+    context('when the query is empty', () => {
+      beforeEach(() => {
+        this.req = {
+          ...this.req,
+          query: {},
+        }
+
+        this.middleware.getRequestBody([
+          'archived',
+          'name',
+          'company_name',
+        ])(this.req, this.res, this.nextSpy)
+      })
+
+      it('should not set the request body', () => {
+        expect(this.req.body).to.be.an('object').and.empty
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+    })
+
     context('when supplied with default parameters', () => {
       beforeEach(() => {
         this.req = {
@@ -32,23 +46,18 @@ describe('Contact collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody([
+          'archived',
+          'name',
+          'company_name',
+        ])(this.req, this.res, this.nextSpy)
       })
 
       it('should set the request body', () => {
         expect(this.req.body).to.deep.equal({
-          address_country: [
-            'af959812-6095-e211-a939-e4115bead28a',
-          ],
           archived: 'false',
           company_name: 'company name',
-          company_sector_descends: [
-            '9b38cecc-5f95-e211-a939-e4115bead28a',
-          ],
-          company_uk_region: [
-            '934cd12a-6095-e211-a939-e4115bead28a',
-          ],
-          name: 'contact name',
+          name: 'name',
         })
       })
 
@@ -70,7 +79,11 @@ describe('Contact collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody([
+          'archived',
+          'name',
+          'company_name',
+        ])(this.req, this.res, this.nextSpy)
       })
 
       it('should not set archived on the request body', () => {
@@ -92,11 +105,40 @@ describe('Contact collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody([
+          'archived',
+          'name',
+          'company_name',
+        ])(this.req, this.res, this.nextSpy)
       })
 
       it('should set sort on the request body', () => {
         expect(this.req.body.sortby).to.equal('modified_on:desc')
+      })
+
+      it('should call next', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+    })
+
+    context('when supplied with unknown parameters', () => {
+      beforeEach(() => {
+        this.req = {
+          ...this.req,
+          query: {
+            random: 'yes',
+          },
+        }
+
+        this.middleware.getRequestBody([
+          'archived',
+          'name',
+          'company_name',
+        ])(this.req, this.res, this.nextSpy)
+      })
+
+      it('should set sort on the request body', () => {
+        expect(this.req.body.random).to.be.undefined
       })
 
       it('should call next', () => {

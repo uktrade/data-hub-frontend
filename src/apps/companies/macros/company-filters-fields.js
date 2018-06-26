@@ -18,17 +18,6 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'archived',
-      type: 'checkbox',
-      label: 'Status',
-      options: [
-        { value: 'false', label: 'Active' },
-        { value: 'true', label: 'Inactive' },
-      ],
-      modifier: 'option-select',
-    },
-    {
-      macroName: 'MultipleChoiceField',
       name: PRIMARY_SECTOR_NAME,
       type: 'checkbox',
       modifier: 'option-select',
@@ -44,6 +33,17 @@ const companyFiltersFields = function ({ sectorOptions }) {
       type: 'checkbox',
       modifier: 'option-select',
     }),
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'archived',
+      type: 'checkbox',
+      label: 'Status',
+      options: [
+        { value: 'false', label: 'Active' },
+        { value: 'true', label: 'Inactive' },
+      ],
+      modifier: 'option-select',
+    },
   ].map(filter => {
     return Object.assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),

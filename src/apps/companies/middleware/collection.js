@@ -1,4 +1,4 @@
-const { pick, pickBy, assign } = require('lodash')
+const { assign } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
 const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
@@ -152,26 +152,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
   }
 }
 
-function getRequestBody (req, res, next) {
-  const selectedFiltersQuery = pick(req.query, [
-    'name',
-    'sector_descends',
-    'country',
-    'uk_region',
-    'headquarter_type',
-  ])
-
-  const selectedSortBy = req.query.sortby ? {
-    sortby: req.query.sortby,
-  } : null
-
-  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
-
-  next()
-}
-
 module.exports = {
-  getRequestBody,
   getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,

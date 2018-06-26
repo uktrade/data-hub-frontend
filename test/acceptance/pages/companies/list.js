@@ -54,6 +54,8 @@ module.exports = {
         sector: '[name="sector"]',
         country: '[name="country"]',
         ukRegion: '[name="uk_region"]',
+        active: 'label[for=field-archived-1]',
+        inactive: 'label[for=field-archived-2]',
       },
     },
     collectionHeader: {
