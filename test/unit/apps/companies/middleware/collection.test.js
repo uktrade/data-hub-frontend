@@ -8,7 +8,6 @@ const subsidiaryCompanySearchResponse = require('~/test/unit/data/companies/subs
 const subsidiaryCompanyTransformedResults = require('~/test/unit/data/companies/subsidiary-company-transformed-results.json')
 
 const {
-  getRequestBody,
   getCompanyCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
@@ -68,45 +67,6 @@ describe('Company collection middleware', () => {
       expect(actual).to.have.property('items').to.have.length(3)
       expect(actual).to.have.property('pagination')
       expect(actual.count).to.equal(3)
-      expect(this.nextSpy).to.have.been.calledOnce
-    })
-  })
-
-  describe('#getRequestBody', () => {
-    it('should not set req.body for empty query', () => {
-      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.reqMock.body).to.be.an('object').and.empty
-      expect(this.nextSpy).to.have.been.calledOnce
-    })
-
-    it('should set req.body for valid query items', () => {
-      this.reqMock.query = {
-        sector_descends: 'space',
-        uk_region: 'london',
-        sortby: 'name:asc',
-        random: 'query',
-      }
-
-      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.reqMock.body).to.deep.equal({
-        sector_descends: 'space',
-        uk_region: 'london',
-        sortby: 'name:asc',
-      })
-      expect(this.nextSpy).to.have.been.calledOnce
-    })
-
-    it('should not set req.body invalid items', async () => {
-      this.reqMock.query = {
-        random: 'query',
-        some: 'more',
-      }
-
-      getRequestBody(this.reqMock, this.resMock, this.nextSpy)
-
-      expect(this.reqMock.body).to.be.an('object').and.empty
       expect(this.nextSpy).to.have.been.calledOnce
     })
   })
