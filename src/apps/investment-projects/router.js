@@ -1,6 +1,8 @@
 const router = require('express').Router()
 
-const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+
+const { getRequestBody } = require('../../middleware/collection')
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
@@ -34,7 +36,7 @@ const { renderInvestmentList } = require('./controllers/list')
 const { renderInteractionList } = require('./controllers/interactions')
 const { renderPropositionList } = require('./controllers/propositions')
 
-const { getInvestmentProjectsCollection, getRequestBody } = require('./middleware/collection')
+const { getInvestmentProjectsCollection } = require('./middleware/collection')
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
 
@@ -70,7 +72,12 @@ router.use('/:investmentId', setLocalNav(LOCAL_NAV))
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody, getInvestmentProjectsCollection, renderInvestmentList)
+router.get('/',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  getInvestmentProjectsCollection,
+  renderInvestmentList
+)
 
 router.post('/:investmentId/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
 router.get('/:investmentId/unarchive', archive.unarchiveInvestmentProjectHandler)

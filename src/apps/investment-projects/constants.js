@@ -58,9 +58,28 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
 
+const QUERY_FIELDS = [
+  'status',
+  'adviser',
+  'sector_descends',
+  'investor_company_country',
+  'uk_region_location',
+  'stage',
+  'investment_type',
+  'investor_company',
+  'proposal_deadline_before',
+  'proposal_deadline_after',
+  'estimated_land_date_before',
+  'estimated_land_date_after',
+  'actual_land_date_before',
+  'actual_land_date_after',
+  'client_relationship_manager',
+]
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
+  QUERY_FIELDS,
 }
