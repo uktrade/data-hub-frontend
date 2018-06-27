@@ -57,39 +57,4 @@ describe('Event collection middleware', () => {
       })
     })
   })
-
-  describe('#getRequestBody', () => {
-    it('should not set req.body for empty query', async () => {
-      await this.controller.getRequestBody(this.req, this.res, this.next)
-
-      expect(this.req.body).to.be.an('object').and.empty
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should set req.body for valid query items', async () => {
-      this.req.query = {
-        sortby: 'modified_on:desc',
-        random: 'query',
-      }
-
-      await this.controller.getRequestBody(this.req, this.res, this.next)
-
-      expect(this.req.body).to.deep.equal({
-        sortby: 'modified_on:desc',
-      })
-      expect(this.next).to.have.been.calledOnce
-    })
-
-    it('should not set req.body invalid items', async () => {
-      this.req.query = {
-        random: 'query',
-        some: 'more',
-      }
-
-      await this.controller.getRequestBody(this.req, this.res, this.next)
-
-      expect(this.req.body).to.be.an('object').and.empty
-      expect(this.next).to.have.been.calledOnce
-    })
-  })
 })
