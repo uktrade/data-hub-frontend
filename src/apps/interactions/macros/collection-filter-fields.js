@@ -1,4 +1,4 @@
-const { assign, flatten } = require('lodash')
+const { flatten } = require('lodash')
 
 const labels = require('../labels')
 const { provider } = require('./fields')
@@ -8,7 +8,13 @@ const { POLICY_FEEDBACK_PERMISSIONS } = require('../constants')
 
 const currentYear = (new Date()).getFullYear()
 
-module.exports = function ({ currentAdviserId, channels = [], teams = [], sectorOptions, permissions }) {
+module.exports = function ({
+  currentAdviserId,
+  permissions,
+  sectorOptions,
+  serviceOptions,
+  teamOptions,
+}) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -50,10 +56,18 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [], sector
       hint: 'YYYY-MM-DD',
       placeholder: `e.g. ${currentYear}-07-21`,
     },
-    assign({}, provider(teams), {
+    {
+      ...provider(teamOptions),
       type: 'checkbox',
       modifier: 'option-select',
-    }),
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: 'service',
+      modifier: 'option-select',
+      options: serviceOptions,
+    },
     {
       macroName: 'MultipleChoiceField',
       type: 'checkbox',
@@ -62,9 +76,10 @@ module.exports = function ({ currentAdviserId, channels = [], teams = [], sector
       options: sectorOptions,
     },
   ].map(filter => {
-    return assign(filter, {
+    return {
+      ...filter,
       label: labels.filters[filter.name],
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
-    })
+    }
   })
 }
