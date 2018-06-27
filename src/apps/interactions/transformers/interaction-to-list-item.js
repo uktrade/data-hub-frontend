@@ -11,6 +11,7 @@ function transformInteractionToListItem ({
   date,
   dit_adviser,
   dit_team,
+  service,
 }) {
   return {
     id,
@@ -42,6 +43,10 @@ function transformInteractionToListItem ({
       {
         label: 'Service provider',
         value: dit_team,
+      },
+      {
+        label: 'Service',
+        value: service,
       },
     ],
   }

@@ -56,6 +56,13 @@ describe('#transformInteractionToListItem', () => {
               name: 'Team',
             },
           },
+          {
+            label: 'Service',
+            value: {
+              id: '1231231231312',
+              name: 'Test service',
+            },
+          },
         ],
       })
     })
@@ -143,6 +150,13 @@ describe('#transformInteractionToListItem', () => {
               name: 'Team',
             },
           },
+          {
+            label: 'Service',
+            value: {
+              id: '1231231231312',
+              name: 'Test service',
+            },
+          },
         ],
       })
     })
@@ -202,6 +216,13 @@ describe('#transformInteractionToListItem', () => {
             value: {
               id: '222',
               name: 'Team',
+            },
+          },
+          {
+            label: 'Service',
+            value: {
+              id: '1231231231312',
+              name: 'Test service',
             },
           },
         ],
