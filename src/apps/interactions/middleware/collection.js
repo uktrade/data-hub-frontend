@@ -36,6 +36,7 @@ function getInteractionsRequestBody (req, res, next) {
     'date_before',
     'sortby',
     'dit_team',
+    'service',
   ])
 
   if (req.params.contactId) {
