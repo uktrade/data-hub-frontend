@@ -23,7 +23,6 @@ describe('Investment project transformers', () => {
           'account_tier',
           'uk_region_locations',
           'competitor_countries',
-          'proposal_deadline',
           'estimated_land_date',
           'total_investment',
         ])
@@ -320,7 +319,6 @@ describe('Investment project transformers', () => {
           'investor_type',
           'level_of_involvement',
           'specific_programme',
-          'proposal_deadline',
           'estimated_land_date',
           'actual_land_date',
         ])

@@ -9,9 +9,7 @@ const {
 
 router.get('/', renderAttendees)
 
-router.route('/find-new')
-  .get(renderFindAttendee)
-  .post(findAttendee, renderFindAttendee)
+router.get('/find-new', findAttendee, renderFindAttendee)
 
 router.get('/create/:contactId', createAttendee)
 

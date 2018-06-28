@@ -11,7 +11,7 @@ const Collection = client.page.collection()
 When('I store the result count in state', async function () {
   await Collection
     .captureResultCount((count) => {
-      set(this.state, 'collection.resultCount', count)
+      set(this.state, 'collection.resultCount', parseInt(count))
     })
 })
 
@@ -23,7 +23,7 @@ When(/^I clear all filters$/, async function () {
 
 Then(/^the results summary for (?:a|an).*? (.+) collection is present$/, async function (collectionType) {
   await Collection.captureResultCount((count) => {
-    set(this.state, 'collection.resultCount', count)
+    set(this.state, 'collection.resultCount', parseInt(count))
   })
 
   const resultCount = get(this.state, 'collection.resultCount')
@@ -101,7 +101,17 @@ Then(/^the result count should be reset$/, async function () {
     .waitForElementVisible('@resultCount')
     .getText('@resultCount', (result) => {
       const expected = get(this.state, 'collection.resultCount')
-      client.expect(result.value).to.equal(expected)
+      client.expect(parseInt(result.value)).to.equal(expected)
+    })
+})
+
+Then(/^the result count should be less$/, async function () {
+  await Collection
+    .section.collectionHeader
+    .waitForElementVisible('@resultCount')
+    .getText('@resultCount', (result) => {
+      const expected = get(this.state, 'collection.resultCount')
+      client.expect(parseInt(result.value)).to.be.below(expected)
     })
 })
 

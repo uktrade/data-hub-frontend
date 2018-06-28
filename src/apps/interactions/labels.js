@@ -55,6 +55,7 @@ const filters = {
   date_before: 'To',
   dit_team: 'Service provider',
   sector_descends: 'Sector',
+  service: 'Service',
 }
 
 module.exports = {

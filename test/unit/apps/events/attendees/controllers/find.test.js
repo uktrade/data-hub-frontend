@@ -83,9 +83,7 @@ describe('Find new event attendees controller', () => {
 
       context('and a search term', () => {
         beforeEach(() => {
-          this.req.body = {
-            term: 'Fred ',
-          }
+          this.req.query.term = 'Fred '
         })
 
         context('with a couple of results', () => {
@@ -138,7 +136,10 @@ describe('Find new event attendees controller', () => {
 
           it('should include the original query in the result', () => {
             expect(this.res.locals.contacts).to.have.property('query')
-            expect(this.res.locals.contacts.query).to.deep.equal({ page: '1' })
+            expect(this.res.locals.contacts.query).to.deep.equal({
+              term: 'Fred ',
+              page: '1',
+            })
           })
 
           it('should include collection count information', () => {
@@ -164,6 +165,10 @@ describe('Find new event attendees controller', () => {
 
           it('should use the block link style for results', () => {
             expect(this.res.locals.contacts).to.have.property('listModifier', 'block-links')
+          })
+
+          it('should include the search term in the locals', () => {
+            expect(this.res.locals.searchTerm).to.equal('Fred')
           })
         })
 
@@ -191,7 +196,10 @@ describe('Find new event attendees controller', () => {
 
           it('should include the original query in the result', () => {
             expect(this.res.locals.contacts).to.have.property('query')
-            expect(this.res.locals.contacts.query).to.deep.equal({ page: '2' })
+            expect(this.res.locals.contacts.query).to.deep.equal({
+              page: '2',
+              term: 'Fred ',
+            })
           })
 
           it('should include collection count information', () => {
