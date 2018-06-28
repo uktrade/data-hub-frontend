@@ -1,5 +1,3 @@
-const { get } = require('lodash')
-
 const { collectionFilterFields } = require('../macros')
 const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
@@ -8,26 +6,34 @@ const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INTERACTIONS.SECTOR.NAME
 
+async function getInteractionOptions (token) {
+  const sectorOptions = await getOptions(token, SECTOR, { queryString: QUERY_STRING })
+  const serviceOptions = await getOptions(token, 'service', { includeDisabled: true })
+  const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
+
+  return {
+    sectorOptions,
+    serviceOptions,
+    teamOptions,
+  }
+}
+
 async function renderInteractionList (req, res, next) {
   try {
-    const token = req.session.token
-    const queryString = QUERY_STRING
-    const currentAdviserId = get(req.session, 'user.id')
-    const channels = await getOptions(token, 'communication-channel', { includeDisabled: true })
-    const teams = await getOptions(token, 'team', { includeDisabled: true })
-    const permissions = get(req.session, 'user.permissions')
-    const sectorOptions = await getOptions(token, SECTOR, { queryString })
+    const { token, user } = req.session
+    const { id: currentAdviserId, permissions } = user
+    const { query } = req
+
+    const options = await getInteractionOptions(token)
 
     const filtersFields = collectionFilterFields({
-      teams,
-      channels,
       currentAdviserId,
-      sectorOptions,
       permissions,
+      ...options,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
-    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, query)
+    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, query)
 
     res.render('_layouts/collection', {
       selectedFilters,

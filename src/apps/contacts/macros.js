@@ -47,17 +47,6 @@ const contactFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'archived',
-      type: 'checkbox',
-      label: 'Status',
-      options: [
-        { value: 'false', label: 'Active' },
-        { value: 'true', label: 'Inactive' },
-      ],
-      modifier: 'option-select',
-    },
-    {
-      macroName: 'MultipleChoiceField',
       type: 'checkbox',
       name: PRIMARY_SECTOR_NAME,
       modifier: 'option-select',
@@ -74,6 +63,17 @@ const contactFiltersFields = function ({ sectorOptions }) {
       type: 'checkbox',
       modifier: 'option-select',
     }),
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'archived',
+      type: 'checkbox',
+      label: 'Status',
+      options: [
+        { value: 'false', label: 'Active' },
+        { value: 'true', label: 'Inactive' },
+      ],
+      modifier: 'option-select',
+    },
 
   ].map(filter => {
     return assign(filter, {

@@ -78,9 +78,19 @@ const LOCAL_NAV = [
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
 
+const QUERY_FIELDS = [
+  'archived',
+  'name',
+  'sector_descends',
+  'country',
+  'uk_region',
+  'headquarter_type',
+]
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
+  QUERY_FIELDS,
 }

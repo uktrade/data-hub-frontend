@@ -57,7 +57,7 @@ describe('Create attendee controller', () => {
     })
 
     it('should set a flash message to tell the user that the record was created', () => {
-      expect(this.req.flash).to.be.calledWith('success', 'Event attendee added - This has created a service delivery. You can view or edit the service delivery record, for example, to change the title or add notes')
+      expect(this.req.flash).to.be.calledWith('success', 'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.')
     })
 
     it('should redirect the user to the attendee list', () => {

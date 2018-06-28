@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, isEmpty } = require('lodash')
 
 const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
@@ -31,7 +31,11 @@ async function findAttendee (req, res, next) {
     }
 
     const query = req.query
-    const searchTerm = res.locals.searchTerm = get(req, 'body.term', '').trim()
+    const searchTerm = res.locals.searchTerm = (query.term || '').trim()
+
+    if (isEmpty(searchTerm)) {
+      return next()
+    }
 
     const contacts = await search({
       searchTerm,

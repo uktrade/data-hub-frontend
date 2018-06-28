@@ -5,13 +5,10 @@
 
   {{
     EntitySearchForm({
-      inputName: "term",
       inputLabel: "Find the contact",
       inputPlaceholder: "Contact or company name to search for",
       searchTerm: searchTerm,
-      isLabelHidden: true,
-      method: 'post',
-      value: searchTerm
+      isLabelHidden: true
     })
   }}
 
@@ -29,7 +26,6 @@
     {% endif %}
 
     {{ CollectionContent(contacts) }}
-    {{ Pagination(contacts.pagination) }}
   {% else %}
     {{ Message({
       type: "muted",

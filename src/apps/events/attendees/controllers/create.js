@@ -30,7 +30,7 @@ async function createAttendee (req, res, next) {
 
     await saveInteraction(token, serviceDelivery)
 
-    req.flash('success', 'Event attendee added - This has created a service delivery. You can view or edit the service delivery record, for example, to change the title or add notes')
+    req.flash('success', 'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.')
     return res.redirect(`/events/${event.id}/attendees`)
   } catch (error) {
     next(error)
