@@ -25,10 +25,10 @@ describe('interaction list', () => {
         { id: 'te2', name: 'te2', disabled_on: null },
         { id: 'te', name: 'te3', disabled_on: null },
       ],
-      channelOptions: [
-        { id: 'c1', name: 'c1', disabled_on: null },
-        { id: 'c2', name: 'c2', disabled_on: null },
-        { id: 'c3', name: 'c3', disabled_on: null },
+      service: [
+        { id: 's1', name: 's1', disabled_on: null },
+        { id: 's2', name: 's2', disabled_on: null },
+        { id: 's3', name: 's3', disabled_on: null },
       ],
       sectorOptions: [
         { id: 's1', name: 's1', disabled_on: null },
@@ -38,8 +38,8 @@ describe('interaction list', () => {
     }
 
     nock(config.apiRoot)
-      .get('/metadata/communication-channel/')
-      .reply(200, this.metadataMock.channelOptions)
+      .get('/metadata/service/')
+      .reply(200, this.metadataMock.sectorOptions)
       .get('/metadata/team/')
       .reply(200, this.metadataMock.teamOptions)
       .get('/metadata/sector/?level__lte=0')
