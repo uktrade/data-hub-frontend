@@ -1,5 +1,3 @@
-const { pick, pickBy, assign } = require('lodash')
-
 const { search } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../search/transformers')
 const { transformEventToListItem } = require('../transformers')
@@ -24,25 +22,6 @@ async function getEventsCollection (req, res, next) {
   }
 }
 
-function getRequestBody (req, res, next) {
-  const selectedFiltersQuery = pick(req.query, [
-    'name',
-    'organiser',
-    'event_type',
-    'address_country',
-    'uk_region',
-    'start_date_after',
-    'start_date_before',
-  ])
-
-  const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
-
-  req.body = assign({}, req.body, selectedSortBy, pickBy(selectedFiltersQuery))
-
-  next()
-}
-
 module.exports = {
   getEventsCollection,
-  getRequestBody,
 }
