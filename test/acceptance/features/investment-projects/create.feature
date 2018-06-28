@@ -36,7 +36,6 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
-      | Proposal deadline             | investmentProject.proposalDeadline            |
       | Actual land date              | investmentProject.actualLandDate              |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
@@ -76,7 +75,6 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
-      | Proposal deadline             | investmentProject.proposalDeadline            |
       | Actual land date              | investmentProject.actualLandDate              |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
@@ -115,7 +113,6 @@ Feature: Create a new Investment project
       | Project description           | investmentProject.description                 |
       | Anonymised description        | investmentProject.anonymousDescription        |
       | Estimated land date           | investmentProject.estimatedLandDate           |
-      | Proposal deadline             | investmentProject.proposalDeadline            |
       | Actual land date              | investmentProject.actualLandDate              |
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
