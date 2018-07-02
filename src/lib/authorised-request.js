@@ -1,7 +1,12 @@
+const { isNil, pickBy, set } = require('lodash')
 const request = require('request-promise')
-const config = require('../../config')
 
+const config = require('../../config')
 const logger = require('../../config/logger')
+
+function hasValue (value) {
+  return !isNil(value)
+}
 
 function stripScript (text) {
   const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
@@ -30,28 +35,20 @@ function jsonReviver (key, value) {
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
 module.exports = (token, opts) => {
-  const requestOptions = {
-    json: true,
-  }
-
-  if (isString(opts)) {
-    requestOptions.url = opts
-    requestOptions.method = 'GET'
-    requestOptions.headers = {}
-  } else {
-    requestOptions.url = opts.url
-    requestOptions.headers = opts.headers || {}
-    requestOptions.method = opts.method || 'GET'
-    requestOptions.qs = opts.qs
-
-    if (opts.body) {
-      requestOptions.body = opts.body
+  let requestOptions = (isString(opts))
+    ? {
+      json: true,
+      method: 'GET',
+      url: opts,
     }
-  }
-
-  if (requestOptions.url.indexOf('v2') !== -1) {
-    requestOptions.headers = { 'content-type': 'application/vnd.api+json', 'accept': 'application/vnd.api+json' }
-  }
+    : {
+      body: opts.body,
+      headers: pickBy(opts.headers, hasValue), // remove empty headers
+      json: true,
+      method: opts.method || 'GET',
+      qs: pickBy(opts.qs, hasValue), // remove empty params
+      url: opts.url,
+    }
 
   if (process.env.PROXY) {
     requestOptions.proxy = process.env.PROXY
@@ -61,8 +58,11 @@ module.exports = (token, opts) => {
   }
 
   if (token) {
-    requestOptions.headers.Authorization = `Bearer ${token}`
+    set(requestOptions, 'headers.Authorization', `Bearer ${token}`)
   }
+
+  // Strip out top level properties that are null (such as qs)
+  requestOptions = pickBy(requestOptions, hasValue)
 
   logger.debug('Send authorised request: ', requestOptions)
   requestOptions.jsonReviver = jsonReviver
