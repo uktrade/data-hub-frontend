@@ -91,7 +91,13 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
-              .get('/v3/search?term=Fred&limit=10&offset=0&entity=contact')
+              .post('/v3/search/contact', {
+                archived: false,
+                original_query: 'Fred',
+                term: '',
+                limit: 10,
+                offset: 0,
+              })
               .reply(200, {
                 count: 1,
                 results: [contact],
@@ -177,7 +183,13 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '2'
 
             nock(config.apiRoot)
-              .get('/v3/search?term=Fred&limit=10&offset=10&entity=contact')
+              .post('/v3/search/contact', {
+                archived: false,
+                original_query: 'Fred',
+                term: '',
+                limit: 10,
+                offset: 10,
+              })
               .reply(200, {
                 count: 50,
                 results: [contact],
@@ -220,7 +232,13 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
-              .get('/v3/search?term=Fred&limit=10&offset=0&entity=contact')
+              .post('/v3/search/contact', {
+                archived: false,
+                original_query: 'Fred',
+                term: '',
+                limit: 10,
+                offset: 0,
+              })
               .reply(500, 'Error message')
 
             await findAttendee(this.req, this.res, this.nextSpy)
