@@ -38,10 +38,14 @@ async function findAttendee (req, res, next) {
     }
 
     const contacts = await search({
-      searchTerm,
       searchEntity: 'contact',
       token: req.session.token,
       page: query.page,
+      requestBody: {
+        archived: false,
+        original_query: searchTerm,
+      },
+      isAggregation: false,
     })
       .then(transformApiResponseToSearchCollection(
         {
