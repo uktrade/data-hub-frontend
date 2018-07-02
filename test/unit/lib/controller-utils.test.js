@@ -1,6 +1,5 @@
 const {
   isBlank,
-  transformV2Errors,
   isValidGuid,
   getDataLabels,
 } = require('~/src/lib/controller-utils')
@@ -25,108 +24,6 @@ describe('isBlank', () => {
   })
   it('should know when it is sent a valid object', () => {
     expect(isBlank({ x: 1 })).to.be.false
-  })
-})
-
-describe('transformV2Errors: Formatting V2 service delivery endpoint errors', () => {
-  it('Should warn if the Service Delivery triple does not exist', () => {
-    const source = [
-      {
-        'detail': 'This combination of service and service provider does not exist.',
-        'source': {
-          'pointer': '/data/relationships/service',
-        },
-      },
-    ]
-    const actual = transformV2Errors(source)
-    expect(actual.Alert).to.exist
-    expect(actual.Alert).to.equal('This combination of service and service provider does not exist.')
-  })
-  it('Should return multiple errors when presented with an array of errors', () => {
-    const source = [
-      {
-        'detail': 'Required',
-        'source': {
-          'pointer': '/data/attributes/subject',
-        },
-      },
-      {
-        'detail': 'Required',
-        'source': {
-          'pointer': '/data/attributes/notes',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'ServiceDeliveryStatus'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/status',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'Contact'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/contact',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'Service'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/service',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'Team'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/dit_team',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'Sector'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/sector',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'UKRegion'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/uk_region',
-        },
-      },
-      {
-        'detail': "{'data': {'type': 'Country'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/country_of_interest',
-        },
-      },
-    ]
-    const transformedErrors = transformV2Errors(source)
-    const expectedErrors = {
-      subject: 'Subject is required',
-      notes: 'Notes are required',
-      status: 'Status  is required',
-      contact: 'Contact is required',
-      service: 'Service is required',
-      dit_team: 'Service provider  is required',
-      sector: 'Sector is required',
-      uk_region: 'UK Region  is required',
-      country_of_interest: 'Country is required',
-    }
-
-    expect(transformedErrors).to.deep.equal(expectedErrors)
-  })
-  it('Should match keys not specially defined', () => {
-    const source = [
-      {
-        'detail': "{'data': {'type': 'Foo'}} has no key id",
-        'source': {
-          'pointer': '/data/relationships/foo',
-        },
-      },
-    ]
-    const transformedErrors = transformV2Errors(source)
-    const expectedErrors = { foo: 'Foo is required' }
-
-    expect(transformedErrors).to.deep.equal(expectedErrors)
   })
 })
 
