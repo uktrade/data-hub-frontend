@@ -2,5 +2,9 @@
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Event Attendees</h2>
-  {{ CollectionContent(attendees) }}
+  {% block xhr_content %}
+    <article id="xhr-outlet">
+      {{ CollectionContent(attendees) }}
+    </article>
+  {% endblock %}
 {% endblock %}
