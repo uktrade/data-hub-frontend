@@ -1,7 +1,7 @@
 const config = require('../../../../config')
 const authorisedRequest = require('../../../lib/authorised-request')
 
-async function fetchEventAttendees (token, eventId, page = 1) {
+async function fetchEventAttendees (token, eventId, page = 1, sortby) {
   const limit = 10
   const offset = limit * (page - 1)
 
@@ -10,8 +10,8 @@ async function fetchEventAttendees (token, eventId, page = 1) {
     qs: {
       limit,
       offset,
+      sortby,
       event_id: eventId,
-      sortby: 'contact__last_name,contact__first_name',
     },
   })
 
