@@ -65,6 +65,21 @@ module.exports = {
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
     },
+    archived: {
+      id: '346f78a5-1d23-4213-b4c2-bf48246a13c3',
+      name: 'Archived Ltd',
+      address1: '16 Getabergsvagen',
+      town: 'Geta',
+      postcode: '22340',
+      country: 'Aland Islands',
+      primaryAddress: '16 Getabergsvagen, Geta, 22340, Aland Islands',
+      businessType: 'Company',
+      headquarterType: 'Global HQ',
+      sector: 'Retail',
+      description: 'This is a dummy company for testing archived features',
+      employeeRange: '500+',
+      turnoverRange: '£33.5M+',
+    },
   },
   contact: {
     georginaClark: {
