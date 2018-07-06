@@ -59,6 +59,13 @@ When(/^I select a value for `(.+)` on the `(.+)` page$/, async function (element
   }
 })
 
+Then(/^I should not see the "([^"]*)?" (link|button)$/, async function (linkText, type) {
+  await client
+    .useXpath()
+    .assert.elementNotPresent(`//a[text()='${linkText}']`)
+    .useCss()
+})
+
 Then(/^I am on the `(.+)` page$/, async function (pageName) {
   try {
     const page = get(client.page, pageName)()
