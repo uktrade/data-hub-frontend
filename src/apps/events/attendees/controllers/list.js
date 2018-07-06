@@ -18,33 +18,40 @@ async function renderAttendees (req, res, next) {
     const page = query.page || 1
     const token = req.session.token
     const sortby = req.query.sortby || defaultAttendeeSort
+    const incompleteEvent = (!event.service || !event.lead_team)
 
-    const sortForm = merge({}, attendeeSortForm, {
-      hiddenFields: omit(req.query, 'sortby'),
-      children: [
-        { value: sortby },
-      ],
-    })
+    const renderOptions = {
+      incompleteEvent,
+    }
 
-    const attendees = await fetchEventAttendees(token, event.id, page, sortby)
-      .then(transformApiResponseToCollection(
-        { query },
-        transformServiceDeliveryToAttendeeListItem
-      ))
+    if (!incompleteEvent) {
+      const sortForm = merge({}, attendeeSortForm, {
+        hiddenFields: omit(req.query, 'sortby'),
+        children: [
+          { value: sortby },
+        ],
+      })
+
+      const attendees = await fetchEventAttendees(token, event.id, page, sortby)
+        .then(transformApiResponseToCollection(
+          { query },
+          transformServiceDeliveryToAttendeeListItem
+        ))
+
+      renderOptions.attendees = {
+        ...attendees,
+        sortForm,
+        countLabel: 'attendee',
+        actionButtons: [{
+          label: 'Add attendee',
+          url: `/events/${event.id}/attendees/find-new`,
+        }],
+      }
+    }
 
     res
       .breadcrumb(name)
-      .render('events/attendees/views/list', {
-        attendees: {
-          sortForm,
-          ...attendees,
-          countLabel: 'attendee',
-          actionButtons: [{
-            label: 'Add attendee',
-            url: `/events/${event.id}/attendees/find-new`,
-          }],
-        },
-      })
+      .render('events/attendees/views/list', renderOptions)
   } catch (error) {
     next(error)
   }
