@@ -20,6 +20,14 @@ describe('event attendees', () => {
         event: {
           id: '1234',
           name: 'Dance',
+          lead_team: {
+            id: '1234',
+            name: 'x',
+          },
+          service: {
+            id: '321',
+            name: 'service',
+          },
         },
       },
     }
@@ -33,7 +41,7 @@ describe('event attendees', () => {
   context('when there is an attendee', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&event_id=1234&sortby=contact__last_name%2Ccontact__first_name`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
         .reply(200, attendeesData)
 
       await renderAttendees(this.req, this.res, this.nextSpy)
@@ -68,12 +76,16 @@ describe('event attendees', () => {
     it('calls next', () => {
       expect(this.nextSpy).to.not.be.called
     })
+
+    it('indicates the event is complete', () => {
+      expect(this.properties).to.have.property('incompleteEvent', false)
+    })
   })
 
   context('when there are many attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&event_id=1234&sortby=contact__last_name%2Ccontact__first_name`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
         .reply(200, {
           ...attendeesData,
           count: 200,
@@ -93,7 +105,7 @@ describe('event attendees', () => {
       this.req.query.page = 2
 
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=10&event_id=1234&sortby=contact__last_name%2Ccontact__first_name`)
+        .get(`/v3/interaction?limit=10&offset=10&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
         .reply(200, {
           ...attendeesData,
           count: 200,
@@ -111,7 +123,7 @@ describe('event attendees', () => {
   context('when there is an error fetching attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&event_id=1234&sortby=contact__last_name%2Ccontact__first_name`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
         .reply(500, 'Error message')
 
       await renderAttendees(this.req, this.res, this.nextSpy)
@@ -126,6 +138,58 @@ describe('event attendees', () => {
       expect(this.nextSpy).to.be.calledWith(sinon.match({
         message: '500 - "Error message"',
       }))
+    })
+  })
+
+  context('when the event is incomplete', () => {
+    context('when there is no service', () => {
+      beforeEach(async () => {
+        this.res.locals.event.service = null
+
+        nock(config.apiRoot)
+          .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+          .reply(200, attendeesData)
+
+        await renderAttendees(this.req, this.res, this.nextSpy)
+        this.properties = this.res.render.firstCall.args[1]
+      })
+
+      it('should not fetch attendees', () => {
+        expect(nock.isDone()).to.be.false
+      })
+
+      it('should not include any collection information in the render call', () => {
+        expect(this.properties).to.not.have.property('contacts')
+      })
+
+      it('should indicate that the event is incomplete', () => {
+        expect(this.properties).to.have.property('incompleteEvent', true)
+      })
+    })
+
+    context('when there is no lead team', () => {
+      beforeEach(async () => {
+        this.res.locals.event.lead_team = null
+
+        nock(config.apiRoot)
+          .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+          .reply(200, attendeesData)
+
+        await renderAttendees(this.req, this.res, this.nextSpy)
+        this.properties = this.res.render.firstCall.args[1]
+      })
+
+      it('should not fetch attendees', () => {
+        expect(nock.isDone()).to.be.false
+      })
+
+      it('should not include any collection information in the render call', () => {
+        expect(this.properties).to.not.have.property('contacts')
+      })
+
+      it('should indicate that the event is incomplete', () => {
+        expect(this.properties).to.have.property('incompleteEvent', true)
+      })
     })
   })
 })

@@ -2,5 +2,17 @@
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Event Attendees</h2>
-  {{ CollectionContent(attendees) }}
+  {% if incompleteEvent %}
+    <p class="c-message c-message--info">
+      You cannot add an event attendee on this page because the event
+      record is incomplete. You can create a service delivery interaction
+      from the company record to add an event attendee.
+    </p>
+  {% else %}
+    {% block xhr_content %}
+      <article id="xhr-outlet">
+        {{ CollectionContent(attendees) }}
+      </article>
+    {% endblock %}
+  {% endif %}
 {% endblock %}
