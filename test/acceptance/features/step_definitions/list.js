@@ -1,6 +1,6 @@
 const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
-const { Then, When } = require('cucumber')
+const { Given, When, Then } = require('cucumber')
 const moment = require('moment')
 
 const { pluralise } = require('../../../../config/nunjucks/filters')
@@ -8,7 +8,7 @@ const { mediumDateTimeFormat } = require('../../../../config')
 
 const Collection = client.page.collection()
 
-When('I store the result count in state', async function () {
+Given('I store the result count in state', async function () {
   await Collection
     .captureResultCount((count) => {
       set(this.state, 'collection.resultCount', parseInt(count))

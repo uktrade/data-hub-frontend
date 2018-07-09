@@ -43,7 +43,7 @@ Feature: View collection of companies
     When a "UK non-private or non-public limited company" is created
     Then I see the success message
     When I navigate to the `companies.list` page
-    And I store the result count in state
+    Given I store the result count in state
     And I filter the companies list by company
     Then the companies should be filtered by company name
     When I clear all filters
