@@ -53,34 +53,36 @@ Feature: View collection of contacts
     Then I see the success message
     Then I wait and then refresh the page
     When I navigate to the `contacts.list` page
-    And I store the result count in state
+    When I clear all filters
+    Then there are no filters selected
+    Given I store the result count in state
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
+    And the result count should be 1
     When I clear all filters
     Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by active status
-    Then the result count should be reset
+    And the result count should be reset
     When I clear all filters
     Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by inactive status
-    Then the result count should be less
+    Then the result count should be 0
     When I clear all filters
+    Then there are no filters selected
+    And the result count should be reset
     When I filter the contacts list by company
     Then the contacts should be filtered by company name
+    And the result count should be less than the total
     When I clear all filters
     Then there are no filters selected
-    When I filter the contacts list by active status
-    Then the result count should be reset
-    When I clear all filters
-    Then there are no filters selected
-    When I filter the contacts list by active status
-    Then the result count should be reset
+    And the result count should be reset
     When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
     When I clear all filters
     Then there are no filters selected
-    When I filter the contacts list by active status
-    Then the result count should be reset
+    And the result count should be reset
     When I filter the contacts list by country
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
