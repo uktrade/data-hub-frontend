@@ -22,7 +22,7 @@ async function getEditOptions (token, createdOn, currentAdviser) {
     locationTypes: await getOptions(token, 'location-type', { createdOn }),
     countries: await getOptions(token, 'country', { createdOn }),
     teams: await getOptions(token, 'team', { createdOn }),
-    services: await getOptions(token, 'service', { createdOn }),
+    services: await getOptions(token, 'service', { createdOn, context: 'event' }),
     programmes: await getOptions(token, 'programme', { createdOn }),
     ukRegions: await getOptions(token, 'uk-region', { createdOn }),
   }
