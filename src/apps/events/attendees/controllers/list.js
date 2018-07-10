@@ -26,6 +26,7 @@ async function renderAttendees (req, res, next) {
 
     if (!incompleteEvent) {
       const sortForm = merge({}, attendeeSortForm, {
+        action: `/events/${event.id}/attendees`,
         hiddenFields: omit(req.query, 'sortby'),
         children: [
           { value: sortby },
