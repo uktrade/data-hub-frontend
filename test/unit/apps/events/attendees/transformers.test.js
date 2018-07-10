@@ -18,8 +18,17 @@ describe('#transformEventToAttendeeListItem', () => {
       this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
     })
 
-    it('should return undefined', () => {
-      expect(this.result).to.be.undefined
+    it('should indicate no contact selected', () => {
+      expect(this.result.name).to.equal('No contact assigned')
+    })
+
+    it('should link to the service delivery instead of the contact', () => {
+      expect(this.result.id).to.equal('1234')
+      expect(this.result.type).to.equal('interaction')
+    })
+
+    it('should indicate job title not available', () => {
+      expect(this.result.meta[1].value).to.equal('Not available')
     })
   })
 
@@ -28,13 +37,15 @@ describe('#transformEventToAttendeeListItem', () => {
       this.serviceDelivery.contact = {
         id: '3333',
         name: 'Test contact',
+        job_title: 'Director',
       }
 
       this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
     })
 
-    it('should return undefined', () => {
-      expect(this.result).to.be.undefined
+    it('not include a company in the meta data.', () => {
+      const companyItem = this.result.meta.find(item => item.label === 'Company')
+      expect(companyItem).to.be.undefined
     })
   })
 
