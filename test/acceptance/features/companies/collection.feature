@@ -48,7 +48,6 @@ Feature: View collection of companies
     Then the companies should be filtered by company name
     When I clear all filters
     Then there are no filters selected
-    And the result count should be reset
     When I filter the companies list by active status
     Then the result count should be reset
     When I clear all filters
@@ -60,7 +59,6 @@ Feature: View collection of companies
     Then the companies should be filtered to show badge company country
     When I clear all filters
     Then there are no filters selected
-    And the result count should be reset
     When I filter the companies list by country
     And I filter the companies list by UK region
     Then the companies should be filtered to show badge company country
