@@ -1,20 +1,12 @@
 /* eslint-disable camelcase */
-const { compact, pickBy } = require('lodash')
+const { compact, get, pickBy } = require('lodash')
 
 const { attendeeLabels } = require('./labels')
 
 function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, id }) {
-  if (!contact || !company) { return }
-
-  const {
-    id: contactId,
-    name,
-    job_title,
-  } = contact
-
   const metaItems = [
-    { key: 'company', value: company.name, url: `/companies/${company.id}` },
-    { key: 'job_title', value: job_title },
+    { key: 'company', value: get(company, 'name'), url: `/companies/${get(company, 'id')}` },
+    { key: 'job_title', value: contact ? contact.job_title : 'Not available' },
     { key: 'attended_date', value: date, type: 'date' },
     { key: 'service_delivery', value: 'View or edit service delivery', url: `/interactions/${id}` },
   ]
@@ -24,12 +16,21 @@ function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, i
       label: attendeeLabels[key],
     }))
 
-  return {
-    id: contactId,
-    type: 'contact',
-    name,
-    meta: compact(metaItems),
-  }
+  const listItem = contact
+    ? {
+      id: contact.id,
+      type: 'contact',
+      name: contact.name,
+      meta: compact(metaItems),
+    }
+    : {
+      id,
+      type: 'interaction',
+      name: 'No contact assigned',
+      meta: compact(metaItems),
+    }
+
+  return listItem
 }
 
 module.exports = { transformServiceDeliveryToAttendeeListItem }
