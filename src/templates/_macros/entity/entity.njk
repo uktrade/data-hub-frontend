@@ -30,6 +30,7 @@
       {{ 'c-entity--block-link' if props.isBlockLink }}
       {{ 'c-entity__link' if props.isBlockLink and not props.isLinkDisabled }}
       {{ 'disabled' if props.isLinkDisabled }}
+      js-prevent-double-click
       "
       {% if props.isBlockLink and not props.isLinkDisabled %}href="{{ url }}"{% endif %}
     >
