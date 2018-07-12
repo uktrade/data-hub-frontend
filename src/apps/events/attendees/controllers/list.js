@@ -33,7 +33,7 @@ async function renderAttendees (req, res, next) {
         ],
       })
 
-      const attendees = await fetchEventAttendees(token, event.id, page, sortby)
+      const attendees = await fetchEventAttendees({ token, eventId: event.id, page, sortby })
         .then(transformApiResponseToCollection(
           { query },
           transformServiceDeliveryToAttendeeListItem
