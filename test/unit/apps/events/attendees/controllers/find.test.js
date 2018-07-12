@@ -1,6 +1,8 @@
 const config = require('~/config')
 const { renderFindAttendee, findAttendee } = require('~/src/apps/events/attendees/controllers/find')
 const event = require('~/test/unit/data/events/event-data.json')
+const attendeesData = require('~/test/unit/data/interactions/attendees.json')
+
 const contact = require('~/test/unit/data/contacts/contact-search-result.json')
 
 describe('Find new event attendees controller', () => {
@@ -91,6 +93,8 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
+              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
                 original_query: 'Fred',
@@ -183,6 +187,8 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '2'
 
             nock(config.apiRoot)
+              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
                 original_query: 'Fred',
@@ -227,11 +233,56 @@ describe('Find new event attendees controller', () => {
           })
         })
 
+        context('when one of the results is an existing attendee', () => {
+          beforeEach(async () => {
+            this.req.query.page = '1'
+
+            nock(config.apiRoot)
+              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .reply(200, attendeesData)
+              .post('/v3/search/contact', {
+                archived: false,
+                original_query: 'Fred',
+                term: '',
+                limit: 10,
+                offset: 0,
+              })
+              .reply(200, {
+                count: 1,
+                results: [{
+                  ...contact,
+                  id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
+                }],
+              })
+
+            await findAttendee(this.req, this.res, this.nextSpy)
+          })
+
+          it('should mark the contact result as an existing attendee', () => {
+            const contact = this.res.locals.contacts.items[0]
+            expect(contact).to.have.property('isLinkDisabled', true)
+          })
+
+          it('should include a badge to say it has previously been added', () => {
+            const meta = this.res.locals.contacts.items[0].meta
+            const badges = meta.filter(metaItem => metaItem.type === 'badge')
+
+            expect(badges).to.have.length(1)
+            expect(badges[0]).to.deep.equal({
+              label: 'Existing',
+              type: 'badge',
+              value: 'Existing attendee',
+            })
+          })
+        })
+
         context('when there is an error searching for contacts', () => {
           beforeEach(async () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
+              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
                 original_query: 'Fred',
