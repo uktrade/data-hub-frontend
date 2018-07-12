@@ -2,6 +2,7 @@
 const { compact, get, pickBy } = require('lodash')
 
 const { attendeeLabels } = require('./labels')
+const { fetchEventAttendees } = require('./repos')
 
 function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, id }) {
   const metaItems = [
@@ -33,4 +34,39 @@ function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, i
   return listItem
 }
 
-module.exports = { transformServiceDeliveryToAttendeeListItem }
+async function createContactItemToAttendeeSearchResult (token, event) {
+  const attendees = await fetchEventAttendees({ token, eventId: event.id, limit: 9999 })
+
+  return (contact) => {
+    const isExistingAttendee = existingAttendee(contact, attendees)
+
+    if (!isExistingAttendee) {
+      return {
+        ...contact,
+        url: `/events/${event.id}/attendees/create/${contact.id}`,
+      }
+    }
+
+    const meta = contact.meta.filter(metaItem => metaItem.type !== 'badge')
+    meta.push({
+      label: 'Existing',
+      type: 'badge',
+      value: 'Existing attendee',
+    })
+
+    return {
+      ...contact,
+      meta,
+      isLinkDisabled: true,
+    }
+  }
+}
+
+function existingAttendee ({ id }, attendees) {
+  return attendees.results.find(attendee => attendee.contact.id === id)
+}
+
+module.exports = {
+  transformServiceDeliveryToAttendeeListItem,
+  createContactItemToAttendeeSearchResult,
+}
