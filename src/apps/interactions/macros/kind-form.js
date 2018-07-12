@@ -13,7 +13,7 @@ module.exports = function ({
     }, {
       value: 'service_delivery',
       label: 'A service that you have provided',
-      hint: 'For example, account management, a significant assist or an event',
+      hint: 'For example a significant assist or an event',
     },
   ]
 

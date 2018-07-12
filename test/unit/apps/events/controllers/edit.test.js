@@ -111,7 +111,7 @@ describe('Event edit controller', () => {
         .reply(200, metadataMock.countryOptions)
         .get('/metadata/team/')
         .reply(200, metadataMock.teamOptions)
-        .get('/metadata/service/')
+        .get('/metadata/service/?contexts__has_any=event')
         .reply(200, metadataMock.serviceOptions)
         .get('/metadata/programme/')
         .reply(200, metadataMock.programmeOptions)
