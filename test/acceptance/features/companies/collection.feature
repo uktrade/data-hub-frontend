@@ -43,19 +43,25 @@ Feature: View collection of companies
     When a "UK non-private or non-public limited company" is created
     Then I see the success message
     When I navigate to the `companies.list` page
-    And I store the result count in state
+    When I clear all filters
+    Then there are no filters selected
+    Given I store the result count in state
     And I filter the companies list by company
     Then the companies should be filtered by company name
+    And the result count should be 1
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
     When I filter the companies list by active status
-    Then the result count should be reset
+    Then the result count should be 1 less than the total
     When I clear all filters
     Then there are no filters selected
+    And the result count should be reset
     When I filter the companies list by inactive status
-    Then the result count should be less
+    Then the result count should be 1
     When I clear all filters
+    Then there are no filters selected
+    And the result count should be reset
     When I filter the companies list by country
     Then the companies should be filtered to show badge company country
     When I clear all filters
