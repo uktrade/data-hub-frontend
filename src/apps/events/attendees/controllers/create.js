@@ -2,6 +2,7 @@ const { get } = require('lodash')
 
 const { saveInteraction } = require('../../../interactions/repos')
 const { getContact } = require('../../../contacts/repos')
+const { fetchEventAttendees } = require('../repos')
 
 async function createAttendee (req, res, next) {
   try {
@@ -11,6 +12,12 @@ async function createAttendee (req, res, next) {
 
     if (!event || !contactId) {
       throw new Error('Missing eventId or contactId')
+    }
+
+    const attendees = await fetchEventAttendees({ token, contactId, eventId: event.id })
+    if (attendees.count > 0) {
+      req.flash('failure', 'Event attendee not added - This contact has already been added as an event attendee')
+      return res.redirect(`/events/${event.id}/attendees`)
     }
 
     const contact = await getContact(token, contactId)
