@@ -1,5 +1,6 @@
 const config = require('~/config')
 const { createAttendee } = require('~/src/apps/events/attendees/controllers/create')
+const attendeesData = require('~/test/unit/data/interactions/attendees.json')
 const event = require('~/test/unit/data/events/event-data.json')
 const contact = require('~/test/unit/data/contacts/contact.json')
 
@@ -33,6 +34,11 @@ describe('Create attendee controller', () => {
       this.res.locals.event = event
 
       nock(config.apiRoot)
+        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contact_id=59c815d1-91d0-4d1f-b980-1d04157a298f')
+        .reply(200, {
+          count: 0,
+          results: [],
+        })
         .get('/v3/contact/59c815d1-91d0-4d1f-b980-1d04157a298f')
         .reply(200, contact)
         .post('/v3/interaction', {
@@ -94,6 +100,23 @@ describe('Create attendee controller', () => {
       expect(this.nextSpy).to.be.calledWith(sinon.match({
         message: 'Missing eventId or contactId',
       }))
+    })
+  })
+
+  context('when the controller is called with a valid event but an existing attendee', () => {
+    beforeEach(async () => {
+      this.req.params.contactId = '9b1138ab-ec7b-497f-b8c3-27fed21694ef'
+      this.res.locals.event = event
+
+      nock(config.apiRoot)
+        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contact_id=9b1138ab-ec7b-497f-b8c3-27fed21694ef')
+        .reply(200, attendeesData)
+
+      await createAttendee(this.req, this.res, this.nextSpy)
+    })
+
+    it('should set a flash message to tell the user that the attendee already exists', () => {
+      expect(this.req.flash).to.be.calledWith('failure', 'Event attendee not added - This contact has already been added as an event attendee')
     })
   })
 })
