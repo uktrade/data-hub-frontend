@@ -68,6 +68,18 @@
     color: $link-hover-colour;
   }
 
+  &.disabled {
+    background-color: $grey-4;
+    border-color: $grey-4;
+
+    &:focus,
+    &:hover {
+      background-color: $grey-4;
+      border-color: $grey-4;
+      color: $black;
+    }
+  }
+
   .c-entity__badges {
     color: $black;
   }

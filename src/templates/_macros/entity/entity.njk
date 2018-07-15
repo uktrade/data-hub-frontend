@@ -23,11 +23,15 @@
     {% set metaBadges = props.meta | filter(['type', 'badge']) %}
     {% set metaItems = props.meta | reject(['type', 'badge']) %}
     {% set highlightedName = props.name | highlight(props.highlightTerm) %}
-    {% set containerElement = 'a' if props.isBlockLink else 'div' %}
+    {% set containerElement = 'a' if props.isBlockLink and not props.isLinkDisabled else 'div' %}
 
     <{{ containerElement }}
-      class="c-entity c-entity--{{ props.type }} {{ 'c-entity__link c-entity--block-link' if props.isBlockLink }}"
-      {% if props.isBlockLink %}href="{{ url }}"{% endif %}
+      class="c-entity c-entity--{{ props.type }}
+      {{ 'c-entity--block-link' if props.isBlockLink }}
+      {{ 'c-entity__link' if props.isBlockLink and not props.isLinkDisabled }}
+      {{ 'disabled' if props.isLinkDisabled }}
+      "
+      {% if props.isBlockLink and not props.isLinkDisabled %}href="{{ url }}"{% endif %}
     >
       <div class="c-entity__header">
         {% if metaBadges | length %}
