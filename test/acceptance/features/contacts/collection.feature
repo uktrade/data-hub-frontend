@@ -63,7 +63,7 @@ Feature: View collection of contacts
     Then there are no filters selected
     And the result count should be reset
     When I filter the contacts list by active status
-    And the result count should be reset
+    Then the result count should be 0 less than the total
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
