@@ -40,6 +40,16 @@ function completeProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
+function completeUpload (token, proposition) {
+  const options = {
+    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/document`,
+    method: 'POST',
+    body: proposition,
+  }
+
+  return authorisedRequest(token, options)
+}
+
 /**
  * Get propositions for a investment
  *
@@ -57,6 +67,7 @@ function getPropositionsForInvestment (token, investmentId, page) {
 module.exports = {
   abandonProposition,
   completeProposition,
+  completeUpload,
   saveProposition,
   fetchProposition,
   getPropositionsForInvestment,

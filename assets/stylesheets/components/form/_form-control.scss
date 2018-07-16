@@ -20,6 +20,37 @@
     width: 100%;
   }
 
+  &[type="file"] {
+    $button-width: 128px;
+    border: none;
+    margin-left: $button-width;
+    position: relative;
+    padding-top: 10px;
+    line-height: 1ex;
+    text-align: left;
+
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+
+    &::before {
+      @include button ($grey-2);
+      padding-bottom: .526315em;
+      content: 'Select a file';
+      display: inline-block;
+      position: absolute;
+      left: -$button-width;
+      top: -3px;
+      -webkit-user-select: none;
+      cursor: pointer;
+
+      @include media (mobile) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
   &::placeholder {
     color: $grey-2;
   }
