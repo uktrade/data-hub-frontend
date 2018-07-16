@@ -40,6 +40,24 @@ function completeProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
+function getDocumentUploadS3Url (token, proposition) {
+  const options = {
+    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/document`,
+    method: 'POST',
+    body: proposition,
+  }
+
+  return authorisedRequest(token, options)
+}
+
+function uploadDocumenToS3 (token, url, documentId, document) {
+  return authorisedRequest(token, {
+    url: `${url}${documentId}`,
+    method: 'PUT',
+    body: document,
+  })
+}
+
 /**
  * Get propositions for a investment
  *
@@ -57,7 +75,9 @@ function getPropositionsForInvestment (token, investmentId, page) {
 module.exports = {
   abandonProposition,
   completeProposition,
+  getDocumentUploadS3Url,
   saveProposition,
   fetchProposition,
   getPropositionsForInvestment,
+  uploadDocumenToS3,
 }

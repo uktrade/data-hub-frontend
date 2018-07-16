@@ -15,7 +15,7 @@ async function renderPropositionList (req, res, next) {
       .then(transformApiResponseToCollection(
         { entityType: 'proposition' },
         transformPropositionToListItem,
-        transformPropositionListItemToHaveUrlPrefix(res.locals.returnLink)
+        transformPropositionListItemToHaveUrlPrefix(`${res.locals.returnLink}/`)
       ))
 
     return res
