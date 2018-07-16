@@ -62,27 +62,32 @@ Feature: View collection of contacts
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the contacts list by active status
     Then the result count should be 0 less than the total
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the contacts list by inactive status
     Then the result count should be 0
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the contacts list by company
     Then the contacts should be filtered by company name
     And the result count should be less than the total
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the contacts list by country
     Then the contacts should be filtered to show badge company country
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the contacts list by country
     And I filter the contacts list by UK region
     Then the contacts should be filtered to show badge company country
