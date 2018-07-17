@@ -23,6 +23,7 @@ module.exports = {
     macroName: 'TextField',
     type: 'file',
     name: 'filename',
+    isLabelHidden: true,
   },
   deadline: {
     macroName: 'DateFieldset',

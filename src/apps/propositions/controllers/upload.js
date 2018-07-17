@@ -22,8 +22,8 @@ function renderUpload (req, res) {
   )
 
   res
-    .breadcrumb('Upload Proposition Document')
-    .title('Upload proposition document')
+    .breadcrumb('Choose files')
+    .title('Choose files')
     .render('propositions/views/upload.njk', {
       selectUploadForm,
     })

@@ -36,7 +36,7 @@
     &::before {
       @include button ($grey-2);
       padding-bottom: .526315em;
-      content: 'Select a file';
+      content: 'Choose a file';
       display: inline-block;
       position: absolute;
       left: -$button-width;
