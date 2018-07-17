@@ -52,21 +52,25 @@ Feature: View collection of companies
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the companies list by active status
     Then the result count should be 1 less than the total
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the companies list by inactive status
     Then the result count should be 1
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the companies list by country
     Then the companies should be filtered to show badge company country
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
+    Given I store the result count in state
     When I filter the companies list by country
     And I filter the companies list by UK region
     Then the companies should be filtered to show badge company country
