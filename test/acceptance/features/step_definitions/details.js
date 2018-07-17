@@ -142,3 +142,9 @@ Then(/^the details are displayed$/, async function (dataTable) {
   await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
   await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
 })
+
+Then('the heading should have a {string} badge', async function (badgeText) {
+  await Details
+    .waitForElementPresent('@headingBadge')
+    .assert.containsText('@headingBadge', badgeText)
+})
