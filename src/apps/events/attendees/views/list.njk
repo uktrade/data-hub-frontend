@@ -1,5 +1,13 @@
 {% extends "_layouts/left-nav.njk" %}
 
+{% block local_header %}
+  {{ LocalHeader({
+    heading: event.name,
+    headingSuffix: '<span class="c-badge c-badge--secondary">Disabled</span>' if event.disabled_on,
+    modifier: 'light-banner'
+  }) }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Event Attendees</h2>
   {% if event.disabled_on %}

@@ -1,6 +1,16 @@
 {% extends "_layouts/left-nav.njk" %}
 
+{% block local_header %}
+  {{ LocalHeader({
+    heading: event.name,
+    headingSuffix: '<span class="c-badge c-badge--secondary">Disabled</span>' if event.disabled_on,
+    modifier: 'light-banner'
+  }) }}
+{% endblock %}
+
 {% block main_grid_right_column %}
   {% component 'key-value-table', variant='striped', items=eventViewRecord %}
-  <a class="button button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
+  {% if event.disabled_on == null %}
+    <a class="button button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
+  {% endif %}
 {% endblock %}
