@@ -233,6 +233,22 @@ describe('Event transformers', () => {
       })
     })
 
+    context('when the event is disabled', () => {
+      beforeEach(() => {
+        this.transformedEvent = transformEventResponseToViewRecord({
+          ...mockEvent,
+          disabled_on: '2017-09-05T00:00:00Z',
+        })
+      })
+
+      it('should show the disabled date', () => {
+        expect(this.transformedEvent.Disabled).to.deep.equal({
+          type: 'date',
+          name: '2017-09-05T00:00:00Z',
+        })
+      })
+    })
+
     describe('date transformer', () => {
       context('when start and end date are identical', () => {
         beforeEach(() => {

@@ -110,6 +110,7 @@ function transformEventResponseToViewRecord ({
   related_programmes,
   service,
   archived_documents_url_path,
+  disabled_on,
 }) {
   teams = teams || []
   related_programmes = related_programmes || []
@@ -165,6 +166,13 @@ function transformEventResponseToViewRecord ({
       name: 'View files and documents',
       hint: '(will open another website)',
       hintId: 'external-link-label',
+    }
+  }
+
+  if (disabled_on) {
+    viewRecord.Disabled = {
+      type: 'date',
+      name: disabled_on,
     }
   }
 
