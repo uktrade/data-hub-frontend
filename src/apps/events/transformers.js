@@ -17,6 +17,7 @@ function transformEventToListItem ({
   organiser,
   lead_team,
   uk_region,
+  disabled_on,
 }) {
   if (!id || !name) { return }
 
@@ -68,6 +69,14 @@ function transformEventToListItem ({
         label: 'Lead team',
         value: get(lead_team, 'name'),
       })
+  }
+
+  if (disabled_on) {
+    item.meta.push({
+      label: 'Disabled',
+      value: 'Disabled',
+      type: 'badge',
+    })
   }
 
   if (get(address_country, 'id') === '80756b9a-5d95-e211-a939-e4115bead28a') { // United Kingdom
