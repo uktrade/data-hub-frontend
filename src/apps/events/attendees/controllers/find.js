@@ -3,6 +3,7 @@ const { get, isEmpty } = require('lodash')
 const { search } = require('../../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
 const { transformContactToListItem } = require('../../../contacts/transformers')
+const { createContactItemToAttendeeSearchResult } = require('../transformers')
 
 async function renderFindAttendee (req, res, next) {
   try {
@@ -25,6 +26,7 @@ async function renderFindAttendee (req, res, next) {
 async function findAttendee (req, res, next) {
   try {
     const event = res.locals.event
+    const token = req.session.token
 
     if (!event) {
       throw new Error('No event supplied')
@@ -37,9 +39,11 @@ async function findAttendee (req, res, next) {
       return next()
     }
 
-    const contacts = await search({
+    const transformListItemToAttendeeSearchResult = await createContactItemToAttendeeSearchResult(token, event)
+
+    const contactsResponse = await search({
+      token,
       searchEntity: 'contact',
-      token: req.session.token,
       page: query.page,
       requestBody: {
         archived: false,
@@ -47,23 +51,19 @@ async function findAttendee (req, res, next) {
       },
       isAggregation: false,
     })
-      .then(transformApiResponseToSearchCollection(
-        {
-          searchTerm,
-          query,
-          userPermissions: get(res, 'locals.user.permissions'),
-        },
-        transformContactToListItem,
-        (contact) => {
-          return {
-            ...contact,
-            url: `/events/${event.id}/attendees/create/${contact.id}`,
-          }
-        }
-      ))
+
+    const transformedContacts = transformApiResponseToSearchCollection(
+      {
+        searchTerm,
+        query,
+        userPermissions: get(res, 'locals.user.permissions'),
+      },
+      transformContactToListItem,
+      transformListItemToAttendeeSearchResult
+    )(contactsResponse)
 
     res.locals.contacts = {
-      ...contacts,
+      ...transformedContacts,
       query,
       highlightTerm: searchTerm,
       countLabel: 'contact',
