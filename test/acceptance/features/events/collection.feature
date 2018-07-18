@@ -103,3 +103,12 @@ Feature: View a list of events
 
     When I navigate to the `events.list` page
     Then I see the 403 error page
+
+  @events-collection--disabled
+  Scenario: Indicate an event is disabled in collection view
+
+    When I navigate to the `events.list` page
+    And I filter the events list by name "Teddy bear expo"
+    Then the Event has badges
+      | text            | expected              |
+      | Disabled        | Disabled              |

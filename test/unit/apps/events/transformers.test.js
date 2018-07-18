@@ -68,6 +68,24 @@ describe('Event transformers', () => {
         ])
       })
     })
+
+    context('when the event is disabled', () => {
+      beforeEach(() => {
+        this.event = transformEventToListItem({
+          ...mockEvent,
+          disabled_on: '2017-09-05T00:00:00Z',
+        })
+      })
+
+      it('should show a badge indicating the event was disabled', () => {
+        const disabledBadge = this.event.meta.find(metaItem => metaItem.label === 'Disabled')
+        expect(disabledBadge).to.deep.equal({
+          label: 'Disabled',
+          value: 'Disabled',
+          type: 'badge',
+        })
+      })
+    })
   })
 
   describe('#transformEventResponseToViewRecord', () => {
