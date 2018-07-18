@@ -10,3 +10,9 @@ Feature: Event details
   Scenario: Event does not have Documents link
     When I navigate to the `events.fixture` page using `event` `Grand exhibition` fixture
     And details view data for "Documents" should contain "There are no files or documents"
+
+  @event-details--disabled
+  Scenario: Event is disabled
+    When I navigate to the `events.fixture` page using `event` `Teddy bear expo` fixture
+    Then I see an info message containing "This event was disabled on 5 September 2017 and can no longer be edited."
+    And I should not see the "edit" button

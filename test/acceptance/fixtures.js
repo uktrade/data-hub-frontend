@@ -100,6 +100,10 @@ module.exports = {
       id: 'bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
       name: 'Grand exhibition',
     },
+    teddyBearExpo: {
+      id: 'b93d4274-36fe-4008-ac40-fbc197910791',
+      name: 'Teddy bear expo',
+    },
   },
   interaction: {
     attendedGammaEvent: {

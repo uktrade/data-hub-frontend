@@ -17,6 +17,7 @@ function transformEventToListItem ({
   organiser,
   lead_team,
   uk_region,
+  disabled_on,
 }) {
   if (!id || !name) { return }
 
@@ -70,6 +71,14 @@ function transformEventToListItem ({
       })
   }
 
+  if (disabled_on) {
+    item.meta.push({
+      label: 'Disabled',
+      value: 'Disabled',
+      type: 'badge',
+    })
+  }
+
   if (get(address_country, 'id') === '80756b9a-5d95-e211-a939-e4115bead28a') { // United Kingdom
     item.meta.push(
       {
@@ -101,6 +110,7 @@ function transformEventResponseToViewRecord ({
   related_programmes,
   service,
   archived_documents_url_path,
+  disabled_on,
 }) {
   teams = teams || []
   related_programmes = related_programmes || []
