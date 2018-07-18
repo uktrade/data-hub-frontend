@@ -1,6 +1,6 @@
 const { get, set, camelCase } = require('lodash')
 const { client } = require('nightwatch-cucumber')
-const { Then, When } = require('cucumber')
+const { Given, When, Then } = require('cucumber')
 const moment = require('moment')
 
 const { pluralise } = require('../../../../config/nunjucks/filters')
@@ -8,7 +8,7 @@ const { mediumDateTimeFormat } = require('../../../../config')
 
 const Collection = client.page.collection()
 
-When('I store the result count in state', async function () {
+Given('I store the result count in state', async function () {
   await Collection
     .captureResultCount((count) => {
       set(this.state, 'collection.resultCount', parseInt(count))
@@ -105,13 +105,32 @@ Then(/^the result count should be reset$/, async function () {
     })
 })
 
-Then(/^the result count should be less$/, async function () {
+Then(/^the result count should be ([0-9])$/, async function (expected) {
   await Collection
     .section.collectionHeader
     .waitForElementVisible('@resultCount')
     .getText('@resultCount', (result) => {
-      const expected = get(this.state, 'collection.resultCount')
-      client.expect(parseInt(result.value)).to.be.below(expected)
+      client.expect(result.value).to.equal(expected)
+    })
+})
+
+Then(/^the result count should be ([0-9]) less than the total$/, async function (valueToSubtract) {
+  await Collection
+    .section.collectionHeader
+    .waitForElementVisible('@resultCount')
+    .getText('@resultCount', (result) => {
+      const total = get(this.state, 'collection.resultCount')
+      client.expect(parseInt(result.value)).to.equal(total - parseInt(valueToSubtract))
+    })
+})
+
+Then(/^the result count should be less than the total$/, async function () {
+  await Collection
+    .section.collectionHeader
+    .waitForElementVisible('@resultCount')
+    .getText('@resultCount', (result) => {
+      const total = get(this.state, 'collection.resultCount')
+      client.expect(parseInt(result.value)).to.be.below(total)
     })
 })
 
