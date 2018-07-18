@@ -169,13 +169,6 @@ function transformEventResponseToViewRecord ({
     }
   }
 
-  if (disabled_on) {
-    viewRecord.Disabled = {
-      type: 'date',
-      name: disabled_on,
-    }
-  }
-
   return viewRecord
 }
 

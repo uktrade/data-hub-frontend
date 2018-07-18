@@ -14,6 +14,5 @@ Feature: Event details
   @event-details--disabled
   Scenario: Event is disabled
     When I navigate to the `events.fixture` page using `event` `Teddy bear expo` fixture
-    Then details view data for "Disabled" should contain "5 September 2017"
-    And the heading should have a "Disabled" badge
+    Then I see an info message containing "This event was disabled on 5 September 2017 and can no longer be edited."
     And I should not see the "edit" button
