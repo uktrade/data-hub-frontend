@@ -2,7 +2,7 @@ const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
 const queryString = require('qs')
 const { parse } = require('url')
 
-const { filterNonPermittedItem } = require('./filters')
+const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
 function userHasPermission (routePermissions, userPermissions) {
   return intersection(routePermissions, userPermissions).length > 0
