@@ -66,6 +66,18 @@ Then(/^I filter the events list by name$/, async function () {
     .assert.containsText('@header', this.state.event.name)
 })
 
+Then('I filter the events list by name {string}', async function (name) {
+  await EventList.section.filters
+    .waitForElementPresent('@nameInput')
+    .setValue('@nameInput', name)
+    .sendKeys('@nameInput', [ client.Keys.ENTER ])
+    .wait() // wait for xhr
+
+  await EventList.section.firstEventInList
+    .waitForElementVisible('@header')
+    .assert.containsText('@header', name)
+})
+
 Then(/^I filter the events list by organiser$/, async function () {
   await EventList.section.filters
     .waitForElementPresent('@organiser')

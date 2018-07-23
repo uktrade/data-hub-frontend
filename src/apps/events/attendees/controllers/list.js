@@ -20,39 +20,36 @@ async function renderAttendees (req, res, next) {
     const sortby = req.query.sortby || defaultAttendeeSort
     const incompleteEvent = (!event.service || !event.lead_team)
 
-    const renderOptions = {
-      incompleteEvent,
+    const attendeesResponse = await fetchEventAttendees({ token, eventId: event.id, page, sortby })
+
+    const attendeesCollection = transformApiResponseToCollection(
+      { query },
+      transformServiceDeliveryToAttendeeListItem
+    )(attendeesResponse)
+
+    attendeesCollection.countLabel = 'attendee'
+
+    if (!incompleteEvent && !event.disabled_on) {
+      attendeesCollection.actionButtons = [{
+        label: 'Add attendee',
+        url: `/events/${event.id}/attendees/find-new`,
+      }]
     }
 
-    if (!incompleteEvent) {
-      const sortForm = merge({}, attendeeSortForm, {
-        action: `/events/${event.id}/attendees`,
-        hiddenFields: omit(req.query, 'sortby'),
-        children: [
-          { value: sortby },
-        ],
-      })
-
-      const attendees = await fetchEventAttendees({ token, eventId: event.id, page, sortby })
-        .then(transformApiResponseToCollection(
-          { query },
-          transformServiceDeliveryToAttendeeListItem
-        ))
-
-      renderOptions.attendees = {
-        ...attendees,
-        sortForm,
-        countLabel: 'attendee',
-        actionButtons: [{
-          label: 'Add attendee',
-          url: `/events/${event.id}/attendees/find-new`,
-        }],
-      }
-    }
+    attendeesCollection.sortForm = merge({}, attendeeSortForm, {
+      action: `/events/${event.id}/attendees`,
+      hiddenFields: omit(req.query, 'sortby'),
+      children: [
+        { value: sortby },
+      ],
+    })
 
     res
       .breadcrumb(name)
-      .render('events/attendees/views/list', renderOptions)
+      .render('events/attendees/views/list', {
+        incompleteEvent,
+        attendees: attendeesCollection,
+      })
   } catch (error) {
     next(error)
   }

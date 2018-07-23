@@ -1,6 +1,8 @@
-{% extends "_layouts/left-nav.njk" %}
+{% extends "./_layout.njk" %}
 
 {% block main_grid_right_column %}
   {% component 'key-value-table', variant='striped', items=eventViewRecord %}
-  <a class="button button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
+  {% if event.disabled_on == null %}
+    <a class="button button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
+  {% endif %}
 {% endblock %}
