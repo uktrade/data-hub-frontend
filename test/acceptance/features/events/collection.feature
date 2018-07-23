@@ -92,6 +92,14 @@ Feature: View a list of events
     And the results are sorted by Least recently updated
     Then the results should be sorted by Least recently updated
 
+  @events-collection--sort-visible
+  Scenario: Only show sort options when there are more than 1 results
+
+    When I navigate to the `events.list` page
+    Then I see a sort option
+    And I filter the events list by name "Teddy bear expo"
+    Then I cannot see a sort option
+
   @events-collection--lep @lep
   Scenario: Navigate to events shows 403 for LEPs
 
@@ -103,3 +111,12 @@ Feature: View a list of events
 
     When I navigate to the `events.list` page
     Then I see the 403 error page
+
+  @events-collection--disabled
+  Scenario: Indicate an event is disabled in collection view
+
+    When I navigate to the `events.list` page
+    And I filter the events list by name "Teddy bear expo"
+    Then the Event has badges
+      | text            | expected              |
+      | Disabled        | Disabled              |

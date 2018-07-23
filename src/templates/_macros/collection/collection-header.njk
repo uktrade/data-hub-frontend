@@ -75,7 +75,7 @@
           </span>
         {% endif %}
 
-        {{ Form(props.sortForm) if props.sortForm }}
+        {{ Form(props.sortForm) if props.sortForm and count > 1 }}
       </div>
     {% endif %}
 
