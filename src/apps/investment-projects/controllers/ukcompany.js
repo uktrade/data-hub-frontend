@@ -1,7 +1,8 @@
 const { searchCompanies } = require('../../search/services')
 const { transformCompanyToListItem } = require('../../companies/transformers')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')
+const { ENTITIES } = require('../../search/constants')
 
 async function selectUKCompany (req, res, next) {
   if (!req.query.company) {
@@ -39,6 +40,7 @@ async function searchForUKCompany (req, res, next) {
     }).then(
       transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
         (item) => {
           return Object.assign({}, item, {
