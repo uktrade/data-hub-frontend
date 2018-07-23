@@ -1,8 +1,9 @@
 const { assign, pick, pickBy } = require('lodash')
 
 const { search } = require('../../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
 const { transformOrderToTableItem } = require('../../transformers')
+const { ENTITIES } = require('../../../search/constants')
 
 async function setResults (req, res, next) {
   try {
@@ -15,6 +16,7 @@ async function setResults (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformOrderToTableItem,
       ))
 

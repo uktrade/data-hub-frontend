@@ -1,13 +1,14 @@
 const { find, assign } = require('lodash')
 
 const { searchInvestments } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')
 const metadata = require('../../../lib/metadata')
 const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToDisableMetaLinks,
 } = require('../transformers')
+const { ENTITIES } = require('../../search/constants')
 
 async function selectAssociatedInvestmentProject (req, res, next) {
   if (!req.query.project) {
@@ -56,6 +57,7 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformInvestmentProjectToListItem,
         transformInvestmentListItemToDisableMetaLinks,
         (item) => {

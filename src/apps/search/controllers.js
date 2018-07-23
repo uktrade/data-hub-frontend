@@ -2,7 +2,7 @@ const { get, find } = require('lodash')
 
 const { ENTITIES } = require('./constants')
 const { search } = require('./services')
-const { transformApiResponseToSearchCollection } = require('./transformers')
+const { transformApiResponseToSearchCollection } = require('../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
 const { transformEventToListItem } = require('../events/transformers')
@@ -68,6 +68,7 @@ async function renderSearchResults (req, res) {
         query: req.query,
         userPermissions: get(res, 'locals.user.permissions'),
       },
+      ENTITIES,
       ...itemTransformers,
     ))
 
