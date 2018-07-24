@@ -1,8 +1,7 @@
 const { search } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
-const {
-  transformInvestmentProjectToListItem,
-} = require('../transformers')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
+const { transformInvestmentProjectToListItem } = require('../transformers')
+const { ENTITIES } = require('../../search/constants')
 
 async function getInvestmentProjectsCollection (req, res, next) {
   try {
@@ -15,6 +14,7 @@ async function getInvestmentProjectsCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformInvestmentProjectToListItem,
       ))
 

@@ -13,7 +13,7 @@ describe('investment uk company', () => {
       '../repos': {
         updateInvestment: this.updateInvestmentStub,
       },
-      '../../search/transformers': {
+      '../../../modules/search/transformers': {
         transformApiResponseToSearchCollection: this.transformerStub,
       },
     })

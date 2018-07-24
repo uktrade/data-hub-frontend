@@ -1,8 +1,9 @@
 const { assign, get } = require('lodash')
 const { getCompanyInvestmentProjects } = require('../../repos')
 const { searchForeignCompanies } = require('../../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../../../companies/transformers')
+const { ENTITIES } = require('../../../search/constants')
 
 function renderEquitySourcePage (req, res, next) {
   return res
@@ -41,6 +42,7 @@ async function getHandler (req, res, next) {
         .then(
           transformApiResponseToSearchCollection(
             { query: req.query },
+            ENTITIES,
             transformCompanyToListItem,
             transformListItemForEquitySource(company)
           )

@@ -2,8 +2,9 @@ const { assign, merge, pick, pickBy, omit } = require('lodash')
 
 const { collectionSortForm } = require('../macros')
 const { search } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
+const { ENTITIES } = require('../../search/constants')
 
 async function getInteractionCollection (req, res, next) {
   try {
@@ -16,6 +17,7 @@ async function getInteractionCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformInteractionToListItem,
         transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink),
       ))
