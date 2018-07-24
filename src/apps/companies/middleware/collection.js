@@ -2,11 +2,12 @@ const { assign } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
 const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const {
   transformCompanyToListItem,
   transformCompaniesHouseToListItem,
 } = require('../transformers')
+const { ENTITIES } = require('../../search/constants')
 
 async function getNonGlobalHQs (token) {
   const headerquarterTypes = await getOptions(token, 'headquarter-type')
@@ -36,6 +37,7 @@ async function getCompanyCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
       ))
 
@@ -61,6 +63,7 @@ async function getLimitedCompaniesCollection (req, res, next) {
       .then(
         transformApiResponseToSearchCollection(
           { query: req.query },
+          ENTITIES,
           transformCompaniesHouseToListItem,
           (item) => {
             return assign({}, item, {
@@ -99,6 +102,7 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
         (item) => {
           return {
@@ -137,6 +141,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
         (item) => {
           return {

@@ -1,11 +1,12 @@
 const router = require('express').Router()
 
+const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
+const { getCollection } = require('../../modules/search/middleware/collection')
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
-const { getContactsCollection } = require('./middleware/collection')
 const { getCommon, getDetails } = require('./controllers/details')
 const { renderContactList } = require('./controllers/list')
 const { postDetails, editDetails } = require('./controllers/edit')
@@ -21,9 +22,16 @@ const {
   getInteractionSortForm,
 } = require('../interactions/middleware/collection')
 
+const { transformContactToListItem } = require('./transformers')
+
 const interactionsRouter = require('../interactions/router.sub-app')
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody(QUERY_FIELDS), getContactsCollection, renderContactList)
+router.get('/',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  getCollection('contact', ENTITIES, transformContactToListItem),
+  renderContactList,
+)
 
 router
   .route('/create')

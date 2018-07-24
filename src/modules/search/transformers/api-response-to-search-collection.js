@@ -1,7 +1,7 @@
-const { get } = require('lodash')
+const { get, assign } = require('lodash')
 
-const { transformApiResponseToCollection } = require('../transformers')
-const { buildSearchAggregation } = require('./builders')
+const { transformApiResponseToCollection } = require('../../api/transformers')
+const { buildSearchAggregation } = require('../builders')
 
 /**
  * @param {object} [options] {object}
@@ -10,7 +10,7 @@ const { buildSearchAggregation } = require('./builders')
  * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
  * @returns {object, undefined}
  */
-function transformApiResponseToSearchCollection (options = {}, ...itemTransformers) {
+function transformApiResponseToSearchCollection (options = {}, entityDetails, ...itemTransformers) {
   /**
    * @param {object} response - API response object
    * @returns {function}
@@ -19,17 +19,17 @@ function transformApiResponseToSearchCollection (options = {}, ...itemTransforme
     if (!response) { return }
 
     const collection = transformApiResponseToCollection(options, ...itemTransformers)(response)
+    const aggregations = buildSearchAggregation({
+      entityDetails,
+      aggregations: response.aggregations,
+      userPermissions: get(options, 'userPermissions'),
+    })
 
-    return Object.assign({}, collection, {
+    return assign({}, collection, {
+      aggregations,
       highlightTerm: get(options, 'searchTerm'),
-      aggregations: buildSearchAggregation({
-        aggregations: response.aggregations,
-        userPermissions: get(options, 'userPermissions'),
-      }),
     })
   }
 }
 
-module.exports = {
-  transformApiResponseToSearchCollection,
-}
+module.exports = transformApiResponseToSearchCollection
