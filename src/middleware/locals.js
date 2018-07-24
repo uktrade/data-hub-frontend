@@ -4,7 +4,7 @@ const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
 const config = require('../../config')
 const { version } = require('../../package.json')
-const { filterNonPermittedItem } = require('../apps/filters')
+const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
 let webpackManifest = {}
 
