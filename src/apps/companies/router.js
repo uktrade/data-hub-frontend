@@ -1,8 +1,10 @@
 const router = require('express').Router()
 
+const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
+const { getCollection } = require('../../modules/search/middleware/collection')
 
 const {
   renderAddStepOne,
@@ -40,7 +42,6 @@ const {
 } = require('../interactions/middleware/collection')
 
 const {
-  getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
@@ -53,6 +54,8 @@ const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middl
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
+const { transformCompanyToListItem } = require('./transformers')
+
 const interactionsRouter = require('../interactions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -60,7 +63,12 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.param('companyId', getCompany)
 router.param('companyNumber', getCompaniesHouseRecord)
 
-router.get('/', setDefaultQuery(DEFAULT_COLLECTION_QUERY), getRequestBody(QUERY_FIELDS), getCompanyCollection, renderCompanyList)
+router.get('/',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  getCollection('company', ENTITIES, transformCompanyToListItem),
+  renderCompanyList,
+)
 
 router
   .route('/add-step-1')

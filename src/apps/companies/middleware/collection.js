@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
-const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
+const { searchLimitedCompanies, searchCompanies } = require('../../search/services')
 const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const {
   transformCompanyToListItem,
@@ -24,27 +24,6 @@ async function getNonGlobalHQs (token) {
 async function getGlobalHQ (token) {
   const headerquarterTypes = await getOptions(token, 'headquarter-type')
   return headerquarterTypes.find(hqType => hqType.label === 'ghq')
-}
-
-async function getCompanyCollection (req, res, next) {
-  try {
-    res.locals.results = await search({
-      searchEntity: 'company',
-      requestBody: req.body,
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
-    })
-      .then(transformApiResponseToSearchCollection(
-        { query: req.query },
-        ENTITIES,
-        transformCompanyToListItem,
-      ))
-
-    next()
-  } catch (error) {
-    next(error)
-  }
 }
 
 async function getLimitedCompaniesCollection (req, res, next) {
@@ -158,7 +137,6 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
 }
 
 module.exports = {
-  getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
