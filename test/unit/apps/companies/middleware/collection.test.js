@@ -8,7 +8,6 @@ const subsidiaryCompanySearchResponse = require('~/test/unit/data/companies/subs
 const subsidiaryCompanyTransformedResults = require('~/test/unit/data/companies/subsidiary-company-transformed-results.json')
 
 const {
-  getCompanyCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
 } = require('~/src/apps/companies/middleware/collection')
@@ -29,14 +28,6 @@ const headquarterTypes = [{
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
-    this.mockCompanyResults = {
-      count: 3,
-      results: [
-        { id: '111', name: 'A' },
-        { id: '222', name: 'B' },
-        { id: '333', name: 'C' },
-      ],
-    }
     this.nextSpy = sinon.spy()
     this.reqMock = {
       ...globalReq,
@@ -45,30 +36,6 @@ describe('Company collection middleware', () => {
     this.resMock = {
       locals: {},
     }
-  })
-
-  describe('#getCompanyCollection', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .post(`/v3/search/company`)
-        .reply(200, this.mockCompanyResults)
-
-      this.reqMock.query = {
-        stage: 'i1',
-        sector: 's1',
-        sortby: 'name:asc',
-      }
-      await getCompanyCollection(this.reqMock, this.resMock, this.nextSpy)
-    })
-
-    it('should set results property on locals with pagination', () => {
-      const actual = this.resMock.locals.results
-      expect(actual).to.have.property('count')
-      expect(actual).to.have.property('items').to.have.length(3)
-      expect(actual).to.have.property('pagination')
-      expect(actual.count).to.equal(3)
-      expect(this.nextSpy).to.have.been.calledOnce
-    })
   })
 
   describe('#getLimitedCompaniesCollection', () => {
