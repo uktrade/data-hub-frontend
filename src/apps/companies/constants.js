@@ -31,6 +31,10 @@ const LOCAL_NAV = [
     ],
   },
   {
+    path: 'advisers',
+    label: 'Advisers',
+  },
+  {
     path: 'interactions',
     label: 'Interactions',
     permissions: [
