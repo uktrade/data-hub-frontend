@@ -26,6 +26,7 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiaryLink')
+const { renderAdvisers } = require('./controllers/advisers')
 
 const {
   renderExports,
@@ -116,6 +117,8 @@ router.get('/:companyId/contacts',
   getCompanyContactCollection,
   renderContacts
 )
+
+router.get('/:companyId/advisers', renderAdvisers)
 
 router.get('/:companyId/interactions',
   setInteractionsReturnUrl,
