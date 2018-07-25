@@ -1,31 +1,5 @@
 const { pick, pickBy } = require('lodash')
 
-const { search } = require('../../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
-const { transformOrderToListItem } = require('../../transformers')
-const { ENTITIES } = require('../../../search/constants')
-
-async function setResults (req, res, next) {
-  try {
-    res.locals.results = await search({
-      searchEntity: 'order',
-      requestBody: req.body,
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
-    })
-      .then(transformApiResponseToSearchCollection(
-        { query: req.query },
-        ENTITIES,
-        transformOrderToListItem,
-      ))
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 function setRequestBody (req, res, next) {
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
   const selectedFiltersQuery = pick(req.query, [
@@ -57,6 +31,5 @@ function setRequestBody (req, res, next) {
 }
 
 module.exports = {
-  setResults,
   setRequestBody,
 }

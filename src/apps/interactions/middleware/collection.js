@@ -1,31 +1,18 @@
 const { assign, merge, pick, pickBy, omit } = require('lodash')
 
-const { collectionSortForm } = require('../macros')
-const { search } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
-const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
 const { ENTITIES } = require('../../search/constants')
 
-async function getInteractionCollection (req, res, next) {
-  try {
-    res.locals.results = await search({
-      searchEntity: 'interaction',
-      requestBody: req.body,
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
-    })
-      .then(transformApiResponseToSearchCollection(
-        { query: req.query },
-        ENTITIES,
-        transformInteractionToListItem,
-        transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink),
-      ))
+const { getCollection } = require('../../../modules/search/middleware/collection')
 
-    next()
-  } catch (error) {
-    next(error)
-  }
+const { collectionSortForm } = require('../macros')
+const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
+
+async function getInteractionCollection (req, res, next) {
+  getCollection('interaction',
+    ENTITIES,
+    transformInteractionToListItem,
+    transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink)
+  )(req, res, next)
 }
 
 function getInteractionsRequestBody (req, res, next) {

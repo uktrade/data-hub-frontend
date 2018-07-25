@@ -1,4 +1,5 @@
 const { assign } = require('lodash')
+
 describe('interaction collection middleware', () => {
   beforeEach(async () => {
     this.req = {
@@ -19,50 +20,6 @@ describe('interaction collection middleware', () => {
     }
 
     this.next = sinon.spy()
-  })
-
-  describe('#getInteractionCollection', () => {
-    beforeEach(async () => {
-      this.transformApiResponseToSearchCollectionStub = sinon.stub()
-
-      this.searchStub = sinon.stub().resolves({
-        count: 1,
-        results: [{ id: '1' }],
-      })
-
-      this.transformedInteractionStub = { id: '1234' }
-      this.transformedInteractionWithUrlPrefixStub = assign({}, this.transformedInteractionStub, { urlPrefix: 'return' })
-      this.transformInteractionToListItemStub = sinon.stub().returns(this.transformedInteractionStub)
-      this.transformInteractionListItemToHaveUrlPrefixStub =
-        sinon.stub().returns(() => { return this.transformedInteractionWithUrlPrefixStub })
-
-      this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
-        '../../search/services': {
-          search: this.searchStub,
-        },
-        '../transformers': {
-          transformInteractionToListItem: this.transformInteractionToListItemStub,
-          transformInteractionListItemToHaveUrlPrefix: this.transformInteractionListItemToHaveUrlPrefixStub,
-        },
-      })
-
-      await this.middleware.getInteractionCollection(this.req, this.res, this.next)
-    })
-
-    it('should call the search api to get interactions', () => {
-      expect(this.searchStub).to.be.calledWith({
-        searchEntity: 'interaction',
-        requestBody: this.req.body,
-        token: this.req.session.token,
-        page: this.req.query.page,
-        isAggregation: false,
-      })
-    })
-
-    it('should create a collection of interactions', () => {
-      expect(this.res.locals.results.count).to.equal(1)
-      expect(this.res.locals.results.items[0]).to.deep.equal(this.transformedInteractionWithUrlPrefixStub)
-    })
   })
 
   describe('#getInteractionsRequestBody', () => {
