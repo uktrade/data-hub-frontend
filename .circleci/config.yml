@@ -132,7 +132,7 @@ aliases:
       DOCUMENTS_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
       DJANGO_SETTINGS_MODULE: config.settings.local
-      ES_INDEX: test_index
+      ES_INDEX_PREFIX: test_index
       ES5_URL: http://localhost:9200
       POSTGRES_URL: tcp://postgres:5432
       SSO_ENABLED: 'True'
