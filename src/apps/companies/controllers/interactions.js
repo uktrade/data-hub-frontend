@@ -8,7 +8,7 @@ function renderInteractions (req, res, next) {
       .render('companies/views/interactions', {
         actionButtons: [{
           label: 'Add interaction',
-          url: `/companies/${req.params.companyId}/interactions/create`,
+          url: `/companies/${id}/interactions/create`,
         }],
       })
   } catch (error) {
