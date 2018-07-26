@@ -119,7 +119,7 @@ Feature: Create a new Investment project
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
 
   @investment-projects-create--archived-company
-  Scenario: Add a Non Foreign Direct Investment (Non-FDI) Investment project
+  Scenario: Archived company without Add investment project button
 
     When I navigate to the `companies.investments` page using `company` `Archived Ltd` fixture
     And I should not see the "Add investment project" button
