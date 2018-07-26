@@ -34,36 +34,61 @@ describe('Company contact list controller', () => {
   })
 
   describe('#renderContacts', () => {
-    beforeEach(() => {
-      this.controller.renderContacts(this.reqMock, this.resMock)
+    context('when the company is active', () => {
+      beforeEach(() => {
+        this.controller.renderContacts(this.reqMock, this.resMock)
+      })
+
+      it('should render collection page with locals', () => {
+        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
+        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
+        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
+        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
+        expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
+          { macroName: 'foo', name: 'name' },
+          { macroName: 'bar', name: 'archived' },
+        ], this.reqMock.query)
+      })
+
+      it('should set the correct number of breadcrumbs', () => {
+        expect(this.resMock.breadcrumb).to.have.been.calledTwice
+      })
+
+      it('should render the correct template', () => {
+        expect(this.resMock.render.args[0][0]).to.equal('companies/views/contacts')
+      })
+
+      it('should set the correct add button', () => {
+        const props = this.resMock.render.args[0][1]
+
+        expect(props.actionButtons).to.deep.equal([{
+          label: 'Add contact',
+          url: `/contacts/create?company=${companyMock.id}`,
+        }])
+      })
     })
 
-    it('should render collection page with locals', () => {
-      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
-      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
-      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
-      expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
-      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'foo', name: 'name' },
-        { macroName: 'bar', name: 'archived' },
-      ], this.reqMock.query)
-    })
+    context('when the company is archived', () => {
+      beforeEach(() => {
+        this.resMock = {
+          ...this.resMock,
+          locals: {
+            ...this.resMock.locals,
+            company: {
+              ...this.resMock.locals.company,
+              archived: true,
+            },
+          },
+        }
 
-    it('should set the correct number of breadcrumbs', () => {
-      expect(this.resMock.breadcrumb).to.have.been.calledTwice
-    })
+        this.controller.renderContacts(this.reqMock, this.resMock)
+      })
 
-    it('should render the correct template', () => {
-      expect(this.resMock.render.args[0][0]).to.equal('companies/views/contacts')
-    })
+      it('should not set actions buttons', () => {
+        const props = this.resMock.render.args[0][1]
 
-    it('should set the correct add button', () => {
-      const props = this.resMock.render.args[0][1]
-
-      expect(props.actionButtons).to.deep.equal([{
-        label: 'Add contact',
-        url: `/contacts/create?company=${companyMock.id}`,
-      }])
+        expect(props.actionButtons).to.be.undefined
+      })
     })
   })
 })
