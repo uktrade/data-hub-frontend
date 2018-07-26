@@ -90,3 +90,9 @@ Feature: Create New Contact
     When I submit the form
     Then the contact fields have error messages
     And I see form error summary
+
+  @contacts-save--archived-company
+  Scenario: Archived company without Add contact button
+
+    When I navigate to the `companies.contacts` page using `company` `Archived Ltd` fixture
+    And I should not see the "Add contact" button
