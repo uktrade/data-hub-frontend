@@ -257,3 +257,9 @@ Feature: Add a new interaction in Data hub
     Then the net receipt field is hidden
     When I change form dropdown "service" to Bank Referral
     Then the service fields are hidden
+
+  @interactions-add--archived-company
+  Scenario: Archived company without Add interaction button
+
+    When I navigate to the `companies.interactions` page using `company` `Archived Ltd` fixture
+    And I should not see the "Add interaction" button
