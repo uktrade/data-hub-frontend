@@ -1,28 +1,52 @@
+/* eslint-disable camelcase */
 const { assign } = require('lodash')
+const formidable = require('formidable')
+const map = require('lodash/map')
 
-const { getDocumentUploadS3Url, uploadDocumenToS3 } = require('../repos')
+const { getDocumentUploadS3Url, uploadDocumentToS3 } = require('../repos')
 
-async function postUpload (req, res, next) {
-  res.locals.requestBody = req.body
+class DocumentUpload {
+  async chainUploadSequence (req, res, filesData, index) {
+    const s3_options = await getDocumentUploadS3Url(req.session.token, filesData)
+    const temporary_path = filesData.file.path
+    const s3_url = s3_options.signed_upload_url
 
-  // const formData = new FormData(req.body)
-  // console.log('>>>>>>>>>>> ', req, formData)
+    try {
+      uploadDocumentToS3(s3_url, temporary_path, req, res, s3_options.id, filesData.investment_project, index) //TODO (jf): solve multiple files
+    } catch (error) {
+      res.status(error.statusCode).json({ message: error.message })
+    }
+  }
+}
 
+function parseForm (req, res) {
+  const form = new formidable.IncomingForm()
+
+  form.maxFileSize = 5000 * 1024 * 1024 // 5GB
+  form.parse(req, (err, fields, files) => {
+    map(files, async (file, value, index) => { //TODO(jf) this needs rethinking
+      const filesData = {
+        id: fields.id,
+        investment_project: fields.investment_project,
+        file,
+      }
+
+      if (!file.name.length) { return }
+
+      const documentUpload = new DocumentUpload()
+
+      await documentUpload.chainUploadSequence(req, res, filesData, file, index)
+    })
+
+    if (err) {
+      return res.status(500).json({ error: err })
+    }
+  })
+}
+
+function postUpload (req, res, next) {
   try {
-    const options = await getDocumentUploadS3Url(req.session.token, res.locals.requestBody)
-
-    // req.flash('success', 'Upload completed')
-    //
-    // if (res.locals.returnLink) {
-    //   return res.redirect(res.locals.returnLink)
-    // }
-    //
-    // return res.redirect(`/propositions`)
-    console.log('>>>>>>>>>>> ', options)
-
-    uploadDocumenToS3(req.session.token, options.id, options.signed_upload_url)
-
-    // res.json(uploadResponse)
+    parseForm(req, res)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
