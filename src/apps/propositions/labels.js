@@ -37,6 +37,7 @@ const completeProposition = {
 
 const uploadForm = {
   filename: 'File name',
+  filename01: 'File name 01',
 }
 
 module.exports = {
