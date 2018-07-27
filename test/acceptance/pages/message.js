@@ -1,14 +1,18 @@
 module.exports = {
   elements: {
-    flashMessage: '.c-message-list li:first-child',
+    flashMessage: '.c-message',
   },
 
   commands: [
     {
-      verifyMessage (messageType) {
-        return this
+      async verifyMessage (messageType, message) {
+        await this
           .waitForElementPresent('@flashMessage')
           .assert.cssClassPresent('@flashMessage', `c-message--${messageType}`)
+
+        if (message) {
+          await this.assert.containsText('@flashMessage', message)
+        }
       },
     },
   ],

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+const { ENTITIES } = require('../search/constants')
+
 const {
   renderEntityList,
   renderIndex,
@@ -17,9 +19,8 @@ const {
 const { adviserLookup } = require('./middleware')
 const { renderFormElements } = require('./form/controllers')
 
-const {
-  getInvestmentProjectsCollection,
-} = require('../investment-projects/middleware/collection')
+const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
+const { getCollection } = require('../../modules/search/middleware/collection')
 
 router
   .get('/', renderIndex)
@@ -28,7 +29,10 @@ router
   .get('/entity-list', renderEntityList)
   .get('/local-header', renderLocalHeader)
   .get('/pagination', renderPagination)
-  .get('/collection', getInvestmentProjectsCollection, renderCollection)
+  .get('/collection',
+    getCollection('investment_project', ENTITIES, transformInvestmentProjectToListItem),
+    renderCollection
+  )
   .get('/progress', renderProgress)
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)

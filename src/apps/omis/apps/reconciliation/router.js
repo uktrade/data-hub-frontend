@@ -1,15 +1,17 @@
 const router = require('express').Router()
 
+const { ENTITIES } = require('../../../search/constants')
+
+const { getCollection } = require('../../../../modules/search/middleware/collection')
+
 const { setDefaultQuery } = require('../../../middleware')
 const { setOrder } = require('../../middleware')
 const { setInvoice, setPayments } = require('../view/middleware')
 const { renderPaymentReceipt } = require('../view/controllers')
 const { renderList } = require('./controllers')
 const { setRequestBody } = require('../list/middleware')
-const {
-  setResults,
-  setReconciliationJourney,
-} = require('./middleware')
+const { setReconciliationJourney } = require('./middleware')
+const { transformOrderToTableItem } = require('../../transformers')
 const editApp = require('../edit')
 
 const DEFAULT_QUERY_RECONCILIATION = {
@@ -22,7 +24,7 @@ router.param('orderId', setOrder)
 router.get('/',
   setDefaultQuery(DEFAULT_QUERY_RECONCILIATION),
   setRequestBody,
-  setResults,
+  getCollection('order', ENTITIES, transformOrderToTableItem),
   renderList
 )
 
