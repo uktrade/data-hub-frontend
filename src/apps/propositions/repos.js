@@ -1,3 +1,6 @@
+const request = require('request')
+const fs = require('fs')
+
 const config = require('../../../config')
 const authorisedRequest = require('../../lib/authorised-request')
 
@@ -40,22 +43,57 @@ function completeProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
-function getDocumentUploadS3Url (token, proposition) {
+function getDocumentUploadS3Url (token, local) {
   const options = {
-    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/document`,
+    url: `${config.apiRoot}/v3/investment/${local.investment_project}/proposition/${local.id}/document`,
     method: 'POST',
-    body: proposition,
+    body: {
+      filename: local.file.name,
+    },
   }
 
   return authorisedRequest(token, options)
 }
 
-function uploadDocumenToS3 (token, url, documentId, document) {
-  return authorisedRequest(token, {
-    url: `${url}${documentId}`,
-    method: 'PUT',
-    body: document,
-  })
+class PutDocument {
+  createRequest (req, res, url, filePath, apiUrl, returnUrl, index) {
+    request({
+      url,
+      method: 'PUT',
+      body: fs.readFileSync(filePath),
+    }, (error, response) => {
+      if (!error && response.statusCode === 200) {
+        try {
+          authorisedRequest(req.session.token, {
+            url: apiUrl,
+            method: 'POST',
+            body: {
+              status: 'success',
+            },
+          })
+
+          // if (index !== 0) {
+          //   req.flash('success', `File(s) uploaded`)
+          //   res.redirect(returnUrl)
+          // }
+        } catch (error) {
+          req.flash('error', error.message)
+          res.redirect(req.originalUrl)
+        }
+      }
+    })
+  }
+}
+
+function uploadDocumentToS3 (url, filePath, req, res, id, investmentProject, index) {
+  const returnUrl = `${req.baseUrl}/propositions/${req.params.propositionId}/`
+  const apiUrl = `${config.apiRoot}/v3/investment/${investmentProject}/proposition/${req.params.propositionId}/document/${id}/upload-callback`
+
+  console.log(']]]]]]]]]]]] filePath ]]]]]]]]]]]]]], ', filePath)
+
+  const putDocument = new PutDocument()
+  putDocument.createRequest(req, res, url, filePath, apiUrl, returnUrl, index)
+
 }
 
 /**
@@ -79,5 +117,5 @@ module.exports = {
   saveProposition,
   fetchProposition,
   getPropositionsForInvestment,
-  uploadDocumenToS3,
+  uploadDocumentToS3,
 }

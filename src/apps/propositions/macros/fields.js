@@ -25,6 +25,12 @@ module.exports = {
     name: 'filename',
     isLabelHidden: true,
   },
+  documentUpload01: {
+    macroName: 'TextField',
+    type: 'file',
+    name: 'filename01',
+    isLabelHidden: true,
+  },
   deadline: {
     macroName: 'DateFieldset',
     name: 'deadline',
