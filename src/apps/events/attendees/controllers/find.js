@@ -70,6 +70,7 @@ async function findAttendee (req, res, next) {
       highlightTerm: searchTerm,
       countLabel: 'contact',
       listModifier: 'block-links',
+      preventDoubleClick: true,
     }
 
     return next()
