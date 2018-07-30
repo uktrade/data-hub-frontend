@@ -24,7 +24,7 @@ describe('Entity macro', () => {
         name: 'Horse',
         type: 'animal',
       })
-      expect(component.className.trim()).to.equal('c-entity c-entity--animal\n      \n      \n      \n      js-prevent-double-click')
+      expect(component.className.trim()).to.equal('c-entity c-entity--animal')
       expect(component.querySelector('.c-entity__title a')).to.have.property('href', '/animals/12345')
     })
 
