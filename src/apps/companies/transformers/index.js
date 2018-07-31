@@ -14,6 +14,6 @@ module.exports = {
   transformCompanyToForm,
   transformCompanyToListItem,
   transformCompanyToOneListView,
-  transformCompanyToView,
   transformCompanyToSubsidiaryListItem,
+  transformCompanyToView,
 }
