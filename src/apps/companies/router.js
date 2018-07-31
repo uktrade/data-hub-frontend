@@ -103,6 +103,7 @@ router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNa
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
+router.get('/:companyId/advisers', renderAdvisers)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
@@ -117,8 +118,6 @@ router.get('/:companyId/contacts',
   getCompanyContactCollection,
   renderContacts
 )
-
-router.get('/:companyId/advisers', renderAdvisers)
 
 router.get('/:companyId/interactions',
   setInteractionsReturnUrl,
