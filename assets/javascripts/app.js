@@ -16,6 +16,7 @@ const PrintDialog = require('./modules/print-dialog')
 const MirrorValue = require('./modules/mirror-value.js')
 const ClearInputs = require('./modules/clear-inputs.js')
 const PreventMultipleSubmits = require('./modules/prevent-multiple-submits.js')
+const PreventLinkDoubleClick = require('./modules/prevent-link-double-click.js')
 
 const CompanyAdd = require('./_deprecated/company-add')
 const CompanyEdit = require('./_deprecated/company-edit')
@@ -33,6 +34,7 @@ PrintDialog.init()
 MirrorValue.init()
 ClearInputs.init()
 PreventMultipleSubmits.init()
+PreventLinkDoubleClick.init()
 
 // Deprecated
 CompanyAdd.init()
