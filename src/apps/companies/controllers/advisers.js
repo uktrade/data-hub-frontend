@@ -6,10 +6,10 @@ function renderAdvisers (req, res, next) {
   }
 
   try {
-    const { name, id } = res.locals.company
+    const { name: companyName, id: companyId } = res.locals.company
 
     res
-      .breadcrumb(name, `/companies/${id}`)
+      .breadcrumb(companyName, `/companies/${companyId}`)
       .breadcrumb('Advisers')
       .render('companies/views/advisers')
   } catch (error) {
