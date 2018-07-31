@@ -12,7 +12,7 @@ class DocumentUpload {
     const s3_url = s3_options.signed_upload_url
 
     try {
-      uploadDocumentToS3(s3_url, temporary_path, req, res, s3_options.id, filesData.investment_project, index) //TODO (jf): solve multiple files
+      uploadDocumentToS3(s3_url, temporary_path, req, res, s3_options.id, filesData.investment_project, index)
     } catch (error) {
       res.status(error.statusCode).json({ message: error.message })
     }
@@ -24,17 +24,15 @@ function parseForm (req, res) {
 
   form.maxFileSize = 5000 * 1024 * 1024 // 5GB
   form.parse(req, (err, fields, files) => {
-    map(files, async (file, value, index) => { //TODO(jf) this needs rethinking
+    map(files, async (file, value, index) => { // TODO(jf) "index" isn't an index
       const filesData = {
         id: fields.id,
         investment_project: fields.investment_project,
         file,
       }
-
       if (!file.name.length) { return }
 
       const documentUpload = new DocumentUpload()
-
       await documentUpload.chainUploadSequence(req, res, filesData, file, index)
     })
 
