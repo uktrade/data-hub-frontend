@@ -78,6 +78,12 @@ const exportDetailsLabels = {
   futureInterestCountries: 'Future countries of interest',
 }
 
+const coreTeamLabels = {
+  region: 'Region',
+  country: 'Country',
+  team: 'Team',
+}
+
 module.exports = {
   companyDetailsLabels,
   chDetailsLabels,
@@ -86,4 +92,5 @@ module.exports = {
   accountManagementDisplayLabels,
   exportDetailsLabels,
   address,
+  coreTeamLabels,
 }
