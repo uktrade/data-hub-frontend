@@ -1,6 +1,10 @@
 {% extends "./_layout-view.njk" %}
 
+{% from "_macros/entity/entity-list.njk" import EntityList %}
+
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Company advisers</h2>
+  <h2 class="heading-medium">Advisers assigned to {{ companyName }}</h2>
+
+  {{ EntityList({ items: coreTeam }) }}
 
 {% endblock %}

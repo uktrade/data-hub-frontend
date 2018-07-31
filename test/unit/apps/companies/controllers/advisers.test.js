@@ -1,6 +1,8 @@
 const { assign } = require('lodash')
 
+const config = require('~/config')
 const companyMock = require('~/test/unit/data/companies/companies-house.json')
+const coreTeamMock = require('~/test/unit/data/companies/core-team.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
@@ -25,10 +27,14 @@ describe('Company contact list controller', () => {
 
   describe('#renderAdvisers', () => {
     context('when the feature flag is enabled', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/company/${companyMock.id}/core-team`)
+          .reply(200, coreTeamMock)
+
         this.resMock.locals.features['companies-advisers'] = true
 
-        this.controller.renderAdvisers(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.renderAdvisers(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should add two breadcrumbs', () => {
@@ -45,6 +51,14 @@ describe('Company contact list controller', () => {
 
       it('should render the correct template', () => {
         expect(this.resMock.render).to.be.calledWith('companies/views/advisers')
+      })
+
+      it('should set the company name', () => {
+        expect(this.resMock.render.args[0][1].companyName).to.equal('Mercury Trading Ltd')
+      })
+
+      it('should set the core team', () => {
+        expect(this.resMock.render.args[0][1].coreTeam).to.not.be.null
       })
 
       it('should not call next', () => {
