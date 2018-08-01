@@ -63,8 +63,8 @@ describe('company subsidiaries controller', () => {
           { label: 'Sector', value: 'Retail' },
           { label: 'Country', type: 'badge', value: 'United Kingdom' },
           { label: 'UK region', type: 'badge', value: 'North West' },
-          { label: 'Primary address', value: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom' },
           { label: '', value: 'Remove subsidiary', url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611/hierarchies/ghq/remove' },
+          { label: 'Primary address', value: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom' },
         ],
         subTitle: {
           type: 'datetime',
