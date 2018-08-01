@@ -17,3 +17,8 @@ Feature: Company export save
       | Export win category          | company.exportWinCategory         |
       | Currently exporting to       | company.currentlyExportingTo      |
       | Future countries of interest | company.futureCountriesOfInterest |
+
+  @companies-export--archived-company
+  Scenario: Archived company without Edit export markets button
+    When I navigate to the `companies.exports` page using `company` `Archived Ltd` fixture
+    And I should not see the "Edit export markets" button
