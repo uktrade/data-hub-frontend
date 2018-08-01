@@ -87,6 +87,33 @@ describe('company subsidiaries controller', () => {
     })
   })
 
+  context('when the company is archived', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        ...this.resMock,
+        locals: {
+          ...this.resMock.locals,
+          company: {
+            ...this.resMock.locals.company,
+            archived: true,
+          },
+        },
+      }
+
+      nock(config.apiRoot)
+        .get('/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=72fda78f-bdc3-44dc-9c22-c8ac82f7bda4')
+        .reply(200, subsidiaryData)
+
+      await subsidiariesController.renderSubsidiaries(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not set actions buttons', () => {
+      const props = this.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.be.undefined
+    })
+  })
+
   context('when there are no subsidiaries', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
