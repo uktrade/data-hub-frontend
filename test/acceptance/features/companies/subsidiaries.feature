@@ -44,3 +44,5 @@ Feature: Company subsidiaries
   Scenario: Archived company without Link a subsidiary button
     When I navigate to the `companies.subsidiaries` page using `company` `Archived Ltd` fixture
     And I should not see the "Link a subsidiary" button
+    And I can view the collection
+    And I should not see the "Remove subsidiary" link
