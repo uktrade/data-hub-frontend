@@ -39,3 +39,8 @@ Feature: Company subsidiaries
     And I change "headquarter_type" radio button option to "Not a headquarters"
     And I submit the form
     Then I see the success message
+
+  @companies-subsidiaries--archived-company
+  Scenario: Archived company without Link a subsidiary button
+    When I navigate to the `companies.subsidiaries` page using `company` `Archived Ltd` fixture
+    And I should not see the "Link a subsidiary" button
