@@ -10,12 +10,8 @@ async function renderSubsidiaries (req, res, next) {
     const query = req.query
     const page = query.page || '1'
 
-    const {
-      id: companyId,
-      name: companyName,
-    } = res.locals.company
-
-    const actionButtons = [{
+    const { id: companyId, name: companyName, archived: companyArchived } = res.locals.company
+    const actionButtons = companyArchived ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${companyId}/subsidiaries/link`,
     }]
