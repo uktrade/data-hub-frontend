@@ -39,4 +39,10 @@ Feature: Company details
     Then I cannot see the field "headquarter_type"
     And I cannot see the field "sector"
 
+  @companies-edit--archived-company
+  Scenario: Archived company without Edit company details button
+
+    When I navigate to the `companies.details` page using `company` `Archived Ltd` fixture
+    And I should not see the "Edit company details" button
+
   # TODO add more editing and viewing in details work

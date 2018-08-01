@@ -21,7 +21,9 @@
   {% endif %}
 
   {% if company.id %}
-    <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
+    {% if not company.archived %}
+      <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
+    {% endif %}
   {% else %}
     <p><a href="/companies/add/{{company.company_number}}" class="button">Add company</a></p>
   {% endif %}
