@@ -77,6 +77,12 @@ Then(/^details heading should contain "(.+)"$/, async (value) => {
     .assert.containsText('@heading', value)
 })
 
+Then(/^details content heading should contain "(.+)"$/, async (value) => {
+  await Details
+    .waitForElementPresent('@contentHeading')
+    .assert.containsText('@contentHeading', value)
+})
+
 Then(/^details view data for "(.+)" should contain what I entered for "(.+)" field$/, async function (detailsItemName, fieldName) {
   const detail = await Details.getDetailFor(detailsItemName)
 
