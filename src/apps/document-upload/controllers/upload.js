@@ -5,6 +5,7 @@ const { buildFormWithStateAndErrors } = require('../../builders')
 const { uploadForm } = require('../macros')
 
 function renderUpload (req, res) {
+  // TODO(jf) this is where you pass the config info, and should be unique for each module
   const proposition = get(res.locals, 'proposition')
   const propositionId = get(res.locals, 'proposition.id')
   const investment_project = get(res.locals, 'investmentData.id')
@@ -14,6 +15,7 @@ function renderUpload (req, res) {
       returnLink: res.locals.returnLink,
       hiddenFields: {
         id: propositionId,
+        proposition_id: propositionId,
         investment_project,
       },
     })),
