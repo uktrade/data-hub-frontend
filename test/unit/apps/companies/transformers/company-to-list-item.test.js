@@ -210,20 +210,55 @@ describe('transformCompanyToListItem', () => {
 
   context('global headquarters information', () => {
     context('contains the global headquarters information', () => {
-      beforeEach(() => {
-        this.listItem = transformCompanyToListItem(companyData)
+      context('and the parent company is not archived', () => {
+        beforeEach(() => {
+          this.listItem = transformCompanyToListItem(companyData)
+        })
+
+        it('should include the headquarter info in the result', () => {
+          expect(this.listItem.meta).to.containSubset([{
+            label: 'Global HQ',
+            value: 'Mars Exports Ltd',
+            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+          }])
+        })
+
+        it('should include the "Remove subsidiary" link in the result', () => {
+          expect(this.listItem.meta).to.containSubset([{
+            label: '',
+            value: 'Remove subsidiary',
+            url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/hierarchies/ghq/remove',
+          }])
+        })
       })
 
-      it('should not include the headquarter info in the result', () => {
-        expect(this.listItem.meta).to.containSubset([{
-          label: 'Global HQ',
-          value: 'Mars Exports Ltd',
-          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-        }])
+      context('and the parent company is archived', () => {
+        beforeEach(() => {
+          this.listItem = transformCompanyToListItem({
+            ...companyData,
+            parentCompanyArchived: true,
+          })
+        })
+
+        it('should include the headquarter info in the result', () => {
+          expect(this.listItem.meta).to.containSubset([{
+            label: 'Global HQ',
+            value: 'Mars Exports Ltd',
+            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+          }])
+        })
+
+        it('should not include the "Remove subsidiary" link in the result', () => {
+          expect(this.listItem.meta).to.not.containSubset([{
+            label: '',
+            value: 'Remove subsidiary',
+            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd/hierarchies/ghq/remove',
+          }])
+        })
       })
     })
 
-    context('should not contain the headquarter information', () => {
+    context('does not contain the headquarter information', () => {
       beforeEach(() => {
         this.listItem = transformCompanyToListItem({
           ...companyData,

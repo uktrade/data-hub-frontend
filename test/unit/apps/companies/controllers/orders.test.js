@@ -104,6 +104,27 @@ describe('Company investments controller', () => {
         })
       })
     })
+
+    context('when the company is archived', () => {
+      beforeEach(async () => {
+        this.resMock = {
+          ...this.resMock,
+          locals: {
+            ...this.resMock.locals,
+            company: {
+              ...this.resMock.locals.company,
+              archived: true,
+            },
+          },
+        }
+
+        await this.controller.renderOrders(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should not send buttons to the template', () => {
+        expect(this.renderSpy.args[0][1].actionButtons).to.be.undefined
+      })
+    })
   })
 
   context('when search rejects', () => {

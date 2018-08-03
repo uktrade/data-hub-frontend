@@ -9,6 +9,7 @@ Feature: Companies local nav
       | text                      |
       | Details                   |
       | Contacts                  |
+      | Advisers                  |
       | Interactions              |
       | Investment                |
       | Export                    |
@@ -24,6 +25,7 @@ Feature: Companies local nav
       | text                      |
       | Details                   |
       | Contacts                  |
+      | Advisers                  |
       | Investment                |
       | Export                    |
       | Audit history             |
@@ -36,6 +38,7 @@ Feature: Companies local nav
       | text                      |
       | Details                   |
       | Contacts                  |
+      | Advisers                  |
       | Investment                |
       | Export                    |
       | Orders (OMIS)             |

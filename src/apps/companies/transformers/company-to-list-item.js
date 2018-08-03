@@ -27,6 +27,7 @@ module.exports = function transformCompanyToListItem ({
   modified_on,
   headquarter_type,
   global_headquarters,
+  parentCompanyArchived,
 } = {}) {
   if (!id) { return }
 
@@ -86,24 +87,24 @@ module.exports = function transformCompanyToListItem ({
   }
 
   if (global_headquarters) {
-    const { name, id } = global_headquarters
+    const { name: ghqName, id: ghqId } = global_headquarters
 
     meta.push({
       label: 'Global HQ',
-      value: name,
-      url: `/companies/${id}`,
+      value: ghqName,
+      url: `/companies/${ghqId}`,
     })
+
+    if (!parentCompanyArchived) {
+      meta.push({
+        label: '',
+        value: 'Remove subsidiary',
+        url: `/companies/${id}/hierarchies/ghq/remove`,
+      })
+    }
   }
 
   meta.push(address)
-
-  if (global_headquarters) {
-    meta.push({
-      label: '',
-      value: 'Remove subsidiary',
-      url: `/companies/${id}/hierarchies/ghq/remove`,
-    })
-  }
 
   const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
 
