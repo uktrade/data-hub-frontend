@@ -3,7 +3,10 @@ const { assign } = require('lodash')
 const labels = require('../labels')
 const {
   documentUpload,
-  // documentUpload01,
+  documentUpload01,
+  documentUpload02,
+  documentUpload03,
+  documentUpload04,
 } = require('./fields')
 
 module.exports = function ({
@@ -20,7 +23,10 @@ module.exports = function ({
     hiddenFields,
     children: [
       documentUpload,
-      // documentUpload01,
+      documentUpload01,
+      documentUpload02,
+      documentUpload03,
+      documentUpload04,
     ].map(field => {
       return assign(field, {
         label: labels.uploadForm[field.name],
