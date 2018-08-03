@@ -3,7 +3,7 @@ const fields = require('./fields')
 const propositionForm = require('./proposition-form')
 const abandonForm = require('./abandon-form')
 const completeForm = require('./complete-form')
-const uploadForm = require('./upload-form')
+const uploadForm = require('./OBSOLETE_upload-form')
 
 module.exports = {
   abandonForm,
