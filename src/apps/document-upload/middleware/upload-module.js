@@ -4,12 +4,14 @@ const request = require('request')
 const fs = require('fs')
 const formidable = require('formidable')
 const map = require('lodash/map')
+const compact = require('lodash/compact')
 
 const config = require('../../../../config')
 const authorisedRequest = require('../../../lib/authorised-request')
 
 function getDocumentUploadS3Url (req, res, self) {
-  const url = `${self.documentUpload.getParentUrl(self)}/document`
+  const url = `${self.documentUpload.buildApiUrl(self)}/document`
+
   const options = {
     url,
     method: 'POST',
@@ -23,7 +25,7 @@ function getDocumentUploadS3Url (req, res, self) {
 
 function uploadDocumentToS3 (req, res, self, url, id) {
   const returnUrl = `${req.baseUrl}/propositions/${req.params.propositionId}/`
-  const apiUrl = `${self.documentUpload.getParentUrl(req, res, self)}/document/${id}/upload-callback`
+  const apiUrl = `${self.documentUpload.buildApiUrl(self)}/document/${id}/upload-callback`
 
   self.documentUpload.createRequest(req, res, self, url, id, apiUrl, returnUrl)
 }
@@ -40,9 +42,14 @@ class DocumentUpload {
     }
   }
 
-  getParentUrl (req, res, self) {
-    // TODO (jf): these two urls should get params from outside the module
-    return `${config.apiRoot}/v3/investment/${self.parent_id}/proposition/${self.id}`
+  buildApiUrl (self) {
+    const url = map(self.fields, (value, key) => {
+      if (key !== '_csrf') {
+        return `${key}/${value}`
+      }
+    })
+
+    return `${config.apiRoot}/v3/${compact(url).join('/')}`
   }
 
   createRequest (req, res, self, url, id, apiUrl, returnUrl) {
@@ -93,9 +100,10 @@ function parseForm (req, res) {
     map(files, async (file, value, collection) => {
       const self = {
         id: fields.id,
-        parent_id: fields.investment_project, // TODO(jf) this needs to be dynamic
+        parent_id: fields[fields.app], // TODO(jf) this needs to be dynamic
         file,
         numberOfDocuments: countDocumentsUploaded(collection),
+        fields,
       }
 
       if (!file.name.length) { return }
@@ -103,6 +111,7 @@ function parseForm (req, res) {
       index++
       self.index = index
       self.documentUpload = new DocumentUpload()
+
       await self.documentUpload.chainUploadSequence(req, res, self)
     })
 
