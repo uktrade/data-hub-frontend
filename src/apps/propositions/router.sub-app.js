@@ -4,7 +4,7 @@ const { renderCreatePage } = require('./controllers/create')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderAbandon } = require('./controllers/abandon')
 const { renderComplete } = require('./controllers/complete')
-const { renderUpload } = require('../document-upload/controllers/upload')
+const { renderUpload } = require('./controllers/upload')
 
 const { postDetails, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
 const { postAbandon } = require('./middleware/abandon')
