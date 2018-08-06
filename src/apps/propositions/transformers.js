@@ -140,7 +140,7 @@ function fileLabel (key) {
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
   const status = file.upload_status
 
-  if (status === 'completed') {
+  if (status === 'virus_scanned') {
     return `
       <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
     `
