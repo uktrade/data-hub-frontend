@@ -80,9 +80,12 @@ function transformPropositionResponseToViewRecord ({
   deadline,
   adviser,
   details,
+  files,
+  id,
+  investment_project,
 }) {
   const detailLabels = labels.proposition
-  const transformed = {
+  let transformed = {
     scope: capitalize(scope),
     status: capitalize(status),
     created_on: {
@@ -112,9 +115,59 @@ function transformPropositionResponseToViewRecord ({
     })(),
   }
 
+  transformed = {
+    ...transformed,
+    ...transformFilesResultsToDetails(files.results, id, investment_project.id),
+  }
+
   return pickBy(mapKeys(transformed, (value, key) => {
-    return detailLabels[key]
+    if (!isFileKey(key)) {
+      return detailLabels[key]
+    } else {
+      return fileLabel(key)
+    }
   }))
+}
+
+function isFileKey (key) {
+  return key.search(/file/i) !== -1
+}
+
+function fileLabel (key) {
+  return key.replace(/file/i, 'File ')
+}
+
+function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
+  const status = file.upload_status
+
+  if (status === 'completed') {
+    return `
+      <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
+    `
+  } else if (status === 'not_virus_scanned') {
+    return 'Not Virus Scanned, contact your administrator'
+  } else if (status === 'virus_scanning_scheduled' ||
+    status === 'virus_scanning_in_progress') {
+    return 'File is being scanned, try again in a few moments'
+  }
+}
+
+function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {
+  let obj = {}
+
+  mapKeys(files, (file, index) => {
+    const downloadLinkOrState = getDownloadLinkOrState(file, proposition_id, investment_project_id)
+    let key = 'file'
+    let counter = parseInt(index) + 1
+
+    if (files.length > 0) {
+      key = `${key}${counter}`
+    }
+
+    obj[key] = [file.original_filename, downloadLinkOrState]
+  })
+
+  return obj
 }
 
 function transformPropositionFormBodyToApiRequest (props) {

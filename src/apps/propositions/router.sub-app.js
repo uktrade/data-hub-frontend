@@ -6,7 +6,7 @@ const { renderAbandon } = require('./controllers/abandon')
 const { renderComplete } = require('./controllers/complete')
 const { renderUpload } = require('./controllers/upload')
 
-const { postDetails, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
+const { postDetails, getDownloadLink, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
 const { postAbandon } = require('./middleware/abandon')
 const { postComplete } = require('./middleware/complete')
 const { postUpload } = require('../document-upload/middleware/upload-module')
@@ -41,6 +41,12 @@ router
   )
   .get(
     renderUpload,
+  )
+
+router
+  .route('/propositions/:propositionId/download/:documentId')
+  .get(
+    getDownloadLink
   )
 
 router.route([
