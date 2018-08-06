@@ -2,11 +2,7 @@ const { assign } = require('lodash')
 
 const labels = require('../labels')
 const {
-  documentUpload,
-  documentUpload01,
-  documentUpload02,
-  documentUpload03,
-  documentUpload04,
+  multipleDocumentUpload,
 } = require('./fields')
 
 module.exports = function ({
@@ -22,11 +18,7 @@ module.exports = function ({
     buttonText: 'Upload',
     hiddenFields,
     children: [
-      documentUpload,
-      documentUpload01,
-      documentUpload02,
-      documentUpload03,
-      documentUpload04,
+      multipleDocumentUpload,
     ].map(field => {
       return assign(field, {
         label: labels.uploadForm[field.name],
