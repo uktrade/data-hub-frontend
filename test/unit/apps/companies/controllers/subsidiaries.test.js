@@ -63,8 +63,8 @@ describe('company subsidiaries controller', () => {
           { label: 'Sector', value: 'Retail' },
           { label: 'Country', type: 'badge', value: 'United Kingdom' },
           { label: 'UK region', type: 'badge', value: 'North West' },
-          { label: 'Primary address', value: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom' },
           { label: '', value: 'Remove subsidiary', url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611/hierarchies/ghq/remove' },
+          { label: 'Primary address', value: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom' },
         ],
         subTitle: {
           type: 'datetime',
@@ -84,6 +84,33 @@ describe('company subsidiaries controller', () => {
 
     it('should include a count label', () => {
       expect(this.subsidiaries).to.have.property('countLabel', 'subsidiary')
+    })
+  })
+
+  context('when the company is archived', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        ...this.resMock,
+        locals: {
+          ...this.resMock.locals,
+          company: {
+            ...this.resMock.locals.company,
+            archived: true,
+          },
+        },
+      }
+
+      nock(config.apiRoot)
+        .get('/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=72fda78f-bdc3-44dc-9c22-c8ac82f7bda4')
+        .reply(200, subsidiaryData)
+
+      await subsidiariesController.renderSubsidiaries(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not set actions buttons', () => {
+      const props = this.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.be.undefined
     })
   })
 

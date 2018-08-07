@@ -1,12 +1,13 @@
 const { assign } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
-const { search, searchLimitedCompanies, searchCompanies } = require('../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../search/transformers')
+const { searchLimitedCompanies, searchCompanies } = require('../../search/services')
+const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const {
   transformCompanyToListItem,
   transformCompaniesHouseToListItem,
 } = require('../transformers')
+const { ENTITIES } = require('../../search/constants')
 
 async function getNonGlobalHQs (token) {
   const headerquarterTypes = await getOptions(token, 'headquarter-type')
@@ -25,26 +26,6 @@ async function getGlobalHQ (token) {
   return headerquarterTypes.find(hqType => hqType.label === 'ghq')
 }
 
-async function getCompanyCollection (req, res, next) {
-  try {
-    res.locals.results = await search({
-      searchEntity: 'company',
-      requestBody: req.body,
-      token: req.session.token,
-      page: req.query.page,
-      isAggregation: false,
-    })
-      .then(transformApiResponseToSearchCollection(
-        { query: req.query },
-        transformCompanyToListItem,
-      ))
-
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function getLimitedCompaniesCollection (req, res, next) {
   const searchTerm = res.locals.searchTerm = req.query.term
 
@@ -61,6 +42,7 @@ async function getLimitedCompaniesCollection (req, res, next) {
       .then(
         transformApiResponseToSearchCollection(
           { query: req.query },
+          ENTITIES,
           transformCompaniesHouseToListItem,
           (item) => {
             return assign({}, item, {
@@ -99,6 +81,7 @@ async function getGlobalHQCompaniesCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
         (item) => {
           return {
@@ -137,6 +120,7 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
     })
       .then(transformApiResponseToSearchCollection(
         { query: req.query },
+        ENTITIES,
         transformCompanyToListItem,
         (item) => {
           return {
@@ -153,7 +137,6 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
 }
 
 module.exports = {
-  getCompanyCollection,
   getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,

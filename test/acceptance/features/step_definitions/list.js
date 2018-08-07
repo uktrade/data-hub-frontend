@@ -146,6 +146,11 @@ Then(/^I can view the collection$/, async function () {
     .assert.visible('@collection')
 })
 
+Then(/^I can view the entity list/, async function () {
+  await Collection
+    .assert.visible('@entityList')
+})
+
 Then(/^I see the list in A-Z alphabetical order$/, async function () {
   const firstFieldIsLessThanSecondField = this.state.list.firstItem.field.toLowerCase() < this.state.list.secondItem.field.toLowerCase()
   const bothFieldsAreTheSame = this.state.list.firstItem.field === this.state.list.secondItem.field

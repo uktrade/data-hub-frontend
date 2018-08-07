@@ -5,7 +5,7 @@ const { transformOrderToListItem } = require('../../omis/transformers')
 async function renderOrders (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { id, name } = res.locals.company
+  const { id, name, archived } = res.locals.company
 
   try {
     const results = await search({
@@ -22,15 +22,17 @@ async function renderOrders (req, res, next) {
         transformOrderToListItem,
       ))
 
+    const actionButtons = archived ? undefined : [{
+      label: 'Add order',
+      url: `/omis/create?company=${id}&skip-company=true`,
+    }]
+
     res
       .breadcrumb(name, `/companies/${id}`)
       .breadcrumb('Orders (OMIS)')
       .render('companies/views/orders', {
         results,
-        actionButtons: [{
-          label: 'Add order',
-          url: `/omis/create?company=${id}&skip-company=true`,
-        }],
+        actionButtons,
       })
   } catch (error) {
     next(error)

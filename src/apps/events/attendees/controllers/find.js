@@ -1,9 +1,10 @@
 const { get, isEmpty } = require('lodash')
 
 const { search } = require('../../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
 const { transformContactToListItem } = require('../../../contacts/transformers')
 const { createContactItemToAttendeeSearchResult } = require('../transformers')
+const { ENTITIES } = require('../../../search/constants')
 
 async function renderFindAttendee (req, res, next) {
   try {
@@ -58,6 +59,7 @@ async function findAttendee (req, res, next) {
         query,
         userPermissions: get(res, 'locals.user.permissions'),
       },
+      ENTITIES,
       transformContactToListItem,
       transformListItemToAttendeeSearchResult
     )(contactsResponse)
@@ -68,6 +70,7 @@ async function findAttendee (req, res, next) {
       highlightTerm: searchTerm,
       countLabel: 'contact',
       listModifier: 'block-links',
+      preventDoubleClick: true,
     }
 
     return next()

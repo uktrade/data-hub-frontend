@@ -1,9 +1,8 @@
 const { isArray, assign } = require('lodash')
 
-const { ENTITIES } = require('./constants')
-const { filterNonPermittedItem } = require('../filters')
+const { filterNonPermittedItem } = require('../../permissions/filters')
 
-function buildSearchAggregation ({ aggregations, userPermissions, entityDetails = ENTITIES }) {
+function buildSearchAggregation ({ aggregations, userPermissions, entityDetails }) {
   if (!isArray(aggregations)) { return }
 
   const userEntities = entityDetails.filter(filterNonPermittedItem(userPermissions))
@@ -19,6 +18,4 @@ function buildSearchAggregation ({ aggregations, userPermissions, entityDetails 
   })
 }
 
-module.exports = {
-  buildSearchAggregation,
-}
+module.exports = buildSearchAggregation

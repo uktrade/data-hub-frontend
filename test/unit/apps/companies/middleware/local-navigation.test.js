@@ -22,6 +22,7 @@ describe('Companies local navigation', () => {
         headquarter_type: null,
         company_number: null,
       }
+      this.res.locals.features = {}
 
       setCompaniesLocalNav(this.req, this.res, this.next)
     })
@@ -42,6 +43,7 @@ describe('Companies local navigation', () => {
         },
         company_number: null,
       }
+      this.res.locals.features = {}
 
       setCompaniesLocalNav(this.req, this.res, this.next)
     })
@@ -62,6 +64,7 @@ describe('Companies local navigation', () => {
         },
         company_number: null,
       }
+      this.res.locals.features = {}
 
       setCompaniesLocalNav(this.req, this.res, this.next)
     })
@@ -82,6 +85,7 @@ describe('Companies local navigation', () => {
         },
         company_number: '1234',
       }
+      this.res.locals.features = {}
 
       setCompaniesLocalNav(this.req, this.res, this.next)
     })
@@ -102,6 +106,7 @@ describe('Companies local navigation', () => {
         },
         company_number: null,
       }
+      this.res.locals.features = {}
 
       setCompaniesLocalNav(this.req, this.res, this.next)
     })
@@ -109,6 +114,34 @@ describe('Companies local navigation', () => {
     it('should not have a timeline option', () => {
       const menuItem = this.res.locals.localNavItems.find(item => item.path === 'timeline')
       expect(menuItem).to.be.undefined
+    })
+  })
+
+  context('when the company advisers feature is not enabled', () => {
+    beforeEach(() => {
+      this.res.locals.company = {}
+      this.res.locals.features = {}
+
+      setCompaniesLocalNav(this.req, this.res, this.next)
+    })
+
+    it('should not have an advisers option', () => {
+      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'advisers')
+      expect(menuItem).to.be.undefined
+    })
+  })
+
+  context('when the company advisers feature is enabled', () => {
+    beforeEach(() => {
+      this.res.locals.company = {}
+      this.res.locals.features = { 'companies-advisers': true }
+
+      setCompaniesLocalNav(this.req, this.res, this.next)
+    })
+
+    it('should have an advisers option', () => {
+      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'advisers')
+      expect(menuItem).to.be.ok
     })
   })
 })

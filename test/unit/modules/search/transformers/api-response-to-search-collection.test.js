@@ -6,14 +6,14 @@ describe('Search transformers', () => {
 
     this.responseMock = {
       aggregations: {},
-      items: [],
+      entityDetails: [],
     }
 
-    this.transformers = proxyquire('~/src/apps/search/transformers', {
-      '../transformers': {
+    this.transformApiResponseToSearchCollection = proxyquire('~/src/modules/search/transformers/api-response-to-search-collection.js', {
+      '../../api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
       },
-      './builders': {
+      '../builders': {
         buildSearchAggregation: this.buildSearchAggregationStub,
       },
     })
@@ -21,15 +21,15 @@ describe('Search transformers', () => {
 
   describe('#transformApiResponseToSearchCollection', () => {
     it('should return a function when high-order function is called without arguments', () => {
-      expect(this.transformers.transformApiResponseToSearchCollection()).to.be.a('function')
+      expect(this.transformApiResponseToSearchCollection()).to.be.a('function')
     })
 
     it('should return undefined when returned function is called with invalid arguments', () => {
-      expect(this.transformers.transformApiResponseToSearchCollection()()).to.be.undefined
+      expect(this.transformApiResponseToSearchCollection()()).to.be.undefined
     })
 
     it('should return collection with response transformed into a collection object', () => {
-      const actual = this.transformers.transformApiResponseToSearchCollection()(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
 
       expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
       expect(actual).to.have.property('highlightTerm', undefined)
@@ -37,7 +37,7 @@ describe('Search transformers', () => {
     })
 
     it('should call transformApiResponseToCollection transformer returning augmented collection object', () => {
-      const actual = this.transformers.transformApiResponseToSearchCollection()(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
 
       expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
       expect(actual).to.have.property('highlightTerm', undefined)
@@ -48,7 +48,7 @@ describe('Search transformers', () => {
       const options = {
         query: { a: 'A' },
       }
-      this.transformers.transformApiResponseToSearchCollection(options)(this.responseMock)
+      this.transformApiResponseToSearchCollection(options)(this.responseMock)
 
       expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
       expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options)
@@ -58,8 +58,9 @@ describe('Search transformers', () => {
       const firstItemTransformerSpy = sinon.spy()
       const secondItemTransformerSpy = sinon.spy()
 
-      this.transformers.transformApiResponseToSearchCollection(
+      this.transformApiResponseToSearchCollection(
         undefined,
+        [],
         firstItemTransformerSpy,
         secondItemTransformerSpy
       )(this.responseMock)
@@ -73,7 +74,7 @@ describe('Search transformers', () => {
       const itemsMock = [{ a: 'A', b: 'B' }]
       this.buildSearchAggregationStub.returns(aggregationsMock)
       this.transformApiResponseToCollectionInnerStub.returns({ count: 2, items: itemsMock })
-      const actual = this.transformers.transformApiResponseToSearchCollection()(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
 
       expect(actual).to.have.property('count', 2)
       expect(actual).to.have.property('aggregations', aggregationsMock)
@@ -84,7 +85,7 @@ describe('Search transformers', () => {
       const options = { searchTerm: 'loop' }
       const itemsMock = [{ a: 'A', b: 'B' }]
       this.transformApiResponseToCollectionInnerStub.returns({ count: 2, items: itemsMock })
-      const actual = this.transformers.transformApiResponseToSearchCollection(options)(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection(options)(this.responseMock)
 
       expect(actual).to.have.property('count', 2)
       expect(actual).to.have.property('highlightTerm', options.searchTerm)

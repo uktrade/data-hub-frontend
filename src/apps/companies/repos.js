@@ -105,6 +105,12 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
   })
 }
 
+function getCoreTeam (token, companyId) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company/${companyId}/core-team`,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -115,4 +121,5 @@ module.exports = {
   getCompanyAuditLog,
   getCompanyTimeline,
   getCompanySubsidiaries,
+  getCoreTeam,
 }

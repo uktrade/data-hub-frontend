@@ -3,8 +3,9 @@ const { assign, get } = require('lodash')
 
 const { CreateController } = require('../../../controllers')
 const { searchCompanies } = require('../../../../search/services')
-const { transformApiResponseToSearchCollection } = require('../../../../search/transformers')
+const { transformApiResponseToSearchCollection } = require('../../../../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../../../../companies/transformers')
+const { ENTITIES } = require('../../../../search/constants')
 
 function transformListItemForOrderSource (item) {
   return assign({}, item, {
@@ -63,6 +64,7 @@ class CompanyController extends CreateController {
           .then(
             transformApiResponseToSearchCollection(
               { query: req.query },
+              ENTITIES,
               transformCompanyToListItem,
               transformListItemForOrderSource
             )
