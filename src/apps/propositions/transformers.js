@@ -138,17 +138,23 @@ function fileLabel (key) {
 }
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const status = file.upload_status
+  const status = file.status
 
-  if (status === 'virus_scanned') {
-    return `
+  switch (status) {
+    case 'virus_scanned':
+      return `
       <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
-    `
-  } else if (status === 'not_virus_scanned') {
-    return 'Not Virus Scanned, contact your administrator'
-  } else if (status === 'virus_scanning_scheduled' ||
-    status === 'virus_scanning_in_progress') {
-    return 'File is being scanned, try again in a few moments'
+      `
+    case 'not_virus_scanned':
+      return 'File not virus scanned'
+    case 'virus_scanning_scheduled':
+      return 'Virus scanning scheduled'
+    case 'virus_scanning_in_progress':
+      return 'File is being scanned, try again in a few moments'
+    case 'virus_scanning_failed':
+      return 'Virus scanning failed, contact your administrator'
+    default:
+      return 'Virus scanning failed, contact your administrator'
   }
 }
 

@@ -5,7 +5,7 @@
 
   {%  if proposition.status === 'ongoing' or  proposition.status === 'late' %}
     <ul class="list-links">
-      {% if proposition.files.reults.length == 0 %}
+      {% if proposition.files.results.length == 0 %}
         <li class="list-links-item">
           <a class="button" href="{{proposition.id}}/document">
             Upload Files
