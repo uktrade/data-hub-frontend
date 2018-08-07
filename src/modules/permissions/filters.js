@@ -26,6 +26,6 @@ function filterNonPermittedItem (userPermissions) {
 }
 
 module.exports = {
-  filterDisabledOption,
   filterNonPermittedItem,
+  filterDisabledOption,
 }

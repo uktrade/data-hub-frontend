@@ -9,7 +9,8 @@
       <li class="c-entity-list__item">
         {{ Entity(item | assign({
           highlightTerm: props.highlightTerm,
-          isBlockLink: hasBlockLinks
+          isBlockLink: hasBlockLinks,
+          preventDoubleClick: props.preventDoubleClick
         })) }}
       </li>
     {% endfor %}

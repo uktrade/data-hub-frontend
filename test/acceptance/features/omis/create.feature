@@ -53,3 +53,9 @@ Feature: Create new order using company ID
     And I should see the correct text on the `omis.create.summary` page
       | elementPath     | expectedText                     |
       | sector.sector   | omis.create.sector.sectorField   |
+
+
+  @omis-create--archived-company
+  Scenario: Archived company without Add order button
+    When I navigate to the `companies.orders` page using `company` `Archived Ltd` fixture
+    And I should not see the "Add order" button
