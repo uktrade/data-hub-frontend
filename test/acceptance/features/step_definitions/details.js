@@ -12,6 +12,11 @@ const getRowCellSelector = {
   'data': getDataTableRowCell,
 }
 
+const ignoredKeys = [
+  'Business type', // todo: case issues
+  'Sector', // todo: https://uktrade.atlassian.net/browse/DH-1086
+]
+
 const TABLE_TYPE = {
   KEY_VALUE: 'key-value',
   DATA: 'data',
@@ -54,16 +59,7 @@ const assertTableContent = async function (tableSelector, expectedData, tableTyp
     const rowFirstCellKey = columnKeys[0]
 
     for (const [columnIndex, columnKey] of columnKeys.entries()) {
-      if (columnIndex === 0 || columnKey === 'formatter') {
-        continue
-      }
-
-      if (row[rowFirstCellKey] === 'Business type') {
-        // todo: case issues
-        continue
-      }
-      if (row[rowFirstCellKey] === 'Sector') {
-        // todo: https://uktrade.atlassian.net/browse/DH-1086
+      if (includes(ignoredKeys, row[rowFirstCellKey]) || columnIndex === 0 || columnKey === 'formatter') {
         continue
       }
 
