@@ -2,7 +2,7 @@ const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 const { get, includes, startsWith } = require('lodash')
 
-const { getDetailsTableRowValue } = require('../../helpers/selectors')
+const { getKeyValueTableRowValueCell } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
 const Details = client.page.details()
@@ -49,7 +49,7 @@ const assertDetailsTableContent = async function (detailsTableSelector, expected
       continue
     }
 
-    const rowValueSelector = getDetailsTableRowValue(row.key)
+    const rowValueSelector = getKeyValueTableRowValueCell(row.key)
     const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
     const expectedValue = getExpectedValue(row, this.state)
     await Details

@@ -4,7 +4,7 @@ const { assign } = require('lodash')
 const {
   getMetaListItemValueSelector,
   getButtonWithText,
-  getDetailsTableRowValue,
+  getKeyValueTableRowValueCell,
   getSelectorForDetailsSectionEditButton,
 } = require('../../helpers/selectors')
 const { appendUid, getUid } = require('../../helpers/uuid')
@@ -545,7 +545,7 @@ module.exports = {
     companyDetails: {
       selector: '.table--key-value',
       elements: {
-        ukRegion: getDetailsTableRowValue('UK region'),
+        ukRegion: getKeyValueTableRowValueCell('UK region'),
       },
     },
     accountManagementForm: {

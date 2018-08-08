@@ -30,7 +30,7 @@ function getButtonWithText (text) {
  * @param text
  * @returns {{selector: string, locateStrategy: string}}
  */
-function getDetailsTableRowValue (text) {
+function getKeyValueTableRowValueCell (text) {
   return getSelectorForElementWithText(
     text,
     {
@@ -103,7 +103,7 @@ const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
-  getDetailsTableRowValue,
+  getKeyValueTableRowValueCell,
   getMetaListItemValueSelector,
   getLinkWithText,
   getListItemMetaElementWithText,
