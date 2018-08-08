@@ -41,6 +41,17 @@ function getKeyValueTableRowValueCell (text) {
   )
 }
 
+function getDataTableRowCell (text, index) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//td',
+      child: `/following-sibling::td[${index}]`,
+      hasExactText: true,
+    }
+  )
+}
+
 /**
  * Gets XPath selector the selector for the meta item label value from entity lists
  * @param text
@@ -104,6 +115,7 @@ module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
   getKeyValueTableRowValueCell,
+  getDataTableRowCell,
   getMetaListItemValueSelector,
   getLinkWithText,
   getListItemMetaElementWithText,
