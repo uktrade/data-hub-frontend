@@ -16,12 +16,11 @@ When(/^I (?:navigate|go|open|visit).*? `(.+)` page$/, async function (pageName) 
 When(/^I (?:navigate|go|open|visit).*? `(.+)` page using `(.+)` `(.+)` fixture$/, async function (pageName, entity, fixtureName) {
   try {
     const page = get(client.page, pageName)()
-
-    const fixture = find(fixtures[entity], { name: fixtureName })
+    const entityTypeKey = camelCase(entity)
+    const fixture = find(fixtures[entityTypeKey], { name: fixtureName })
 
     // TODO: Need to find a way to remove needing to store the item in state
-    const entityTypeFieldName = camelCase(entity)
-    set(this.state, entityTypeFieldName, assign({}, get(this.state, entityTypeFieldName), fixture))
+    set(this.state, entityTypeKey, assign({}, get(this.state, entityTypeKey), fixture))
 
     await page.navigate(page.url(fixtureName))
   } catch (error) {
