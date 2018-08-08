@@ -133,15 +133,15 @@ Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink
     .assert.visible(tag)
 })
 
-Then(/^the (.+) details are displayed$/, async function (detailsTableTitle, dataTable) {
   const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
   const detailsTableSelector = Details.getSelectorForDetailsTable(detailsTableTitle)
+Then(/^the (.+) key value details are displayed$/, async function (detailsTableTitle, dataTable) {
+Then(/^the key value details are displayed$/, async function (dataTable) {
 
   await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
   await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
 })
 
-Then(/^the details are displayed$/, async function (dataTable) {
   const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
   const detailsTableSelector = Details.getSelectorForDetailsTable()
 

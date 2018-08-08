@@ -13,7 +13,7 @@ Feature: Create New Contact
     When a primary contact is added
     And I submit the form
     Then I see the success message
-    Then the Contact details details are displayed
+    Then the Contact details key value details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
       | Phone number          | contact.primaryPhoneNumber           |
@@ -34,7 +34,7 @@ Feature: Create New Contact
     When a primary contact with new company address is added
     And I submit the form
     Then I see the success message
-    Then the Contact details details are displayed
+    Then the Contact details key value details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
       | Phone number          | contact.primaryPhoneNumber           |
@@ -55,7 +55,7 @@ Feature: Create New Contact
     When a non-primary contact is added
     And I submit the form
     Then I see the success message
-    Then the Contact details details are displayed
+    Then the Contact details key value details are displayed
       | key                   | value                                |
       | Job title             | contact.jobTitle                     |
       | Phone number          | contact.primaryPhoneNumber           |
