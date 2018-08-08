@@ -30,15 +30,17 @@ function transformClientRelationshipManagementForView (investmentData) {
   const result = [{
     role: 'Client relationship manager',
     adviser: getAdviserName(investmentData, 'client_relationship_manager'),
-    team: get(investmentData, 'client_relationship_manager.dit_team.name', null),
+    team: get(investmentData, 'client_relationship_manager.dit_team.name'),
   }]
-
-  const accountManager = get(investmentData, 'investor_company.account_manager.id', null)
-  if (accountManager) {
+  const globalAccountManager = get(investmentData, 'investor_company.one_list_account_owner.id')
+  if (globalAccountManager) {
+    const firstName = get(investmentData, 'investor_company.one_list_account_owner.first_name')
+    const lastName = get(investmentData, 'investor_company.one_list_account_owner.last_name')
+    const team = get(investmentData, 'investor_company.one_list_account_owner.dit_team.name')
     result.push({
-      adviser: get(investmentData, 'investor_company.account_manager.name', null),
-      role: 'Account manager',
-      team: get(investmentData, 'investor_company.account_manager.dit_team.name', null),
+      team,
+      adviser: `${firstName} ${lastName}`,
+      role: 'Global account manager',
     })
   }
 

@@ -168,5 +168,9 @@ Then(/^the key value details are displayed$/, async function (dataTable) {
   await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
 })
 
+Then(/^the (.+) data details are displayed$/, async function (tableTitle, dataTable) {
+  const tableSelector = Details.getSelectorForDataTable(tableTitle)
 
+  await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+  await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
 })
