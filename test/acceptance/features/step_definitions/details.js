@@ -1,25 +1,35 @@
 const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
-const { get, includes, startsWith } = require('lodash')
+const { get, includes, startsWith, keys } = require('lodash')
 
-const { getKeyValueTableRowValueCell } = require('../../helpers/selectors')
+const { getKeyValueTableRowValueCell, getDataTableRowCell } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
 const Details = client.page.details()
 
-function getExpectedValue (row, state) {
-  if (includes(row.value, '.') && !includes(row.value, ' ') && !startsWith(row.value, '£')) {
-    const expectedText = get(state, row.value)
+const getRowCellSelector = {
+  'key-value': getKeyValueTableRowValueCell,
+  'data': getDataTableRowCell,
+}
 
-    if (row.key === 'Client contacts') {
+const TABLE_TYPE = {
+  KEY_VALUE: 'key-value',
+  DATA: 'data',
+}
+
+function getExpected (key, state) {
+  if (includes(key, '.') && !includes(key, ' ') && !startsWith(key, '£')) {
+    const expectedText = get(state, key)
+
+    if (key === 'investmentProject.clientContact') {
       // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
-      return expectedText.split(',')[0]
+      return { value: expectedText.split(',')[0] }
     }
 
-    return expectedText
+    return { value: expectedText }
   }
 
-  return row.value
+  return { value: key }
 }
 
 const removeFalsey = (details, state) => {
@@ -32,36 +42,45 @@ const removeFalsey = (details, state) => {
   })
 }
 
-const assertDetailsTableRowCount = async function (detailsTableSelector, expectedDetails) {
-  await Details.api.elements('xpath', `${detailsTableSelector.selector}//th`, (result) => {
-    client.expect(result.value.length, 'Table row count').to.equal(expectedDetails.length)
+const assertTableRowCount = async function (tableSelector, expectedData, tableType) {
+  await Details.api.elements('xpath', `${tableSelector.selector}/tbody/tr`, (result) => {
+    client.expect(result.value.length, 'Table row count').to.equal(expectedData.length)
   })
 }
 
-const assertDetailsTableContent = async function (detailsTableSelector, expectedDetails) {
-  for (const row of expectedDetails) {
-    if (row.key === 'Business type') {
-      // todo: case issues
-      continue
-    }
-    if (row.key === 'Sector') {
-      // todo: https://uktrade.atlassian.net/browse/DH-1086
-      continue
-    }
+const assertTableContent = async function (tableSelector, expectedData, tableType) {
+  for (const row of expectedData) {
+    const columnKeys = keys(row)
+    const rowFirstCellKey = columnKeys[0]
 
-    const rowValueSelector = getKeyValueTableRowValueCell(row.key)
-    const detailsTableRowValueXPathSelector = detailsTableSelector.selector + rowValueSelector.selector
-    const expectedValue = getExpectedValue(row, this.state)
-    await Details
-      .api.useXpath()
-      .waitForElementPresent(detailsTableRowValueXPathSelector)
-      .getText(detailsTableRowValueXPathSelector, (actual) => {
-        if (row.formatter) {
-          return client.expect(formatters[row.formatter](expectedValue, actual.value)).to.be.true
-        }
-        client.expect(actual.value).to.equal(expectedValue)
-      })
-      .useCss()
+    for (const [columnIndex, columnKey] of columnKeys.entries()) {
+      if (columnIndex === 0 || columnKey === 'formatter') {
+        continue
+      }
+
+      if (row[rowFirstCellKey] === 'Business type') {
+        // todo: case issues
+        continue
+      }
+      if (row[rowFirstCellKey] === 'Sector') {
+        // todo: https://uktrade.atlassian.net/browse/DH-1086
+        continue
+      }
+
+      const rowCellSelector = getRowCellSelector[tableType](row[rowFirstCellKey], columnIndex)
+      const tableRowCellXPathSelector = tableSelector.selector + rowCellSelector.selector
+      const expected = getExpected(row[columnKey], this.state)
+      await Details
+        .api.useXpath()
+        .waitForElementPresent(tableRowCellXPathSelector)
+        .getText(tableRowCellXPathSelector, (actual) => {
+          if (row.formatter) {
+            return client.expect(formatters[row.formatter](expected.value, actual.value), row[rowFirstCellKey]).to.be.true
+          }
+          client.expect(actual.value, row[rowFirstCellKey]).to.equal(expected.value)
+        })
+        .useCss()
+    }
   }
 }
 
@@ -133,18 +152,21 @@ Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink
     .assert.visible(tag)
 })
 
-  const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
-  const detailsTableSelector = Details.getSelectorForDetailsTable(detailsTableTitle)
-Then(/^the (.+) key value details are displayed$/, async function (detailsTableTitle, dataTable) {
-Then(/^the key value details are displayed$/, async function (dataTable) {
+Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
+  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
 
-  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
-  await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
+  await assertTableRowCount(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
 })
 
-  const expectedDetails = removeFalsey(dataTable.hashes(), this.state)
-  const detailsTableSelector = Details.getSelectorForDetailsTable()
+Then(/^the key value details are displayed$/, async function (dataTable) {
+  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
+  const tableSelector = Details.getSelectorForKeyValueTable()
 
-  await assertDetailsTableRowCount(detailsTableSelector, expectedDetails)
-  await assertDetailsTableContent.bind(this)(detailsTableSelector, expectedDetails)
+  await assertTableRowCount(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+})
+
+
 })
