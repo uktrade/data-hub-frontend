@@ -38,19 +38,19 @@ describe('Investment form middleware - client relationship management', () => {
         })
     })
 
-    it('should populate the form state with the existing client relationship management if there is data', (done) => {
+    it('should populate the form state with the existing client relationship management', async () => {
+      const globalAccountManager = investmentData.investor_company.one_list_account_owner
       const expectedFormState = {
         client_relationship_manager: investmentData.client_relationship_manager.id,
-        account_manager: investmentData.investor_company.account_manager.id,
+        global_account_manager: `${globalAccountManager.first_name} ${globalAccountManager.last_name}`,
       }
 
-      this.controller.populateForm({
+      await this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
       }, this.resMock, () => {
         expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
-        done()
       })
     })
 
@@ -61,24 +61,6 @@ describe('Investment form middleware - client relationship management', () => {
         },
       }, this.resMock, () => {
         expect(this.resMock.locals.form.hiddenFields).to.deep.equal({ investor_company: investmentData.investor_company.id })
-        done()
-      })
-    })
-
-    it('should not throw an error if you render a form for a company with no account manager', (done) => {
-      this.resMock.locals.investmentData.investor_company.account_manager = null
-
-      const expectedFormState = {
-        client_relationship_manager: investmentData.client_relationship_manager.id,
-        account_manager: null,
-      }
-
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
         done()
       })
     })
@@ -94,15 +76,15 @@ describe('Investment form middleware - client relationship management', () => {
       })
     })
 
-    it('should include button text and a return link', (done) => {
-      this.controller.populateForm({
+    it('should include button text, return link and One List email', async () => {
+      await this.controller.populateForm({
         session: {
           token: 'mock-token',
         },
       }, this.resMock, () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
         expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
-        done()
+        expect(this.resMock.locals.form.oneListEmail).to.equal('one.list@example.com')
       })
     })
 
@@ -138,17 +120,6 @@ describe('Investment form middleware - client relationship management', () => {
         ]
 
         expect(this.resMock.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
-      })
-
-      it('includes all active adviser options for account manager', () => {
-        const expectedOptions = [
-          { label: 'Jeff Smith', value: '1' },
-          { label: 'John Smith', value: '2' },
-          { label: 'Zac Smith', value: '3' },
-          { label: 'Jim Smith', value: '5' },
-        ]
-
-        expect(this.resMock.locals.form.options.accountManagers).to.deep.equal(expectedOptions)
       })
     })
   })
