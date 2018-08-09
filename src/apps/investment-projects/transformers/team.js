@@ -40,7 +40,7 @@ function transformClientRelationshipManagementForView (investmentData) {
     result.push({
       team,
       adviser: `${firstName} ${lastName}`,
-      role: 'Global account manager',
+      role: 'Global Account Manager',
     })
   }
 

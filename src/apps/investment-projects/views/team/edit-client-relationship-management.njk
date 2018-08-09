@@ -1,9 +1,5 @@
 {% extends "../_layout.njk" %}
 
-{% set phase = investmentData.stage.name %}
-{% set crm = investmentData.client_relationship_manager %}
-{% set rsa = investmentData.referral_source_adviser %}
-
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Edit client relationship management</h2>
 
@@ -17,14 +13,19 @@
       initialOption: '-- Select an adviser --'
     }) }}
 
-    {{ MultipleChoiceField({
-      name: 'account_manager',
-      label: form.labels.account_manager,
-      error: form.errors.account_manager,
-      options: form.options.accountManagers,
-      value: form.state.account_manager,
-      initialOption: '-- Select an adviser --'
-    }) }}
+    {{ FormGroup({} | assign(props, {
+      label: form.labels.global_account_manager,
+      name: 'global_account_manager',
+      innerHTML: form.state.global_account_manager
+    })) }}
+
+    {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
+      {% call Message({ type: 'muted' }) %}
+        If you need to change the Global Account Manager for this company,
+        go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>
+        or email <a href="mailto:{{form.oneListEmail}}">{{form.oneListEmail}}</a>.
+      {% endcall %}
+    {% endcall %}
 
   {% endcall %}
 {% endblock %}

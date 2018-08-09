@@ -128,7 +128,7 @@ describe('Investment project transformers', () => {
         team: 'Team Fred',
       }, {
         adviser: 'John Brown',
-        role: 'Global account manager',
+        role: 'Global Account Manager',
         team: 'Johns Team',
       }]
 
