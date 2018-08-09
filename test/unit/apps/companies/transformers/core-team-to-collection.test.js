@@ -5,7 +5,7 @@ describe('#transformCoreTeamToCollection', () => {
     this.coreTeamMock = require('~/test/unit/data/companies/core-team.json')
   })
 
-  context('when the core team member is a global account manager and from a UK region', () => {
+  context('when the core team member is a Global Account Manager and from a UK region', () => {
     beforeEach(() => {
       this.collection = transformCoreTeamToCollection(this.coreTeamMock)
     })
@@ -44,7 +44,7 @@ describe('#transformCoreTeamToCollection', () => {
     })
   })
 
-  context('when the core team member is not a global account manager and not from a UK region', () => {
+  context('when the core team member is not a Global Account Manager and not from a UK region', () => {
     beforeEach(() => {
       this.coreTeamMock[0].is_global_account_manager = false
       delete this.coreTeamMock[0].adviser.dit_team.uk_region
