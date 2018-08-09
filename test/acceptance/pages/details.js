@@ -1,5 +1,19 @@
 const { getSelectorForElementWithText } = require('../helpers/selectors')
 
+const getSelectorForTable = (title, className) => {
+  if (!title) {
+    return {
+      selector: `//table[contains(@class, "${className}")][1]`,
+      locateStrategy: 'xpath',
+    }
+  }
+
+  return getSelectorForElementWithText(title, {
+    el: '//h2',
+    child: '/following-sibling::table[1]',
+  })
+}
+
 module.exports = {
   elements: {
     heading: '.c-local-header__heading',
@@ -25,18 +39,11 @@ module.exports = {
           },
         )
       },
-      getSelectorForDetailsTable (title) {
-        if (!title) {
-          return {
-            selector: '//table[contains(@class, "table--key-value")][1]',
-            locateStrategy: 'xpath',
-          }
-        }
-
-        return getSelectorForElementWithText(title, {
-          el: '//h2',
-          child: '/following-sibling::table[1]',
-        })
+      getSelectorForKeyValueTable (title) {
+        return getSelectorForTable(title, 'table--key-value')
+      },
+      getSelectorForDataTable (title) {
+        return getSelectorForTable(title, 'data-table')
       },
     },
   ],

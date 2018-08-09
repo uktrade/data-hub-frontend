@@ -3,7 +3,7 @@ const { assign } = require('lodash')
 
 const {
   getSelectorForElementWithText,
-  getDetailsTableRowValue,
+  getKeyValueTableRowValueCell,
   getMetaListItemValueSelector,
 } = require('../../helpers/selectors')
 const { appendUid, getUid } = require('../../helpers/uuid')
@@ -165,14 +165,14 @@ module.exports = {
     contactDetails: {
       selector: '.table--key-value',
       elements: {
-        jobTitle: getDetailsTableRowValue('Job title'),
-        phoneNumber: getDetailsTableRowValue('Phone number'),
-        email: getDetailsTableRowValue('Email'),
-        emailMarketing: getDetailsTableRowValue('Email marketing'),
-        address: getDetailsTableRowValue('Address'),
-        alternativeTelephone: getDetailsTableRowValue('Alternative telephone'),
-        alternativeEmail: getDetailsTableRowValue('Alternative email'),
-        notes: getDetailsTableRowValue('Notes'),
+        jobTitle: getKeyValueTableRowValueCell('Job title'),
+        phoneNumber: getKeyValueTableRowValueCell('Phone number'),
+        email: getKeyValueTableRowValueCell('Email'),
+        emailMarketing: getKeyValueTableRowValueCell('Email marketing'),
+        address: getKeyValueTableRowValueCell('Address'),
+        alternativeTelephone: getKeyValueTableRowValueCell('Alternative telephone'),
+        alternativeEmail: getKeyValueTableRowValueCell('Alternative email'),
+        notes: getKeyValueTableRowValueCell('Notes'),
       },
     },
   },
