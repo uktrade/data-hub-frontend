@@ -30,12 +30,23 @@ function getButtonWithText (text) {
  * @param text
  * @returns {{selector: string, locateStrategy: string}}
  */
-function getDetailsTableRowValue (text) {
+function getKeyValueTableRowValueCell (text) {
   return getSelectorForElementWithText(
     text,
     {
       el: '//th',
       child: '/following-sibling::td',
+      hasExactText: true,
+    }
+  )
+}
+
+function getDataTableRowCell (text, index) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//td',
+      child: `/following-sibling::td[${index}]`,
       hasExactText: true,
     }
   )
@@ -103,7 +114,8 @@ const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit
 module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
-  getDetailsTableRowValue,
+  getKeyValueTableRowValueCell,
+  getDataTableRowCell,
   getMetaListItemValueSelector,
   getLinkWithText,
   getListItemMetaElementWithText,

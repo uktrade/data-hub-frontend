@@ -12,7 +12,7 @@ Feature: Add a new interaction in Data hub
     When an interaction is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -36,7 +36,7 @@ Feature: Add a new interaction in Data hub
     When a policy feedback is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -62,7 +62,7 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -90,7 +90,7 @@ Feature: Add a new interaction in Data hub
       | Grant offered            | 100000                                   |
       | Net receipt              | 50000                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -118,7 +118,7 @@ Feature: Add a new interaction in Data hub
       | key                      | value                                    |
       | Service                  | Tradeshow Access Programme (TAP)         |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -142,7 +142,7 @@ Feature: Add a new interaction in Data hub
     When an interaction is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -166,7 +166,7 @@ Feature: Add a new interaction in Data hub
     When a policy feedback is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -192,7 +192,7 @@ Feature: Add a new interaction in Data hub
     When a service delivery is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
@@ -215,7 +215,7 @@ Feature: Add a new interaction in Data hub
     When an interaction is added
       | key                      | value                                    |
     Then I see the success message
-    And the details are displayed
+    And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |

@@ -111,9 +111,10 @@ describe('Investment project transformers', () => {
           },
         },
         investor_company: {
-          account_manager: {
+          one_list_account_owner: {
             id: '321',
-            name: 'John Brown',
+            first_name: 'John',
+            last_name: 'Brown',
             dit_team: {
               name: 'Johns Team',
             },
@@ -127,7 +128,7 @@ describe('Investment project transformers', () => {
         team: 'Team Fred',
       }, {
         adviser: 'John Brown',
-        role: 'Account manager',
+        role: 'Global account manager',
         team: 'Johns Team',
       }]
 

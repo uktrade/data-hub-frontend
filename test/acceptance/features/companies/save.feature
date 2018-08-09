@@ -11,7 +11,7 @@ Feature: Create a new company
     Then I see the success message
     And the company trading name is in the search results
     When the first search result is clicked
-    Then the Company summary details are displayed
+    Then the Company summary key value details are displayed
       | key                       | value                      |
       | Business type             | company.businessType       |
       | Primary address           | company.primaryAddress     |
@@ -24,7 +24,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global Account Manager – One List details are displayed
+    And the Global Account Manager – One List key value details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Global account manager    | None                       |
@@ -36,7 +36,7 @@ Feature: Create a new company
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked
-    Then the Company summary details are displayed
+    Then the Company summary key value details are displayed
       | key                       | value                      |
       | Business type             | company.businessType       |
       | Primary address           | company.primaryAddress     |
@@ -48,7 +48,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global Account Manager – One List details are displayed
+    And the Global Account Manager – One List key value details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Global account manager    | None                       |
@@ -60,7 +60,7 @@ Feature: Create a new company
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked
-    Then the Company summary details are displayed
+    Then the Company summary key value details are displayed
       | key                       | value                            |
       | Business type             | company.businessType             |
       | Primary address           | company.primaryAddress           |
@@ -72,7 +72,7 @@ Feature: Create a new company
       | Number of employees       | company.employeeRange            |
       | Annual turnover           | company.turnoverRange            |
       | Country                   | company.registeredAddressCountry |
-    And the Global Account Manager – One List details are displayed
+    And the Global Account Manager – One List key value details are displayed
       | key                       | value                            |
       | One List tier             | None                             |
       | Global account manager    | None                             |
@@ -84,7 +84,7 @@ Feature: Create a new company
     Then I see the success message
     And the company is in the search results
     When the first search result is clicked
-    Then the Company summary details are displayed
+    Then the Company summary key value details are displayed
       | key                       | value                      |
       | Business type             | company.businessType       |
       | Primary address           | company.primaryAddress     |
@@ -96,7 +96,7 @@ Feature: Create a new company
       | Business description      | company.description        |
       | Number of employees       | company.employeeRange      |
       | Annual turnover           | company.turnoverRange      |
-    And the Global Account Manager – One List details are displayed
+    And the Global Account Manager – One List key value details are displayed
       | key                       | value                      |
       | One List tier             | None                       |
       | Global account manager    | None                       |
