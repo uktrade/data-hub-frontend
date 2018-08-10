@@ -210,7 +210,7 @@ describe('transformCompanyToListItem', () => {
 
   context('global headquarters information', () => {
     context('contains the global headquarters information', () => {
-      context('and the parent company is not archived', () => {
+      context('and its global headquarters is not archived', () => {
         beforeEach(() => {
           this.listItem = transformCompanyToListItem(companyData)
         })
@@ -232,11 +232,11 @@ describe('transformCompanyToListItem', () => {
         })
       })
 
-      context('and the parent company is archived', () => {
+      context('and its global headquarters is archived', () => {
         beforeEach(() => {
           this.listItem = transformCompanyToListItem({
             ...companyData,
-            parentCompanyArchived: true,
+            global_headquarters_archived: true,
           })
         })
 
