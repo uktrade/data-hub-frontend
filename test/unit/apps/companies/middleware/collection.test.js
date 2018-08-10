@@ -91,7 +91,7 @@ describe('Company collection middleware', () => {
 
   describe('#getGlobalHQCompaniesCollection', () => {
     beforeEach(async () => {
-      this.resMock.locals.company = { id: 'mock-parent-company-id' }
+      this.resMock.locals.company = { id: 'mock-global-headquarters-id' }
     })
 
     context('no searchTerm', () => {
@@ -163,7 +163,7 @@ describe('Company collection middleware', () => {
 
   describe('#getSubsidiaryCompaniesCollection', () => {
     beforeEach(async () => {
-      this.resMock.locals.company = { id: 'mock-parent-company-id' }
+      this.resMock.locals.company = { id: 'mock-global-headquarters-id' }
     })
 
     context('no searchTerm', () => {

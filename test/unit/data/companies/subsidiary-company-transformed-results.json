@@ -3,7 +3,7 @@
     {
       "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
       "name": "Mars Exports Ltd",
-      "url": "\/companies\/mock-parent-company-id\/hierarchies\/subsidiaries\/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd\/add",
+      "url": "\/companies\/mock-global-headquarters-id\/hierarchies\/subsidiaries\/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd\/add",
       "meta": [
         {
           "label": "Sector",
@@ -29,7 +29,7 @@
     {
       "id": "731bdcc1-f685-4c8e-bd66-b356b2c16995",
       "name": "Mars Components Ltd",
-      "url": "\/companies\/mock-parent-company-id\/hierarchies\/subsidiaries\/731bdcc1-f685-4c8e-bd66-b356b2c16995\/add",
+      "url": "\/companies\/mock-global-headquarters-id\/hierarchies\/subsidiaries\/731bdcc1-f685-4c8e-bd66-b356b2c16995\/add",
       "meta": [
         {
           "label": "Sector",
