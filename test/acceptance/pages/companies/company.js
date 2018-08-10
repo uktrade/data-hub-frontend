@@ -36,7 +36,7 @@ module.exports = {
     sector: '#field-sector',
     website: '#field-website',
     description: '#field-description',
-    parentCompanySearch: '#field-term',
+    companiesHouseSearchField: '#field-term',
     collectionsCompanyNameInput: '#field-name',
     collectionResultsCompanyName: '.c-entity-list li:first-child .c-entity__title > a',
     xhrTargetElement: '#xhr-outlet',
@@ -269,7 +269,7 @@ module.exports = {
         return this
       },
 
-      createUkPrivateOrPublicLimitedCompany (parentCompany, details = {}, callback) {
+      createUkPrivateOrPublicLimitedCompany (companiesHouseCompany, details = {}, callback) {
         const company = assign({}, {
           tradingName: appendUid(faker.company.companyName()),
           website: faker.internet.url(),
@@ -289,8 +289,8 @@ module.exports = {
               .click('@continueButton')
 
             // step 2
-              .waitForElementPresent('@parentCompanySearch')
-              .setValue('@parentCompanySearch', parentCompany.name)
+              .waitForElementPresent('@companiesHouseSearchField')
+              .setValue('@companiesHouseSearchField', companiesHouseCompany.name)
               .submitForm('form')
 
             // step 3
@@ -350,9 +350,9 @@ module.exports = {
                   .click('@saveAndCreateButton')
 
                 callback(assign({}, company, {
-                  heading: parentCompany.name,
-                  primaryAddress: getAddress(parentCompany),
-                  country: parentCompany.country,
+                  heading: companiesHouseCompany.name,
+                  primaryAddress: getAddress(companiesHouseCompany),
+                  country: companiesHouseCompany.country,
                   uniqueSearchTerm: getUid(company.tradingName),
                   globalHeadquarters: companyRadioButtons.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
                 }))
