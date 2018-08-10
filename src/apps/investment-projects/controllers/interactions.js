@@ -3,7 +3,7 @@ const {
   transformInteractionToListItem,
   transformInteractionListItemToHaveUrlPrefix,
 } = require('../../interactions/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderInteractionList (req, res, next) {
   try {

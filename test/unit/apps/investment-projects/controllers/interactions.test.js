@@ -12,7 +12,7 @@ describe('Investment Interactions controller', () => {
       '../../interactions/repos': {
         getInteractionsForInvestment: this.getInteractionsForInvestmentStub,
       },
-      '../../transformers': {
+      '../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
       },
     })

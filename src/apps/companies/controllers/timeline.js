@@ -1,6 +1,6 @@
 const { getCompanyTimeline } = require('../repos')
 const { transformTimelineToListItem } = require('../../timeline/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderTimeline (req, res, next) {
   const token = req.session.token
