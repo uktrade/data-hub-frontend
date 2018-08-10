@@ -1,5 +1,5 @@
 const { getContactAuditLog } = require('../repos')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { contactAuditLabels } = require('../labels')
 
