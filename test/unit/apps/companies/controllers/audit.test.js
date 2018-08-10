@@ -15,7 +15,7 @@ describe('Company audit controller', () => {
       '../repos': {
         getCompanyAuditLog: this.getCompanyAuditLogStub,
       },
-      '../../transformers': {
+      '../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
       '../../audit/transformers': {

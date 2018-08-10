@@ -1,6 +1,6 @@
 const { getInteractionsForInvestment } = require('../../interactions/repos')
 const { transformInteractionToListItem } = require('../../interactions/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { getInvestment } = require('../repos')
 
 async function getInteractionCollection (req, res, next) {

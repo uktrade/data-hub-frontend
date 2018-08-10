@@ -1,5 +1,5 @@
 const { search } = require('../../search/services')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { transformOrderToListItem } = require('../../omis/transformers')
 
 async function renderOrders (req, res, next) {

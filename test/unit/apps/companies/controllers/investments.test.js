@@ -18,7 +18,7 @@ describe('Company investments controller', () => {
       '../../investment-projects/transformers': {
         transformInvestmentProjectToListItem: this.transformInvestmentProjectToListItemSpy,
       },
-      '../../transformers': {
+      '../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })

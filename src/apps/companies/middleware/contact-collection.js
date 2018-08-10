@@ -7,7 +7,7 @@ const {
 } = require('lodash')
 
 const { search } = require('../../search/services')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { transformContactToListItem } = require('../../contacts/transformers')
 const removeArray = require('../../../lib/remove-array')
 
