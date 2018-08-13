@@ -37,9 +37,12 @@ const {
 const { renderInvestmentList } = require('./controllers/list')
 const { renderInteractionList } = require('./controllers/interactions')
 const { renderPropositionList } = require('./controllers/propositions')
+const { renderEvidenceView } = require('./controllers/evidence')
+const { renderAddEvidence } = require('../evidence/controllers/evidence')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
+// const { setEvidenceReturnUrl } = require('./middleware/evidence')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
@@ -180,6 +183,19 @@ router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderIntera
 router.get('/:investmentId/propositions', setPropositionsReturnUrl, renderPropositionList)
 
 router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
+
+router.get('/:investmentId/evidence', renderEvidenceView)
+
+router
+  .route('/:investmentId/evidence/add-new')
+  .post(
+    renderAddEvidence,
+    // postUpload,
+    // renderUpload,
+  )
+  .get(
+    renderAddNewEvidenceView,
+  )
 
 router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
