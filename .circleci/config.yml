@@ -129,7 +129,7 @@ aliases:
       DATABASE_URL: postgresql://postgres@postgres/datahub
       DATAHUB_SECRET: secret
       DEBUG: 'True'
-      DOCUMENTS_BUCKET: baz
+      DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
       DJANGO_SETTINGS_MODULE: config.settings.local
       ES_INDEX_PREFIX: test_index
