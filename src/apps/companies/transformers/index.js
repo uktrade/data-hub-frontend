@@ -5,7 +5,7 @@ const transformCompanyToForm = require('./company-to-form')
 const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
 const transformCompanyToView = require('./company-to-view')
-const transformCompanyToSubsidiaryListItem = require('./company-to-subsidary-list-item')
+const transformCompanyToSubsidiaryListItem = require('./company-to-subsidiary-list-item')
 const transformCoreTeamToCollection = require('./core-team-to-collection')
 
 module.exports = {

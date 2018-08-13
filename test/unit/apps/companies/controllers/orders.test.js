@@ -18,7 +18,7 @@ describe('Company investments controller', () => {
       '../../omis/transformers': {
         transformOrderToListItem: this.transformOrderToListItemSpy,
       },
-      '../../transformers': {
+      '../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })
