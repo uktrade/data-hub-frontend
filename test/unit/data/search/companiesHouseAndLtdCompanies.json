@@ -58,7 +58,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     },
@@ -121,7 +120,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     },
@@ -184,7 +182,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     }
