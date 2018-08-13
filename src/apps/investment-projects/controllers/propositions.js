@@ -3,7 +3,7 @@ const {
   transformPropositionToListItem,
   transformPropositionListItemToHaveUrlPrefix,
 } = require('../../propositions/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderPropositionList (req, res, next) {
   try {

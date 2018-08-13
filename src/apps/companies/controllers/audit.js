@@ -1,7 +1,7 @@
 const { getCompanyAuditLog } = require('../repos')
 const { transformAuditLogToListItem } = require('../../audit/transformers')
 const { companyDetailsLabels } = require('../labels')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderAuditLog (req, res, next) {
   const token = req.session.token
