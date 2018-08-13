@@ -25,7 +25,7 @@ const { renderContacts } = require('./controllers/contacts')
 const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
-const { renderLinkSubsidiary } = require('./controllers/subsidiaryLink')
+const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const { renderAdvisers } = require('./controllers/advisers')
 
 const {
