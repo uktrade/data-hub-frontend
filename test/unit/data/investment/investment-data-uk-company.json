@@ -80,7 +80,6 @@
       "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
       "name": "Tier A - Strategic Account"
     },
-    "parent": null,
     "one_list_account_owner": null
   },
   "intermediate_company": null,
@@ -281,7 +280,6 @@
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },
-    "parent": null,
     "one_list_account_owner": null
   },
   "requirements_complete": true,

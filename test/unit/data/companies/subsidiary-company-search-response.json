@@ -49,7 +49,6 @@
       "global_headquarters": null,
       "headquarter_type": null,
       "one_list_account_owner": null,
-      "parent": null,
       "registered_address_country": {
         "id": "81756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United States"
@@ -128,7 +127,6 @@
       "global_headquarters": null,
       "headquarter_type": null,
       "one_list_account_owner": null,
-      "parent": null,
       "registered_address_country": {
         "id": "80756b9a-5d95-e211-a939-e4115bead28a",
         "name": "United Kingdom"

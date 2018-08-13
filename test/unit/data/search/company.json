@@ -48,7 +48,6 @@
       "modified_on": "2017-05-25T11:15:27.272221",
       "name": "abc defg ltd",
       "one_list_account_owner": null,
-      "parent": null,
       "registered_address_1": "2 Foo st.",
       "registered_address_2": null,
       "registered_address_country": {
@@ -104,7 +103,6 @@
       "modified_on": "2017-05-25T11:15:27.283250",
       "name": "abc defg us ltd",
       "one_list_account_owner": null,
-      "parent": null,
       "registered_address_1": "3 Foo st.",
       "registered_address_2": null,
       "registered_address_country": {
@@ -166,7 +164,6 @@
       "modified_on": "2017-05-25T11:15:27.237129",
       "name": "name0",
       "one_list_account_owner": null,
-      "parent": null,
       "registered_address_1": "0 Foo st.",
       "registered_address_2": null,
       "registered_address_country": {
