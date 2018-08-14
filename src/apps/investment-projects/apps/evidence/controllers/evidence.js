@@ -1,8 +1,8 @@
 /* eslint camelcase: 0 */
 const { assign, get } = require('lodash')
 
-const { buildFormWithStateAndErrors } = require('../../builders')
-const { evidenceForm } = require('../macros')
+const { buildFormWithStateAndErrors } = require('../../../../builders')
+const { evidenceForm } = require('../macros/index')
 
 function renderAddEvidence (req, res) {
   const investment = get(res.locals, 'investmentData.id')
@@ -28,7 +28,7 @@ function renderAddEvidence (req, res) {
   res
     .breadcrumb('Choose files')
     .title('Choose files')
-    .render('evidence/views/evidence-add-new.njk', {
+    .render('investment-projects/apps/evidence/views/evidence-add-new.njk', {
       addEvidenceForm,
     })
 }

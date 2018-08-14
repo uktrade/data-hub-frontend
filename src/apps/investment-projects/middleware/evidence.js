@@ -1,5 +1,5 @@
 const { assign } = require('lodash')
-const { addEvidence } = require('../../evidence/repos')
+const { addEvidence } = require('../apps/evidence/repos')
 
 function setEvidenceReturnUrl (req, res, next) {
   res.locals.returnLink = `/investment-projects/${req.params.investmentId}/evidence`
@@ -7,7 +7,6 @@ function setEvidenceReturnUrl (req, res, next) {
 }
 
 async function postEvidence (req, res, next) {
-
   // TODO (jf): for the file input do the document upload, for the rest of the fields, run addEvidence
 
   try {

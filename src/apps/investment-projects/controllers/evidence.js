@@ -1,12 +1,10 @@
-const { notFound } = require('../../../middleware/errors')
-const { getEvidenceForInvestment } = require('../../evidence/repos')
-const {
-} = require('../../evidence/transformers')
+// const { notFound } = require('../../../middleware/errors')
+const { getEvidenceForInvestment } = require('../apps/evidence/repos')
 
 async function renderEvidenceView (req, res, next) {
-  if (!res.locals.features['investment-evidence']) {
-    return notFound(req, res, next)
-  }
+  // if (!res.locals.features['investment-evidence']) {
+  //   return notFound(req, res, next)
+  // }
 
   try {
     const token = req.session.token
@@ -18,7 +16,6 @@ async function renderEvidenceView (req, res, next) {
       .render('investment-projects/views/evidence', {
         evidence,
       })
-
   } catch (error) {
     next(error)
   }

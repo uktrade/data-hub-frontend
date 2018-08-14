@@ -54,7 +54,8 @@ const LOCAL_NAV = [
     path: 'evidence',
     label: 'Evidence',
     // permissions: [
-    //   'investment.read_evidence',
+    //  'investment.read_all_evidencedocument',
+    //  'investment.read_associated_evidence_document',
     // ],
   },
 ]

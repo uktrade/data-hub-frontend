@@ -38,7 +38,7 @@ const { renderInvestmentList } = require('./controllers/list')
 const { renderInteractionList } = require('./controllers/interactions')
 const { renderPropositionList } = require('./controllers/propositions')
 const { renderEvidenceView } = require('./controllers/evidence')
-const { renderAddEvidence } = require('../evidence/controllers/evidence')
+const { renderAddEvidence } = require('./apps/evidence/controllers/evidence')
 const { postEvidence } = require('./middleware/evidence')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
