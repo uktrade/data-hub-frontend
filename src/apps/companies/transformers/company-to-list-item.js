@@ -27,7 +27,7 @@ module.exports = function transformCompanyToListItem ({
   modified_on,
   headquarter_type,
   global_headquarters,
-  parentCompanyArchived,
+  global_headquarters_archived,
 } = {}) {
   if (!id) { return }
 
@@ -95,7 +95,7 @@ module.exports = function transformCompanyToListItem ({
       url: `/companies/${ghqId}`,
     })
 
-    if (!parentCompanyArchived) {
+    if (!global_headquarters_archived) {
       meta.push({
         label: '',
         value: 'Remove subsidiary',

@@ -7,7 +7,7 @@ Feature: View team for an investment project
     Then the Client relationship management data details are displayed
       | Role                        | Adviser                                          | Team                                             |
       | Client relationship manager | investmentProject.clientRelationshipManager.name | investmentProject.clientRelationshipManager.team |
-      | Global account manager      | investmentProject.globalAccountManager.name      |                                                  |
+      | Global Account Manager      | investmentProject.globalAccountManager.name      | IST - Sector Advisory Services                   |
 
   @investment-projects-team--view--lep @lep
   Scenario: View investment project team

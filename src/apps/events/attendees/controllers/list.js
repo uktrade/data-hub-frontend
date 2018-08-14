@@ -1,6 +1,6 @@
 const { merge, omit } = require('lodash')
 
-const { transformApiResponseToCollection } = require('../../../transformers')
+const { transformApiResponseToCollection } = require('../../../../modules/api/transformers')
 const { fetchEventAttendees } = require('../repos')
 const { transformServiceDeliveryToAttendeeListItem } = require('../transformers')
 const { attendeeSortForm, defaultAttendeeSort } = require('../macros')
