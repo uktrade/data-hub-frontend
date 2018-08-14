@@ -2,13 +2,10 @@
 const { assign, get } = require('lodash')
 
 const { buildFormWithStateAndErrors } = require('../../builders')
-const { transformEvidenceResponseToForm } = require('../transformers')
 const { evidenceForm } = require('../macros')
 
 function renderAddEvidence (req, res) {
-  //const evidenceData = transformEvidenceResponseToForm(res.locals.evidence)
   const investment = get(res.locals, 'investmentData.id')
-  const evidence = get(res.locals, 'evidence.id')
 
   const addEvidenceForm = buildFormWithStateAndErrors(evidenceForm(
     assign({}, res.locals.options, res.locals.conditions, {
@@ -23,7 +20,6 @@ function renderAddEvidence (req, res) {
        */
       hiddenFields: {
         investment,
-        // evidence_group,
       },
     })),
   get(res.locals, 'form.errors.messages'),
