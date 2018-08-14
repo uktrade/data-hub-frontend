@@ -16,7 +16,7 @@ describe('transformCompanyToOneListView', () => {
 
     it('indicate there is no one list account management information', () => {
       expect(this.viewRecord).to.deep.equal({
-        'Global account manager': 'None',
+        'Global Account Manager': 'None',
         'One List tier': 'None',
       })
     })
@@ -40,7 +40,7 @@ describe('transformCompanyToOneListView', () => {
 
     it('indicate there is no one list account management information', () => {
       expect(this.viewRecord).to.deep.equal({
-        'Global account manager': 'The owner',
+        'Global Account Manager': 'The owner',
         'One List tier': 'The classification',
       })
     })

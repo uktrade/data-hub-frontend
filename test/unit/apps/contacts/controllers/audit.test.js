@@ -16,7 +16,7 @@ describe('Contact audit controller', () => {
       '../repos': {
         getContactAuditLog: this.getContactAuditLogStub,
       },
-      '../../transformers': {
+      '../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
       },
       '../../audit/transformers': {

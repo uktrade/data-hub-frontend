@@ -139,23 +139,43 @@ function fileLabel (key) {
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
   const status = file.status
+  let output = ''
 
   switch (status) {
     case 'virus_scanned':
-      return `
-      <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
-      `
+
+      if (file.av_clean) {
+        output = `
+            <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
+        `
+      } else {
+        output = 'Virus found! You must contact your administrator right away'
+      }
+
+      break
+
     case 'not_virus_scanned':
-      return 'File not virus scanned'
+      output = 'File not virus scanned'
+      break
+
     case 'virus_scanning_scheduled':
-      return 'Virus scanning scheduled'
+      output = 'Virus scanning scheduled'
+      break
+
     case 'virus_scanning_in_progress':
-      return 'File is being scanned, try again in a few moments'
+      output = 'File is being scanned, try again in a few moments'
+      break
+
     case 'virus_scanning_failed':
-      return 'Virus scanning failed, contact your administrator'
+      output = 'Virus scanning failed, contact your administrator'
+      break
+
     default:
-      return 'Virus scanning failed, contact your administrator'
+      output = 'Virus scanning failed, contact your administrator'
+      break
   }
+
+  return output
 }
 
 function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {

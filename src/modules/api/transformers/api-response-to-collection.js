@@ -5,7 +5,7 @@ const {
   assign,
 } = require('lodash')
 
-const { buildPagination } = require('../../../lib/pagination')
+const { buildPagination } = require('../../../lib/pagination') // TODO: We should not be dependent on this
 
 /**
  * @param {object} [options] {object}
