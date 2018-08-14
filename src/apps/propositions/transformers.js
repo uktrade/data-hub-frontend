@@ -3,6 +3,7 @@ const { assign, capitalize, get, mapKeys, pickBy } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
+const { transformFilesResultsToDetails, transformLabelsToShowFiles } = require('../document-upload/transformers')
 const labels = require('./labels')
 const { PROPOSITION_STATE } = require('./constants')
 
@@ -115,85 +116,14 @@ function transformPropositionResponseToViewRecord ({
     })(),
   }
 
-  transformed = {
-    ...transformed,
-    ...transformFilesResultsToDetails(files.results, id, investment_project.id),
+  if (files) {
+    transformed = {
+      ...transformed,
+      ...transformFilesResultsToDetails(files.results, id, investment_project.id),
+    }
   }
 
-  return pickBy(mapKeys(transformed, (value, key) => {
-    if (!isFileKey(key)) {
-      return detailLabels[key]
-    } else {
-      return fileLabel(key)
-    }
-  }))
-}
-
-function isFileKey (key) {
-  return key.search(/file/i) !== -1
-}
-
-function fileLabel (key) {
-  return key.replace(/file/i, 'File ')
-}
-
-function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const status = file.status
-  let output = ''
-
-  switch (status) {
-    case 'virus_scanned':
-
-      if (file.av_clean) {
-        output = `
-            <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
-        `
-      } else {
-        output = 'Virus found! You must contact your administrator right away'
-      }
-
-      break
-
-    case 'not_virus_scanned':
-      output = 'File not virus scanned'
-      break
-
-    case 'virus_scanning_scheduled':
-      output = 'Virus scanning scheduled'
-      break
-
-    case 'virus_scanning_in_progress':
-      output = 'File is being scanned, try again in a few moments'
-      break
-
-    case 'virus_scanning_failed':
-      output = 'Virus scanning failed, contact your administrator'
-      break
-
-    default:
-      output = 'Virus scanning failed, contact your administrator'
-      break
-  }
-
-  return output
-}
-
-function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {
-  let obj = {}
-
-  mapKeys(files, (file, index) => {
-    const downloadLinkOrState = getDownloadLinkOrState(file, proposition_id, investment_project_id)
-    let key = 'file'
-    let counter = parseInt(index) + 1
-
-    if (files.length > 0) {
-      key = `${key}${counter}`
-    }
-
-    obj[key] = [file.original_filename, downloadLinkOrState]
-  })
-
-  return obj
+  return pickBy(mapKeys(transformed, (value, key) => transformLabelsToShowFiles(key, detailLabels)))
 }
 
 function transformPropositionFormBodyToApiRequest (props) {
