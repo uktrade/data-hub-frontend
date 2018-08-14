@@ -39,10 +39,11 @@ const { renderInteractionList } = require('./controllers/interactions')
 const { renderPropositionList } = require('./controllers/propositions')
 const { renderEvidenceView } = require('./controllers/evidence')
 const { renderAddEvidence } = require('../evidence/controllers/evidence')
+const { postEvidence } = require('./middleware/evidence')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
-// const { setEvidenceReturnUrl } = require('./middleware/evidence')
+const { setEvidenceReturnUrl } = require('./middleware/evidence')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
@@ -184,17 +185,18 @@ router.get('/:investmentId/propositions', setPropositionsReturnUrl, renderPropos
 
 router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
 
-router.get('/:investmentId/evidence', renderEvidenceView)
+router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
 
 router
   .route('/:investmentId/evidence/add-new')
   .post(
+    setEvidenceReturnUrl,
     renderAddEvidence,
-    // postUpload,
+    postEvidence,
     // renderUpload,
   )
   .get(
-    renderAddNewEvidenceView,
+    renderAddEvidence,
   )
 
 router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)

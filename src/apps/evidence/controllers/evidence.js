@@ -2,14 +2,19 @@
 const { assign, get } = require('lodash')
 
 const { buildFormWithStateAndErrors } = require('../../builders')
+const { transformEvidenceResponseToForm } = require('../transformers')
 const { evidenceForm } = require('../macros')
 
 function renderAddEvidence (req, res) {
+  //const evidenceData = transformEvidenceResponseToForm(res.locals.evidence)
   const investment = get(res.locals, 'investmentData.id')
+  const evidence = get(res.locals, 'evidence.id')
 
-  const selectEvidenceForm = buildFormWithStateAndErrors(evidenceForm(
+  const addEvidenceForm = buildFormWithStateAndErrors(evidenceForm(
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,
+      returnText: 'Cancel',
+      buttonText: 'Add evidence',
 
       /**
        * Order and names of hidden inputs are important because we rely on them to build the API call url
@@ -18,6 +23,7 @@ function renderAddEvidence (req, res) {
        */
       hiddenFields: {
         investment,
+        // evidence_group,
       },
     })),
   get(res.locals, 'form.errors.messages'),
@@ -26,8 +32,8 @@ function renderAddEvidence (req, res) {
   res
     .breadcrumb('Choose files')
     .title('Choose files')
-    .render('./views/evidence-add-new.njk', {
-      selectEvidenceForm,
+    .render('evidence/views/evidence-add-new.njk', {
+      addEvidenceForm,
     })
 }
 

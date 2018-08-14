@@ -1,12 +1,5 @@
-{% extends "./_layout.njk" %}
+{% extends "_layouts/datahub-base.njk" %}
 
-{% block main_grid_right_column %}
-  <h2 class="heading-medium">Add New Evidence</h2>
-
-  <p>title form</p>
-  <p>upload document</p>
-
-  <br>
-  <a href="submit" class="button">Upload Evidence</a>
-  <a href="#" >Cancel</a>
+{% block body_main_content %}
+  {{ Form(addEvidenceForm) }}
 {% endblock %}

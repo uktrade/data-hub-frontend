@@ -1,5 +1,5 @@
-const { renderEvidence } = require('./evidence')
+const { renderAddEvidence } = require('./evidence')
 
 module.exports = {
-  renderEvidence,
+  renderAddEvidence,
 }

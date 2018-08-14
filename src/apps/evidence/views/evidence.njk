@@ -1,0 +1,18 @@
+{% extends "../../investment-projects/views/_layout.njk" %}
+
+<h2 class="heading-medium">Evidence</h2>
+<a href="#">View documents imported from CDMS</a><br/>
+(will open another website)
+
+<h2>{{ evidence.tags }}</h2>
+<span>{{ evidence.comment }}</span><br>
+<span>{{ evidence.document.original_filename }}</span><br>
+{#{{#}
+{#CollectionContent(propositions | assignCopy({#}
+  {#countLabel: 'proposition',#}
+  {#actionButtons: actionButtons#}
+{#}))#}
+{#}}#}
+
+<br>
+<a href="evidence/add-new" class="button">Add new evidence</a>

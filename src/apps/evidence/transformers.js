@@ -23,6 +23,11 @@ function transformEvidenceToListItem ({
   }
 }
 
+function transformEvidenceResponseToForm (obj) {
+  return obj
+}
+
 module.exports = {
+  transformEvidenceResponseToForm,
   transformEvidenceToListItem,
 }
