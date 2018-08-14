@@ -84,7 +84,6 @@
       "trading_address_country": null,
       "headquarter_type": null,
       "classification": null,
-      "parent": null,
       "one_list_account_owner": null,
       "export_to_countries": [],
       "future_interest_countries": []
@@ -189,7 +188,6 @@
       "trading_address_country": null,
       "headquarter_type": null,
       "classification": null,
-      "parent": null,
       "one_list_account_owner": null,
       "export_to_countries": [],
       "future_interest_countries": []

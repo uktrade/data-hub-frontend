@@ -6,7 +6,7 @@ const { getDaysInMonth } = require('date-fns')
 const {
   getButtonWithText,
   getSelectorForElementWithText,
-  getDetailsTableRowValue,
+  getKeyValueTableRowValueCell,
 } = require('../../helpers/selectors')
 const {
   storeSelectValue,
@@ -259,17 +259,17 @@ module.exports = {
           elements: {
             header: getHeaderSelector('Investment project summary'),
             clientLink: getTableCellAnchorByName('Client'),
-            typeOfInvestment: getDetailsTableRowValue('Type of investment'),
-            primarySector: getDetailsTableRowValue('Primary sector'),
-            businessActivity: getDetailsTableRowValue('Business activity'),
-            clientContact: getDetailsTableRowValue('Client contacts'),
-            projectDescription: getDetailsTableRowValue('Project description'),
-            anonDescription: getDetailsTableRowValue('Anonymised description'),
-            estimatedLandDate: getDetailsTableRowValue('Estimated land date'),
-            actualLandDate: getDetailsTableRowValue('Actual land date'),
-            newOrExistingInvestor: getDetailsTableRowValue('New or existing investor'),
-            levelOfInvolvement: getDetailsTableRowValue('Level of involvement'),
-            specificInvestmentProgramme: getDetailsTableRowValue('Specific investment programme'),
+            typeOfInvestment: getKeyValueTableRowValueCell('Type of investment'),
+            primarySector: getKeyValueTableRowValueCell('Primary sector'),
+            businessActivity: getKeyValueTableRowValueCell('Business activity'),
+            clientContact: getKeyValueTableRowValueCell('Client contacts'),
+            projectDescription: getKeyValueTableRowValueCell('Project description'),
+            anonDescription: getKeyValueTableRowValueCell('Anonymised description'),
+            estimatedLandDate: getKeyValueTableRowValueCell('Estimated land date'),
+            actualLandDate: getKeyValueTableRowValueCell('Actual land date'),
+            newOrExistingInvestor: getKeyValueTableRowValueCell('New or existing investor'),
+            levelOfInvolvement: getKeyValueTableRowValueCell('Level of involvement'),
+            specificInvestmentProgramme: getKeyValueTableRowValueCell('Specific investment programme'),
           },
         },
         archive: {

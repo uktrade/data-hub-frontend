@@ -1,44 +1,40 @@
 const { get } = require('lodash')
+
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateCompany } = require('../../../companies/repos')
 const { updateInvestment } = require('../../repos')
 const { clientRelationshipManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
+const config = require('../../../../../config')
 
 async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
     const clientRelationshipManager = get(investmentData, 'client_relationship_manager.id', null)
-    const accountManager = get(investmentData, 'investor_company.account_manager.id', null)
-
+    const firstName = get(investmentData, 'investor_company.one_list_account_owner.first_name')
+    const lastName = get(investmentData, 'investor_company.one_list_account_owner.last_name')
     const advisersResponse = await getAdvisers(req.session.token)
-
     const clientRelationshipManagerOptions = filterActiveAdvisers({
       advisers: advisersResponse.results,
       includeAdviser: clientRelationshipManager,
-    }).map(transformObjectToOption)
-
-    const accountManagerOptions = filterActiveAdvisers({
-      advisers: advisersResponse.results,
-      includeAdviser: accountManager,
     }).map(transformObjectToOption)
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,
       state: {
         client_relationship_manager: clientRelationshipManager,
-        account_manager: accountManager,
+        global_account_manager: `${firstName} ${lastName}`,
       },
       options: {
         clientRelationshipManagers: clientRelationshipManagerOptions,
-        accountManagers: accountManagerOptions,
       },
       hiddenFields: {
         investor_company: get(investmentData, 'investor_company.id'),
       },
       buttonText: 'Save',
       returnLink: `/investment-projects/${investmentData.id}/team`,
+      oneListEmail: config.oneList.email,
     })
 
     next()

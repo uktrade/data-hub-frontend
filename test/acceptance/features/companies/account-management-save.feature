@@ -6,12 +6,12 @@ Feature: Save account management details for a company
   Scenario: Save account management details
 
     When I navigate to the `companies.fixture` page using `company` `Lambda plc` fixture
-    Then the Account management details are displayed
+    Then the Account management key value details are displayed
       | key                       | value                   |
       | One List tier             | None                    |
-      | Global account manager    | None                    |
+      | Global Account Manager    | None                    |
     When the Account management details are updated
-    Then the Account management details are displayed
+    Then the Account management key value details are displayed
       | key                       | value                       |
       | One List tier             | None                        |
-      | Global account manager    | company.oneListAccountOwner |
+      | Global Account Manager    | company.oneListAccountOwner |

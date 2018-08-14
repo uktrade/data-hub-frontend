@@ -85,7 +85,6 @@
       "trading_address_country": null,
       "trading_address_postcode": "",
       "classification": null,
-      "parent": null,
       "global_headquarters": null,
       "one_list_account_owner": null,
       "export_experience_category": null
@@ -147,7 +146,6 @@
       "trading_address_country": null,
       "trading_address_postcode": "",
       "classification": null,
-      "parent": null,
       "global_headquarters": null,
       "one_list_account_owner": null,
       "export_experience_category": null

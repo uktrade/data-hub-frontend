@@ -27,7 +27,7 @@ Feature: Investment projects evaluations details
       | Export revenue radio              | Yes                                            |
     Then I see the success message
     When I click the Evaluations local nav link
-    Then the Project value (Test D) details are displayed
+    Then the Project value (Test D) key value details are displayed
       | key                               | value                                          | formatter                               |
       | Primary sector                    | investmentProject.primarySector                |                                         |
       | Total investment                  | £100,000.00                                    |                                         |
@@ -39,7 +39,7 @@ Feature: Investment projects evaluations details
       | Account tier                      | Not Known                                      |                                         |
       | New GHQ/EHQ                       | investmentProject.businessActivity             | isEuropeanOrGlobalHeadquartersFormatter |
       | Export revenue                    | Yes, will create significant export revenue    |                                         |
-    And the FDI (Test A) details are displayed
+    And the FDI (Test A) key value details are displayed
       | key                               | value                                          |
       | Type of investment                | investmentProject.typeAndSubType               |
       | Foreign investor                  | Lambda plc                                     |
@@ -49,7 +49,7 @@ Feature: Investment projects evaluations details
       | Investor retains 10% voting power | No                                             |
       | New jobs                          | 100 new jobs                                   |
       | Safeguarded jobs                  | 200 safeguarded jobs                           |
-    And the Project Landing (Test C) details are displayed
+    And the Project Landing (Test C) key value details are displayed
       | key                               | value                                          |
       | UK company                        | Not Known                                      |
       | Companies House Number            | Not Known                                      |
@@ -80,7 +80,7 @@ Feature: Investment projects evaluations details
       | Export revenue radio              | No                                             |
     Then I see the success message
     When I click the Evaluations local nav link
-    Then the Project value (Test D) details are displayed
+    Then the Project value (Test D) key value details are displayed
       | key                               | value                                          | formatter                               |
       | Primary sector                    | investmentProject.primarySector                |                                         |
       | Total investment                  | Client cannot provide this information         |                                         |
@@ -92,7 +92,7 @@ Feature: Investment projects evaluations details
       | Account tier                      | Not Known                                      |                                         |
       | New GHQ/EHQ                       | investmentProject.businessActivity             | isEuropeanOrGlobalHeadquartersFormatter |
       | Export revenue                    | No, will not create significant export revenue |                                         |
-    And the FDI (Test A) details are displayed
+    And the FDI (Test A) key value details are displayed
       | key                               | value                                          |
       | Type of investment                | investmentProject.typeAndSubType               |
       | Foreign investor                  | Lambda plc                                     |
@@ -102,7 +102,7 @@ Feature: Investment projects evaluations details
       | Investor retains 10% voting power | No                                             |
       | New jobs                          | 0                                              |
       | Safeguarded jobs                  | 0                                              |
-    And the Project Landing (Test C) details are displayed
+    And the Project Landing (Test C) key value details are displayed
       | key                               | value                                          |
       | UK company                        | Not Known                                      |
       | Companies House Number            | Not Known                                      |

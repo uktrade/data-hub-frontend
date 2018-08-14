@@ -144,7 +144,7 @@ const labels = {
     view: roleAdviserTeam,
     edit: {
       client_relationship_manager: 'Client relationship manager',
-      account_manager: 'Account manager',
+      global_account_manager: 'Global Account Manager',
     },
   },
   teamMembersLabels: {

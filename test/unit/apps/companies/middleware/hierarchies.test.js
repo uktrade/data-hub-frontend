@@ -17,7 +17,7 @@ describe('Company hierarchies middleware', () => {
 
     this.nextSpy = sinon.spy()
 
-    this.parentCompanyId = '1'
+    this.globalHeadquartersId = '1'
     this.subsidiaryCompanyId = '2'
   })
 
@@ -25,7 +25,7 @@ describe('Company hierarchies middleware', () => {
     beforeEach(() => {
       this.reqMock.params = {
         companyId: this.subsidiaryCompanyId,
-        globalHqId: this.parentCompanyId,
+        globalHqId: this.globalHeadquartersId,
       }
     })
 
@@ -33,7 +33,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(200, { id: this.subsidiaryCompanyId })
 
@@ -59,7 +59,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(500, 'Error message')
 
@@ -83,7 +83,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(400, { error: 'Error message' })
 
@@ -180,7 +180,7 @@ describe('Company hierarchies middleware', () => {
   describe('#addSubsidiary', () => {
     beforeEach(() => {
       this.reqMock.params = {
-        companyId: this.parentCompanyId,
+        companyId: this.globalHeadquartersId,
         subsidiaryCompanyId: this.subsidiaryCompanyId,
       }
     })
@@ -189,7 +189,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(200, { id: this.subsidiaryCompanyId })
 
@@ -202,7 +202,7 @@ describe('Company hierarchies middleware', () => {
 
       it('should redirect', () => {
         expect(this.resMock.redirect).to.have.been.calledOnce
-        expect(this.resMock.redirect).to.be.calledWith(`/companies/${this.parentCompanyId}/subsidiaries`)
+        expect(this.resMock.redirect).to.be.calledWith(`/companies/${this.globalHeadquartersId}/subsidiaries`)
       })
 
       it('should call flash', () => {
@@ -215,7 +215,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(500, 'Error message')
 
@@ -239,7 +239,7 @@ describe('Company hierarchies middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .patch(`/v3/company/${this.subsidiaryCompanyId}`, {
-            global_headquarters: this.parentCompanyId,
+            global_headquarters: this.globalHeadquartersId,
           })
           .reply(400, { error: 'Error message' })
 
@@ -248,7 +248,7 @@ describe('Company hierarchies middleware', () => {
 
       it('should redirect', () => {
         expect(this.resMock.redirect).to.have.been.calledOnce
-        expect(this.resMock.redirect).to.be.calledWith(`/companies/${this.parentCompanyId}/subsidiaries`)
+        expect(this.resMock.redirect).to.be.calledWith(`/companies/${this.globalHeadquartersId}/subsidiaries`)
       })
 
       it('should call flash', () => {

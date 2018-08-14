@@ -3,7 +3,7 @@
     {
       "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
       "name": "Mars Exports Ltd",
-      "url": "/companies/mock-parent-company-id/hierarchies/ghq/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd/add",
+      "url": "/companies/mock-global-headquarters-id/hierarchies/ghq/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd/add",
       "meta": [
         {
           "label": "Sector",
@@ -34,7 +34,7 @@
     {
       "id": "cf8d6dd0-1d26-450f-931a-f2de21146549",
       "name": "Cole, Stoltenberg and Russel",
-      "url": "/companies/mock-parent-company-id/hierarchies/ghq/cf8d6dd0-1d26-450f-931a-f2de21146549/add",
+      "url": "/companies/mock-global-headquarters-id/hierarchies/ghq/cf8d6dd0-1d26-450f-931a-f2de21146549/add",
       "meta": [
         {
           "label": "Sector",
