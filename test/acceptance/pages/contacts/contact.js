@@ -87,7 +87,7 @@ module.exports = {
               .click('@sameAddressAsCompanyYes')
 
             callback(assign({}, contact, {
-              acceptsEmailMarketingFromDit: 'Yes',
+              acceptsEmailMarketingFromDit: 'Opted in',
               primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
               uniqueSearchTerm: getUid(contact.lastName),
             }))
@@ -139,7 +139,7 @@ module.exports = {
               .page.address()
               .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
                 callback(assign({}, {
-                  acceptsEmailMarketingFromDit: 'No',
+                  acceptsEmailMarketingFromDit: 'Opted out',
                   type: 'Primary',
                   primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
                   address: getAddress(addressInputValues),
