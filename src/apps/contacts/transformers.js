@@ -105,7 +105,7 @@ function transformContactToView ({
     email_alternative,
     notes,
     telephone_number: telephoneNumber,
-    email_marketing: accepts_dit_email_marketing ? 'Yes' : 'No',
+    email_marketing: accepts_dit_email_marketing ? 'Opted in' : 'Opted out',
     address: getContactAddress(address_same_as_company, {
       address_1,
       address_2,

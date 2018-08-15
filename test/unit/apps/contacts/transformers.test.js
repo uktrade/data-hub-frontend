@@ -182,7 +182,7 @@ describe('Contact transformers', () => {
       })
 
       it('should show that they do not want to receive marketing by email', () => {
-        expect(this.view).to.have.property('Email marketing', 'No')
+        expect(this.view).to.have.property('Email marketing', 'Opted out')
       })
     })
 
@@ -194,7 +194,7 @@ describe('Contact transformers', () => {
       })
 
       it('should show that they do not want to receive marketing by email', () => {
-        expect(this.view).to.have.property('Email marketing', 'Yes')
+        expect(this.view).to.have.property('Email marketing', 'Opted in')
       })
     })
 
