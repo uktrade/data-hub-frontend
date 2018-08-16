@@ -1,26 +1,21 @@
 module.exports = {
-  tags: {
-    macroName: 'AddAnother',
-    buttonName: 'add_item',
-    label: 'Tags',
-    name: 'tags',
-    hint: 'Pick your favorite fruits from the following list',
-    children: [{
-      macroName: 'MultipleChoiceField',
-      type: 'file',
-      label: 'Tag',
+  tag (tags) {
+    return {
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      label: 'Tags',
       name: 'tags',
-      isLabelHidden: true,
-      initialOption: '-- Select fruit --',
-      options: [
-        { value: 'apples', label: 'Apples' },
-        { value: 'cherries', label: 'Cherries' },
-        { value: 'peaches', label: 'Peaches' },
-        { value: 'mangoes', label: 'Mangoes' },
-        { value: 'bananas', label: 'Bananas' },
-        { value: 'strawberries', label: 'Strawberries' },
-      ],
-    }],
+      hint: 'Pick your favorite fruits from the following list',
+      children: [{
+        macroName: 'MultipleChoiceField',
+        type: 'file',
+        label: 'Tag',
+        name: 'tags',
+        isLabelHidden: true,
+        initialOption: '-- Select fruit --',
+        options: tags,
+      }],
+    }
   },
   documentUpload: {
     macroName: 'TextField',
@@ -33,5 +28,6 @@ module.exports = {
     type: 'textarea',
     name: 'comment',
     hint: 'Add a relevant comment to the evidence you`re uploading',
+    optional: true,
   },
 }

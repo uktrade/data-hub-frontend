@@ -1,23 +1,20 @@
 /* eslint camelcase: 0 */
 const { assign, get } = require('lodash')
+const { getOptions } = require('../../../../../lib/options')
 
 const { buildFormWithStateAndErrors } = require('../../../../builders')
 const { evidenceForm } = require('../macros/index')
 
-function renderAddEvidence (req, res) {
+async function renderAddEvidence (req, res) {
   const investment = get(res.locals, 'investmentData.id')
+  const tags = await getOptions(req.session.token, 'evidence-tag')
 
   const addEvidenceForm = buildFormWithStateAndErrors(evidenceForm(
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,
       returnText: 'Cancel',
       buttonText: 'Add evidence',
-
-      /**
-       * Order and names of hidden inputs are important because we rely on them to build the API call url
-       * - names need to match the API keys
-       * - values need to match the ID of the app or subb-app in scope
-       */
+      tags,
       hiddenFields: {
         investment,
       },
@@ -28,7 +25,7 @@ function renderAddEvidence (req, res) {
   res
     .breadcrumb('Choose files')
     .title('Choose files')
-    .render('investment-projects/apps/evidence/views/evidence-add-new.njk', {
+    .render('investment-projects/apps/evidence/views/create', {
       addEvidenceForm,
     })
 }

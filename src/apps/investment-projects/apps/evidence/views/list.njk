@@ -1,4 +1,4 @@
-{% extends "./_layout.njk" %}
+{% extends "../../../views/_layout.njk" %}
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Evidence</h2>
@@ -23,28 +23,29 @@
         Edit
       </th>
     </tr>
-    {% for item in evidence %}
+  {{ evidence.results | log | safe }}
+    {% for item in evidence.results %}
       <tr>
         <td>
           {% for tag in item.tags %}
-            <span class="c-badge">{{ tag }}</span>
+            <span class="c-badge" data-id="{{ tag.id }}">{{ tag.name }}</span>
           {% endfor %}
         </td>
         <td>
           {{ item.comment }}
         </td>
         <td>
-          {{ item.document.original_filename }}
+          {{ item.original_filename }}
         </td>
         <td>
-          {% if item.document.av_clean and item.document.status == 'virus_scanned' %}
-            <a href="/investment-projects/{{ item.investment_project }}/evidence/{{ item.id }}/download">Download</a>
+          {% if item.av_clean and item.status == 'virus_scanned' %}
+            <a href="/investment-projects/{{ item.investment_project.id }}/evidence/{{ item.id }}/download">Download</a>
           {% else %}
             <span>File scan failed</span>
           {% endif %}
         </td>
         <td>
-          <a href="/investment-projects/{{ item.investment_project }}/evidence/{{ item.id }}/edit">Edit</a>
+          <a href="/investment-projects/{{ item.investment_project.id }}/evidence/{{ item.id }}/delete">Delete</a>
         </td>
       </tr>
     {% endfor %}

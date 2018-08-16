@@ -1,24 +1,30 @@
 const { assign } = require('lodash')
-const { addEvidence } = require('../apps/evidence/repos')
+const formidable = require('formidable')
+
+const { fetchDownloadLink } = require('../apps/evidence/repos')
+const authorisedRequest = require('../../../lib/authorised-request')
+
+const { transformedEvidenceFieldsRequest } = require('../apps/evidence/transformers')
 
 function setEvidenceReturnUrl (req, res, next) {
   res.locals.returnLink = `/investment-projects/${req.params.investmentId}/evidence`
   next()
 }
 
-async function postEvidence (req, res, next) {
-  // TODO (jf): for the file input do the document upload, for the rest of the fields, run addEvidence
+async function collectEvidenceFields (req, res, next) {
 
+  const form = new formidable.IncomingForm()
   try {
-    await addEvidence(req.session.token, res.locals.requestBody)
+    form.parse(req, (err, fields) => {
+      res.locals.requestBody = transformedEvidenceFieldsRequest(fields)
 
-    req.flash('success', 'Evidence added')
+      if (err) {
+        return res.status(500).json({ error: err })
+      }
+    })
 
-    if (res.locals.returnLink) {
-      return res.redirect(res.locals.returnLink)
-    }
-
-    return res.redirect(`/evidence`)
+    console.log(':::::::::: collectEvidenceFields ::::::::::: ', res.locals.requestBody)
+    next()
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {
@@ -26,6 +32,7 @@ async function postEvidence (req, res, next) {
           messages: err.error,
         },
       })
+
       next()
     } else {
       next(err)
@@ -33,7 +40,22 @@ async function postEvidence (req, res, next) {
   }
 }
 
+async function getDownloadLink (req, res, next) {
+
+  try {
+    const token = req.session.token
+    const evidenceId = req.params.evidenceId
+    const investmentId = req.params.investmentId
+    const s3 = await fetchDownloadLink(token, investmentId, evidenceId)
+
+    return res.redirect(s3.document_url)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   setEvidenceReturnUrl,
-  postEvidence,
+  collectEvidenceFields,
+  getDownloadLink,
 }

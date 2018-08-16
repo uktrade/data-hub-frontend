@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 
 const labels = require('../labels')
 const {
-  tags,
+  tag,
   documentUpload,
   comment,
 } = require('./fields')
@@ -12,14 +12,16 @@ module.exports = function ({
   returnText,
   buttonText,
   hiddenFields,
+  tags = [],
 }) {
   return {
-    returnLink,
+    enctype: 'multipart/form-data',
+    returnLink, // TODO (jf): fix return link
     returnText,
     buttonText,
     hiddenFields,
     children: [
-      tags,
+      tag(tags),
       documentUpload,
       comment,
     ].map(field => {

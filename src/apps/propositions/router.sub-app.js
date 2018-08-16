@@ -36,7 +36,12 @@ router
 router
   .route('/propositions/:propositionId/document')
   .post(
-    postUpload,
+    postUpload.bind({
+      url: {
+        app: 'investment',
+        subApp: 'proposition',
+      },
+    }),
     renderUpload,
   )
   .get(

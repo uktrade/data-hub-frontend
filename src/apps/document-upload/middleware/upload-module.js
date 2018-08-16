@@ -4,20 +4,21 @@ const request = require('request')
 const fs = require('fs')
 const formidable = require('formidable')
 const map = require('lodash/map')
-const compact = require('lodash/compact')
 
 const config = require('../../../../config')
 const authorisedRequest = require('../../../lib/authorised-request')
 
 function getDocumentUploadS3Url (req, res, self) {
-  const url = `${self.documentUpload.buildApiUrl(self)}/document`
+  const url = `${self.documentUpload.buildApiUrl(self)}`
+  const body = {
+    original_filename: self.file.name,
+    ...res.locals.requestBody,
+  }
 
   const options = {
     url,
     method: 'POST',
-    body: {
-      original_filename: self.file.name,
-    },
+    body,
   }
 
   return authorisedRequest(req.session.token, options)
@@ -25,7 +26,7 @@ function getDocumentUploadS3Url (req, res, self) {
 
 function uploadDocumentToS3 (req, res, self, url, id) {
   const returnUrl = `${req.baseUrl}/propositions/${req.params.propositionId}/`
-  const apiUrl = `${self.documentUpload.buildApiUrl(self)}/document/${id}/upload-callback`
+  const apiUrl = `${self.documentUpload.buildApiUrl(self)}/${id}/upload-callback`
 
   self.documentUpload.createRequest(req, res, self, url, id, apiUrl, returnUrl)
 }
@@ -43,13 +44,11 @@ class DocumentUpload {
   }
 
   buildApiUrl (self) {
-    const url = map(self.fields, (value, key) => {
-      if (key !== '_csrf') {
-        return `${key}/${value}`
-      }
-    })
+    const app = self.url.app ? `/${self.url.app}/${self.fields[self.url.app]}` : ''
+    const subApp = self.url.subApp ? `/${self.url.subApp}/${self.fields[self.url.subApp]}` : ''
+    const document = self.url.document ? `/${self.url.document}` : '/document'
 
-    return `${config.apiRoot}/v3/${compact(url).join('/')}`
+    return `${config.apiRoot}/v3${app}${subApp}${document}`
   }
 
   createRequest (req, res, self, url, id, apiUrl, returnUrl) {
@@ -90,20 +89,23 @@ function countDocumentsUploaded (collection) {
   return index
 }
 
-function parseForm (req, res) {
+function parseForm (req, res, apiConfig) {
   const form = new formidable.IncomingForm()
 
   form.maxFileSize = 5000 * 1024 * 1024 // 5GB
+
   form.parse(req, (err, fields, files) => {
     let index = 0
 
     map(files, async (file, value, collection) => {
+
       const self = {
         id: fields.id,
-        parent_id: fields[fields.app], // TODO(jf) this needs to be dynamic
+        parent_id: fields[fields.app],
         file,
         numberOfDocuments: countDocumentsUploaded(collection),
         fields,
+        url: apiConfig.url,
       }
 
       if (!file.name.length) { return }
@@ -122,8 +124,10 @@ function parseForm (req, res) {
 }
 
 function postUpload (req, res, next) {
+  const apiConfig = this
+
   try {
-    parseForm(req, res)
+    parseForm(req, res, apiConfig)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {

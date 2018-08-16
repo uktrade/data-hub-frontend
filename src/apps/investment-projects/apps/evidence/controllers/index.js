@@ -1,4 +1,4 @@
-const { renderAddEvidence } = require('./evidence')
+const { renderAddEvidence } = require('./create')
 
 module.exports = {
   renderAddEvidence,

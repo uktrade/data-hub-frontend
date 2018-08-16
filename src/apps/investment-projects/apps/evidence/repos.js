@@ -6,16 +6,23 @@ function getEvidenceForInvestment (token, investmentId) {
 }
 
 function addEvidence (token, evidence) {
+
+  console.log('????????', evidence)
   const options = {
-    url: `${config.apiRoot}/v3/investment/${evidence.investment_project}/evidence-document`,
+    url: `${config.apiRoot}/v3/investment/${evidence.investment}/evidence-document`,
     method: 'POST',
     body: evidence,
   }
 
-  return authorisedRequest(token, options)
+  // return authorisedRequest(token, options)
+}
+
+function fetchDownloadLink (token, investmentId, evidenceId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}/download`)
 }
 
 module.exports = {
-  getEvidenceForInvestment,
   addEvidence,
+  fetchDownloadLink,
+  getEvidenceForInvestment,
 }
