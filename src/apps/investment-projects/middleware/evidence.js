@@ -1,6 +1,3 @@
-const { assign } = require('lodash')
-const formidable = require('formidable')
-
 const { fetchDownloadLink, requestDeleteEvidence } = require('../apps/evidence/repos')
 const { transformedEvidenceFieldsRequest } = require('../apps/evidence/transformers')
 
@@ -9,31 +6,8 @@ function setEvidenceReturnUrl (req, res, next) {
   next()
 }
 
-async function collectEvidenceFields (req, res, next) {
-  const form = new formidable.IncomingForm()
-  try {
-    form.parse(req, async (err, fields) => {
-      res.locals.requestBody = await transformedEvidenceFieldsRequest(fields)
-
-      if (err) {
-        return res.status(500).json({ error: err })
-      }
-    })
-
-    next()
-  } catch (err) {
-    if (err.statusCode === 400) {
-      res.locals.form = assign({}, res.locals.form, {
-        errors: {
-          messages: err.error,
-        },
-      })
-
-      next()
-    } else {
-      next(err)
-    }
-  }
+async function collectEvidenceFields (req, res, fields) {
+  res.locals.requestBody = await transformedEvidenceFieldsRequest(fields)
 }
 
 async function getDownloadLink (req, res, next) {

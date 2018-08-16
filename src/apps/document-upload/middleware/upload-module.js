@@ -10,9 +10,11 @@ const authorisedRequest = require('../../../lib/authorised-request')
 
 function getDocumentUploadS3Url (req, res, self) {
   const url = `${self.documentUpload.buildApiUrl(self)}`
+
+  const requestBody = self.index === 1 ? res.locals.requestBody : {}
   const body = {
     original_filename: self.file.name,
-    ...res.locals.requestBody,
+    ...requestBody,
   }
 
   const options = {
@@ -94,8 +96,12 @@ function parseForm (req, res, apiConfig) {
 
   form.maxFileSize = 5000 * 1024 * 1024 // 5GB
 
-  form.parse(req, (err, fields, files) => {
+  form.parse(req, async (err, fields, files) => {
     let index = 0
+
+    if (apiConfig.collectTextFields) {
+      await apiConfig.collectTextFields(req, res, fields)
+    }
 
     map(files, async (file, value, collection) => {
       const self = {
@@ -108,7 +114,6 @@ function parseForm (req, res, apiConfig) {
       }
 
       if (!file.name.length) { return }
-
       index++
       self.index = index
       self.documentUpload = new DocumentUpload()

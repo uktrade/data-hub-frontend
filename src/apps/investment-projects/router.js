@@ -196,12 +196,12 @@ router
   )
   .post(
     setEvidenceReturnUrl,
-    collectEvidenceFields,
     postUpload.bind({
       url: {
         app: 'investment',
         document: 'evidence-document',
       },
+      collectTextFields: collectEvidenceFields,
     }),
   )
 
