@@ -51,3 +51,7 @@
 .c-badge--secondary {
   @include _style-badge($purple);
 }
+
+.c-badge--multi {
+  line-height: 2;
+}
