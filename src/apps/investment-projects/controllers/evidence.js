@@ -1,6 +1,5 @@
 const { notFound } = require('../../../middleware/errors')
 const { getEvidenceForInvestment } = require('../apps/evidence/repos')
-const { transformEvidenceResponseToViewRecord } = require('../apps/evidence/transformers')
 
 async function renderEvidenceView (req, res, next) {
   if (!res.locals.features['investment-evidence']) {
@@ -11,7 +10,6 @@ async function renderEvidenceView (req, res, next) {
     const token = req.session.token
     const investmentId = req.params.investmentId
     const evidence = await getEvidenceForInvestment(token, investmentId)
-    const evidenceViewRecord = transformEvidenceResponseToViewRecord(evidence)
 
     return res
       .breadcrumb('Evidence')

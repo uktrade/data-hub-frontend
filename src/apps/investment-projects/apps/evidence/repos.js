@@ -5,24 +5,21 @@ function getEvidenceForInvestment (token, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/evidence-document`)
 }
 
-function addEvidence (token, evidence) {
-
-  console.log('????????', evidence)
-  const options = {
-    url: `${config.apiRoot}/v3/investment/${evidence.investment}/evidence-document`,
-    method: 'POST',
-    body: evidence,
-  }
-
-  // return authorisedRequest(token, options)
-}
-
 function fetchDownloadLink (token, investmentId, evidenceId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}/download`)
 }
 
+function requestDeleteEvidence (token, investmentId, evidenceId) {
+  const options = {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}`,
+    method: 'DELETE',
+  }
+
+  return authorisedRequest(token, options)
+}
+
 module.exports = {
-  addEvidence,
   fetchDownloadLink,
   getEvidenceForInvestment,
+  requestDeleteEvidence,
 }

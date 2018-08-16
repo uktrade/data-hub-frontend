@@ -44,7 +44,7 @@ const { postUpload } = require('../document-upload/middleware/upload-module')
 
 const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
-const { setEvidenceReturnUrl, getDownloadLink } = require('./middleware/evidence')
+const { setEvidenceReturnUrl, getDownloadLink, deleteEvidence } = require('./middleware/evidence')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
 const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
@@ -191,11 +191,11 @@ router.get('/:investmentId/evidence', setEvidenceReturnUrl, renderEvidenceView)
 router
   .route('/:investmentId/evidence/add-new')
   .get(
+    setEvidenceReturnUrl,
     renderAddEvidence,
   )
   .post(
     setEvidenceReturnUrl,
-    // renderAddEvidence,
     collectEvidenceFields,
     postUpload.bind({
       url: {
@@ -203,7 +203,6 @@ router
         document: 'evidence-document',
       },
     }),
-    // postEvidence,
   )
 
 router
@@ -215,7 +214,8 @@ router
 router
   .route('/:investmentId/evidence/:evidenceId/delete')
   .get(
-    getDownloadLink
+    setEvidenceReturnUrl,
+    deleteEvidence
   )
 
 router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)

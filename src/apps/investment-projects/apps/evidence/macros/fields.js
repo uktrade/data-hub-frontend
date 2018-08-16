@@ -5,14 +5,13 @@ module.exports = {
       buttonName: 'add_item',
       label: 'Tags',
       name: 'tags',
-      hint: 'Pick your favorite fruits from the following list',
       children: [{
         macroName: 'MultipleChoiceField',
         type: 'file',
         label: 'Tag',
         name: 'tags',
         isLabelHidden: true,
-        initialOption: '-- Select fruit --',
+        initialOption: '-- Select tag --',
         options: tags,
       }],
     }

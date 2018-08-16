@@ -25,7 +25,7 @@ function getDocumentUploadS3Url (req, res, self) {
 }
 
 function uploadDocumentToS3 (req, res, self, url, id) {
-  const returnUrl = `${req.baseUrl}/propositions/${req.params.propositionId}/`
+  const returnUrl = res.locals.returnLink
   const apiUrl = `${self.documentUpload.buildApiUrl(self)}/${id}/upload-callback`
 
   self.documentUpload.createRequest(req, res, self, url, id, apiUrl, returnUrl)
@@ -98,7 +98,6 @@ function parseForm (req, res, apiConfig) {
     let index = 0
 
     map(files, async (file, value, collection) => {
-
       const self = {
         id: fields.id,
         parent_id: fields[fields.app],

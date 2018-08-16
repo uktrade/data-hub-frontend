@@ -16,7 +16,7 @@ module.exports = function ({
 }) {
   return {
     enctype: 'multipart/form-data',
-    returnLink, // TODO (jf): fix return link
+    returnLink,
     returnText,
     buttonText,
     hiddenFields,
