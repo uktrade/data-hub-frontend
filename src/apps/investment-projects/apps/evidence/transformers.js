@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { compact, map } = require('lodash')
+const { compact, identity, map, pickBy } = require('lodash')
 
 function isTag (key) {
   return key.search(/tag/i) !== -1
@@ -9,10 +9,10 @@ function transformedEvidenceFieldsRequest (fields) {
   const tags = compact(map(fields, (value, key) => isTag(key) ? fields[key] : null))
   const comment = fields.comment
 
-  return {
+  return pickBy({
     tags,
-    ...comment,
-  }
+    comment,
+  }, identity)
 }
 
 module.exports = {
