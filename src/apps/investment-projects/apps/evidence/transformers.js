@@ -11,7 +11,7 @@ function transformedEvidenceFieldsRequest (fields) {
 
   return {
     tags,
-    comment,
+    ...comment,
   }
 }
 
