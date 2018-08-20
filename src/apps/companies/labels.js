@@ -35,7 +35,6 @@ const companyDetailsLabels = {
   archived_reason: 'Archived reason',
   archived_by_id: 'Archived by',
   company_number: 'Companies House number',
-  account_manager: 'Account manager',
   vat_number: 'VAT number',
   reference_code: 'CDMS reference',
 }

@@ -251,13 +251,13 @@ describe('Company repository', () => {
     })
 
     it('should make the correct call to the API', () => {
-      return this.repo.updateCompany('1234', '999', { account_manager: '8888' })
+      return this.repo.updateCompany('1234', '999', { global_headquarters: '1' })
         .then(() => {
           expect(this.authorisedRequestStub).to.be.calledWith('1234', {
             url: 'http://test.com/v3/company/999',
             method: 'PATCH',
             body: {
-              account_manager: '8888',
+              global_headquarters: '1',
             },
           })
         })

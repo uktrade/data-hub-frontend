@@ -35,7 +35,6 @@
           "trading_address_county": null,
           "trading_address_postcode": null,
           "trading_address_country": null,
-          "account_manager": null,
           "business_type": {
               "name": "Company",
               "id": "98d14e94-5d95-e211-a939-e4115bead28a"
