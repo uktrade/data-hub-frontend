@@ -37,7 +37,7 @@
             {% elif data | isArray %}
               <ul>
                {% for item in data | removeNilAndEmpty %}
-                <li>{{ item }}{{ "," if not loop.last }}</li>
+                 <li>{{ item }}{{ "," if not loop.last }}</li>
                {% endfor %}
               </ul>
             {% elif data | isPlainObject %}
