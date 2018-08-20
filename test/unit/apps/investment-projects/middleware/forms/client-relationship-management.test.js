@@ -102,7 +102,6 @@ describe('Investment form middleware - client relationship management', () => {
             investmentData: assign({}, investmentData, {
               client_relationship_manager: { id: '4', name: 'Fred Smith' },
               investor_company: {
-                account_manager: { id: '5', name: 'Jim Smith' },
               },
             }),
           },
@@ -128,7 +127,6 @@ describe('Investment form middleware - client relationship management', () => {
     beforeEach(() => {
       this.body = {
         client_relationship_manager: '1234',
-        account_manager: '4321',
         investor_company: '0909',
       }
     })
@@ -163,21 +161,6 @@ describe('Investment form middleware - client relationship management', () => {
           body: this.body,
         }, this.resMock, () => {
           expect(this.updateInvestmentStub).to.be.calledWith('mock-token', investmentData.id, { client_relationship_manager: this.body.client_relationship_manager })
-          done()
-        })
-      })
-
-      it('updates the company data', (done) => {
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
-          },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, () => {
-          expect(this.updateCompanyStub).to.be.calledWith('mock-token', this.body.investor_company, { account_manager: this.body.account_manager })
           done()
         })
       })

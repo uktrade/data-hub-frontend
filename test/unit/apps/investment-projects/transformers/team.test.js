@@ -85,7 +85,6 @@ describe('Investment project transformers', () => {
           },
         },
         investor_company: {
-          account_manager: null,
         },
       }
 

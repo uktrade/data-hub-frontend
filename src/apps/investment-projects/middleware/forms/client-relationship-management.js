@@ -2,7 +2,6 @@ const { get } = require('lodash')
 
 const { getAdvisers } = require('../../../adviser/repos')
 const { filterActiveAdvisers } = require('../../../adviser/filters')
-const { updateCompany } = require('../../../companies/repos')
 const { updateInvestment } = require('../../repos')
 const { clientRelationshipManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
@@ -46,7 +45,6 @@ async function populateForm (req, res, next) {
 async function handleFormPost (req, res, next) {
   try {
     res.locals.projectId = req.params.investmentId
-    await updateCompany(req.session.token, req.body.investor_company, { account_manager: req.body.account_manager })
     await updateInvestment(req.session.token, res.locals.projectId, { client_relationship_manager: req.body.client_relationship_manager })
     next()
   } catch (err) {
