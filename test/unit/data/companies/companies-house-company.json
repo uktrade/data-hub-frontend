@@ -33,10 +33,6 @@
     "id": "1234",
     "name": "United Kingdom"
   },
-  "account_manager": {
-    "id": "4234124124124",
-    "name": "Yvonne Ahern"
-  },
   "business_type": {
       "name": "Private limited company",
       "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
