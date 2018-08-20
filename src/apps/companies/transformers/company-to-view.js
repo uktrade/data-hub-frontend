@@ -35,7 +35,6 @@ module.exports = function transformCompanyToView ({
   website,
   employee_range,
   turnover_range,
-  account_manager,
   headquarter_type,
   trading_name,
   vat_number,
@@ -69,7 +68,6 @@ module.exports = function transformCompanyToView ({
     } : null,
     employee_range: get(employee_range, 'name'),
     turnover_range: get(turnover_range, 'name'),
-    account_manager: get(account_manager, 'name'),
     headquarter_type: hqLabels[get(headquarter_type, 'name')] || 'Not a headquarters',
     registered_address: getFormattedAddress({
       address_1: registered_address_1,

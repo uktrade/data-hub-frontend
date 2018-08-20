@@ -36,18 +36,6 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": false,
-    "account_manager": {
-      "id": "0563a10b-0e34-e411-985c-e4115bead28a",
-      "name": "Yang Xiao",
-      "last_login": null,
-      "first_name": "Yang",
-      "last_name": "Xiao",
-      "email": "yang.xiao@mobile.ukti.gov.uk",
-      "dit_team": {
-        "id": "a84d24c2-9698-e211-a939-e4115bead28a",
-        "name": "British Embassy Beijing China"
-      }
-    },
     "registered_address_1": "707-19 Yoksam2 dong",
     "registered_address_2": "Gangnam-gu",
     "registered_address_town": "Seoul",

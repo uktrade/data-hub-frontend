@@ -3,7 +3,6 @@
   "results": [
     {
       "id": "b2c34b41-1d5a-4b4b-9249-7c53ff2868dd",
-      "account_manager": null,
       "archived_by": null,
       "business_type": {
         "id": "98d14e94-5d95-e211-a939-e4115bead28a",
@@ -92,7 +91,6 @@
     },
     {
       "id": "731bdcc1-f685-4c8e-bd66-b356b2c16995",
-      "account_manager": null,
       "archived_by": null,
       "business_type": {
         "id": "9ad14e94-5d95-e211-a939-e4115bead28a",
