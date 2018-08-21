@@ -27,22 +27,30 @@ describe('Contacts interactions middleware', () => {
     this.nextSpy = sinon.spy()
   })
 
-  describe('#setInteractionsReturnUrl', () => {
-    it('should set the return URL', () => {
-      this.middleware.setInteractionsReturnUrl(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.returnLink).to.equal('/contacts/1/interactions/')
+  describe('#setInteractionsDetails', () => {
+    beforeEach(() => {
+      this.middleware.setInteractionsDetails(this.req, this.res, this.nextSpy)
     })
-  })
 
-  describe('#setInteractionsEntityName', () => {
+    it('should set the return URL', () => {
+      expect(this.res.locals.interactions.returnLink).to.equal('/contacts/1/interactions/')
+    })
+
     it('should set the entity name', () => {
-      this.middleware.setInteractionsEntityName(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.entityName).to.equal('first last')
+      expect(this.res.locals.interactions.entityName).to.equal('first last')
+    })
+
+    it('should set the interactions query', () => {
+      expect(this.res.locals.interactions.query).to.deep.equal({ contact_id: '1' })
+    })
+
+    it('should allow interactions to be added', () => {
+      expect(this.res.locals.interactions.canAdd).to.be.true
     })
   })
 
   describe('#setCompanyDetails', () => {
-    it('should set the entity name', async () => {
+    it('should set the entiity name', async () => {
       await this.middleware.setCompanyDetails(this.req, this.res, this.nextSpy)
       expect(this.res.locals.company).to.deep.equal(contactData.company)
     })

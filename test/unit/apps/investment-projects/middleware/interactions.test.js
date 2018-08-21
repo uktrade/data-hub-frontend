@@ -26,17 +26,25 @@ describe('Investment projects interactions middleware', () => {
     this.nextSpy = sinon.spy()
   })
 
-  describe('#setInteractionsReturnUrl', () => {
-    it('should set the return URL', () => {
-      this.middleware.setInteractionsReturnUrl(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.returnLink).to.equal('/investment-projects/1/interactions/')
+  describe('#setInteractionsDetails', () => {
+    beforeEach(() => {
+      this.middleware.setInteractionsDetails(this.req, this.res, this.nextSpy)
     })
-  })
 
-  describe('#setInteractionsEntityName', () => {
+    it('should set the return URL', () => {
+      expect(this.res.locals.interactions.returnLink).to.equal('/investment-projects/1/interactions/')
+    })
+
     it('should set the entity name', () => {
-      this.middleware.setInteractionsEntityName(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.entityName).to.equal('investment')
+      expect(this.res.locals.interactions.entityName).to.equal('investment')
+    })
+
+    it('should set the interactions query', () => {
+      expect(this.res.locals.interactions.query).to.deep.equal({ investment_project_id: '1' })
+    })
+
+    it('should allow interactions to be added', () => {
+      expect(this.res.locals.interactions.canAdd).to.be.true
     })
   })
 
