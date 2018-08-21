@@ -1,12 +1,13 @@
 const { getContact } = require('../../contacts/repos')
 
-function setInteractionsReturnUrl (req, res, next) {
-  res.locals.returnLink = `/contacts/${req.params.contactId}/interactions/`
-  next()
-}
+function setInteractionsDetails (req, res, next) {
+  res.locals.interactions = {
+    returnLink: `/contacts/${req.params.contactId}/interactions/`,
+    entityName: `${res.locals.contact.first_name} ${res.locals.contact.last_name}`,
+    query: `contact_id=${req.params.contactId}`,
+    view: 'contacts/views/interactions',
+  }
 
-function setInteractionsEntityName (req, res, next) {
-  res.locals.entityName = `${res.locals.contact.first_name} ${res.locals.contact.last_name}`
   next()
 }
 
@@ -21,7 +22,6 @@ async function setCompanyDetails (req, res, next) {
 }
 
 module.exports = {
-  setInteractionsReturnUrl,
-  setInteractionsEntityName,
+  setInteractionsDetails,
   setCompanyDetails,
 }
