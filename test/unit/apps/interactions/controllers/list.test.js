@@ -115,9 +115,9 @@ describe('interaction list', () => {
       })
 
       it('should render action buttons', () => {
-        const actual = this.res.render.firstCall.args[1].actionButtons
-        expect(actual[0].label).to.equal('Add interaction')
-        expect(actual[0].url).to.equal('entity/interactions/create/interaction')
+        const actual = this.res.render.firstCall.args[1].actionButtons[0]
+        expect(actual.label).to.equal('Add interaction')
+        expect(actual.url).to.equal('entity/interactions/create/interaction')
         expect(this.res.render).to.have.been.calledOnce
       })
     })
