@@ -87,7 +87,7 @@ describe('interaction list', () => {
     })
   })
 
-  context('renderInteractions', () => {
+  context('#renderInteractionsForEntity', () => {
     context('when everything is okay', () => {
       beforeEach(async () => {
         this.res = {
