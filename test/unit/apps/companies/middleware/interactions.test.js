@@ -16,17 +16,21 @@ describe('Companies interactions middleware', () => {
     this.nextSpy = sinon.spy()
   })
 
-  describe('#setInteractionsReturnUrl', () => {
-    it('should set the return URL', () => {
-      this.middleware.setInteractionsReturnUrl(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.returnLink).to.equal('/companies/1/interactions/')
+  describe('#setInteractionsDetails', () => {
+    beforeEach(() => {
+      this.middleware.setInteractionsDetails(this.req, this.res, this.nextSpy)
     })
-  })
 
-  describe('#setInteractionsEntityName', () => {
+    it('should set the return URL', () => {
+      expect(this.res.locals.interactions.returnLink).to.equal('/companies/1/interactions/')
+    })
+
     it('should set the entity name', () => {
-      this.middleware.setInteractionsEntityName(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.entityName).to.equal('company name')
+      expect(this.res.locals.interactions.entityName).to.equal('company name')
+    })
+
+    it('should set the interactions query', () => {
+      expect(this.res.locals.interactions.query).to.equal('company_id=1')
     })
   })
 })

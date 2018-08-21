@@ -35,10 +35,9 @@ const {
 } = require('./middleware/forms')
 
 const { renderInvestmentList } = require('./controllers/list')
-const { renderInteractionList } = require('./controllers/interactions')
 const { renderPropositionList } = require('./controllers/propositions')
 
-const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
+const { setInteractionsDetails, setCompanyDetails } = require('./middleware/interactions')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
 
 const { renderTeamEdit } = require('./controllers/team/edit-team-members')
@@ -175,15 +174,13 @@ router
   .get(populateTeamEditForm, renderTeamEdit)
   .post(postTeamEdit, renderTeamEdit)
 
-router.get('/:investmentId/interactions', setInteractionsReturnUrl, renderInteractionList)
-
 router.get('/:investmentId/propositions', setPropositionsReturnUrl, renderPropositionList)
 
 router.get('/:investmentId/evaluation', evaluation.renderEvaluationPage)
 
 router.post('/:investmentId/change-project-stage', projectStageFormMiddleware.handleFormPost)
 
-router.use('/:investmentId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+router.use('/:investmentId', setInteractionsDetails, setCompanyDetails, interactionsRouter)
 
 router.use('/:investmentId', setPropositionsReturnUrl, propositionsRouter)
 

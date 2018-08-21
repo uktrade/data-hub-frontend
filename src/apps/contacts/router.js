@@ -12,15 +12,9 @@ const { renderContactList } = require('./controllers/list')
 const { postDetails, editDetails } = require('./controllers/edit')
 const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
-const { renderInteractions } = require('./controllers/interactions')
 const { getAudit } = require('./controllers/audit')
 
-const { setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails } = require('./middleware/interactions')
-const {
-  getInteractionCollection,
-  getInteractionsRequestBody,
-  getInteractionSortForm,
-} = require('../interactions/middleware/collection')
+const { setInteractionsDetails, setCompanyDetails } = require('./middleware/interactions')
 
 const { transformContactToListItem } = require('./transformers')
 
@@ -51,18 +45,10 @@ router
 router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)
 
-router.get('/:contactId/interactions',
-  setInteractionsReturnUrl,
-  getInteractionsRequestBody,
-  getInteractionCollection,
-  getInteractionSortForm,
-  renderInteractions
-)
-
 router.get('/:contactId/audit', getAudit)
 
 router.get('/:contactId/documents', renderDocuments)
 
-router.use('/:contactId', setInteractionsReturnUrl, setInteractionsEntityName, setCompanyDetails, interactionsRouter)
+router.use('/:contactId', setInteractionsDetails, setCompanyDetails, interactionsRouter)
 
 module.exports = router

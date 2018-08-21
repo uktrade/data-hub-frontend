@@ -46,6 +46,24 @@ async function renderInteractionList (req, res, next) {
   }
 }
 
+function renderInteractionsForEntity (req, res, next) {
+  try {
+    const { view, returnLink, createKind } = res.locals.interactions
+
+    res
+      .breadcrumb('Interactions')
+      .render(view, {
+        actionButtons: [{
+          label: 'Add interaction',
+          url: `${returnLink}create${createKind ? `/${createKind}` : ''}`,
+        }],
+      })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   renderInteractionList,
+  renderInteractionsForEntity,
 }

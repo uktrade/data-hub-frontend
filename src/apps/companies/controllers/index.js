@@ -4,7 +4,6 @@ const archiveController = require('./archive')
 const auditController = require('./audit')
 const contactsController = require('./contacts')
 const exportsController = require('./exports')
-const interactionsController = require('./interactions')
 const investmentsController = require('./investments')
 const renderCompanyList = require('./list')
 
@@ -15,7 +14,6 @@ module.exports = {
   auditController,
   contactsController,
   exportsController,
-  interactionsController,
   investmentsController,
   renderCompanyList,
 }

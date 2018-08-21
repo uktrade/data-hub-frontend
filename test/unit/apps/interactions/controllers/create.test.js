@@ -26,7 +26,9 @@ describe('Create interaction, step 1', () => {
       redirect: sinon.spy(),
       render: sinon.spy(),
       locals: {
-        returnLink: '/return/',
+        interactions: {
+          returnLink: '/return/',
+        },
       },
     }
 
@@ -43,7 +45,6 @@ describe('Create interaction, step 1', () => {
           query: {
             company: '1234',
             contact: '4321',
-            returnLink: '/contacts/4321/interactions',
           },
         })
 
@@ -65,7 +66,6 @@ describe('Create interaction, step 1', () => {
           query: {
             company: '1234',
             contact: '4321',
-            returnLink: '/contacts/4321/interactions',
           },
         })
 
@@ -83,7 +83,6 @@ describe('Create interaction, step 1', () => {
         this.req = assign({}, this.req, {
           query: {
             company: '1234',
-            returnLink: '/companies/1234/interactions',
           },
         })
 

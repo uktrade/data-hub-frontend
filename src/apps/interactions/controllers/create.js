@@ -12,7 +12,7 @@ function postCreate (req, res, next) {
     }
     return next()
   }
-  return res.redirect(`${res.locals.returnLink}create/${kebabCase(kind)}`)
+  return res.redirect(`${res.locals.interactions.returnLink}create/${kebabCase(kind)}`)
 }
 
 function renderCreate (req, res) {

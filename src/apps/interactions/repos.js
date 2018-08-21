@@ -21,21 +21,21 @@ function saveInteraction (token, interaction) {
 }
 
 /**
- * Get interactions for a investment
+ * Get interactions for an entity type
  *
  * @param {string} token
- * @param {string} investmentId
+ * @param {string} entityQuery
  * @param {number} page
  * @return {Promise<Object[]>} Returns a promise that resolves to an array of API interaction objects
  */
-function getInteractionsForInvestment (token, investmentId, page) {
+function getInteractionsForEntity (token, entityQuery, page) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?investment_project_id=${investmentId}&limit=${limit}&offset=${offset}`)
+  return authorisedRequest(token, `${config.apiRoot}/v3/interaction?${entityQuery}&limit=${limit}&offset=${offset}`)
 }
 
 module.exports = {
   saveInteraction,
   fetchInteraction,
-  getInteractionsForInvestment,
+  getInteractionsForEntity,
 }

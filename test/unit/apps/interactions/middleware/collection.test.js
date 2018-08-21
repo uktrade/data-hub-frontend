@@ -27,28 +27,6 @@ describe('interaction collection middleware', () => {
       this.middleware = require('~/src/apps/interactions/middleware/collection')
     })
 
-    context('when called with contact id', () => {
-      beforeEach(() => {
-        this.req.params.contactId = '1234'
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
-      })
-
-      it('should set the contact in the request body', () => {
-        expect(this.req.body.contact).to.equal('1234')
-      })
-    })
-
-    context('when called with company id', () => {
-      beforeEach(() => {
-        this.req.params.companyId = '1234'
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
-      })
-
-      it('should set the contact in the request body', () => {
-        expect(this.req.body.company).to.equal('1234')
-      })
-    })
-
     context('when called with sort order', () => {
       beforeEach(() => {
         this.req.query.sortby = 'name'
