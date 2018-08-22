@@ -72,3 +72,11 @@ table.table--key-value.table--small {
 .table__action {
   padding-left: $default-spacing-unit / 2;
 }
+
+.table--filename-truncate {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}

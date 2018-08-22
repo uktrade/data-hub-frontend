@@ -50,6 +50,14 @@ const LOCAL_NAV = [
       'investment.read_investmentproject_document',
     ],
   },
+  {
+    path: 'evidence',
+    label: 'Evidence',
+    permissions: [
+      'evidence.read_all_evidencedocument',
+      'evidence.read_associated_evidencedocument',
+    ],
+  },
 ]
 
 const DEFAULT_COLLECTION_QUERY = {

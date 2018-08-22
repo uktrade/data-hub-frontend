@@ -9,6 +9,7 @@ const { renderUpload } = require('./controllers/upload')
 const { postDetails, getDownloadLink, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
 const { postAbandon } = require('./middleware/abandon')
 const { postComplete } = require('./middleware/complete')
+const { setPropositionDocumentUploadReturnUrl } = require('./middleware/document-upload')
 const { postUpload } = require('../document-upload/middleware/upload-module')
 
 router.param('propositionId', getPropositionDetails)
@@ -36,7 +37,13 @@ router
 router
   .route('/propositions/:propositionId/document')
   .post(
-    postUpload,
+    setPropositionDocumentUploadReturnUrl,
+    postUpload.bind({
+      url: {
+        app: 'investment',
+        subApp: 'proposition',
+      },
+    }),
     renderUpload,
   )
   .get(
