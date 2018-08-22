@@ -134,6 +134,15 @@ Then(/^the result count should be less than the total$/, async function () {
     })
 })
 
+Then(/^the result count should be greater than ([0-9])/, async function (minimum) {
+  await Collection
+    .section.collectionHeader
+    .waitForElementVisible('@resultCount')
+    .getText('@resultCount', (result) => {
+      client.expect(parseInt(result.value)).to.be.above(parseInt(minimum))
+    })
+})
+
 Then(/^I choose the first item in the collection$/, async function () {
   await Collection
     .section.firstCollectionItem
