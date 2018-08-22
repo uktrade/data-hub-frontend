@@ -14,14 +14,18 @@ When(/^I (?:navigate|go|open|visit).*? `(.+)` page$/, async function (pageName) 
 })
 
 When(/^I (?:navigate|go|open|visit).*? `(.+)` page using `(.+)` `(.+)` fixture$/, async function (pageName, entity, fixtureName) {
+  const page = get(client.page, pageName)()
+  const entityTypeKey = camelCase(entity)
+  const fixture = find(fixtures[entityTypeKey], { name: fixtureName })
+
+  if (!fixture) {
+    throw new Error(`Fixture ${fixtureName} does not exist`)
+  }
+
+  // TODO: Need to find a way to remove needing to store the item in state
+  set(this.state, entityTypeKey, assign({}, get(this.state, entityTypeKey), fixture))
+
   try {
-    const page = get(client.page, pageName)()
-    const entityTypeKey = camelCase(entity)
-    const fixture = find(fixtures[entityTypeKey], { name: fixtureName })
-
-    // TODO: Need to find a way to remove needing to store the item in state
-    set(this.state, entityTypeKey, assign({}, get(this.state, entityTypeKey), fixture))
-
     await page.navigate(page.url(fixtureName))
   } catch (error) {
     throw new Error(`The page object '${pageName}' does not exist`)
