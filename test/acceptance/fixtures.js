@@ -193,29 +193,14 @@ module.exports = {
     newGolfCourse: {
       id: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
       name: 'New golf course (DA)',
-      clientRelationshipManager: {
-        name: 'Paula Churing',
-        team: 'Marketing - Marketing Team',
-      },
     },
     newZoo: {
       id: 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977',
       name: 'New zoo (LEP)',
-      clientRelationshipManager: {
-        name: 'Paula Churing',
-        team: 'Marketing - Marketing Team',
-      },
     },
     fancyDressManufacturing: {
       id: 'b30dee70-b2d6-48cf-9ce4-b9264854470c',
       name: 'Fancy dress manufacturing',
-      clientRelationshipManager: {
-        name: 'Puck Head',
-        team: 'CBBC North EAST',
-      },
-      globalAccountManager: {
-        name: 'Travis Greene',
-      },
     },
   },
   proposition: {
