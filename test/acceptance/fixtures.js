@@ -90,6 +90,10 @@ module.exports = {
       id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
       name: 'Johnny Cakeman',
     },
+    deanCox: {
+      id: '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
+      name: 'Dean Cox',
+    },
   },
   event: {
     oneDayExhibition: {
@@ -139,6 +143,10 @@ module.exports = {
       ditAdviser: 'John Rogers',
       event: 'No',
       documents: 'There are no files or documents',
+    },
+    providedFundingInformation: {
+      id: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
+      name: 'Provided funding information',
     },
   },
   investmentProject: {
