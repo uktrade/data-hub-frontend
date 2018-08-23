@@ -7,6 +7,7 @@ Feature: View collection of interactions for a contact
     When I navigate to the `contacts.interactions` page using `contact` `Dean Cox` fixture
     And the results summary for a interaction collection is present
     And I can view the collection
+    And the result count should be greater than 0
 
   @contacts-interactions-collection--filter # TODO
 

@@ -1,5 +1,7 @@
 const { assign } = require('lodash')
 
+const interactions = require('../../../data/interactions/attendees')
+
 describe('interaction collection middleware', () => {
   beforeEach(async () => {
     this.req = {
@@ -20,35 +22,130 @@ describe('interaction collection middleware', () => {
     }
 
     this.next = sinon.spy()
+    this.getInteractionsForEntityStub = sinon.stub()
+
+    this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+      '../repos': {
+        getInteractionsForEntity: this.getInteractionsForEntityStub.resolves(interactions),
+      },
+    })
+  })
+
+  describe('#getInteractionCollectionForEntity', () => {
+    const commonTests = () => {
+      it('should get the interactions for the entity once', () => {
+        expect(this.getInteractionsForEntityStub).to.have.been.calledOnce
+      })
+
+      it('should set the results', () => {
+        expect(this.res.locals.results.items.length).to.equal(1)
+      })
+    }
+
+    context('when a sort by is specified', () => {
+      beforeEach(async () => {
+        this.req = {
+          ...this.req,
+          query: {
+            ...this.req.query,
+            sortby: 'company__name',
+          },
+        }
+
+        this.res = {
+          ...this.res,
+          locals: {
+            ...this.res.locals,
+            interactions: {
+              entityQuery: {
+                entity: '1',
+              },
+            },
+          },
+        }
+
+        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+      })
+
+      commonTests()
+
+      it('should use the specified sort', () => {
+        const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
+        expect(actual).to.equal('company__name')
+      })
+    })
+
+    context('when a sort by is not specified', () => {
+      beforeEach(async () => {
+        this.req = {
+          ...this.req,
+          query: {
+            ...this.req.query,
+          },
+        }
+
+        this.res = {
+          ...this.res,
+          locals: {
+            ...this.res.locals,
+            interactions: {
+              entityQuery: {
+                entity: '1',
+              },
+            },
+          },
+        }
+
+        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+      })
+
+      commonTests()
+
+      it('should use the default sort', () => {
+        const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
+        expect(actual).to.equal('-date')
+      })
+    })
+
+    context('when there is an error', () => {
+      beforeEach(async () => {
+        this.req = {
+          ...this.req,
+          query: {
+            ...this.req.query,
+          },
+        }
+
+        this.res = {
+          ...this.res,
+          locals: {
+            ...this.res.locals,
+            interactions: {
+              entityQuery: {
+                entity: '1',
+              },
+            },
+          },
+        }
+
+        this.error = new Error('error')
+
+        this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+          '../repos': {
+            getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(this.error),
+          },
+        })
+
+        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+      })
+
+      it('should call next once with an error', () => {
+        expect(this.next.args[0][0].message).to.have.string('error')
+      })
+    })
   })
 
   describe('#getInteractionsRequestBody', () => {
-    beforeEach(() => {
-      this.middleware = require('~/src/apps/interactions/middleware/collection')
-    })
-
-    context('when called with contact id', () => {
-      beforeEach(() => {
-        this.req.params.contactId = '1234'
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
-      })
-
-      it('should set the contact in the request body', () => {
-        expect(this.req.body.contact).to.equal('1234')
-      })
-    })
-
-    context('when called with company id', () => {
-      beforeEach(() => {
-        this.req.params.companyId = '1234'
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
-      })
-
-      it('should set the contact in the request body', () => {
-        expect(this.req.body.company).to.equal('1234')
-      })
-    })
-
     context('when called with sort order', () => {
       beforeEach(() => {
         this.req.query.sortby = 'name'
@@ -110,29 +207,34 @@ describe('interaction collection middleware', () => {
   })
 
   describe('#getInteractionSortForm', () => {
-    beforeEach(() => {
-      this.middleware = require('~/src/apps/interactions/middleware/collection')
-    })
+    const commonTests = () => {
+      it('should generate a sort form', () => {
+        expect(this.res.locals).to.have.property('sortForm')
+      })
+    }
 
     context('when called with no sort order', () => {
       beforeEach(() => {
         this.middleware.getInteractionSortForm(this.req, this.res, this.next)
       })
 
-      it('should generate a sort form', () => {
-        expect(this.res.locals).to.have.property('sortForm')
-      })
+      commonTests()
     })
 
     context('when called with a sort order', () => {
       beforeEach(() => {
-        this.req.query.sortby = 'name'
+        this.req = {
+          ...this.req,
+          query: {
+            ...this.req.query,
+            sortby: 'name',
+          },
+        }
+
         this.middleware.getInteractionSortForm(this.req, this.res, this.next)
       })
 
-      it('should generate a sort form', () => {
-        expect(this.res.locals).to.have.property('sortForm')
-      })
+      commonTests()
 
       it('should indicate the selected sort order', () => {
         expect(this.res.locals.sortForm.children[0].value).to.equal('name')
