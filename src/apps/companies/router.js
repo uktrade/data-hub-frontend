@@ -19,7 +19,6 @@ const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderTimeline } = require('./controllers/timeline')
-const { renderInteractions } = require('./controllers/interactions')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const { renderDocuments } = require('./controllers/documents')
@@ -36,11 +35,6 @@ const {
 } = require('./controllers/exports')
 
 const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
-const {
-  getInteractionCollection,
-  getInteractionsRequestBody,
-  getInteractionSortForm,
-} = require('../interactions/middleware/collection')
 
 const {
   getLimitedCompaniesCollection,
@@ -51,7 +45,7 @@ const {
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
-const { setInteractionsReturnUrl, setInteractionsEntityName } = require('./middleware/interactions')
+const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
@@ -119,13 +113,6 @@ router.get('/:companyId/contacts',
   renderContacts
 )
 
-router.get('/:companyId/interactions',
-  setInteractionsReturnUrl,
-  getInteractionsRequestBody,
-  getInteractionCollection,
-  getInteractionSortForm,
-  renderInteractions
-)
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/subsidiaries', renderSubsidiaries)
 router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
@@ -135,6 +122,6 @@ router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
 router.get('/:companyId/timeline', renderTimeline)
 
-router.use('/:companyId', setInteractionsReturnUrl, setInteractionsEntityName, interactionsRouter)
+router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 
 module.exports = router

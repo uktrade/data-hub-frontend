@@ -90,6 +90,10 @@ module.exports = {
       id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
       name: 'Johnny Cakeman',
     },
+    deanCox: {
+      id: '952232d2-1d25-4c3a-bcac-2f3a30a94da9',
+      name: 'Dean Cox',
+    },
   },
   event: {
     oneDayExhibition: {
@@ -140,6 +144,10 @@ module.exports = {
       event: 'No',
       documents: 'There are no files or documents',
     },
+    providedFundingInformation: {
+      id: '0dcb3748-c097-4f20-b84f-0114bbb1a8e0',
+      name: 'Provided funding information',
+    },
   },
   investmentProject: {
     newHotelCommitmentToInvest: {
@@ -185,29 +193,14 @@ module.exports = {
     newGolfCourse: {
       id: 'e32b3c33-80ac-4589-a8c4-dda305d726ba',
       name: 'New golf course (DA)',
-      clientRelationshipManager: {
-        name: 'Paula Churing',
-        team: 'Marketing - Marketing Team',
-      },
     },
     newZoo: {
       id: 'ba1f0b14-5fe4-4c36-bf6a-ddf115272977',
       name: 'New zoo (LEP)',
-      clientRelationshipManager: {
-        name: 'Paula Churing',
-        team: 'Marketing - Marketing Team',
-      },
     },
     fancyDressManufacturing: {
       id: 'b30dee70-b2d6-48cf-9ce4-b9264854470c',
       name: 'Fancy dress manufacturing',
-      clientRelationshipManager: {
-        name: 'Puck Head',
-        team: 'CBBC North EAST',
-      },
-      globalAccountManager: {
-        name: 'Travis Greene',
-      },
     },
   },
   proposition: {
