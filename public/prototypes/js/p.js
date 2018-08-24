@@ -10,6 +10,7 @@ const contacts = [
       {
         label: 'Location',
         value: 'London Office',
+        postcode: 'N1 6NU',
       },
       {
         label: 'Sector',
@@ -44,6 +45,7 @@ const contacts = [
       {
         label: 'Location',
         value: 'London Office',
+        postcode: 'N1 6NU',
       },
       {
         label: 'Sector',
@@ -78,6 +80,7 @@ const contacts = [
       {
         label: 'Location',
         value: 'Cambridge Office',
+        postcode: 'CB1 8GL',
       },
       {
         label: 'Sector',
@@ -103,9 +106,48 @@ const contacts = [
   },
 ]
 
+const subsidiaries = [
+  {
+    id: 1,
+    name: 'Siemens',
+    name2: 'Siemens',
+    breadcrumb: 'Siemens',
+    address: '4 Highlands Court, Cranmore Avenue, Solihull, B90 4LE, United Kingdom',
+    businessType: 'Company',
+    ukRegion: 'West Midlands',
+    headquarterType: 'Not a headquarters',
+    globalHq: 'Siemens AG (Munich) (GLOBAL HQ)s',
+    sector: 'Energy',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Energy',
+      },
+      {
+        label: 'Primary address',
+        value: '4 Highlands Court, Cranmore Avenue, Solihull, B90 4LE, United Kingdom',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'United Kingdom',
+      },
+      {
+        label: 'UK region',
+        value: 'West Midlands',
+      },
+    ],
+  },
+]
+
+
 new Vue({
   el: '#blah',
   data: {
+    contacts,
+    subsidiaries,
     options: [],
     addresses: [
       {
@@ -133,7 +175,6 @@ new Vue({
         display: '74 Guild Street, Some place, London E5 2WR',
       },
     ],
-    contacts: contacts,
   },
   methods: {
     getEntity() {
@@ -154,7 +195,7 @@ new Vue({
 
       this.setState(collectionName, collection)
 
-      window.location.href = `${entity['next-page']}?success=${entity['success-message']}`
+      window.location.href = `${entity['next-page']}?success=${entity['success-message']}&id=${getQueryParam('id')}`
     },
 
     moveToNextStep (nextPage) {
@@ -163,7 +204,7 @@ new Vue({
 
       this.setState(key, this.refreshEntity(key, entity))
 
-      window.location.href = `${nextPage}?key=${key}`
+      window.location.href = `${nextPage}?key=${key}&id=${getQueryParam('id')}`
     },
 
     setState (name, o) {
@@ -218,6 +259,12 @@ new Vue({
               value: `${location['address-1']}, ${location['address-2']}, ${location['town-or-city']}, ${location['county']}, United Kingdom`,
             },
           ],
+          badges: [
+            {
+              label: 'UK region',
+              value: location['region'] || 'todo',
+            },
+          ],
         }
       })
     },
@@ -226,16 +273,20 @@ new Vue({
       return `${href}?key=${uuid()}`
     },
 
+    appendQueryParam (href) {
+      return `${href}&id=${getQueryParam('id')}`
+    },
+
     getUniqueLocations() {
       return _.uniq(_.map(contacts, (contact) => {
         return _.find(contact.meta, (item) => {
           return item.label === 'Location'
-        }).value
+        })
       }))
     },
 
-    getContactsCount() {
-      return this.contacts.length
+    getCount(name) {
+      return this[name].length
     },
 
     filterContacts(event) {
@@ -251,5 +302,24 @@ new Vue({
         })
       }
     },
+
+    setDataFields(name, fields) {
+      const id = parseInt(getQueryParam('id'))
+      const entity = _.find(this[name], { id })
+      fields.forEach((field) => {
+        document.getElementById(field).innerHTML = entity[field]
+      })
+    },
+
+    getTableDataFields(name, fields) {
+      const id = parseInt(getQueryParam('id'))
+      const entity = _.find(this[name], { id })
+      return _.map(fields, (field) => {
+        return {
+          ...field,
+          value: entity[field.key],
+        }
+      })
+    }
   }
 })

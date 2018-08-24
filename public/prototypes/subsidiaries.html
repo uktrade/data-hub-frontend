@@ -47,7 +47,7 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name id="breadcrumb"></span></a></li>
+            itemprop=name>Siemens AG (Munich) (GLOBAL HQ)</span></a></li>
         </ul>
       </nav>
       <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
@@ -55,8 +55,13 @@
       </ul>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading id="name"></h1>
-          <p class="c-local-header__heading-after" id="address"></p>
+          <h1 class=c-local-header__heading>Siemens AG (Munich) (GLOBAL HQ)</h1>
+          <p class="c-local-header__heading-after">Wittelsbacherplatz 2, München, Bayern, 80333, Germany</p>
+          <div class="c-meta-list">
+            <div class="c-meta-list__item c-meta-list__item--stacked">
+              <span class="c-meta-list__item-label u-visually-hidden">Headquarter type</span> <span class="c-badge">Global HQ</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,9 +72,8 @@
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
             { text: 'Details' },
-            { text: 'Subsidiaries' },
-            { text: 'Locations', active: true, href: 'locations.html' },
-            { text: 'Contacts', href: 'contacts.html' },
+            { text: 'Subsidiaries', active: true },
+            { text: 'Contacts' },
             { text: 'Advisers' },
             { text: 'Interactions' },
             { text: 'Investment' },
@@ -77,46 +81,39 @@
             { text: 'Orders (OMIS)' },
             { text: 'Documents' },
             { text: 'Audit history' },
-          ]" :class="{ 'is-active': item.active }" :href="item.href ? item.href + '?id=' + appendQueryParam('id') : ''">{{ item.text }}</a>
+          ]" :class="{ 'is-active': item.active }" :href="item.href">{{ item.text }}</a>
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
-        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name', 'address' ]) }}
-        <h2 class="heading-medium">Additional locations for <span>Siemens</span></h2>
+        <h2 class="heading-medium">Subsidiaries</h2>
         <article class="c-collection">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
               <div class="c-collection__header-intro">
-                <span class="c-collection__result-count">{{ getCollectionCount('locations') }}</span> locations</div>
+                <span class="c-collection__result-count">{{ getCount('subsidiaries') }}</span> subsidaries</div>
               <div class="c-collection__header-actions">
-                <a class="button button--secondary" v-bind:href="appendQueryParam(appendKey('postcode-lookup.html'))">Add location</a>
+                <a class="button button--secondary">Link a subsidiary</a>
               </div>
               <div class="c-collection__filter-summary"></div>
             </div>
           </header>
           <ol class="c-entity-list">
-            <li class="c-entity-list__item" v-for="location in getTransformedCollection('locations', transformLocationsToView)">
+            <li class="c-entity-list__item" v-for="subsidiary in subsidiaries">
               <div class="c-entity c-entity--company">
-                <div class="c-entity__badges">
-                  <a href="" style="font-size:20px; font-weight: bold;">Edit</a>
-                </div>
                 <div class="c-entity__header">
-                  <h3 class="c-entity__title"><a href="/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa"
-                                                 class="c-entity__link">{{ location.name }}</a></h3></div>
-                <div class="c-entity__content">
-                  <div class="c-meta-list" style="margin-bottom:10px;">
-                    <div class="c-meta-list__item" v-for="item in location.meta">
-                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
+                  <div class="c-entity__badges">
+                    <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
+                      <div class="c-meta-list__item" v-for="badge in subsidiary.badges">
+                        <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge">{{ badge.value }}</span>
+                      </div>
                     </div>
                   </div>
-                  <a href="" style="top:10px;">View contacts for this location</a><br /><!-- TODO -->
-                  <a href="">View interactions for this location</a>
-                </div>
-
-                <div style="margin-top:10px;">
-                  <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
-                    <div class="c-meta-list__item" v-for="badge in location.badges">
-                      <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge" style="font-weight:normal;">{{ badge.value }}</span>
+                  <h3 class="c-entity__title"><a :href="'subsidiary.html?id=' + subsidiary.id"
+                                                 class="c-entity__link">{{ subsidiary.name }}</a></h3></div>
+                <div class="c-entity__content">
+                  <div class="c-meta-list">
+                    <div class="c-meta-list__item" v-for="item in subsidiary.meta">
+                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
                     </div>
                   </div>
                 </div>

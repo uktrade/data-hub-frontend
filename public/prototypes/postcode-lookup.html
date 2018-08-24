@@ -52,12 +52,12 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name>Fancy Dress Construction Ltd</span></a></li>
+            itemprop=name id="breadcrumb">breadcrumb</span></a></li>
         </ul>
       </nav>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading>Add a location for Fancy Dress Construction Ltd</h1>
+          <h1 class=c-local-header__heading>Add a location for <span id="name">name</span></h1>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@
   <div class="main-content__inner l-container">
     <div class=grid-row>
       <article class=column-three-quarters id="blah">
-        <p>Blah blah blah</p>
+        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name' ]) }}
         <form @submit.prevent="moveToNextStep('set-type.html')">
           <div id="group-field-registered_address_pcode_lookup" class="c-form-group c-form-group--short c-form-group--PostcodeLookup">
             <label class="c-form-group__label"
@@ -114,6 +114,29 @@
             <label class="c-form-group__label" for="country"><span class="c-form-group__label-text">Country</span></label>
             <div class="c-form-group__inner">United Kingdom<input type="hidden" ref="country" value="United Kingdom" /></div>
           </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="field-uk_region"><span class="c-form-group__label-text">UK region</span></label>
+            <div class="c-form-group__inner">
+              <select id="field-uk_region" name="uk_region" class="c-form-control" ref="region">
+                <option value="">-- Select region --</option>
+                <option>All</option>
+                <option>Benzonia</option>
+                <option>East Midlands</option>
+                <option>East of England</option>
+                <option>London</option>
+                <option>North East</option>
+                <option>North West</option>
+                <option>Northern Ireland</option>
+                <option>Scotland</option>
+                <option>South East</option>
+                <option>South West</option>
+                <option>UKTI Dubai Hub</option>
+                <option>Wales</option>
+                <option>West Midlands</option>
+                <option>Yorkshire and The Humber</option>
+              </select>
+            </div>
+          </div>
           <div class="c-form-actions">
             <button class="button">Continue</button>
             <a href="locations.html">Cancel</a>
@@ -126,6 +149,7 @@
 <!--[if gt IE 8]><!-->
 <script src=http://localhost:3000/js/app.js></script>
 <!--<![endif]-->
+<script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/p.js"></script>
 </body>

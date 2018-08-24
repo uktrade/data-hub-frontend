@@ -53,7 +53,7 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name>Fancy Dress Construction Ltd</span></a></li>
+            itemprop=name id="breadcrumb">breadcrumb</span></a></li>
         </ul>
       </nav>
       <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
@@ -61,7 +61,7 @@
       </ul>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading>Add a location for Fancy Dress Construction Ltd</h1>
+          <h1 class=c-local-header__heading>Add a location for <span id="name">name</span></h1>
         </div>
       </div>
     </div>
@@ -69,6 +69,7 @@
   <div class="main-content__inner l-container">
     <div class=grid-row>
       <article class=column-three-quarters id="blah">
+        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name' ]) }}
         <form @submit.prevent="addToCollection">
           <input type="hidden" ref="collection-name" value="locations" />
           <input type="hidden" ref="next-page" value="locations.html" />
@@ -119,6 +120,7 @@
 <!--[if gt IE 8]><!-->
 <script src=http://localhost:3000/js/app.js></script>
 <!--<![endif]-->
+<script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/messages.js"></script>
 <script src="/prototypes/js/p.js"></script>

@@ -66,10 +66,10 @@
       <div class=column-one-quarter id="local-nav">
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
-            { text: 'Details' },
+            { text: 'Details', active: true },
             { text: 'Subsidiaries' },
-            { text: 'Locations', active: true, href: 'locations.html' },
-            { text: 'Contacts', href: 'contacts.html' },
+            { text: 'Locations', href: 'locations.html?id=1' },
+            { text: 'Contacts', href: 'contacts.html?id=1' },
             { text: 'Advisers' },
             { text: 'Interactions' },
             { text: 'Investment' },
@@ -77,53 +77,43 @@
             { text: 'Orders (OMIS)' },
             { text: 'Documents' },
             { text: 'Audit history' },
-          ]" :class="{ 'is-active': item.active }" :href="item.href ? item.href + '?id=' + appendQueryParam('id') : ''">{{ item.text }}</a>
+          ]" :class="{ 'is-active': item.active }" :href="item.href">{{ item.text }}</a>
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
         {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name', 'address' ]) }}
-        <h2 class="heading-medium">Additional locations for <span>Siemens</span></h2>
-        <article class="c-collection">
-          <header class="c-collection__header">
-            <div class="c-collection__header-row">
-              <div class="c-collection__header-intro">
-                <span class="c-collection__result-count">{{ getCollectionCount('locations') }}</span> locations</div>
-              <div class="c-collection__header-actions">
-                <a class="button button--secondary" v-bind:href="appendQueryParam(appendKey('postcode-lookup.html'))">Add location</a>
-              </div>
-              <div class="c-collection__filter-summary"></div>
-            </div>
-          </header>
-          <ol class="c-entity-list">
-            <li class="c-entity-list__item" v-for="location in getTransformedCollection('locations', transformLocationsToView)">
-              <div class="c-entity c-entity--company">
-                <div class="c-entity__badges">
-                  <a href="" style="font-size:20px; font-weight: bold;">Edit</a>
-                </div>
-                <div class="c-entity__header">
-                  <h3 class="c-entity__title"><a href="/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa"
-                                                 class="c-entity__link">{{ location.name }}</a></h3></div>
-                <div class="c-entity__content">
-                  <div class="c-meta-list" style="margin-bottom:10px;">
-                    <div class="c-meta-list__item" v-for="item in location.meta">
-                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
-                    </div>
-                  </div>
-                  <a href="" style="top:10px;">View contacts for this location</a><br /><!-- TODO -->
-                  <a href="">View interactions for this location</a>
-                </div>
-
-                <div style="margin-top:10px;">
-                  <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
-                    <div class="c-meta-list__item" v-for="badge in location.badges">
-                      <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge" style="font-weight:normal;">{{ badge.value }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ol>
-        </article>
+        <h2 class="heading-medium">Company summary</h2>
+        <table class="table--key-value table--striped">
+          <tbody>
+            <tr v-for="field in getTableDataFields('subsidiaries', [
+              { label: 'Business type', key: 'businessType' },
+              { label: 'Primary address', key: 'address' },
+              { label: 'UK region', key: 'ukRegion' },
+              { label: 'Headquarter type', key: 'headquarterType' },
+              { label: 'Global HQ', key: 'globalHq' },
+              { label: 'Sector', key: 'sector' },
+            ])">
+              <th>{{ field.label }}</th>
+              <td>{{ field.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><a href="" class="button button--secondary">Edit company details</a></p>
+        <div class="section">
+          <h2 class="heading-medium">Global Account Manager – One List</h2>
+          <table class="table--key-value table--striped">
+            <tbody>
+            <tr>
+              <th>One List tier</th>
+              <td>None</td>
+            </tr>
+            <tr>
+              <th>Global Account Manager</th>
+              <td>None</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </article>
     </div>
   </div>

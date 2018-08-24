@@ -47,7 +47,7 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name>Fancy Dress Construction Ltd</span></a></li>
+            itemprop=name id="breadcrumb">breadcrumb</span></a></li>
         </ul>
       </nav>
       <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
@@ -55,7 +55,8 @@
       </ul>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading>Fancy Dress Construction Ltd</h1>
+          <h1 class=c-local-header__heading id="name">name</h1>
+          <p class="c-local-header__heading-after" id="address">address</p>
         </div>
       </div>
     </div>
@@ -76,16 +77,17 @@
             { text: 'Orders (OMIS)' },
             { text: 'Documents' },
             { text: 'Audit history' },
-          ]" :class="{ 'is-active': item.active }" :href="item.href">{{ item.text }}</a>
+          ]" :class="{ 'is-active': item.active }" :href="item.href ? item.href + '?id=' + appendQueryParam('id') : ''">{{ item.text }}</a>
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
+        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name', 'address' ]) }}
         <h2 class="heading-medium">Contacts</h2>
         <article class="c-collection">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
               <div class="c-collection__header-intro">
-                <span class="c-collection__result-count">{{ getContactsCount() }}</span> contacts</div>
+                <span class="c-collection__result-count">{{ getCount('contacts') }}</span> contacts</div>
               <div class="c-collection__header-actions">
                 <a class="button button--secondary">Add contact</a>
               </div>
@@ -104,7 +106,7 @@
                             class="c-form-control c-form-control--small c-form-control--inline c-form-control--light js-MirrorValue"
                             v-on:change="filterContacts">
                       <option>All locations</option>
-                      <option v-for="location in getUniqueLocations()">{{ location }}</option>
+                      <option v-for="location in getUniqueLocations()" :value="location.value">{{ location.value + ' - ' + location.postcode }}</option>
                     </select>
                   </div>
                 </div>
