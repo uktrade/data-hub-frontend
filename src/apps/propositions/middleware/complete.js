@@ -10,7 +10,6 @@ function transformErrorMessage (error) {
 }
 
 async function postComplete (req, res, next) {
-
   try {
     await completeProposition(req, res, next)
 
