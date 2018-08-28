@@ -26,12 +26,13 @@ router
 
 router
   .route('/propositions/:propositionId/complete')
-  .post(
-    postComplete,
-    renderComplete,
-  )
+  // .post(
+  //   postComplete,
+  //   renderComplete,
+  // )
   .get(
-    renderComplete,
+    postComplete
+    // renderComplete,
   )
 
 router
