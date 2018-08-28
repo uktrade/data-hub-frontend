@@ -27,8 +27,6 @@ function buildApiUrl (res) {
 function createRequest (req, res, index, urls) {
   const self = res.locals.documents
 
-  console.log('oink')
-
   request({
     url: urls.s3,
     method: 'PUT',

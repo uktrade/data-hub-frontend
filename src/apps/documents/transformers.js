@@ -29,7 +29,9 @@ function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
             <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
         `
       } else {
-        output = 'The file didn\'t pass virus scanning, contact your administrator'
+        output = `
+            <span class="c-message--error">The file didn't pass virus scanning, contact your administrator</span>
+        `
       }
 
       break

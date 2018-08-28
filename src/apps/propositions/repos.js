@@ -5,6 +5,14 @@ function fetchProposition (token, propositionId, investmentId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}`)
 }
 
+function fetchPropositionFiles (token, propositionId, investmentId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document`)
+}
+
+function fetchDownloadLink (token, propositionId, investmentId, documentId) {
+  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document/${documentId}/download`)
+}
+
 function saveProposition (token, proposition) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition`,
@@ -57,7 +65,9 @@ function getPropositionsForInvestment (token, investmentId, page) {
 module.exports = {
   abandonProposition,
   completeProposition,
-  saveProposition,
+  fetchDownloadLink,
   fetchProposition,
+  fetchPropositionFiles,
   getPropositionsForInvestment,
+  saveProposition,
 }

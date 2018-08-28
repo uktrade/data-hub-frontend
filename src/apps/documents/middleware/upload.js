@@ -10,7 +10,7 @@ function parseForm (req, res, apiConfig) {
   form.maxFileSize = 5000 * 1024 * 1024 // 5GB
 
   form.parse(req, async (err, fields, files) => {
-    let index = 1
+    let index = 0
 
     if (apiConfig.collectTextFields) {
       await apiConfig.collectTextFields(req, res, fields)
@@ -21,14 +21,13 @@ function parseForm (req, res, apiConfig) {
         id: fields.id,
         parent_id: fields[fields.app],
         file,
-        numberOfDocuments: filter(collection).length,
+        numberOfDocuments: filter(collection, (document) => document.name.length).length,
         fields,
         url: apiConfig.url,
       }
 
       if (!file.name.length) { return }
       index++
-
       await chainUploadSequence(req, res, index)
     })
 
