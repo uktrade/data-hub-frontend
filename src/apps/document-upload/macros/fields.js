@@ -19,11 +19,18 @@ module.exports = {
     name: 'details',
     hint: 'Add the document\'s Sharepoint URL, e.g. http://your-sharepoint-url~',
   },
-  documentUpload: {
-    macroName: 'TextField',
-    type: 'file',
+  multipleDocumentUpload: {
+    macroName: 'AddAnother',
+    buttonName: 'add_item',
+    label: 'Filename',
     name: 'filename',
-    isLabelHidden: true,
+    children: [{
+      macroName: 'TextField',
+      type: 'file',
+      label: 'Filename',
+      name: 'filename',
+      isLabelHidden: true,
+    }],
   },
   deadline: {
     macroName: 'DateFieldset',

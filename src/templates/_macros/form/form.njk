@@ -32,12 +32,16 @@
 
   <form
     method="{{ method }}"
-    action="{{ props.action }}"
-    {% if props.class %}class="{{ props.class }}"{% endif %}
-    {% if props.role %}role="{{ props.role }}"{% endif %}
+    {% if props.enctype %}
+      enctype="{{ props.enctype }}"
+      action="{{ props.action }}?_csrf={{csrfToken}}"
+    {% else %}
+      action="{{ props.action }}"
+    {% endif %}
+      {% if props.class %}class="{{ props.class }}"{% endif %}
+      {% if props.role %}role="{{ props.role }}"{% endif %}
   >
     {{ ErrorSummary(props.errors) }}
-
     {% set hiddenFields = props.hiddenFields | default({}) | assign({
       '_csrf': csrfToken if method|lower === 'post'
     }) %}
