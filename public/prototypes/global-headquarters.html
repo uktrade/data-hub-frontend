@@ -67,7 +67,7 @@
       <div class=column-one-quarter id="local-nav">
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
-            { text: 'Details' },
+            { text: 'Details', href: 'subsidiary.html?id=1' },
             { text: 'Related companies', href: 'global-headquarters.html', active: true },
             { text: 'Locations', href: 'locations.html?id=1' },
             { text: 'Contacts', href: 'contacts.html?id=1' },
@@ -82,11 +82,10 @@
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
-        <h2 class="heading-medium">Global headquarters</h2>
-        <article class="c-collection">
+        <h2 class="heading-medium" style="margin-bottom: 0 !important;">Global headquarters</h2>
+        <article class="c-collection" style="margin-top: 0 !important;">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
-              <div class="c-collection__filter-summary"></div>
             </div>
           </header>
           <ol class="c-entity-list">
@@ -116,6 +115,40 @@
               </div>
               <div style="padding-top:10px;">
                 <a href="">Remove link</a>
+              </div>
+            </li>
+          </ol>
+        </article>
+        <article class="c-collection">
+          <header class="c-collection__header">
+            <div class="c-collection__header-row">
+              <div class="c-collection__header-intro">
+                <span class="c-collection__result-count">{{ getCount('subsidiaries') - 1 }}</span> other subsidiaries
+              </div>
+            </div>
+          </header>
+          <ol class="c-entity-list">
+            <li class="c-entity-list__item" v-for="subsidiary in subsidiaries" v-if="subsidiary.name !== 'Volkswagen Group'">
+              <div class="c-entity c-entity--company">
+                <div class="c-entity__header">
+                  <div class="c-entity__badges">
+                    <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
+                      <div class="c-meta-list__item" v-for="badge in subsidiary.badges">
+                        <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge">{{ badge.value }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 class="c-entity__title">
+                    <a v-if="subsidiary.id === 1" :href="'subsidiary.html?id=' + subsidiary.id" class="c-entity__link">{{ subsidiary.name }}</a>
+                    <a v-else class="c-entity__link">{{ subsidiary.name }}</a>
+                  </h3></div>
+                <div class="c-entity__content">
+                  <div class="c-meta-list">
+                    <div class="c-meta-list__item" v-for="item in subsidiary.meta">
+                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </li>
           </ol>
