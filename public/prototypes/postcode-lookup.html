@@ -89,6 +89,7 @@
                       class="c-form-control c-form-control--PostcodeLookupResult"
                       v-on:change="setAddressFields">
                 <option value="" v-if="options.length === 0">Enter a postcode to lookup your address</option>
+                <option value="" v-if="options.length > 0">Select an address</option>
                 <option v-for="option in options" :value="option.id" v-on:click="">{{ option.display }}</option>
               </select>
             </div>
