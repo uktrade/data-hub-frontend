@@ -69,7 +69,7 @@
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
             { text: 'Details', active: true },
-            { text: 'Subsidiaries' },
+            { text: 'Related companies', href: 'global-headquarters.html' },
             { text: 'Locations', href: 'locations.html?id=1' },
             { text: 'Contacts', href: 'contacts.html?id=1' },
             { text: 'Advisers' },
@@ -93,7 +93,7 @@
               { label: 'Headquarter type', key: 'headquarterType' },
               { label: 'Global HQ', key: 'globalHq', href: '/prototypes/subsidiaries.html' },
               { label: 'Sector', key: 'sector' },
-              { label: 'Website', key: 'website' },
+              { label: 'Website', key: 'website', href: '#' },
               { label: 'Business description', key: 'businessDescription' },
             ])">
               <th>{{ field.label }}</th>

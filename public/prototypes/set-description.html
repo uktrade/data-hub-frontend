@@ -68,45 +68,17 @@
     <div class=grid-row>
       <article class=column-three-quarters id="blah">
         {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name' ]) }}
-        <form @submit.prevent="moveToNextStep('set-description.html')">
+        <form @submit.prevent="addToCollection">
           <input type="hidden" ref="collection-name" value="locations" />
-          <input type="hidden" ref="type-of-location" id="type-of-location" />
-          <fieldset id="group-field-average_salary" class="c-form-group">
-            <legend class="c-form-group__label"><span class="c-form-group__label-text">Choose a type of location</span></legend>
-            <div class="c-form-group__inner">
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Office" id="type-of-location-1" v-on:click="setHidden('type-of-location', 'Office')">
-                <label class="c-multiple-choice__label" for="type-of-location-1"><span class="c-multiple-choice__label-text">Office</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Head office" id="type-of-location-2" v-on:click="setHidden('type-of-location', 'Head office')">
-                <label class="c-multiple-choice__label" for="type-of-location-2"><span class="c-multiple-choice__label-text">Head office</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Corporate centre" id="type-of-location-3" v-on:click="setHidden('type-of-location', 'Corporate centre')">
-                <label class="c-multiple-choice__label" for="type-of-location-3"><span class="c-multiple-choice__label-text">Corporate centre</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Factory" id="type-of-location-4" v-on:click="setHidden('type-of-location', 'Factory')">
-                <label class="c-multiple-choice__label" for="type-of-location-4"><span class="c-multiple-choice__label-text">Factory</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Telesales" id="type-of-location-5" v-on:click="setHidden('type-of-location', 'Telesales')">
-                <label class="c-multiple-choice__label" for="type-of-location-5"><span class="c-multiple-choice__label-text">Telesales</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="R&D base" id="type-of-location-6" v-on:click="setHidden('type-of-location', 'R&D base')">
-                <label class="c-multiple-choice__label" for="type-of-location-6"><span class="c-multiple-choice__label-text">R&D base</span></label>
-              </div>
-              <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Branch" id="type-of-location-7" v-on:click="setHidden('type-of-location', 'Branch')">
-                <label class="c-multiple-choice__label" for="type-of-location-7"><span class="c-multiple-choice__label-text">Branch</span></label>
-              </div>
-            </div>
-          </fieldset>
+          <input type="hidden" ref="next-page" value="locations.html" />
+          <input type="hidden" ref="success-message" value="You have added the location" />
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="description"><span class="c-form-group__label-text">Description for this location</span></label>
+            <div class="c-form-group__inner"><input name="description" type="text" id="description" ref="description" class="c-form-control"></div>
+          </div>
           <div class="c-form-actions">
-            <button class="button">Continue</button>
-            <a :href="`postcode-lookup.html?key=${query.key}&id=${query.id}`">Back</a>
+            <button class="button">Save location</button>
+            <a :href="`set-type.html?key=${query.key}&id=${query.id}`">Back</a>
           </div>
         </form>
       </article>

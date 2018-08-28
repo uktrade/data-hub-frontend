@@ -279,12 +279,45 @@ const subsidiaries = [
   },
 ]
 
+const globalHeadquarters = [
+  {
+    id: 1,
+    name: 'Volkswagen AG',
+    name2: 'Volkswagen AG',
+    breadcrumb: 'Volkswagen AG',
+    address: 'Berliner Ring 2, Brieffach, Wolfsburg, D-38436, Germany',
+    businessType: 'Company',
+    sector: 'Automotive',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Automotive',
+      },
+      {
+        label: 'Address',
+        value: 'Berliner Ring 2, Brieffach, Wolfsburg, D-38436, Germany',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'Germany',
+      },
+    ],
+  },
+]
 
 new Vue({
   el: '#blah',
   data: {
     contacts,
     subsidiaries,
+    globalHeadquarters,
+    query: {
+      id: getQueryParam('id'),
+      key: getQueryParam('key'),
+    },
     options: [],
     addresses: [
       {

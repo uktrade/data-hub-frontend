@@ -21,7 +21,6 @@
         <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
         <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
       </ul>
-      </ul>
     </nav>
   </div>
 </header>
@@ -49,7 +48,7 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name id="breadcrumb"></span></a></li>
+            itemprop=name>Volkswagen Group</span></a></li>
         </ul>
       </nav>
       <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
@@ -57,8 +56,8 @@
       </ul>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading id="name"></h1>
-          <p class="c-local-header__heading-after" id="address"></p>
+          <h1 class=c-local-header__heading>Volkswagen Group</h1>
+          <p class="c-local-header__heading-after">Yeomans Drive, Blakelands, MK14 5LR, Milton Keynes, United Kingdom</p>
         </div>
       </div>
     </div>
@@ -69,8 +68,8 @@
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
             { text: 'Details' },
-            { text: 'Related companies', href: 'global-headquarters.html' },
-            { text: 'Locations', href: 'locations.html?id=1', active: true },
+            { text: 'Related companies', href: 'global-headquarters.html', active: true },
+            { text: 'Locations', href: 'locations.html?id=1' },
             { text: 'Contacts', href: 'contacts.html?id=1' },
             { text: 'Advisers' },
             { text: 'Interactions' },
@@ -79,46 +78,44 @@
             { text: 'Orders (OMIS)' },
             { text: 'Documents' },
             { text: 'Audit history' },
-          ]" :class="{ 'is-active': item.active }" :href="item.href ? item.href + '?id=' + appendQueryParam('id') : ''">{{ item.text }}</a>
+          ]" :class="{ 'is-active': item.active }" :href="item.href">{{ item.text }}</a>
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
-        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name', 'address' ]) }}
-        <h2 class="heading-medium">Additional locations for <span>Volkswagen Group</span></h2>
+        <h2 class="heading-medium">Global headquarters</h2>
         <article class="c-collection">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
-              <div class="c-collection__header-intro">
-                <span class="c-collection__result-count">{{ getCollectionCount('locations') }}</span> locations</div>
-              <div class="c-collection__header-actions">
-                <a class="button button--secondary" v-bind:href="appendQueryParam(appendKey('postcode-lookup.html'))">Add location</a>
-              </div>
               <div class="c-collection__filter-summary"></div>
             </div>
           </header>
           <ol class="c-entity-list">
-            <li class="c-entity-list__item" v-for="location in getTransformedCollection('locations', transformLocationsToView)">
+            <li class="c-entity-list__item" v-for="globalHeadquarter in globalHeadquarters">
               <div class="c-entity c-entity--company">
-                <div class="c-entity__badges">
-                  <a href="" style="font-size:20px; font-weight: bold;">Edit</a>
-                </div>
                 <div class="c-entity__header">
-                  <h3 class="c-entity__title">{{ location.name }}</h3></div>
+                  <div class="c-entity__badges">
+                    <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
+                      <div class="c-meta-list__item" v-for="badge in globalHeadquarter.badges">
+                        <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge">{{ badge.value }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 class="c-entity__title">
+                    <a href="subsidiaries.html" class="c-entity__link">{{
+                      globalHeadquarter.name }}</a>
+                    <a v-else class="c-entity__link">{{ globalHeadquarter.name }}</a>
+                  </h3>
+                </div>
                 <div class="c-entity__content">
-                  <div class="c-meta-list" style="margin-bottom:10px;">
-                    <div class="c-meta-list__item" v-for="item in location.meta">
+                  <div class="c-meta-list">
+                    <div class="c-meta-list__item" v-for="item in globalHeadquarter.meta">
                       <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
                     </div>
                   </div>
                 </div>
-
-                <div style="margin-top:10px;">
-                  <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
-                    <div class="c-meta-list__item" v-for="badge in location.badges">
-                      <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge" style="font-weight:normal;">{{ badge.value }}</span>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <div style="padding-top:10px;">
+                <a href="">Remove link</a>
               </div>
             </li>
           </ol>

@@ -88,7 +88,7 @@
                       ref="address"
                       class="c-form-control c-form-control--PostcodeLookupResult"
                       v-on:change="setAddressFields">
-                <option value="">Enter a postcode to lookup your address</option>
+                <option value="" v-if="options.length === 0">Enter a postcode to lookup your address</option>
                 <option v-for="option in options" :value="option.id" v-on:click="">{{ option.display }}</option>
               </select>
             </div>
@@ -134,13 +134,9 @@
               </select>
             </div>
           </div>
-          <div class="c-form-group">
-            <label class="c-form-group__label" for="description"><span class="c-form-group__label-text">Description for this location</span></label>
-            <div class="c-form-group__inner"><input name="description" type="text" id="description" ref="description" class="c-form-control"></div>
-          </div>
           <div class="c-form-actions">
             <button class="button">Continue</button>
-            <a href="locations.html">Cancel</a>
+            <a href="locations.html?id=1">Cancel</a>
           </div>
         </form>
       </article>
