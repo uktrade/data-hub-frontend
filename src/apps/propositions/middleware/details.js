@@ -1,7 +1,7 @@
 const { assign, get } = require('lodash')
 
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
-const { fetchProposition, saveProposition } = require('../repos')
+const { fetchProposition, fetchDownloadLink, fetchPropositionFiles, saveProposition } = require('../repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
@@ -38,6 +38,7 @@ async function getPropositionDetails (req, res, next, propositionId) {
     const token = req.session.token
     const investmentId = get(res.locals, 'investmentData.id')
     res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
+    res.locals.proposition.files = await fetchPropositionFiles(token, propositionId, investmentId)
 
     next()
   } catch (error) {
@@ -65,7 +66,22 @@ async function getPropositionOptions (req, res, next) {
   }
 }
 
+async function getDownloadLink (req, res, next) {
+  try {
+    const token = req.session.token
+    const propositionId = req.params.propositionId
+    const documentId = req.params.documentId
+    const investmentId = res.locals.investmentData.id
+    const s3 = await fetchDownloadLink(token, propositionId, investmentId, documentId)
+
+    return res.redirect(s3.document_url)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
+  getDownloadLink,
   getPropositionDetails,
   postDetails,
   getPropositionOptions,
