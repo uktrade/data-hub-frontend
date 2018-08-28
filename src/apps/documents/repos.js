@@ -6,7 +6,7 @@ const fs = require('fs')
 
 async function chainUploadSequence (req, res, index) {
   try {
-    const s3_options = await getDocumentUploadS3Url(req, res)
+    const s3_options = await getDocumentUploadS3Url(req, res, index)
     const s3_url = s3_options.signed_upload_url
 
     uploadDocumentToS3(req, res, index, s3_url, s3_options.id)
@@ -51,10 +51,9 @@ function createRequest (req, res, index, urls) {
   })
 }
 
-function getDocumentUploadS3Url (req, res) {
+function getDocumentUploadS3Url (req, res, index) {
   const url = `${buildApiUrl(res)}`
-
-  const requestBody = res.locals.documents.index === 1 ? res.locals.requestBody : {}
+  const requestBody = index === 1 ? res.locals.requestBody : {}
   const body = {
     original_filename: res.locals.documents.file.name,
     ...requestBody,

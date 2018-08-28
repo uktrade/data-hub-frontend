@@ -70,6 +70,7 @@ const metadataItems = [
   ['uk-region', 'regionOptions'],
   ['country', 'countryOptions'],
   ['employee-range', 'employeeOptions'],
+  ['evidence-tag', 'evidenceTagOptions'],
   ['business-type', 'businessTypeOptions'],
   ['team', 'teams'],
   ['communication-channel', 'communicationChannelOptions'],
