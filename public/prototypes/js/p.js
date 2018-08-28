@@ -1,3 +1,24 @@
+const defaultLocation = {
+  id: 1,
+  name: 'Head office',
+  meta: [
+    {
+      label: 'Address',
+      value: 'Yeomans Drive, Blakelands, MK14 5LR, Milton Keynes, United Kingdom',
+    },
+    {
+      label: 'Description',
+      value: 'Registered company address. From Blakelands the company controls sourcing, marketing and distribution of all vehicles and parts in the UK.',
+    },
+  ],
+  badges: [
+    {
+      label: 'UK region',
+      value: 'South East',
+    },
+  ],
+}
+
 const contacts = [
   {
     name: 'Emma Jones',
@@ -9,12 +30,11 @@ const contacts = [
       },
       {
         label: 'Location',
-        value: 'London Office',
-        postcode: 'N1 6NU',
+        value: 'Milton Keynes - Head office (MK14 5LR)',
       },
       {
         label: 'Sector',
-        value: 'Creative and Media',
+        value: 'Automotive',
       },
       {
         label: 'Country',
@@ -30,7 +50,7 @@ const contacts = [
       },
       {
         label: 'Email',
-        value: 'emma.jones@email.com',
+        value: 'emma.jones@volkswagen.co.uk',
       },
     ],
   },
@@ -44,12 +64,11 @@ const contacts = [
       },
       {
         label: 'Location',
-        value: 'London Office',
-        postcode: 'N1 6NU',
+        value: 'Milton Keynes - Head office (MK14 5LR)',
       },
       {
         label: 'Sector',
-        value: 'Creative and Media',
+        value: 'Automotive',
       },
       {
         label: 'Country',
@@ -65,7 +84,7 @@ const contacts = [
       },
       {
         label: 'Email',
-        value: 'sam.hobkinson@email.com',
+        value: 'sam.hobkinson@volkswagen.co.uk',
       },
     ],
   },
@@ -75,16 +94,15 @@ const contacts = [
     meta: [
       {
         label: 'Job title',
-        value: 'Managing Director',
+        value: 'Finance Director',
       },
       {
         label: 'Location',
-        value: 'Cambridge Office',
-        postcode: 'CB1 8GL',
+        value: 'Milton Keynes - Office (MK15 8HG)',
       },
       {
         label: 'Sector',
-        value: 'Creative and Media',
+        value: 'Automotive',
       },
       {
         label: 'Country',
@@ -92,7 +110,7 @@ const contacts = [
       },
       {
         label: 'UK region',
-        value: 'East of England',
+        value: 'London',
       },
       {
         label: 'Phone number',
@@ -100,7 +118,7 @@ const contacts = [
       },
       {
         label: 'Email',
-        value: 'frank.gareth@email.com',
+        value: 'frank.gareth@volkswagen.co.uk',
       },
     ],
   },
@@ -109,24 +127,26 @@ const contacts = [
 const subsidiaries = [
   {
     id: 1,
-    name: 'Siemens',
-    name2: 'Siemens',
-    breadcrumb: 'Siemens',
-    address: '4 Highlands Court, Cranmore Avenue, Solihull, B90 4LE, United Kingdom',
+    name: 'Volkswagen Group',
+    name2: 'Volkswagen Group',
+    breadcrumb: 'Volkswagen Group',
+    address: 'Yeomans Drive, Blakelands, MK14 5LR, Milton Keynes, United Kingdom',
     businessType: 'Company',
-    ukRegion: 'West Midlands',
+    ukRegion: 'South East',
     headquarterType: 'Not a headquarters',
-    globalHq: 'Siemens AG (Munich) (GLOBAL HQ)s',
-    sector: 'Energy',
+    globalHq: 'Volkswagen AG',
+    sector: 'Automotive',
+    website: 'http://www.volkswagen.co.uk',
+    businessDescription: 'Volkswagen UK, as part of the Volkswagen Group, is one of the country\'s largest importers of vehicles.',
     updated: '9 Aug 2018, 11:03am',
     meta: [
       {
         label: 'Sector',
-        value: 'Energy',
+        value: 'Automotive',
       },
       {
-        label: 'Primary address',
-        value: '4 Highlands Court, Cranmore Avenue, Solihull, B90 4LE, United Kingdom',
+        label: 'Address',
+        value: 'Yeomans Drive, Blakelands, MK14 5LR, Milton Keynes, United Kingdom',
       },
     ],
     badges: [
@@ -136,7 +156,124 @@ const subsidiaries = [
       },
       {
         label: 'UK region',
-        value: 'West Midlands',
+        value: 'South East',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Volkswagen Commercial Vehicles UK',
+    name2: 'Volkswagen Commercial Vehicles UK',
+    breadcrumb: 'Volkswagen Commercial Vehicles UK',
+    address: 'Spring Hill Parkway, Spring Croft Road, Baillieston, Glasgow, G69 6GA, United Kingdom',
+    businessType: 'Company',
+    ukRegion: 'Scotland',
+    headquarterType: 'Not a headquarters',
+    globalHq: 'Volkswagen AG',
+    sector: 'Automotive',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Automotive',
+      },
+      {
+        label: 'Address',
+        value: 'Spring Hill Parkway, Spring Croft Road, Baillieston, Glasgow, G69 6GA, United Kingdom',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'United Kingdom',
+      },
+      {
+        label: 'UK region',
+        value: 'Scotland',
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: 'Volkswagen of America Inc',
+    name2: 'Volkswagen of America Inc',
+    breadcrumb: 'Volkswagen of America Inc',
+    address: '2200 Ferdinand Porche Dr, Herndon, Virginia (state), 20171, United States',
+    businessType: 'Company',
+    headquarterType: 'Not a headquarters',
+    globalHq: 'Volkswagen AG',
+    sector: 'Automotive',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Automotive',
+      },
+      {
+        label: 'Address',
+        value: '2200 Ferdinand Porche Dr, Herndon, Virginia (state), 20171, United States',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'United States',
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: 'Volkswagen Slovakia',
+    name2: 'Volkswagen Slovakia',
+    breadcrumb: 'Volkswagen Slovakia',
+    address: 'J.jonasa 1, Bratislava, Slovakia, 84302, Slovakia',
+    businessType: 'Company',
+    headquarterType: 'Not a headquarters',
+    globalHq: 'Volkswagen AG',
+    sector: 'Automotive',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Automotive',
+      },
+      {
+        label: 'Address',
+        value: 'J.jonasa 1, Bratislava, Slovakia, 84302, Slovakia',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'Slovakia',
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: 'Volkswagen Sarajevo',
+    name2: 'Volkswagen Sarajevo',
+    breadcrumb: 'Volkswagen Sarajevo',
+    address: 'Igmanska 36, Sarajevo, 71320, Bosnia and Herzegovina',
+    businessType: 'Company',
+    headquarterType: 'Not a headquarters',
+    globalHq: 'Volkswagen AG',
+    sector: 'Automotive',
+    updated: '9 Aug 2018, 11:03am',
+    meta: [
+      {
+        label: 'Sector',
+        value: 'Automotive',
+      },
+      {
+        label: 'Address',
+        value: 'Igmanska 36, Sarajevo, 71320, Bosnia and Herzegovina',
+      },
+    ],
+    badges: [
+      {
+        label: 'Country',
+        value: 'Bosnia and Herzegovina',
       },
     ],
   },
@@ -152,27 +289,30 @@ new Vue({
     addresses: [
       {
         id: '1',
-        line1: '70 Crown Street',
-        line2: 'Some place',
-        townOrCity: 'London',
-        county: 'Greater London',
-        display: '70 Crown Street, Some place, London E1 3EZ',
+        line1: 'One Delaware Drive',
+        line2: 'Tongwell',
+        townOrCity: 'Milton Keynes',
+        county: '',
+        postcode: 'MK15 8HG',
+        display: 'One Delaware Drive, Tongwell, Milton Keynes, MK15 8HG, United Kingdom',
       },
       {
         id: '2',
-        line1: '19 Union Terrace',
-        line2: 'Some place',
-        townOrCity: 'London',
-        county: 'Greater London',
-        display: '19 Union Terrace, Some place, London WC1V 6UG',
+        line1: 'Two Delaware Drive',
+        line2: 'Tongwell',
+        townOrCity: 'Milton Keynes',
+        county: '',
+        postcode: 'MK15 8HG',
+        display: 'Two Delaware Drive, Tongwell, Milton Keynes, MK15 8HG, United Kingdom',
       },
       {
-        id: '2',
-        line1: '74 Guild Street',
-        line2: 'Some place',
-        townOrCity: 'London',
-        county: 'Greater London',
-        display: '74 Guild Street, Some place, London E5 2WR',
+        id: '3',
+        line1: 'Three Delaware Drive',
+        line2: 'Tongwell',
+        townOrCity: 'Milton Keynes',
+        county: '',
+        postcode: 'MK15 8HG',
+        display: 'Three Delaware Drive, Tongwell, Milton Keynes, MK15 8HG, United Kingdom',
       },
     ],
   },
@@ -216,7 +356,7 @@ new Vue({
     },
 
     getCollectionCount (name) {
-      return this.getCollection(name).items.length
+      return this.getCollection(name).items.length + (name === 'locations' ? 1 : 0)
     },
 
     refreshEntity (key, entity) {
@@ -242,6 +382,7 @@ new Vue({
       document.getElementById('address-2').value = address.line2
       document.getElementById('town-or-city').value = address.townOrCity
       document.getElementById('county').value = address.county
+      document.getElementById('postcode').value = address.postcode
     },
 
     setHidden (id, value) {
@@ -249,14 +390,18 @@ new Vue({
     },
 
     transformLocationsToView (locations) {
-      return _.map(locations, (location) => {
+      const mapped = _.map(locations, (location) => {
         return {
           id: 1,
           name: location['type-of-location'],
           meta: [
             {
               label: 'Address',
-              value: `${location['address-1']}, ${location['address-2']}, ${location['town-or-city']}, ${location['county']}, United Kingdom`,
+              value: `${location['address-1']}, ${location['address-2']}, ${location['town-or-city']}, ${location['postcode']}, United Kingdom`,
+            },
+            {
+              label: 'Description',
+              value: location['description'],
             },
           ],
           badges: [
@@ -267,6 +412,8 @@ new Vue({
           ],
         }
       })
+
+      return _.concat([ defaultLocation ], mapped)
     },
 
     appendKey (href) {
@@ -281,7 +428,7 @@ new Vue({
       return _.uniq(_.map(contacts, (contact) => {
         return _.find(contact.meta, (item) => {
           return item.label === 'Location'
-        })
+        }).value
       }))
     },
 

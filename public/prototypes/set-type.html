@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 </head>
 <body>
-<header class=global-header aria-label="global header">
+<header class=global-header aria-label="global header" id="global-header">
   <div class=global-header__inner>
     <div class=global-header__site-title>
       <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
@@ -21,6 +21,8 @@
         <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
         <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
         <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
       </ul>
     </nav>
   </div>
@@ -113,6 +115,7 @@
     </div>
   </div>
 </main>
+<script src="/prototypes/js/global-header.js"></script>
 <script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/messages.js"></script>

@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 </head>
 <body>
-<header class=global-header aria-label="global header">
+<header class=global-header aria-label="global header" id="global-header">
   <div class=global-header__inner>
     <div class=global-header__site-title>
       <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
@@ -19,6 +19,8 @@
         <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
         <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
         <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
       </ul>
     </nav>
   </div>
@@ -82,7 +84,7 @@
       </div>
       <article class=column-three-quarters id="blah">
         {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name', 'address' ]) }}
-        <h2 class="heading-medium">Additional locations for <span>Siemens</span></h2>
+        <h2 class="heading-medium">Additional locations for <span>Volkswagen Group</span></h2>
         <article class="c-collection">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
@@ -101,16 +103,13 @@
                   <a href="" style="font-size:20px; font-weight: bold;">Edit</a>
                 </div>
                 <div class="c-entity__header">
-                  <h3 class="c-entity__title"><a href="/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa"
-                                                 class="c-entity__link">{{ location.name }}</a></h3></div>
+                  <h3 class="c-entity__title">{{ location.name }}</h3></div>
                 <div class="c-entity__content">
                   <div class="c-meta-list" style="margin-bottom:10px;">
                     <div class="c-meta-list__item" v-for="item in location.meta">
                       <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
                     </div>
                   </div>
-                  <a href="" style="top:10px;">View contacts for this location</a><br /><!-- TODO -->
-                  <a href="">View interactions for this location</a>
                 </div>
 
                 <div style="margin-top:10px;">
@@ -128,6 +127,7 @@
     </div>
   </div>
 </main>
+<script src="/prototypes/js/global-header.js"></script>
 <script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/local-nav.js"></script>

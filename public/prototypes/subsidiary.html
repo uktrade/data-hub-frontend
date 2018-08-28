@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 </head>
 <body>
-<header class=global-header aria-label="global header">
+<header class=global-header aria-label="global header" id="global-header">
   <div class=global-header__inner>
     <div class=global-header__site-title>
       <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
@@ -19,6 +19,8 @@
         <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
         <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
         <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
       </ul>
     </nav>
   </div>
@@ -86,38 +88,26 @@
         <table class="table--key-value table--striped">
           <tbody>
             <tr v-for="field in getTableDataFields('subsidiaries', [
-              { label: 'Business type', key: 'businessType' },
-              { label: 'Primary address', key: 'address' },
+              { label: 'Registered company address', key: 'address' },
               { label: 'UK region', key: 'ukRegion' },
               { label: 'Headquarter type', key: 'headquarterType' },
-              { label: 'Global HQ', key: 'globalHq' },
+              { label: 'Global HQ', key: 'globalHq', href: '/prototypes/subsidiaries.html' },
               { label: 'Sector', key: 'sector' },
+              { label: 'Website', key: 'website' },
+              { label: 'Business description', key: 'businessDescription' },
             ])">
               <th>{{ field.label }}</th>
-              <td>{{ field.value }}</td>
+              <td v-if="field.href"><a :href="field.href">{{ field.value }}</a></td>
+              <td v-else>{{ field.value }}</td>
             </tr>
           </tbody>
         </table>
         <p><a href="" class="button button--secondary">Edit company details</a></p>
-        <div class="section">
-          <h2 class="heading-medium">Global Account Manager – One List</h2>
-          <table class="table--key-value table--striped">
-            <tbody>
-            <tr>
-              <th>One List tier</th>
-              <td>None</td>
-            </tr>
-            <tr>
-              <th>Global Account Manager</th>
-              <td>None</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
       </article>
     </div>
   </div>
 </main>
+<script src="/prototypes/js/global-header.js"></script>
 <script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/local-nav.js"></script>

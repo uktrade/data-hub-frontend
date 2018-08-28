@@ -9,7 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
 </head>
 <body>
-<header class=global-header aria-label="global header">
+<header class=global-header aria-label="global header" id="global-header">
   <div class=global-header__inner>
     <div class=global-header__site-title>
       <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
@@ -19,6 +19,7 @@
         <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
         <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
         <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
       </ul>
     </nav>
   </div>
@@ -47,7 +48,7 @@
             href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
           <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
             href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
-            itemprop=name>Siemens AG (Munich) (GLOBAL HQ)</span></a></li>
+            itemprop=name>Volkswagen AG</span></a></li>
         </ul>
       </nav>
       <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
@@ -55,8 +56,8 @@
       </ul>
       <div class=grid-row>
         <div class=column-full>
-          <h1 class=c-local-header__heading>Siemens AG (Munich) (GLOBAL HQ)</h1>
-          <p class="c-local-header__heading-after">Wittelsbacherplatz 2, München, Bayern, 80333, Germany</p>
+          <h1 class=c-local-header__heading>Volkswagen AG</h1>
+          <p class="c-local-header__heading-after">Berliner Ring 2, Brieffach, Wolfsburg, D-38436, Germany</p>
           <div class="c-meta-list">
             <div class="c-meta-list__item c-meta-list__item--stacked">
               <span class="c-meta-list__item-label u-visually-hidden">Headquarter type</span> <span class="c-badge">Global HQ</span>
@@ -72,7 +73,7 @@
         <nav class=c-local-nav aria-label="local navigation">
           <a class="c-local-nav__link" v-for="item in [
             { text: 'Details' },
-            { text: 'Subsidiaries', active: true },
+            { text: 'Related companies', active: true },
             { text: 'Contacts' },
             { text: 'Advisers' },
             { text: 'Interactions' },
@@ -85,7 +86,7 @@
         </nav>
       </div>
       <article class=column-three-quarters id="blah">
-        <h2 class="heading-medium">Subsidiaries</h2>
+        <h2 class="heading-medium">Related companies</h2>
         <article class="c-collection">
           <header class="c-collection__header">
             <div class="c-collection__header-row">
@@ -108,8 +109,10 @@
                       </div>
                     </div>
                   </div>
-                  <h3 class="c-entity__title"><a :href="'subsidiary.html?id=' + subsidiary.id"
-                                                 class="c-entity__link">{{ subsidiary.name }}</a></h3></div>
+                  <h3 class="c-entity__title">
+                    <a v-if="subsidiary.id === 1" :href="'subsidiary.html?id=' + subsidiary.id" class="c-entity__link">{{ subsidiary.name }}</a>
+                    <a v-else class="c-entity__link">{{ subsidiary.name }}</a>
+                  </h3></div>
                 <div class="c-entity__content">
                   <div class="c-meta-list">
                     <div class="c-meta-list__item" v-for="item in subsidiary.meta">
@@ -125,6 +128,7 @@
     </div>
   </div>
 </main>
+<script src="/prototypes/js/global-header.js"></script>
 <script src="/prototypes/js/global-nav.js"></script>
 <script src="/prototypes/js/lib.js"></script>
 <script src="/prototypes/js/local-nav.js"></script>
