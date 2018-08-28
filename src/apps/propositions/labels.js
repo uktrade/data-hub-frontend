@@ -27,6 +27,7 @@ const completeProposition = {
   scope: 'Scope',
   status: 'Status',
   deadline: 'Deadline',
+  filename: 'File name',
   adviser: 'Assigned to',
   created_on: 'Date created',
   modified_on: 'Modified on',
@@ -34,8 +35,13 @@ const completeProposition = {
   details: 'Proposition URL',
 }
 
+const uploadForm = {
+  filename: 'File name',
+}
+
 module.exports = {
   abandonProposition,
   completeProposition,
   proposition,
+  uploadForm,
 }

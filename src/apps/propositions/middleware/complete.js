@@ -1,16 +1,17 @@
 const { assign, get } = require('lodash')
 
-const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const { completeProposition, fetchProposition } = require('../repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
 
-async function postComplete (req, res, next) {
-  res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
+function transformErrorMessage (error) {
+  return get(error, 'non_field_errors', ['There has been an error'])[0]
+}
 
+async function postComplete (req, res, next) {
   try {
-    await completeProposition(req.session.token, res.locals.requestBody)
+    await completeProposition(req, res, next)
 
     req.flash('success', 'Proposition completed')
 
@@ -26,7 +27,9 @@ async function postComplete (req, res, next) {
           messages: err.error,
         },
       })
-      next()
+
+      req.flash('error', transformErrorMessage(err.error))
+      return res.redirect(res.locals.returnLink)
     } else {
       next(err)
     }
