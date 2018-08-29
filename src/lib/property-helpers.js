@@ -70,11 +70,13 @@ function convertYesNoToBoolean (object) {
   for (const key of keys) {
     const value = convertedObject[key]
 
-    if (value.toLocaleLowerCase() === 'yes') {
-      convertedObject[key] = true
-    }
-    if (value.toLocaleLowerCase() === 'no') {
-      convertedObject[key] = false
+    if (typeof value !== 'boolean') {
+      if (value.toLocaleLowerCase() === 'yes') {
+        convertedObject[key] = true
+      }
+      if (value.toLocaleLowerCase() === 'no') {
+        convertedObject[key] = false
+      }
     }
   }
 
