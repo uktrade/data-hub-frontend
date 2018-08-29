@@ -182,19 +182,19 @@ describe('Contact transformers', () => {
       })
 
       it('should show that they do not want to receive marketing by email', () => {
-        expect(this.view).to.have.property('Email marketing', 'Opted out')
+        expect(this.view).to.have.property('Email marketing', 'Cannot be marketed to')
       })
     })
 
     context('when the contact does want to receiving marketing by email', () => {
       beforeEach(() => {
         this.view = transformContactToView(assign({}, contact, {
-          accepts_dit_email_marketing: true,
+          rejects_dit_email_marketing: false,
         }), company)
       })
 
       it('should show that they do not want to receive marketing by email', () => {
-        expect(this.view).to.have.property('Email marketing', 'Opted in')
+        expect(this.view).to.have.property('Email marketing', 'Can be marketed to')
       })
     })
 
