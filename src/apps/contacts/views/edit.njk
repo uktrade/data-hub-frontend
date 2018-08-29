@@ -83,19 +83,24 @@
       error: errors.messages.email
     }) }}
 
-    {{ MultipleChoiceField({
-      type: 'checkbox',
-      name: 'marketing_preferences',
-      label: 'Marketing preferences',
-      isLabelHidden: true,
-      value: formData.marketing_preferences,
-      options: [
-        {
-          label: 'Accepts email marketing from DIT',
-          value: 'accepts_dit_email_marketing'
-        }
-      ]
-    }) }}
+    <fieldset id="group-field-rejects_dit_email_marketing" class="c-form-group">
+        <legend class="c-form-group__label u-visually-hidden">
+            <span class="c-form-group__label-text">
+                Marketing preferences
+            </span>
+        </legend>
+        <div class="c-form-group__inner">
+            <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="checkbox" name="rejects_dit_email_marketing" value="rejects_dit_email_marketing" id="field-rejects_dit_email_marketing-1" {% if formData.rejects_dit_email_marketing %} checked {% endif %}>
+                    <label class="c-multiple-choice__label" for="field-rejects_dit_email_marketing-1">
+                        <span class="c-multiple-choice__label-text">
+                            Does not accept email marketing
+                        </span>
+                    </label>
+            </div>
+         </div>
+    </fieldset>
+
 
     {{ MultipleChoiceField({
       name: 'address_same_as_company',
