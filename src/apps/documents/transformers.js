@@ -19,41 +19,52 @@ function transformLabelsToShowFiles (key, labels) {
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
   const status = file.status
-  let output = ''
+  let output = {
+    type: 'document',
+  }
 
   switch (status) {
     case 'virus_scanned':
 
       if (file.av_clean) {
-        output = `
-            <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
-        `
+        output = {
+          ...output,
+          ...{
+            status: 'av_clean',
+            message: 'Download',
+            href: `/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
+          },
+        }
       } else {
-        output = `
-            <span class="c-message--error">The file didn't pass virus scanning, contact your administrator</span>
-        `
+        output = {
+          ...output,
+          ...{
+            status: 'scan_failed',
+            message: 'The file didn\'t pass virus scanning, contact your administrator',
+          },
+        }
       }
 
       break
 
     case 'not_virus_scanned':
-      output = 'File not virus scanned'
+      output.message = `File not virus scanned`
       break
 
     case 'virus_scanning_scheduled':
-      output = 'Virus scanning scheduled'
+      output.message = `Virus scanning scheduled`
       break
 
     case 'virus_scanning_in_progress':
-      output = 'File is being scanned, try again in a few moments'
+      output.message = `File is being scanned, try again in a few moments`
       break
 
     case 'virus_scanning_failed':
-      output = 'Virus scanning failed, contact your administrator'
+      output.message = `Virus scanning failed, contact your administrator`
       break
 
     default:
-      output = 'Virus scanning failed, contact your administrator'
+      output.message = `Virus scanning failed, contact your administrator`
       break
   }
 
