@@ -84,7 +84,7 @@ function transformContactToView ({
   telephone_number,
   job_title,
   email,
-  accepts_dit_email_marketing,
+  rejects_dit_email_marketing,
   address_1,
   address_2,
   address_town,
@@ -105,7 +105,7 @@ function transformContactToView ({
     email_alternative,
     notes,
     telephone_number: telephoneNumber,
-    email_marketing: accepts_dit_email_marketing ? 'Opted in' : 'Opted out',
+    email_marketing: rejects_dit_email_marketing ? 'Cannot be marketed to' : 'Can be marketed to',
     address: getContactAddress(address_same_as_company, {
       address_1,
       address_2,
