@@ -3,7 +3,6 @@ const router = require('express').Router()
 const { renderCreatePage } = require('./controllers/create')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderAbandon } = require('./controllers/abandon')
-const { renderComplete } = require('./controllers/complete')
 const { renderUpload } = require('./controllers/upload')
 
 const { postDetails, getDownloadLink, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
@@ -26,12 +25,8 @@ router
 
 router
   .route('/propositions/:propositionId/complete')
-  .post(
-    postComplete,
-    renderComplete,
-  )
   .get(
-    renderComplete,
+    postComplete
   )
 
 router

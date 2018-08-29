@@ -38,14 +38,13 @@ function abandonProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
-function completeProposition (token, proposition) {
+function completeProposition (req, res) {
   const options = {
-    url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/complete`,
+    url: `${config.apiRoot}/v3/investment/${res.locals.investmentData.id}/proposition/${req.params.propositionId}/complete`,
     method: 'POST',
-    body: proposition,
   }
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req.session.token, options)
 }
 
 /**
