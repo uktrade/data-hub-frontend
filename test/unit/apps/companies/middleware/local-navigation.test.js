@@ -7,7 +7,7 @@ describe('Companies local navigation', () => {
     this.res = {
       locals: {
         user: {
-          permissions: ['company.read_company_timeline'],
+          permissions: ['company.view_company_timeline'],
         },
       },
     }

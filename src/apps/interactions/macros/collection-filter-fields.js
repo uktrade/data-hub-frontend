@@ -20,7 +20,7 @@ module.exports = function ({
       macroName: 'MultipleChoiceField',
       name: 'kind',
       type: 'checkbox',
-      options: permissions.includes(POLICY_FEEDBACK_PERMISSIONS.read) ? [
+      options: permissions.includes(POLICY_FEEDBACK_PERMISSIONS.view) ? [
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
         { value: 'policy_feedback', label: 'Policy feedback' },

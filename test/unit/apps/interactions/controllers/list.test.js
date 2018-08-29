@@ -52,7 +52,7 @@ describe('interaction list', () => {
   context('#renderInteractionList', () => {
     context('when the user is allowed to view policy feedback data', () => {
       beforeEach(async () => {
-        this.req.session.user.permissions = ['interaction.read_policy_feedback_interaction']
+        this.req.session.user.permissions = ['interaction.view_policy_feedback_interaction']
         await renderInteractionList(this.req, this.res, this.next)
       })
 

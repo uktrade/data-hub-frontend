@@ -2,7 +2,7 @@ const GLOBAL_NAV_ITEM = {
   path: '/omis',
   label: 'Orders (OMIS)',
   permissions: [
-    'order.read_order',
+    'order.view_order',
   ],
   order: 6,
 }
