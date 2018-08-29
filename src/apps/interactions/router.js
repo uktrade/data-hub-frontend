@@ -33,6 +33,6 @@ router
   .post(handlePolicyPermissions('edit'), postDetails, renderEditPage)
   .get(handlePolicyPermissions('edit'), renderEditPage)
 
-router.get('/:interactionId', handlePolicyPermissions('read'), renderDetailsPage)
+router.get('/:interactionId', handlePolicyPermissions('view'), renderDetailsPage)
 
 module.exports = router
