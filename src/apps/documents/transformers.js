@@ -25,7 +25,6 @@ function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
 
   switch (status) {
     case 'virus_scanned':
-
       if (file.av_clean) {
         output = {
           ...output,
@@ -46,7 +45,6 @@ function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
       }
 
       break
-
     case 'not_virus_scanned':
       output.message = `File not virus scanned`
       break

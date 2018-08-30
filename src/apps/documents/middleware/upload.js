@@ -1,16 +1,17 @@
 /* eslint-disable camelcase */
-const { assign, filter, map } = require('lodash')
+const { filter, map } = require('lodash')
 const formidable = require('formidable')
 
 const { chainUploadSequence } = require('../repos')
 
 function parseForm (req, res, apiConfig) {
   const form = new formidable.IncomingForm()
+  const fiveGigabytes = 5000 * 1024 * 1024
 
-  form.maxFileSize = 5000 * 1024 * 1024 // 5GB
+  form.maxFileSize = fiveGigabytes
 
   form.parse(req, async (err, fields, files) => {
-    let index = 0
+    let index = 1
 
     if (apiConfig.collectTextFields) {
       await apiConfig.collectTextFields(req, res, fields)
@@ -28,6 +29,7 @@ function parseForm (req, res, apiConfig) {
 
       if (!file.name.length) { return }
       index++
+
       await chainUploadSequence(req, res, index)
     })
 
@@ -42,16 +44,9 @@ function postUpload (req, res, next) {
 
   try {
     parseForm(req, res, apiConfig)
-  } catch (err) {
-    if (err.statusCode === 400) {
-      res.locals.form = assign({}, res.locals.form, {
-        errors: {
-          messages: err.error,
-        },
-      })
-      next()
-    } else {
-      next(err)
+  } catch (error) {
+    if (error.statusCode !== 400) {
+      return next(error)
     }
   }
 }
