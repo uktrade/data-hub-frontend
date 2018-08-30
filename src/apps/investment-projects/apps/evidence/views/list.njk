@@ -5,34 +5,30 @@
   <table class="table--striped">
     <tr>
       <th>
-        Tags
+        Verification criteria
       </th>
       <th>
         Comment
       </th>
-      <th class="table--filename-truncate">
-        Filename
+      <th>
+        &nbsp;
       </th>
       <th>
-        File State
-      </th>
-      <th>
-        Edit
+        &nbsp;
       </th>
     </tr>
 
     {% for item in evidence.results %}
       <tr>
         <td>
-          {% for tag in item.tags %}
-            <span class="c-badge c-badge--multi" data-id="{{ tag.id }}">{{ tag.name }}</span>
-          {% endfor %}
+            <ul class="table__list">
+              {% for tag in item.tags %}
+                <li class="table__list-item" data-id="{{ tag.id }}">{{ tag.name }}</li>
+              {% endfor %}
+            </ul>
         </td>
         <td>
           {{ item.comment }}
-        </td>
-        <td class="table--filename-truncate">
-          <span class="trunacte-text" title="{{ item.original_filename }}"><em>{{ item.original_filename }}</em></span>
         </td>
         <td>
           {% if item.status == 'virus_scanned' %}
