@@ -81,13 +81,14 @@ function transformPropositionResponseToViewRecord ({
   deadline,
   adviser,
   details,
-  files,
+  files = {},
   id,
   investment_project,
   features,
 }) {
   const detailLabels = labels.proposition
-  let transformed = {
+  const filesResults = files.results || []
+  const transformed = {
     scope: capitalize(scope),
     status: capitalize(status),
     created_on: {
@@ -115,7 +116,7 @@ function transformPropositionResponseToViewRecord ({
         return details
       }
     })(),
-    ...transformFilesResultsToDetails(files.results, id, investment_project.id),
+    ...transformFilesResultsToDetails(filesResults, id, investment_project.id),
   }
 
   return pickBy(mapKeys(transformed, (value, key) => transformLabelsToShowFiles(key, detailLabels)))

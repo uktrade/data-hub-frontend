@@ -71,13 +71,12 @@ describe('Documents Upload repos', () => {
 
     context('When there is a single file submitted and there are text fields in the form', () => {
       beforeEach(async () => {
-        this.res.locals.documents.index = 1
         this.res.locals.requestBody = {
           title: 'Best Recipies',
           message: 'Have an apple every day',
         }
 
-        await this.repos.getDocumentUploadS3Url(this.req, this.res)
+        await this.repos.getDocumentUploadS3Url(this.req, this.res, 1)
       })
 
       it('should only post to the API the name of the document and the text fields', () => {

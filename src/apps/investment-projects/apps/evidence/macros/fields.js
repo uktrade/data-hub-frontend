@@ -11,7 +11,7 @@ module.exports = {
         label: 'Tag',
         name: 'tags',
         isLabelHidden: true,
-        initialOption: '-- Select tag --',
+        initialOption: '-- Select criteria --',
         options: tags,
       }],
     }
@@ -21,12 +21,12 @@ module.exports = {
     type: 'file',
     label: 'File',
     name: 'original_filename',
+    isLabelHidden: true,
   },
   comment: {
     macroName: 'TextField',
     type: 'textarea',
     name: 'comment',
-    hint: 'Add a relevant comment to the evidence you`re uploading',
     optional: true,
   },
 }

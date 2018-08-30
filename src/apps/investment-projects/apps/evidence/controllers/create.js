@@ -13,7 +13,7 @@ async function renderAddEvidence (req, res) {
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,
       returnText: 'Cancel',
-      buttonText: 'Add evidence',
+      buttonText: 'Upload',
       tags,
       hiddenFields: {
         investment,
@@ -23,8 +23,8 @@ async function renderAddEvidence (req, res) {
   )
 
   res
-    .breadcrumb('Choose files')
-    .title('Choose files')
+    .breadcrumb('Add evidence')
+    .title('Add evidence')
     .render('investment-projects/apps/evidence/views/create', {
       addEvidenceForm,
     })

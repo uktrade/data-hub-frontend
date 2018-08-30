@@ -1,7 +1,7 @@
 const evidenceForm = {
   title: 'Title',
   original_filename: 'Evidence file',
-  tags: 'Tags',
+  tags: 'Verification criteria',
   comment: 'Comment',
 }
 

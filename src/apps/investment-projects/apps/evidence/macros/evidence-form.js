@@ -21,8 +21,8 @@ module.exports = function ({
     buttonText,
     hiddenFields,
     children: [
-      tag(tags),
       documentUpload,
+      tag(tags),
       comment,
     ].map(field => {
       return assign(field, {
