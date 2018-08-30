@@ -19,6 +19,11 @@ function getContactAsFormData (contact) {
     return null
   }
 
+  // default is that people are always marketable, unless opted out
+  if (!contact.hasOwnProperty('accepts_dit_email_marketing')) {
+    contact.accepts_dit_email_marketing = true
+  }
+
   let result = {
     id: contact.id,
     company: contact.company.id,
@@ -30,7 +35,8 @@ function getContactAsFormData (contact) {
     telephone_number: contact.telephone_number,
     telephone_countrycode: contact.telephone_countrycode,
     email: contact.email,
-    marketing_preferences: contact.accepts_dit_email_marketing ? 'accepts_dit_email_marketing' : null,
+    accepts_dit_email_marketing: contact.accepts_dit_email_marketing,
+    rejects_dit_email_marketing: !contact.accepts_dit_email_marketing,
     address_same_as_company: (contact.address_same_as_company) ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
@@ -61,11 +67,10 @@ function saveContactForm (token, contactForm) {
       const contactFormWithYesNoAsBool = convertYesNoToBoolean(contactForm)
       const contactFormWithEmptyAsNull = nullEmptyFields(contactFormWithYesNoAsBool)
       const transformedContactForm = convertNestedObjects(contactFormWithEmptyAsNull, ['title', 'company', 'address_country'])
-
       const contactFormForApiRequest = merge({}, transformedContactForm, {
-        accepts_dit_email_marketing: contactForm.marketing_preferences === 'accepts_dit_email_marketing' }
+        // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
+        accepts_dit_email_marketing: !contactForm.rejects_dit_email_marketing }
       )
-
       const savedContact = await contactsRepository.saveContact(token, contactFormForApiRequest)
       resolve(savedContact)
     } catch (error) {
