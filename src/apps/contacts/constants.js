@@ -9,7 +9,7 @@ const GLOBAL_NAV_ITEM = {
   path: '/contacts',
   label: 'Contacts',
   permissions: [
-    'company.read_contact',
+    'company.view_contact',
   ],
   order: 2,
 }
@@ -23,7 +23,7 @@ const LOCAL_NAV = [
     path: 'interactions',
     label: 'Interactions',
     permissions: [
-      'interaction.read_all_interaction',
+      'interaction.view_all_interaction',
     ],
   },
   {
@@ -34,7 +34,7 @@ const LOCAL_NAV = [
     path: 'documents',
     label: 'Documents',
     permissions: [
-      'company.read_contact_document',
+      'company.view_contact_document',
     ],
   },
 ]
