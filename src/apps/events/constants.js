@@ -6,7 +6,7 @@ const GLOBAL_NAV_ITEM = {
   path: '/events',
   label: 'Events',
   permissions: [
-    'event.read_event',
+    'event.view_event',
   ],
   order: 3,
 }
@@ -18,14 +18,14 @@ const LOCAL_NAV = [
     path: 'details',
     label: 'Details',
     permissions: [
-      'event.read_event',
+      'event.view_event',
     ],
   },
   {
     path: 'attendees',
     label: 'Attendees',
     permissions: [
-      'event.read_event',
+      'event.view_event',
     ],
   },
 ]

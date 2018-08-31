@@ -6,7 +6,7 @@ const ENTITIES = [
     noun: 'company',
     count: 0,
     permissions: [
-      'company.read_company',
+      'company.view_company',
     ],
   },
   {
@@ -16,7 +16,7 @@ const ENTITIES = [
     noun: 'contact',
     count: 0,
     permissions: [
-      'company.read_contact',
+      'company.view_contact',
     ],
   },
   {
@@ -26,7 +26,7 @@ const ENTITIES = [
     noun: 'event',
     count: 0,
     permissions: [
-      'event.read_event',
+      'event.view_event',
     ],
   },
   {
@@ -36,7 +36,7 @@ const ENTITIES = [
     noun: 'interaction',
     count: 0,
     permissions: [
-      'interaction.read_all_interaction',
+      'interaction.view_all_interaction',
     ],
   },
   {
@@ -46,8 +46,8 @@ const ENTITIES = [
     noun: 'investment project',
     count: 0,
     permissions: [
-      'investment.read_associated_investmentproject',
-      'investment.read_all_investmentproject',
+      'investment.view_associated_investmentproject',
+      'investment.view_all_investmentproject',
     ],
   },
   {
@@ -57,7 +57,7 @@ const ENTITIES = [
     noun: 'order',
     count: 0,
     permissions: [
-      'order.read_order',
+      'order.view_order',
     ],
   },
 ]
