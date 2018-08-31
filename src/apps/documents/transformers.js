@@ -18,12 +18,11 @@ function transformLabelsToShowFiles (key, labels) {
 }
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const status = file.status
   let output = {
     type: 'document',
   }
 
-  switch (status) {
+  switch (file.status) {
     case 'virus_scanned':
       if (file.av_clean) {
         output = {
@@ -65,7 +64,7 @@ function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
       output.message = `Virus scanning failed, contact your administrator`
       break
   }
-
+  
   return output
 }
 
@@ -74,12 +73,7 @@ function transformFilesResultsToDetails (files, proposition_id, investment_proje
 
   mapKeys(files, (file, index) => {
     const downloadLinkOrState = getDownloadLinkOrState(file, proposition_id, investment_project_id)
-    let key = 'file'
-    let counter = parseInt(index) + 1
-
-    if (files.length > 0) {
-      key = `${key}${counter}`
-    }
+    const key = files.length ? 'file' + (index + 1) : 'file'
 
     obj[key] = [file.original_filename, downloadLinkOrState]
   })

@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
 const config = require('../../../config')
-const authorisedRequest = require('../../lib/authorised-request')
 const request = require('request')
 const fs = require('fs')
+
+const authorisedRequest = require('../../lib/authorised-request')
 
 async function chainUploadSequence (req, res, index) {
   try {
@@ -16,10 +17,10 @@ async function chainUploadSequence (req, res, index) {
 }
 
 function buildApiUrl (res) {
-  const self = res.locals.documents
-  const app = self.url.app ? `/${self.url.app}/${self.fields[self.url.app]}` : ''
-  const subApp = self.url.subApp ? `/${self.url.subApp}/${self.fields[self.url.subApp]}` : ''
-  const document = self.url.document ? `/${self.url.document}` : '/document'
+  const { url, fields } = res.locals.documents
+  const app = url.app ? `/${url.app}/${fields[url.app]}` : ''
+  const subApp = url.subApp ? `/${url.subApp}/${fields[url.subApp]}` : ''
+  const document = url.document ? `/${url.document}` : '/document'
 
   return `${config.apiRoot}/v3${app}${subApp}${document}`
 }
@@ -52,18 +53,18 @@ function createRequest (req, res, index, urls) {
 }
 
 function getDocumentUploadS3Url (req, res) {
-  const url = `${buildApiUrl(res)}`
+  const url = buildApiUrl(res)
 
   const requestBody = res.locals.documents.index === 1 ? res.locals.requestBody : {}
   const body = {
-    original_filename: res.locals.documents.file.name,
     ...requestBody,
+    original_filename: res.locals.documents.file.name,
   }
 
   const options = {
     url,
-    method: 'POST',
     body,
+    method: 'POST',
   }
 
   return authorisedRequest(req.session.token, options)

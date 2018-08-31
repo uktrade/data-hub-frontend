@@ -17,14 +17,24 @@ function parseForm (req, res, apiConfig) {
       await apiConfig.collectTextFields(req, res, fields)
     }
 
+    if (err) {
+      return res.status(500).json({ error: err })
+    }
+
+    res.locals.documents = {
+      fields,
+      id: fields.id,
+      parent_id: fields[fields.app],
+      url: apiConfig.url,
+    }
+
     map(files, async (file, value, collection) => {
       res.locals.documents = {
-        id: fields.id,
-        parent_id: fields[fields.app],
-        file,
-        numberOfDocuments: filter(collection, (document) => document.name.length).length,
-        fields,
-        url: apiConfig.url,
+        ...res.locals.documents,
+        ...{
+          file,
+          numberOfDocuments: filter(collection, (document) => document.name.length).length,
+        },
       }
 
       if (!file.name.length) { return }
@@ -32,10 +42,6 @@ function parseForm (req, res, apiConfig) {
 
       await chainUploadSequence(req, res, index)
     })
-
-    if (err) {
-      return res.status(500).json({ error: err })
-    }
   })
 }
 
