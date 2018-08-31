@@ -18,44 +18,32 @@ function transformLabelsToShowFiles (key, labels) {
 }
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const status = file.status
-  let output = ''
-
-  switch (status) {
+  switch (file.status) {
     case 'virus_scanned':
 
       if (file.av_clean) {
-        output = `
+        return `
             <a href="/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}">Download</a>
         `
       } else {
-        output = 'The file didn\'t pass virus scanning, contact your administrator'
+        return 'The file didn\'t pass virus scanning, contact your administrator'
       }
 
-      break
-
     case 'not_virus_scanned':
-      output = 'File not virus scanned'
-      break
+      return 'File not virus scanned'
 
     case 'virus_scanning_scheduled':
-      output = 'Virus scanning scheduled'
-      break
+      return 'Virus scanning scheduled'
 
     case 'virus_scanning_in_progress':
-      output = 'File is being scanned, try again in a few moments'
-      break
+      return 'File is being scanned, try again in a few moments'
 
     case 'virus_scanning_failed':
-      output = 'Virus scanning failed, contact your administrator'
-      break
+      return 'Virus scanning failed, contact your administrator'
 
     default:
-      output = 'Virus scanning failed, contact your administrator'
-      break
+      return 'Virus scanning failed, contact your administrator'
   }
-
-  return output
 }
 
 function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {
@@ -63,12 +51,7 @@ function transformFilesResultsToDetails (files, proposition_id, investment_proje
 
   mapKeys(files, (file, index) => {
     const downloadLinkOrState = getDownloadLinkOrState(file, proposition_id, investment_project_id)
-    let key = 'file'
-    let counter = parseInt(index) + 1
-
-    if (files.length > 0) {
-      key = `${key}${counter}`
-    }
+    const key = files.length ? 'file' + (index + 1) : 'file'
 
     obj[key] = [file.original_filename, downloadLinkOrState]
   })
