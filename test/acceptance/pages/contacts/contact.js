@@ -35,7 +35,7 @@ module.exports = {
     telephoneNumber: '#field-telephone_number',
     emailAddress: '#field-email',
     emailAddressError: 'label[for=field-email] span:nth-child(2)',
-    acceptsEmailMarketingFromDit: getCheckBoxLabel('Accepts email marketing from DIT'),
+    acceptsEmailMarketingFromDit: getCheckBoxLabel('Does not accept email marketing'),
     sameAddressAsCompanyYes: '[for="field-address_same_as_company-1"]',
     sameAddressAsCompanyNo: '[for="field-address_same_as_company-2"]',
     alternativePhoneNumber: '#field-telephone_alternative',
@@ -83,11 +83,10 @@ module.exports = {
           })
           .perform(() => {
             this
-              .click('@acceptsEmailMarketingFromDit')
               .click('@sameAddressAsCompanyYes')
 
             callback(assign({}, contact, {
-              acceptsEmailMarketingFromDit: 'Yes',
+              acceptsEmailMarketingFromDit: 'Can be marketed to',
               primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
               uniqueSearchTerm: getUid(contact.lastName),
             }))
@@ -139,7 +138,7 @@ module.exports = {
               .page.address()
               .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
                 callback(assign({}, {
-                  acceptsEmailMarketingFromDit: 'No',
+                  acceptsEmailMarketingFromDit: 'Can be marketed to',
                   type: 'Primary',
                   primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
                   address: getAddress(addressInputValues),
