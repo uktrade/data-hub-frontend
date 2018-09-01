@@ -54,15 +54,12 @@ describe('Documents Upload repos', () => {
       })
 
       it('should only post to the API the name of the document', () => {
-        const url = `http://localhost:8000/v3/investment/123/proposition/345/document`
-        const body = {
-          original_filename: 'document.txt',
-        }
-
         const options = {
-          body,
+          url: 'http://localhost:8000/v3/investment/123/proposition/345/document',
+          body: {
+            original_filename: 'document.txt',
+          },
           method: 'POST',
-          url,
         }
 
         expect(this.authorisedRequestStub).to.be.calledWith(this.req.session.token, options)

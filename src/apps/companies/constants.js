@@ -9,7 +9,7 @@ const GLOBAL_NAV_ITEM = {
   path: '/companies',
   label: 'Companies',
   permissions: [
-    'company.read_company',
+    'company.view_company',
   ],
   order: 1,
 }
@@ -27,7 +27,7 @@ const LOCAL_NAV = [
     path: 'contacts',
     label: 'Contacts',
     permissions: [
-      'company.read_contact',
+      'company.view_contact',
     ],
   },
   {
@@ -38,15 +38,15 @@ const LOCAL_NAV = [
     path: 'interactions',
     label: 'Interactions',
     permissions: [
-      'interaction.read_all_interaction',
+      'interaction.view_all_interaction',
     ],
   },
   {
     path: 'investments',
     label: 'Investment',
     permissions: [
-      'investment.read_all_investmentproject',
-      'investment.read_associated_investmentproject',
+      'investment.view_all_investmentproject',
+      'investment.view_associated_investmentproject',
     ],
   },
   {
@@ -57,21 +57,21 @@ const LOCAL_NAV = [
     path: 'orders',
     label: 'Orders (OMIS)',
     permissions: [
-      'order.read_order',
+      'order.view_order',
     ],
   },
   {
     path: 'timeline',
     label: 'Timeline',
     permissions: [
-      'company.read_company_timeline',
+      'company.view_company_timeline',
     ],
   },
   {
     path: 'documents',
     label: 'Documents',
     permissions: [
-      'company.read_company_document',
+      'company.view_company_document',
     ],
   },
   {
