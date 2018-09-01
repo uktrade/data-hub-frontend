@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { filter, map } = require('lodash')
+const { filter } = require('lodash')
 const formidable = require('formidable')
 
 const { chainUploadSequence } = require('../repos')
@@ -28,11 +28,11 @@ function parseForm (req, res, apiConfig) {
       url: apiConfig.url,
     }
 
-    map(files, async (file, value, collection) => {
+    files.forEach(async (file, value, collection) => {
       res.locals.documents = {
         ...res.locals.documents,
         ...{
-          file,
+          files,
           numberOfDocuments: filter(collection, (document) => document.name.length).length,
         },
       }
