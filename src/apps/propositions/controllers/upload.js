@@ -12,16 +12,9 @@ function renderUpload (req, res, next) {
 
   const proposition = get(res.locals, 'proposition.id')
   const investment = get(res.locals, 'investmentData.id')
-
   const selectUploadForm = buildFormWithStateAndErrors(uploadForm(
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,
-
-      /**
-       * Order and names of hidden inputs are important because we rely on them to build the API call url
-       * - names need to match the API keys
-       * - values need to match the ID of the app or subb-app in scope
-       */
       hiddenFields: {
         investment,
         proposition,
@@ -33,11 +26,23 @@ function renderUpload (req, res, next) {
   res
     .breadcrumb('Choose files')
     .title('Choose files')
-    .render('propositions/views/upload.njk', {
+    .render('propositions/views/upload', {
       selectUploadForm,
     })
 }
 
+function getDocumentsOptions (req, res, next) {
+  res.locals.documents = {
+    url: {
+      app: 'investment',
+      subApp: 'proposition',
+    },
+  }
+
+  next()
+}
+
 module.exports = {
+  getDocumentsOptions,
   renderUpload,
 }

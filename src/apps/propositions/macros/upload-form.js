@@ -6,7 +6,7 @@ const {
 } = require('./fields')
 
 module.exports = function ({
-  returnLink,
+  returnLink = '',
   returnText,
   buttonText,
   hiddenFields,

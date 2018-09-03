@@ -87,7 +87,7 @@ function transformPropositionResponseToViewRecord ({
   features,
 }) {
   const detailLabels = labels.proposition
-  let transformed = {
+  const transformed = {
     scope: capitalize(scope),
     status: capitalize(status),
     created_on: {

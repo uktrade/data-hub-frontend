@@ -3,7 +3,7 @@ const router = require('express').Router()
 const { renderCreatePage } = require('./controllers/create')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderAbandon } = require('./controllers/abandon')
-const { renderUpload } = require('./controllers/upload')
+const { getDocumentsOptions, renderUpload } = require('./controllers/upload')
 
 const { postDetails, getDownloadLink, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
 const { postAbandon } = require('./middleware/abandon')
@@ -33,12 +33,8 @@ router
   .route('/propositions/:propositionId/document')
   .post(
     setPropositionDocumentUploadReturnUrl,
-    postUpload.bind({
-      url: {
-        app: 'investment',
-        subApp: 'proposition',
-      },
-    }),
+    getDocumentsOptions,
+    postUpload,
     renderUpload,
   )
   .get(
