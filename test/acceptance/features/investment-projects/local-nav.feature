@@ -26,6 +26,7 @@ Feature: Investment projects local nav
       | Project team              |
       | Interactions              |
       | Evaluations               |
+      | Propositions              |
       | Audit history             |
       | Evidence                  |
 
@@ -41,5 +42,6 @@ Feature: Investment projects local nav
       | Project team              |
       | Interactions              |
       | Evaluations               |
+      | Propositions              |
       | Audit history             |
       | Evidence                  |
