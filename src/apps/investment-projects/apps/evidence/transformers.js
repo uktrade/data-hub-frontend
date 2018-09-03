@@ -5,7 +5,7 @@ function isTag (key) {
   return key.search(/tag/i) !== -1
 }
 
-function transformedEvidenceFieldsRequest (fields) {
+function transformedEvidenceTextFields (fields) {
   const tags = compact(map(fields, (value, key) => isTag(key) ? fields[key] : null))
   const comment = fields.comment
 
@@ -16,5 +16,5 @@ function transformedEvidenceFieldsRequest (fields) {
 }
 
 module.exports = {
-  transformedEvidenceFieldsRequest,
+  transformedEvidenceTextFields,
 }

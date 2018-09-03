@@ -1,13 +1,9 @@
 const { fetchDownloadLink, requestDeleteEvidence } = require('../apps/evidence/repos')
-const { transformedEvidenceFieldsRequest } = require('../apps/evidence/transformers')
+const { transformedEvidenceTextFields } = require('../apps/evidence/transformers')
 
 function setEvidenceReturnUrl (req, res, next) {
   res.locals.returnLink = `/investment-projects/${req.params.investmentId}/evidence`
   next()
-}
-
-async function collectEvidenceFields (req, res, fields) {
-  res.locals.requestBody = await transformedEvidenceFieldsRequest(fields)
 }
 
 async function getDownloadLink (req, res, next) {
@@ -39,9 +35,21 @@ async function deleteEvidence (req, res, next) {
   }
 }
 
+function getEvidenceDocumentsOptions (req, res, next) {
+  res.locals.documents = {
+    collectTextFields: transformedEvidenceTextFields,
+    url: {
+      app: 'investment',
+      document: 'evidence-document',
+    },
+  }
+
+  next()
+}
+
 module.exports = {
   setEvidenceReturnUrl,
-  collectEvidenceFields,
   deleteEvidence,
   getDownloadLink,
+  getEvidenceDocumentsOptions,
 }
