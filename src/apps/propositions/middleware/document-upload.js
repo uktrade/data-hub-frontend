@@ -3,6 +3,18 @@ function setPropositionDocumentUploadReturnUrl (req, res, next) {
   next()
 }
 
+function setDocumentsOptions (req, res, next) {
+  res.locals.documents = {
+    url: {
+      app: 'investment',
+      subApp: 'proposition',
+    },
+  }
+
+  next()
+}
+
 module.exports = {
   setPropositionDocumentUploadReturnUrl,
+  setDocumentsOptions,
 }
