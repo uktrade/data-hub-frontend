@@ -4,52 +4,40 @@ const formidable = require('formidable')
 
 const { chainUploadSequence } = require('../repos')
 
-function parseForm (req, res, apiConfig) {
+function parseForm (req, res) {
   const form = new formidable.IncomingForm()
   const fiveGigabytes = 5000 * 1024 * 1024
 
   form.maxFileSize = fiveGigabytes
 
   form.parse(req, async (err, fields, files) => {
-    let index = 1
-
-    if (apiConfig.collectTextFields) {
-      await apiConfig.collectTextFields(req, res, fields)
-    }
-
     if (err) {
       return res.status(500).json({ error: err })
     }
 
-    res.locals.documents = {
-      fields,
-      id: fields.id,
-      parent_id: fields[fields.app],
-      url: apiConfig.url,
-    }
-
-    files.forEach(async (file, value, collection) => {
-      res.locals.documents = {
-        ...res.locals.documents,
-        ...{
-          files,
-          numberOfDocuments: filter(collection, (document) => document.name.length).length,
-        },
+    Object.keys(files).forEach(async (key, index, collection) => {
+      try {
+        await chainUploadSequence(req.session.token, {
+          file: files[key],
+          fields,
+          url: res.locals.documents.url,
+        })
+      } catch (e) {
+        req.flash('error', e.message)
+        res.redirect(req.originalUrl)
+      } finally {
+        if (collection.length === index + 1) {
+          req.flash('success', `${filter(files).length} File(s) uploaded`)
+          res.redirect(res.locals.returnLink)
+        }
       }
-
-      if (!file.name.length) { return }
-      index++
-
-      await chainUploadSequence(req, res, index)
     })
   })
 }
 
 function postUpload (req, res, next) {
-  const apiConfig = this
-
   try {
-    parseForm(req, res, apiConfig)
+    parseForm(req, res)
   } catch (error) {
     if (error.statusCode !== 400) {
       return next(error)

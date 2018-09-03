@@ -82,6 +82,23 @@ describe('Proposition transformers', () => {
             url: undefined,
             name: undefined,
           },
+          'File 1':
+            [ 'il_fullxfull.826924229_2xdo.jpg',
+              { type: 'document',
+                status: 'av_clean',
+                message: 'Download',
+                href: '/investment-projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1a85b301-56ae-4073-97db-a42604c40bea' } ],
+          'File 2':
+            [ 'totally_not_a_virus.zip',
+              { type: 'document',
+                status: 'scan_failed',
+                message: 'The file didn\'t pass virus scanning, contact your administrator' } ],
+          'File 3':
+            [ '780-rainbow-teacosy-1.jpg',
+              { type: 'document',
+                status: 'av_clean',
+                message: 'Download',
+                href: '/investment-projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f' }],
         })
       })
     })
