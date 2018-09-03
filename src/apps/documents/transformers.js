@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-const { mapKeys } = require('lodash')
 
 function isFileKey (key) {
   return key.search(/file/i) !== -1
@@ -18,70 +17,62 @@ function transformLabelsToShowFiles (key, labels) {
 }
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const status = file.status
-  let output = {
+  const output = {
     type: 'document',
   }
 
-  switch (status) {
+  switch (file.status) {
     case 'virus_scanned':
-
       if (file.av_clean) {
-        output = {
+        return {
           ...output,
-          ...{
-            status: 'av_clean',
-            message: 'Download',
-            href: `/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
-          },
+          status: 'av_clean',
+          message: 'Download',
+          href: `/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
         }
       } else {
-        output = {
+        return {
           ...output,
-          ...{
-            status: 'scan_failed',
-            message: 'The file didn\'t pass virus scanning, contact your administrator',
-          },
+          status: 'scan_failed',
+          message: 'The file didn\'t pass virus scanning, contact your administrator',
         }
       }
-
-      break
-
     case 'not_virus_scanned':
-      output.message = `File not virus scanned`
-      break
-
+      return {
+        ...output,
+        message: 'File not virus scanned',
+      }
     case 'virus_scanning_scheduled':
-      output.message = `Virus scanning scheduled`
-      break
-
+      return {
+        ...output,
+        message: 'Virus scanning scheduled',
+      }
     case 'virus_scanning_in_progress':
-      output.message = `File is being scanned, try again in a few moments`
-      break
+      return {
+        ...output,
+        message: 'File is being scanned, try again in a few moments',
+      }
 
     case 'virus_scanning_failed':
-      output.message = `Virus scanning failed, contact your administrator`
-      break
+      return {
+        ...output,
+        message: 'Virus scanning failed, contact your administrator',
+      }
 
     default:
-      output.message = `Virus scanning failed, contact your administrator`
-      break
+      return {
+        ...output,
+        message: 'Virus scanning failed, contact your administrator',
+      }
   }
-
-  return output
 }
 
 function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {
   let obj = {}
 
-  mapKeys(files, (file, index) => {
+  files.forEach((file, index) => {
     const downloadLinkOrState = getDownloadLinkOrState(file, proposition_id, investment_project_id)
-    let key = 'file'
-    let counter = parseInt(index) + 1
-
-    if (files.length > 0) {
-      key = `${key}${counter}`
-    }
+    const key = files.length ? 'file' + (index + 1) : 'file'
 
     obj[key] = [file.original_filename, downloadLinkOrState]
   })

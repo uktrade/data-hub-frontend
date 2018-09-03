@@ -4,8 +4,8 @@ const GLOBAL_NAV_ITEM = {
   path: '/investment-projects',
   label: 'Investment projects',
   permissions: [
-    'investment.read_associated_investmentproject',
-    'investment.read_all_investmentproject',
+    'investment.view_associated_investmentproject',
+    'investment.view_all_investmentproject',
   ],
   order: 5,
 }
@@ -23,16 +23,16 @@ const LOCAL_NAV = [
     path: 'interactions',
     label: 'Interactions',
     permissions: [
-      'interaction.read_associated_investmentproject_interaction',
-      'interaction.read_all_interaction',
+      'interaction.view_associated_investmentproject_interaction',
+      'interaction.view_all_interaction',
     ],
   },
   {
     path: 'propositions',
     label: 'Propositions',
     permissions: [
-      'proposition.read_associated_investmentproject_propositions',
-      'proposition.read_all_proposition',
+      'proposition.view_associated_investmentproject_propositions',
+      'proposition.view_all_proposition',
     ],
   },
   {
@@ -47,7 +47,7 @@ const LOCAL_NAV = [
     path: 'documents',
     label: 'Documents',
     permissions: [
-      'investment.read_investmentproject_document',
+      'investment.view_investmentproject_document',
     ],
   },
 ]

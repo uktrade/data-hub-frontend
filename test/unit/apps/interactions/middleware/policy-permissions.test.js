@@ -4,7 +4,7 @@ const interactionData = require('~/test/unit/data/interactions/interaction.json'
 const serviceDeliveryData = require('~/test/unit/data/interactions/service-delivery.json')
 const policyFeedbackData = require('~/test/unit/data/interactions/policy-feedback.json')
 
-const VIEW_POLICY_FEEDBACK = 'interaction.read_policy_feedback_interaction'
+const VIEW_POLICY_FEEDBACK = 'interaction.view_policy_feedback_interaction'
 const EDIT_POLICY_FEEDBACK = 'interaction.change_policy_feedback_interaction'
 const CREATE_POLICY_FEEDBACK = 'interaction.add_policy_feedback_interaction'
 
@@ -28,7 +28,7 @@ describe('#handlePolicyPermissions', () => {
 
   context('The user tries to view an interaction', () => {
     beforeEach(() => {
-      this.handler = handlePolicyPermissions('read')
+      this.handler = handlePolicyPermissions('view')
       this.res.locals.interaction = interactionData
     })
 
@@ -61,7 +61,7 @@ describe('#handlePolicyPermissions', () => {
 
   context('The user tries to view a service delivery', () => {
     beforeEach(() => {
-      this.handler = handlePolicyPermissions('read')
+      this.handler = handlePolicyPermissions('view')
       this.res.locals.interaction = serviceDeliveryData
     })
 
@@ -92,7 +92,7 @@ describe('#handlePolicyPermissions', () => {
 
   context('The user tries to view a policy feedback', () => {
     beforeEach(() => {
-      this.handler = handlePolicyPermissions('read')
+      this.handler = handlePolicyPermissions('view')
       this.res.locals.interaction = policyFeedbackData
     })
 
