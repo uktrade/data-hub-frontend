@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang=en class=no-js>
+<head>
+  <title>Prototypes</title>
+  <link href="/prototypes/css/styles.css" media="screen, print" rel=stylesheet>
+  <!--[if lt IE 9]>
+  <script src="/html5shiv.min.js"></script>
+  <![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+</head>
+<body>
+<header class=global-header aria-label="global header" id="global-header">
+  <div class=global-header__inner>
+    <div class=global-header__site-title>
+      <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
+    </div>
+    <nav aria-label="global nav">
+      <ul class=proposition-menu>
+        <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
+        <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
+        <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
+      </ul>
+    </nav>
+  </div>
+</header>
+<nav class=c-global-nav aria-label="global navigation" id="global-nav">
+  <div class="c-global-nav__container l-container">
+    <a href="" class="c-global-nav__link" v-for="item in [
+      { text: 'Companies', active: true },
+      { text: 'Contacts' },
+      { text: 'Events' },
+      { text: 'Interactions and services' },
+      { text: 'Investment projects' },
+      { text: 'Orders (OMIS)' },
+      { text: 'MI dashboards' },
+    ]" :class="{ 'is-active': item.active }">{{ item.text }}</a>
+  </div>
+</nav>
+<main class=main-content id=main-content>
+  <header class="c-local-header c-local-header--light-banner" aria-label="local header">
+    <div class=l-container>
+      <nav class=c-breadcrumb aria-label=Breadcrumbs>
+        <ul class=c-breadcrumb__list itemscope itemtype=http://schema.org/BreadcrumbList>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/ class=c-breadcrumb__link itemprop=url><span itemprop=name>Home</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
+            itemprop=name id="breadcrumb">breadcrumb</span></a></li>
+        </ul>
+      </nav>
+      <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
+        <li class="c-message c-message--success" v-if="canShow()">{{ getMessage() }}</li>
+      </ul>
+      <div class=grid-row>
+        <div class=column-full>
+          <h1 class=c-local-header__heading>Add a location for <span id="name">name</span></h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="main-content__inner l-container">
+    <div class=grid-row>
+      <article class=column-three-quarters id="blah">
+        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name' ]) }}
+        <form @submit.prevent="moveToNextStep('set-description.html')">
+          <input type="hidden" ref="collection-name" value="locations" />
+          <input type="hidden" ref="type-of-location" id="type-of-location" />
+          <fieldset id="group-field-average_salary" class="c-form-group">
+            <legend class="c-form-group__label"><span class="c-form-group__label-text">Choose a type of location</span></legend>
+            <div class="c-form-group__inner">
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Office" id="type-of-location-1" v-on:click="setHidden('type-of-location', 'Office')">
+                <label class="c-multiple-choice__label" for="type-of-location-1"><span class="c-multiple-choice__label-text">Office</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Head office" id="type-of-location-2" v-on:click="setHidden('type-of-location', 'Head office')">
+                <label class="c-multiple-choice__label" for="type-of-location-2"><span class="c-multiple-choice__label-text">Head office</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Corporate centre" id="type-of-location-3" v-on:click="setHidden('type-of-location', 'Corporate centre')">
+                <label class="c-multiple-choice__label" for="type-of-location-3"><span class="c-multiple-choice__label-text">Corporate centre</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Factory" id="type-of-location-4" v-on:click="setHidden('type-of-location', 'Factory')">
+                <label class="c-multiple-choice__label" for="type-of-location-4"><span class="c-multiple-choice__label-text">Factory</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Telesales" id="type-of-location-5" v-on:click="setHidden('type-of-location', 'Telesales')">
+                <label class="c-multiple-choice__label" for="type-of-location-5"><span class="c-multiple-choice__label-text">Telesales</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="R&D base" id="type-of-location-6" v-on:click="setHidden('type-of-location', 'R&D base')">
+                <label class="c-multiple-choice__label" for="type-of-location-6"><span class="c-multiple-choice__label-text">R&D base</span></label>
+              </div>
+              <div class="c-multiple-choice">
+                <input class="c-multiple-choice__input" type="radio" name="type-of-location" value="Branch" id="type-of-location-7" v-on:click="setHidden('type-of-location', 'Branch')">
+                <label class="c-multiple-choice__label" for="type-of-location-7"><span class="c-multiple-choice__label-text">Branch</span></label>
+              </div>
+            </div>
+          </fieldset>
+          <div class="c-form-actions">
+            <button class="button">Continue</button>
+            <a :href="`postcode-lookup.html?key=${query.key}&id=${query.id}`">Back</a>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</main>
+<script src="/prototypes/js/global-header.js"></script>
+<script src="/prototypes/js/global-nav.js"></script>
+<script src="/prototypes/js/lib.js"></script>
+<script src="/prototypes/js/messages.js"></script>
+<script src="/prototypes/js/p.js"></script>
+</body>
+</html>
