@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang=en class=no-js>
+<head>
+  <title>Prototypes</title>
+  <link href="/prototypes/css/styles.css" media="screen, print" rel=stylesheet>
+  <!--[if lt IE 9]>
+  <script src="/html5shiv.min.js"></script>
+  <![endif]-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+</head>
+<body>
+<header class=global-header aria-label="global header" id="global-header">
+  <div class=global-header__inner>
+    <div class=global-header__site-title>
+      <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
+    </div>
+    <nav aria-label="global nav">
+      <ul class=proposition-menu>
+        <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
+        <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
+        <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
+      </ul>
+    </nav>
+  </div>
+</header>
+<nav class=c-global-nav aria-label="global navigation" id="global-nav">
+  <div class="c-global-nav__container l-container">
+    <a href="" class="c-global-nav__link" v-for="item in [
+      { text: 'Companies', active: true },
+      { text: 'Contacts' },
+      { text: 'Events' },
+      { text: 'Interactions and services' },
+      { text: 'Investment projects' },
+      { text: 'Orders (OMIS)' },
+      { text: 'MI dashboards' },
+    ]" :class="{ 'is-active': item.active }">{{ item.text }}</a>
+  </div>
+</nav>
+<main class=main-content id=main-content>
+  <header class="c-local-header c-local-header--light-banner" aria-label="local header">
+    <div class=l-container>
+      <nav class=c-breadcrumb aria-label=Breadcrumbs>
+        <ul class=c-breadcrumb__list itemscope itemtype=http://schema.org/BreadcrumbList>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/ class=c-breadcrumb__link itemprop=url><span itemprop=name>Home</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
+            itemprop=name id="breadcrumb">breadcrumb</span></a></li>
+        </ul>
+      </nav>
+      <div class=grid-row>
+        <div class=column-full>
+          <h1 class=c-local-header__heading>Add a location for <span id="name">name</span></h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="main-content__inner l-container">
+    <div class=grid-row>
+      <article class=column-three-quarters id="blah">
+        {{ setDataFields('subsidiaries', [ 'breadcrumb', 'name' ]) }}
+        <form @submit.prevent="moveToNextStep('set-type.html')">
+          <div id="group-field-registered_address_pcode_lookup" class="c-form-group c-form-group--short c-form-group--PostcodeLookup">
+            <label class="c-form-group__label"
+                   for="field-registered_address_pcode_lookup"><span class="c-form-group__label-text">Postcode</span></label>
+            <div class="c-form-group__inner">
+              <input type="text"
+                     id="field-registered_address_pcode_lookup"
+                     ref="postcode-lookup"
+                     class="c-form-control c-form-control--short c-form-control--PostcodeLookup">
+              <input type="hidden" ref="postcode" id="postcode" />
+              <button class="button button--secondary postcode-lookup-button"
+                      type="button"
+                      v-on:click="populateDropdown(addresses)">Find UK address</button>
+            </div>
+          </div>
+          <div id="group-field-registered_address_pcode_result" class="c-form-group c-form-group--PostcodeLookupResult">
+            <label class="c-form-group__label"
+                   for="field-registered_address_pcode_result"><span class="c-form-group__label-text">Select an address</span>
+            </label>
+            <div class="c-form-group__inner">
+              <select id="field-registered_address_pcode_result"
+                      ref="address"
+                      class="c-form-control c-form-control--PostcodeLookupResult"
+                      v-on:change="setAddressFields">
+                <option value="" v-if="options.length === 0">Enter a postcode to lookup your address</option>
+                <option value="" v-if="options.length > 0">Select an address</option>
+                <option v-for="option in options" :value="option.id" v-on:click="">{{ option.display }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="address-1"><span class="c-form-group__label-text">Address line 1</span></label>
+            <div class="c-form-group__inner"><input name="address-1" type="text" id="address-1" ref="address-1" class="c-form-control"></div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="address-2"><span class="c-form-group__label-text">Address line 2 (optional)</span></label>
+            <div class="c-form-group__inner"><input name="address-2" type="text" id="address-2" ref="address-2" class="c-form-control"></div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="town-or-city"><span class="c-form-group__label-text">Town or city</span></label>
+            <div class="c-form-group__inner"><input name="town-or-city" type="text" id="town-or-city" ref="town-or-city" class="c-form-control"></div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="county"><span class="c-form-group__label-text">County (optional)</span></label>
+            <div class="c-form-group__inner"><input name="county" type="text" id="county" ref="county" class="c-form-control"></div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label"><span class="c-form-group__label-text">Country</span></label>
+            <div class="c-form-group__inner">United Kingdom<input type="hidden" ref="country" value="United Kingdom" /></div>
+          </div>
+          <div class="c-form-group">
+            <label class="c-form-group__label" for="field-uk_region"><span class="c-form-group__label-text">UK region</span></label>
+            <div class="c-form-group__inner">
+              <select id="field-uk_region" name="uk_region" class="c-form-control" ref="region">
+                <option value="">-- Select region --</option>
+                <option>East Midlands</option>
+                <option>East of England</option>
+                <option>London</option>
+                <option>North East</option>
+                <option>North West</option>
+                <option>Northern Ireland</option>
+                <option>Scotland</option>
+                <option>South East</option>
+                <option>South West</option>
+                <option>UKTI Dubai Hub</option>
+                <option>Wales</option>
+                <option>West Midlands</option>
+                <option>Yorkshire and The Humber</option>
+              </select>
+            </div>
+          </div>
+          <div class="c-form-actions">
+            <button class="button">Continue</button>
+            <a href="locations.html?id=1">Cancel</a>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</main>
+<script src="/prototypes/js/global-header.js"></script>
+<script src="/prototypes/js/global-nav.js"></script>
+<script src="/prototypes/js/lib.js"></script>
+<script src="/prototypes/js/p.js"></script>
+</body>
+</html>

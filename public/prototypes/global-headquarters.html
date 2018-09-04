@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang=en class=no-js>
+<head>
+  <title>Prototypes</title>
+
+  <link href="/prototypes/css/styles.css" media="screen, print" rel=stylesheet>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+</head>
+<body>
+<header class=global-header aria-label="global header" id="global-header">
+  <div class=global-header__inner>
+    <div class=global-header__site-title>
+      <a href=/ class=global-header__link><span class=global-header__logo><span class=global-header__site-name>Department for International Trade</span><span class=global-header__service-name>Data Hub</span></span></a><span class=phase-badge>BETA</span>
+    </div>
+    <nav aria-label="global nav">
+      <ul class=proposition-menu>
+        <li class=proposition-menu__item><a href=/support class=proposition-menu__link>Support</a></li>
+        <li class=proposition-menu__item><a href=/profile class=proposition-menu__link>DIT Staff</a></li>
+        <li class=proposition-menu__item><a href=/oauth/sign-out class=proposition-menu__link>Sign out</a></li>
+        <li class=proposition-menu__item><span class="proposition-menu__link" v-on:click="reset" style="cursor: pointer;">Reset</span></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<nav class=c-global-nav aria-label="global navigation" id="global-nav">
+  <div class="c-global-nav__container l-container">
+    <a href="" class="c-global-nav__link" v-for="item in [
+      { text: 'Companies', active: true },
+      { text: 'Contacts' },
+      { text: 'Events' },
+      { text: 'Interactions and services' },
+      { text: 'Investment projects' },
+      { text: 'Orders (OMIS)' },
+      { text: 'MI dashboards' },
+    ]" :class="{ 'is-active': item.active }">{{ item.text }}</a>
+  </div>
+</nav>
+<main class=main-content id=main-content>
+  <header class="c-local-header c-local-header--light-banner" aria-label="local header">
+    <div class=l-container>
+      <nav class=c-breadcrumb aria-label=Breadcrumbs>
+        <ul class=c-breadcrumb__list itemscope itemtype=http://schema.org/BreadcrumbList>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/ class=c-breadcrumb__link itemprop=url><span itemprop=name>Home</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=/companies class=c-breadcrumb__link itemprop=url><span itemprop=name>Companies</span></a></li>
+          <li class=c-breadcrumb__list-item itemprop=itemListElement itemscope itemtype=http://schema.org/ListItem><a
+            href=#main-content class="c-breadcrumb__link is-active" itemprop=url><span
+            itemprop=name>Volkswagen Group</span></a></li>
+        </ul>
+      </nav>
+      <ul class="c-message-list js-Messages" tabindex="-1" role="alert" id="messages">
+        <li class="c-message c-message--success" v-if="canShow()">{{ getMessage() }}</li>
+      </ul>
+      <div class=grid-row>
+        <div class=column-full>
+          <h1 class=c-local-header__heading>Volkswagen Group</h1>
+          <p class="c-local-header__heading-after">Yeomans Drive, Blakelands, MK14 5LR, Milton Keynes, United Kingdom</p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="main-content__inner l-container">
+    <div class=grid-row>
+      <div class=column-one-quarter id="local-nav">
+        <nav class=c-local-nav aria-label="local navigation">
+          <a class="c-local-nav__link" v-for="item in [
+            { text: 'Details', href: 'subsidiary.html?id=1' },
+            { text: 'Related companies', href: 'global-headquarters.html', active: true },
+            { text: 'Locations', href: 'locations.html?id=1' },
+            { text: 'Contacts', href: 'contacts.html?id=1' },
+            { text: 'Advisers' },
+            { text: 'Interactions' },
+            { text: 'Investment' },
+            { text: 'Export' },
+            { text: 'Orders (OMIS)' },
+            { text: 'Documents' },
+            { text: 'Audit history' },
+          ]" :class="{ 'is-active': item.active }" :href="item.href">{{ item.text }}</a>
+        </nav>
+      </div>
+      <article class=column-three-quarters id="blah">
+        <h2 class="heading-medium" style="margin-bottom: 0 !important;">Global headquarters</h2>
+        <article class="c-collection" style="margin-top: 0 !important;">
+          <header class="c-collection__header">
+            <div class="c-collection__header-row">
+            </div>
+          </header>
+          <ol class="c-entity-list">
+            <li class="c-entity-list__item" v-for="globalHeadquarter in globalHeadquarters">
+              <div class="c-entity c-entity--company">
+                <div class="c-entity__header">
+                  <div class="c-entity__badges">
+                    <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
+                      <div class="c-meta-list__item" v-for="badge in globalHeadquarter.badges">
+                        <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge">{{ badge.value }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 class="c-entity__title">
+                    <a href="subsidiaries.html" class="c-entity__link">{{
+                      globalHeadquarter.name }}</a>
+                    <a v-else class="c-entity__link">{{ globalHeadquarter.name }}</a>
+                  </h3>
+                </div>
+                <div class="c-entity__content">
+                  <div class="c-meta-list">
+                    <div class="c-meta-list__item" v-for="item in globalHeadquarter.meta">
+                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding-top:10px;">
+                <a href="">Remove link</a>
+              </div>
+            </li>
+          </ol>
+        </article>
+        <article class="c-collection">
+          <header class="c-collection__header">
+            <div class="c-collection__header-row">
+              <div class="c-collection__header-intro">
+                <span class="c-collection__result-count">{{ getCount('subsidiaries') - 1 }}</span> other subsidiaries
+              </div>
+            </div>
+          </header>
+          <ol class="c-entity-list">
+            <li class="c-entity-list__item" v-for="subsidiary in subsidiaries" v-if="subsidiary.name !== 'Volkswagen Group'">
+              <div class="c-entity c-entity--company">
+                <div class="c-entity__header">
+                  <div class="c-entity__badges">
+                    <div class="c-meta-list c-meta-list--inline c-meta-list--condensed">
+                      <div class="c-meta-list__item" v-for="badge in subsidiary.badges">
+                        <span class="c-meta-list__item-label u-visually-hidden">{{ badge.label }}</span> <span class="c-badge">{{ badge.value }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h3 class="c-entity__title">
+                    <a v-if="subsidiary.id === 1" :href="'subsidiary.html?id=' + subsidiary.id" class="c-entity__link">{{ subsidiary.name }}</a>
+                    <a v-else class="c-entity__link">{{ subsidiary.name }}</a>
+                  </h3></div>
+                <div class="c-entity__content">
+                  <div class="c-meta-list">
+                    <div class="c-meta-list__item" v-for="item in subsidiary.meta">
+                      <span class="c-meta-list__item-label">{{ item.label }}</span> <span class="c-meta-list__item-value">{{ item.value }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </article>
+      </article>
+    </div>
+  </div>
+</main>
+<script src="/prototypes/js/global-header.js"></script>
+<script src="/prototypes/js/global-nav.js"></script>
+<script src="/prototypes/js/lib.js"></script>
+<script src="/prototypes/js/local-nav.js"></script>
+<script src="/prototypes/js/messages.js"></script>
+<script src="/prototypes/js/p.js"></script>
+</body>
+</html>
