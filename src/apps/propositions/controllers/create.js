@@ -33,7 +33,6 @@ function renderCreatePage (req, res) {
       mergedPropositionData,
       get(res.locals, 'form.errors.messages'),
     )
-
   const forEntityName = res.locals.investmentData.name ? ` for ${res.locals.investmentData.name}` : ''
   const kindName = 'proposition'
 

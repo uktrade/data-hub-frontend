@@ -36,3 +36,9 @@
     margin-top: $default-spacing-unit / 2;
   }
 }
+
+.list-links {
+  &-item {
+    margin: $default-spacing-unit * 2 0;
+  }
+}
