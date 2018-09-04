@@ -15,21 +15,23 @@ function parseForm (req, res) {
       return res.status(500).json({ error: err })
     }
 
-    files.forEach(async (file, value, collection) => {
+    Object.keys(files).forEach(async (key, index, collection) => {
       try {
         await chainUploadSequence(req.session.token, {
-          file,
+          file: files[key],
           fields,
           url: res.locals.documents.url,
         })
       } catch (e) {
         req.flash('error', e.message)
         res.redirect(req.originalUrl)
+      } finally {
+        if (collection.length === index + 1) {
+          req.flash('success', `${filter(files).length} File(s) uploaded`)
+          res.redirect(res.locals.returnLink)
+        }
       }
     })
-
-    req.flash('success', `${filter(files).length} File(s) uploaded`)
-    res.redirect(res.locals.returnLink)
   })
 }
 
