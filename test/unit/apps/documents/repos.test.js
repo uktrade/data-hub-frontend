@@ -84,8 +84,6 @@ describe('Documents Upload repos', () => {
 
     context('When there is a single file submitted and there are text fields in the form', () => {
       beforeEach(async () => {
-        this.documents.index = 1
-
         await this.repos.getDocumentUploadS3Url(this.token, this.documents)
       })
 

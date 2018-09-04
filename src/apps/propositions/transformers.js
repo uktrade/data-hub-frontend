@@ -81,7 +81,7 @@ function transformPropositionResponseToViewRecord ({
   deadline,
   adviser,
   details,
-  files,
+  files = {},
   id,
   investment_project,
   features,

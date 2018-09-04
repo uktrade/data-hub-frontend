@@ -1,4 +1,3 @@
-
 const mockFilesResponse = require('~/test/unit/data/documents/files-response.json')
 
 const {

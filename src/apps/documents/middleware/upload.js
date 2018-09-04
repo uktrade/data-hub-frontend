@@ -21,6 +21,7 @@ function parseForm (req, res) {
           file: files[key],
           fields,
           url: res.locals.documents.url,
+          textFields: getTextFields(res.locals.documents, fields),
         })
       } catch (e) {
         req.flash('error', e.message)
@@ -33,6 +34,10 @@ function parseForm (req, res) {
       }
     })
   })
+}
+
+function getTextFields ({ collectTextFields = () => {} }, fields) {
+  return collectTextFields(fields)
 }
 
 function postUpload (req, res, next) {
