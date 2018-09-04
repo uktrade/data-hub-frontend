@@ -14,6 +14,7 @@ Feature: Investment projects local nav
       | Propositions              |
       | Audit history             |
       | Documents                 |
+      | Evidence                  |
 
   @investment-projects-local-nav--lep @lep
   Scenario: Investment projects local nav as LEP
@@ -26,6 +27,8 @@ Feature: Investment projects local nav
       | Interactions              |
       | Evaluations               |
       | Audit history             |
+      | Evidence                  |
+
 
 
   @investment-projects-local-nav--da @da
@@ -39,3 +42,4 @@ Feature: Investment projects local nav
       | Interactions              |
       | Evaluations               |
       | Audit history             |
+      | Evidence                  |

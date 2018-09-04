@@ -35,8 +35,9 @@ function createRequest (token, urls, file) {
   })
 }
 
-function getDocumentUploadS3Url (token, { file, url, fields }) {
+function getDocumentUploadS3Url (token, { file, url, fields, textFields = {} }) {
   const body = {
+    ...textFields,
     original_filename: file.name,
   }
 
