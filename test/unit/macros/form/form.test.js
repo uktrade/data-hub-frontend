@@ -37,7 +37,7 @@ describe('Form component', () => {
         macros.renderToDom('TextField'),
       )
       expect(component.method).to.equal('get')
-      expect(component.action).to.equal('/form-url')
+      expect(component.action).to.equal('/form-url?_csrf=')
       expect(component.className).to.equal('c-form-component')
       expect(component.getAttribute('role')).to.equal('search')
       expect(component.querySelector('.c-form-actions').classList.contains('u-js-hidden')).to.be.true
