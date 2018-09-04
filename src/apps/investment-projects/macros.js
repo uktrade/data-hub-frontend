@@ -301,9 +301,14 @@ const statusFormConfig = {
   }],
 }
 
+const downloadFormConfig = {
+  buttonText: 'Download',
+}
+
 module.exports = {
   investmentFiltersFields,
   investmentSortForm,
   requirementsFormConfig,
+  downloadFormConfig,
   statusFormConfig,
 }

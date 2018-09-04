@@ -18,7 +18,9 @@ function getDeepObjectValuesForKey (object, keyName, values = []) {
 }
 
 function assignPropsIfFoundInObject (children, sourceObject = {}, propName) {
-  if (!isArray(children) || isEmpty(sourceObject) || !propName) { return children }
+  if (!isArray(children) || isEmpty(sourceObject) || !propName) {
+    return children
+  }
 
   return children.map(child => {
     if (child.children) {
@@ -42,7 +44,9 @@ function assignPropsIfFoundInObject (children, sourceObject = {}, propName) {
 }
 
 function buildFormWithErrors (form = {}, errorMessages = {}) {
-  if (!isArray(form.children) || isEmpty(errorMessages)) { return form }
+  if (!isArray(form.children) || isEmpty(errorMessages)) {
+    return form
+  }
 
   const formFieldNames = getDeepObjectValuesForKey(form, 'name')
   const messages = pick(pickBy(errorMessages), formFieldNames)
@@ -69,7 +73,9 @@ function buildFormWithErrors (form = {}, errorMessages = {}) {
 }
 
 function buildFormWithState (form = {}, requestBody = {}) {
-  if (!isArray(form.children) || isEmpty(requestBody)) { return form }
+  if (!isArray(form.children) || isEmpty(requestBody)) {
+    return form
+  }
 
   const children = assignPropsIfFoundInObject(form.children, requestBody, 'value')
 
@@ -79,14 +85,18 @@ function buildFormWithState (form = {}, requestBody = {}) {
 }
 
 function buildFormWithStateAndErrors (form, requestBody, errorsObject) {
-  if (isEmpty(requestBody)) { return form }
+  if (isEmpty(requestBody)) {
+    return form
+  }
 
   const formWithState = buildFormWithState(form, requestBody)
   return buildFormWithErrors(formWithState, errorsObject)
 }
 
 function buildSelectedFiltersSummary (fields, query = {}) {
-  if (!isArray(fields)) { return }
+  if (!isArray(fields)) {
+    return
+  }
 
   return fields
     .map(field => {
@@ -147,6 +157,23 @@ async function buildFieldsWithSelectedEntities (token, fields = [], query = {}) 
   return processedFields
 }
 
+async function buildDownloadFilterFields (token, filtersFieldsWithSelectedOptions) {
+  const processedFields = {}
+
+  for (let key in filtersFieldsWithSelectedOptions) {
+    const value = filtersFieldsWithSelectedOptions[key]
+    if (value.value === undefined) {
+      continue
+    }
+    processedFields[value.name] = value.value
+  }
+
+  return {
+    token: token,
+    hiddenFields: processedFields,
+  }
+}
+
 module.exports = {
   getDeepObjectValuesForKey,
   assignPropsIfFoundInObject,
@@ -155,4 +182,5 @@ module.exports = {
   buildFormWithStateAndErrors,
   buildSelectedFiltersSummary,
   buildFieldsWithSelectedEntities,
+  buildDownloadFilterFields,
 }

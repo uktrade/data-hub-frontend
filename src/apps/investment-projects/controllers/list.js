@@ -1,6 +1,6 @@
 const { get, merge, omit } = require('lodash')
 
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities, buildDownloadFilterFields } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { investmentFiltersFields, investmentSortForm } = require('../macros')
 
@@ -29,11 +29,13 @@ async function renderInvestmentList (req, res, next) {
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
     const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const downloadFiltersFields = await buildDownloadFilterFields(token, filtersFieldsWithSelectedOptions)
 
     res.render('_layouts/collection', {
       sortForm,
       selectedFilters,
       filtersFields: filtersFieldsWithSelectedOptions,
+      downloadFiltersFields: downloadFiltersFields,
       title: 'Investment Projects',
       countLabel: 'project',
     })
