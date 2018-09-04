@@ -3,6 +3,7 @@ const { assign, capitalize, get, mapKeys, pickBy } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
+const { transformFilesResultsToDetails, transformLabelsToShowFiles } = require('../documents/transformers')
 const labels = require('./labels')
 const { PROPOSITION_STATE } = require('./constants')
 
@@ -80,6 +81,10 @@ function transformPropositionResponseToViewRecord ({
   deadline,
   adviser,
   details,
+  files,
+  id,
+  investment_project,
+  features,
 }) {
   const detailLabels = labels.proposition
   const transformed = {
@@ -110,11 +115,10 @@ function transformPropositionResponseToViewRecord ({
         return details
       }
     })(),
+    ...transformFilesResultsToDetails(files.results, id, investment_project.id),
   }
 
-  return pickBy(mapKeys(transformed, (value, key) => {
-    return detailLabels[key]
-  }))
+  return pickBy(mapKeys(transformed, (value, key) => transformLabelsToShowFiles(key, detailLabels)))
 }
 
 function transformPropositionFormBodyToApiRequest (props) {
