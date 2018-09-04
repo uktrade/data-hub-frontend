@@ -172,8 +172,10 @@ function regenIds (wrapper) {
       // If the element has a name, use that as part of the new ID
       const name = element.name || ''
       const newId = generateID(name)
+      const newName = generateID(name)
 
       element.id = newId
+      element.name = newName
 
       const relatedLabel = wrapper.querySelector(`[for="${oldId}"]`)
       if (relatedLabel) {
