@@ -40,3 +40,29 @@ table {
 .table__cell--plain {
   border-bottom: 0;
 }
+
+.table--filename-truncate {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.table__list {
+  padding-left: $default-spacing-unit;
+  margin-bottom: $default-spacing-unit;
+}
+
+.table__list-item {
+  display: inline-block;
+  padding: 5px 0px;
+  &:before {
+    content: '\25CF';
+    margin-right: 10px ;
+    position: relative;
+    font-size: 0.8em;
+    top: -2px;
+  }
+}
+
