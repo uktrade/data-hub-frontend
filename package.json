@@ -79,6 +79,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "fast-sass-loader": "^1.4.5",
     "file-loader": "^1.1.6",
+    "formidable": "^1.2.1",
     "get-form-data": "^2.0.0",
     "govuk-elements-sass": "^2.2.1",
     "govuk_frontend_toolkit": "^7.5.0",
