@@ -31,8 +31,9 @@ const LOCAL_NAV = [
     path: 'propositions',
     label: 'Propositions',
     permissions: [
-      'proposition.view_associated_investmentproject_propositions',
+      'proposition.view_associated_investmentproject_proposition',
       'proposition.view_all_proposition',
+      'proposition.view_associated_proposition',
     ],
   },
   {
