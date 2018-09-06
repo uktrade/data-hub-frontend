@@ -1,0 +1,22 @@
+{% from '../form.njk' import Form, MultipleChoiceField, TextField, Typeahead %}
+
+{##
+ # Render collection filters form
+ # @param {object} props - component props
+ # @param {array}  props.filtersFields - an array of filters macro configurations
+ # @param {object} [props.query] - query object used to include existing state
+#}
+{% macro CollectionDownload(props) %}
+  {% call Form({
+    method: 'post',
+    class: 'c-collection-download',
+    action: props.action,
+    buttonText: 'Download',
+    actionsClass: '',
+    disableFormAction: 0 > props.items.length > 5000,
+    token: props.downloadFiltersFields.token,
+    hiddenFields: props.downloadFiltersFields.hiddenFields
+  }) %}
+    {{ renderAsMacro() }}
+  {% endcall %}
+{% endmacro %}
