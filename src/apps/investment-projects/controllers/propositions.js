@@ -3,7 +3,7 @@ const {
   transformPropositionToListItem,
   transformPropositionListItemToHaveUrlPrefix,
 } = require('../../propositions/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderPropositionList (req, res, next) {
   try {
@@ -15,7 +15,7 @@ async function renderPropositionList (req, res, next) {
       .then(transformApiResponseToCollection(
         { entityType: 'proposition' },
         transformPropositionToListItem,
-        transformPropositionListItemToHaveUrlPrefix(res.locals.returnLink)
+        transformPropositionListItemToHaveUrlPrefix(`${res.locals.returnLink}/`)
       ))
 
     return res

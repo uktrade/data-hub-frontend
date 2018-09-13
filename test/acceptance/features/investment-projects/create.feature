@@ -26,7 +26,7 @@ Feature: Create a new Investment project
       | Project code  |                  | isProjectCodeFormatter |
       | Valuation     | Not yet valued   |                        |
       | Created on    |                  | isRecentDateFormatter  |
-    And the Investment project summary details are displayed
+    And the Investment project summary key value details are displayed
       | key                           | value                                         |
       | Client                        | investmentProject.equitySource.name           |
       | Type of investment            | investmentProject.typeAndSubType              |
@@ -65,7 +65,7 @@ Feature: Create a new Investment project
       | Project code  |                  | isProjectCodeFormatter |
       | Valuation     | Not yet valued   |                        |
       | Created on    |                  | isRecentDateFormatter  |
-    And the Investment project summary details are displayed
+    And the Investment project summary key value details are displayed
       | key                           | value                                         |
       | Client                        | investmentProject.equitySource.name           |
       | Type of investment            | investmentProject.typeAndSubType              |
@@ -103,7 +103,7 @@ Feature: Create a new Investment project
       | Project code  |                  | isProjectCodeFormatter |
       | Valuation     | Not yet valued   |                        |
       | Created on    |                  | isRecentDateFormatter  |
-    And the Investment project summary details are displayed
+    And the Investment project summary key value details are displayed
       | key                           | value                                         |
       | Client                        | investmentProject.equitySource.name           |
       | Type of investment            | investmentProject.type                        |

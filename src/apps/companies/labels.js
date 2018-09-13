@@ -35,7 +35,6 @@ const companyDetailsLabels = {
   archived_reason: 'Archived reason',
   archived_by_id: 'Archived by',
   company_number: 'Companies House number',
-  account_manager: 'Account manager',
   vat_number: 'VAT number',
   reference_code: 'CDMS reference',
 }
@@ -69,7 +68,7 @@ const hqLabels = {
 
 const accountManagementDisplayLabels = {
   one_list_tier: 'One List tier',
-  one_list_account_owner: 'Global account manager',
+  one_list_account_owner: 'Global Account Manager',
 }
 
 const exportDetailsLabels = {

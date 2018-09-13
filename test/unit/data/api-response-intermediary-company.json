@@ -122,12 +122,10 @@
                 "sector": "b722c9d2-5f95-e211-a939-e4115bead28a",
                 "employee_range": null,
                 "turnover_range": null,
-                "account_manager": null,
                 "uk_region": "844cd12a-6095-e211-a939-e4115bead28a",
                 "trading_address_country": null,
                 "headquarter_type": null,
                 "classification": null,
-                "parent": null,
                 "one_list_account_owner": null,
                 "export_to_countries": [],
                 "future_interest_countries": []
@@ -160,7 +158,6 @@
       "name": "Increasing export markets"
     },
     "uk_based": true,
-    "account_manager": null,
     "registered_address_1": "Annexe -  Blackthorn Cottage",
     "registered_address_2": "Chawridge Lane",
     "registered_address_town": "Windsor",
@@ -205,6 +202,5 @@
     "trading_address_country": null,
     "headquarter_type": null,
     "classification": null,
-    "parent": null,
     "one_list_account_owner": null
 }
