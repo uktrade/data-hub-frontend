@@ -47,7 +47,6 @@
       "trading_name": null,
       "employee_range": null,
       "turnover_range": null,
-      "account_manager": null,
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntst",
       "website": null,
@@ -58,7 +57,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     },
@@ -110,7 +108,6 @@
       "registered_address_postcode": "GH7 1HP",
       "company_number": null,
       "trading_name": null,
-      "account_manager": null,
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntest",
       "website": "http://moo.com",
@@ -121,7 +118,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     },
@@ -173,7 +169,6 @@
       "registered_address_postcode": "io8 1HP",
       "company_number": null,
       "trading_name": null,
-      "account_manager": null,
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntest",
       "website": null,
@@ -184,7 +179,6 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "parent": null,
       "one_list_account_owner": null,
       "level": 0
     }

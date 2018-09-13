@@ -36,7 +36,6 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": false,
-    "account_manager": null,
     "registered_address_1": "The octagon",
     "registered_address_2": "13A, A.J ACHME Drive,",
     "registered_address_town": "Victoria island",
@@ -80,7 +79,6 @@
       "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
       "name": "Tier A - Strategic Account"
     },
-    "parent": null,
     "one_list_account_owner": null
   },
   "intermediate_company": null,
@@ -229,7 +227,6 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": true,
-    "account_manager": null,
     "registered_address_1": "FIRST FLOOR ACHME HOUSE",
     "registered_address_2": "KIRKDALE ROAD",
     "registered_address_town": "LEYTONSTONE",
@@ -281,7 +278,6 @@
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },
-    "parent": null,
     "one_list_account_owner": null
   },
   "requirements_complete": true,

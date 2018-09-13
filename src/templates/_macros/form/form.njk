@@ -31,16 +31,16 @@
   {% set children = caller() if caller else renderAsMacro(props.children) %}
 
   <form
-    method="{{ method }}"
-    action="{{ props.action }}"
-    {% if props.class %}class="{{ props.class }}"{% endif %}
-    {% if props.role %}role="{{ props.role }}"{% endif %}
+      method="{{ method }}"
+      {% if props.enctype %}
+        enctype="{{ props.enctype }}"
+      {% endif %}
+      action="{{ props.action }}?_csrf={{csrfToken}}"
+      {% if props.class %}class="{{ props.class }}"{% endif %}
+      {% if props.role %}role="{{ props.role }}"{% endif %}
   >
     {{ ErrorSummary(props.errors) }}
-
-    {% set hiddenFields = props.hiddenFields | default({}) | assign({
-      '_csrf': csrfToken if method|lower === 'post'
-    }) %}
+    {% set hiddenFields = props.hiddenFields | default({}) %}
 
     {% if hiddenFields|length %}
       {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}

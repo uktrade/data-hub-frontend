@@ -37,7 +37,19 @@
             {% elif data | isArray %}
               <ul>
                {% for item in data | removeNilAndEmpty %}
-                <li>{{ item }}{{ "," if not loop.last }}</li>
+                 {% if item.type == 'document' %}
+                  <li>
+                     {% if item.status == 'av_clean' %}
+                       <a href="{{ item.href }}">{{ item.message }}</a>
+                     {% elif item.status == 'scan_failed' %}
+                       <span class="c-message--error">{{ item.message }}</span>
+                     {% else %}
+                       {{ item.message }}
+                     {% endif %}
+                  </li>
+                 {% else %}
+                   <li>{{ item }}{{ "," if not loop.last }}</li>
+                 {% endif %}
                {% endfor %}
               </ul>
             {% elif data | isPlainObject %}

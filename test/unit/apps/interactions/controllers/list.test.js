@@ -1,8 +1,10 @@
 const config = require('~/config')
-const { renderInteractionList } = require('~/src/apps/interactions/controllers/list')
+const { renderInteractionList, renderInteractionsForEntity } = require('~/src/apps/interactions/controllers/list')
 
 describe('interaction list', () => {
   beforeEach(() => {
+    this.error = new Error('error')
+
     this.req = {
       session: {
         user: {
@@ -15,6 +17,7 @@ describe('interaction list', () => {
 
     this.res = {
       render: sinon.stub(),
+      breadcrumb: sinon.stub().returnsThis(),
     }
 
     this.next = sinon.stub()
@@ -46,39 +49,137 @@ describe('interaction list', () => {
       .reply(200, this.metadataMock.sectorOptions)
   })
 
-  context('when the user is allowed to view policy feedback data', () => {
-    beforeEach(async () => {
-      this.req.session.user.permissions = ['interaction.read_policy_feedback_interaction']
-      await renderInteractionList(this.req, this.res, this.next)
+  context('#renderInteractionList', () => {
+    context('when the user is allowed to view policy feedback data', () => {
+      beforeEach(async () => {
+        this.req.session.user.permissions = ['interaction.view_policy_feedback_interaction']
+        await renderInteractionList(this.req, this.res, this.next)
+      })
+
+      it('should show the policy feedback filter', () => {
+        const options = this.res.render.firstCall.args[1]
+        const filterFields = options.filtersFields
+
+        const kindField = filterFields.find(field => field.name === 'kind')
+        expect(kindField.options).to.deep.equal([
+          { value: 'interaction', label: 'Interaction' },
+          { value: 'service_delivery', label: 'Service delivery' },
+          { value: 'policy_feedback', label: 'Policy feedback' },
+        ])
+      })
     })
 
-    it('should show the policy feedback filter', () => {
-      const options = this.res.render.firstCall.args[1]
-      const filterFields = options.filtersFields
+    context('when the user is not allowed to view policy feedback data', () => {
+      beforeEach(async () => {
+        await renderInteractionList(this.req, this.res, this.next)
+      })
 
-      const kindField = filterFields.find(field => field.name === 'kind')
-      expect(kindField.options).to.deep.equal([
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-        { value: 'policy_feedback', label: 'Policy feedback' },
-      ])
+      it('should not show the policy feedback filter', () => {
+        const options = this.res.render.firstCall.args[1]
+        const filterFields = options.filtersFields
+
+        const kindField = filterFields.find(field => field.name === 'kind')
+        expect(kindField.options).to.deep.equal([
+          { value: 'interaction', label: 'Interaction' },
+          { value: 'service_delivery', label: 'Service delivery' },
+        ])
+      })
     })
   })
 
-  context('when the user is not allowed to view policy feedback data', () => {
-    beforeEach(async () => {
-      await renderInteractionList(this.req, this.res, this.next)
+  context('#renderInteractionsForEntity', () => {
+    context('when everything is okay', () => {
+      const commonTests = () => {
+        it('should render breadcrumbs', () => {
+          expect(this.res.breadcrumb).to.have.been.calledWith('Interactions')
+          expect(this.res.breadcrumb).to.have.been.calledOnce
+        })
+
+        it('should render the view', () => {
+          expect(this.res.render).to.be.calledWith('entity/interactions')
+          expect(this.res.render).to.have.been.calledOnce
+        })
+      }
+
+      context('when interactions can be added to the entity', () => {
+        beforeEach(async () => {
+          this.res = {
+            ...this.res,
+            locals: {
+              interactions: {
+                view: 'entity/interactions',
+                returnLink: 'entity/interactions/',
+                createKind: 'interaction',
+                canAdd: true,
+              },
+            },
+          }
+
+          await renderInteractionsForEntity(this.req, this.res, this.next)
+        })
+
+        commonTests()
+
+        it('should render action buttons', () => {
+          const actual = this.res.render.firstCall.args[1].actionButtons[0]
+          expect(actual.label).to.equal('Add interaction')
+          expect(actual.url).to.equal('entity/interactions/create/interaction')
+          expect(this.res.render).to.have.been.calledOnce
+        })
+      })
+
+      context('when interactions cannot be added to the entity', () => {
+        beforeEach(async () => {
+          this.res = {
+            ...this.res,
+            locals: {
+              interactions: {
+                view: 'entity/interactions',
+                returnLink: 'entity/interactions/',
+                createKind: 'interaction',
+                canAdd: false,
+              },
+            },
+          }
+
+          await renderInteractionsForEntity(this.req, this.res, this.next)
+        })
+
+        commonTests()
+
+        it('should not render action buttons', () => {
+          const actual = this.res.render.firstCall.args[1].actionButtons
+          expect(actual).to.be.undefined
+          expect(this.res.render).to.have.been.calledOnce
+        })
+      })
     })
 
-    it('should not show the policy feedback filter', () => {
-      const options = this.res.render.firstCall.args[1]
-      const filterFields = options.filtersFields
+    context('when there is an error', () => {
+      beforeEach(async () => {
+        this.res = {
+          breadcrumb: sinon.stub().throws(this.error),
+          render: this.res.render,
+          locals: {
+            interactions: {
+              view: 'entity/interactions',
+              returnLink: 'entity/interactions/',
+              createKind: 'interaction',
+            },
+          },
+        }
 
-      const kindField = filterFields.find(field => field.name === 'kind')
-      expect(kindField.options).to.deep.equal([
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-      ])
+        await renderInteractionsForEntity(this.req, this.res, this.next)
+      })
+
+      it('should not render the view', () => {
+        expect(this.res.render).to.have.not.been.called
+      })
+
+      it('should call next with error', () => {
+        expect(this.next).to.have.been.calledWith(this.error)
+        expect(this.next).to.have.been.calledOnce
+      })
     })
   })
 })

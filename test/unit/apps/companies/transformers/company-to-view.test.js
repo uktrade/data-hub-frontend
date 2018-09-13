@@ -22,7 +22,6 @@ describe('transformCompanyToView', () => {
         'Sector',
         'Website',
         'Business description',
-        'Account manager',
         'VAT number',
         'CDMS reference',
         'Global HQ',
@@ -66,10 +65,6 @@ describe('transformCompanyToView', () => {
 
     it('should supply description', () => {
       expect(this.viewRecord['Business description']).to.equal('description')
-    })
-
-    it('should supply account manager', () => {
-      expect(this.viewRecord['Account manager']).to.equal('Yvonne Ahern')
     })
 
     it('should supply vat number', () => {
@@ -124,7 +119,6 @@ describe('transformCompanyToView', () => {
         'Sector',
         'Website',
         'Business description',
-        'Account manager',
         'VAT number',
         'CDMS reference',
         'Global HQ',

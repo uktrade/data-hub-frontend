@@ -6,6 +6,7 @@ Feature: View collection of interactions for a company
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And the results summary for a interaction collection is present
     And I can view the collection
+    And the result count should be greater than 0
 
   @companies-interactions-collection--filter # TODO
 

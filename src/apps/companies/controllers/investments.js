@@ -1,6 +1,6 @@
 const { getCompanyInvestmentProjects } = require('../../investment-projects/repos')
 const { transformInvestmentProjectToListItem } = require('../../investment-projects/transformers')
-const { transformApiResponseToCollection } = require('../../transformers')
+const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderInvestments (req, res, next) {
   const token = req.session.token

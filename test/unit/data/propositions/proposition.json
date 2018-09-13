@@ -23,5 +23,52 @@
     "name": "Francisco Goya",
     "id": "67ac0071-5d7b-4fc7-a437-929d18e2e82a"
   },
+  "files": {
+    "results": [
+      {
+        "id": "1a85b301-56ae-4073-97db-a42604c40bea",
+        "av_clean": true,
+        "created_by": {
+          "name": "DIT Staff",
+          "first_name": "DIT",
+          "last_name": "Staff",
+          "id": "c68d33f3-4819-4c7c-8162-4a01f97c98f0"
+        },
+        "created_on": "2018-09-03T19:55:38.735730Z",
+        "uploaded_on": null,
+        "original_filename": "il_fullxfull.826924229_2xdo.jpg",
+        "url": "/v3/investment/5d341b34-1fc8-4638-b4b1-a0922ebf401e/proposition/6da4c5ef-c01a-4184-8f00-e44f564bf76a/document/1a85b301-56ae-4073-97db-a42604c40bea/download",
+        "status": "virus_scanned"
+      }, {
+        "id": "ec45b928-2922-4cc9-8b0c-b5f65980a71f",
+        "av_clean": false,
+        "created_by": {
+          "name": "DIT Staff",
+          "first_name": "DIT",
+          "last_name": "Staff",
+          "id": "c68d33f3-4819-4c7c-8162-4a01f97c98f0"
+        },
+        "created_on": "2018-09-03T19:57:06.625347Z",
+        "uploaded_on": null,
+        "original_filename": "totally_not_a_virus.zip",
+        "url": "/v3/investment/5d341b34-1fc8-4638-b4b1-a0922ebf401e/proposition/6da4c5ef-c01a-4184-8f00-e44f564bf76a/document/ec45b928-2922-4cc9-8b0c-b5f65980a71f/download",
+        "status": "virus_scanned"
+      }, {
+        "id": "1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f",
+        "av_clean": true,
+        "created_by": {
+          "name": "DIT Staff",
+          "first_name": "DIT",
+          "last_name": "Staff",
+          "id": "c68d33f3-4819-4c7c-8162-4a01f97c98f0"
+        },
+        "created_on": "2018-09-03T19:57:06.638430Z",
+        "uploaded_on": null,
+        "original_filename": "780-rainbow-teacosy-1.jpg",
+        "url": "/v3/investment/5d341b34-1fc8-4638-b4b1-a0922ebf401e/proposition/6da4c5ef-c01a-4184-8f00-e44f564bf76a/document/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f/download",
+        "status": "virus_scanned"
+      }
+    ]
+  },
   "created_on": "2018-05-09"
 }

@@ -179,7 +179,6 @@
   "export_to_countries": [],
   "future_interest_countries": [],
   "uk_based": true,
-  "account_manager": null,
   "registered_address_1": "Leeds City Centre",
   "registered_address_2": null,
   "registered_address_town": "Leeds",
@@ -228,6 +227,5 @@
     "name": "Mars Exports Ltd"
   },
   "classification": null,
-  "parent": null,
   "one_list_account_owner": null
 }

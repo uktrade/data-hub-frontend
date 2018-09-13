@@ -33,10 +33,6 @@
     "id": "1234",
     "name": "United Kingdom"
   },
-  "account_manager": {
-    "id": "4234124124124",
-    "name": "Yvonne Ahern"
-  },
   "business_type": {
       "name": "Private limited company",
       "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
@@ -89,7 +85,6 @@
     "name": "ehq"
   },
   "one_list_account_owner": null,
-  "parent": null,
   "sector": {
       "name": "Aerospace : Manufacturing and Assembly : Space Technology",
       "id": "b622c9d2-5f95-e211-a939-e4115bead28a"

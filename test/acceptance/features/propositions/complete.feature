@@ -11,8 +11,3 @@ Feature: Complete a proposition from a propositions list
     When a proposition is added
       | key      | value                 |
     Then I see the success message
-    Then I click the "Complete" link
-    Then there is the details field
-    When a proposition is completed
-      | key      | value                 |
-    Then I see the success message

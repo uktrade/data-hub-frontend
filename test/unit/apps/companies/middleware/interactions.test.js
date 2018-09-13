@@ -16,17 +16,54 @@ describe('Companies interactions middleware', () => {
     this.nextSpy = sinon.spy()
   })
 
-  describe('#setInteractionsReturnUrl', () => {
-    it('should set the return URL', () => {
-      this.middleware.setInteractionsReturnUrl(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.returnLink).to.equal('/companies/1/interactions/')
-    })
-  })
+  describe('#setInteractionsDetails', () => {
+    const commonTests = () => {
+      it('should set the return URL', () => {
+        expect(this.res.locals.interactions.returnLink).to.equal('/companies/1/interactions/')
+      })
 
-  describe('#setInteractionsEntityName', () => {
-    it('should set the entity name', () => {
-      this.middleware.setInteractionsEntityName(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.entityName).to.equal('company name')
+      it('should set the entity name', () => {
+        expect(this.res.locals.interactions.entityName).to.equal('company name')
+      })
+
+      it('should set the interactions query', () => {
+        expect(this.res.locals.interactions.query).to.deep.equal({ company_id: '1' })
+      })
+    }
+
+    context('when the company is active', () => {
+      beforeEach(() => {
+        this.middleware.setInteractionsDetails(this.req, this.res, this.nextSpy)
+      })
+
+      commonTests()
+
+      it('should allow interactions to be added', () => {
+        expect(this.res.locals.interactions.canAdd).to.be.true
+      })
+    })
+
+    context('when the company is archived', () => {
+      beforeEach(() => {
+        this.res = {
+          ...this.res,
+          locals: {
+            ...this.res.locals,
+            company: {
+              ...this.res.locals.company,
+              archived: true,
+            },
+          },
+        }
+
+        this.middleware.setInteractionsDetails(this.req, this.res, this.nextSpy)
+      })
+
+      commonTests()
+
+      it('should not allow interactions to be added', () => {
+        expect(this.res.locals.interactions.canAdd).to.be.false
+      })
     })
   })
 })

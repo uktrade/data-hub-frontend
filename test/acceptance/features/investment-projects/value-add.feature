@@ -21,7 +21,7 @@ Feature: Add value to investment project
       | New-to-world tech radio           | Yes                                              |
       | Export revenue radio              | Yes                                              |
     Then I see the success message
-    And the Value details are displayed
+    And the Value key value details are displayed
       | key                               | value                                            |
       | Total investment                  | £100,000.00                                      |
       | Foreign equity investment         | £200,000.00                                      |
@@ -53,7 +53,7 @@ Feature: Add value to investment project
       | New-to-world tech radio           | No                                             |
       | Export revenue radio              | No                                             |
     Then I see the success message
-    And the Value details are displayed
+    And the Value key value details are displayed
       | key                        | value                                           |
       | Total investment           | Client cannot provide this information          |
       | Foreign equity investment  | Client cannot provide this information          |
