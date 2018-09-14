@@ -51,6 +51,7 @@ const AddItems = {
     addButtonText: 'Add another {{itemName}}',
     removeButtonSelector: `.${removeButtonClass}`,
     removeButtonText: 'Remove',
+    encType: false,
   },
 
   init (wrapper = document, options) {
@@ -60,6 +61,7 @@ const AddItems = {
     this.cacheEls()
     this.bindEvents()
     this.render()
+    this.setEncType()
   },
 
   cacheEls () {
@@ -161,9 +163,26 @@ const AddItems = {
     this.render()
   },
 
+  setEncType () {
+    const pageForm = document.querySelector('form')
+
+    if (pageForm && pageForm.enctype) {
+      this.encType = pageForm.enctype
+    }
+  },
+
+  getItemAttribute () {
+    if (this.encType === 'multipart/form-data') {
+      return 'name'
+    } else {
+      return 'id'
+    }
+  },
+
   addItem () {
     const lastItem = this.wrapper.querySelector(`${this.settings.itemSelector}:last-of-type`)
-    const newItem = regenIds(this.template.cloneNode(true))
+    const attr = this.getItemAttribute()
+    const newItem = regenIds(this.template.cloneNode(true), attr)
 
     resetFieldValues(newItem)
 
