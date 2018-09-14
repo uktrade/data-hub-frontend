@@ -148,6 +148,18 @@ describe('Add another', () => {
         expect(secondTextField.id).to.not.equal(firstTextField.id)
       })
 
+      it('should not create a new NAME for elements with an existing NAME', () => {
+        const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
+        addButtonElement.click()
+        const fieldsets = Array.from(this.wrapper.querySelectorAll('fieldset'))
+
+        const firstTextField = fieldsets[0].querySelector('input')
+        const secondTextField = fieldsets[1].querySelector('input')
+
+        expect(secondTextField.name).to.have.length.above(0)
+        expect(secondTextField.name).to.equal(firstTextField.name)
+      })
+
       it('should re-assign "for" attributes to their associated new field', () => {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()

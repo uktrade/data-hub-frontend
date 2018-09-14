@@ -163,23 +163,21 @@ function resetFieldValues (element) {
  *
  * @returns {nodeElement}
  */
-function regenIds (wrapper) {
+function regenIds (wrapper, attr = 'id') {
   Array
     .from(wrapper.querySelectorAll('*[id]'))
     .forEach((element) => {
-      const oldId = element.id
+      const oldId = element[attr]
 
       // If the element has a name, use that as part of the new ID
-      const name = element.name || ''
-      const newId = generateID(name)
-      const newName = generateID(name)
+      const item = element[attr] || ''
+      const newItem = generateID(item)
 
-      element.id = newId
-      element.name = newName
+      element[attr] = newItem
 
       const relatedLabel = wrapper.querySelector(`[for="${oldId}"]`)
       if (relatedLabel) {
-        relatedLabel.setAttribute('for', newId)
+        relatedLabel.setAttribute('for', newItem)
       }
     })
 
