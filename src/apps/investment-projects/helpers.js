@@ -1,6 +1,5 @@
 const { assign, map, sortBy, compact, get } = require('lodash')
 
-const config = require('../../../config')
 const labels = require('./labels')
 const logger = require('../../../config/logger')
 
@@ -53,12 +52,12 @@ const formFieldLinks = {
 const toCompleteStageMessages = {
   active: [
     {
-      html: `Upload evidence documents on the <a href="${config.teamSiteSharePointUrl}" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>`,
+      html: `Upload any evidence documents in the 'Evidence' section of the project`,
     },
   ],
   verifyWin: [
     {
-      html: `Review the evidence for this investment project on the <a href="${config.teamSiteSharePointUrl}" aria-labelledby="external-link-label">Evidence teamsite</a> <span id="external-link-label">(will open another website)</span>`,
+      html: `Review the evidence for this investment project using the 'Evidence' section of the project`,
     },
   ],
 }
