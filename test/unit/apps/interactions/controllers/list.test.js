@@ -122,9 +122,10 @@ describe('interaction list', () => {
 
         it('should render action buttons', () => {
           const actual = this.res.render.firstCall.args[1].actionButtons[0]
-          expect(actual.label).to.equal('Add interaction')
-          expect(actual.url).to.equal('entity/interactions/create/interaction')
-          expect(this.res.render).to.have.been.calledOnce
+          expect(actual).to.deep.equal({
+            label: 'Add interaction',
+            url: 'entity/interactions/create/interaction',
+          })
         })
       })
 
@@ -150,7 +151,6 @@ describe('interaction list', () => {
         it('should not render action buttons', () => {
           const actual = this.res.render.firstCall.args[1].actionButtons
           expect(actual).to.be.undefined
-          expect(this.res.render).to.have.been.calledOnce
         })
       })
     })

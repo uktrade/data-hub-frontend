@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, times } = require('lodash')
 
 const interactions = require('../../../data/interactions/attendees')
 
@@ -11,7 +11,7 @@ describe('interaction collection middleware', () => {
       },
       params: {},
       query: {
-        page: '1',
+        page: '2',
       },
     }
 
@@ -26,7 +26,11 @@ describe('interaction collection middleware', () => {
 
     this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
       '../repos': {
-        getInteractionsForEntity: this.getInteractionsForEntityStub.resolves(interactions),
+        getInteractionsForEntity: this.getInteractionsForEntityStub.resolves({
+          count: 20,
+          limit: 10,
+          results: times(10, interactions.results[0]),
+        }),
       },
     })
   })
@@ -38,7 +42,7 @@ describe('interaction collection middleware', () => {
       })
 
       it('should set the results', () => {
-        expect(this.res.locals.results.items.length).to.equal(1)
+        expect(this.res.locals.results.items.length).to.equal(10)
       })
     }
 
@@ -73,6 +77,25 @@ describe('interaction collection middleware', () => {
         const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
         expect(actual).to.equal('company__name')
       })
+
+      it('should set the pagination', () => {
+        expect(this.res.locals.results.pagination).to.deep.equal({
+          currentPage: 2,
+          next: null,
+          pages: [
+            {
+              label: 1,
+              url: '?page=1&sortby=company__name',
+            },
+            {
+              label: 2,
+              url: '?page=2&sortby=company__name',
+            },
+          ],
+          prev: '?page=1&sortby=company__name',
+          totalPages: 2,
+        })
+      })
     })
 
     context('when a sort by is not specified', () => {
@@ -104,6 +127,25 @@ describe('interaction collection middleware', () => {
       it('should use the default sort', () => {
         const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
         expect(actual).to.equal('-date')
+      })
+
+      it('should set the pagination', () => {
+        expect(this.res.locals.results.pagination).to.deep.equal({
+          currentPage: 2,
+          next: null,
+          pages: [
+            {
+              label: 1,
+              url: '?page=1',
+            },
+            {
+              label: 2,
+              url: '?page=2',
+            },
+          ],
+          prev: '?page=1',
+          totalPages: 2,
+        })
       })
     })
 
