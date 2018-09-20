@@ -29,7 +29,7 @@ async function getInteractionCollectionForEntity (req, res, next) {
 
     res.locals.results = await getInteractionsForEntity(params)
       .then(transformApiResponseToCollection(
-        { entityType: 'interaction' },
+        { query: req.query },
         transformInteractionToListItem,
         transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink)
       ))
