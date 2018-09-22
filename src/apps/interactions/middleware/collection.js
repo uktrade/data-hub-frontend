@@ -12,8 +12,7 @@ const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPre
 async function getInteractionCollection (req, res, next) {
   getCollection('interaction',
     ENTITIES,
-    transformInteractionToListItem,
-    transformInteractionListItemToHaveUrlPrefix(res.locals.returnLink)
+    transformInteractionToListItem
   )(req, res, next)
 }
 
