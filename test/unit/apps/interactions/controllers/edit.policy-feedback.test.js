@@ -162,7 +162,9 @@ describe('Interaction edit controller (Policy feedback)', () => {
           id: '2',
           name: 'Fred Bloggs',
         },
-        returnLink: '/',
+        interactions: {
+          returnLink: '/',
+        },
         entityName: 'Fred Bloggs',
       }
 
