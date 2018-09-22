@@ -151,7 +151,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '2',
           name: 'Fred Bloggs',
         },
-        returnLink: '/',
+        interactions: {
+          returnLink: '/',
+        },
         entityName: 'Fred Bloggs',
       }
 
