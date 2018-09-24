@@ -14,8 +14,8 @@ async function postDetails (req, res, next) {
 
     req.flash('success', `${sentence(req.params.kind)} ${res.locals.interaction ? 'updated' : 'created'}`)
 
-    if (res.locals.returnLink) {
-      return res.redirect(res.locals.returnLink + result.id)
+    if (res.locals.interactions && res.locals.interactions.returnLink) {
+      return res.redirect(res.locals.interactions.returnLink + result.id)
     }
 
     return res.redirect(`/interactions/${result.id}`)
