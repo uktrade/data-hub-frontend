@@ -9,6 +9,32 @@ const QUERY_STRING = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_S
 const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 const MAX_EXPORT_ITEMS = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.MAX_EXPORT_ITEMS
 
+function hasExportPermission (userPermissions) {
+  return userPermissions.includes('investment.export_investmentproject')
+}
+
+function buildExportAction (userPermissions, exportFiltersFields, queryString) {
+  if (hasExportPermission(userPermissions)) {
+    return {
+      messages: {
+        tooManyItems: 'Filter to ' + MAX_EXPORT_ITEMS + ' items to download',
+        default: 'You can now download these records',
+      },
+      maxItems: MAX_EXPORT_ITEMS,
+      enable: true,
+      form: {
+        action: 'investment-projects/export',
+        hiddenFields: exportFiltersFields,
+        query: queryString,
+      },
+    }
+  } else {
+    return {
+      enable: false,
+    }
+  }
+}
+
 async function renderInvestmentList (req, res, next) {
   try {
     const token = req.session.token
@@ -33,23 +59,7 @@ async function renderInvestmentList (req, res, next) {
     const exportFiltersFields = await buildFiltersValues(filtersFieldsWithSelectedOptions)
 
     const userPermissions = get(res, 'locals.user.permissions')
-    const hasExportPermission = userPermissions.includes('investment.export_investmentproject')
-
-    const exportAction = hasExportPermission ? {
-      messages: {
-        tooManyItems: 'Filter to ' + MAX_EXPORT_ITEMS + ' items to download',
-        default: 'You can now download these records',
-      },
-      maxItems: MAX_EXPORT_ITEMS,
-      enable: true,
-      form: {
-        action: 'investment-projects/export',
-        hiddenFields: exportFiltersFields,
-        query: queryString,
-      },
-    } : {
-      enable: false,
-    }
+    const exportAction = await buildExportAction(userPermissions, exportFiltersFields, queryString)
 
     res.render('_layouts/collection', {
       sortForm,
