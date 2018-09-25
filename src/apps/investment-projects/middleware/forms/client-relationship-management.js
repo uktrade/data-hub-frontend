@@ -18,12 +18,13 @@ async function populateForm (req, res, next) {
       advisers: advisersResponse.results,
       includeAdviser: clientRelationshipManager,
     }).map(transformObjectToOption)
+    const globalAccountManager = firstName && lastName ? `${firstName} ${lastName}` : 'Not set'
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,
       state: {
         client_relationship_manager: clientRelationshipManager,
-        global_account_manager: `${firstName} ${lastName}`,
+        global_account_manager: globalAccountManager,
       },
       options: {
         clientRelationshipManagers: clientRelationshipManagerOptions,

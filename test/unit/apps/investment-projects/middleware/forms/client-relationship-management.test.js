@@ -38,19 +38,40 @@ describe('Investment form middleware - client relationship management', () => {
         })
     })
 
-    it('should populate the form state with the existing client relationship management', async () => {
-      const globalAccountManager = investmentData.investor_company.one_list_account_owner
-      const expectedFormState = {
-        client_relationship_manager: investmentData.client_relationship_manager.id,
-        global_account_manager: `${globalAccountManager.first_name} ${globalAccountManager.last_name}`,
-      }
+    context('when the global account manager is set', () => {
+      it('should populate the form state with the existing client relationship management', async () => {
+        const globalAccountManager = investmentData.investor_company.one_list_account_owner
+        const expectedFormState = {
+          client_relationship_manager: investmentData.client_relationship_manager.id,
+          global_account_manager: `${globalAccountManager.first_name} ${globalAccountManager.last_name}`,
+        }
 
-      await this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
+        await this.controller.populateForm({
+          session: {
+            token: 'mock-token',
+          },
+        }, this.resMock, () => {
+          expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
+        })
+      })
+    })
+
+    context('when the global account manager is not set', () => {
+      it('should populate the form state with the existing client relationship management', async () => {
+        this.resMock.locals.investmentData.investor_company.one_list_account_owner = null
+
+        const expectedFormState = {
+          client_relationship_manager: investmentData.client_relationship_manager.id,
+          global_account_manager: 'Not set',
+        }
+
+        await this.controller.populateForm({
+          session: {
+            token: 'mock-token',
+          },
+        }, this.resMock, () => {
+          expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
+        })
       })
     })
 
