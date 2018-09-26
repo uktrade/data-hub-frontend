@@ -5,7 +5,7 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   return async function (req, res, next) {
     try {
       res.locals.results = await search({
-        searchEntity: searchEntity,
+        searchEntity,
         requestBody: req.body,
         token: req.session.token,
         page: req.query.page,
@@ -19,17 +19,17 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   }
 }
 
-function exportCollection (searchEntity, entityDetails) {
+function exportCollection (searchEntity) {
   return async function (req, res, next) {
     try {
       await exportSearch({
-        res: res,
-        searchEntity: searchEntity,
+        res,
+        searchEntity,
         requestBody: req.body,
         token: req.session.token,
-        page: req.query.page,
-        isAggregation: false,
       })
+
+      next()
     } catch (error) {
       next(error)
     }

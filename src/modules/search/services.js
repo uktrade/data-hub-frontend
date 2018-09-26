@@ -31,10 +31,10 @@ function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregat
     })
 }
 
-function exportSearch ({ res, token, searchTerm = '', searchEntity, requestBody, isAggregation = true }) {
+function exportSearch ({ res, token, searchTerm = '', searchEntity, requestBody }) {
   const searchUrl = `${config.apiRoot}/v3/search`
   let options = {
-    url: isAggregation ? searchUrl : `${searchUrl}/${searchEntity}/export`,
+    url: `${searchUrl}/${searchEntity}/export`,
     method: 'POST',
   }
 
@@ -43,14 +43,7 @@ function exportSearch ({ res, token, searchTerm = '', searchEntity, requestBody,
     term: searchTerm,
   }
 
-  if (isAggregation) {
-    options.qs = {
-      ...requestBody,
-      entity: searchEntity,
-    }
-  } else {
-    options.body = requestBody
-  }
+  options.body = requestBody
 
   return authorisedRawRequest(token, options)
     .then(req => {

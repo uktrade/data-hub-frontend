@@ -1,12 +1,8 @@
-const { isNil, pickBy, set } = require('lodash')
+const { isPresent, pickBy, set } = require('lodash')
 const request = require('request-promise')
 
 const config = require('../../config')
 const logger = require('../../config/logger')
-
-function hasValue (value) {
-  return !isNil(value)
-}
 
 function stripScript (text) {
   const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
@@ -43,10 +39,10 @@ module.exports = (token, opts) => {
     }
     : {
       body: opts.body,
-      headers: pickBy(opts.headers, hasValue), // remove empty headers
+      headers: pickBy(opts.headers, isPresent), // remove empty headers
       json: true,
       method: opts.method || 'GET',
-      qs: pickBy(opts.qs, hasValue), // remove empty params
+      qs: pickBy(opts.qs, isPresent), // remove empty params
       url: opts.url,
     }
 
@@ -62,7 +58,7 @@ module.exports = (token, opts) => {
   }
 
   // Strip out top level properties that are null (such as qs)
-  requestOptions = pickBy(requestOptions, hasValue)
+  requestOptions = pickBy(requestOptions, isPresent)
 
   logger.debug('Send authorised request: ', requestOptions)
   requestOptions.jsonReviver = jsonReviver

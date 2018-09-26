@@ -88,8 +88,7 @@ router.get('/',
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
-  exportCollection('investment_project', ENTITIES),
-  renderInvestmentList
+  exportCollection('investment_project', ENTITIES)
 )
 
 router.post('/:investmentId/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
