@@ -2,14 +2,14 @@ const { getMacros } = require('~/test/unit/macro-helper')
 const entitiesMacros = getMacros('collection')
 
 describe('CollectionExport macro', () => {
-  describe('invalid props', () => {
+  context('invalid props', () => {
     it('should not render if there is no form', () => {
       const component = entitiesMacros.renderToDom('CollectionExport')
       expect(component).to.be.null
     })
   })
 
-  describe('valid props', () => {
+  context('valid props', () => {
     beforeEach(() => {
       this.props = {
         hiddenFields: {
