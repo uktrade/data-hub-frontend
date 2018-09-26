@@ -1,0 +1,22 @@
+{% from '../form.njk' import Form, HiddenField %}
+
+{##
+ # Render collection filters form
+ # @param {object} props - component props
+ # @param {array}  props.hiddenFields - filters to send to csv backend
+ # @param {object} [props.query] - query object used to include existing state
+#}
+{% macro CollectionExport(props, disableFormAction = false) %}
+   {% if props.action %}
+     {% call Form( {
+        method: 'get',
+        action: props.action,
+        buttonText: 'Download',
+        hiddenFields: props.hiddenFields,
+        query: props.queryString,
+        disableFormAction: props.disableFormAction or disableFormAction
+      }) %}
+        {{ renderAsMacro([]) }}
+      {% endcall %}
+    {% endif %}
+{% endmacro %}

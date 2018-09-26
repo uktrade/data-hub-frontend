@@ -147,6 +147,14 @@ async function buildFieldsWithSelectedEntities (token, fields = [], query = {}) 
   return processedFields
 }
 
+async function buildFiltersValues (filtersFieldsWithSelectedOptions) {
+  const filtersValues = filtersFieldsWithSelectedOptions
+    .filter(filter => filter.value !== undefined)
+    .map(filter => { return [ filter.name, filter.value ] })
+
+  return filtersValues
+}
+
 module.exports = {
   getDeepObjectValuesForKey,
   assignPropsIfFoundInObject,
@@ -155,4 +163,5 @@ module.exports = {
   buildFormWithStateAndErrors,
   buildSelectedFiltersSummary,
   buildFieldsWithSelectedEntities,
+  buildFiltersValues,
 }

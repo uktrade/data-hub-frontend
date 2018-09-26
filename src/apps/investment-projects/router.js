@@ -4,7 +4,7 @@ const { ENTITIES } = require('../search/constants')
 const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
-const { getCollection } = require('../../modules/search/middleware/collection')
+const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
@@ -83,6 +83,12 @@ router.get('/',
   getRequestBody(QUERY_FIELDS),
   getCollection('investment_project', ENTITIES, transformInvestmentProjectToListItem),
   renderInvestmentList
+)
+
+router.get('/export',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  exportCollection('investment_project', ENTITIES)
 )
 
 router.post('/:investmentId/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)

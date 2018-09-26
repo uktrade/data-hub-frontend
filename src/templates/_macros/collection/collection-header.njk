@@ -1,4 +1,5 @@
 {% from '../form.njk' import Form %}
+{% from './collection-export.njk' import CollectionExport %}
 
 {##
  # Render collection header
@@ -76,6 +77,21 @@
         {% endif %}
 
         {{ Form(props.sortForm) if props.sortForm and count > 1 }}
+      </div>
+    {% endif %}
+
+    {% if props.exportAction.enable %}
+      <div class="c-collection__header-row">
+        <span class="c-collection__export-info">
+          {% if count > props.exportAction.maxItems %}
+            {{ props.exportAction.messages.tooManyItems }}
+          {% else %}
+            {{ props.exportAction.messages.default }}
+          {% endif %}
+        </span>
+        <span class="c-collection__export-action">
+          {{ CollectionExport(props.exportAction.form ) }}
+        </span>
       </div>
     {% endif %}
 

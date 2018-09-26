@@ -8,6 +8,11 @@ describe('Investment list controller', () => {
     this.req = {
       session: {
         token: 'abcd',
+        user: {
+          id: '1234',
+          name: 'Fred Smith',
+          permissions: [],
+        },
       },
       query: {},
     }

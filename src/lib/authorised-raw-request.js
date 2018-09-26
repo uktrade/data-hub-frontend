@@ -1,35 +1,17 @@
-const { isPresent, pickBy, set } = require('lodash')
-const request = require('request-promise')
+// authorised-raw-request is based on authorised-request
+// using request instead of request-promise, for use with streams[1]
+// [1] https://github.com/request/request-promise/issues/90
+
+const { isPresent, isString, pickBy, set } = require('lodash')
+const request = require('request')
 
 const config = require('../../config')
 const logger = require('../../config/logger')
 
-function stripScript (text) {
-  const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
-  while (SCRIPT_REGEX.test(text)) {
-    logger.warn('Found script tag in response')
-    text = text.replace(SCRIPT_REGEX, '')
-  }
-  return text
-}
-
-function isString (s) {
-  return typeof (s) === 'string' || s instanceof String
-}
-
-// Called for each key value in a json response, strips out any script tags.
-function jsonReviver (key, value) {
-  if (isString(value)) {
-    return stripScript(value)
-  }
-  return value
-}
-
 // Accepts either options in a kashmap or a string with a url
 // Combines the options or url with the given token to create a
 // call to the API server
-// Responses are parsed to remove any embedded XSS attempts with
-// script tags
+// The response is not parsed
 module.exports = (token, opts) => {
   let requestOptions = (isString(opts))
     ? {
@@ -60,8 +42,8 @@ module.exports = (token, opts) => {
   // Strip out top level properties that are null (such as qs)
   requestOptions = pickBy(requestOptions, isPresent)
 
-  logger.debug('Send authorised request: ', requestOptions)
-  requestOptions.jsonReviver = jsonReviver
+  logger.debug('Send authorised raw request: ', requestOptions)
 
-  return request(requestOptions)
+  const req = request(requestOptions)
+  return Promise.resolve(req)
 }
