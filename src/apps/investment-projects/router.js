@@ -1,12 +1,12 @@
 const router = require('express').Router()
 
 const { ENTITIES } = require('../search/constants')
-const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection } = require('../../modules/search/middleware/collection')
 
-const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
+const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
 const {
   getBriefInvestmentSummary,
@@ -41,6 +41,7 @@ const { renderAddEvidence } = require('./apps/evidence/controllers/create')
 const { postUpload } = require('../documents/middleware/upload')
 
 const { setInteractionsDetails, setCompanyDetails } = require('./middleware/interactions')
+const { setLocalNavForApp } = require('./middleware/local-nav')
 const { setPropositionsReturnUrl } = require('./middleware/propositions')
 const { setEvidenceReturnUrl, setEvidenceDocumentsOptions, getDownloadLink, deleteEvidence } = require('./middleware/evidence')
 
@@ -73,7 +74,7 @@ const propositionsRouter = require('../propositions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router.use('/:investmentId', setLocalNav(LOCAL_NAV))
+router.use('/:investmentId', setLocalNavForApp)
 
 router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
