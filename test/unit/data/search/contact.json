@@ -45,11 +45,7 @@
       "address_same_as_company": false,
       "telephone_alternative": null,
       "email_alternative": null,
-      "notes": null,
-      "contactable_by_dit": false,
-      "contactable_by_dit_partners": false,
-      "contactable_by_email": true,
-      "contactable_by_phone": true
+      "notes": null
     }
   ],
   "aggregations": [
