@@ -1,4 +1,6 @@
-module.exports = () => {
+module.exports = ({
+  errors = {},
+}) => {
   return {
     buttonText: 'Continue',
     children: [
@@ -11,6 +13,13 @@ module.exports = () => {
           { value: 'uk', label: 'UK address' },
           { value: 'overseas', label: 'Overseas address' },
         ],
+        validations: [
+          {
+            type: 'required',
+            message: 'Select an address type',
+          },
+        ],
+        error: errors.uk_or_overseas,
       },
     ],
   }
