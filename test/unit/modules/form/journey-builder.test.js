@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const request = require('supertest')
 const { endsWith } = require('lodash')
 
@@ -11,6 +12,8 @@ describe('#build', () => {
     this.journeyBuilder = require('~/src/modules/form/journey-builder.js')
 
     this.app = express()
+    this.app.use(bodyParser.json())
+    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.set('views', `${process.cwd()}/src/templates`)
     this.app.set('view engine', 'njk')
     this.app.use((req, res, next) => {
@@ -105,13 +108,9 @@ describe('#build', () => {
     context('when middleware has been specified', () => {
       context('when the value for step 2 has been selected', () => {
         beforeEach(async () => {
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-2-value' }
-            next()
-          })
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-2-value' })
         })
 
         it('should call the middleware', async () => {
@@ -131,13 +130,9 @@ describe('#build', () => {
 
       context('when the value for step 3 has been selected', () => {
         beforeEach(async () => {
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-3-value' }
-            next()
-          })
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-3-value' })
         })
 
         it('should call the middleware', async () => {
@@ -160,13 +155,10 @@ describe('#build', () => {
       context('when the value for step 2 has been selected', () => {
         beforeEach(async () => {
           delete this.journey.steps[0].middleware
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-2-value' }
-            next()
-          })
+
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-2-value' })
         })
 
         it('should redirect to step 2', () => {
@@ -217,10 +209,6 @@ describe('#build', () => {
         this.journey.steps[0].macro = () => {
           return form
         }
-        this.app.use((req, res, next) => {
-          req.body = {}
-          next()
-        })
         this.app.use(this.journeyBuilder.build(this.journey))
 
         this.response = await request(this.app).post('/step-1')
