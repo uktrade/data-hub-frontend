@@ -6,8 +6,8 @@ describe('#build', () => {
   beforeEach(() => {
     this.breadcrumbSpy = sinon.spy()
     this.redirectSpy = sinon.spy()
-    this.setOptionsSpy1 = sinon.stub().callsFake((req, res, next) => { next() })
-    this.setOptionsSpy2 = sinon.stub().callsFake((req, res, next) => { next() })
+    this.setOptionsStub1 = sinon.stub().callsFake((req, res, next) => { next() })
+    this.setOptionsStub2 = sinon.stub().callsFake((req, res, next) => { next() })
     this.journeyBuilder = require('~/src/modules/form/journey-builder.js')
 
     this.app = express()
@@ -27,8 +27,8 @@ describe('#build', () => {
         {
           path: '/step-1',
           middleware: [
-            this.setOptionsSpy1,
-            this.setOptionsSpy2,
+            this.setOptionsStub1,
+            this.setOptionsStub2,
           ],
           type: 'form',
           heading: 'Add something',
@@ -84,8 +84,8 @@ describe('#build', () => {
       commonTests()
 
       it('should call the middleware', () => {
-        expect(this.setOptionsSpy1).to.be.calledOnce
-        expect(this.setOptionsSpy2).to.be.calledOnce
+        expect(this.setOptionsStub1).to.be.calledOnce
+        expect(this.setOptionsStub2).to.be.calledOnce
       })
     })
 
@@ -115,8 +115,8 @@ describe('#build', () => {
         })
 
         it('should call the middleware', async () => {
-          expect(this.setOptionsSpy1).to.be.calledOnce
-          expect(this.setOptionsSpy2).to.be.calledOnce
+          expect(this.setOptionsStub1).to.be.calledOnce
+          expect(this.setOptionsStub2).to.be.calledOnce
         })
 
         it('should redirect to step 2', () => {
@@ -141,8 +141,8 @@ describe('#build', () => {
         })
 
         it('should call the middleware', async () => {
-          expect(this.setOptionsSpy1).to.be.calledOnce
-          expect(this.setOptionsSpy2).to.be.calledOnce
+          expect(this.setOptionsStub1).to.be.calledOnce
+          expect(this.setOptionsStub2).to.be.calledOnce
         })
 
         it('should redirect to step 3', () => {
