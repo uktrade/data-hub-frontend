@@ -47,6 +47,16 @@ describe('#build', () => {
             return paths[selected]
           },
         },
+        {
+          path: '/step-2',
+          type: 'form',
+          heading: 'Add something',
+          breadcrumbs: [
+            { name: 'Add something', url: '/url' },
+          ],
+          macro: () => { return { children: [] } },
+          nextPath: '/finish',
+        },
       ],
     }
   })
@@ -94,10 +104,9 @@ describe('#build', () => {
 
     context('when middleware has not been specified', () => {
       beforeEach(async () => {
-        delete this.journey.steps[0].middleware
         this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).get('/step-1')
+        this.response = await request(this.app).get('/step-2')
       })
 
       commonTests()
@@ -174,10 +183,9 @@ describe('#build', () => {
 
     context('when the next path is a string', () => {
       beforeEach(async () => {
-        this.journey.steps[0].nextPath = '/finish'
         this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).post('/step-1')
+        this.response = await request(this.app).post('/step-2')
       })
 
       it('should redirect to step 2', () => {
