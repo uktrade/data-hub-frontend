@@ -64,7 +64,6 @@ describe('#build', () => {
         const render = JSON.parse(this.response.res.text)
         const expected = {
           children: [],
-          errors: { error: 'This field is required' },
         }
         expect(render.options.form).to.deep.equal(expected)
       })
@@ -77,10 +76,6 @@ describe('#build', () => {
 
     context('when middleware has been specified', () => {
       beforeEach(async () => {
-        this.app.use((req, res, next) => {
-          res.locals.errors = { error: 'This field is required' }
-          next()
-        })
         this.app.use(this.journeyBuilder.build(this.journey))
 
         this.response = await request(this.app).get('/step-1')
@@ -97,10 +92,6 @@ describe('#build', () => {
     context('when middleware has not been specified', () => {
       beforeEach(async () => {
         delete this.journey.steps[0].middleware
-        this.app.use((req, res, next) => {
-          res.locals.errors = { error: 'This field is required' }
-          next()
-        })
         this.app.use(this.journeyBuilder.build(this.journey))
 
         this.response = await request(this.app).get('/step-1')
@@ -204,6 +195,53 @@ describe('#build', () => {
 
       it('should not render a template', () => {
         expect(this.response.res.text).to.equal('Found. Redirecting to /base/finish')
+      })
+    })
+
+    context('when the first field is required', () => {
+      beforeEach(async () => {
+        const form = {
+          children: [
+            {
+              name: 'selected',
+              validations: [
+                {
+                  type: 'required',
+                  message: 'You must enter a value for selected',
+                },
+              ],
+            },
+          ],
+        }
+        this.form = form
+        this.journey.steps[0].macro = () => {
+          return form
+        }
+        this.app.use((req, res, next) => {
+          req.body = {}
+          next()
+        })
+        this.app.use(this.journeyBuilder.build(this.journey))
+
+        this.response = await request(this.app).post('/step-1')
+      })
+
+      it('should not redirect', () => {
+        expect(this.response.statusCode).to.equal(200)
+        expect(this.response.headers.location).to.be.undefined
+      })
+
+      it('should render the form with errors', () => {
+        const render = JSON.parse(this.response.res.text)
+        const expected = {
+          ...this.form,
+          errors: {
+            messages: {
+              selected: [ 'You must enter a value for selected' ],
+            },
+          },
+        }
+        expect(render.options.form).to.deep.equal(expected)
       })
     })
   })
