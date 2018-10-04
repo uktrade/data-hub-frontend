@@ -15,11 +15,12 @@ const getErrorMessages = (validations, requestBody, fieldName) => {
 const getErrors = (children, requestBody) => {
   const errors = reduce(
     children,
-    (child, { name, validations, options }) => {
+    (obj, { name, validations, options }) => {
       const fieldErrorMessages = getErrorMessages(validations, requestBody, name)
       const subFieldErrors = reduce(options, (option, { children }) => (getErrors(children, requestBody)), {})
 
       return {
+        ...obj,
         ...(fieldErrorMessages.length ? { [name]: fieldErrorMessages } : undefined),
         ...subFieldErrors,
       }

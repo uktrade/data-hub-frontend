@@ -14,6 +14,15 @@ describe('errors', () => {
               },
             ],
           },
+          {
+            name: 'field_2',
+            validations: [
+              {
+                type: 'required',
+                message: 'You must select field 2',
+              },
+            ],
+          },
         ]
         this.errors = getErrors(children, {})
       })
@@ -21,6 +30,7 @@ describe('errors', () => {
       it('should map the errors to an object', () => {
         expect(this.errors).to.deep.equal({
           field_1: [ 'You must select field 1' ],
+          field_2: [ 'You must select field 2' ],
         })
       })
     })
@@ -107,6 +117,15 @@ describe('errors', () => {
                               },
                             ],
                           },
+                          {
+                            name: 'sub_sub_field_2',
+                            validations: [
+                              {
+                                type: 'required',
+                                message: 'You must select sub sub field 2',
+                              },
+                            ],
+                          },
                         ],
                       },
                     ],
@@ -124,6 +143,7 @@ describe('errors', () => {
           field_1: [ 'You must select field 1' ],
           sub_field_1: [ 'You must select sub field 1' ],
           sub_sub_field_1: [ 'You must select sub sub field 1' ],
+          sub_sub_field_2: [ 'You must select sub sub field 2' ],
         })
       })
     })
