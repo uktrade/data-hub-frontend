@@ -68,10 +68,6 @@
             "telephone_alternative": null,
             "email_alternative": null,
             "notes": null,
-            "contactable_by_dit": false,
-            "contactable_by_dit_partners": false,
-            "contactable_by_email": true,
-            "contactable_by_phone": true,
             "archived_by": {
                 "id": "5707c18a-454a-4bd2-b14b-218761a684bc",
                 "password": "pbkdf2_sha256$36000$TSfuj7jcngtw$HiuHtcN+MqmbbyQopvRCSiatWVBbL4ej4u0gtwsNJ7M=",
