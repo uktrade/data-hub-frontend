@@ -34,16 +34,22 @@ async function getHiddenFields (req, res, interactionId) {
   return hiddenFields
 }
 
+const getReturnLink = (res, interactionId) => {
+  const urlPrefix = (res.locals.interactions && res.locals.interactions.returnLink) || '/interactions/'
+  return interactionId ? `${urlPrefix}${interactionId}` : urlPrefix
+}
+
 async function buildForm (req, res, interactionId) {
   const options = await getInteractionOptions(req, res)
   const hiddenFields = await getHiddenFields(req, res, interactionId)
+  const returnLink = getReturnLink(res, interactionId)
 
   const formProperties = {
     ...options,
-    returnLink: interactionId ? `/interactions/${interactionId}` : res.locals.returnLink,
+    hiddenFields,
+    returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
     buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
-    hiddenFields,
   }
 
   const form = formConfigs[req.params.kind](formProperties)
