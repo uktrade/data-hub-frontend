@@ -74,7 +74,9 @@ describe('Interaction details middleware', () => {
         company: {
           id: '1',
         },
-        returnLink: '/return/',
+        interactions: {
+          returnLink: '/return/',
+        },
       },
     }
 
