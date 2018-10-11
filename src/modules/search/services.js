@@ -1,5 +1,6 @@
-const authorisedRequest = require('../../lib/authorised-request')
+const { authorisedRequest } = require('../../lib/authorised-request')
 const authorisedRawRequest = require('../../lib/authorised-raw-request')
+
 const config = require('../../../config')
 
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {

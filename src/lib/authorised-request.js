@@ -30,7 +30,8 @@ function jsonReviver (key, value) {
 // call to the API server
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
-module.exports = (token, opts) => {
+
+function authorisedRequest (token, opts) {
   let requestOptions = (isString(opts))
     ? {
       json: true,
@@ -64,3 +65,5 @@ module.exports = (token, opts) => {
 
   return request(requestOptions)
 }
+
+module.exports = { authorisedRequest }
