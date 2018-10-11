@@ -1,6 +1,5 @@
-const { assign } = require('lodash')
-
 const authorisedRequest = require('../../lib/authorised-request')
+const authorisedRawRequest = require('../../lib/authorised-raw-request')
 const config = require('../../../config')
 
 function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
@@ -9,16 +8,18 @@ function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregat
     url: isAggregation ? searchUrl : `${searchUrl}/${searchEntity}`,
     method: isAggregation ? 'GET' : 'POST',
   }
-  requestBody = assign({}, requestBody, {
+  requestBody = {
+    ...requestBody,
     term: searchTerm,
     limit,
     offset: (page * limit) - limit,
-  })
+  }
 
   if (isAggregation) {
-    options.qs = assign(requestBody, {
+    options.qs = {
+      ...requestBody,
       entity: searchEntity,
-    })
+    }
   } else {
     options.body = requestBody
   }
@@ -30,6 +31,21 @@ function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregat
     })
 }
 
+function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
+  const searchUrl = `${config.apiRoot}/v3/search`
+  const options = {
+    url: `${searchUrl}/${searchEntity}/export`,
+    method: 'POST',
+    body: {
+      ...requestBody,
+      term: searchTerm,
+    },
+  }
+
+  return authorisedRawRequest(token, options)
+}
+
 module.exports = {
+  exportSearch,
   search,
 }
