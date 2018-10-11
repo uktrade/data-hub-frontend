@@ -1,5 +1,5 @@
 const { isNil, isString, pickBy, set } = require('lodash')
-const request = require('request-promise')
+const request = require('request')
 
 const config = require('../../config')
 const logger = require('../../config/logger')
@@ -7,29 +7,10 @@ const logger = require('../../config/logger')
 function hasValue (value) {
   return !isNil(value)
 }
-
-function stripScript (text) {
-  const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
-  while (SCRIPT_REGEX.test(text)) {
-    logger.warn('Found script tag in response')
-    text = text.replace(SCRIPT_REGEX, '')
-  }
-  return text
-}
-
-// Called for each key value in a json response, strips out any script tags.
-function jsonReviver (key, value) {
-  if (isString(value)) {
-    return stripScript(value)
-  }
-  return value
-}
-
 // Accepts either options in a kashmap or a string with a url
 // Combines the options or url with the given token to create a
 // call to the API server
-// Responses are parsed to remove any embedded XSS attempts with
-// script tags
+// The response is not parsed
 module.exports = (token, opts) => {
   let requestOptions = (isString(opts))
     ? {
@@ -59,8 +40,7 @@ module.exports = (token, opts) => {
 
   requestOptions = pickBy(requestOptions, hasValue)
 
-  logger.debug('Send authorised request: ', requestOptions)
-  requestOptions.jsonReviver = jsonReviver
+  logger.debug('Send authorised raw request: ', requestOptions)
 
-  return request(requestOptions)
+  return Promise.resolve(request(requestOptions))
 }
