@@ -37,6 +37,13 @@
   line-height: 1;
 }
 
+// Export button
+
+.c-collection__export-message {
+  color: $black;
+  line-height: $default-spacing-unit * 2;
+}
+
 // Filter summary
 
 .c-collection__filter-summary {
