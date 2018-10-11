@@ -1,5 +1,4 @@
-const { authorisedRequest } = require('../../lib/authorised-request')
-const authorisedRawRequest = require('../../lib/authorised-raw-request')
+const { authorisedRequest, authorisedRawRequest } = require('../../lib/authorised-request')
 
 const config = require('../../../config')
 
