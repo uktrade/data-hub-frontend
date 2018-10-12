@@ -1,11 +1,12 @@
-const { search } = require('../services')
+const { streamToFile } = require('../../../lib/stream-to-file')
+const { search, exportSearch } = require('../services')
 const { transformApiResponseToSearchCollection } = require('../transformers')
 
 function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   return async function (req, res, next) {
     try {
       res.locals.results = await search({
-        searchEntity: searchEntity,
+        searchEntity,
         requestBody: req.body,
         token: req.session.token,
         page: req.query.page,
@@ -19,6 +20,29 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   }
 }
 
+function exportFileName (filenamePrefix) {
+  return filenamePrefix + '.csv'
+}
+
+function exportCollection (searchEntity, filenamePrefix) {
+  return async function (req, res, next) {
+    try {
+      exportSearch({
+        searchEntity,
+        requestBody: req.body,
+        token: req.session.token,
+      }).then(req => {
+        return streamToFile(req, res, exportFileName(filenamePrefix))
+      }).catch(error => {
+        return next(error)
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
 module.exports = {
+  exportCollection,
   getCollection,
 }
