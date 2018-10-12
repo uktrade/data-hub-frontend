@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const request = require('supertest')
 const { endsWith } = require('lodash')
 
@@ -6,11 +7,13 @@ describe('#build', () => {
   beforeEach(() => {
     this.breadcrumbSpy = sinon.spy()
     this.redirectSpy = sinon.spy()
-    this.setOptionsSpy1 = sinon.stub().callsFake((req, res, next) => { next() })
-    this.setOptionsSpy2 = sinon.stub().callsFake((req, res, next) => { next() })
+    this.setOptionsStub1 = sinon.stub().callsFake((req, res, next) => { next() })
+    this.setOptionsStub2 = sinon.stub().callsFake((req, res, next) => { next() })
     this.journeyBuilder = require('~/src/modules/form/journey-builder.js')
 
     this.app = express()
+    this.app.use(bodyParser.json())
+    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.set('views', `${process.cwd()}/src/templates`)
     this.app.set('view engine', 'njk')
     this.app.use((req, res, next) => {
@@ -27,8 +30,8 @@ describe('#build', () => {
         {
           path: '/step-1',
           middleware: [
-            this.setOptionsSpy1,
-            this.setOptionsSpy2,
+            this.setOptionsStub1,
+            this.setOptionsStub2,
           ],
           type: 'form',
           heading: 'Add something',
@@ -43,6 +46,16 @@ describe('#build', () => {
             }
             return paths[selected]
           },
+        },
+        {
+          path: '/step-2',
+          type: 'form',
+          heading: 'Add something',
+          breadcrumbs: [
+            { name: 'Add something', url: '/url' },
+          ],
+          macro: () => { return { children: [] } },
+          nextPath: '/finish',
         },
       ],
     }
@@ -84,17 +97,16 @@ describe('#build', () => {
       commonTests()
 
       it('should call the middleware', () => {
-        expect(this.setOptionsSpy1).to.be.calledOnce
-        expect(this.setOptionsSpy2).to.be.calledOnce
+        expect(this.setOptionsStub1).to.be.calledOnce
+        expect(this.setOptionsStub2).to.be.calledOnce
       })
     })
 
     context('when middleware has not been specified', () => {
       beforeEach(async () => {
-        delete this.journey.steps[0].middleware
         this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).get('/step-1')
+        this.response = await request(this.app).get('/step-2')
       })
 
       commonTests()
@@ -105,18 +117,14 @@ describe('#build', () => {
     context('when middleware has been specified', () => {
       context('when the value for step 2 has been selected', () => {
         beforeEach(async () => {
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-2-value' }
-            next()
-          })
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-2-value' })
         })
 
         it('should call the middleware', async () => {
-          expect(this.setOptionsSpy1).to.be.calledOnce
-          expect(this.setOptionsSpy2).to.be.calledOnce
+          expect(this.setOptionsStub1).to.be.calledOnce
+          expect(this.setOptionsStub2).to.be.calledOnce
         })
 
         it('should redirect to step 2', () => {
@@ -131,18 +139,14 @@ describe('#build', () => {
 
       context('when the value for step 3 has been selected', () => {
         beforeEach(async () => {
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-3-value' }
-            next()
-          })
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-3-value' })
         })
 
         it('should call the middleware', async () => {
-          expect(this.setOptionsSpy1).to.be.calledOnce
-          expect(this.setOptionsSpy2).to.be.calledOnce
+          expect(this.setOptionsStub1).to.be.calledOnce
+          expect(this.setOptionsStub2).to.be.calledOnce
         })
 
         it('should redirect to step 3', () => {
@@ -160,13 +164,10 @@ describe('#build', () => {
       context('when the value for step 2 has been selected', () => {
         beforeEach(async () => {
           delete this.journey.steps[0].middleware
-          this.app.use((req, res, next) => {
-            req.body = { selected: 'step-2-value' }
-            next()
-          })
+
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1')
+          this.response = await request(this.app).post('/step-1').send({ selected: 'step-2-value' })
         })
 
         it('should redirect to step 2', () => {
@@ -182,10 +183,9 @@ describe('#build', () => {
 
     context('when the next path is a string', () => {
       beforeEach(async () => {
-        this.journey.steps[0].nextPath = '/finish'
         this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).post('/step-1')
+        this.response = await request(this.app).post('/step-2')
       })
 
       it('should redirect to step 2', () => {
@@ -217,10 +217,6 @@ describe('#build', () => {
         this.journey.steps[0].macro = () => {
           return form
         }
-        this.app.use((req, res, next) => {
-          req.body = {}
-          next()
-        })
         this.app.use(this.journeyBuilder.build(this.journey))
 
         this.response = await request(this.app).post('/step-1')
