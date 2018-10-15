@@ -1,9 +1,11 @@
 const {
   isEmpty,
   get,
+  set,
   map,
   compact,
   find,
+  reduce,
 } = require('lodash')
 
 const state = require('../state/current')
@@ -40,6 +42,15 @@ const isValidJourney = (steps, currentStepId, currentState) => {
   return hasCompletedPreviousStep(currentStepWithState)
 }
 
+const reduceStepsData = (steps, currentState) => {
+  return reduce(steps, (previousReduction, { path }) => {
+    return {
+      ...previousReduction,
+      ...get(currentState, `steps.${path}.data`),
+    }
+  }, {})
+}
+
 const validateState = (req, res, next) => {
   const { key, steps, currentStepId } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
@@ -65,6 +76,26 @@ const updateState = (req, res, next) => {
   next()
 }
 
+const setFormDetails = (req, res, next) => {
+  const { key, steps } = res.locals.journey
+  const currentState = state.getCurrent(req.session, key)
+
+  set(res.locals, 'form.state', reduceStepsData(steps, currentState))
+
+  if (currentState.browseHistory) {
+    const previousPath = currentState.browseHistory[currentState.browseHistory.length - 1]
+    const returnStep = find(steps, step => step.path === previousPath)
+
+    set(res.locals, 'form.returnLink', getFullRoute(req.baseUrl, returnStep))
+    set(res.locals, 'form.returnText', 'Back')
+  } else {
+    set(res.locals, 'form.returnLink', req.baseUrl)
+    set(res.locals, 'form.returnText', 'Cancel')
+  }
+
+  next()
+}
+
 const setJourneyDetails = (journey, currentStep, currentStepId) => {
   return (req, res, next) => {
     res.locals.journey = {
@@ -82,4 +113,5 @@ module.exports = {
   setJourneyDetails,
   validateState,
   updateState,
+  setFormDetails,
 }
