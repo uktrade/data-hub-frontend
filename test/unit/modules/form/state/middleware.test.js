@@ -1,4 +1,4 @@
-const { validateState, setJourneyDetails } = require('~/src/modules/form/state/middleware.js')
+const { validateState, updateState, setJourneyDetails } = require('~/src/modules/form/state/middleware.js')
 const steps = require('../steps.js')()
 
 describe('Form state middleware', () => {
@@ -197,6 +197,52 @@ describe('Form state middleware', () => {
       it('should not redirect', () => {
         expect(this.res.redirect).to.not.be.called
       })
+    })
+  })
+
+  describe('#updateState', () => {
+    beforeEach(() => {
+      this.req = {
+        session: {},
+        baseUrl: '/base',
+        body: {
+          selectedAtStep1: 'step-3-value',
+        },
+      }
+      this.res = {
+        locals: {
+          journey: {
+            steps,
+            currentStep: steps[0],
+            currentStepId: 0,
+            key: '/base/step-1',
+          },
+        },
+        redirect: sinon.spy(),
+      }
+      this.nextSpy = sinon.spy()
+
+      updateState(this.req, this.res, this.nextSpy)
+    })
+
+    it('should update state', () => {
+      expect(this.req.session).to.deep.equal({
+        'multi-step': {
+          '/base/step-1': {
+            steps: {
+              '/step-1': {
+                data: {
+                  selectedAtStep1: 'step-3-value',
+                },
+              },
+            },
+          },
+        },
+      })
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledOnce
     })
   })
 })
