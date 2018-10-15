@@ -1,5 +1,4 @@
-const { setJourneyDetails } = require('~/src/modules/form/state/middleware.js')
-
+const { validateState, setJourneyDetails } = require('~/src/modules/form/state/middleware.js')
 const steps = require('../steps.js')()
 
 describe('Form state middleware', () => {
@@ -34,6 +33,170 @@ describe('Form state middleware', () => {
 
     it('should call next once', () => {
       expect(this.nextSpy).to.be.calledOnce
+    })
+  })
+
+  describe('#validateState', () => {
+    context('when starting the journey', () => {
+      beforeEach(() => {
+        this.req = {
+          session: {},
+          baseUrl: '/base',
+        }
+        this.res = {
+          locals: {
+            journey: {
+              steps,
+              currentStepId: 0,
+              key: '/base/step-1',
+            },
+          },
+          redirect: sinon.spy(),
+        }
+        this.nextSpy = sinon.spy()
+
+        validateState(this.req, this.res, this.nextSpy)
+      })
+
+      it('should call next once', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should not redirect', () => {
+        expect(this.res.redirect).to.not.be.called
+      })
+    })
+
+    context('when steps 1 and 3 have been completed and then rendering step 5', () => {
+      beforeEach(() => {
+        this.req = {
+          session: {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      selectedAtStep1: 'step-3-value',
+                    },
+                    completed: true,
+                  },
+                  '/step-3': {
+                    data: {
+                      selectedAtStep3: 'step-5-value',
+                    },
+                    completed: true,
+                  },
+                },
+              },
+            },
+          },
+          baseUrl: '/base',
+        }
+        this.res = {
+          locals: {
+            journey: {
+              steps,
+              currentStepId: 4,
+              key: '/base/step-1',
+            },
+          },
+          redirect: sinon.spy(),
+        }
+        this.nextSpy = sinon.spy()
+
+        validateState(this.req, this.res, this.nextSpy)
+      })
+
+      it('should call next once', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should not redirect', () => {
+        expect(this.res.redirect).to.not.be.called
+      })
+    })
+
+    context('when step 3 has not been completed and then rendering step 5', () => {
+      beforeEach(() => {
+        this.req = {
+          session: {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      selectedAtStep1: 'step-3-value',
+                    },
+                    completed: true,
+                  },
+                  '/step-3': {
+                    data: {
+                      selectedAtStep3: 'step-5-value',
+                    },
+                  },
+                },
+              },
+            },
+          },
+          baseUrl: '/base',
+        }
+        this.res = {
+          locals: {
+            journey: {
+              steps,
+              currentStepId: 4,
+              key: '/base/step-1',
+            },
+          },
+          redirect: sinon.spy(),
+        }
+        this.nextSpy = sinon.spy()
+
+        validateState(this.req, this.res, this.nextSpy)
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).to.not.be.called
+      })
+
+      it('should redirect', () => {
+        expect(this.res.redirect).to.be.calledOnce
+        expect(this.res.redirect).to.be.calledWith('/base/step-1')
+      })
+    })
+
+    context('when starting with step 2 which does not require previously completed steps', () => {
+      beforeEach(() => {
+        this.req = {
+          session: {
+            'multi-step': {
+              '/base/step-1': {},
+            },
+          },
+          baseUrl: '/base',
+        }
+        this.res = {
+          locals: {
+            journey: {
+              steps,
+              currentStepId: 1,
+              key: '/base/step-1',
+            },
+          },
+          redirect: sinon.spy(),
+        }
+        this.nextSpy = sinon.spy()
+
+        validateState(this.req, this.res, this.nextSpy)
+      })
+
+      it('should call next once', () => {
+        expect(this.nextSpy).to.be.calledOnce
+      })
+
+      it('should not redirect', () => {
+        expect(this.res.redirect).to.not.be.called
+      })
     })
   })
 })
