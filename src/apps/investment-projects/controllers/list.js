@@ -36,7 +36,7 @@ async function renderInvestmentList (req, res, next) {
       targetPermission: 'investment.export_investmentproject',
       urlFragment: 'investment-projects',
       maxItems: FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.MAX_EXPORT_ITEMS,
-      entityPlural: 'projects',
+      entityName: 'project',
     }
 
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
