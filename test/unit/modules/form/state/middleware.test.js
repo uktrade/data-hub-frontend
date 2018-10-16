@@ -1,6 +1,7 @@
 const {
   validateState,
   updateStateData,
+  updateStateBrowseHistory,
   setFormDetails,
   setJourneyDetails,
 } = require('~/src/modules/form/state/middleware.js')
@@ -241,6 +242,53 @@ describe('Form state middleware', () => {
                 },
               },
             },
+          },
+        },
+      })
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledOnce
+    })
+  })
+
+  describe('#updateStateBrowseHistory', () => {
+    beforeEach(() => {
+      this.req = {
+        session: {},
+        baseUrl: '/base',
+        body: {
+          selectedAtStep1: 'step-3-value',
+        },
+      }
+      this.res = {
+        locals: {
+          journey: {
+            steps,
+            currentStep: steps[0],
+            currentStepId: 0,
+            key: '/base/step-1',
+          },
+        },
+        redirect: sinon.spy(),
+      }
+      this.nextSpy = sinon.spy()
+
+      updateStateBrowseHistory(this.req, this.res, this.nextSpy)
+    })
+
+    it('should update state browse history', () => {
+      expect(this.req.session).to.deep.equal({
+        'multi-step': {
+          '/base/step-1': {
+            steps: {
+              '/step-1': {
+                data: {},
+              },
+            },
+            browseHistory: [
+              '/step-1',
+            ],
           },
         },
       })
