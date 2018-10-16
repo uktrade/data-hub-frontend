@@ -400,4 +400,33 @@ describe('Current form state', () => {
       })
     })
   })
+
+  describe('#getField', () => {
+    beforeEach(() => {
+      this.session = {
+        'multi-step': {
+          '/base/step-1': {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+              },
+              '/step-2': {
+                data: {
+                  field_2: 'field_2',
+                },
+              },
+            },
+          },
+        },
+      }
+
+      this.actual = state.getField(this.session, '/base/step-1', 'field_2')
+    })
+
+    it('should return the specified field', () => {
+      expect(this.actual).to.equal('field_2')
+    })
+  })
 })

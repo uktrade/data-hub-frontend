@@ -53,6 +53,11 @@ const reduceSteps = (session, journeyKey) => {
   }, {})
 }
 
+const getField = (session, journeyKey, fieldName) => {
+  const data = reduceSteps(session, journeyKey)
+  return data[fieldName]
+}
+
 const remove = (session, journeyKey) => {
   const sessionKey = `${MULTI_STEP_KEY}.${journeyKey}`
   unset(session, sessionKey)
@@ -62,5 +67,6 @@ module.exports = {
   update,
   getCurrent,
   reduceSteps,
+  getField,
   remove,
 }
