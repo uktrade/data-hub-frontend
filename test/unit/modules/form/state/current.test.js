@@ -350,4 +350,54 @@ describe('Current form state', () => {
       expect(this.actual).to.deep.equal(expected)
     })
   })
+
+  describe('#remove', () => {
+    beforeEach(() => {
+      this.session = {
+        'multi-step': {
+          '/base/step-1': {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+              },
+              '/step-2': {
+                data: {
+                  field_2: 'field_2',
+                },
+              },
+            },
+          },
+          '/base/another-step-1': {
+            steps: {
+              '/another-step-1': {
+                data: {
+                  another_field_1: 'another_field_1',
+                },
+              },
+            },
+          },
+        },
+      }
+
+      state.remove(this.session, '/base/step-1')
+    })
+
+    it('should remove the specified journey only', () => {
+      expect(this.session).to.deep.equal({
+        'multi-step': {
+          '/base/another-step-1': {
+            steps: {
+              '/another-step-1': {
+                data: {
+                  another_field_1: 'another_field_1',
+                },
+              },
+            },
+          },
+        },
+      })
+    })
+  })
 })
