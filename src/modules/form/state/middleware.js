@@ -5,7 +5,6 @@ const {
   map,
   compact,
   find,
-  reduce,
 } = require('lodash')
 
 const state = require('../state/current')
@@ -40,15 +39,6 @@ const isValidJourney = (steps, currentStepId, currentState) => {
 
   const currentStepWithState = find(stepsWithState, stepWithState => stepWithState.id === currentStepId)
   return hasCompletedPreviousStep(currentStepWithState)
-}
-
-const reduceStepsData = (steps, currentState) => {
-  return reduce(steps, (previousReduction, { path }) => {
-    return {
-      ...previousReduction,
-      ...get(currentState, `steps.${path}.data`),
-    }
-  }, {})
 }
 
 const validateState = (req, res, next) => {
@@ -89,7 +79,7 @@ const setFormDetails = (req, res, next) => {
   const { key, steps, currentStepId } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
 
-  set(res.locals, 'form.state', reduceStepsData(steps, currentState))
+  set(res.locals, 'form.state', state.reduceSteps(req.session, key))
 
   if (currentState.browseHistory && currentStepId !== 0) {
     const isPresentingErrors = !isEmpty(res.locals.form.errors)
