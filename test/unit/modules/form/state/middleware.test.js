@@ -1,4 +1,9 @@
-const { validateState, updateState, setFormDetails, setJourneyDetails } = require('~/src/modules/form/state/middleware.js')
+const {
+  validateState,
+  updateStateData,
+  setFormDetails,
+  setJourneyDetails,
+} = require('~/src/modules/form/state/middleware.js')
 const steps = require('../steps.js')()
 
 describe('Form state middleware', () => {
@@ -200,7 +205,7 @@ describe('Form state middleware', () => {
     })
   })
 
-  describe('#updateState', () => {
+  describe('#updateStateData', () => {
     beforeEach(() => {
       this.req = {
         session: {},
@@ -222,10 +227,10 @@ describe('Form state middleware', () => {
       }
       this.nextSpy = sinon.spy()
 
-      updateState(this.req, this.res, this.nextSpy)
+      updateStateData(this.req, this.res, this.nextSpy)
     })
 
-    it('should update state', () => {
+    it('should update state data', () => {
       expect(this.req.session).to.deep.equal({
         'multi-step': {
           '/base/step-1': {

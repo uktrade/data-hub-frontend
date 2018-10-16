@@ -67,7 +67,7 @@ const validateState = (req, res, next) => {
   res.redirect(key)
 }
 
-const updateState = (req, res, next) => {
+const updateStateData = (req, res, next) => {
   const { key, currentStep } = res.locals.journey
   const currentStepPath = currentStep.path
 
@@ -112,6 +112,6 @@ const setJourneyDetails = (journey, currentStep, currentStepId) => {
 module.exports = {
   setJourneyDetails,
   validateState,
-  updateState,
+  updateStateData,
   setFormDetails,
 }
