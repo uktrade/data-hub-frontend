@@ -86,13 +86,15 @@ const updateStateBrowseHistory = (req, res, next) => {
 }
 
 const setFormDetails = (req, res, next) => {
-  const { key, steps } = res.locals.journey
+  const { key, steps, currentStepId } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
 
   set(res.locals, 'form.state', reduceStepsData(steps, currentState))
 
-  if (currentState.browseHistory) {
-    const previousPath = currentState.browseHistory[currentState.browseHistory.length - 1]
+  if (currentState.browseHistory && currentStepId !== 0) {
+    const isPresentingErrors = !isEmpty(res.locals.form.errors)
+    const browseHistoryIndex = currentState.browseHistory.length - (isPresentingErrors ? 2 : 1)
+    const previousPath = currentState.browseHistory[browseHistoryIndex]
     const returnStep = find(steps, step => step.path === previousPath)
 
     set(res.locals, 'form.returnLink', getFullRoute(req.baseUrl, returnStep))

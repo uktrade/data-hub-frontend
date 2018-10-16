@@ -301,66 +301,114 @@ describe('Form state middleware', () => {
 
   describe('#setFormDetails', () => {
     context('when setting form details for the first step', () => {
-      beforeEach(() => {
-        this.req = {
-          session: {
-            'multi-step': {
-              '/base/step-1': {
-                steps: {
-                  '/step-1': {
-                    data: {
-                      selectedAtStep1: 'step-3-value',
-                    },
-                    completed: true,
-                  },
-                  '/step-3': {
-                    data: {
-                      selectedAtStep3: 'step-5-value',
-                    },
-                    completed: true,
-                  },
-                },
+      context('when rendering the template for this first time', () => {
+        beforeEach(() => {
+          this.req = {
+            session: {},
+            baseUrl: '/base',
+            body: {
+              selectedAtStep1: 'step-3-value',
+            },
+          }
+          this.res = {
+            locals: {
+              journey: {
+                steps,
+                currentStep: steps[0],
+                currentStepId: 0,
+                key: '/base/step-1',
               },
             },
-          },
-          baseUrl: '/base',
-          body: {
-            selectedAtStep1: 'step-3-value',
-          },
-        }
-        this.res = {
-          locals: {
-            journey: {
-              steps,
-              currentStep: steps[0],
-              currentStepId: 0,
-              key: '/base/step-1',
-            },
-          },
-          redirect: sinon.spy(),
-        }
-        this.nextSpy = sinon.spy()
+            redirect: sinon.spy(),
+          }
+          this.nextSpy = sinon.spy()
 
-        setFormDetails(this.req, this.res, this.nextSpy)
-      })
+          setFormDetails(this.req, this.res, this.nextSpy)
+        })
 
-      it('should set state on locals', () => {
-        expect(this.res.locals.form.state).to.deep.equal({
-          selectedAtStep1: 'step-3-value',
-          selectedAtStep3: 'step-5-value',
+        it('should set state on locals', () => {
+          expect(this.res.locals.form.state).to.deep.equal({})
+        })
+
+        it('should set the return link', () => {
+          expect(this.res.locals.form.returnLink).to.equal('/base')
+        })
+
+        it('should set the return text', () => {
+          expect(this.res.locals.form.returnText).to.equal('Cancel')
+        })
+
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledOnce
         })
       })
 
-      it('should set the return link', () => {
-        expect(this.res.locals.form.returnLink).to.equal('/base')
-      })
+      context('when rendering the template having browsed to subsequent steps', () => {
+        beforeEach(() => {
+          this.req = {
+            session: {
+              'multi-step': {
+                '/base/step-1': {
+                  steps: {
+                    '/step-1': {
+                      data: {
+                        selectedAtStep1: 'step-3-value',
+                      },
+                      completed: true,
+                    },
+                    '/step-3': {
+                      data: {
+                        selectedAtStep3: 'step-5-value',
+                      },
+                      completed: true,
+                    },
+                  },
+                  browseHistory: [
+                    '/step-1',
+                    '/step-3',
+                  ],
+                },
+              },
+            },
+            baseUrl: '/base',
+            body: {
+              selectedAtStep1: 'step-3-value',
+            },
+          }
+          this.res = {
+            locals: {
+              journey: {
+                steps,
+                currentStep: steps[0],
+                currentStepId: 0,
+                key: '/base/step-1',
+              },
+            },
+            redirect: sinon.spy(),
+          }
+          this.nextSpy = sinon.spy()
 
-      it('should set the return text', () => {
-        expect(this.res.locals.form.returnText).to.equal('Cancel')
-      })
+          setFormDetails(this.req, this.res, this.nextSpy)
+        })
 
-      it('should call next once', () => {
-        expect(this.nextSpy).to.be.calledOnce
+        it('should set state on locals', () => {
+          expect(this.res.locals.form.state).to.deep.equal({
+            selectedAtStep1: 'step-3-value',
+            selectedAtStep3: 'step-5-value',
+          })
+        })
+
+        it('should set the return link', () => {
+          expect(this.res.locals.form.returnLink).to.equal('/base')
+        })
+
+        it('should set the return text', () => {
+          expect(this.res.locals.form.returnText).to.equal('Cancel')
+        })
+
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledOnce
+        })
       })
     })
 
