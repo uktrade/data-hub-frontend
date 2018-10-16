@@ -4,6 +4,7 @@ const {
   keys,
   reduce,
   last,
+  unset,
 } = require('lodash')
 
 const MULTI_STEP_KEY = 'multi-step'
@@ -52,8 +53,14 @@ const reduceSteps = (session, journeyKey) => {
   }, {})
 }
 
+const remove = (session, journeyKey) => {
+  const sessionKey = `${MULTI_STEP_KEY}.${journeyKey}`
+  unset(session, sessionKey)
+}
+
 module.exports = {
   update,
   getCurrent,
   reduceSteps,
+  remove,
 }
