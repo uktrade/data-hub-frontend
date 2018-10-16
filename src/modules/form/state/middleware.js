@@ -76,6 +76,15 @@ const updateStateData = (req, res, next) => {
   next()
 }
 
+const updateStateBrowseHistory = (req, res, next) => {
+  const { key, currentStep } = res.locals.journey
+  const currentStepPath = currentStep.path
+
+  state.update(req.session, key, currentStepPath, { addBrowseHistory: true })
+
+  next()
+}
+
 const setFormDetails = (req, res, next) => {
   const { key, steps } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
@@ -113,5 +122,6 @@ module.exports = {
   setJourneyDetails,
   validateState,
   updateStateData,
+  updateStateBrowseHistory,
   setFormDetails,
 }
