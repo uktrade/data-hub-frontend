@@ -31,6 +31,7 @@ function buildExportAction (queryString, userPermissions, exportOptions) {
     enabled: true,
     buildMessage: (count) => buildExportMessage(count, exportOptions),
     url: `${exportOptions.urlFragment}/export?${queryString}`,
+    maxItems: exportOptions.maxItems,
     invalidNumberOfItems,
   }
 }
