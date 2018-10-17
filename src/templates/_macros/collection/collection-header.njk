@@ -85,7 +85,7 @@
         {{ props.exportAction.buildMessage(count) }}
       </span>
       <span class="c-collection__header-actions">
-        {% if not props.exportAction.tooManyItems(count) %}
+        {% if not props.exportAction.invalidNumberOfItems(count) %}
           <a class="button" download href="{{ props.exportAction.url }}">Download</a>
         {% endif %}
       </span>
