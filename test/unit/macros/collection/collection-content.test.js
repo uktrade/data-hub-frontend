@@ -34,7 +34,6 @@ describe('Collection macro', () => {
         },
       })
     })
-
     it('should render selected filters', () => {
       const selectedFilters = this.component.querySelectorAll('.c-collection__filter-tag')
       expect(selectedFilters).to.have.length(2)
@@ -42,6 +41,27 @@ describe('Collection macro', () => {
 
     it('should render remove filters link', () => {
       expect(this.component.querySelector('.c-collection__filter-remove-all')).to.exist
+    })
+  })
+
+  context('when an action button is present', () => {
+    beforeEach(() => {
+      this.component = entitiesMacros.renderToDom('CollectionContent', {
+        count: 2000,
+        actionButtons: {
+          action: {
+            prop: 1,
+          },
+        },
+      })
+    })
+
+    it('should render an action button header', () => {
+      const actionHeader = this.component.querySelectorAll('.c-collection__header-actions')
+      const actionButton = this.component.querySelectorAll('.button--secondary')
+
+      expect(actionHeader).to.exist
+      expect(actionButton).to.exist
     })
   })
 })
