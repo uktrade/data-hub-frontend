@@ -116,40 +116,80 @@ describe('Current form state', () => {
     })
 
     context('when updating state with a new completed step', () => {
-      beforeEach(() => {
-        const session = {
-          'multi-step': {
-            '/base/step-1': {
-              steps: {
-                '/step-1': {
-                  data: {
-                    field_1: 'field_1',
+      context('when completed is true', () => {
+        beforeEach(() => {
+          const session = {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      field_1: 'field_1',
+                    },
                   },
                 },
               },
             },
-          },
-        }
-        const journeyKey = '/base/step-1'
+          }
+          const journeyKey = '/base/step-1'
 
-        state.update(session, journeyKey, '/step-1', { completed: true })
+          state.update(session, journeyKey, '/step-1', { completed: true })
 
-        this.actual = state.getCurrent(session, journeyKey)
+          this.actual = state.getCurrent(session, journeyKey)
+        })
+
+        it('should set the step completed to true', () => {
+          const expected = {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+                completed: true,
+              },
+            },
+          }
+
+          expect(this.actual).to.deep.equal(expected)
+        })
       })
 
-      it('should set the step to completed', () => {
-        const expected = {
-          steps: {
-            '/step-1': {
-              data: {
-                field_1: 'field_1',
+      context('when completed is false', () => {
+        beforeEach(() => {
+          const session = {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      field_1: 'field_1',
+                    },
+                  },
+                },
               },
-              completed: true,
             },
-          },
-        }
+          }
+          const journeyKey = '/base/step-1'
 
-        expect(this.actual).to.deep.equal(expected)
+          state.update(session, journeyKey, '/step-1', { completed: false })
+
+          this.actual = state.getCurrent(session, journeyKey)
+        })
+
+        it('should set the step completed to false', () => {
+          const expected = {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+                completed: false,
+              },
+            },
+          }
+
+          expect(this.actual).to.deep.equal(expected)
+        })
       })
     })
 
