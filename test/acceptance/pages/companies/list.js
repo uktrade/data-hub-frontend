@@ -62,6 +62,7 @@ module.exports = {
       selector: '.c-collection__header',
       elements: {
         sortBy: '#field-sortby',
+        download: '.c-collection__header-actions a[download]',
       },
     },
   },
