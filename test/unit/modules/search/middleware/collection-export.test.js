@@ -31,11 +31,7 @@ describe('Collection middleware', () => {
         this.reqMock.query = {
           sortby: 'name:asc',
         }
-        await this.exportCollection('entity', 'test-file')(this.reqMock, this.resMock, this.nextSpy).catch(e => { throw e })
-      })
-
-      it('should set the attachment filename', () => {
-        expect(this.streamToFileStub.args[0][2]).to.equal('test-file.csv')
+        await this.exportCollection('entity')(this.reqMock, this.resMock, this.nextSpy).catch(e => { throw e })
       })
 
       it('should pass the response to the file streamer', () => {

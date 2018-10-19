@@ -1,4 +1,3 @@
-const { streamToFile } = require('../../../lib/stream-to-file')
 const { search, exportSearch } = require('../services')
 const { transformApiResponseToSearchCollection } = require('../transformers')
 
@@ -20,11 +19,7 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   }
 }
 
-function exportFileName (filenamePrefix) {
-  return filenamePrefix + '.csv'
-}
-
-function exportCollection (searchEntity, filenamePrefix) {
+function exportCollection (searchEntity) {
   return async function (req, res, next) {
     try {
       exportSearch({
@@ -32,7 +27,7 @@ function exportCollection (searchEntity, filenamePrefix) {
         requestBody: req.body,
         token: req.session.token,
       }).then(req => {
-        return streamToFile(req, res, exportFileName(filenamePrefix))
+        return req.pipe(res)
       }).catch(error => {
         return next(error)
       })

@@ -68,7 +68,7 @@ router.get('/',
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
-  exportCollection('company', 'Data Hub - Companies'),
+  exportCollection('company'),
 )
 
 router
