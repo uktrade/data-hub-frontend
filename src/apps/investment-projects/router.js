@@ -88,7 +88,7 @@ router.get('/',
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
-  exportCollection('investment_project', 'Data Hub - Investment Projects'),
+  exportCollection('investment_project'),
 )
 
 router.post('/:investmentId/details', archive.archiveInvestmentProjectHandler, details.detailsGetHandler)
