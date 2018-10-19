@@ -85,6 +85,13 @@ Then(/^the companies should be filtered by company name/, async function () {
     .assert.containsText('@header', expected)
 })
 
+Then(/^the CSV download button should be visible/, async function () {
+  await CompanyList
+    .section.collectionHeader
+    .waitForElementVisible('@download')
+    .assert.containsText('@download', 'Download')
+})
+
 Then(/^the companies should be filtered by company sector$/, async function () {
   const expected = get(this.state, `company.sector`)
 
