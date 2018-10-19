@@ -5,7 +5,6 @@ const {
   map,
   compact,
   find,
-  reduce,
 } = require('lodash')
 
 const state = require('../state/current')
@@ -42,15 +41,6 @@ const isValidJourney = (steps, currentStepId, currentState) => {
   return hasCompletedPreviousStep(currentStepWithState)
 }
 
-const reduceStepsData = (steps, currentState) => {
-  return reduce(steps, (previousReduction, { path }) => {
-    return {
-      ...previousReduction,
-      ...get(currentState, `steps.${path}.data`),
-    }
-  }, {})
-}
-
 const validateState = (req, res, next) => {
   const { key, steps, currentStepId } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
@@ -67,7 +57,7 @@ const validateState = (req, res, next) => {
   res.redirect(key)
 }
 
-const updateState = (req, res, next) => {
+const updateStateData = (req, res, next) => {
   const { key, currentStep } = res.locals.journey
   const currentStepPath = currentStep.path
 
@@ -76,14 +66,25 @@ const updateState = (req, res, next) => {
   next()
 }
 
+const updateStateBrowseHistory = (req, res, next) => {
+  const { key, currentStep } = res.locals.journey
+  const currentStepPath = currentStep.path
+
+  state.update(req.session, key, currentStepPath, { addBrowseHistory: true })
+
+  next()
+}
+
 const setFormDetails = (req, res, next) => {
-  const { key, steps } = res.locals.journey
+  const { key, steps, currentStepId } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
 
-  set(res.locals, 'form.state', reduceStepsData(steps, currentState))
+  set(res.locals, 'form.state', state.reduceSteps(req.session, key))
 
-  if (currentState.browseHistory) {
-    const previousPath = currentState.browseHistory[currentState.browseHistory.length - 1]
+  if (currentState.browseHistory && currentStepId !== 0) {
+    const isPresentingErrors = !isEmpty(res.locals.form.errors)
+    const browseHistoryIndex = currentState.browseHistory.length - (isPresentingErrors ? 2 : 1)
+    const previousPath = currentState.browseHistory[browseHistoryIndex]
     const returnStep = find(steps, step => step.path === previousPath)
 
     set(res.locals, 'form.returnLink', getFullRoute(req.baseUrl, returnStep))
@@ -112,6 +113,7 @@ const setJourneyDetails = (journey, currentStep, currentStepId) => {
 module.exports = {
   setJourneyDetails,
   validateState,
-  updateState,
+  updateStateData,
+  updateStateBrowseHistory,
   setFormDetails,
 }
