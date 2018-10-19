@@ -5,6 +5,7 @@ const {
   reduce,
   last,
   unset,
+  isNil,
 } = require('lodash')
 
 const MULTI_STEP_KEY = 'multi-step'
@@ -19,7 +20,7 @@ const update = (session, journeyKey, path, { data, completed, addBrowseHistory }
   }
   set(currentState, stepDataKey, stepData)
 
-  if (completed) {
+  if (!isNil(completed)) {
     const pathCompletedKey = `steps.${path}.completed`
     set(currentState, pathCompletedKey, completed)
   }
