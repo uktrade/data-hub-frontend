@@ -11,10 +11,12 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions }) {
   return [
     {
       macroName: 'MultipleChoiceField',
-      name: 'status',
+      name: 'stage',
       type: 'checkbox',
       modifier: 'option-select',
-      options: metadata.investmentStatusOptions,
+      options () {
+        return metadata.investmentStageOptions.map(transformObjectToOption)
+      },
     },
     {
       macroName: 'MultipleChoiceField',
@@ -57,12 +59,10 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions }) {
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'stage',
+      name: 'status',
       type: 'checkbox',
       modifier: 'option-select',
-      options () {
-        return metadata.investmentStageOptions.map(transformObjectToOption)
-      },
+      options: metadata.investmentStatusOptions,
     },
     {
       macroName: 'MultipleChoiceField',
