@@ -3,14 +3,8 @@ const config = require('~/config')
 describe('Collection middleware', () => {
   context('#collectionExport', () => {
     beforeEach(() => {
-      const streamToFileStub = sinon.spy()
-      const { exportCollection } = proxyquire('~/src/modules/search/middleware/collection', {
-        '../../../lib/stream-to-file': {
-          streamToFile: streamToFileStub,
-        },
-      })
+      const { exportCollection } = require('~/src/modules/search/middleware/collection')
       this.exportCollection = exportCollection
-      this.streamToFileStub = streamToFileStub
 
       this.reqMock = {
         session: {
@@ -18,7 +12,14 @@ describe('Collection middleware', () => {
         },
       }
 
-      this.resMock = sinon.spy()
+      this.resMock = {
+        on: sinon.spy(),
+        // these are required otherwise request doesn't see the mock as a stream
+        end: () => {},
+        emit: () => {},
+        removeListener: () => {},
+      }
+
       this.nextSpy = sinon.spy()
     })
 
@@ -26,7 +27,7 @@ describe('Collection middleware', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .post(`/v3/search/entity/export`)
-          .reply(200, this.resMock)
+          .reply(200)
 
         this.reqMock.query = {
           sortby: 'name:asc',
@@ -34,9 +35,8 @@ describe('Collection middleware', () => {
         await this.exportCollection('entity')(this.reqMock, this.resMock, this.nextSpy).catch(e => { throw e })
       })
 
-      it('should pass the response to the file streamer', () => {
-        expect(this.streamToFileStub).to.be.calledOnce
-        expect(this.streamToFileStub.args[0][1]).to.equal(this.resMock)
+      it('should pipe the request to response as a stream', () => {
+        expect(this.resMock.on).to.be.called
       })
 
       it('should not return an error to the next handler', () => {
