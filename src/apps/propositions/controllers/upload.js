@@ -1,15 +1,8 @@
-/* eslint camelcase: 0 */
 const { assign, get } = require('lodash')
-const { notFound } = require('../../../middleware/errors')
-
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { uploadForm } = require('../macros')
 
 function renderUpload (req, res, next) {
-  if (!res.locals.features['proposition-documents']) {
-    return notFound(req, res, next)
-  }
-
   const proposition = get(res.locals, 'proposition.id')
   const investment = get(res.locals, 'investmentData.id')
   const selectUploadForm = buildFormWithStateAndErrors(uploadForm(
