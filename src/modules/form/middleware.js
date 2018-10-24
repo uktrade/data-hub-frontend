@@ -45,8 +45,9 @@ const postDetails = async (req, res, next) => {
       res.redirect(req.baseUrl + getNextPath(currentStep, req.body))
     })
   } else {
-    state.update(req.session, key, currentStep.path, { completed: true })
-    res.redirect(req.baseUrl + getNextPath(currentStep, req.body))
+    const nextPath = getNextPath(currentStep, req.body)
+    state.update(req.session, key, currentStep.path, { completed: true, nextPath })
+    res.redirect(req.baseUrl + nextPath)
   }
 }
 
