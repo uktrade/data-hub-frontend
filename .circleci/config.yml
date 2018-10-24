@@ -1,6 +1,6 @@
 version: 2
 aliases:
-  - &node_version               node:10.9.0
+  - &node_version               node:10.12.0
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:9.5
   - &elasticsearch_version      elasticsearch:5.5
