@@ -5,6 +5,8 @@ const {
   map,
   compact,
   find,
+  keys,
+  indexOf,
 } = require('lodash')
 
 const state = require('../state/current')
@@ -95,9 +97,31 @@ const setFormDetails = (req, res, next) => {
   next()
 }
 
+const invalidateStateForChangedNextPath = (req, res, next) => {
+  const { currentStep, key } = res.locals.journey
+  const currentState = state.getCurrent(req.session, key)
+  const currentNextPath = get(currentState, `steps.${currentStep.path}.nextPath`)
+  const newNextPath = getNextPath(currentStep, req.body)
+  const hasChangedNextPath = currentNextPath && newNextPath && currentNextPath !== newNextPath
+
+  if (hasChangedNextPath) {
+    const stepPathsInState = keys(currentState.steps)
+    const indexOfCurrentStepInState = indexOf(stepPathsInState, currentStep.path)
+
+    stepPathsInState.forEach((stepPath, stepPathIndex) => {
+      if (stepPathIndex > indexOfCurrentStepInState) {
+        state.removeStep(req.session, key, stepPath)
+      }
+    })
+  }
+
+  next()
+}
+
 module.exports = {
   validateState,
   updateStateData,
   updateStateBrowseHistory,
   setFormDetails,
+  invalidateStateForChangedNextPath,
 }
