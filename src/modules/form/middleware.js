@@ -1,4 +1,4 @@
-const { isEmpty, set } = require('lodash')
+const { isEmpty, set, forEach } = require('lodash')
 
 const { getFullRoute, getNextPath } = require('./helpers')
 const state = require('./state/current')
@@ -50,7 +50,21 @@ const postDetails = async (req, res, next) => {
   }
 }
 
+const setBreadcrumbs = (req, res, next) => {
+  const breadcrumbs = [
+    ...(res.locals.journey.breadcrumbs || []),
+    ...(res.locals.journey.currentStep.breadcrumbs || []),
+  ]
+
+  forEach(breadcrumbs, (breadcrumb) => {
+    res.breadcrumb(breadcrumb.name, breadcrumb.url)
+  })
+
+  next()
+}
+
 module.exports = {
   setJourneyDetails,
   postDetails,
+  setBreadcrumbs,
 }
