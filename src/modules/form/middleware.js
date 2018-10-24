@@ -1,8 +1,21 @@
 const { isEmpty, set } = require('lodash')
 
-const { getNextPath } = require('./helpers')
+const { getFullRoute, getNextPath } = require('./helpers')
 const state = require('./state/current')
 const { getErrors } = require('./errors')
+
+const setJourneyDetails = (journey, currentStep, currentStepId) => {
+  return (req, res, next) => {
+    res.locals.journey = {
+      currentStep,
+      currentStepId,
+      ...journey,
+      key: getFullRoute(req.baseUrl, journey.steps[0]),
+    }
+
+    next()
+  }
+}
 
 const postDetails = async (req, res, next) => {
   const { currentStep, key, successMessage } = res.locals.journey
@@ -38,5 +51,6 @@ const postDetails = async (req, res, next) => {
 }
 
 module.exports = {
+  setJourneyDetails,
   postDetails,
 }
