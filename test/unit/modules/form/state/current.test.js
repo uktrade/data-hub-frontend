@@ -34,7 +34,7 @@ describe('Current form state', () => {
       })
     })
 
-    context('when adding state for a step and state exist for another journey', () => {
+    context('when adding state for a step and state exists for another journey', () => {
       beforeEach(() => {
         const session = {
           'multi-step': {
