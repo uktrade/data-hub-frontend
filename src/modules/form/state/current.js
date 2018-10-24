@@ -21,8 +21,7 @@ const update = (session, journeyKey, path, { data, completed, addBrowseHistory }
   set(currentState, stepDataKey, stepData)
 
   if (!isNil(completed)) {
-    const pathCompletedKey = `steps.${path}.completed`
-    set(currentState, pathCompletedKey, completed)
+    set(currentState, `steps.${path}.completed`, completed)
   }
 
   if (addBrowseHistory) {
