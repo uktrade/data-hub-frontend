@@ -10,7 +10,7 @@ const QUERY_STRING = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.COMPANIES.SECTOR.NAME
 
 const exportOptions = {
-  targetPermission: 'investment.export_investmentproject',
+  targetPermission: 'company.export_company',
   urlFragment: 'companies',
   maxItems: FILTER_CONSTANTS.COMPANIES.SECTOR.MAX_EXPORT_ITEMS,
   entityName: 'company',
