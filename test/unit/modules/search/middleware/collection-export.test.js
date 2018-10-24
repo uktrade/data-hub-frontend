@@ -32,7 +32,7 @@ describe('Collection middleware', () => {
         this.reqMock.query = {
           sortby: 'name:asc',
         }
-        await this.exportCollection('entity')(this.reqMock, this.resMock, this.nextSpy).catch(e => { throw e })
+        await this.exportCollection('entity')(this.reqMock, this.resMock, this.nextSpy)
       })
 
       it('should pipe the request to response as a stream', () => {
