@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { postDetails, setJourneyDetails } = require('~/src/modules/form/middleware.js')
+const { postDetails, setJourneyDetails, setBreadcrumbs } = require('~/src/modules/form/middleware.js')
 const steps = require('./steps')()
 
 describe('#postDetails', () => {
@@ -428,5 +428,135 @@ describe('#setJourneyDetails', () => {
 
   it('should call next once', () => {
     expect(this.nextSpy).to.be.calledOnce
+  })
+})
+
+describe('#setBreadcrumbs', () => {
+  context('when there are breadcrumbs on the whole journey and the step', () => {
+    beforeEach(() => {
+      this.breadcrumbSpy = sinon.spy()
+      this.req = {}
+      this.res = {
+        locals: {
+          journey: {
+            breadcrumbs: [
+              { name: 'breadcrumb', url: '/url' },
+            ],
+            currentStep: steps[0],
+          },
+        },
+        breadcrumb: this.breadcrumbSpy,
+      }
+      this.nextSpy = sinon.spy()
+
+      setBreadcrumbs(this.req, this.res, this.nextSpy)
+    })
+
+    it('should set the breadcrumbs', () => {
+      expect(this.breadcrumbSpy).to.be.calledWithExactly('breadcrumb', '/url')
+      expect(this.breadcrumbSpy).to.be.calledWithExactly('Add something', '/url')
+      expect(this.breadcrumbSpy).to.be.calledTwice
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledWithExactly()
+      expect(this.nextSpy).to.be.calledOnce
+    })
+  })
+
+  context('when there are breadcrumbs on the whole journey and not on the step', () => {
+    beforeEach(() => {
+      const currentStep = {
+        ...steps[0],
+      }
+      delete currentStep.breadcrumbs
+
+      this.breadcrumbSpy = sinon.spy()
+      this.req = {}
+      this.res = {
+        locals: {
+          journey: {
+            currentStep,
+            breadcrumbs: [
+              { name: 'breadcrumb', url: '/url' },
+            ],
+          },
+        },
+        breadcrumb: this.breadcrumbSpy,
+      }
+      this.nextSpy = sinon.spy()
+
+      setBreadcrumbs(this.req, this.res, this.nextSpy)
+    })
+
+    it('should set the breadcrumbs', () => {
+      expect(this.breadcrumbSpy).to.be.calledWithExactly('breadcrumb', '/url')
+      expect(this.breadcrumbSpy).to.be.calledOnce
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledWithExactly()
+      expect(this.nextSpy).to.be.calledOnce
+    })
+  })
+
+  context('when there are breadcrumbs on the step and not the whole journey', () => {
+    beforeEach(() => {
+      this.breadcrumbSpy = sinon.spy()
+      this.req = {}
+      this.res = {
+        locals: {
+          journey: {
+            currentStep: steps[0],
+          },
+        },
+        breadcrumb: this.breadcrumbSpy,
+      }
+      this.nextSpy = sinon.spy()
+
+      setBreadcrumbs(this.req, this.res, this.nextSpy)
+    })
+
+    it('should set the breadcrumbs', () => {
+      expect(this.breadcrumbSpy).to.be.calledWithExactly('Add something', '/url')
+      expect(this.breadcrumbSpy).to.be.calledOnce
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledWithExactly()
+      expect(this.nextSpy).to.be.calledOnce
+    })
+  })
+
+  context('when there are not any breadcrumbs on either the whole journey or the step', () => {
+    beforeEach(() => {
+      const currentStep = {
+        ...steps[0],
+      }
+      delete currentStep.breadcrumbs
+
+      this.breadcrumbSpy = sinon.spy()
+      this.req = {}
+      this.res = {
+        locals: {
+          journey: {
+            currentStep,
+          },
+        },
+        breadcrumb: this.breadcrumbSpy,
+      }
+      this.nextSpy = sinon.spy()
+
+      setBreadcrumbs(this.req, this.res, this.nextSpy)
+    })
+
+    it('should not set the breadcrumbs', () => {
+      expect(this.breadcrumbSpy).to.be.not.be.called
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledWithExactly()
+      expect(this.nextSpy).to.be.calledOnce
+    })
   })
 })
