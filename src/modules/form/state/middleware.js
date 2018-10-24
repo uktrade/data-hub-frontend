@@ -59,18 +59,16 @@ const validateState = (req, res, next) => {
 
 const updateStateData = (req, res, next) => {
   const { key, currentStep } = res.locals.journey
-  const currentStepPath = currentStep.path
 
-  state.update(req.session, key, currentStepPath, { data: req.body })
+  state.update(req.session, key, currentStep.path, { data: req.body })
 
   next()
 }
 
 const updateStateBrowseHistory = (req, res, next) => {
   const { key, currentStep } = res.locals.journey
-  const currentStepPath = currentStep.path
 
-  state.update(req.session, key, currentStepPath, { addBrowseHistory: true })
+  state.update(req.session, key, currentStep.path, { addBrowseHistory: true })
 
   next()
 }
