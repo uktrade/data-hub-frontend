@@ -26,8 +26,8 @@ function exportCollection (searchEntity) {
         searchEntity,
         requestBody: req.body,
         token: req.session.token,
-      }).then(req => {
-        return req.pipe(res)
+      }).then(apiReq => {
+        return apiReq.pipe(res)
       }).catch(error => {
         return next(error)
       })
