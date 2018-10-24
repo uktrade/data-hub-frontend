@@ -15,8 +15,8 @@ const update = (session, journeyKey, path, { data, completed, addBrowseHistory }
 
   const stepDataKey = `steps.${path}.data`
   const stepData = {
-    ...data,
     ...get(currentState, stepDataKey),
+    ...data,
   }
   set(currentState, stepDataKey, stepData)
 

@@ -115,6 +115,46 @@ describe('Current form state', () => {
       })
     })
 
+    context('when updating state for a step', () => {
+      beforeEach(() => {
+        const session = {
+          'multi-step': {
+            '/base/step-1': {
+              steps: {
+                '/step-1': {
+                  data: {
+                    field_1: 'field_1',
+                  },
+                },
+              },
+            },
+          },
+        }
+        const data = {
+          field_1: 'new_field_1',
+        }
+        const journeyKey = '/base/step-1'
+
+        state.update(session, journeyKey, '/step-1', { data })
+
+        this.actual = state.getCurrent(session, journeyKey)
+      })
+
+      it('should update state', () => {
+        const expected = {
+          steps: {
+            '/step-1': {
+              data: {
+                field_1: 'new_field_1',
+              },
+            },
+          },
+        }
+
+        expect(this.actual).to.deep.equal(expected)
+      })
+    })
+
     context('when updating state with a new completed step', () => {
       context('when completed is true', () => {
         beforeEach(() => {
