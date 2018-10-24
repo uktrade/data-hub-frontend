@@ -32,14 +32,16 @@ const update = (session, journeyKey, path, { data, completed, addBrowseHistory }
       set(currentState, 'browseHistory', browseHistory)
     }
   }
-
-  const sessionKey = `${MULTI_STEP_KEY}.${journeyKey}`
-  set(session, sessionKey, currentState)
 }
 
 const getCurrent = (session, journeyKey) => {
   const sessionKey = `${MULTI_STEP_KEY}.${journeyKey}`
-  return get(session, sessionKey, {})
+
+  if (!get(session, sessionKey)) {
+    set(session, sessionKey, {})
+  }
+
+  return get(session, sessionKey)
 }
 
 const reduceSteps = (session, journeyKey) => {
