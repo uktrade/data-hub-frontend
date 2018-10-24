@@ -22,7 +22,11 @@
     {% endblock %}
   {% else %}
     {% call Message({ type: 'info' }) %}
-      You currently have no contacts for this company. To add an interaction you must first <a href="/contacts/create?company={{company.id}}">add a contact</a>.
+      You currently have no contacts for this company.
+      {% if not company.archived %}
+        To add an interaction you must first <a href="/contacts/create?company={{company.id}}">add a contact</a>.
+      {% endif %}
+
     {% endcall %}
   {% endif %}
 {% endblock %}
