@@ -21,19 +21,15 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
 
 function exportCollection (searchEntity) {
   return async function (req, res, next) {
-    try {
-      exportSearch({
-        searchEntity,
-        requestBody: req.body,
-        token: req.session.token,
-      }).then(apiReq => {
-        return apiReq.pipe(res)
-      }).catch(error => {
-        return next(error)
-      })
-    } catch (error) {
-      next(error)
-    }
+    return exportSearch({
+      searchEntity,
+      requestBody: req.body,
+      token: req.session.token,
+    }).then(apiReq => {
+      return apiReq.pipe(res)
+    }).catch(error => {
+      return next(error)
+    })
   }
 }
 
