@@ -10,7 +10,7 @@ const {
 
 const MULTI_STEP_KEY = 'multi-step'
 
-const update = (session, journeyKey, path, { data, completed, addBrowseHistory }) => {
+const update = (session, journeyKey, path, { data, completed, addBrowseHistory, nextPath }) => {
   const currentState = getCurrent(session, journeyKey)
 
   const stepDataKey = `steps.${path}.data`
@@ -30,6 +30,10 @@ const update = (session, journeyKey, path, { data, completed, addBrowseHistory }
       browseHistory.push(path)
       set(currentState, 'browseHistory', browseHistory)
     }
+  }
+
+  if (nextPath) {
+    set(currentState, `steps.${path}.nextPath`, nextPath)
   }
 }
 
