@@ -505,5 +505,31 @@ describe('#build', () => {
         })
       })
     })
+
+    context('when the user has changed direction in the journey', () => {
+      beforeEach(async () => {
+        this.sendSpy = sinon.stub().callsFake((data, next) => { next() })
+        this.journey.steps[1].send = this.sendSpy
+        this.app.use(this.journeyBuilder.build(this.journey))
+
+        await request(this.app).get('/step-1')
+        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' }) // initially select step 3
+        await request(this.app).get('/step-3')
+        await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
+        await request(this.app).get('/step-5')
+        await request(this.app).post('/step-5').send({ moreDataAtStep5: 'more' })
+        await request(this.app).get('/step-1') // go back to step 1
+        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' }) // change to step 2
+        this.response = await request(this.app).post('/step-2').send({ moreDataAtStep2: 'more' })
+      })
+
+      it('should POST only valid data to the API', () => {
+        expect(this.sendSpy).have.been.calledWith({
+          selectedAtStep1: 'step-2-value',
+          moreDataAtStep2: 'more',
+        })
+        expect(this.sendSpy).to.be.calledOnce
+      })
+    })
   })
 })
