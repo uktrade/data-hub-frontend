@@ -14,7 +14,7 @@ const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
 )
 
 module.exports = {
-  url: process.env.QA_HOST + '/events',
+  url: `${process.env.QA_HOST}/events`,
   props: {},
   elements: {
     h1Element: '.c-local-header__heading',

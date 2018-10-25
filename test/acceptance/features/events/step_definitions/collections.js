@@ -15,14 +15,6 @@ When(/^I populate the create event form$/, async function () {
     })
 })
 
-When(/^I populate the create event form with United Kingdom and a region$/, async function () {
-  await Event
-    .populateCreateEventForm({ address_country: 'United Kingdom' }, true, (event) => {
-      set(this.state, 'event', event)
-      set(this.state, 'event.heading', event.name)
-    })
-})
-
 When(/^I populate the create event form with United Kingdom and without a region$/, async function () {
   await Event
     .populateCreateEventForm({ address_country: 'United Kingdom' }, false, (event) => {
