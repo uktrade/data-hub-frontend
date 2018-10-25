@@ -317,6 +317,83 @@ describe('Current form state', () => {
         })
       })
     })
+
+    context('when updating next path', () => {
+      context('when the next path is set', () => {
+        beforeEach(() => {
+          const session = {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      field_1: 'field_1',
+                    },
+                  },
+                },
+              },
+            },
+          }
+          const journeyKey = '/base/step-1'
+
+          state.update(session, journeyKey, '/step-1', { nextPath: '/step-2' })
+
+          this.actual = state.getCurrent(session, journeyKey)
+        })
+
+        it('should set the step next path', () => {
+          const expected = {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+                nextPath: '/step-2',
+              },
+            },
+          }
+
+          expect(this.actual).to.deep.equal(expected)
+        })
+      })
+
+      context('when the next path is not set', () => {
+        beforeEach(() => {
+          const session = {
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    data: {
+                      field_1: 'field_1',
+                    },
+                  },
+                },
+              },
+            },
+          }
+          const journeyKey = '/base/step-1'
+
+          state.update(session, journeyKey, '/step-1', {})
+
+          this.actual = state.getCurrent(session, journeyKey)
+        })
+
+        it('should not set the step next path', () => {
+          const expected = {
+            steps: {
+              '/step-1': {
+                data: {
+                  field_1: 'field_1',
+                },
+              },
+            },
+          }
+
+          expect(this.actual).to.deep.equal(expected)
+        })
+      })
+    })
   })
 
   describe('#getCurrent', () => {
@@ -331,6 +408,7 @@ describe('Current form state', () => {
                     field_1: 'field_1',
                   },
                   completed: true,
+                  nextPath: '/step-2',
                 },
               },
             },
@@ -348,6 +426,7 @@ describe('Current form state', () => {
                 field_1: 'field_1',
               },
               completed: true,
+              nextPath: '/step-2',
             },
           },
         }
@@ -381,6 +460,7 @@ describe('Current form state', () => {
                     field_1: 'field_1',
                   },
                   completed: true,
+                  nextPath: '/another-step-2',
                 },
               },
             },
