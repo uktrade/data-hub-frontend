@@ -531,5 +531,39 @@ describe('#build', () => {
         expect(this.sendSpy).to.be.calledOnce
       })
     })
+
+    context('when the user has changed a field that is depended on by a form', () => {
+      context('and attempting to skip to a previously completed step', () => {
+        beforeEach(async () => {
+          this.sendSpy = sinon.stub().callsFake((data, next) => { next() })
+          this.journey.steps[2].macro = () => {
+            return {
+              dependsOn: [ 'changing_field' ],
+              children: [],
+            }
+          }
+          this.app.use(this.journeyBuilder.build(this.journey))
+
+          await request(this.app).get('/step-1')
+          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value', changing_field: '1' }) // initial value
+          await request(this.app).get('/step-3')
+          await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
+          await request(this.app).get('/step-5')
+          await request(this.app).post('/step-5').send({ moreDataAtStep5: 'more' })
+          await request(this.app).get('/step-1') // go back to step 1
+          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value', changing_field: '2' }) // change value to invalidate
+          this.response = await request(this.app).get('/step-5') // attempt to jump to step 5 which has been invalidated
+        })
+
+        it('should redirect to step 1', () => {
+          expect(this.response.statusCode).to.equal(302)
+          expect(this.response.headers.location).to.equal('/base/step-1')
+        })
+
+        it('should not render a template', () => {
+          expect(this.response.res.text).to.equal('Found. Redirecting to /base/step-1')
+        })
+      })
+    })
   })
 })

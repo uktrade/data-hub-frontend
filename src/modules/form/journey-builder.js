@@ -6,6 +6,7 @@ const {
   updateStateBrowseHistory,
   setFormDetails,
   invalidateStateForChangedNextPath,
+  invalidateStateForDependentSteps,
 } = require('./state/middleware')
 const {
   setJourneyDetails,
@@ -37,6 +38,7 @@ const build = (journey) => {
         validateState,
         ...getMiddleware(currentStep),
         invalidateStateForChangedNextPath,
+        invalidateStateForDependentSteps,
         updateStateData,
         postDetails,
         setFormDetails,
