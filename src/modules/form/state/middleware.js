@@ -7,6 +7,9 @@ const {
   find,
   keys,
   indexOf,
+  union,
+  filter,
+  includes,
 } = require('lodash')
 
 const state = require('../state/current')
@@ -41,6 +44,11 @@ const isValidJourney = (steps, currentStepId, currentState) => {
 
   const currentStepWithState = find(stepsWithState, stepWithState => stepWithState.id === currentStepId)
   return hasCompletedPreviousStep(currentStepWithState)
+}
+
+function getDifference (object1, object2) {
+  const allKeys = union(keys(object1), keys(object2))
+  return filter(allKeys, (key) => object1[key] !== object2[key])
 }
 
 const validateState = (req, res, next) => {
@@ -97,6 +105,23 @@ const setFormDetails = (req, res, next) => {
   next()
 }
 
+const invalidateStateForDependentSteps = (req, res, next) => {
+  const { currentStep, key, steps } = res.locals.journey
+  const currentState = state.getCurrent(req.session, key)
+  const stepState = get(currentState, `steps.${currentStep.path}.data`, {})
+  const difference = getDifference(stepState, req.body)
+
+  difference.forEach((differentField) => {
+    steps.forEach((step) => {
+      if (step.macro && includes(step.macro({}).dependsOn, differentField)) {
+        state.removeStep(req.session, key, step.path)
+      }
+    })
+  })
+
+  next()
+}
+
 const invalidateStateForChangedNextPath = (req, res, next) => {
   const { currentStep, key } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
@@ -123,5 +148,6 @@ module.exports = {
   updateStateData,
   updateStateBrowseHistory,
   setFormDetails,
+  invalidateStateForDependentSteps,
   invalidateStateForChangedNextPath,
 }
