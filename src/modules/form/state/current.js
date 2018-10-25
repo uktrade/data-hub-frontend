@@ -65,10 +65,16 @@ const remove = (session, journeyKey) => {
   unset(session, sessionKey)
 }
 
+const removeStep = (session, journeyKey, stepPath) => {
+  const currentState = getCurrent(session, journeyKey)
+  unset(currentState, `steps.${stepPath}`)
+}
+
 module.exports = {
   update,
   getCurrent,
   reduceSteps,
   getField,
   remove,
+  removeStep,
 }
