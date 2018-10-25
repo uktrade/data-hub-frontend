@@ -11,15 +11,12 @@ Feature: View a list of events
     And I click the "Add event" link
     Then I am taken to the "Add event" page
 
-  @events-collection--view
+  @events-collection--without-uk-region
   Scenario: View event collection
 
-    When I navigate to the `events.list` page
-    And I click the "Add event" link
-    And I populate the create event form
-    And I submit the form
-    Then I see the success message
-    When I navigate to the `events.list` page
+    When I navigate to the `events.fixture` page using `event` `One-day exhibition` fixture
+    And I navigate to the `events.list` page
+    And I filter the events list by name "One-day exhibition"
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
@@ -32,15 +29,12 @@ Feature: View a list of events
       | Country         | event.address_country |
       | Region          | event.uk_region       |
 
-  @events-collection--view-uk-region
+  @events-collection--with-uk-region
   Scenario: View event uk region
 
-    When I navigate to the `events.list` page
-    And I click the "Add event" link
-    And I populate the create event form with United Kingdom and a region
-    And I submit the form
-    Then I see the success message
-    When I navigate to the `events.list` page
+    When I navigate to the `events.fixture` page using `event` `Grand exhibition` fixture
+    And I navigate to the `events.list` page
+    And I filter the events list by name "Grand exhibition"
     Then I can view the Event in the collection
       | text            | expected              |
       | Type            | event.event_type      |
