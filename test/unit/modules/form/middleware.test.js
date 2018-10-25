@@ -1,6 +1,11 @@
 const { get } = require('lodash')
 
-const { postDetails, setJourneyDetails, setBreadcrumbs } = require('~/src/modules/form/middleware.js')
+const {
+  postDetails,
+  setJourneyDetails,
+  setBreadcrumbs,
+  renderTemplate,
+} = require('~/src/modules/form/middleware.js')
 const steps = require('./steps')()
 
 describe('#postDetails', () => {
@@ -558,5 +563,69 @@ describe('#setBreadcrumbs', () => {
       expect(this.nextSpy).to.be.calledWithExactly()
       expect(this.nextSpy).to.be.calledOnce
     })
+  })
+})
+
+describe('#renderTemplate', () => {
+  beforeEach(() => {
+    steps[0].macro = sinon.spy()
+
+    this.req = {}
+    this.res = {
+      render: sinon.spy(),
+      locals: {
+        journey: {
+          currentStep: steps[0],
+        },
+        form: {
+          previouslySet: 'previously-set',
+          errors: {
+            messages: {
+              field: [ 'error' ],
+            },
+          },
+          returnLink: '/base',
+          returnText: 'Cancel',
+          state: {
+            selectedAtStep1: 'step-3-value',
+          },
+        },
+      },
+    }
+
+    renderTemplate(this.req, this.res)
+  })
+
+  it('should render the template once', () => {
+    expect(this.res.render.firstCall.args[0]).to.equal('_layouts/form')
+    expect(this.res.render).to.be.calledOnce
+  })
+
+  it('should set the heading', () => {
+    expect(this.res.render.firstCall.args[1].heading).to.equal('Add something')
+  })
+
+  it('should maintain previously set form fields', () => {
+    expect(this.res.render.firstCall.args[1].form.previouslySet).to.equal('previously-set')
+  })
+
+  it('should call the form macro once', () => {
+    expect(this.res.locals.journey.currentStep.macro).to.be.calledOnce
+  })
+
+  it('should call the form macro with errors', () => {
+    expect(this.res.locals.journey.currentStep.macro.firstCall.args[0].errors).to.deep.equal({ field: [ 'error' ] })
+  })
+
+  it('should call the form macro with return link', () => {
+    expect(this.res.locals.journey.currentStep.macro.firstCall.args[0].returnLink).to.equal('/base')
+  })
+
+  it('should call the form macro with return text', () => {
+    expect(this.res.locals.journey.currentStep.macro.firstCall.args[0].returnText).to.equal('Cancel')
+  })
+
+  it('should call the form macro with state', () => {
+    expect(this.res.locals.journey.currentStep.macro.firstCall.args[0].state).to.deep.equal({ selectedAtStep1: 'step-3-value' })
   })
 })

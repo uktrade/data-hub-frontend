@@ -1,4 +1,4 @@
-const { isEmpty, set, forEach } = require('lodash')
+const { isEmpty, set, forEach, get } = require('lodash')
 
 const { getFullRoute, getNextPath } = require('./helpers')
 const state = require('./state/current')
@@ -63,8 +63,27 @@ const setBreadcrumbs = (req, res, next) => {
   next()
 }
 
+const renderTemplate = (req, res) => {
+  const { type, heading, macro } = res.locals.journey.currentStep
+
+  res.render(`_layouts/${type}`, {
+    heading,
+    form: {
+      ...res.locals.form,
+      ...macro({
+        ...res.locals,
+        errors: get(res.locals, 'form.errors.messages'),
+        state: get(res.locals, 'form.state'),
+        returnLink: get(res.locals, 'form.returnLink'),
+        returnText: get(res.locals, 'form.returnText'),
+      }),
+    },
+  })
+}
+
 module.exports = {
   setJourneyDetails,
   postDetails,
   setBreadcrumbs,
+  renderTemplate,
 }
