@@ -13,7 +13,6 @@
         "first_name": "Anonymous",
         "last_name": "Lang",
         "email": "Anonymous.lang@fco.example.uk",
-        "use_cdms_auth": false,
         "dit_team": {
           "id": "107c51d4-9698-e211-a939-e4115bead28a",
           "name": "Achme Embassy Vienna Austria"
@@ -99,7 +98,6 @@
           "is_staff": false,
           "is_active": true,
           "date_joined": "2017-02-08T15:34:49.888000",
-          "use_cdms_auth": true,
           "dit_team": "8710dd28-9798-e211-a939-e4115bead28a",
           "groups": [],
           "user_permissions": []
@@ -203,7 +201,6 @@
           "is_staff": false,
           "is_active": true,
           "date_joined": "2017-02-08T15:34:49.888000",
-          "use_cdms_auth": true,
           "dit_team": "8710dd28-9798-e211-a939-e4115bead28a",
           "groups": [],
           "user_permissions": []
@@ -219,7 +216,6 @@
           "is_staff": false,
           "is_active": true,
           "date_joined": "2017-02-08T15:34:49.888000",
-          "use_cdms_auth": true,
           "dit_team": "8710dd28-9798-e211-a939-e4115bead28a",
           "groups": [],
           "user_permissions": []
