@@ -66,7 +66,7 @@ describe('Investment list controller', () => {
         })
 
         it('should return a function that can check if items have been filtered enough to export', () => {
-          expect(this.exportAction.tooManyItems).to.be.a('function')
+          expect(this.exportAction.invalidNumberOfItems).to.be.a('function')
         })
 
         it('should return a url to download the csv', () => {
@@ -74,7 +74,15 @@ describe('Investment list controller', () => {
         })
 
         it('should output a message if further filtering is required', () => {
-          expect(this.exportAction.buildMessage(MAX_EXPORT_ITEMS + 1)).to.equal(`Filter to less than ${MAX_EXPORT_ITEMS} projects to download`)
+          expect(this.exportAction.buildMessage(MAX_EXPORT_ITEMS)).to.equal(`Filter to fewer than ${MAX_EXPORT_ITEMS} projects to download`)
+        })
+
+        it('should use the singular and an appropriate message when only one item is downloadable', () => {
+          expect(this.exportAction.buildMessage(1)).to.equal('You can now download this project')
+        })
+
+        it('should disable itself and warn the user if there is nothing to download', () => {
+          expect(this.exportAction.buildMessage(0)).to.equal('There are no projects to download')
         })
 
         commonTests()

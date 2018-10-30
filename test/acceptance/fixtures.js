@@ -99,10 +99,12 @@ module.exports = {
     oneDayExhibition: {
       id: 'b93d4273-36fe-4008-ac40-fbc197910791',
       name: 'One-day exhibition',
+      heading: 'One-day exhibition',
     },
     grandExhibition: {
       id: 'bda12a57-433c-4a0c-a7ce-5ebd080e09e8',
       name: 'Grand exhibition',
+      heading: 'Grand exhibition',
     },
     teddyBearExpo: {
       id: 'b93d4274-36fe-4008-ac40-fbc197910791',
