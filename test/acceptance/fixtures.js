@@ -80,6 +80,10 @@ module.exports = {
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
     },
+    archivedContactless: {
+      id: '346f78a5-1d23-4213-b4c2-bf48246a13c4',
+      name: 'Contactless Archived Ltd',
+    },
   },
   contact: {
     georginaClark: {
