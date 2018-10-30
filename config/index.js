@@ -4,11 +4,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 const isProd = process.env.NODE_ENV === 'production'
 const root = path.normalize(`${__dirname}/..`)
 
-if (process.env.VCAP_SERVICES) {
-  var vcap = JSON.parse(process.env.VCAP_SERVICES)
-} else {
-  var vcap = JSON.parse('{}')
-}
+var vcap = process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES): JSON.parse('{"redis": [{}]}')
 
 const config = {
   root,
@@ -27,11 +23,11 @@ const config = {
     baseUrl: 'https://api.getAddress.io/v2/uk/{postcode}?api-key={api-key}',
   },
   redis: {
-    url: vcap.redis[0].credentials.uri || process.env.REDISTOGO_URL,
-    port: vcap.redis[0].credentials.port || 6379,
-    host: vcap.redis[0].credentials.host || 'redis',
+    url: vcap.redis[0].hasOwnProperty('credentials') ? vcap.redis[0].credentials.uri : process.env.REDIS_URL || process.env.REDISTOGO_URL,
+    port: vcap.redis[0].hasOwnProperty('credentials') ? vcap.redis[0].credentials.port : process.env.REDIS_PORT || 6379,
+    host: vcap.redis[0].hasOwnProperty('credentials') ? vcap.redis[0].credentials.host : process.env.REDIS_HOST || 'redis',
     metadataTtl: (process.env.METADATA_TTL || (15 * 60)),
-    useTLS: vcap.redis[0].credentials.tls_enabled || process.env.REDIS_USE_TLS,
+    useTLS: vcap.redis[0].hasOwnProperty('credentials') ? vcap.redis[0].credentials.tls_enabled : process.env.REDIS_USE_TLS,
   },
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
