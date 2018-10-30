@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 const isProd = process.env.NODE_ENV === 'production'
 const root = path.normalize(`${__dirname}/..`)
 
-var vcap_services = JSON.parse(process.env.VCAP_SERVICES)
+var vcap = JSON.parse(process.env.VCAP_SERVICES)
 
 const config = {
   root,
