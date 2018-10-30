@@ -1,6 +1,11 @@
 @import "../settings";
 @import "../tools";
 
+@mixin progress-bar-node {
+  background-color: $govuk-blue;
+  border: 2px solid $govuk-blue;
+}
+
 $_section-width: 25%;
 
 .c-progress {
@@ -58,17 +63,14 @@ $_section-width: 25%;
 
   &.is-complete {
     border-color: $govuk-blue;
-
     &::before {
-      background-color: $govuk-blue;
-      border: 2px solid $govuk-blue;
+      @include progress-bar-node;
     }
   }
 
   &.is-active {
     &::before {
-      background-color: $white;
-      border: 2px solid $govuk-blue;
+      @include progress-bar-node;
     }
   }
 
