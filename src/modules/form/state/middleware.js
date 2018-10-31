@@ -13,7 +13,7 @@ const {
 } = require('lodash')
 
 const state = require('../state/current')
-const { getFullRoute, getNextPath } = require('../helpers')
+const { joinPaths, getNextPath } = require('../helpers')
 
 const mapStepsWithState = (steps, currentState) => {
   return compact(map(steps, (step, stepId) => {
@@ -95,7 +95,7 @@ const setFormDetails = (req, res, next) => {
     const previousPath = currentState.browseHistory[browseHistoryIndex]
     const returnStep = find(steps, step => step.path === previousPath)
 
-    set(res.locals, 'form.returnLink', getFullRoute(req.baseUrl, returnStep))
+    set(res.locals, 'form.returnLink', joinPaths([ req.baseUrl, returnStep.path ]))
     set(res.locals, 'form.returnText', 'Back')
   } else {
     set(res.locals, 'form.returnLink', req.baseUrl)
