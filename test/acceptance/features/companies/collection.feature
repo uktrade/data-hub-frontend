@@ -49,7 +49,7 @@ Feature: View collection of companies
     And I filter the companies list by company
     Then the companies should be filtered by company name
     And the result count should be 1
-    And the CSV download button should be visible
+    And the companies CSV download button should be visible
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset
