@@ -38,6 +38,9 @@ const FILTER_CONSTANTS = {
       },
     },
   },
+  ORDERS: {
+    MAX_EXPORT_ITEMS: 5000,
+  },
 }
 
 module.exports = FILTER_CONSTANTS
