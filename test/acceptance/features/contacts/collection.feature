@@ -59,6 +59,7 @@ Feature: View collection of contacts
     And I filter the contacts list by contact
     Then the contacts should be filtered by contact name
     And the result count should be 1
+    And there is a Download button in the collection header
     When I clear all filters
     Then there are no filters selected
     And the result count should be reset

@@ -4,7 +4,7 @@ const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
-const { getCollection } = require('../../modules/search/middleware/collection')
+const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { getCommon, getDetails } = require('./controllers/details')
@@ -25,6 +25,12 @@ router.get('/',
   getRequestBody(QUERY_FIELDS),
   getCollection('contact', ENTITIES, transformContactToListItem),
   renderContactList,
+)
+
+router.get('/export',
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  exportCollection('contact'),
 )
 
 router
