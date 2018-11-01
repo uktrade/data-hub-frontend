@@ -5,6 +5,9 @@ describe('OMIS list controllers', () => {
     this.req = {
       session: {
         token: 'abcd',
+        user: {
+          permissions: ['order.export_order'],
+        },
       },
       query: {},
     }
