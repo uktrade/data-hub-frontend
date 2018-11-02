@@ -11,7 +11,7 @@ const exportOptions = {
   targetPermission: 'order.export_order',
   urlFragment: 'omis',
   maxItems: FILTER_CONSTANTS.ORDERS.MAX_EXPORT_ITEMS,
-  entityName: 'omis',
+  entityName: 'order',
 }
 
 /**
