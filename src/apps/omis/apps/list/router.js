@@ -26,7 +26,7 @@ router.get('/',
 router.get('/export',
   setDefaultQuery(DEFAULT_QUERY),
   getRequestBody(QUERY_FIELDS),
-  exportCollection('company'),
+  exportCollection('order'),
 )
 
 module.exports = router
