@@ -43,7 +43,7 @@ const config = {
     apiKey: process.env.POSTCODE_KEY,
     baseUrl: 'https://api.getAddress.io/v2/uk/{postcode}?api-key={api-key}',
   },
-  redis: buildRedisConfig()
+  redis: buildRedisConfig(),
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
     secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
