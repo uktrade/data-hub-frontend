@@ -6,7 +6,7 @@ const root = path.normalize(`${__dirname}/..`)
 
 const buildRedisConfig = () => {
   const metadataTtl = (process.env.METADATA_TTL || (15 * 60))
-  const vcap = process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES)
+  const vcap = process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES) : JSON.parse('{}')
   
   if (vcap.hasOwnProperty('redis')) {
     return {
