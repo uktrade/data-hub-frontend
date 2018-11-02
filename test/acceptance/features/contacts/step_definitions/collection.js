@@ -190,6 +190,13 @@ Then(/^the contacts should be filtered by ([A-Za-z]+) ([A-Za-z]+)$/, async funct
     .assert.containsText(selector, expected)
 })
 
+Then(/^the contacts CSV download button should be visible/, async function () {
+  await ContactList
+    .section.collectionHeader
+    .waitForElementVisible('@download')
+    .assert.containsText('@download', 'Download')
+})
+
 Then(/^the contacts should be filtered to show badge ([A-Za-z]+) ([A-Za-z]+)$/, async function (entityType, field) {
   const expectedBadgeText = get(this.state, `${entityType}.${field}`)
 

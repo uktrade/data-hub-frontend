@@ -1,6 +1,6 @@
 const { isEmpty, set, forEach, get } = require('lodash')
 
-const { getFullRoute, getNextPath } = require('./helpers')
+const { getNextPath, joinPaths } = require('./helpers')
 const state = require('./state/current')
 const { getErrors } = require('./errors')
 
@@ -10,7 +10,7 @@ const setJourneyDetails = (journey, currentStep, currentStepId) => {
       currentStep,
       currentStepId,
       ...journey,
-      key: getFullRoute(req.baseUrl, journey.steps[0]),
+      key: joinPaths([ req.baseUrl, journey.steps[0].path ]),
     }
 
     next()
@@ -42,11 +42,12 @@ const postDetails = async (req, res, next) => {
 
       state.remove(req.session, key)
       req.flash('success', successMessage)
-      res.redirect(req.baseUrl + getNextPath(currentStep, req.body))
+      res.redirect(joinPaths([ req.baseUrl, getNextPath(currentStep, req.body) ]))
     })
   } else {
-    state.update(req.session, key, currentStep.path, { completed: true })
-    res.redirect(req.baseUrl + getNextPath(currentStep, req.body))
+    const nextPath = getNextPath(currentStep, req.body)
+    state.update(req.session, key, currentStep.path, { completed: true, nextPath })
+    res.redirect(joinPaths([ req.baseUrl, nextPath ]))
   }
 }
 

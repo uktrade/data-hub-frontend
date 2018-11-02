@@ -1,7 +1,19 @@
-const { isString, trimEnd, trimStart } = require('lodash')
+const { isString, trimEnd, trimStart, map, join } = require('lodash')
 
-const getFullRoute = (baseUrl, step) => {
-  return `${trimEnd(baseUrl, '/')}/${trimStart(step.path, '/')}`
+const joinPaths = (paths) => {
+  const cleanPaths = map(paths, (path, index) => {
+    if (index === 0) {
+      return trimEnd(path, '/')
+    }
+
+    if (index === paths.length - 1) {
+      return trimStart(path, '/')
+    }
+
+    return trimStart(trimEnd(path, '/'), '/')
+  })
+
+  return join(cleanPaths, '/')
 }
 
 const getNextPath = (step, requestBody) => {
@@ -11,6 +23,6 @@ const getNextPath = (step, requestBody) => {
 }
 
 module.exports = {
-  getFullRoute,
   getNextPath,
+  joinPaths,
 }
