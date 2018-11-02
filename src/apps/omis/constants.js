@@ -34,10 +34,23 @@ const ORDER_STATES = [
   },
 ]
 
+const QUERY_FIELDS = [
+  'status',
+  'company_name',
+  'contact_name',
+  'primary_market',
+  'uk_region',
+  'reference',
+  'total_cost',
+  'net_cost',
+  'sector_descends',
+]
+
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
 
 module.exports = {
+  APP_PERMISSIONS,
   GLOBAL_NAV_ITEM,
   ORDER_STATES,
-  APP_PERMISSIONS,
+  QUERY_FIELDS,
 }

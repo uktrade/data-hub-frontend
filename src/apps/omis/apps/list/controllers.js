@@ -1,8 +1,18 @@
+const qs = require('querystring')
 const { omit, merge } = require('lodash')
 
 const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../../builders')
 const { getOptions } = require('../../../../lib/options')
+const { buildExportAction } = require('../../../../lib/export-helper')
 const { omisFiltersFields, collectionSortForm } = require('./macros')
+const FILTER_CONSTANTS = require('../../../../lib/filter-constants')
+
+const exportOptions = {
+  targetPermission: 'order.export_order',
+  urlFragment: 'omis',
+  maxItems: FILTER_CONSTANTS.ORDERS.MAX_EXPORT_ITEMS,
+  entityName: 'omis',
+}
 
 /**
  * Fetches the options required for the filter form,
@@ -55,17 +65,19 @@ function getSortForm (query) {
  */
 async function renderList (req, res, next) {
   try {
-    const token = req.session.token
+    const { token, user } = req.session
     const query = req.query
 
     const sortForm = getSortForm(query)
     const filtersFields = await getFiltersFields(token, query)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, query)
+    const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 
     res.render('_layouts/collection', {
       sortForm,
       selectedFilters,
       filtersFields,
+      exportAction,
       countLabel: 'order',
       actionButtons: [{
         label: 'Add order',

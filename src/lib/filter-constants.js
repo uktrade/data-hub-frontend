@@ -16,6 +16,7 @@ const FILTER_CONSTANTS = {
         NAME: 'company_sector_descends',
         QUERY_STRING: '?level__lte=0',
       },
+      MAX_EXPORT_ITEMS: 5000,
     },
   },
   INVESTMENT_PROJECTS: {
@@ -36,6 +37,9 @@ const FILTER_CONSTANTS = {
         QUERY_STRING: '?level__lte=0',
       },
     },
+  },
+  ORDERS: {
+    MAX_EXPORT_ITEMS: 5000,
   },
 }
 
