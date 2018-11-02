@@ -8,7 +8,9 @@ const buildRedisConfig = () => {
   const metadataTtl = (process.env.METADATA_TTL || (15 * 60))
   if (process.env.VCAP_SERVICES) {
     const vcap = JSON.parse(process.env.VCAP_SERVICES)
-
+  }
+  
+  if (vcap.hasOwnProperty('redis') {
     return {
       metadataTtl,
       url: vcap.redis[0].credentials.uri,
