@@ -20,7 +20,7 @@ const QUERY_FIELDS = [
   'date_before',
   'sortby',
   'dit_team',
-  'service'
+  'service',
 ]
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]

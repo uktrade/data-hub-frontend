@@ -43,5 +43,4 @@ router
 
 router.get('/:interactionId', handlePolicyPermissions('view'), renderDetailsPage)
 
-
 module.exports = router
