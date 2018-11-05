@@ -4,6 +4,7 @@ const {
   updateStateBrowseHistory,
   setFormDetails,
   invalidateStateForChangedNextPath,
+  invalidateStateForDependentSteps,
 } = require('~/src/modules/form/state/middleware.js')
 const steps = require('../steps.js')()
 
@@ -620,6 +621,89 @@ describe('Form state middleware', () => {
           this.nextSpy = sinon.spy()
 
           invalidateStateForChangedNextPath(this.req, this.res, this.nextSpy)
+        })
+
+        it('should not remove state for step 1', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          expect(actual).to.not.be.undefined
+        })
+
+        it('should not remove state for step 3', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          expect(actual).to.not.be.undefined
+        })
+
+        it('should not remove state for step 5', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          expect(actual).to.not.be.undefined
+        })
+
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledWithExactly()
+          expect(this.nextSpy).to.have.been.calledOnce
+        })
+      })
+    })
+
+    describe('#invalidateStateForDependentSteps', () => {
+      beforeEach(() => {
+        steps[2].macro = () => {
+          return {
+            dependsOn: 'moreDataAtStep1',
+          }
+        }
+
+        this.res = {
+          locals: {
+            journey: {
+              steps,
+              key: '/base/step-1',
+              currentStep: steps[0],
+            },
+          },
+        }
+        this.nextSpy = sinon.spy()
+      })
+
+      context('when there are differences', () => {
+        beforeEach(() => {
+          this.req = buildReq({
+            selectedAtStep1: 'step-3-value',
+            moreDataAtStep1: 'changed-more',
+          })
+
+          invalidateStateForDependentSteps(this.req, this.res, this.nextSpy)
+        })
+
+        it('should not remove state for step 1', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          expect(actual).to.not.be.undefined
+        })
+
+        it('should remove state for step 3', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          expect(actual).to.be.undefined
+        })
+
+        it('should not remove state for step 5', () => {
+          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          expect(actual).to.not.be.undefined
+        })
+
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledWithExactly()
+          expect(this.nextSpy).to.have.been.calledOnce
+        })
+      })
+
+      context('when there are no differences', () => {
+        beforeEach(() => {
+          this.req = buildReq({
+            selectedAtStep1: 'step-3-value',
+            moreDataAtStep1: 'more',
+          })
+
+          invalidateStateForDependentSteps(this.req, this.res, this.nextSpy)
         })
 
         it('should not remove state for step 1', () => {
