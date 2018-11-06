@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const { ENTITIES } = require('../../../search/constants')
 
-const QUERY_FIELDS = require('../../constants')
+const { QUERY_FIELDS } = require('../../constants')
 
 const { getCollection, exportCollection } = require('../../../../modules/search/middleware/collection')
 const { setDefaultQuery } = require('../../../middleware')
