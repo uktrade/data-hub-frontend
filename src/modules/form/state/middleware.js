@@ -5,10 +5,15 @@ const {
   map,
   compact,
   find,
+  keys,
+  indexOf,
+  union,
+  filter,
+  includes,
 } = require('lodash')
 
 const state = require('../state/current')
-const { getFullRoute, getNextPath } = require('../helpers')
+const { joinPaths, getNextPath } = require('../helpers')
 
 const mapStepsWithState = (steps, currentState) => {
   return compact(map(steps, (step, stepId) => {
@@ -39,6 +44,11 @@ const isValidJourney = (steps, currentStepId, currentState) => {
 
   const currentStepWithState = find(stepsWithState, stepWithState => stepWithState.id === currentStepId)
   return hasCompletedPreviousStep(currentStepWithState)
+}
+
+function getDifference (object1, object2) {
+  const allKeys = union(keys(object1), keys(object2))
+  return filter(allKeys, (key) => object1[key] !== object2[key])
 }
 
 const validateState = (req, res, next) => {
@@ -85,11 +95,49 @@ const setFormDetails = (req, res, next) => {
     const previousPath = currentState.browseHistory[browseHistoryIndex]
     const returnStep = find(steps, step => step.path === previousPath)
 
-    set(res.locals, 'form.returnLink', getFullRoute(req.baseUrl, returnStep))
+    set(res.locals, 'form.returnLink', joinPaths([ req.baseUrl, returnStep.path ]))
     set(res.locals, 'form.returnText', 'Back')
   } else {
     set(res.locals, 'form.returnLink', req.baseUrl)
     set(res.locals, 'form.returnText', 'Cancel')
+  }
+
+  next()
+}
+
+const invalidateStateForDependentSteps = (req, res, next) => {
+  const { currentStep, key, steps } = res.locals.journey
+  const currentState = state.getCurrent(req.session, key)
+  const stepState = get(currentState, `steps.${currentStep.path}.data`, {})
+  const difference = getDifference(stepState, req.body)
+
+  difference.forEach((differentField) => {
+    steps.forEach((step) => {
+      if (step.macro && includes(step.macro({}).dependsOn, differentField)) {
+        state.removeStep(req.session, key, step.path)
+      }
+    })
+  })
+
+  next()
+}
+
+const invalidateStateForChangedNextPath = (req, res, next) => {
+  const { currentStep, key } = res.locals.journey
+  const currentState = state.getCurrent(req.session, key)
+  const currentNextPath = get(currentState, `steps.${currentStep.path}.nextPath`)
+  const newNextPath = getNextPath(currentStep, req.body)
+  const hasChangedNextPath = currentNextPath && newNextPath && currentNextPath !== newNextPath
+
+  if (hasChangedNextPath) {
+    const stepPathsInState = keys(currentState.steps)
+    const indexOfCurrentStepInState = indexOf(stepPathsInState, currentStep.path)
+
+    stepPathsInState.forEach((stepPath, stepPathIndex) => {
+      if (stepPathIndex > indexOfCurrentStepInState) {
+        state.removeStep(req.session, key, stepPath)
+      }
+    })
   }
 
   next()
@@ -100,4 +148,6 @@ module.exports = {
   updateStateData,
   updateStateBrowseHistory,
   setFormDetails,
+  invalidateStateForDependentSteps,
+  invalidateStateForChangedNextPath,
 }
