@@ -85,7 +85,7 @@ Then(/^the companies should be filtered by company name/, async function () {
     .assert.containsText('@header', expected)
 })
 
-Then(/^the CSV download button should be visible/, async function () {
+Then(/^the companies CSV download button should be visible/, async function () {
   await CompanyList
     .section.collectionHeader
     .waitForElementVisible('@download')
