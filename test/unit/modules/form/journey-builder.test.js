@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('supertest')
 const { endsWith } = require('lodash')
+
 const steps = require('./steps')
 
 describe('#build', () => {
@@ -30,7 +31,6 @@ describe('#build', () => {
     })
 
     this.journey = {
-      successMessage: 'The entity has been added',
       steps: steps([
         this.setOptionsStub1,
         this.setOptionsStub2,
@@ -381,8 +381,13 @@ describe('#build', () => {
 
     context('when it is the final step and the API request is successful', () => {
       beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake((data, next) => { next() })
-        this.journey.steps[4].send = this.sendSpy
+        this.sendSpy = sinon.stub().callsFake(() => { return { id: 1 } })
+        this.journey.steps[4].done = {
+          send: this.sendSpy,
+          message: 'The entity has been added',
+          nextPath: ({ id }) => `/base/entities/${id}`,
+        }
+
         this.app.use(this.journeyBuilder.build(this.journey))
 
         await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' })
@@ -404,26 +409,34 @@ describe('#build', () => {
       })
 
       it('should set the success message', () => {
-        expect(this.flashSpy).to.be.calledWith('success', this.journey.successMessage)
+        expect(this.flashSpy).to.be.calledWith('success', 'The entity has been added')
         expect(this.flashSpy).to.be.calledOnce
       })
 
       it('should redirect to the finish', () => {
         expect(this.response.statusCode).to.equal(302)
-        expect(this.response.headers.location).to.equal('/base/finish')
+        expect(this.response.headers.location).to.equal('/base/entities/1')
       })
 
       it('should not render a template', () => {
-        expect(this.response.res.text).to.equal('Found. Redirecting to /base/finish')
+        expect(this.response.res.text).to.equal('Found. Redirecting to /base/entities/1')
       })
     })
 
     context('when it is the final step and the API request is erroneous', () => {
       beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake((data, next) => {
-          return next({ statusCode: 400, error: 'Error messages' })
+        this.sendSpy = sinon.stub().callsFake(() => {
+          const error = new Error()
+          error.statusCode = 400
+          error.error = 'Error messages'
+          throw error
         })
-        this.journey.steps[4].send = this.sendSpy
+        this.journey.steps[4].done = {
+          send: this.sendSpy,
+          message: 'The entity has been added',
+          nextPath: ({ id }) => `/base/entities/${id}`,
+        }
+
         this.app.use(this.journeyBuilder.build(this.journey))
 
         await request(this.app).get('/step-1')
@@ -508,8 +521,13 @@ describe('#build', () => {
 
     context('when the user has changed direction in the journey', () => {
       beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake((data, next) => { next() })
-        this.journey.steps[1].send = this.sendSpy
+        this.sendSpy = sinon.stub().callsFake(() => { return { id: 1 } })
+        this.journey.steps[1].done = {
+          send: this.sendSpy,
+          message: 'The entity has been added',
+          nextPath: ({ id }) => `/base/entities/${id}`,
+        }
+
         this.app.use(this.journeyBuilder.build(this.journey))
 
         await request(this.app).get('/step-1')
