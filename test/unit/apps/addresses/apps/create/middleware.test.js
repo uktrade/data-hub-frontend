@@ -1,4 +1,5 @@
 const currentJourney = require('~/src/modules/form/current-journey.js')
+const config = require('~/config')
 
 describe('Addresses create middleware', () => {
   describe('#setAddresses', () => {
@@ -60,6 +61,41 @@ describe('Addresses create middleware', () => {
           value: 'zero, one, two, , , five, six',
           label: 'zero - one, two, five, six',
         },
+      ])
+    })
+
+    it('should call next once', () => {
+      expect(this.nextSpy).to.be.calledWithExactly()
+      expect(this.nextSpy).to.have.been.calledOnce
+    })
+  })
+
+  describe('#setCountries', () => {
+    beforeEach(async () => {
+      this.middleware = require('~/src/apps/addresses/apps/create/middleware.js')
+
+      this.req = {
+        session: {
+          token: '1234',
+        },
+      }
+      this.res = {
+        locals: {},
+      }
+      this.nextSpy = sinon.spy()
+
+      nock(config.apiRoot)
+        .get('/metadata/country/')
+        .reply(200, [
+          { id: '9999', name: 'United Kingdom', disabled_on: null },
+        ])
+
+      await this.middleware.setCountries(this.req, this.res, this.nextSpy)
+    })
+
+    it('should set the countries', () => {
+      expect(this.res.locals.countries).to.deep.equal([
+        { value: '9999', label: 'United Kingdom' },
       ])
     })
 
