@@ -130,7 +130,7 @@ aliases:
       CDMS_AUTH_URL: http://example.com
       DATABASE_URL: postgresql://postgres@postgres/datahub
       DATAHUB_SECRET: secret
-      DEBUG: 'True'
+      DEBUG: 'False'
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
       DJANGO_SETTINGS_MODULE: config.settings.local
