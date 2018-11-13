@@ -35,7 +35,7 @@ Then(/^the results summary for (?:a|an).*? (.+) collection is present$/, async f
     .assert.containsText('@intro', `${resultCount} ${collectionTypeTitle}`)
 })
 
-Then(/^there is an (.+) button in the collection header$/, async function (buttonText) {
+Then(/^there is an? (.+) button in the collection header$/, async function (buttonText) {
   const button = Collection
     .getButtonSelectorWithText(buttonText)
 
