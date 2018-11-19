@@ -33,13 +33,21 @@
       <h2 class="heading-medium">Global Account Manager – One List</h2>
       {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
 
-      {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
-        {% call Message({ type: 'muted' }) %}
-          If you need to change the One List tier or Global Account Manager for this company,
-          go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>
-          or email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
+      {# when the "companies-advisers" flag check is removed then the HiddenContent block should also be removed #}
+      {% if features['companies-advisers'] %}
+        <p>
+          <a href="advisers">See all advisers on the core team</a>
+        </p>
+      {% else %}
+        {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
+          {% call Message({ type: 'muted' }) %}
+            If you need to change the One List tier or Global Account Manager for this company,
+            go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>
+            or email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
+          {% endcall %}
         {% endcall %}
-      {% endcall %}
+      {% endif %}
+
     </div>
   {% endif %}
 
