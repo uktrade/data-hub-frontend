@@ -140,14 +140,6 @@ Then(/^there should not be a local nav$/, async () => {
     .assert.elementNotPresent('@localNav')
 })
 
-Then(/^view should (not\s?)?contain the Documents link$/, async (noDocumentsLink) => {
-  const tag = noDocumentsLink ? '@noDocumentsMessage' : '@documentsLink'
-
-  await Details
-    .waitForElementPresent(tag)
-    .assert.visible(tag)
-})
-
 Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
   const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
   const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
