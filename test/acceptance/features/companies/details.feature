@@ -20,6 +20,7 @@ Feature: Company details
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And I should see the "See all advisers on the core team" link
 
 
   @companies-details--subsidiary-company-no-one-list
@@ -39,3 +40,4 @@ Feature: Company details
       | Country                   | company.country              |
     And the Global headquarters summary key value details are not displayed
     And the Global Account Manager – One List key value details are not displayed
+    And I should not see the "See all advisers on the core team" link
