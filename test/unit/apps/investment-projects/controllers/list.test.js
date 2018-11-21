@@ -1,9 +1,7 @@
-const MAX_EXPORT_ITEMS = require('~/src/lib/filter-constants.js').INVESTMENT_PROJECTS.SECTOR.MAX_EXPORT_ITEMS
+const config = require('~/config')
 
 describe('Investment list controller', () => {
   beforeEach(() => {
-    this.error = new Error('error')
-    this.next = sinon.spy()
     this.req = {
       session: {
         user: {
@@ -21,85 +19,78 @@ describe('Investment list controller', () => {
       render: sinon.spy(),
       query: {},
     }
+    this.nextSpy = sinon.spy()
 
-    this.buildSelectedFiltersSummaryStub = sinon.spy()
-
-    const controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
-      '../../builders': {
-        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
-        buildFieldsWithSelectedEntities: sinon.stub(),
-      },
-      '../../../lib/options': {
-        getOptions: sinon.stub(),
-      },
-    })
-
-    this.renderInvestmentList = controller.renderInvestmentList
-    this.next = sinon.spy()
+    nock(config.apiRoot)
+      .get('/metadata/sector/?level__lte=0')
+      .reply(200, [
+        { id: 's1', name: 's1', disabled_on: null },
+      ])
   })
 
   describe('#renderInvestmentList', () => {
     context('when the list renders successfully', () => {
-      const commonTests = () => {
-        it('should not catch an error', () => {
-          expect(this.next).to.not.have.been.called
-        })
+      beforeEach(async () => {
+        const controller = require('~/src/apps/investment-projects/controllers/list')
 
-        it('should render the view', () => {
-          expect(this.res.render).to.have.been.calledOnce
-        })
-      }
-
-      context('when the user is allowed to export projects', () => {
-        beforeEach(async () => {
-          this.req.session.user.permissions = ['investment.export_investmentproject']
-          await this.renderInvestmentList(this.req, this.res, this.next)
-          this.exportAction = this.res.render.firstCall.args[1].exportAction
-        })
-
-        it('should enable the export button', () => {
-          expect(this.exportAction.enabled).to.equal(true)
-        })
-
-        it('should return a function to build the export status message', () => {
-          expect(this.exportAction.buildMessage).to.be.a('function')
-        })
-
-        it('should return a function that can check if items have been filtered enough to export', () => {
-          expect(this.exportAction.invalidNumberOfItems).to.be.a('function')
-        })
-
-        it('should return a url to download the csv', () => {
-          expect(this.exportAction.url).to.equal('investment-projects/export?sortby=estimated_land_date%3Aasc')
-        })
-
-        it('should output a message if further filtering is required', () => {
-          expect(this.exportAction.buildMessage(MAX_EXPORT_ITEMS)).to.equal(`Filter to fewer than ${MAX_EXPORT_ITEMS} projects to download`)
-        })
-
-        it('should use the singular and an appropriate message when only one item is downloadable', () => {
-          expect(this.exportAction.buildMessage(1)).to.equal('You can now download this project')
-        })
-
-        it('should disable itself and warn the user if there is nothing to download', () => {
-          expect(this.exportAction.buildMessage(0)).to.equal('There are no projects to download')
-        })
-
-        commonTests()
+        await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
       })
 
-      context('when the user is not allowed to export projects', () => {
-        beforeEach(async () => {
-          this.req.session.user.permissions = []
-          await this.renderInvestmentList(this.req, this.res, this.next)
+      it('should render', () => {
+        expect(this.res.render).to.be.calledOnce
+      })
+
+      it('should render the collection template', () => {
+        expect(this.res.render.firstCall.args[0]).to.equal('_layouts/collection')
+      })
+
+      it('should render the view with a title', () => {
+        expect(this.res.render.firstCall.args[1].title).to.equal('Investment Projects')
+      })
+
+      it('should render the view with a count label', () => {
+        expect(this.res.render.firstCall.args[1].countLabel).to.equal('project')
+      })
+
+      it('should render the view with a sort form', () => {
+        expect(this.res.render.firstCall.args[1].sortForm).to.not.be.undefined
+      })
+
+      it('should render the view with selected filters', () => {
+        expect(this.res.render.firstCall.args[1].selectedFilters).to.not.be.undefined
+      })
+
+      it('should render the view with an export action', () => {
+        expect(this.res.render.firstCall.args[1].exportAction).to.deep.equal({ enabled: false })
+      })
+
+      it('should render the view with filter fields', () => {
+        expect(this.res.render.firstCall.args[1].filtersFields).to.not.be.undefined
+      })
+    })
+
+    context('when there is an error', () => {
+      beforeEach(async () => {
+        this.error = new Error('error')
+        const erroneousSpy = sinon.stub().throws(this.error)
+
+        const controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
+          '../../builders': {
+            buildSelectedFiltersSummary: erroneousSpy,
+            buildFieldsWithSelectedEntities: sinon.stub(),
+          },
         })
 
-        it('should not enable the export button', () => {
-          const exportAction = this.res.render.firstCall.args[1].exportAction
-          expect(exportAction).to.deep.equal({ enabled: false })
-        })
+        await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
+      })
 
-        commonTests()
+      it('should not render the view', () => {
+        expect(this.res.render).to.not.be.called
+      })
+
+      it('should call next with an error', () => {
+        expect(this.nextSpy).to.have.been.calledWith(this.error)
+        expect(this.nextSpy).to.have.been.calledOnce
       })
     })
   })
