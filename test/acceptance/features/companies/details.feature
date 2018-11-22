@@ -41,6 +41,8 @@ Feature: Company details
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And I should see the "See all advisers on the core team" link
+
 
   @companies-details--subsidiary-company-no-one-list
   Scenario: View details for a company not on the One List
