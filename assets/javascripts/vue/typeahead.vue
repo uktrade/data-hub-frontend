@@ -136,7 +136,7 @@
     },
     watch: {
       selectedOptions: function (newOptions) {
-        if (!this.autoSubmit || this.isSubmitting) { return }
+        if (!this.autoSubmit) { return }
 
         const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
         if (!form) { return }
@@ -146,9 +146,6 @@
         query[this.name] = newOptions.map(option => option.value)
 
         XHR.request(form.action, query)
-          .then(() => {
-            this.isSubmitting = false
-          })
       }
     },
     computed: {
