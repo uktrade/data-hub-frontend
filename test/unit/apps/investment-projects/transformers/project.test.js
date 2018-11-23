@@ -120,11 +120,11 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when investor company has no classification', () => {
+    context('when investor company is not on the One List', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           investor_company: {
-            classification: null,
+            one_list_group_tier: null,
           },
         })
 
@@ -136,31 +136,13 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when investor company has a malformed classification', () => {
+    context('when investor company is on the One List', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           investor_company: {
-            classification: {
-              'colour': 'red',
-            },
-          },
-        })
-
-        this.result = transformBriefInvestmentSummary(data)
-      })
-
-      it('should indicate no account tier', () => {
-        expect(this.result).to.have.property('account_tier', 'None')
-      })
-    })
-
-    context('when investor company has a valid classification', () => {
-      beforeEach(() => {
-        const data = assign({}, investmentData, {
-          investor_company: {
-            classification: {
+            one_list_group_tier: {
               id: '1321',
-              name: 'Test',
+              name: 'Tier A - Strategic Account',
             },
           },
         })
@@ -169,7 +151,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the account tier', () => {
-        expect(this.result).to.have.property('account_tier', 'Test')
+        expect(this.result).to.have.property('account_tier', 'Tier A - Strategic Account')
       })
     })
 
