@@ -111,6 +111,12 @@ function getCoreTeam (token, companyId) {
   })
 }
 
+function getOneListGroupCoreTeam (token, companyId) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/company/${companyId}/one-list-group-core-team`,
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -122,4 +128,5 @@ module.exports = {
   getCompanyTimeline,
   getCompanySubsidiaries,
   getCoreTeam,
+  getOneListGroupCoreTeam,
 }

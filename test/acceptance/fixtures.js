@@ -73,7 +73,7 @@ module.exports = {
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
       oneListTier: 'Tier A - Strategic Account',
-      globalAccountManager: 'Travis Greene',
+      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
     },
     archived: {
       id: '346f78a5-1d23-4213-b4c2-bf48246a13c3',
