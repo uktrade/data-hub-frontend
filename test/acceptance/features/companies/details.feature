@@ -23,6 +23,27 @@ Feature: Company details
     And I should see the "See all advisers on the core team" link
 
 
+  @companies-details--subsidiary-company-parent-one-list
+  Scenario: View details for a subsidiary company of a parent on the One List
+
+    When I navigate to the `companies.details` page using `company` `One List Subsidiary Ltd` fixture
+    Then the Company summary key value details are displayed
+      | key                       | value                        |
+      | Business type             | company.businessType         |
+      | Primary address           | company.primaryAddress       |
+      | UK region                 | company.ukRegion             |
+      | Headquarter type          | company.headquarterType      |
+      | Global HQ                 | company.globalHeadquarters   |
+      | Sector                    | company.sector               |
+      | Business description      | company.description          |
+    And the Global headquarters summary key value details are not displayed
+    And the Global Account Manager – One List key value details are displayed
+      | key                       | value                        |
+      | One List tier             | company.oneListTier          |
+      | Global Account Manager    | company.globalAccountManager |
+    And I should see the "See all advisers on the core team" link
+
+
   @companies-details--subsidiary-company-no-one-list
   Scenario: View details for a company not on the One List
 
