@@ -21,6 +21,11 @@ describe('interaction list', () => {
     this.res = {
       render: sinon.stub(),
       breadcrumb: sinon.stub().returnsThis(),
+      locals: {
+        userAgent: {
+          isIE: false,
+        },
+      },
     }
 
     this.next = sinon.stub()
@@ -114,6 +119,7 @@ describe('interaction list', () => {
                 returnLink: 'entity/interactions/',
                 createKind: 'interaction',
                 canAdd: true,
+                isIE: false,
               },
             },
           }

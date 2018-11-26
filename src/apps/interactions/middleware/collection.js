@@ -1,9 +1,11 @@
 const { assign, merge, pick, pickBy, omit } = require('lodash')
 
 const { ENTITIES } = require('../../search/constants')
+const { QUERY_DATE_FIELDS } = require('../constants')
 
 const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { getCollection } = require('../../../modules/search/middleware/collection')
+const reverseDateIfIE = require('../../../lib/if-ie-reverse-date-value')
 
 const { interactionSortForm, defaultInteractionSort } = require('../macros/collection-sort-form')
 const { getInteractionsForEntity } = require('../repos')
@@ -40,13 +42,18 @@ async function getInteractionCollectionForEntity (req, res, next) {
 }
 
 function getInteractionsRequestBody (req, res, next) {
+  if (res.locals.userAgent) {
+    QUERY_DATE_FIELDS.forEach((date) => {
+      req.query[date] = reverseDateIfIE(req.query[date], res.locals.userAgent)
+    })
+  }
+
   const searchBody = pick(req.query, [
     'kind',
     'sector_descends',
     'communication_channel',
     'dit_adviser',
-    'date_after',
-    'date_before',
+    ...QUERY_DATE_FIELDS,
     'sortby',
     'dit_team',
     'service',

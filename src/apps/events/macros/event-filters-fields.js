@@ -1,10 +1,9 @@
 const { assign, flatten } = require('lodash')
 const { globalFields } = require('../../macros')
 const { collectionFilterLabels } = require('../labels')
-const currentYear = (new Date()).getFullYear()
 const { transformObjectToOption } = require('../../transformers')
 
-const eventFiltersFields = ({ advisers }) => {
+const eventFiltersFields = ({ advisers, userAgent }) => {
   return [
     {
       macroName: 'TextField',
@@ -17,16 +16,16 @@ const eventFiltersFields = ({ advisers }) => {
       options: advisers.map(transformObjectToOption),
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'start_date_after',
-      hint: 'YYYY-MM-DD',
-      placeholder: `e.g. ${currentYear}-07-18`,
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'start_date_before',
-      hint: 'YYYY-MM-DD',
-      placeholder: `e.g. ${currentYear}-07-21`,
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     assign({}, globalFields.countries, {
       name: 'address_country',

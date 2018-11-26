@@ -18,8 +18,13 @@ describe('interaction collection middleware', () => {
     this.res = {
       locals: {
         returnLink: '/return',
+        userAgent: {
+          isIE: false,
+        },
       },
     }
+
+    this.reverseDateIfIE = sinon.spy()
 
     this.next = sinon.spy()
     this.getInteractionsForEntityStub = sinon.stub()
@@ -191,6 +196,7 @@ describe('interaction collection middleware', () => {
     context('when called with sort order', () => {
       beforeEach(() => {
         this.req.query.sortby = 'name'
+
         this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
       })
 

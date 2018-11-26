@@ -5,14 +5,13 @@ const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
 const { POLICY_FEEDBACK_PERMISSIONS } = require('../constants')
 
-const currentYear = (new Date()).getFullYear()
-
 module.exports = function ({
   currentAdviserId,
   permissions,
   sectorOptions,
   serviceOptions,
   teamOptions,
+  userAgent,
 }) {
   return [
     {
@@ -45,16 +44,18 @@ module.exports = function ({
       placeholder: 'Search adviser',
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'date_after',
-      hint: 'YYYY-MM-DD',
-      placeholder: `e.g. ${currentYear}-07-18`,
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'date_before',
-      hint: 'YYYY-MM-DD',
-      placeholder: `e.g. ${currentYear}-07-21`,
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
     },
     {
       macroName: 'Typeahead',
