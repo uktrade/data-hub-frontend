@@ -85,7 +85,7 @@
           "export_to_countries": [],
           "future_interest_countries": [],
           "headquarter_type": null,
-          "one_list_account_owner": null,
+          "one_list_group_global_account_manager": null,
           "global_headquarters": {
               "name": "Mercury Ltd",
               "id": "a73efeba-8499-11e6-ae22-56b6b6499611"
