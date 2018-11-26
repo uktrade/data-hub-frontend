@@ -74,7 +74,7 @@ describe('Investment project transformers', () => {
           },
           investor_company: {
             name: 'Venus Ltd',
-            classification: {
+            one_list_group_tier: {
               name: 'New hotel (Non-FDI)',
             },
           },
@@ -153,8 +153,8 @@ describe('Investment project transformers', () => {
           },
           investor_company: {
             name: 'Venus Ltd',
-            classification: {
-              name: 'New hotel (Non-FDI)',
+            one_list_group_tier: {
+              name: 'Tier A - Strategic Account',
             },
           },
           business_activities: [
@@ -184,7 +184,7 @@ describe('Investment project transformers', () => {
           new_tech_to_uk: 'Has new-to-world tech, business model or IP',
           export_revenue: 'Yes, will create significant export revenue',
           sector_name: 'Renewable Energy : Wind : Renewable energy: Wind: Onshore',
-          account_tier: 'New hotel (Non-FDI)',
+          account_tier: 'Tier A - Strategic Account',
           business_activities: 'Yes',
           associated_non_fdi_r_and_d_project: {
             name: 'Freds',

@@ -75,7 +75,7 @@
     },
     "trading_address_country": null,
     "headquarter_type": null,
-    "classification": {
+    "one_list_group_tier": {
       "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
       "name": "Tier A - Strategic Account"
     },
@@ -274,7 +274,7 @@
     },
     "trading_address_country": null,
     "headquarter_type": null,
-    "classification": {
+    "one_list_group_tier": {
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },

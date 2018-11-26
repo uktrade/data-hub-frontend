@@ -121,7 +121,7 @@
                 "uk_region": "844cd12a-6095-e211-a939-e4115bead28a",
                 "trading_address_country": null,
                 "headquarter_type": null,
-                "classification": null,
+                "one_list_group_tier": null,
                 "one_list_account_owner": null,
                 "export_to_countries": [],
                 "future_interest_countries": []
@@ -197,6 +197,6 @@
     },
     "trading_address_country": null,
     "headquarter_type": null,
-    "classification": null,
+    "one_list_group_tier": null,
     "one_list_account_owner": null
 }

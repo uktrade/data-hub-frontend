@@ -39,7 +39,7 @@
               "name": "Company",
               "id": "98d14e94-5d95-e211-a939-e4115bead28a"
           },
-          "classification": null,
+          "one_list_group_tier": null,
           "companies_house_data": null,
           "contacts": [
               {

@@ -168,7 +168,7 @@ function transformBriefInvestmentSummary (data) {
       name: investorCompany.website,
       url: investorCompany.website,
     } : null,
-    account_tier: (investorCompany.classification && investorCompany.classification !== null && investorCompany.classification.name) ? investorCompany.classification.name : 'None',
+    account_tier: (investorCompany.one_list_group_tier && investorCompany.one_list_group_tier !== null && investorCompany.one_list_group_tier.name) ? investorCompany.one_list_group_tier.name : 'None',
     uk_region_locations: regionLocations.map(region => region.name).join(', '),
     competitor_countries: competitorCountries.map(country => country.name).join(', '),
     estimated_land_date: !isEmpty(data.estimated_land_date) ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,

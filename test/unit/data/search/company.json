@@ -28,7 +28,7 @@
         "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
         "name": "Private limited company"
       },
-      "classification": null,
+      "one_list_group_tier": null,
       "company_number": null,
       "contacts": [],
       "created_on": "2017-05-25T11:15:27.270215",
@@ -86,7 +86,7 @@
         "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
         "name": "Private limited company"
       },
-      "classification": null,
+      "one_list_group_tier": null,
       "company_number": null,
       "contacts": [],
       "created_on": "2017-05-25T11:15:27.281747",
@@ -140,7 +140,7 @@
         "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
         "name": "Private limited company"
       },
-      "classification": null,
+      "one_list_group_tier": null,
       "company_number": null,
       "contacts": [
         {
