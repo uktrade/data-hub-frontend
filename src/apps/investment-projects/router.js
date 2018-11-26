@@ -1,9 +1,10 @@
 const router = require('express').Router()
 
 const { ENTITIES } = require('../search/constants')
-const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+const { DEFAULT_COLLECTION_QUERY, LOCAL_NAV, APP_PERMISSIONS, QUERY_FIELDS, QUERY_DATE_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
+const { detectUserAgent } = require('../../middleware/detect-useragent')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
 const { setLocalNav, setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
@@ -79,8 +80,9 @@ router.param('investmentId', shared.getInvestmentDetails)
 router.param('companyId', shared.getCompanyDetails)
 
 router.get('/',
+  detectUserAgent,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getRequestBody(QUERY_FIELDS),
+  getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   getCollection('investment_project', ENTITIES, transformInvestmentProjectToListItem),
   renderInvestmentList
 )

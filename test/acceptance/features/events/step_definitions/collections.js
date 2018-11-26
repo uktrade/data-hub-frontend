@@ -94,9 +94,9 @@ Then(/^I filter the events list by event type/, async function () {
 Then(/^I filter the events list by start date/, async function () {
   const event = this.state.event
   const startDate = getDateFor({
-    year: event.start_date_year,
-    month: event.start_date_month,
     day: event.start_date_day,
+    month: event.start_date_month,
+    year: event.start_date_year,
   })
 
   await EventList.section.filters

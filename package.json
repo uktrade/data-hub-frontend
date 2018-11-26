@@ -76,6 +76,7 @@
     "express-minify-html": "^0.12.0",
     "express-session": "^1.15.6",
     "express-sslify": "^1.2.0",
+    "express-useragent": "^1.0.12",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "formidable": "^1.2.1",

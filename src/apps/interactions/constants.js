@@ -16,11 +16,14 @@ const QUERY_FIELDS = [
   'sector_descends',
   'communication_channel',
   'dit_adviser',
-  'date_after',
-  'date_before',
   'sortby',
   'dit_team',
   'service',
+]
+
+const QUERY_DATE_FIELDS = [
+  'date_after',
+  'date_before',
 ]
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
@@ -81,6 +84,7 @@ const IST_ONLY_SERVICES = [
 
 module.exports = {
   QUERY_FIELDS,
+  QUERY_DATE_FIELDS,
   APP_PERMISSIONS,
   DEFAULT_COLLECTION_QUERY,
   GLOBAL_NAV_ITEM,

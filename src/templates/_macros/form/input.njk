@@ -17,7 +17,7 @@
     type="{{ props.type if props.type else 'text' }}"
     id="{{ props.fieldId }}"
     {% if props.placeholder %}placeholder="{{ props.placeholder }}"{% endif %}
-    value="{{ props.value }}"
+    value="{% if props.type === "date" %}{{ props.value | reverseDate }}{% else %}{{ props.value }}{% endif %}"
     class="{{ 'c-form-control' | applyClassModifiers(props.modifier) }} {{ 'has-error' if props.error }} {{ props.class }}"
     {% if props.autofocus %}autofocus{% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
