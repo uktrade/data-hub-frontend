@@ -37,7 +37,7 @@ function isForeignCompany (req, res) {
 }
 
 function isOnOneList (req, res) {
-  return !isEmpty(get(res.locals, 'company.classification'))
+  return !isEmpty(get(res.locals, 'company.one_list_group_tier'))
 }
 
 function getHeading (company, isForeign) {

@@ -67,7 +67,7 @@ function transformInvestmentValueForView ({
     }),
     average_salary: get(average_salary, 'name'),
     sector_name: get(sector, 'name'),
-    account_tier: get(investor_company, 'classification.name'),
+    account_tier: get(investor_company, 'one_list_group_tier.name'),
     business_activities: europeanOrGlobalHeadquartersBusinessActivities.length ? 'Yes' : 'No',
     associated_non_fdi_r_and_d_project: non_fdi_r_and_d_budget
       ? transformAssociatedProject({ id, associated_non_fdi_r_and_d_project })

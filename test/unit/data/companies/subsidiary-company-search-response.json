@@ -8,7 +8,7 @@
         "id": "98d14e94-5d95-e211-a939-e4115bead28a",
         "name": "Company"
       },
-      "classification": null,
+      "one_list_group_tier": null,
       "companies_house_data": null,
       "contacts": [
         {
@@ -96,7 +96,7 @@
         "id": "9ad14e94-5d95-e211-a939-e4115bead28a",
         "name": "Partnership"
       },
-      "classification": null,
+      "one_list_group_tier": null,
       "companies_house_data": null,
       "contacts": [
 

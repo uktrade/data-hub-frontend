@@ -1,7 +1,9 @@
-const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
-const config = require('~/config')
-const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const { renderDetails } = require('~/src/apps/companies/controllers/details')
+
+const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
+const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
+const oneListGroupCoreTeam = require('~/test/unit/data/companies/one-list-group-core-team.json')
+const config = require('~/config')
 
 describe('Companies details controller', () => {
   beforeEach(() => {
@@ -19,13 +21,18 @@ describe('Companies details controller', () => {
       breadcrumb: sinon.stub().returnsThis(),
       render: sinon.stub(),
     }
+
+    nock(config.apiRoot)
+      .get(`/v3/company/${minimalCompany.id}/one-list-group-core-team`)
+      .reply(200, oneListGroupCoreTeam)
   })
 
   describe('#renderDetails', () => {
     context('when the company contains companes house data', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         this.res.locals.company = companiesHouseCompany
-        renderDetails(this.req, this.res, this.next)
+
+        await renderDetails(this.req, this.res, this.next)
       })
 
       it('should render the correct template', () => {
@@ -36,6 +43,11 @@ describe('Companies details controller', () => {
       it('should include company details', () => {
         const options = this.res.render.firstCall.args[1]
         expect(options.companyDetails).to.not.be.null
+      })
+
+      it('should include account management details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.accountManagementDetails).to.not.be.null
       })
 
       it('should include companies house details', () => {
@@ -55,9 +67,10 @@ describe('Companies details controller', () => {
     })
 
     context('when the company has no companies house data', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         this.res.locals.company = minimalCompany
-        renderDetails(this.req, this.res, this.next)
+
+        await renderDetails(this.req, this.res, this.next)
       })
 
       it('should render the correct template', () => {
@@ -70,7 +83,12 @@ describe('Companies details controller', () => {
         expect(options.companyDetails).to.not.be.null
       })
 
-      it('should include companies house details', () => {
+      it('should include account management details', () => {
+        const options = this.res.render.firstCall.args[1]
+        expect(options.accountManagementDetails).to.not.be.null
+      })
+
+      it('should not include companies house details', () => {
         const options = this.res.render.firstCall.args[1]
         expect(options.chDetails).to.be.null
       })
