@@ -18,9 +18,9 @@
       <tr>
         <td>{{ companyInvestments.count|default('No', true) }} investment {{ 'project' | pluralise(companyInvestments.count) }} in the UK</td>
       </tr>
-      {% if company.classification %}
+      {% if company.one_list_group_tier %}
         <tr>
-          <td>{{ company.classification.name }}</td>
+          <td>{{ company.one_list_group_tier.name }}</td>
         </tr>
       {% endif %}
       {% if company.one_list_account_owner %}

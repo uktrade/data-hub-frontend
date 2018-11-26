@@ -77,7 +77,7 @@
       "uk_region": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "trading_address_country": null,
       "headquarter_type": null,
-      "classification": null,
+      "one_list_group_tier": null,
       "one_list_account_owner": null,
       "export_to_countries": [],
       "future_interest_countries": []
@@ -179,7 +179,7 @@
       "uk_region": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "trading_address_country": null,
       "headquarter_type": null,
-      "classification": null,
+      "one_list_group_tier": null,
       "one_list_account_owner": null,
       "export_to_countries": [],
       "future_interest_countries": []

@@ -409,9 +409,9 @@ describe('Company edit controller', () => {
             company: {
               id: 1,
               name: 'One List Company',
-              classification: {
+              one_list_group_tier: {
                 id: '4321',
-                name: 'The classification',
+                name: 'Tier A - Strategic Account',
               },
             },
           },
