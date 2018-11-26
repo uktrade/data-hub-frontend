@@ -1,84 +1,43 @@
-const transformCoreTeamToCollection = require('~/src/apps/companies/transformers/core-team-to-collection')
+const transformOneListCoreTeamToCollection = require('~/src/apps/companies/transformers/one-list-core-team-to-collection')
 
-describe('#transformCoreTeamToCollection', () => {
+describe('#transformOneListCoreTeamToCollection', () => {
   beforeEach(() => {
     this.coreTeamMock = require('~/test/unit/data/companies/core-team.json')
   })
 
   context('when the core team member is a Global Account Manager and from a UK region', () => {
     beforeEach(() => {
-      this.collection = transformCoreTeamToCollection(this.coreTeamMock)
+      this.collection = transformOneListCoreTeamToCollection(this.coreTeamMock)
     })
 
     it('should have 1 item in the collection', () => {
-      expect(this.collection.length).to.equal(1)
+      expect(this.collection.accountManagers.length).to.equal(1)
     })
 
     it('should set the name', () => {
-      expect(this.collection[0].name).to.equal('Travis Greene')
+      expect(this.collection.accountManagers[0].name).to.equal('Travis Greene')
     })
 
-    it('should set the type', () => {
-      expect(this.collection[0].type).to.equal('adviser')
-    })
-
-    it('should set the subtitle', () => {
-      expect(this.collection[0].subTitle.value).to.equal('Global Account Manager')
-    })
-
-    it('should set the meta with region', () => {
-      expect(this.collection[0].meta).to.deep.equal([
-        {
-          'label': 'Region',
-          'value': 'London',
-        },
-        {
-          'label': 'Country',
-          'value': 'United Kingdom',
-        },
-        {
-          'label': 'Team',
-          'value': 'IST - Sector Advisory Services',
-        },
-      ])
+    it('should have an accountManager property', () => {
+      expect(typeof this.collection.accountManagers).to.equal('object')
     })
   })
 
   context('when the core team member is not a Global Account Manager and not from a UK region', () => {
     beforeEach(() => {
-      this.coreTeamMock[0].is_global_account_manager = false
-      delete this.coreTeamMock[0].adviser.dit_team.uk_region
-
-      this.collection = transformCoreTeamToCollection(this.coreTeamMock)
+      this.collection = transformOneListCoreTeamToCollection(this.coreTeamMock)
     })
 
     it('should have 1 item in the collection', () => {
-      expect(this.collection.length).to.equal(1)
+      expect(this.collection.teamMembers.length).to.equal(1)
     })
 
     it('should set the name', () => {
-      expect(this.collection[0].name).to.equal('Travis Greene')
+      expect(this.collection.teamMembers[0].name).to.equal('Resivda Greene')
     })
 
-    it('should set the type', () => {
-      expect(this.collection[0].type).to.equal('adviser')
-    })
-
-    it('should not set the subtitle', () => {
-      expect(this.collection[0].subTitle).to.be.undefined
-    })
-
-    it('should set the meta without region', () => {
-      expect(this.collection[0].meta).to.deep.equal([
-        {
-          'label': 'Country',
-          'value': 'United Kingdom',
-        },
-        {
-          'label': 'Team',
-          'value': 'IST - Sector Advisory Services',
-        },
-      ])
+    it('should have a teamMember property', () => {
+      expect(typeof this.collection.teamMembers).to.equal('object')
     })
   })
 })
