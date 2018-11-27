@@ -64,7 +64,6 @@ Feature: Company details
     And I should not see the "See all advisers on the core team" link
 
   @companies-details--dnb-company
-  Scenario: Hide archive button for a DnB company
-
+  Scenario: Hide Edit company details button for a company containing a DnB number
     When I navigate to the `companies.details` page using `company` `One List Corp` fixture
-    Then I should not see the "Archive" button
+    Then I should not see the "Edit company details" button
