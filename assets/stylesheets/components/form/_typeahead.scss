@@ -42,8 +42,9 @@
 
 .multiselect__option {
   border-bottom: 1px solid $grey-2;
-  overflow: hidden;
+  white-space: normal;
   width: 100%;
+  line-height: 24px;
 
   .highlight {
     font-weight: 600;
