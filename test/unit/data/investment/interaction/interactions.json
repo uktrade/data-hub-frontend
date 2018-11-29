@@ -83,7 +83,7 @@
           "trading_address_country": null,
           "headquarter_type": null,
           "one_list_group_tier": null,
-          "one_list_account_owner": null,
+          "one_list_group_global_account_manager": null,
           "export_to_countries": [],
           "future_interest_countries": []
         },
@@ -185,7 +185,7 @@
           "trading_address_country": null,
           "headquarter_type": null,
           "one_list_group_tier": null,
-          "one_list_account_owner": null,
+          "one_list_group_global_account_manager": null,
           "export_to_countries": [],
           "future_interest_countries": []
         },
