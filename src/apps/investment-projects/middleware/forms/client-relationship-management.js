@@ -11,8 +11,8 @@ async function populateForm (req, res, next) {
   try {
     const investmentData = res.locals.investmentData
     const clientRelationshipManager = get(investmentData, 'client_relationship_manager.id', null)
-    const firstName = get(investmentData, 'investor_company.one_list_account_owner.first_name')
-    const lastName = get(investmentData, 'investor_company.one_list_account_owner.last_name')
+    const firstName = get(investmentData, 'investor_company.one_list_group_global_account_manager.first_name')
+    const lastName = get(investmentData, 'investor_company.one_list_group_global_account_manager.last_name')
     const advisersResponse = await getAdvisers(req.session.token)
     const clientRelationshipManagerOptions = filterActiveAdvisers({
       advisers: advisersResponse.results,

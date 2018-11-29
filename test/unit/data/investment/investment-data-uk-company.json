@@ -79,7 +79,7 @@
       "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
       "name": "Tier A - Strategic Account"
     },
-    "one_list_account_owner": null
+    "one_list_group_global_account_manager": null
   },
   "intermediate_company": null,
   "client_contacts": [
@@ -278,7 +278,7 @@
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },
-    "one_list_account_owner": null
+    "one_list_group_global_account_manager": null
   },
   "requirements_complete": true,
   "project_manager": {

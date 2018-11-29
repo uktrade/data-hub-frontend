@@ -23,10 +23,10 @@
           <td>{{ company.one_list_group_tier.name }}</td>
         </tr>
       {% endif %}
-      {% if company.one_list_account_owner %}
+      {% if company.one_list_group_global_account_manager %}
         <tr>
           <td>
-            Relationship manager: {{ company.one_list_account_owner.first_name }} {{ company.one_list_account_owner.last_name }}
+            Relationship manager: {{ company.one_list_group_global_account_manager.first_name }} {{ company.one_list_group_global_account_manager.last_name }}
           </td>
         </tr>
       {% endif %}
