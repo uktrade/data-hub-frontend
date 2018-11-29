@@ -1,14 +1,16 @@
 <template>
-  <div class="c-form-group c-form-group--light c-form-group--smaller c-form-group--filter">
+  <div class="c-form-group c-form-group--light c-form-group--smaller c-form-group--filter"
+       v-bind:id="name+'__typeahead'">
     <label class="c-form-group__label" :for="id">
       <span class="c-form-group__label-text">{{ label }}</span>
     </label>
     <multiselect
       label="label"
       open-direction="bottom"
-      placeholder="Starts with"
       track-by="value"
       v-model="selectedOptions"
+      :placeholder="placeholder"
+      :model="model"
       :clear-on-select="true"
       :close-on-select="false"
       :hide-selected="true"
@@ -21,13 +23,15 @@
       :showLabels="false"
       :searchable="true"
       :id="id"
-      @search-change="asyncFind">
+      @search-change="searchType">
       <template slot="clear" slot-scope="props">
-        <div class="multiselect__clear" v-if="selectedOptions.length" @mousedown.prevent.stop="clearAll(props.search)"></div>
+        <div class="multiselect__clear" v-if="selectedOptions.length"
+             @mousedown.prevent.stop="clearAll(props.search)"></div>
       </template>
-
       <template slot="option" slot-scope="props">
-        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">{{ props.option.label }}</div>
+        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">
+          {{ props.option.label }}
+        </div>
         <div class="multiselect__option-sublabel">{{ props.option.subLabel }}</div>
       </template>
 
@@ -37,19 +41,21 @@
         </div>
       </template>
     </multiselect>
-    <input type="hidden" class="js-ClearInputs--removable-field" :name="name" v-for="(option, index) in selectedOptions" :key="index" :value="option.value">
+    <input type="hidden" class="js-ClearInputs--removable-field" :name="name"
+           v-for="(option, index) in selectedOptions"
+           :key="index" :value="option.value">
   </div>
 </template>
-
 <script>
+
   const axios = require('axios')
   const Multiselect = require('vue-multiselect').default
   const getFormData = require('get-form-data').default
-  const pickBy = require('lodash/pickBy')
   const debounce = require('lodash/debounce')
+  const pickBy = require('lodash/pickBy')
   const uuid = require('uuid')
-
   const XHR = require('../lib/xhr')
+  const { matchWords } = require('../lib/helpers')
 
   export default {
     components: {
@@ -62,11 +68,19 @@
       },
       entity: {
         type: String,
-        required: true,
+        required: false,
       },
       name: {
         type: String,
         required: true,
+      },
+      placeholder: {
+        type: String,
+        required: true
+      },
+      model: {
+        type: String,
+        required: false
       },
       value: {
         type: String,
@@ -83,41 +97,32 @@
       allowMultiple: {
         type: Boolean,
         default: true,
-      },
+      }
     },
     data () {
       return {
         selectedOptions: this.value ? JSON.parse(this.value) : [],
         options: [],
+        optionsData: this.model && JSON.parse(this.model),
         isLoading: false,
-        id: uuid()
-      }
-    },
-    watch: {
-      selectedOptions: function (newOptions) {
-        if (!this.autoSubmit || this.isSubmitting) { return }
-        this.isSubmitting = true
+        id: uuid(),
 
-        const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
-        if (!form) { return }
-
-        const query = pickBy(getFormData(form))
-        delete query[this.id]
-        query[this.name] = newOptions.map(option => option.value)
-
-        XHR.request(form.action, query)
-          .then(() => {
-            this.isSubmitting = false
-          })
       }
     },
     methods: {
+      searchType: function (query) {
+        !!this.model ? this.find(query) : this.asyncFind(query)
+      },
+      find: debounce(function (query) {
+        this.options = this.optionsData.filter((obj) => {
+          return matchWords(obj.label, query)
+        })
+      }, 500),
       asyncFind: debounce(function (query) {
         if (query.length < 3) {
           this.options = []
           return
         }
-
         this.isLoading = true
         axios.get(`/api/options/${this.entity}?term=${query}`)
           .then((response) => {
@@ -129,8 +134,22 @@
           })
       }, 500),
     },
+    watch: {
+      selectedOptions: function (newOptions) {
+        if (!this.autoSubmit) { return }
+
+        const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
+        if (!form) { return }
+
+        const query = pickBy(getFormData(form))
+        delete query[this.id]
+        query[this.name] = newOptions.map(option => option.value)
+
+        XHR.request(form.action, query)
+      }
+    },
     computed: {
-      showCaret: function() {
+      showCaret: function () {
         return this.options.length > 0
       }
     }
