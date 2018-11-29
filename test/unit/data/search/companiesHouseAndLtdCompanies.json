@@ -57,7 +57,7 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "one_list_account_owner": null,
+      "one_list_group_global_account_manager": null,
       "level": 0
     },
     {
@@ -118,7 +118,7 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "one_list_account_owner": null,
+      "one_list_group_global_account_manager": null,
       "level": 0
     },
     {
@@ -179,7 +179,7 @@
       "trading_address_country": null,
       "trading_address_postcode": null,
       "headquarter_type": null,
-      "one_list_account_owner": null,
+      "one_list_group_global_account_manager": null,
       "level": 0
     }
   ],

@@ -76,7 +76,7 @@
     "trading_address_country": null,
     "headquarter_type": null,
     "one_list_group_tier": null,
-    "one_list_account_owner": null
+    "one_list_group_global_account_manager": null
   },
   "intermediate_company": null,
   "client_contacts": [],
