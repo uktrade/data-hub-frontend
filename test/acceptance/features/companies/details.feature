@@ -62,3 +62,9 @@ Feature: Company details
     And the Global headquarters summary key value details are not displayed
     And the Global Account Manager – One List key value details are not displayed
     And I should not see the "See all advisers on the core team" link
+
+  @companies-details--dnb-company
+  Scenario: Hide archive button for a DnB company
+
+    When I navigate to the `companies.details` page using `company` `One List Corp` fixture
+    Then I should not see the "Archive" button
