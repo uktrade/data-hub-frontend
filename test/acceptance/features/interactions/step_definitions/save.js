@@ -199,7 +199,7 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
     year: get(this.state, 'interaction.dateOfInteractionYear'),
     month: get(this.state, 'interaction.dateOfInteractionMonth'),
     day: get(this.state, 'interaction.dateOfInteractionDay'),
-  }, 'YYYY-M-D')
+  }, 'DD-MM-YYYY')
 
   await filtersSection
     .waitForElementPresent(`@${interactionType}`)
