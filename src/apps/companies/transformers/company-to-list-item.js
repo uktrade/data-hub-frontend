@@ -28,6 +28,7 @@ module.exports = function transformCompanyToListItem ({
   headquarter_type,
   global_headquarters,
   global_headquarters_archived,
+  DnB,
 } = {}) {
   if (!id) { return }
 
@@ -95,7 +96,7 @@ module.exports = function transformCompanyToListItem ({
       url: `/companies/${ghqId}`,
     })
 
-    if (!global_headquarters_archived) {
+    if (!global_headquarters_archived && !DnB) {
       meta.push({
         label: '',
         value: 'Remove subsidiary',

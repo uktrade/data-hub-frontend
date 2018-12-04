@@ -2,7 +2,7 @@
 
 {% block main_grid_right_column %}
 
-  {% if company.archived %}
+  {% if company.archived or DnB %}
     <details role="group">
       <summary role="button" aria-controls="details-content-0" aria-expanded="false">
         <span class="details__summary">
@@ -10,8 +10,14 @@
         </span>
       </summary>
       <div class="details__content" id="details-content-0" aria-hidden="false">
-        <p class="c-message c-message--muted">Subsidiaries cannot be linked to an archived company.
+        {% if company.archived %}
+          <p class="c-message c-message--muted">Subsidiaries cannot be linked to an archived company.
           <a href="/companies/{{company.id}}/unarchive">Click here to unarchive</a>
+        {% endif %}
+        {% if DnB %}
+          <p class="c-message c-message--muted">Subsidiaries cannot be linked to a Dun & Bradstreet company.
+        {% endif %}
+
         </p>
       </div>
     </details>
