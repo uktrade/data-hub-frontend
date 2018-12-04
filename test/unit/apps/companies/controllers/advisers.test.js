@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 
 const config = require('~/config')
 const companyMock = require('~/test/unit/data/companies/companies-house.json')
-const coreTeamMock = require('~/test/unit/data/companies/core-team.json')
+const coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {

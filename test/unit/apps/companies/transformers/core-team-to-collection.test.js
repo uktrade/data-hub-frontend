@@ -2,7 +2,7 @@ const transformOneListCoreTeamToCollection = require('~/src/apps/companies/trans
 
 describe('#transformOneListCoreTeamToCollection', () => {
   beforeEach(() => {
-    this.coreTeamMock = require('~/test/unit/data/companies/core-team.json')
+    this.coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
   })
 
   context('when the core team member is a Global Account Manager and from a UK region', () => {
@@ -28,12 +28,12 @@ describe('#transformOneListCoreTeamToCollection', () => {
       this.collection = transformOneListCoreTeamToCollection(this.coreTeamMock)
     })
 
-    it('should have 1 item in the collection', () => {
-      expect(this.collection.teamMembers.length).to.equal(1)
+    it('should have 2 items in the collection', () => {
+      expect(this.collection.teamMembers.length).to.equal(2)
     })
 
     it('should set the name', () => {
-      expect(this.collection.teamMembers[0].name).to.equal('Resivda Greene')
+      expect(this.collection.teamMembers[0].name).to.equal('Holly Collins')
     })
 
     it('should have a teamMember property', () => {
