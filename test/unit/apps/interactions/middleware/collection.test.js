@@ -24,8 +24,6 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    this.reverseDateIfIE = sinon.spy()
-
     this.next = sinon.spy()
     this.getInteractionsForEntityStub = sinon.stub()
 
