@@ -22,9 +22,6 @@
 
   {% if company.id %}
     {% if not company.archived %}
-      {# {% if not company.duns_number %}
-        <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
-      {% endif %} #}
       {% if company.duns_number %}
         {% call HiddenContent({ summary: 'Why can I not edit the company information?' }) %}
           {% call Message({ type: 'muted' }) %}
