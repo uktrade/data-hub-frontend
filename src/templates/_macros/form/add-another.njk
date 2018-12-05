@@ -12,7 +12,7 @@
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = props.element | default('fieldset') %}
 
-  {% call FormGroup(props | assign({ fieldId: fieldId, element: element, groupClassName: 'c-form-fieldset' })) %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, element: element, groupClassName: 'c-form-group c-form-fieldset' })) %}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
       {% for individualValue in props.value %}
         {{ renderAsMacro(
