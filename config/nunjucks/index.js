@@ -75,6 +75,8 @@ module.exports = (app, config) => {
   const env = nunjucks.configure([
     `${config.root}/src/apps`,
     `${config.root}/src/templates`,
+    `${config.root}/node_modules/govuk-frontend`,
+    `${config.root}/node_modules/govuk-frontend/components`,
   ], {
     autoescape: true,
     express: app,

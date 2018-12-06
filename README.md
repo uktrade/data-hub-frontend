@@ -342,25 +342,35 @@ that extends the base layout can include these additional blocks.
 ### Nunjucks base template blocks
 
 Template block names are structured by combining main element names to form path. e.g. `head` wraps everything inside
-the `head` element, `head_content` wraps the section that is used to contain contents of `head` element. Thus allowing
-to completely override everything inside `head` element if needed or just the section reserved for basic use cases.    
+the `head` element, the same applies to `headIcons`.  
 
-- `head` - contains the whole head element
-  - `head_title_content` - contains title element content
-  - `head_content` - wraps main content for head element
-  - `head_stylesheets` - wraps stylesheet declarations
-- `body` - contains the whole body element
-  - `body_skiplinks` - wraps container with "skip to content" link (first element inside body)
-  - `body_notifications` - wraps cookie message container (above site_header, after skiplinks)
-  - `body_site_header` - wraps site header
-    - `header_site_title` - wraps the site title
-    - `header_menu` - wraps the header menu
-  - `body_main` - wraps the main content block
-    - `body_main_header` - contains the header of the main block
-    - `body_main_header_content` - contains the heading of the main block
-    - `body_main_content` - contains main content (inside main#content)
-  - `body_footer` - wraps site footer container (inside body > footer)
-  - `body_footer_content` - contains content inside site footer
+- `datahub-base.njk extends "template.njk` - the GOV.UK frontend template Data Hub extends from
+
+```<head>```
+
+  - `pageTitle` - contains the page title
+  - `headIcons` - contains various GOV.UK icons
+  - `head` - overridden by Data Hub containing mainly `<meta>`, `<link>` and `<script>` tags
+
+```</head>```
+
+```</body>```
+
+  - `bodyStart` - contains Google Tag Manager (GTM) and the notification banner
+  - `skipLink` - a GOV.UK "skip to content" link
+  - `header` - overridden by Data Hub
+     - `header_site_title` - wraps the site title
+     - `header_menu` - wraps the header menu
+  - `main` - Data Hub overrides the GOV.UK main block
+     - `body_main_header` - contains the header of the main block
+       - `body_main_phase_banner` - contains the phase banner (e.g. alpha, beta etc)
+       - `local_header` - contains the local page title and local header
+     - `body_main_header_content` - contains the heading of the main block
+     - `body_main_content` - contains main content (inside main#content)
+  - `footer` - contains a GOV.UK footer which DataHub overrides with an empty block
+  - `bodyEnd` - initialise scripts (e.g. app.js and GOV.UK frontend)
+  
+```</body>```
 
 ### Base template variables
 
@@ -376,7 +386,7 @@ Base layout checks for certain variables.
 ```
 layouts/
 
-    +-> dit-base.njk
+    +-> template.njk (GOV.UK frontend)
     |
 +-> +-+ datahub-base.njk <-----+
 |                              |
