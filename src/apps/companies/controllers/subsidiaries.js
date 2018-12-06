@@ -9,17 +9,17 @@ async function renderSubsidiaries (req, res, next) {
     const token = req.session.token
     const query = req.query
     const page = query.page || '1'
-    const { id: companyId, name: companyName, archived: companyArchived, duns_number: dunsNumber } = res.locals.company
-    const actionButtons = companyArchived || dunsNumber ? undefined : [{
+    const { company } = res.locals
+    const actionButtons = company.archived || company.duns_number ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
-      url: `/companies/${companyId}/subsidiaries/link`,
+      url: `/companies/${company.id}/subsidiaries/link`,
     }]
 
-    const subsidiaryCollection = await getCompanySubsidiaries(token, companyId, page)
+    const subsidiaryCollection = await getCompanySubsidiaries(token, company.id, page)
       .then(transformApiResponseToSearchCollection(
         { query },
         ENTITIES,
-        transformCompanyToSubsidiaryListItem(res.locals.company, dunsNumber),
+        transformCompanyToSubsidiaryListItem(res.locals.company, company.duns_number),
       ))
 
     const subsidiaries = {
@@ -29,9 +29,9 @@ async function renderSubsidiaries (req, res, next) {
     }
 
     return res
-      .breadcrumb(companyName, `/companies/${companyId}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
-      .render('companies/views/subsidiaries.njk', { subsidiaries, dunsNumber })
+      .render('companies/views/subsidiaries.njk', { subsidiaries, company })
   } catch (error) {
     next(error)
   }
