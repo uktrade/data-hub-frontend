@@ -9,8 +9,8 @@ async function renderSubsidiaries (req, res, next) {
     const token = req.session.token
     const query = req.query
     const page = query.page || '1'
-    const { id: companyId, name: companyName, archived: companyArchived, duns_number: DnB } = res.locals.company
-    const actionButtons = companyArchived || DnB ? undefined : [{
+    const { id: companyId, name: companyName, archived: companyArchived, duns_number: dunsNumber } = res.locals.company
+    const actionButtons = companyArchived || dunsNumber ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${companyId}/subsidiaries/link`,
     }]
@@ -19,7 +19,7 @@ async function renderSubsidiaries (req, res, next) {
       .then(transformApiResponseToSearchCollection(
         { query },
         ENTITIES,
-        transformCompanyToSubsidiaryListItem(res.locals.company, DnB),
+        transformCompanyToSubsidiaryListItem(res.locals.company, dunsNumber),
       ))
 
     const subsidiaries = {
@@ -31,7 +31,7 @@ async function renderSubsidiaries (req, res, next) {
     return res
       .breadcrumb(companyName, `/companies/${companyId}`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
-      .render('companies/views/subsidiaries.njk', { subsidiaries, DnB })
+      .render('companies/views/subsidiaries.njk', { subsidiaries, dunsNumber })
   } catch (error) {
     next(error)
   }
