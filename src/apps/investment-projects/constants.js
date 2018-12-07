@@ -79,6 +79,7 @@ const QUERY_FIELDS = [
   'actual_land_date_before',
   'actual_land_date_after',
   'client_relationship_manager',
+  'likelihood_to_land',
 ]
 
 module.exports = {

@@ -19,6 +19,7 @@ async function populateForm (req, res, next) {
     options: {
       averageSalaryRange: await getOptions(token, 'salary-range', { createdOn }),
       fdiValue: await getOptions(token, 'fdi-value', { createdOn, sorted: false }),
+      likelihoodToLand: await getOptions(token, 'likelihood-to-land', { createdOn, sorted: false }),
     },
   }
 
