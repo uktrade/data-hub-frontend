@@ -96,6 +96,15 @@
     {% endif %}
 
     {{ MultipleChoiceField({
+      name: 'likelihood_to_land',
+      label: form.labels.likelihood_to_land,
+      value: form.state.likelihood_to_land,
+      error: errors.messages.likelihood_to_land,
+      initialOption: '-- Select a likelihood to land value --',
+      options: form.options.likelihood_to_land
+    }) }}
+
+    {{ MultipleChoiceField({
       name: 'government_assistance',
       type: 'radio',
       modifier: 'inline',

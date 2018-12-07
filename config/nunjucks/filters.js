@@ -210,6 +210,10 @@ const filters = {
 
     return `${className} ${classModifier}`.trim()
   },
+
+  json: obj => {
+    return JSON.stringify(obj, null, 2)
+  },
 }
 
 module.exports = filters
