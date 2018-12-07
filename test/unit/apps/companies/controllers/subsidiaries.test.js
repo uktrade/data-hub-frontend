@@ -2,6 +2,7 @@ const config = require('~/config')
 const subsidiariesController = require('~/src/apps/companies/controllers/subsidiaries')
 
 const companyData = require('~/test/unit/data/companies/companies-house-company.json')
+const dnbData = require('~/test/unit/data/companies/dnb-company.json')
 const subsidiaryData = require('~/test/unit/data/companies/subsidiaries.json')
 
 describe('company subsidiaries controller', () => {
@@ -84,6 +85,34 @@ describe('company subsidiaries controller', () => {
 
     it('should include a count label', () => {
       expect(this.subsidiaries).to.have.property('countLabel', 'subsidiary')
+    })
+  })
+
+  context('when the company is Dun and Bradstreet', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        ...this.resMock,
+        locals: {
+          ...this.resMock.locals,
+          company: {
+            ...this.resMock.locals.company,
+            archived: true,
+          },
+        },
+      }
+
+      nock(config.apiRoot)
+        .get('/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=72fda78f-bdc3-44dc-9c22-c8ac82f7bda4')
+        .reply(200, dnbData)
+
+      await subsidiariesController.renderSubsidiaries(this.reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should not set actions buttons', () => {
+      console.log('subsidiary data', dnbData)
+      const props = this.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.be.undefined
     })
   })
 
