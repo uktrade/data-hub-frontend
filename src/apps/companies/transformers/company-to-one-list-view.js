@@ -20,7 +20,7 @@ const transformOneListAccountOwner = (globalAccountManager) => {
 
 module.exports = function transformCompanyToOneListView (company, globalAccountManager) {
   const viewRecord = {
-    one_list_account_owner: transformOneListAccountOwner(globalAccountManager),
+    one_list_group_global_account_manager: transformOneListAccountOwner(globalAccountManager),
     one_list_tier: get(company, 'one_list_group_tier.name', NONE_TEXT),
   }
 

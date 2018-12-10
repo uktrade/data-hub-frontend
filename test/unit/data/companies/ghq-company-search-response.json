@@ -85,7 +85,7 @@
       "trading_address_postcode": "",
       "one_list_group_tier": null,
       "global_headquarters": null,
-      "one_list_account_owner": null,
+      "one_list_group_global_account_manager": null,
       "export_experience_category": null
     },
     {
@@ -145,7 +145,7 @@
       "trading_address_postcode": "",
       "one_list_group_tier": null,
       "global_headquarters": null,
-      "one_list_account_owner": null,
+      "one_list_group_global_account_manager": null,
       "export_experience_category": null
     }
   ],

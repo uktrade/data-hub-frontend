@@ -68,7 +68,7 @@ const hqLabels = {
 
 const accountManagementDisplayLabels = {
   one_list_tier: 'One List tier',
-  one_list_account_owner: 'Global Account Manager',
+  one_list_group_global_account_manager: 'Global Account Manager',
 }
 
 const exportDetailsLabels = {
@@ -81,6 +81,9 @@ const coreTeamLabels = {
   region: 'Region',
   country: 'Country',
   team: 'Team',
+  location: 'Location',
+  global_account_manager: 'Global Account Manager',
+  adviser_on_core_team: 'Adviser on core team',
 }
 
 module.exports = {

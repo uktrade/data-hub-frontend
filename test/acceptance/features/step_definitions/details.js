@@ -47,7 +47,7 @@ const removeFalsey = (details, state) => {
   })
 }
 
-const assertTableRowCount = async function (tableSelector, expectedData, tableType) {
+const assertTableRowCount = async function (tableSelector, expectedData) {
   await Details.api.elements('xpath', `${tableSelector.selector}/tbody/tr`, (result) => {
     client.expect(result.value.length, 'Table row count').to.equal(expectedData.length)
   })
@@ -167,6 +167,15 @@ Then(/^the key value details are displayed$/, async function (dataTable) {
 
 Then(/^the (.+) data details are displayed$/, async function (tableTitle, dataTable) {
   const tableSelector = Details.getSelectorForDataTable(tableTitle)
+
+  await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+  await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+})
+
+Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, dataTable) {
+  const tableSelector = Details.getSelectorForDataTableNumber(tableNumber)
+
+  console.log(tableSelector)
 
   await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
