@@ -8,11 +8,16 @@
   %}
     <p class="c-local-header__heading-after">{{ headingAddress }}</p>
 
-    {% if metaItems.length %}
-      {{ MetaList({
-        items: metaItems,
-        itemModifier: 'stacked'
-      }) }}
+    {% if company.one_list_group_tier %}
+      <div class="c-local-header__description">
+        <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
+        <p>
+          Global Account Manager: {{ company.one_list_group_global_account_manager.name }}
+          {% if features['companies-advisers'] %}
+            <a href="/companies/{{ company.id }}/advisers">View core team</a>
+          {% endif %}
+        </p>
+      </div>
     {% endif %}
 
     {% if company.archived %}
