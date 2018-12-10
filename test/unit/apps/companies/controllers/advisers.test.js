@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 
 const config = require('~/config')
 const companyMock = require('~/test/unit/data/companies/companies-house.json')
-const coreTeamMock = require('~/test/unit/data/companies/core-team.json')
+const coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
@@ -29,7 +29,7 @@ describe('Company contact list controller', () => {
     context('when the feature flag is enabled', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company/${companyMock.id}/core-team`)
+          .get(`/v3/company/${companyMock.id}/one-list-group-core-team`)
           .reply(200, coreTeamMock)
 
         this.resMock.locals.features['companies-advisers'] = true

@@ -76,6 +76,13 @@ Then(/^I should see the "([^"]*)?" (link|button)$/, async function (linkText, ty
     .useCss()
 })
 
+Then(/^I should see the "([^"]*)?" paragraph$/, async function (text) {
+  await client
+    .useXpath()
+    .assert.elementPresent(`//p[text()='${text}']`)
+    .useCss()
+})
+
 Then(/^I am on the `(.+)` page$/, async function (pageName) {
   try {
     const page = get(client.page, pageName)()

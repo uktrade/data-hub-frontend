@@ -110,7 +110,7 @@ describe('Investment project transformers', () => {
           },
         },
         investor_company: {
-          one_list_account_owner: {
+          one_list_group_global_account_manager: {
             id: '321',
             first_name: 'John',
             last_name: 'Brown',

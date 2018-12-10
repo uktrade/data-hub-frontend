@@ -1,11 +1,15 @@
 const { getSelectorForElementWithText } = require('../helpers/selectors')
 
+const getSelectorForTableNumber = (number, className) => {
+  return {
+    selector: `//table[contains(@class, "${className}")][${number}]`,
+    locateStrategy: 'xpath',
+  }
+}
+
 const getSelectorForTable = (title, className) => {
   if (!title) {
-    return {
-      selector: `//table[contains(@class, "${className}")][1]`,
-      locateStrategy: 'xpath',
-    }
+    return getSelectorForTableNumber(1, className)
   }
 
   return getSelectorForElementWithText(title, {
@@ -39,6 +43,9 @@ module.exports = {
       },
       getSelectorForDataTable (title) {
         return getSelectorForTable(title, 'data-table')
+      },
+      getSelectorForDataTableNumber (number) {
+        return getSelectorForTableNumber(number, 'data-table')
       },
     },
   ],

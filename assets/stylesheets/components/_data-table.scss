@@ -26,3 +26,9 @@
     background: $highlight-colour;
   }
 }
+
+.data-table--equal-columns {
+  thead tr th {
+    width: 33%
+  }
+}
