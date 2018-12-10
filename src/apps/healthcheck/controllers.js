@@ -23,7 +23,6 @@ function healthCheck (dependencies) {
 }
 
 function renderPingdomXml (req, res, next) {
-
   return healthCheck(serviceDependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
