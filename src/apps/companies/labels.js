@@ -81,6 +81,9 @@ const coreTeamLabels = {
   region: 'Region',
   country: 'Country',
   team: 'Team',
+  location: 'Location',
+  global_account_manager: 'Global Account Manager',
+  adviser_on_core_team: 'Adviser on core team',
 }
 
 module.exports = {
