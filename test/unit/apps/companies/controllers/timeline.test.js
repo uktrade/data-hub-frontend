@@ -1,182 +1,102 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const config = require('~/config')
-const companyData = require('~/test/unit/data/companies/companies-house-company.json')
-const timelineData = require('~/test/unit/data/companies/timeline.json')
-const timelineDataPage2 = require('~/test/unit/data/companies/timeline2.json')
-const tokenMock = '12345abcde'
+const companyMock = require('~/test/unit/data/companies/companies-house-company.json')
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
+const timelineMock = require('~/test/unit/data/companies/timeline.json')
 
-const controller = require('~/src/apps/companies/controllers/timeline')
+const { renderTimeline } = require('~/src/apps/companies/controllers/timeline')
 
 describe('Company timeline controller', () => {
-  beforeEach(() => {
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.renderSpy = sinon.spy()
-    this.nextSpy = sinon.spy()
+  describe('#renderTimeline', () => {
+    context('when timeline api returns valid data', () => {
+      const commonTests = (expectedBreadcrumbs, expectedTemplate) => {
+        it('return a transformed list of entries', () => {
+          const timeline = this.middlewareParameters.resMock.render.args[0][1].timeline
 
-    this.reqMock = {
-      query: {},
-      session: {
-        token: tokenMock,
-      },
-    }
+          expect(timeline).to.not.be.undefined
+        })
 
-    this.resMock = {
-      breadcrumb: this.breadcrumbStub,
-      render: this.renderSpy,
-      locals: {
-        company: companyData,
-      },
-    }
-  })
+        it('should set the breadcrumbs', () => {
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[0].name, expectedBreadcrumbs[0].url)
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[1].name)
+        })
 
-  context('when timeline api returns valid data', () => {
-    context('with default page number', () => {
+        it('should render the correct template', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
+          expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+        })
+      }
+
+      context('when rendering for a company without a DUNS number', () => {
+        beforeEach(async () => {
+          nock(config.apiRoot)
+            .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+            .reply(200, timelineMock)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
+
+          await renderTimeline(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests([
+          { name: companyMock.name, url: `/companies/${companyMock.id}` },
+          { name: 'Timeline' },
+        ], 'companies/views/_deprecated/timeline')
+      })
+
+      context('when rendering for a company with a DUNS number', () => {
+        beforeEach(async () => {
+          nock(config.apiRoot)
+            .get(`/v3/company/${dnbCompanyMock.id}/timeline?limit=10&offset=0`)
+            .reply(200, timelineMock)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: dnbCompanyMock,
+          })
+
+          await renderTimeline(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests([
+          { name: dnbCompanyMock.name, url: `/companies/${dnbCompanyMock.id}` },
+          { name: 'Timeline' },
+        ], 'companies/views/timeline')
+      })
+    })
+
+    context('when timeline api returns error', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get('/v3/company/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/timeline?limit=10&offset=0')
-          .reply(200, timelineData)
+          .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+          .reply(500)
 
-        await controller.renderTimeline(this.reqMock, this.resMock, this.nextSpy)
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+        })
+
+        await renderTimeline(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
-      it('should call timeline with correct arguments', () => {
-        expect(nock.isDone()).to.be.true
+      it('should call next with error', () => {
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+        expect(this.middlewareParameters.nextSpy.firstCall.args).to.have.length(1)
       })
-
-      it('return a transformed list of entries', () => {
-        const transformedTimelineData = this.renderSpy.args[0][1].timeline
-
-        const expected = {
-          items: [
-            {
-              type: 'timeline',
-              name: '31 Oct 2018',
-              contentMetaModifier: 'stacked',
-              meta: [
-                {
-                  label: 'Source',
-                  value: 'Companies House (Companies)',
-                },
-                {
-                  label: 'Description',
-                  value: 'Accounts next due date',
-                },
-              ],
-            }, {
-              type: 'timeline',
-              name: '4 Feb 2017',
-              contentMetaModifier: 'stacked',
-              meta: [
-                {
-                  label: 'Source',
-                  value: 'Companies House (Companies)',
-                },
-                {
-                  label: 'Description',
-                  value: 'Returns next due date',
-                },
-              ],
-            },
-            {
-              type: 'timeline',
-              name: '31 Jan 2017',
-              contentMetaModifier: 'stacked',
-              meta: [
-                {
-                  label: 'Source',
-                  value: 'Companies House (Companies)',
-                },
-                {
-                  label: 'Description',
-                  value: 'Accounts last made up date',
-                },
-              ],
-            },
-            {
-              type: 'timeline',
-              name: '7 Jan 2016',
-              contentMetaModifier: 'stacked',
-              meta: [
-                {
-                  label: 'Source',
-                  value: 'Companies House (Companies)',
-                },
-                {
-                  label: 'Description',
-                  value: 'Returns last due date',
-                },
-              ],
-            },
-            {
-              type: 'timeline',
-              name: '7 Jan 2002',
-              contentMetaModifier: 'stacked',
-              meta: [
-                {
-                  label: 'Source',
-                  value: 'Companies House (Companies)',
-                },
-                {
-                  label: 'Description',
-                  value: 'Company officially incorporated in Companies House',
-                },
-              ],
-            },
-          ],
-          'count': 5,
-          'pagination': null,
-        }
-
-        expect(transformedTimelineData).to.deep.equal(expected)
-      })
-
-      it('should set the breadcrumbs', () => {
-        expect(this.breadcrumbStub).to.have.been.calledTwice
-        expect(this.breadcrumbStub).to.have.been.calledWith('SAMSUNG BIOEPIS UK LIMITED', '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4')
-        expect(this.breadcrumbStub).to.have.been.calledWith('Timeline')
-      })
-
-      it('should render the correct template', () => {
-        expect(this.renderSpy.args[0][0]).to.equal('companies/views/timeline')
-        expect(this.renderSpy).to.have.been.calledOnce
-      })
-    })
-
-    context('when a custom page number', () => {
-      beforeEach(async () => {
-        this.reqMock.query.page = 2
-
-        nock(config.apiRoot)
-          .get('/v3/company/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/timeline?limit=10&offset=10')
-          .reply(200, timelineDataPage2)
-
-        await controller.renderTimeline(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call timeline with correct arguments', () => {
-        expect(nock.isDone()).to.be.true
-      })
-
-      it('shold include pagination data in the response', () => {
-        const data = this.resMock.render.firstCall.args[1]
-        expect(data.timeline.pagination.currentPage).to.eq(2)
-        expect(data.timeline.pagination.totalPages).to.eq(6)
-      })
-    })
-  })
-
-  context('when timeline api returns error', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get('/v3/company/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/timeline?limit=10&offset=0')
-        .reply(500)
-
-      await controller.renderTimeline(this.reqMock, this.resMock, this.nextSpy)
-    })
-
-    it('should call next with error', () => {
-      expect(this.nextSpy).to.have.been.calledOnce
-      expect(this.nextSpy.firstCall.args).to.have.length(1)
     })
   })
 })
