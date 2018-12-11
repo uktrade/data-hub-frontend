@@ -10,7 +10,7 @@ async function renderAdvisers (req, res, next) {
   }
 
   try {
-    const { name: companyName, id: companyId } = res.locals.company
+    const { company } = res.locals
     const token = req.session.token
     const { global_account_manager: globalAccountManager, adviser_on_core_team: adviserOnCoreTeam, location, team } = coreTeamLabels
     const columns = {
@@ -25,16 +25,19 @@ async function renderAdvisers (req, res, next) {
         name: adviserOnCoreTeam,
       },
     }
-    const coreTeam = await getOneListGroupCoreTeam(token, companyId)
+    const coreTeam = await getOneListGroupCoreTeam(token, company.id)
       .then(transformCoreTeamToCollection)
+
+    const view = company.duns_number ? 'companies/views/advisers' : 'companies/views/_deprecated/advisers'
+
     res
-      .breadcrumb(companyName, `/companies/${companyId}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Advisers')
-      .render('companies/views/advisers', {
-        companyName,
+      .render(view, {
         coreTeam,
         columns,
         oneListEmail: config.oneList.email,
+        companyName: company.name,
       })
   } catch (error) {
     next(error)
