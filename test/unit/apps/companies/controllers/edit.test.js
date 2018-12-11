@@ -107,7 +107,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the add breadcrumb', () => {
@@ -171,7 +171,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the company breadcrumb text', () => {
@@ -238,7 +238,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the add breadcrumb', () => {
@@ -297,7 +297,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the add breadcrumb', () => {
@@ -362,7 +362,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the add breadcrumb', () => {
@@ -421,7 +421,7 @@ describe('Company edit controller', () => {
       })
 
       it('should render the edit page', () => {
-        expect(this.getCalledRenderView()).to.equal('companies/views/edit')
+        expect(this.getCalledRenderView()).to.equal('companies/views/_deprecated/edit')
       })
 
       it('should set the add breadcrumb', () => {
