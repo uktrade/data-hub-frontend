@@ -1,4 +1,4 @@
-{% extends "../_layout-view.njk" %}
+{% extends "./_layout-view.njk" %}
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">
@@ -22,7 +22,16 @@
 
   {% if company.id %}
     {% if not company.archived %}
-      <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
+      {% if company.duns_number %}
+        {% call HiddenContent({ summary: 'Why can I not edit the company information?' }) %}
+          {% call Message({ type: 'muted' }) %}
+            Information for this company comes from an external and verified source. The information is automatically updated.
+            If you think the information is incomplete or incorrect, get in touch <a href="/support">using the support form</a>
+          {% endcall %}
+        {% endcall %}
+      {% else %}
+        <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
+      {% endif %}
     {% endif %}
   {% else %}
     <p><a href="/companies/add/{{company.company_number}}" class="button">Add company</a></p>
@@ -51,16 +60,16 @@
     </div>
   {% endif %}
 
-  {% if company.id and not company.archived %}
-    <h2 class="heading-medium">Archive company</h2>
-    <p>Archive this company if it is no longer required or active.</p>
+  {% if not company.archived and not company.duns_number %}
+      <h2 class="heading-medium">Archive company</h2>
+      <p>Archive this company if it is no longer required or active.</p>
 
-    {% component 'archive-form', {
-      label: 'Archive reason',
-      options: ['Company is dissolved'],
-      csrfToken: csrfToken,
-      error: form.errors.reason,
-      url: '/companies/' + company.id + '/archive'
-    } %}
+      {% component 'archive-form', {
+        label: 'Archive reason',
+        options: ['Company is dissolved'],
+        csrfToken: csrfToken,
+        error: form.errors.reason,
+        url: '/companies/' + company.id + '/archive'
+      } %}
   {% endif %}
 {% endblock %}
