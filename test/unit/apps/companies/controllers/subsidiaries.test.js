@@ -109,7 +109,6 @@ describe('company subsidiaries controller', () => {
     })
 
     it('should not set actions buttons', () => {
-      console.log('subsidiary data', dnbData)
       const props = this.resMock.render.args[0][1]
 
       expect(props.actionButtons).to.be.undefined
