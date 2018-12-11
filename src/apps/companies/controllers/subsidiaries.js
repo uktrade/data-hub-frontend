@@ -19,7 +19,7 @@ async function renderSubsidiaries (req, res, next) {
       .then(transformApiResponseToSearchCollection(
         { query },
         ENTITIES,
-        transformCompanyToSubsidiaryListItem(res.locals.company, company.duns_number),
+        transformCompanyToSubsidiaryListItem(res.locals.company),
       ))
 
     const subsidiaries = {
