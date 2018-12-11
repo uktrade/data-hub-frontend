@@ -1,11 +1,12 @@
-function renderLinkSubsidiary (req, res, next) {
-  const { id: companyId, name: companyName } = res.locals.company
-  const { companyDetailsLabels } = require('../labels')
+const { companyDetailsLabels } = require('../labels')
+
+function renderLinkSubsidiary (req, res) {
+  const { company } = res.locals
 
   res
-    .breadcrumb(companyName, `/companies/${companyId}`)
+    .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb(companyDetailsLabels.link_subsidiary)
-    .render('companies/views/link-subsidiary.njk')
+    .render('companies/views/_deprecated/link-subsidiary.njk')
 }
 
 module.exports = {
