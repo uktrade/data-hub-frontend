@@ -5,7 +5,12 @@ const { transformOrderToListItem } = require('../../omis/transformers')
 async function renderOrders (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { id, name, archived } = res.locals.company
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/orders' : 'companies/views/_deprecated/orders'
+  const actionButtons = company.archived ? undefined : [{
+    label: 'Add order',
+    url: `/omis/create?company=${company.id}&skip-company=true`,
+  }]
 
   try {
     const results = await search({
@@ -13,7 +18,7 @@ async function renderOrders (req, res, next) {
       page,
       searchEntity: 'order',
       requestBody: {
-        company: id,
+        company: company.id,
       },
       isAggregation: false,
     })
@@ -22,15 +27,10 @@ async function renderOrders (req, res, next) {
         transformOrderToListItem,
       ))
 
-    const actionButtons = archived ? undefined : [{
-      label: 'Add order',
-      url: `/omis/create?company=${id}&skip-company=true`,
-    }]
-
     res
-      .breadcrumb(name, `/companies/${id}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Orders (OMIS)')
-      .render('companies/views/orders', {
+      .render(view, {
         results,
         actionButtons,
       })

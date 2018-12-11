@@ -1,15 +1,14 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
 const ordersMock = require('~/test/unit/data/omis/collection.json')
 const companyMock = require('~/test/unit/data/company.json')
-const tokenMock = '12345abcde'
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company investments controller', () => {
   beforeEach(() => {
     this.searchStub = sinon.stub()
     this.transformOrderToListItemSpy = sinon.spy()
     this.transformApiResponseToCollectionSpy = sinon.spy()
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.renderSpy = sinon.spy()
-    this.nextSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/orders', {
       '../../search/services': {
@@ -22,107 +21,107 @@ describe('Company investments controller', () => {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })
-
-    this.reqMock = {
-      query: {},
-      session: {
-        token: tokenMock,
-      },
-    }
-    this.resMock = {
-      breadcrumb: this.breadcrumbStub,
-      render: this.renderSpy,
-      locals: {
-        company: companyMock,
-      },
-    }
   })
 
   context('when investments returns successfully', () => {
-    beforeEach(() => {
-      this.searchStub.resolves(ordersMock.results)
-    })
-
     context('with default page number', () => {
-      beforeEach(async () => {
-        await this.controller.renderOrders(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call search with correct arguments', () => {
-        expect(this.searchStub).to.have.been.calledWith({
-          isAggregation: false,
-          page: 1,
-          requestBody: {
-            company: companyMock.id,
-          },
-          searchEntity: 'order',
-          token: tokenMock,
+      const commonTests = (expectedCompanyId, expectedTemplate) => {
+        it('should call search with correct arguments', () => {
+          expect(this.searchStub).to.have.been.calledWith({
+            isAggregation: false,
+            page: 1,
+            requestBody: {
+              company: expectedCompanyId,
+            },
+            searchEntity: 'order',
+            token: '1234',
+          })
         })
-      })
 
-      it('should call list item transformer', () => {
-        expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
-      })
-
-      it('should set the correct number of breadcrumbs', () => {
-        expect(this.breadcrumbStub).to.have.been.calledTwice
-      })
-
-      it('should render the correct template', () => {
-        expect(this.renderSpy.args[0][0]).to.equal('companies/views/orders')
-        expect(this.renderSpy).to.have.been.calledOnce
-      })
-
-      it('should send results to the template', () => {
-        expect(this.renderSpy.args[0][1].results).to.deep.equal(ordersMock.results)
-      })
-
-      it('should send an add button to the template', () => {
-        expect(this.renderSpy.args[0][1].actionButtons).to.deep.equal([{
-          label: 'Add order',
-          url: `/omis/create?company=dcdabbc9-1781-e411-8955-e4115bead28a&skip-company=true`,
-        }])
-      })
-    })
-
-    context('when a custom page number', () => {
-      beforeEach(async () => {
-        this.reqMock.query.page = 2
-
-        await this.controller.renderOrders(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call with custom page number', () => {
-        expect(this.searchStub).to.have.been.calledWith({
-          isAggregation: false,
-          page: 2,
-          requestBody: {
-            company: companyMock.id,
-          },
-          searchEntity: 'order',
-          token: tokenMock,
+        it('should call list item transformer', () => {
+          expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
         })
+
+        it('should set the correct number of breadcrumbs', () => {
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+        })
+
+        it('should render the correct template', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
+          expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+        })
+
+        it('should send results to the template', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][1].results).to.deep.equal(ordersMock.results)
+        })
+
+        it('should send an add button to the template', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][1].actionButtons).to.deep.equal([{
+            label: 'Add order',
+            url: `/omis/create?company=${expectedCompanyId}&skip-company=true`,
+          }])
+        })
+      }
+
+      context('when the company does not have a DNB number', () => {
+        beforeEach(async () => {
+          this.searchStub.resolves(ordersMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
+
+          await this.controller.renderOrders(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(companyMock.id, 'companies/views/_deprecated/orders')
+      })
+
+      context('when the company does have a DNB number', () => {
+        beforeEach(async () => {
+          this.searchStub.resolves(ordersMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: {
+              ...dnbCompanyMock,
+            },
+          })
+
+          await this.controller.renderOrders(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(dnbCompanyMock.id, 'companies/views/orders')
       })
     })
 
     context('when the company is archived', () => {
       beforeEach(async () => {
-        this.resMock = {
-          ...this.resMock,
-          locals: {
-            ...this.resMock.locals,
-            company: {
-              ...this.resMock.locals.company,
-              archived: true,
-            },
-          },
-        }
+        this.searchStub.resolves(ordersMock.results)
 
-        await this.controller.renderOrders(this.reqMock, this.resMock, this.nextSpy)
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+            archived: true,
+          },
+        })
+
+        await this.controller.renderOrders(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
       it('should not send buttons to the template', () => {
-        expect(this.renderSpy.args[0][1].actionButtons).to.be.undefined
+        expect(this.middlewareParameters.resMock.render.args[0][1].actionButtons).to.be.undefined
       })
     })
   })
@@ -132,14 +131,23 @@ describe('Company investments controller', () => {
       this.errorMock = {
         errorCode: 500,
       }
+
       this.searchStub.rejects(this.errorMock)
 
-      await this.controller.renderOrders(this.reqMock, this.resMock, this.nextSpy)
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
+      })
+
+      await this.controller.renderOrders(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
     })
 
     it('should call next with error', () => {
-      expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
-      expect(this.nextSpy).to.have.been.calledOnce
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.errorMock)
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
     })
   })
 })
