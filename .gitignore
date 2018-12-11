@@ -44,3 +44,6 @@ selenium-debug.log
 test/acceptance/screenshots/
 cucumber
 seleniumLogs
+
+# IDE configurations
+.vscode/
