@@ -30,14 +30,6 @@ Feature: Company details
     Then I see the success message
     And details view data for "Headquarter type" should contain "Global HQ"
 
-  @companies-edit--one-list
-  Scenario: Update one list company
-
-    When I navigate to the `companies.fixture` page using `company` `One List Corp` fixture
-    When I click the Global headquarters summary edit button
-    Then I cannot see the field "headquarter_type"
-    And I cannot see the field "sector"
-
   @companies-edit--archived-company
   Scenario: Archived company without Edit company details button
 
