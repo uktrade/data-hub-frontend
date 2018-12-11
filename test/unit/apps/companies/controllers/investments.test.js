@@ -1,15 +1,14 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
 const investmentsMock = require('~/test/unit/data/investment/collection.json')
-const companyMock = require('~/test/unit/data/companies/company.json')
-const tokenMock = '12345abcde'
+const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company investments controller', () => {
   beforeEach(() => {
     this.getCompanyInvestmentProjectsStub = sinon.stub()
     this.transformInvestmentProjectToListItemSpy = sinon.spy()
     this.transformApiResponseToCollectionSpy = sinon.spy()
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.renderSpy = sinon.spy()
-    this.nextSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
       '../../investment-projects/repos': {
@@ -22,89 +21,101 @@ describe('Company investments controller', () => {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })
-
-    this.reqMock = {
-      query: {},
-      session: {
-        token: tokenMock,
-      },
-      params: {
-        companyId: '1234',
-      },
-    }
-    this.resMock = {
-      breadcrumb: this.breadcrumbStub,
-      render: this.renderSpy,
-      locals: {
-        company: companyMock,
-      },
-    }
   })
 
-  context('when investments returns successfully', () => {
-    beforeEach(() => {
-      this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
-    })
-
-    context('with default page number', () => {
-      beforeEach(async () => {
-        await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call audit log with correct arguments', () => {
-        expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith(tokenMock, companyMock.id, 1)
-      })
-
-      it('should call list item transformer', () => {
-        expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
-      })
-
-      it('should set the correct number of breadcrumbs', () => {
-        expect(this.breadcrumbStub).to.have.been.calledTwice
-      })
-
-      it('should render the correct template', () => {
-        expect(this.renderSpy.args[0][0]).to.equal('companies/views/investments')
-        expect(this.renderSpy).to.have.been.calledOnce
-      })
-
-      it('should send the correct template data', () => {
-        expect(this.renderSpy.args[0][1]).to.deep.equal({
-          results: investmentsMock.results,
-          actionButtons: [{
-            label: 'Add investment project',
-            url: '/investment-projects/create/1234',
-          }],
+  describe('#renderInvestments', () => {
+    context('when investments returns successfully', () => {
+      const commonTests = (expectedCompanyId, expectedTemplate) => {
+        it('should call audit log with correct arguments', () => {
+          expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith('1234', expectedCompanyId, 1)
         })
-      })
-    })
 
-    context('when a custom page number', () => {
-      beforeEach(async () => {
-        this.reqMock.query.page = 2
+        it('should call list item transformer', () => {
+          expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
+        })
 
-        await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
-      })
+        it('should set the correct number of breadcrumbs', () => {
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+        })
 
-      it('should call with custom page number', () => {
-        expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith(tokenMock, companyMock.id, 2)
-      })
-    })
-  })
+        it('should render the correct template', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
+          expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+        })
 
-  context('when investments rejects', () => {
-    beforeEach(async () => {
-      this.errorMock = {
-        errorCode: 500,
+        it('should send the correct template data', () => {
+          expect(this.middlewareParameters.resMock.render.args[0][1]).to.deep.equal({
+            results: investmentsMock.results,
+            actionButtons: [{
+              label: 'Add investment project',
+              url: `/investment-projects/create/${expectedCompanyId}`,
+            }],
+          })
+        })
       }
-      this.getCompanyInvestmentProjectsStub.rejects(this.errorMock)
 
-      await this.controller.renderInvestments(this.reqMock, this.resMock, this.nextSpy)
+      context('when the company does not have a DUNS number', () => {
+        beforeEach(async () => {
+          this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
+
+          await this.controller.renderInvestments(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(companyMock.id, 'companies/views/_deprecated/investments')
+      })
+
+      context('when the company does have a DUNS number', () => {
+        beforeEach(async () => {
+          this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: {
+              ...dnbCompanyMock,
+            },
+          })
+
+          await this.controller.renderInvestments(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(dnbCompanyMock.id, 'companies/views/investments')
+      })
     })
 
-    it('should call next with error', () => {
-      expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
-      expect(this.nextSpy).to.have.been.calledOnce
+    context('when investments rejects', () => {
+      beforeEach(async () => {
+        this.errorMock = {
+          errorCode: 500,
+        }
+
+        this.getCompanyInvestmentProjectsStub.rejects(this.errorMock)
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+        })
+
+        await this.controller.renderInvestments(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should call next with error', () => {
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.errorMock)
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+      })
     })
   })
 })
