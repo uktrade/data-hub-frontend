@@ -63,7 +63,7 @@ Feature: Company details
     And the Global Account Manager – One List key value details are not displayed
     And I should not see the "See all advisers on the core team" link
 
-  @companies-details--dnb-company
+@companies-details--dnb-company
   Scenario: Hide Edit company details button for a company containing a DnB number
     When I navigate to the `companies.details` page using `company` `One List Corp` fixture
     Then I should not see the "Edit company details" button
