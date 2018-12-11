@@ -10,6 +10,7 @@ async function renderSubsidiaries (req, res, next) {
     const query = req.query
     const page = query.page || '1'
     const { company } = res.locals
+    const view = company.duns_number ? 'companies/views/subsidiaries' : 'companies/views/_deprecated/subsidiaries'
     const actionButtons = company.archived || company.duns_number ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${company.id}/subsidiaries/link`,
@@ -22,16 +23,17 @@ async function renderSubsidiaries (req, res, next) {
         transformCompanyToSubsidiaryListItem(res.locals.company),
       ))
 
-    const subsidiaries = {
-      ...subsidiaryCollection,
-      actionButtons,
-      countLabel: 'subsidiary',
-    }
-
     return res
       .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
-      .render('companies/views/subsidiaries.njk', { subsidiaries, company })
+      .render(view, {
+        subsidiaries: {
+          ...subsidiaryCollection,
+          actionButtons,
+          countLabel: 'subsidiary',
+        },
+        company,
+      })
   } catch (error) {
     next(error)
   }
