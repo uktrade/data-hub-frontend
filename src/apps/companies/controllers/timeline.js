@@ -5,19 +5,22 @@ const { transformApiResponseToCollection } = require('../../../modules/api/trans
 async function renderTimeline (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { id, name } = res.locals.company
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/timeline' : 'companies/views/_deprecated/timeline'
 
   try {
-    const timeline = await getCompanyTimeline(token, id, page)
+    const timeline = await getCompanyTimeline(token, company.id, page)
       .then(transformApiResponseToCollection(
         { query: req.query },
         transformTimelineToListItem
       ))
 
     res
-      .breadcrumb(name, `/companies/${id}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Timeline')
-      .render('companies/views/timeline', { timeline })
+      .render(view, {
+        timeline,
+      })
   } catch (error) {
     next(error)
   }
