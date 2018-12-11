@@ -74,6 +74,7 @@ module.exports = {
       turnoverRange: '£33.5M+',
       oneListTier: 'Tier A - Strategic Account',
       globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
+      duns_number: 'abc123',
     },
     oneListSubsidiary: {
       id: '960e1fa9-cc25-478c-a548-a2e2047319bb',
