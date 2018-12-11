@@ -5,24 +5,24 @@ const { transformApiResponseToCollection } = require('../../../modules/api/trans
 async function renderInvestments (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { id, name, archived } = res.locals.company
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/investments' : 'companies/views/_deprecated/investments'
+  const actionButtons = company.archived ? undefined : [{
+    label: 'Add investment project',
+    url: `/investment-projects/create/${company.id}`,
+  }]
 
   try {
-    const results = await getCompanyInvestmentProjects(token, id, page)
+    const results = await getCompanyInvestmentProjects(token, company.id, page)
       .then(transformApiResponseToCollection(
         { query: req.query },
         transformInvestmentProjectToListItem,
       ))
 
-    const actionButtons = archived ? undefined : [{
-      label: 'Add investment project',
-      url: `/investment-projects/create/${req.params.companyId}`,
-    }]
-
     res
-      .breadcrumb(name, `/companies/${id}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Investment')
-      .render('companies/views/investments', {
+      .render(view, {
         results,
         actionButtons,
       })
