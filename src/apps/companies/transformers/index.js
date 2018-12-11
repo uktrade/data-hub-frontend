@@ -6,7 +6,7 @@ const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
 const transformCompanyToView = require('./company-to-view')
 const transformCompanyToSubsidiaryListItem = require('./company-to-subsidiary-list-item')
-const transformCoreTeamToCollection = require('./core-team-to-collection')
+const transformCoreTeamToCollection = require('./one-list-core-team-to-collection')
 
 module.exports = {
   transformCompaniesHouseToListItem,
