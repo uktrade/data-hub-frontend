@@ -1,5 +1,6 @@
 module.exports = ({
   requestBody,
+  requestQuery = {},
   company,
   contact,
   interaction,
@@ -13,6 +14,7 @@ module.exports = ({
         token: '1234',
       },
       body: requestBody,
+      query: requestQuery,
     },
     resMock: {
       breadcrumb: sinon.stub().returnsThis(),

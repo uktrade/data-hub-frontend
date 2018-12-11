@@ -6,19 +6,20 @@ const { transformApiResponseToCollection } = require('../../../modules/api/trans
 async function renderAuditLog (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { id, name } = res.locals.company
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/audit' : 'companies/views/_deprecated/audit'
 
   try {
-    const auditLog = await getCompanyAuditLog(token, id, page)
+    const auditLog = await getCompanyAuditLog(token, company.id, page)
       .then(transformApiResponseToCollection(
-        { entityType: 'audit' },
+        {},
         transformAuditLogToListItem(companyDetailsLabels)
       ))
 
     res
-      .breadcrumb(name, `/companies/${id}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Audit history')
-      .render('companies/views/audit', {
+      .render(view, {
         auditLog,
       })
   } catch (error) {
