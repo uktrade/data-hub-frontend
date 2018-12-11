@@ -1,83 +1,93 @@
-const { assign, set } = require('lodash')
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
+const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const { renderDocuments } = require('~/src/apps/companies/controllers/documents')
 
 describe('Companies documents controller', () => {
-  const companyId = 'mock-id'
-  const companyName = 'mock-name'
-
-  beforeEach(() => {
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.resMock = assign({}, globalRes, {
-      breadcrumb: this.breadcrumbStub,
-      render: sinon.spy(),
-      locals: {
-        company: {
-          id: companyId,
-          name: companyName,
-        },
-      },
-    })
-    this.reqMock = assign({}, globalReq)
-    this.nextSpy = sinon.spy()
-  })
-
   describe('#renderDocuments', () => {
-    context('when documents path is an empty string', () => {
-      beforeEach(() => {
-        set(this.resMock, 'locals.company.archived_documents_url_path', '')
-        renderDocuments(this.reqMock, this.resMock, this.nextSpy)
-      })
-
+    const commonTests = (expectedCompanyName, expectedCompanyId, expectedTemplate, expectedArchivedDocumentsPath) => {
       it('should call breadcrumb', () => {
-        expect(this.resMock.breadcrumb).to.be.calledTwice
+        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledTwice
       })
 
       it('should call breadcrumb with', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWith(companyName, `/companies/${companyId}`)
+        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(expectedCompanyName, `/companies/${expectedCompanyId}`)
       })
 
       it('should call breadcrumb with', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWith('Documents')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Documents')
       })
 
       it('should call render', () => {
-        expect(this.resMock.render).to.be.calledOnce
+        expect(this.middlewareParameters.resMock.render).to.be.calledOnce
       })
 
       it('should call render with', () => {
-        expect(this.resMock.render).to.be.calledWith('companies/views/documents', { archivedDocumentPath: '' })
-      })
-    })
-
-    context('when documents path contains a url', () => {
-      const mockDocumentUrl = 'mock-document-url'
-      beforeEach(() => {
-        set(this.resMock, 'locals.company.archived_documents_url_path', mockDocumentUrl)
-        renderDocuments(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call breadcrumb', () => {
-        expect(this.resMock.breadcrumb).to.be.calledTwice
-      })
-
-      it('should call breadcrumb with', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWith(companyName, `/companies/${companyId}`)
-      })
-
-      it('should call breadcrumb with', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWith('Documents')
-      })
-
-      it('should call render', () => {
-        expect(this.resMock.render).to.be.calledOnce
-      })
-
-      it('should call render with', () => {
-        expect(this.resMock.render).to.be.calledWith('companies/views/documents', {
-          archivedDocumentPath: mockDocumentUrl,
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(expectedTemplate, {
+          archivedDocumentPath: expectedArchivedDocumentsPath,
         })
       })
+    }
+
+    context('when the company does not have a DUNS number', () => {
+      context('when documents path is an empty string', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: {
+              ...companyMock,
+              archived_documents_url_path: '',
+            },
+          })
+
+          renderDocuments(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+          )
+        })
+
+        commonTests(companyMock.name, companyMock.id, 'companies/views/_deprecated/documents', '')
+      })
+
+      context('when documents path contains a url', () => {
+        const archivedDocumentsPath = 'mock-document-url'
+
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: {
+              ...companyMock,
+              archived_documents_url_path: archivedDocumentsPath,
+            },
+          })
+
+          renderDocuments(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+          )
+        })
+
+        commonTests(companyMock.name, companyMock.id, 'companies/views/_deprecated/documents', archivedDocumentsPath)
+      })
+    })
+
+    context('when the company does have a DUNS number', () => {
+      const archivedDocumentsPath = 'mock-document-url'
+
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...dnbCompanyMock,
+            archived_documents_url_path: archivedDocumentsPath,
+          },
+        })
+
+        renderDocuments(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
+      })
+
+      commonTests(dnbCompanyMock.name, dnbCompanyMock.id, 'companies/views/documents', archivedDocumentsPath)
     })
   })
 })

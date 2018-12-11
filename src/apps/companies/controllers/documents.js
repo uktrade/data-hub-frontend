@@ -1,14 +1,12 @@
-const { get } = require('lodash')
-
-function renderDocuments (req, res, next) {
-  const { id: companyId, name: companyName } = get(res.locals, 'company')
-  const archivedDocumentPath = get(res.locals, 'company.archived_documents_url_path')
+function renderDocuments (req, res) {
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/documents' : 'companies/views/_deprecated/documents'
 
   return res
-    .breadcrumb(companyName, `/companies/${companyId}`)
+    .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Documents')
-    .render('companies/views/documents', {
-      archivedDocumentPath,
+    .render(view, {
+      archivedDocumentPath: company.archived_documents_url_path,
     })
 }
 
