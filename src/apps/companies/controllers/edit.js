@@ -70,7 +70,7 @@ async function renderForm (req, res, next) {
 
     res
       .breadcrumb(res.locals.company ? 'Edit' : 'Add')
-      .render('companies/views/edit', {
+      .render('companies/views/_deprecated/edit', {
         isForeign,
         isOnOneList: isOnOneList(req, res),
         companyDetails: res.locals.company ? transformCompanyToView(res.locals.company) : {},
