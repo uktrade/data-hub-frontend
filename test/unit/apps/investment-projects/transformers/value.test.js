@@ -29,6 +29,7 @@ describe('Investment project transformers', () => {
           non_fdi_r_and_d_budget: false,
           id: 1,
           associated_non_fdi_r_and_d_project: null,
+          likelihood_to_land: null,
         })
       })
 
@@ -47,6 +48,7 @@ describe('Investment project transformers', () => {
           account_tier: undefined,
           business_activities: 'No',
           associated_non_fdi_r_and_d_project: 'Not linked to a non-FDI R&D project',
+          likelihood_to_land: null,
         }
 
         expect(this.actualInvestmentValue).to.deep.equal(expectedInvestmentValue)
@@ -90,6 +92,10 @@ describe('Investment project transformers', () => {
             id: 'ac035522-ad0b-4eeb-87f4-0ce964e4b999',
             project_code: 'DHP-00000460',
           },
+          likelihood_to_land: {
+            name: 'Low',
+            id: 'b3515282-dc36-487a-a5af-320cde165575',
+          },
         })
       })
 
@@ -125,6 +131,10 @@ describe('Investment project transformers', () => {
                 url: '/investment-projects/1/remove-associated',
               },
             ],
+          },
+          likelihood_to_land: {
+            name: 'Low',
+            id: 'b3515282-dc36-487a-a5af-320cde165575',
           },
         }
 
@@ -169,6 +179,10 @@ describe('Investment project transformers', () => {
             id: 'ac035522-ad0b-4eeb-87f4-0ce964e4b999',
             project_code: 'DHP-00000460',
           },
+          likelihood_to_land: {
+            name: 'Low',
+            id: 'b3515282-dc36-487a-a5af-320cde165575',
+          },
         })
       })
 
@@ -198,6 +212,10 @@ describe('Investment project transformers', () => {
                 url: '/investment-projects/1/remove-associated',
               },
             ],
+          },
+          likelihood_to_land: {
+            'name': 'Low',
+            'id': 'b3515282-dc36-487a-a5af-320cde165575',
           },
         }
 

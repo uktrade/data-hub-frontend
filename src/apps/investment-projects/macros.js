@@ -74,6 +74,15 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, use
       },
     },
     {
+      macroName: 'MultipleChoiceField',
+      name: 'likelihood_to_land',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.likelihoodToLandOptions.map(transformObjectToOption)
+      },
+    },
+    {
       macroName: 'DateField',
       type: 'date',
       name: 'estimated_land_date_before',
