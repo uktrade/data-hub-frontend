@@ -25,32 +25,6 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-  @interaction-add--companies-policy-feedback-submit @policy
-  Scenario: Companies policy feedback is saved
-
-    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
-    And I click the "Add interaction" link
-    And I select policy feedback
-    Then there are policy feedback fields
-    And policy feedback fields are pre-populated
-    When a policy feedback is added
-      | key                      | value                                    |
-    Then I see the success message
-    And the key value details are displayed
-      | key                      | value                                    |
-      | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
-      | Service provider         | interaction.serviceProvider              |
-      | Service                  | Policy feedback                          |
-      | Subject                  | interaction.subject                      |
-      | Notes                    | interaction.notes                        |
-      | Date of interaction      | interaction.date                         |
-      | DIT adviser              | interaction.ditAdviser                   |
-      | Communication channel    | interaction.communicationChannel         |
-      | Documents                | There are no files or documents          |
-      | Policy issue type        | interaction.policyIssueType              |
-      | Policy area              | interaction.policyArea                   |
-
   @interaction-add--companies-service-delivery-submit
   Scenario: Companies service delivery is saved
 
@@ -155,15 +129,17 @@ Feature: Add a new interaction in Data hub
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
 
-  @interaction-add--contacts-policy-feedback-submit @policy
+  @interaction-add--contacts-interaction--standard-interaction-with-feedback-submit
   Scenario: Policy feedback fields from contacts
 
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
-    And I select policy feedback
-    Then there are policy feedback fields
-    And policy feedback fields are pre-populated
-    When a policy feedback is added
+    And I select interaction
+    Then there are interaction fields
+    And interaction fields are pre-populated
+    Then I select a policy feedback option
+    And there are interaction policy feedback fields
+    When an interaction policy feedback is added
       | key                      | value                                    |
     Then I see the success message
     And the key value details are displayed
@@ -171,15 +147,46 @@ Feature: Add a new interaction in Data hub
       | Company                  | Venus Ltd                                |
       | Contact                  | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
-      | Service                  | Policy feedback                          |
+      | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
       | Notes                    | interaction.notes                        |
       | Date of interaction      | interaction.date                         |
       | DIT adviser              | interaction.ditAdviser                   |
       | Communication channel    | interaction.communicationChannel         |
       | Documents                | There are no files or documents          |
-      | Policy issue type        | interaction.policyIssueType              |
+      | Policy issue types       | interaction.policyIssueType1             |
       | Policy area              | interaction.policyArea                   |
+      | Policy feedback notes    | interaction.policyFeedbackNotes          |
+
+  @interaction-add--contacts-interaction--service-delivery-interaction-with-feedback-submit
+  Scenario: Policy feedback fields from contacts
+
+    When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
+    And I click the "Add interaction" link
+    And I select service delivery
+    Then there are service delivery fields
+    And interaction fields are pre-populated
+    Then I select a policy feedback option
+    And there are interaction policy feedback fields
+    When a service delivery policy feedback is added
+      | key                      | value                                    |
+      | Service                  | Tradeshow Access Programme (TAP)         |
+    Then I see the success message
+    And the key value details are displayed
+      | key                      | value                                    |
+      | Company                  | Venus Ltd                                |
+      | Contact                  | interaction.contact                      |
+      | Service provider         | interaction.serviceProvider              |
+      | Service                  | interaction.service                      |
+      | Subject                  | interaction.subject                      |
+      | Notes                    | interaction.notes                        |
+      | Date of service delivery | interaction.date                         |
+      | DIT adviser              | interaction.ditAdviser                   |
+      | Event                    | interaction.event                        |
+      | Documents                | There are no files or documents          |
+      | Policy issue types       | interaction.policyIssueType1             |
+      | Policy area              | interaction.policyArea                   |
+      | Policy feedback notes    | interaction.policyFeedbackNotes          |
 
   @interaction-add--contacts-service-delivery-submit
   Scenario: Service delivery fields from contacts
