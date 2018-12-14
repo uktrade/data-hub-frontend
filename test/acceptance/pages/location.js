@@ -9,6 +9,9 @@ const getDetailsTabSelector = (text) => getSelectorForElementWithText(text,
 
 module.exports = {
   url: process.env.QA_HOST,
+  elements: {
+    subHeading: '.heading-medium',
+  },
   sections: {
     localHeader: {
       selector: '.c-local-header',

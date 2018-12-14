@@ -20,23 +20,11 @@ const getSelectorForTable = (title, className) => {
 
 module.exports = {
   elements: {
-    heading: '.c-local-header__heading',
-    contentHeading: '.heading-medium',
-    localNav: '.c-local-nav',
   },
   commands: [
     {
       getDetailFor (label) {
         return getSelectorForElementWithText(label, { el: '//th', child: '/following-sibling::td' })
-      },
-      getLocalNavItemSelector (text) {
-        return getSelectorForElementWithText(
-          text,
-          {
-            el: '//a',
-            className: 'c-local-nav__link',
-          },
-        )
       },
       getSelectorForKeyValueTable (title) {
         return getSelectorForTable(title, 'table--key-value')

@@ -14,7 +14,7 @@ Feature: Edit an Event in Data hub
     And I click the "Edit event" link
     When I change form text field "name" to random words
     And I submit the form
-    Then details heading should contain what I entered for "name" field
+    Then the heading should contain what I entered for "name" field
 
   @events-edit--type
   Scenario: Edit event type

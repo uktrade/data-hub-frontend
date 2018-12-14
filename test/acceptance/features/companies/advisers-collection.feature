@@ -5,7 +5,7 @@ Feature: View advisers for a company
   Scenario: View advisers for a GHQ on the One List
 
     When I navigate to the `companies.advisers` page using `company` `One List Corp` fixture
-    Then details content heading should contain "Advisers on the core team"
+    Then there should be a sub heading "Advisers on the core team"
     And the data details 1 are displayed
       | Team                                            | Location   | Global Account Manager |
       | IST - Sector Advisory Services                  | London	   | Travis Greene          |
