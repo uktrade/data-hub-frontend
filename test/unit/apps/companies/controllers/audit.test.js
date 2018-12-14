@@ -1,15 +1,14 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
 const auditLogMock = require('~/test/unit/data/audit/company-audit.json')
 const companyMock = require('~/test/unit/data/companies/company.json')
-const tokenMock = '12345abcde'
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company audit controller', () => {
   beforeEach(() => {
     this.getCompanyAuditLogStub = sinon.stub()
     this.transformApiResponseToCollectionSpy = sinon.spy()
     this.transformAuditLogToListItemSpy = sinon.spy()
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.renderSpy = sinon.spy()
-    this.nextSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
       '../repos': {
@@ -22,34 +21,12 @@ describe('Company audit controller', () => {
         transformAuditLogToListItem: this.transformAuditLogToListItemSpy,
       },
     })
-
-    this.reqMock = {
-      query: {},
-      session: {
-        token: tokenMock,
-      },
-    }
-    this.resMock = {
-      breadcrumb: this.breadcrumbStub,
-      render: this.renderSpy,
-      locals: {
-        company: companyMock,
-      },
-    }
   })
 
   context('when audit returns successfully', () => {
-    beforeEach(() => {
-      this.getCompanyAuditLogStub.resolves(auditLogMock)
-    })
-
-    context('with default page number', () => {
-      beforeEach(async () => {
-        await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
-      })
-
+    const commonTests = (expectedCompanyId, expectedTemplate) => {
       it('should call audit log with correct arguments', () => {
-        expect(this.getCompanyAuditLogStub).to.have.been.calledWith(tokenMock, companyMock.id, 1)
+        expect(this.getCompanyAuditLogStub).to.have.been.calledWith('1234', expectedCompanyId, 1)
       })
 
       it('should call api transformer', () => {
@@ -61,47 +38,80 @@ describe('Company audit controller', () => {
       })
 
       it('should set the correct number of breadcrumbs', () => {
-        expect(this.breadcrumbStub).to.have.been.calledTwice
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
       })
 
       it('should render the correct template', () => {
-        expect(this.renderSpy.args[0][0]).to.equal('companies/views/audit')
-        expect(this.renderSpy).to.have.been.calledOnce
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
       })
 
       it('should send the correct template data', () => {
-        expect(this.renderSpy.args[0][1]).to.deep.equal({
+        expect(this.middlewareParameters.resMock.render.args[0][1]).to.deep.equal({
           auditLog: auditLogMock,
         })
       })
+    }
+
+    context('when the company does not have a DUNS number', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+        })
+
+        this.getCompanyAuditLogStub.resolves(auditLogMock)
+
+        await this.controller.renderAuditLog(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests(companyMock.id, 'companies/views/_deprecated/audit')
     })
 
-    context('when a custom page number', () => {
+    context('when the company does have a DUNS number', () => {
       beforeEach(async () => {
-        this.reqMock.query.page = 2
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: dnbCompanyMock,
+        })
 
-        await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
+        this.getCompanyAuditLogStub.resolves(auditLogMock)
+
+        await this.controller.renderAuditLog(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
-      it('should call audit log with custom page number', () => {
-        expect(this.getCompanyAuditLogStub).to.have.been.calledWith(tokenMock, companyMock.id, 2)
-      })
+      commonTests(dnbCompanyMock.id, 'companies/views/audit')
     })
   })
 
   context('when audit rejects', () => {
     beforeEach(async () => {
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
+      })
+
       this.errorMock = {
         errorCode: 500,
       }
+
       this.getCompanyAuditLogStub.rejects(this.errorMock)
 
-      await this.controller.renderAuditLog(this.reqMock, this.resMock, this.nextSpy)
+      await this.controller.renderAuditLog(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
     })
 
     it('should call next with error', () => {
-      expect(this.nextSpy).to.have.been.calledWith(this.errorMock)
-      expect(this.nextSpy).to.have.been.calledOnce
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.errorMock)
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
     })
   })
 })
