@@ -56,6 +56,7 @@ module.exports = {
             'headless',
             'disable-gpu',
             '--no-sandbox',
+            'window-size=1366,768',
           ],
         },
       },
