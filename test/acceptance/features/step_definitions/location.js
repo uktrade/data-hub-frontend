@@ -95,6 +95,31 @@ Then(/^the (.+) local header is displayed$/, async function (entityType, dataTab
   }
 })
 
+Then(/^the heading should be "(.+)"$/, async (value) => {
+  await Location
+    .section.localHeader
+    .waitForElementPresent('@header')
+    .assert.containsText('@header', value)
+})
+
+Then(/^after the heading should be "(.+)"$/, async (value) => {
+  await Location
+    .section.localHeader
+    .waitForElementPresent('@headerAfter')
+    .assert.containsText('@headerAfter', value)
+})
+
+Then(/^the heading description should be$/, async (data) => {
+  for (const row of data.hashes()) {
+    const headerDescriptionParagraphSelector = Location.section.localHeader.getSelectorForHeaderDescriptionParagraph(row.paragraph)
+
+    await Location
+      .api.useXpath()
+      .waitForElementVisible(headerDescriptionParagraphSelector.selector)
+      .useCss()
+  }
+})
+
 Then(/^I see the ([0-9]+) error page$/, async function (statusCode) {
   const headingSelector = Location.getHeading('//h3', statusCode).selector
 
