@@ -27,6 +27,7 @@ async function renderInvestmentList (req, res, next) {
     const filtersFields = investmentFiltersFields({
       currentAdviserId,
       sectorOptions,
+      userAgent: res.locals.userAgent,
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)

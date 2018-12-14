@@ -36,6 +36,9 @@ const QUERY_FIELDS = [
   'event_type',
   'address_country',
   'uk_region',
+]
+
+const QUERY_DATE_FIELDS = [
   'start_date_after',
   'start_date_before',
 ]
@@ -46,4 +49,5 @@ module.exports = {
   APP_PERMISSIONS,
   LOCAL_NAV,
   QUERY_FIELDS,
+  QUERY_DATE_FIELDS,
 }
