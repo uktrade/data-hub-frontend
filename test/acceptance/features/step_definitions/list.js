@@ -1,4 +1,4 @@
-const { get, set, camelCase } = require('lodash')
+const { get, set } = require('lodash')
 const { client } = require('nightwatch-cucumber')
 const { Given, When, Then } = require('cucumber')
 const moment = require('moment')
@@ -23,7 +23,7 @@ When(/^I clear all filters$/, async function () {
 
 Then(/^the results summary for (?:a|an).*? (.+) collection is present$/, async function (collectionType) {
   await Collection.captureResultCount((count) => {
-    set(this.state, 'collection.resultCount', parseInt(count))
+    set(this.state, 'collection.resultCount', count)
   })
 
   const resultCount = get(this.state, 'collection.resultCount')
@@ -47,12 +47,8 @@ Then(/^there is an? (.+) button in the collection header$/, async function (butt
 })
 
 Then(/^I can view the (.+) in the collection$/, async function (entityType, dataTable) {
-  const entityHeading = get(this.state, `${camelCase(entityType)}.heading`)
-
   await Collection
     .section.firstCollectionItem
-    .waitForElementPresent('@header')
-    .assert.containsText('@header', entityHeading)
 
   for (const row of dataTable.hashes()) {
     const metaListValueElement = Collection.getSelectorForMetaListItemValue(row.text)

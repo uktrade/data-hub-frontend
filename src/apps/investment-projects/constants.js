@@ -74,11 +74,14 @@ const QUERY_FIELDS = [
   'investor_company',
   'proposal_deadline_before',
   'proposal_deadline_after',
+  'client_relationship_manager',
+]
+
+const QUERY_DATE_FIELDS = [
   'estimated_land_date_before',
   'estimated_land_date_after',
   'actual_land_date_before',
   'actual_land_date_after',
-  'client_relationship_manager',
 ]
 
 module.exports = {
@@ -87,4 +90,5 @@ module.exports = {
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
+  QUERY_DATE_FIELDS,
 }

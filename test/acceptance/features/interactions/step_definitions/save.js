@@ -195,11 +195,20 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
   const filterTagsSection = InteractionList.section.filterTags
   const waitForTimeout = 15000
   const interactionType = camelCase(typeOfInteraction)
+
+  const inputDateFormat = process.env.NW_CIRCLECI ? 'MM/DD/YYYY' : 'DD/MM/YYYY'
+
   const date = getDateFor({
     year: get(this.state, 'interaction.dateOfInteractionYear'),
     month: get(this.state, 'interaction.dateOfInteractionMonth'),
     day: get(this.state, 'interaction.dateOfInteractionDay'),
-  }, 'YYYY-M-D')
+  }, inputDateFormat)
+
+  const expectedDate = getDateFor({
+    year: get(this.state, 'interaction.dateOfInteractionYear'),
+    month: get(this.state, 'interaction.dateOfInteractionMonth'),
+    day: get(this.state, 'interaction.dateOfInteractionDay'),
+  }, 'YYYY-MM-DD')
 
   await filtersSection
     .waitForElementPresent(`@${interactionType}`)
@@ -208,15 +217,21 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
   await filterTagsSection
     .waitForElementPresent('@kind', waitForTimeout)
 
-  await filtersSection
-    .setValue('@dateFrom', date)
-    .sendKeys('@dateFrom', [ client.Keys.ENTER ])
-
-  await filterTagsSection
-    .waitForElementPresent('@dateFrom', waitForTimeout)
+  client.clearValue('#field-date_after')
 
   await filtersSection
-    .setValue('@dateTo', date)
+    .sendKeys('@dateFrom', date)
+
+  client.expect.element('#field-date_after').to.have.value.which.contains(`${expectedDate}`)
+
+  client.clearValue('#field-date_before')
+
+  await filtersSection
+    .sendKeys('@dateTo', date)
+
+  client.expect.element('#field-date_before').to.have.value.which.contains(`${expectedDate}`)
+
+  await filtersSection
     .sendKeys('@dateTo', [ client.Keys.ENTER ])
 
   await filterTagsSection
