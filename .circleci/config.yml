@@ -20,6 +20,7 @@ aliases:
     working_directory: ~/data-hub-frontend
     environment:
       BASH_ENV: "/usr/local/nvm/nvm.sh"  # make node, npm and yarn available
+      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Common steps for user_acceptance* jobs
   - &wait_for_backend
@@ -89,6 +90,7 @@ aliases:
     OAUTH2_CLIENT_ID: randomClientId
     ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
+    TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Data hub base docker container
   - &docker_data_hub_base
@@ -110,6 +112,7 @@ aliases:
     name: postgres
     environment:
       POSTGRES_DB: datahub
+      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
@@ -140,6 +143,7 @@ aliases:
       RESOURCE_SERVER_AUTH_TOKEN: sso-token
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Non master branch Common workflow config
   - &common_at_workflow_config
