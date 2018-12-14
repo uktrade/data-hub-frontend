@@ -23,11 +23,21 @@ module.exports = {
               }
             )
           },
+          getSelectorForHeaderDescriptionParagraph (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//div',
+                className: 'c-local-header__description',
+                child: '/p',
+              }
+            )
+          },
         },
       ],
       elements: {
         header: '.c-local-header__heading',
         headerLink: '.c-local-header__heading-before a',
+        headerAfter: '.c-local-header__heading-after',
       },
     },
     localNav: {
