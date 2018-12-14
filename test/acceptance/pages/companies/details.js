@@ -9,5 +9,6 @@ module.exports = {
 
     return `${process.env.QA_HOST}/companies/${companyId}/details`
   },
-  elements: {},
+  elements: {
+  },
 }
