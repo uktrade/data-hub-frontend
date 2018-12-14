@@ -49,6 +49,12 @@
   },
   "service_delivery_status": null,
   "subject": "ad",
+  "policy_issue_types": [{
+    "name": "Domestic",
+    "id": "4b9142df-0520-46bd-9da9-94147cdbae13"
+  }],
+  "policy_feedback_notes": "Labore culpa quas cupiditate voluptatibus magni.",
+  "was_policy_feedback_provided": "true",
   "notes": "Labore culpa quas cupiditate voluptatibus magni.",
   "archived_documents_url_path": "",
   "policy_areas": [{
