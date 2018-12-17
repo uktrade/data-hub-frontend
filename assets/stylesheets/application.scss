@@ -1,8 +1,9 @@
 $images-dir: "/images/";
 
+@import "~govuk-frontend/all";
 @import "_deprecated/trade-elements";
 
-@import "vue-multiselect.min.css";
+@import "~vue-multiselect/dist/vue-multiselect.min.css";
 
 @import "settings";
 @import "tools";

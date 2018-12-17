@@ -15,9 +15,15 @@ describe('Investment list controller', () => {
         sortby: 'estimated_land_date:asc',
       },
     }
+
     this.res = {
       render: sinon.spy(),
       query: {},
+      locals: {
+        userAgent: {
+          isIE: false,
+        },
+      },
     }
     this.nextSpy = sinon.spy()
 

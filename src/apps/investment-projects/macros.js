@@ -7,7 +7,7 @@ const { collectionFilterLabels, requirementsLabels } = require('./labels')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function ({ currentAdviserId, sectorOptions }) {
+const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, userAgent }) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -74,28 +74,28 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions }) {
       },
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'estimated_land_date_before',
-      hint: 'YYYY-MM-DD',
-      placeholder: 'e.g. 2018-07-18',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'estimated_land_date_after',
-      hint: 'YYYY-MM-DD',
-      placeholder: 'e.g. 2019-05-09',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'actual_land_date_before',
-      hint: 'YYYY-MM-DD',
-      placeholder: 'e.g. 2018-07-18',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
     {
-      macroName: 'TextField',
+      macroName: 'DateField',
+      type: 'date',
       name: 'actual_land_date_after',
-      hint: 'YYYY-MM-DD',
-      placeholder: 'e.g. 2019-05-09',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
     },
   ].map(filter => {
     return Object.assign(filter, {

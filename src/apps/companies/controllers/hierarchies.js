@@ -4,7 +4,7 @@ function renderAddGlobalHQ (req, res, next) {
   res
     .breadcrumb(companyName, `/companies/${companyId}`)
     .breadcrumb('Link Global HQ')
-    .render('companies/views/add-global-hq.njk')
+    .render('companies/views/_deprecated/add-global-hq.njk')
 }
 
 module.exports = {

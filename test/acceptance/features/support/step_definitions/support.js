@@ -1,6 +1,6 @@
 const { client } = require('nightwatch-cucumber')
 const { Then, When } = require('cucumber')
-const { get, set } = require('lodash')
+const { get } = require('lodash')
 
 const Support = client.page.support()
 
@@ -14,13 +14,6 @@ Then(/^the support fields have error messages$/, async function () {
     .assert.visible('@titleError')
     .assert.visible('@chooseOneOfTheseError')
     .assert.visible('@emailError')
-})
-
-Then(/^a new support request is created$/, async function () {
-  await Support
-    .createSupportTicket({}, (supportRequest) => {
-      set(this.state, 'supportRequest', supportRequest)
-    })
 })
 
 Then(/^the success message contains the ticket ID/, async function () {

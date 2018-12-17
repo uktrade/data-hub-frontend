@@ -95,6 +95,44 @@ Then(/^the (.+) local header is displayed$/, async function (entityType, dataTab
   }
 })
 
+Then(/^the heading should be "(.+)"$/, async (value) => {
+  await Location
+    .section.localHeader
+    .waitForElementPresent('@header')
+    .assert.containsText('@header', value)
+})
+
+Then(/^the heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
+  await Location
+    .section.localHeader
+    .waitForElementPresent('@header')
+    .assert.containsText('@header', this.state[fieldName])
+})
+
+Then(/^after the heading should be "(.+)"$/, async (value) => {
+  await Location
+    .section.localHeader
+    .waitForElementPresent('@headerAfter')
+    .assert.containsText('@headerAfter', value)
+})
+
+Then(/^the heading description should be$/, async (data) => {
+  for (const row of data.hashes()) {
+    const headerDescriptionParagraphSelector = Location.section.localHeader.getSelectorForHeaderDescriptionParagraph(row.paragraph)
+
+    await Location
+      .api.useXpath()
+      .waitForElementVisible(headerDescriptionParagraphSelector.selector)
+      .useCss()
+  }
+})
+
+Then(/^there should be a sub heading "(.+)"$/, async (value) => {
+  await Location
+    .waitForElementPresent('@subHeading')
+    .assert.containsText('@subHeading', value)
+})
+
 Then(/^I see the ([0-9]+) error page$/, async function (statusCode) {
   const headingSelector = Location.getHeading('//h3', statusCode).selector
 
@@ -102,4 +140,26 @@ Then(/^I see the ([0-9]+) error page$/, async function (statusCode) {
     .api.useXpath()
     .assert.visible(headingSelector)
     .useCss()
+})
+
+Then(/^there should be a local nav$/, async (dataTable) => {
+  const expectedLocalNav = dataTable.hashes()
+
+  await Location.api.elements('css selector', '.c-local-nav__link', (result) => {
+    client.expect(result.value.length).to.equal(expectedLocalNav.length)
+  })
+
+  for (const row of expectedLocalNav) {
+    const localNavItemSelector = Location.section.localNav.getLocalNavLinkSelector(row.text)
+    await Location
+      .api.useXpath()
+      .waitForElementPresent(localNavItemSelector.selector)
+      .assert.visible(localNavItemSelector.selector)
+      .useCss()
+  }
+})
+
+Then(/^there should not be a local nav$/, async () => {
+  await Location.section.localNav
+    .assert.elementNotPresent(Location.section.localNav.selector)
 })

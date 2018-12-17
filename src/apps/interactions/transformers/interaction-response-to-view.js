@@ -38,6 +38,9 @@ function transformInteractionResponseToViewRecord ({
   contact,
   policy_issue_type,
   policy_areas,
+  policy_issue_types,
+  was_policy_feedback_provided,
+  policy_feedback_notes,
   investment_project,
   communication_channel,
   event,
@@ -50,6 +53,10 @@ function transformInteractionResponseToViewRecord ({
     .map(policy_area => policy_area.name)
     .join(', ')
 
+  const displayPolicyTypes = (policy_issue_types || [])
+    .map(policy_type => policy_type.name)
+    .join(', ')
+
   const transformed = {
     company: transformEntityLink(company, 'companies'),
     contact: transformEntityLink(contact, 'contacts'),
@@ -57,7 +64,6 @@ function transformInteractionResponseToViewRecord ({
     service,
     service_delivery_status,
     policy_issue_type,
-    policy_areas: displayPolicyAreas,
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,
@@ -77,6 +83,9 @@ function transformInteractionResponseToViewRecord ({
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,
     documents: transformDocumentsLink(archived_documents_url_path),
+    policy_issue_types: displayPolicyTypes,
+    policy_areas: displayPolicyAreas,
+    policy_feedback_notes,
   }
 
   const result = {}

@@ -1,22 +1,10 @@
-const { assign } = require('lodash')
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const companyMock = require('~/test/unit/data/companies/company.json')
+const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
-    this.resMock = assign({}, globalRes, {
-      locals: {
-        company: companyMock,
-      },
-      breadcrumb: sinon.stub().returnsThis(),
-      render: sinon.spy(),
-      query: {},
-    })
-    this.reqMock = assign({}, globalReq, {
-      session: {
-        token: 'abcd',
-      },
-    })
     this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/contacts', {
@@ -34,32 +22,43 @@ describe('Company contact list controller', () => {
   })
 
   describe('#renderContacts', () => {
-    context('when the company is active', () => {
-      beforeEach(() => {
-        this.controller.renderContacts(this.reqMock, this.resMock)
-      })
-
+    const commonTests = (expectedCompanyId, expectedTemplate) => {
       it('should render collection page with locals', () => {
-        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
-        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
-        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
-        expect(this.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
         expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
           { macroName: 'foo', name: 'name' },
           { macroName: 'bar', name: 'archived' },
-        ], this.reqMock.query)
+        ], this.middlewareParameters.reqMock.query)
       })
 
       it('should set the correct number of breadcrumbs', () => {
-        expect(this.resMock.breadcrumb).to.have.been.calledTwice
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
       })
 
       it('should render the correct template', () => {
-        expect(this.resMock.render.args[0][0]).to.equal('companies/views/contacts')
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
+      })
+    }
+
+    context('when the company does not have a DUNS number', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+        })
+
+        this.controller.renderContacts(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
       })
 
+      commonTests(companyMock.id, 'companies/views/_deprecated/contacts')
+
       it('should set the correct add button', () => {
-        const props = this.resMock.render.args[0][1]
+        const props = this.middlewareParameters.resMock.render.args[0][1]
 
         expect(props.actionButtons).to.deep.equal([{
           label: 'Add contact',
@@ -68,24 +67,49 @@ describe('Company contact list controller', () => {
       })
     })
 
-    context('when the company is archived', () => {
+    context('when the company does have a DUNS number', () => {
       beforeEach(() => {
-        this.resMock = {
-          ...this.resMock,
-          locals: {
-            ...this.resMock.locals,
-            company: {
-              ...this.resMock.locals.company,
-              archived: true,
-            },
-          },
-        }
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: dnbCompanyMock,
+        })
 
-        this.controller.renderContacts(this.reqMock, this.resMock)
+        this.controller.renderContacts(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
       })
 
+      commonTests(dnbCompanyMock.id, 'companies/views/contacts')
+
+      it('should set the correct add button', () => {
+        const props = this.middlewareParameters.resMock.render.args[0][1]
+
+        expect(props.actionButtons).to.deep.equal([{
+          label: 'Add contact',
+          url: `/contacts/create?company=${dnbCompanyMock.id}`,
+        }])
+      })
+    })
+
+    context('when the company is archived', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+            archived: true,
+          },
+        })
+
+        this.controller.renderContacts(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
+      })
+
+      commonTests(companyMock.id, 'companies/views/_deprecated/contacts')
+
       it('should not set actions buttons', () => {
-        const props = this.resMock.render.args[0][1]
+        const props = this.middlewareParameters.resMock.render.args[0][1]
 
         expect(props.actionButtons).to.be.undefined
       })

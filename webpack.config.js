@@ -12,6 +12,7 @@ const common = {
   entry: {
     styles: './assets/stylesheets/application.scss',
     app: [
+      './assets/javascripts/govuk-frontend-all.js',
       './assets/javascripts/vendor/details.polyfill.js',
       './assets/javascripts/app.js',
       './assets/javascripts/app-vue.js',
@@ -68,7 +69,7 @@ const common = {
             },
             'resolve-url-loader',
             {
-              loader: 'fast-sass-loader',
+              loader: 'sass-loader',
               options: {
                 sourceMap: true, // required for resolve-url-loader
                 includePaths: [

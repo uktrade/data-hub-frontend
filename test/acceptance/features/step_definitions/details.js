@@ -47,7 +47,7 @@ const removeFalsey = (details, state) => {
   })
 }
 
-const assertTableRowCount = async function (tableSelector, expectedData, tableType) {
+const assertTableRowCount = async function (tableSelector, expectedData) {
   await Details.api.elements('xpath', `${tableSelector.selector}/tbody/tr`, (result) => {
     client.expect(result.value.length, 'Table row count').to.equal(expectedData.length)
   })
@@ -80,24 +80,6 @@ const assertTableContent = async function (tableSelector, expectedData, tableTyp
   }
 }
 
-Then(/^details heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
-  await Details
-    .waitForElementPresent('@heading')
-    .assert.containsText('@heading', this.state[fieldName])
-})
-
-Then(/^details heading should contain "(.+)"$/, async (value) => {
-  await Details
-    .waitForElementPresent('@heading')
-    .assert.containsText('@heading', value)
-})
-
-Then(/^details content heading should contain "(.+)"$/, async (value) => {
-  await Details
-    .waitForElementPresent('@contentHeading')
-    .assert.containsText('@contentHeading', value)
-})
-
 Then(/^details view data for "(.+)" should contain what I entered for "(.+)" field$/, async function (detailsItemName, fieldName) {
   const detail = await Details.getDetailFor(detailsItemName)
 
@@ -116,28 +98,6 @@ Then(/^details view data for "(.+)" should contain "(.+)"$/, async (detailsItemN
     .waitForElementPresent(detail.selector)
     .assert.containsText(detail.selector, value)
     .useCss()
-})
-
-Then(/^there should be a local nav$/, async (dataTable) => {
-  const expectedLocalNav = dataTable.hashes()
-
-  await Details.api.elements('css selector', '.c-local-nav__link', (result) => {
-    client.expect(result.value.length).to.equal(expectedLocalNav.length)
-  })
-
-  for (const row of expectedLocalNav) {
-    const localNavItemSelector = Details.getLocalNavItemSelector(row.text)
-    await Details
-      .api.useXpath()
-      .waitForElementPresent(localNavItemSelector.selector)
-      .assert.visible(localNavItemSelector.selector)
-      .useCss()
-  }
-})
-
-Then(/^there should not be a local nav$/, async () => {
-  await Details
-    .assert.elementNotPresent('@localNav')
 })
 
 Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
@@ -167,6 +127,15 @@ Then(/^the key value details are displayed$/, async function (dataTable) {
 
 Then(/^the (.+) data details are displayed$/, async function (tableTitle, dataTable) {
   const tableSelector = Details.getSelectorForDataTable(tableTitle)
+
+  await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+  await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+})
+
+Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, dataTable) {
+  const tableSelector = Details.getSelectorForDataTableNumber(tableNumber)
+
+  console.log(tableSelector)
 
   await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)

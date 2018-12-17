@@ -147,3 +147,24 @@ $_first-element-spacing: $default-spacing-unit * 3;
 .c-local-header--keyline {
   border-bottom: 1px solid $grey-3;
 }
+
+.c-local-header__description {
+  padding: $default-spacing-unit / 2;
+  background-color: $grey-3;
+
+  * + & {
+    margin-top: $default-spacing-unit;
+  }
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    &:not(:last-child) {
+      margin-bottom: $default-spacing-unit / 2;
+    }
+
+    a {
+      margin-left: $default-spacing-unit / 2;
+    }
+  }
+}
